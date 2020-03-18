@@ -47,10 +47,10 @@
 
     return  array(
     'class' => 'CDbConnection',
-    'connectionString' => 'mysql:host=localhost;dbname=db_airasia_test',
+    'connectionString' => 'mysql:host=203.154.140.77;dbname=db_thoresen',
     'emulatePrepare' => true,
-    'username' => 'root',
-    'password' => '',
+    'username' => 'lms_thoresen',
+    'password' => 'Admin@123#',
     'tablePrefix' => 'tbl_',
     'charset' => 'utf8',
     'initSQLs'=>array(
