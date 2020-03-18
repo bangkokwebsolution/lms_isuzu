@@ -65,7 +65,7 @@
                 <?php echo CHtml::beginForm(); ?>
                 <div class="span7">
                     <div class="inner">
-                       <!--  <?php if(Yii::app()->user->hasFlash('loginMessage')): ?>
+                         <?php if(Yii::app()->user->hasFlash('loginMessage')): ?>
                             <div class="success">
                                 <?php echo Yii::app()->user->getFlash('loginMessage'); ?>
                             </div>
@@ -88,12 +88,12 @@
                                     <div class="span5 center">
                                         <?php echo CHtml::submitButton(UserModule::t("Login"), array('class'=>'btn btn-block btn-danger')); ?>
                                     </div>
-                                </div> -->
-                                <div class="loginwith" id="customBtn">
+                                </div> 
+                               <!-- <div class="loginwith" id="customBtn">
                                   <a class="btn btn-block btn-danger">
                                     <i class="fa fa-google-plus" aria-hidden="true"></i>  &nbsp;&nbsp;Login with Google
                                 </a>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
 
