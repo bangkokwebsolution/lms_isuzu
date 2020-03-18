@@ -1,0 +1,158 @@
+<?php
+class UsabilityController extends Controller
+{
+	public function filters()
+	{
+		return array(
+            'accessControl', // perform access control for CRUD operations
+            // 'rights',
+        );
+	}
+
+    /**
+     * Specifies the access control rules.
+     * This method is used by the 'accessControl' filter.
+     * @return array access control rules
+     */
+    public function accessRules()
+    {
+    	return array(
+            array('allow',  // allow all users to perform 'index' and 'view' actions
+            	'actions' => array('index', 'view'),
+            	'users' => array('*'),
+            ),
+            array('allow',
+                // กำหนดสิทธิ์เข้าใช้งาน actionIndex
+            	'actions' => AccessControl::check_action(),
+                // ได้เฉพาะ group 1 เท่านั่น
+            	'expression' => 'AccessControl::check_access()',
+            ),
+            array('deny',  // deny all users
+            	'users' => array('*'),
+            ),
+        );
+    }
+    
+    public function init()
+    {
+    	parent::init();
+    	$this->lastactivity();
+
+    }
+    // public function filters() 
+    // {
+    //     return array(
+    //         'rights',
+    //     );
+    // }
+
+    public function actionView($id)
+    {
+    	$this->render('view',array(
+    		'model'=>$this->loadModel($id),
+    	));
+    }
+
+    public function actionCreate()
+    {
+    	$model=new Usability;
+
+    	if(isset($_POST['Usability']))
+    	{
+            // $langId = $_POST['Usability'][lang_id];
+    		// $model->attributes=$_POST['Usability'];
+            $model->lang_id = isset($_GET['lang_id']) ? $_GET['lang_id'] : 1 ;
+            $model->parent_id = isset($_GET['parent_id']) ? $_GET['parent_id'] : 0 ;
+            
+            // $model->lang_id = $langId;
+            $model->usa_title = $_POST['Usability'][usa_title];
+            $model->usa_detail = $_POST['Usability'][usa_detail];
+            // if($langId == 1){
+            //     $model->parent_id = 0;
+            // }else{
+            //     $model->parent_id = $_POST['Usability'][usa_id];
+            // }
+    		if($model->save()){
+    			if(Yii::app()->user->id){
+    				Helpers::lib()->getControllerActionId($model->usa_id);
+    			}
+    			$this->redirect(array('view','id'=>$model->usa_id));
+    		}
+    	}
+
+    	$this->render('create',array(
+    		'model'=>$model,
+    	));
+    }
+
+    public function actionUpdate($id)
+    {
+    	$model=$this->loadModel($id);
+
+    	if(isset($_POST['Usability']))
+    	{
+    		$model->attributes=$_POST['Usability'];
+    		if($model->save()){
+    			if(Yii::app()->user->id){
+    				Helpers::lib()->getControllerActionId();
+    			}
+    			$this->redirect(array('view','id'=>$model->usa_id));
+    		}
+    	}
+
+    	$this->render('update',array(
+    		'model'=>$model,
+    	));
+    }
+
+    public function actionDelete($id)
+    {
+    	$this->loadModel($id)->delete();
+    	if(Yii::app()->user->id){
+    		Helpers::lib()->getControllerActionId();
+    	}
+    	if(!isset($_GET['ajax']))
+    		$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+    }
+
+    public function actionMultiDelete()
+    {	
+		//header('Content-type: application/json');
+    	if(isset($_POST['chk'])) 
+    	{
+    		foreach($_POST['chk'] as $val) 
+    		{
+    			$this->actionDelete($val);
+    		}
+    	}
+    }
+
+    public function actionIndex()
+    {
+    	$model=new Usability('search');
+    	$model->unsetAttributes();
+    	if(isset($_GET['Usability']))
+    		$model->attributes=$_GET['Usability'];
+
+    	$this->render('index',array(
+    		'model'=>$model,
+    	));
+    }
+
+    public function loadModel($id)
+    {
+    	$model=Usability::model()->usabilitycheck()->findByPk($id);
+    	if($model===null)
+    		throw new CHttpException(404,'The requested page does not exist.');
+    	return $model;
+    }
+
+    protected function performAjaxValidation($model)
+    {
+    	if(isset($_POST['ajax']) && $_POST['ajax']==='usability-form')
+    	{
+    		echo CActiveForm::validate($model);
+    		Yii::app()->end();
+    	}
+    }
+}

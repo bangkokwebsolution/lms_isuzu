@@ -1,0 +1,194 @@
+<?php
+$this->breadcrumbs=array(
+	UserModule::t('Users')=>array('admin'),
+	UserModule::t('Manage'),
+);
+//
+// $this->menu=array(
+//     array('label'=>UserModule::t('Create User'), 'url'=>array('create')),
+//     array('label'=>UserModule::t('Manage Users'), 'url'=>array('admin')),
+//     array('label'=>UserModule::t('Manage Profile Field'), 'url'=>array('profileField/admin')),
+//     array('label'=>UserModule::t('List User'), 'url'=>array('/user')),
+// );
+
+Yii::app()->clientScript->registerScript('search', "
+	$('.search-button').click(function(){
+		$('.search-form').toggle();
+		return false;
+	});
+	$('.search-form form').submit(function(){
+		$.fn.yiiGridView.update('user-grid', {
+			data: $(this).serialize()
+		});
+		return false;
+	});
+	");
+
+	?>
+	<div id="user" class="innerLR">
+
+		<div class="widget" style="margin-top: -1px;">
+			<div class="widget-head">
+				<h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Confirm Registration"); ?></h4>
+			</div>
+			<div class="widget-body">
+				<div>
+					<?php echo Rights::t('core', 'ที่นี่คุณสามารถอนุมัติการเข้าใช้งานระบบให้กับผู้ใช้แต่ละราย'); ?>
+				</div>
+				<div class="spacer"></div>
+				<div>
+
+					<!--  < ?php echo CHtml::link(UserModule::t('ค้นหาขั้นสูง'),'#',array('class'=>'search-button')); ?>
+					<div class="search-form" style="display:none">
+						< ?php $this->renderPartial('_search',array(
+							'model'=>$model,
+							)); ?>
+						</div> --><!-- search-form -->
+
+						<?php 
+						$this->widget('AGridView', array(
+							'id'=>'user-grid',
+							'dataProvider'=>$model->searchapprove(),
+							'filter'=>$model,
+							'columns'=>array(
+								array(
+									'header'=>'No.',
+									'value'=>'$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
+								),
+			// 					array(
+			// 						'name' => 'idensearch',
+			// 						'type'=>'raw',
+			// 						'value' => '$data->profile->identification',
+			// //'value' => 'CHtml::link(UHtml::markSearch($data, ),array("admin/view","id"=>$data->id))',
+			// 					),
+								array(
+									'name'=>'email',
+									'type'=>'raw',
+									'value'=>'CHtml::link(UHtml::markSearch($data,"email"), "mailto:".$data->email)',
+								),
+		// 'create_at',
+								array(
+									'name'=>'create_at',
+									'type'=>'html',
+									'filter' => false,
+			// 'value'=>'UHtml::markSearch($data,"create_at")'
+									'value'=>function($data){
+										return Helpers::changeFormatDate($data->create_at,'datetime');
+									},
+								),
+			// 					array(
+			// 						'name'=>'careersearch',
+			// 						'type'=>'raw',
+			// 						'filter'=>User::getListCareer(),
+			// 						'value' => '$data->profile->Career->career',
+			// //'value' => 'CHtml::link(UHtml::markSearch($data, ),array("admin/view","id"=>$data->id))',
+			// 					),
+								// array(
+								// 	'name'=>'orgchart_lv2',
+								// 	'type'=>'raw',
+								// 	'filter' => User::getListOrgCourse(),
+								// 	'value'=>function($data){
+								// 		$orgCoruse = json_decode($data->orgchart_lv2);
+								// 		$criteria=new CDbCriteria;
+								// 		$criteria->addInCondition('id', $orgCoruse);
+								// 		$org = OrgChart::model()->findAll($criteria);
+								// 		foreach ($org as $key => $value) {
+								// 			$courseName .= ($key+1).'. '.$value->title.'<br>';
+								// 		}
+								// 		return $courseName;
+								// 	},
+								// ),
+		// 'lastvisit_at',
+								// array(
+								// 	'name'=>'superuser',
+								// 	'value'=>'User::itemAlias("AdminStatus",$data->superuser)',
+								// 	'filter'=>User::itemAlias("AdminStatus"),
+								// ),
+								array(
+									'type'=>'raw',
+									'value'=>function($data){
+										if($data->status == 1){
+											echo CHtml::button("ปิด",array("class"=>"btn btn-danger changeStatus","data-id" => $data->id));
+										} else {
+											echo CHtml::button("รออนุมัติ",array("class"=>"btn btn-success changeStatus","data-id" => $data->id));
+										}
+									},
+									'header' => 'เปิด/ปิด การแสดงผล',
+									'htmlOptions'=>array('style'=>'text-align: center;'),
+									'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
+								),
+								array(
+									'class'=>'AButtonColumn',
+									'visible'=>Controller::PButton(
+										array("Admin.*", "Admin.View", "Admin.Update", "Admin.Delete")
+									),
+									'buttons' => array(
+										'view'=> array(
+											'visible'=>'Controller::PButton( array("Admin.*", "Admin.View") )'
+										),
+										// 'update'=> array(
+										// 	'visible'=>'false'
+										// ),
+										'update'=> array( 
+											'visible'=>'Controller::PButton( array("Admin.*", "Admin.Update") )' 
+										),
+										'delete'=> array(
+											'visible'=>'Controller::PButton( array("Admin.*", "Admin.Delete") )'
+										),
+									),
+								),
+							),
+						));
+
+						?>
+
+						<div class="modal fade" id="modal-id-card">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times-circle text-white" aria-hidden="true"></i></button> -->
+										<h4 class="modal-title text-white"><i class="fa fa-lock" aria-hidden="true"></i>
+										แก้ไขบัตรประชาชน สำหรับเรียนหลักสูตร CPD</h4>
+									</div>
+									<div class="modal-body"
+									style="padding: 4em 0;background: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/books.png"
+									);
+									">
+								</div>
+								<div class="modal-footer">
+									<?php echo CHtml::submitButton('ยืนยัน', array('class' => 'btn btn-sm', 'style' => 'font-size:20px;')); ?>
+									<button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+								</div>
+							</div>
+						</div>
+						<script>
+							$( ".changeStatus" ).click(function() {
+								var btn = $(this);
+								var id = btn.attr("data-id");
+								var _items = ["ระงับการใช้งาน","เปิดการใช้งาน"];
+								swal({
+									title: "โปรดรอสักครู่",
+									text: "ระบบกำลังส่งอีเมล",
+									type: "info",
+									showConfirmButton: false
+								});
+								$.ajax({
+									url: "<?= $this->createUrl('admin/active'); ?>", 
+									type: "POST",
+									data:  {id:id},
+									success: function(result){
+										if(result == 1) btn.addClass('btn-success').removeClass('btn-danger');
+										else btn.addClass('btn-danger').removeClass('btn-success');
+										btn.val(_items[result]);
+										location.reload();
+									}
+								});
+							});
+						</script>
+					</div>
+
+				</div><!-- form -->
+			</div>
+		</div>
+	</div>
+	<!-- END innerLR -->

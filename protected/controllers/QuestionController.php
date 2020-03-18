@@ -1,0 +1,783 @@
+<?php
+
+class QuestionController extends Controller
+{
+    /**
+     * Declares class-based actions.
+     */
+    public function actions()
+    {
+        return array(
+            // captcha action renders the CAPTCHA image displayed on the contact page
+            'captcha'=>array(
+                'class'=>'CCaptchaAction',
+                'backColor'=>0xFFFFFF,
+            ),
+            // page action renders "static" pages stored under 'protected/views/site/pages'
+            // They can be accessed via: index.php?r=site/page&view=FileName
+            'page'=>array(
+                'class'=>'CViewAction',
+            ),
+        );
+    }
+
+    /**
+     * This is the default 'index' action that is invoked
+     * when an action is not explicitly requested by users.
+     */
+    
+    public function actionPreExams($id=null)
+    {
+        if(Yii::app()->user->id){
+            Helpers::lib()->getControllerActionId();
+        }
+        $isPreTest = Helpers::isPretestState($id);
+        $testType = $isPreTest ? 'pre' : 'post';
+        $testType = (empty($_GET['type'])) ?  $testType: $_GET['type'];
+        $lesson = Lesson::model()->findByPk($id);
+        $manage = Manage::Model()->findAll("id=:id AND type=:type", array("id" => $id,":type" => $testType));
+
+       /* $Question = Question::model()->with('chioce')->findAll("question.group_id=:group_id AND chioce.choice_answer=:choice_answer", array(
+                                    "group_id" => $manage->group_id,
+                                    "choice_answer" => 1,
+                                ));*/
+         if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+            $langId = Yii::app()->session['lang'] = 1;
+            Yii::app()->language = 'en';
+            }else{
+                $langId = Yii::app()->session['lang'];
+                Yii::app()->language = (Yii::app()->session['lang'] == 1)? 'en':'th';
+            }
+
+            $label = MenuCoursequestion::model()->find(array(
+                    'condition' => 'lang_id=:lang_id',
+                    'params' => array(':lang_id' => $langId)
+                    ));
+            if(!$label){
+                $label = MenuCoursequestion::model()->find(array(
+                    'condition' => 'lang_id=:lang_id',
+                    'params' => array(':lang_id' => 1)
+                    ));
+            }
+
+            $labelCourse = MenuCourse::model()->find(array(
+                    'condition' => 'lang_id=:lang_id',
+                    'params' => array(':lang_id' => $langId)
+                    ));
+            if(!$labelCourse){
+                $labelCourse = MenuCourse::model()->find(array(
+                    'condition' => 'lang_id=:lang_id',
+                    'params' => array(':lang_id' => 1)
+                    ));
+            }
+
+
+        foreach ($manage as $key => $value) {   
+                $total_score += $value->manage_row;
+            }
+            
+        $currentQuiz = TempQuiz::model()->find(array(
+            'condition' => "user_id=:user_id AND lesson=:lesson AND type=:type order by id",
+            'params' => array(':user_id' => Yii::app()->user->id,':lesson' => $id,':type' => $testType)
+        ));
+        // Not found and redirect
+        if (!$manage) {
+            Yii::app()->user->setFlash('CheckQues',$label->label_alert_noTest);
+            Yii::app()->user->setFlash('class', "error");
+            $this->redirect(array(
+                "//course/detail/$id",
+            ));
+        }
+        if($currentQuiz){
+            Helpers::lib()->checkDateStartandEnd(Yii::app()->user->id,$lesson->course_id);
+            $this->redirect(array('question/index',
+                'id' => $lesson->id,
+                'type' => $testType,
+                'labelCourse' =>$labelCourse
+            ));
+        } else {
+            Helpers::lib()->checkDateStartandEnd(Yii::app()->user->id,$lesson->course_id);
+            $this->render('pre_exams',array(
+                'lesson' => $lesson,
+                //'manage' => $manage,
+                'total_score' => $total_score,
+                'label'=>$label,
+                'labelCourse' => $labelCourse,
+                'testType' => $testType
+            ));
+        }
+    }
+    public function actionIndex($id=null)
+    {        
+        if(Yii::app()->user->id){
+            Helpers::lib()->getControllerActionId();
+        }
+        if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+            $langId = Yii::app()->session['lang'] = 1;
+            Yii::app()->language = 'en';
+            }else{
+                $langId = Yii::app()->session['lang'];
+                Yii::app()->language = (Yii::app()->session['lang'] == 1)? 'en':'th';
+            }
+
+            $label = MenuCoursequestion::model()->find(array(
+                    'condition' => 'lang_id=:lang_id',
+                    'params' => array(':lang_id' => $langId)
+                    ));
+            if(!$label){
+                $label = MenuCoursequestion::model()->find(array(
+                    'condition' => 'lang_id=:lang_id',
+                    'params' => array(':lang_id' => 1)
+                    ));
+            }
+
+            $labelCourse = MenuCourse::model()->find(array(
+                    'condition' => 'lang_id=:lang_id',
+                    'params' => array(':lang_id' => $langId)
+                    ));
+            if(!$labelCourse){
+                $labelCourse = MenuCourse::model()->find(array(
+                    'condition' => 'lang_id=:lang_id',
+                    'params' => array(':lang_id' => 1)
+                    ));
+            }
+
+        $id = isset($_POST['lesson_id']) ? $_POST['lesson_id'] : $id;
+        $user_lesson = User::model()->findByPk(Yii::app()->user->id);
+        $to['email'] = $user_lesson->email;
+        $to['firstname'] = $user_lesson->profile->firstname;
+        $to['lastname'] = $user_lesson->profile->lastname;
+
+        $to_admin1['email'] = $user_lesson->profile->advisor_email1;
+        $to_admin1['firstname'] = $user_lesson->profile->firstname;
+        $to_admin1['lastname'] = $user_lesson->profile->lastname;
+
+        $to_admin2['email'] = $user_lesson->profile->advisor_email2;
+        $to_admin2['firstname'] = $user_lesson->profile->firstname;
+        $to_admin2['lastname'] = $user_lesson->profile->lastname;
+//        Helpers::lib()->SendMail($to,"คุณสอบผ่านแล้ว",'คุณสอบผ่านแล้ว');
+
+        $lesson = Lesson::model()->findByPk($id);
+
+        if (!Helpers::lib()->CheckBuyItem($lesson->course_id, false)) {
+            Yii::app()->user->setFlash('CheckQues',$label->label_alert_error);
+            Yii::app()->user->setFlash('class','error');
+
+            $this->redirect(array('//course/detail', 'id' => $lesson->course_id, 'lesson_id' => $id,
+                'label'=>$label));
+        }
+
+        // $isPreTest = Helpers::isPretestState($id);
+        // $isPostTest = Helpers::isPosttestState($id);
+        // $testType = $isPreTest ? 'pre' : 'post';
+
+        $isChkPreTest = $_GET['type'] == 'pre';
+        $testType = $isChkPreTest ? 'pre' : 'post';
+        $isPreTest = ($isChkPreTest == 'pre')? true : false;
+
+        if ($lesson) {
+            Helpers::lib()->checkDateStartandEnd(Yii::app()->user->id, $lesson->course_id);
+            $lessonStatus = Helpers::lib()->checkLessonPass($lesson);
+        }
+        if ($lessonStatus == "pass" || $isPreTest) {
+            $countScore = Score::Model()->count("lesson_id=:lesson_id AND user_id=:user_id AND type=:type AND active = 'y'", array(
+                "lesson_id" => $id,
+                "user_id" => Yii::app()->user->id,
+                "type" => $testType,
+            ));
+
+            $countManage = Manage::Model()->count("id=:id AND active=:active AND type=:type", array(
+                "id" => $id,
+                "active" => "y",
+                "type" => $testType
+            ));
+
+            // Not found and redirect
+
+            if (!$countManage) {
+
+                Yii::app()->user->setFlash('CheckQues',$label->label_alert_noTest);
+                Yii::app()->user->setFlash('class','error');
+
+                $this->redirect(array(
+                    '//course/detail',
+                    'lesson_id' => $id,
+                    'id' => $lesson->course_id,
+                    'label'=>$label,
+                ));
+            }
+
+            if ($countScore == $lesson->cate_amount) //สอบครบจำนวน
+            {
+
+                $countScorePast = Score::model()->findAll(array(
+                    'condition' => ' lesson_id = "' . $id . '"
+                    AND user_id    = "' . Yii::app()->user->id . '"
+                    AND type       = "' . $testType . '"
+                    AND active       = "y"
+                    ',
+                ));
+                if (!empty($countScorePast)) {
+                    // Pass
+                    Yii::app()->user->setFlash('CheckQues',$label->label_alert_testPass);
+                    Yii::app()->user->setFlash('class','success');
+                    $this->redirect(array('//course/detail', 'id' => $lesson->course_id, 'lesson_id' => $id,
+                        'label'=>$label));
+                } else {
+                    // Not Pass
+                    Yii::app()->user->setFlash('CheckQues',$label->label_alert_testFail);
+                    Yii::app()->user->setFlash('class','error');
+                    $this->redirect(array('//course/detail', 'id' => $lesson->course_id, 'lesson_id' => $id,'label'=>$label));
+                }
+            } else {
+                $countScorePast = Score::Model()->count("lesson_id=:lesson_id AND user_id=:user_id AND score_past=:score_past AND type=:type AND active = 'y'", array(
+                    "lesson_id" => $id,
+                    "user_id" => Yii::app()->user->id,
+                    "score_past" => "y",
+                    "type" => $testType,
+                ));
+    
+                if (!empty($countScorePast)) {
+                    //pass
+                    Yii::app()->user->setFlash('CheckQues',$label->label_alert_testPass);
+                    Yii::app()->user->setFlash('class','success');
+                    $this->redirect(array('//course/detail', 'id' => $lesson->course_id, 'lesson_id' => $id));
+                } else {
+                    // Config default pass score 60 percent
+                    //$settings = Setting::model()->find();
+//                    $scorePercent = 60;
+                    $scorePercent = $lesson->cate_percent;
+
+                    $manage = new CActiveDataProvider('Manage', array(
+                        'criteria' => array(
+                            'condition' => ' id = "' . $id . '" AND active = "y" AND type = "' . $testType . '" '
+                        ))
+                    );
+                          
+                    $temp_all = TempQuiz::model()->findAll(array(
+                        'condition' => "user_id=".Yii::app()->user->id." and lesson=".$id." and type='".$testType."'"
+                    ));
+
+                    if(!$temp_all){            
+                        $countchoice = 0;
+                        foreach ($manage->getData() as $i => $value) {
+                         $modelQuestion[] = Question::getLimitData($value['group_id'], $value['manage_row']);
+                         foreach($modelQuestion as $key1 => $ques){
+                            foreach($ques as $key2 => $val){
+                                $temp_test = new TempQuiz;
+                                $temp_test->user_id = Yii::app()->user->id;
+                                $temp_test->lesson = $lesson->id;
+                                $temp_test->group_id = $val['group_id'];
+                                $temp_test->ques_id = $val['ques_id'];
+                                $temp_test->type = $testType;
+                                $choice = array();
+                                $choiceData = array();
+                                $choiceData = $val['chioce'];
+                                $arrType4Answer = array();
+                                $Type4Question = array();
+                                foreach ($choiceData as $key => $val_choice) {
+                                    if($val_choice->choice_type != 'dropdown'){
+                                    // if($val_choice->choice_type != 'radio'){
+                                        $choice[] = $val_choice->choice_id;
+                                        // echo 'NO';
+                                    }else{
+                                        $ranNumber = rand(1, 10000000);
+                                        if($val_choice->choice_answer == 2){
+                                            $arrType4Answer[$ranNumber] = $val_choice->choice_id;
+                                        }
+                                        if($val_choice->choice_answer == 1){
+                                            $choice[] = $val_choice->choice_id;
+                                        }
+                                    }
+                                }
+
+                               
+                               
+                               
+                                if($arrType4Answer){
+                                    ksort($arrType4Answer);
+                                    $choiceA = array();
+                                    foreach ($arrType4Answer as $key => $arrTypeVal) {
+                                        $choiceA[] = $arrTypeVal;
+                                    }
+                                    $choice = array_merge($choice,$choiceA);
+                                }
+
+                                array_rand($choice); //Random choice
+                                // var_dump($choice);exit();
+
+                                $temp_test->question = json_encode($choice);
+                                $temp_test->number = $key2+1;
+                                $temp_test->status = 0;
+                                if($key2==0){
+                                    $temp_test->time_start = new CDbExpression('NOW()');
+                                    $temp_test->time_up = $lesson->time_test*60;
+                                }
+                                $temp_test->save();
+                            }
+                        }
+                    }
+                } 
+                if(is_numeric($_POST['actionEvnt'])){
+                    $sql_number = 'AND number = '.$_POST['actionEvnt'];
+                } else {
+                    $sql_number = 'AND status="0"';
+                }
+                /*if(isset($_POST['number'])){
+                    $sql_number = 'AND number = '.$_POST['number'];
+                } else {
+                    $sql_number = 'AND status="0"';
+                }*/
+                $currentQuiz = TempQuiz::model()->find(array(
+                    'condition' => "user_id=:user_id AND lesson=:lesson AND type=:type ".$sql_number." order by id",
+                    'params' => array(':user_id' => Yii::app()->user->id,':lesson' => $id,':type' => $testType)
+                ));
+                
+                if(empty($currentQuiz)){
+                    $currentQuiz = TempQuiz::model()->find(array(
+                        'condition' => "user_id=:user_id AND lesson=:lesson AND type=:type order by id",
+                        'params' => array(':user_id' => Yii::app()->user->id,':lesson' => $id,':type' => $testType)
+                    ));
+                }
+
+                $model = Question::getTempData($currentQuiz['ques_id']);
+                if(count($model) != null || count($model) != 0) {                     
+                    if(isset($_POST['actionEvnt'])){                                                 
+                        if(isset($_POST['Choice'])){         
+                            foreach ($_POST['Question_type'] as $question_id => $value) {
+                                $update_temp = TempQuiz::model()->find(array(
+                                    'condition' => "user_id=".Yii::app()->user->id." and lesson=".$lesson->id." and ques_id=".$question_id." and type='".$testType."'"
+                                ));
+                                $update_temp->status = 1;
+                                $update_temp->ans_id = json_encode($_POST['Choice'][$question_id]);
+                                if(!$update_temp->update()) var_dump($update_temp->getErrors());
+                            }
+                        }
+
+                        if(isset($_POST['dropdownVal'])){                           
+
+                            foreach ($_POST['Question_type'] as $question_id => $value) {
+                                $update_temp = TempQuiz::model()->find(array(
+                                    'condition' => "user_id=".Yii::app()->user->id." and lesson=".$lesson->id." and ques_id=".$question_id." and type='".$testType."'"
+                                ));
+                                $update_temp->status = 1;
+                                $update_temp->ans_id = json_encode($_POST['dropdownVal']);
+
+                                if(!$update_temp->update()) var_dump($update_temp->getErrors());
+                            }
+                        }
+
+
+                        if($_POST['actionEvnt']=="save" || $_POST['actionEvnt']=="timeup"){
+                            $modelCoursescore = new Score;
+                            $modelCoursescore->lesson_id = $id;
+                           //$modelCoursescore->manage_id = $value['group_id'];
+                            $modelCoursescore->type = $testType;
+                            $modelCoursescore->user_id = Yii::app()->user->id;
+                            $modelCoursescore->save();
+
+                            $temp_accept = TempQuiz::model()->findAll(
+                               array('condition' => "user_id=".Yii::app()->user->id." and lesson=".$id." and type='".$testType."'"
+                           )); 
+                            $countAllCoursequestion = 0;
+                            $scoreSum = 0;
+
+                            foreach ($temp_accept as $key => $value) {
+                                $result = 0;
+
+                                if($value->quest->ques_type==1){
+                                    $countAllCoursequestion += 1;
+
+                                    $coursequestion = Question::model()->with('chioce')->find("question.ques_id=:id", array(
+                                        "id" => $value->ques_id,
+                                    ));
+                                    $choiceUserAnswerArray = array();
+                                    if (isset($value->ans_id)) {
+                                        $choiceUserAnswerArray = json_decode($value->ans_id);
+                                    } 
+
+                                    $choiceCorrect = $coursequestion->chioce(array(
+                                        'condition' => 'choice_answer=1'
+                                    ));
+
+                                    $choiceCorrectArray = array();
+                                    foreach ($choiceCorrect as $choiceCorrectItem) {
+                                        $choiceCorrectArray[] = $choiceCorrectItem->choice_id;
+                                    }
+                                    sort($choiceUserAnswerArray);
+                                    if ($choiceUserAnswerArray === $choiceCorrectArray) {
+                                        $scoreSum++;
+                                        $result = 1;
+                                    }
+                                    
+                                    foreach ($coursequestion->chioce as $keyChoice => $choice) {
+                                            // Save Logchoice
+                                        $modelCourselogchoice = new Logchoice;
+                                            $modelCourselogchoice->lesson_id = $id; // $_POST ID
+                                            $modelCourselogchoice->logchoice_select = 1;
+                                            $modelCourselogchoice->score_id = $modelCoursescore->score_id;
+                                            $modelCourselogchoice->choice_id = $choice->choice_id;
+                                            $modelCourselogchoice->ques_id = $coursequestion->ques_id;
+                                            $modelCourselogchoice->user_id = Yii::app()->user->id;
+                                            $modelCourselogchoice->ques_type = $coursequestion->ques_type;
+                                            $modelCourselogchoice->is_valid_choice = $choice->choice_answer == "1" ? '1' : '0';
+                                            $modelCourselogchoice->logchoice_answer = (in_array($choice->choice_id, $choiceUserAnswerArray)) ? 1 : 0;
+                                            // Save Courselogchoice
+                                            $modelCourselogchoice->save();
+                                        }
+
+                                        // Save Logques
+                                        $modelCourselogques = new Logques;
+                                        $modelCourselogques->lesson_id = $id; // $_POST ID
+                                        $modelCourselogques->score_id = $modelCoursescore->score_id;
+                                        $modelCourselogques->ques_id = $value->ques_id;
+                                        $modelCourselogques->user_id = Yii::app()->user->id;
+                                        $modelCourselogques->test_type = $testType;
+                                        $modelCourselogques->ques_type = $coursequestion->ques_type;
+                                        $modelCourselogques->result = $result;
+                                        $modelCourselogques->save();
+                                } else if($value->quest->ques_type==2){
+                                        $countAllCoursequestion += 1;
+                                        $coursequestion = Question::model()->with('chioce')->find("question.ques_id=:id", array(
+                                            "id" => $value->ques_id,
+                                        ));
+                                        $choiceUserAnswerArray = array();
+                                        if (isset($value->ans_id)) {
+                                            $choiceUserAnswerArray = json_decode($value->ans_id);
+                                        } 
+
+                                        $choiceCorrect = $coursequestion->chioce(array(
+                                            'condition' => 'choice_answer=1'
+                                        ));
+
+                                        $choiceCorrectArray = array();
+                                        foreach ($choiceCorrect as $choiceCorrectItem) {
+                                            $choiceCorrectArray[] = $choiceCorrectItem->choice_id;
+                                        }
+                                        
+                                        if ($choiceUserAnswerArray === $choiceCorrectArray) {
+                                            $scoreSum++;
+                                            $result = 1;
+                                        }
+                                        foreach ($coursequestion->chioce as $keyChoice => $choice) {
+                                            // Save Logchoice
+                                            $modelCourselogchoice = new Logchoice;
+                                            $modelCourselogchoice->lesson_id = $id; // $_POST ID
+                                            $modelCourselogchoice->logchoice_select = 1;
+                                            $modelCourselogchoice->score_id = $modelCoursescore->score_id;
+                                            $modelCourselogchoice->choice_id = $choice->choice_id;
+                                            $modelCourselogchoice->ques_id = $coursequestion->ques_id;
+                                            $modelCourselogchoice->user_id = Yii::app()->user->id;
+                                            $modelCourselogchoice->ques_type = $coursequestion->ques_type;
+                                            $modelCourselogchoice->is_valid_choice = $choice->choice_answer == "1" ? '1' : '0';
+                                            $modelCourselogchoice->logchoice_answer = (in_array($choice->choice_id, $choiceUserAnswerArray)) ? 1 : 0;
+                                            // Save Courselogchoice
+                                            $modelCourselogchoice->save();
+                                        }
+
+                                        // Save Logques
+                                        $modelCourselogques = new Logques;
+                                        $modelCourselogques->lesson_id = $id; // $_POST ID
+                                        $modelCourselogques->score_id = $modelCoursescore->score_id;
+                                        $modelCourselogques->ques_id = $value->ques_id;
+                                        $modelCourselogques->user_id = Yii::app()->user->id;
+                                        $modelCourselogques->test_type = $testType;
+                                        $modelCourselogques->ques_type = $coursequestion->ques_type;
+                                        $modelCourselogques->result = $result;
+                                        $modelCourselogques->save();
+                                } else if($value->quest->ques_type==4){
+                                    $coursequestion = Question::model()->with('chioce')->find("question.ques_id=:id", array(
+                                        "id" => $value->ques_id,
+                                    ));
+
+                                    $choiceUserAnswerArray = array();
+                                    if (isset($value->ans_id)) {
+                                        $choiceUserAnswerArray = json_decode($value->ans_id);
+                                    } 
+
+                                    $choiceUserQuestionArray = array();
+                                    $choiceUserQuestionArray = $coursequestion->chioce(array(
+                                            'condition' => 'choice_answer=1'
+                                        ));
+
+                                    $choiceCorrectIDs = array();
+                                    $choiceIsQuest = array();
+
+                                    foreach ($choiceUserQuestionArray as $key => $value) {
+                                        $countAllCoursequestion += 1;
+                                        $choiceIsQuest[] = $value->choice_id;
+                                        $choiceCorrectID['Anschoice_id'] = $choiceUserAnswerArray[$key];
+                                        $checkValue = 0;
+
+                                        $AnsChoice = $coursequestion->chioce(array(
+                                            'condition' => 'choice_id='.$choiceUserAnswerArray[$key].
+                                                            ' AND reference IS NOT NULL '
+                                        ));
+
+                                        if($AnsChoice){                                           
+                                            if($AnsChoice[0]->reference == $value->choice_id){
+                                                $checkValue = 1;
+                                                $scoreSum++;
+                                                $result = 1;
+                                            }
+                                        }
+                                         
+                                        $choiceCorrectID['checkVal'] = $checkValue;
+                                        $choiceCorrectIDs[$value->choice_id] = $choiceCorrectID;
+                                     
+                                    }
+
+                                    $quest_score = 0;
+                                    foreach ($coursequestion->chioce as $keyChoice => $choice) {
+                                        $is_valid_choice = 0;
+                                        $logchoice_answer = 0;
+
+                                        $modelCourselogchoice = new Logchoice;
+                                            $modelCourselogchoice->lesson_id = $id; // $_POST ID
+                                            $modelCourselogchoice->logchoice_select = 1;
+                                            $modelCourselogchoice->score_id = $modelCoursescore->score_id;
+                                            $modelCourselogchoice->choice_id = $choice->choice_id;
+                                            $modelCourselogchoice->ques_id = $coursequestion->ques_id;
+                                            $modelCourselogchoice->user_id = Yii::app()->user->id;
+                                            $modelCourselogchoice->ques_type = $coursequestion->ques_type;
+
+
+                                            $checkChoice_quest = (in_array($choice->choice_id, $choiceIsQuest)) ? $choice->choice_id : 0;
+
+                                            if($checkChoice_quest!=0){  
+                                                                                            
+                                                $logchoice_answer = $choiceCorrectIDs[$checkChoice_quest]['Anschoice_id'];
+                                                if($choiceCorrectIDs[$checkChoice_quest]['checkVal'] == 1){
+                                                    $is_valid_choice = 1;
+                                                    $quest_score ++;
+                                                }
+
+                                            }
+
+                                            $modelCourselogchoice->logchoice_answer = $logchoice_answer;
+                                            $modelCourselogchoice->is_valid_choice = $is_valid_choice == 1 ? 1 : 0;
+                                            // Save Courselogchoice
+                                            $modelCourselogchoice->save();
+                                        }
+                                          
+                                    //         echo '<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><pre>';
+                                    //     var_dump($modelCourselogchoice);
+                                    //     echo '-------------';
+                                    // exit();
+                          
+                                     $modelCourselogques = new Logques;
+                                        $modelCourselogques->lesson_id = $id; // $_POST ID
+                                        $modelCourselogques->score_id = $modelCoursescore->score_id;
+                                        $modelCourselogques->ques_id = $value->ques_id;
+                                        $modelCourselogques->user_id = Yii::app()->user->id;
+                                        $modelCourselogques->test_type = $testType;
+                                        $modelCourselogques->ques_type = $coursequestion->ques_type;
+                                        $modelCourselogques->result = $quest_score;
+                                        $modelCourselogques->save();
+                                }
+                            }
+                                    // exit();
+
+                                $sumPoint = $scoreSum * 100 / $countAllCoursequestion;
+                                Score::model()->updateByPk($modelCoursescore->score_id, array(
+                                    'score_number' => $scoreSum,
+                                    'update_date' => date('Y-m-d H:i:s'),
+                                    'score_total' => $countAllCoursequestion,
+                                    'score_past' => ($sumPoint >= $scorePercent) ? 'y' : 'n',
+                                ));
+                                $modelScore = Score::model()->findByPk($modelCoursescore->score_id);
+                                $courseStats = Helpers::lib()->checkCoursePass($lesson->course_id);
+                                $courseManageHave = Helpers::lib()->checkHaveCourseTestInManage($lesson->course_id);
+                                if($courseStats == "pass" && !$isPreTest && !$courseManageHave){
+                                    $passCoursModel = Passcours::model()->findByAttributes(array(
+                                        'passcours_cates' => $lesson->CourseOnlines->cate_id,
+                                        'passcours_user' => Yii::app()->user->id
+                                        ));
+                                    if (!$passCoursModel) {
+                                        $modelPasscours = new Passcours;
+                                        $modelPasscours->passcours_cates = $lesson->CourseOnlines->cate_id;
+                                        $modelPasscours->passcours_cours = $lesson->course_id;
+                                        $modelPasscours->passcours_user = Yii::app()->user->id;
+                                        $modelPasscours->passcours_date = new CDbExpression('NOW()');
+                                        $modelPasscours->save();
+                                    }
+                                }
+                                $this->actiondeleteTemp($id,$testType);
+                                $this->renderPartial('exams_finish', array(
+                                    'model' => $model,
+                                    'lesson' => $lesson,
+                                    'temp_all' => $temp_all,
+                                    'testType' => $testType,
+                                    'modelScore' => $modelScore,
+                                    'label'=>$label,
+                                    'labelCourse' => $labelCourse
+                                ));
+                        } else {
+                            // echo '<pre>';
+                            //     var_dump($_POST['dropdownVal']);
+                            //     exit();        
+                                $temp_count = count($temp_all);
+                                if($_POST['actionEvnt']=="next"){
+                                    $idx = $_POST['idx_now']+1;
+                                    if($_POST['idx_now'] == $temp_count)$idx=1;
+                                } elseif($_POST['actionEvnt']=="previous") {
+                                    $idx = $_POST['idx_now']-1;
+                                    if($_POST['idx_now'] == 1)$idx = $temp_count;
+                                } else {
+                                    $idx = $_POST['actionEvnt'];
+                                }
+                                $count_no_select = TempQuiz::model()->count(array(
+                                    'condition' => "user_id=:user_id AND lesson=:lesson AND type=:type AND status='0' order by id",
+                                    'params' => array(':user_id' => Yii::app()->user->id,':lesson' => $id,':type' => $testType)
+                                ));
+
+                                $last_ques = $count_no_select == 0 ? 1 : 0;
+                                $currentQuiz = TempQuiz::model()->find(array(
+                                    'condition' => "user_id=:user_id AND lesson=:lesson AND type=:type AND number=:number order by id",
+                                    'params' => array(':user_id' => Yii::app()->user->id,':lesson' => $id,':type' => $testType,':number' => $idx)
+                                ));
+                                $model = Question::getTempData($currentQuiz['ques_id']);
+                                $temp_all = TempQuiz::model()->findAll(array(
+                                    'condition' => "user_id=".Yii::app()->user->id." and lesson=".$id." and type='".$testType."'"
+                                ));
+                                $countExam = count($temp_all) - $count_no_select;
+                                $this->renderPartial('exams_next', array(
+                                    'model' => $model,
+                                    'lesson' => $lesson,
+                                    'temp_all' => $temp_all,
+                                    'testType' => $testType,
+                                    'currentQuiz' => $currentQuiz,
+                                    'last_ques' => $last_ques,
+                                    'countExam' => $countExam,
+                                    'label'=>$label,
+                                    'labelCourse'=>$labelCourse,
+                                ));
+                            }
+                    } else {      
+                            $count_no_select = TempQuiz::model()->count(array(
+                                'condition' => "user_id=:user_id AND lesson=:lesson AND type=:type AND status='0' order by id",
+                                'params' => array(':user_id' => Yii::app()->user->id,':lesson' => $id,':type' => $testType)
+                            ));
+
+                            $last_ques = $count_no_select == 0 ? 1 : 0;
+                            $temp_all = TempQuiz::model()->findAll(array(
+                                'condition' => "user_id=".Yii::app()->user->id." and lesson=".$id." and type='".$testType."'"
+                            ));
+                            $countExam = count($temp_all) - $count_no_select;
+                            $this->render('exams', array(
+                                'model' => $model,
+                                'lesson' => $lesson,
+                                'temp_all' => $temp_all,
+                                'testType' => $testType,
+                                'currentQuiz' => $currentQuiz,
+                                'last_ques' => $last_ques,
+                                'countExam' => $countExam,
+                                'time_up' => $temp_all[0]->time_up,
+                                'label'=>$label,
+                                'labelCourse'=>$labelCourse,
+                            ));
+                        }
+                    } else {
+                        Yii::app()->user->setFlash('CheckQues',$label->label_alert_noTest);
+                        Yii::app()->user->setFlash('class','error');
+
+                        $this->redirect(array(
+                            '//course/detail', 'id' => $lesson->course_id, 'lesson_id' => $id
+                        ));
+                    }
+                }
+            }
+        } else {
+            Yii::app()->user->setFlash('CheckQues',$label->label_alert_error);
+            Yii::app()->user->setFlash('class','error');
+
+            $this->redirect(array('//course/detail', 'id' => $lesson->course_id, 'lesson_id' => $id));
+        }
+    }
+    public function actionExamsFinish()
+    {
+        $this->render('exams-finish');
+    }
+
+    public function actionResetpost($id=null,$course=null)
+    {
+
+        $learn = Learn::model()->findAll(array(
+            'condition' => "user_id=:user_id AND lesson_id=:lesson AND lesson_active=:lesson_active",
+            'params' => array(':user_id' => Yii::app()->user->id,':lesson' => $id,':lesson_active' => 'y')
+        ));
+
+        foreach ($learn as $key => $value) {
+
+            LearnFile::model()->deleteAll(array(
+                'condition' => "learn_id=:learn_id AND user_id_file=:user_id_file",
+                'params' => array(':learn_id' => $value->learn_id , ':user_id_file' => Yii::app()->user->id)
+            ));
+
+
+            $value->lesson_active = 'n';
+            $value->save(false);
+        }
+
+        $score = Score::model()->findAll(array(
+            'condition' => "user_id=:user_id AND lesson_id=:lesson AND type=:type AND active=:active",
+            'params' => array(':user_id' => Yii::app()->user->id,':lesson' => $id,':type' => 'post',':active' => 'y')
+        ));
+
+        foreach ($score as $key => $value) {
+
+            Logques::model()->deleteAll(array(
+                'condition' => 'user_id=:user_id AND lesson_id=:lesson_id AND score_id=:score_id',
+                'params' => array(':user_id' => Yii::app()->user->id,':lesson_id' => $id,':score_id'=>$value->score_id)));
+
+            Logchoice::model()->deleteAll(array(
+                'condition' => 'lesson_id=:lesson_id AND user_id=:user_id AND score_id=:score_id',
+                'params' => array(':lesson_id' => $id,':user_id' => Yii::app()->user->id,':score_id'=>$value->score_id)));
+            $value->active = 'n';
+            $value->save(false);
+        }
+        $this->redirect(array('/course/detail/', 'id' => $course));
+
+    }
+
+
+
+
+    /**
+     * This is the action to handle external exceptions.
+     */
+    public function actionError()
+    {
+        if($error=Yii::app()->errorHandler->error)
+            {
+                if(Yii::app()->request->isAjaxRequest)
+                    echo $error['message'];
+                    else
+                        $this->render('error', $error);
+                }
+            }
+
+            public function actiondeleteTemp($lesson_id=null,$type=null){
+             TempQuiz::model()->deleteAll(array(
+                'condition' => "user_id=:user_id AND lesson=:lesson AND type=:type",
+                'params' => array(':user_id' => Yii::app()->user->id,':lesson' => $lesson_id,':type'=>$type)
+            )); 
+         }
+         public function actionSaveTimeExam(){
+           $temp_time_start = TempQuiz::model()->find(array(
+            'condition' => "user_id=".Yii::app()->user->id." and lesson=".$_POST['lesson_id']." and time_start is not null"
+        )); 
+           if($temp_time_start){
+                $temp_time_start->time_up = $_POST['time'];
+               // echo ($temp_time_start->update()) ? 'success' : 'error';
+               if($temp_time_start->update()){
+                    $state = 'success';
+               }else{
+                    $state = 'error';
+               }
+           }else{
+                $state = 'error';
+           }
+           echo $state;
+       }
+   }

@@ -1,0 +1,32 @@
+<?php
+/* @var $this CourseNotificationController */
+/* @var $model CourseNotification */
+
+$this->breadcrumbs=array(
+	'Course Notifications'=>array('index'),
+	$model->id,
+);
+
+// $this->menu=array(
+// 	array('label'=>'List CourseNotification', 'url'=>array('index')),
+// 	array('label'=>'Create CourseNotification', 'url'=>array('create')),
+// 	array('label'=>'Update CourseNotification', 'url'=>array('update', 'id'=>$model->id)),
+// 	array('label'=>'Delete CourseNotification', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+// 	array('label'=>'Manage CourseNotification', 'url'=>array('admin')),
+// );
+?>
+
+<h1>View CourseNotification #<?php echo $model->id; ?></h1>
+
+<?php $this->widget('zii.widgets.CDetailView', array(
+	'data'=>$model,
+	'attributes'=>array(
+		'id',
+		'course_id',
+		// 'generation_id',
+		'notification_time',
+		'create_date',
+		// 'update_date',
+		'active',
+	),
+)); ?>
