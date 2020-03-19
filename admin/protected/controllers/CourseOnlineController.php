@@ -41,7 +41,7 @@ class CourseOnlineController extends Controller
     {
     	return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-            	'actions' => array('index', 'view','edit_teacher','MultiDelete','save_categories'),
+            	'actions' => array('index', 'view','edit_teacher','MultiDelete','save_categories','update','delete','create'),
             	'users' => array('*'),
             ),
             array('allow',

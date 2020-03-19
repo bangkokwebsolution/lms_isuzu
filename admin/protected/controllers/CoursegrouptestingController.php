@@ -18,10 +18,10 @@ class CoursegrouptestingController extends Controller
     public function accessRules()
     {
     	return array(
-            // array('allow',  // allow all users to perform 'index' and 'view' actions
-            // 	'actions' => array('index', 'view'),
-            // 	'users' => array('*'),
-            // 	),
+            array('allow',  // allow all users to perform 'index' and 'view' actions
+            	'actions' => array('index', 'view','update','delete','create'),
+            	'users' => array('*'),
+            	),
     		array('allow',
                 // กำหนดสิทธิ์เข้าใช้งาน actionIndex
     			'actions' => AccessControl::check_action(),

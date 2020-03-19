@@ -19,7 +19,7 @@ class GrouptestingController extends Controller
     {
     	return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-            	'actions' => array('index', 'view'),
+            	'actions' => array('index', 'view','update','delete','create'),
             	'users' => array('*'),
             ),
             array('allow',

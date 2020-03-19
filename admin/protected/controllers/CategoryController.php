@@ -19,7 +19,7 @@ class CategoryController extends Controller
     {
     	return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-            	'actions' => array('index', 'view','Multidelete'),
+            	'actions' => array('index', 'view','Multidelete','update','delete','create'),
             	'users' => array('*'),
             ),
             array('allow',

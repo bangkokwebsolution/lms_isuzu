@@ -44,7 +44,6 @@
 
 
 
-
     return  array(
     'class' => 'CDbConnection',
     'connectionString' => 'mysql:host=203.154.140.77;dbname=db_thoresen',
@@ -57,5 +56,6 @@
         "SET time_zone = '+07:00'"
     )
 );
+
 
 // }

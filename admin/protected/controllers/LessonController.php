@@ -19,7 +19,7 @@ class LessonController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view','DeleteVdo','DeleteFileDoc','add_teacher','CheckExists','uploadifive','uploadifivedoc','uploadifivepdf','uploadifivescorm','EditName'),
+                'actions' => array('index', 'view','DeleteVdo','DeleteFileDoc','add_teacher','CheckExists','uploadifive','uploadifivedoc','uploadifivepdf','uploadifivescorm','EditName','update','delete','create'),
                 'users' => array('*'),
             ),
             array('allow',

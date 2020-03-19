@@ -60,6 +60,7 @@ class Score extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'course' => array(self::BELONGS_TO, 'CourseOnline', 'course_id'),
 			'Lessons'=>array(self::BELONGS_TO, 'Lesson', 'lesson_id'),
 			'user'=>array(self::BELONGS_TO, 'User', 'user_id'),
 		);
