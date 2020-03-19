@@ -27,8 +27,8 @@ class Imgslide extends AActiveRecord
 		);
 	}
 
-   	public function beforeSave() 
-    {
+	public function beforeSave() 
+	{
 		if(Yii::app()->user !== null && isset(Yii::app()->user->id))
 		{
 			$id = Yii::app()->user->id;
@@ -37,15 +37,13 @@ class Imgslide extends AActiveRecord
 		{
 			$id = 0;
 		}
-			
+		
 		$this->imgslide_link = CHtml::encode($this->imgslide_link);
 
 		if($this->isNewRecord)
 		{
 			$this->create_by = $id;
 			$this->create_date = date("Y-m-d H:i:s");
-			$this->update_by = $id;
-			$this->update_date = date("Y-m-d H:i:s");
 		}
 		else
 		{
@@ -53,38 +51,38 @@ class Imgslide extends AActiveRecord
 			$this->update_date = date("Y-m-d H:i:s");
 		}
 
-        return parent::beforeSave();
-    }
+		return parent::beforeSave();
+	}
 
-    public function afterFind() 
-    {
+	public function afterFind() 
+	{
 		$this->imgslide_link = CHtml::decode($this->imgslide_link);
-        return parent::afterFind();
-    }
+		return parent::afterFind();
+	}
 
-    public function checkScopes($check = 'scopes')
-    {
-    	if ($check == 'scopes')
-    	{
-		    $checkScopes =  array(
-		    	'alias' => 'imgslide',
-	    		'order' => ' imgslide.imgslide_id DESC ',
-	    		'condition' => ' imgslide.active = "y" ',
-		    );	
-    	}
-    	else
-    	{
-		    $checkScopes =  array(
-		    	'alias' => 'imgslide',
-	    		'order' => ' imgslide.imgslide_id DESC ',
-		    );	
-    	}
+	public function checkScopes($check = 'scopes')
+	{
+		if ($check == 'scopes')
+		{
+			$checkScopes =  array(
+				'alias' => 'imgslide',
+				'order' => ' imgslide.imgslide_id DESC ',
+				'condition' => ' imgslide.active = "y" ',
+			);	
+		}
+		else
+		{
+			$checkScopes =  array(
+				'alias' => 'imgslide',
+				'order' => ' imgslide.imgslide_id DESC ',
+			);	
+		}
 
 		return $checkScopes;
-    }
+	}
 
 	public function scopes()
-    {
+	{
     	//========== SET Controller loadModel() ==========//
 
 		$Access = Controller::SetAccess( array("Imgslide.*") );
@@ -111,22 +109,22 @@ class Imgslide extends AActiveRecord
 	    		// 		'condition' => ' imgslide.create_by = "'.Yii::app()->user->id.'" AND imgslide.active = "y" ',
 		     //        ),
 			    // );
-			    $scopes = array(
-		            'imgslidecheck'=>array(
-		    			'alias' => 'imgslide',
-	    				'order' => ' imgslide.imgslide_id DESC ',
-	    				'condition' => ' imgslide.active = "y" ',
-		            ),
-			    );
+				$scopes = array(
+					'imgslidecheck'=>array(
+						'alias' => 'imgslide',
+						'order' => ' imgslide.imgslide_id DESC ',
+						'condition' => ' imgslide.active = "y" ',
+					),
+				);
 			}
 		}
 
 		return $scopes;
-    }
+	}
 
 	public function defaultScope()
 	{
-	    $defaultScope =  $this->checkScopes('defaultScope');
+		$defaultScope =  $this->checkScopes('defaultScope');
 
 		return $defaultScope;
 	}
@@ -190,7 +188,7 @@ class Imgslide extends AActiveRecord
 		{
 			$poviderArray['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
 		}
-			
+		
 		return new CActiveDataProvider($this, $poviderArray);
 	}
 }

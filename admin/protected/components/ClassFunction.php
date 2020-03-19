@@ -36,15 +36,19 @@ Class ClassFunction
     }
     // Date Thai Time
     public static function datethaiTime($date) {
-        $strYear = date("Y", strtotime($date));
-        $strMonth = date("n", strtotime($date));
-        $strDay = date("j", strtotime($date));
-        $strHour = date("H", strtotime($date));
-        $strMinute = date("i", strtotime($date));
-        $strSeconds = date("s", strtotime($date));
-        $strMonthCut = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
-        $strMonthThai = $strMonthCut[$strMonth];
-        return "$strDay $strMonthThai $strYear $strHour:$strMinute";
+        if($date != null){
+            $strYear = date("Y", strtotime($date));
+            $strMonth = date("n", strtotime($date));
+            $strDay = date("j", strtotime($date));
+            $strHour = date("H", strtotime($date));
+            $strMinute = date("i", strtotime($date));
+            $strSeconds = date("s", strtotime($date));
+            $strMonthCut = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
+            $strMonthThai = $strMonthCut[$strMonth];
+            return "$strDay $strMonthThai $strYear $strHour:$strMinute"." น.";
+        }else{
+            return "Not set";
+        }
     }
 
     public static function datePrint($date)
@@ -152,7 +156,7 @@ Class ClassFunction
                 (    checkdate(substr($date[0], 4, 2) 
                     , substr($date[0], 6, 2) 
                     , substr($date[0], 0, 4))) 
-                ) 
+            ) 
             { 
                 return true; 
             }  
@@ -163,7 +167,7 @@ Class ClassFunction
                 (    checkdate($date[0], $date[1], $date[2]) //mmddyyyy 
                 or    checkdate($date[1], $date[0], $date[2]) //ddmmyyyy 
                 or    checkdate($date[1], $date[2], $date[0])) //yyyymmdd 
-                ) 
+            ) 
             { 
                 return true; 
             } 

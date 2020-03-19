@@ -223,7 +223,7 @@
                                     if ($chk_status_reg) {
                                         ?>
                                         <!-- Register & Before Login -->
-                                        <li><a class="btn-register"
+                                        <li><a class="btn-login"
                                            href="<?php echo $this->createUrl('/registration/ShowForm'); ?>"><i
                                            class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a></li>
                                        <?php }
