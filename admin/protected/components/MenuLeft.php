@@ -981,40 +981,40 @@ Class MenuLeft extends Controller
 				)
 			),
 
-			array(
-	        	//////// SlideImg ////////
-				'visible'=>self::PermissionsMenu(array(
-					'imgslide.*',
-					'imgslide.Index',
-					'imgslide.Create'
-				)),
-				'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบป้ายประชาสัมพันธ์</span>',
-				'url'=>'#imgslide',
-				'linkOptions' => array('data-toggle' => 'collapse'),
-				'itemOptions' => array('class' => 'hasSubmenu glyphicons bullhorn'),
-				'submenuOptions' => array('class' => self::SetSubMenu( array('imgslide') ), 'id' => 'imgslide'),
-				'active' => self::SetSubMenu( array('imgslide') ,false),
-				'items'=>array(
-					array(
-						/*====== Check Permissions Sup-Category (1) ======*/
-						'visible'=>self::PermissionsMenu(array(
-							'imgslide.*',
-							'imgslide.Create'
-						)),
-						'label'=>'เพิ่มป้ายประชาสัมพันธ์'." (ภาษา ".$mainLang." )",
-						'url'=>array('//imgslide/create')
-					),
-					array(
-						/*====== Check Permissions Sup-Category (2) ======*/
-						'visible'=>self::PermissionsMenu(array(
-							'imgslide.*',
-							'imgslide.Index'
-						)),
-						'label'=>'จัดการป้ายประชาสัมพันธ์',
-						'url'=>array('//imgslide/index')
-					),
-				)
-			),
+			// array(
+	  //       	//////// SlideImg ////////
+			// 	'visible'=>self::PermissionsMenu(array(
+			// 		'imgslide.*',
+			// 		'imgslide.Index',
+			// 		'imgslide.Create'
+			// 	)),
+			// 	'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบป้ายประชาสัมพันธ์</span>',
+			// 	'url'=>'#imgslide',
+			// 	'linkOptions' => array('data-toggle' => 'collapse'),
+			// 	'itemOptions' => array('class' => 'hasSubmenu glyphicons bullhorn'),
+			// 	'submenuOptions' => array('class' => self::SetSubMenu( array('imgslide') ), 'id' => 'imgslide'),
+			// 	'active' => self::SetSubMenu( array('imgslide') ,false),
+			// 	'items'=>array(
+			// 		array(
+			// 			/*====== Check Permissions Sup-Category (1) ======*/
+			// 			'visible'=>self::PermissionsMenu(array(
+			// 				'imgslide.*',
+			// 				'imgslide.Create'
+			// 			)),
+			// 			'label'=>'เพิ่มป้ายประชาสัมพันธ์'." (ภาษา ".$mainLang." )",
+			// 			'url'=>array('//imgslide/create')
+			// 		),
+			// 		array(
+			// 			/*====== Check Permissions Sup-Category (2) ======*/
+			// 			'visible'=>self::PermissionsMenu(array(
+			// 				'imgslide.*',
+			// 				'imgslide.Index'
+			// 			)),
+			// 			'label'=>'จัดการป้ายประชาสัมพันธ์',
+			// 			'url'=>array('//imgslide/index')
+			// 		),
+			// 	)
+			// ),
 
 			array(
 				/*====== Check Permissions Rights (6) ======*/
