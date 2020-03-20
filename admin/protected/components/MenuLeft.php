@@ -88,7 +88,7 @@ Class MenuLeft extends Controller
 				'url'=>array('/site/index'),
 				'itemOptions' => array('class' => 'glyphicons home'),
 			),
-			array(
+				array(
 				/*====== Check Permissions Language (2) ======*/
 				'visible'=>self::PermissionsMenu(array(
 					'Language.*',
@@ -98,7 +98,7 @@ Class MenuLeft extends Controller
 				'label'=>'<i></i><span>ภาษา</span>',
 				'url'=>'#Language',
 				'linkOptions' => array('data-toggle' => 'collapse'),
-				'itemOptions' => array('class' => 'hasSubmenu1 glyphicons folder_new'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
 				'submenuOptions' => array('class' => self::SetSubMenu( array('Language') ), 'id' => 'Language'),
 				'active' => self::SetSubMenu( array('Language') ,false),
 				'items'=>array(
@@ -108,7 +108,7 @@ Class MenuLeft extends Controller
 							'Language.*',
 							'Language.Create'
 						)),
-						'label'=>'เพิ่มภาษา'." (ภาษา ".$mainLang." )",
+						'label'=>'เพิ่มภาษา',
 						'url'=>array('//Language/create')
 					),
 					array(

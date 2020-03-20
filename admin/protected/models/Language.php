@@ -27,10 +27,11 @@ class Language extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('language', 'length', 'max'=>255),
+			array('active', 'length', 'max'=>1),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('status, image', 'safe'),
-			array('id, language, status, image', 'safe', 'on'=>'search'),
+			array('id, language, status, image, active', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,7 +55,8 @@ class Language extends CActiveRecord
 			'id' => 'ID',
 			'language' => 'ภาษา',
 			'status' => 'แสดงผล',
-			'image' => 'รูปภาพ'
+			'image' => 'รูปภาพ',
+			'active' => 'active'
 		);
 	}
 
@@ -79,7 +81,7 @@ class Language extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('language',$this->language,true);
 		$criteria->compare('status',$this->status,true);
-		
+
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

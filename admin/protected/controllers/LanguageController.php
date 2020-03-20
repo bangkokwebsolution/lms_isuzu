@@ -19,7 +19,7 @@ class LanguageController extends Controller
     {
     	return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-            	'actions' => array('view','MultiDeletes'),
+            	'actions' => array('view','MultiDeletes','create','update','delete','index','admin'),
             	'users' => array('*'),
             ),
             array('allow',
