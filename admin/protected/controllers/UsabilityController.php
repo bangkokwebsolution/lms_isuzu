@@ -18,7 +18,7 @@ class UsabilityController extends Controller
     {
     	return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-            	'actions' => array('index', 'view'),
+            	'actions' => array('index', 'view', 'update', 'delete', 'create'),
             	'users' => array('*'),
             ),
             array('allow',
@@ -73,6 +73,8 @@ class UsabilityController extends Controller
             //     $model->parent_id = $_POST['Usability'][usa_id];
             // }
     		if($model->save()){
+                $model->sortOrder = $model->id;
+                $model->save();
     			if(Yii::app()->user->id){
     				Helpers::lib()->getControllerActionId($model->usa_id);
     			}
@@ -155,4 +157,44 @@ class UsabilityController extends Controller
     		Yii::app()->end();
     	}
     }
+
+    public function actionSequence() {
+
+    if (isset($_POST['items']) && is_array($_POST['items'])) {
+       
+            // Get all current target items to retrieve available sortOrders
+        $cur_items = Usability::model()->findAllByPk($_POST['items'], array('order'=>'sortOrder'));
+        
+            // Check 1 by 1 and update if neccessary
+
+        foreach ($cur_items as $keys => $values) {
+
+            for ($i = 0; $i < count($_POST['items']); $i++) {
+                $item = Usability::model()->findByPk($_POST['items'][$i]);
+
+                if ($item->sortOrder != $cur_items[$i]->sortOrder) {
+                    $item->sortOrder = $cur_items[$i]->sortOrder ;
+                    $item->save(false);
+                } 
+
+                $modellang2 = Usability::model()->findByAttributes(array('parent_id'=>$_POST['items'][$i])); 
+                  //var_dump($modellang2->sortOrder);exit();
+                
+                if ($modellang2->sortOrder != $cur_items[$i]->sortOrder) {
+                    if ($modellang2->parent_id == '') {
+                        $items = Usability::model()->findByPk($_POST['items'][$i]);
+                        $items->sortOrder = $cur_items[$i]->sortOrder ;
+                        $items->save(false);
+                        
+                    }
+                    if ($modellang2->parent_id != null) {
+                        $modellang2->sortOrder = $cur_items[$i]->sortOrder ;
+                        $modellang2->save(false);   
+                    }
+                    
+                } 
+            }
+        }        
+    }
+}
 }

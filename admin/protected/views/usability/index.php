@@ -57,6 +57,7 @@ EOD
 					'id'=>$formNameModel.'-grid',
 					'dataProvider'=>$model->usabilitycheck()->search(),
 					'filter'=>$model,
+					'rowCssClassExpression'=>'"items[]_{$data->usa_id}"',
 					'selectableRows' => 2,	
 					'htmlOptions' => array(
 						'style'=> "margin-top: -1px;",
@@ -77,6 +78,13 @@ EOD
 							'name'=>'usa_title',
 							'type'=>'html',
 							'value'=>'UHtml::markSearch($data,"usa_title")'
+						),
+						array(
+							'type'=>'html',
+							'value'=>'CHtml::link("<i></i>","", array("class"=>"glyphicons move btn-action btn-inverse"))',
+							'htmlOptions'=>array('style'=>'text-align: center; width:50px;', 'class'=>'row_move'),
+							'header' => 'ย้าย',
+							'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
 						),
 						array(
                         'header'=>'ภาษา',

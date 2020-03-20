@@ -15,12 +15,12 @@ class Usability extends AActiveRecord
 	public function rules()
 	{
 		return array(
-			array('usa_id, create_by, update_by', 'numerical', 'integerOnly'=>true),
+			array('usa_id, create_by, update_by, sortOrder', 'numerical', 'integerOnly'=>true),
 			array('usa_title', 'length', 'max'=>255),
 			array('active', 'length', 'max'=>1),
 			array('usa_detail, update_date, news_per_page, parent_id, lang_id', 'safe'),
 			array('usa_title', 'required'),
-			array('usa_id, usa_title, usa_detail, create_date, create_by, update_date, update_by, active, parent_id, lang_id', 'safe', 'on'=>'search'),
+			array('usa_id, usa_title, usa_detail, create_date, create_by, update_date, update_by, active, parent_id, lang_id, sortOrder', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,6 +54,7 @@ class Usability extends AActiveRecord
 			'active' => 'สถานะ',
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
+			'sortOrder'=>'ย้ายตำแหน่ง'
 		);
 	}
 
@@ -71,7 +72,7 @@ class Usability extends AActiveRecord
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('parent_id',0);
 
-		// $criteria->order = 'sortOrder ASC';
+		 $criteria->order = 'sortOrder ASC';
 
 		$poviderArray = array('criteria'=>$criteria);
 

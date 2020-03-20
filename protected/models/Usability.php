@@ -31,13 +31,13 @@ class Usability extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('create_by, update_by', 'numerical', 'integerOnly'=>true),
+			array('create_by, update_by, sortOrder', 'numerical', 'integerOnly'=>true),
 			array('usa_title', 'length', 'max'=>255),
 			array('active', 'length', 'max'=>1),
 			array('usa_detail, create_date, update_date, parent_id, lang_id,usaMutiLang', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('usa_id, usa_title, usa_detail, create_date, create_by, update_date, update_by, active', 'safe', 'on'=>'search'),
+			array('usa_id, usa_title, usa_detail, create_date, create_by, update_date, update_by, active, sortOrder', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,6 +69,7 @@ class Usability extends CActiveRecord
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
 			'usaMutiLang' => 'หัวข้อวิธีการใช้งานภาษาอื่น',
+			'sortOrder'=>'ย้ายตำแหน่ง'
 		);
 	}
 
@@ -100,6 +101,7 @@ class Usability extends CActiveRecord
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('lang_id',$this->lang_id);
 		$criteria->order = 'usa_id';
+	
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

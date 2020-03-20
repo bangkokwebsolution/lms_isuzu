@@ -1535,108 +1535,108 @@ Class MenuLeft extends Controller
 	        	)
 	        ),
 
-	        array(
-	        	/*====== Check Permissions Company (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Company.*',
-	        		'Company.admin',
-	        		'Company.Create'
-	        	)),
-	        	'label'=>'<i></i><span>ฝ่าย</span>',
-	        	'url'=>'#Company',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Company') ), 'id' => 'Company'),
-	        	'active' => self::SetSubMenu( array('Company') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Sup-PopUp (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Company.*',
-	        				'Company.Create'
-	        			)),
-	        			'label'=>'เพิ่มฝ่าย'." (ภาษา ".$mainLang." )",
-	        			'url'=>array('//Company/create')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-PopUp (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Company.*',
-	        				'Company.admin'
-	        			)),
-	        			'label'=>'จัดการฝ่าย',
-	        			'url'=>array('//Company/admin')
-	        		),
-	        	)
-	        ),
-	        array(
-	        	/*====== Check Permissions Company (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Station.*',
-	        		'Station.admin',
-	        		'Station.Create'
-	        	)),
-	        	'label'=>'<i></i><span>สถานี</span>',
-	        	'url'=>'#Station',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Station') ), 'id' => 'Station'),
-	        	'active' => self::SetSubMenu( array('Station') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Sup-PopUp (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Station.*',
-	        				'Station.Create'
-	        			)),
-	        			'label'=>'เพิ่มสถานี'." (ภาษา ".$mainLang." )",
-	        			'url'=>array('//Station/create')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-PopUp (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Station.*',
-	        				'Station.admin'
-	        			)),
-	        			'label'=>'จัดการสถานี',
-	        			'url'=>array('//Station/admin')
-	        		),
-	        	)
-	        ),
-	        array(
-	        	/*====== Check Permissions division (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'division.*',
-	        		'division.admin',
-	        		'division.Create'
-	        	)),
-	        	'label'=>'<i></i><span>กอง</span>',
-	        	'url'=>'#division',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('division') ), 'id' => 'division'),
-	        	'active' => self::SetSubMenu( array('division') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions division (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'division.*',
-	        				'division.Create'
-	        			)),
-	        			'label'=>'เพิ่มกอง'." (ภาษา ".$mainLang." )",
-	        			'url'=>array('//division/create')
-	        		),
-	        		array(
-	        			/*====== Check Permissions division (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'division.*',
-	        				'division.admin'
-	        			)),
-	        			'label'=>'จัดการกอง',
-	        			'url'=>array('//division/admin')
-	        		),
-	        	)
-	        ),
+	        // array(
+	        // 	/*====== Check Permissions Company (2) ======*/
+	        // 	'visible'=>self::PermissionsMenu(array(
+	        // 		'Company.*',
+	        // 		'Company.admin',
+	        // 		'Company.Create'
+	        // 	)),
+	        // 	'label'=>'<i></i><span>ฝ่าย</span>',
+	        // 	'url'=>'#Company',
+	        // 	'linkOptions' => array('data-toggle' => 'collapse'),
+	        // 	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
+	        // 	'submenuOptions' => array('class' => self::SetSubMenu( array('Company') ), 'id' => 'Company'),
+	        // 	'active' => self::SetSubMenu( array('Company') ,false),
+	        // 	'items'=>array(
+	        // 		array(
+	        // 			/*====== Check Permissions Sup-PopUp (1) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'Company.*',
+	        // 				'Company.Create'
+	        // 			)),
+	        // 			'label'=>'เพิ่มฝ่าย'." (ภาษา ".$mainLang." )",
+	        // 			'url'=>array('//Company/create')
+	        // 		),
+	        // 		array(
+	        // 			/*====== Check Permissions Sup-PopUp (2) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'Company.*',
+	        // 				'Company.admin'
+	        // 			)),
+	        // 			'label'=>'จัดการฝ่าย',
+	        // 			'url'=>array('//Company/admin')
+	        // 		),
+	        // 	)
+	        // ),
+	        // array(
+	        // 	/*====== Check Permissions Company (2) ======*/
+	        // 	'visible'=>self::PermissionsMenu(array(
+	        // 		'Station.*',
+	        // 		'Station.admin',
+	        // 		'Station.Create'
+	        // 	)),
+	        // 	'label'=>'<i></i><span>สถานี</span>',
+	        // 	'url'=>'#Station',
+	        // 	'linkOptions' => array('data-toggle' => 'collapse'),
+	        // 	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
+	        // 	'submenuOptions' => array('class' => self::SetSubMenu( array('Station') ), 'id' => 'Station'),
+	        // 	'active' => self::SetSubMenu( array('Station') ,false),
+	        // 	'items'=>array(
+	        // 		array(
+	        // 			/*====== Check Permissions Sup-PopUp (1) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'Station.*',
+	        // 				'Station.Create'
+	        // 			)),
+	        // 			'label'=>'เพิ่มสถานี'." (ภาษา ".$mainLang." )",
+	        // 			'url'=>array('//Station/create')
+	        // 		),
+	        // 		array(
+	        // 			/*====== Check Permissions Sup-PopUp (2) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'Station.*',
+	        // 				'Station.admin'
+	        // 			)),
+	        // 			'label'=>'จัดการสถานี',
+	        // 			'url'=>array('//Station/admin')
+	        // 		),
+	        // 	)
+	        // ),
+	        // array(
+	        // 	/*====== Check Permissions division (2) ======*/
+	        // 	'visible'=>self::PermissionsMenu(array(
+	        // 		'division.*',
+	        // 		'division.admin',
+	        // 		'division.Create'
+	        // 	)),
+	        // 	'label'=>'<i></i><span>กอง</span>',
+	        // 	'url'=>'#division',
+	        // 	'linkOptions' => array('data-toggle' => 'collapse'),
+	        // 	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
+	        // 	'submenuOptions' => array('class' => self::SetSubMenu( array('division') ), 'id' => 'division'),
+	        // 	'active' => self::SetSubMenu( array('division') ,false),
+	        // 	'items'=>array(
+	        // 		array(
+	        // 			/*====== Check Permissions division (1) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'division.*',
+	        // 				'division.Create'
+	        // 			)),
+	        // 			'label'=>'เพิ่มกอง'." (ภาษา ".$mainLang." )",
+	        // 			'url'=>array('//division/create')
+	        // 		),
+	        // 		array(
+	        // 			/*====== Check Permissions division (2) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'division.*',
+	        // 				'division.admin'
+	        // 			)),
+	        // 			'label'=>'จัดการกอง',
+	        // 			'url'=>array('//division/admin')
+	        // 		),
+	        // 	)
+	        // ),
 			//====== END Menu Company ======//
 	        array(
 	        	/*====== Check Permissions Department (2) ======*/
@@ -1750,15 +1750,15 @@ Class MenuLeft extends Controller
 	        			'label'=>'Log การใช้งานผู้ดูแลระบบ',
 	        			'url'=>array('//logAdmin/index')
 	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'LogAdmin.*',
-	        				'LogAdmin.api'
-	        			)),
-	        			'label'=>'Log การส่งข้อมูล API',
-	        			'url'=>array('//logAdmin/api')
-	        		)
+	        		// array(
+	        		// 	/*====== Check Permissions Sup-Passcours (1) ======*/
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'LogAdmin.*',
+	        		// 		'LogAdmin.api'
+	        		// 	)),
+	        		// 	'label'=>'Log การส่งข้อมูล API',
+	        		// 	'url'=>array('//logAdmin/api')
+	        		// )
 	        	)
 	        ),
 

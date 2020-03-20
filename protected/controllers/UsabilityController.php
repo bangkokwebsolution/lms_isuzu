@@ -23,7 +23,8 @@ class UsabilityController extends Controller
 		}
 		    $usability_data = Usability::model()->findAll(array(
             'condition'=>'lang_id=:lang_id AND active=:active',
-            'params' => array(':lang_id' => $langId, ':active' => 'y')
+            'params' => array(':lang_id' => $langId, ':active' => 'y'),
+            'order'=> 'sortOrder ASC'
               ));
 
             $label = MenuUsability::model()->find(array(
