@@ -33,11 +33,22 @@
 						<?php echo $form->textarea($model,'imgslide_detail',array('rows' => '3', 'class'=>'span8')); ?>
 						<?php echo $form->error($model,'imgslide_detail'); ?>
 					</div>
-					<!-- <div class="row">
-						<font color="#990000">
+				    <div class="row">
+				    <!-- 	<font color="#990000">
 							<?php echo $this->NotEmpty();?> ตัวอย่าง http://www.cpdland.com/
-						</font>
-					</div> -->
+						</font> -->
+				    	<?php echo $form->labelEx($model,'imgslide_link'); ?>
+						<?php echo $form->textField($model,'imgslide_link',array('size'=>60,'maxlength'=>250, 'class'=>'span8')); ?>
+						<?php echo $form->error($model,'imgslide_link'); ?>
+						
+					</div>
+					<div class="row">
+					   <?php echo $form->labelEx($model,'gallery_type_id'); ?>
+
+						<?php echo $form->dropDownList($model, 'gallery_type_id', CHtml::listData(GalleryType::model()->findAll(), 'id', 'name_gallery_type'),array('class'=>'span5')); ?>
+
+						<?php echo $form->error($model,'gallery_type_id'); ?>
+					</div>
 					<div class="row">
 					<?php
 					if(isset($imageShow)){

@@ -14,9 +14,13 @@ $this->widget('ADetailView', array(
 						"class"=>"thumbnail"
 					)):'-',
 		),
-		'imgslide_link',
 		'imgslide_title',
 		'imgslide_detail',
+		'imgslide_link',
+		array(
+			'name'=>'gallery_type_id',
+			'value'=> $model->gType->name_gallery_type,
+		),
 		array(
 			'name'=>'create_date',
 			'value'=> ClassFunction::datethaiTime($model->create_date)

@@ -2,16 +2,15 @@
 
 class GalleryTypeController extends Controller
 {
-	public function init()
-	{
-		parent::init();
-		$this->lastactivity();
+	// public function init()
+	// {
+	// 	parent::init();
+	// 	$this->lastactivity();
 		
-	}
+	// }
 	public function filters() 
 	{
 		return array(
-//            'rights',
 			'accessControl',
 		);
 	}
@@ -19,10 +18,10 @@ class GalleryTypeController extends Controller
 	public function accessRules()
 	{
 		return array(
-           array('allow',  // allow all users to perform 'index' and 'view' actions
-           	'actions' => array('index', 'view', 'update','multidelete','delete'),
-           	'users' => array('*'),
-           ),
+           // array('allow',  // allow all users to perform 'index' and 'view' actions
+           // 	'actions' => array('index', 'view', 'update','multidelete','delete'),
+           // 	'users' => array('*'),
+           // ),
            array('allow',
                 // กำหนดสิทธิ์เข้าใช้งาน actionIndex
            	'actions' => AccessControl::check_action(),

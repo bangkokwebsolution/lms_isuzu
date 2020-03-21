@@ -145,7 +145,7 @@
 		<div class="navbar main hidden-print">
 
 			<!-- Brand -->
-			<?php echo CHtml::link('AirAsia Admin', array('//site/index'), array('class'=>'appbrand'));?>
+			<?php echo CHtml::link('Thoresen Admin', array('//site/index'), array('class'=>'appbrand'));?>
 
 			<!-- Menu Toggle Button -->
 			<button type="button" class="btn btn-navbar">
@@ -239,7 +239,7 @@
 		<div id="footer" class="hidden-print">
 
 			<!--  Copyright Line -->
-			<div class="copy">&copy;  <?php echo date('Y'); ?> -  Air Asia - All Rights Reserved.
+			<div class="copy">&copy;  <?php echo date('Y'); ?> -  Thoresen - All Rights Reserved.
 			<!--  End Copyright Line -->
 
 		</div>

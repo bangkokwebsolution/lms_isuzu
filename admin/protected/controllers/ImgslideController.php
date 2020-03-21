@@ -2,16 +2,9 @@
 
 class ImgslideController extends Controller
 {
-	public function init()
-	{
-		parent::init();
-		$this->lastactivity();
-		
-	}
 	public function filters() 
 	{
 		return array(
-//            'rights',
 			'accessControl',
 		);
 	}
@@ -19,10 +12,10 @@ class ImgslideController extends Controller
 	public function accessRules()
 	{
 		return array(
-           array('allow',  // allow all users to perform 'index' and 'view' actions
-               'actions' => array('index', 'view','update','delete'),
-               'users' => array('*'),
-               ),
+           // array('allow',  // allow all users to perform 'index' and 'view' actions
+           //     'actions' => array('index', 'view','update','delete' ,'create'),
+           //     'users' => array('*'),
+           //     ),
 			array('allow',
                 // กำหนดสิทธิ์เข้าใช้งาน actionIndex
 				'actions' => AccessControl::check_action(),
@@ -52,6 +45,8 @@ class ImgslideController extends Controller
 			// $model->imgslide_link=$_POST['Imgslide'][imgslide_link];
 			$model->imgslide_detail=$_POST['Imgslide'][imgslide_detail];
 			$model->imgslide_title=$_POST['Imgslide'][imgslide_title];
+			$model->imgslide_link=$_POST['Imgslide'][imgslide_link];
+			$model->gallery_type_id=$_POST['Imgslide'][gallery_type_id];
 			$model->lang_id = isset($_GET['lang_id']) ? $_GET['lang_id'] : 1 ;
 			$model->parent_id = isset($_GET['parent_id']) ? $_GET['parent_id'] : 0 ;
 

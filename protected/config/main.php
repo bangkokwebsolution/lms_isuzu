@@ -7,7 +7,7 @@ ini_set('error_reporting', 'E_ALL & ~E_NOTICE');
 // CWebApplication properties can be configured here.
 return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-    'name'=>'AirAsia e-Learning',
+    'name'=>'Thoresen e-Learning',
     'theme'=>'template2',
     'language'=>'TH',
     'timezone'=>'Asia/Bangkok',

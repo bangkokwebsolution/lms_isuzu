@@ -154,11 +154,11 @@ Class MenuLeft extends Controller
 					),
 				)
 			),
-			// array(
-			// 	'label'=>'<i></i><span>สถิติการใช้งาน</span>',
-			// 	'url'=>array('/analytics/index'),
-			// 	'itemOptions' => array('class' => 'glyphicons stats'),
-			// ),
+			array(
+				'label'=>'<i></i><span>สถิติการใช้งาน</span>',
+				'url'=>array('/analytics/index'),
+				'itemOptions' => array('class' => 'glyphicons stats'),
+			),
 	        //====== END Menu Site ======//
 
 
@@ -1025,32 +1025,32 @@ Class MenuLeft extends Controller
 	        ),
 	        
 
-	        array(
-	        	//////// MainImage ////////
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Mainimage.*',
-	        		'Mainimage.Index',
-	        		'Mainimage.Create'
-	        	)),
-	        	'label'=>'<span class="label label-primary"></span> <i></i><span>รูปภาพโฆษณา</span>',
-	        	'url'=>'#Mainimage',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons bullhorn'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Mainimage') ), 'id' => 'Mainimage'),
-	        	'active' => self::SetSubMenu( array('Mainimage') ,false),
-	        	'items'=>array(
+	        // array(
+	        // 	//////// MainImage ////////
+	        // 	'visible'=>self::PermissionsMenu(array(
+	        // 		'Mainimage.*',
+	        // 		'Mainimage.Index',
+	        // 		'Mainimage.Create'
+	        // 	)),
+	        // 	'label'=>'<span class="label label-primary"></span> <i></i><span>รูปภาพโฆษณา</span>',
+	        // 	'url'=>'#Mainimage',
+	        // 	'linkOptions' => array('data-toggle' => 'collapse'),
+	        // 	'itemOptions' => array('class' => 'hasSubmenu glyphicons bullhorn'),
+	        // 	'submenuOptions' => array('class' => self::SetSubMenu( array('Mainimage') ), 'id' => 'Mainimage'),
+	        // 	'active' => self::SetSubMenu( array('Mainimage') ,false),
+	        // 	'items'=>array(
 
-	        		array(
-	        			/*====== Check Permissions Sup-Category (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Mainimage.*',
-	        				'Mainimage.Index'
-	        			)),
-	        			'label'=>'จัดการรูปภาพโฆษณา',
-	        			'url'=>array('//Mainimage/index')
-	        		),
-	        	)
-	        ),
+	        // 		array(
+	        // 			/*====== Check Permissions Sup-Category (2) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'Mainimage.*',
+	        // 				'Mainimage.Index'
+	        // 			)),
+	        // 			'label'=>'จัดการรูปภาพโฆษณา',
+	        // 			'url'=>array('//Mainimage/index')
+	        // 		),
+	        // 	)
+	        // ),
 
 	        array(
 	        	//////// SlideImg ////////

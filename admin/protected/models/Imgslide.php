@@ -20,10 +20,9 @@ class Imgslide extends AActiveRecord
 			array('imgslide_title', 'length', 'max'=>250),
 			array('active', 'length', 'max'=>1),
 			array('news_per_page, create_date, update_date, parent_id, lang_id', 'safe'),
-			array('imgslide_picture ,imgslide_detail,imgslide_title','required', 'on'=>'insert'),
-			array('imgslide_detail', 'required', 'on'=>'update'),
+			array('imgslide_picture ,imgslide_title','required', 'on'=>'insert'),
 			array('imgslide_picture', 'file','types' => 'jpg, gif, png', 'allowEmpty'=>true),
-			array('imgslide_id , imgslide_link,imgslide_detail,imgslide_title, parent_id, lang_id', 'safe', 'on'=>'search'),
+			array('imgslide_id , imgslide_link,imgslide_detail,imgslide_title, parent_id, lang_id, gallery_type_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -132,6 +131,7 @@ class Imgslide extends AActiveRecord
 	public function relations()
 	{
 		return array(
+			'gType' => array(self::BELONGS_TO, 'GalleryType', 'gallery_type_id'),
 			'usercreate' => array(self::BELONGS_TO, 'User', 'create_by'),
 			'userupdate' => array(self::BELONGS_TO, 'User', 'update_by'),
 		);
@@ -161,6 +161,7 @@ class Imgslide extends AActiveRecord
 			'imgslide_title' => 'หัวข้อรูปภาพ'.$label_lang,
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
+			'gallery_type_id' => 'ประเภทแกลลอรี่',
 		);
 	}
 
@@ -179,6 +180,7 @@ class Imgslide extends AActiveRecord
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('lang_id',$this->lang_id,true);
 		$criteria->compare('parent_id',0);
+		$criteria->compare('gallery_type_id',$this->gallery_type_id,true);
 
 		
 		$poviderArray = array('criteria'=>$criteria);
