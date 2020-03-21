@@ -34,22 +34,37 @@
 				<div class="row">
 					<?php
 					if(isset($imageShow)){
-						echo CHtml::image(Yush::getUrl($model, Yush::SIZE_THUMB, $imageShow), $imageShow,array(
-							"class"=>"thumbnail"
-						));
+					?>
+					<h6>รูปภาพเดิม</h6>
+					<?php
+						 echo CHtml::image(yii::app()->baseUrl.'../../uploads/gallery/images/'.$model->image);
 					}
 					?>
 				</div>
 				<br>
 
 				<div class="row">
-					<?php echo $form->labelEx($model,'image'); ?>
-					<div class="fileupload fileupload-new" data-provides="fileupload">
-						<div class="input-append">
-							<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-default btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><?php echo $form->fileField($model, 'image'); ?></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+					<?php
+					if(isset($imageShow)){
+					?>
+						<?php echo $form->labelEx($model,'image'); ?>
+						<div class="fileupload fileupload-new" data-provides="fileupload">
+							<div class="input-append">
+								<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-default btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input type="file" id="files" name="files[]" ></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+							</div>
 						</div>
-					</div>
-					<?php echo $form->error($model,'image'); ?>
+						<?php echo $form->error($model,'image'); ?>
+
+					<?php  }else{ ?>
+
+					<?php echo $form->labelEx($model,'image'); ?>
+						<div class="fileupload fileupload-new" data-provides="fileupload">
+							<div class="input-append">
+								<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-default btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><input type="file" id="files" name="files[]" multiple></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+							</div>
+						</div>
+						<?php echo $form->error($model,'image'); ?>
+					<?php } ?>
 				</div>
 
 				<div class="row">

@@ -14,31 +14,34 @@ Yii::app()->clientScript->registerScript('search', "
 			});
 			");
 
-// Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
-// 	$.updateGridView = function(gridID, name, value) {
-// 		$("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
-// 		$.fn.yiiGridView.update(gridID, {data: $.param(
-// 			$("#"+gridID+" input, #"+gridID+" .filters select")
-// 			)});
-// 		}
-// 		$.appendFilter = function(name, varName) {
-// 			var val = eval("$."+varName);
-// 			$("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
-// 		}
-// 		$.appendFilter("Gallery[news_per_page]", "news_per_page");
-// 		EOD
-// 		, CClientScript::POS_READY);
-			?>
-
+Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
+	$.updateGridView = function(gridID, name, value) {
+	    $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
+	    $.fn.yiiGridView.update(gridID, {data: $.param(
+	        $("#"+gridID+" input, #"+gridID+" .filters select")
+	    )});
+	}
+	$.appendFilter = function(name, varName) {
+	    var val = eval("$."+varName);
+	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
+	}
+	$.appendFilter("GalleryType[news_per_page]", "news_per_page");
+EOD
+, CClientScript::POS_READY);
+?>
 			<div class="innerLR">
 				<?php $this->widget('AdvanceSearchForm', array(
 					'data'=>$model,
 					'route' => $this->route,
-					'attributes'=>array( 
-						array('name'=>'image','type'=>'text'),
-						array('name'=>'gallery_type_id','type'=>'text'),
+					'attributes'=>array(
+						array(
+							'type'=>'list',
+							'name'=>'gallery_type_id',
+							'query'=>CHtml::listData(GalleryType::model()->findAll(),'id', 'name_gallery_type')
+						),
 					),
-				));?>
+				));?> 
+
 				<div class="widget" style="margin-top: -1px;">
 					<div class="widget-head">
 						<h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $titleName;?></h4>
@@ -55,7 +58,7 @@ Yii::app()->clientScript->registerScript('search', "
 							<?php $this->widget('AGridView', array(
 								'id'=>$formNameModel.'-grid',
 								'dataProvider'=>$model->gallerycheck()->search(),
-								'filter'=>$model,
+								// 'filter'=>$model,
 								'selectableRows' => 2,	
 								'htmlOptions' => array(
 									'style'=> "margin-top: -1px;",
@@ -73,10 +76,17 @@ Yii::app()->clientScript->registerScript('search', "
 										'id'=>'chk',
 									),
 									array(
-										'header'=>'รูปภาพ',
-										'type'=>'raw',
-										'value'=> 'Controller::ImageShowIndex($data,$data->image)',
-										'htmlOptions'=>array('width'=>'110')
+										'name'=>'image',
+										'type' => 'raw',
+										'value'=> function ($model){
+											if ($model->image) {
+												echo CHtml::image(yii::app()->baseUrl.'../../uploads/gallery/images/'.$model->image);
+											}else
+											{
+												echo 'No image';
+											}
+										},
+										'htmlOptions'=>array('width'=>'110')			
 									),
 									array(
 										'name'=>'gallery_type_id',

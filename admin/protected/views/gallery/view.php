@@ -1,19 +1,19 @@
 
 <?php
 $this->breadcrumbs=array(
-	'ระบบแกลลอร'=>array('index'),
+	'ระบบแกลลอรี่'=>array('index'),
 	$model->id,
 );
+$assetsDir = yii::app()->baseUrl.'../../uploads/gallery/'.$model->gallery_type_id.'/'.$model->image;
 $this->widget('ADetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		array(
 			'name'=>'image',
 			'type'=>'raw',
-			'value'=> ($model->image)?CHtml::image(Yush::getUrl($model, Yush::SIZE_THUMB, $model->image), $model->image,array(
-				"class"=>"thumbnail"
-			)):'-',
+			'value'=> ($model->image)?CHtml::image(yii::app()->baseUrl.'../../uploads/gallery/images/'.$model->image):'No image',
 		),
+
 		array(
 			'name'=>'gallery_type_id',
 			'value'=> $model->gType->name_gallery_type,

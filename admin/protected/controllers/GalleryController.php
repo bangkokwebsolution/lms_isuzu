@@ -11,7 +11,7 @@ class GalleryController extends Controller
 	public function filters() 
 	{
 		return array(
-//            'rights',
+           // 'rights',
 			'accessControl',
 		);
 	}
@@ -44,134 +44,179 @@ class GalleryController extends Controller
 
 	public function actionCreate()
 	{
-		$model=new Gallery;
 
-		if(isset($_POST['Gallery']))
-		{
-			$time = date("dmYHis");
-			$model->image=$_POST['Gallery'][image];
-			$model->gallery_type_id=$_POST['Gallery'][gallery_type_id];
+		$model = new Gallery;
 
-			$image_picture = CUploadedFile::getInstance($model, 'image');
-			if(!empty($image_picture)){
-				$fileNamePicture = $time."_Picture.".$image_picture->getExtensionName();
-				$model->image = $fileNamePicture;
-			}
+		if(isset($_POST['Gallery'])){
+           		 $type_id = $_POST['Gallery'][gallery_type_id];
 
-			if($model->validate())
-			{
-				if($model->save())
-				{
-					if(Yii::app()->user->id){
-						Helpers::lib()->getControllerActionId();
-					}
-					if(isset($image_picture))
-					{
-						/////////// SAVE IMAGE //////////
-						Yush::init($model);
-						$originalPath = Yush::getPath($model, Yush::SIZE_ORIGINAL, $model->image);
-						$thumbPath = Yush::getPath($model, Yush::SIZE_THUMB, $model->image);
-						$smallPath = Yush::getPath($model, Yush::SIZE_SMALL, $model->image);
-			            // Save the original resource to disk
-						$image_picture->saveAs($originalPath);
-						$size = getimagesize($originalPath);
-			            //if ($size[0] == 750 && $size[1] == 416) {
-						if (isset($size)) {
-			            // Create a small image
-							$smallImage = Yii::app()->phpThumb->create($originalPath);
-							$smallImage->resize(110);
-							$smallImage->save($smallPath);
+				if(isset($_FILES['files']['tmp_name'])){
 
-			            // Create a thumbnail
-							$thumbImage = Yii::app()->phpThumb->create($originalPath);
-							$thumbImage->resize(750,416);
-							$thumbImage->save($thumbPath);
-						} else {
-							unlink($originalPath);
-							$model->delete();
-							$notsave = 1;
-							$this->render('create',array(
-								'model'=>$model,'notsave'=>$notsave));
-						}
-					}
-				}
+				foreach ($_FILES['files']['tmp_name'] as $key => $value) {
+				   if($_FILES['files']['tmp_name'][$key] != ""){
+				    $uploadDir = Yii::app()->getUploadPath(null);
 
-				$this->redirect(array('view','id'=>$model->id));
-			}
-		}
+				    if (!is_dir($uploadDir."../gallery/")) {
+				     mkdir($uploadDir."../gallery/", 0777, true);
+				    }
+				    if (!is_dir($uploadDir."../gallery/"."images")) {
+				     mkdir($uploadDir."../gallery/"."images", 0777, true);
+				    }else{     
+				     rmdir($uploadDir."../gallery/"."images");
+				    }
+
+					 $uploadDir = $uploadDir."..\\gallery\\"."images"."\\";
+
+				     $tempFile   = $_FILES['files']['tmp_name'][$key];
+				     $fileParts = pathinfo($_FILES['files']['name'][$key]);
+				     $fileType = strtolower($fileParts['extension']);
+
+ 					 $file_name_original = $_FILES['files']['name'][$key];
+				     $namepath = "gallery_".$type_id."_";
+				     $rnd = rand(0,9999999999);
+				     $fileName = $namepath."{$rnd}-{$session['idx']}".$file_name_original;
+	
+				     $targetFile = $uploadDir.$fileName;
+				     move_uploaded_file($tempFile, $targetFile);
+
+					  $ProAttachFile = new Gallery;
+					  $ProAttachFile->image = $fileName;
+				      $ProAttachFile->gallery_type_id = $type_id;
+				      $ProAttachFile->save();
+
+				  } // close if
+				} // close foreach
+				$this->redirect('index');
+		    } //close (isset($_FILES['files']['tmp_name']))
+		}// close isset($_POST['Gallery'])
 
 		$this->render('create',array(
 			'model'=>$model
 		));
-	}
+	} // close function
 
 	public function actionUpdate($id)
 	{
+
 		$model = $this->loadModel($id);
 		$imageShow = $model->image;
+
 		if(isset($_POST['Gallery']))
 		{
-			$time = date("dmYHis");
-			$model->gallery_type_id=$_POST['Gallery'][gallery_type_id];
+			$type_id = $_POST['Gallery'][gallery_type_id];
+			$uploadDir = Yii::app()->getUploadPath(null);
+			$checkEmpty = $_FILES['files']['tmp_name'];
 
-			$imageOld = $model->image; // Image Old
+			if(isset($_FILES['files']['tmp_name'])){
 
-			$image_picture = CUploadedFile::getInstance($model, 'image');
-			if(isset($image_picture)){
-				$fileNamePicture = $time."_Picture.".$image_picture->getExtensionName();
-				$model->image = $fileNamePicture;
-			}
+							if($type_id == $model->gallery_type_id){ //typeเก่า รูปใหม่
 
-			if($model->validate())
-			{
-				if($model->save())
-				{
-					if(Yii::app()->user->id){
-						Helpers::lib()->getControllerActionId($model->id);
-					}
-					if(isset($imageShow) && isset($image_picture))
-					{
-						Yii::app()->getDeleteImageYush('gallery',$model->id,$imageShow);
-					}
+									//delete image old
+									$imageOld = $model->image; // Image Old
+								    $files = glob($uploadDir."../gallery/images/".$imageOld);
+								     foreach($files as $file){ // iterate files
+								      if(is_file($file)){
+								        unlink($file); // delete file
+								        $model->delete();
+								       }       
+							      	}
 
-					if(isset($image_picture))
-					{
-						/////////// SAVE IMAGE //////////
-						Yush::init($model);
-						$originalPath = Yush::getPath($model, Yush::SIZE_ORIGINAL, $model->image);
-						$thumbPath = Yush::getPath($model, Yush::SIZE_THUMB, $model->image);
-						$smallPath = Yush::getPath($model, Yush::SIZE_SMALL, $model->image);
-			            // Save the original resource to disk
-						$image_picture->saveAs($originalPath);
-						$size = getimagesize($originalPath);
-			            //if ($size[0] == 750 && $size[1] == 416) {
-						if (isset($size)) {
-			            // Create a small image
-							$smallImage = Yii::app()->phpThumb->create($originalPath);
-							$smallImage->resize(110);
-							$smallImage->save($smallPath);
+							      	foreach ($_FILES['files']['tmp_name'] as $key => $value) {
+										   if($_FILES['files']['tmp_name'][$key] != ""){
+										    $uploadDir = Yii::app()->getUploadPath(null);
 
-			            // Create a thumbnail
-							$thumbImage = Yii::app()->phpThumb->create($originalPath);
-							$thumbImage->resize(750,416);
-							$thumbImage->save($thumbPath);
-						} else {
-							unlink($originalPath);
-							$notsave = 1;
-							$this->render('create',array(
-								'model'=>$model,'notsave'=>$notsave));
-						}
-					}
-				}
-				$this->redirect(array('view','id'=>$model->id));
-			}
-		}
+										   if (!is_dir($uploadDir."../gallery/")) {
+										     mkdir($uploadDir."../gallery/", 0777, true);
+										    }
+										    if (!is_dir($uploadDir."../gallery/"."images")) {
+										     mkdir($uploadDir."../gallery/"."images", 0777, true);
+										    }else{     
+										     rmdir($uploadDir."../gallery/"."images");
+										    }
+
+											 $uploadDir = $uploadDir."..\\gallery\\"."images"."\\";
+
+										     $tempFile   = $_FILES['files']['tmp_name'][$key];
+										     $fileParts = pathinfo($_FILES['files']['name'][$key]);
+										     $fileType = strtolower($fileParts['extension']);
+
+						 					 $file_name_original = $_FILES['files']['name'][$key];
+										     $namepath = "gallery_".$type_id."_";
+										     $rnd = rand(0,9999999999);
+										     $fileName = $namepath."{$rnd}-{$session['idx']}".$file_name_original;
+							
+										     $targetFile = $uploadDir.$fileName;
+										     move_uploaded_file($tempFile, $targetFile);
+
+											  $ProAttachFile = new Gallery;
+											  $ProAttachFile->image = $fileName;
+										      $ProAttachFile->gallery_type_id = $type_id;
+										      $ProAttachFile->save();
+										}
+									}
+							}else if($type_id != $model->gallery_type_id && $checkEmpty[0] == ""){ //typeใหม่ รูปเก่า
+										$model->gallery_type_id = $type_id;
+										$model->update();
+
+							}else if($type_id != $model->gallery_type_id && $checkEmpty[0] != ""){ //typeใหม่ รูปใหม่
+
+									//delete image old
+									$imageOld = $model->image; // Image Old
+								    $files = glob($uploadDir."../gallery/images/".$imageOld);
+								     foreach($files as $file){ // iterate files
+								      if(is_file($file)){
+								        unlink($file); // delete file
+								        $model->delete();
+								       }       
+							      	}
+
+									foreach ($_FILES['files']['tmp_name'] as $key => $value) {
+										   if($_FILES['files']['tmp_name'][$key] != ""){
+										    $uploadDir = Yii::app()->getUploadPath(null);
+
+										    if (!is_dir($uploadDir."../gallery/")) {
+										     mkdir($uploadDir."../gallery/", 0777, true);
+										    }
+										    if (!is_dir($uploadDir."../gallery/"."images")) {
+										     mkdir($uploadDir."../gallery/"."images", 0777, true);
+										    }else{     
+										     rmdir($uploadDir."../gallery/"."images");
+										    }
+
+											 $uploadDir = $uploadDir."..\\gallery\\"."images"."\\";
+
+										     $tempFile   = $_FILES['files']['tmp_name'][$key];
+										     $fileParts = pathinfo($_FILES['files']['name'][$key]);
+										     $fileType = strtolower($fileParts['extension']);
+
+						 					 $file_name_original = $_FILES['files']['name'][$key];
+										     $namepath = "gallery_".$type_id."_";
+										     $rnd = rand(0,9999999999);
+										     $fileName = $namepath."{$rnd}-{$session['idx']}".$file_name_original;
+							
+										     $targetFile = $uploadDir.$fileName;
+										     move_uploaded_file($tempFile, $targetFile);
+
+											  $ProAttachFile = new Gallery;
+											  $ProAttachFile->image = $fileName;
+										      $ProAttachFile->gallery_type_id = $type_id;
+										      $ProAttachFile->save();
+
+										  } // close if
+										} // close foreach
+							}
+
+				$this->redirect('../index');
+
+			}//close if(isset($_FILES['files']['tmp_name'])){
+
+		}//close if(isset($_POST['Gallery']))
 
 		$this->render('update',array(
 			'model'=>$model,
 			'imageShow'=>$imageShow
 		));
-	}
+	}// close function
 
 
 	public function actionDelete($id)
@@ -200,6 +245,9 @@ class GalleryController extends Controller
 	}
 	public function actionIndex()
 	{
+
+		// var_dum(Yii::app()->basePath . '../';);exit();
+
 		$model=new Gallery('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Gallery']))
