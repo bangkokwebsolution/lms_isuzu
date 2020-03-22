@@ -22,12 +22,12 @@ Yii::app()->user->returnUrl = $http->getUrl();
 		<!-- Basic -->
         <?php if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
             $langId = Yii::app()->session['lang'] = 1;
-            $this->pageTitle = 'AirAsia e-Learning';
+            $this->pageTitle = 'Thoresen e-Learning';
         }else{
             $langId = Yii::app()->session['lang'];
-            $this->pageTitle = 'ระบบการเรียนรู้แอร์เอเชีย e-Learning';
+            $this->pageTitle = 'ระบบการเรียนรู้โทรีเซน e-Learning';
         }
-         ?>
+      ?>
 		<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
 		<?php include("themes/template2/include/css.php"); ?>

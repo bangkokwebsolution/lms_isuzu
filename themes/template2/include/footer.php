@@ -1,6 +1,6 @@
 		<footer>
 				<div>
-					<p>© 2018 AirAsia  e-Learning</p>
+					<p>© 2020 Thoresen  e-Learning</p>
 				</div>
 
 		</footer>
