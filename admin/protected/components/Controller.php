@@ -34,7 +34,7 @@ class Controller extends RController
             }
             $user->update();
 
-            AccessControl::check_access_filemanager($user->superuser);
+            //AccessControl::check_access_filemanager($user->superuser);
 
             // $chatstatus=CometchatStatus::model()->find('userid='.Yii::app()->user->id);
             // if(!$chatstatus){

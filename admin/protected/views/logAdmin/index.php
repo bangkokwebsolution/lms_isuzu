@@ -2,6 +2,15 @@
 $formNameModel = 'LogAdmin';
 $titleName = 'Log การใช้งานผู้ดูแลระบบ';
 
+$this->breadcrumbs=array($titleName);
+Yii::app()->clientScript->registerScript('search', "
+    $('#SearchFormAjax').submit(function(){
+        $.fn.yiiGridView.update('$formNameModel-grid', {
+            data: $(this).serialize()
+        });
+        return false;
+    });
+");
 Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	$.updateGridView = function(gridID, name, value) {
 	    $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
@@ -40,7 +49,7 @@ EOD
                 <?php $this->widget('AGridView', array(
                     'id'=>$formNameModel.'-grid',
                     'dataProvider'=>$model->search(),
-                    //'filter'=>$model,
+                    'filter'=>$model,
                     'selectableRows' => 2,
                     'rowCssClassExpression'=>'"items[]_{$data->id}"',
                     'htmlOptions' => array(

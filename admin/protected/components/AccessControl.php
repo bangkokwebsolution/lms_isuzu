@@ -124,54 +124,54 @@ class AccessControl extends CApplicationComponent
         }
     }
 
-    public static function check_access_admin($controller_name,$action_name){
-        $action = array('');
-        if(Yii::app()->user->id)
-        {
-            $model = User::model()->findByPk(Yii::app()->user->id);
+    // public static function check_access_admin($controller_name,$action_name){
+    //     $action = array('');
+    //     if(Yii::app()->user->id)
+    //     {
+    //         $model = User::model()->findByPk(Yii::app()->user->id);
    
-            if(!empty($model)){
-                $usergroup = json_decode($model->group);
-                if($usergroup){
-                    foreach ($usergroup as $key => $val) {
+    //         if(!empty($model)){
+    //             $usergroup = json_decode($model->group);
+    //             if($usergroup){
+    //                 foreach ($usergroup as $key => $val) {
 
-                       $permission = PGroupPermission::model()->find(array('condition'=> 'group_id ='. $val));
-                        if ($permission) {
-                            if (in_array("1")) {
-                                return true;
-                            } else {
-                               foreach (json_decode($permission->permission) as $key => $value) {
-                                    if (strtolower($controller_name) == strtolower($key)){
-                                        if(!empty($value->action) && ($value->active == 1)){
-                                            $action = $value->action;
-                                            if($action_name != '*'){
-                                                if(!in_array(strtolower($action_name), $action)){
-                                                    return false;
-                                                }
-                                            }
-                                            return true;
-                                        }
-                                    }
-                                }
-                                return false;
-                            }
-                        }else{
-                            return false;
-                        }
-                    }
-                }
+    //                    $permission = PGroupPermission::model()->find(array('condition'=> 'group_id ='. $val));
+    //                     if ($permission) {
+    //                         if (in_array("1")) {
+    //                             return true;
+    //                         } else {
+    //                            foreach (json_decode($permission->permission) as $key => $value) {
+    //                                 if (strtolower($controller_name) == strtolower($key)){
+    //                                     if(!empty($value->action) && ($value->active == 1)){
+    //                                         $action = $value->action;
+    //                                         if($action_name != '*'){
+    //                                             if(!in_array(strtolower($action_name), $action)){
+    //                                                 return false;
+    //                                             }
+    //                                         }
+    //                                         return true;
+    //                                     }
+    //                                 }
+    //                             }
+    //                             return false;
+    //                         }
+    //                     }else{
+    //                         return false;
+    //                     }
+    //                 }
+    //             }
                 
-            }
-        }else{
-            return $action;
-        }
-    }
+    //         }
+    //     }else{
+    //         return $action;
+    //     }
+    // }
 
-    public static function check_access_filemanager($status){
-        if($status == 1){
-            Yii::app()->session['admin'] = true;
-        }else{
-            Yii::app()->session['admin'] = false;
-        }
-    }
+    // public static function check_access_filemanager($status){
+    //     if($status == 1){
+    //         Yii::app()->session['admin'] = true;
+    //     }else{
+    //         Yii::app()->session['admin'] = false;
+    //     }
+    // }
 }
