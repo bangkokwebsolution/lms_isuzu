@@ -35,18 +35,16 @@ if(!empty($msg)){
   </script>
   <?php 
 } ?>
-<div class="header-page parallax-window" >
-    <div class="container">
-        <h1><?= $label->label_contactus ?>
-            <small class="pull-right">
-                <ul class="list-inline list-unstyled">
-                    <li><a href="<?php echo $this->createUrl('/site/index'); ?>"><?= $label->label_homepage ?></a></li> /
-                    <li><span class="text-bc"><?= $label->label_contactus ?></span></li>
-                </ul>
-            </small>
-        </h1>
-    </div>
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-main">
+            <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/site/index'); ?>"><?php echo $label->label_homepage; ?></a></li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $label->label_contactus ?></li>
+        </ol>
+    </nav>
 </div>
+
 <!-- Content -->
 <section class="content" id="contact-us">
     <div class="container">

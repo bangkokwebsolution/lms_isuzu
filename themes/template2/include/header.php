@@ -1,6 +1,6 @@
-
-<header id="header">
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">  
+<div class="backtotop"><span><i class="fas fa-arrow-up"></i> <small>top</small></span></div>
+<header id="header" class="main-header">
+    <nav class="navbar navbar-inverse" role="navigation">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -10,15 +10,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <!-- Single button -->
-                <?php 
-                if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+                <?php
+                if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                     $langId = Yii::app()->session['lang'] = 1;
-                }else{
+                } else {
                     $langId = Yii::app()->session['lang'];
                 }
                 $label = MenuSite::model()->findByPk(array('lang_id' => $langId));
-                if(!$label){
+                if (!$label) {
                     $label = MenuSite::model()->findByPk(array('lang_id' => 1));
                 }
                 ?>
@@ -27,423 +26,367 @@
                     $name = Profile::model()->findByPk(Yii::app()->user->getId());
                     $criteria1 = new CDbCriteria;
                     $criteria1->addCondition('create_by =' . $name->user_id);
-                    // $criteria1->addCondition('create_by = 1');
                     $criteria1->order = 'update_date  ASC';
                     $criteria1->compare('status_answer', 1);
                     $PrivatemessageReturn = PrivateMessageReturn::model()->findAll($criteria1);
                     ?>
                     <div class="dropdown pull-right visible-xs visible-sm" style="margin: 25px 5px;">
-                        <a href="#" class="dropdown-toggle" id="user-message" data-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="true" style="color: white"><i class="fa fa-envelope"></i></a>
+                        <a href="#" class="dropdown-toggle" id="user-message" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="color: white"><i class="fa fa-envelope"></i></a>
                         <div class="dropdown-menu user-message" style="width: 235px;">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title"><span class="pull-right"><a href="#"><i
-                                        class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span><?= $label->label_header_msg  ?>
+                                    <h3 class="panel-title"><span class="pull-right"><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span><?= $label->label_header_msg  ?>
                                     </h3>
                                 </div>
                                 <div class="panel-body">
                                     <ul class="list-unstyled">
                                         <?php for ($i = 0; $i <= 3; $i++) { ?>
-                                            <?php if (!empty($PrivatemessageReturn[$i]->pmr_return)) {?>
+                                            <?php if (!empty($PrivatemessageReturn[$i]->pmr_return)) { ?>
                                                 <li>
                                                     <span class="pull-right">
                                                         <?php echo $PrivatemessageReturn[$i]->update_date; ?>
                                                     </span>
                                                     <a href="<?php echo $this->createUrl('/privatemessage/index'); ?>">
-                                                        <span class="img-send"
-                                                        style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/user.png);">
-                                                    </span>
-                                                    <?php echo $PrivatemessageReturn[$i]->pmr_return; ?>
-                                                </a>
-                                            </li>
+                                                        <span class="img-send" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/user.png);">
+                                                        </span>
+                                                        <?php echo $PrivatemessageReturn[$i]->pmr_return; ?>
+                                                    </a>
+                                                </li>
                                         <?php }
-                                    } ?>
+                                        } ?>
 
-                                </ul>
-                            </div>
+                                    </ul>
+                                </div>
 
-                            <div class="panel-footer">
-                                <a href="#" class="text-center"><?= $label->label_header_msgAll  ?></a>
+                                <div class="panel-footer">
+                                    <a href="#" class="text-center"><?= $label->label_header_msgAll  ?></a>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                </div>
-            <?php } else {
-            } ?>
-            <a class="navbar-brand hidden-xs" href="<?php echo $this->createUrl('/site/index'); ?>"><img
-                src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo.png" height="55px" alt=""></a>
-                <a class="navbar-brand visible-xs" style="width: auto"
-                href="<?php echo $this->createUrl('/site/index'); ?>"><img
-                src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-xs.png" height="70px" alt=""></a>
+                    </div>
+                <?php } else {
+                } ?>
+                <a class="navbar-brand hidden-xs" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo.png" height="80px" alt=""></a>
+                <a class="navbar-brand visible-xs" style="width: auto" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-xs.png" height="70px" alt=""></a>
             </div>
 
 
-            <!-- Collect the nav links, forms, and other content for toggling -->
+
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <!-- index -->
-                    <?php $bar = Yii::app()->controller->id ?> 
+
+                    <?php $bar = Yii::app()->controller->id ?>
                     <?php $bar_action = Yii::app()->controller->action->id;
-                    $mainMenu = MainMenu::model()->findAllByAttributes(array('status' => 'y','active' => 'y','lang_id' => Yii::app()->session['lang']));
+                    $mainMenu = MainMenu::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y', 'lang_id' => Yii::app()->session['lang']));
                     foreach ($mainMenu as $key => $value) {
-                       $url = !empty($value->parent) ? $value->parent->url : $value->url;
-                       $controller = explode('/', $url);
-                       $controller[0] = strtolower($controller[0]);
-                       if($controller[0] != "registration" && $controller[0] != "privatemessage" && $controller[0] != "search" && $controller[0] != "forgot_password" && $controller[0] != "question" ){
-                           $clss =  $bar == $controller[0] && $bar_action == "index" ? "active" : '';
-                           if($controller[0] != "webboard"){
-                            if($controller[0] == "course" && Yii::app()->user->id == null){
-                                echo '<li class="'. $clss .'">
+                        $url = !empty($value->parent) ? $value->parent->url : $value->url;
+                        $controller = explode('/', $url);
+                        $controller[0] = strtolower($controller[0]);
+                        if ($controller[0] != "registration" && $controller[0] != "privatemessage" && $controller[0] != "search" && $controller[0] != "forgot_password" && $controller[0] != "question") {
+                            $clss =  $bar == $controller[0] && $bar_action == "index" ? "active" : '';
+                            if ($controller[0] != "webboard") {
+                                if ($controller[0] == "course" && Yii::app()->user->id == null) {
+                                    echo '<li class="' . $clss . '">
 
-                                <a data-toggle="modal" class="btn-login-course" href="#modal-login" >'.$value->title.'</span></a>
+                                <a data-toggle="modal" class="btn-login-course" href="#modal-login" >' . $value->title . '</span></a>
                                 </li>';
-                            }else{
-                                echo '<li class="'. $clss .'">
-                                <a href="'.$this->createUrl($url).'">'.$value->title.'</span></a>
+                                } else {
+                                    echo '<li class="' . $clss . '">
+                                <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
                                 </li>';
-                            }
-                            
-                        }else{
-                            echo '<li class="'. $clss .'">
-                            <a href="'.$this->createUrl($url).'?lang='.Yii::app()->session['lang'].'">'.$value->title.'</span></a>
+                                }
+                            } else {
+                                echo '<li class="' . $clss . '">
+                            <a href="' . $this->createUrl($url) . '?lang=' . Yii::app()->session['lang'] . '">' . $value->title . '</span></a>
                             </li>';
+                            }
                         }
-
-
                     }
-                }
-                ?>
+                    ?>
 
-                    <!-- <li class="<?= $bar == 'site' && $bar_action == 'index' ? 'active' : '' ?>">
-                        <a href="<?php echo $this->createUrl('/site/index'); ?>">หน้าแรก</span></a>
-                    </li>
-                    
-                    <li class="<?= $bar == 'about' ? 'active' : '' ?>"><a
-                                href="<?php echo $this->createUrl('/about/index'); ?>">เกี่ยวกับเรา</a>
-                    
-
-                    </li>
-                   
-                   
-                    <li class="<?= $bar == 'course' ? 'active' : '' ?>">
-                        <?php if(Yii::app()->user->id !== null){ ?>
-                        <a href="<?php echo $this->createUrl('/course/index'); ?>">
-                        <?php }else{ ?>
-                            <a data-toggle="modal" href='#modal-login'>
-                        <?php } ?>
-                            หลักสูตร</a></li>
-                    <li class="<?= $bar == 'usability' ? 'active' : '' ?>"><a
-                                href="<?php echo $this->createUrl('/usability/index'); ?>">วิธีการใช้งาน</a></li>
-                    <li class="<?= $bar == 'faq' ? 'active' : '' ?>"><a
-                                href="<?php echo $this->createUrl('/faq/index'); ?>">ถาม-ตอบ</a></li>
-                    <li class="<?= $bar == 'contactus' ? 'active' : '' ?>"><a
-                        href="<?php echo $this->createUrl('/contactus/index'); ?>">ติดต่อเรา</a></li> -->
-                  <!--   <li class="<?= $bar == 'webboard' ? 'active' : '' ?>">
-                    <a href="<?php echo $this->createUrl('/webboard'); ?>">กระดานสนทนา</a></li> -->
-                    <!-- Search -->
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-search" ></i></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i></a>
                         <ul class="dropdown-menu search">
-                            <!--form search-->
-                            <form id="searchForm" class="navbar-form"
-                            action="<?php echo $this->createUrl('Search/index') ?>">
-                            <div class="input-group">
-                                <input type="text" class="form-control" name="text"
-                                placeholder='<?= $label->label_placeholder_search ?>'>
-                                <span class="input-group-btn">
-                                  <button class="btn btn-default" type="submit"><?= $label->label_search ?></button>
-                              </span>
-                          </div>
-                      </form>
-                      <!--end form search-->
-                  </ul>
-              </li>
-              <?php 
-              $langauge = Language::model()->findAllByAttributes(array('status' => 'y','active' => 'y'));
-              $currentlangauge = Language::model()->findByPk(Yii::app()->session['lang']);
-              ?>
-              <li class="changelg">
-                <a class="btn  dropdown-toggle selectpicker" type="button" data-toggle="dropdown"><img src="<?= Yii::app()->baseUrl.'/uploads/language/'.$currentlangauge->id.'/small/'.$currentlangauge->image; ?>" height="30px" alt="">
-                  <span class="caret"></span></a>
-                  <ul class="dropdown-menu changelang">
-                    <?php 
-                    foreach ($langauge as $key => $value) {
-                       echo '<li><a href="?lang='.$value->id.'"><img src="'.Yii::app()->baseUrl.'/uploads/language/'.$value->id.'/small/'.$value->image.'" height="30px" alt=""></a></li>';
-                   }
-                   ?>
-                                <!-- <li><a href="#"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/thai.png" height="30px" alt=""></a></li>
-                                    <li><a href="#"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/uk.png" height="30px" alt=""></a></li> -->
-                                </ul> 
-                            </li>
+                            <form id="searchForm" class="navbar-form" action="<?php echo $this->createUrl('Search/index') ?>">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="text" placeholder='<?= $label->label_placeholder_search ?>'>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="submit"><?= $label->label_search ?></button>
+                                    </span>
+                                </div>
+                            </form>
 
-                            <?php $name = Profile::model()->findByPk(Yii::app()->user->getId()); ?>
-                            <?php if (Yii::app()->user->id == null) { ?>
-                                <!-- Before Login -->
-                                <li><a class="btn-login " data-toggle="modal" href='#modal-login'><i class="fa fa-sign-in"
-                                    aria-hidden="true"></i>
-                                    <?=  $label->label_header_login ?></a></li>
-                                <?php } else { ?>
-                                    <!-- After Login -->
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;"><span class="photo"
-                                         style="background-image: url('<?php echo Yii::app()->theme->baseUrl; ?>'/images/user.png);"></span> <?php echo $name->firstname; ?>
-                                         <b class="caret"></b></a>
-                                         <ul class="dropdown-menu">
-                                             <?php if (Yii::app()->user->id !== null) { ?>
-                                              <li class="<?= $bar == 'site' && $bar_action == 'dashboard' ? 'active' : '' ?>"><a
-                                                href="<?php echo $this->createUrl('/site/dashboard'); ?>"><?= $label->label_header_dashboard ?></a></li>
-                                            <?php } ?>
+                        </ul>
+                    </li>
+                    <?php
+                    $langauge = Language::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y'));
+                    $currentlangauge = Language::model()->findByPk(Yii::app()->session['lang']);
+                    ?>
+                    <li class="changelg">
+                        <a class="btn  dropdown-toggle selectpicker" type="button" data-toggle="dropdown"><img src="<?= Yii::app()->baseUrl . '/uploads/language/' . $currentlangauge->id . '/small/' . $currentlangauge->image; ?>" height="30px" alt="">
+                            <span class="caret"></span></a>
+                        <ul class="dropdown-menu changelang">
+                            <?php
+                            foreach ($langauge as $key => $value) {
+                                echo '<li><a href="?lang=' . $value->id . '"><img src="' . Yii::app()->baseUrl . '/uploads/language/' . $value->id . '/small/' . $value->image . '" height="30px" alt=""></a></li>';
+                            }
+                            ?>
 
-                                            <li>  
-                                                <?php
-                                                $user = Users::model()->findByPk(Yii::app()->user->id);
-                                                if($user->type_register != 3){ ?> 
-                                                    <li>   
-                                                        <?php  $url = Yii::app()->createUrl('registration/Update/'); ?>
-                                                        <a href="<?= $url ?>"><?= $label->label_header_update ?></a>
-                                                    </li>
-                                                <?php } ?>
-                                                <?php if($user->superuser == 1){ ?>
-                                                 <li>   
-                                                    <?php  $url = Yii::app()->createUrl('admin'); ?>
-                                                    <a href="<?= $url ?>"><?= UserModule::t("backend"); ?></a>
-                                                </li>
-                                            <?php } ?>
-                                            <li><!-- <a href="<?php //echo $this->createUrl('login/logout') ?>"> --><a href="javascript:void(0)" onclick="logout()"><?= $label->label_header_logout ?></a>
-                                            </li>
-                                        </ul>
-                                    </li>
+                        </ul>
+                    </li>
+
+                    <?php $name = Profile::model()->findByPk(Yii::app()->user->getId()); ?>
+                    <?php if (Yii::app()->user->id == null) { ?>
+                        <li><a class="btn-login " data-toggle="modal" href='#modal-login'><i class="fas fa-sign-in-alt"></i>
+                                <?= $label->label_header_login ?></a></li>
+                    <?php } else { ?>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;"><span class="photo" style="background-image: url('<?php echo Yii::app()->theme->baseUrl; ?>'/images/user.png);"></span> <?php echo $name->firstname; ?>
+                                <b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <?php if (Yii::app()->user->id !== null) { ?>
+                                    <li class="<?= $bar == 'site' && $bar_action == 'dashboard' ? 'active' : '' ?>"><a href="<?php echo $this->createUrl('/site/dashboard'); ?>"><?= $label->label_header_dashboard ?></a></li>
                                 <?php } ?>
-                                <?php
-                                if (Yii::app()->user->id == null) {
-                                    $chk_status_reg = $SettingAll = Helpers::lib()->SetUpSetting();
-                                    $chk_status_reg = $SettingAll['ACTIVE_REGIS'];
-                                    if ($chk_status_reg) {
-                                        ?>
-                                        <!-- Register & Before Login -->
-                                        <li><a class="btn-login"
-                                           href="<?php echo $this->createUrl('/registration/ShowForm'); ?>"><i
-                                           class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a></li>
-                                       <?php }
-                                   } ?>
-                                   <!-- After Login show Messege icon -->
 
-                                   <?php if (Yii::app()->user->id !== null) { ?>
+                                <li>
                                     <?php
-                                    $name = Profile::model()->findByPk(Yii::app()->user->getId());
+                                    $user = Users::model()->findByPk(Yii::app()->user->id);
+                                    if ($user->type_register != 3) { ?>
+                                <li>
+                                    <?php $url = Yii::app()->createUrl('registration/Update/'); ?>
+                                    <a href="<?= $url ?>"><?= $label->label_header_update ?></a>
+                                </li>
+                            <?php } ?>
+                            <?php if ($user->superuser == 1) { ?>
+                                <li>
+                                    <?php $url = Yii::app()->createUrl('admin'); ?>
+                                    <a href="<?= $url ?>"><?= UserModule::t("backend"); ?></a>
+                                </li>
+                            <?php } ?>
+                            <li>
+                                <!-- <a href="<?php //echo $this->createUrl('login/logout') 
+                                                ?>"> --><a href="javascript:void(0)" onclick="logout()"><?= $label->label_header_logout ?></a>
+                            </li>
+                            </ul>
+                        </li>
+                    <?php } ?>
+                    <?php
+                    if (Yii::app()->user->id == null) {
+                        $chk_status_reg = $SettingAll = Helpers::lib()->SetUpSetting();
+                        $chk_status_reg = $SettingAll['ACTIVE_REGIS'];
+                        if ($chk_status_reg) {
+                    ?>
+                            <li><a class="btn-register" href="<?php echo $this->createUrl('/registration/ShowForm'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a></li>
+                    <?php }
+                    } ?>
 
-                                    $criteria = new CDbCriteria;
-                                    $criteria->addCondition('create_by =' . $name->user_id);
-                                    $criteria->order = 'update_date  ASC';
-                                    $criteria->compare('status_answer', 1);
-                                    $PrivatemessageReturn = PrivateMessageReturn::model()->findAll($criteria);
-                                    ?>
-                                    <li class="dropdown visible-md visible-lg">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;"><i class="fa fa-envelope"
-                                          aria-hidden="true"></i></a>
-                                          <div class="dropdown-menu user-message">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h3 class="panel-title"><span class="pull-right"><a href="#"></a></span><?= $label->label_header_msg ?>
-                                                </h3>
-                                            </div>
-                                            <div class="panel-body">
-                                                <ul class="list-unstyled">
-                                                    <?php for ($i = 0; $i <= 3; $i++) { ?>
-                                                        <?php if (!empty($PrivatemessageReturn[$i]->pmr_return)) {
-                                                            ?>
-                                                            <li>
-                                                                <span class="pull-right">
-                                                                    <?php echo $PrivatemessageReturn[$i]->update_date; ?>
-                                                                </span>
-                                                                <a href="<?php echo $this->createUrl('/privatemessage/index',array('id'=>$PrivatemessageReturn[$i]->pm_id)); ?>">
-                                                                    <span class="img-send"
-                                                                    style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/user.png);">
-                                                                </span>
-                                                                <?php echo $PrivatemessageReturn[$i]->pmr_return; ?>
-                                                            </a>
-                                                        </li>
-                                                    <?php }
-                                                } ?>
+                    <?php if (Yii::app()->user->id !== null) { ?>
+                        <?php
+                        $name = Profile::model()->findByPk(Yii::app()->user->getId());
 
-                                            </ul>
-                                        </div>
-                                        <div class="panel-footer">
-                                            <a href="<?php echo $this->createUrl('/privatemessage/index'); ?>"
-                                               class="text-center"><?= $label->label_header_msgAll ?></a>
-                                           </div>
-                                       </div>
-                                   </div>
-                               </li>
-                           <?php } else {
-                           } ?>
-                       </ul>
-                   </div><!-- /.navbar-collapse -->
-               </div>
-           </nav>
-       </header><!-- /header -->
+                        $criteria = new CDbCriteria;
+                        $criteria->addCondition('create_by =' . $name->user_id);
+                        $criteria->order = 'update_date  ASC';
+                        $criteria->compare('status_answer', 1);
+                        $PrivatemessageReturn = PrivateMessageReturn::model()->findAll($criteria);
+                        ?>
+                        <li class="dropdown visible-md visible-lg">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                            <div class="dropdown-menu user-message">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title"><span class="pull-right"><a href="#"></a></span><?= $label->label_header_msg ?>
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <ul class="list-unstyled">
+                                            <?php for ($i = 0; $i <= 3; $i++) { ?>
+                                                <?php if (!empty($PrivatemessageReturn[$i]->pmr_return)) {
+                                                ?>
+                                                    <li>
+                                                        <span class="pull-right">
+                                                            <?php echo $PrivatemessageReturn[$i]->update_date; ?>
+                                                        </span>
+                                                        <a href="<?php echo $this->createUrl('/privatemessage/index', array('id' => $PrivatemessageReturn[$i]->pm_id)); ?>">
+                                                            <span class="img-send" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/user.png);">
+                                                            </span>
+                                                            <?php echo $PrivatemessageReturn[$i]->pmr_return; ?>
+                                                        </a>
+                                                    </li>
+                                            <?php }
+                                            } ?>
 
-       <!-- google login -->
-       <script src="https://apis.google.com/js/api:client.js"></script>
-       <script>
-        var googleUser = {};
-        var startApp = function() {
-            gapi.load('auth2', function(){
-                auth2 = gapi.auth2.init({
-                    client_id: '1064112749813-6gko5159s9sbkkva1jppnfsrbou43tgo.apps.googleusercontent.com',
-                    cookiepolicy: 'single_host_origin',
-                });
-                attachSignin(document.getElementById('customBtn'));
+                                        </ul>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <a href="<?php echo $this->createUrl('/privatemessage/index'); ?>" class="text-center"><?= $label->label_header_msgAll ?></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    <?php } else {
+                    } ?>
+                </ul>
+            </div><!-- /.navbar-collapse -->
+        </div>
+    </nav>
+</header><!-- /header -->
+
+<!-- google login -->
+<script src="https://apis.google.com/js/api:client.js"></script>
+<script>
+    var googleUser = {};
+    var startApp = function() {
+        gapi.load('auth2', function() {
+            auth2 = gapi.auth2.init({
+                client_id: '1064112749813-6gko5159s9sbkkva1jppnfsrbou43tgo.apps.googleusercontent.com',
+                cookiepolicy: 'single_host_origin',
             });
-        };
+            attachSignin(document.getElementById('customBtn'));
+        });
+    };
 
-        function attachSignin(element) {
-            auth2.attachClickHandler(element, {},
-                function(googleUser) {
-                    onGoogleSignIn(googleUser);
-                });
-        }
-    </script>
-    <script>
-        function onGoogleSignIn(googleUser) {
-            var response = googleUser.getAuthResponse(true);
-            console.log(response);
-            var accessToken = response.access_token;
-            $.ajax({
-                type: "POST",
-                url: "<?= Yii::app()->createUrl('login/LoginGoogle') ?>",
-                dataType:"json",
-                data: {
-                    token:accessToken
+    function attachSignin(element) {
+        auth2.attachClickHandler(element, {},
+            function(googleUser) {
+                onGoogleSignIn(googleUser);
+            });
+    }
+</script>
+<script>
+    function onGoogleSignIn(googleUser) {
+        var response = googleUser.getAuthResponse(true);
+        console.log(response);
+        var accessToken = response.access_token;
+        $.ajax({
+            type: "POST",
+            url: "<?= Yii::app()->createUrl('login/LoginGoogle') ?>",
+            dataType: "json",
+            data: {
+                token: accessToken
                 //google: googleUser.getBasicProfile()
             },
-            success: function (result) {
+            success: function(result) {
                 $('#modal-login').modal('hide');
 
                 if (result.result == true) {
-                   swal({
-                      position: 'top-end',
-                      type: 'success',
-                      title: result.msg,
-                      showConfirmButton: true,
-                  },
-                  function(isConfirm) {
-                     if (isConfirm) {
-                        location.reload();
-                    }
-                });
-               } else {
-                swal({
-                  position: 'top-end',
-                  type: 'warning',
-                  title: result.msg,
-                  showConfirmButton: true
-              },
-              function(isConfirm) {
-                 if (isConfirm) {
-                    location.reload();
+                    swal({
+                            position: 'top-end',
+                            type: 'success',
+                            title: result.msg,
+                            showConfirmButton: true,
+                        },
+                        function(isConfirm) {
+                            if (isConfirm) {
+                                location.reload();
+                            }
+                        });
+                } else {
+                    swal({
+                            position: 'top-end',
+                            type: 'warning',
+                            title: result.msg,
+                            showConfirmButton: true
+                        },
+                        function(isConfirm) {
+                            if (isConfirm) {
+                                location.reload();
+                            }
+                        });
                 }
-            });
             }
-        }
-    });
-        }
+        });
+    }
 
-        function logout(){
-            gapi.auth2.getAuthInstance().disconnect();
-            window.location.href = "<?=  $this->createUrl('login/logout'); ?>";
-        }
+    function logout() {
+        gapi.auth2.getAuthInstance().disconnect();
+        window.location.href = "<?= $this->createUrl('login/logout'); ?>";
+    }
+</script>
+<script>
+    startApp();
+</script>
+
+<?php
+$msg = Yii::app()->user->getFlash('msg');
+$icon = Yii::app()->user->getFlash('icon');
+if (!empty($msg)) { ?>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        swal({
+            title: "แจ้งเตือน",
+            text: "<?= $msg ?>",
+            icon: "<?= $icon  ?>",
+            dangerMode: true,
+        });
     </script>
-    <script>startApp();</script>
+<?php } ?>
 
-    <?php 
-    $msg = Yii::app()->user->getFlash('msg');
-    $icon = Yii::app()->user->getFlash('icon');
-    if(!empty($msg)){ ?>
-        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-        <script type="text/javascript">
-            swal({
-                title: "แจ้งเตือน",
-                text: "<?= $msg ?>",
-                icon: "<?= $icon  ?>",
-                dangerMode: true,
-            });
-        </script>
-    <?php } ?>
+<div class="modal fade" id="modal-login">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="<?php echo $this->createUrl('login/index') ?>" method="POST" role="form" name='loginform'>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-lock" aria-hidden="true"></i> <?= $label->label_header_login ?></h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2">
+                            <?php
+                            if (!empty($_GET['error'])) {
+                                if (!empty($_GET['error']['status'])) {
+                                    $error = $_GET['error']['status'][0];
+                                } else if (!empty($_GET['error']['username'])) {
+                                    $error = $_GET['error']['username'][0];
+                                } else if (!empty($_GET['error']['password'])) {
+                                    $error = $_GET['error']['password'][0];
+                                }
+                            ?>
+                                <script>
+                                    $(document).ready(function() {
+                                        window.history.replaceState({}, 'error', '<?= $this->createUrl('site/index') ?>');
+                                    });
+                                </script>
+                                <div class="form-group">
+                                    <label for="" style="color: red"><?= $error ?></label>
+                                </div>
+                            <?php } ?>
+                            <div class="form-group">
+                                <label for=""><?= $label->label_header_username ?></label>
+                                <input type="text" class="form-control" placeholder='<?= $label->label_header_username ?>' name="UserLogin[username]" value="<?php echo Yii::app()->request->cookies['cookie_name']->value; ?>" required>
+                            </div>
 
-    <!-- Modal Login -->
-    <div class="modal fade" id="modal-login">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <form action="<?php echo $this->createUrl('login/index') ?>" method="POST" role="form" name='loginform'>
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title"><i class="fa fa-lock" aria-hidden="true"></i> <?= $label->label_header_login ?></h4>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-sm-8 col-sm-offset-2">
-                                <?php
-                                if(!empty($_GET['error'])){
-                                    if(!empty($_GET['error']['status'])){
-                                        $error = $_GET['error']['status'][0];
-                                    } else if(!empty($_GET['error']['username'])){
-                                        $error = $_GET['error']['username'][0];
-                                    } else if(!empty($_GET['error']['password'])){
-                                        $error = $_GET['error']['password'][0];
-                                    }
+                            <div class="form-group">
+                                <label for=""><?= $label->label_header_password ?></label>
+                                <input type="password" class="form-control" placeholder='<?= $label->label_header_password ?>' name="UserLogin[password]" required>
+                            </div>
+                            <div class="form-group">
+                                <div class="checkbox checkbox-info checkbox-circle">
+                                    <input id="checkbox1" type="checkbox" name="UserLogin[checkbox]" value="on">
+                                    <label for="checkbox1">
+                                        <?= $label->label_header_remember ?>
+                                    </label>
+                                    <?php $chk_status_reg = $SettingAll = Helpers::lib()->SetUpSetting();
+                                    $chk_status_reg = $SettingAll['ACTIVE_REGIS'];
+                                    if ($chk_status_reg) {
                                     ?>
-                                    <script>
-                                        $(document).ready(function() {
-                                            window.history.replaceState( {} , 'error', '<?= $this->createUrl('site/index') ?>' );
-                                        } );
-                                    </script>
-                                    <div class="form-group">
-                                        <label for="" style="color: red"><?= $error ?></label>
-                                    </div>
-                                <?php } ?>
-                                <div class="form-group">
-                                    <label for=""><?= $label->label_header_username ?></label>
-                                    <input type="text" class="form-control" placeholder='<?= $label->label_header_username ?>'
-                                    name="UserLogin[username]"
-                                    value="<?php echo Yii::app()->request->cookies['cookie_name']->value; ?>" required>
+                                        <span class="pull-right"><a href="<?php echo $this->createUrl('/registration/ShowForm'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a></span>
+                                    <?php } ?>
+
                                 </div>
 
-                                <div class="form-group">
-                                    <label for=""><?= $label->label_header_password ?></label>
-                                    <input type="password" class="form-control" placeholder='<?= $label->label_header_password ?>'
-                                    name="UserLogin[password]" required>
-                                </div>
-                                <div class="form-group">
-                                    <div class="checkbox checkbox-info checkbox-circle">
-                                        <input id="checkbox1" type="checkbox" name="UserLogin[checkbox]" value="on">
-                                        <label for="checkbox1">
-                                            <?= $label->label_header_remember ?>
-                                        </label>
-                                        <?php $chk_status_reg = $SettingAll = Helpers::lib()->SetUpSetting();
-                                        $chk_status_reg = $SettingAll['ACTIVE_REGIS'];
-                                        if ($chk_status_reg) {
-                                            ?>
-                                            <span class="pull-right"><a
-                                                href="<?php echo $this->createUrl('/registration/ShowForm'); ?>"><i
-                                                class="fa fa-user-plus"
-                                                aria-hidden="true"></i> <?= $label->label_header_regis ?></a></span>
-                                            <?php } ?>                           
-
-                                        </div>
-
-                                    </div>
-                                </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-warning" name="submit" ><?= $label->label_header_yes ?></button>
-                            <a class="btn btn-default" href="<?php echo $this->createUrl('Forgot_password/index') ?>"><?= $label->label_header_forgotPass ?></a>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-submit" name="submit"><?= $label->label_header_yes ?></button>
+                    <a class="btn btn-default" href="<?php echo $this->createUrl('Forgot_password/index') ?>"><?= $label->label_header_forgotPass ?></a>
+                </div>
+            </form>
         </div>
-    </script>
+    </div>
+</div>
+</script>

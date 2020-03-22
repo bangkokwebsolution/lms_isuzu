@@ -1,36 +1,13 @@
-<div class="header-page parallax-window">
-    <div class="container">
-        <h1><?= $label->label_faq ?>
-            <small class="pull-right">
-                <ul class="list-inline list-unstyled">
-                    <li><a href="<?php echo $this->createUrl('/site/index'); ?>"><?= $label->label_homepage ?></a></li> /
-                    <li><span class="text-bc"><?= $label->label_faq ?></span></li>
-                </ul>
-            </small>
-        </h1>
-    </div>
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-main">
+            <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/site/index'); ?>"><?php echo $label->label_homepage; ?></a></li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $label->label_faq ?></li>
+        </ol>
+    </nav>
 </div>
-    <!-- Content --> 
-    <!-- <div class="container">
-            <div class="row">   
-            <div class="col-md-8"></div>
-            <div class="col-md-4"> -->
 
-          <!--form search-->
-                   <!--  <form id="faqForm" class="" action="<?php echo $this->createUrl('faq/search') ?>">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="text" placeholder="ใส่ข้อความที่ต้องการค้นหา...">
-                                    <span class="input-group-btn">
-                                    <button class="btn btn-default" type="submit">ค้นหา</button>
-                                    </span>
-                                </div>
-                          </form> -->
-            <!--end form search-->
-            <!-- /div> 
-            </div>  
-    </div> -->
-
- <section class="content" id="faq">
+<section class="content" id="faq">
     <div class="container">
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <!--statr no loop -->

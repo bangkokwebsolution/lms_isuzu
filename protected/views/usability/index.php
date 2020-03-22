@@ -1,14 +1,10 @@
-<div class="header-page parallax-window" >
-    <div class="container">
-        <h1><?= $label->label_usability ?>
-            <small class="pull-right">
-                <ul class="list-inline list-unstyled">
-                    <li><a href="<?php echo $this->createUrl('/site/index'); ?>"><?= $label->label_homepage ?></a></li> /
-                    <li><span class="text-bc"><?= $label->label_usability ?></span></li>
-                </ul>
-            </small>
-        </h1>
-    </div>
+<div class="container">
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb breadcrumb-main">
+			<li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/site/index'); ?>"><?php echo $label->label_homepage; ?></a></li>
+			<li class="breadcrumb-item active" aria-current="page"><?= $label->label_usability ?></li>
+		</ol>
+	</nav>
 </div>
 
 <!-- Content -->
@@ -19,16 +15,17 @@
 //     'condition' => 'active="y"',
 //         ));
 ?>
-<?php 
+<?php
 
-// echo '<pre>'; var_dump($usability_data) ?>
+// echo '<pre>'; var_dump($usability_data) 
+?>
 
 <section class="content" id="manual">
-    <div class="container">
-        <div class="row">
-			
+	<div class="container">
+		<div class="row">
+
 			<!--form search-->
-		<!-- <form id="usabilityForm" class="col-sm-4 col-md-3" action="<?php echo $this->createUrl('usability/search') ?>">
+			<!-- <form id="usabilityForm" class="col-sm-4 col-md-3" action="<?php echo $this->createUrl('usability/search') ?>">
                                 <div class="input-group">
                                     <input type="text" class="form-control" name="text" placeholder="ใส่ข้อความที่ต้องการค้นหา...">
                                     <span class="input-group-btn">
@@ -36,55 +33,52 @@
                                     </span>
                                 </div>
                           </form> -->
-        	<!--end form search-->
-			<div class="col-sm-4 col-md-4">
-			
-			</div>
-
-            <?php foreach ($usability_data as $usa) { ?>
-                
-            <div class="modal fade" id="modal-manual-detail-<?= $usa->usa_id ?>">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-
-                                    <h4 class="modal-title"><i class="fa fa-sign-in" aria-hidden="true"></i> <?php echo ($usa->usa_title); ?> </h4>
-                                </div>
-                                <div class="modal-body">
-                                    <?php echo htmlspecialchars_decode($usa->usa_detail) ?>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-warning" data-dismiss="modal">ปิด</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-            
-           <?php } ?>
-
-        </div>
+			<!--end form search-->
 
 
-        <div class="row">
-        	<?php foreach ($usability_data as $usa) { ?>
-					<div class="col-sm-4 col-md-3">
-						<div class="well">
-							<a data-toggle="modal" href='#modal-manual-detail-<?= $usa->usa_id ?>'>
-								<div class="manual-icon"><i class="fa fa-sign-in fa-3x" aria-hidden="true"></i></div>
-								<h4><?php echo ($usa->usa_title); ?></h4>
-							</a>
+			<?php foreach ($usability_data as $usa) { ?>
+
+				<div class="modal fade" id="modal-manual-detail-<?= $usa->usa_id ?>">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+								<h4 class="modal-title"><i class="fas fa-sign-in" aria-hidden="true"></i> <?php echo ($usa->usa_title); ?> </h4>
+							</div>
+							<div class="modal-body">
+								<?php echo htmlspecialchars_decode($usa->usa_detail) ?>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+							</div>
 						</div>
 					</div>
+				</div>
 
-							<?php } ?>
+			<?php } ?>
+
 		</div>
-				
-        <!-- Modal detail -->
+
+
+		<div class="row">
+			<?php foreach ($usability_data as $usa) { ?>
+				<div class="col-sm-4 col-md-3">
+					<div class="well">
+						<a data-toggle="modal" href='#modal-manual-detail-<?= $usa->usa_id ?>'>
+							<div class="manual-icon"></i><i class="fas fa-info-circle fa-4x"></i></div>
+							<h4><?php echo ($usa->usa_title); ?></h4>
+						</a>
+					</div>
+				</div>
+
+			<?php } ?>
+		</div>
 
 
 
-    </div>
+
+	</div>
 </section>
 <!-- <div class="col-sm-4 col-md-3">
 								<div class="well">

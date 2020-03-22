@@ -10,7 +10,8 @@
     </h1>
   </div>
 </div>
-<!-- Content -->
+
+
 <section class="content" id="about-us">
   <div class="container">
     <div class="well">
