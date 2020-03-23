@@ -2375,6 +2375,10 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
   margin-bottom: 20px;
 }
 
+#searchForm span button{
+  height: 40px;
+}
+
 .alert {
   padding: 30px;
   margin-bottom: 30px;
