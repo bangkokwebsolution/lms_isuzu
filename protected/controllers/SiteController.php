@@ -458,12 +458,12 @@ class SiteController extends Controller
 // 			// 'limit'=>'6',
 // 		));
 
-// 		//CourseOnline
-// 		$course_online = CourseOnline::model()->findAll(array(
-// 			'condition'=>'active="y"',
-// 			'order'=>'create_date DESC',
-// 			'limit'=>'6',
-// 		));
+		//CourseOnline
+		$course_online = CourseOnline::model()->findAll(array(
+			'condition'=>'active="y"',
+			'order'=>'create_date DESC',
+			'limit'=>'4',
+		));
 
 // 		$coursevodaudit = CourseVod::model()->findAll(array(
 // 				'condition' => 'name="ธรรมาภิบาลภาคธุรกิจ" or name="กลยุทธ์ดึงดูดลูกค้าออนไลน์" or name="เริ่มต้นธุรกิจแบบมืออาชีพ" or name="หลักสูตร e-Commerce"',
@@ -498,7 +498,7 @@ class SiteController extends Controller
   //                   setcookie('checkbox',$cookie,time()+3600*24*356);
   //               }
 		// $this->render('index');
-		$this->render('index',array('label'=>$label,'model'=>$model,'modelCourseTms'=>$modelCourseTms,'modelOrg'=>$modelOrg,'labelCourse' => $labelCourse,'modelCat' => $modelCat,'courseArr' => $courseArr));
+		$this->render('index',array('label'=>$label,'model'=>$model,'modelCourseTms'=>$modelCourseTms,'modelOrg'=>$modelOrg,'labelCourse' => $labelCourse,'modelCat' => $modelCat,'courseArr' => $courseArr, 'course_online'=>$course_online));
 
 	}
 
