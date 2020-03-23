@@ -337,6 +337,27 @@ class SiteController extends Controller
 
 	public function actionIndex($login = null)
 	{
+		$dateNow  =date("d-m-Y");
+		$ip = $_SERVER['REMOTE_ADDR'];
+
+		$modelCount = Counter::model()->findAll();
+		foreach ($modelCount as $key => $value) {
+			$ip_Old = $value->ip_visit;
+			$date_Old = $value->date_visit;			 
+		}
+
+		if($ip_Old != $ip && $date_Old != $dateNow){
+			$count = new Counter;
+			$count->date_visit = $dateNow;
+			$count->ip_visit = $ip;
+			$count->visit = 1;
+			$count->save();
+		}
+
+		$result =  Yii::app()->db->createCommand("Select count(visit) as visit From counter")->queryAll();
+		// var_dump($counter);exit();
+		$counter = implode(" ",$result[0]);
+
 		// echo Yii::app()->user->id;
   //       exit();
 		if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
@@ -498,7 +519,7 @@ class SiteController extends Controller
   //                   setcookie('checkbox',$cookie,time()+3600*24*356);
   //               }
 		// $this->render('index');
-		$this->render('index',array('label'=>$label,'model'=>$model,'modelCourseTms'=>$modelCourseTms,'modelOrg'=>$modelOrg,'labelCourse' => $labelCourse,'modelCat' => $modelCat,'courseArr' => $courseArr, 'course_online'=>$course_online));
+		$this->render('index',array('label'=>$label,'model'=>$model,'modelCourseTms'=>$modelCourseTms,'modelOrg'=>$modelOrg,'labelCourse' => $labelCourse,'modelCat' => $modelCat,'courseArr' => $courseArr, 'course_online'=>$course_online, 'counter'=>$counter));
 
 	}
 
