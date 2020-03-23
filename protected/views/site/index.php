@@ -109,7 +109,8 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                         <span class="pull-right">
                             <!-- <a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/banner/index'); ?>" role="button"><?= $label->label_viewAll ?>
                                 <i class="fa fa-angle-right" aria-hidden="true"></i></a> -->
-                            <a class="btn btn-viewall btn-sm" href="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" role="button"><?= $label->label_viewAll ?>
+                            <a class="btn btn-viewall btn-sm fresco"  
+                            href="https://via.placeholder.com/1364x580.jpg" role="button"><?= $label->label_viewAll ?>
                                 <i class="fa fa-angle-right" aria-hidden="true"></i></a>
                         </span>
                     </h1>
@@ -144,17 +145,17 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                         <?php if (!isset($image[0])) { ?>
 
                             <div class="item active">
-                                <a href="#" class="fresco"> <img alt="news-thoresen" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/slide-news.jpg"></a>
+                                <a href="#" > <img alt="news-thoresen" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/slide-news.jpg"></a>
                             </div>
                             <div class="item">
-                                <a href="#" class="fresco"> <img alt="news-thoresen" src="https://via.placeholder.com/1364x580.jpg"> </a>
+                                <a href="#" > <img alt="news-thoresen" src="https://via.placeholder.com/1364x580.jpg"> </a>
                             </div>
 
                             <?php } else {
 
                             foreach ($image as $key => $value) { ?>
                                 <div class="item <?php if ($key == 0) echo 'active'; ?>">
-                                    <a class="fresco" href="<?= empty($value->imgslide_link) ? 'javascript:void(0)' : $value->imgslide_link;  ?>" target="_blank">
+                                    <a href="<?= empty($value->imgslide_link) ? 'javascript:void(0)' : $value->imgslide_link;  ?>" target="_blank">
                                         <img alt="<?= $value->imgslide_title; ?>" src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>">
                                     </a>
                                 </div>
