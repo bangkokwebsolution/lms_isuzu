@@ -23,7 +23,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $peple= "คน";    
 }
 ?>
-
+<!-- // -->
 <?php if (Yii::app()->user->hasFlash('users') && !isset(Yii::app()->user->id)) {  ?>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript">
