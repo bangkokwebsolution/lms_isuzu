@@ -112,7 +112,7 @@ label {
 }
 
 .bg-greendark {
-  background-color: #4D8741;
+  background-color: #ddd;
 }
 
 .bg-brown {
@@ -147,6 +147,10 @@ label {
 
 .pb-1 {
   padding-bottom: 1em;
+}
+
+.pb-20{
+  padding-bottom: 20px;
 }
 
 .mb-0 {
@@ -725,7 +729,7 @@ div.course-detail2 h4.text11 {
 }
 
 .course .well .course-detail h4 {
-  color: #4D8741;
+  color: #ddd;
   font-weight: bold;
 }
 
@@ -1369,7 +1373,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 #course-detail .course-teacher .page-header {
   padding-bottom: 0;
   margin: 40px 0 20px;
-  border-bottom: 1px dashed #4D8741;
+  border-bottom: 1px dashed #ddd;
 }
 
 #course-detail .course-teacher .page-header .inline img {
@@ -1872,7 +1876,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #video-detail .detail-content .content-header {
-  border-bottom: 1px dashed #4D8741;
+  border-bottom: 1px dashed #ddd;
 }
 
 #video-detail .detail-content .content-header .pull-left {
@@ -2148,7 +2152,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #search .well {
-  border-color: #4D8741;
+  border-color: #ddd;
 }
 
 #pre-exams .well {
@@ -2156,12 +2160,16 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 .condition {
-  margin-top: 10px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
 }
 
+.condition .form-group{
+
+}
 #pre-exams .well .exams-condition {
   padding: 1em;
-  background-color: #4D8741;
+  background-color: #ddd;
   border-radius: 10px;
   margin-top: -2em;
   color: #ffffff;
@@ -2170,7 +2178,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #exams .well {
-  background-color: #4D8741;
+  background-color: #ddd;
 }
 
 #exams .well .exams {
@@ -2187,7 +2195,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #exams .all-exams .exams-title {
-  border-bottom: 2px solid #4D8741;
+  border-bottom: 2px solid #ddd;
   margin-bottom: 0.5em;
 }
 
@@ -2206,6 +2214,22 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
   box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
 }
 
+
+.login-bg .login-img-1 {
+  position: absolute;
+  left: 20px;
+  bottom: 40px;
+  z-index: 10;
+}
+
+.login-bg .login-img-2 {
+  position: absolute;
+  right: 20px;
+  bottom: 40px;
+  z-index: 10;
+}
+
+
 @media (max-width: 767px) {
   #exams .all-exams .table>tbody>tr>td .btn {
     font-size: 1rem;
@@ -2214,7 +2238,9 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #register .well {
-  background-color: #efefef;
+  background-color: #F9F9F9;
+  position: relative;
+  z-index: 20;
 }
 
 #register .well form {
@@ -2278,13 +2304,19 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #about-us .well {
-  background-color: #efefef;
+  position: relative;
+  background: #F9F9F9;
   padding: 20px;
+  border: none;
+  z-index: 20;
+
 }
 
 #about-us .well .detail {
-  background-color: #efefef;
-  border-radius: 0px;
+  /* height: 50vh; */
+  width: 100%;
+  margin-bottom: 3%;
+  /* overflow: auto; */
   padding: 1em;
   margin-top: 0;
 }
@@ -2312,7 +2344,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 
 #exams-finish aside h4.title {
   font-weight: bold;
-  border-bottom: 2px solid #4D8741;
+  border-bottom: 2px solid #ddd;
   padding: 4px 0;
 }
 
@@ -2332,7 +2364,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 
 #questionnaire .well.bg-greendark .well form .form-group {
   padding: 1em 0;
-  border-bottom: 1px solid #4D8741;
+  border-bottom: 1px solid #ddd;
 }
 
 #questionnaire .well.bg-greendark .well form .form-group:last-child {
@@ -3827,7 +3859,12 @@ ol.stat-alert li::before {
 .mtb-10 {
   margin: 10px 0;
 }
-
+.mt-10{
+  margin-top: 10px;
+}
+.mt-20{
+  margin-top: 20px;
+}
 .mt-40 {
   margin-top: 40px;
 }
@@ -4038,10 +4075,51 @@ ol.stat-alert li::before {
   border-radius: 5px 5px 0 0;
   margin-top: 25px;
 }
-.upload-img {
-  padding: 20px;
+
+.tab-formregis .custom-file {
+  width: 110px;
+}
+
+.tab-formregis .custom-file label{
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+  width: auto !important;
+  padding: .375rem .75rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #fff;
+  border-radius: .25
+}
+.upload-img{
+  padding: 20px 20px;
   text-align: center;
+  
+}
+
+.bb-1{
   border-bottom: 1px solid #ddd;
+}
+
+#register .well{
+  margin-bottom: 20px;
+}
+#register .well .radio-danger input[type=radio]:checked+label:before{
+ border-color: var(--color-bulemain) ;
+}
+
+#register .well .radio-danger input[type=radio]:checked+label:after{
+  background-color: var(--color-bulemain);
+}
+.custom-file-input {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: calc(1.5em + .75rem + 2px);
+  margin: 0;
+  opacity: 0;
 }
 
 .tab-formregis {
@@ -4082,6 +4160,10 @@ ol.stat-alert li::before {
   height: calc(2em + .75rem + 2px);
 }
 
+.topic-register{
+  border-bottom: 1px dashed #ddd;
+  padding-bottom:10px;
+}
 
 @media (min-width: 1440px) {
   .course .well .course-img {

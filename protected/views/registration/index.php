@@ -80,7 +80,6 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             <label for=""><?= $label->label_identification ?></label>
                             <?php echo $form->textField($profile, 'identification', array('class' => 'form-control required', 'name' => 'idcard', 'maxlength' => '13', 'onKeyPress' => 'return check_number();')); ?>
                             <?php echo $form->error($profile, 'identification', array('class' => 'error2')); ?>
-                            <!--<input type="text" class="form-control" id="">-->
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -88,7 +87,6 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             <label for=""><?= $label->label_email ?></label>
                             <?php echo $form->emailField($users, 'email', array('class' => 'form-control')); ?>
                             <?php echo $form->error($users, 'email', array('class' => 'error2')); ?>
-                            <!--<input type="email" class="form-control" id="">-->
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -115,18 +113,6 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
             </div>
 
             <div class="well">
-                <!-- <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group"> -->
-                <!-- <label for=""><? //echo UserModule::t("passport"); 
-                                    ?></label> -->
-                <?php //echo $form->textField($users, 'passport', array('class' => 'form-control')); 
-                ?>
-                <?php //echo $form->error($users, 'passport', array('class' => 'error2')); 
-                ?>
-                <!--  </div>
-                    </div>
-                </div> -->
                 <div class="row">
                     <div class="col-sm-2">
                         <div class="form-group">
@@ -160,7 +146,6 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             <label for=""><?= $label->label_phone ?></label>
                             <?php echo $form->textField($profile, 'tel', array('class' => 'form-control')); ?>
                             <?php echo $form->error($profile, 'tel', array('class' => 'error2')); ?>
-                            <!--<input type="text" class="form-control" id="">-->
                         </div>
                     </div>
                     <div class="clearfix"></div>
@@ -232,256 +217,324 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
             <?php $this->endWidget();
             ?>
         </div>
-    </div>
 
 
-    <div class="container">
-        <div class="register-form">
-            <h3>สมัครสมาชิก</h3>
-            <div class="row justify-content-center">
-                <div class="col-lg-8">
-                    <div class="tab-formregis">
-                        <div class="upload-img">
-                            <img src="themes/template/images/thumbnail-profile.png" alt="">
-                            <div class="mt-2">
-                                <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="customFileLang" lang="es">
-                                    <label class="btn btn-success" for="customFileLang">เลือกรูปภาพ</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-resigter">
-                            <div class="row justify-content-center border-bottom">
-                                <div class="col-md-6">
-                                    <form class="">
-                                        <div class="custom-control-inline custom-radio-inline c-input">
-                                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input">
-                                            <label class="custom-control-label" for="customRadio1">สำหรับบุคคลทั่วไป</label>
-                                        </div>
-                                        <div class="custom-control-inline custom-radio-inline c-input">
-                                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input">
-                                            <label class="custom-control-label" for="customRadio2">สำหรับพนักงาน</label>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="row mt-4">
-                                <div class="col-12">
-                                    <form class="needs-validation" novalidate>
-                                        <div class="form-row">
-                                            <div class="col-md-8 mb-3">
-                                                <input type="text" class="form-control" id="validationCustom01" placeholder="ID พนักงาน" value="" required>
+        <div class="well">
 
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 mt-2">
-                                            <h6 class="font-weight-bold">ข้อมูลพื้นฐาน</h6>
-                                        </div>
-                                        <div class="form-row">
-                                            <div class="col-md-4 mb-3">
-                                                <input type="text" class="form-control" id="validationCustom01" placeholder="ชื่อ" value="" required>
-
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <input type="text" class="form-control" id="validationCustom02" placeholder="นามสกุล" value="" required>
-
-                                            </div>
-
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="col-md-8 mb-3">
-                                                <div class="custom-control-inline custom-radio-inline c-input">
-                                                    <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input">
-                                                    <label class="custom-control-label" for="customRadio3">เลขบัตรประจำตัวประชาชน</label>
-                                                </div>
-                                                <div class="custom-control-inline custom-radio-inline c-input">
-                                                    <input type="radio" id="customRadio4" name="customRadio" class="custom-control-input">
-                                                    <label class="custom-control-label" for="customRadio4">เลขหนังสือเดินทาง</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="col-md-8 mb-3">
-                                                <input type="text" class="form-control" id="validationCustom01" placeholder="เลขบัตรประจำตัวประชาชน" value="" required>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="col-md-4 mb-3">
-                                                <input type="text" class="form-control" id="validationCustom01" placeholder="วันที่ออกบัตร/หนังสือ" value="" required>
-
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <input type="text" class="form-control" id="validationCustom02" placeholder="วันหมดอายุ" value="" required>
-
-                                            </div>
-                                        </div>
-
-                                        <hr>
-
-                                        <div class="form-row pt-3">
-                                            <div class="col-md-4 mb-3">
-                                                <input type="text" class="form-control" id="validationCustom01" placeholder="วัน/เดือน/ปีเกิด" value="" required>
-
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <input type="text" class="form-control" id="validationCustom02" placeholder="อายุ" value="" required>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="col-md-4 mb-3">
-                                                <input type="text" class="form-control" id="validationCustom01" placeholder="เชื้อชาติ" value="" required>
-
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <input type="text" class="form-control" id="validationCustom02" placeholder="สัญชาติ" value="" required>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="col-md-4 mb-3">
-                                                <input type="text" class="form-control" id="validationCustom01" placeholder="ศาสนา" value="" required>
-
-                                            </div>
-                                            <div class="col-md-4 mb-3">
-                                                <select class="custom-select form-control" required>
-                                                    <option value="" selected class="select-none">เพศ</option>
-                                                    <option value="1">ชาย</option>
-                                                    <option value="2">หญิง</option>
-                                                </select>
-                                                <div class="invalid-feedback">กรุณาเลือกเพศ</div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row form-inline">
-                                            <label for="inputPassword6" class="font-weight-bold">สถานะภาพทางการสมรส :</label>
-                                            <div class="col-md-8 ml-3">
-                                                <div class="custom-control-inline custom-radio-inline c-input">
-                                                    <input type="radio" id="customRadio7" name="customRadio" class="custom-control-input">
-                                                    <label class="custom-control-label" for="customRadio7">โสด</label>
-                                                </div>
-                                                <div class="custom-control-inline custom-radio-inline c-input">
-                                                    <input type="radio" id="customRadio6" name="customRadio" class="custom-control-input">
-                                                    <label class="custom-control-label" for="customRadio6">สมรส</label>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row pt-3">
-                                            <div class="col-md-8 mb-3">
-                                                <textarea class="form-control" name="" id="validationCustom01" placeholder="ที่อยู่" value="" required id="" cols="30" rows="3"></textarea>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="col-md-8 mb-3">
-                                                <input type="text" class="form-control" id="validationCustom01" placeholder="เบอร์โทรศัพท์" value="" required>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row">
-                                            <div class="col-md-8 mb-3">
-                                                <input type="text" class="form-control" id="validationCustom01" placeholder="E-mail" value="" required>
-
-                                            </div>
-                                        </div>
-
-                                        <div class="form-row form-inline">
-                                            <label for="inputPassword6" class="font-weight-bold">ประวัติการเจ็บป่วยรุนแรง :</label>
-                                            <div class="col-md-8 ml-3">
-                                                <div class="custom-control-inline custom-radio-inline c-input">
-                                                    <input type="radio" id="customRadio8" name="customRadio" class="custom-control-input">
-                                                    <label class="custom-control-label" for="customRadio8">ไม่เคย</label>
-                                                </div>
-                                                <div class="custom-control-inline custom-radio-inline c-input">
-                                                    <input type="radio" id="customRadio9" name="customRadio" class="custom-control-input">
-                                                    <label class="custom-control-label" for="customRadio9">เคย</label>
-                                                </div>
-
-                                            </div>
-                                            <div class="col-md-5 mb-3">
-                                                <input type="text" class="form-control" id="validationCustom01" placeholder="ระบุโรคที่ป่วย" value="" required>
-                                            </div>
-                                        </div>
-
-                                        <div class="study-register">
-                                            <div class="form-row">
-                                                <label for="inputPassword6" class="font-weight-bold p-2">ประวัติการศึกษา :</label>
-                                                <div class="col-md-3">
-                                                    <select class="custom-select form-control w-100" required>
-                                                        <option value="" selected class="select-none">ระดับการศึกษา</option>
-                                                        <option value="1">ปริญญาตรี</option>
-                                                        <option value="2">ปริญญาโท</option>
-                                                        <option value="3">ปริญญาเอก</option>
-                                                    </select>
-
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="ชื่อสถาบัน" value="" required>
-
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <input type="text" class="form-control" id="validationCustom01" placeholder="ปีการศึกษาที่จบ" value="" required>
-
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="staff-register">
-                                            <div class="form-row form-inline">
-                                                <label for="inputPassword6" class="font-weight-bold">ส่วนของพนักงาน :</label>
-                                                <div class="col-md-8 ml-3">
-                                                    <div class="custom-control-inline custom-radio-inline c-input">
-                                                        <input type="radio" id="customRadio11" name="customRadio" class="custom-control-input">
-                                                        <label class="custom-control-label" for="customRadio11">Office</label>
-                                                    </div>
-                                                    <div class="custom-control-inline custom-radio-inline c-input">
-                                                        <input type="radio" id="customRadio10" name="customRadio" class="custom-control-input">
-                                                        <label class="custom-control-label" for="customRadio10">เรือ</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-row">
-                                                <div class="col-md-8 mb-3">
-                                                    <select class="custom-select form-control" required>
-                                                        <option value="" selected class="select-none">แผนก</option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-row">
-                                                <div class="col-md-8 mb-3">
-                                                    <select class="custom-select form-control" required>
-                                                        <option value="" selected class="select-none">ตำแหน่ง</option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="text-center pb-3"> <button class="btn btn-main p-2" type="submit">ยืนยันการสมัคร</button></div>
-
-                                    </form>
-
-                                </div>
+            <div class="row justify-content-center mb-2 bb-1">
+                <div class="col-sm-4">
+                    <div class="upload-img">
+                        <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-profile.png" alt="">
+                        <div class="mt-2">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="customFileLang" lang="es">
+                                <label class="btn btn-success" for="customFileLang">เลือกรูปภาพ</label>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-</section>
+            <div class="row justify-content-center select-profile">
+                <div class="form-group">
+                    <div class="radio radio-danger radio-inline">
+                        <input type="radio" name="status" id="accept" value="1">
+                        <label for="accept" class="bg-success text-black">
+                            สำหรับบุคคลทั่วไป </label>
+                    </div>
+                    <div class="radio radio-danger radio-inline">
+                        <input type="radio" name="status" id="reject" value="2">
+                        <label for="reject" class="bg-danger text-black">สำหรับพนักงาน </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="">ID พนักงาน</label>
+                        <input type="text" class="form-control" id="" placeholder="ID พนักงาน">
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <h4 class="topic-register">ข้อมูลพื้นฐาน</h4>
+
+            <div class="row justify-content-center">
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for=""><?= $label->label_title ?></label>
+                        <?php $country = array('1' => $label->label_dropdown_mr, '2' => $label->label_dropdown_mrs, '3' => $label->label_dropdown_ms); ?>
+                        <?php
+                        $htmlOptions = array('class' => 'form-control');
+                        echo $form->dropDownList($profile, 'title_id', $country, $htmlOptions);
+                        ?>
+                    </div>
+                </div>
+                <div class="col-sm-5 col-lg-3">
+                    <div class="form-group">
+                        <label for=""><?= $label->label_firstname ?></label>
+                        <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control')); ?>
+                        <?php echo $form->error($profile, 'firstname', array('class' => 'error2')); ?>
+                    </div>
+                </div>
+                <div class="col-sm-5 col-lg-3">
+                    <div class="form-group">
+                        <label for=""><?= $label->label_lastname ?></label>
+                        <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control')); ?>
+                        <?php echo $form->error($profile, 'lastname', array('class' => 'error2')); ?>
+                        <!--<input type="text" class="form-control" id="">-->
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="row justify-content-center mt-1 mb-1">
+                <div class="form-group">
+                    <div class="radio radio-danger radio-inline">
+                        <input type="radio" name="status" id="card-1" value="1">
+                        <label for="card-1" class="bg-success text-black">
+                            เลขบัตรประจำตัวประชาชน </label>
+                    </div>
+                    <div class="radio radio-danger radio-inline">
+                        <input type="radio" name="status" id="card-2" value="2">
+                        <label for="card-2" class="bg-danger text-black">เลขหนังสือเดินทาง </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row justify-content-center bb-1 ">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="">วันที่ออกบัตร/หนังสือ</label>
+                        <input type="text" class="form-control" id="" placeholder="วันที่ออกบัตร/หนังสือ">
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="">วันหมดอายุบัตร</label>
+                        <input type="text" class="form-control" id="" placeholder="วันหมดอายุบัตร">
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="row justify-content-center mt-20">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label for="">วัน/เดือน/ปี</label>
+                        <input type="date" class="form-control" id="" placeholder="วัน/เดือน/ปี">
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label for="">อายุ</label>
+                        <input type="text" class="form-control" id="" placeholder="อายุ">
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="">เชื้อชาติ</label>
+                        <input type="text" class="form-control" id="" placeholder="เชื้อชาติ">
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="">สัญชาติ</label>
+                        <input type="text" class="form-control" id="" placeholder="สัญชาติ">
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+
+            <div class="row justify-content-center">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="">ศาสนา</label>
+                        <input type="text" class="form-control" id="" placeholder="เชื้อชาติ">
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="">เพศ</label>
+                        <select class="form-control" name="" id="">
+                            <option value="1">ชาย</option>
+                            <option value="2">หญิง</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="row  mt-1 mb-1">
+                <div class="col-sm-3 text-right"> <strong>สถานะภาพทางการสมรส :</strong></div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+
+                        <span></span>
+                        <div class="radio radio-danger radio-inline">
+                            <input type="radio" name="status" id="card-3" value="1">
+                            <label for="card-3" class="bg-success text-black">
+                                โสด </label>
+                        </div>
+                        <div class="radio radio-danger radio-inline">
+                            <input type="radio" name="status" id="card-4" value="2">
+                            <label for="card-4" class="bg-danger text-black">สมรส </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row justify-content-center">
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <label for="card-4" class="bg-danger text-black">ที่อยู่</label>
+                        <textarea class="form-control" name="" id="" placeholder="ที่อยู่" value="" required="" cols="30" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="">เบอร์โทรศัพท์</label>
+                        <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์">
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="">Email</label>
+                        <input type="text" class="form-control" id="" placeholder="Email">
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="row  mt-1 mb-1 ">
+                <div class="col-sm-3 text-right"> <strong>ประวัติการเจ็บป่วยรุนแรง :</strong></div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+
+                        <span></span>
+                        <div class="radio radio-danger radio-inline">
+                            <input type="radio" name="status" id="card-5" value="1">
+                            <label for="card-5" class="bg-success text-black">
+                                ไม่เคย </label>
+                        </div>
+                        <div class="radio radio-danger radio-inline">
+                            <input type="radio" name="status" id="card-6" value="2">
+                            <label for="card-6" class="bg-danger text-black">เคย </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row  mt-20 mb-1 bb-1">
+                <div class="col-sm-3 text-right"> <strong>ประวัติการศึกษา :</strong></div>
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <select class="form-control" name="" id="">
+                            <option value="">ระดับการศึกษา</option>
+                            <option value="1">ปริญญาตรี</option>
+                            <option value="2">ปริญญาโท</option>
+                            <option value="2">ปริญญาเอก</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="" placeholder="สถาบันที่จบ">
+                    </div>
+                </div>
+
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="" placeholder="ปีที่จบ">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="row  mt-20 mb-1">
+                <div class="col-sm-3 text-right"> <strong>ส่วนของพนักงาน :</strong></div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+
+                        <span></span>
+                        <div class="radio radio-danger radio-inline">
+                            <input type="radio" name="status" id="card-7" value="1">
+                            <label for="card-7" class="bg-success text-black">
+                                Office </label>
+                        </div>
+                        <div class="radio radio-danger radio-inline">
+                            <input type="radio" name="status" id="card-8" value="2">
+                            <label for="card-8" class="bg-danger text-black">เรือ </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row justify-content-center mt-20 mb-1 bb-1 pb-20">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="">แผนก</label>
+                        <select class="form-control" name="" id="">
+                            <option value="">แผนก</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="2">3</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="">ตำแหน่ง</label>
+                        <select class="form-control" name="" id="">
+                            <option value="">ตำแหน่ง</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="2">3</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="text-center mt-20">
+                <input class="btn btn-default bg-greenlight btn-lg center-block" type="submit" name="yt0" value="Register">
+            </div>
+
+        </div>
+
+
+        <div class="login-bg">
+            <img class="login-img-1" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg3.png">
+            <img class="login-img-2" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg4.png">
+        </div>
+
+    </div>
