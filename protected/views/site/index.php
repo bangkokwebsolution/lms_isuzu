@@ -267,7 +267,30 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
                                         ?>
 
-                                        <div class="col-lg-3 col-md-3 coursebox">
+                                        <!-- new course -->
+
+                                        <div class="col-lg-3 col-md-3 ">
+                                            <div class="item">
+                                                <div class="cours-card">
+                                                    <div class="card">
+                                                        <a href="<?= $url; ?>" <?= $evnt ?> >
+                                                            <div class="course-boximg">
+                                                                <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png" alt="">
+                                                            </div>
+                                                        </a>
+                                                        <div class="card-body" style="padding: 20px;">
+                                                            <a href="course-detail.php">
+                                                                <h5 class="card-title"><?= $value->course_title; ?></h5>
+                                                            </a>
+                                                            <span class="card-text-1">สถานะ : <a href="#" class="btn btn-sm btn-secondary">ยังไม่เรียน</a> </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <!-- <div class="col-lg-3 col-md-3 coursebox">
                                             <div class="well text-center">
                                                 <a href="<?= $url; ?>" <?= $evnt ?>>
 
@@ -293,137 +316,114 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                                 </a>
                                             </div>
                                         </div>
+                                    -->
+                                    <?php
 
-                                        <?php
-
-                                    }
                                 }
-                                ?>
-
-                                <!-- new course -->
-
-                             <!--    <div class="course-main owl-carousel owl-theme">
-                                    <div class="item">
-                                        <div class="cours-card">
-                                            <div class="card">
-                                                <a href="course-detail.php">
-                                                    <div class="course-boximg">
-                                                        <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png" alt="">
-                                                    </div>
-                                                </a>
-                                                <div class="card-body">
-                                                    <a href="course-detail.php">
-                                                        <h5 class="card-title">บทเรียนทดสอบ</h5>
-                                                    </a>
-                                                    <span class="card-text-1">สถานะ : <a href="#" class="btn btn-sm btn-secondary">ยังไม่เรียน</a> </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> -->
-
-
-
-                            </div>
-
-                        </section>
-
-                    <?php } ?> 
-
-                    <section class="news">
-                        <div class="container">
-                            <div class="page-header">
-                                <h1><span class="linehead"><?= $label->label_news ?></span> <span class="pull-right"><a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/news/index'); ?>" role="button"><?= $label->label_viewAll ?> <i class="fa fa-angle-right" aria-hidden="true"></i></a></span></h1>
-                            </div>
-                            <?php
-                            $criteria = new CDbCriteria;
-                            $criteria->compare('active', y);
-                            $criteria->compare('lang_id', $langId);
-                            $criteria->order = 'sortOrder ASC';
-                            $criteria->limit = 6;
-                            $news = News::model()->findAll($criteria); 
-                            ?>
-                            <?php foreach ($news as $key => $value) {
-                                if ($value->cms_type_display == 'url' && !empty($value->cms_link)) {
-                                    $arr = json_decode($value->cms_link);
-                                    $link = $arr[0];
-                                    $new_tab = ($arr[1] == '0') ? '' : 'target="_blank"';
-                                } else {
-                                    $link = $this->createUrl('news/detail/', array('id' => $value->cms_id));
-                                }
-                                ?>
-                                <div class="col-sm-4">
-                                    <div class="well">
-                                        <a href="<?php echo $link; ?>" <?= $new_tab ?>">
-                                            <div class="row">
-                                                <div class="col-sm-5">
-
-                                                    <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/news/' . $value->cms_id . '/thumb/' . $value->cms_picture)) { ?>
-
-                                                        <div class="news-img" style="background-image: url(<?php echo Yii::app()->homeUrl; ?>uploads/news/<?php echo $value->cms_id ?>/thumb/<?php echo $value->cms_picture ?>);">
-                                                        </div>
-
-                                                    <?php } else { ?>
-
-                                                        <div class="news-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/news.jpg);">
-                                                        </div>
-
-                                                    <?php } ?>
-
-
-                                                </div>
-                                                <div class="col-sm-7">
-                                                    <h4 class="text22"><?php echo $value->cms_title ?></h4>
-                                                    <p class="p2"><?php echo $value->cms_short_title ?></p>
-                                                    <div class="news-date">
-                                                        <small><i class="far fa-clock"></i> <?php echo Helpers::lib()->DateLangTms($value->update_date, Yii::app()->session['lang']); ?></small>
-                                                    </div>
-                                                    <!-- <div class="news-more"><a href="<?php echo $link; ?>" <?= $new_tab ?>" class="more">อ่านเพิ่มเติม <i class="fas fa-arrow-right"></i></a></div> -->
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </div>
-
-                                <?php
                             }
                             ?>
+
+
                         </div>
+
                     </section>
 
+                <?php } ?> 
 
-                    <?php foreach ($course_online as $key => $value) {
+                <section class="news">
+                    <div class="container">
+                        <div class="page-header">
+                            <h1><span class="linehead"><?= $label->label_news ?></span> <span class="pull-right"><a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/news/index'); ?>" role="button"><?= $label->label_viewAll ?> <i class="fa fa-angle-right" aria-hidden="true"></i></a></span></h1>
+                        </div>
+                        <?php
+                        $criteria = new CDbCriteria;
+                        $criteria->compare('active', y);
+                        $criteria->compare('lang_id', $langId);
+                        $criteria->order = 'sortOrder ASC';
+                        $criteria->limit = 6;
+                        $news = News::model()->findAll($criteria); 
+                        ?>
+                        <?php foreach ($news as $key => $value) {
+                            if ($value->cms_type_display == 'url' && !empty($value->cms_link)) {
+                                $arr = json_decode($value->cms_link);
+                                $link = $arr[0];
+                                $new_tab = ($arr[1] == '0') ? '' : 'target="_blank"';
+                            } else {
+                                $link = $this->createUrl('news/detail/', array('id' => $value->cms_id));
+                            }
+                            ?>
+                            <div class="col-sm-4">
+                                <div class="well">
+                                    <a href="<?php echo $link; ?>" <?= $new_tab ?>">
+                                        <div class="row">
+                                            <div class="col-sm-5">
 
-                        if ($value->status == 1) {
-                            $chk = Helpers::lib()->getLearn($value->course_id);
+                                                <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/news/' . $value->cms_id . '/thumb/' . $value->cms_picture)) { ?>
 
-                            if (!$chk) { ?>
-
-                                <div class="modal fade" id="modal-startcourse<?= $value->course_id ?>">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                <h4 class="modal-title"><?= $labelcourse->label_learnlesson ?></h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="row">
-                                                    <div class="col-sm-8 col-sm-offset-2 text-center">
-                                                        <h3><?= (Yii::app()->user->id) ? $labelcourse->label_swal_regiscourse : $labelcourse->label_detail; ?></h3>
-                                                        <h2>"<?= $value->course_title ?>"</h2>
-                                                        <h3>(<?= $value->CategoryTitle->cate_title ?>)</h3>
+                                                    <div class="news-img" style="background-image: url(<?php echo Yii::app()->homeUrl; ?>uploads/news/<?php echo $value->cms_id ?>/thumb/<?php echo $value->cms_picture ?>);">
                                                     </div>
+
+                                                <?php } else { ?>
+
+                                                    <div class="news-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/news.jpg);">
+                                                    </div>
+
+                                                <?php } ?>
+
+
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <h4 class="text22"><?php echo $value->cms_title ?></h4>
+                                                <p class="p2"><?php echo $value->cms_short_title ?></p>
+                                                <div class="news-date">
+                                                    <small><i class="far fa-clock"></i> <?php echo Helpers::lib()->DateLangTms($value->update_date, Yii::app()->session['lang']); ?></small>
+                                                </div>
+                                                <!-- <div class="news-more"><a href="<?php echo $link; ?>" <?= $new_tab ?>" class="more">อ่านเพิ่มเติม <i class="fas fa-arrow-right"></i></a></div> -->
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <?php
+                        }
+                        ?>
+                    </div>
+                </section>
+
+
+                <?php foreach ($course_online as $key => $value) {
+
+                    if ($value->status == 1) {
+                        $chk = Helpers::lib()->getLearn($value->course_id);
+
+                        if (!$chk) { ?>
+
+                            <div class="modal fade" id="modal-startcourse<?= $value->course_id ?>">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title"><?= $labelcourse->label_learnlesson ?></h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-sm-8 col-sm-offset-2 text-center">
+                                                    <h3><?= (Yii::app()->user->id) ? $labelcourse->label_swal_regiscourse : $labelcourse->label_detail; ?></h3>
+                                                    <h2>"<?= $value->course_title ?>"</h2>
+                                                    <h3>(<?= $value->CategoryTitle->cate_title ?>)</h3>
                                                 </div>
                                             </div>
-                                            <div class="modal-footer">
-                                                <a class="btn btn-success" href="<?php echo Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)) ?>"><?= UserModule::t("Ok") ?></a>
-                                                <a class="btn btn-warning" href="#" class="close" data-dismiss="modal" aria-hidden="true"><?= UserModule::t("Cancel") ?></a>
-                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a class="btn btn-success" href="<?php echo Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)) ?>"><?= UserModule::t("Ok") ?></a>
+                                            <a class="btn btn-warning" href="#" class="close" data-dismiss="modal" aria-hidden="true"><?= UserModule::t("Cancel") ?></a>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                            <?php }
+                        <?php }
     } //condition status
 } ?>
 <!--end news-->
