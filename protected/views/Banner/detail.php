@@ -19,26 +19,17 @@ function DateThai($strDate) {
 
     <body>
 
-        <!-- Header -->
         <?php include './include/header.php'; ?>
 
-        <!-- Header page -->
-        <div class="header-page parallax-window" data-parallax="scroll" data-image-src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg-header-page.png">
-            <div class="container">
-                <h1>ชื่อป้ายประชาสัมพันธ์
-                    <small class="pull-right">
-                        <ul class="list-inline list-unstyled">
-                            <li><a href="<?php echo $this->createUrl('/site/index'); ?>">หน้าแรก</a></li>/
-                            <li><a href="<?php echo $this->createUrl('/banner/index'); ?>">ป้ายประชาสัมพันธ์</a></li>/
-                            <li><span class="text-bc"><?php echo $img_data->imgslide_title; ?></span></li>
-                        </ul>
-                    </small>
-                </h1>
-            </div>
-            <div class="bottom1"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/kind-bottom.png" class="img-responsive" alt=""></div>
-        </div>
+        <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-main">
+                <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/banner/index'); ?>">ป้ายประชาสัมพันธ์</a></li>
+                <li class="breadcrumb-item active" aria-current="page"><?php echo $img_data->imgslide_title; ?></li>
+            </ol>
+        </nav>
+    </div>
 
-        <!-- Content -->
         <section class="content" id="banner-news-detail">
             <div class="container">
                 <div class="well">
@@ -47,7 +38,7 @@ function DateThai($strDate) {
                         <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/imgslide/' . $img_data->imgslide_id.'/thumb/'.$img_data->imgslide_picture)) { ?>
                         <img src="<?php echo Yii::app()->baseUrl; ?>/uploads/imgslide/<?php echo $img_data->imgslide_id.'/thumb/'.$img_data->imgslide_picture; ?>" class="img-responsive center-block img-rounded" alt="">
                         <?php } else { ?>
-                        <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/banner-slide1.jpg" class="img-responsive center-block img-rounded" alt="">
+                        <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/slide-news.jpg" class="img-responsive center-block img-rounded" alt="">
                         <?php } ?>
 
                     </div>

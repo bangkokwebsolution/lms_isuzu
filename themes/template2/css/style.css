@@ -465,7 +465,7 @@ header .dropdown-menu.user-message .panel.panel-default .panel-heading h3.panel-
 }
 
 header .dropdown-menu.user-message .panel.panel-default .panel-heading h3.panel-title span.pull-right a:hover {
-  color: #e6e6e6;
+  color: #F9F9F9;
 }
 
 header .dropdown-menu.user-message .panel.panel-default .panel-body {
@@ -505,7 +505,7 @@ header .dropdown-menu.user-message .panel.panel-default .panel-body ul li a .img
 }
 
 header .dropdown-menu.user-message .panel.panel-default .panel-footer {
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
   text-align: center;
@@ -1085,7 +1085,7 @@ hr {
 }
 
 #manual .well {
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
   border-radius: 10px;
   border: 0;
   text-align: center;
@@ -1310,7 +1310,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 /*#course-detail .row.step .well .progressbar li.active + li:after { background-color: #166ab2; height: 3px; }*/
 
 #course-detail .course-poster .well {
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
 }
 
 #course-detail .course-poster .well img {
@@ -1381,7 +1381,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #course-detail .course-teacher .teacher-detail .well {
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
   margin-top: 1.5em;
 }
 
@@ -1423,7 +1423,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #course-detail .course-popular .well {
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
 }
 
 #course-detail .course-popular .well ul li {
@@ -1705,7 +1705,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #banner-news .well {
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
   margin-bottom: 2em;
   -webkit-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
@@ -1761,7 +1761,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #banner-news-detail .well {
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
 }
 
 #banner-news-detail .well .news-detail-img {
@@ -1795,7 +1795,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
   position: relative;
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
   margin-bottom: 2em;
   height: 300px;
 }
@@ -1851,7 +1851,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #video-detail .well {
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
 }
 
 #video-detail .well .video-js {
@@ -1892,7 +1892,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #document .nav-tabs>li.active.f>a {
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
   color: #1a1a1a;
   font-weight: 600;
   font-size: 24px;
@@ -1914,7 +1914,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   border: 0;
-  background-color: #e6e6e65c;
+  background-color: #F9F9F95c;
 }
 
 #document .tab-content #doc-1 .well .doc-list {
@@ -1969,7 +1969,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 
 #link .well {
   border: 0;
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
   text-align: center;
   margin-bottom: 2em;
 }
@@ -2013,7 +2013,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #message .panel.panel-default .panel-heading a:hover {
-  color: #e6e6e6;
+  color: #F9F9F9;
 }
 
 #message .panel.panel-default .panel-heading .img-user {
@@ -2156,7 +2156,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #pre-exams .well {
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
 }
 
 .condition {
@@ -2182,7 +2182,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #exams .well .exams {
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
   border-radius: 10px;
   padding: 1em;
   margin-top: -2em;
@@ -2191,7 +2191,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #exams .well .exams .well.answer {
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
 }
 
 #exams .all-exams .exams-title {
@@ -2253,7 +2253,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #register .well form .well {
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
 }
 
 #register .well form .well .img-profile {
@@ -2325,7 +2325,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
   margin-top: -2em;
   -webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
 }
 
 #exams-finish .col-sm-8 .result h1 span {
@@ -2358,7 +2358,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #questionnaire .well.bg-greendark .well {
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
   margin-top: -2em;
 }
 
@@ -2910,7 +2910,7 @@ footer {
 }
 
 .titleprogree {
-  background-color: #e6e6e6;
+  background-color: #F9F9F9;
   border-radius: 15px;
   padding: 9px;
   width: 100px;
@@ -3758,7 +3758,7 @@ footer {
 }
 
 .pt-now {
-  border: 1px solid #e6e6e6;
+  border: 1px solid #F9F9F9;
   border-radius: 5px;
   color: #fff;
   background-color: var(--color-bulemain);
