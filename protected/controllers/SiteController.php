@@ -337,6 +337,27 @@ class SiteController extends Controller
 
 	public function actionIndex($login = null)
 	{
+		$dateNow  =date("d-m-Y");
+		$ip = $_SERVER['REMOTE_ADDR'];
+
+		$modelCount = Counter::model()->findAll();
+		foreach ($modelCount as $key => $value) {
+			$ip_Old = $value->ip_visit;
+			$date_Old = $value->date_visit;			 
+		}
+
+		if($ip_Old != $ip && $date_Old != $dateNow){
+			$count = new Counter;
+			$count->date_visit = $dateNow;
+			$count->ip_visit = $ip;
+			$count->visit = 1;
+			$count->save();
+		}
+
+		$result =  Yii::app()->db->createCommand("Select count(visit) as visit From counter")->queryAll();
+		$counter = implode(" ",$result[0]);
+
+
 		// echo Yii::app()->user->id;
   //       exit();
 		if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
@@ -373,83 +394,83 @@ class SiteController extends Controller
 
 		$this->layout = '//layouts/mainIndex';
 
-		if(Yii::app()->user->id != null){
-			// var_dump('expression');exit();
-			$userModel = Users::model()->findByPK(Yii::app()->user->id);
-			$userDepartment = $userModel->department_id;
+		// if(Yii::app()->user->id != null){
+		// 	// var_dump('expression');exit();
+		// 	$userModel = Users::model()->findByPK(Yii::app()->user->id);
+		// 	$userDepartment = $userModel->department_id;
 
-			$criteria = new CDbCriteria;
-			$criteria->with = array('orgchart');
-			if($userDepartment == 1){ 
-				$criteria->compare('depart_id',$userDepartment);
-			}else{
-				$criteria->addIncondition('depart_id',[1,$userDepartment]);
-			}
+		// 	$criteria = new CDbCriteria;
+		// 	$criteria->with = array('orgchart');
+		// 	if($userDepartment == 1){ 
+		// 		$criteria->compare('depart_id',$userDepartment);
+		// 	}else{
+		// 		$criteria->addIncondition('depart_id',[1,$userDepartment]);
+		// 	}
 
-			$criteria->compare('orgchart.active','y');
-			$criteria->compare('t.active','y');
-			$criteria->group = 'orgchart_id';
-			$modelOrgDep = OrgDepart::model()->findAll($criteria);
+		// 	$criteria->compare('orgchart.active','y');
+		// 	$criteria->compare('t.active','y');
+		// 	$criteria->group = 'orgchart_id';
+		// 	$modelOrgDep = OrgDepart::model()->findAll($criteria);
 
-			foreach ($modelOrgDep as $key => $value) {
-				$courseArr[] = $value->orgchart_id;
-			}
-			$criteria = new CDbCriteria;
-			$criteria->join = "INNER JOIN tbl_course_online AS course ON (course.course_id = t.course_id) ";
-			$criteria->join .= "INNER JOIN tbl_schedule as s ON ( s.id = t.schedule_id ) ";
-			$criteria->compare('user_id',Yii::app()->user->id);
-			$criteria->compare('course.active','y');
-			$criteria->compare('course.status','1');
-			$criteria->addCondition('s.training_date_end >= :date_now');
-			$criteria->params[':date_now'] = date('Y-m-d');
-			$criteria->group = 't.course_id';
-			$criteria->order = 't.schedule_id DESC';
-			$criteria->limit = 4;
-			$modelCourseTms = AuthCourse::model()->findAll($criteria);
+		// 	foreach ($modelOrgDep as $key => $value) {
+		// 		$courseArr[] = $value->orgchart_id;
+		// 	}
+		// 	$criteria = new CDbCriteria;
+		// 	$criteria->join = "INNER JOIN tbl_course_online AS course ON (course.course_id = t.course_id) ";
+		// 	$criteria->join .= "INNER JOIN tbl_schedule as s ON ( s.id = t.schedule_id ) ";
+		// 	$criteria->compare('user_id',Yii::app()->user->id);
+		// 	$criteria->compare('course.active','y');
+		// 	$criteria->compare('course.status','1');
+		// 	$criteria->addCondition('s.training_date_end >= :date_now');
+		// 	$criteria->params[':date_now'] = date('Y-m-d');
+		// 	$criteria->group = 't.course_id';
+		// 	$criteria->order = 't.schedule_id DESC';
+		// 	$criteria->limit = 4;
+		// 	$modelCourseTms = AuthCourse::model()->findAll($criteria);
 
 
-			$criteria = new CDbCriteria;
-			$criteria->with = array('course','course.CategoryTitle');
-			$criteria->addIncondition('orgchart_id',$courseArr);
-			$criteria->compare('course.active','y');
-			$criteria->compare('course.status','1');
-			$criteria->compare('categorys.cate_show','1');
-			$criteria->compare('categorys.cate_id','1');
-			$criteria->group = 'course.course_id';
-			$criteria->addCondition('course.course_date_end >= :date_now');
-			$criteria->params[':date_now'] = date('Y-m-d H:i');
-			$criteria->order = 'course.course_id';
-			// $criteria->limit = 5;
-			$modelOrgOld = OrgCourse::model()->findAll($criteria);
+		// 	$criteria = new CDbCriteria;
+		// 	$criteria->with = array('course','course.CategoryTitle');
+		// 	$criteria->addIncondition('orgchart_id',$courseArr);
+		// 	$criteria->compare('course.active','y');
+		// 	$criteria->compare('course.status','1');
+		// 	$criteria->compare('categorys.cate_show','1');
+		// 	$criteria->compare('categorys.cate_id','1');
+		// 	$criteria->group = 'course.course_id';
+		// 	$criteria->addCondition('course.course_date_end >= :date_now');
+		// 	$criteria->params[':date_now'] = date('Y-m-d H:i');
+		// 	$criteria->order = 'course.course_id';
+		// 	// $criteria->limit = 5;
+		// 	$modelOrgOld = OrgCourse::model()->findAll($criteria);
 
-			$criteria = new CDbCriteria;
-			$criteria->with = array('course','course.CategoryTitle');
-			$criteria->addIncondition('orgchart_id',$courseArr);
-			$criteria->compare('course.active','y');
-			$criteria->compare('course.status','1');
-			$criteria->compare('categorys.cate_show','1');
-			$criteria->group = 'course.cate_id';
-			$criteria->addCondition('course.course_date_end >= :date_now');
-			$criteria->params[':date_now'] = date('Y-m-d H:i');
-			$criteria->order = 'course.course_id';
-			// $criteria->limit = 5;
-			$modelCat = OrgCourse::model()->findAll($criteria);
+		// 	$criteria = new CDbCriteria;
+		// 	$criteria->with = array('course','course.CategoryTitle');
+		// 	$criteria->addIncondition('orgchart_id',$courseArr);
+		// 	$criteria->compare('course.active','y');
+		// 	$criteria->compare('course.status','1');
+		// 	$criteria->compare('categorys.cate_show','1');
+		// 	$criteria->group = 'course.cate_id';
+		// 	$criteria->addCondition('course.course_date_end >= :date_now');
+		// 	$criteria->params[':date_now'] = date('Y-m-d H:i');
+		// 	$criteria->order = 'course.course_id';
+		// 	// $criteria->limit = 5;
+		// 	$modelCat = OrgCourse::model()->findAll($criteria);
 
-		} else {
-			$criteria = new CDbCriteria;
-			$criteria->with = array('Schedules');
-			$criteria->compare('active','y');
-			$criteria->compare('lang_id',$langId);
-			$criteria->compare('status','1');
-			// $criteria->order = 'update_date  DESC';
-			// $criteria->compare('lang_id',Yii::app()->session['lang']);
-			$criteria->order = 'course.course_id,Schedules.id desc';
-			$criteria->addCondition('Schedules.id IS NULL');
-			$criteria->addCondition('course_date_end >= :date_now');
-			$criteria->params[':date_now'] = date('Y-m-d H:i');
-			$criteria->limit = 4;
-			$model = CourseOnline::model()->findAll($criteria); 
-		}
+		// } else {
+		// 	$criteria = new CDbCriteria;
+		// 	$criteria->with = array('Schedules');
+		// 	$criteria->compare('active','y');
+		// 	$criteria->compare('lang_id',$langId);
+		// 	$criteria->compare('status','1');
+		// 	// $criteria->order = 'update_date  DESC';
+		// 	// $criteria->compare('lang_id',Yii::app()->session['lang']);
+		// 	$criteria->order = 'course.course_id,Schedules.id desc';
+		// 	$criteria->addCondition('Schedules.id IS NULL');
+		// 	$criteria->addCondition('course_date_end >= :date_now');
+		// 	$criteria->params[':date_now'] = date('Y-m-d H:i');
+		// 	$criteria->limit = 4;
+		// 	$model = CourseOnline::model()->findAll($criteria); 
+		// }
 
 // 		//News
 // 		$news_data = News::model()->findAll(array(
@@ -459,11 +480,11 @@ class SiteController extends Controller
 // 		));
 
 		//CourseOnline
-		$course_online = CourseOnline::model()->findAll(array(
-			'condition'=>'active="y"',
-			'order'=>'create_date DESC',
-			'limit'=>'4',
-		));
+		// $course_online = CourseOnline::model()->findAll(array(
+		// 	'condition'=>'active="y"',
+		// 	'order'=>'create_date DESC',
+		// 	// 'limit'=>'4',
+		// ));
 
 // 		$coursevodaudit = CourseVod::model()->findAll(array(
 // 				'condition' => 'name="ธรรมาภิบาลภาคธุรกิจ" or name="กลยุทธ์ดึงดูดลูกค้าออนไลน์" or name="เริ่มต้นธุรกิจแบบมืออาชีพ" or name="หลักสูตร e-Commerce"',
@@ -498,7 +519,52 @@ class SiteController extends Controller
   //                   setcookie('checkbox',$cookie,time()+3600*24*356);
   //               }
 		// $this->render('index');
-		$this->render('index',array('label'=>$label,'model'=>$model,'modelCourseTms'=>$modelCourseTms,'modelOrg'=>$modelOrg,'labelCourse' => $labelCourse,'modelCat' => $modelCat,'courseArr' => $courseArr, 'course_online'=>$course_online, 'counter'=>$counter));
+
+		if(!Yii::app()->user->isGuest){
+
+			// $course_online = new CourseOnline('search');
+			// $course_online->unsetAttributes();
+			// $userObject = Users::model()->findByPk(Yii::app()->user->id);
+
+			if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+				$langId = Yii::app()->session['lang'] = 1;
+			}else{
+				$langId = Yii::app()->session['lang'];
+			}
+			// if($userObject->position_id != 4){
+			// 	if($userObject->orgposition){
+			// 		$courses = $userObject->orgposition;
+			// 	}
+			// }else{
+			// 	$criteria = new CDbCriteria;
+			// 	$criteria->compare('title_all','General');
+			// 	$courses = OrgRoot::model()->findAll($criteria);
+			// }
+
+			// foreach ($courses as $key => $cate) {
+			// 	$courseArr[] = $cate->course->CategoryTitle->cate_id;
+			// }
+			// $courseArray = array();
+			// if(!empty($courses)){
+			// 	$courseArray = CHtml::listData($courses,'course_id','course_id');
+			// }
+			// $course_online->course_id_array = array_values($courseArray);
+			$course = CourseOnline::model()->with("CategoryTitle")->findAll(array("condition" => "course.active='y' and course.status ='1' and categorys.active='y' and categorys.cate_show='1' and course.lang_id = ".$langId,"order" => 'sortOrder' ));
+		}else{
+
+			$criteria = new CDbCriteria;
+			$criteria->compare('course_id',$id);
+			$criteria->compare('active','y');
+			$criteria->compare('status',1);
+			$criteria->compare('lang_id',$langId);
+			// $criteria->limit = 8;
+			$course = CourseOnline::model()->findAll($criteria);
+		}
+
+		// var_dump($course);exit();
+
+
+		$this->render('index',array('label'=>$label,'model'=>$model,'modelCourseTms'=>$modelCourseTms,'modelOrg'=>$modelOrg,'labelCourse' => $labelCourse,'modelCat' => $modelCat,'courseArr' => $courseArr, 'course_online'=>$course, 'counter'=>$counter));
 
 	}
 

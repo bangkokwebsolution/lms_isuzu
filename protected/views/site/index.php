@@ -10,6 +10,8 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $problem_of_use= "Problem of use";
     $Number_of_website_visitors= "Website visitors";  
     $peple= "Peple"; 
+    $status= "Status"; 
+    $edu= "Not study"; 
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -20,7 +22,9 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $QaA= "คำถามที่พบบ่อย"; 
     $problem_of_use= "ปัญหาการใช้งาน";
     $Number_of_website_visitors= "จำนวนผู้เข้าชมเว็บไซต์";
-    $peple= "คน";    
+    $peple= "คน";
+    $status= "สถานะ"; 
+    $edu= "ยังไม่เรียน";     
 }
 ?>
 <!-- // -->
@@ -218,234 +222,224 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     </section>
 
 
-    <?php if (Yii::app()->user->id != null) { ?>
+    <!--start course-->
+    <?php if(Yii::app()->user->id != null){ ?>
         <section class="course">
             <div class="container">
                 <div class="page-header">
                     <h1>
                         <span class="linehead"><?= $label->label_courseOur ?></span> <span class="pull-right"><a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/course/index'); ?>" role="button"><?= $label->label_viewAll ?> <i class="fa fa-angle-right" aria-hidden="true"></i></a></span></h1>
                     </div>
-
                     <?php foreach ($course_online as $key => $value) {
-                        if ($value->status == 1) {
+                        if($value->status == 1){
 
-                            if ($value->lang_id != 1) {
-                                $value->course_id = $value->parent_id;
-                            }
-                            if (!$flag) {
-                                $modelChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $value->course_id, 'order' => 'course_id'));
-                                if ($modelChildren) {
-                                    $value->course_title = $modelChildren->course_title;
-                                    $value->course_short_title = $modelChildren->course_short_title;
-                                    $value->course_detail = $modelChildren->course_detail;
-                                    $value->course_picture = $modelChildren->course_picture;
-                                }
-                            }
-
-                            if ($value->parent_id != 0) {
-                                $value->course_id = $value->parent_id;
-                            }
-
-                            $expireDate = Helpers::lib()->checkCourseExpire($value);
-
-                            if ($expireDate) {
-
-                                $date_start = date("Y-m-d H:i:s", strtotime($value->course_date_start));
-                                $dateStartStr = strtotime($date_start);
-                                $currentDate = strtotime(date("Y-m-d H:i:s"));
-
-                                if ($currentDate >= $dateStartStr) {
-
-                                    $chk = Helpers::lib()->getLearn($value->course_id);
-                                    if ($chk) {
-                                        $expireUser = Helpers::lib()->checkUserCourseExpire($value);
-                                        if (!$expireUser) {
-
-                                            $evnt = 'onclick="alertMsg(\'' . $label->label_swal_youtimeout . '\',\'\',\'error\')"';
-                                            $url = 'javascript:void(0)';
-                                        } else {
-
-                                            $evnt = '';
-                                            $url = Yii::app()->createUrl('course/detail/', array('id' => $value->course_id));
-                                        }
-                                    } else {
-                                        $evnt = 'data-toggle="modal"';
-                                        $url = '#modal-startcourse' . $value->course_id;
-                                    }
-                                } else {
-
-                                    $evnt = 'onclick="alertMsg(\'ระบบ\',\'' . $labelcourse->label_swal_coursenoopen . '\',\'error\')"';
-                                    $url = 'javascript:void(0)';
-                                }
-                            } elseif ($expireDate == 3) {
-                                $evnt = 'onclick="alertMsg(\'ระบบ\',\'' . $labelcourse->label_swal_coursenoopen . '\',\'error\')"';
-                                $url = 'javascript:void(0)';
-                            } else {
-                                $evnt = 'onclick="alertMsg(\'ระบบ\',\'' . $labelcourse->label_swal_timeoutcourse . '\',\'error\')"';
-                                $url = 'javascript:void(0)';
-                            }
-
-                            ?>
-
-                            <!-- new course -->
-
-                            <div class="col-lg-3 col-md-3 ">
-                                <div class="item">
-                                    <div class="cours-card">
-                                        <div class="card">
-                                            <a href="<?= $url; ?>" <?= $evnt ?>>
-                                                <div class="course-boximg">
-                                                    <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png" alt="">
-                                                </div>
-                                            </a>
-                                            <div class="card-body" style="padding: 20px;">
-                                                <a href="course-detail.php">
-                                                    <h5 class="card-title"><?= $value->course_title; ?></h5>
-                                                </a>
-                                                <span class="card-text-1">สถานะ : <a href="#" class="btn btn-sm btn-secondary">ยังไม่เรียน</a> </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                    <!-- <div class="col-lg-3 col-md-3 coursebox">
-                                            <div class="well text-center">
-                                                <a href="<?= $url; ?>" <?= $evnt ?>>
-
-                                                    <?php $idCourse_img = (!$flag) ? $modelChildren->course_id : $value->course_id; ?>
-                                                    <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/courseonline/' . $idCourse_img . '/thumb/' . $value->course_picture)) { ?>
-
-                                                        <div class="course-img" style="background-image: url(<?php echo Yii::app()->baseUrl; ?>/uploads/courseonline/<?php echo $idCourse_img . '/thumb/' . $value->course_picture; ?>);">
-                                                        </div>
-                                                    <?php } else { ?>
-                                                        <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/img/book.png);"></div>
-                                                    <?php } ?>
-                                                    <div class="course-detail2">
-                                                        <h4 class="text11"><?= $value->course_title; ?></h4>
-                                                        <p class="p"><?= $value->course_short_title; ?></p>
-                                                        <hr class="line-course">
-
-                                                        <p class="p" style="min-height: 0em; margin-top: 0px; margin-bottom: 0px;"> <?= $labelcourse->label_startLearn ?> <?php echo Helpers::lib()->DateLangTms($value->course_date_start, Yii::app()->session['lang']); ?> </p>
-                                                        <p class="p" style="min-height: 0em; margin-top: 0px; margin-bottom: 0px;"> <?= $labelcourse->label_endLearn ?> <?php echo Helpers::lib()->DateLangTms($value->course_date_end, Yii::app()->session['lang']); ?></p>
-
-
-                                                    </div>
-
-                                                </a>
-                                            </div>
-                                        </div>
-                                    -->
-                                    <?php
-
-                                }
-                            }
-                            ?>
-
-
-                        </div>
-
-                    </section>
-
-                <?php } ?>
-
-                <section class="news">
-                    <div class="container">
-                        <div class="page-header">
-                            <h1><span class="linehead"><?= $label->label_news ?></span> <span class="pull-right"><a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/news/index'); ?>" role="button"><?= $label->label_viewAll ?> <i class="fa fa-angle-right" aria-hidden="true"></i></a></span></h1>
-                        </div>
-                        <?php
-                        $criteria = new CDbCriteria;
-                        $criteria->compare('active', y);
-                        $criteria->compare('lang_id', $langId);
-                        $criteria->order = 'sortOrder ASC';
-                        $criteria->limit = 6;
-                        $news = News::model()->findAll($criteria);
-                        ?>
-                        <?php foreach ($news as $key => $value) {
-                            if ($value->cms_type_display == 'url' && !empty($value->cms_link)) {
-                                $arr = json_decode($value->cms_link);
-                                $link = $arr[0];
-                                $new_tab = ($arr[1] == '0') ? '' : 'target="_blank"';
-                            } else {
-                                $link = $this->createUrl('news/detail/', array('id' => $value->cms_id));
-                            }
-                            ?>
-                            <div class="col-sm-4">
-                                <div class="well">
-                                    <a href="<?php echo $link; ?>" <?= $new_tab ?>">
-                                        <div class="row">
-                                            <div class="col-sm-5">
-
-                                                <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/news/' . $value->cms_id . '/thumb/' . $value->cms_picture)) { ?>
-
-                                                    <div class="news-img" style="background-image: url(<?php echo Yii::app()->homeUrl; ?>uploads/news/<?php echo $value->cms_id ?>/thumb/<?php echo $value->cms_picture ?>);">
-                                                    </div>
-
-                                                <?php } else { ?>
-
-                                                    <div class="news-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/news.jpg);">
-                                                    </div>
-
-                                                <?php } ?>
-
-
-                                            </div>
-                                            <div class="col-sm-7">
-                                                <h4 class="text22"><?php echo $value->cms_title ?></h4>
-                                                <p class="p2"><?php echo $value->cms_short_title ?></p>
-                                                <div class="news-date">
-                                                    <small><i class="far fa-clock"></i> <?php echo Helpers::lib()->DateLangTms($value->update_date, Yii::app()->session['lang']); ?></small>
-                                                </div>
-                                                <!-- <div class="news-more"><a href="<?php echo $link; ?>" <?= $new_tab ?>" class="more">อ่านเพิ่มเติม <i class="fas fa-arrow-right"></i></a></div> -->
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-
-                            <?php
+                           if($value->lang_id != 1){
+                            $value->course_id = $value->parent_id;
                         }
-                        ?>
+                        if(!$flag){
+                            $modelChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = '.$langId.' AND parent_id = ' . $value->course_id, 'order' => 'course_id'));
+                            if($modelChildren){
+                                $value->course_title = $modelChildren->course_title;
+                                $value->course_short_title = $modelChildren->course_short_title;
+                                $value->course_detail = $modelChildren->course_detail;
+                                $value->course_picture = $modelChildren->course_picture;
+                            }
+                        }
+
+                        if($value->parent_id != 0){
+                            $value->course_id = $value->parent_id;
+                        }
+
+                        $expireDate = Helpers::lib()->checkCourseExpire($value);
+                        if($expireDate){
+
+                            $date_start = date( "Y-m-d H:i:s", strtotime($value->course_date_start));
+                            $dateStartStr = strtotime($date_start);
+                            $currentDate = strtotime(date("Y-m-d H:i:s"));
+
+                            if($currentDate >= $dateStartStr){
+
+                                $chk = Helpers::lib()->getLearn($value->course_id);
+                                if ($chk) {
+                                 $expireUser = Helpers::lib()->checkUserCourseExpire($value);
+                                 if (!$expireUser) {
+
+                                   $evnt = 'onclick="alertMsg(\''.$label->label_swal_youtimeout .'\',\'\',\'error\')"';
+                                   $url = 'javascript:void(0)';
+                               }else{
+
+                                  $evnt = '';
+                                  $url = Yii::app()->createUrl('course/detail/', array('id' => $value->course_id));
+                              }
+                          }else{
+                           $evnt = 'data-toggle="modal"';
+                           $url = '#modal-startcourse'.$value->course_id;
+                           // $url = '#modal-login';
+
+                              // $evnt = '';
+                              //   $url = Yii::app()->createUrl('course/detail/', array('id' => $value->course_id));
+                       }
+                   }else{
+
+                    $evnt = 'onclick="alertMsg(\'ระบบ\',\''. $labelcourse->label_swal_coursenoopen.'\',\'error\')"';
+                    $url = 'javascript:void(0)';
+                }
+
+            }elseif ($expireDate == 3) {
+                $evnt = 'onclick="alertMsg(\'ระบบ\',\''.$labelcourse->label_swal_coursenoopen.'\',\'error\')"';
+                $url = 'javascript:void(0)';
+            }else {
+                $evnt = 'onclick="alertMsg(\'ระบบ\',\''.$labelcourse->label_swal_timeoutcourse.'\',\'error\')"';
+                $url = 'javascript:void(0)';
+            }
+                            // $evnt = '';
+                          //             $url = Yii::app()->createUrl('course/detail/', array('id' => $value->course_id));
+            ?>
+
+            <!-- new course -->
+
+            <div class="col-lg-3 col-md-3 ">
+                <div class="item">
+                    <div class="cours-card">
+                        <div class="card">
+                         <!--  <a href="<?= $url; ?>" <?= $evnt ?>> -->
+                          <a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)); ?>"
+                            class="course_site">
+                            <!-- Check image -->
+                            <?php $idCourse_img = (!$flag)? $modelChildren->course_id: $value->course_id; ?>
+                            <?php if ($value->course_picture != null) { ?>
+                             <div class="course-boximg">
+                                <img src="<?php echo Yii::app()->baseUrl; ?>/uploads/courseonline/<?= $idCourse_img ?>/thumb/<?= $value->course_picture?>" alt="">
+                            </div>
+                        <?php }else{ ?>
+                            <div class="course-boximg">
+                                <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png" alt="">
+                            </div>
+                        <?php } ?>
+
+                        <div class="card-body" style="padding: 20px;">
+                            <a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)); ?>">
+                                <h5 class="card-title"><?= $value->course_title; ?></h5>
+                            </a>
+                            <span class="card-text-1"><?=$status?> : <a class="btn btn-sm btn-secondary"><?=$edu?></a> </span>
+                        </div>
                     </div>
-                </section>
+                </div>
+            </div>
+        </div>
 
+        <?php
 
-                <?php foreach ($course_online as $key => $value) {
+                    }//condition status
+                }
+                ?>
 
-                    if ($value->status == 1) {
-                        $chk = Helpers::lib()->getLearn($value->course_id);
+            </div>
+        </div>
 
-                        if (!$chk) { ?>
+    </div>
 
-                            <div class="modal fade" id="modal-startcourse<?= $value->course_id ?>">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title"><?= $labelcourse->label_learnlesson ?></h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-sm-8 col-sm-offset-2 text-center">
-                                                    <h3><?= (Yii::app()->user->id) ? $labelcourse->label_swal_regiscourse : $labelcourse->label_detail; ?></h3>
-                                                    <h2>"<?= $value->course_title ?>"</h2>
-                                                    <h3>(<?= $value->CategoryTitle->cate_title ?>)</h3>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <a class="btn btn-success" href="<?php echo Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)) ?>"><?= UserModule::t("Ok") ?></a>
-                                            <a class="btn btn-warning" href="#" class="close" data-dismiss="modal" aria-hidden="true"><?= UserModule::t("Cancel") ?></a>
-                                        </div>
+</section>
+<?php } ?>
+<!--end course-->
+
+<section class="news">
+    <div class="container">
+        <div class="page-header">
+            <h1><span class="linehead"><?= $label->label_news ?></span> <span class="pull-right"><a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/news/index'); ?>" role="button"><?= $label->label_viewAll ?> <i class="fa fa-angle-right" aria-hidden="true"></i></a></span></h1>
+        </div>
+        <?php
+        $criteria = new CDbCriteria;
+        $criteria->compare('active', y);
+        $criteria->compare('lang_id', $langId);
+        $criteria->order = 'sortOrder ASC';
+        $criteria->limit = 6;
+        $news = News::model()->findAll($criteria);
+        ?>
+        <?php foreach ($news as $key => $value) {
+            if ($value->cms_type_display == 'url' && !empty($value->cms_link)) {
+                $arr = json_decode($value->cms_link);
+                $link = $arr[0];
+                $new_tab = ($arr[1] == '0') ? '' : 'target="_blank"';
+            } else {
+                $link = $this->createUrl('news/detail/', array('id' => $value->cms_id));
+            }
+            ?>
+            <div class="col-sm-4">
+                <div class="well">
+                    <a href="<?php echo $link; ?>" <?= $new_tab ?>">
+                        <div class="row">
+                            <div class="col-sm-5">
+
+                                <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/news/' . $value->cms_id . '/thumb/' . $value->cms_picture)) { ?>
+
+                                    <div class="news-img" style="background-image: url(<?php echo Yii::app()->homeUrl; ?>uploads/news/<?php echo $value->cms_id ?>/thumb/<?php echo $value->cms_picture ?>);">
                                     </div>
+
+                                <?php } else { ?>
+
+                                    <div class="news-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/news.jpg);">
+                                    </div>
+
+                                <?php } ?>
+
+
+                            </div>
+                            <div class="col-sm-7">
+                                <h4 class="text22"><?php echo $value->cms_title ?></h4>
+                                <p class="p2"><?php echo $value->cms_short_title ?></p>
+                                <div class="news-date">
+                                    <small><i class="far fa-clock"></i> <?php echo Helpers::lib()->DateLangTms($value->update_date, Yii::app()->session['lang']); ?></small>
+                                </div>
+                                <!-- <div class="news-more"><a href="<?php echo $link; ?>" <?= $new_tab ?>" class="more">อ่านเพิ่มเติม <i class="fas fa-arrow-right"></i></a></div> -->
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <?php
+        }
+        ?>
+    </div>
+</section>
+
+
+<?php foreach ($course_online as $key => $value) {
+
+    if ($value->status == 1) {
+        $chk = Helpers::lib()->getLearn($value->course_id);
+
+        if (!$chk) { ?>
+
+            <div class="modal fade" id="modal-startcourse<?= $value->course_id ?>">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title"><?= $labelcourse->label_learnlesson ?></h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-sm-8 col-sm-offset-2 text-center">
+                                    <h3><?= (Yii::app()->user->id) ? $labelcourse->label_swal_regiscourse : $labelcourse->label_detail; ?></h3>
+                                    <h2>"<?= $value->course_title ?>"</h2>
+                                    <h3>(<?= $value->CategoryTitle->cate_title ?>)</h3>
                                 </div>
                             </div>
+                        </div>
+                        <div class="modal-footer">
+                            <a class="btn btn-success" href="<?php echo Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)) ?>"><?= UserModule::t("Ok") ?></a>
+                            <a class="btn btn-warning" href="#" class="close" data-dismiss="modal" aria-hidden="true"><?= UserModule::t("Cancel") ?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                        <?php }
+        <?php }
     } //condition status
 } ?>
+
 <!--end news-->
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
