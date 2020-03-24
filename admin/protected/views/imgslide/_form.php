@@ -15,57 +15,58 @@
 			<div class="form">
 				<?php $form = $this->beginWidget('AActiveForm', array(
 					'id'=>'imgslide-form',
-			        'enableClientValidation'=>true,
-			        'clientOptions'=>array(
-			            'validateOnSubmit'=>true
-			        ),
-			         'errorMessageCssClass' => 'label label-important',
-			        'htmlOptions' => array('enctype' => 'multipart/form-data')
+					'enableClientValidation'=>true,
+					'clientOptions'=>array(
+						'validateOnSubmit'=>true
+					),
+					'errorMessageCssClass' => 'label label-important',
+					'htmlOptions' => array('enctype' => 'multipart/form-data')
 				)); ?>
 				<p class="note">ค่าที่มี <?php echo $this->NotEmpty();?> จำเป็นต้องใส่ให้ครบ</p>
-					<div class="row">
-						<?php echo $form->labelEx($model,'imgslide_title'); ?>
-						<?php echo $form->textField($model,'imgslide_title',array('size'=>60,'maxlength'=>250, 'class'=>'span8')); ?>
-						<?php echo $form->error($model,'imgslide_title'); ?>
-					</div>
-					<div class="row">
-						<?php echo $form->labelEx($model,'imgslide_detail'); ?>
-						<?php echo $form->textarea($model,'imgslide_detail',array('rows' => '3', 'class'=>'span8')); ?>
-						<?php echo $form->error($model,'imgslide_detail'); ?>
-					</div>
-				    <div class="row">
+				<div class="row">
+					<?php echo $form->labelEx($model,'imgslide_title'); ?>
+					<?php echo $form->textField($model,'imgslide_title',array('size'=>60,'maxlength'=>250, 'class'=>'span8')); ?>
+					<?php echo $form->error($model,'imgslide_title'); ?>
+				</div>
+				<div class="row">
+					<?php echo $form->labelEx($model,'imgslide_detail'); ?>
+					<?php echo $form->textarea($model,'imgslide_detail',array('rows' => '3', 'class'=>'span8')); ?>
+					<?php echo $form->error($model,'imgslide_detail'); ?>
+				</div>
+
+				<div class="row">
 				    <!-- 	<font color="#990000">
 							<?php echo $this->NotEmpty();?> ตัวอย่าง http://www.cpdland.com/
 						</font> -->
-				    	<?php echo $form->labelEx($model,'imgslide_link'); ?>
+						<?php echo $form->labelEx($model,'imgslide_link'); ?>
 						<?php echo $form->textField($model,'imgslide_link',array('size'=>60,'maxlength'=>250, 'class'=>'span8')); ?>
 						<?php echo $form->error($model,'imgslide_link'); ?>
 						
 					</div>
 					<div class="row">
-					   <?php echo $form->labelEx($model,'gallery_type_id'); ?>
+						<?php echo $form->labelEx($model,'gallery_type_id'); ?>
 
-						<?php echo $form->dropDownList($model, 'gallery_type_id', CHtml::listData(GalleryType::model()->findAll(), 'id', 'name_gallery_type'),array('class'=>'span5')); ?>
+						<?php echo $form->dropDownList($model, 'gallery_type_id', CHtml::listData(GalleryType::model()->findAll(), 'id', 'name_gallery_type'),array('class'=>'span5','disable_search' => false,'empty' => "--เลือก--")); ?>
 
 						<?php echo $form->error($model,'gallery_type_id'); ?>
 					</div>
 					<div class="row">
-					<?php
-					if(isset($imageShow)){
-						echo CHtml::image(Yush::getUrl($model, Yush::SIZE_THUMB, $imageShow), $imageShow,array(
-							"class"=>"thumbnail"
-						));
-					}
-					?>
+						<?php
+						if(isset($imageShow)){
+							echo CHtml::image(Yush::getUrl($model, Yush::SIZE_THUMB, $imageShow), $imageShow,array(
+								"class"=>"thumbnail"
+							));
+						}
+						?>
 					</div>
 					<br>
 
 					<div class="row">
 						<?php echo $form->labelEx($model,'imgslide_picture'); ?>
 						<div class="fileupload fileupload-new" data-provides="fileupload">
-						  	<div class="input-append">
-						    	<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-default btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><?php echo $form->fileField($model, 'imgslide_picture'); ?></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
-						  	</div>
+							<div class="input-append">
+								<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-default btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><?php echo $form->fileField($model, 'imgslide_picture'); ?></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+							</div>
 						</div>
 						<?php echo $form->error($model,'imgslide_picture'); ?>
 					</div>
@@ -77,15 +78,16 @@
 					</div>
 					<?php if ($notsave == 1) { ?>
 						<p class="note"><font color="red">*ขนาดของรูปภาพไม่ถูกต้อง </font></p>
-						 <?php }else{} ?> 
+					<?php }else{} ?> 
 					<br>
 
 					<div class="row buttons">
 						<?php echo CHtml::tag('button',array('class' => 'btn btn-primary btn-icon glyphicons ok_2'),'<i></i>บันทึกข้อมูล');?>
 					</div>
-				<?php $this->endWidget(); ?>
-			</div><!-- form -->
+					<?php $this->endWidget(); ?>
+				</div><!-- form -->
+			</div>
 		</div>
 	</div>
-</div>
-<!-- END innerLR -->
+	<!-- END innerLR -->
+

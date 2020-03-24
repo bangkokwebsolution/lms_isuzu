@@ -138,12 +138,12 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 $criteriaimg = new CDbCriteria;
                 $criteriaimg->compare('active', y);
                 $criteriaimg->compare('lang_id', 1);
-                $criteriaimg->order = 'update_date  DESC';
+                // $criteriaimg->order = 'update_date  DESC';
                 $image = Imgslide::model()->findAll($criteriaimg);
                 ?>
                 <div id="carousel-id" class="carousel slide" data-ride="carousel" data-interval="false">
 
-                    <ol class="carousel-indicators">
+                    <!-- <ol class="carousel-indicators">
 
                         <?php if (!isset($image[0])) { ?>
                             <li data-target="#carousel-id" data-slide-to="0" class="active"></li>
@@ -158,177 +158,190 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             }
                         }
                         ?>
-                    </ol>
+                    </ol> -->
 
                     <div class="carousel-inner">
-                        <?php if (!isset($image[0])) { ?>
 
-                            <div class="item active">
-                                <a href="#" class="fresco"> <img alt="news-thoresen" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/slide-news.jpg"></a>
-                            </div>
-                            <div class="item">
-                                <a href="#" class="fresco"> <img alt="news-thoresen" src="https://via.placeholder.com/1364x580.jpg"> </a>
-                            </div>
+                        <?php 
+                        foreach ($image as $key => $value) { 
+                          $criteriaType = new CDbCriteria;
+                          $criteriaType->compare('active', y);
+                          $criteriaType->compare('gallery_type_id', $value->gallery_type_id);
+                          $galleryType = Gallery::model()->findAll($criteriaType);
+                          ?>
 
-                        <?php } else {
+                          <div class="item <?php if ($key == 0) echo 'active'; ?>">
+                            <?php 
+                            if($value->imgslide_link == "" && $value->gallery_type_id != null) {
+                             foreach ($galleryType as $data) { ?>
+                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/uploads/gallery/images/<?= $data->image; ?>" class="liquid-lp-read-more zoom fresco" data-fresco-group="ld-pf-1" >
+                                <?php } ?>
+                            <?php }else if($value->imgslide_link != "" && $value->gallery_type_id == null){ ?>
+                                <a href="<?=$value->imgslide_link;  ?>" target="_blank">
+                                <?php } ?>
 
-                            foreach ($image as $key => $value) { ?>
-                                <div class="item <?php if ($key == 0) echo 'active'; ?>">
-                                    <a class="fresco" href="<?= empty($value->imgslide_link) ? 'javascript:void(0)' : $value->imgslide_link;  ?>" target="_blank">
-                                        <img alt="<?= $value->imgslide_title; ?>" src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>">
-                                    </a>
-                                </div>
+                                <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" alt="">
+                            </a>
+                        </div>
 
-                                <?php
-                            }
-                        } ?>
-                    </div>
-                    <a class="left carousel-control" href="#carousel-id" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-                    <a class="right carousel-control" href="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-                </div>
-            </div>
 
-            <?php
-            $criteriavdo = new CDbCriteria;
-            $criteriavdo->compare('active', 'y');
-            $criteriavdo->order = 'vdo_id  DESC';
-            $vdoshow = vdo::model()->find($criteriavdo);
-            ?>
-            <div class="col-sm-4">
-                <div class="page-header">
-                    <h1><span class="linehead"><?= $label->label_vdo ?></span> <span class="pull-right"><a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/video/index'); ?>" role="button"><?= $label->label_viewAll ?> <i class="fa fa-angle-right" aria-hidden="true"></i></a></span></h1>
-                </div>
-                <?php
-                if ($vdoshow->vdo_type == 'link') {
-                    $vdoName = $vdoshow->vdo_path;
-                    $new_link = str_replace("watch?v=", "embed/", $vdoName);
-                    $show = '<iframe class="embed-responsive-item" width="100%" height="88"  src="' . $new_link . '" allowfullscreen style="box-shadow:1px 4px 6px #767676"></iframe>';
-                    echo $show;
-                    $href = 'href="' . $vdoshow->vdo_path . '" target="_blank"';
-                } else {
-                    ?>
-                    <video class="video-js" controls preload="auto" style="width: 100%; height: 315;">
-                        <source src="<?php echo Yii::app()->homeurl . 'admin/uploads/' . $vdoshow->vdo_path; ?>" type='video/mp4'>
-                            <p class="vjs-no-js">
-                                To view this video please enable JavaScript, and consider upgrading to a web browser that
-                                <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-                            </p>
-                        </video>
                     <?php } ?>
+                        <!-- <?php 
+                        foreach ($image as $key => $value) { ?>
+                            <div class="item <?php if ($key == 0) echo 'active'; ?>">
+                                <a class="fresco" href="<?= empty($value->imgslide_link) ? 'javascript:void(0)' : $value->imgslide_link;  ?>" target="_blank">
+                                    <img alt="<?= $value->imgslide_title; ?>" src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>">
+                                </a>
+                            </div>
+
+                            <?php } ?> -->
+                        </div>
+                        <a class="left carousel-control" href="#carousel-id" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                        <a class="right carousel-control" href="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+                    </div>
                 </div>
 
-            </div>
-        </div>
-    </section>
-
-
-    <!--start course-->
-    <?php if(Yii::app()->user->id != null){ ?>
-        <section class="course">
-            <div class="container">
-                <div class="page-header">
-                    <h1>
-                        <span class="linehead"><?= $label->label_courseOur ?></span> <span class="pull-right"><a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/course/index'); ?>" role="button"><?= $label->label_viewAll ?> <i class="fa fa-angle-right" aria-hidden="true"></i></a></span></h1>
+                <?php
+                $criteriavdo = new CDbCriteria;
+                $criteriavdo->compare('active', 'y');
+                $criteriavdo->order = 'vdo_id  DESC';
+                $vdoshow = vdo::model()->find($criteriavdo);
+                ?>
+                <div class="col-sm-4">
+                    <div class="page-header">
+                        <h1><span class="linehead"><?= $label->label_vdo ?></span> <span class="pull-right"><a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/video/index'); ?>" role="button"><?= $label->label_viewAll ?> <i class="fa fa-angle-right" aria-hidden="true"></i></a></span></h1>
                     </div>
-                    <?php foreach ($course_online as $key => $value) {
-                        if($value->status == 1){
+                    <?php
+                    if ($vdoshow->vdo_type == 'link') {
+                        $vdoName = $vdoshow->vdo_path;
+                        $new_link = str_replace("watch?v=", "embed/", $vdoName);
+                        $show = '<iframe class="embed-responsive-item" width="100%" height="88"  src="' . $new_link . '" allowfullscreen style="box-shadow:1px 4px 6px #767676"></iframe>';
+                        echo $show;
+                        $href = 'href="' . $vdoshow->vdo_path . '" target="_blank"';
+                    } else {
+                        ?>
+                        <video class="video-js" controls preload="auto" style="width: 100%; height: 315;">
+                            <source src="<?php echo Yii::app()->homeurl . 'admin/uploads/' . $vdoshow->vdo_path; ?>" type='video/mp4'>
+                                <p class="vjs-no-js">
+                                    To view this video please enable JavaScript, and consider upgrading to a web browser that
+                                    <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                                </p>
+                            </video>
+                        <?php } ?>
+                    </div>
 
-                           if($value->lang_id != 1){
-                            $value->course_id = $value->parent_id;
-                        }
-                        if(!$flag){
-                            $modelChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = '.$langId.' AND parent_id = ' . $value->course_id, 'order' => 'course_id'));
-                            if($modelChildren){
-                                $value->course_title = $modelChildren->course_title;
-                                $value->course_short_title = $modelChildren->course_short_title;
-                                $value->course_detail = $modelChildren->course_detail;
-                                $value->course_picture = $modelChildren->course_picture;
+                </div>
+            </div>
+        </section>
+
+
+        <!--start course-->
+        <?php if(Yii::app()->user->id != null){ ?>
+            <section class="course">
+                <div class="container">
+                    <div class="page-header">
+                        <h1>
+                            <span class="linehead"><?= $label->label_courseOur ?></span> <span class="pull-right"><a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/course/index'); ?>" role="button"><?= $label->label_viewAll ?> <i class="fa fa-angle-right" aria-hidden="true"></i></a></span></h1>
+                        </div>
+                        <?php foreach ($course_online as $key => $value) {
+                            if($value->status == 1){
+
+                             if($value->lang_id != 1){
+                                $value->course_id = $value->parent_id;
                             }
-                        }
+                            if(!$flag){
+                                $modelChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = '.$langId.' AND parent_id = ' . $value->course_id, 'order' => 'course_id'));
+                                if($modelChildren){
+                                    $value->course_title = $modelChildren->course_title;
+                                    $value->course_short_title = $modelChildren->course_short_title;
+                                    $value->course_detail = $modelChildren->course_detail;
+                                    $value->course_picture = $modelChildren->course_picture;
+                                }
+                            }
 
-                        if($value->parent_id != 0){
-                            $value->course_id = $value->parent_id;
-                        }
+                            if($value->parent_id != 0){
+                                $value->course_id = $value->parent_id;
+                            }
 
-                        $expireDate = Helpers::lib()->checkCourseExpire($value);
-                        if($expireDate){
+                            $expireDate = Helpers::lib()->checkCourseExpire($value);
+                            if($expireDate){
 
-                            $date_start = date( "Y-m-d H:i:s", strtotime($value->course_date_start));
-                            $dateStartStr = strtotime($date_start);
-                            $currentDate = strtotime(date("Y-m-d H:i:s"));
+                                $date_start = date( "Y-m-d H:i:s", strtotime($value->course_date_start));
+                                $dateStartStr = strtotime($date_start);
+                                $currentDate = strtotime(date("Y-m-d H:i:s"));
 
-                            if($currentDate >= $dateStartStr){
+                                if($currentDate >= $dateStartStr){
 
-                                $chk = Helpers::lib()->getLearn($value->course_id);
-                                if ($chk) {
-                                 $expireUser = Helpers::lib()->checkUserCourseExpire($value);
-                                 if (!$expireUser) {
+                                    $chk = Helpers::lib()->getLearn($value->course_id);
+                                    if ($chk) {
+                                       $expireUser = Helpers::lib()->checkUserCourseExpire($value);
+                                       if (!$expireUser) {
 
-                                   $evnt = 'onclick="alertMsg(\''.$label->label_swal_youtimeout .'\',\'\',\'error\')"';
-                                   $url = 'javascript:void(0)';
-                               }else{
+                                         $evnt = 'onclick="alertMsg(\''.$label->label_swal_youtimeout .'\',\'\',\'error\')"';
+                                         $url = 'javascript:void(0)';
+                                     }else{
 
-                                  $evnt = '';
-                                  $url = Yii::app()->createUrl('course/detail/', array('id' => $value->course_id));
-                              }
-                          }else{
-                           $evnt = 'data-toggle="modal"';
-                           $url = '#modal-startcourse'.$value->course_id;
+                                      $evnt = '';
+                                      $url = Yii::app()->createUrl('course/detail/', array('id' => $value->course_id));
+                                  }
+                              }else{
+                                 $evnt = 'data-toggle="modal"';
+                                 $url = '#modal-startcourse'.$value->course_id;
                            // $url = '#modal-login';
 
                               // $evnt = '';
                               //   $url = Yii::app()->createUrl('course/detail/', array('id' => $value->course_id));
-                       }
-                   }else{
+                             }
+                         }else{
 
-                    $evnt = 'onclick="alertMsg(\'ระบบ\',\''. $labelcourse->label_swal_coursenoopen.'\',\'error\')"';
-                    $url = 'javascript:void(0)';
-                }
+                            $evnt = 'onclick="alertMsg(\'ระบบ\',\''. $labelcourse->label_swal_coursenoopen.'\',\'error\')"';
+                            $url = 'javascript:void(0)';
+                        }
 
-            }elseif ($expireDate == 3) {
-                $evnt = 'onclick="alertMsg(\'ระบบ\',\''.$labelcourse->label_swal_coursenoopen.'\',\'error\')"';
-                $url = 'javascript:void(0)';
-            }else {
-                $evnt = 'onclick="alertMsg(\'ระบบ\',\''.$labelcourse->label_swal_timeoutcourse.'\',\'error\')"';
-                $url = 'javascript:void(0)';
-            }
+                    }elseif ($expireDate == 3) {
+                        $evnt = 'onclick="alertMsg(\'ระบบ\',\''.$labelcourse->label_swal_coursenoopen.'\',\'error\')"';
+                        $url = 'javascript:void(0)';
+                    }else {
+                        $evnt = 'onclick="alertMsg(\'ระบบ\',\''.$labelcourse->label_swal_timeoutcourse.'\',\'error\')"';
+                        $url = 'javascript:void(0)';
+                    }
                             // $evnt = '';
                           //             $url = Yii::app()->createUrl('course/detail/', array('id' => $value->course_id));
-            ?>
+                    ?>
 
-            <!-- new course -->
+                    <!-- new course -->
 
-            <div class="col-lg-3 col-md-3 ">
-                <div class="item">
-                    <div class="cours-card">
-                        <div class="card">
-                         <!--  <a href="<?= $url; ?>" <?= $evnt ?>> -->
-                          <a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)); ?>"
-                            class="course_site">
-                            <!-- Check image -->
-                            <?php $idCourse_img = (!$flag)? $modelChildren->course_id: $value->course_id; ?>
-                            <?php if ($value->course_picture != null) { ?>
-                             <div class="course-boximg">
-                                <img src="<?php echo Yii::app()->baseUrl; ?>/uploads/courseonline/<?= $idCourse_img ?>/thumb/<?= $value->course_picture?>" alt="">
+                    <div class="col-lg-3 col-md-3 ">
+                        <div class="item">
+                            <div class="cours-card">
+                                <div class="card">
+                                   <!--  <a href="<?= $url; ?>" <?= $evnt ?>> -->
+                                      <a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)); ?>"
+                                        class="course_site">
+                                        <!-- Check image -->
+                                        <?php $idCourse_img = (!$flag)? $modelChildren->course_id: $value->course_id; ?>
+                                        <?php if ($value->course_picture != null) { ?>
+                                           <div class="course-boximg">
+                                            <img src="<?php echo Yii::app()->baseUrl; ?>/uploads/courseonline/<?= $idCourse_img ?>/thumb/<?= $value->course_picture?>" alt="">
+                                        </div>
+                                    <?php }else{ ?>
+                                        <div class="course-boximg">
+                                            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png" alt="">
+                                        </div>
+                                    <?php } ?>
+
+                                    <div class="card-body" style="padding: 20px;">
+                                        <a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)); ?>">
+                                            <h5 class="card-title"><?= $value->course_title; ?></h5>
+                                        </a>
+                                        <span class="card-text-1"><?=$status?> : <a class="btn btn-sm btn-secondary"><?=$edu?></a> </span>
+                                    </div>
+                                </div>
                             </div>
-                        <?php }else{ ?>
-                            <div class="course-boximg">
-                                <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png" alt="">
-                            </div>
-                        <?php } ?>
-
-                        <div class="card-body" style="padding: 20px;">
-                            <a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)); ?>">
-                                <h5 class="card-title"><?= $value->course_title; ?></h5>
-                            </a>
-                            <span class="card-text-1"><?=$status?> : <a class="btn btn-sm btn-secondary"><?=$edu?></a> </span>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <?php
+                    <?php
 
                     }//condition status
                 }

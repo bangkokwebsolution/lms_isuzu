@@ -338,7 +338,21 @@ class SiteController extends Controller
 	public function actionIndex($login = null)
 	{
 		$dateNow  =date("d-m-Y");
-		$ip = $_SERVER['REMOTE_ADDR'];
+		$ipaddress = '';
+		if ($_SERVER['HTTP_CLIENT_IP'] != '127.0.0.1')
+			$ipaddress = $_SERVER['HTTP_CLIENT_IP'];
+		else if ($_SERVER['HTTP_X_FORWARDED_FOR'] != '127.0.0.1')
+			$ipaddress = $_SERVER['HTTP_X_FORWARDED_FOR'];
+		else if ($_SERVER['HTTP_X_FORWARDED'] != '127.0.0.1')
+			$ipaddress = $_SERVER['HTTP_X_FORWARDED'];
+		else if ($_SERVER['HTTP_FORWARDED_FOR'] != '127.0.0.1')
+			$ipaddress = $_SERVER['HTTP_FORWARDED_FOR'];
+		else if ($_SERVER['HTTP_FORWARDED'] != '127.0.0.1')
+			$ipaddress = $_SERVER['HTTP_FORWARDED'];
+		else if ($_SERVER['REMOTE_ADDR'] != '127.0.0.1')
+			$ipaddress = $_SERVER['REMOTE_ADDR'];
+		else
+			$ipaddress = 'UNKNOWN';
 
 		$modelCount = Counter::model()->findAll();
 		foreach ($modelCount as $key => $value) {
@@ -346,10 +360,10 @@ class SiteController extends Controller
 			$date_Old = $value->date_visit;			 
 		}
 
-		if($ip_Old != $ip && $date_Old != $dateNow){
+		if($ip_Old != $ipaddress && $date_Old != $dateNow){
 			$count = new Counter;
 			$count->date_visit = $dateNow;
-			$count->ip_visit = $ip;
+			$count->ip_visit = $ipaddress;
 			$count->visit = 1;
 			$count->save();
 		}
@@ -808,7 +822,7 @@ class SiteController extends Controller
 		// public function actionCheckLdap(){
 		// 	echo "<pre>";
 		// 	$data = Helpers::lib()->ldapTms($_GET['email']);
-		// 	var_dump($data[0]['description'][0]);
+		// 	var_dump($data[0]['descripaddresstion'][0]);
 		// 	var_dump($data);exit();
 		// }
 
