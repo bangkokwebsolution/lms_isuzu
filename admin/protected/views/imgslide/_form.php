@@ -1,4 +1,5 @@
-
+<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 <!-- innerLR -->
 <div class="innerLR">
 	<div class="widget widget-tabs border-bottom-none">
@@ -35,15 +36,21 @@
 				</div>
 
 				<div class="row">
+					<?php echo $form->labelEx($model,'imgslide_link'); ?>
+					<input type="checkbox" id="swiftLink"  data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+
+				</div>
+				<br>
+				<div class="row" id="link" style="display: none;">
 				    <!-- 	<font color="#990000">
 							<?php echo $this->NotEmpty();?> ตัวอย่าง http://www.cpdland.com/
 						</font> -->
-						<?php echo $form->labelEx($model,'imgslide_link'); ?>
+						<?php //echo $form->labelEx($model,'imgslide_link'); ?>
 						<?php echo $form->textField($model,'imgslide_link',array('size'=>60,'maxlength'=>250, 'class'=>'span8')); ?>
 						<?php echo $form->error($model,'imgslide_link'); ?>
 						
 					</div>
-					<div class="row">
+					<div class="row" id="typeId">
 						<?php echo $form->labelEx($model,'gallery_type_id'); ?>
 
 						<?php echo $form->dropDownList($model, 'gallery_type_id', CHtml::listData(GalleryType::model()->findAll(), 'id', 'name_gallery_type'),array('class'=>'span5','disable_search' => false,'empty' => "--เลือก--")); ?>
@@ -90,4 +97,21 @@
 		</div>
 	</div>
 	<!-- END innerLR -->
+
+	<script>
+		$('#swiftLink').change(function(){
+			var chk = $(this).is(":checked");
+			checkswitch(chk);
+		});
+
+		function checkswitch(chk){
+			if (chk == true) {
+				$('#link').show();
+				$('#typeId').hide();
+			}else{
+				$('#link').hide();
+				$('#typeId').show();
+			}
+		}
+	</script>
 

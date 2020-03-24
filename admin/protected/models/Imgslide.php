@@ -161,7 +161,7 @@ class Imgslide extends AActiveRecord
 			'imgslide_title' => 'หัวข้อรูปภาพ'.$label_lang,
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
-			'gallery_type_id' => 'ประเภทแกลลอรี่',
+			'gallery_type_id' => 'ประเภทแกลลอรี่'.$label_lang,
 		);
 	}
 
