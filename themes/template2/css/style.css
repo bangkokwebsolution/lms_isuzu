@@ -2380,9 +2380,7 @@ div.course-detail2 h4.text11 {
   }
 
   .alert {
-    padding: 30px;
     margin-bottom: 30px;
-    box-shadow: 5px 5px 5px #0000007d;
   }
 
   #video .col-md-3 {
@@ -2787,53 +2785,23 @@ div.course-detail2 h4.text11 {
     padding: 1rem;
   }
 
-  .progressbar {
-    position: relative;
-    display: block;
-    list-style: none;
-  }
-
-  .progress-bar {
-    background-color: #a5d055;
-    position: absolute;
-    height: 10px;
-    top: 82px;
-  }
-
-  .progressbar li a {
-    color: #fff;
-    padding-left: 55px;
-    font-size: 20px;
-  }
-
-  .progress {
-    /*position: absolute;*/
-    height: 0px;
-    margin-bottom: 0px;
-    background-color: ;
-    border-radius: 0;
-    -webkit-box-shadow: 0;
-    box-shadow: 0;
-  }
-
-  .progresssize {
-    width: 80%;
-    margin-left: 50px;
-
-  }
-
   .stepcourse {
     font-weight: 700;
   }
+
+  .nav-tabs>li>a{
+    color: rgba(0,0,0,.5);
+  }
+
 
 
   .nav-tabs>li.active>a,
   .nav-tabs>li.active>a:focus,
   .nav-tabs>li.active>a:hover {
-    background-color: #ff991a;
-    color: #fff;
-    /*border-radius: 20px;*/
+    color: #000;
     text-align: center;
+    border: none;
+    border-bottom: 3px solid var(--color-bulemain);
   }
 
   .one,
@@ -4168,6 +4136,31 @@ div.course-detail2 h4.text11 {
   border-bottom: 1px dashed #ddd;
   padding-bottom:10px;
 }
+
+.course-detail-main{
+  padding: 1em 0 1.5em;
+}
+
+.course-active{
+  position: relative;
+}
+
+.course-active .card{
+ padding: 1em;
+}
+.course-active .progress{
+  margin-bottom:0 ;
+}
+.course-active .progress-bar{
+  background-color: #007bff;
+}
+
+.certificate-check {
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid #ddd;
+}
+
 
 @media (min-width: 1440px) {
   .course .well .course-img {
