@@ -708,7 +708,7 @@ public function actionReset_university()
 
         $respon = '';
         $respon = $this->renderPartial('_modal_pre',array('course' => $course,'user_id' => $user_id,'type' => $type));
-        var_dump($respon);
+        
     }
 
     public function actionGet_dialog_post()
@@ -752,9 +752,9 @@ public function actionReset_university()
                     'user_id' => $user_id,
                     'lesson_id' => $lesson_id,
                     'course_id' => $course_id,
-                    'active' => 'y'
+                    'lesson_active' => 'y'
                 ));
-
+   
                 if ($learn) {
 
                     foreach ($learn as $key => $data) {
@@ -783,7 +783,7 @@ public function actionReset_university()
                         }
 
                         $data->lesson_status = null;
-                        $data->active = 'n';
+                        $data->lesson_active = 'n';
                         $data->save(false);
 
                     }
@@ -911,7 +911,6 @@ public function actionReset_university()
 
 $courseMsg .= '<br><span style="color:red">สาเหตุ : '.$_POST['description'].'</span>';
 $model = Users::model()->findByPk($user_id);
-var_dump($model);exit();
 $to['email'] = $model->email;
 $to['firstname'] = $model->profiles->firstname;
 $to['lastname'] = $model->profiles->lastname;

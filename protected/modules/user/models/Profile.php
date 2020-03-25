@@ -49,18 +49,18 @@ class Profile extends CActiveRecord {
             array('fax', 'numerical', 'integerOnly' => true),
             array('phone', 'numerical', 'integerOnly' => true),
            // array('tel', 'length', 'min' => 9),
-            array('bussiness_model_id,bussiness_type_id,company,juristic,title_id, type_user, education, occupation, position, website, province, tel, phone, fax, advisor_email1, advisor_email2, generation, file,department', 'length', 'max' => 255),
+            array('bussiness_model_id,bussiness_type_id,company,juristic,title_id, type_user, education, occupation, position, website, province, tel, phone, fax, advisor_email1, advisor_email2, generation, file,department, passport, date_of_expiry, race, nationality, religion', 'length', 'max' => 255),
             array('firstname, lastname', 'length', 'max' => 50),
             array('identification', 'length', 'max'=>13),
             // array('identification', 'length', 'min'=>13),
-            array('sex', 'length', 'max' => 6),
+            array('sex, history_of_illness, status_sm, type_employee', 'length', 'max' => 6),
              array('identification', 'validateIdCard'),
             array('identification', 'unique'
         
              , 'message' => 'เลขบัตรประชาชนนี้มีในระบบแล้ว'),
             // The following rule is used by search(). 
             // Please remove those attributes that should not be searched. 
-            array('bussiness_model_id,bussiness_type_id,company,juristic,user_id, title_id, firstname, lastname, active, generation, type_user, sex, birthday, age, education, occupation, position, website, address, province, tel, phone, fax, contactfrom, advisor_email1, advisor_email2, file', 'safe', 'on' => 'search'),
+            array('bussiness_model_id,bussiness_type_id,company,juristic,user_id, title_id, firstname, lastname, active, generation, type_user, sex, birthday, age, education, occupation, position, website, address, province, tel, phone, fax, contactfrom, advisor_email1, advisor_email2, file, passport, date_of_expiry, race, nationality, religion, history_of_illness, status_sm, type_employee', 'safe', 'on' => 'search'),
             array('file_user', 'file', 'types' => 'pdf', 'allowEmpty' => true, 'on' => 'insert'),
             array('file_user', 'file', 'types' => 'pdf',
                 'wrongType' => 'รองรับไฟล์ pdf เท่านั้น', 'allowEmpty' => true, // ข้อความเตือน
@@ -180,6 +180,14 @@ class Profile extends CActiveRecord {
             'company' => 'ชื่อหน่วยงาน/บริษัท',
             'juristic' => 'เลขทะเบียนนิติบุคคล',
             'department' => 'หน่วยงาน',
+            'passport' => 'เลขหนังสือเดินทาง',
+            'date_of_expiry' => 'วันที่บัตรหมดอายุ',
+            'race' => 'เชื้อชาติ',
+            'nationality' => 'สัญชาติ',
+            'religion' => 'ศาสนา',
+            'history_of_illness' => 'ประวัติเจ็บป่วยรุนแรง',
+            'status_sm' => 'สถานภาพ',
+            'type_employee'=> 'ประเภทพนักงาน'
         );
 
         // $labels = array(
@@ -221,6 +229,14 @@ class Profile extends CActiveRecord {
         $criteria->compare('advisor_email1', $this->advisor_email1, true);
         $criteria->compare('advisor_email2', $this->advisor_email2, true);
         $criteria->compare('file', $this->file, true);
+        $criteria->compare('passport', $this->passport, true);
+        $criteria->compare('date_of_expiry', $this->date_of_expiry, true);
+        $criteria->compare('race', $this->race, true);
+        $criteria->compare('nationality', $this->nationality, true);
+        $criteria->compare('religion', $this->religion, true);
+        $criteria->compare('history_of_illness', $this->history_of_illness, true);
+        $criteria->compare('status_sm', $this->status_sm, true);
+        $criteria->compare('type_employee', $this->type_employee, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

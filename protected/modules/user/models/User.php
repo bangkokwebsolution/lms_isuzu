@@ -87,7 +87,7 @@ class User extends CActiveRecord
 			array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
 			array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 			array('username, email,password,verifyPassword', 'required'),
-			array('captcha', 'required','message' => "Please verify that you are not a robot."),
+			//array('captcha', 'required','message' => "Please verify that you are not a robot."),
 			array('username', 'length', 'max'=>255),
 			array('superuser, status, online_status,online_user', 'numerical', 'integerOnly'=>true),
 			// array('username', 'length', 'max'=>13, 'min' => 13,'message' => 'กรอกเลขบัตรประชาชน 13 หลักเท่านั้น'),
