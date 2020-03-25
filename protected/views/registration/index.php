@@ -78,36 +78,36 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         // alert("adadad");
         e_k = event.keyCode
         //if (((e_k < 48) || (e_k > 57)) && e_k != 46 ) {
-            if (e_k != 13 && (e_k < 48) || (e_k > 57)) {
-                event.returnValue = false;
-                alert('<?= $label->label_alert_notNumber ?>');
-            }
+        if (e_k != 13 && (e_k < 48) || (e_k > 57)) {
+            event.returnValue = false;
+            alert('<?= $label->label_alert_notNumber ?>');
         }
-    </script>
+    }
+</script>
 
-    <!-- Header -->
-    <style>
-        .error2 {
-            color: red;
-        }
-    </style>
+<!-- Header -->
+<style>
+    .error2 {
+        color: red;
+    }
+</style>
 
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-main">
+            <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/site/index'); ?>"><?php echo $label->label_homepage; ?></a></li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $label->label_regis ?></li>
+        </ol>
+    </nav>
+</div>
+
+<section class="content" id="register">
     <div class="container">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb breadcrumb-main">
-                <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/site/index'); ?>"><?php echo $label->label_homepage; ?></a></li>
-                <li class="breadcrumb-item active" aria-current="page"><?= $label->label_regis ?></li>
-            </ol>
-        </nav>
-    </div>
-
-    <section class="content" id="register">
-        <div class="container">
-            <div class="well reset-well">
-                <?php
-                $form = $this->beginWidget('CActiveForm', array(
+        <div class="well reset-well">
+            <?php
+            $form = $this->beginWidget('CActiveForm', array(
                 //                            'name' => 'form1',
-                    'id' => 'registration-form',
+                'id' => 'registration-form',
                 //                        'OnSubmit'=> checkForm(),
                 //                        'enableAjaxValidation'=>true,
                 //                        // 'disableAjaxValidationAttributes'=>array('RegistrationForm_verifyCode'),
@@ -133,26 +133,25 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                     <div class="mt-2">
                                         <!-- <input type="file" class="custom-file-input" id="customFileLang" lang="es"> -->
                                         <?php
-                                        if ($users->pic_user==null) {
+                                        if ($users->pic_user == null) {
 
-                                           $img  = Yii::app()->theme->baseUrl."/images/thumbnail-profile.png";
-
-                                       }else{
-                                        $registor = new RegistrationForm;
-                                        $registor->id = $users->id;                                       
-                                        $img= Yii::app()->baseUrl.'/uploads/user/'.$users->id.'/original/'.$users->pic_user;
-                                    }
-                                    ?> 
-                                    <img src="<?=$img?>" alt="">
+                                            $img  = Yii::app()->theme->baseUrl . "/images/thumbnail-profile.png";
+                                        } else {
+                                            $registor = new RegistrationForm;
+                                            $registor->id = $users->id;
+                                            $img = Yii::app()->baseUrl . '/uploads/user/' . $users->id . '/original/' . $users->pic_user;
+                                        }
+                                        ?>
+                                        <img src="<?= $img ?>" alt="">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="custom-file">
-                                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 180px; max-height: 240px;"></div>
+                                <div class="custom-file">
+                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 180px; max-height: 240px;"></div>
                                     <!--  <?php echo $form->fileField($users, 'pic_user', array('id' => 'wizard-picture')); ?> 
                                     <label class="btn btn-success" for="customFileLang"><span class="fileinput-new"> เลือกรูปภาพ</span></label> -->
                                     <span class="btn btn-info btn-file"><span class="fileinput-new">เลือกรูปภาพ</span>
-                                    <?php echo $form->fileField($users, 'pic_user', array('id' => 'wizard-picture')); ?>
-                                    <a href="#" class=" btn-info fileinput-exists" data-dismiss="fileinput">เปลี่ยนรูปภาพ</a>
+                                        <?php echo $form->fileField($users, 'pic_user', array('id' => 'wizard-picture')); ?>
+                                        <a href="#" class=" btn-info fileinput-exists" data-dismiss="fileinput">เปลี่ยนรูปภาพ</a>
                                 </div>
                             </div>
                         </div>
@@ -163,7 +162,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         <div class="radio radio-danger radio-inline">
                             <input type="radio" name="type_user" id="accept" value="1" <?= ($type_user == 1) ? 'checked' : ($profile->type_user) ? 'checked' : '' ?>>
                             <label for="accept" class="bg-success text-black">
-                            สำหรับบุคคลทั่วไป </label>
+                                สำหรับบุคคลทั่วไป </label>
                         </div>
                         <div class="radio radio-danger radio-inline">
                             <input type="radio" name="type_user" id="reject" value="3" <?= ($type_user == 3) ? 'checked' : ($profile->type_user) ? 'checked' : '' ?>>
@@ -177,7 +176,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         <div class="form-group" id="id_employee">
                             <!-- <label for=""><?php echo $form->labelEx($users, 'username'); ?></label> -->
                             <label for="">เลขประจำตัวพนักงาน</label>
-                            <?php echo $form->textField($users, 'username', array('class' => 'form-control','placeholder'=>'เลขประจำตัวพนักงาน')); ?>
+                            <?php echo $form->textField($users, 'username', array('class' => 'form-control', 'placeholder' => 'เลขประจำตัวพนักงาน')); ?>
                             <?php echo $form->error($users, 'username', array('class' => 'error2')); ?>
                             <!-- <input type="text" class="form-control" id="" placeholder="ID พนักงาน"> -->
                         </div>
@@ -223,7 +222,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         <div class="radio radio-danger radio-inline">
                             <input type="radio" name="Identify" id="card-1" value="1">
                             <label for="card-1" class="bg-success text-black">
-                            เลขบัตรประจำตัวประชาชน </label>
+                                เลขบัตรประจำตัวประชาชน </label>
                         </div>
                         <div class="radio radio-danger radio-inline">
                             <input type="radio" name="Identify" id="card-2" value="2">
@@ -252,208 +251,208 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         <div class="form-group">
                             <!-- <label for="">วันหมดอายุบัตร</label>
                                 <input type="text" class="form-control" id="" placeholder="วันหมดอายุบัตร" > -->
-                                <?php echo $form->labelEx($profile, 'date_of_expiry'); ?>
-                                <?php echo $form->textField($profile, 'date_of_expiry', $attTime); ?>
-                                <?php echo $form->error($profile, 'date_of_expiry', array('class' => 'error2')); ?>
-                            </div>
+                            <?php echo $form->labelEx($profile, 'date_of_expiry'); ?>
+                            <?php echo $form->textField($profile, 'date_of_expiry', $attTime); ?>
+                            <?php echo $form->error($profile, 'date_of_expiry', array('class' => 'error2')); ?>
                         </div>
-
-                        <div class="clearfix"></div>
                     </div>
 
-                    <div class="row justify-content-center mt-20">
-                        <div class="col-sm-6">
-                            <div class="form-group">
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="row justify-content-center mt-20">
+                    <div class="col-sm-6">
+                        <div class="form-group">
                             <!-- <label for="">วัน/เดือน/ปี</label>
                                 <input type="date" class="form-control" id="" placeholder="วัน/เดือน/ปี"> -->
-                                <?php echo $form->labelEx($profile, 'birthday'); ?>
-                                <?php echo $form->textField($profile, 'birthday', $birthday); ?>
-                                <?php echo $form->error($profile, 'birthday', array('class' => 'error2')); ?>
-                            </div>
+                            <?php echo $form->labelEx($profile, 'birthday'); ?>
+                            <?php echo $form->textField($profile, 'birthday', $birthday); ?>
+                            <?php echo $form->error($profile, 'birthday', array('class' => 'error2')); ?>
                         </div>
+                    </div>
 
-                        <div class="col-sm-2">
-                            <div class="form-group">
+                    <div class="col-sm-2">
+                        <div class="form-group">
                             <!-- <label for="">อายุ</label>
                                 <input type="text" class="form-control" id="" placeholder="อายุ"> -->
-                                <?php echo $form->labelEx($profile, 'age'); ?>
-                                <?php echo $form->textField($profile, 'age', array('class' => 'form-control', 'placeholder' => 'อายุ')); ?>
-                                <?php echo $form->error($profile, 'age', array('class' => 'error2')); ?>
-                            </div>
+                            <?php echo $form->labelEx($profile, 'age'); ?>
+                            <?php echo $form->textField($profile, 'age', array('class' => 'form-control', 'placeholder' => 'อายุ')); ?>
+                            <?php echo $form->error($profile, 'age', array('class' => 'error2')); ?>
                         </div>
-
-                        <div class="clearfix"></div>
                     </div>
 
-                    <div class="row justify-content-center">
-                        <div class="col-sm-4">
-                            <div class="form-group">
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-sm-4">
+                        <div class="form-group">
                             <!--  <label for="">เชื้อชาติ</label>
                                 <input type="text" class="form-control" id="" placeholder="เชื้อชาติ"> -->
-                                <?php echo $form->labelEx($profile, 'race'); ?>
-                                <?php echo $form->textField($profile, 'race', array('class' => 'form-control', 'placeholder' => 'เชื้อชาติ')); ?>
-                                <?php echo $form->error($profile, 'race', array('class' => 'error2')); ?>
-                            </div>
+                            <?php echo $form->labelEx($profile, 'race'); ?>
+                            <?php echo $form->textField($profile, 'race', array('class' => 'form-control', 'placeholder' => 'เชื้อชาติ')); ?>
+                            <?php echo $form->error($profile, 'race', array('class' => 'error2')); ?>
                         </div>
+                    </div>
 
-                        <div class="col-sm-4">
-                            <div class="form-group">
+                    <div class="col-sm-4">
+                        <div class="form-group">
                             <!-- <label for="">สัญชาติ</label>
                                 <input type="text" class="form-control" id="" placeholder="สัญชาติ"> -->
-                                <?php echo $form->labelEx($profile, 'nationality'); ?>
-                                <?php echo $form->textField($profile, 'nationality', array('class' => 'form-control', 'placeholder' => 'สัญชาติ')); ?>
-                                <?php echo $form->error($profile, 'nationality', array('class' => 'error2')); ?>
-                            </div>
+                            <?php echo $form->labelEx($profile, 'nationality'); ?>
+                            <?php echo $form->textField($profile, 'nationality', array('class' => 'form-control', 'placeholder' => 'สัญชาติ')); ?>
+                            <?php echo $form->error($profile, 'nationality', array('class' => 'error2')); ?>
                         </div>
-
-                        <div class="clearfix"></div>
                     </div>
 
+                    <div class="clearfix"></div>
+                </div>
 
-                    <div class="row justify-content-center">
-                        <div class="col-sm-4">
-                            <div class="form-group">
+
+                <div class="row justify-content-center">
+                    <div class="col-sm-4">
+                        <div class="form-group">
                             <!-- <label for="">ศาสนา</label>
                                 <input type="text" class="form-control" id="" placeholder="เชื้อชาติ"> -->
-                                <?php echo $form->labelEx($profile, 'religion'); ?>
-                                <?php echo $form->textField($profile, 'religion', array('class' => 'form-control', 'placeholder' => 'ศาสนา')); ?>
-                                <?php echo $form->error($profile, 'religion', array('class' => 'error2')); ?>
-                            </div>
+                            <?php echo $form->labelEx($profile, 'religion'); ?>
+                            <?php echo $form->textField($profile, 'religion', array('class' => 'form-control', 'placeholder' => 'ศาสนา')); ?>
+                            <?php echo $form->error($profile, 'religion', array('class' => 'error2')); ?>
                         </div>
-
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="">เพศ</label>
-                                <select class="form-control" name="" id="">
-                                    <option value="1">ชาย</option>
-                                    <option value="2">หญิง</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="clearfix"></div>
                     </div>
 
-                    <div class="row  mt-1 mb-1">
-                        <div class="col-sm-3 text-right"> <strong>สถานะภาพทางการสมรส :</strong></div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label for="">เพศ</label>
+                            <select class="form-control" name="" id="">
+                                <option value="1">ชาย</option>
+                                <option value="2">หญิง</option>
+                            </select>
+                        </div>
+                    </div>
 
-                                <span></span>
-                                <div class="radio radio-danger radio-inline">
-                                    <input type="radio" name="status_sm" id="card-3" value="s" <?= ($status_sm == "s") ? 'checked' : ($profile->status_sm) ? 'checked' : '' ?>>
-                                    <label for="card-3" class="bg-success text-black">
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="row  mt-1 mb-1">
+                    <div class="col-sm-3 text-right"> <strong>สถานะภาพทางการสมรส :</strong></div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+
+                            <span></span>
+                            <div class="radio radio-danger radio-inline">
+                                <input type="radio" name="status_sm" id="card-3" value="s" <?= ($status_sm == "s") ? 'checked' : ($profile->status_sm) ? 'checked' : '' ?>>
+                                <label for="card-3" class="bg-success text-black">
                                     โสด </label>
-                                </div>
-                                <div class="radio radio-danger radio-inline">
-                                    <input type="radio" name="status_sm" id="card-4" value="m" <?= ($status_sm == "m") ? 'checked' : ($profile->status_sm) ? 'checked' : '' ?>>
-                                    <label for="card-4" class="bg-danger text-black">สมรส </label>
-                                </div>
+                            </div>
+                            <div class="radio radio-danger radio-inline">
+                                <input type="radio" name="status_sm" id="card-4" value="m" <?= ($status_sm == "m") ? 'checked' : ($profile->status_sm) ? 'checked' : '' ?>>
+                                <label for="card-4" class="bg-danger text-black">สมรส </label>
                             </div>
                         </div>
                     </div>
+                </div>
 
 
-                    <div class="row justify-content-center">
-                        <div class="col-sm-8">
-                            <div class="form-group">
+                <div class="row justify-content-center">
+                    <div class="col-sm-8">
+                        <div class="form-group">
                             <!-- <label for="card-4" class="bg-danger text-black">ที่อยู่</label>
                                 <textarea class="form-control" name="" id="" placeholder="ที่อยู่" value="" required="" cols="30" rows="3"></textarea> -->
-                                <?php echo $form->labelEx($profile, 'address'); ?>
-                                <?php echo $form->textArea($profile, 'address', array('class' => 'form-control', 'cols' => "30", 'rows' => "3", 'placeholder' => 'ที่อยู่')); ?>
-                                <?php echo $form->error($profile, 'address', array('class' => 'error2')); ?>
+                            <?php echo $form->labelEx($profile, 'address'); ?>
+                            <?php echo $form->textArea($profile, 'address', array('class' => 'form-control', 'cols' => "30", 'rows' => "3", 'placeholder' => 'ที่อยู่')); ?>
+                            <?php echo $form->error($profile, 'address', array('class' => 'error2')); ?>
 
-                            </div>
                         </div>
-
-                        <div class="clearfix"></div>
                     </div>
 
-                    <div class="row justify-content-center">
-                        <div class="col-sm-4">
-                            <div class="form-group">
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="row justify-content-center">
+                    <div class="col-sm-4">
+                        <div class="form-group">
                             <!-- <label for="">เบอร์โทรศัพท์</label>
                                 <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์"> -->
-                                <?php echo $form->labelEx($profile, 'tel'); ?>
-                                <?php echo $form->textField($profile, 'tel', array('class' => 'form-control', 'placeholder' => 'เบอร์โทรศัพท์')); ?>
-                                <?php echo $form->error($profile, 'tel', array('class' => 'error2')); ?>
+                            <?php echo $form->labelEx($profile, 'tel'); ?>
+                            <?php echo $form->textField($profile, 'tel', array('class' => 'form-control', 'placeholder' => 'เบอร์โทรศัพท์')); ?>
+                            <?php echo $form->error($profile, 'tel', array('class' => 'error2')); ?>
 
-                            </div>
                         </div>
+                    </div>
 
-                        <div class="col-sm-4">
-                            <div class="form-group">
+                    <div class="col-sm-4">
+                        <div class="form-group">
                             <!-- <label for="">Email</label>
                                 <input type="text" class="form-control" id="" placeholder="Email"> -->
-                                <label><?php echo $form->labelEx($users, 'email'); ?></label>
-                                <?php echo $form->emailField($users, 'email', array('class' => 'form-control', 'placeholder' => 'E-mail')); ?>
-                                <?php echo $form->error($users, 'email', array('class' => 'error2')); ?>
-                            </div>
+                            <label><?php echo $form->labelEx($users, 'email'); ?></label>
+                            <?php echo $form->emailField($users, 'email', array('class' => 'form-control', 'placeholder' => 'E-mail')); ?>
+                            <?php echo $form->error($users, 'email', array('class' => 'error2')); ?>
                         </div>
-
-                        <div class="clearfix"></div>
                     </div>
 
-                    <div class="row  mt-1 mb-1 ">
-                        <div class="col-sm-3 text-right"> <strong>ประวัติการเจ็บป่วยรุนแรง :</strong></div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
+                    <div class="clearfix"></div>
+                </div>
 
-                                <span></span>
-                                <div class="radio radio-danger radio-inline">
-                                    <input type="radio" name="history_of_illness" id="card-5" value="n" <?= ($history_of_illness == "n") ? 'checked' : ($profile->history_of_illness) ? 'checked' : '' ?>>
-                                    <label for="card-5" class="bg-success text-black">
+                <div class="row  mt-1 mb-1 ">
+                    <div class="col-sm-3 text-right"> <strong>ประวัติการเจ็บป่วยรุนแรง :</strong></div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+
+                            <span></span>
+                            <div class="radio radio-danger radio-inline">
+                                <input type="radio" name="history_of_illness" id="card-5" value="n" <?= ($history_of_illness == "n") ? 'checked' : ($profile->history_of_illness) ? 'checked' : '' ?>>
+                                <label for="card-5" class="bg-success text-black">
                                     ไม่เคย </label>
-                                </div>
-                                <div class="radio radio-danger radio-inline">
-                                    <input type="radio" name="history_of_illness" id="card-6" value="y" <?= ($history_of_illness == "y") ? 'checked' : ($profile->history_of_illness) ? 'checked' : '' ?>>
-                                    <label for="card-6" class="bg-danger text-black">เคย </label>
-                                </div>
+                            </div>
+                            <div class="radio radio-danger radio-inline">
+                                <input type="radio" name="history_of_illness" id="card-6" value="y" <?= ($history_of_illness == "y") ? 'checked' : ($profile->history_of_illness) ? 'checked' : '' ?>>
+                                <label for="card-6" class="bg-danger text-black">เคย </label>
                             </div>
                         </div>
                     </div>
+                </div>
 
 
-                    <div class="row  mt-20 mb-1 ">
-                        <div class="col-sm-3 text-right"> <strong>ประวัติการศึกษา :</strong></div>
-                        
-                        <?php
-                        $modelList = Education::model()->findAll(array("condition" => " active = 'y'"));
-                        $list = CHtml::listData($modelList, 'edu_id', 'edu_name');
-                        $att_Education = array('class' => 'form-control', 'empty' => 'ระดับการศึกษา');
-                        if (!$ProfilesEdu->isNewRecord) {        
-                            foreach ($ProfilesEdu as $kedu => $valedu) { 
-                                ?>
-                               <div class="add-study">
-                                    <div class="row ttt">
-                                        <div class="col-sm-2">
-                                            <div class="form-group">
-                                                <?php echo CHtml::activeDropDownList($valedu, '['.$kedu.']edu_id', $list, $att_Education); ?>
-                                            </div>
+                <div class="row  mt-20 mb-1 ">
+                    <div class="col-sm-3 text-right"> <strong>ประวัติการศึกษา :</strong></div>
+
+                    <?php
+                    $modelList = Education::model()->findAll(array("condition" => " active = 'y'"));
+                    $list = CHtml::listData($modelList, 'edu_id', 'edu_name');
+                    $att_Education = array('class' => 'form-control', 'empty' => 'ระดับการศึกษา');
+                    if (!$ProfilesEdu->isNewRecord) {
+                        foreach ($ProfilesEdu as $kedu => $valedu) {
+                    ?>
+                            <div class="add-study">
+                                <div class="row ttt">
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <?php echo CHtml::activeDropDownList($valedu, '[' . $kedu . ']edu_id', $list, $att_Education); ?>
                                         </div>
-
-                                        <div class="col-sm-3">
-                                            <div class="form-group">
-
-                                                <?php echo $form->textField($valedu, '['.$kedu.']institution', array('class' => 'form-control', 'placeholder' => 'สถานที่่จบการศึกษา')); ?>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-sm-2">
-                                            <div class="form-group">
-                                                <?php echo $form->textField($valedu, '['.$kedu.']date_graduation', $graduation); ?>
-                                            </div>
-                                        </div>
-                                        <span class="delete btn-danger" name="mytext[<?php echo $kedu;?>]"><i class="fas fa-minus-circle" ></i> Delete</span>
-
-                                        <div class="row justify-content-center bb-1 pb-20"> </div>
                                     </div>
-                                
 
-                                <?php
-                            }?>
-                       <?php } else {
-                            ?>
+                                    <div class="col-sm-3">
+                                        <div class="form-group">
+
+                                            <?php echo $form->textField($valedu, '[' . $kedu . ']institution', array('class' => 'form-control', 'placeholder' => 'สถานที่่จบการศึกษา')); ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <?php echo $form->textField($valedu, '[' . $kedu . ']date_graduation', $graduation); ?>
+                                        </div>
+                                    </div>
+                                    <span class="delete btn-danger" name="mytext[<?php echo $kedu; ?>]"><i class="fas fa-minus-circle"></i> Delete</span>
+
+                                    <div class="row justify-content-center bb-1 pb-20"> </div>
+                                </div>
+
+
+                            <?php
+                        } ?>
+                        <?php } else {
+                        ?>
 
                             <div class="col-sm-2">
                                 <div class="form-group">
@@ -472,111 +471,108 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                     <?php echo $form->textField($ProfilesEdu, '[0]date_graduation', $graduation); ?>
                                 </div>
                             </div>
-                        </div>
+                            </div>
 
-                       
 
-                            <?php
-                        }
+
+                        <?php
+                    }
                         ?>
-                    </div>
+                </div>
 
-                    <div class="row justify-content-center bb-1 pb-20">
-                        <div class="col-md-3">
-                            <button class="btn btn-info btn-add add_form_field" type="button" id="moreFields">
-                                <span class="glyphicon glyphicon-plus"> </span> เพิ่มประวัติการศึกษา
-                            </button>
-                        </div>
+                <div class="row justify-content-center bb-1 pb-20">
+                    <div class="col-md-3">
+                        <button class="btn btn-info btn-add add_form_field" type="button" id="moreFields">
+                            <span class="glyphicon glyphicon-plus"> </span> เพิ่มประวัติการศึกษา
+                        </button>
                     </div>
-                    <div class="row  mt-20 mb-1" id="employee_type">
-                        <div class="col-sm-3 text-right"> <strong>ส่วนของพนักงาน :</strong></div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
+                </div>
+                <div class="row  mt-20 mb-1" id="employee_type">
+                    <div class="col-sm-3 text-right"> <strong>ส่วนของพนักงาน :</strong></div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
 
-                                <span></span>
-                                <div class="radio radio-danger radio-inline">
-                                    <input type="radio" name="type_employee" id="card-7" value="office" <?= ($type_employee == "office") ? 'checked' : ($profile->type_employee) ? 'checked' : '' ?>>
-                                    <label for="card-7" class="bg-success text-black">
+                            <span></span>
+                            <div class="radio radio-danger radio-inline">
+                                <input type="radio" name="type_employee" id="card-7" value="office" <?= ($type_employee == "office") ? 'checked' : ($profile->type_employee) ? 'checked' : '' ?>>
+                                <label for="card-7" class="bg-success text-black">
                                     Office </label>
-                                </div>
-                                <div class="radio radio-danger radio-inline">
-                                    <input type="radio" name="type_employee" id="card-8" value="ship" <?= ($type_employee == "ship") ? 'checked' : ($profile->type_employee) ? 'checked' : '' ?>>
-                                    <label for="card-8" class="bg-danger text-black">เรือ </label>
-                                </div>
+                            </div>
+                            <div class="radio radio-danger radio-inline">
+                                <input type="radio" name="type_employee" id="card-8" value="ship" <?= ($type_employee == "ship") ? 'checked' : ($profile->type_employee) ? 'checked' : '' ?>>
+                                <label for="card-8" class="bg-danger text-black">เรือ </label>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="row justify-content-center mt-20 mb-1 bb-1 pb-20" id="employee_detail">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label><?php echo $form->labelEx($users, 'department_id'); ?></label>
-                                <?php
-                                $departmentModel = Department::model()->findAll(array(
-                                    "condition" => " active = 'y'"
-                                ));
-                                $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
-                                $departmentOption = array('class' => 'form-control department', 'empty' => 'แผนก');
-                                ?>
-                                <?php
-                                echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption);
-                                ?>
-                                <?php echo $form->error($users, 'department_id', array('class' => 'error2')); ?>
-                            </div>
+                <div class="row justify-content-center mt-20 mb-1 bb-1 pb-20" id="employee_detail">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label><?php echo $form->labelEx($users, 'department_id'); ?></label>
+                            <?php
+                            $departmentModel = Department::model()->findAll(array(
+                                "condition" => " active = 'y'"
+                            ));
+                            $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
+                            $departmentOption = array('class' => 'form-control department', 'empty' => 'แผนก');
+                            ?>
+                            <?php
+                            echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption);
+                            ?>
+                            <?php echo $form->error($users, 'department_id', array('class' => 'error2')); ?>
                         </div>
-
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label><?php echo $form->labelEx($users, 'position_id'); ?></label>
-                                <?php
-                                $positionModel = Position::model()->findAll(array(
-                                    "condition" => " active = 'y'"
-                                ));
-                                $positionList = CHtml::listData($positionModel, 'id', 'position_title');
-                                $positiontOption = array('class' => 'form-control position', 'empty' => 'ตำแหน่ง');
-                                ?>
-                                <?php
-                                echo $form->dropDownList($users, 'position_id', $positionList, $positiontOption); ?>
-                                <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
-
-                            </div>
-                        </div>
-
                     </div>
-                    <div class="text-center mt-20">
 
-                        <?php if (Yii::app()->user->getId() == null) { ?>
-                            <?php echo CHtml::submitButton($label->label_regis, array('class' => 'btn btn-default bg-greenlight btn-lg center-block')); ?>
-                        <?php } else {
-                            echo CHtml::submitButton($label->label_save, array('class' => 'btn btn-default bg-greenlight btn-lg center-block'));
-                        } ?>
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label><?php echo $form->labelEx($users, 'position_id'); ?></label>
+                            <?php
+                            $positionModel = Position::model()->findAll(array(
+                                "condition" => " active = 'y'"
+                            ));
+                            $positionList = CHtml::listData($positionModel, 'id', 'position_title');
+                            $positiontOption = array('class' => 'form-control position', 'empty' => 'ตำแหน่ง');
+                            ?>
+                            <?php
+                            echo $form->dropDownList($users, 'position_id', $positionList, $positiontOption); ?>
+                            <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
+
+                        </div>
                     </div>
 
                 </div>
+                <div class="text-center mt-20">
 
-
-
-                <?php $this->endWidget();
-                ?>
+                    <?php if (Yii::app()->user->getId() == null) { ?>
+                        <?php echo CHtml::submitButton($label->label_regis, array('class' => 'btn btn-default bg-greenlight btn-lg center-block')); ?>
+                    <?php } else {
+                        echo CHtml::submitButton($label->label_save, array('class' => 'btn btn-default bg-greenlight btn-lg center-block'));
+                    } ?>
+                </div>
 
             </div>
-            <div class="login-bg">
-                <img class="login-img-1" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg3.png">
-                <img class="login-img-2" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg4.png">
-            </div>
-            <script type="text/javascript">
-                $(document).ready(function() {
-                    var max_fields = 10;
-                    var wrapper = $(".add-study");
-                    var add_button = $(".add_form_field");
-                    var numItems = 0;
-                    var x = 1;  
 
-                    $(add_button).click(function(e) {
-                        e.preventDefault();
-                        if (x < max_fields) {
-                            x++;
-                            numItems++;
+
+
+            <?php $this->endWidget();
+            ?>
+
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                var max_fields = 10;
+                var wrapper = $(".add-study");
+                var add_button = $(".add_form_field");
+                var numItems = 0;
+                var x = 1;
+
+                $(add_button).click(function(e) {
+                    e.preventDefault();
+                    if (x < max_fields) {
+                        x++;
+                        numItems++;
                         $(wrapper).append('<div class="row ttt"><div class="col-sm-3 text-right "><strong>ประวัติการศึกษา :</strong></div><div class="col-sm-2"><div class="form-group"><select class ="form-control" name="ProfilesEdu[' + numItems + '][edu_id]"><?php foreach ($list as $key => $value) : ?><option value=<?php echo $key ?>><?php echo $value ?></option><?php endforeach ?></select></div></div><div class="col-sm-3"><div class="form-group"><input type="text" class="form-control" placeholder="สถานที่่จบการศึกษา" name="ProfilesEdu[' + numItems + '][institution]"></div></div><div class="col-sm-2"><div class="form-group"><input class="form-control datetimepicker" autocomplete="off" id="ProfilesEdu_' + numItems + '_date_graduation" placeholder="วันที่จบการศึกษา "name="ProfilesEdu[' + numItems + '][date_graduation]"> </div></div><span class="delete btn-danger" name="mytext[' + numItems + ']"><i class="fas fa-minus-circle" ></i> Delete</span></div>'); //add input box
                         $('.datetimepicker').datetimepicker({
                             format: 'Y-m-d',
@@ -589,58 +585,65 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         alert('You Reached the limits')
                     }
                 });
-                    $(wrapper).on("click", ".delete", function(e) {
-                        e.preventDefault();
-                        $(this).parent('.ttt').remove();
-                        x--;
-                    });
+                $(wrapper).on("click", ".delete", function(e) {
+                    e.preventDefault();
+                    $(this).parent('.ttt').remove();
+                    x--;
                 });
-                $('.default_datetimepicker').datetimepicker({
-                    format: 'Y-m-d',
-                    step: 10,
-                    timepickerScrollbar: false
-                });
+            });
+            $('.default_datetimepicker').datetimepicker({
+                format: 'Y-m-d',
+                step: 10,
+                timepickerScrollbar: false
+            });
 
-                $('.default_datetimepicker').datetimepicker({
-                    step: 10
-                });
-                $('.xdsoft_timepicker').hide();
+            $('.default_datetimepicker').datetimepicker({
+                step: 10
+            });
+            $('.xdsoft_timepicker').hide();
 
-                $(function() {
-                    $('#accept').change(function(event) {
-                        $("#id_employee").hide();
-                        $("#employee_type").hide();
-                        $("#employee_detail").hide();
-                    });
-                    $("#reject").change(function(event) {
-                        $("#id_employee").show();
-                        $("#employee_type").show();
-                        $("#employee_detail").show();
-                    });
+            $(function() {
+                $('#accept').change(function(event) {
+                    $("#id_employee").hide();
+                    $("#employee_type").hide();
+                    $("#employee_detail").hide();
+                });
+                $("#reject").change(function(event) {
+                    $("#id_employee").show();
+                    $("#employee_type").show();
+                    $("#employee_detail").show();
+                });
+                $('#passport_card').hide();
+                $('#card-1').change(function(event) {
                     $('#passport_card').hide();
-                    $('#card-1').change(function(event) {
-                        $('#passport_card').hide();
-                        $('#identification_card').show();
-                    });
-
-                    $('#card-2').change(function(event) {
-                        $('#passport_card').show();
-                        $('#identification_card').hide();
-                    });
-                    $(".department").change(function() {
-                        var id = $(".department").val();
-                        $.ajax({
-                            type: 'POST',
-                            url: "<?= Yii::app()->createUrl('Registration/ListPosition'); ?>",
-                            data: {
-                                id: id
-                            },
-                            success: function(data) {
-                                $('.position').empty();
-                                $('.position').append(data);
-                            }
-                        });
-                    });
-
+                    $('#identification_card').show();
                 });
-            </script>
+
+                $('#card-2').change(function(event) {
+                    $('#passport_card').show();
+                    $('#identification_card').hide();
+                });
+                $(".department").change(function() {
+                    var id = $(".department").val();
+                    $.ajax({
+                        type: 'POST',
+                        url: "<?= Yii::app()->createUrl('Registration/ListPosition'); ?>",
+                        data: {
+                            id: id
+                        },
+                        success: function(data) {
+                            $('.position').empty();
+                            $('.position').append(data);
+                        }
+                    });
+                });
+
+            });
+        </script>
+
+
+        </section>
+        <div class="login-bg">
+            <img class="login-img-1" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg3.png">
+            <img class="login-img-2" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg4.png">
+        </div>

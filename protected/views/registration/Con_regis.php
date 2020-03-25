@@ -45,13 +45,12 @@ $form = $this->beginWidget('CActiveForm', array(
     </div>
   </div>
 
+</section>
 
-  <div class="login-bg">
+<div class="login-bg">
     <img class="login-img-1" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg3.png">
     <img class="login-img-2" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg4.png">
-  </div>
-
-</section>
+</div>
 
 <?php $this->endWidget(); ?>
 <?php if (Yii::app()->user->hasFlash('CheckQues')) {
