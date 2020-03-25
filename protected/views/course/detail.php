@@ -24,13 +24,15 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
     $flag = true;
     $statusEdu = "Study status";
     $lastStatus = "Recent study status";
-    $notStudy = "Still not passing the condition";
+    $failStudy = "Still not passing the condition";
+    $successStudy = "You have passed the conditions";
 }else{  
     $langId = Yii::app()->session['lang'];
     $flag = false;
     $statusEdu = "สถานนะการเรียน";
     $lastStatus = "ไปยังสถานะเรียนล่าสุด";
-    $notStudy = "ท่านยังเรียนไม่ผ่านตามเงื่อนไข";
+    $failStudy = "ท่านยังเรียนไม่ผ่านตามเงื่อนไข";
+    $successStudy = "ท่านเรียนผ่านตามเงื่อนไข";
     $courseChildren = CourseOnline::model()->find(array('condition' => 'parent_id = ' . $course->course_id));
     if($courseChildren){
         $course->course_title = $courseChildren->course_title;
@@ -205,12 +207,21 @@ if($model){
                         <div class="progress-bar" role="progressbar" style="width: <?=$checkLessonPass->percent?>%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                     <h5 class="text-muted text-left"><?=$checkLessonPass->percent?>%</h5>
+
+                    <div class="mt-10"> <a href="#" class="btn btn-success"><?=$lastStatus?></a></div>
+                    <?php if($checkLessonPass->status != "pass") {?>
+                        <div class="certificate-check">
+                            <a href="#"> <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/cer-warning.png"></a>
+                        </div>
+                        <h4 style="margin-top:25px;"><?=$failStudy?></h4>
+                    <?php }else{?>
+                        <div class="certificate-check">
+                            <a href="#"> <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/cer-success.png"></a>
+                        </div>
+                        <h4 style="margin-top:25px;"><?=$successStudy?></h4>
+                    <?php } ?>
+
                 <?php } ?>
-                <div class="mt-10"> <a href="#" class="btn btn-success"><?=$lastStatus?></a></div>
-                <div class="certificate-check">
-                    <a href="#"> <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/cer-warning.png"></a>
-                </div>
-                <h4 style="margin-top:25px;"><?=$notStudy?></h4>
             </div>
         </div>
     </div>
