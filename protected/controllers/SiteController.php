@@ -563,7 +563,7 @@ class SiteController extends Controller
 			// 	$courseArray = CHtml::listData($courses,'course_id','course_id');
 			// }
 			// $course_online->course_id_array = array_values($courseArray);
-			$course = CourseOnline::model()->with("CategoryTitle")->findAll(array("condition" => "course.active='y' and course.status ='1' and categorys.active='y' and categorys.cate_show='1' and course.lang_id = ".$langId,"order" => 'sortOrder' ));
+			$course = CourseOnline::model()->with("CategoryTitle")->findAll(array("condition" => "course.active='y' and course.status ='1' and categorys.active='y' and categorys.cate_show='1' and course.lang_id = ".$langId));
 		}else{
 
 			$criteria = new CDbCriteria;
@@ -575,8 +575,23 @@ class SiteController extends Controller
 			$course = CourseOnline::model()->findAll($criteria);
 		}
 
-		// var_dump($course);exit();
+		// var_dump("<pre>");
+		// var_dump($courseStatus);
+		// var_dump("<br>");
+		// exit();
+		// foreach($courseStatus as $data) {
 
+		// 	$test = $data;
+
+		// 	$lessonList = Lesson::model()->findAll(array('condition' => 'active = "y" AND lang_id = 1 AND course_id=' . $data->course_id, 'order' => 'lesson_no'));
+		// }
+
+		// var_dump($lessonList);exit();
+
+		// var_dump("<pre>");
+		// var_dump($lessonList);
+		// var_dump("<br>");
+		// exit();
 
 		$this->render('index',array('label'=>$label,'model'=>$model,'modelCourseTms'=>$modelCourseTms,'modelOrg'=>$modelOrg,'labelCourse' => $labelCourse,'modelCat' => $modelCat,'courseArr' => $courseArr, 'course_online'=>$course, 'counter'=>$counter));
 

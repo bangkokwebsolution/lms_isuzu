@@ -80,10 +80,10 @@ if($model){
                 if($checkPostTest){
                     $isPostTest = Helpers::isPosttestState($value->id); //true = ยังไมไ่ด้ทำข้อสอบหลังเรียน,false = ทำข้อสอบหลังเรียนแล้ว
                     if($isPostTest){
-                       $stopId = $value->id;
-                       $state = false;
-                       $msg_step = UserModule::t('learning_lesson').': '.$value->title;
-                   }else{
+                     $stopId = $value->id;
+                     $state = false;
+                     $msg_step = UserModule::t('learning_lesson').': '.$value->title;
+                 }else{
                     $criteria = new CDbCriteria;
                     $criteria->condition = ' lesson_id="' . $value->id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y" AND score_past = "y" AND type = "post"';
                     $criteria->order = 'create_date ASC';
@@ -155,12 +155,12 @@ if($model){
 <script src="<?php echo $themeBaseUrl; ?>/plugins/video-js/video.js"></script>
 
 <div class="container">
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb breadcrumb-main">
-                <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/course/index'); ?>"><?php echo $label->label_course; ?></a></li>
-                <li class="breadcrumb-item active" aria-current="page"><?= $course->course_title ?></li>
-            </ol>
-        </nav>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-main">
+            <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/course/index'); ?>"><?php echo $label->label_course; ?></a></li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $course->course_title ?></li>
+        </ol>
+    </nav>
 </div>
 <!-- <div class="header-page parallax-window">
     <div class="container">
@@ -178,107 +178,112 @@ if($model){
 </div>
 </div> -->
 
-  <div class="course-detail-main">
-       <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                       <div class="course-active" id="sticker">
-                             <div class="card">
-                                 <div class="card-body" align="center">
-                                     <div class="mb-3">
-                                         <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png" class="w-100 ">
-                                     </div>
+<div class="course-detail-main">
+ <div class="container">
+    <div class="row">
+        <div class="col-md-4">
+         <div class="course-active" id="sticker">
+           <div class="card">
+               <div class="card-body" align="center">
+                   <div class="mb-3">
+                    <img src="<?php echo Yii::app()->baseUrl; ?>/uploads/courseonline/<?= $course->course_id ?>/thumb/<?= $course->course_picture?>" class="w-100 ">
+                    <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png" class="w-100 "> -->
 
-                                     <h4 class="text-left">สถานนะการเรียน</h4>
-
-                                     <div class="progress" style="height: 8px;">
-                                         <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                     </div>
-                                     <h5 class="text-muted text-left">20.00%</h5>
-                                    <div class="mt-10"> <a href="#" class="btn btn-success">ไปยังสถานะเรียนล่าสุด</a></div>
-                                     <div class="certificate-check">
-                                         <a href="#"> <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/cer-warning.png"></a>
-                                     </div>
-                                     <h4 style="margin-top:25px;">ท่านยังเรียนไม่ผ่านตามเงื่อนไข</h4>
-                                 </div>
-                             </div>
-                         </div>
                 </div>
-                <div class="col-sm-8 col-md-8 ">
 
-                    <div class="topic-course">
-                    <h3><?= $course->course_title ?></h3>
-                    <div class="alert alert-warning mt-20" role="alert">
-                    Period <?=$course->course_day_learn?> day <?= (!empty($course))? "(".Helpers::lib()->CuttimeLang($course->course_date_start,$langId)." - ".Helpers::lib()->CuttimeLang($course->course_date_end,$langId).")":""; ?>
-                    </div>
-                    </div>
-                    
-                    <div class="course-detail">
-                        <div role="tabpanel">
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-tabs" role="tablist">
-                                <li role="presentation">
-                                    <a href="#course-info" aria-controls="course-info" role="tab" data-toggle="tab"><?php echo $label->label_detail; ?></a>
-                                </li>
-                                <li role="presentation" class="active">
-                                    <a href="#course-unit" aria-controls="course-unit" role="tab" id="change_tab2" data-toggle="tab"><?php echo $label->label_Content; ?></a>
-                                </li>
-                            </ul>
-        
-                            <!-- Tab panes -->
-                            <div class="tab-content" id="tab-content">
-                                <div role="tabpanel" class="tab-pane" id="course-info">
-                                    <li class="list-group-item">
-        
-                                        <?php echo htmlspecialchars_decode($course->course_detail); ?>
-        
-                                    </li>
-                                </div>
-                                <div role="tabpanel" class="tab-pane active " id="course-unit">
-                                    <ol>
-                                        <div class="panel panel-default">
-                                            <?php                                         
-                                            foreach ($lessonList as $key => $lessonListValue) {
-                                                if(!$flag){
-                                                    $lessonListChildren  = Lesson::model()->find(array('condition' => 'parent_id = ' . $lessonListValue->id, 'order' => 'lesson_no'));
-                                                    if($lessonListChildren){
-                                                        $lessonListValue->title = $lessonListChildren->title;
-                                                        $lessonListValue->description = $lessonListChildren->description;
-                                                        $lessonListValue->content = $lessonListChildren->content;
-                                                        $lessonListValue->image = $lessonListChildren->image;
-                                                    }
-        
-                                                }
-        
-                                                    // var_dump($lessonListValue->id);
-                                                $idx = 1;
-                                                $checkPreTest = Helpers::checkHavePreTestInManage($lessonListValue->id);
-                                                $checkPostTest = Helpers::checkHavePostTestInManage($lessonListValue->id);
+                <h4 class="text-left">สถานนะการเรียน</h4>
+
+                <div class="progress" style="height: 8px;">
+                   <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+               </div>
+               <h5 class="text-muted text-left">20.00%</h5>
+               <div class="mt-10"> <a href="#" class="btn btn-success">ไปยังสถานะเรียนล่าสุด</a></div>
+               <div class="certificate-check">
+                   <a href="#"> <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/cer-warning.png"></a>
+               </div>
+               <h4 style="margin-top:25px;">ท่านยังเรียนไม่ผ่านตามเงื่อนไข</h4>
+           </div>
+       </div>
+   </div>
+</div>
+<div class="col-sm-8 col-md-8 ">
+
+    <div class="topic-course">
+        <h3><?= $course->course_title ?></h3>
+        <div class="alert alert-warning mt-20" role="alert">
+            Period <?=$course->course_day_learn?> day <?= (!empty($course))? "(".Helpers::lib()->CuttimeLang($course->course_date_start,$langId)." - ".Helpers::lib()->CuttimeLang($course->course_date_end,$langId).")":""; ?>
+        </div>
+    </div>
+
+    <div class="course-detail">
+        <div role="tabpanel">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation">
+                    <a href="#course-info" aria-controls="course-info" role="tab" data-toggle="tab"><?php echo $label->label_detail; ?></a>
+                </li>
+                <li role="presentation" class="active">
+                    <a href="#course-unit" aria-controls="course-unit" role="tab" id="change_tab2" data-toggle="tab"><?php echo $label->label_Content; ?></a>
+                </li>
+            </ul>
+
+            <!-- Tab panes -->
+            <div class="tab-content" id="tab-content">
+                <div role="tabpanel" class="tab-pane" id="course-info">
+                    <li class="list-group-item">
+
+                        <?php echo htmlspecialchars_decode($course->course_detail); ?>
+
+                    </li>
+                </div>
+                <div role="tabpanel" class="tab-pane active " id="course-unit">
+                    <ol>
+                        <div class="panel panel-default">
+                            <?php                                         
+                            foreach ($lessonList as $key => $lessonListValue) {
+                               if(!$flag){
+                                $lessonListChildren  = Lesson::model()->find(array('condition' => 'parent_id = ' . $lessonListValue->id, 'order' => 'lesson_no'));
+                                if($lessonListChildren){
+                                    $lessonListValue->title = $lessonListChildren->title;
+                                    $lessonListValue->description = $lessonListChildren->description;
+                                    $lessonListValue->content = $lessonListChildren->content;
+                                    $lessonListValue->image = $lessonListChildren->image;
+                                }
+
+                            }
+
+                            // var_dump($lessonListValue);
+                            $idx = 1;
+                            $checkPreTest = Helpers::checkHavePreTestInManage($lessonListValue->id);
+                            $checkPostTest = Helpers::checkHavePostTestInManage($lessonListValue->id);
                                                     // var_dump($checkPostTest);exit();
-                                                $lessonStatus = Helpers::lib()->checkLessonPass($lessonListValue);
-                                                $checkLessonPass = Helpers::lib()->checkLessonPass_Percent($lessonListValue);
-                                                $postStatus = Helpers::lib()->CheckTest($lessonListValue, "post");
+                            $lessonStatus = Helpers::lib()->checkLessonPass($lessonListValue);
+                            $checkLessonPass = Helpers::lib()->checkLessonPass_Percent($lessonListValue);
+
+                            $postStatus = Helpers::lib()->CheckTest($lessonListValue, "post");
                                                     // var_dump($postStatus);
-                                                $chk_test_type = Helpers::lib()->CheckTestCount('pass', $lessonListValue->id, true, false, "post");
-                                                $isChecklesson = Helpers::lib()->Checkparentlesson($lessonListValue->id);
-                                                ?>
-        
-                                                <?php 
-                                                if ($checkLessonPass->status == "notLearn") {
-                                                    $colorTab = 'listlearn-danger';
-                                                    $lessonStatusStr = $label->label_notLearn;
-                                                } else if ($checkLessonPass->status == "learning") {
-                                                    $colorTab = 'listlearn-warning';
-                                                    $lessonStatusStr = $label->label_learning;
-                                                } else if ($checkLessonPass->status == "pass") {
-                                                    $colorTab = 'listlearn-success';
+                            $chk_test_type = Helpers::lib()->CheckTestCount('pass', $lessonListValue->id, true, false, "post");
+                            $isChecklesson = Helpers::lib()->Checkparentlesson($lessonListValue->id);
+                            ?>
+
+                            <?php 
+                            if ($checkLessonPass->status == "notLearn") {
+                                $colorTab = 'listlearn-danger';
+                                $lessonStatusStr = $label->label_notLearn;
+                            } else if ($checkLessonPass->status == "learning") {
+                                $colorTab = 'listlearn-warning';
+                                $lessonStatusStr = $label->label_learning;
+                            } else if ($checkLessonPass->status == "pass") {
+                                $colorTab = 'listlearn-success';
                                                         // $lessonStatusStr = $label->label_lessonPass;
-                                                    $lessonStatusStr =  $label->label_learnPass;
-                                                }
-        
-                                                $step = 0;
-                                                if($lessonListValue->id == $stopId){
-                                                 $step =  Helpers::lib()->checkStepLesson($lessonListValue);
+                                $lessonStatusStr =  $label->label_learnPass;
+                            }
+
+
+
+                            $step = 0;
+                            if($lessonListValue->id == $stopId){
+                               $step =  Helpers::lib()->checkStepLesson($lessonListValue);
                                                            // var_dump($step);
                                                     }else if(empty($stopId)){ //step to course test
                                                         $criteria = new CDbCriteria;
@@ -291,7 +296,7 @@ if($model){
                                                             $status_courseTest[] = $value->score_past;
                                                         }
                                                         if(in_array("y", $status_courseTest)){
-        
+
                                                             $step = 5;
                                                         }else if(count($scoreCourse) == $course->cate_amount){
                                                             $step = 4;
@@ -300,16 +305,16 @@ if($model){
                                                         }
                                                     }
                                                     ?>
-        
+
                                                     <div class="panel-heading headcourse <?php //echo $colorTab; ?>" role="tab" id="lessonId<?= $lessonListValue->id; ?>">
                                                         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<?= $lessonListValue->id ?>" aria-expanded="true" aria-controls="collapseOne">
-        
+
                                                             <?php 
                                                             $idLesson_img = (!$flag)? $lessonListChildren->id: $lessonListValue->id;
                                                             $uploadDir = Yii::app()->baseUrl . '/uploads/lesson/' . $idLesson_img . '/thumb/';
                                                             $filename = $lessonListValue->image;
                                                             $filename = $uploadDir . $filename;
-        
+
                                                             ?> 
                                                             <li id="collapseles<?= $lessonListValue->id ?>">
                                                                 <img src="<?= $filename; ?>" class="img-rounded" alt="" style=" width:70px; height:50px;">
@@ -318,7 +323,7 @@ if($model){
                                                                 </span>
                                                                 <label style="color: <?= $checkLessonPass->color ?>" class="<?= $checkLessonPass->class ?>"><?= $lessonStatusStr ?></label>
                                                                 <span class="pull-right"><i class="fa fa-angle-down"></i></span>
-        
+
                                                             </li>
                                                         </a>
                                                     </div>
@@ -326,12 +331,12 @@ if($model){
                                                     <div class="panel-collapse collapse <?= ($lessonListValue->id == $stopId)? 'in':'' ?>" id="collapse-<?= $lessonListValue->id ?>" role="tabpanel" aria-labelledby="headingOne">
                                                         <?php if ($checkPreTest) { ?>
                                                             <div class="stepcoursediv">
-                                                               <div> <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?> </span><?php echo $label->label_testPre; ?></div></div>
-                                                               <ul class="list-group">
+                                                             <div> <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?> </span><?php echo $label->label_testPre; ?></div></div>
+                                                             <ul class="list-group">
                                                                 <?php
-        
+
                                                                 $isPreTest = Helpers::isPretestState($lessonListValue->id);
-        
+
                                                                 if($isChecklesson){
                                                                     $ckLinkTest = $this->createUrl('/question/preexams', array('id' => $lessonListValue->id,'type'=>'pre'));
                                                                     $ckLinkTest_onClick = '';
@@ -339,7 +344,7 @@ if($model){
                                                                     $ckLinkTest = 'javascript:void(0);';
                                                                     $ckLinkTest_onClick = 'onclick="alertSequence();"';
                                                                 }
-        
+
                                                                 if ($isPreTest) {
                                                                     $prelearn = false;
                                                                     ?>
@@ -452,10 +457,10 @@ if($model){
                                                                         }
                                                                         ?>
                                                                         <div class="stepcoursediv">
-                                                                           <div> <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?> </span><?php echo $label->label_gotoLesson; ?></div></div>
-                                                                           <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
+                                                                         <div> <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?> </span><?php echo $label->label_gotoLesson; ?></div></div>
+                                                                         <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
                                                                             <li class="list-group-item ">
-                                                                               <?php if($step == 2){ ?>
+                                                                             <?php if($step == 2){ ?>
                                                                                 <div class="pt-now"> You are here</div>
                                                                             <?php } ?>
                                                                             <span class="pull-right">
@@ -531,7 +536,7 @@ if($model){
                                                                                                 }
                                                                                             }
                                                                                         }
-        
+
                                                                                         if(!$flagCheckPre){
                                                                                             $learnlink = 'javascript:void(0);';
                                                                                             $learnalert = 'alertswalpretest();';    
@@ -550,8 +555,8 @@ if($model){
                                                                                     }
                                                                                     ?>
                                                                                     <div class="stepcoursediv">
-                                                                                     <div> <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?> </span><?php echo $label->label_gotoLesson; ?></div></div>
-                                                                                     <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
+                                                                                       <div> <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?> </span><?php echo $label->label_gotoLesson; ?></div></div>
+                                                                                       <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
                                                                                         <li class="list-group-item">
                                                                                             <?php if($step == 2){ ?>
                                                                                                 <div class="pt-now"> You are here</div>
@@ -580,11 +585,11 @@ if($model){
                                                                                                     $learnalert = '';    
                                                                                                 }
                                                                                             }else{
-                                                                                             $learnlink = 'javascript:void(0);';
-                                                                                             $learnalert = 'alertswal();';
-                                                                                         }
-                                                                                         $learnFiles = Helpers::lib()->checkLessonFile($les,$learnModel->learn_id);
-                                                                                         if ($learnFiles == "notLearn") {
+                                                                                               $learnlink = 'javascript:void(0);';
+                                                                                               $learnalert = 'alertswal();';
+                                                                                           }
+                                                                                           $learnFiles = Helpers::lib()->checkLessonFile($les,$learnModel->learn_id);
+                                                                                           if ($learnFiles == "notLearn") {
                                                                                             $statusValue = '<span class="label label-default" >'.$label->label_notLearn .'</span>';
                                                                                         } else if ($learnFiles == "learning") {
                                                                                             $statusValue = '<span class="label label-warning" >'. $label->label_learning .'</span>';
@@ -592,48 +597,48 @@ if($model){
                                                                                             $statusValue = '<span class="label label-success" >'. $label->label_learnPass .'</span>';
                                                                                         }
                                                                                         ?>
-                                                                                         <div class="stepcoursediv">
+                                                                                        <div class="stepcoursediv">
                                                                                             <div> <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?> </span><?php echo $label->label_gotoLesson; ?>
-                                                                                            </div>
                                                                                         </div>
-                                                                                        <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
-                                                                                            <li class="list-group-item ">
-                                                                                                <?php if($step == 2){ ?>
+                                                                                    </div>
+                                                                                    <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
+                                                                                        <li class="list-group-item ">
+                                                                                            <?php if($step == 2){ ?>
+                                                                                                <div class="pt-now"> You are here</div>
+                                                                                            <?php } ?>
+                                                                                            <span class="pull-right">
+                                                                                                <span id="lblduration-<?=$les->id?>"></span>  <span class="btn btn-warning detailmore"><?php echo $label->label_gotoLesson; ?> <i class="fa fa-play-circle"></i> </span></span>
+                                                                                                <span class="list__course"><?= $les->getRefileName(); ?></span>&nbsp;<?=$statusValue?>
+                                                                                                <div class="hidden">
+                                                                                                    <video id="video_player<?=$les->id?>" width="320" height="240" controls>
+                                                                                                        <source src="<?php echo $uploadFolder . $les->filename;?>" type="video/mp4">
+                                                                                                        </video>
+                                                                                                        <div id="meta"></div>   
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                            </a>  
+                                                                                            <?php 
+                                                                                        } 
+                                                                                    }
+                                                                                    ?>
+                                                                                    <?php
+                                                                                    if ($checkPostTest) {
+                                                                                        $isPostTest = Helpers::isPosttestState($lessonListValue->id);
+                                                                                        if ($isPostTest) {
+                                                                                            if ($lessonStatus != 'pass') {
+                                                                                                $link = 'javascript:void(0);';
+                                                                                                $alert = 'alertswal();';
+                                                                                            } else {
+                                                                                                $link = $this->createUrl('question/preexams', array('id' => $lessonListValue->id));
+                                                                                                $alert = '';
+                                                                                            }
+                                                                                            ?>
+                                                                                            <li class="list-group-item">
+                                                                                                <?php if($step == 3){ ?>
                                                                                                     <div class="pt-now"> You are here</div>
                                                                                                 <?php } ?>
-                                                                                                <span class="pull-right">
-                                                                                                    <span id="lblduration-<?=$les->id?>"></span>  <span class="btn btn-warning detailmore"><?php echo $label->label_gotoLesson; ?> <i class="fa fa-play-circle"></i> </span></span>
-                                                                                                    <span class="list__course"><?= $les->getRefileName(); ?></span>&nbsp;<?=$statusValue?>
-                                                                                                    <div class="hidden">
-                                                                                                        <video id="video_player<?=$les->id?>" width="320" height="240" controls>
-                                                                                                            <source src="<?php echo $uploadFolder . $les->filename;?>" type="video/mp4">
-                                                                                                            </video>
-                                                                                                            <div id="meta"></div>   
-                                                                                                        </div>
-                                                                                                    </li>
-                                                                                                </a>  
-                                                                                                <?php 
-                                                                                            } 
-                                                                                        }
-                                                                                        ?>
-                                                                                        <?php
-                                                                                        if ($checkPostTest) {
-                                                                                            $isPostTest = Helpers::isPosttestState($lessonListValue->id);
-                                                                                            if ($isPostTest) {
-                                                                                                if ($lessonStatus != 'pass') {
-                                                                                                    $link = 'javascript:void(0);';
-                                                                                                    $alert = 'alertswal();';
-                                                                                                } else {
-                                                                                                    $link = $this->createUrl('question/preexams', array('id' => $lessonListValue->id));
-                                                                                                    $alert = '';
-                                                                                                }
-                                                                                                ?>
-                                                                                                <li class="list-group-item">
-                                                                                                    <?php if($step == 3){ ?>
-                                                                                                        <div class="pt-now"> You are here</div>
-                                                                                                    <?php } ?>
-                                                                                                    <?php echo $label->label_testPost; ?>  <span class="pull-right"><a href="<?= $link ?>" <?= $alert != '' ? 'onclick="' . $alert . '"' : ''; ?> class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <?php echo $label->label_DoTest; ?></a></span></li>
-                                                                                                    <?php
+                                                                                                <?php echo $label->label_testPost; ?>  <span class="pull-right"><a href="<?= $link ?>" <?= $alert != '' ? 'onclick="' . $alert . '"' : ''; ?> class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <?php echo $label->label_DoTest; ?></a></span></li>
+                                                                                                <?php
                                                                                         } else { //Post Test
                                                                                             $flagPostTestPass = false;
                                                                                             $criteriaScoreAll = new CDbCriteria;
@@ -641,9 +646,9 @@ if($model){
                                                                                             $scoreAll = Score::model()->findAll($criteriaScoreAll);
                                                                                             ?>
                                                                                             <div class="stepcoursediv">
-                                                                                               <div> <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?> </span><?php echo $label->label_testPost; ?></div></div>
-                                                                                               <?php
-                                                                                               foreach ($scoreAll as $keys => $scorePost) {
+                                                                                             <div> <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?> </span><?php echo $label->label_testPost; ?></div></div>
+                                                                                             <?php
+                                                                                             foreach ($scoreAll as $keys => $scorePost) {
                                                                                                 if($scorePost->score_past == 'y'){
                                                                                                     $flagPostTestPass = true;
                                                                                                     $colorText = 'text-success';
@@ -652,7 +657,7 @@ if($model){
                                                                                                 }
                                                                                                 $postStatus = Helpers::lib()->CheckTestAll($lessonListValue, "post",$scorePost);
                                                                                                 ?>
-        
+
                                                                                                 <li class="list-group-item"><?php echo $label->label_resultTestPost; ?> <?= $keys+1 ?><span class="pull-right <?= $colorText ?> prepost"><?= $postStatus->value['score']; ?>/<?= $postStatus->value['total']; ?> <?php echo $label->label_point; ?></span></li>
                                                                                                 <?php
                                                                                                 }//end foreach
@@ -662,12 +667,12 @@ if($model){
                                                                                                     $alert = '';
                                                                                                     ?>
                                                                                                     <li class="list-group-item">
-                                                                                                       <?php if($step == 3){ ?>
+                                                                                                     <?php if($step == 3){ ?>
                                                                                                         <div class="pt-now"> You are here</div>
                                                                                                     <?php } ?>
                                                                                                     <?php echo $label->label_testPost; ?> <?= count($scoreAll)+1; ?> <span class="pull-right"><a href="<?= $link ?>" <?= $alert != '' ? 'onclick="' . $alert . '"' : ''; ?> class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <?php echo $label->label_DoTest; ?></a></span></li>
                                                                                                 <?php } ?>
-        
+
                                                                                                 <?php
                                                                                             }
                                                                                         } else {
@@ -675,10 +680,10 @@ if($model){
                                                                                             <!-- <li class="list-group-item">ไม่มีข้อสอบหลังเรียน</li> -->
                                                                                         <?php } ?>
                                                                                         <!--                                                        <li class="list-group-item">แบบทดสอบ <?= $lessonListValue->id ?> <span class="pull-right"><a href="<?php echo $this->createUrl('/quiz/preexams', array('id' => $lessonListValue->id)); ?>" class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> ทำแบบทดสอบ</a></span></li>-->
-        
+
                                                                                         <?php
                                                                                         if ($lessonListValue->header_id) {
-        
+
                 if ($checkPostTest) { //ถ้ามีข้อสอบหลังเรียน
                     if ($isPostTest) {//ถ้ายังไม่ทำข้อสอบ
                         $link_questionnair = 'javascript:void(0);';
@@ -745,7 +750,7 @@ if($model){
                                                                     $currentAnswer = QAnswers::model()->find(array(
                                                                         'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $lessonQuestionAns->id . '"',
                                                                     ));
-        
+
                                                                     if($currentAnswer->choice_id == $QChoices->option_choice_id){
                                                                         echo '<li>';
                                                                         if($QQuestion->input_type_id == 1){
@@ -764,7 +769,7 @@ if($model){
                                                                     $currentAnswer = QAnswers::model()->find(array(
                                                                         'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $lessonQuestionAns->id . '"',
                                                                     ));
-        
+
                                                                     if($currentAnswer->choice_id == $QChoices->option_choice_id){
                                                                         echo '<li>';
                                                                         echo $QChoices->option_choice_name;
@@ -778,7 +783,7 @@ if($model){
                                                                     <thead>
                                                                         <tr>
                                                                             <td style="vertical-align: middle;" class="left padleft" rowspan="2"><?= $QQuestion->question_name ?></td>
-        
+
                                                                             <td class="center" <?= ($QQuestion->question_range)?'colspan="'.$QQuestion->question_range.'"':null ?>><?php echo  $label->label_SatisfactionLv; ?></td>
                                                                         </tr>
                                                                         <tr class="info">
@@ -815,7 +820,7 @@ if($model){
                                                                                         $j--;
                                                                                     }
                                                                                 }
-        
+
                                                                                 ?>
                                                                             </tr>
                                                                             <?php
@@ -863,8 +868,8 @@ if($model){
                     </div>
                 <?php } ?>
             </div>
-       </div>
-  </div>
+        </div>
+    </div>
     <!-- Course question  -->
     <?php 
     $ckPassAll = true;
@@ -901,7 +906,7 @@ if($model){
 
         ?>
         <?php if($checkHaveCourseTest || $CourseSurvey){ ?>
-           <div class="stepcoursediv formrating">
+         <div class="stepcoursediv formrating">
             <span class="stepcourse"><?= $course->course_title ?> <?= $checkHaveCourseTest ? 'Exam' : ''; ?> <?= $checkHaveCourseTest && $CourseSurvey ? '&' : ''; ?> <?= $CourseSurvey ? 'Training Feedback' : '' ?></span>
         </div>
     <?php } ?>
@@ -912,12 +917,12 @@ if($model){
         <?php foreach ($BestFinalTestScore as $key => $course_score) {?>
             <?php if(count($BestFinalTestScore) < $course->cate_amount){ ?>
                 <?php if($course_score->score_past == 'n'){ ?>
-                 <li class="list-group-item ">
+                   <li class="list-group-item ">
                     <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
                         <span class="pull-right  text-danger prepost"> <?= $course_score->score_number ?>/<?= $course_score->score_total ?> <?= $label->label_point; ?></span></a> 
                     </li>
                 <?php }else{ ?>
-                 <li class="list-group-item ">
+                   <li class="list-group-item ">
                     <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
                         <span class="pull-right  text-success prepost"> <?= $course_score->score_number ?>/<?= $course_score->score_total ?> <?= $label->label_point; ?></span></a> 
                     </li>
@@ -930,7 +935,7 @@ if($model){
                 <?php } ?>
             <?php }?>
             <?php if($step == 4){ ?>
-               <li class="list-group-item ">
+             <li class="list-group-item ">
                 <div class="pt-now"> You are here</div>
                 <a href="<?= $pathCourseTest ?>" <?= $alertCourseTest ?> >
                     <span class="list__course"><?= $label->label_testFinalTimes; ?> <?= $key+2; ?></span>
@@ -939,7 +944,7 @@ if($model){
                 </li>
             <?php } ?>
         <?php }else if($checkHaveCourseTest){ ?>
-           <li class="list-group-item ">
+         <li class="list-group-item ">
             <?php if($step == 4){ ?>
                 <div class="pt-now"> You are here</div>
             <?php } ?>
@@ -966,14 +971,14 @@ if($model){
 
         if($checkCourseTest == 'pass'){ //Lesson All pass
             if($checkHaveCourseTest){
-             $criteria = new CDbCriteria;
-             $criteria->compare('course_id',$course->course_id);
-             $criteria->compare('user_id',Yii::app()->user->id);
-             $criteria->compare('score_past','y');
-             $criteria->compare('active','y');
-             $criteria->order = 'score_id';
-             $courseScorePass = Coursescore::model()->findAll($criteria);
-             if($courseScorePass){
+               $criteria = new CDbCriteria;
+               $criteria->compare('course_id',$course->course_id);
+               $criteria->compare('user_id',Yii::app()->user->id);
+               $criteria->compare('score_past','y');
+               $criteria->compare('active','y');
+               $criteria->order = 'score_id';
+               $courseScorePass = Coursescore::model()->findAll($criteria);
+               if($courseScorePass){
 
                         if($PaQuest){ //ทำแบบสอบถามแล้ว
                             $step = 0;

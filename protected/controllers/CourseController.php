@@ -526,63 +526,63 @@ public function actionCateIndex($id) {
                     'lesson_status' => 'learning'
                 ));
 
-                    echo json_encode($att);
+                echo json_encode($att);
             } else {
                 $learnVdoModel->learn_file_date = new CDbExpression('NOW()');
                 if ($status == 'success' || $learnVdoModel->learn_file_status == 's') {
-                        $learnVdoModel->learn_file_status = 's';
-                        $att['no'] = $id;
-                        $att['image'] = '<input type="text" class="knob" value="100" data-skin="tron" data-thickness="0.2" data-width="25" data-height="25" data-displayInput="false" data-fgColor="#0C9C14" data-readonly="true">';
-                        $att['imageBar'] = 'success';
-                        echo json_encode($att);
+                    $learnVdoModel->learn_file_status = 's';
+                    $att['no'] = $id;
+                    $att['image'] = '<input type="text" class="knob" value="100" data-skin="tron" data-thickness="0.2" data-width="25" data-height="25" data-displayInput="false" data-fgColor="#0C9C14" data-readonly="true">';
+                    $att['imageBar'] = 'success';
+                    echo json_encode($att);
                 }
                 $learnVdoModel->save();
 
                 // start update lesson status pass
-                    $lesson = Lesson::model()->findByPk($model->lesson_id);
-                    if ($lesson) {
+                $lesson = Lesson::model()->findByPk($model->lesson_id);
+                if ($lesson) {
 
-                        Helpers::lib()->checkDateStartandEnd(Yii::app()->user->id, $lesson->course_id);
+                    Helpers::lib()->checkDateStartandEnd(Yii::app()->user->id, $lesson->course_id);
 
-                        $user = Yii::app()->getModule('user')->user();
-                        $lessonStatus = Helpers::lib()->checkLessonPass($lesson);
-                        $learnLesson = $user->learns(
-                            array(
-                                'condition' => 'lesson_id=:lesson_id AND lesson_active="y"',
-                                'params' => array(':lesson_id' => $lesson->id)
-                            )
-                        );
+                    $user = Yii::app()->getModule('user')->user();
+                    $lessonStatus = Helpers::lib()->checkLessonPass($lesson);
+                    $learnLesson = $user->learns(
+                        array(
+                            'condition' => 'lesson_id=:lesson_id AND lesson_active="y"',
+                            'params' => array(':lesson_id' => $lesson->id)
+                        )
+                    );
 
-                        $learn = Learn::model()->findByPk($learnLesson[0]->learn_id);
-                        $learn->lesson_status = $lessonStatus;
-                        $learn->save();
+                    $learn = Learn::model()->findByPk($learnLesson[0]->learn_id);
+                    $learn->lesson_status = $lessonStatus;
+                    $learn->save();
 
                     //$cateStatus = Helpers::lib()->checkCategoryPass($lesson->CourseOnlines->cate_id);
-                        $courseStats = Helpers::lib()->checkCoursePass($lesson->course_id);
-                        $postTestHave = Helpers::lib()->checkHavePostTestInManage($lesson->id);
-                        $courseManageHave = Helpers::lib()->checkHaveCourseTestInManage($lesson->course_id);
-                        if ($courseStats == "pass" && !$postTestHave && !$courseManageHave) {
-                            $passCoursModel = Passcours::model()->findByAttributes(array(
-                                'passcours_cates' => $lesson->CourseOnlines->cate_id,
-                                'passcours_user' => Yii::app()->user->id
-                            ));
-                            if (!$passCoursModel) {
-                                $modelPasscours = new Passcours;
-                                $modelPasscours->passcours_cates = $lesson->CourseOnlines->cate_id;
-                                $modelPasscours->passcours_cours = $lesson->course_id;
-                                $modelPasscours->passcours_user = Yii::app()->user->id;
-                                $modelPasscours->passcours_date = new CDbExpression('NOW()');
-                                $modelPasscours->save();
-                            }
-                        }
-                        if($courseStats == "pass"){
-                            $this->SendMailLearn($lesson->course_id);
+                    $courseStats = Helpers::lib()->checkCoursePass($lesson->course_id);
+                    $postTestHave = Helpers::lib()->checkHavePostTestInManage($lesson->id);
+                    $courseManageHave = Helpers::lib()->checkHaveCourseTestInManage($lesson->course_id);
+                    if ($courseStats == "pass" && !$postTestHave && !$courseManageHave) {
+                        $passCoursModel = Passcours::model()->findByAttributes(array(
+                            'passcours_cates' => $lesson->CourseOnlines->cate_id,
+                            'passcours_user' => Yii::app()->user->id
+                        ));
+                        if (!$passCoursModel) {
+                            $modelPasscours = new Passcours;
+                            $modelPasscours->passcours_cates = $lesson->CourseOnlines->cate_id;
+                            $modelPasscours->passcours_cours = $lesson->course_id;
+                            $modelPasscours->passcours_user = Yii::app()->user->id;
+                            $modelPasscours->passcours_date = new CDbExpression('NOW()');
+                            $modelPasscours->save();
                         }
                     }
-                // end update lesson status pass
+                    if($courseStats == "pass"){
+                        $this->SendMailLearn($lesson->course_id);
+                    }
                 }
+                // end update lesson status pass
             }
         }
+    }
 
     public function actionLearnVdo($id=null, $learn_id=null) {
         if(Yii::app()->user->id){
@@ -1028,7 +1028,7 @@ public function actionDetail($id) {
 
 //        var_dump($teacher[0]->teacher_name) ;        exit();
     $lessonList = Lesson::model()->findAll(array('condition' => 'active = "y" AND lang_id = 1 AND course_id=' . $id, 'order' => 'lesson_no'));
-
+    
     // if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
     //         $langId = Yii::app()->session['lang'] = 1;
     //     }else{
