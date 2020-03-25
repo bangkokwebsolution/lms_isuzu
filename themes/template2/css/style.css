@@ -2237,8 +2237,18 @@ div.course-detail2 h4.text11 {
     }
   }
 
+
+  .reset-well{
+    background-color: transparent;
+    border:none;
+    box-shadow: none;
+  }
+
+  .add-study{
+    position: relative;
+  }
+
   #register .well {
-    background-color: #F9F9F9;
     position: relative;
     z-index: 20;
   }
@@ -2248,8 +2258,9 @@ div.course-detail2 h4.text11 {
     padding: 1em;
     border-radius: 10px;
     margin-top: -2em;
-    -webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
-    box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px -1px 5px rgba(0,0,0,.075);
+    box-shadow: 0px -1px 5px rgba(0,0,0,.075);
+    border: 1px solid #ddd;
   }
 
   #register .well form .well {
@@ -2274,7 +2285,7 @@ div.course-detail2 h4.text11 {
 
   #register .well form .well input,
   #register .well form .well select {
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 0px 12px;
     font-size: 16px;
   }
@@ -4085,9 +4096,27 @@ div.course-detail2 h4.text11 {
    border-color: var(--color-bulemain) ;
  }
 
- #register .well .radio-danger input[type=radio]:checked+label:after{
-  background-color: var(--color-bulemain);
+ #register .radio label:before{
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  top: 3px;
 }
+
+#register .radio label:after{
+  top: 3px;
+  background: transparent;
+}
+#register .radio-danger input[type=radio]:checked+label:after{
+  content: "✔";
+  background: transparent;
+  color: var(--color-bulemain);
+}
+#register .radio label{
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
 .custom-file-input {
   position: relative;
   z-index: 2;
@@ -4138,6 +4167,8 @@ div.course-detail2 h4.text11 {
 .topic-register{
   border-bottom: 1px dashed #ddd;
   padding-bottom:10px;
+  margin-bottom: 20px;
+  color: var(--color-bulemain);
 }
 
 .course-detail-main{
