@@ -324,7 +324,7 @@ if (isset($_POST['Profile'])) {
     $users->identification = $_POST['idcard'];
     $profile->identification = $_POST['idcard'];
     $profile->passport = $_POST['Profile'][passport];
-    $users->username = $_POST['User'][employee_id];
+    $users->username = $_POST['User'][username];
     $users->email = $_POST['User'][email];
     $users->department_id = $_POST['User'][department_id];
     $users->position_id = $_POST['User'][position_id];
@@ -547,45 +547,47 @@ public function actionUpdate() {
             'params' => array(':lang_id' => 1)
         ));
     }
-             // var_dump($label);exit();
+    $ProfilesEdu = ProfilesEdu::model()->findAll(array(
+        'condition' => 'user_id='.Yii::app()->user->id,
+    ));
 
-             
+    $this->performAjaxValidation($ProfilesEdu);         
 
     if (isset($_POST['Profile'])) {
         // var_dump($_POST['User']);
         // exit();
 
-        $Neworg = $_POST['Orgchart'];    
-        $users->orgchart_lv2 = json_encode($Neworg);
-        $profile->identification = $_POST['idcard'];
-//            $users->username = $_POST['User'][email];
-        $users->attributes = $_POST['User'];
-        // $users->email = $_POST['User'][email];
-        $criteria=new CDbCriteria;
-        $criteria->compare('department_id',$_POST['User'][department_id]);
-        $criteria->compare('position_title',$_POST['User'][position_name]);
-        $position = Position::model()->find($criteria);
-        if(!$position){
-            $position = new Position;
-            $position->department_id = $_POST['User'][department_id];
-            $position->position_title = $_POST['User'][position_name];
-            $position->create_date = date("Y-m-d H:i:s");
-            if(!empty($_POST['User']['department_id']) && !empty($_POST['User']['position_name'])){
-                $position->save();
-            }
-        }
-        $users->position_id = $position->id;
+//         $Neworg = $_POST['Orgchart'];    
+//         $users->orgchart_lv2 = json_encode($Neworg);
+//         $profile->identification = $_POST['idcard'];
+// //            $users->username = $_POST['User'][email];
+//         $users->attributes = $_POST['User'];
+//         // $users->email = $_POST['User'][email];
+//         $criteria=new CDbCriteria;
+//         $criteria->compare('department_id',$_POST['User'][department_id]);
+//         $criteria->compare('position_title',$_POST['User'][position_name]);
+//         $position = Position::model()->find($criteria);
+//         if(!$position){
+//             $position = new Position;
+//             $position->department_id = $_POST['User'][department_id];
+//             $position->position_title = $_POST['User'][position_name];
+//             $position->create_date = date("Y-m-d H:i:s");
+//             if(!empty($_POST['User']['department_id']) && !empty($_POST['User']['position_name'])){
+//                 $position->save();
+//             }
+//         }
+//         $users->position_id = $position->id;
         $users->position_name = $_POST['User'][position_name];
            // $users->position_id = $_POST['User'][position_id];
         // $users->division_id = $_POST['User'][division_id];
         // $users->department_id = $_POST['User'][department_id];
         // $users->station_id = $_POST['User'][station_id];
                 // $users->company_id = $_POST['User'][company_id];
-        if($memberLdap['count'] <= 0){
-           $users->division_id = $_POST['User'][division_id];
-           $users->department_id = $_POST['User'][department_id];
-           $users->station_id = $_POST['User'][station_id];
-        }
+        // if($memberLdap['count'] <= 0){
+        //    $users->division_id = $_POST['User'][division_id];
+        //    $users->department_id = $_POST['User'][department_id];
+        //    $users->station_id = $_POST['User'][station_id];
+        // }
         
             // $users->password = $_POST['Users'][password];
             // $users->verifyPassword = $_POST['Users'][verifyPassword];
@@ -594,6 +596,26 @@ public function actionUpdate() {
         $profile->firstname = $_POST['Profile'][firstname];
         $profile->lastname = $_POST['Profile'][lastname];
         $profile->department = $_POST['Profile'][department];
+         $profile->type_user = $_POST['type_user']; 
+    $profile->history_of_illness = $_POST['history_of_illness'];;
+    $profile->status_sm = $_POST['status_sm'];
+    $profile->type_employee = $_POST['type_employee'];
+    $profile->sex = ($profile->title_id == 1)? "Male":"Female";
+    $profile->tel = $_POST['Profile'][tel];
+            // $profile->division_title = $_POST['Profile'][division_title];
+    $profile->birthday = $_POST['Profile'][birthday];
+    $profile->age = $_POST['Profile'][age];
+            // $profile->education = $_POST['Profile'][education];
+            // $profile->occupation = $_POST['Profile'][occupation];
+            // $profile->position = $_POST['Profile'][position];
+            // $profile->tel = $_POST['Profile'][tel];
+            // $profile->phone = $_POST['Profile'][phone];
+            // $profile->fax = $_POST['Profile'][fax];
+    $profile->address = $_POST['Profile'][address];
+    $profile->date_of_expiry = $_POST['Profile'][date_of_expiry];
+    $profile->race = $_POST['Profile'][race];
+    $profile->nationality = $_POST['Profile'][nationality];
+    $profile->religion = $_POST['Profile'][religion];
             // $profile->birthday = $_POST['Profile'][birthday];
             // $profile->age = $_POST['Profile'][age];
             //$profile->sex = $_POST['Profile'][sex];
@@ -605,20 +627,20 @@ public function actionUpdate() {
             // $profile->fax = $_POST['Profile'][fax];
             // $profile->address = $_POST['Profile'][address];
         $users->status = 1;
-        if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
-            $secret = '6LdMXXcUAAAAAK76NVqqh5qMv05wg2QxbHoSrJMc';
-            $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secret . '&response=' . $_POST['g-recaptcha-response']);
-            $responseData = json_decode($verifyResponse);
-            if ($responseData->success)$users->captcha = $responseData->success;
-        }
+        // if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
+        //     $secret = '6LdMXXcUAAAAAK76NVqqh5qMv05wg2QxbHoSrJMc';
+        //     $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secret . '&response=' . $_POST['g-recaptcha-response']);
+        //     $responseData = json_decode($verifyResponse);
+        //     if ($responseData->success)$users->captcha = $responseData->success;
+        // }
 
-        if($_POST['User']['newpassword'] != null ){
-            $users->password = UserModule::encrypting($_POST['User']['newpassword']);
-                    // $model->verifyPassword=UserModule::encrypting($model->password);
-            $users->verifyPassword = UserModule::encrypting($_POST['User']['confirmpass']);
-        }else{
-            $users->verifyPassword = $users->password;
-        } 
+        // if($_POST['User']['newpassword'] != null ){
+        //     $users->password = UserModule::encrypting($_POST['User']['newpassword']);
+        //             // $model->verifyPassword=UserModule::encrypting($model->password);
+        //     $users->verifyPassword = UserModule::encrypting($_POST['User']['confirmpass']);
+        // }else{
+        //     $users->verifyPassword = $users->password;
+        // } 
             // var_dump($profile->validate());exit();
             // var_dump($users->save());
             // var_dump($users->getErrors());
@@ -636,44 +658,55 @@ public function actionUpdate() {
                     //     $users->pic_user = $beautifulName;
                     // }
 //                บันทึกข้อมูล
-            if ($users->save() && $profile->save()) {  
-//                    บันทึกภาพ
-//                         if (isset($uploadFile)) {
-//                             /////////// SAVE IMAGE //////////
-//                             Yush::init($users);
-//                             $originalPath = Yush::getPath($users, Yush::SIZE_ORIGINAL, $users->pic_user);
-//                             $thumbPath = Yush::getPath($users, Yush::SIZE_THUMB, $users->pic_user);
-//                             $smallPath = Yush::getPath($users, Yush::SIZE_SMALL, $users->pic_user);
-//                             // Save the original resource to disk
-//                             $uploadFile->saveAs($originalPath);
+            if ($users->save() && $profile->save()) { 
+             if ($_POST['ProfilesEdu']){
+            foreach ($_POST['ProfilesEdu'] as $action_index=>$action_value){
 
-//                             // Create a small image
-//                             $smallImage = Yii::app()->phpThumb->create($originalPath);
-//                             $smallImage->resize(385, 220);
-//                             $smallImage->save($smallPath);
-// //
-//                             // Create a thumbnail
-//                             $thumbImage = Yii::app()->phpThumb->create($originalPath);
-//                             $thumbImage->resize(350, 200);
-//                             $thumbImage->save($thumbPath);
-//                         }
+               $Edu = new ProfilesEdu;
+               $Edu->user_id = $users->id;
+               $Edu->update_date = date("Y-m-d H:i:s");
+               $Edu->update_by = $users->id;
+               $Edu->attributes = $action_value;
+               $Edu->save();
+                    }
+                } 
+                //   บันทึกภาพ
+                        if (isset($uploadFile)) {
+                            /////////// SAVE IMAGE //////////
+                            Yush::init($users);
+                            $originalPath = Yush::getPath($users, Yush::SIZE_ORIGINAL, $users->pic_user);
+                            $thumbPath = Yush::getPath($users, Yush::SIZE_THUMB, $users->pic_user);
+                            $smallPath = Yush::getPath($users, Yush::SIZE_SMALL, $users->pic_user);
+                            // Save the original resource to disk
+                            $uploadFile->saveAs($originalPath);
+
+                            // Create a small image
+                            $smallImage = Yii::app()->phpThumb->create($originalPath);
+                            $smallImage->resize(385, 220);
+                            $smallImage->save($smallPath);
+//
+                            // Create a thumbnail
+                            $thumbImage = Yii::app()->phpThumb->create($originalPath);
+                            $thumbImage->resize(350, 200);
+                            $thumbImage->save($thumbPath);
+                        }
                 $this->redirect(array('site/index'));
             } else {
                         // var_dump($users->getErrors());
                         // var_dump($profile->getErrors());
-                    $this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label));
-                    exit();
+                    // $this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label));
+                    // exit();
             }
         } else {
                     // var_dump($users->getErrors());
                     // var_dump($profile->getErrors());
-                    $this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label));
-                    exit();
+                    // $this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label));
+                    // exit();
         }
 
     }
     $users->position_name = isset($_POST['User']['position_name']) ? $_POST['User']['position_name'] : $users->position->position_title;
-    $this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label));
+    $this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label, 'ProfilesEdu' => $ProfilesEdu, 'status_sm' => $status_sm, 'type_user' => $type_user, 'type_employee' => $type_employee, 'history_of_illness' => $history_of_illness));
 }
 
 //
