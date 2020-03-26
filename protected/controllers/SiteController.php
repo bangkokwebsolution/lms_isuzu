@@ -337,7 +337,7 @@ class SiteController extends Controller
 
 	public function actionIndex($login = null)
 	{
-		$dateNow  =date("d-m-Y");
+		$dateNow  = date("d-m-Y");
 		$ipaddress = '';
 		
 		if (getenv('HTTP_CLIENT_IP'))
@@ -361,8 +361,19 @@ class SiteController extends Controller
 			$date_Old = $value->date_visit;			 
 		}
 
-		if($ip_Old != $ipaddress && $date_Old != $dateNow){
-			$count = new Counter;
+		$count = new Counter;
+
+		if($ip_Old == $ipaddress && $date_Old != $dateNow){ //ไอพี่เก่า วันใหม่
+			$count->date_visit = $dateNow;
+			$count->ip_visit = $ipaddress;
+			$count->visit = 1;
+			$count->save();
+		}else if($ip_Old != $ipaddress && $date_Old == $dateNow){ //ไอพี่ใหม่ วันเก่า
+			$count->date_visit = $dateNow;
+			$count->ip_visit = $ipaddress;
+			$count->visit = 1;
+			$count->save();
+		}else if($ip_Old != $ipaddress && $date_Old != $dateNow){ //ไอพี่ใหม่ วันใหม่
 			$count->date_visit = $dateNow;
 			$count->ip_visit = $ipaddress;
 			$count->visit = 1;
