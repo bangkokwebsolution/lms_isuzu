@@ -339,7 +339,7 @@ class SiteController extends Controller
 	{
 		$dateNow  = date("d-m-Y");
 		$ipaddress = '';
-		
+
 		if (getenv('HTTP_CLIENT_IP'))
 			$ipaddress = getenv('HTTP_CLIENT_IP');
 		else if(getenv('HTTP_X_FORWARDED_FOR'))
@@ -356,24 +356,28 @@ class SiteController extends Controller
 			$ipaddress = 'UNKNOWN';
 
 		$modelCount = Counter::model()->findAll();
+
+
+		$ip_Old = [];
+		$date_Old = [];
 		foreach ($modelCount as $key => $value) {
-			$ip_Old = $value->ip_visit;
-			$date_Old = $value->date_visit;			 
+			$ip_Old[] = $value->ip_visit;
+			$date_Old[] = $value->date_visit;			 
 		}
 
 		$count = new Counter;
-
-		if($ip_Old == $ipaddress && $date_Old != $dateNow){ //ไอพี่เก่า วันใหม่
+		
+		if(in_array($ipaddress, $ip_Old) && !in_array($dateNow, $date_Old)){ //ไอพี่เก่า วันใหม่
 			$count->date_visit = $dateNow;
 			$count->ip_visit = $ipaddress;
 			$count->visit = 1;
 			$count->save();
-		}else if($ip_Old != $ipaddress && $date_Old == $dateNow){ //ไอพี่ใหม่ วันเก่า
+		}else if(!in_array($ipaddress, $ip_Old) && in_array($dateNow, $date_Old)){ //ไอพี่ใหม่ วันเก่า
 			$count->date_visit = $dateNow;
 			$count->ip_visit = $ipaddress;
 			$count->visit = 1;
 			$count->save();
-		}else if($ip_Old != $ipaddress && $date_Old != $dateNow){ //ไอพี่ใหม่ วันใหม่
+		}else if(!in_array($ipaddress, $ip_Old) && !in_array($dateNow, $date_Old)){ //ไอพี่ใหม่ วันใหม่
 			$count->date_visit = $dateNow;
 			$count->ip_visit = $ipaddress;
 			$count->visit = 1;
