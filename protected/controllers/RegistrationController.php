@@ -303,11 +303,12 @@ if(!$label){
         'params' => array(':lang_id' => 1)
     ));
 }
- $type_user = (!empty($_POST['type_user']))? $_POST['type_user']:1;
+ $type_user = (!empty($_POST['type_user']))? $_POST['type_user']:3;
  $history_of_illness = (!empty($_POST['history_of_illness']))? $_POST['history_of_illness']:'n';
  $status_sm = (!empty($_POST['status_sm']))? $_POST['status_sm']:'s';
  $type_employee = (!empty($_POST['type_employee']))? $_POST['type_employee']:'office'; 
-
+ $type_card = (!empty($_POST['type_card']))? $_POST['type_card']:'p';
+//var_dump($type_card);exit();
 if (isset($_POST['Profile'])) {
     //var_dump($_POST['passport']);exit();
     // $memberLdap = Helpers::lib()->ldapTms($_POST['User'][email]);
@@ -320,25 +321,34 @@ if (isset($_POST['Profile'])) {
 
     /*$Neworg = $_POST['Orgchart'];         
     $Neworg = json_encode($Neworg);*/
-
+ 
     $users->identification = $_POST['idcard'];
     $profile->identification = $_POST['idcard'];
-    $profile->passport = $_POST['Profile'][passport];
+    $profile->passport = $_POST['passport'];
+
     $users->username = $_POST['User'][username];
     $users->email = $_POST['User'][email];
     $users->department_id = $_POST['User'][department_id];
     $users->position_id = $_POST['User'][position_id];
             // $users->password = $_POST['User'][password];
             // $passwordshow = $_POST['Users'][password];
-    $users->password = $_POST['idcard']; 
+
+            $genpass = ($type_card == 'p')?substr($profile->passport, 0):substr($profile->identification, -6);
+           // $users->verifyPassword = $genpass;
+           // $users->orgchart_lv2 = $Neworg;
+            $users->activkey = ($type_card == 'p')?UserModule::encrypting(microtime() . $profile->identification):UserModule::encrypting(microtime() . $profile->passport);
+
+            $users->password = ($type_card == 'p')?UserModule::encrypting(microtime() . $profile->identification):UserModule::encrypting(microtime() . $profile->passport);
+// var_dump($users->activkey);exit();
+//     $users->password = $_POST['idcard']; 
   
     $passwordshow = $_POST['idcard'];
-    $users->activkey = UserModule::encrypting(microtime() . $_POST['idcard']);
+//    $users->activkey = UserModule::encrypting(microtime() . $_POST['idcard']);
             //$users->activkey = UserModule::encrypting(microtime() . $users->password);
     //$users->orgchart_lv2 = $Neworg;
 
             //$users->verifyPassword = $_POST['User'][verifyPassword];
-    $users->verifyPassword = $_POST['idcard'];
+   // $users->verifyPassword = $_POST['idcard'];
     $users->type_register = 1;
     // $users->division_id = $_POST['User'][division_id];
  
@@ -353,6 +363,7 @@ if (isset($_POST['Profile'])) {
     $profile->history_of_illness = $_POST['history_of_illness'];;
     $profile->status_sm = $_POST['status_sm'];
     $profile->type_employee = $_POST['type_employee'];
+    $profile->type_card = $_POST['type_card'];
     $profile->title_id = $_POST['Profile'][title_id]; 
     $profile->sex = ($profile->title_id == 1)? "Male":"Female";
     $profile->firstname = $_POST['Profile'][firstname];
@@ -402,9 +413,9 @@ if (isset($_POST['Profile'])) {
         $responseData = json_decode($verifyResponse);
         if ($responseData->success)$users->captcha = $responseData->success;
     }*/
-// var_dump( $users->validate());
-//  $errors = $users->getErrors();
-//         var_dump($errors); //or print_r($errors);
+var_dump( $users->validate());
+ $errors = $users->getErrors();
+        var_dump($errors); //or print_r($errors);
   //if (isset($_POST['PController']) && isset($_POST['PAction'])) {    
 
     if ($profile->validate() && $users->validate()) {
@@ -412,7 +423,7 @@ if (isset($_POST['Profile'])) {
                     //$users->password = UserModule::encrypting($users->password);
                     //$users->verifyPassword = UserModule::encrypting($users->verifyPassword);
         $users->password = UserModule::encrypting($_POST['idcard']);
-        $users->verifyPassword = UserModule::encrypting($_POST['idcard']);
+ //       $users->verifyPassword = UserModule::encrypting($_POST['idcard']);
                     // $users->department_id = 1; // fix ประเภทสมาชิกหน้าบ้านเป็นสมาชิกทั่วไป
     } else {
         //  $errors = $users->getErrors();
@@ -509,7 +520,7 @@ if (isset($_POST['Profile'])) {
     }
 
 }
- $this->render('index', array('profile' => $profile, 'users' => $users,'label'=> $label, 'ProfilesEdu' => $ProfilesEdu, 'status_sm' => $status_sm, 'type_user' => $type_user, 'type_employee' => $type_employee, 'history_of_illness' => $history_of_illness));
+ $this->render('index', array('profile' => $profile, 'users' => $users,'label'=> $label, 'ProfilesEdu' => $ProfilesEdu, 'status_sm' => $status_sm, 'type_user' => $type_user, 'type_employee' => $type_employee, 'history_of_illness' => $history_of_illness, 'type_card'=> $type_card));
 }
 public function actionUpdate() {
     if(Yii::app()->user->id){
@@ -547,11 +558,18 @@ public function actionUpdate() {
             'params' => array(':lang_id' => 1)
         ));
     }
-    $ProfilesEdu = ProfilesEdu::model()->findAll(array(
-        'condition' => 'user_id='.Yii::app()->user->id,
-    ));
+    $criteria = new CDbCriteria;
+    $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
+    $criteria->addCondition("active ='y'");
+    $ProfilesEdu = ProfilesEdu::model()->findAll($criteria);
+       
+    $this->performAjaxValidation($ProfilesEdu);  
 
-    $this->performAjaxValidation($ProfilesEdu);         
+ $type_user = (!empty($_POST['type_user']))? $_POST['type_user']:3;
+ $history_of_illness = (!empty($_POST['history_of_illness']))? $_POST['history_of_illness']:'n';
+ $status_sm = (!empty($_POST['status_sm']))? $_POST['status_sm']:'s';
+ $type_employee = (!empty($_POST['type_employee']))? $_POST['type_employee']:'ship'; 
+ $type_card = (!empty($_POST['type_card']))? $_POST['type_card']:'p';       
 
     if (isset($_POST['Profile'])) {
         // var_dump($_POST['User']);
@@ -591,15 +609,18 @@ public function actionUpdate() {
         
             // $users->password = $_POST['Users'][password];
             // $users->verifyPassword = $_POST['Users'][verifyPassword];
-
+  $users->identification = $_POST['idcard'];
+  $profile->identification = $_POST['idcard'];
+  $profile->passport = $_POST['Profile'][passport];
+  $users->email = $_POST['User'][email];
         $profile->title_id = $_POST['Profile'][title_id];
         $profile->firstname = $_POST['Profile'][firstname];
         $profile->lastname = $_POST['Profile'][lastname];
-        $profile->department = $_POST['Profile'][department];
          $profile->type_user = $_POST['type_user']; 
     $profile->history_of_illness = $_POST['history_of_illness'];;
     $profile->status_sm = $_POST['status_sm'];
     $profile->type_employee = $_POST['type_employee'];
+    $profile->type_card = $_POST['type_card'];
     $profile->sex = ($profile->title_id == 1)? "Male":"Female";
     $profile->tel = $_POST['Profile'][tel];
             // $profile->division_title = $_POST['Profile'][division_title];
@@ -626,7 +647,7 @@ public function actionUpdate() {
             // $profile->phone = $_POST['Profile'][phone];
             // $profile->fax = $_POST['Profile'][fax];
             // $profile->address = $_POST['Profile'][address];
-        $users->status = 1;
+        //$users->status = 1;
         // if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
         //     $secret = '6LdMXXcUAAAAAK76NVqqh5qMv05wg2QxbHoSrJMc';
         //     $verifyResponse = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . $secret . '&response=' . $_POST['g-recaptcha-response']);
@@ -641,10 +662,17 @@ public function actionUpdate() {
         // }else{
         //     $users->verifyPassword = $users->password;
         // } 
-            // var_dump($profile->validate());exit();
-            // var_dump($users->save());
-            // var_dump($users->getErrors());
-            // exit();
+     //$users->password = UserModule::encrypting($users->password);
+    // $users->verifyPassword = UserModule::encrypting($users->verifyPassword);
+     //var_dump($users->verifyPassword);
+           //var_dump($profile->validate());
+           //  var_dump($ProfilesEdu->validate());
+           // //var_dump($users->save());
+           //  var_dump($ProfilesEdu->getErrors());
+           //  exit();
+   
+            
+           
         if ($profile->validate() && $users->validate()) {
 //                    เข้ารหัสpassword
                     // $users->password = UserModule::encrypting($users->password);
@@ -658,19 +686,50 @@ public function actionUpdate() {
                     //     $users->pic_user = $beautifulName;
                     // }
 //                บันทึกข้อมูล
-            if ($users->save() && $profile->save()) { 
-             if ($_POST['ProfilesEdu']){
-            foreach ($_POST['ProfilesEdu'] as $action_index=>$action_value){
 
-               $Edu = new ProfilesEdu;
-               $Edu->user_id = $users->id;
-               $Edu->update_date = date("Y-m-d H:i:s");
-               $Edu->update_by = $users->id;
-               $Edu->attributes = $action_value;
-               $Edu->save();
-                    }
-                } 
-                //   บันทึกภาพ
+            if ($users->save() && $profile->save()) { 
+                if ($_POST['ProfilesEdu']){
+            foreach ($_POST['ProfilesEdu'] as $action_index=>$action_value){
+                      $new_action[] = $action_value['edu_id'];
+                        $model_ss = ProfilesEdu::model()->find('edu_id="'.$action_value['edu_id'].'" AND user_id='.Yii::app()->user->id);
+
+                        if ($model_ss){
+                            $model_ss->attributes = $action_value;
+                            $model_ss->user_id = $users->id;
+                            $model_ss->update_date = date("Y-m-d H:i:s");
+                            $model_ss->update_by = $users->id;
+                            $model_ss->save();
+                           // echo "a";
+                        }else{
+                           $Edu = new ProfilesEdu;
+                           $Edu->user_id = $users->id;
+                           $Edu->created_date = date("Y-m-d H:i:s");
+                           $Edu->created_by = $users->id;
+                           $Edu->attributes = $action_value;
+                           $Edu->save();
+                           //echo "b";
+    
+            } 
+
+             } 
+                   $model_del = ProfilesEdu::model()->findAll(["select"=>"edu_id",'condition'=>'user_id='.Yii::app()->user->id]);
+                  
+                        if($model_del){
+                            foreach($model_del as $key => $val){
+                                if(isset($new_action)){
+                                    if(!in_array($val->edu_id,$new_action)){
+                                        $model_del_action = ProfilesEdu::model()->find('edu_id="'.$val->edu_id.'" AND user_id='.Yii::app()->user->id); 
+                                         $model_del_action->active = 'n';
+                                         $model_del_action->save();
+                                       // $model_del_action->delete(false);
+                                         //echo "c";
+                                    }
+                                }
+                            }
+                        }
+                        /////// end ลบแอคชั่น
+         } //exit();
+          //   บันทึกภาพ
                         if (isset($uploadFile)) {
                             /////////// SAVE IMAGE //////////
                             Yush::init($users);
@@ -706,7 +765,7 @@ public function actionUpdate() {
 
     }
     $users->position_name = isset($_POST['User']['position_name']) ? $_POST['User']['position_name'] : $users->position->position_title;
-    $this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label, 'ProfilesEdu' => $ProfilesEdu, 'status_sm' => $status_sm, 'type_user' => $type_user, 'type_employee' => $type_employee, 'history_of_illness' => $history_of_illness));
+    $this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label, 'ProfilesEdu' => $ProfilesEdu, 'status_sm' => $status_sm, 'type_user' => $type_user, 'type_employee' => $type_employee, 'history_of_illness' => $history_of_illness, 'type_card'=> $type_card));
 }
 
 //
@@ -803,14 +862,14 @@ public function actionUpdate() {
                     $model = Users::model()->findbyattributes(array('id'=>Yii::app()->user->id));
                // var_dump($model);
                     $model->password = $_POST['Users']['password'];
-                    $model->verifyPassword = $_POST['Users']['verifyPassword'];
+     //               $model->verifyPassword = $_POST['Users']['verifyPassword'];
                     // var_dump($model->save());
                     // var_dump($model->getErrors());
                     // exit();
                     if ($model->validate()) {
 
                         $model->password = UserModule::encrypting($model->password);
-                        $model->verifyPassword = UserModule::encrypting($model->verifyPassword);
+     //                   $model->verifyPassword = UserModule::encrypting($model->verifyPassword);
                         $model->repass_status = 1;
 
                         if ($model->save(false)) {
@@ -849,7 +908,7 @@ public function actionUpdate() {
    $model=Position::model()->findAll('department_id=:department_id',
             array(':department_id'=>$_POST['id']));
 
-        $data=CHtml::listData($model,'id','position_title');
+        $data=CHtml::listData($model,'id','position_title',array('empty' => 'ตำแหน่ง'));
        foreach ($model as $key => $value) {
             $data .= '<option value = "'.$value->id.'"'.'>'.$value->position_title.'</option>';
         }
@@ -857,5 +916,12 @@ public function actionUpdate() {
         
    }
 
-
+   public function actionCalculateBirthday(){
+     $birthdays = $_POST['item'];
+     $birthdays = explode("-", $birthdays);
+     $date_now = date("Y");
+     $data = $date_now - $birthdays[0];
+   echo ($data);
+   }
+     
     }

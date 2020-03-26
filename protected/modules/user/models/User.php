@@ -24,7 +24,7 @@ class User extends CActiveRecord
      * @var timestamp $lastvisit_at
 	 */
 	public $position_name;
-	public $verifyPassword;
+	//public $verifyPassword;
 	public $verifyCode;
 	public $pic_user;
 	public $newpassword;
@@ -80,13 +80,13 @@ class User extends CActiveRecord
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'update'),
 			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,station_id,company_id, division_id,position_id,lastactivity,orgchart_lv2,del_status,avatar,pic_cardid2,employee_id', 'safe', 'on'=>'search'),
-			array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
+			//array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
 			array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 			// array('confirmpass', 'compare', 'compareAttribute'=>'newpassword', 'message' => UserModule::t("Retype Password is incorrect.")),
 		):((Yii::app()->user->id==$this->id)?array(
-			array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
+			//array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
 			array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
-			array('username, email,password,verifyPassword', 'required'),
+			array('username, email,password', 'required'),
 			//array('captcha', 'required','message' => "Please verify that you are not a robot."),
 			array('username', 'length', 'max'=>255),
 			array('superuser, status, online_status,online_user', 'numerical', 'integerOnly'=>true),
@@ -121,6 +121,8 @@ class User extends CActiveRecord
         $relations = Yii::app()->getModule('user')->relations;
         if (!isset($relations['profile']))
             $relations['profile'] = array(self::HAS_ONE, 'Profile', 'user_id');
+
+        $relations['profileEdu'] = array(self::HAS_ONE, 'profileEdu', 'user_id');
 
         $relations['orgchart'] = array(
             self::BELONGS_TO, 'Orgchart', array('id'=>'department_id')
@@ -228,7 +230,7 @@ class User extends CActiveRecord
 			'id' => UserModule::t("Id"),
 			'username'=>UserModule::t("username"),
 			'password'=>UserModule::t("password"),
-			'verifyPassword'=>UserModule::t("Retype Password"),
+			//'verifyPassword'=>UserModule::t("Retype Password"),
 			'email'=>UserModule::t("E-mail"),
 			'verifyCode'=>UserModule::t("Verification Code"),
 			'activkey' => UserModule::t("activation key"),
