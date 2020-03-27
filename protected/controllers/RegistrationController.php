@@ -413,16 +413,16 @@ if (isset($_POST['Profile'])) {
         $responseData = json_decode($verifyResponse);
         if ($responseData->success)$users->captcha = $responseData->success;
     }*/
-var_dump( $users->validate());
- $errors = $users->getErrors();
-        var_dump($errors); //or print_r($errors);
-  //if (isset($_POST['PController']) && isset($_POST['PAction'])) {    
-
+// var_dump( $users->validate());
+//  $errors = $users->getErrors();
+//         var_dump($errors); //or print_r($errors);
+//   //if (isset($_POST['PController']) && isset($_POST['PAction'])) {    
+//     exit();
     if ($profile->validate() && $users->validate()) {
 //                    เข้ารหัสpassword
                     //$users->password = UserModule::encrypting($users->password);
                     //$users->verifyPassword = UserModule::encrypting($users->verifyPassword);
-        $users->password = UserModule::encrypting($_POST['idcard']);
+        $users->password = UserModule::encrypting($genpass);
  //       $users->verifyPassword = UserModule::encrypting($_POST['idcard']);
                     // $users->department_id = 1; // fix ประเภทสมาชิกหน้าบ้านเป็นสมาชิกทั่วไป
     } else {
