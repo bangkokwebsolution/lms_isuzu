@@ -427,14 +427,13 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 </div>
 
 
-                <div class="row  mt-20 mb-1 ">
-
+               
                     <?php
 
                     if (!$ProfilesEdu->isNewRecord || $ProfilesEdu->isNewRecord == NULL) {
                         echo "";
                     } else { ?>
-                        <div class="col-sm-3 text-right"> <strong>ประวัติการศึกษา :</strong></div>
+                        <!-- <div class="col-sm-3 text-right"> <strong>ประวัติการศึกษา :</strong></div> -->
                     <?php
                     }
                     $modelList = Education::model()->findAll(array("condition" => " active = 'y'"));
@@ -470,116 +469,117 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
                                 </div>
 
-
                             <?php
                             } ?>
                         </div>
 
                     <?php } else {
                     ?>
-
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]edu_id', $list, $att_Education); ?>
+    
+                            <div class="row">
+                            <div class="col-sm-3 text-right"> <strong>ประวัติการศึกษา :</strong></div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]edu_id', $list, $att_Education); ?>
+                                    </div>
+                                </div>
+        
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <?php echo $form->textField($ProfilesEdu, '[0]institution', array('class' => 'form-control', 'placeholder' => 'สถานที่่จบการศึกษา')); ?>
+                                    </div>
+                                </div>
+        
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <?php echo $form->textField($ProfilesEdu, '[0]date_graduation', $graduation); ?>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <?php echo $form->textField($ProfilesEdu, '[0]institution', array('class' => 'form-control', 'placeholder' => 'สถานที่่จบการศึกษา')); ?>
-                            </div>
-                        </div>
-
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <?php echo $form->textField($ProfilesEdu, '[0]date_graduation', $graduation); ?>
-                            </div>
-                        </div>
 
 
-                </div>
                 <div class="add-study"></div>
 
             <?php
                     }
             ?>
-            <div>
 
-            <div class="row justify-content-center bb-1 pb-20">
-                <div class="col-md-3">
-                    <button class="btn btn-info btn-add add_form_field" type="button" id="moreFields">
-                        <span class="glyphicon glyphicon-plus"> </span> เพิ่มประวัติการศึกษา
-                    </button>
-                </div>
-            </div>
-
-           <div id="office-section">
-                <div class="row  mt-20 mb-1" id="employee_type" >
-                    <div class="col-sm-3 text-right"> <strong>ส่วนของพนักงาน :</strong></div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-    
-                            <span></span>
-                            <div class="radio radio-danger radio-inline">
-                                <input type="radio" name="type_employee" id="card-7" value="office" <?php if ($profile->type_employee == "office") : ?> checked="checked" <?php endif ?>>
-    
-                                <label for="card-7" class="bg-success text-black">
-                                    Office </label>
-                            </div>
-                            <div class="radio radio-danger radio-inline">
-                                <input type="radio" name="type_employee" id="card-8" value="ship" <?php if ($profile->type_employee == "ship") : ?> checked="checked" <?php endif ?>>
-    
-                                <label for="card-8" class="bg-danger text-black">เรือ </label>
-                            </div>
-                        </div>
+                <div class="row justify-content-center bb-1 pb-20">
+                    <div class="col-md-3">
+                        <button class="btn btn-info btn-add add_form_field" type="button" id="moreFields">
+                            <span class="glyphicon glyphicon-plus"> </span> เพิ่มประวัติการศึกษา
+                        </button>
                     </div>
                 </div>
-    
-                <div class="row justify-content-center mt-20 mb-1 bb-1 pb-20" id="employee_detail">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label><?php echo $form->labelEx($users, 'department_id'); ?></label>
-                            <?php
-                            $departmentModel = Department::model()->findAll(array(
-                                "condition" => " active = 'y'"
-                            ));
-                            $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
-                            $departmentOption = array('class' => 'form-control department', 'empty' => 'แผนก');
-                            ?>
-                            <?php
-                            echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption);
-                            ?>
-                            <?php echo $form->error($users, 'department_id', array('class' => 'error2')); ?>
-                        </div>
-                    </div>
-    
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label><?php echo $form->labelEx($users, 'position_id'); ?></label>
-                            <?php
-                            $positionModel = Position::model()->findAll(array(
-                                "condition" => " active = 'y'"
-                            ));
-                            $positionList = CHtml::listData($positionModel, 'id', 'position_title');
-                            $positiontOption = array('class' => 'form-control position', 'empty' => 'ตำแหน่ง');
-                            ?>
-                            <?php
-                            echo $form->dropDownList($users, 'position_id', $positionList, $positiontOption); ?>
-                            <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
-    
-                        </div>
-                    </div>
-           </div>
 
-            </div>
-            <div class="text-center mt-20">
+                   <div id="office-section">
+                        <div class="row  mt-20 mb-1" id="employee_type">
+                            <div class="col-sm-3 text-right"> <strong>ส่วนของพนักงาน :</strong></div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+    
+                                    <span></span>
+                                    <div class="radio radio-danger radio-inline">
+                                        <input type="radio" name="type_employee" id="card-7" value="office" <?php if ($profile->type_employee == "office") : ?> checked="checked" <?php endif ?>>
+    
+                                        <label for="card-7" class="bg-success text-black">
+                                            Office </label>
+                                    </div>
+                                    <div class="radio radio-danger radio-inline">
+                                        <input type="radio" name="type_employee" id="card-8" value="ship" <?php if ($profile->type_employee == "ship") : ?> checked="checked" <?php endif ?>>
+    
+                                        <label for="card-8" class="bg-danger text-black">เรือ </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    
+                        <div class="row justify-content-center mt-20 mb-1 bb-1 pb-20" id="employee_detail">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label><?php echo $form->labelEx($users, 'department_id'); ?></label>
+                                    <?php
+                                    $departmentModel = Department::model()->findAll(array(
+                                        "condition" => " active = 'y'"
+                                    ));
+                                    $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
+                                    $departmentOption = array('class' => 'form-control department', 'empty' => 'แผนก');
+                                    ?>
+                                    <?php
+                                    echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption);
+                                    ?>
+                                    <?php echo $form->error($users, 'department_id', array('class' => 'error2')); ?>
+                                </div>
+                            </div>
+    
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label><?php echo $form->labelEx($users, 'position_id'); ?></label>
+                                    <?php
+                                    $positionModel = Position::model()->findAll(array(
+                                        "condition" => " active = 'y'"
+                                    ));
+                                    $positionList = CHtml::listData($positionModel, 'id', 'position_title');
+                                    $positiontOption = array('class' => 'form-control position', 'empty' => 'ตำแหน่ง');
+                                    ?>
+                                    <?php
+                                    echo $form->dropDownList($users, 'position_id', $positionList, $positiontOption); ?>
+                                    <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
+    
+                                </div>
+                            </div>
+                        </div>
+                   </div>
 
-                <?php if (Yii::app()->user->getId() == null) { ?>
-                    <?php echo CHtml::submitButton($label->label_regis, array('class' => 'btn btn-default bg-greenlight btn-lg center-block')); ?>
-                <?php } else {
-                    echo CHtml::submitButton($label->label_save, array('class' => 'btn btn-default bg-greenlight btn-lg center-block'));
-                } ?>
-            </div>
+
+                <div class="text-center mt-20">
+
+                    <?php if (Yii::app()->user->getId() == null) { ?>
+                        <?php echo CHtml::submitButton($label->label_regis, array('class' => 'btn btn-default bg-greenlight btn-lg center-block')); ?>
+                    <?php } else {
+                        echo CHtml::submitButton($label->label_save, array('class' => 'btn btn-default bg-greenlight btn-lg center-block'));
+                    } ?>
+                </div>
 
             </div>
 
@@ -588,100 +588,100 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
             <?php $this->endWidget();
             ?>
 
-        </div>
+            </div>
 
-        <script type="text/javascript">
-            $(document).ready(function() {
-                var max_fields = 10;
-                var wrapper = $(".add-study");
-                var add_button = $(".add_form_field");
-                var numItems = 0;
-                var x = 1;
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    var max_fields = 10;
+                    var wrapper = $(".add-study");
+                    var add_button = $(".add_form_field");
+                    var numItems = 0;
+                    var x = 1;
 
-                $(add_button).click(function(e) {
-                    e.preventDefault();
-                    if (x < max_fields) {
-                        x++;
-                        numItems++;
-                        var level = '<option value="">ระดับการศึกษา</option>';
-                        $(wrapper).append('<div class="row del_edu"><div class="col-sm-3 text-right "><strong>ประวัติการศึกษา :</strong></div><div class="col-sm-2"><div class="form-group"><select class ="form-control" name="ProfilesEdu[' + numItems + '][edu_id]">' + level + '<?php foreach ($list as $key => $value) : ?><option value=<?php echo $key ?>>ระดับการศึกษา<?php echo $value ?></option><?php endforeach ?></select></div></div><div class="col-sm-3"><div class="form-group"><input type="text" class="form-control" placeholder="สถานที่่จบการศึกษา" name="ProfilesEdu[' + numItems + '][institution]"></div></div><div class="col-sm-2"><div class="form-group"><input class="form-control datetimepicker" autocomplete="off" id="ProfilesEdu_' + numItems + '_date_graduation" placeholder="วันที่จบการศึกษา "name="ProfilesEdu[' + numItems + '][date_graduation]"> </div></div><span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> Delete</span></div>'); //add input box
-                        $('.datetimepicker').datetimepicker({
-                            format: 'Y-m-d',
-                            step: 10,
-                            timepickerScrollbar: false
-                        });
-                        $('.xdsoft_timepicker').hide();
+                    $(add_button).click(function(e) {
+                        e.preventDefault();
+                        if (x < max_fields) {
+                            x++;
+                            numItems++;
+                            var level = '<option value="">ระดับการศึกษา</option>';
+                            $(wrapper).append('<div class="row del_edu"><div class="col-sm-3 text-right "><strong>ประวัติการศึกษา :</strong></div><div class="col-sm-2"><div class="form-group"><select class ="form-control" name="ProfilesEdu[' + numItems + '][edu_id]">' + level + '<?php foreach ($list as $key => $value) : ?><option value=<?php echo $key ?>>ระดับการศึกษา<?php echo $value ?></option><?php endforeach ?></select></div></div><div class="col-sm-3"><div class="form-group"><input type="text" class="form-control" placeholder="สถานที่่จบการศึกษา" name="ProfilesEdu[' + numItems + '][institution]"></div></div><div class="col-sm-2"><div class="form-group"><input class="form-control datetimepicker" autocomplete="off" id="ProfilesEdu_' + numItems + '_date_graduation" placeholder="วันที่จบการศึกษา "name="ProfilesEdu[' + numItems + '][date_graduation]"> </div></div><span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> Delete</span></div>'); //add input box
+                            $('.datetimepicker').datetimepicker({
+                                format: 'Y-m-d',
+                                step: 10,
+                                timepickerScrollbar: false
+                            });
+                            $('.xdsoft_timepicker').hide();
 
-                    } else {
-                        alert('You Reached the limits')
-                    }
+                        } else {
+                            alert('You Reached the limits')
+                        }
+                    });
+                    $(wrapper).on("click", ".delete", function(e) {
+                        e.preventDefault();
+                        $(this).parent('.del_edu').remove();
+                        x--;
+                    });
                 });
-                $(wrapper).on("click", ".delete", function(e) {
-                    e.preventDefault();
-                    $(this).parent('.del_edu').remove();
-                    x--;
+                $('.default_datetimepicker').datetimepicker({
+                    format: 'Y-m-d',
+                    step: 10,
+                    timepickerScrollbar: false
                 });
-            });
-            $('.default_datetimepicker').datetimepicker({
-                format: 'Y-m-d',
-                step: 10,
-                timepickerScrollbar: false
-            });
 
-            $('.xdsoft_timepicker').hide();
+                $('.xdsoft_timepicker').hide();
 
-            $(function() {
-                $('#accept').change(function(event) {
-                    $("#id_employee").hide();
-                    $("#employee_type").hide();
-                    $("#employee_detail").hide();
-                });
-                $("#reject").change(function(event) {
-                    $("#id_employee").show();
-                    $("#employee_type").show();
-                    $("#employee_detail").show();
-                    $("#office-section").show();
-                });
-                $('#passport_card').hide();
-                $('#card-1').change(function(event) {
+                $(function() {
+                    $('#accept').change(function(event) {
+                        $("#id_employee").hide();
+                        $("#employee_type").hide();
+                        $("#employee_detail").hide();
+                    });
+                    $("#reject").change(function(event) {
+                        $("#id_employee").show();
+                        $("#employee_type").show();
+                        $("#employee_detail").show();
+                        $("#office-section").show();
+                    });
                     $('#passport_card').hide();
-                    $('#identification_card').show();
-                });
+                    $('#card-1').change(function(event) {
+                        $('#passport_card').hide();
+                        $('#identification_card').show();
+                    });
 
-                $('#card-2').change(function(event) {
-                    $('#passport_card').show();
-                    $('#identification_card').hide();
-                });
-                $(".department").change(function() {
-                    var id = $(".department").val();
-                    $.ajax({
-                        type: 'POST',
-                        url: "<?= Yii::app()->createUrl('Registration/ListPosition'); ?>",
-                        data: {
-                            id: id
-                        },
-                        success: function(data) {
-                            $('.position').empty();
-                            $('.position').append(data);
-                        }
+                    $('#card-2').change(function(event) {
+                        $('#passport_card').show();
+                        $('#identification_card').hide();
+                    });
+                    $(".department").change(function() {
+                        var id = $(".department").val();
+                        $.ajax({
+                            type: 'POST',
+                            url: "<?= Yii::app()->createUrl('Registration/ListPosition'); ?>",
+                            data: {
+                                id: id
+                            },
+                            success: function(data) {
+                                $('.position').empty();
+                                $('.position').append(data);
+                            }
+                        });
+                    });
+                    $(".birth").change(function() {
+                        var item = $(".birth").val();
+                        $.ajax({
+                            type: 'POST',
+                            url: "<?= Yii::app()->createUrl('Registration/CalculateBirthday'); ?>",
+                            data: {
+                                item: item
+                            },
+                            success: function(data) {
+                                $('.ages').val(data);
+                                $('.ages').append(data);
+                            }
+                        });
                     });
                 });
-                $(".birth").change(function() {
-                    var item = $(".birth").val();
-                    $.ajax({
-                        type: 'POST',
-                        url: "<?= Yii::app()->createUrl('Registration/CalculateBirthday'); ?>",
-                        data: {
-                            item: item
-                        },
-                        success: function(data) {
-                            $('.ages').val(data);
-                            $('.ages').append(data);
-                        }
-                    });
-                });
-            });
-        </script>
+            </script>
 
 
 </section>
