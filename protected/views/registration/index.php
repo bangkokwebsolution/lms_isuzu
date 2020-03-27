@@ -160,16 +160,12 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 <div class="row justify-content-center select-profile">
                     <div class="form-group">
                         <div class="radio radio-danger radio-inline">
-                            <input type="radio" name="type_user" id="accept" value="1" <?php if ($profile->type_user == 1): ?>
-                                 checked="checked"
-                                  <?php endif ?>>
+                            <input type="radio" name="type_user" id="accept" value="1" <?php if ($profile->type_user == 1) : ?> checked="checked" <?php endif ?>>
                             <label for="accept" class="bg-success text-black">
                                 สำหรับบุคคลทั่วไป </label>
                         </div>
                         <div class="radio radio-danger radio-inline">
-                            <input type="radio" name="type_user" id="reject" value="3" <?php if ($profile->type_user == 3): ?>
-                                 checked="checked"
-                                  <?php endif ?>>
+                            <input type="radio" name="type_user" id="reject" value="3" <?php if ($profile->type_user == 3) : ?> checked="checked" <?php endif ?>>
                             <label for="reject" class="bg-danger text-black">สำหรับพนักงาน </label>
                         </div>
                     </div>
@@ -177,7 +173,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
                 <div class="row justify-content-center mt-1">
                     <div class="col-sm-4">
-                        <div class="form-group" id="id_employee">
+                        <div class="form-group" id="id_employee" style="display:none">
                             <!-- <label for=""><?php echo $form->labelEx($users, 'username'); ?></label> -->
                             <label for="">เลขประจำตัวพนักงาน</label>
                             <?php echo $form->textField($users, 'username', array('class' => 'form-control', 'placeholder' => 'เลขประจำตัวพนักงาน')); ?>
@@ -224,17 +220,13 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 <div class="row justify-content-center mt-1 mb-1 ">
                     <div class="form-group">
                         <div class="radio radio-danger radio-inline">
-                            <input type="radio" name="type_card" id="card-1" value="l"<?php if ($profile->type_card == "l"): ?>
-                                 checked="checked"
-                                  <?php endif ?>>
+                            <input type="radio" name="type_card" id="card-1" value="l" <?php if ($profile->type_card == "l") : ?> checked="checked" <?php endif ?>>
                             <label for="card-1" class="bg-success text-black">
                                 เลขบัตรประจำตัวประชาชน </label>
                         </div>
 
                         <div class="radio radio-danger radio-inline">
-                            <input type="radio" name="type_card" id="card-2" value="p"<?php if ($profile->type_card == "p"): ?>
-                                 checked="checked"
-                                  <?php endif ?>>
+                            <input type="radio" name="type_card" id="card-2" value="p" <?php if ($profile->type_card == "p") : ?> checked="checked" <?php endif ?>>
                             <label for="card-2" class="bg-danger text-black">เลขหนังสือเดินทาง </label>
                         </div>
                     </div>
@@ -332,23 +324,22 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label for="">เพศ</label>
-                            <select class="form-control" name="" id=""><
-                                <?php 
-                             if ($profile->sex) {
-                                if ($profile->sex === 'Male') {?>
-                                    <option value="1">ชาย</option>
+                            <select class="form-control" name="" id="">
+                                < <?php
+                                    if ($profile->sex) {
+                                        if ($profile->sex === 'Male') { ?> <option value="1">ชาย</option>
                                     <option value="2">หญิง</option>
-                                <?php }else{?>
+                                <?php } else { ?>
                                     <option value="2">หญิง</option>
                                     <option value="1">ชาย</option>
-                        <?php    }
-                                }else?>
-                                    <option value="">เพศ</option>
-                                    <option value="1">ชาย</option>
-                                    <option value="2">หญิง</option>                                    
-                            <?php?> 
-       
-                            
+                            <?php    }
+                                    } else ?>
+                            <option value="">เพศ</option>
+                            <option value="1">ชาย</option>
+                            <option value="2">หญิง</option>
+                            <? php ?>
+
+
                             </select>
                         </div>
                     </div>
@@ -363,16 +354,12 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
                             <span></span>
                             <div class="radio radio-danger radio-inline">
-                                <input type="radio" name="status_sm" id="card-3" value="s"  <?php if ($profile->status_sm == "s"): ?>
-                                 checked="checked"
-                                  <?php endif ?>>
+                                <input type="radio" name="status_sm" id="card-3" value="s" <?php if ($profile->status_sm == "s") : ?> checked="checked" <?php endif ?>>
                                 <label for="card-3" class="bg-success text-black">
                                     โสด </label>
                             </div>
                             <div class="radio radio-danger radio-inline">
-                                <input type="radio" name="status_sm" id="card-4" value="m"  <?php if ($profile->status_sm == "m"): ?>
-                                 checked="checked"
-                                  <?php endif ?>>
+                                <input type="radio" name="status_sm" id="card-4" value="m" <?php if ($profile->status_sm == "m") : ?> checked="checked" <?php endif ?>>
                                 <label for="card-4" class="bg-danger text-black">สมรส </label>
                             </div>
                         </div>
@@ -427,16 +414,12 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
                             <span></span>
                             <div class="radio radio-danger radio-inline">
-                                <input type="radio" name="history_of_illness" id="card-5" value="n" <?php if ($profile->history_of_illness == "n"): ?>
-                                 checked="checked"
-                                  <?php endif ?>>
+                                <input type="radio" name="history_of_illness" id="card-5" value="n" <?php if ($profile->history_of_illness == "n") : ?> checked="checked" <?php endif ?>>
                                 <label for="card-5" class="bg-success text-black">
                                     ไม่เคย </label>
                             </div>
                             <div class="radio radio-danger radio-inline">
-                                <input type="radio" name="history_of_illness" id="card-6" value="y"  <?php if ($profile->history_of_illness == "y"): ?>
-                                 checked="checked"
-                                  <?php endif ?>>
+                                <input type="radio" name="history_of_illness" id="card-6" value="y" <?php if ($profile->history_of_illness == "y") : ?> checked="checked" <?php endif ?>>
                                 <label for="card-6" class="bg-danger text-black">เคย </label>
                             </div>
                         </div>
@@ -446,24 +429,24 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
                 <div class="row  mt-20 mb-1 ">
 
-                    <?php 
-
-                    if (!$ProfilesEdu->isNewRecord || $ProfilesEdu->isNewRecord == NULL) { 
-                    echo "";
-                   }else{?>
-                    <div class="col-sm-3 text-right"> <strong>ประวัติการศึกษา :</strong></div>
                     <?php
-                 }
+
+                    if (!$ProfilesEdu->isNewRecord || $ProfilesEdu->isNewRecord == NULL) {
+                        echo "";
+                    } else { ?>
+                        <div class="col-sm-3 text-right"> <strong>ประวัติการศึกษา :</strong></div>
+                    <?php
+                    }
                     $modelList = Education::model()->findAll(array("condition" => " active = 'y'"));
                     $list = CHtml::listData($modelList, 'edu_id', 'edu_name');
                     $att_Education = array('class' => 'form-control', 'empty' => 'ระดับการศึกษา');
-                    if (!$ProfilesEdu->isNewRecord) {?>
+                    if (!$ProfilesEdu->isNewRecord) { ?>
                         <div class="add-study">
                             <?php
-                        foreach ($ProfilesEdu as $kedu => $valedu) {
-                    ?>
-                            
-                                 <div class="row del_edu"> 
+                            foreach ($ProfilesEdu as $kedu => $valedu) {
+                            ?>
+
+                                <div class="row del_edu">
                                     <div class="col-sm-3 text-right"> <strong>ประวัติการศึกษา :</strong></div>
                                     <div class="col-sm-2">
                                         <div class="form-group">
@@ -485,74 +468,73 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                     </div>
                                     <span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i> Delete</span>
 
-                                    <!-- <div class="row justify-content-center bb-1 pb-20"> </div> -->
-                               </div> 
-                        
+                                </div>
+
 
                             <?php
-                        } ?>
-                    </div>
-                       
-                        <?php } else {
-                        ?>
-                     
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                    <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]edu_id', $list, $att_Education); ?>
-                                </div>
+                            } ?>
+                        </div>
+
+                    <?php } else {
+                    ?>
+
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]edu_id', $list, $att_Education); ?>
                             </div>
+                        </div>
 
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <?php echo $form->textField($ProfilesEdu, '[0]institution', array('class' => 'form-control', 'placeholder' => 'สถานที่่จบการศึกษา')); ?>
-                                </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <?php echo $form->textField($ProfilesEdu, '[0]institution', array('class' => 'form-control', 'placeholder' => 'สถานที่่จบการศึกษา')); ?>
                             </div>
+                        </div>
 
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                    <?php echo $form->textField($ProfilesEdu, '[0]date_graduation', $graduation); ?>
-                                </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <?php echo $form->textField($ProfilesEdu, '[0]date_graduation', $graduation); ?>
                             </div>
+                        </div>
 
-                            <div class="add-study"></div>
 
-                        <?php
+                </div>
+                <div class="add-study"></div>
+
+            <?php
                     }
-                        ?>
-                </div>
+            ?>
+            <div>
 
-                <div class="row justify-content-center bb-1 pb-20">
-                    <div class="col-md-3">
-                        <button class="btn btn-info btn-add add_form_field" type="button" id="moreFields">
-                            <span class="glyphicon glyphicon-plus"> </span> เพิ่มประวัติการศึกษา
-                        </button>
-                    </div>
+            <div class="row justify-content-center bb-1 pb-20">
+                <div class="col-md-3">
+                    <button class="btn btn-info btn-add add_form_field" type="button" id="moreFields">
+                        <span class="glyphicon glyphicon-plus"> </span> เพิ่มประวัติการศึกษา
+                    </button>
                 </div>
-                <div class="row  mt-20 mb-1" id="employee_type">
+            </div>
+
+           <div id="office-section">
+                <div class="row  mt-20 mb-1" id="employee_type" >
                     <div class="col-sm-3 text-right"> <strong>ส่วนของพนักงาน :</strong></div>
                     <div class="col-sm-4">
                         <div class="form-group">
-
+    
                             <span></span>
                             <div class="radio radio-danger radio-inline">
-                                <input type="radio" name="type_employee" id="card-7" value="office"<?php if ($profile->type_employee == "office"): ?>
-                                 checked="checked"
-                                  <?php endif ?>>
-                            
+                                <input type="radio" name="type_employee" id="card-7" value="office" <?php if ($profile->type_employee == "office") : ?> checked="checked" <?php endif ?>>
+    
                                 <label for="card-7" class="bg-success text-black">
                                     Office </label>
                             </div>
                             <div class="radio radio-danger radio-inline">
-                                <input type="radio" name="type_employee" id="card-8" value="ship" <?php if ($profile->type_employee == "ship"): ?>
-                                 checked="checked"
-                                  <?php endif ?>>
-                                
+                                <input type="radio" name="type_employee" id="card-8" value="ship" <?php if ($profile->type_employee == "ship") : ?> checked="checked" <?php endif ?>>
+    
                                 <label for="card-8" class="bg-danger text-black">เรือ </label>
                             </div>
                         </div>
                     </div>
                 </div>
-
+    
                 <div class="row justify-content-center mt-20 mb-1 bb-1 pb-20" id="employee_detail">
                     <div class="col-sm-4">
                         <div class="form-group">
@@ -570,7 +552,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             <?php echo $form->error($users, 'department_id', array('class' => 'error2')); ?>
                         </div>
                     </div>
-
+    
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label><?php echo $form->labelEx($users, 'position_id'); ?></label>
@@ -584,19 +566,20 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             <?php
                             echo $form->dropDownList($users, 'position_id', $positionList, $positiontOption); ?>
                             <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
-
+    
                         </div>
                     </div>
+           </div>
 
-                </div>
-                <div class="text-center mt-20">
+            </div>
+            <div class="text-center mt-20">
 
-                    <?php if (Yii::app()->user->getId() == null) { ?>
-                        <?php echo CHtml::submitButton($label->label_regis, array('class' => 'btn btn-default bg-greenlight btn-lg center-block')); ?>
-                    <?php } else {
-                        echo CHtml::submitButton($label->label_save, array('class' => 'btn btn-default bg-greenlight btn-lg center-block'));
-                    } ?>
-                </div>
+                <?php if (Yii::app()->user->getId() == null) { ?>
+                    <?php echo CHtml::submitButton($label->label_regis, array('class' => 'btn btn-default bg-greenlight btn-lg center-block')); ?>
+                <?php } else {
+                    echo CHtml::submitButton($label->label_save, array('class' => 'btn btn-default bg-greenlight btn-lg center-block'));
+                } ?>
+            </div>
 
             </div>
 
@@ -621,7 +604,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         x++;
                         numItems++;
                         var level = '<option value="">ระดับการศึกษา</option>';
-                        $(wrapper).append('<div class="row del_edu"><div class="col-sm-3 text-right "><strong>ประวัติการศึกษา :</strong></div><div class="col-sm-2"><div class="form-group"><select class ="form-control" name="ProfilesEdu[' + numItems + '][edu_id]">'+level+'<?php foreach ($list as $key => $value) : ?><option value=<?php echo $key ?>>ระดับการศึกษา<?php echo $value ?></option><?php endforeach ?></select></div></div><div class="col-sm-3"><div class="form-group"><input type="text" class="form-control" placeholder="สถานที่่จบการศึกษา" name="ProfilesEdu[' + numItems + '][institution]"></div></div><div class="col-sm-2"><div class="form-group"><input class="form-control datetimepicker" autocomplete="off" id="ProfilesEdu_' + numItems + '_date_graduation" placeholder="วันที่จบการศึกษา "name="ProfilesEdu[' + numItems + '][date_graduation]"> </div></div><span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> Delete</span></div>'); //add input box
+                        $(wrapper).append('<div class="row del_edu"><div class="col-sm-3 text-right "><strong>ประวัติการศึกษา :</strong></div><div class="col-sm-2"><div class="form-group"><select class ="form-control" name="ProfilesEdu[' + numItems + '][edu_id]">' + level + '<?php foreach ($list as $key => $value) : ?><option value=<?php echo $key ?>>ระดับการศึกษา<?php echo $value ?></option><?php endforeach ?></select></div></div><div class="col-sm-3"><div class="form-group"><input type="text" class="form-control" placeholder="สถานที่่จบการศึกษา" name="ProfilesEdu[' + numItems + '][institution]"></div></div><div class="col-sm-2"><div class="form-group"><input class="form-control datetimepicker" autocomplete="off" id="ProfilesEdu_' + numItems + '_date_graduation" placeholder="วันที่จบการศึกษา "name="ProfilesEdu[' + numItems + '][date_graduation]"> </div></div><span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> Delete</span></div>'); //add input box
                         $('.datetimepicker').datetimepicker({
                             format: 'Y-m-d',
                             step: 10,
@@ -657,6 +640,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                     $("#id_employee").show();
                     $("#employee_type").show();
                     $("#employee_detail").show();
+                    $("#office-section").show();
                 });
                 $('#passport_card').hide();
                 $('#card-1').change(function(event) {
@@ -682,9 +666,9 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         }
                     });
                 });
-                $(".birth").change(function(){
+                $(".birth").change(function() {
                     var item = $(".birth").val();
-                   $.ajax({
+                    $.ajax({
                         type: 'POST',
                         url: "<?= Yii::app()->createUrl('Registration/CalculateBirthday'); ?>",
                         data: {
@@ -694,14 +678,14 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             $('.ages').val(data);
                             $('.ages').append(data);
                         }
+                    });
                 });
-              });
             });
         </script>
 
 
-        </section>
-        <div class="login-bg">
-            <img class="login-img-1" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg3.png">
-            <img class="login-img-2" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg4.png">
-        </div>
+</section>
+<div class="login-bg">
+    <img class="login-img-1" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg3.png">
+    <img class="login-img-2" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg4.png">
+</div>
