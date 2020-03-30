@@ -174,7 +174,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             <?php 
                             if($value->imgslide_link == "" && $value->gallery_type_id != null) {
                                foreach ($galleryType as $data) { ?>
-                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/uploads/gallery/images/<?= $data->image; ?>" class="liquid-lp-read-more zoom fresco" data-fresco-group="ld-pf-1" >
+                                <a href="<?php echo Yii::app()->request->baseUrl; ?>/uploads/gallery/images/<?= $data->image; ?>" class="liquid-lp-read-more zoom fresco" data-fresco-group="ld-pf-1[<?= $value->id ?>]" >
                                 <?php } ?>
                             <?php }else if($value->imgslide_link != "" && $value->gallery_type_id == null){ ?>
                                 <a href="<?=$value->imgslide_link;  ?>" target="_blank">
