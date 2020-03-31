@@ -180,7 +180,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                 <a href="<?=$value->imgslide_link;  ?>" target="_blank">
                                 <?php } ?>
 
-                                <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" alt="">
+                                <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" alt="" style="height:315px;">
                             </a>
                         </div>
 
@@ -325,7 +325,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                 <?php $idCourse_img = (!$flag)? $modelChildren->course_id: $value->course_id; ?>
                                 <?php if ($value->course_picture != null) { ?>
                                  <div class="course-boximg">
-                                    <img src="<?php echo Yii::app()->baseUrl; ?>/uploads/courseonline/<?= $idCourse_img ?>/thumb/<?= $value->course_picture?>" alt="">
+                                    <img src="<?php echo Yii::app()->baseUrl; ?>/uploads/courseonline/<?= $idCourse_img ?>/thumb/<?= $value->course_picture?>" alt="" style="width:259px; height:185px;">
                                 </div>
                             <?php }else{ ?>
                                 <div class="course-boximg">
