@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <?php
+
 if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $langId = Yii::app()->session['lang'] = 1;
 } else {
     $langId = Yii::app()->session['lang'];
 }
+
 function DateThai($strDate)
 {
     $strYear = date("Y", strtotime($strDate)) + 543;
@@ -14,12 +16,23 @@ function DateThai($strDate)
     $strMinute = date("i", strtotime($strDate));
     $strSeconds = date("s", strtotime($strDate));
 
-    $strMonthCut = array("", "Jan.", "Feb.", "Mar.", "Apr.", "May.", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec.");
-    //$strMonthCut = Array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
+    if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+        $langId = Yii::app()->session['lang'] = 1;
+    } else {
+        $langId = Yii::app()->session['lang'];
+    }
+
+    if($langId == 1)
+    {
+     $strMonthCut = array("", "Jan.", "Feb.", "Mar.", "Apr.", "May.", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec.");
+ }
+ else{
+   $strMonthCut = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
+}
 
 
-    $strMonthThai = $strMonthCut[$strMonth];
-    return "$strDay $strMonthThai $strYear, $strHour:$strMinute";
+$strMonthThai = $strMonthCut[$strMonth];
+return "$strDay $strMonthThai $strYear, $strHour:$strMinute";
 }
 ?>
 <html lang="th">
@@ -49,7 +62,8 @@ function DateThai($strDate)
                 $criteriaimg->order = 'update_date  DESC';
                 $image = Imgslide::model()->findAll($criteriaimg);
                 ?>
-                <?php foreach ($image as $all) { ?>
+                <?php foreach ($image as $all) { 
+                    ?>
                     <div class="col-xs-12 col-sm-4 col-md-3">
                         <div class="well">
                             <a href="<?php echo $this->createUrl('/banner/detail', array('id' => $all->imgslide_id)); ?>">
@@ -58,11 +72,16 @@ function DateThai($strDate)
                                     <?php } else { ?>
                                         <div class="news-img" style="background-image: url('<?php echo Yii::app()->theme->baseUrl; ?>/images/slide-news.jpg');">
                                         <?php } ?>
-                                        <span class="news-date"><i class="fa fa-calendar"></i>&nbsp;&nbsp;<?php echo DateThai($all->update_date) ?></span>
-                                        </div>
-                                        <div class="news-detail">
-                                            <?php echo $all->imgslide_title; ?>
-                                        </div>
+                                        <?php if($all->update_date != null) {?>
+                                            <span class="news-date"><i class="fa fa-calendar"></i>&nbsp;&nbsp;<?php echo DateThai($all->update_date) ?></span>
+                                        <?php }else{?>
+                                         <span class="news-date"><i class="fa fa-calendar"></i>&nbsp;&nbsp;<?php echo DateThai($all->create_date) ?></span>
+                                     <?php } ?>
+
+                                 </div>
+                                 <div class="news-detail">
+                                    <?php echo $all->imgslide_title; ?>
+                                </div>
                             </a>
                         </div>
                     </div>

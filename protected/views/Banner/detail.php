@@ -8,9 +8,23 @@ function DateThai($strDate)
     $strHour = date("H", strtotime($strDate));
     $strMinute = date("i", strtotime($strDate));
     $strSeconds = date("s", strtotime($strDate));
-    $strMonthCut = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
-    $strMonthThai = $strMonthCut[$strMonth];
-    return "$strDay $strMonthThai $strYear, $strHour:$strMinute";
+
+    if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+        $langId = Yii::app()->session['lang'] = 1;
+    } else {
+        $langId = Yii::app()->session['lang'];
+    }
+
+    if($langId == 1)
+    {
+       $strMonthCut = array("", "Jan.", "Feb.", "Mar.", "Apr.", "May.", "Jun.", "Jul.", "Aug.", "Sep.", "Oct.", "Nov.", "Dec.");
+   }
+   else{
+     $strMonthCut = array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
+ }
+ 
+ $strMonthThai = $strMonthCut[$strMonth];
+ return "$strDay $strMonthThai $strYear, $strHour:$strMinute";
 }
 ?>
 <html lang="th">
@@ -55,22 +69,26 @@ function DateThai($strDate)
                     $create = profile::model()->findbyPk($id);
                     ?>
                     <ul class="list-inline">
+                       <?php if($img_data->update_date != null) {?>
                         <li><small><i class="fa fa-calendar"></i> <?php echo DateThai($img_data->update_date) ?></small></li>
-                        <li><small><i class="fa fa-user"></i> <?= $create->firstname; ?> </small></li>
-                    </ul>
-                </div>
-                <div class="content-detail">
-                    <?php echo $img_data->imgslide_detail; ?>
-                </div>
-            </div>
+                    <?php }else{?>
+                     <li><small><i class="fa fa-calendar"></i> <?php echo DateThai($img_data->create_date) ?></small></li>
+                 <?php } ?>
+                 <!-- <li><small><i class="fa fa-user"></i> <?= $create->firstname; ?> </small></li> -->
+             </ul>
+         </div>
+         <div class="content-detail">
+            <?php echo $img_data->imgslide_detail; ?>
         </div>
-    </section>
+    </div>
+</div>
+</section>
 
-    <!-- Footer -->
-    <?php include './include/footer.php'; ?>
+<!-- Footer -->
+<?php include './include/footer.php'; ?>
 
-    <!-- Script -->
-    <?php include './include/script.php'; ?>
+<!-- Script -->
+<?php include './include/script.php'; ?>
 
 </body>
 
