@@ -1,4 +1,60 @@
 <div class="backtotop"><span><i class="fas fa-arrow-up"></i> <small>top</small></span></div>
+
+<a class="contact-admin" data-toggle="modal" href="#user-report"></a>
+<div class="modal fade" id="user-report">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form action="<" method="POST" role="form" name='user-report'>
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> แจ้งปัญหาการใช้งาน</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row report-row">
+                        <div class="col-md-6">
+                            <label for="">ชื่อ</label>
+                            <input type="text" class="form-control" placeholder="ชื่อ">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">นามสกุล</label>
+                            <input type="text" class="form-control" placeholder="นามสกุล">
+                        </div>
+                    </div>
+                    <div class="row report-row">
+                        <div class="col-md-6">
+                            <label for="">เบอร์โทรศัพท์</label>
+                            <input type="text" class="form-control" placeholder="เบอร์โทรศัพท์">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="">อีเมล์</label>
+                            <input type="text" class="form-control" placeholder="อีเมล์">
+                        </div>
+                    </div>
+
+                    <div class="row report-row">
+                        <div class="col-md-12">
+                            <label for="">ข้อความ</label>
+                            <textarea name="" class="form-control" placeholder="พิมพ์ข้อความในช่องนี้" id="" cols="30" rows="6"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row report-row">
+                        <div class="col-md-6">
+                            <label for="">อัปโหลดรูปภาพ</label>
+                            <input type="file" class="form-control"  multiple>
+                        </div>
+                    </div>
+
+                    <hr>
+                   <div class="text-center"> <button type="submit" class="btn btn-submit btn-report" name="">ยืนยัน</button></div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <header id="header" class="main-header">
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="container">

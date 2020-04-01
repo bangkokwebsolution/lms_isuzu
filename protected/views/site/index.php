@@ -116,7 +116,17 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     <?php } ?>
 
     <div class="banner">
-        <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/banner-main.jpg" alt="thoresen" class="img-responsive w-100">
+        <div id="banner-thoresen"></div>
+        <script>
+            var animation = bodymovin.loadAnimation({
+                container: document.getElementById('banner-thoresen'),
+                renderer: 'svg',
+                autoplay : true,
+                loop: true,
+                path: './themes/template2/banner-main/main-bg.json'
+
+            });
+        </script>
     </div>
 
     <section class="slide-video">

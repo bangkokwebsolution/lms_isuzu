@@ -610,9 +610,8 @@ section {
 }
 
 .slide-video .carousel {
-  border-radius: 10px;
-  -webkit-box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  border: 1px solid #ddd;
 }
 
 .slide-video .video-js {
@@ -4199,6 +4198,40 @@ div.course-detail2 h4.text11 {
   margin-top: 30px;
   padding-top: 20px;
   border-top: 1px solid #ddd;
+}
+
+.contact-admin{
+  position: fixed;
+  right: 70px;
+  bottom: 0;
+  margin: 0;
+  z-index: 10000;
+  color: #fff;
+  cursor: pointer;
+  height: 65px;
+  width: 280px;
+  background: url(../images/thoresen-contact.png);
+  background-repeat: no-repeat;
+  background-position: top;
+  transition: all 0.3s ease 0s;
+}
+
+.contact-admin:hover{
+  background-position: bottom;
+  height: 180px;
+}
+
+#user-report .modal-body{
+  padding: 2em;
+}
+
+#user-report .report-row{
+  margin-bottom: 10px;
+}
+
+.btn-report{
+  padding: 10px 40px;
+  font-size: 16px;
 }
 
 

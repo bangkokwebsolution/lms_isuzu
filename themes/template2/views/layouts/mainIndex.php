@@ -19,7 +19,6 @@ Yii::app()->user->returnUrl = $http->getUrl();
 	
 	<head>
 
-		<!-- Basic -->
         <?php if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
             $langId = Yii::app()->session['lang'] = 1;
             $this->pageTitle = 'Thoresen e-Learning';
@@ -36,9 +35,11 @@ Yii::app()->user->returnUrl = $http->getUrl();
 		<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/jquery.themepunch.revolution.min.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/jquery.themepunch.tools.min.js"></script>  
         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/sweetalert/dist/sweetalert.min.js"></script>
+       
+        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/lottie.js"></script>
 	</head>
-	<body style="overflow-x: hidden; margin:0;" ><!-- onload="init();" -->
-	
+	<body style="overflow-x: hidden; margin:0;" >
+    <!-- onload="init();" -->
 <!-- <a data-toggle="modal" href="#modal-contactus" class="contact">
     <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/contact.png" alt="" class="hidden-xs">
 </a> -->
@@ -68,7 +69,6 @@ Yii::app()->user->returnUrl = $http->getUrl();
         <div class="dot2"></div>
       </div>
     </div>  
-    <!-- <script type="text/javascript" src="themes/template2/js/script.js"></script> -->
 
 
 
