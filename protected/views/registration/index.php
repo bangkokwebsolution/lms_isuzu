@@ -176,7 +176,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         <div class="form-group" id="id_employee" style="display:none">
                             <!-- <label for=""><?php echo $form->labelEx($users, 'username'); ?></label> -->
                             <label for="">เลขประจำตัวพนักงาน</label>
-                            <?php echo $form->textField($users, 'username', array('class' => 'form-control', 'placeholder' => 'เลขประจำตัวพนักงาน')); ?>
+                            <?php echo $form->textField($users, 'username', array('class' => 'form-control user_ID', 'placeholder' => 'เลขประจำตัวพนักงาน','maxlength'=>'13', 'autocomplete' => 'off')); ?>
                             <?php echo $form->error($users, 'username', array('class' => 'error2')); ?>
                             <!-- <input type="text" class="form-control" id="" placeholder="ID พนักงาน"> -->
                         </div>
@@ -190,8 +190,8 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 <div class="row justify-content-center">
                     <div class="col-sm-2">
                         <div class="form-group">
-                            <label for=""><?= $label->label_title ?></label>
-                            <?php $country = array('1' => $label->label_dropdown_mr, '2' => $label->label_dropdown_mrs, '3' => $label->label_dropdown_ms); ?>
+                            <label for="">คำนำหน้า</label>
+                            <?php  $country = array('1' => 'นาย', '2' => 'นาง', '3' => 'นางสาว'); ?>
                             <?php
                             $htmlOptions = array('class' => 'form-control');
                             echo $form->dropDownList($profile, 'title_id', $country, $htmlOptions);
@@ -200,14 +200,14 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                     </div>
                     <div class="col-sm-5 col-lg-3">
                         <div class="form-group">
-                            <label for=""><?= $label->label_firstname ?></label>
+                            <label for="">ชื่อ</label>
                             <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control', 'placeholder' => 'ชื่อ')); ?>
                             <?php echo $form->error($profile, 'firstname', array('class' => 'error2')); ?>
                         </div>
                     </div>
                     <div class="col-sm-5 col-lg-3">
                         <div class="form-group">
-                            <label for=""><?= $label->label_lastname ?></label>
+                            <label for="">นามสกุล</label>
                             <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control', 'placeholder' => 'นามสกุล')); ?>
                             <?php echo $form->error($profile, 'lastname', array('class' => 'error2')); ?>
                             <!--<input type="text" class="form-control" id="">-->
@@ -216,6 +216,36 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
                     <div class="clearfix"></div>
                 </div>
+                      <div class="row justify-content-center">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label for="">Prefix</label>
+                            <?php $country = array('1' => 'Mr.', '2' => 'Mrs.', '3' => 'Miss.'); ?>
+                            <?php
+                            $htmlOptions = array('class' => 'form-control');
+                            echo $form->dropDownList($profile, 'title_id', $country, $htmlOptions);
+                            ?>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 col-lg-3">
+                        <div class="form-group">
+                            <label for="">firstname</label>
+                            <?php echo $form->textField($profile, 'firstname_en', array('class' => 'form-control', 'placeholder' => 'firstname')); ?>
+                            <?php echo $form->error($profile, 'firstname_en', array('class' => 'error2')); ?>
+                        </div>
+                    </div>
+                    <div class="col-sm-5 col-lg-3">
+                        <div class="form-group">
+                            <label for="">lastname</label>
+                            <?php echo $form->textField($profile, 'lastname_en', array('class' => 'form-control', 'placeholder' => 'lastname')); ?>
+                            <?php echo $form->error($profile, 'lastname_en', array('class' => 'error2')); ?>
+                            <!--<input type="text" class="form-control" id="">-->
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                </div>
+
 
                 <div class="row justify-content-center mt-1 mb-1 ">
                     <div class="form-group">
@@ -327,8 +357,9 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             <select class="form-control" name="" id="">
                                 < <?php
                                     if ($profile->sex) {
-                                        if ($profile->sex === 'Male') { ?> <option value="1">ชาย</option>
-                                    <option value="2">หญิง</option>
+                                        if ($profile->sex === 'Male') { ?> 
+                                            <option value="1">ชาย</option>
+                                            <option value="2">หญิง</option>
                                 <?php } else { ?>
                                     <option value="2">หญิง</option>
                                     <option value="1">ชาย</option>
@@ -337,9 +368,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             <option value="">เพศ</option>
                             <option value="1">ชาย</option>
                             <option value="2">หญิง</option>
-                            <? php ?>
-
-
+                            <?php?>
                             </select>
                         </div>
                     </div>
@@ -403,8 +432,20 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             <?php echo $form->error($users, 'email', array('class' => 'error2')); ?>
                         </div>
                     </div>
-
+                    
                     <div class="clearfix"></div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <!-- <label for="">Email</label>
+                                <input type="text" class="form-control" id="" placeholder="Email"> -->
+                            <label><?php echo $form->labelEx($profile, 'line_id'); ?></label>
+                            <?php echo $form->emailField($profile, 'line_id', array('class' => 'form-control', 'placeholder' => 'IDLine')); ?>
+                            <?php echo $form->error($profile, 'line_id', array('class' => 'error2')); ?>
+                        </div>
+                    </div>
+                 <div class="clearfix"></div>
                 </div>
 
                 <div class="row  mt-1 mb-1 ">
@@ -631,17 +672,37 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 $('.xdsoft_timepicker').hide();
 
                 $(function() {
+                    $('.user_ID').change(function(event,length){
+                        var max = $(this).attr('maxlength');
+                        var vals = $(this).val();
+                        if (max.length < vals) { 
+                            var setval = '' + $(this).val();
+                            while (setval.length < max) {
+                                   setval = '0' + setval;
+                            }
+                            $(this).val(setval);
+                           
+                        } 
+                        // else {
+                        //     alert("คุณได้กรอกเลขประจำตัวพนักงานเกินกว่าที่กำหนด");
+                        //      $(this).empty();
+                        //      $(this).val();
+                        // }
+                    });
+
                     $('#accept').change(function(event) {
                         $("#id_employee").hide();
                         $("#employee_type").hide();
                         $("#employee_detail").hide();
                     });
+
                     $("#reject").change(function(event) {
                         $("#id_employee").show();
                         $("#employee_type").show();
                         $("#employee_detail").show();
                         $("#office-section").show();
                     });
+
                     $('#passport_card').hide();
                     $('#card-1').change(function(event) {
                         $('#passport_card').hide();
@@ -652,6 +713,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         $('#passport_card').show();
                         $('#identification_card').hide();
                     });
+
                     $(".department").change(function() {
                         var id = $(".department").val();
                         $.ajax({
@@ -666,6 +728,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             }
                         });
                     });
+
                     $(".birth").change(function() {
                         var item = $(".birth").val();
                         $.ajax({

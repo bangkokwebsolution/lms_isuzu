@@ -303,11 +303,11 @@ if(!$label){
         'params' => array(':lang_id' => 1)
     ));
 }
- $type_user = (!empty($_POST['type_user']))? $_POST['type_user']:3;
- $history_of_illness = (!empty($_POST['history_of_illness']))? $_POST['history_of_illness']:'n';
- $status_sm = (!empty($_POST['status_sm']))? $_POST['status_sm']:'s';
- $type_employee = (!empty($_POST['type_employee']))? $_POST['type_employee']:'office'; 
- $type_card = (!empty($_POST['type_card']))? $_POST['type_card']:'p';
+ // $type_user = (!empty($_POST['type_user']))? $_POST['type_user']:3;
+ // $history_of_illness = (!empty($_POST['history_of_illness']))? $_POST['history_of_illness']:'n';
+ // $status_sm = (!empty($_POST['status_sm']))? $_POST['status_sm']:'s';
+ // $type_employee = (!empty($_POST['type_employee']))? $_POST['type_employee']:'office'; 
+ // $type_card = (!empty($_POST['type_card']))? $_POST['type_card']:'p';
 //var_dump($type_card);exit();
 if (isset($_POST['Profile'])) {
     //var_dump($_POST['passport']);exit();
@@ -368,6 +368,8 @@ if (isset($_POST['Profile'])) {
     $profile->sex = ($profile->title_id == 1)? "Male":"Female";
     $profile->firstname = $_POST['Profile'][firstname];
     $profile->lastname = $_POST['Profile'][lastname];
+    $profile->firstname_en = $_POST['Profile'][firstname_en];
+    $profile->lastname_en = $_POST['Profile'][lastname_en];
     $profile->tel = $_POST['Profile'][tel];
             // $profile->division_title = $_POST['Profile'][division_title];
     $profile->birthday = $_POST['Profile'][birthday];
@@ -383,7 +385,7 @@ if (isset($_POST['Profile'])) {
     $profile->race = $_POST['Profile'][race];
     $profile->nationality = $_POST['Profile'][nationality];
     $profile->religion = $_POST['Profile'][religion];
-    
+    $profile->line_id = $_POST['Profile'][line_id];
      //var_dump($_REQUEST);
      
     // if(!$chk_status_email){
