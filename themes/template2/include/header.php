@@ -57,7 +57,7 @@
 
 <header id="header" class="main-header">
     <nav class="navbar navbar-inverse" role="navigation">
-        <div class="container">
+        <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
@@ -123,8 +123,8 @@
                     </div>
                 <?php } else {
                 } ?>
-                <a class="navbar-brand hidden-xs" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo.png" height="80px" alt=""></a>
-                <a class="navbar-brand visible-xs" style="width: auto" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-xs.png" height="70px" alt=""></a>
+                <a class="navbar-brand hidden-xs" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo.png" height="60px" alt=""></a>
+                <a class="navbar-brand visible-xs" style="width: auto" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-xs.png" height="35px" alt=""></a>
             </div>
 
 
@@ -445,4 +445,4 @@ if (!empty($msg)) { ?>
         </div>
     </div>
 </div>
-</script>
+                                 

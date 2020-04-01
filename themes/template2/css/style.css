@@ -3459,16 +3459,12 @@ div.course-detail2 h4.text11 {
   }
 
   .navbar-brand>img{
-    margin-top: 7px;
+    margin: 20px;
   }
 
 @media (max-width: 320px) {
   .team-member.modern .member-info {
     padding: 30px 0;
-  }
-
-  .banner {
-    margin-top: 35px;
   }
 }
 
@@ -3503,7 +3499,7 @@ div.course-detail2 h4.text11 {
 
 @media (max-width: 425px) {
   .navbar-brand>img {
-    margin-top: -10px;
+    margin-top: 20px;
   }
 
   header .navbar-nav li a.btn-login {
@@ -3544,6 +3540,11 @@ div.course-detail2 h4.text11 {
 }
 
 @media (min-width:768px) and (max-width: 1023px) {
+
+  .navbar-brand>img {
+    margin-top: 10px;
+  }
+
   .textstate {
     font-size: 14px;
   }

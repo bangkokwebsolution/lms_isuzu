@@ -124,7 +124,6 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 autoplay : true,
                 loop: true,
                 path: './themes/template2/banner-main/main-bg.json'
-
             });
         </script>
     </div>
@@ -132,7 +131,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     <section class="slide-video">
         <div class="container">
             <div class="row">
-                <div class="col-sm-8">
+                <div class="col-lg-8  col-xs-12 col-sm-8">
                     <div class="page-header">
                         <h1 class="title-topic">
                             <?= $label->label_imgslide ?>
@@ -217,7 +216,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 $criteriavdo->order = 'vdo_id  DESC';
                 $vdoshow = vdo::model()->find($criteriavdo);
                 ?>
-                <div class="col-sm-4">
+                <div class="col-lg-4 col-xs-12 col-sm-4">
                     <div class="page-header">
                         <h1><span class="linehead"><?= $label->label_vdo ?></span> <span class="pull-right"><a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/video/index'); ?>" role="button"><?= $label->label_viewAll ?> <i class="fa fa-angle-right" aria-hidden="true"></i></a></span></h1>
                     </div>
@@ -238,14 +237,13 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                 </p>
                             </video>
                         <?php } ?>
-                    </div>
+                </div>
 
                 </div>
             </div>
         </section>
 
 
-        <!--start course-->
 
         <?php if(Yii::app()->user->id != null){ ?>
             <section class="course">
@@ -322,7 +320,6 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                           //             $url = Yii::app()->createUrl('course/detail/', array('id' => $value->course_id));
                 ?>
 
-                <!-- new course -->
 
                 <div class="col-lg-3 col-md-3 ">
                     <div class="item">
@@ -425,11 +422,11 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 $link = $this->createUrl('news/detail/', array('id' => $value->cms_id));
             }
             ?>
-            <div class="col-sm-4">
+            <div class="col-md-4 col-sm-6">
                 <div class="well">
                     <a href="<?php echo $link; ?>" <?= $new_tab ?>">
                         <div class="row">
-                            <div class="col-sm-5">
+                            <div class="col-md-5 col-sm-5">
 
                                 <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/news/' . $value->cms_id . '/thumb/' . $value->cms_picture)) { ?>
 
@@ -445,7 +442,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
 
                             </div>
-                            <div class="col-sm-7">
+                            <div class="col-md-7 col-sm-7">
                                 <h4 class="text22"><?php echo $value->cms_title ?></h4>
                                 <p class="p2"><?php echo $value->cms_short_title ?></p>
                                 <div class="news-date">
@@ -518,52 +515,52 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 <section class="menu-elearning">
     <div class="container">
         <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-3 col-sm-6 col-xs-12 mb-1">
                 <a href="<?php echo $this->createUrl('/document/index'); ?>" class="btn btn-elearning bg-download">
                     <div class="row center-align">
-                        <div class="col-md-3">
+                        <div class="col-md-3 col-sm-3 col-xs-3">
                             <i class="fas fa-file-download"></i>
                         </div>
-                        <div class="col-md-9 ">
+                        <div class="col-md-9 col-sm-9 col-xs-9">
                             <h4 class="mb-0 text-white"> <?=$doc_download?></h4>
                             <span class="font-weight-normal text-white"><?=$system_guide_and_others?></span>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-sm-6 col-xs-12 mb-1">
                 <a href="<?php echo $this->createUrl('/usability/index'); ?>" class="btn btn-elearning bg-usability">
                     <div class="row center-align">
-                        <div class="col-md-3">
+                        <div class="col-md-3 col-sm-3 col-xs-3 ">
                             <i class="fas fa-list-ol"></i>
                         </div>
-                        <div class="col-md-9 ">
+                        <div class="col-md-9 col-sm-9 col-xs-9">
                             <h4 class="mb-0 text-white"><?=$how_to_use?></h4>
                             <span class="font-weight-normal text-white"><?=$sys_eleaning?></span>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-sm-6 col-xs-12 mb-1">
                 <a href="<?php echo $this->createUrl('/faq/index'); ?>" class="btn btn-elearning bg-faq">
                     <div class="row center-align">
-                        <div class="col-md-3">
+                        <div class="col-md-3 col-sm-3" col-xs-3>
                             <i class="fas fa-question-circle"></i>
                         </div>
-                        <div class="col-md-9 ">
+                        <div class="col-md-9 col-sm-9 col-xs-9">
                             <h4 class="mb-0 text-white "><?=$QaA?></h4>
                             <span class="font-weight-light text-white"><?=$problem_of_use?></span>
                         </div>
                     </div>
                 </a>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-sm-6 col-xs-12 mb-1">
                 <a href="#" class="btn btn-elearning bg-user">
                     <div class="row center-align">
-                        <div class="col-md-3">
+                        <div class="col-md-3 col-sm-3 col-xs-3">
                             <i class="fas fa-users"></i>
                         </div>
-                        <div class="col-md-9 text-center">
+                        <div class="col-md-9 col-sm-9 col-xs-9 text-center">
                             <h4 class="mb-0 text-white"><?=$Number_of_website_visitors?></h4>
                             <span class="font-weight-normal text-white"><?=$counter?> <?=$peple?></span>
                         </div>
