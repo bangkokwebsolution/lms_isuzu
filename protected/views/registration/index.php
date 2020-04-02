@@ -52,7 +52,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         text-decoration: none;
         display: inline-table;
         font-size: 14px;
-        margin: 4px 2px;
+        margin: 4px 15px;
         cursor: pointer;
         /* position: absolute;
         right: 0 */
@@ -303,14 +303,14 @@ function editName(filedoc_id){
                             ?>
                         </div>
                     </div>
-                    <div class="col-md-4 col-lg-3">
+                    <div class="col-md-3 col-lg-3 col-xs-12">
                         <div class="form-group">
                             <label for="">ชื่อ</label>
                             <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control', 'placeholder' => 'ชื่อ')); ?>
                             <?php echo $form->error($profile, 'firstname', array('class' => 'error2')); ?>
                         </div>
                     </div>
-                    <div class="col-md-4 col-lg-3">
+                    <div class="col-md-3 col-lg-3 col-xs-12">
                         <div class="form-group">
                             <label for="">นามสกุล</label>
                             <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control', 'placeholder' => 'นามสกุล')); ?>
@@ -332,14 +332,14 @@ function editName(filedoc_id){
                             ?>
                         </div>
                     </div>
-                    <div class="col-md-5 col-lg-3">
+                    <div class="col-md-3 col-lg-3 col-xs-12">
                         <div class="form-group">
                             <label for="">firstname</label>
                             <?php echo $form->textField($profile, 'firstname_en', array('class' => 'form-control', 'placeholder' => 'firstname')); ?>
                             <?php echo $form->error($profile, 'firstname_en', array('class' => 'error2')); ?>
                         </div>
                     </div>
-                    <div class="col-md-5 col-lg-3">
+                    <div class="col-md-3 col-lg-3 col-xs-12">
                         <div class="form-group">
                             <label for="">lastname</label>
                             <?php echo $form->textField($profile, 'lastname_en', array('class' => 'form-control', 'placeholder' => 'lastname')); ?>
@@ -369,7 +369,7 @@ function editName(filedoc_id){
 
 
                 <div class="row justify-content-center bb-1 pb-20">
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-sm-6 col-xs-12" >
                         <div class="form-group" id="identification_card">
                             <?php echo $form->labelEx($profile, 'identification'); ?>
                             <?php echo $form->textField($profile, 'identification', array('class' => 'form-control', 'name' => 'idcard', 'maxlength' => '13', 'onKeyPress' => 'return check_number();', 'placeholder' => 'เลขบัตรประจำตัวประชาชน')); ?>
@@ -383,7 +383,7 @@ function editName(filedoc_id){
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="form-group">
                             <!-- <label for="">วันหมดอายุบัตร</label>
                                 <input type="text" class="form-control" id="" placeholder="วันหมดอายุบัตร" > -->
@@ -397,7 +397,7 @@ function editName(filedoc_id){
                     </div>
 
                     <div class="row justify-content-center mt-20">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group">
                             <!-- <label for="">วัน/เดือน/ปี</label>
                                 <input type="date" class="form-control" id="" placeholder="วัน/เดือน/ปี"> -->
@@ -407,7 +407,7 @@ function editName(filedoc_id){
                             </div>
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-md-2 col-sm-6 col-xs-12">
                             <div class="form-group">
                             <!-- <label for="">อายุ</label>
                                 <input type="text" class="form-control" id="" placeholder="อายุ"> -->
@@ -421,7 +421,7 @@ function editName(filedoc_id){
                     </div>
 
                     <div class="row justify-content-center">
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="form-group">
                             <!--  <label for="">เชื้อชาติ</label>
                                 <input type="text" class="form-control" id="" placeholder="เชื้อชาติ"> -->
@@ -431,7 +431,7 @@ function editName(filedoc_id){
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="form-group">
                             <!-- <label for="">สัญชาติ</label>
                                 <input type="text" class="form-control" id="" placeholder="สัญชาติ"> -->
@@ -446,7 +446,7 @@ function editName(filedoc_id){
 
 
                     <div class="row justify-content-center">
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="form-group">
                             <!-- <label for="">ศาสนา</label>
                                 <input type="text" class="form-control" id="" placeholder="เชื้อชาติ"> -->
@@ -456,7 +456,7 @@ function editName(filedoc_id){
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="form-group">
                                 <label for="">เพศ</label>
                                 <select class="form-control" name="" id="">
@@ -502,7 +502,7 @@ function editName(filedoc_id){
 
 
                     <div class="row justify-content-center">
-                        <div class="col-md-8">
+                        <div class="col-md-8 col-sm-12 col-xs-12">
                             <div class="form-group">
                             <!-- <label for="card-4" class="bg-danger text-black">ที่อยู่</label>
                                 <textarea class="form-control" name="" id="" placeholder="ที่อยู่" value="" required="" cols="30" rows="3"></textarea> -->
@@ -517,7 +517,7 @@ function editName(filedoc_id){
                     </div>
 
                     <div class="row justify-content-center">
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="form-group">
                             <!-- <label for="">เบอร์โทรศัพท์</label>
                                 <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์"> -->
@@ -528,7 +528,7 @@ function editName(filedoc_id){
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="form-group">
                             <!-- <label for="">Email</label>
                                 <input type="text" class="form-control" id="" placeholder="Email"> -->
@@ -541,7 +541,7 @@ function editName(filedoc_id){
                         <div class="clearfix"></div>
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-md-4">
+                        <div class="col-md-8 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label><?php echo $form->labelEx($profile, 'line_id'); ?></label>
                                 <?php echo $form->textField($profile, 'line_id', array('class' => 'form-control', 'placeholder' => 'IDLine')); ?>
@@ -553,7 +553,7 @@ function editName(filedoc_id){
 
                     <div class="row  mt-1 mb-1 ">
                         <div class="col-md-3 text-right-md"> <strong>ประวัติการเจ็บป่วยรุนแรง</strong></div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-xs-12">
                             <div class="form-group">
 
                                 <span></span>
@@ -590,21 +590,21 @@ function editName(filedoc_id){
                                 ?>
 
                                 <div class="row del_edu">
-                                    <div class="col-md-3 text-right"> <strong>ประวัติการศึกษา</strong></div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-3 col-sm-12 text-right-md"> <strong>ประวัติการศึกษา</strong></div>
+                                    <div class="col-md-2 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <?php echo CHtml::activeDropDownList($valedu, '[' . $kedu . ']edu_id', $list, $att_Education); ?>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-3 col-sm-6 col-xs-12">
                                         <div class="form-group">
 
                                             <?php echo $form->textField($valedu, '[' . $kedu . ']institution', array('class' => 'form-control', 'placeholder' => 'สถานที่่จบการศึกษา')); ?>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <?php echo $form->textField($valedu, '[' . $kedu . ']date_graduation', $graduation); ?>
                                         </div>
@@ -621,20 +621,20 @@ function editName(filedoc_id){
                         ?>
 
                         <div class="row">
-                            <div class="col-md-3 text-right-md"> <strong>ประวัติการศึกษา</strong></div>
-                            <div class="col-md-2">
+                            <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong>ประวัติการศึกษา</strong></div>
+                            <div class="col-md-2 col-sm-6 col-xs-12 ">
                                 <div class="form-group">
                                     <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]edu_id', $list, $att_Education); ?>
                                 </div>
                             </div>
 
-                            <div class="col-md-3">
+                            <div class="col-md-3 col-sm-6 col-xs-12 ">
                                 <div class="form-group">
                                     <?php echo $form->textField($ProfilesEdu, '[0]institution', array('class' => 'form-control', 'placeholder' => 'สถานที่่จบการศึกษา')); ?>
                                 </div>
                             </div>
 
-                            <div class="col-md-2">
+                            <div class="col-md-2 col-sm-6 col-xs-12 ">
                                 <div class="form-group">
                                     <?php echo $form->textField($ProfilesEdu, '[0]date_graduation', $graduation); ?>
                                 </div>
@@ -648,8 +648,8 @@ function editName(filedoc_id){
                     }
                     ?>
 
-                    <div class="row justify-content-center bb-1 pb-20">
-                        <div class="col-md-3">
+                    <div class="row justify-content-center bb-1 pb-20 mt-20">
+                        <div class="col-md-3 col-sm-12  col-xs-12 text-center">
                             <button class="btn btn-info btn-add add_form_field" type="button" id="moreFields">
                                 <span class="glyphicon glyphicon-plus"> </span> เพิ่มประวัติการศึกษา
                             </button>
@@ -951,7 +951,10 @@ function editName(filedoc_id){
                             x++;
                             numItems++;
                             var level = '<option value="">ระดับการศึกษา</option>';
-                            $(wrapper).append('<div class="row del_edu"><div class="col-sm-3 text-right-md "><strong>ประวัติการศึกษา</strong></div><div class="col-sm-2"><div class="form-group"><select class ="form-control" name="ProfilesEdu[' + numItems + '][edu_id]">' + level + '<?php foreach ($list as $key => $value) : ?><option value=<?php echo $key ?>>ระดับการศึกษา<?php echo $value ?></option><?php endforeach ?></select></div></div><div class="col-sm-3"><div class="form-group"><input type="text" class="form-control" placeholder="สถานที่่จบการศึกษา" name="ProfilesEdu[' + numItems + '][institution]"></div></div><div class="col-sm-2"><div class="form-group"><input class="form-control datetimepicker" autocomplete="off" id="ProfilesEdu_' + numItems + '_date_graduation" placeholder="วันที่จบการศึกษา "name="ProfilesEdu[' + numItems + '][date_graduation]"> </div></div><span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> Delete</span></div>'); //add input box
+                            $(wrapper).append('<div class="row del_edu"><div class="col-md-3 col-sm-12 text-right-md "><strong>ประวัติการศึกษา</strong></div>'
+                            +'<div class="col-md-2 col-sm-6"><div class="form-group"><select class ="form-control" name="ProfilesEdu[' + numItems + '][edu_id]">' + level + '<?php foreach ($list as $key => $value) : ?><option value=<?php echo $key ?>>ระดับการศึกษา<?php echo $value ?></option><?php endforeach ?></select></div></div>'
+                            +'<div class="col-md-3 col-sm-6"><div class="form-group"><input type="text" class="form-control" placeholder="สถานที่่จบการศึกษา" name="ProfilesEdu[' + numItems + '][institution]"></div></div>'
+                            +'<div class="col-md-2 col-sm-6"><div class="form-group"><input class="form-control datetimepicker" autocomplete="off" id="ProfilesEdu_' + numItems + '_date_graduation" placeholder="วันที่จบการศึกษา "name="ProfilesEdu[' + numItems + '][date_graduation]"> </div></div><span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> Delete</span></div>'); //add input box
                             $('.datetimepicker').datetimepicker({
                                 format: 'Y-m-d',
                                 step: 10,
