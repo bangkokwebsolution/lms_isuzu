@@ -390,7 +390,7 @@ if($model){
                                                                     ?>
                                                                     <li class="list-group-item">
                                                                         <?php if($step == 1){ ?>
-                                                                            <div class="pt-now"> You are here</div>
+                                                                            <!-- <div class="pt-now"> You are here</div> -->
                                                                         <?php } ?>
                                                                         <?php echo $label->label_testPre; ?>  <span class="pull-right"><!-- <a href="<?php echo $this->createUrl('/question/preexams', array('id' => $lessonListValue->id,'type'=>'pre')); ?>" class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"> -->
                                                                             <a href="<?= $ckLinkTest; ?>" 
@@ -422,7 +422,7 @@ if($model){
                                                                 <?php if(count($scoreAll) < $lessonListValue->cate_amount && !$flagPreTestPass && count($scoreAll) != 0){ ?>
                                                                     <li class="list-group-item">
                                                                         <?php if($step == 1){ ?>
-                                                                            <div class="pt-now"> You are here</div>
+                                                                            <!-- <div class="pt-now"> You are here</div> -->
                                                                         <?php } ?>
                                                                         <?php echo $label->label_testPre; ?> <?= count($scoreAll)+1; ?> <span class="pull-right"><a href="<?php echo $this->createUrl('/question/preexams', array('id' => $lessonListValue->id,'type'=>'pre')); ?>" class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <?php echo $label->label_DoTest; ?></a></span></li>
                                                                     <?php } ?>
@@ -501,7 +501,7 @@ if($model){
                                                                          <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
                                                                             <li class="list-group-item ">
                                                                                <?php if($step == 2){ ?>
-                                                                                <div class="pt-now"> You are here</div>
+                                                                                <!-- <div class="pt-now"> You are here</div> -->
                                                                             <?php } ?>
                                                                             <span class="pull-right">
                                                                                 <span id="lblduration-<?=$les->id?>"></span>  <span class="btn btn-warning detailmore"><?php echo $label->label_gotoLesson; ?> <i class="fa fa-play-circle"></i> </span></span>
@@ -543,7 +543,7 @@ if($model){
                                                                         <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
                                                                             <li class="list-group-item ">
                                                                                 <?php if($step == 2){ ?>
-                                                                                    <div class="pt-now"> You are here</div>
+                                                                                    <!-- <div class="pt-now"> You are here</div> -->
                                                                                 <?php } ?>
                                                                                 <span class="pull-right">
                                                                                     <span id="lblduration-<?=$les->id?>"></span>  <span class="label label-default"><?php echo $label->label_gotoLesson; ?> <i class="fa fa-play-circle"></i> </span></span>
@@ -605,7 +605,7 @@ if($model){
                                                                                  <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
                                                                                     <li class="list-group-item">
                                                                                         <?php if($step == 2){ ?>
-                                                                                            <div class="pt-now"> You are here</div>
+                                                                                            <!-- <div class="pt-now"> You are here</div> -->
                                                                                         <?php } ?>
                                                                                         <span class="pull-right">
                                                                                             <span id="lblduration-<?=$les->id?>"></span>  <span class="btn btn-warning detailmore"><?php echo $label->label_gotoLesson; ?> <i class="fa fa-play-circle"></i> </span></span>
@@ -650,7 +650,7 @@ if($model){
                                                                                 <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
                                                                                     <li class="list-group-item ">
                                                                                         <?php if($step == 2){ ?>
-                                                                                            <div class="pt-now"> You are here</div>
+                                                                                            <!-- <div class="pt-now"> You are here</div> -->
                                                                                         <?php } ?>
                                                                                         <span class="pull-right">
                                                                                             <span id="lblduration-<?=$les->id?>"></span>  <span class="btn btn-warning detailmore"><?php echo $label->label_gotoLesson; ?> <i class="fa fa-play-circle"></i> </span></span>
@@ -681,7 +681,7 @@ if($model){
                                                                                         ?>
                                                                                         <li class="list-group-item">
                                                                                             <?php if($step == 3){ ?>
-                                                                                                <div class="pt-now"> You are here</div>
+                                                                                                <!-- <div class="pt-now"> You are here</div> -->
                                                                                             <?php } ?>
                                                                                             <?php echo $label->label_testPost; ?>  <span class="pull-right"><a href="<?= $link ?>" <?= $alert != '' ? 'onclick="' . $alert . '"' : ''; ?> class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <?php echo $label->label_DoTest; ?></a></span></li>
                                                                                             <?php
@@ -714,7 +714,7 @@ if($model){
                                                                                                     ?>
                                                                                                     <li class="list-group-item">
                                                                                                        <?php if($step == 3){ ?>
-                                                                                                        <div class="pt-now"> You are here</div>
+                                                                                                        <!-- <div class="pt-now"> You are here</div> -->
                                                                                                     <?php } ?>
                                                                                                     <?php echo $label->label_testPost; ?> <?= count($scoreAll)+1; ?> <span class="pull-right"><a href="<?= $link ?>" <?= $alert != '' ? 'onclick="' . $alert . '"' : ''; ?> class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <?php echo $label->label_DoTest; ?></a></span></li>
                                                                                                 <?php } ?>
@@ -982,7 +982,7 @@ if($model){
             <?php }?>
             <?php if($step == 4){ ?>
                <li class="list-group-item ">
-                <div class="pt-now"> You are here</div>
+                <!-- <div class="pt-now"> You are here</div> -->
                 <a href="<?= $pathCourseTest ?>" <?= $alertCourseTest ?> >
                     <span class="list__course"><?= $label->label_testFinalTimes; ?> <?= $key+2; ?></span>
                     <span class="btn btn-warning detailmore pull-right"><?= $label->label_gotoLesson ?>
@@ -992,7 +992,7 @@ if($model){
         <?php }else if($checkHaveCourseTest){ ?>
            <li class="list-group-item ">
             <?php if($step == 4){ ?>
-                <div class="pt-now"> You are here</div>
+                <!-- <div class="pt-now"> You are here</div> -->
             <?php } ?>
             <a href="<?= $pathCourseTest ?>" <?= $alertCourseTest ?> >
                 <span class="list__course"><?= $label->label_testFinalTimes; ?> 1</span>

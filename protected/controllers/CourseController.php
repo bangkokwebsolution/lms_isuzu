@@ -267,13 +267,17 @@ public function actionResetLearn($id) {
         if(Yii::app()->user->id){
             Helpers::lib()->getControllerActionId();
         }
+
         if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
             $langId = Yii::app()->session['lang'] = 1;
         }else{
             $langId = Yii::app()->session['lang'];
         }
+
         $userModel = Users::model()->findByPK(Yii::app()->user->id);
+
         $userDepartment = $userModel->department_id;
+
         // $courseArr = json_decode($userModel->orgchart_lv2);
         $criteria = new CDbCriteria;
         $criteria->with = array('orgchart');
@@ -291,9 +295,10 @@ public function actionResetLearn($id) {
         foreach ($modelOrgDep as $key => $value) {
            $courseArr[] = $value->orgchart_id;
        }
+
        $criteria = new CDbCriteria;
      // $criteria->with = array('authCourse');
-       $criteria->join = "INNER JOIN tbl_course_online AS course ON (course.course_id = t.course_id) ";
+       $criteria->join = "INNER JOIN tbl_course_online AS course ON (course.course_id = t.course_id) ";   
        $criteria->join .= "INNER JOIN tbl_schedule as s ON ( s.id = t.schedule_id ) ";
        $criteria->compare('user_id',Yii::app()->user->id);
        $criteria->compare('course.active','y');
@@ -303,7 +308,7 @@ public function actionResetLearn($id) {
        $criteria->group = 't.course_id';
        $criteria->order = 't.schedule_id DESC';
        $modelCourseTms = AuthCourse::model()->findAll($criteria);
-     // var_dump($modelCourseTms);exit();
+
        if($modelCourseTms){
         // $model_cate_tms = ($langId == 1) ? Category::model()->findByPk(1) : Category::model()->findByAttributes(array('parent_id' => '1'));
         // $model_cate_tms = Category::model()->findByPk(24); //localhost
@@ -315,6 +320,8 @@ public function actionResetLearn($id) {
     //        $courseArr[] = $value->course_id;
     //    }
     // $modelCourseTms = null;
+
+    //old OrgCourse
     $criteria = new CDbCriteria;
     $criteria->with = array('course','course.CategoryTitle');
     if(!empty($model_cate_tms))$criteria->condition = "categorys.cate_id != 1";
@@ -322,12 +329,12 @@ public function actionResetLearn($id) {
     $criteria->compare('categorys.active','y');
     $criteria->compare('course.status','1');
     $criteria->compare('categorys.cate_show','1');
-    $criteria->compare('categorys.lang_id',$langId);
     $criteria->addCondition('course.course_date_end >= :date_now');
     $criteria->params[':date_now'] = date('Y-m-d H:i');
     // $criteria->compare('categorys.lang_id',$langId);
     $criteria->group = 'course.cate_id';
     $model_cate = OrgCourse::model()->findAll($criteria);
+
 
     $criteria = new CDbCriteria;
     $criteria->with = array('course','course.CategoryTitle');
@@ -335,13 +342,17 @@ public function actionResetLearn($id) {
     $criteria->compare('course.active','y');
     $criteria->compare('course.status','1');
     $criteria->compare('categorys.cate_show','1');
+    // $criteria->compare('course.lang_id',$langId);
     $criteria->addCondition('course.course_date_end >= :date_now');
     $criteria->params[':date_now'] = date('Y-m-d H:i');
     $criteria->group = 'course.course_id';
 
-    // $criteria->compare('course.lang_id',$langId);
     $Model = OrgCourse::model()->findAll($criteria);
-    // var_dump($Model);exit();
+
+    // var_dump("<pre>");
+    // var_dump($Model);
+    // var_dump("<br>");exit();
+
     $label = MenuCourse::model()->find(array(
         'condition' => 'lang_id=:lang_id',
         'params' => array(':lang_id' => $langId)

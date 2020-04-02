@@ -49,14 +49,14 @@ function DateThai($strDate)
         <div class="row">
             <div class="col-sm-4 col-md-3">
                 <!-- Search -->
-                <form id="searchForm" action="<?php echo $this->createUrl('course/Search') ?>" method="post">
+                <!-- <form id="searchForm" action="<?php echo $this->createUrl('course/Search') ?>" method="post">
                     <div class="input-group">
                         <input type="text" class="form-control" name="text" placeholder='<?php echo $label->label_search; ?>'>
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
                         </span>
                     </div>
-                </form>
+                </form> -->
 
                 <!--end  Search -->
 
@@ -68,85 +68,91 @@ function DateThai($strDate)
                         if (!$flag) {
                             $m_cChildren  = Category::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $m_c->cate_id, 'order' => 'cate_id'));
                             if ($m_cChildren) {
-                                $m_c->cate_title = $m_cChildren->cate_title;
-                                $m_c->cate_short_detail = $m_cChildren->cate_short_detail;
-                                $m_c->cate_detail = $m_cChildren->cate_detail;
-                                $m_c->cate_image = $m_cChildren->cate_image;
-                            }
-                        }
-                        if ($m_c->lang_id != 1) {
-                            $m_c->cate_id = $m_c->parent_id;
-                        }
-                        ?>
-                        <button style="white-space: normal;" class="btn btn-default filter-button btn-lg" data-filter="<?= $m_c->cate_id ?>"><?= $m_c->cate_title ?></button>
-                    <?php } ?>
+                               $m_c->cate_title = $m_cChildren->cate_title;
+                               $m_c->cate_short_detail = $m_cChildren->cate_short_detail;
+                               $m_c->cate_detail = $m_cChildren->cate_detail;
+                               $m_c->cate_image = $m_cChildren->cate_image;
+                           }
+                       }
+                       if ($m_c->lang_id != 1) {
+                        $m_c->cate_id = $m_c->parent_id;
+                    }
+                    ?>
+                    <button style="white-space: normal;" class="btn btn-default filter-button btn-lg" data-filter="<?= $m_c->cate_id ?>"><?= $m_c->cate_title ?></button>
+                <?php } ?>
 
-                    <?php if ($model_cate_tms) {
-                        if ($model_cate_tms->lang_id != 1) {
-                            $model_cate_tms->cate_id = $m_c->parent_id;
-                        }
-                        ?>
-                        <button style="white-space: normal;" class="btn btn-default filter-button btn-lg" data-filter="<?= $model_cate_tms->cate_id ?>"><?= $model_cate_tms->cate_title ?></button>
-                    <?php } ?>
-                </div>
+                <?php if ($model_cate_tms) {
+                    if ($model_cate_tms->lang_id != 1) {
+                        $model_cate_tms->cate_id = $m_c->parent_id;
+                    }
+                    ?>
+                    <button style="white-space: normal;" class="btn btn-default filter-button btn-lg" data-filter="<?= $model_cate_tms->cate_id ?>"><?= $model_cate_tms->cate_title ?></button>
+                <?php } ?>
             </div>
-            <div class="col-sm-8 col-md-9">
-                <div class="row">
-                    <?php
-                    if ($model_cate_tms) {
-                        if ($model_cate_tms->lang_id != 1) {
-                            $model_cate_tms->cate_id = $model_cate_tms->parent_id;
-                        }
-                        ?>
-                        <div class="gallery_product col-sm-6 col-md-4 filter cate-all">
-                            <div class="well text-center">
-                                <button class="btn btn-default filter-button btn-lg" data-filter="<?= $model_cate_tms->cate_id ?>" style="border:0;background-color: transparent;width: 100%;box-shadow: none;">
+        </div>
+        <div class="col-sm-8 col-md-9">
+            <div class="row">
+                <?php
+                if ($model_cate_tms) {
+                    if ($model_cate_tms->lang_id != 1) {
+                        $model_cate_tms->cate_id = $model_cate_tms->parent_id;
+                    }
+                    ?>
+                    <div class="gallery_product col-sm-6 col-md-4 filter cate-all">
+                        <div class="well text-center">
+                            <button class="btn btn-default filter-button btn-lg" data-filter="<?= $model_cate_tms->cate_id ?>" style="border:0;background-color: transparent;width: 100%;box-shadow: none;">
 
-                                    <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/category/' . $model_cate_tms->cate_id . '/thumb/' . $model_cate_tms->cate_image)) { ?>
+                                <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/category/' . $model_cate_tms->cate_id . '/thumb/' . $model_cate_tms->cate_image)) { ?>
 
-                                        <div class="course-img" style="background-image: url(<?php echo Yii::app()->request->baseUrl; ?>/uploads/category/<?php echo $model_cate_tms->cate_id . '/thumb/' . $model_cate_tms->cate_image; ?>);"></div>
-                                    <?php } else { ?>
-                                        <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/book.png);"></div>
-                                    <?php } ?>
-                                    <div class="course-detail">
-                                        <h4 class="text11"><?= $model_cate_tms->cate_title ?>....</h4>
-                                        <p class="p"><?= $model_cate_tms->cate_short_detail ?></p>
-                                    </div>
-                                </button>
-                            </div>
+                                    <div class="course-img" style="background-image: url(<?php echo Yii::app()->request->baseUrl; ?>/uploads/category/<?php echo $model_cate_tms->cate_id . '/thumb/' . $model_cate_tms->cate_image; ?>);"></div>
+                                <?php } else { ?>
+                                    <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/book.png);"></div>
+                                <?php } ?>
+                                <div class="course-detail">
+                                    <h4 class="text11"><?= $model_cate_tms->cate_title ?>....</h4>
+                                    <p class="p"><?= $model_cate_tms->cate_short_detail ?></p>
+                                </div>
+                            </button>
                         </div>
-                    <?php  } ?>
+                    </div>
+                <?php  } ?>
 
 
-                    <?php foreach ($model_cate as $m_c) {
-                        $m_c  = $m_c->course->CategoryTitle;
-                        if ($m_c->lang_id != 1) {
-                            $m_c->cate_id = $m_c->parent_id;
-                        }
-                        if (!$flag) {
-                            $m_cChildren  = Category::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $m_c->cate_id, 'order' => 'cate_id'));
-                            if ($m_cChildren) {
-                                $m_c->cate_title = $m_cChildren->cate_title;
-                                $m_c->cate_short_detail = $m_cChildren->cate_short_detail;
-                                $m_c->cate_detail = $m_cChildren->cate_detail;
-                                $m_c->cate_image = $m_cChildren->cate_image;
-                            }
-                        }
-                        ?>
-                        <div class="gallery_product col-sm-6 col-md-4 filter cate-all">
-                            <div class="well text-center">
-                                <!--                            <a href="course-detail.php-->
-                                    <button class="btn btn-default filter-button btn-lg" data-filter="<?= $m_c->cate_id ?>" style="border:0;background-color: transparent;width: 100%;box-shadow: none;">
+                <?php foreach ($model_cate as $m_c) {
+                    $m_c  = $m_c->course->CategoryTitle;
 
-                                        <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/category/' . $m_c->cate_id . '/thumb/' . $m_c->cate_image)) { ?>
+                    if ($m_c->lang_id != 1) {
+                        $m_c->cate_id = $m_c->parent_id;
+                    }
 
-                                            <div class="course-img" style="background-image: url(<?php echo Yii::app()->request->baseUrl; ?>/uploads/category/<?php echo $m_c->cate_id . '/thumb/' . $m_c->cate_image; ?>);"></div>
-                                        <?php } else { ?>
-                                            <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/book.png);"></div>
-                                        <?php } ?>
-                                        <div class="course-detail">
-                                            <h4 class="text11"><?= $m_c->cate_title ?>....</h4>
-                                            <p class="p"><?= $m_c->cate_short_detail ?></p>
+                    ?>
+                    <div class="gallery_product col-sm-6 col-md-4 filter cate-all">
+                        <div class="well text-center">
+                            <!--                            <a href="course-detail.php-->
+
+                                <button class="btn btn-default filter-button btn-lg" data-filter="<?= $m_c->cate_id ?>" style="border:0;background-color: transparent;width: 100%;box-shadow: none;">
+                                    <?php 
+
+                                    if (!$flag) {
+                                        $m_cChildren  = Category::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $m_c->cate_id, 'order' => 'cate_id'));
+                                        if ($m_cChildren) {
+                                           $m_c->cate_id = $m_cChildren->cate_id;
+                                           $m_c->cate_title = $m_cChildren->cate_title;
+                                           $m_c->cate_short_detail = $m_cChildren->cate_short_detail;
+                                           $m_c->cate_detail = $m_cChildren->cate_detail;
+                                           $m_c->cate_image = $m_cChildren->cate_image;
+                                       }
+                                   }
+                                   ?>
+
+                                   <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/category/' . $m_c->cate_id . '/thumb/' . $m_c->cate_image)) { ?>
+                                    <div class="course-img" style="background-image: url(<?php echo Yii::app()->request->baseUrl; ?>/uploads/category/<?php echo $m_c->cate_id . '/thumb/' . $m_c->cate_image; ?>);"></div>
+                                <?php } else { ?>
+                                    <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/book.png);"></div>
+                                <?php } ?>
+                                <div class="course-detail">
+                                    <h4 class="text11"><?= $m_c->cate_title ?>....</h4>
+                                    <p class="p"><?= $m_c->cate_short_detail ?></p>
                                         <!-- <i class="fa fa-calendar"></i>&nbsp;<? php // echo DateThai($m_c->update_date); 
                                         ?> -->
                                     </div>
@@ -164,56 +170,58 @@ function DateThai($strDate)
                         if (!$flag) {
                             $modelChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $model->course_id, 'order' => 'course_id'));
                             if ($modelChildren) {
-                                $model->course_title = $modelChildren->course_title;
-                                $model->course_short_title = $modelChildren->course_short_title;
-                                $model->course_detail = $modelChildren->course_detail;
-                                $model->course_picture = $modelChildren->course_picture;
-                            }
-                        }
-                        $expireDate = Helpers::lib()->checkCourseExpireTms($schedule);
-                        if ($expireDate) {
-                            $evnt = '';
-                            $url = Yii::app()->createUrl('course/detail/', array('id' => $model->course_id, 'courseType' => 'tms'));
-                        } else {
+                               // $model->course_id = $modelChildren->course_id;
+                               $model->course_title = $modelChildren->course_title;
+                               $model->course_short_title = $modelChildren->course_short_title;
+                               $model->course_detail = $modelChildren->course_detail;
+                               $model->course_picture = $modelChildren->course_picture;
+                           }
+                       }
+                       $expireDate = Helpers::lib()->checkCourseExpireTms($schedule);
+                       if ($expireDate) {
+                        $evnt = '';
+                        $url = Yii::app()->createUrl('course/detail/', array('id' => $model->course_id, 'courseType' => 'tms'));
+                    } else {
                             // $evnt = 'onclick="alertMsg(\'ระบบ\',\'หลักสูตรหมดอายุ\',\'error\')"';
-                            if (date($schedule->training_date_start) > date("Y-m-d")) {
-                                $evnt = 'onclick="alertMsgNotNow()"';
-                                $url = 'javascript:void(0)';
-                            } else {
-                                $evnt = 'onclick="alertMsg()"';
-                                $url = 'javascript:void(0)';
-                            }
+                        if (date($schedule->training_date_start) > date("Y-m-d")) {
+                            $evnt = 'onclick="alertMsgNotNow()"';
+                            $url = 'javascript:void(0)';
+                        } else {
+                            $evnt = 'onclick="alertMsg()"';
+                            $url = 'javascript:void(0)';
                         }
-                        ?>
-                        <div class="gallery_product col-sm-6 col-md-4 filter <?= $model->cate_id ?>" style="display: none;">
-                            <div class="well text-center">
-                                <!--                            <a href="course-detail.php-->
-                                    <a href="<?= $url; ?>" <?= $evnt ?>>
-                                        <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/courseonline/' . $model->course_id . '/thumb/' . $model->course_picture)) { ?>
-                                            <div class="course-img" style="background-image: url(<?php echo Yii::app()->request->baseUrl; ?>/uploads/courseonline/<?php echo $model->course_id . '/thumb/' . $model->course_picture; ?>);"></div>
-                                        <?php } else { ?>
-                                            <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/book.png);"></div>
-                                        <?php } ?>
-                                        <div class="course-detail">
+                    }
+                    ?>
 
-                                            <?php
-                                            $courseStatus = Helpers::lib()->checkCoursePass($model->id);
+                    <div class="gallery_product col-sm-6 col-md-4 filter <?= $model->cate_id ?>" style="display: none;">
+                        <div class="well text-center">
+                            <!--                            <a href="course-detail.php-->
+                                <a href="<?= $url; ?>" <?= $evnt ?>>
+                                    <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/courseonline/' . $model->course_id . '/thumb/' . $model->course_picture)) { ?>
+                                        <div class="course-img" style="background-image: url(<?php echo Yii::app()->request->baseUrl; ?>/uploads/courseonline/<?php echo $model->course_id . '/thumb/' . $model->course_picture; ?>);"></div>
+                                    <?php } else { ?>
+                                        <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/book.png);"></div>
+                                    <?php } ?>
+                                    <div class="course-detail">
 
-                                            if ($courseStatus == "notPass") {
-                                                $statusLearnClass = 'muted';
-                                            } else if ($courseStatus == "learning") {
-                                                $statusLearnClass = 'warning';
-                                            } else if ($courseStatus == "pass") {
-                                                $statusLearnClass = 'success';
-                                            }
-                                            ?>
+                                        <?php
+                                        $courseStatus = Helpers::lib()->checkCoursePass($model->id);
+
+                                        if ($courseStatus == "notPass") {
+                                            $statusLearnClass = 'muted';
+                                        } else if ($courseStatus == "learning") {
+                                            $statusLearnClass = 'warning';
+                                        } else if ($courseStatus == "pass") {
+                                            $statusLearnClass = 'success';
+                                        }
+                                        ?>
 
 
-                                            <h4 class="text11"><i class="fa fa-trophy fa-sm text-<?= $statusLearnClass; ?>"></i> &nbsp <?= $model->course_title ?>....</h4>
+                                        <h4 class="text11"><i class="fa fa-trophy fa-sm text-<?= $statusLearnClass; ?>"></i> &nbsp <?= $model->course_title ?>....</h4>
 
-                                            <p class="p"><?= $model->course_short_title ?></p>
-                                            <!-- <i class="fa fa-calendar"></i> -->
-                                            <hr class="line-course">
+                                        <p class="p"><?= $model->course_short_title ?></p>
+                                        <!-- <i class="fa fa-calendar"></i> -->
+                                        <hr class="line-course">
                                         <!--  <p  class="p" style="min-height: 0em; margin-top: 0px; margin-bottom: 0px;"> วันที่เริ่มเรียน <?= DateThai($model->course_date_start); ?> </p>
                                             <p  class="p" style="min-height: 0em; margin-top: 0px; margin-bottom: 0px;"> วันที่สิ้นสุด <?= DateThai($model->course_date_end); ?></p>  -->
                                             <p class="p" style="min-height: 0em; margin-top: 0px; margin-bottom: 0px;"> <?= $label->label_dateStart ?> <?php echo Helpers::lib()->DateLangTms($schedule->training_date_start, Yii::app()->session['lang']); ?> </p>
@@ -226,18 +234,23 @@ function DateThai($strDate)
 
                         <?php foreach ($Model as $model) {
                             $model = $model->course;
+
                             if ($model->lang_id != 1) {
                                 $model->course_id = $model->parent_id;
                             }
+
+                            // var_dump($model->course_id);
                             if (!$flag) {
                                 $modelChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $model->course_id, 'order' => 'course_id'));
                                 if ($modelChildren) {
+                                    $model->course_id = $modelChildren->course_id;
                                     $model->course_title = $modelChildren->course_title;
                                     $model->course_short_title = $modelChildren->course_short_title;
                                     $model->course_detail = $modelChildren->course_detail;
                                     $model->course_picture = $modelChildren->course_picture;
                                 }
                             }
+                            // var_dump(expression)
                             $expireDate = Helpers::lib()->checkCourseExpire($model);
                             if ($expireDate) {
                                 $evnt = '';
