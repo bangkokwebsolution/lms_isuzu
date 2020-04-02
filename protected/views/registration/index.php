@@ -67,7 +67,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         overflow: auto;
         margin-bottom: 10px;
         padding: 0 3px 3px;
-        width: 600px;
+        width: 100%;
     }
 
     #docqueue {
@@ -76,7 +76,13 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         overflow: auto;
         margin-bottom: 10px;
         padding: 0 3px 3px;
-        width: 600px;
+        width: 100%;
+    }
+
+    @media screen and (max-width: 600px){
+        #register .row.justify-content-center{
+            justify-content: inherit !important;
+        }
     }
 
 
@@ -224,7 +230,7 @@ function editName(filedoc_id){
             ?>
             <div class="well">
 
-                <div class="row justify-content-center mb-2 bb-1">
+                <div class="row box-img-center mb-2 bb-1">
                     <div class="col-sm-4">
                         <div class="upload-img">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -287,7 +293,7 @@ function editName(filedoc_id){
                 <h4 class="topic-register"><i class="fas fa-user-edit"></i> ข้อมูลพื้นฐาน</h4>
 
                 <div class="row justify-content-center">
-                    <div class="col-sm-2">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="">คำนำหน้า</label>
                             <?php  $country = array('1' => 'นาย', '2' => 'นาง', '3' => 'นางสาว'); ?>
@@ -297,14 +303,14 @@ function editName(filedoc_id){
                             ?>
                         </div>
                     </div>
-                    <div class="col-sm-5 col-lg-3">
+                    <div class="col-md-4 col-lg-3">
                         <div class="form-group">
                             <label for="">ชื่อ</label>
                             <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control', 'placeholder' => 'ชื่อ')); ?>
                             <?php echo $form->error($profile, 'firstname', array('class' => 'error2')); ?>
                         </div>
                     </div>
-                    <div class="col-sm-5 col-lg-3">
+                    <div class="col-md-4 col-lg-3">
                         <div class="form-group">
                             <label for="">นามสกุล</label>
                             <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control', 'placeholder' => 'นามสกุล')); ?>
@@ -316,7 +322,7 @@ function editName(filedoc_id){
                     <div class="clearfix"></div>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col-sm-2">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label for="">Prefix</label>
                             <?php $country = array('1' => 'Mr.', '2' => 'Mrs.', '3' => 'Miss.'); ?>
@@ -326,14 +332,14 @@ function editName(filedoc_id){
                             ?>
                         </div>
                     </div>
-                    <div class="col-sm-5 col-lg-3">
+                    <div class="col-md-5 col-lg-3">
                         <div class="form-group">
                             <label for="">firstname</label>
                             <?php echo $form->textField($profile, 'firstname_en', array('class' => 'form-control', 'placeholder' => 'firstname')); ?>
                             <?php echo $form->error($profile, 'firstname_en', array('class' => 'error2')); ?>
                         </div>
                     </div>
-                    <div class="col-sm-5 col-lg-3">
+                    <div class="col-md-5 col-lg-3">
                         <div class="form-group">
                             <label for="">lastname</label>
                             <?php echo $form->textField($profile, 'lastname_en', array('class' => 'form-control', 'placeholder' => 'lastname')); ?>
@@ -363,7 +369,7 @@ function editName(filedoc_id){
 
 
                 <div class="row justify-content-center bb-1 pb-20">
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                         <div class="form-group" id="identification_card">
                             <?php echo $form->labelEx($profile, 'identification'); ?>
                             <?php echo $form->textField($profile, 'identification', array('class' => 'form-control', 'name' => 'idcard', 'maxlength' => '13', 'onKeyPress' => 'return check_number();', 'placeholder' => 'เลขบัตรประจำตัวประชาชน')); ?>
@@ -377,7 +383,7 @@ function editName(filedoc_id){
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <!-- <label for="">วันหมดอายุบัตร</label>
                                 <input type="text" class="form-control" id="" placeholder="วันหมดอายุบัตร" > -->
@@ -391,7 +397,7 @@ function editName(filedoc_id){
                     </div>
 
                     <div class="row justify-content-center mt-20">
-                        <div class="col-sm-6">
+                        <div class="col-md-6">
                             <div class="form-group">
                             <!-- <label for="">วัน/เดือน/ปี</label>
                                 <input type="date" class="form-control" id="" placeholder="วัน/เดือน/ปี"> -->
@@ -401,7 +407,7 @@ function editName(filedoc_id){
                             </div>
                         </div>
 
-                        <div class="col-sm-2">
+                        <div class="col-md-2">
                             <div class="form-group">
                             <!-- <label for="">อายุ</label>
                                 <input type="text" class="form-control" id="" placeholder="อายุ"> -->
@@ -415,7 +421,7 @@ function editName(filedoc_id){
                     </div>
 
                     <div class="row justify-content-center">
-                        <div class="col-sm-4">
+                        <div class="col-md-4">
                             <div class="form-group">
                             <!--  <label for="">เชื้อชาติ</label>
                                 <input type="text" class="form-control" id="" placeholder="เชื้อชาติ"> -->
@@ -425,7 +431,7 @@ function editName(filedoc_id){
                             </div>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-md-4">
                             <div class="form-group">
                             <!-- <label for="">สัญชาติ</label>
                                 <input type="text" class="form-control" id="" placeholder="สัญชาติ"> -->
@@ -440,7 +446,7 @@ function editName(filedoc_id){
 
 
                     <div class="row justify-content-center">
-                        <div class="col-sm-4">
+                        <div class="col-md-4">
                             <div class="form-group">
                             <!-- <label for="">ศาสนา</label>
                                 <input type="text" class="form-control" id="" placeholder="เชื้อชาติ"> -->
@@ -450,7 +456,7 @@ function editName(filedoc_id){
                             </div>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label for="">เพศ</label>
                                 <select class="form-control" name="" id="">
@@ -475,9 +481,9 @@ function editName(filedoc_id){
                         <div class="clearfix"></div>
                     </div>
 
-                    <div class="row  mt-1 mb-1">
-                        <div class="col-sm-3 text-right"> <strong>สถานะภาพทางการสมรส :</strong></div>
-                        <div class="col-sm-4">
+                    <div class="row  mt-1 mb-1 ">
+                        <div class="col-md-3 text-right-md"> <strong>สถานะภาพทางการสมรส</strong></div>
+                        <div class="col-md-4">
                             <div class="form-group">
 
                                 <span></span>
@@ -496,7 +502,7 @@ function editName(filedoc_id){
 
 
                     <div class="row justify-content-center">
-                        <div class="col-sm-8">
+                        <div class="col-md-8">
                             <div class="form-group">
                             <!-- <label for="card-4" class="bg-danger text-black">ที่อยู่</label>
                                 <textarea class="form-control" name="" id="" placeholder="ที่อยู่" value="" required="" cols="30" rows="3"></textarea> -->
@@ -511,7 +517,7 @@ function editName(filedoc_id){
                     </div>
 
                     <div class="row justify-content-center">
-                        <div class="col-sm-4">
+                        <div class="col-md-4">
                             <div class="form-group">
                             <!-- <label for="">เบอร์โทรศัพท์</label>
                                 <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์"> -->
@@ -522,7 +528,7 @@ function editName(filedoc_id){
                             </div>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-md-4">
                             <div class="form-group">
                             <!-- <label for="">Email</label>
                                 <input type="text" class="form-control" id="" placeholder="Email"> -->
@@ -535,7 +541,7 @@ function editName(filedoc_id){
                         <div class="clearfix"></div>
                     </div>
                     <div class="row justify-content-center">
-                        <div class="col-sm-4">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label><?php echo $form->labelEx($profile, 'line_id'); ?></label>
                                 <?php echo $form->textField($profile, 'line_id', array('class' => 'form-control', 'placeholder' => 'IDLine')); ?>
@@ -546,8 +552,8 @@ function editName(filedoc_id){
                     </div>
 
                     <div class="row  mt-1 mb-1 ">
-                        <div class="col-sm-3 text-right"> <strong>ประวัติการเจ็บป่วยรุนแรง :</strong></div>
-                        <div class="col-sm-4">
+                        <div class="col-md-3 text-right-md"> <strong>ประวัติการเจ็บป่วยรุนแรง</strong></div>
+                        <div class="col-md-4">
                             <div class="form-group">
 
                                 <span></span>
@@ -584,21 +590,21 @@ function editName(filedoc_id){
                                 ?>
 
                                 <div class="row del_edu">
-                                    <div class="col-sm-3 text-right"> <strong>ประวัติการศึกษา :</strong></div>
-                                    <div class="col-sm-2">
+                                    <div class="col-md-3 text-right"> <strong>ประวัติการศึกษา</strong></div>
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <?php echo CHtml::activeDropDownList($valedu, '[' . $kedu . ']edu_id', $list, $att_Education); ?>
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-3">
+                                    <div class="col-md-3">
                                         <div class="form-group">
 
                                             <?php echo $form->textField($valedu, '[' . $kedu . ']institution', array('class' => 'form-control', 'placeholder' => 'สถานที่่จบการศึกษา')); ?>
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-2">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <?php echo $form->textField($valedu, '[' . $kedu . ']date_graduation', $graduation); ?>
                                         </div>
@@ -615,20 +621,20 @@ function editName(filedoc_id){
                         ?>
 
                         <div class="row">
-                            <div class="col-sm-3 text-right"> <strong>ประวัติการศึกษา :</strong></div>
-                            <div class="col-sm-2">
+                            <div class="col-md-3 text-right-md"> <strong>ประวัติการศึกษา</strong></div>
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]edu_id', $list, $att_Education); ?>
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <?php echo $form->textField($ProfilesEdu, '[0]institution', array('class' => 'form-control', 'placeholder' => 'สถานที่่จบการศึกษา')); ?>
                                 </div>
                             </div>
 
-                            <div class="col-sm-2">
+                            <div class="col-md-2">
                                 <div class="form-group">
                                     <?php echo $form->textField($ProfilesEdu, '[0]date_graduation', $graduation); ?>
                                 </div>
@@ -653,9 +659,9 @@ function editName(filedoc_id){
                     <div id="office-section1">
                         <div class="row  mt-20 mb-1">
 
-                            <div class="col-sm-3 text-right"> <strong>เอกสารแนบไฟล์วุฒิการศึกษา/วิชาชีพ(pdf,png,jpg,jpeg) :</strong></div>
+                            <div class="col-md-3 col-sm-12 text-right-md"> <strong>เอกสารแนบไฟล์วุฒิการศึกษา/วิชาชีพ<small class="text-danger d-block">(pdf,png,jpg,jpeg)</small></strong></div>
                             <!--     <?php echo $form->labelEx($FileEdu,'file_name'); ?> --> 
-                            <div class="col-md-3">
+                            <div class="col-sm-12 col-xs-12 col-md-8">
                                 <div id="docqueue"></div>
                                 <?php echo $form->fileField($FileEdu,'file_name',array('id'=>'doc','multiple'=>'true')); ?>
                                 <script type="text/javascript">
@@ -698,64 +704,66 @@ function editName(filedoc_id){
 
                         </div>
                         <div class="row">
-                            <?php
-                            $idx = 1;
-                            $uploadFolder = Yii::app()->getUploadUrl('edufile');
-                            $criteria = new CDbCriteria;
-                            $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
-                            $criteria->addCondition("active ='y'");
-                            $FileEdu = FileEdu::model()->findAll($criteria);
-
-                            if(isset($FileEdu)){
-                                foreach($FileEdu as $fileDatas){
-                                    ?>
-                                    <div class="row" style="padding-top:20px;">
-
-                                        <div id="filedoc<?php echo $idx; ?>">
-                                            <!-- <a href="<?php echo $this->createUrl('edufile',array('id' => $fileDatas->id)); ?>" target="_blank"> -->
-                                            <?php
-                                                echo '<strong id="filenamedoctext'.$fileDatas->id.'">'.$fileDatas->file_name.'</strong>';
-                                                ?>
-                                            <!-- </a> -->
-                                            <?php echo '<input id="filenamedoc'.$fileDatas->id.'" 
-                                                               type="text" value="'.$fileDatas->file_name.'" 
-                                                               style="display:none;" 
-                                                               onblur="editName('.$fileDatas->id.');">'; ?>
-
-
-                                            <?php echo CHtml::link('<i></i>','', array('title'=>'แก้ไขชื่อ',
-                                                   'id'=>'btnEditName'.$fileDatas->id,
-                                                   'class'=>'btn-action glyphicons pencil btn-danger',
-                                                   'style'=>'z-index:1; background-color:white; cursor:pointer;',
-                                                   'onclick'=>'$("#filenamedoctext'.$fileDatas->id.'").hide();
-                                                               $("#filenamedoc'.$fileDatas->id.'").show(); 
-                                                               $("#filenamedoc'.$fileDatas->id.'").focus(); 
-                                                               $("#btnEditName'.$fileDatas->id.'").hide(); ')); ?>
-
-
-
-                                            <?php echo CHtml::link('<i></i>','', array('title'=>'ลบไฟล์',
-                                                    'id'=>'btnSaveName'.$fileDatas->id,
-                                                    'class'=>'btn-action glyphicons btn-danger remove_2',
-                                                    'style'=>'z-index:1; background-color:white; cursor:pointer;',
-                                                    'onclick'=>'if(confirm("คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร")){ deleteFileDoc("filedoc'.$idx.'","'.$fileDatas->id.'"); }')); ?>
-
+                           <div class="col-md-offset-3 col-md-4">
+                                <?php
+                                $idx = 1;
+                                $uploadFolder = Yii::app()->getUploadUrl('edufile');
+                                $criteria = new CDbCriteria;
+                                $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
+                                $criteria->addCondition("active ='y'");
+                                $FileEdu = FileEdu::model()->findAll($criteria);
+    
+                                if(isset($FileEdu)){
+                                    foreach($FileEdu as $fileDatas){
+                                        ?>
+    
+                                            <div id="filedoc<?php echo $idx; ?>">
+                                                <!-- <a href="<?php echo $this->createUrl('edufile',array('id' => $fileDatas->id)); ?>" target="_blank"> -->
+                                                <?php
+                                                    echo '<strong id="filenamedoctext'.$fileDatas->id.'">'.$fileDatas->file_name.'</strong>';
+                                                    ?>
+                                                <!-- </a> -->
+                                                <?php echo '<input id="filenamedoc'.$fileDatas->id.'" 
+                                                                    class="form-control"
+                                                                   type="text" value="'.$fileDatas->file_name.'" 
+                                                                   style="display:none;" 
+                                                                   onblur="editName('.$fileDatas->id.');">'; ?>
+    
+    
+                                                <?php echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
+                                                       'id'=>'btnEditName'.$fileDatas->id,
+                                                       'class'=>'btn-action glyphicons pencil btn-danger',
+                                                       'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                                       'onclick'=>'$("#filenamedoctext'.$fileDatas->id.'").hide();
+                                                                   $("#filenamedoc'.$fileDatas->id.'").show(); 
+                                                                   $("#filenamedoc'.$fileDatas->id.'").focus(); 
+                                                                   $("#btnEditName'.$fileDatas->id.'").hide(); ')); ?>
+    
+    
+    
+                                                <?php echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
+                                                        'id'=>'btnSaveName'.$fileDatas->id,
+                                                        'class'=>'btn-action glyphicons btn-danger remove_2',
+                                                        'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                                        'onclick'=>'if(confirm("คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร")){ deleteFileDoc("filedoc'.$idx.'","'.$fileDatas->id.'"); }')); ?>
+                                               
+                                          
+                                           
                                         </div>
-                                        <br>
-                                    </div>
-                                    <?php
-                                    $idx++;
-                                }?><br><?php
-                            }
-                            ?>   
+                                        <?php
+                                        $idx++;
+                                    }?><br><?php
+                                }
+                                ?>   
+                           </div>
                         </div>
                     </div>
 
                     <div id="office-section2">
                         <div class="row  mt-20 mb-1">
 
-                            <div class="col-sm-3 text-right"> <strong>เอกสารแนบไฟล์ฝึกอบรม(pdf,png,jpg,jpeg) :</strong></div>
-                            <div class="col-md-3">
+                            <div class="col-md-3 col-sm-12 text-right-md"> <strong>เอกสารแนบไฟล์ฝึกอบรม<small class="text-danger d-block">(pdf,png,jpg,jpeg)</small></strong></div>
+                            <div class="col-sm-12 col-xs-12 col-md-8"">
                                 <div id="queue"></div>
                                 <?php echo $form->fileField($FileTraining,'file_name',array('id'=>'Training','multiple'=>'true')); ?>
                                 <script type="text/javascript">
@@ -797,8 +805,8 @@ function editName(filedoc_id){
                             </div>
                             
                         </div>
-                        <div class="row mt-20 mb-1">
-                            <div class="col-md-3">
+                        <div class="row mt-20 mb-3">
+                            <div class="col-md-offset-3 col-md-4">
                             <?php
                             $idx = 1;
                             $uploadFolder = Yii::app()->getUploadUrl('Trainingfile');
@@ -818,24 +826,25 @@ function editName(filedoc_id){
                                                 ?>
                                             <!-- </a> -->
                                             <?php echo '<input id="filenameTrain'.$fileData->id.'" 
+                                                        class="form-control"
                                                          type="text" value="'.$fileData->file_name.'" 
                                                          style="display:none;" 
                                                          onblur="editName('.$fileData->id.');">'; ?>
 
-                                            <?php echo CHtml::link('<i></i>','', array('title'=>'แก้ไขชื่อ',
+                                            <?php echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
                                             'id'=>'btnEditName'.$fileData->id,
                                             'class'=>'btn-action glyphicons pencil btn-danger',
-                                            'style'=>'z-index:1; background-color:white; cursor:pointer;',
+                                            'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
                                             'onclick'=>'$("#filenamedoctext'.$fileData->id.'").hide(); 
                                                         $("#filenameTrain'.$fileData->id.'").show(); 
                                                         $("#filenameTrain'.$fileData->id.'").focus(); 
                                                         $("#btnEditName'.$fileData->id.'").hide(); ')); ?>
 
 
-                                            <?php echo CHtml::link('<i></i>','', array('title'=>'ลบไฟล์',
+                                            <?php echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
                                             'id'=>'btnSaveName'.$fileData->id,
                                             'class'=>'btn-action glyphicons btn-danger remove_2',
-                                            'style'=>'z-index:1; background-color:white; cursor:pointer;',
+                                            'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
                                             'onclick'=>'if(confirm("คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร")){ deleteFileDoc("filedoc'.$idx.'","'.$fileData->id.'"); }')); ?>
                                             
                                         </div>
@@ -851,8 +860,8 @@ function editName(filedoc_id){
 
                     <div id="office-section">
                         <div class="row  mt-20 mb-1" id="employee_type">
-                            <div class="col-sm-3 text-right"> <strong>ส่วนของพนักงาน :</strong></div>
-                            <div class="col-sm-4">
+                            <div class="col-md-3 col-sm-12 text-right-md"> <strong>ส่วนของพนักงาน</strong></div>
+                            <div class="col-sm-12 col-xs-12 col-md-8">
                                 <div class="form-group">
 
                                     <span></span>
@@ -872,7 +881,7 @@ function editName(filedoc_id){
                         </div>
 
                         <div class="row justify-content-center mt-20 mb-1 bb-1 pb-20" id="employee_detail">
-                            <div class="col-sm-4">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label><?php echo $form->labelEx($users, 'department_id'); ?></label>
                                     <?php
@@ -889,7 +898,7 @@ function editName(filedoc_id){
                                 </div>
                             </div>
 
-                            <div class="col-sm-4">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label><?php echo $form->labelEx($users, 'position_id'); ?></label>
                                     <?php
@@ -909,7 +918,7 @@ function editName(filedoc_id){
                     </div>
 
 
-                    <div class="text-center mt-20">
+                    <div class="text-center submit-register">
 
                         <?php if (Yii::app()->user->getId() == null) { ?>
                             <?php echo CHtml::submitButton($label->label_regis, array('class' => 'btn btn-default bg-greenlight btn-lg center-block ok_2','onclick'=>"return upload();")); ?>
@@ -942,7 +951,7 @@ function editName(filedoc_id){
                             x++;
                             numItems++;
                             var level = '<option value="">ระดับการศึกษา</option>';
-                            $(wrapper).append('<div class="row del_edu"><div class="col-sm-3 text-right "><strong>ประวัติการศึกษา :</strong></div><div class="col-sm-2"><div class="form-group"><select class ="form-control" name="ProfilesEdu[' + numItems + '][edu_id]">' + level + '<?php foreach ($list as $key => $value) : ?><option value=<?php echo $key ?>>ระดับการศึกษา<?php echo $value ?></option><?php endforeach ?></select></div></div><div class="col-sm-3"><div class="form-group"><input type="text" class="form-control" placeholder="สถานที่่จบการศึกษา" name="ProfilesEdu[' + numItems + '][institution]"></div></div><div class="col-sm-2"><div class="form-group"><input class="form-control datetimepicker" autocomplete="off" id="ProfilesEdu_' + numItems + '_date_graduation" placeholder="วันที่จบการศึกษา "name="ProfilesEdu[' + numItems + '][date_graduation]"> </div></div><span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> Delete</span></div>'); //add input box
+                            $(wrapper).append('<div class="row del_edu"><div class="col-sm-3 text-right-md "><strong>ประวัติการศึกษา</strong></div><div class="col-sm-2"><div class="form-group"><select class ="form-control" name="ProfilesEdu[' + numItems + '][edu_id]">' + level + '<?php foreach ($list as $key => $value) : ?><option value=<?php echo $key ?>>ระดับการศึกษา<?php echo $value ?></option><?php endforeach ?></select></div></div><div class="col-sm-3"><div class="form-group"><input type="text" class="form-control" placeholder="สถานที่่จบการศึกษา" name="ProfilesEdu[' + numItems + '][institution]"></div></div><div class="col-sm-2"><div class="form-group"><input class="form-control datetimepicker" autocomplete="off" id="ProfilesEdu_' + numItems + '_date_graduation" placeholder="วันที่จบการศึกษา "name="ProfilesEdu[' + numItems + '][date_graduation]"> </div></div><span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> Delete</span></div>'); //add input box
                             $('.datetimepicker').datetimepicker({
                                 format: 'Y-m-d',
                                 step: 10,
