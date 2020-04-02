@@ -57,7 +57,7 @@ class User extends CActiveRecord
 		return ((get_class(Yii::app())=='CConsoleApplication' || (get_class(Yii::app())!='CConsoleApplication' && Yii::app()->getModule('user')->isAdmin()))?array(
 			// array('username', 'length', 'max'=>13, 'min' => 13,'message' => 'กรอกเลข E-mail เท่านั้น'),
 			array('password', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
-			array('captcha', 'required','message' => "Please verify that you are not a robot."),
+			//array('captcha', 'required','message' => "Please verify that you are not a robot."),
 			array('email', 'email'),
 			array('auditor_id', 'length', 'max'=>5, 'min' => 5,'message' => 'กรุณาป้อนเลขผู้สอบ 5 หลัก'),
 			// array('username', 'unique', 'message' => UserModule::t("This user's name already exists.")),
@@ -86,7 +86,7 @@ class User extends CActiveRecord
 		):((Yii::app()->user->id==$this->id)?array(
 			//array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
 			array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
-			array('username, email,password', 'required'),
+			array('email,password', 'required'),
 			//array('captcha', 'required','message' => "Please verify that you are not a robot."),
 			array('username', 'length', 'max'=>255),
 			array('superuser, status, online_status,online_user', 'numerical', 'integerOnly'=>true),
