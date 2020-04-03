@@ -53,12 +53,28 @@
                 ?>
                 <p class="note">ค่าที่มี <?php echo $this->NotEmpty(); ?> จำเป็นต้องใส่ให้ครบ</p>
                 
-               <!--   <div class="row">
+        <!--         <div class="row">
                     <?php echo $form->labelEx($model, 'department_id'); ?>
                     <?php echo $this->listdepartmentShow($model, 'department_id','span8'); ?>
                     <?php echo $this->NotEmpty(); ?>
                     <?php echo $form->error($model, 'department_id'); ?>
-                </div> -->
+                </div>  -->
+
+                <div class="row">
+                    <?php echo $form->labelEx($model,'type_employee_id'); ?>
+                    <?php echo $form->dropDownList($model, 'type_employee_id', CHtml::listData(TypeEmployee::model()->findAll(), 'id', 'type_employee_name'),array('class'=>'span5','empty' => "--เลือก--")); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($model,'type_employee_id'); ?>
+                </div>
+                
+
+                <div class="row">
+                    <?php echo $form->labelEx($model,'department_id'); ?>
+                    <?php echo $form->dropDownList($model, 'department_id', CHtml::listData(Department::model()->findAll(), 'id', 'dep_title'),array('class'=>'span5','empty' => "--เลือก--")); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($model,'department_id'); ?>
+                </div>
+
 
 
                 <div class="row">
@@ -67,10 +83,10 @@
                     <?php echo $this->NotEmpty(); ?>
                     <?php echo $form->error($model, 'position_title'); ?>
                 </div>
-                
-               
 
-                
+
+
+
                 <br>
                 <div class="row buttons">
                     <?php echo CHtml::tag('button', array('class' => 'btn btn-primary btn-icon glyphicons ok_2', 'onclick' => "return upload();"), '<i></i>บันทึกข้อมูล'); ?>

@@ -1,20 +1,20 @@
 
-  <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/css/bootstrap.min.css" />
-  <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/css/jquery.jOrgChart.css" />
-  <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/css/custom.css" />
-  <link href="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/css/prettify.css" type="text/css" rel="stylesheet" />
-  <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/fancybox/jquery.fancybox.css" type="text/css" />
+<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/css/bootstrap.min.css" />
+<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/css/jquery.jOrgChart.css" />
+<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/css/custom.css" />
+<link href="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/css/prettify.css" type="text/css" rel="stylesheet" />
+<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/fancybox/jquery.fancybox.css" type="text/css" />
 
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-  <!-- jQuery includes -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+<!-- jQuery includes -->
 <!--  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>-->
 <!--  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>-->
-  <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/js/prettify.js"></script>
-  <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/fancybox/jquery.fancybox.js"></script>
-  <script src="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/js/jquery.jOrgChart.js"></script>
-  <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/js/taffy.js"></script>
-  <style type="text/css">
+<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/js/prettify.js"></script>
+<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/fancybox/jquery.fancybox.js"></script>
+<script src="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/js/jquery.jOrgChart.js"></script>
+<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/js/taffy.js"></script>
+<style type="text/css">
   #getjson {
     width: 100px;
     height: 50px;
@@ -31,77 +31,77 @@
 overflow:auto;
 }
 */
-  .opciones span{
-    cursor: pointer;
-  }
-  ul#upload-chart {
-    float: right;
-    list-style: none outside none;
-  }
+.opciones span{
+  cursor: pointer;
+}
+ul#upload-chart {
+  float: right;
+  list-style: none outside none;
+}
 
-  ul#upload-chart li {
-    background: none repeat scroll 0 0 #ECDC20;
-    border: 1px solid #808080;
-    border-radius: 2px;
-    height: 44px;
-    margin-top: 2px;
-    padding-top: 5px;
-    width: 200px;
-  }
-  </style>
-  <script>
+ul#upload-chart li {
+  background: none repeat scroll 0 0 #ECDC20;
+  border: 1px solid #808080;
+  border-radius: 2px;
+  height: 44px;
+  margin-top: 2px;
+  padding-top: 5px;
+  width: 200px;
+}
+</style>
+<script>
   function init_tree() {
     var opts = {
-	  chartElement : '#chart',
-		dragAndDrop  : false,
-		expand       : true,
-		control		 : true,
-		rowcolor     : false
-    };
-    $("#chart").html("");
-    $("#org").jOrgChart(opts);
-    cutomdata();
-  }
+     chartElement : '#chart',
+     dragAndDrop  : false,
+     expand       : true,
+     control		 : true,
+     rowcolor     : false
+   };
+   $("#chart").html("");
+   $("#org").jOrgChart(opts);
+   cutomdata();
+ }
 
-  function scroll() {
-    $(".node").click(function() {
-      $("#chart").scrollTop(0)
-      $("#chart").scrollTop($(this).offset().top - 140);
-    })
-  }
+ function scroll() {
+  $(".node").click(function() {
+    $("#chart").scrollTop(0)
+    $("#chart").scrollTop($(this).offset().top - 140);
+  })
+}
 
-  var click_flag = true;
-  var node_to_edit;
+var click_flag = true;
+var node_to_edit;
   // read json and convert to html formate
   function loadjson() {
     var items = [];
     var data = TAFFY([
 
-<?php
-   $categories=OrgChart::model()->findAll();
-  if($categories){
-    foreach($categories as $n=>$category)
-    {
+      <?php
+      $categories=OrgChart::model()->findAll();
+      if($categories){
+        foreach($categories as $n=>$category)
+        {
           if($category->parent_id==""){
             $parent_null = '""';
           }else{
             $parent_null = $category->parent_id;
           }
 
-      ?>
+          ?>
           {
 
-          "id": <?=$category->id?>,
-          "name": "<?=$category->title?>",
-          "parent": <?=$parent_null?>,
-          "level": <?=$category->level?>
+            "id": <?=$category->id?>,
+            "name": "<?=$category->title?>",
+            "parent": <?=$parent_null?>,
+            "level": <?=$category->level?>
           },
 
-  <?php
+          <?php
+        }
       }
-    }
-  ?>
-    ]);
+      ?>
+      ]);
 
     data({
       "parent": ""
@@ -110,32 +110,34 @@ overflow:auto;
     });
     //start loop the json and form the html
     function loops(root) {
-        if (root.level == 1) {
-          items.push("<li class='btn_add unic" + root.id + " root' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='#'>" + root.name + "</a></br></span>");
-        }else if (root.level == 2) {
-          if(root.name != "TMS"){
-            items.push("<li class='btn_add unic" + root.id + "' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='<?=Yii::app()->createUrl('Coursecontrol/index/id');?>/" + root.id + "' class='move_down' data-name='"+root.name+"' target='_blank'><span class='RootName'>" + root.name + "</span></a></br></span>");
-          }else{
-            items.push("<li class='btn_add unic" + root.id + "' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='javascript:void(0);' class='move_down' data-name='"+root.name+"' target='_blank'><span class='RootName'>" + root.name + "</span></a></br></span>");
-          }
-          
-        } else {
-          items.push("<li class='child unic" + root.id + "' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='<?=Yii::app()->createUrl('Coursecontrol/index/id');?>/" + root.id + "' class='move_down' data-name='"+root.name+"' target='_blank'><span class='RootName'>" + root.name + "</span></a><p><a href='<?=Yii::app()->createUrl('Orgcontrol/index/id');?>/" + root.id + "' style='font-size: 12px' target='_blank'>แผนก</a></p></br></span>");
+      if (root.level == 1) {
+        items.push("<li class='btn_add unic" + root.id + " root' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='#'>" + root.name + "</a></br></span>");
+      }else if (root.level == 2) {
+        if(root.name != "TMS"){
+          items.push("<li class='btn_add unic" + root.id + "' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='<?=Yii::app()->createUrl('Coursecontrol/index/id');?>/" + root.id + "' class='move_down' data-name='"+root.name+"' target='_blank'><span class='RootName'>" + root.name + "</span></a></br></span>");
+        }else{
+          items.push("<li class='btn_add unic" + root.id + "' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='javascript:void(0);' class='move_down' data-name='"+root.name+"' target='_blank'><span class='RootName'>" + root.name + "</span></a></br></span>");
         }
-        var c = data({
+        
+      } else {
+        // items.push("<li class='child unic" + root.id + "' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='<?=Yii::app()->createUrl('Coursecontrol/index/id');?>/" + root.id + "' class='move_down' data-name='"+root.name+"' target='_blank'><span class='RootName'>" + root.name + "</span></a><p><a href='<?=Yii::app()->createUrl('Orgcontrol/index/id');?>/" + root.id + "' style='font-size: 12px' target='_blank'>แผนก</a></p></br></span>");
+
+        items.push("<li class='child unic" + root.id + "' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='<?=Yii::app()->createUrl('Coursecontrol/index/id');?>/" + root.id + "' class='move_down' data-name='"+root.name+"' target='_blank'><span class='RootName'>" + root.name + "</span></a><p><a href='<?=Yii::app()->createUrl('Orgcontrol/index/id');?>/" + root.id + "' style='font-size: 12px' target='_blank'></a></p></br></span>");
+      }
+      var c = data({
+        "parent": root.id
+      }).count();
+      if (c != 0) {
+        items.push("<ul>");
+        data({
           "parent": root.id
-        }).count();
-        if (c != 0) {
-          items.push("<ul>");
-          data({
-            "parent": root.id
-          }).each(function(record, recordnumber) {
-            loops(record);
-          });
-          items.push("</ul></li>");
-        } else {
-          items.push("</li>");
-        }
+        }).each(function(record, recordnumber) {
+          loops(record);
+        });
+        items.push("</ul></li>");
+      } else {
+        items.push("</li>");
+      }
       } // End the generate html code
 
     //push to html code
@@ -145,7 +147,7 @@ overflow:auto;
       html: items.join("")
     }).appendTo("body");
   }
-  </script>
+</script>
 </head>
 
 <body onload="prettyPrint();">
@@ -189,33 +191,33 @@ overflow:auto;
 
 
   <script type="text/javascript">
-  function remChild(removing) {
-    $("#upload-chart").append(removing);
-    $("#upload-chart ul li").each(function() {
-      var Orgli = $(this).removeAttr("class").addClass("node").addClass("child").clone();
-      $(this).remove();
-      $("#upload-chart").append(Orgli);
-    });
-    $("#upload-chart ul").remove();
-    var sideLi = $("#upload-chart").html();
-    $("#upload-chart").empty();
-    $("#upload-chart").append(sideLi);
-  }
+    function remChild(removing) {
+      $("#upload-chart").append(removing);
+      $("#upload-chart ul li").each(function() {
+        var Orgli = $(this).removeAttr("class").addClass("node").addClass("child").clone();
+        $(this).remove();
+        $("#upload-chart").append(Orgli);
+      });
+      $("#upload-chart ul").remove();
+      var sideLi = $("#upload-chart").html();
+      $("#upload-chart").empty();
+      $("#upload-chart").append(sideLi);
+    }
 
-  function makeArrays() {
-    var level = [];
+    function makeArrays() {
+      var level = [];
 
-    $("#org li").each(function() {
-      var uid = $(this).attr("id");
-      var des = $(this).attr("data-department");
+      $("#org li").each(function() {
+        var uid = $(this).attr("id");
+        var des = $(this).attr("data-department");
       // var name = $(this).find(">:first-child a").text();
       var name = $(this).find(">:first-child .move_down").text();
       if(name == ""){
-         name = $(this).find(">:first-child a").text();
-      }
-      var pid = $(this).attr("data-parent");
-      var hidSTR = "";
-      var hid = $(this).parents("li");
+       name = $(this).find(">:first-child a").text();
+     }
+     var pid = $(this).attr("data-parent");
+     var hidSTR = "";
+     var hid = $(this).parents("li");
       if (hid.length == 0) //If this object is the root user, substitute id with "orgName" so the DB knows it's the name of organization and not a user
       {
         hidSTR = uid;
@@ -247,8 +249,8 @@ overflow:auto;
       }
     });
 
-    console.log(level)
-    $.ajax({
+      console.log(level)
+      $.ajax({
         type: "POST",
         url: "<?=$this->createUrl("/OrgChart/saveorgchart");?>",
         data: { post_value:level },
@@ -256,7 +258,7 @@ overflow:auto;
           alert("SAVE");
           location.reload();
         },
-    });
+      });
         // $.each( level, function( key, value ) {
         //     var data_text = "" + value.level + "";
 
@@ -273,28 +275,28 @@ overflow:auto;
         // });
 
 
-  }
+      }
 
-  function cutomdata() {
-    var add_to_node = "",
-      del_node = "",
-      classList = "";
-    var regx = /\w*(row)/;
+      function cutomdata() {
+        var add_to_node = "",
+        del_node = "",
+        classList = "";
+        var regx = /\w*(row)/;
 
-    $(".edit").off("click").on("click", function(e) {
-      classList = $(this).parent().parent().attr('class').split(/\s+/);
-      var tipo_n;
-      $.each(classList, function(index, item) {
-        if (item != "temp" && item != "node" && item != "child" && item != "ui-draggable" && item != "ui-droppable" && !regx.test(item)) {
-          del_node = item;
-        }
-        if (item == "root" || item == "child") {
-          tipo_n = item;
-        }
-      });
-      node_to_edit = $("li." + del_node + ":not('.temp')");
-      $("#edit_node").off("click").on("click", function(e) {
-        e.preventDefault();
+        $(".edit").off("click").on("click", function(e) {
+          classList = $(this).parent().parent().attr('class').split(/\s+/);
+          var tipo_n;
+          $.each(classList, function(index, item) {
+            if (item != "temp" && item != "node" && item != "child" && item != "ui-draggable" && item != "ui-droppable" && !regx.test(item)) {
+              del_node = item;
+            }
+            if (item == "root" || item == "child") {
+              tipo_n = item;
+            }
+          });
+          node_to_edit = $("li." + del_node + ":not('.temp')");
+          $("#edit_node").off("click").on("click", function(e) {
+            e.preventDefault();
         //modify li and refresh tree
         var edit_field = $("#edit_node_name");
         var edit_title = $("#edit_node_title");
@@ -308,38 +310,38 @@ overflow:auto;
         init_tree();
 
       });
-    }).fancybox({
-      maxWidth: 800,
-      maxHeight: 800,
-      fitToView: false,
-      width: '70%',
-      height: '70%',
-      autoSize: false,
-      closeClick: false,
-      openEffect: 'none',
-      closeEffect: 'none'
-    });
+        }).fancybox({
+          maxWidth: 800,
+          maxHeight: 800,
+          fitToView: false,
+          width: '70%',
+          height: '70%',
+          autoSize: false,
+          closeClick: false,
+          openEffect: 'none',
+          closeEffect: 'none'
+        });
 
 
     //-- Listo editar :D
 
     $(".del").off("click").on("click", function(e) {
       if(confirm("Are you sure?")){
-      var nodo = $(this);
-      if (!nodo.parent().parent().hasClass("temp")) {
-        var nodeDiv = nodo.parent().parent();
-        var cu = nodeDiv.find("a").attr("rel");
-        classList = nodeDiv.attr('class').split(/\s+/);
-        $.each(classList, function(index, item) {
-          if (item != "temp" && item != "node" && item != "child" && item != "ui-draggable" && item != "ui-droppable" && !regx.test(item)) {
-            del_node = item;
-          }
-        });
-        var element = $("li." + del_node + ":not('.temp, #upload-chart li')").removeAttr("class").addClass("node").addClass("child");
-        remChild(element);
-        init_tree();
+        var nodo = $(this);
+        if (!nodo.parent().parent().hasClass("temp")) {
+          var nodeDiv = nodo.parent().parent();
+          var cu = nodeDiv.find("a").attr("rel");
+          classList = nodeDiv.attr('class').split(/\s+/);
+          $.each(classList, function(index, item) {
+            if (item != "temp" && item != "node" && item != "child" && item != "ui-draggable" && item != "ui-droppable" && !regx.test(item)) {
+              del_node = item;
+            }
+          });
+          var element = $("li." + del_node + ":not('.temp, #upload-chart li')").removeAttr("class").addClass("node").addClass("child");
+          remChild(element);
+          init_tree();
+        }
       }
-    }
 
     });
 
@@ -356,7 +358,7 @@ overflow:auto;
         e.preventDefault();
 
         //unidad de consumo agregada, agregar li a la lista, y refrescar arbol
-         var res = add_to_node.substring(4);
+        var res = add_to_node.substring(4);
         var tipo_nodo = "";
         var text_field = $("#new_node_name");
         var text_description = $("#new_node_title");
@@ -448,6 +450,6 @@ overflow:auto;
 
 
   });
-  </script>
+</script>
 
 

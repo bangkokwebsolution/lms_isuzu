@@ -61,6 +61,12 @@
                     <?php echo $form->error($model, 'division_id'); ?>
                 </div> -->
 
+                <div class="row">
+                    <?php echo $form->labelEx($model,'type_employee_id'); ?>
+                    <?php echo $form->dropDownList($model, 'type_employee_id', CHtml::listData(TypeEmployee::model()->findAll(), 'id', 'type_employee_name'),array('class'=>'span5','empty' => "--เลือก--")); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($model,'type_employee_id'); ?>
+                </div>
 
                 <div class="row">
                     <?php echo $form->labelEx($model, 'dep_title'); ?>
@@ -69,8 +75,6 @@
                     <?php echo $form->error($model, 'dep_title'); ?>
                 </div>
                 
-               
-
                 
                 <br>
                 <div class="row buttons">
@@ -89,3 +93,4 @@
         init_tinymce();
     });
 </script>
+

@@ -167,7 +167,7 @@ class DepartmentController extends Controller
 	{
 		// $dataProvider=new CActiveDataProvider('Department');
 		$dataProvider=new CActiveDataProvider('Department' ,array('criteria'=>array(
-        'condition'=>'active="y"')));
+			'condition'=>'active="y"')));
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
