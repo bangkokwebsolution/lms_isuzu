@@ -62,7 +62,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         margin-right: 10px;
     }
     #queue {
-        border: 1px solid #E5E5E5;
+        border: 1px solid #708090;
         height: 177px;
         overflow: auto;
         margin-bottom: 10px;
@@ -71,7 +71,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     }
 
     #docqueue {
-        border: 1px solid #E5E5E5;
+        border: 1px solid #708090;
         height: 177px;
         overflow: auto;
         margin-bottom: 10px;
@@ -113,7 +113,6 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         var file = $('#Lesson_image').val();
         var exts = ['jpg','gif','png'];
         if ( file ) {
-
             var get_ext = file.split('.');
             get_ext = get_ext.reverse();
             if ( $.inArray ( get_ext[0].toLowerCase(), exts ) > -1 ){
@@ -130,10 +129,11 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                     }
                 }
 
-            } else {
-                $('#Lesson_image_em_').removeAttr('style').html("<p class='error help-block'><span class='label label-important'> ไม่สามารถอัพโหลดได้ ไฟล์ที่สามารถอัพโหลดได้จะต้องเป็น: jpg, gif, png.</span></p>");
-                return false;
-            }
+            } 
+            // else {
+            //     $('#Lesson_image_em_').removeAttr('style').html("<p class='error help-block'><span class='label label-important'> ไม่สามารถอัพโหลดได้ ไฟล์ที่สามารถอัพโหลดได้จะต้องเป็น: jpg, gif, png.</span></p>");
+            //     return false;
+            // }
 
         }
         else
@@ -154,14 +154,18 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 }
 
 function deleteFileDoc(filedoc_id,file_id){
+
     $.get("<?php echo $this->createUrl('Registration/deleteFileDoc'); ?>",{id:file_id},function(data){
         if($.trim(data)==1){
-            notyfy({dismissQueue: false,text: "ลบไฟล์เรียบร้อย",type: 'success'});
-            $('#'+filedoc_id).parent().hide('fast');
-        }else{
-            alert('ไม่สามารถลบไฟล์ได้');
-        }
-    });
+           // notyfy({dismissQueue: false,text: "ลบไฟล์เรียบร้อย",type: 'success'});
+           var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
+           alert(success_file);
+           $('#'+filedoc_id).parent().hide('fast');
+       }else{
+        var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
+        alert(Unable_file);
+    }
+});
 }
 
 function editName(filedoc_id){
@@ -173,6 +177,32 @@ function editName(filedoc_id){
         $('#filenamedoctext'+filedoc_id).text(name);
         $('#filenamedoctext'+filedoc_id).show();
         $('#btnEditName'+filedoc_id).show();
+    });
+
+}
+
+function deleteFiletrain(filedoc_id,file_id){
+
+    $.get("<?php echo $this->createUrl('Registration/deleteFileTrain'); ?>",{id:file_id},function(data){
+        if($.trim(data)==1){
+           // notyfy({dismissQueue: false,text: "ลบไฟล์เรียบร้อย",type: 'success'});
+           var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
+           alert(success_file);
+           $('#'+filedoc_id).parent().hide('fast');
+       }else{
+        var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
+        alert(Unable_file);
+    }
+});
+}
+
+function editNameTrain(filedoc_id){
+    var name = $('#filenameTrains'+filedoc_id).val();
+    $.get("<?php echo $this->createUrl('Registration/editNameTrain'); ?>",{id:filedoc_id,name:name},function(data){
+        $('#filenameTrains'+filedoc_id).hide();
+        $('#filenametraintext'+filedoc_id).text(name);
+        $('#filenametraintext'+filedoc_id).show();
+        $('#btnEditNametrain'+filedoc_id).show();
     });
 
 }
@@ -224,9 +254,9 @@ function editName(filedoc_id){
             ));
             ?>
             <?php
-            $attTime = array('class' => ' form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => 'วันหมดอายุ');
-            $graduation = array('class' => 'form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => 'วันที่จบการศึกษา');
-            $birthday = array('class' => 'form-control default_datetimepicker birth', 'autocomplete' => 'off', 'placeholder' => 'วันเดือนปีเกิด', 'type' => "text");
+            $attTime = array('class' => ' form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_date_of_expiry);
+            $graduation = array('class' => 'form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_graduation_year);
+            $birthday = array('class' => 'form-control default_datetimepicker birth', 'autocomplete' => 'off', 'placeholder' => $label->label_birthday, 'type' => "text");
             ?>
             <div class="well">
 
@@ -254,9 +284,9 @@ function editName(filedoc_id){
                                     <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 180px; max-height: 240px;"></div>
                                     <!--  <?php echo $form->fileField($users, 'pic_user', array('id' => 'wizard-picture')); ?> 
                                     <label class="btn btn-success" for="customFileLang"><span class="fileinput-new"> เลือกรูปภาพ</span></label> -->
-                                    <span class="btn btn-info btn-file"><span class="fileinput-new">เลือกรูปภาพ</span>
+                                    <span class="btn btn-info btn-file"><span class="fileinput-new"><?= Yii::app()->session['lang'] == 1?'Choose image ':'เลือกรูปภาพ'; ?></span>
                                     <?php echo $form->fileField($users, 'pic_user', array('id' => 'wizard-picture')); ?>
-                                    <a href="#" class=" btn-info fileinput-exists" data-dismiss="fileinput">เปลี่ยนรูปภาพ</a>
+                                    <a href="#" class=" btn-info fileinput-exists" data-dismiss="fileinput"><?= Yii::app()->session['lang'] == 1?'Change picture ':'เปลี่ยนรูปภาพ'; ?></a>
                                 </div>
                             </div>
                         </div>
@@ -267,127 +297,124 @@ function editName(filedoc_id){
                         <div class="radio radio-danger radio-inline">
                             <input type="radio" name="type_user" id="accept" value="1" <?php if ($profile->type_user == 1) : ?> checked="checked" <?php endif ?>>
                             <label for="accept" class="bg-success text-black">
-                            สำหรับบุคคลทั่วไป </label>
-                        </div>
-                        <div class="radio radio-danger radio-inline">
-                            <input type="radio" name="type_user" id="reject" value="3" <?php if ($profile->type_user == 3) : ?> checked="checked" <?php endif ?>>
-                            <label for="reject" class="bg-danger text-black">สำหรับพนักงาน </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="row justify-content-center mt-1">
-                    <div class="col-sm-4">
-                        <div class="form-group" id="id_employee" style="display:none">
-                            <!-- <label for=""><?php echo $form->labelEx($users, 'username'); ?></label> -->
-                            <label for="">เลขประจำตัวพนักงาน</label>
-                            <?php echo $form->textField($users, 'username', array('class' => 'form-control user_ID', 'placeholder' => 'เลขประจำตัวพนักงาน','maxlength'=>'13', 'autocomplete' => 'off')); ?>
-                            <?php echo $form->error($users, 'username', array('class' => 'error2')); ?>
-                            <!-- <input type="text" class="form-control" id="" placeholder="ID พนักงาน"> -->
+                                <?php echo $label->label_general_public; ?> </label>
+                            </div>
+                            <div class="radio radio-danger radio-inline">
+                                <input type="radio" name="type_user" id="reject" value="3" <?php if ($profile->type_user == 3) : ?> checked="checked" <?php endif ?>>
+                                <label for="reject" class="bg-danger text-black"><?php echo $label->label_personnel; ?> </label>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="clearfix"></div>
-                </div>
+                    <div class="row justify-content-center mt-1 id_employee" >
+                        <div class="col-sm-4">
+                            <div class="form-group" >
+                                <!-- <label for=""><?php echo $form->labelEx($users, 'username'); ?></label> -->
+                                <label for=""><?php echo $label->label_employee_id ; ?></label>
+                                <?php echo $form->textField($users, 'username', array('class' => 'form-control user_ID', 'placeholder' => $label->label_employee_id,'maxlength'=>'13', 'autocomplete' => 'off')); ?>
+                                <?php echo $form->error($users, 'username', array('class' => 'error2')); ?>
+                                <!-- <input type="text" class="form-control" id="" placeholder="ID พนักงาน"> -->
+                            </div>
+                        </div>
 
-                <h4 class="topic-register"><i class="fas fa-user-edit"></i> ข้อมูลพื้นฐาน</h4>
+                        <div class="clearfix"></div>
+                    </div>
 
-                <div class="row justify-content-center">
-                    <div class="col-md-2">
+                    <h4 class="topic-register"><i class="fas fa-user-edit"></i> <?= Yii::app()->session['lang'] == 1?'Basic information ':'ข้อมูลพื้นฐาน'; ?></h4>
+
+                    <div class="row justify-content-center form_name">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for=""><?php echo $label->label_title; ?>(TH)</label>
+                                <?php  $country = array('1' => $label->label_dropdown_mr, '2' => $label->label_dropdown_ms, '3' => $label->label_dropdown_mrs); ?>
+                                <?php
+                                $htmlOptions = array('class' => 'form-control');
+                                echo $form->dropDownList($profile, 'title_id', $country, $htmlOptions);
+                                ?>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xs-12">
+                            <div class="form-group">
+                                <label for=""><?php echo $label->label_firstname; ?>(TH)</label>
+                                <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control', 'placeholder' => $label->label_firstname)); ?>
+                                <?php echo $form->error($profile, 'firstname', array('class' => 'error2')); ?>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xs-12">
+                            <div class="form-group">
+                                <label for=""><?php echo $label->label_lastname; ?>(TH)</label>
+                                <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control', 'placeholder' => $label->label_lastname)); ?>
+                                <?php echo $form->error($profile, 'lastname', array('class' => 'error2')); ?>
+                                <!--<input type="text" class="form-control" id="">-->
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="row justify-content-center form_name">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for=""><?php echo $label->label_title; ?>(EN)</label>
+                                <?php  $country = array('1' => $label->label_dropdown_mr, '2' => $label->label_dropdown_ms, '3' => $label->label_dropdown_mrs); ?>
+                                <?php
+                                $htmlOptions = array('class' => 'form-control');
+                                echo $form->dropDownList($profile, 'title_id', $country, $htmlOptions);
+                                ?>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xs-12">
+                            <div class="form-group">
+                                <label for=""><?php echo $label->label_firstname; ?>(EN)</label>
+                                <?php echo $form->textField($profile, 'firstname_en', array('class' => 'form-control', 'placeholder' => $label->label_firstname)); ?>
+                                <?php echo $form->error($profile, 'firstname_en', array('class' => 'error2')); ?>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-lg-3 col-xs-12">
+                            <div class="form-group">
+                                <label for=""><?php echo $label->label_lastname; ?>(EN)</label>
+                                <?php echo $form->textField($profile, 'lastname_en', array('class' => 'form-control', 'placeholder' => $label->label_lastname)); ?>
+                                <?php echo $form->error($profile, 'lastname_en', array('class' => 'error2')); ?>
+                                <!--<input type="text" class="form-control" id="">-->
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </div>
+
+
+                    <div class="row justify-content-center mt-1 mb-1 form_number_id">
                         <div class="form-group">
-                            <label for="">คำนำหน้า</label>
-                            <?php  $country = array('1' => 'นาย', '2' => 'นาง', '3' => 'นางสาว'); ?>
-                            <?php
-                            $htmlOptions = array('class' => 'form-control');
-                            echo $form->dropDownList($profile, 'title_id', $country, $htmlOptions);
-                            ?>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-lg-3 col-xs-12">
-                        <div class="form-group">
-                            <label for="">ชื่อ</label>
-                            <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control', 'placeholder' => 'ชื่อ')); ?>
-                            <?php echo $form->error($profile, 'firstname', array('class' => 'error2')); ?>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-lg-3 col-xs-12">
-                        <div class="form-group">
-                            <label for="">นามสกุล</label>
-                            <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control', 'placeholder' => 'นามสกุล')); ?>
-                            <?php echo $form->error($profile, 'lastname', array('class' => 'error2')); ?>
-                            <!--<input type="text" class="form-control" id="">-->
+                            <div class="radio radio-danger radio-inline">
+                                <input type="radio" name="type_card" id="card-1" value="l" <?php if ($profile->type_card == "l") : ?> checked="checked" <?php endif ?>>
+                                <label for="card-1" class="bg-success text-black"><?php echo $label->label_identification; ?> </label>
+                            </div>
+
+                            <div class="radio radio-danger radio-inline">
+                                <input type="radio" name="type_card" id="card-2" value="p" <?php if ($profile->type_card == "p") : ?> checked="checked" <?php endif ?>>
+                                <label for="card-2" class="bg-danger text-black"><?php echo $label->label_passport; ?> </label>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="clearfix"></div>
-                </div>
-                <div class="row justify-content-center">
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label for="">Prefix</label>
-                            <?php $country = array('1' => 'Mr.', '2' => 'Mrs.', '3' => 'Miss.'); ?>
-                            <?php
-                            $htmlOptions = array('class' => 'form-control');
-                            echo $form->dropDownList($profile, 'title_id', $country, $htmlOptions);
-                            ?>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-lg-3 col-xs-12">
-                        <div class="form-group">
-                            <label for="">firstname</label>
-                            <?php echo $form->textField($profile, 'firstname_en', array('class' => 'form-control', 'placeholder' => 'firstname')); ?>
-                            <?php echo $form->error($profile, 'firstname_en', array('class' => 'error2')); ?>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-lg-3 col-xs-12">
-                        <div class="form-group">
-                            <label for="">lastname</label>
-                            <?php echo $form->textField($profile, 'lastname_en', array('class' => 'form-control', 'placeholder' => 'lastname')); ?>
-                            <?php echo $form->error($profile, 'lastname_en', array('class' => 'error2')); ?>
-                            <!--<input type="text" class="form-control" id="">-->
-                        </div>
-                    </div>
 
-                    <div class="clearfix"></div>
-                </div>
+                    <div class="row justify-content-center bb-1 pb-20 form_number_id">
+                        <div class="col-md-4 col-sm-6 col-xs-12" >
+                            <div class="form-group" id="identification_card">
+                                <label> <?php echo $label->label_identification;?></label>
+                                <?php echo $form->textField($profile, 'identification', array('class' => 'form-control', 'name' => 'idcard', 'maxlength' => '13', 'onKeyPress' => 'return check_number();', 'placeholder' => $label->label_identification)); ?>
+                                <?php echo $form->error($profile, 'identification', array('class' => 'error2')); ?>
+                            </div>
 
-
-                <div class="row justify-content-center mt-1 mb-1 ">
-                    <div class="form-group">
-                        <div class="radio radio-danger radio-inline">
-                            <input type="radio" name="type_card" id="card-1" value="l" <?php if ($profile->type_card == "l") : ?> checked="checked" <?php endif ?>>
-                            <label for="card-1" class="bg-success text-black">
-                            เลขบัตรประจำตัวประชาชน </label>
+                            <div class="form-group" id="passport_card">
+                                <?php echo $form->labelEx($profile, 'passport'); ?>
+                                <?php echo $form->textField($profile, 'passport', array('class' => 'form-control', 'name' => 'passport', 'placeholder' => $label->label_passport)); ?>
+                                <?php echo $form->error($profile, 'passport', array('class' => 'error2')); ?>
+                            </div>
                         </div>
 
-                        <div class="radio radio-danger radio-inline">
-                            <input type="radio" name="type_card" id="card-2" value="p" <?php if ($profile->type_card == "p") : ?> checked="checked" <?php endif ?>>
-                            <label for="card-2" class="bg-danger text-black">เลขหนังสือเดินทาง </label>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="row justify-content-center bb-1 pb-20">
-                    <div class="col-md-4 col-sm-6 col-xs-12" >
-                        <div class="form-group" id="identification_card">
-                            <?php echo $form->labelEx($profile, 'identification'); ?>
-                            <?php echo $form->textField($profile, 'identification', array('class' => 'form-control', 'name' => 'idcard', 'maxlength' => '13', 'onKeyPress' => 'return check_number();', 'placeholder' => 'เลขบัตรประจำตัวประชาชน')); ?>
-                            <?php echo $form->error($profile, 'identification', array('class' => 'error2')); ?>
-                        </div>
-
-                        <div class="form-group" id="passport_card">
-                            <?php echo $form->labelEx($profile, 'passport'); ?>
-                            <?php echo $form->textField($profile, 'passport', array('class' => 'form-control', 'name' => 'passport', 'placeholder' => 'passport')); ?>
-                            <?php echo $form->error($profile, 'passport', array('class' => 'error2')); ?>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="form-group">
-                            <!-- <label for="">วันหมดอายุบัตร</label>
-                                <input type="text" class="form-control" id="" placeholder="วันหมดอายุบัตร" > -->
-                                <?php echo $form->labelEx($profile, 'date_of_expiry'); ?>
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="form-group">
+                                <label> <?php echo $label->label_date_of_expiry;?></label>
                                 <?php echo $form->textField($profile, 'date_of_expiry', $attTime); ?>
                                 <?php echo $form->error($profile, 'date_of_expiry', array('class' => 'error2')); ?>
                             </div>
@@ -399,9 +426,7 @@ function editName(filedoc_id){
                     <div class="row justify-content-center mt-20">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group">
-                            <!-- <label for="">วัน/เดือน/ปี</label>
-                                <input type="date" class="form-control" id="" placeholder="วัน/เดือน/ปี"> -->
-                                <?php echo $form->labelEx($profile, 'birthday'); ?>
+                                <label><?php echo $label->label_birthday; ?></label>
                                 <?php echo $form->textField($profile, 'birthday', $birthday); ?>
                                 <?php echo $form->error($profile, 'birthday', array('class' => 'error2')); ?>
                             </div>
@@ -409,10 +434,8 @@ function editName(filedoc_id){
 
                         <div class="col-md-2 col-sm-6 col-xs-12">
                             <div class="form-group">
-                            <!-- <label for="">อายุ</label>
-                                <input type="text" class="form-control" id="" placeholder="อายุ"> -->
-                                <?php echo $form->labelEx($profile, 'age'); ?>
-                                <?php echo $form->textField($profile, 'age', array('class' => 'form-control ages', 'placeholder' => 'อายุ')); ?>
+                                <label><?php echo $label->label_age; ?></label>
+                                <?php echo $form->textField($profile, 'age', array('class' => 'form-control ages', 'placeholder' => $label->label_age)); ?>
                                 <?php echo $form->error($profile, 'age', array('class' => 'error2')); ?>
                             </div>
                         </div>
@@ -425,8 +448,8 @@ function editName(filedoc_id){
                             <div class="form-group">
                             <!--  <label for="">เชื้อชาติ</label>
                                 <input type="text" class="form-control" id="" placeholder="เชื้อชาติ"> -->
-                                <?php echo $form->labelEx($profile, 'race'); ?>
-                                <?php echo $form->textField($profile, 'race', array('class' => 'form-control', 'placeholder' => 'เชื้อชาติ')); ?>
+                                <label><?php echo $label->label_race; ?></label>
+                                <?php echo $form->textField($profile, 'race', array('class' => 'form-control', 'placeholder' => $label->label_race)); ?>
                                 <?php echo $form->error($profile, 'race', array('class' => 'error2')); ?>
                             </div>
                         </div>
@@ -435,8 +458,8 @@ function editName(filedoc_id){
                             <div class="form-group">
                             <!-- <label for="">สัญชาติ</label>
                                 <input type="text" class="form-control" id="" placeholder="สัญชาติ"> -->
-                                <?php echo $form->labelEx($profile, 'nationality'); ?>
-                                <?php echo $form->textField($profile, 'nationality', array('class' => 'form-control', 'placeholder' => 'สัญชาติ')); ?>
+                                <label><?php echo $label->label_nationality; ?></label>
+                                <?php echo $form->textField($profile, 'nationality', array('class' => 'form-control', 'placeholder' => $label->label_nationality)); ?>
                                 <?php echo $form->error($profile, 'nationality', array('class' => 'error2')); ?>
                             </div>
                         </div>
@@ -450,29 +473,29 @@ function editName(filedoc_id){
                             <div class="form-group">
                             <!-- <label for="">ศาสนา</label>
                                 <input type="text" class="form-control" id="" placeholder="เชื้อชาติ"> -->
-                                <?php echo $form->labelEx($profile, 'religion'); ?>
-                                <?php echo $form->textField($profile, 'religion', array('class' => 'form-control', 'placeholder' => 'ศาสนา')); ?>
+                                <label><?php echo $label->label_religion; ?></label>
+                                <?php echo $form->textField($profile, 'religion', array('class' => 'form-control', 'placeholder' => $label->label_religion)); ?>
                                 <?php echo $form->error($profile, 'religion', array('class' => 'error2')); ?>
                             </div>
                         </div>
 
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="form-group">
-                                <label for="">เพศ</label>
+                                <label for=""><?php echo $label->label_sex; ?></label>
                                 <select class="form-control" name="" id="">
                                     < <?php
                                     if ($profile->sex) {
                                         if ($profile->sex === 'Male') { ?> 
-                                            <option value="1">ชาย</option>
-                                            <option value="2">หญิง</option>
+                                            <option value="1"><?php echo $label->label_male; ?></option>
+                                            <option value="2"><?php echo $label->label_female; ?></option>
                                         <?php } else { ?>
-                                            <option value="2">หญิง</option>
-                                            <option value="1">ชาย</option>
+                                            <option value="2"><?php echo $label->label_female; ?></option>
+                                            <option value="1"><?php echo $label->label_male; ?></option>
                                         <?php    }
                                     } else ?>
-                                    <option value="">เพศ</option>
-                                    <option value="1">ชาย</option>
-                                    <option value="2">หญิง</option>
+                                    <option value=""><?php echo $label->label_sex; ?></option>
+                                    <option value="1"><?php echo $label->label_male; ?></option>
+                                    <option value="2"><?php echo $label->label_female; ?></option>
                                     <?php?>
                                 </select>
                             </div>
@@ -482,19 +505,18 @@ function editName(filedoc_id){
                     </div>
 
                     <div class="row  mt-1 mb-1 ">
-                        <div class="col-md-3 text-right-md"> <strong>สถานะภาพทางการสมรส</strong></div>
+                        <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_marital_status; ?></strong></div>
                         <div class="col-md-4">
                             <div class="form-group">
 
                                 <span></span>
                                 <div class="radio radio-danger radio-inline">
                                     <input type="radio" name="status_sm" id="card-3" value="s" <?php if ($profile->status_sm == "s") : ?> checked="checked" <?php endif ?>>
-                                    <label for="card-3" class="bg-success text-black">
-                                    โสด </label>
+                                    <label for="card-3" class="bg-success text-black"> <?php echo $label->label_single; ?> </label>
                                 </div>
                                 <div class="radio radio-danger radio-inline">
                                     <input type="radio" name="status_sm" id="card-4" value="m" <?php if ($profile->status_sm == "m") : ?> checked="checked" <?php endif ?>>
-                                    <label for="card-4" class="bg-danger text-black">สมรส </label>
+                                    <label for="card-4" class="bg-danger text-black"><?php echo $label->label_marry; ?> </label>
                                 </div>
                             </div>
                         </div>
@@ -506,8 +528,8 @@ function editName(filedoc_id){
                             <div class="form-group">
                             <!-- <label for="card-4" class="bg-danger text-black">ที่อยู่</label>
                                 <textarea class="form-control" name="" id="" placeholder="ที่อยู่" value="" required="" cols="30" rows="3"></textarea> -->
-                                <?php echo $form->labelEx($profile, 'address'); ?>
-                                <?php echo $form->textArea($profile, 'address', array('class' => 'form-control', 'cols' => "30", 'rows' => "3", 'placeholder' => 'ที่อยู่')); ?>
+                                <label><?php echo $label->label_address; ?></label>
+                                <?php echo $form->textArea($profile, 'address', array('class' => 'form-control', 'cols' => "30", 'rows' => "3", 'placeholder' => $label->label_address)); ?>
                                 <?php echo $form->error($profile, 'address', array('class' => 'error2')); ?>
 
                             </div>
@@ -521,8 +543,8 @@ function editName(filedoc_id){
                             <div class="form-group">
                             <!-- <label for="">เบอร์โทรศัพท์</label>
                                 <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์"> -->
-                                <?php echo $form->labelEx($profile, 'tel'); ?>
-                                <?php echo $form->textField($profile, 'tel', array('class' => 'form-control', 'placeholder' => 'เบอร์โทรศัพท์')); ?>
+                                <label><?php echo $label->label_phone; ?></label>
+                                <?php echo $form->textField($profile, 'tel', array('class' => 'form-control', 'placeholder' => $label->label_phone)); ?>
                                 <?php echo $form->error($profile, 'tel', array('class' => 'error2')); ?>
 
                             </div>
@@ -532,8 +554,8 @@ function editName(filedoc_id){
                             <div class="form-group">
                             <!-- <label for="">Email</label>
                                 <input type="text" class="form-control" id="" placeholder="Email"> -->
-                                <label><?php echo $form->labelEx($users, 'email'); ?></label>
-                                <?php echo $form->emailField($users, 'email', array('class' => 'form-control', 'placeholder' => 'E-mail')); ?>
+                                <label><?php echo $label->label_email; ?></label>
+                                <?php echo $form->emailField($users, 'email', array('class' => 'form-control', 'placeholder' => $label->label_email)); ?>
                                 <?php echo $form->error($users, 'email', array('class' => 'error2')); ?>
                             </div>
                         </div>
@@ -543,8 +565,8 @@ function editName(filedoc_id){
                     <div class="row justify-content-center">
                         <div class="col-md-8 col-sm-12 col-xs-12">
                             <div class="form-group">
-                                <label><?php echo $form->labelEx($profile, 'line_id'); ?></label>
-                                <?php echo $form->textField($profile, 'line_id', array('class' => 'form-control', 'placeholder' => 'IDLine')); ?>
+                                <label><?php echo $label->label_id_Line;  ?></label>
+                                <?php echo $form->textField($profile, 'line_id', array('class' => 'form-control', 'placeholder' => $label->label_id_Line)); ?>
                                 <?php echo $form->error($profile, 'line_id', array('class' => 'error2')); ?>
                             </div>
                         </div>
@@ -552,19 +574,18 @@ function editName(filedoc_id){
                     </div>
 
                     <div class="row  mt-1 mb-1 ">
-                        <div class="col-md-3 text-right-md"> <strong>ประวัติการเจ็บป่วยรุนแรง</strong></div>
+                        <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_history_of_severe_illness;  ?></strong></div>
                         <div class="col-md-4 col-xs-12">
                             <div class="form-group">
 
                                 <span></span>
                                 <div class="radio radio-danger radio-inline">
                                     <input type="radio" name="history_of_illness" id="card-5" value="n" <?php if ($profile->history_of_illness == "n") : ?> checked="checked" <?php endif ?>>
-                                    <label for="card-5" class="bg-success text-black">
-                                    ไม่เคย </label>
+                                    <label for="card-5" class="bg-success text-black"><?php echo $label->label_never;  ?> </label>
                                 </div>
                                 <div class="radio radio-danger radio-inline">
                                     <input type="radio" name="history_of_illness" id="card-6" value="y" <?php if ($profile->history_of_illness == "y") : ?> checked="checked" <?php endif ?>>
-                                    <label for="card-6" class="bg-danger text-black">เคย </label>
+                                    <label for="card-6" class="bg-danger text-black"><?php echo $label->label_ever;  ?> </label>
                                 </div>
                             </div>
                         </div>
@@ -573,7 +594,6 @@ function editName(filedoc_id){
 
 
                     <?php
-
                     if (!$ProfilesEdu->isNewRecord || $ProfilesEdu->isNewRecord == NULL) {
                         echo "";
                     } else { ?>
@@ -582,7 +602,7 @@ function editName(filedoc_id){
                     }
                     $modelList = Education::model()->findAll(array("condition" => " active = 'y'"));
                     $list = CHtml::listData($modelList, 'edu_id', 'edu_name');
-                    $att_Education = array('class' => 'form-control', 'empty' => 'ระดับการศึกษา');
+                    $att_Education = array('class' => 'form-control', 'empty' => $label->label_education_level);
                     if (!$ProfilesEdu->isNewRecord) { ?>
                         <div class="add-study">
                             <?php
@@ -590,7 +610,7 @@ function editName(filedoc_id){
                                 ?>
 
                                 <div class="row del_edu">
-                                    <div class="col-md-3 col-sm-12 text-right-md"> <strong>ประวัติการศึกษา</strong></div>
+                                    <div class="col-md-3 col-sm-12 text-right-md"> <strong><?php echo $label->label_educational;  ?></strong></div>
                                     <div class="col-md-2 col-sm-6 col-xs-12">
                                         <div class="form-group">
                                             <?php echo CHtml::activeDropDownList($valedu, '[' . $kedu . ']edu_id', $list, $att_Education); ?>
@@ -600,7 +620,7 @@ function editName(filedoc_id){
                                     <div class="col-md-3 col-sm-6 col-xs-12">
                                         <div class="form-group">
 
-                                            <?php echo $form->textField($valedu, '[' . $kedu . ']institution', array('class' => 'form-control', 'placeholder' => 'สถานที่่จบการศึกษา')); ?>
+                                            <?php echo $form->textField($valedu, '[' . $kedu . ']institution', array('class' => 'form-control', 'placeholder' => $label->label_academy)); ?>
                                         </div>
                                     </div>
 
@@ -609,7 +629,7 @@ function editName(filedoc_id){
                                             <?php echo $form->textField($valedu, '[' . $kedu . ']date_graduation', $graduation); ?>
                                         </div>
                                     </div>
-                                    <span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i> Delete</span>
+                                    <span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?> </span>
 
                                 </div>
 
@@ -621,7 +641,7 @@ function editName(filedoc_id){
                         ?>
 
                         <div class="row">
-                            <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong>ประวัติการศึกษา</strong></div>
+                            <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?php echo $label->label_educational;  ?></strong></div>
                             <div class="col-md-2 col-sm-6 col-xs-12 ">
                                 <div class="form-group">
                                     <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]edu_id', $list, $att_Education); ?>
@@ -630,7 +650,7 @@ function editName(filedoc_id){
 
                             <div class="col-md-3 col-sm-6 col-xs-12 ">
                                 <div class="form-group">
-                                    <?php echo $form->textField($ProfilesEdu, '[0]institution', array('class' => 'form-control', 'placeholder' => 'สถานที่่จบการศึกษา')); ?>
+                                    <?php echo $form->textField($ProfilesEdu, '[0]institution', array('class' => 'form-control', 'placeholder' => $label->label_academy)); ?>
                                 </div>
                             </div>
 
@@ -651,7 +671,7 @@ function editName(filedoc_id){
                     <div class="row justify-content-center bb-1 pb-20 mt-20">
                         <div class="col-md-3 col-sm-12  col-xs-12 text-center">
                             <button class="btn btn-info btn-add add_form_field" type="button" id="moreFields">
-                                <span class="glyphicon glyphicon-plus"> </span> เพิ่มประวัติการศึกษา
+                                <span class="glyphicon glyphicon-plus"> </span> <?= Yii::app()->session['lang'] == 1?'Add education history ':'เพิ่มประวัติการศึกษา'; ?>
                             </button>
                         </div>
                     </div>
@@ -659,7 +679,7 @@ function editName(filedoc_id){
                     <div id="office-section1">
                         <div class="row  mt-20 mb-1">
 
-                            <div class="col-md-3 col-sm-12 text-right-md"> <strong>เอกสารแนบไฟล์วุฒิการศึกษา/วิชาชีพ<small class="text-danger d-block">(pdf,png,jpg,jpeg)</small></strong></div>
+                            <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Attachments of Qualification / Professional File ':'เอกสารแนบไฟล์วุฒิการศึกษา/วิชาชีพ'; ?><small class="text-danger d-block">(pdf,png,jpg,jpeg)</small></strong></div>
                             <!--     <?php echo $form->labelEx($FileEdu,'file_name'); ?> --> 
                             <div class="col-sm-12 col-xs-12 col-md-8">
                                 <div id="docqueue"></div>
@@ -705,81 +725,77 @@ function editName(filedoc_id){
                         </div>
                         <div class="row">
                            <div class="col-md-offset-3 col-md-4">
-                                <?php
-                                $idx = 1;
-                                $uploadFolder = Yii::app()->getUploadUrl('edufile');
-                                $criteria = new CDbCriteria;
-                                $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
-                                $criteria->addCondition("active ='y'");
-                                $FileEdu = FileEdu::model()->findAll($criteria);
-    
-                                if(isset($FileEdu)){
-                                    foreach($FileEdu as $fileDatas){
-                                        ?>
-    
-                                            <div id="filedoc<?php echo $idx; ?>">
-                                                <!-- <a href="<?php echo $this->createUrl('edufile',array('id' => $fileDatas->id)); ?>" target="_blank"> -->
-                                                <?php
-                                                    echo '<strong id="filenamedoctext'.$fileDatas->id.'">'.$fileDatas->file_name.'</strong>';
-                                                    ?>
-                                                <!-- </a> -->
-                                                <?php echo '<input id="filenamedoc'.$fileDatas->id.'" 
-                                                                    class="form-control"
-                                                                   type="text" value="'.$fileDatas->file_name.'" 
-                                                                   style="display:none;" 
-                                                                   onblur="editName('.$fileDatas->id.');">'; ?>
-    
-    
-                                                <?php echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
-                                                       'id'=>'btnEditName'.$fileDatas->id,
-                                                       'class'=>'btn-action glyphicons pencil btn-danger',
-                                                       'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                                                       'onclick'=>'$("#filenamedoctext'.$fileDatas->id.'").hide();
-                                                                   $("#filenamedoc'.$fileDatas->id.'").show(); 
-                                                                   $("#filenamedoc'.$fileDatas->id.'").focus(); 
-                                                                   $("#btnEditName'.$fileDatas->id.'").hide(); ')); ?>
-    
-    
-    
-                                                <?php echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
-                                                        'id'=>'btnSaveName'.$fileDatas->id,
-                                                        'class'=>'btn-action glyphicons btn-danger remove_2',
-                                                        'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                                                        'onclick'=>'if(confirm("คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร")){ deleteFileDoc("filedoc'.$idx.'","'.$fileDatas->id.'"); }')); ?>
-                                               
-                                          
-                                           
-                                        </div>
-                                        <?php
-                                        $idx++;
-                                    }?><br><?php
-                                }
-                                ?>   
-                           </div>
+                            <?php
+                            $idx = 1;
+                            $uploadFolder = Yii::app()->getUploadUrl('edufile');
+                            $criteria = new CDbCriteria;
+                            $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
+                            $criteria->addCondition("active ='y'");
+                            $FileEdu = FileEdu::model()->findAll($criteria);
+
+                            if(isset($FileEdu)){
+                                 $confirm_del  = Yii::app()->session['lang'] == 1?'Do you want to delete the file ?\nWhen you agree, the system will permanently delete the file from the system. ':'คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร';
+                                foreach($FileEdu as $fileDatas){
+                                    ?>
+
+                                    <div id="filenamedoc<?php echo $idx; ?>">
+                                        <!-- <a href="<?php echo $this->createUrl('edufile',array('id' => $fileDatas->id)); ?>" target="_blank"> -->
+                                            <?php
+                                            echo '<strong id="filenamedoctext'.$fileDatas->id.'">'.$fileDatas->file_name.'</strong>';
+                                            ?>
+                                            <!-- </a> -->
+                                            <?php echo '<input id="filenamedoc'.$fileDatas->id.'" 
+                                            class="form-control"
+                                            type="text" value="'.$fileDatas->file_name.'" 
+                                            style="display:none;" 
+                                            onblur="editName('.$fileDatas->id.');">'; ?>
+
+                                            <?php echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
+                                               'id'=>'btnEditName'.$fileDatas->id,
+                                               'class'=>'btn-action glyphicons pencil btn-danger',
+                                               'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                               'onclick'=>'$("#filenamedoctext'.$fileDatas->id.'").hide();
+                                               $("#filenamedoc'.$fileDatas->id.'").show(); 
+                                               $("#filenamedoc'.$fileDatas->id.'").focus(); 
+                                               $("#btnEditName'.$fileDatas->id.'").hide(); ')); ?>
+
+                                            <?php echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
+                                                'id'=>'btnSaveName'.$fileDatas->id,
+                                                'class'=>'btn-action glyphicons btn-danger remove_2',
+                                                'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                                'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFileDoc("filedoc'.$idx.'","'.$fileDatas->id.'"); }')); ?>
+
+                                            </div>
+                                            <?php
+                                            $idx++;
+                                        }?><br><?php
+                                    }
+                                    ?>   
+                                </div>
+                            </div>
                         </div>
-                    </div>
 
-                    <div id="office-section2">
-                        <div class="row  mt-20 mb-1">
+                        <div id="office-section2">
+                            <div class="row  mt-20 mb-1">
 
-                            <div class="col-md-3 col-sm-12 text-right-md"> <strong>เอกสารแนบไฟล์ฝึกอบรม<small class="text-danger d-block">(pdf,png,jpg,jpeg)</small></strong></div>
-                            <div class="col-sm-12 col-xs-12 col-md-8"">
-                                <div id="queue"></div>
-                                <?php echo $form->fileField($FileTraining,'file_name',array('id'=>'Training','multiple'=>'true')); ?>
-                                <script type="text/javascript">
-                                    <?php $timestamp = time();?>
-                                    $(function() {
-                                        $('#Training').uploadifive({
-                                            'auto'             : false,
+                                <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training file attachment ':'เอกสารแนบไฟล์ฝึกอบรม'; ?><small class="text-danger d-block">(pdf,png,jpg,jpeg)</small></strong></div>
+                                <div class="col-sm-12 col-xs-12 col-md-8">
+                                    <div id="queue"></div>
+                                    <?php echo $form->fileField($FileTraining,'file_name',array('id'=>'Training','multiple'=>'true')); ?>
+                                    <script type="text/javascript">
+                                        <?php $timestamp = time();?>
+                                        $(function() {
+                                            $('#Training').uploadifive({
+                                                'auto'             : false,
 
-                                            'formData'         : {
-                                                'timestamp' : '<?php echo $timestamp;?>',
-                                                'token'     : '<?php echo md5("unique_salt" . $timestamp);?>'
-                                            },
-                                            'queueID'          : 'queue',
-                                            'uploadScript'     : '<?php echo $this->createUrl("Registration/uploadifiveTraining"); ?>',
-                                            'onAddQueueItem' : function(file){
-                                                var fileName = file.name;
+                                                'formData'         : {
+                                                    'timestamp' : '<?php echo $timestamp;?>',
+                                                    'token'     : '<?php echo md5("unique_salt" . $timestamp);?>'
+                                                },
+                                                'queueID'          : 'queue',
+                                                'uploadScript'     : '<?php echo $this->createUrl("Registration/uploadifiveTraining"); ?>',
+                                                'onAddQueueItem' : function(file){
+                                                    var fileName = file.name;
                                                     var ext = fileName.substring(fileName.lastIndexOf('.') + 1); // Extract EXT
                                                     switch (ext) {
                                                         case 'pdf':
@@ -799,199 +815,203 @@ function editName(filedoc_id){
 
                                              }
                                          });
-                                    });
-                                </script>
-                                <?php echo $form->error($FileTraining,'file_name'); ?>
-                            </div>
-                            
-                        </div>
-                        <div class="row mt-20 mb-3">
-                            <div class="col-md-offset-3 col-md-4">
-                            <?php
-                            $idx = 1;
-                            $uploadFolder = Yii::app()->getUploadUrl('Trainingfile');
-                            $criteria = new CDbCriteria;
-                            $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
-                            $criteria->addCondition("active ='y'");
-                            $Trainingfile = FileTraining::model()->findAll($criteria);
-                            
-                            if(isset($Trainingfile)){
-                                foreach($Trainingfile as $fileData){
+                                        });
+                                    </script>
+                                    <?php echo $form->error($FileTraining,'file_name'); ?>
+                                </div>
 
-                                    ?>
-                                        <div id="filedoc<?php echo $idx; ?>">
-                                           <!--  <a href="<?php echo $this->createUrl('Trainingfile',array('id' => $fileData->id)); ?>" target="_blank"> -->
-                                            <?php
-                                                echo '<strong id="filenamedoctext'.$fileData->id.'">'.$fileData->file_name.'</strong>';
+                            </div>
+                            <div class="row mt-20 mb-3">
+                                <div class="col-md-offset-3 col-md-4">
+                                    <?php
+                                    $idx = 1;
+                                    $uploadFolder = Yii::app()->getUploadUrl('Trainingfile');
+                                    $criteria = new CDbCriteria;
+                                    $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
+                                    $criteria->addCondition("active ='y'");
+                                    $Trainingfile = FileTraining::model()->findAll($criteria);
+                    
+                                    if(isset($Trainingfile)){
+                                      $confirm_del  = Yii::app()->session['lang'] == 1?'Do you want to delete the file ?\nWhen you agree, the system will permanently delete the file from the system. ':'คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร'; 
+                                        foreach($Trainingfile as $fileData){
+
+                                            ?>
+                                            <div id="filenameTrain<?php echo $idx; ?>">
+                                               <!--  <a href="<?php echo $this->createUrl('Trainingfile',array('id' => $fileData->id)); ?>" target="_blank"> -->
+                                                <?php
+                                                echo '<strong id="filenametraintext'.$fileData->id.'">'.$fileData->file_name.'</strong>';
                                                 ?>
-                                            <!-- </a> -->
-                                            <?php echo '<input id="filenameTrain'.$fileData->id.'" 
-                                                        class="form-control"
-                                                         type="text" value="'.$fileData->file_name.'" 
-                                                         style="display:none;" 
-                                                         onblur="editName('.$fileData->id.');">'; ?>
-
-                                            <?php echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
-                                            'id'=>'btnEditName'.$fileData->id,
-                                            'class'=>'btn-action glyphicons pencil btn-danger',
-                                            'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                                            'onclick'=>'$("#filenamedoctext'.$fileData->id.'").hide(); 
-                                                        $("#filenameTrain'.$fileData->id.'").show(); 
-                                                        $("#filenameTrain'.$fileData->id.'").focus(); 
-                                                        $("#btnEditName'.$fileData->id.'").hide(); ')); ?>
+                                                <!-- </a> -->
+                                                <?php echo '<input id="filenameTrains'.$fileData->id.'" 
+                                                class="form-control"
+                                                type="text" value="'.$fileData->file_name.'" 
+                                                style="display:none;" 
+                                                onblur="editNameTrain('.$fileData->id.');">'; ?>
 
 
-                                            <?php echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
-                                            'id'=>'btnSaveName'.$fileData->id,
-                                            'class'=>'btn-action glyphicons btn-danger remove_2',
-                                            'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                                            'onclick'=>'if(confirm("คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร")){ deleteFileDoc("filedoc'.$idx.'","'.$fileData->id.'"); }')); ?>
-                                            
+                                                <?php echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
+                                                    'id'=>'btnEditNametrain'.$fileData->id,
+                                                    'class'=>'btn-action glyphicons pencil btn-danger',
+                                                    'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                                    'onclick'=>'$("#filenametraintext'.$fileData->id.'").hide(); 
+                                                    $("#filenameTrains'.$fileData->id.'").show(); 
+                                                    $("#filenameTrains'.$fileData->id.'").focus(); 
+                                                    $("#btnEditNametrain'.$fileData->id.'").hide(); ')); ?>
+
+                                                
+                                                <?php echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
+                                                    'id'=>'btnSaveNametrain'.$fileData->id,
+                                                    'class'=>'btn-action glyphicons btn-danger remove_2',
+                                                    'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                                    'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFiletrain("filedoc'.$idx.'","'.$fileData->id.'"); }')); ?>
+
+                                                </div>
+
+                                                <?php
+                                                $idx++;
+                                            }?><?php
+                                        }
+                                        ?> 
+                                    </div>  
+                                </div>
+                            </div>
+
+                            <div id="office-section">
+                                <div class="row  mt-20 mb-1" id="employee_type">
+                                    <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Employee section ':'ส่วนของพนักงาน'; ?></strong></div>
+                                    <div class="col-sm-12 col-xs-12 col-md-8">
+                                        <div class="form-group">
+
+                                            <span></span>
+                                            <div class="radio radio-danger radio-inline">
+                                                <input type="radio" name="type_employee" id="card-7" value="office" <?php if ($profile->type_employee == "office") : ?> checked="checked" <?php endif ?>>
+
+                                                <label for="card-7" class="bg-success text-black"> <?php echo $label->label_office ?> </label>
+                                            </div>
+                                            <div class="radio radio-danger radio-inline">
+                                                <input type="radio" name="type_employee" id="card-8" value="ship" <?php if ($profile->type_employee == "ship") : ?> checked="checked" <?php endif ?>>
+
+                                                <label for="card-8" class="bg-danger text-black"><?php echo $label->label_ship ?> </label>
+                                            </div>
                                         </div>
-                                    
-                                    <?php
-                                    $idx++;
-                                }?><?php
-                            }
-                            ?> 
-                            </div>  
-                        </div>
-                    </div>
-
-                    <div id="office-section">
-                        <div class="row  mt-20 mb-1" id="employee_type">
-                            <div class="col-md-3 col-sm-12 text-right-md"> <strong>ส่วนของพนักงาน</strong></div>
-                            <div class="col-sm-12 col-xs-12 col-md-8">
-                                <div class="form-group">
-
-                                    <span></span>
-                                    <div class="radio radio-danger radio-inline">
-                                        <input type="radio" name="type_employee" id="card-7" value="office" <?php if ($profile->type_employee == "office") : ?> checked="checked" <?php endif ?>>
-
-                                        <label for="card-7" class="bg-success text-black">
-                                        Office </label>
-                                    </div>
-                                    <div class="radio radio-danger radio-inline">
-                                        <input type="radio" name="type_employee" id="card-8" value="ship" <?php if ($profile->type_employee == "ship") : ?> checked="checked" <?php endif ?>>
-
-                                        <label for="card-8" class="bg-danger text-black">เรือ </label>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
 
-                        <div class="row justify-content-center mt-20 mb-1 bb-1 pb-20" id="employee_detail">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label><?php echo $form->labelEx($users, 'department_id'); ?></label>
-                                    <?php
-                                    $departmentModel = Department::model()->findAll(array(
-                                        "condition" => " active = 'y'"
-                                    ));
-                                    $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
-                                    $departmentOption = array('class' => 'form-control department', 'empty' => 'แผนก');
-                                    ?>
-                                    <?php
-                                    echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption);
-                                    ?>
-                                    <?php echo $form->error($users, 'department_id', array('class' => 'error2')); ?>
+                                <div class="row justify-content-center mt-20 mb-1 bb-1 pb-20" id="employee_detail">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label><?php echo $label->label_company; ?></label>
+                                            <?php
+                                            $departmentModel = Department::model()->findAll(array(
+                                                "condition" => " active = 'y'"
+                                            ));
+                                            $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
+                                            $departmentOption = array('class' => 'form-control department', 'empty' => $label->label_placeholder_company);
+                                            ?>
+                                            <?php
+                                            echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption);
+                                            ?>
+                                            <?php echo $form->error($users, 'department_id', array('class' => 'error2')); ?>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label><?php echo $label->label_position; ?></label>
+                                            <?php
+                                            $positionModel = Position::model()->findAll(array(
+                                                "condition" => " active = 'y'"
+                                            ));
+                                            $positionList = CHtml::listData($positionModel, 'id', 'position_title');
+                                            $positiontOption = array('class' => 'form-control position', 'empty' => $label->label_placeholder_position);
+                                            ?>
+                                            <?php
+                                            echo $form->dropDownList($users, 'position_id', $positionList, $positiontOption); ?>
+                                            <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label><?php echo $form->labelEx($users, 'position_id'); ?></label>
-                                    <?php
-                                    $positionModel = Position::model()->findAll(array(
-                                        "condition" => " active = 'y'"
-                                    ));
-                                    $positionList = CHtml::listData($positionModel, 'id', 'position_title');
-                                    $positiontOption = array('class' => 'form-control position', 'empty' => 'ตำแหน่ง');
-                                    ?>
-                                    <?php
-                                    echo $form->dropDownList($users, 'position_id', $positionList, $positiontOption); ?>
-                                    <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
 
-                                </div>
+                            <div class="text-center submit-register">
+
+                                <?php if (Yii::app()->user->getId() == null) { ?>
+                                    <?php echo CHtml::submitButton($label->label_regis, array('class' => 'btn btn-default bg-greenlight btn-lg center-block ok_2','onclick'=>"return upload();")); ?>
+                                <?php } else {
+                                    echo CHtml::submitButton($label->label_save, array('class' => 'btn btn-default bg-greenlight btn-lg center-block ok_2','onclick'=>"return upload();"));
+                                } ?>
                             </div>
+
                         </div>
+
+
+
+                        <?php $this->endWidget();
+                        ?>
+
                     </div>
 
 
-                    <div class="text-center submit-register">
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            var max_fields = 10;
+                            var wrapper = $(".add-study");
+                            var add_button = $(".add_form_field");
+                            var numItems = 0;
+                            var x = 1;
 
-                        <?php if (Yii::app()->user->getId() == null) { ?>
-                            <?php echo CHtml::submitButton($label->label_regis, array('class' => 'btn btn-default bg-greenlight btn-lg center-block ok_2','onclick'=>"return upload();")); ?>
-                        <?php } else {
-                            echo CHtml::submitButton($label->label_save, array('class' => 'btn btn-default bg-greenlight btn-lg center-block ok_2','onclick'=>"return upload();"));
-                        } ?>
-                    </div>
+                            $(add_button).click(function(e) {
+                                e.preventDefault();
+                                if (x < max_fields) {
+                                    x++;
+                                    numItems++;
+                                    var level = '<option value=""><?php echo $label->label_education_level; ?></option>';
+                                    var academy = '<?php echo $label->label_academy; ?>';
+                                    var graduation_year = '<?php echo $label->label_graduation_year; ?>';
+                                    var del = '<?php echo Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?>';
+                                    $(wrapper).append('<div class="row del_edu"><div class="col-md-3 col-sm-12 text-right-md "><strong><?php echo $label->label_educational; ?></strong></div>'
+                                        +'<div class="col-md-2 col-sm-6"><div class="form-group"><select class ="form-control" name="ProfilesEdu[' + numItems + '][edu_id]">' + level + '<?php foreach ($list as $key => $value) : ?><option value=<?php echo $key ?>><?php echo $value ?></option><?php endforeach ?></select></div></div>'
+                                        +'<div class="col-md-3 col-sm-6"><div class="form-group"><input type="text" class="form-control" placeholder="' + academy + '" name="ProfilesEdu[' + numItems + '][institution]"></div></div>'
+                            +'<div class="col-md-2 col-sm-6"><div class="form-group"><input class="form-control datetimepicker" autocomplete="off" id="ProfilesEdu_' + numItems + '_date_graduation" placeholder="' + graduation_year + ' "name="ProfilesEdu[' + numItems + '][date_graduation]"> </div></div><span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> ' + del + '</span></div>'); //add input box
+                                    $('.datetimepicker').datetimepicker({
+                                        format: 'Y-m-d',
+                                        step: 10,
+                                        timepickerScrollbar: false
+                                    });
+                                    $('.xdsoft_timepicker').hide();
 
-                </div>
-
-
-
-                <?php $this->endWidget();
-                ?>
-
-            </div>
-
-
-            <script type="text/javascript">
-                $(document).ready(function() {
-                    var max_fields = 10;
-                    var wrapper = $(".add-study");
-                    var add_button = $(".add_form_field");
-                    var numItems = 0;
-                    var x = 1;
-
-                    $(add_button).click(function(e) {
-                        e.preventDefault();
-                        if (x < max_fields) {
-                            x++;
-                            numItems++;
-                            var level = '<option value="">ระดับการศึกษา</option>';
-                            $(wrapper).append('<div class="row del_edu"><div class="col-md-3 col-sm-12 text-right-md "><strong>ประวัติการศึกษา</strong></div>'
-                            +'<div class="col-md-2 col-sm-6"><div class="form-group"><select class ="form-control" name="ProfilesEdu[' + numItems + '][edu_id]">' + level + '<?php foreach ($list as $key => $value) : ?><option value=<?php echo $key ?>>ระดับการศึกษา<?php echo $value ?></option><?php endforeach ?></select></div></div>'
-                            +'<div class="col-md-3 col-sm-6"><div class="form-group"><input type="text" class="form-control" placeholder="สถานที่่จบการศึกษา" name="ProfilesEdu[' + numItems + '][institution]"></div></div>'
-                            +'<div class="col-md-2 col-sm-6"><div class="form-group"><input class="form-control datetimepicker" autocomplete="off" id="ProfilesEdu_' + numItems + '_date_graduation" placeholder="วันที่จบการศึกษา "name="ProfilesEdu[' + numItems + '][date_graduation]"> </div></div><span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> Delete</span></div>'); //add input box
-                            $('.datetimepicker').datetimepicker({
-                                format: 'Y-m-d',
-                                step: 10,
-                                timepickerScrollbar: false
+                                } else {
+                                    alert('You Reached the limits')
+                                }
                             });
-                            $('.xdsoft_timepicker').hide();
+                            $(wrapper).on("click", ".delete", function(e) {
+                                e.preventDefault();
+                                $(this).parent('.del_edu').remove();
+                                x--;
+                            });
+                        });
+                        $('.default_datetimepicker').datetimepicker({
+                            format: 'Y-m-d',
+                            step: 10,
+                            timepickerScrollbar: false
+                        });
 
-                        } else {
-                            alert('You Reached the limits')
-                        }
-                    });
-                    $(wrapper).on("click", ".delete", function(e) {
-                        e.preventDefault();
-                        $(this).parent('.del_edu').remove();
-                        x--;
-                    });
-                });
-                $('.default_datetimepicker').datetimepicker({
-                    format: 'Y-m-d',
-                    step: 10,
-                    timepickerScrollbar: false
-                });
+                        $('.xdsoft_timepicker').hide();
 
-                $('.xdsoft_timepicker').hide();
+                        $(function() {
+                            $('.user_ID').change(function(event,length){
+                                var max = $(this).attr('maxlength');
+                                var vals = $(this).val();
+                                if (max.length < vals) { 
+                                    var setval = '' + $(this).val();
+                                    while (setval.length < max) {
+                                     setval = '0' + setval;
+                                 }
+                                 $(this).val(setval);
 
-                $(function() {
-                    $('.user_ID').change(function(event,length){
-                        var max = $(this).attr('maxlength');
-                        var vals = $(this).val();
-                        if (max.length < vals) { 
-                            var setval = '' + $(this).val();
-                            while (setval.length < max) {
-                             setval = '0' + setval;
-                         }
-                         $(this).val(setval);
-
-                     } 
+                             } 
                         // else {
                         //     alert("คุณได้กรอกเลขประจำตัวพนักงานเกินกว่าที่กำหนด");
                         //      $(this).empty();
@@ -999,67 +1019,71 @@ function editName(filedoc_id){
                         // }
                     });
 
-                    $('#accept').change(function(event) {
-                        $("#id_employee").hide();
-                        $("#employee_type").hide();
-                        $("#employee_detail").hide();
-                    });
+                            $('#accept').change(function(event) {
+                                $(".id_employee").hide();
+                                $('.form_name').show();
+                                $('.form_number_id').show();
+                                $("#office-section").hide();
+                            });
 
-                    $("#reject").change(function(event) {
-                        $("#id_employee").show();
-                        $("#employee_type").show();
-                        $("#employee_detail").show();
-                        $("#office-section").show();
-                    });
-                    $("#id_employee").hide();
-                    $("#employee_type").hide();
-                    $("#employee_detail").hide();
-                    $('#passport_card').hide();
-                    $('#card-1').change(function(event) {
-                        $('#passport_card').hide();
-                        $('#identification_card').show();
-                    });
+                            $("#reject").change(function() {
+                                $(".id_employee").show();
+                                $('.form_name').show();
+                                $('.form_number_id').show();
+                                $("#office-section").show();
+                            });
 
-                    $('#card-2').change(function(event) {
-                        $('#passport_card').show();
-                        $('#identification_card').hide();
-                    });
+                            $(".id_employee").hide();
+                            $('#passport_card').hide();
+                            $("#office-section").show();
+                            $('.form_name').hide();
+                            $('.form_number_id').hide();
 
-                    $(".department").change(function() {
-                        var id = $(".department").val();
-                        $.ajax({
-                            type: 'POST',
-                            url: "<?= Yii::app()->createUrl('Registration/ListPosition'); ?>",
-                            data: {
-                                id: id
-                            },
-                            success: function(data) {
-                                $('.position').empty();
-                                $('.position').append(data);
-                            }
+                            $('#card-1').change(function(event) {
+                                $('#passport_card').hide();
+                                $('#identification_card').show();
+                            });
+
+                            $('#card-2').change(function(event) {
+                                $('#passport_card').show();
+                                $('#identification_card').hide();
+                            });
+
+                            $(".department").change(function() {
+                                var id = $(".department").val();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "<?= Yii::app()->createUrl('Registration/ListPosition'); ?>",
+                                    data: {
+                                        id: id
+                                    },
+                                    success: function(data) {
+                                        $('.position').empty();
+                                        $('.position').append(data);
+                                    }
+                                });
+                            });
+
+                            $(".birth").change(function() {
+                                var item = $(".birth").val();
+                                $.ajax({
+                                    type: 'POST',
+                                    url: "<?= Yii::app()->createUrl('Registration/CalculateBirthday'); ?>",
+                                    data: {
+                                        item: item
+                                    },
+                                    success: function(data) {
+                                        $('.ages').val(data);
+                                        $('.ages').append(data);
+                                    }
+                                });
+                            });
                         });
-                    });
-
-                    $(".birth").change(function() {
-                        var item = $(".birth").val();
-                        $.ajax({
-                            type: 'POST',
-                            url: "<?= Yii::app()->createUrl('Registration/CalculateBirthday'); ?>",
-                            data: {
-                                item: item
-                            },
-                            success: function(data) {
-                                $('.ages').val(data);
-                                $('.ages').append(data);
-                            }
-                        });
-                    });
-                });
-            </script>
+                    </script>
 
 
-        </section>
-        <div class="login-bg">
-            <img class="login-img-1" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg3.png">
-            <img class="login-img-2" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg4.png">
-        </div>
+                </section>
+                <div class="login-bg">
+                    <img class="login-img-1" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg3.png">
+                    <img class="login-img-2" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg4.png">
+                </div>

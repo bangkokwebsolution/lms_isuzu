@@ -1074,6 +1074,8 @@ public function actionUploadifiveEdu() {
         $FileEdu = FileEdu::model()->findByPK($_GET['id']);
         if($FileEdu){
             $FileEdu->file_name = $_GET['name'];
+            $FileEdu->update_date = date("Y-m-d");
+            $FileEdu->update_by = Yii::app()->user->id;
             $FileEdu->save();
         }
     }
@@ -1090,6 +1092,36 @@ public function actionUploadifiveEdu() {
             }
 
             if($FileEdu->delete($id)){
+                echo 1;
+            }else{
+                echo 0;
+            }
+        }
+    }
+
+    public function actionEditNameTrain()
+    {
+        $FileTraining = FileTraining::model()->findByPK($_GET['id']);
+        if($FileTraining){
+            $FileTraining->file_name = $_GET['name'];
+            $FileTraining->update_date = date("Y-m-d");
+            $FileTraining->update_by = Yii::app()->user->id;
+            $FileTraining->save();
+        }
+    }
+     public function actionDeleteFileTrain($id)
+    {
+        $FileTraining = FileTraining::model()->findByPk($id);
+        
+        if($FileTraining->count()>0){
+
+            $webroot = Yii::app()->basePath."/../uploads/Trainingfile/";
+
+            if(is_file($webroot.$FileTraining->filename)){
+                unlink($webroot.$FileTraining->filename);
+            }
+
+            if($FileTraining->delete($id)){
                 echo 1;
             }else{
                 echo 0;
@@ -1172,6 +1204,8 @@ public function actionUploadifiveEdu() {
         array(':department_id'=>$_POST['id']));
 
        $data=CHtml::listData($model,'id','position_title',array('empty' => 'ตำแหน่ง'));
+       $sub_list = Yii::app()->session['lang'] == 1?'Select Pocition ':'เลือกตำแหน่ง';
+       $data = '<option value ="">'.$sub_list.'</option>';
        foreach ($model as $key => $value) {
         $data .= '<option value = "'.$value->id.'"'.'>'.$value->position_title.'</option>';
     }

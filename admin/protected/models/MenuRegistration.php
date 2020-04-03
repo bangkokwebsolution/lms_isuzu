@@ -27,6 +27,33 @@
  * @property string $label_dropdown_mrs
  * @property integer $lang_id
  * @property integer $parent_id
+ * @property string $label_general_public
+ * @property string $label_personnel
+ * @property string $label_employee_id
+ * @property string $label_passport
+ * @property string $label_date_of_expiry
+ * @property string $label_birthday
+ * @property string $label_age
+ * @property string $label_race
+ * @property string $label_nationality
+ * @property string $label_religion
+ * @property string $label_sex
+ * @property string $label_male
+ * @property string $label_female
+ * @property string $label_marital_status
+ * @property string $label_single
+ * @property string $label_marry
+ * @property string $label_address
+ * @property string $label_id_Line
+ * @property string $label_history_of_severe_illness
+ * @property string $label_never
+ * @property string $label_ever
+ * @property string $label_educational
+ * @property string $label_education_level
+ * @property string $label_academy
+ * @property string $label_graduation_year
+ * @property string $label_office
+ * @property string $label_ship
  */
 class MenuRegistration extends CActiveRecord
 {
@@ -48,11 +75,12 @@ class MenuRegistration extends CActiveRecord
 		return array(
 			array('id', 'required'),
 			array('id, lang_id, parent_id', 'numerical', 'integerOnly'=>true),
-			array('label_regis, label_homepage, label_identification,label_accept,label_reject, label_email, label_courseAll, label_placeholder_course, label_title, label_firstname, label_lastname, label_phone, label_company, label_position, label_placeholder_company, label_placeholder_position, label_save, label_alert_identification, label_alert_notNumber', 'length', 'max'=>255),
+			array('label_regis, label_homepage, label_identification, label_email, label_courseAll, label_placeholder_course, label_title, label_firstname, label_lastname, label_phone, label_station, label_company, label_position, label_placeholder_station, label_placeholder_company, label_placeholder_position, label_save, label_alert_identification, label_alert_notNumber, label_general_public, label_personnel, label_employee_id, label_passport, label_date_of_expiry, label_birthday, label_age, label_race, label_nationality, label_religion, label_sex, label_male, label_female, label_marital_status, label_single, label_marry, label_address, label_id_Line, label_history_of_severe_illness, label_never, label_ever, label_educational, label_education_level, label_academy, label_graduation_year, label_office, label_ship', 'length', 'max'=>255),
+			array('label_accept, label_reject', 'length', 'max'=>100),
 			array('label_dropdown_mr, label_dropdown_ms, label_dropdown_mrs', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, label_regis, label_homepage,label_accept,label_reject, label_identification, label_email, label_courseAll, label_placeholder_course, label_title, label_firstname, label_lastname, label_phone, label_company, label_position, label_placeholder_company, label_placeholder_position, label_save, label_alert_identification, label_alert_notNumber, label_dropdown_mr, label_dropdown_ms, label_dropdown_mrs, lang_id, parent_id', 'safe', 'on'=>'search'),
+			array('id, label_regis, label_homepage, label_accept, label_reject, label_identification, label_email, label_courseAll, label_placeholder_course, label_title, label_firstname, label_lastname, label_phone, label_station, label_company, label_position, label_placeholder_station, label_placeholder_company, label_placeholder_position, label_save, label_alert_identification, label_alert_notNumber, label_dropdown_mr, label_dropdown_ms, label_dropdown_mrs, lang_id, parent_id, label_general_public, label_personnel, label_employee_id, label_passport, label_date_of_expiry, label_birthday, label_age, label_race, label_nationality, label_religion, label_sex, label_male, label_female, label_marital_status, label_single, label_marry, label_address, label_id_Line, label_history_of_severe_illness, label_never, label_ever, label_educational, label_education_level, label_academy, label_graduation_year, label_office, label_ship', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -98,6 +126,33 @@ class MenuRegistration extends CActiveRecord
 			'label_dropdown_mrs' => 'นาง',
 			'lang_id' => 'ภาษา',
 			'parent_id' => 'Parent',
+			'label_general_public' => 'Label General Public',
+			'label_personnel' => 'Label Personnel',
+			'label_employee_id' => 'Label Employee',
+			'label_passport' => 'Label Passport',
+			'label_date_of_expiry' => 'Label Date Of Expiry',
+			'label_birthday' => 'Label Birthday',
+			'label_age' => 'Label Age',
+			'label_race' => 'Label Race',
+			'label_nationality' => 'Label Nationality',
+			'label_religion' => 'Label Religion',
+			'label_sex' => 'Label Sex',
+			'label_male' => 'Label Male',
+			'label_female' => 'Label Female',
+			'label_marital_status' => 'Label Marital Status',
+			'label_single' => 'Label Single',
+			'label_marry' => 'Label Marry',
+			'label_address' => 'Label Address',
+			'label_id_Line' => 'Label Id Line',
+			'label_history_of_severe_illness' => 'Label History Of Severe Illness',
+			'label_never' => 'Label Never',
+			'label_ever' => 'Label Ever',
+			'label_educational' => 'Label Educational',
+			'label_education_level' => 'Label Education Level',
+			'label_academy' => 'Label Academy',
+			'label_graduation_year' => 'Label Graduation Year',
+			'label_office' => 'Label Office',
+			'label_ship' => 'Label Ship',
 		);
 	}
 
@@ -144,6 +199,33 @@ class MenuRegistration extends CActiveRecord
 		$criteria->compare('label_dropdown_mrs',$this->label_dropdown_mrs,true);
 		$criteria->compare('lang_id',$this->lang_id);
 		$criteria->compare('parent_id',$this->parent_id);
+		$criteria->compare('label_general_public',$this->label_general_public,true);
+		$criteria->compare('label_personnel',$this->label_personnel,true);
+		$criteria->compare('label_employee_id',$this->label_employee_id,true);
+		$criteria->compare('label_passport',$this->label_passport,true);
+		$criteria->compare('label_date_of_expiry',$this->label_date_of_expiry,true);
+		$criteria->compare('label_birthday',$this->label_birthday,true);
+		$criteria->compare('label_age',$this->label_age,true);
+		$criteria->compare('label_race',$this->label_race,true);
+		$criteria->compare('label_nationality',$this->label_nationality,true);
+		$criteria->compare('label_religion',$this->label_religion,true);
+		$criteria->compare('label_sex',$this->label_sex,true);
+		$criteria->compare('label_male',$this->label_male,true);
+		$criteria->compare('label_female',$this->label_female,true);
+		$criteria->compare('label_marital_status',$this->label_marital_status,true);
+		$criteria->compare('label_single',$this->label_single,true);
+		$criteria->compare('label_marry',$this->label_marry,true);
+		$criteria->compare('label_address',$this->label_address,true);
+		$criteria->compare('label_id_Line',$this->label_id_Line,true);
+		$criteria->compare('label_history_of_severe_illness',$this->label_history_of_severe_illness,true);
+		$criteria->compare('label_never',$this->label_never,true);
+		$criteria->compare('label_ever',$this->label_ever,true);
+		$criteria->compare('label_educational',$this->label_educational,true);
+		$criteria->compare('label_education_level',$this->label_education_level,true);
+		$criteria->compare('label_academy',$this->label_academy,true);
+		$criteria->compare('label_graduation_year',$this->label_graduation_year,true);
+		$criteria->compare('label_office',$this->label_office,true);
+		$criteria->compare('label_ship',$this->label_ship,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
