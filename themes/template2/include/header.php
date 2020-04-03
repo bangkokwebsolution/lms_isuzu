@@ -1,6 +1,24 @@
 <div class="backtotop"><span><i class="fas fa-arrow-up"></i> <small>top</small></span></div>
+<a class="contact-admin" data-toggle="modal" href="#user-report">
+    <div id="mascot-contact"></div>
+</a>
 
-<a class="contact-admin" data-toggle="modal" href="#user-report"></a>
+<?php
+$mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact/mascot-contact.json');
+?>
+<script>
+    var animation = bodymovin.loadAnimation({
+        container: document.getElementById('mascot-contact'),
+        renderer: 'svg',
+        autoplay : true,
+        loop: true,
+        path: '<?php echo $mascot_path; ?>'
+    });
+    console.log('test')
+</script>
+
+
+
 <div class="modal fade" id="user-report">
     <div class="modal-dialog">
         <div class="modal-content">

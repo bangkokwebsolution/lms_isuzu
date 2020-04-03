@@ -117,7 +117,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     <div class="banner">
         <div id="banner-thoresen"></div>
         <?php
-         $banner_path = Yii::app()->createUrl('/themes/template2/banner-main/main-bg.json');
+         $banner_path = Yii::app()->createUrl('/themes/template2/animation/banner-main/main-bg.json');
         ?>
         <script>
             var animation = bodymovin.loadAnimation({
@@ -125,7 +125,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 renderer: 'svg',
                 autoplay : true,
                 loop: true,
-                path: '<?php echo $banner_path; ?>'//'./themes/template2/banner-main/main-bg.json'
+                path: '<?php echo $banner_path; ?>'
             });
         </script>
     </div>
