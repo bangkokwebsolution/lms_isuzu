@@ -126,6 +126,7 @@ function DateThai($strDate)
                     }
 
                     ?>
+
                     <div class="gallery_product col-sm-6 col-md-4 filter cate-all">
                         <div class="well text-center">
                             <!--                            <a href="course-detail.php-->
@@ -167,61 +168,62 @@ function DateThai($strDate)
                         if ($model->lang_id != 1) {
                             $model->course_id = $model->parent_id;
                         }
+
                         if (!$flag) {
                             $modelChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $model->course_id, 'order' => 'course_id'));
                             if ($modelChildren) {
-                               // $model->course_id = $modelChildren->course_id;
-                               $model->course_title = $modelChildren->course_title;
-                               $model->course_short_title = $modelChildren->course_short_title;
-                               $model->course_detail = $modelChildren->course_detail;
-                               $model->course_picture = $modelChildren->course_picture;
-                           }
-                       }
-                       $expireDate = Helpers::lib()->checkCourseExpireTms($schedule);
-                       if ($expireDate) {
-                        $evnt = '';
-                        $url = Yii::app()->createUrl('course/detail/', array('id' => $model->course_id, 'courseType' => 'tms'));
-                    } else {
-                            // $evnt = 'onclick="alertMsg(\'ระบบ\',\'หลักสูตรหมดอายุ\',\'error\')"';
-                        if (date($schedule->training_date_start) > date("Y-m-d")) {
-                            $evnt = 'onclick="alertMsgNotNow()"';
-                            $url = 'javascript:void(0)';
-                        } else {
-                            $evnt = 'onclick="alertMsg()"';
-                            $url = 'javascript:void(0)';
+                        // $model->course_id = $modelChildren->course_id;
+                                $model->course_title = $modelChildren->course_title;
+                                $model->course_short_title = $modelChildren->course_short_title;
+                                $model->course_detail = $modelChildren->course_detail;
+                                $model->course_picture = $modelChildren->course_picture;
+                            }
                         }
-                    }
-                    ?>
+                        $expireDate = Helpers::lib()->checkCourseExpireTms($schedule);
+                        if ($expireDate) {
+                            $evnt = '';
+                            $url = Yii::app()->createUrl('course/detail/', array('id' => $model->course_id, 'courseType' => 'tms'));
+                        } else {
+            // $evnt = 'onclick="alertMsg(\'ระบบ\',\'หลักสูตรหมดอายุ\',\'error\')"';
+                            if (date($schedule->training_date_start) > date("Y-m-d")) {
+                                $evnt = 'onclick="alertMsgNotNow()"';
+                                $url = 'javascript:void(0)';
+                            } else {
+                                $evnt = 'onclick="alertMsg()"';
+                                $url = 'javascript:void(0)';
+                            }
+                        }
+                        ?>
 
-                    <div class="gallery_product col-sm-6 col-md-4 filter <?= $model->cate_id ?>" style="display: none;">
-                        <div class="well text-center">
-                            <!--                            <a href="course-detail.php-->
-                                <a href="<?= $url; ?>" <?= $evnt ?>>
-                                    <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/courseonline/' . $model->course_id . '/thumb/' . $model->course_picture)) { ?>
-                                        <div class="course-img" style="background-image: url(<?php echo Yii::app()->request->baseUrl; ?>/uploads/courseonline/<?php echo $model->course_id . '/thumb/' . $model->course_picture; ?>);"></div>
-                                    <?php } else { ?>
-                                        <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/book.png);"></div>
-                                    <?php } ?>
-                                    <div class="course-detail">
+                        <div class="gallery_product col-sm-6 col-md-4 filter <?= $model->cate_id ?>" style="display: none;">
+                            <div class="well text-center">
+                                <!--                            <a href="course-detail.php-->
+                                    <a href="<?= $url; ?>" <?= $evnt ?>>
+                                        <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/courseonline/' . $model->course_id . '/thumb/' . $model->course_picture)) { ?>
+                                            <div class="course-img" style="background-image: url(<?php echo Yii::app()->request->baseUrl; ?>/uploads/courseonline/<?php echo $model->course_id . '/thumb/' . $model->course_picture; ?>);"></div>
+                                        <?php } else { ?>
+                                            <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/book.png);"></div>
+                                        <?php } ?>
+                                        <div class="course-detail">
 
-                                        <?php
-                                        $courseStatus = Helpers::lib()->checkCoursePass($model->id);
+                                            <?php
+                                            $courseStatus = Helpers::lib()->checkCoursePass($model->id);
 
-                                        if ($courseStatus == "notPass") {
-                                            $statusLearnClass = 'muted';
-                                        } else if ($courseStatus == "learning") {
-                                            $statusLearnClass = 'warning';
-                                        } else if ($courseStatus == "pass") {
-                                            $statusLearnClass = 'success';
-                                        }
-                                        ?>
+                                            if ($courseStatus == "notPass") {
+                                                $statusLearnClass = 'muted';
+                                            } else if ($courseStatus == "learning") {
+                                                $statusLearnClass = 'warning';
+                                            } else if ($courseStatus == "pass") {
+                                                $statusLearnClass = 'success';
+                                            }
+                                            ?>
 
 
-                                        <h4 class="text11"><i class="fa fa-trophy fa-sm text-<?= $statusLearnClass; ?>"></i> &nbsp <?= $model->course_title ?>....</h4>
+                                            <h4 class="text11"><i class="fa fa-trophy fa-sm text-<?= $statusLearnClass; ?>"></i> &nbsp <?= $model->course_title ?>....</h4>
 
-                                        <p class="p"><?= $model->course_short_title ?></p>
-                                        <!-- <i class="fa fa-calendar"></i> -->
-                                        <hr class="line-course">
+                                            <p class="p"><?= $model->course_short_title ?></p>
+                                            <!-- <i class="fa fa-calendar"></i> -->
+                                            <hr class="line-course">
                                         <!--  <p  class="p" style="min-height: 0em; margin-top: 0px; margin-bottom: 0px;"> วันที่เริ่มเรียน <?= DateThai($model->course_date_start); ?> </p>
                                             <p  class="p" style="min-height: 0em; margin-top: 0px; margin-bottom: 0px;"> วันที่สิ้นสุด <?= DateThai($model->course_date_end); ?></p>  -->
                                             <p class="p" style="min-height: 0em; margin-top: 0px; margin-bottom: 0px;"> <?= $label->label_dateStart ?> <?php echo Helpers::lib()->DateLangTms($schedule->training_date_start, Yii::app()->session['lang']); ?> </p>
@@ -239,17 +241,6 @@ function DateThai($strDate)
                                 $model->course_id = $model->parent_id;
                             }
 
-                            // var_dump($model->course_id);
-                            if (!$flag) {
-                                $modelChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $model->course_id, 'order' => 'course_id'));
-                                if ($modelChildren) {
-                                    $model->course_id = $modelChildren->course_id;
-                                    $model->course_title = $modelChildren->course_title;
-                                    $model->course_short_title = $modelChildren->course_short_title;
-                                    $model->course_detail = $modelChildren->course_detail;
-                                    $model->course_picture = $modelChildren->course_picture;
-                                }
-                            }
                             // var_dump(expression)
                             $expireDate = Helpers::lib()->checkCourseExpire($model);
                             if ($expireDate) {
@@ -270,6 +261,18 @@ function DateThai($strDate)
                                 <div class="well text-center">
                                     <!--                            <a href="course-detail.php-->
                                         <a href="<?= $url; ?>" <?= $evnt ?>>
+                                            <?php
+                                            if (!$flag) {
+                                                $modelChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $model->course_id, 'order' => 'course_id'));
+                                                if ($modelChildren) {
+                                                    $model->course_id = $modelChildren->course_id;
+                                                    $model->course_title = $modelChildren->course_title;
+                                                    $model->course_short_title = $modelChildren->course_short_title;
+                                                    $model->course_detail = $modelChildren->course_detail;
+                                                    $model->course_picture = $modelChildren->course_picture;
+                                                }
+                                            }
+                                            ?>
                                             <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/courseonline/' . $model->course_id . '/thumb/' . $model->course_picture)) { ?>
                                                 <div class="course-img" style="background-image: url(<?php echo Yii::app()->request->baseUrl; ?>/uploads/courseonline/<?php echo $model->course_id . '/thumb/' . $model->course_picture; ?>);"></div>
                                             <?php } else { ?>
