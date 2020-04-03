@@ -114,16 +114,18 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
             });
         </script>
     <?php } ?>
-
     <div class="banner">
         <div id="banner-thoresen"></div>
+        <?php
+         $banner_path = Yii::app()->createUrl('/themes/template2/banner-main/main-bg.json');
+        ?>
         <script>
             var animation = bodymovin.loadAnimation({
                 container: document.getElementById('banner-thoresen'),
                 renderer: 'svg',
                 autoplay : true,
                 loop: true,
-                path: './themes/template2/banner-main/main-bg.json'
+                path: '<?php echo $banner_path; ?>'//'./themes/template2/banner-main/main-bg.json'
             });
         </script>
     </div>
