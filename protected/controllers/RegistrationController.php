@@ -335,6 +335,7 @@ if (isset($_POST['Profile'])) {
     $users->email = $_POST['User'][email];
     $users->department_id = $_POST['User'][department_id];
     $users->position_id = $_POST['User'][position_id];
+    $users->branch_id = $_POST['User'][branch_id];
             // $users->password = $_POST['User'][password];
             // $passwordshow = $_POST['Users'][password];
 
@@ -568,7 +569,7 @@ unset($session['idxTrain']);
 unset($session['pathComTrain']);
 unset($session['filenameComTrain']);
 unset($session['filenameOriComTrain']);
-$this->render('index', array('profile' => $profile, 'users' => $users,'label'=> $label, 'ProfilesEdu' => $ProfilesEdu, 'status_sm' => $status_sm, 'type_user' => $type_user, 'type_employee' => $type_employee, 'history_of_illness' => $history_of_illness, 'type_card'=> $type_card, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining));
+$this->render('index', array('profile' => $profile, 'users' => $users,'label'=> $label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining));
 }
 public function actionUpdate() {
     if(Yii::app()->user->id){
@@ -616,11 +617,11 @@ public function actionUpdate() {
 
     $this->performAjaxValidation($ProfilesEdu);  
 
-    $type_user = (!empty($_POST['type_user']))? $_POST['type_user']:3;
-    $history_of_illness = (!empty($_POST['history_of_illness']))? $_POST['history_of_illness']:'n';
-    $status_sm = (!empty($_POST['status_sm']))? $_POST['status_sm']:'s';
-    $type_employee = (!empty($_POST['type_employee']))? $_POST['type_employee']:'ship'; 
-    $type_card = (!empty($_POST['type_card']))? $_POST['type_card']:'p';       
+    // $type_user = (!empty($_POST['type_user']))? $_POST['type_user']:3;
+    // $history_of_illness = (!empty($_POST['history_of_illness']))? $_POST['history_of_illness']:'n';
+    // $status_sm = (!empty($_POST['status_sm']))? $_POST['status_sm']:'s';
+    // $type_employee = (!empty($_POST['type_employee']))? $_POST['type_employee']:'ship'; 
+    // $type_card = (!empty($_POST['type_card']))? $_POST['type_card']:'p';       
 
     if (isset($_POST['Profile'])) {
         // var_dump($_POST['User']);
@@ -645,7 +646,10 @@ public function actionUpdate() {
 //             }
 //         }
 //         $users->position_id = $position->id;
-        $users->position_name = $_POST['User'][position_name];
+        $users->department_id = $_POST['User'][department_id];
+    $users->position_id = $_POST['User'][position_id];
+    $users->branch_id = $_POST['User'][branch_id];
+        //$users->position_name = $_POST['User'][position_name];
            // $users->position_id = $_POST['User'][position_id];
         // $users->division_id = $_POST['User'][division_id];
         // $users->department_id = $_POST['User'][department_id];
@@ -1208,6 +1212,21 @@ public function actionUploadifiveEdu() {
        $data = '<option value ="">'.$sub_list.'</option>';
        foreach ($model as $key => $value) {
         $data .= '<option value = "'.$value->id.'"'.'>'.$value->position_title.'</option>';
+    }
+    echo ($data);
+
+}
+
+public function actionListBranch(){
+
+       $model=Branch::model()->findAll('position_id=:position_id',
+        array(':position_id'=>$_POST['id']));
+
+       $data=CHtml::listData($model,'id','branch_name',array('empty' => 'สาขา'));
+       $sub_list = Yii::app()->session['lang'] == 1?'Select Branch ':'เลือกสาขา';
+       $data = '<option value ="">'.$sub_list.'</option>';
+       foreach ($model as $key => $value) {
+        $data .= '<option value = "'.$value->id.'"'.'>'.$value->branch_name.'</option>';
     }
     echo ($data);
 

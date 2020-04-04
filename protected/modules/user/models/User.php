@@ -79,7 +79,7 @@ class User extends CActiveRecord
 			array('superuser, status, online_status,online_user', 'numerical', 'integerOnly'=>true),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'update'),
-			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,station_id,company_id, division_id,position_id,lastactivity,orgchart_lv2,del_status,avatar,pic_cardid2,employee_id', 'safe', 'on'=>'search'),
+			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,station_id,company_id, division_id,position_id,lastactivity,orgchart_lv2,del_status,avatar,pic_cardid2,employee_id,branch_id', 'safe', 'on'=>'search'),
 			//array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
 			array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 			// array('confirmpass', 'compare', 'compareAttribute'=>'newpassword', 'message' => UserModule::t("Retype Password is incorrect.")),
@@ -135,6 +135,10 @@ class User extends CActiveRecord
 
 		$relations['company'] = array(
 			self::BELONGS_TO, 'Company', array('company_id'=>'company_id')
+		);
+
+		$relations['branch'] = array(
+			self::BELONGS_TO, 'Company', array('branch_id'=>'branch_id')
 		);
 
 		$relations['position'] = array(
@@ -252,7 +256,8 @@ class User extends CActiveRecord
 			'position_name'=> UserModule::t("ตำแหน่ง"),
 			'captcha' => 'Captcha',
 			'employee_id' => 'เลขประจำตัวพนักงาน',
-			'repass_status' => 'สถานะการเปลี่ยนรหัสผ่าน'
+			'repass_status' => 'สถานะการเปลี่ยนรหัสผ่าน',
+			'branch_id' => UserModule::t("สาขา"),
 
 			// 'passport' => UserModule::t("passport"),
 		);
@@ -274,7 +279,7 @@ class User extends CActiveRecord
                 'condition'=>'superuser=1',
             ),
             'notsafe'=>array(
-            	'select' => 'id, username, password, department_id, pic_user, email, activkey, create_at, superuser, status, online_status,online_user,station_id,company_id, division_id,position_id,orgchart_lv2,pic_cardid2,employee_id,repass_status',
+            	'select' => 'id, username, password, department_id, pic_user, email, activkey, create_at, superuser, status, online_status,online_user,station_id,company_id, division_id,position_id,orgchart_lv2,pic_cardid2,employee_id,repass_status,branch_id',
             ),
         );
     }
