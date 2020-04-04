@@ -70,9 +70,12 @@ Class Helpers2
         $mail->ClearAddresses();
         $mail->CharSet = 'utf-8';
         $mail->IsSMTP();
-        $mail->Host = 'smtp.gmail.com'; // gmail server
-        $mail->Port = '465'; // port number
-        $mail->SMTPSecure = "ssl";
+        // $mail->Host = 'smtp.gmail.com'; // gmail server
+        // $mail->Port = '465'; // port number
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = '587'; // port number
+        $mail->SMTPSecure = "tls";
+        //$mail->SMTPSecure = "ssl";
         $mail->SMTPKeepAlive = true;
         $mail->Mailer = "smtp";
         $mail->SMTPAuth = true;

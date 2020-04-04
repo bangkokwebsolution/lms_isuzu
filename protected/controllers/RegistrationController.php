@@ -274,7 +274,7 @@ class RegistrationController extends Controller {
    //      $msg = 'ปิดการลงทะเบียน';
    //      Yii::app()->user->setFlash('msg',$msg);
    //  }
-   //  $chk_status_email = $SettingAll['CONFIRM_MAIL'];
+    $chk_status_email = $SettingAll['CONFIRM_MAIL'];
    //  if (!$chk_status_reg || $check) {
    //      // $this->redirect(array('site/index','msg'=>$msg));
    //     $this->redirect(array('site/index'));
@@ -307,12 +307,7 @@ if(!$label){
         'params' => array(':lang_id' => 1)
     ));
 }
- // $type_user = (!empty($_POST['type_user']))? $_POST['type_user']:3;
- // $history_of_illness = (!empty($_POST['history_of_illness']))? $_POST['history_of_illness']:'n';
- // $status_sm = (!empty($_POST['status_sm']))? $_POST['status_sm']:'s';
- // $type_employee = (!empty($_POST['type_employee']))? $_POST['type_employee']:'office'; 
- // $type_card = (!empty($_POST['type_card']))? $_POST['type_card']:'p';
-//var_dump($type_card);exit();
+
 if (isset($_POST['Profile'])) {
 
     //var_dump($_POST);exit();
@@ -340,11 +335,14 @@ if (isset($_POST['Profile'])) {
             // $passwordshow = $_POST['Users'][password];
 
     $genpass = ($type_card == 'p')?substr($profile->passport, 0):substr($profile->identification, -6);
-           // $users->verifyPassword = $genpass;
+    $users->password = $genpass;
+    $users->verifyPassword = $genpass;
+
            // $users->orgchart_lv2 = $Neworg;
     $users->activkey = ($type_card == 'p')?UserModule::encrypting(microtime() . $profile->identification):UserModule::encrypting(microtime() . $profile->passport);
 
     $users->password = ($type_card == 'p')?UserModule::encrypting(microtime() . $profile->identification):UserModule::encrypting(microtime() . $profile->passport);
+//$users->verifyPassword = ($type_card == 'p')?UserModule::encrypting(microtime() . $profile->identification):UserModule::encrypting(microtime() . $profile->passport);
 // var_dump($users->activkey);exit();
 //     $users->password = $_POST['idcard']; 
 
@@ -387,11 +385,11 @@ if (isset($_POST['Profile'])) {
     $profile->line_id = $_POST['Profile'][line_id];
      //var_dump($_REQUEST);
 
-    // if(!$chk_status_email){
-    //     $users->status = 1;
-    // } else {
-    //     $users->status = 0;
-    // }
+    if(!$chk_status_email){
+        $users->status = 1;
+    } else {
+        $users->status = 0;
+    }
     // $profile->generation = $gen->id_gen;
 
    /* $criteria=new CDbCriteria;
@@ -414,17 +412,19 @@ if (isset($_POST['Profile'])) {
         $responseData = json_decode($verifyResponse);
         if ($responseData->success)$users->captcha = $responseData->success;
     }*/
+//     var_dump( $profile->validate());
 // var_dump( $users->validate());
 //  $errors = $users->getErrors();
 //         var_dump($errors); //or print_r($errors);
 //   //if (isset($_POST['PController']) && isset($_POST['PAction'])) {    
 //     exit();
+
     if ($profile->validate() && $users->validate()) {
 //                    เข้ารหัสpassword
                     //$users->password = UserModule::encrypting($users->password);
                     //$users->verifyPassword = UserModule::encrypting($users->verifyPassword);
-        $users->password = UserModule::encrypting($genpass);
- //       $users->verifyPassword = UserModule::encrypting($_POST['idcard']);
+        $users->password = UserModule::encrypting($users->password);
+        
                     // $users->department_id = 1; // fix ประเภทสมาชิกหน้าบ้านเป็นสมาชิกทั่วไป
     } else {
         //  $errors = $users->getErrors();
@@ -519,32 +519,44 @@ if (isset($_POST['Profile'])) {
         }
     }
     if ($profile->save()) {
-        if($chk_status_email){
+        
+        // if($chk_status_email){
                                 //////////// send mail //////////
 
             $activation_url = $this->createAbsoluteUrl('/user/activation/activation', array("activkey" => $users->activkey, "email" => $users->email));
+            
             $to = array(
              'email'=>$users->email,
              'firstname'=>$profile->firstname,
              'lastname'=>$profile->lastname,
          );
-            $message = $this->renderPartial('Form_mail',array('emailshow'=>$users->email,'passwordshow'=>$passwordshow,'nameshow'=>$profile->firstname,'activation_url'=>$activation_url),true);
+            $firstname = $profile->firstname;
+            $lastname = $profile->lastname;
+            $username = $users->username;
+            //$message = $this->renderPartial('Form_mail',array('emailshow'=>$users->email,'passwordshow'=>$genpass,'nameshow'=>$profile->firstname,'activation_url'=>$activation_url),true);
+            $message = $this->renderPartial('Form_mail',array('email'=>$users->email,'genpass'=>$genpass,'username'=>$username,'firstname'=>$firstname,'lastname'=>$lastname),true);
             $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
-        }else{
-
-            $login = '1';
-                            // $this->redirect(array('site/index','profile' => $profile, 'users' => array(
-                            //     'email'=>$users->email,
-                            //     'password'=>$users->password),'login' => $login));
             Yii::app()->user->setFlash('profile',$profile->identification);
-            Yii::app()->user->setFlash('users', $users->email);
+             Yii::app()->user->setFlash('users', $users->email);
+             Yii::app()->user->setFlash('icon', "success");
+             $this->redirect(array('site/index'));
 
-                            // Yii::app()->user->setFlash('msg', "แก้ไขข้อมูลเรียบร้อย");
-            Yii::app()->user->setFlash('icon', "success");
-            $this->redirect(array('site/index'));
-                            // $this->redirect(array('site/index','profile' => $profile->identification, 'users' => $users->email,'login' => $login));
+         
+        // }else{
 
-        }
+        //     $login = '1';
+        //                     // $this->redirect(array('site/index','profile' => $profile, 'users' => array(
+        //                     //     'email'=>$users->email,
+        //                     //     'password'=>$users->password),'login' => $login));
+        //     Yii::app()->user->setFlash('profile',$profile->identification);
+        //     Yii::app()->user->setFlash('users', $users->email);
+
+        //                     // Yii::app()->user->setFlash('msg', "แก้ไขข้อมูลเรียบร้อย");
+        //     Yii::app()->user->setFlash('icon', "success");
+        //     $this->redirect(array('site/index'));
+        //                     // $this->redirect(array('site/index','profile' => $profile->identification, 'users' => $users->email,'login' => $login));
+
+        // }
 
     } else {
 
@@ -1161,14 +1173,14 @@ public function actionUploadifiveEdu() {
                 $model = Users::model()->findbyattributes(array('id'=>Yii::app()->user->id));
                // var_dump($model);
                 $model->password = $_POST['Users']['password'];
-     //               $model->verifyPassword = $_POST['Users']['verifyPassword'];
+                    $model->verifyPassword = $_POST['Users']['verifyPassword'];
                     // var_dump($model->save());
                     // var_dump($model->getErrors());
                     // exit();
                 if ($model->validate()) {
 
                     $model->password = UserModule::encrypting($model->password);
-     //                   $model->verifyPassword = UserModule::encrypting($model->verifyPassword);
+                        $model->verifyPassword = UserModule::encrypting($model->verifyPassword);
                     $model->repass_status = 1;
 
                     if ($model->save(false)) {

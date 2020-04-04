@@ -203,35 +203,69 @@ Class Helpers
         $SettingAll = Helpers::lib()->SetUpSetting();
         $adminEmail = $SettingAll['USER_EMAIL'];
         $adminEmailPass = $SettingAll['PASS_EMAIL'];
+        
+        $adminEmail = 'mailerbws@gmail.com';
+        $adminEmailPass = 'bangkokweb0192';
 
-        $adminEmail = 'taaonprem04@airasia.com';
-        $adminEmailPass = 'P@ssw0rd';
+        $mail =  new PHPMailer(true);
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+                )
+            );
+        // $adminEmail = 'taaonprem04@airasia.com';
+        // $adminEmailPass = 'P@ssw0rd';
         // $adminEmail = 'noreply_elearning@airasia.com';
         // $adminEmailPass = '';
        
-        $mail =  new PHPMailer(true);
-        $mail->ClearAddresses();
+        // $mail =  new PHPMailer(true);
+        // $mail->ClearAddresses();
+        // $mail->CharSet = 'utf-8';
+        // $mail->Host = '172.30.110.16'; // gmail server
+        // $mail->Port = 25; // port number
+        // $mail->SMTPKeepAlive = true;
+        // $mail->Mailer = "smtp";
+        // $mail->SMTPDebug  = false;
+        // $mail->From =  $adminEmail;
+        // $mail->Username = $adminEmail;
+        // $mail->Password = $adminEmailPass;
+        // $fromText = 'E-Learning System (Red-U)';
+        // $mail->SetFrom( $adminEmail, $fromText);
+            
+        // $mail->AddAddress($adminEmail, 'คุณ' . $to['firstname'] . ' ' . $to['lastname']);
+
+        // $mail->Subject = $subject;
+        // $mail->Body = $message;
+        // $mail->IsHTML(true);
+        // // $member = $this->ldapTms($to['email']);
+        // // if($member['count'] <= 0){
+        // //     Yii::app()->user->setFlash('mail',$to['email']);
+        // // }
+        // return $mail->Send();
+         $mail->ClearAddresses();
         $mail->CharSet = 'utf-8';
-        $mail->Host = '172.30.110.16'; // gmail server
-        $mail->Port = 25; // port number
+        $mail->IsSMTP();
+       // $mail->Host = 'smtp.office365.com'; // gmail server
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = '587'; // port number
+        $mail->SMTPSecure = "tls";
         $mail->SMTPKeepAlive = true;
         $mail->Mailer = "smtp";
-        $mail->SMTPDebug  = false;
-        $mail->From =  $adminEmail;
+        $mail->SMTPAuth = true;
+        $mail->SMTPDebug = false;
         $mail->Username = $adminEmail;
         $mail->Password = $adminEmailPass;
-        $fromText = 'E-Learning System (Red-U)';
-        $mail->SetFrom( $adminEmail, $fromText);
-            
-        $mail->AddAddress($adminEmail, 'คุณ' . $to['firstname'] . ' ' . $to['lastname']);
-
+        $mail->SetFrom($adminEmail, $fromText);
+        $mail->AddAddress($to['email'], 'คุณ' . $to['firstname'] . ' ' . $to['lastname']);
         $mail->Subject = $subject;
         $mail->Body = $message;
         $mail->IsHTML(true);
-        // $member = $this->ldapTms($to['email']);
-        // if($member['count'] <= 0){
-        //     Yii::app()->user->setFlash('mail',$to['email']);
-        // }
+
+       // $mail->SMTPSecure = 'tls';
+        
+
         return $mail->Send();
     }
 

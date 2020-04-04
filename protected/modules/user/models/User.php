@@ -24,7 +24,7 @@ class User extends CActiveRecord
      * @var timestamp $lastvisit_at
 	 */
 	public $position_name;
-	//public $verifyPassword;
+	public $verifyPassword;
 	public $verifyCode;
 	public $pic_user;
 	public $newpassword;
@@ -86,7 +86,7 @@ class User extends CActiveRecord
 		):((Yii::app()->user->id==$this->id)?array(
 			//array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
 			array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
-			array('email,password', 'required'),
+			array('email,password,verifyPassword', 'required'),
 			//array('captcha', 'required','message' => "Please verify that you are not a robot."),
 			array('username', 'length', 'max'=>255),
 			array('superuser, status, online_status,online_user', 'numerical', 'integerOnly'=>true),
@@ -234,7 +234,7 @@ class User extends CActiveRecord
 			'id' => UserModule::t("Id"),
 			'username'=>UserModule::t("username"),
 			'password'=>UserModule::t("password"),
-			//'verifyPassword'=>UserModule::t("Retype Password"),
+			'verifyPassword'=>UserModule::t("Retype Password"),
 			'email'=>UserModule::t("E-mail"),
 			'verifyCode'=>UserModule::t("Verification Code"),
 			'activkey' => UserModule::t("activation key"),

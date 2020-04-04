@@ -937,10 +937,10 @@ function editNameTrain(filedoc_id){
                                     <!-- <label><?php echo $label->label_company; ?></label> -->
                                     <label><?= Yii::app()->session['lang'] == 1?'Branch ':'สาขา'; ?> </label>
                                     <?php
-                                    $departmentModel = Branch::model()->findAll(array(
+                                    $BranchModel = Branch::model()->findAll(array(
                                         "condition" => " active = 'y'"
                                     ));
-                                    $BranchList = CHtml::listData($departmentModel, 'id', 'branch_name');
+                                    $BranchList = CHtml::listData($BranchModel, 'id', 'branch_name');
                                     $BranchOption = array('class' => 'form-control Branch', 'empty' => Yii::app()->session['lang'] == 1?'Branch ':'เลือกสาขา' );
                                     ?>
                                     <?php

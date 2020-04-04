@@ -245,9 +245,9 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
     $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
 
-    $adminEmail = 'taaonprem04@airasia.com';
+    $adminEmail = 'mailerbws@gmail.com';
         // $adminEmail = 'noreply_elearning@airasia.com';
-    $adminEmailPass = 'P@ssw0rd';
+    $adminEmailPass = 'bangkokweb0192';
 
 
         /*$mail =  new PHPMailer(true);
@@ -278,41 +278,64 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         $mail->Body = $message;
         $mail->IsHTML(true);*/
         $mail =  new PHPMailer(true);
-        // $mail->SMTPOptions = array(
-        //     'ssl' => array(
-        //         'verify_peer' => false,
-        //         'verify_peer_name' => false,
-        //         'allow_self_signed' => true
-        //         )
-        // );
-        $mail->ClearAddresses();
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+                )
+        );
+        // $mail->ClearAddresses();
+        // $mail->CharSet = 'utf-8';
+        // // $mail->IsSMTP();
+        // // $mail->Host = 'smtp.gmail.com'; // gmail server
+        // // $mail->Port = '465'; // port number
+        // $mail->Host = '172.30.110.16'; // gmail server
+        // $mail->Port = 25; // port number
+        // // $mail->SMTPSecure = "ssl";
+        // $mail->SMTPKeepAlive = true;
+        // $mail->Mailer = "smtp";
+        // // $mail->SMTPAuth = true;
+        // // $mail->SMTPDebug = false;
+        // $mail->SMTPDebug  = 1;
+        // $mail->From = 'taaonprem04@airasia.com';
+        // // $mail->From = 'bws.rom@gmail.com';
+        // $mail->Username = $adminEmail;
+        // $mail->Password = $adminEmailPass;
+        // $mail->SetFrom('taaonprem04@airasia.com', $fromText);
+        
+        // $mail->AddAddress($to['email'], 'คุณ' . $to['firstname'] . ' ' . $to['lastname']);
+        // $mail->Subject = $subject;
+        // $mail->Body = $message;
+        // // $mail->addAttachment($path.$data_name->file_name);
+        // $mail->IsHTML(true);
+        // $member = $this->ldapTms($to['email']);
+        // if($member['count'] <= 0){
+        //     Yii::app()->user->setFlash('mail',$to['email']);
+        // }
+        // return $mail->Send();
+         $mail->ClearAddresses();
         $mail->CharSet = 'utf-8';
-        // $mail->IsSMTP();
-        // $mail->Host = 'smtp.gmail.com'; // gmail server
-        // $mail->Port = '465'; // port number
-        $mail->Host = '172.30.110.16'; // gmail server
-        $mail->Port = 25; // port number
-        // $mail->SMTPSecure = "ssl";
+        $mail->IsSMTP();
+        //$mail->Host = 'smtp.office365.com'; // gmail server
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = '587'; // port number
+        $mail->SMTPSecure = "tls";
         $mail->SMTPKeepAlive = true;
         $mail->Mailer = "smtp";
-        // $mail->SMTPAuth = true;
-        // $mail->SMTPDebug = false;
-        $mail->SMTPDebug  = 1;
-        $mail->From = 'taaonprem04@airasia.com';
-        // $mail->From = 'bws.rom@gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->SMTPDebug = false;
         $mail->Username = $adminEmail;
         $mail->Password = $adminEmailPass;
-        $mail->SetFrom('taaonprem04@airasia.com', $fromText);
-        
+        $mail->SetFrom($adminEmail, $fromText);
         $mail->AddAddress($to['email'], 'คุณ' . $to['firstname'] . ' ' . $to['lastname']);
         $mail->Subject = $subject;
         $mail->Body = $message;
-        // $mail->addAttachment($path.$data_name->file_name);
         $mail->IsHTML(true);
-        $member = $this->ldapTms($to['email']);
-        if($member['count'] <= 0){
-            Yii::app()->user->setFlash('mail',$to['email']);
-        }
+
+       // $mail->SMTPSecure = 'tls';
+       
+
         return $mail->Send();
     }
 
@@ -325,8 +348,8 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         $adminEmail = $SettingAll['USER_EMAIL'];
         $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-        $adminEmail = 'taaonprem04@airasia.com';
-        $adminEmailPass = 'P@ssw0rd';
+        $adminEmail = 'mailerbws@gmail.com';
+        $adminEmailPass = 'bangkokweb0192';
         $mail =  new PHPMailer(true);
         $mail->ClearAddresses();
         $mail->CharSet = 'utf-8';
@@ -335,7 +358,7 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         $mail->SMTPKeepAlive = true;
         $mail->Mailer = "smtp";
         // $mail->SMTPDebug  = 1;
-        $mail->From = 'taaonprem04@airasia.com';
+        $mail->From = 'mailerbws@gmail.com';
         $mail->Username = $adminEmail;
         $mail->Password = $adminEmailPass;
         $fromText = 'E-Learning System (Red-U)';
@@ -356,13 +379,16 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         $adminEmail = $SettingAll['USER_EMAIL'];
         $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-        $adminEmail = 'taaonprem04@airasia.com';
-        $adminEmailPass = 'P@ssw0rd';
+        $adminEmail = 'mailerbws@gmail.com';
+        $adminEmailPass = 'bangkokweb0192';
         $mail =  new PHPMailer(true);
         $mail->ClearAddresses();
         $mail->CharSet = 'utf-8';
-        $mail->Host = '172.30.110.16'; // gmail server
-        $mail->Port = 25; // port number
+        // $mail->Host = '172.30.110.16'; // gmail server
+        // $mail->Port = 25; // port number
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = '587'; // port number
+        $mail->SMTPSecure = "tls";
         $mail->SMTPKeepAlive = true;
         $mail->Mailer = "smtp";
         // $mail->SMTPDebug  = 1;
@@ -397,14 +423,16 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
 
 
         $adminEmail = 'taaonprem04@airasia.com';
-        $adminEmailPass = 'P@ssw0rd';
+        $adminEmailPass = 'bangkokweb0192';
 
         $mail =  new PHPMailer(true);
 
         $mail->ClearAddresses();
         $mail->CharSet = 'utf-8';
-        $mail->Host = '172.30.110.16'; // gmail server
-        $mail->Port = 25; // port number
+        // 
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = '587'; // port number
+        $mail->SMTPSecure = "tls";
         $mail->SMTPKeepAlive = true;
         $mail->Mailer = "smtp";
         // $mail->SMTPDebug  = 1;
@@ -454,13 +482,15 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
             $adminEmail = $SettingAll['USER_EMAIL'];
             $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-            $adminEmail = 'taaonprem04@airasia.com';
-            $adminEmailPass = 'P@ssw0rd';
+            $adminEmail = 'mailerbws@gmail.com';
+            $adminEmailPass = 'bangkokweb0192';
             $mail =  new PHPMailer(true);
             $mail->ClearAddresses();
             $mail->CharSet = 'utf-8';
-        $mail->Host = '172.30.110.16'; // gmail server
-        $mail->Port = 25; // port number
+      
+         $mail->Host = 'smtp.gmail.com';
+        $mail->Port = '587'; // port number
+        $mail->SMTPSecure = "tls";
         $mail->SMTPKeepAlive = true;
         $mail->Mailer = "smtp";
         // $mail->SMTPDebug  = 1;
@@ -496,18 +526,21 @@ public function SendMailNotificationByUser($subject,$message,$user_id){
         $adminEmail = $SettingAll['USER_EMAIL'];
         $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-        $adminEmail = 'taaonprem04@airasia.com';
-        $adminEmailPass = 'P@ssw0rd';
+        $adminEmail = 'mailerbws@gmail.com';
+        $adminEmailPass = 'bangkokweb0192';
             // $mail =  new PHPMailer(true);
         $mail = Yii::app()->mailer;
         $mail->ClearAddresses();
         $mail->CharSet = 'utf-8';
-        $mail->Host = '172.30.110.16'; // gmail server
-        $mail->Port = 25; // port number
+        // $mail->Host = '172.30.110.16'; // gmail server
+        // $mail->Port = 25; // port number
+         $mail->Host = 'smtp.gmail.com';
+        $mail->Port = '587'; // port number
+        $mail->SMTPSecure = "tls";
         $mail->SMTPKeepAlive = true;
         $mail->Mailer = "smtp";
         // $mail->SMTPDebug  = 1;
-        $mail->From = 'taaonprem04@airasia.com';
+        $mail->From = 'mailerbws@gmail.com';
         $mail->Username = $adminEmail;
         $mail->Password = $adminEmailPass;
         $fromText = 'E-Learning System (Red-U)';
