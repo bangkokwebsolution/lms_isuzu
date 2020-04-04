@@ -28,14 +28,14 @@ class Position extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('department_id, type_employee_id', 'numerical', 'integerOnly'=>true),
+			array('department_id', 'numerical', 'integerOnly'=>true),
 			array('position_title', 'length', 'max'=>200),
 			array('active', 'length', 'max'=>255),
 			array('create_date,lang_id,parent_id', 'safe'),
 			array('position_title, department_id ', 'required'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, department_id, position_title, create_date, active,lang_id,parent_id, type_employee_id', 'safe', 'on'=>'search'),
+			array('id, department_id, position_title, create_date, active,lang_id,parent_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,7 +72,6 @@ class Position extends CActiveRecord
 			'active' => 'Active',
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
-			'type_employee_id' => 'ประเภทสมาชิก'.$label_lang,
 		);
 	}
 
@@ -100,7 +99,6 @@ class Position extends CActiveRecord
 		$criteria->compare('create_date',$this->create_date,true);
 		$criteria->compare('active',y);
 		$criteria->compare('parent_id',0);
-		$criteria->compare('type_employee_id',$this->type_employee_id);
 		$criteria->order = 'id DESC';
 
 		return new CActiveDataProvider($this, array(
