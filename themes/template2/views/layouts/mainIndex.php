@@ -36,7 +36,6 @@ Yii::app()->user->returnUrl = $http->getUrl();
 		<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/jquery.themepunch.tools.min.js"></script>  
         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/sweetalert/dist/sweetalert.min.js"></script>
        
-        <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/lottie.js"></script>
 	</head>
 	<body style="overflow-x: hidden; margin:0;" >
     <!-- onload="init();" -->

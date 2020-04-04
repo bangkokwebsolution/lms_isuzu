@@ -14,7 +14,6 @@ $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact
         loop: true,
         path: '<?php echo $mascot_path; ?>'
     });
-    console.log('test')
 </script>
 
 
