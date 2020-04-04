@@ -31,6 +31,7 @@ class Department extends CActiveRecord
 			array('division_id, type_employee_id', 'numerical', 'integerOnly'=>true),
 			array('dep_title, active', 'length', 'max'=>255),
 			array('create_date,lang_id,parent_id', 'safe'),
+			array('dep_title, type_employee_id', 'required'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, division_id, dep_title, create_date, active,lang_id,parent_id, type_employee_id', 'safe', 'on'=>'search'),
@@ -65,7 +66,7 @@ class Department extends CActiveRecord
 			'active' => 'Active',
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
-			'type_employee_id' => 'ประเภทสมาชิก'.$label_lang,
+			'type_employee_id' => 'บุคลากร'.$label_lang,
 		);
 	}
 

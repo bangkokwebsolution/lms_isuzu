@@ -32,6 +32,7 @@ class Position extends CActiveRecord
 			array('position_title', 'length', 'max'=>200),
 			array('active', 'length', 'max'=>255),
 			array('create_date,lang_id,parent_id', 'safe'),
+			array('position_title, department_id ', 'required'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, department_id, position_title, create_date, active,lang_id,parent_id, type_employee_id', 'safe', 'on'=>'search'),
@@ -65,7 +66,7 @@ class Position extends CActiveRecord
 		$label_lang = ' (ภาษา '.$mainLang.' )';
 		return array(
 			'id' => 'ID',
-			'department_id' => 'แผนก',
+			'department_id' => 'แผนก'.$label_lang,
 			'position_title' => 'ชื่อตำแหน่ง'.$label_lang,
 			'create_date' => 'สร้างวันที่'.$label_lang,
 			'active' => 'Active',

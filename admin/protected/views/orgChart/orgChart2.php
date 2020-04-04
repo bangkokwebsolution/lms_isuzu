@@ -112,18 +112,14 @@ var node_to_edit;
     function loops(root) {
       if (root.level == 1) {
         items.push("<li class='btn_add unic" + root.id + " root' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='#'>" + root.name + "</a></br></span>");
-      }else if (root.level == 2) {
-        if(root.name != "TMS"){
-          items.push("<li class='btn_add unic" + root.id + "' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='<?=Yii::app()->createUrl('Coursecontrol/index/id');?>/" + root.id + "' class='move_down' data-name='"+root.name+"' target='_blank'><span class='RootName'>" + root.name + "</span></a></br></span>");
-        }else{
-          items.push("<li class='btn_add unic" + root.id + "' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='javascript:void(0);' class='move_down' data-name='"+root.name+"' target='_blank'><span class='RootName'>" + root.name + "</span></a></br></span>");
-        }
-        
+      }else if (root.level == 2 &&  root.parent == 1) {
+        items.push("<li class='btn_add unic" + root.id + "' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='<?=Yii::app()->createUrl('Coursecontrol/index/id');?>/" + root.id + "' class='move_down' data-name='"+root.name+"' target='_blank'><span class='RootName'>" + root.name + "</span></a></br></span>");
       } else {
         // items.push("<li class='child unic" + root.id + "' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='<?=Yii::app()->createUrl('Coursecontrol/index/id');?>/" + root.id + "' class='move_down' data-name='"+root.name+"' target='_blank'><span class='RootName'>" + root.name + "</span></a><p><a href='<?=Yii::app()->createUrl('Orgcontrol/index/id');?>/" + root.id + "' style='font-size: 12px' target='_blank'>แผนก</a></p></br></span>");
 
         items.push("<li class='child unic" + root.id + "' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='<?=Yii::app()->createUrl('Coursecontrol/index/id');?>/" + root.id + "' class='move_down' data-name='"+root.name+"' target='_blank'><span class='RootName'>" + root.name + "</span></a><p><a href='<?=Yii::app()->createUrl('Orgcontrol/index/id');?>/" + root.id + "' style='font-size: 12px' target='_blank'></a></p></br></span>");
       }
+
       var c = data({
         "parent": root.id
       }).count();

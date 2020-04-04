@@ -42,15 +42,42 @@ class PositionController extends Controller
 
 		if(isset($_POST['Position']))
 		{
-			$model->attributes=$_POST['Position'];
-			if($model->validate())
-			{
+			if($_POST['Position'][department_id] != null && $_POST['Position'][position_title] != null){
+
+				$department_id = $_POST['Position'][department_id];
+				$position_title = $_POST['Position'][position_title];
+
+				$modelTypeDep = Department::model()->findByPk($department_id);
+				$typeDepName = $modelTypeDep->dep_title;
+
+				$criteria = new CDbCriteria;
+				$criteria->compare('title',$typeDepName);
+				$modelOrgChart = OrgChart::model()->findAll($criteria);
+
+				if($modelOrgChart){
+					foreach ($modelOrgChart as $value) {
+						$idOrgChart = $value->id;
+					}
+				}
+
+				$newOrgChart = new OrgChart;
+				$newOrgChart->title = $position_title;
+				$newOrgChart->parent_id = $idOrgChart;
+				$newOrgChart->level = 5;
+				$newOrgChart->active = 'y';
+				$newOrgChart->save();
+
+				$model->attributes=$_POST['Position'];
+				if($model->validate())
+				{
 				if($model->save()){
 					if(Yii::app()->user->id){
 						Helpers::lib()->getControllerActionId();
 					}
 					$this->redirect(array('position/index'));
 				}
+			}
+				
 			}
 		}
 

@@ -129,7 +129,7 @@ class OrgcontrolController extends Controller
 
 		$orgdepart=OrgDepart::model()->findAll(array(
 			'condition'=>'orgchart_id='.$id,
-			));
+		));
 		$chk_orgdepart = array();
 		if($orgdepart){
 			foreach ($orgdepart as $key => $value) {
@@ -177,16 +177,16 @@ class OrgcontrolController extends Controller
 			foreach (json_decode($json2, true) as $key => $value) {
 				$orgc = OrgDepart::model()->findByPk($value['id']);
 				if($orgc){
-				$orgc->delete();
+					$orgc->delete();
 				}
 				// echo $_GET['id'];
 				// if(isset($value['children'])){
-					foreach ($value['children'] as $key_children => $value_children) {
-						$orgc2 = OrgCourse::model()->findByPk($value_children['id']);
-						if($orgc2){
+				foreach ($value['children'] as $key_children => $value_children) {
+					$orgc2 = OrgCourse::model()->findByPk($value_children['id']);
+					if($orgc2){
 						$orgc2->delete();
-						}
 					}
+				}
 
 			}
 			
@@ -213,18 +213,18 @@ class OrgcontrolController extends Controller
 		} else {
 			echo "Noooooooo";
 		}
-}
+	}
 	
 	public function parseJsonArray($jsonArray, $parentID = 0) 
 	{
 		$return = array();
 		foreach ($jsonArray as $subArray) {
-		   $returnSubSubArray = array();
-		  if (isset($subArray['children'])) {
+			$returnSubSubArray = array();
+			if (isset($subArray['children'])) {
 				$returnSubSubArray = $this->parseJsonArray($subArray['children'], $subArray['id']);
-		  }
-			  $return[] = array('id' => $subArray['id'], 'parentID' => $parentID);
-			  $return = array_merge($return, $returnSubSubArray);
+			}
+			$return[] = array('id' => $subArray['id'], 'parentID' => $parentID);
+			$return = array_merge($return, $returnSubSubArray);
 		}
 		return $return;
 	}

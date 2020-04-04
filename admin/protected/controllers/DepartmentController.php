@@ -100,12 +100,38 @@ class DepartmentController extends Controller
 
 		if(isset($_POST['Department']))
 		{
-			$model->attributes=$_POST['Department'];
-			if($model->save()){
-				if(Yii::app()->user->id){
-					Helpers::lib()->getControllerActionId();
+
+			if($_POST['Department'][type_employee_id] != null && $_POST['Department'][dep_title] != null){
+				$type_employee_id = $_POST['Department'][type_employee_id];
+				$dep_title = $_POST['Department'][dep_title];
+
+				$modelTypeEmp = TypeEmployee::model()->findByPk($type_employee_id);
+				$typeEmpName = $modelTypeEmp->type_employee_name;
+
+				$criteria = new CDbCriteria;
+				$criteria->compare('title',$typeEmpName);
+				$modelOrgChart = OrgChart::model()->findAll($criteria);
+
+				if($modelOrgChart){
+					foreach ($modelOrgChart as $value) {
+						$idOrgChart = $value->id;
+					}
 				}
-				$this->redirect(array('admin','id'=>$model->id));
+
+				$newOrgChart = new OrgChart;
+				$newOrgChart->title = $dep_title;
+				$newOrgChart->parent_id = $idOrgChart;
+				$newOrgChart->level = 4;
+				$newOrgChart->active = 'y';
+				$newOrgChart->save();
+
+				$model->attributes=$_POST['Department'];
+				if($model->save()){
+					if(Yii::app()->user->id){
+						Helpers::lib()->getControllerActionId();
+					}
+					$this->redirect(array('admin','id'=>$model->id));
+				}
 			}
 		}
 

@@ -26,15 +26,15 @@ $this->breadcrumbs=array(
 			<h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> Organization chart</h4>
 		</div>
 		<div class="widget-body">
-<!--			<div class="spacer"></div>-->
+            <!--			<div class="spacer"></div>-->
             <iframe src="<?php echo $this->createUrl('/OrgChart/OrgChart2'); ?>"></iframe>
-<!--			<div>-->
-<!--				--><?php //echo Rights::t('core', 'Values within square brackets tell how many children each item has.'); ?>
-<!--			</div>-->
-		</div>
-	</div>
+            <!--			<div>-->
+                <!--				--><?php //echo Rights::t('core', 'Values within square brackets tell how many children each item has.'); ?>
+                <!--			</div>-->
+            </div>
+        </div>
 
-</div>
+    </div>
 
 <?php /*$this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
