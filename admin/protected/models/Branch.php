@@ -35,9 +35,10 @@ class Branch extends CActiveRecord
 			array('branch_name, create_by, update_by', 'length', 'max'=>255),
 			array('active', 'length', 'max'=>1),
 			array('create_date, update_date', 'safe'),
+			array('branch_name, position_id ', 'required'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, branch_name, create_date, create_by, update_date, update_by, active, position_id', 'safe', 'on'=>'search'),
+			array('id, branch_name, create_date, create_by, update_date, update_by, lang_id, parent_id, active, position_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -49,6 +50,7 @@ class Branch extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'position' => array(self::BELONGS_TO, 'Position', 'position_id'),
 		);
 	}
 
@@ -57,15 +59,25 @@ class Branch extends CActiveRecord
 	 */
 	public function attributeLabels()
 	{
+		if(empty($this->lang_id)){
+			$this->lang_id = isset($_GET['lang_id']) ? $_GET['lang_id'] : 1 ;
+		}else{
+			$this->lang_id = $this->lang_id;
+		}
+		$lang = Language::model()->findByPk($this->lang_id);
+		$mainLang = $lang->language;
+		$label_lang = ' (ภาษา '.$mainLang.' )';
 		return array(
 			'id' => 'ID',
-			'branch_name' => 'Branch Name',
-			'create_date' => 'Create Date',
+			'branch_name' => 'ชื่อสาขา'.$label_lang,
+			'create_date' => 'สร้างวันที่'.$label_lang,
 			'create_by' => 'Create By',
 			'update_date' => 'Update Date',
 			'update_by' => 'Update By',
-			'active' => 'Active',
-			'position_id' => 'Position',
+			'active' => 'สถานะ'.$label_lang,
+			'parent_id' => 'เมนูหลัก',
+			'lang_id' => 'ภาษา',
+			'position_id' => 'ตำแหน่ง'.$label_lang,
 		);
 	}
 
@@ -93,8 +105,10 @@ class Branch extends CActiveRecord
 		$criteria->compare('create_by',$this->create_by,true);
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by,true);
+		$criteria->compare('parent_id',0);
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('position_id',$this->position_id);
+		$criteria->order = 'id DESC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -111,4 +125,22 @@ class Branch extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+	public function beforeSave()
+	{
+		if(null !== Yii::app()->user && isset(Yii::app()->user->id))
+			$id = Yii::app()->user->id;
+		else
+			$id = 0;
+
+		if($this->isNewRecord){
+			$this->create_by = $id;
+			$this->create_date = date("Y-m-d H:i:s");
+		}else{
+			$this->update_by = $id;
+			$this->update_date = date("Y-m-d H:i:s");
+		}
+		return parent::beforeSave();
+	}
+
 }

@@ -88,7 +88,7 @@ Class MenuLeft extends Controller
 				'url'=>array('/site/index'),
 				'itemOptions' => array('class' => 'glyphicons home'),
 			),
-				array(
+			array(
 				/*====== Check Permissions Language (2) ======*/
 				'visible'=>self::PermissionsMenu(array(
 					'Language.*',
@@ -1702,6 +1702,40 @@ Class MenuLeft extends Controller
 	        			)),
 	        			'label'=>'จัดการตำแหน่ง',
 	        			'url'=>array('//Position/index')
+	        		),
+	        	)
+	        ),
+
+	        array(
+	        	/*====== Check Permissions Position (2) ======*/
+	        	'visible'=>self::PermissionsMenu(array(
+	        		'Branch.*',
+	        		'Branch.admin',
+	        		'Branch.Create'
+	        	)),
+	        	'label'=>'<i></i><span>สาขา</span>',
+	        	'url'=>'#Branch',
+	        	'linkOptions' => array('data-toggle' => 'collapse'),
+	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
+	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Branch') ), 'id' => 'Branch'),
+	        	'active' => self::SetSubMenu( array('Branch') ,false),
+	        	'items'=>array(
+	        		array(
+	        			/*====== Check Permissions Branch (1) ======*/
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'Branch.*',
+	        				'Branch.Create'
+	        			)),
+	        			'label'=>'เพิ่มสาขา'." (ภาษา ".$mainLang." )",
+	        			'url'=>array('//Branch/create')
+	        		),
+	        		array(
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'Branch.*',
+	        				'Branch.index'
+	        			)),
+	        			'label'=>'จัดการสาขา',
+	        			'url'=>array('//Branch/index')
 	        		),
 	        	)
 	        ),

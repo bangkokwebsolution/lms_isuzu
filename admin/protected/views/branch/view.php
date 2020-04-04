@@ -1,14 +1,14 @@
 
 <?php
 $this->breadcrumbs=array(
-	'จัดการตำแหน่ง'=>array('index'),
-	$model->position_title,
+	'จัดการสาขา'=>array('index'),
+	$model->branch_name,
 );
 
 $this->widget('ADetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
-		'position_title',
+		'branch_name',
 		array(
 			'name'=>'create_date',
 			'value'=> ClassFunction::datethaiTime($model->create_date)
