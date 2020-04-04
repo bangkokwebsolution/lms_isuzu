@@ -26,17 +26,17 @@ class CoursecontrolController extends Controller
      */
     public function accessRules()
     {
-        return array(
-            array('allow',
+    	return array(
+    		array('allow',
                 // กำหนดสิทธิ์เข้าใช้งาน actionIndex
-                'actions' => AccessControl::check_action(),
+    			'actions' => AccessControl::check_action(),
                 // ได้เฉพาะ group 1 เท่านั่น
-                'expression' => 'AccessControl::check_access()',
-                ),
+    			'expression' => 'AccessControl::check_access()',
+    		),
             array('deny',  // deny all users
-                'users' => array('*'),
-                ),
-            );
+            	'users' => array('*'),
+            ),
+        );
     }
 
 
@@ -119,7 +119,8 @@ class CoursecontrolController extends Controller
 	{
 		$OrgCourse=OrgCourse::model()->findAll(array(
 			'condition'=>'orgchart_id='.$id,
-			));
+		));
+
 		$chk_orgcourse = array();
 		if($OrgCourse){
 			foreach ($OrgCourse as $key => $value) {
@@ -128,40 +129,48 @@ class CoursecontrolController extends Controller
 
 		}
 
-		if($id == 4){
-			$CourseOnline = CourseOnline::model()->courseonlinecheck()->findAll(array(
-				'condition'=>'parent_id=:parent_id AND active=:active AND lang_id =:lang_id AND cate_id = 1',
-				'params' => array(':parent_id' => 0, ':active' => 'y',':lang_id'=> 1)
-			));
-			$chk_courseonline = array();
-			if($CourseOnline){
-				foreach ($CourseOnline as $key => $value) {
-					$chk_courseonline[] = $value->course_id;
-				}
-			}
+		// if($id == 4){
+		// 	$CourseOnline = CourseOnline::model()->courseonlinecheck()->findAll(array(
+		// 		'condition'=>'parent_id=:parent_id AND active=:active AND lang_id =:lang_id AND cate_id = 1',
+		// 		'params' => array(':parent_id' => 0, ':active' => 'y',':lang_id'=> 1)
+		// 	));
+		// 	$chk_courseonline = array();
+		// 	if($CourseOnline){
+		// 		foreach ($CourseOnline as $key => $value) {
+		// 			$chk_courseonline[] = $value->course_id;
+		// 		}
+		// 	}
 
-		}else{
+		// }else{
 
 		// $CourseOnline=CourseOnline::model()->courseonlinecheck()->findAll();
-			$CourseOnline = CourseOnline::model()->courseonlinecheck()->findAll(array(
-				'condition'=>'parent_id=:parent_id AND active=:active AND lang_id =:lang_id AND cate_id != 1',
-				'params' => array(':parent_id' => 0, ':active' => 'y',':lang_id'=> 1 )
-			));
-			$chk_courseonline = array();
-			if($CourseOnline){
-				foreach ($CourseOnline as $key => $value) {
-					$chk_courseonline[] = $value->course_id;
-				}
-			}
+		$CourseOnline = CourseOnline::model()->courseonlinecheck()->findAll(array(
+			'condition'=>'parent_id=:parent_id AND active=:active AND lang_id =:lang_id AND cate_id != 1',
+			'params' => array(':parent_id' => 0, ':active' => 'y',':lang_id'=> 1 )
+		));
 
+		$chk_courseonline = array();
+		if($CourseOnline){
+			foreach ($CourseOnline as $key => $value) {
+				$chk_courseonline[] = $value->course_id;
+			}
 		}
+
+		// }
+
+		// var_dump($chk_courseonline);
+		// var_dump("<br>");
+		// var_dump($chk_orgcourse);
+		// exit();
 
 		// $result_orgcourse = array_diff($chk_orgcourse, $chk_courseonline);
 		$result_courseonline = array_diff($chk_courseonline, $chk_orgcourse);
 		// var_dump($result_courseonline);
 		// exit();
 
-		
+		// var_dump("<pre>");
+		// var_dump($result_courseonline);
+		// var_dump("<br>");exit();
 
 		$this->render('index',array(
 			'result_courseonline'=> $result_courseonline,
@@ -185,63 +194,63 @@ class CoursecontrolController extends Controller
 	}
 
 	public function parseJsonArray($jsonArray, $parentID = 0) {
-	  $return = array();
-	  foreach ($jsonArray as $subArray) {
-	    $returnSubSubArray = array();
-	    if (isset($subArray['children'])) {
-	  		$returnSubSubArray = $this->parseJsonArray($subArray['children'], $subArray['id']);
-	    }
-	    	$return[] = array('id' => $subArray['id'], 'parentID' => $parentID);
-	    	$return = array_merge($return, $returnSubSubArray);
-	  }
-	  return $return;
+		$return = array();
+		foreach ($jsonArray as $subArray) {
+			$returnSubSubArray = array();
+			if (isset($subArray['children'])) {
+				$returnSubSubArray = $this->parseJsonArray($subArray['children'], $subArray['id']);
+			}
+			$return[] = array('id' => $subArray['id'], 'parentID' => $parentID);
+			$return = array_merge($return, $returnSubSubArray);
+		}
+		return $return;
 	}
 
 	public function actionSave_categories(){
 
-			if(isset($_POST['categories'])) {
+		if(isset($_POST['categories'])) {
 
-				$json = $_POST['categories'];
-				$json2 = $_POST['categories2'];
+			$json = $_POST['categories'];
+			$json2 = $_POST['categories2'];
 
-				$data = json_decode($json, true);
+			$data = json_decode($json, true);
 				// var_dump($this->parseJsonArray($data));
 				// exit();
 
-				foreach (json_decode($json2, true) as $key => $value) {
-					$orgc = OrgCourse::model()->findByPk($value['id']);
-					if($orgc){
+			foreach (json_decode($json2, true) as $key => $value) {
+				$orgc = OrgCourse::model()->findByPk($value['id']);
+				if($orgc){
 					$orgc->delete();
-					}
+				}
 					// echo $_GET['id'];
 					// if(isset($value['children'])){
-						foreach ($value['children'] as $key_children => $value_children) {
-							$orgc2 = OrgCourse::model()->findByPk($value_children['id']);
-							if($orgc2){
-							$orgc2->delete();
-							}
-						}
-
+				foreach ($value['children'] as $key_children => $value_children) {
+					$orgc2 = OrgCourse::model()->findByPk($value_children['id']);
+					if($orgc2){
+						$orgc2->delete();
+					}
 				}
-				
-				foreach ($this->parseJsonArray($data) as $key => $value) {
 
-					$orgc = OrgCourse::model()->findByPk($value['id']);
-					if($orgc){
+			}
+			
+			foreach ($this->parseJsonArray($data) as $key => $value) {
+
+				$orgc = OrgCourse::model()->findByPk($value['id']);
+				if($orgc){
 						// $course_online = CourseOnline::model()->findByPk($orgc->course_id);
-						$orgc->parent_id = $value['parentID'];
-						$orgc->save();
+					$orgc->parent_id = $value['parentID'];
+					$orgc->save();
 						// echo $value['id'];
-					}else{
-						$orgc = new OrgCourse;
+				}else{
+					$orgc = new OrgCourse;
 						// $orgc->save();
 						// $course_online = CourseOnline::model()->findByPk($value['id']);
-						$orgc->orgchart_id = $_POST['org_id'];
-						$orgc->course_id = $value['id'];
-						$orgc->parent_id = $value['parentID'];
-						$orgc->active = 'y';
-						$orgc->save();
-					}
+					$orgc->orgchart_id = $_POST['org_id'];
+					$orgc->course_id = $value['id'];
+					$orgc->parent_id = $value['parentID'];
+					$orgc->active = 'y';
+					$orgc->save();
+				}
 					// echo $_GET['id'];
 					// if(isset($value['children'])){
 						// foreach ($value['children'] as $key_children => $value_children) {
@@ -265,11 +274,11 @@ class CoursecontrolController extends Controller
 						// }
 					// }
 
-				}
-
-			} else {
-				echo "Noooooooo";
 			}
+
+		} else {
+			echo "Noooooooo";
+		}
 	}
 
 	/**

@@ -85,7 +85,7 @@ class CourseOnline extends AActiveRecord
 			'cate_course' => 'กลุ่มหลักสูตร'.$label_lang,
 			'time_test'=>'เวลาในการทำข้อสอบ'.$label_lang,
 			'cate_amount' => 'จำนวนครั้งที่ทำข้อสอบได้'.$label_lang,
-            'percen_test' => 'เกณฑ์การสอบผ่าน *เปอร์เซ็น'.$label_lang,
+			'percen_test' => 'เกณฑ์การสอบผ่าน *เปอร์เซ็น'.$label_lang,
 			'course_date_start' => 'วันที่เริ่มต้นการเรียน'.$label_lang,
 			'course_date_end' => 'วันที่สิ้นสุดการเรียน'.$label_lang,
 			'lang_id' => 'ภาษา',
@@ -101,8 +101,8 @@ class CourseOnline extends AActiveRecord
 
 		//provider array
 		$poviderArray = array(
-				'criteria' => $criteria
-			);
+			'criteria' => $criteria
+		);
 
 		// Page
 		if(isset($this->news_per_page)) {
@@ -114,29 +114,29 @@ class CourseOnline extends AActiveRecord
 	}
 
 	public function getCoursetitleConcat()
-    {
-    	if($this->cates->cate_type == 1){
-    		$coursetitle = $this->cates->cate_title." >> ".$this->course_title;
-    	}else{
-    		$coursetitle = $this->cates->cate_title." >> ".$this->course_title;
-    	}
+	{
+		if($this->cates->cate_type == 1){
+			$coursetitle = $this->cates->cate_title." >> ".$this->course_title;
+		}else{
+			$coursetitle = $this->cates->cate_title." >> ".$this->course_title;
+		}
 
-        return $coursetitle;
-    }
+		return $coursetitle;
+	}
 
-   	public function beforeSave() 
-    {
-    	$this->cate_id = CHtml::encode($this->cate_id);
-    	$this->course_number = CHtml::encode($this->course_number);
-    	$this->course_book_number = CHtml::encode($this->course_book_number);
-    	$this->course_title = CHtml::encode($this->course_title);
-    	$this->course_short_title = CHtml::encode($this->course_short_title);
-    	$this->course_detail = CHtml::encode($this->course_detail);
-    	$this->course_price = CHtml::encode($this->course_price);
-    	$this->course_hour = CHtml::encode($this->course_hour);
-    	$this->course_other = CHtml::encode($this->course_other);
-    	$this->course_refer = CHtml::encode($this->course_refer);
-    	$this->course_note = CHtml::encode($this->course_note);
+	public function beforeSave() 
+	{
+		$this->cate_id = CHtml::encode($this->cate_id);
+		$this->course_number = CHtml::encode($this->course_number);
+		$this->course_book_number = CHtml::encode($this->course_book_number);
+		$this->course_title = CHtml::encode($this->course_title);
+		$this->course_short_title = CHtml::encode($this->course_short_title);
+		$this->course_detail = CHtml::encode($this->course_detail);
+		$this->course_price = CHtml::encode($this->course_price);
+		$this->course_hour = CHtml::encode($this->course_hour);
+		$this->course_other = CHtml::encode($this->course_other);
+		$this->course_refer = CHtml::encode($this->course_refer);
+		$this->course_note = CHtml::encode($this->course_note);
 
 		if(null !== Yii::app()->user && isset(Yii::app()->user->id))
 		{
@@ -160,10 +160,10 @@ class CourseOnline extends AActiveRecord
 			$this->update_date = date("Y-m-d H:i:s");
 		}
 
-        return parent::beforeSave();
-    }
+		return parent::beforeSave();
+	}
 
-    public function getCountTest($type='course')
+	public function getCountTest($type='course')
 	{
 		$count = Coursemanage::Model()->count("id=:course_id AND active=:active AND type=:type", array(
 			"course_id"=>$this->course_id, "active"=>"y", "type"=>$type
@@ -179,53 +179,53 @@ class CourseOnline extends AActiveRecord
 		return $count;
 	}
 
-		public function getCountTeacher()
-    {
-        $count = CourseTeacher::Model()->count("course_id=:course_id", array(
-            "course_id"=>$this->course_id,
-        ));
-        return $count;
-    }
+	public function getCountTeacher()
+	{
+		$count = CourseTeacher::Model()->count("course_id=:course_id", array(
+			"course_id"=>$this->course_id,
+		));
+		return $count;
+	}
 
-    public function afterFind() 
-    {
-    	$this->course_title = CHtml::decode($this->course_title);
-    	$this->course_number = CHtml::decode($this->course_number);
-    	$this->course_book_number = CHtml::decode($this->course_book_number);
-    	$this->course_short_title = CHtml::decode($this->course_short_title);
-    	$this->course_detail = CHtml::decode($this->course_detail);
-    	$this->course_price = CHtml::decode($this->course_price);
-    	$this->course_hour = CHtml::decode($this->course_hour);
-    	$this->course_other = CHtml::decode($this->course_other);
-    	$this->course_refer = CHtml::decode($this->course_refer);
-    	$this->course_note = CHtml::decode($this->course_note);
+	public function afterFind() 
+	{
+		$this->course_title = CHtml::decode($this->course_title);
+		$this->course_number = CHtml::decode($this->course_number);
+		$this->course_book_number = CHtml::decode($this->course_book_number);
+		$this->course_short_title = CHtml::decode($this->course_short_title);
+		$this->course_detail = CHtml::decode($this->course_detail);
+		$this->course_price = CHtml::decode($this->course_price);
+		$this->course_hour = CHtml::decode($this->course_hour);
+		$this->course_other = CHtml::decode($this->course_other);
+		$this->course_refer = CHtml::decode($this->course_refer);
+		$this->course_note = CHtml::decode($this->course_note);
 
-        return parent::afterFind();
-    }
+		return parent::afterFind();
+	}
 
-    public function checkScopes($check = 'scopes')
-    {
-    	if ($check == 'scopes')
-    	{
-		    $checkScopes =  array(
-			    'alias' => 'courseonline',
-			    'order' => ' courseonline.course_id DESC ',
-		    	'condition' => ' courseonline.active ="y" ',
-		    );	
-    	}
-    	else
-    	{
-		    $checkScopes =  array(
-			    'alias' => 'courseonline',
-			    'order' => ' courseonline.course_id DESC ',
-		    );	
-    	}
+	public function checkScopes($check = 'scopes')
+	{
+		if ($check == 'scopes')
+		{
+			$checkScopes =  array(
+				'alias' => 'courseonline',
+				'order' => ' courseonline.course_id DESC ',
+				'condition' => ' courseonline.active ="y" ',
+			);	
+		}
+		else
+		{
+			$checkScopes =  array(
+				'alias' => 'courseonline',
+				'order' => ' courseonline.course_id DESC ',
+			);	
+		}
 
 		return $checkScopes;
-    }
+	}
 
 	public function scopes()
-    {
+	{
     	//========== SET Controller loadModel() ==========//
 
 		$Access = Controller::SetAccess( array("CourseOnline.*") );
@@ -265,7 +265,7 @@ class CourseOnline extends AActiveRecord
 						),
 					);
 				}
-			    
+				
 			    // $scopes = array(
 		     //        'courseonlinecheck'=>array(
 			    // 		'alias' => 'courseonline',
@@ -277,11 +277,11 @@ class CourseOnline extends AActiveRecord
 		}
 
 		return $scopes;
-    }
+	}
 
 	public function defaultScope()
 	{
-	    $defaultScope =  $this->checkScopes('defaultScope');
+		$defaultScope =  $this->checkScopes('defaultScope');
 
 		return $defaultScope;
 	}
@@ -334,7 +334,7 @@ class CourseOnline extends AActiveRecord
 		{
 			$criteria->compare('course_date',ClassFunction::DateSearch($this->course_date),true);
 		}
-			
+		
 		$poviderArray = array('criteria'=>$criteria);
 
 		// Page
@@ -342,7 +342,7 @@ class CourseOnline extends AActiveRecord
 		{
 			$poviderArray['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
 		}
-			
+		
 		return new CActiveDataProvider($this, $poviderArray);
 	}
 }
