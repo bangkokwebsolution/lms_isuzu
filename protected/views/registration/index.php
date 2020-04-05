@@ -62,21 +62,23 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         margin-right: 10px;
     }
     #queue {
-        border: 1px solid #708090;
+        border: 1px solid rgba(26, 26, 26, 0.14901960784313725);
         height: 177px;
         overflow: auto;
         margin-bottom: 10px;
         padding: 0 3px 3px;
         width: 100%;
+        border-radius: 4px;
     }
 
     #docqueue {
-        border: 1px solid #708090;
+        border: 1px solid rgba(26, 26, 26, 0.14901960784313725);
         height: 177px;
         overflow: auto;
         margin-bottom: 10px;
         padding: 0 3px 3px;
         width: 100%;
+        border-radius: 4px;
     }
 
     @media screen and (max-width: 600px){
@@ -292,7 +294,7 @@ function editNameTrain(filedoc_id){
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center select-profile">
+                <div class="row justify-content-center select-profile mg-0">
                     <div class="form-group">
                         <div class="radio radio-danger radio-inline">
                             <input type="radio" name="type_user" id="accept" value="1" <?php if ($profile->type_user == 1) : ?> checked="checked" <?php endif ?>>
@@ -877,7 +879,7 @@ function editNameTrain(filedoc_id){
                     </div>
 
                     <div id="office-section">
-                        <div class="row  mt-20 mb-1" id="employee_type">
+                        <div class="row  mb-1 " id="employee_type" >
                             <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Employee section ':'ส่วนของพนักงาน'; ?></strong></div>
                             <div class="col-sm-12 col-xs-12 col-md-8">
                                 <div class="form-group">
@@ -897,7 +899,7 @@ function editNameTrain(filedoc_id){
                             </div>
                         </div>
 
-                        <div class="row justify-content-center mt-20 mb-1 bb-1 pb-20" id="employee_detail">
+                        <div class="row justify-content-center mb-1 pb-20" id="employee_detail">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label><?php echo $label->label_company; ?></label>
@@ -952,6 +954,72 @@ function editNameTrain(filedoc_id){
                         </div>
                     </div>
 
+                </div>
+                
+                <form>
+                    <div class="well">
+                        <div id="report-staff">
+                            <h3 class="text-center">ใบรายงานตัวคนประจำเรือ</h3>
+                                <div class="row justify-content-center">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                        <label for="">ขึ้นจากเรือชื่อ</label>
+                                        <input type="text" class="form-control" id="" placeholder="ขึ้นจากเรือชื่อ">
+                                        </div>
+                                    </div>
+        
+                                    <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>เมื่อวันที่</label>
+                                        <input class="form-control default_datetimepicker " autocomplete="off" placeholder="เมื่อวันที่" type="text" name="" id="" value="">                                                            </div>
+                                    </div>
+                                </div>
+        
+                                <div class="row justify-content-center">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                        <label for="">ที่อยู่ปัจจุบันที่สามารถติดต่อได้</label>
+                                        <textarea class="form-control" name="" id="" cols="30" rows="3" placeholder="เขียนที่อยู่ตรงนี้"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="row justify-content-center">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                        <label for="">เบอร์โทรศัพท์ที่สามารถติดต่อได้</label>
+                                        <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้">
+                                        </div>
+                                    </div>
+        
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                        <label for="">เบอร์มือถือ</label>
+                                        <input type="text" class="form-control" id="" placeholder="เบอร์มือถือ">
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="row justify-content-center">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                        <label for="">โทรศัพท์อื่นๆที่สามารถติดต่อได้</label>
+                                        <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้">
+                                        </div>
+                                    </div>
+                                </div>
+        
+                                <div class="row justify-content-center">
+                                    <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label>สามารถจะลงทำงานเรือครั้งต่อไป</label>
+                                        <input class="form-control default_datetimepicker " autocomplete="off" placeholder="สามารถจะลงทำงานเรือครั้งต่อไป" type="text" name="" id="" value="">                                                            </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                    </div>
+                </form>
 
                     <div class="text-center submit-register">
 
@@ -962,14 +1030,14 @@ function editNameTrain(filedoc_id){
                         } ?>
                     </div>
 
-                </div>
-
 
 
                 <?php $this->endWidget();
                 ?>
 
             </div>
+
+            
 
 
             <script type="text/javascript">

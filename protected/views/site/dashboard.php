@@ -139,18 +139,15 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
 
 ?>
 
-<div class="header-page parallax-window">
-    <div class="container">
-        <h1><?=  $label->label_statusLearn ?>
-            <small class="pull-right">
-                <ul class="list-inline list-unstyled">
-                    <li><a href="<?php echo $this->createUrl('/site/index'); ?>"><?=  $label->label_homepage ?></a></li>/ 
-                    <li><span class="text-bc"><?=  $label->label_statusLearn ?></span></li>
-                </ul>
-            </small>
-        </h1>
-    </div>
-</div>	
+<div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb breadcrumb-main">
+                <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/site/index'); ?>"><?php echo $label->label_homepage; ?></a></li>
+                <li class="breadcrumb-item active" aria-current="page"><?=  $label->label_statusLearn ?></li>
+            </ol>
+        </nav>
+</div>
+
 <section class="dashboard">
         <div class="container">
             <div class="panel-group" id="accordion">

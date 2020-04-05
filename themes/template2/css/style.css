@@ -2286,7 +2286,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 
 #register .well form .well .form-control,
 #register .well form .well .input-group-addon {
-  border-color: #1a1a1a5e;
+  border-color: rgba(26, 26, 26, 0.14901960784313725);
 }
 
 .form-control {
@@ -2298,7 +2298,6 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
   border-radius: 5px;
   padding: 0px 12px;
   font-size: 16px;
-  width: 100%;
 }
 
 #register .well form .well input[type="number"] {
@@ -4275,12 +4274,12 @@ ol.stat-alert li::before {
 
 .submit-register {
   padding-top: 2em;
-  margin: 3.5em 0 2em;
-  border-top: 1px solid #ddd;
+  margin: 1em 0 2em;
 }
 
 .submit-register input {
-
+  font-size: 18px;
+  padding: 7px;
 }
 
 .box-img-center {
@@ -4295,6 +4294,27 @@ ol.stat-alert li::before {
 
 [id^="filedoc"] strong {
   margin-right: 10px;
+}
+
+.mg-0{
+  margin: 0 !important;
+}
+
+#report-staff{
+  margin: 2em 0;
+  border-radius: 5px;
+}
+
+#office-section{
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+  margin-top: 30px;
+}
+
+
+#report-staff h3{
+  margin-bottom: 2em;
+  color: var(--color-bulemain);
 }
 
 @media (min-width: 1440px) {
@@ -4312,6 +4332,10 @@ ol.stat-alert li::before {
 @media (max-width: 767px) {
   .course .well .course-img {
     height: 340px;
+  }
+  #register .well form .well input,
+  #register .well form .well select {
+  width: 100%;
   }
 }
 
