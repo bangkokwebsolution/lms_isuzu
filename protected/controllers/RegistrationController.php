@@ -309,7 +309,7 @@ if(!$label){
 }
 
 if (isset($_POST['Profile'])) {
-
+   // var_dump($_POST['type_user']);exit();
     //var_dump($_POST);exit();
     // $memberLdap = Helpers::lib()->ldapTms($_POST['User'][email]);
     // if($memberLdap['count'] > 0){
@@ -521,8 +521,9 @@ if (isset($_POST['Profile'])) {
     if ($profile->save()) {
         
         // if($chk_status_email){
-                                //////////// send mail //////////
-
+                                //////////// send mail /////////
+        if ($profile->type_user == 3) {
+           
             $activation_url = $this->createAbsoluteUrl('/user/activation/activation', array("activkey" => $users->activkey, "email" => $users->email));
             
             $to = array(
@@ -541,7 +542,32 @@ if (isset($_POST['Profile'])) {
              Yii::app()->user->setFlash('icon', "success");
              $this->redirect(array('site/index'));
 
-         
+          }else if ($profile->type_user == 1){
+
+           $activation_url = $this->createAbsoluteUrl('/user/activation/activation', array("activkey" => $users->activkey, "email" => $users->email));
+            
+            $to = array(
+             'email'=>$users->email,
+             'firstname'=>$profile->firstname,
+             'lastname'=>$profile->lastname,
+         );
+            $firstname = $profile->firstname;
+            $lastname = $profile->lastname;
+           // $username = $users->username;
+            //$message = $this->renderPartial('Form_mail',array('emailshow'=>$users->email,'passwordshow'=>$genpass,'nameshow'=>$profile->firstname,'activation_url'=>$activation_url),true);
+            $message = $this->renderPartial('Form_mail_General',array('firstname'=>$firstname,'lastname'=>$lastname),true);
+            $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
+            Yii::app()->user->setFlash('profile',$profile->identification);
+             Yii::app()->user->setFlash('users', $users->email);
+             Yii::app()->user->setFlash('icon', "success");
+             $this->redirect(array('site/index'));
+         }else{
+            $login = '1';
+            Yii::app()->user->setFlash('profile',$profile->identification);
+            Yii::app()->user->setFlash('users', $users->email);
+            Yii::app()->user->setFlash('icon', "success");
+            $this->redirect(array('site/index'));
+         }
         // }else{
 
         //     $login = '1';

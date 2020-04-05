@@ -335,14 +335,14 @@ function editNameTrain(filedoc_id){
                         </div>
                         <div class="col-md-3 col-lg-3 col-xs-12">
                             <div class="form-group">
-                                <label for=""><?php echo $label->label_firstname; ?>(TH)</label>
+                                <label for=""><?php echo $label->label_firstname; ?>(TH)<font color="red">*</font></label>
                                 <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control', 'placeholder' => $label->label_firstname)); ?>
                                 <?php echo $form->error($profile, 'firstname', array('class' => 'error2')); ?>
                             </div>
                         </div>
                         <div class="col-md-3 col-lg-3 col-xs-12">
                             <div class="form-group">
-                                <label for=""><?php echo $label->label_lastname; ?>(TH)</label>
+                                <label for=""><?php echo $label->label_lastname; ?>(TH)<font color="red">*</font></label>
                                 <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control', 'placeholder' => $label->label_lastname)); ?>
                                 <?php echo $form->error($profile, 'lastname', array('class' => 'error2')); ?>
                                 <!--<input type="text" class="form-control" id="">-->
@@ -400,7 +400,7 @@ function editNameTrain(filedoc_id){
                     <div class="row justify-content-center bb-1 pb-20 form_number_id">
                         <div class="col-md-4 col-sm-6 col-xs-12" >
                             <div class="form-group" id="identification_card">
-                                <label> <?php echo $label->label_identification;?></label>
+                                <label> <?php echo $label->label_identification;?><font color="red">*</font></label>
                                 <?php echo $form->textField($profile, 'identification', array('class' => 'form-control', 'name' => 'idcard', 'maxlength' => '13', 'onKeyPress' => 'return check_number();', 'placeholder' => $label->label_identification)); ?>
                                 <?php echo $form->error($profile, 'identification', array('class' => 'error2')); ?>
                             </div>
@@ -554,7 +554,7 @@ function editNameTrain(filedoc_id){
                             <div class="form-group">
                             <!-- <label for="">Email</label>
                                 <input type="text" class="form-control" id="" placeholder="Email"> -->
-                                <label><?php echo $label->label_email; ?></label>
+                                <label><?php echo $label->label_email; ?><font color="red">*</font></label>
                                 <?php echo $form->emailField($users, 'email', array('class' => 'form-control', 'placeholder' => $label->label_email)); ?>
                                 <?php echo $form->error($users, 'email', array('class' => 'error2')); ?>
                             </div>
