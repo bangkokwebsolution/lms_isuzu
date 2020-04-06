@@ -1,3 +1,4 @@
+
 <style type="text/css">
 	p{
 		display: inline;
@@ -23,19 +24,19 @@
 </style>
 <!-- Header page -->
 <div id="exam-result">
-	<div class="header-page parallax-window" data-parallax="scroll" data-image-src="<?php //echo Yii::app()->theme->baseUrl.'/images/bg-header-page.png'; ?>">
+	<!-- <div class="header-page parallax-window" data-parallax="scroll" data-image-src="<?php //echo Yii::app()->theme->baseUrl.'/images/bg-header-page.png'; ?>">
 		<div class="container">
 			<h1><?= $course->course_title; ?>
 				<small class="pull-right">
 					<ul class="list-inline list-unstyled">
-						<!-- <li><a href="#">หน้าแรก</a></li>/
-						<li><a href="#">ชื่อหลักสูตร</a></li> -->
+						<li><a href="#">หน้าแรก</a></li>/
+						<li><a href="#">ชื่อหลักสูตร</a></li>
 					</ul>
 				</small>
 			</h1>
 		</div>
 		<div class="bottom1"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/kind-bottom.png" class="img-responsive" alt=""></div>
-	</div>
+	</div> -->
 	<section class="content" id="exams">
 		<div class="container">
 			<!-- tabtime -->
@@ -75,87 +76,96 @@
 													echo '<div class="checkbox checkbox-info checkbox-circle">
 													<input id="checkbox-'.$choice->choice_id.'" type="checkbox" '.$checked.' value="'.$choice->choice_id.'" name="Choice['.$model->ques_id.'][]">
 													<label for="checkbox-'.$choice->choice_id.'">
-														'.CHtml::decode($choice->choice_detail).'
+													'.CHtml::decode($choice->choice_detail).'
 													</label>
-												</div>';
-											} else if($model->ques_type == 2) {
-												if(in_array($choice->choice_id, $ansData)){
-													$checked = 'checked';
-												}
-												echo '
-												<div class="radio radio-info radio-circle">
+													</div>';
+												} else if($model->ques_type == 2) {
+													if(in_array($choice->choice_id, $ansData)){
+														$checked = 'checked';
+													}
+													echo '
+													<div class="radio radio-info radio-circle">
 													<input id="radio-'.$choice->choice_id.'" 
 													type="radio"'.$checked.' value='.$choice->choice_id.' name="Choice['.$model->ques_id.'][]">
 													<label for="radio-'.$choice->choice_id.'">
-														'.CHtml::decode($choice->choice_detail).'
+													'.CHtml::decode($choice->choice_detail).'
 													</label>
-												</div>';
-											} else if($model->ques_type == 4) {
+													</div>';
+												} else if($model->ques_type == 4) {
 												// $ranNumber = rand(1, 10000000);
-												if($choice->choice_answer == 2){
-													$thaichar = array('ก','ข','ค','ง','จ','ฉ','ช','ซ','ฌ','ญ','ฐ','ฑ','ฒ','ณ','ด','ต','ถ','ท','ธ','น','บ','ป','ผ','ฝ','พ','ฟ','ภ','ม','ย','ร','ล','ว','ศ','ษ','ส','ห','ฬ','อ','ฮ');  
-													$Type4Answer[$choice->choice_id] = $thaichar[$countchoice-1];
-													$countchoice++;		
+													if($choice->choice_answer == 2){
+														$thaichar = array('ก','ข','ค','ง','จ','ฉ','ช','ซ','ฌ','ญ','ฐ','ฑ','ฒ','ณ','ด','ต','ถ','ท','ธ','น','บ','ป','ผ','ฝ','พ','ฟ','ภ','ม','ย','ร','ล','ว','ศ','ษ','ส','ห','ฬ','อ','ฮ');  
+														$Type4Answer[$choice->choice_id] = $thaichar[$countchoice-1];
+														$countchoice++;		
 													// $arrType4Answer[$ranNumber] = $val_choice;
-												}
-												if($choice->choice_answer == 1){
-													$Type4Question[$val_choice] = $key;
+													}
+													if($choice->choice_answer == 1){
+														$Type4Question[$val_choice] = $key;
+													}
 												}
 											}
-										}
 
-										if($model->ques_type == 4) {
+											if($model->ques_type == 4) {
 												echo '<label> ส่วนที่ 1 </label> <br>';
-										}
+											}
 
 
-										foreach ($Type4Answer as $key => $val_1) {
+											foreach ($Type4Answer as $key => $val_1) {
 
-											$choice = Coursechoice::model()->findByPk($key);
-											echo 	'<div style="display:inline">'.$val_1.'. '.CHtml::decode($choice->choice_detail).'</div>';
-											echo 	'<br>';
-										}
-										echo '<br>';
-
-										if($model->ques_type == 4) {
-											echo '<label> ส่วนที่ 2 </label> <br>';
-										}
-
-										$ansDatas = array_flip($ansData);
-										$countQuest = 0;
-
-										foreach ($Type4Question as $key => $val_2) {
-											$selected = '';
-											if(in_array($countQuest, $ansDatas)){
-												$selected = $ansData[$countQuest];
-											}	
-
-											$choice = Coursechoice::model()->findByPk($key);
-											echo 	CHtml::dropDownList('dropdownVal[]',
-						                            		$selected_value=$selected,
-						                            		$Type4Answer,
-						                            		array('empty'=>'เลือก','class'=>'dropdown_value','id'=>'Q'.$key)).' <label>
-													'.CHtml::decode($choice->choice_detail).'
-													</label>';
+												$choice = Coursechoice::model()->findByPk($key);
+												echo 	'<div style="display:inline">'.$val_1.'. '.CHtml::decode($choice->choice_detail).'</div>';
+												echo 	'<br>';
+											}
 											echo '<br>';
-										$countQuest++;
-										}
 
-										?>
+											if($model->ques_type == 4) {
+												echo '<label> ส่วนที่ 2 </label> <br>';
+											}
+
+											$ansDatas = array_flip($ansData);
+											$countQuest = 0;
+
+											foreach ($Type4Question as $key => $val_2) {
+												$selected = '';
+												if(in_array($countQuest, $ansDatas)){
+													$selected = $ansData[$countQuest];
+												}	
+
+												$choice = Coursechoice::model()->findByPk($key);
+												echo 	CHtml::dropDownList('dropdownVal[]',
+													$selected_value=$selected,
+													$Type4Answer,
+													array('empty'=>'เลือก','class'=>'dropdown_value','id'=>'Q'.$key)).' <label>
+												'.CHtml::decode($choice->choice_detail).'
+												</label>';
+												echo '<br>';
+												$countQuest++;
+											}
+
+											?>
+										</div>
 									</div>
-								</div>
-								<!-- <button type="submit" class="btn btn-warning center-block">ส่งคำตอบ</button> -->
-								<?php 
-								echo CHtml::hiddenField("Question_type[" . $model->ques_id . "]", $questionTypeArray[$model->ques_type]);
-								echo CHtml::hiddenField("last_ques");
-								echo CHtml::hiddenField("actionEvnt");
-								echo CHtml::hiddenField("course_id",$course->course_id);
-								echo CHtml::hiddenField("idx_now",$currentQuiz->number);
-								?>
-								<div class="text-center">
-									<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg','onclick'=>'save_ans("previous")'), 'Previous'); ?>
-									<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg','onclick'=>'save_ans("next")'), 'Next'); ?>
-									<?php if($last_ques==1)echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg','onclick'=>'save_ans("save")'), 'ส่งคำตอบ'); ?>
+									<!-- <button type="submit" class="btn btn-warning center-block">ส่งคำตอบ</button> -->
+									<?php 
+									echo CHtml::hiddenField("Question_type[" . $model->ques_id . "]", $questionTypeArray[$model->ques_type]);
+									echo CHtml::hiddenField("last_ques");
+									echo CHtml::hiddenField("actionEvnt");
+									echo CHtml::hiddenField("course_id",$course->course_id);
+									echo CHtml::hiddenField("idx_now",$currentQuiz->number);
+									?>
+									<div class="text-center">
+										<?php 
+										if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+											$Previous = "Previous";
+											$Next = "Next";
+										}else{  
+											$Previous = "ก่อน";
+											$Next = "ถัดไป";
+										}
+										?>
+										<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg','onclick'=>'save_ans("previous")'), $Previous); ?>
+										<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg','onclick'=>'save_ans("next")'), $Next); ?>
+										<!-- <?php //if($last_ques==1)echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg','onclick'=>'save_ans("save")'), 'ส่งคำตอบ'); ?> -->
 									</div>
 								</form>
 							</div>
@@ -190,6 +200,9 @@
 										</tbody>
 									</table>
 								</div>
+								<center style="margin-top: 80px">
+									<?php if ($last_ques == 1) echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg', 'onclick' => 'save_ans("save")'), UserModule::t('sendQues')); ?>
+								</center>
 							</div>
 						</div>
 					</div>
@@ -205,30 +218,30 @@
 		time_test_start('<?= $time_up; ?>');
 
 		$(".dropdown_value").each(function () {
-	        var $self = $(this);
-	        $self.data("previous_value", $self.val());
-	    });
-	    
-	    $(".dropdown_value").on("change", function () {
+			var $self = $(this);
+			$self.data("previous_value", $self.val());
+		});
+
+		$(".dropdown_value").on("change", function () {
 	    	// alert('test');
 
-	        var $self = $(this);
-	        var prev_value = $self.data("previous_value");
-	        var cur_value = $self.val();
-	        
-	        $(".dropdown_value").not($self).find("option").filter(function () {
-	            return $(this).val() == prev_value;
-	        }).prop("disabled", false);
-	        
-	        if (cur_value != "") {
-	            $(".dropdown_value").not($self).find("option").filter(function () {
-	                return $(this).val() == cur_value;
-	            }).prop("disabled", true);
-	            
-	            $self.data("previous_value", cur_value);
-	        }
+	    	var $self = $(this);
+	    	var prev_value = $self.data("previous_value");
+	    	var cur_value = $self.val();
+
+	    	$(".dropdown_value").not($self).find("option").filter(function () {
+	    		return $(this).val() == prev_value;
+	    	}).prop("disabled", false);
+
+	    	if (cur_value != "") {
+	    		$(".dropdown_value").not($self).find("option").filter(function () {
+	    			return $(this).val() == cur_value;
+	    		}).prop("disabled", true);
+
+	    		$self.data("previous_value", cur_value);
+	    	}
 	    });
-	    
+
 	});
 	function save_ans(evnt) {
 		$("#actionEvnt").val(evnt);

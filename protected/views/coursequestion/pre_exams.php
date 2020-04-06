@@ -1,17 +1,17 @@
 		<!-- Header page -->
-		<div class="header-page parallax-window" data-parallax="scroll" data-image-src="<?php //echo Yii::app()->theme->baseUrl.'/images/bg-header-page.png'; ?>">
+<!-- 		<div class="header-page parallax-window" data-parallax="scroll" data-image-src="<?php //echo Yii::app()->theme->baseUrl.'/images/bg-header-page.png'; ?>">
 			<div class="container">
 				<h1><?= $course->course_title; ?> 
 					<small class="pull-right">
 						<ul class="list-inline list-unstyled">
-							<!-- <li><a href="#"><?= $label->label_homepage ?></a></li>/
-							<li><a href="#"><?= $label->label_courseName ?></a></li> -->
+							<li><a href="#"><?= $label->label_homepage ?></a></li>/
+							<li><a href="#"><?= $label->label_courseName ?></a></li>
 						</ul>
 					</small>
 				</h1>
 			</div>
 			<div class="bottom1"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/kind-bottom.png" class="img-responsive" alt=""></div>
-		</div>
+		</div> -->
 
 		<!-- Content -->
 		<section class="content" id="pre-exams">

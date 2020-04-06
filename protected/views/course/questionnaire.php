@@ -1,4 +1,11 @@
 <?php
+if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+    $Completed = "Completed";
+}else{  
+    $Completed = "สำเร็จ";
+}
+
+
 $teacher = Teacher::model()->findByPk($course->course_lecturer);
 $checkLearnAll = Helpers::lib()->checkLearnAll_Questionnaire($lessonList,'pass');
 
@@ -58,7 +65,7 @@ $getLessonAll = Lesson::model()->findAll(array(
     .text-left { text-align: left !important; }
 </style>
 <!-- Header page -->
-<div class="header-page">
+<!-- <div class="header-page">
     <div class="container">
         <?php // $Model = CourseOnline::model()->findByAttributes(array('cate_id'=>$id,)); ?>    
         <h1><?= $course->course_title ?>
@@ -72,7 +79,7 @@ $getLessonAll = Lesson::model()->findAll(array(
         </small>
     </h1>
 </div>
-</div>
+</div> -->
 
 <!-- Content -->
 <section class="content" id="course-detail">
@@ -117,10 +124,10 @@ $getLessonAll = Lesson::model()->findAll(array(
                                                                         if($checkAnswerYet) {
                                                                             ?>
                                                                             <div class="warningArea">
-                                                                                <span class="text-success font-normal"><?= $label->label_AnsweredQuestions ?></span>
+                                                                                <span style="color: green"><?= $label->label_AnsweredQuestions ?></span>
                                                                             </div>
                                                                             <div class="warningArea">
-                                                                                <i class="fa fa-check-circle fa-4x text-success"></i>
+                                                                                <i class="fa fa-check-circle fa-4x" style="color: green"></i>
                                                                             </div>
                                                             <!-- <a class="col-md-12 btn btn-default btn-sm" href="javascript:void(0)" data-toggle="collapse" data-target="#showAnswerPanel_<?= $surveyCnt ?>">
                                                                 <i class="fa fa-search"></i> < ?= $label->label_detailSurvey ?></a> -->
@@ -165,109 +172,109 @@ $getLessonAll = Lesson::model()->findAll(array(
                                                                         if(isset($currentQuestionaire->questions)) {
                                                                             foreach($currentQuestionaire->questions as $QQuestion) {
                                                                                 if($QQuestion->input_type_id == 4){
-                                                                                ?>
-                                                                                <table class="table table-bordered post-question">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <td class="head-question" style="vertical-align: middle;" class="left padleft" rowspan="2"><?= $QQuestion->question_name ?></td>
-                                                                                            <td class="center head-question" <?= ($QQuestion->question_range)?'colspan="'.$QQuestion->question_range.'"':null ?>><?= $label->label_SatisfactionLv ?></td>
-                                                                                        </tr>
-                                                                                        <tr class="info">
-                                                                                            <?php
-                                                                                            if($QQuestion->question_range == 5){
-                                                                                                $titleArray = array(
-                                                                                                    '1' => 'ไม่พอใจเลย',
-                                                                                                    '2' => 'เฉยๆอ่ะ',
-                                                                                                    '3' => 'พอใจ',
-                                                                                                    '4' => 'พอใจมาก',
-                                                                                                    '5' => 'พอใจมากที่สุด',
-                                                                                                );
-                                                                                            } else {
-                                                                                                $titleArray = array(
-                                                                                                    '1' => '1',
-                                                                                                    '2' => '2',
-                                                                                                    '3' => '3',
-                                                                                                    '4' => '4',
-                                                                                                    '5' => '5',
-                                                                                                    '6' => '6',
-                                                                                                    '7' => '7',
-                                                                                                    '8' => '8',
-                                                                                                    '9' => '9',
-                                                                                                    '10' => '10',
-                                                                                                );
-                                                                                            }
-                                                                                            if($QQuestion->question_range > 0) {
-                                                                                                $j = $QQuestion->question_range;
-                                                                                                for($i=1; $i <= $QQuestion->question_range; $i++) {
-                                                                                                    ?>
-                                                                                                    <td class="center head-question" width="120"><?= $titleArray[$j] ?></td>
-                                                                                                    <?php
-                                                                                                    $j--;
-                                                                                                }
-                                                                                            }
-                                                                                            ?>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <?php 
-                                                                                    if($QQuestion->choices) {
-                                                                                        foreach($QQuestion->choices as $QChoices) {
-                                                                                        // $currentAnswer
-                                                                                            $currentAnswer = QAnswers_course::model()->find(array(
-                                                                                                'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $checkAnswerYet->id . '"',
-                                                                                            ));
-                                                                                            ?>
+                                                                                    ?>
+                                                                                    <table class="table table-bordered post-question">
+                                                                                        <thead>
                                                                                             <tr>
-                                                                                                <td><?= $QChoices->option_choice_name ?></td>
+                                                                                                <td class="head-question" style="vertical-align: middle;" class="left padleft" rowspan="2"><?= $QQuestion->question_name ?></td>
+                                                                                                <td class="center head-question" <?= ($QQuestion->question_range)?'colspan="'.$QQuestion->question_range.'"':null ?>><?= $label->label_SatisfactionLv ?></td>
+                                                                                            </tr>
+                                                                                            <tr class="info">
                                                                                                 <?php
+                                                                                                if($QQuestion->question_range == 5){
+                                                                                                    $titleArray = array(
+                                                                                                        '1' => 'ไม่พอใจเลย',
+                                                                                                        '2' => 'เฉยๆอ่ะ',
+                                                                                                        '3' => 'พอใจ',
+                                                                                                        '4' => 'พอใจมาก',
+                                                                                                        '5' => 'พอใจมากที่สุด',
+                                                                                                    );
+                                                                                                } else {
+                                                                                                    $titleArray = array(
+                                                                                                        '1' => '1',
+                                                                                                        '2' => '2',
+                                                                                                        '3' => '3',
+                                                                                                        '4' => '4',
+                                                                                                        '5' => '5',
+                                                                                                        '6' => '6',
+                                                                                                        '7' => '7',
+                                                                                                        '8' => '8',
+                                                                                                        '9' => '9',
+                                                                                                        '10' => '10',
+                                                                                                    );
+                                                                                                }
                                                                                                 if($QQuestion->question_range > 0) {
                                                                                                     $j = $QQuestion->question_range;
                                                                                                     for($i=1; $i <= $QQuestion->question_range; $i++) {
                                                                                                         ?>
-                                                                                                        <td class="center"><input type="radio" disabled <?= ($currentAnswer->answer_numeric == $j)?'checked':null ?> /></td>
+                                                                                                        <td class="center head-question" width="120"><?= $titleArray[$j] ?></td>
                                                                                                         <?php
                                                                                                         $j--;
                                                                                                     }
                                                                                                 }
                                                                                                 ?>
                                                                                             </tr>
-                                                                                            <?php
-                                                                                        }
-                                                                                    }
-                                                                                    ?>
-                                                                                </table>
-                                                                                <?php
-                                                                                } else if($QQuestion->input_type_id == 2) { ?> 
-                                                                                <table class="table table-bordered post-question">
-                                                                                    <thead>
-                                                                                        <tr>
-                                                                                            <td colspan="3" class="head-question text-left"><?= $QQuestion->question_name ?></td>
-                                                                                        </tr>
-                                                                                        <tr>
-                                                                                            <td class="head-question">ตัวเลือก</td>
-                                                                                            <td class="head-question">คำถาม</td>
-                                                                                            <td class="head-question">หมายเหตุ</td>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <?php 
-                                                                                    if($QQuestion->choices) {
-                                                                                        foreach($QQuestion->choices as $QChoices) {
+                                                                                        </thead>
+                                                                                        <?php 
+                                                                                        if($QQuestion->choices) {
+                                                                                            foreach($QQuestion->choices as $QChoices) {
                                                                                         // $currentAnswer
-                                                                                            $currentAnswer = QAnswers_course::model()->find(array(
-                                                                                                'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $checkAnswerYet->id . '"',
-                                                                                            ));
-                                                                                            ?>
-                                                                                            <tr>
-                                                                                                <td><input type="radio" disabled <?= !empty($currentAnswer) ? 'checked' : '' ?>></td>
-                                                                                                <td><?= $QChoices->option_choice_name ?></td>
-                                                                                                <td class="center"><?= $currentAnswer->answer_text ?></td>
-                                                                                            </tr>
-                                                                                            <?php
+                                                                                                $currentAnswer = QAnswers_course::model()->find(array(
+                                                                                                    'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $checkAnswerYet->id . '"',
+                                                                                                ));
+                                                                                                ?>
+                                                                                                <tr>
+                                                                                                    <td><?= $QChoices->option_choice_name ?></td>
+                                                                                                    <?php
+                                                                                                    if($QQuestion->question_range > 0) {
+                                                                                                        $j = $QQuestion->question_range;
+                                                                                                        for($i=1; $i <= $QQuestion->question_range; $i++) {
+                                                                                                            ?>
+                                                                                                            <td class="center"><input type="radio" disabled <?= ($currentAnswer->answer_numeric == $j)?'checked':null ?> /></td>
+                                                                                                            <?php
+                                                                                                            $j--;
+                                                                                                        }
+                                                                                                    }
+                                                                                                    ?>
+                                                                                                </tr>
+                                                                                                <?php
+                                                                                            }
                                                                                         }
-                                                                                    }
-                                                                                    ?>
-                                                                                </table>  
-                                                                               <?php } else if($QQuestion->input_type_id == 3) { ?> 
-                                                                                 <table class="table table-bordered post-question">
+                                                                                        ?>
+                                                                                    </table>
+                                                                                    <?php
+                                                                                } else if($QQuestion->input_type_id == 2) { ?> 
+                                                                                    <table class="table table-bordered post-question">
+                                                                                        <thead>
+                                                                                            <tr>
+                                                                                                <td colspan="3" class="head-question text-left"><?= $QQuestion->question_name ?></td>
+                                                                                            </tr>
+                                                                                            <tr>
+                                                                                                <td class="head-question">ตัวเลือก</td>
+                                                                                                <td class="head-question">คำถาม</td>
+                                                                                                <td class="head-question">หมายเหตุ</td>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <?php 
+                                                                                        if($QQuestion->choices) {
+                                                                                            foreach($QQuestion->choices as $QChoices) {
+                                                                                        // $currentAnswer
+                                                                                                $currentAnswer = QAnswers_course::model()->find(array(
+                                                                                                    'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $checkAnswerYet->id . '"',
+                                                                                                ));
+                                                                                                ?>
+                                                                                                <tr>
+                                                                                                    <td><input type="radio" disabled <?= !empty($currentAnswer) ? 'checked' : '' ?>></td>
+                                                                                                    <td><?= $QChoices->option_choice_name ?></td>
+                                                                                                    <td class="center"><?= $currentAnswer->answer_text ?></td>
+                                                                                                </tr>
+                                                                                                <?php
+                                                                                            }
+                                                                                        }
+                                                                                        ?>
+                                                                                    </table>  
+                                                                                <?php } else if($QQuestion->input_type_id == 3) { ?> 
+                                                                                   <table class="table table-bordered post-question">
                                                                                     <thead>
                                                                                         <tr>
                                                                                             <td colspan="3" class="head-question text-left"><?= $QQuestion->question_name ?></td>
@@ -297,7 +304,7 @@ $getLessonAll = Lesson::model()->findAll(array(
                                                                                     ?>
                                                                                 </table>
                                                                                 <?php    
-                                                                                } else if($QQuestion->input_type_id == 5) { ?>
+                                                                            } else if($QQuestion->input_type_id == 5) { ?>
                                                                                 <table class="table table-bordered post-question">
                                                                                     <thead>
                                                                                         <tr>
@@ -322,7 +329,7 @@ $getLessonAll = Lesson::model()->findAll(array(
                                                                                     ?>
                                                                                 </table>
                                                                                 <?php
-                                                                                } else { ?>
+                                                                            } else { ?>
                                                                                 <table class="table table-bordered post-question">
                                                                                     <thead>
                                                                                         <tr>
@@ -347,36 +354,24 @@ $getLessonAll = Lesson::model()->findAll(array(
                                                                                     ?>
                                                                                 </table>
                                                                                 <?php 
-                                                                                }   
-                                                                            }
+                                                                            }   
                                                                         }
-                                                                        ?>
-                                                                    </div>
-                                                                    <?php
-                                                                }
+                                                                    }
+                                                                    ?>
+                                                                </div>
+                                                                <?php
                                                             }
-                                                            ?>
-                                                        </div>
+                                                        }
+                                                        ?>
                                                     </div>
-                                                </div>
-                                                <?php
-                                            } else {
-                                                $InactivateSurvey++;
-                                            }
-                                        }
-                                        if($InactivateSurvey == count($CourseSurvey)) {
-                                            ?>
-                                            <div class="box-body panel-body">
-                                                <div class="warningArea">
-                                                    <i class="fa fa-exclamation-circle fa-5x text-danger"></i>
-                                                </div>
-                                                <div class="warningArea">
-                                                    <span class="text-danger font-bold"><?= $label->label_noSurveyCourse ?></span>
                                                 </div>
                                             </div>
                                             <?php
+                                        } else {
+                                            $InactivateSurvey++;
                                         }
-                                    } else {
+                                    }
+                                    if($InactivateSurvey == count($CourseSurvey)) {
                                         ?>
                                         <div class="box-body panel-body">
                                             <div class="warningArea">
@@ -388,18 +383,30 @@ $getLessonAll = Lesson::model()->findAll(array(
                                         </div>
                                         <?php
                                     }
+                                } else {
+                                    ?>
+                                    <div class="box-body panel-body">
+                                        <div class="warningArea">
+                                            <i class="fa fa-exclamation-circle fa-5x text-danger"></i>
+                                        </div>
+                                        <div class="warningArea">
+                                            <span class="text-danger font-bold"><?= $label->label_noSurveyCourse ?></span>
+                                        </div>
+                                    </div>
+                                    <?php
                                 }
-                                ?>
-                            </div>
-
+                            }
+                            ?>
                         </div>
-                        <div class="btn-learn hidden-xs">
 
-                            <a class="btn btn-warning btn-lg " href="<?php echo $this->createUrl('/course/detail', array('id' => $course->course_id)); ?>" role="button">Completed</a>
-                        </div>
                     </div>
+                    <div class="btn-learn hidden-xs">
 
-                    <!-- <div class="col-sm-4 col-md-3"> -->
+                        <a class="btn btn-warning btn-lg " href="<?php echo $this->createUrl('/course/detail', array('id' => $course->course_id)); ?>" role="button"><?= $Completed ?></a>
+                    </div>
+                </div>
+
+                <!-- <div class="col-sm-4 col-md-3"> -->
 
                     <!-- < ?php
                     echo $this->renderPartial('_right_course', array(

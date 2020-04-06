@@ -6,7 +6,7 @@ $path_theme = Yii::app()->theme->baseUrl . '/';
 <?php Yii::app()->clientScript->registerCssFile($path_theme . "css/style.css") ?>
 
 <!-- Header page -->
-<div class="header-page" >
+<!-- <div class="header-page" >
  <div class="container">
     <h1>แบบสอบถาม 
        <small class="pull-right">
@@ -17,22 +17,22 @@ $path_theme = Yii::app()->theme->baseUrl . '/';
      </small>
  </h1>
 </div>
-</div>
+</div> -->
 
 <!-- Content -->
 <section class="content" id="questionnaire">
- <div class="container">
+   <div class="container">
 
-   <div class="well well-question">
+     <div class="well well-question">
 
-    <?php
-    if (isset($questionnaire->q_header)) {
-        $header = $questionnaire->q_header;
-        if (count($header->sections) > 0) {
-            $sections = $header->sections;
-            ?>
-            <!-- end top script -->
-            <div id="container">
+        <?php
+        if (isset($questionnaire->q_header)) {
+            $header = $questionnaire->q_header;
+            if (count($header->sections) > 0) {
+                $sections = $header->sections;
+                ?>
+                <!-- end top script -->
+                <div id="container">
             <!-- <div class="page-header">
                 <figure class="post-thumbnail">
                     <img alt="" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/about/about.jpg">
@@ -214,7 +214,7 @@ $path_theme = Yii::app()->theme->baseUrl . '/';
                                                                                             );
                                                                                         }
                                                                                         if($questionValue->question_range > 0) {
-                                                                                                $j = $questionValue->question_range;
+                                                                                            $j = $questionValue->question_range;
                                                                                             for($i=1; $i <= $questionValue->question_range; $i++) {
                                                                                                 ?>
                                                                                                 <th class="text-center" width="120">
@@ -240,23 +240,23 @@ $path_theme = Yii::app()->theme->baseUrl . '/';
                                                                                                 <?php
                                                                                                 if($questionValue->question_range > 0) {
                                                                                                     $j = $questionValue->question_range;
-                                                                                                for($i=1; $i <= $questionValue->question_range; $i++) {
-                                                                                                    ?>
-                                                                                                    <td class="text-center" <?php echo ($choiceKey % 2 == 0) ? 'style="background-color:#FFFFFF"' : ''; ?> >
-                                                                                                        <div class="radio radio-success">
+                                                                                                    for($i=1; $i <= $questionValue->question_range; $i++) {
+                                                                                                        ?>
+                                                                                                        <td class="text-center" <?php echo ($choiceKey % 2 == 0) ? 'style="background-color:#FFFFFF"' : ''; ?> >
+                                                                                                            <div class="radio radio-success">
 
-                                                                                                            <input type="radio"
-                                                                                                            id="choicecontentment<?php echo $choiceValue->option_choice_id.$j; ?>"
-                                                                                                            name="choice[contentment][<?php echo $choiceValue->option_choice_id; ?>]"
-                                                                                                            value="<?php echo $j; ?>" required >
-                                                                                                            <label for="choicecontentment<?php echo $choiceValue->option_choice_id.$j; ?>">
-                                                                                                            </label>
-                                                                                                        </div>
-                                                                                                    </td>
-                                                                                                    <?php
-                                                                                                    $j--;
+                                                                                                                <input type="radio"
+                                                                                                                id="choicecontentment<?php echo $choiceValue->option_choice_id.$j; ?>"
+                                                                                                                name="choice[contentment][<?php echo $choiceValue->option_choice_id; ?>]"
+                                                                                                                value="<?php echo $j; ?>" required >
+                                                                                                                <label for="choicecontentment<?php echo $choiceValue->option_choice_id.$j; ?>">
+                                                                                                                </label>
+                                                                                                            </div>
+                                                                                                        </td>
+                                                                                                        <?php
+                                                                                                        $j--;
+                                                                                                    }
                                                                                                 }
-                                                                                            }
                                                                                                 ?>
                                                                                             </tr>
                                                                                             <?php
@@ -311,7 +311,14 @@ $path_theme = Yii::app()->theme->baseUrl . '/';
                                             // }
                                              if ($page_start == count($sections)) {
                                                 ?>
-                                                <?php echo CHtml::tag('button', array('class' => 'btn btn-ci center-block'), 'บันทึกข้อมูล'); ?>
+                                                <?php 
+                                                if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+                                                    $Save = "Save";
+                                                }else{  
+                                                    $Save = "บันทึกข้อมูล";
+                                                }
+                                                ?>
+                                                <?php echo CHtml::tag('button', array('class' => 'btn btn-ci center-block'), $Save); ?>
                                                 <?php
                                             }
                                             ?>

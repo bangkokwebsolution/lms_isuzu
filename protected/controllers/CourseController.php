@@ -83,36 +83,36 @@ class CourseController extends Controller {
         $modelOrgDep = OrgDepart::model()->findAll($criteria);
 
         foreach ($modelOrgDep as $key => $value) {
-           $courseArr[] = $value->orgchart_id;
-       }
-       $criteria = new CDbCriteria;
-       $criteria->join = "INNER JOIN tbl_course_online AS course ON (course.course_id = t.course_id) ";
-       $criteria->join .= "INNER JOIN tbl_schedule as s ON ( s.id = t.schedule_id ) ";
-       $criteria->compare('user_id',Yii::app()->user->id);
-       $criteria->compare('course.active','y');
-       $criteria->group = 't.course_id';
-       $criteria->compare('course.course_title',$text,true);
-       $criteria->order = 't.schedule_id DESC';
-       $criteria->addCondition('s.training_date_end >= :date_now');
-       $criteria->params[':date_now'] = date('Y-m-d');
-       $modelCourseTms = AuthCourse::model()->findAll($criteria);
+         $courseArr[] = $value->orgchart_id;
+     }
+     $criteria = new CDbCriteria;
+     $criteria->join = "INNER JOIN tbl_course_online AS course ON (course.course_id = t.course_id) ";
+     $criteria->join .= "INNER JOIN tbl_schedule as s ON ( s.id = t.schedule_id ) ";
+     $criteria->compare('user_id',Yii::app()->user->id);
+     $criteria->compare('course.active','y');
+     $criteria->group = 't.course_id';
+     $criteria->compare('course.course_title',$text,true);
+     $criteria->order = 't.schedule_id DESC';
+     $criteria->addCondition('s.training_date_end >= :date_now');
+     $criteria->params[':date_now'] = date('Y-m-d');
+     $modelCourseTms = AuthCourse::model()->findAll($criteria);
 
-       $criteria = new CDbCriteria;
-       $criteria->with = array('course','course.CategoryTitle');
-       $criteria->addIncondition('orgchart_id',$courseArr);
-       $criteria->compare('course.active','y');
-       $criteria->compare('categorys.cate_show','1');
-       $criteria->compare('course.course_title',$text,true);
-       $criteria->group = 'course.course_id';
-       $criteria->addCondition('course.course_date_end >= :date_now');
-       $criteria->params[':date_now'] = date('Y-m-d H:i');
-       $Model = OrgCourse::model()->findAll($criteria);
+     $criteria = new CDbCriteria;
+     $criteria->with = array('course','course.CategoryTitle');
+     $criteria->addIncondition('orgchart_id',$courseArr);
+     $criteria->compare('course.active','y');
+     $criteria->compare('categorys.cate_show','1');
+     $criteria->compare('course.course_title',$text,true);
+     $criteria->group = 'course.course_id';
+     $criteria->addCondition('course.course_date_end >= :date_now');
+     $criteria->params[':date_now'] = date('Y-m-d H:i');
+     $Model = OrgCourse::model()->findAll($criteria);
 
-       $label = MenuCourse::model()->find(array(
+     $label = MenuCourse::model()->find(array(
         'condition' => 'lang_id=:lang_id',
         'params' => array(':lang_id' => $langId)
     ));
-       if(!$label){
+     if(!$label){
         $label = MenuCourse::model()->find(array(
             'condition' => 'lang_id=:lang_id',
             'params' => array(':lang_id' => 1)
@@ -293,23 +293,23 @@ public function actionResetLearn($id) {
         $modelOrgDep = OrgDepart::model()->findAll($criteria);
 
         foreach ($modelOrgDep as $key => $value) {
-           $courseArr[] = $value->orgchart_id;
-       }
+         $courseArr[] = $value->orgchart_id;
+     }
 
-       $criteria = new CDbCriteria;
+     $criteria = new CDbCriteria;
      // $criteria->with = array('authCourse');
-       $criteria->join = "INNER JOIN tbl_course_online AS course ON (course.course_id = t.course_id) ";   
-       $criteria->join .= "INNER JOIN tbl_schedule as s ON ( s.id = t.schedule_id ) ";
-       $criteria->compare('user_id',Yii::app()->user->id);
-       $criteria->compare('course.active','y');
-       $criteria->compare('course.status','1');
-       $criteria->addCondition('s.training_date_end >= :date_now');
-       $criteria->params[':date_now'] = date('Y-m-d');
-       $criteria->group = 't.course_id';
-       $criteria->order = 't.schedule_id DESC';
-       $modelCourseTms = AuthCourse::model()->findAll($criteria);
+     $criteria->join = "INNER JOIN tbl_course_online AS course ON (course.course_id = t.course_id) ";   
+     $criteria->join .= "INNER JOIN tbl_schedule as s ON ( s.id = t.schedule_id ) ";
+     $criteria->compare('user_id',Yii::app()->user->id);
+     $criteria->compare('course.active','y');
+     $criteria->compare('course.status','1');
+     $criteria->addCondition('s.training_date_end >= :date_now');
+     $criteria->params[':date_now'] = date('Y-m-d');
+     $criteria->group = 't.course_id';
+     $criteria->order = 't.schedule_id DESC';
+     $modelCourseTms = AuthCourse::model()->findAll($criteria);
 
-       if($modelCourseTms){
+     if($modelCourseTms){
         // $model_cate_tms = ($langId == 1) ? Category::model()->findByPk(1) : Category::model()->findByAttributes(array('parent_id' => '1'));
         // $model_cate_tms = Category::model()->findByPk(24); //localhost
         $model_cate_tms = Category::model()->findByPk(1);
@@ -864,22 +864,22 @@ public function actionCateIndex($id) {
                 $att['timeNext'] = $filePdfSlide->image_slide_next_time;
             }
             if(empty($modelLearnFilePdf)){
-               $learnLog = new LearnFile;
-               $learnLog->learn_id = $learn_id;
-               $learnLog->user_id_file = Yii::app()->user->id;
-               $learnLog->file_id = $id;
-               $learnLog->learn_file_date = new CDbExpression('NOW()');
-               $learnLog->learn_file_status = "1";
-               $learnLog->save();
+             $learnLog = new LearnFile;
+             $learnLog->learn_id = $learn_id;
+             $learnLog->user_id_file = Yii::app()->user->id;
+             $learnLog->file_id = $id;
+             $learnLog->learn_file_date = new CDbExpression('NOW()');
+             $learnLog->learn_file_status = "1";
+             $learnLog->save();
 
-               $att['no']      = $id;
-               $att['image']   = '<input type="text" class="knob" value="50" data-skin="tron" data-thickness="0.2" data-width="25" data-height="25" data-displayInput="false" data-fgColor="#ff8000" data-readonly="true">';
-               $learn = Learn::model()->findByPk($learn_id);
-               $learn->lesson_status = 'learning';
-               $learn->save();
-           } else {
-               if(($countFile-1) == $slide || $modelLearnFilePdf->learn_file_status == 's')
-               {
+             $att['no']      = $id;
+             $att['image']   = '<input type="text" class="knob" value="50" data-skin="tron" data-thickness="0.2" data-width="25" data-height="25" data-displayInput="false" data-fgColor="#ff8000" data-readonly="true">';
+             $learn = Learn::model()->findByPk($learn_id);
+             $learn->lesson_status = 'learning';
+             $learn->save();
+         } else {
+             if(($countFile-1) == $slide || $modelLearnFilePdf->learn_file_status == 's')
+             {
                 $modelLearnFilePdf->learn_file_status = 's';
             //$modelLearnFilePdf->learn_file_date_end = new CDbExpression('NOW()');
                 $att['no']      = $id;
@@ -1843,16 +1843,16 @@ public function actionDetail($id) {
 
 
             if(!empty($certDetail)){
-             $to = array();
-             $to['email'] = $currentUser->email;
-             $to['firstname'] = $currentUser->profile->firstname;
-             $to['lastname'] = $currentUser->profile->lastname;
-             $subject = 'ระบบส่งไฟล์ใบประกาศนียบัตร';
-             $message = 'ท่านสอบผ่านหลักสูตร '.$course_model->course_title;
-             $mail = Helpers::lib()->SendMailMsg($to, $subject, $message,$pathSavePdf);
-         }
+               $to = array();
+               $to['email'] = $currentUser->email;
+               $to['firstname'] = $currentUser->profile->firstname;
+               $to['lastname'] = $currentUser->profile->lastname;
+               $subject = 'ระบบส่งไฟล์ใบประกาศนียบัตร';
+               $message = 'ท่านสอบผ่านหลักสูตร '.$course_model->course_title;
+               $mail = Helpers::lib()->SendMailMsg($to, $subject, $message,$pathSavePdf);
+           }
             //output
-         if (isset($model->passcours_id) OR isset($model->score_id)) {
+           if (isset($model->passcours_id) OR isset($model->score_id)) {
             if (isset($model->passcours_id)) {
                 $target = $model->passcours_id;
             } else if (isset($model->score_id)) {
@@ -1879,18 +1879,18 @@ public function actionDetail($id) {
 }
 
 public function actionTest(){
- require_once __DIR__ . '/../../admin/protected/vendors/mpdf7/autoload.php';
- $mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
+   require_once __DIR__ . '/../../admin/protected/vendors/mpdf7/autoload.php';
+   $mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
 
         //Save file
 
- $mPDF->WriteHTML('Hello xxxxxx');
- $pathSavePdf = $_SERVER['DOCUMENT_ROOT']."/lms_airasia/uploads/certificate/testset.pdf";
- $mPDF->Output($pathSavePdf, 'F');
+   $mPDF->WriteHTML('Hello xxxxxx');
+   $pathSavePdf = $_SERVER['DOCUMENT_ROOT']."/lms_airasia/uploads/certificate/testset.pdf";
+   $mPDF->Output($pathSavePdf, 'F');
 
- var_dump(Yii::app()->getBaseUrl(true)."/uploads/certificate/");
- var_dump($_SERVER['DOCUMENT_ROOT']);
- exit();
+   var_dump(Yii::app()->getBaseUrl(true)."/uploads/certificate/");
+   var_dump($_SERVER['DOCUMENT_ROOT']);
+   exit();
 }
 
 private function savePassCourseLog($action, $passcours_id) {
@@ -1914,6 +1914,7 @@ public function actionCourseLearn($id = null){
 
     $param = $_GET['file'];
     $str = CHtml::encode($param);
+
     if(!is_numeric($str)){
         throw new CHttpException(404, 'The requested page does not exist.');
     }
@@ -2079,16 +2080,16 @@ public function actionCheckCaptcha()
             $learn_state->save(false);
         }
         if(isset($_POST['staTime'])){
-           $modelCapt = ValidateCaptcha::model()->find(array(
+         $modelCapt = ValidateCaptcha::model()->find(array(
             'condition' => 'user_id=:user_id AND cnid=:cnid AND status="0"',
             'params' => array(':user_id' => $user->id,':cnid' => $_POST['cnid'])
         )
-       );
-           $time = ConfigCaptchaCourseRelation::model()->with('captchaTime')->find(array(
+     );
+         $time = ConfigCaptchaCourseRelation::model()->with('captchaTime')->find(array(
             'condition'=>'cnid=:cnid AND captchaTime.capt_hide="1" AND captchaTime.capt_active="y"',
             'params' => array(':cnid' => $_POST['cnid'])
         ));
-           if($modelCapt){
+         if($modelCapt){
             $modelCapt->time = $time->captchaTime->capt_wait_time;
             $modelCapt->status = 1;
             $modelCapt->check = $_POST['staTime'];
@@ -2162,16 +2163,16 @@ public function actionCheckCaptchaPdf()
             $learn_state->save(false);
         }
         if(isset($_POST['staTime'])){
-           $modelCapt = ValidateCaptcha::model()->find(array(
+         $modelCapt = ValidateCaptcha::model()->find(array(
             'condition' => 'user_id=:user_id AND cnid=:cnid AND status="0"',
             'params' => array(':user_id' => $user->id,':cnid' => $_POST['cnid'])
         )
-       );
-           $time = ConfigCaptchaCourseRelation::model()->with('captchaTime')->find(array(
+     );
+         $time = ConfigCaptchaCourseRelation::model()->with('captchaTime')->find(array(
             'condition'=>'cnid=:cnid AND captchaTime.capt_hide="1" AND captchaTime.capt_active="y"',
             'params' => array(':cnid' => $_POST['cnid'])
         ));
-           if($modelCapt){
+         if($modelCapt){
                     // $modelCapt->time = $time->captchaTime->capt_wait_time;
             $modelCapt->status = 1;
             $modelCapt->check = $_POST['staTime'];

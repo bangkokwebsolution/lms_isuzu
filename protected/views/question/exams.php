@@ -27,14 +27,14 @@ $arr = json_decode($real);
 </style>
 <div id="exam-result">
 	
-	<div class="container">
+<!-- 	<div class="container">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb breadcrumb-main">
 				<li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/site/index'); ?>"><?php echo $label->label_homepage; ?></a></li>
 				<li class="breadcrumb-item active" aria-current="page"><?= $lesson->CourseOnlines->course_title; ?></li>
 			</ol>
 		</nav>
-	</div>
+	</div> -->
 	<section class="content" id="exams">
 		<div class="container">
 			<!-- tabtime -->
@@ -78,7 +78,7 @@ $arr = json_decode($real);
 													echo '<div class="checkbox checkbox-info checkbox-circle">
 													<input id="checkbox-' . $choice->choice_id . '" type="checkbox" class="check" ' . $checked . ' value="' . $choice->choice_id . '" name="Choice[' . $model->ques_id . '][]">
 													<label for="checkbox-' . $choice->choice_id . '">
-														' . CHtml::decode($choice->choice_detail) . '
+													' . CHtml::decode($choice->choice_detail) . '
 													</label>
 													</div>
 													';
@@ -88,11 +88,11 @@ $arr = json_decode($real);
 													}
 													echo '
 													<div class="radio radio-info radio-circle">
-														<input id="radio-' . $choice->choice_id . '" 
-														type="radio"' . $checked . ' value=' . $choice->choice_id . ' name="Choice[' . $model->ques_id . '][]">
-														<label for="radio-' . $choice->choice_id . '">
-															' . CHtml::decode($choice->choice_detail) . '
-														</label>
+													<input id="radio-' . $choice->choice_id . '" 
+													type="radio"' . $checked . ' value=' . $choice->choice_id . ' name="Choice[' . $model->ques_id . '][]">
+													<label for="radio-' . $choice->choice_id . '">
+													' . CHtml::decode($choice->choice_detail) . '
+													</label>
 													</div>';
 												} else if ($model->ques_type == 4) {
 													// $ranNumber = rand(1, 10000000);
@@ -140,9 +140,9 @@ $arr = json_decode($real);
 													$selected_value = $selected,
 													$Type4Answer,
 													array('empty' => UserModule::t('Choose'), 'class' => 'dropdown_value', 'id' => 'Q' . $key)
-												) . ' <label>
-													' . CHtml::decode($choice->choice_detail) . '
-													</label>';
+													) . ' <label>
+												' . CHtml::decode($choice->choice_detail) . '
+												</label>';
 												echo '<br>';
 												$countQuest++;
 											}
@@ -158,8 +158,17 @@ $arr = json_decode($real);
 									echo CHtml::hiddenField("idx_now", $currentQuiz->number);
 									?>
 									<div class="text-center">
-										<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg', 'onclick' => 'save_ans("previous")'), 'Previous'); ?>
-										<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg', 'onclick' => 'save_ans("next")'), 'Next'); ?>
+										<?php 
+										if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+											$Previous = "Previous";
+											$Next = "Next";
+										}else{  
+											$Previous = "ก่อน";
+											$Next = "ถัดไป";
+										}
+										?>
+										<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg', 'onclick' => 'save_ans("previous")'), $Previous); ?>
+										<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg', 'onclick' => 'save_ans("next")'), $Next); ?>
 										<!-- 	<.?php if($last_ques==1)echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg','onclick'=>'save_ans("save")'), 'ส่งคำตอบ'); ?> -->
 									</div>
 								</div>
@@ -182,11 +191,11 @@ $arr = json_decode($real);
 														}
 														$link = 'onclick="save_ans(\'' . $val_temp->number . '\')"';
 														/*$this->createUrl('index',array('id'=>$lesson->id,'number'=>$val_temp->number));*/
-													?>
+														?>
 														<td><a href="javascript:void(0)" <?= $link; ?> class="btn <?= $class ?> btn-block">
-																<div style="height:100%;width:100%"><?= $val_temp->number; ?></div>
-															</a></td>
-													<?php
+															<div style="height:100%;width:100%"><?= $val_temp->number; ?></div>
+														</a></td>
+														<?php
 														if ($loop == 10) {
 															$loop = 0;
 															echo '</tr><tr style="background-color: #f9f9f9">';
@@ -279,12 +288,12 @@ $arr = json_decode($real);
 									var typeMsg = 'warning';
 								}
 								swal({
-										title: "<?= UserModule::t('success_test'); ?>",
-										text: '',
-										type: typeMsg,
-										confirmButtonText: "OK",
-									},
-									function() {
+									title: "<?= UserModule::t('success_test'); ?>",
+									text: '',
+									type: typeMsg,
+									confirmButtonText: "OK",
+								},
+								function() {
 										$('#exam-result').html(data); //window.location.href = url;
 									});
 							} else {
@@ -317,12 +326,12 @@ $arr = json_decode($real);
 							var typeMsg = 'warning';
 						}
 						swal({
-								title: "<?= UserModule::t('success_test'); ?>",
-								text: '',
-								type: typeMsg,
-								confirmButtonText: "OK",
-							},
-							function() {
+							title: "<?= UserModule::t('success_test'); ?>",
+							text: '',
+							type: typeMsg,
+							confirmButtonText: "OK",
+						},
+						function() {
 								$('#exam-result').html(data); //window.location.href = url;
 							});
 					} else {
