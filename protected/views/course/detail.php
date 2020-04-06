@@ -16,6 +16,7 @@
 }
 
 </style>
+
 <?php 
 $themeBaseUrl = Yii::app()->theme->baseUrl;
 $uploadFolder = Yii::app()->getUploadUrl("lesson");
@@ -30,6 +31,7 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
     $day = "day";
     $Questionnaire = "Questionnaire ";
     $Click = "Click";
+    $final = "Post Test";
 }else{  
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -41,13 +43,14 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
     $day = "วัน";
     $Questionnaire = "แบบสอบถาม ";
     $Click = "คลิก";
+    $final = "แบบทดสอบหลังเรียน";
     $courseChildren = CourseOnline::model()->find(array('condition' => 'parent_id = ' . $course->course_id));
     if($courseChildren){
         $course->course_title = $courseChildren->course_title;
         $course->course_detail = $courseChildren->course_detail;
-    }
-    
+    }  
 }
+
 function Cuttime($date){
     $strYear = date("Y", strtotime($date)) + 543;
     $strMonth = date("n", strtotime($date));
@@ -60,6 +63,7 @@ function Cuttime($date){
     return "$strDay / $strMonthThai / $strYear";
 }
 ?>
+
 <?php 
 $criteria = new CDbCriteria;
 // $criteria->with = 'LessonLearn';
@@ -96,10 +100,10 @@ if($model){
                 if($checkPostTest){
                     $isPostTest = Helpers::isPosttestState($value->id); //true = ยังไมได้ทำข้อสอบหลังเรียน,false = ทำข้อสอบหลังเรียนแล้ว
                     if($isPostTest){
-                       $stopId = $value->id;
-                       $state = false;
-                       $msg_step = UserModule::t('learning_lesson').': '.$value->title;
-                   }else{
+                     $stopId = $value->id;
+                     $state = false;
+                     $msg_step = UserModule::t('learning_lesson').': '.$value->title;
+                 }else{
                     $criteria = new CDbCriteria;
                     $criteria->condition = ' lesson_id="' . $value->id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y" AND score_past = "y" AND type = "post"';
                     $criteria->order = 'create_date ASC';
@@ -195,7 +199,7 @@ if($model){
 </div> -->
 
 <div class="course-detail-main">
-   <div class="container">
+ <div class="container">
 <!--     <?php
     // $this->renderPartial('menu-steps', array(
     //     'course'=>$course,
@@ -207,46 +211,117 @@ if($model){
 ?> -->
 <div class="row">
     <div class="col-md-4">
-       <div class="course-active" id="sticker">
-         <div class="card">
-             <div class="card-body" align="center">
-                 <div class="mb-3">
-                    <?php if($course->course_picture != null) {?>
-                        <img src="<?php echo Yii::app()->baseUrl; ?>/uploads/courseonline/<?= $course->course_id ?>/thumb/<?= $course->course_picture?>" style="height:185px;" class="w-100 ">
+     <div class="course-active" id="sticker">
+       <div class="card">
+           <div class="card-body" align="center">
+               <div class="mb-3">
+                <?php if($course->course_picture != null) {?>
+                    <img src="<?php echo Yii::app()->baseUrl; ?>/uploads/courseonline/<?= $course->course_id ?>/thumb/<?= $course->course_picture?>" style="height:185px;" class="w-100 ">
+                <?php }else{ ?>
+                    <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png" class="w-100 ">
+                <?php } ?>
+            </div>
+            <?php                                         
+            foreach ($lessonList as $key => $lessonListValue) { 
+               $checkLessonPass = Helpers::lib()->checkLessonPass_Percent($lessonListValue);
+               ?>
+
+               <h4 class="text-left"><?= $statusEdu?></h4>
+               <div class="progress" style="height: 8px;">
+                <div class="progress-bar" role="progressbar" style="width: <?=$checkLessonPass->percent?>%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <h5 class="text-muted text-left"><?=$checkLessonPass->percent?>%</h5>
+
+            <div class="mt-10"> <a href="#tab-content" onclick = "$('#change_tab2').click();" class="btn btn-success"><?=$lastStatus?></a></div>
+            <!--old-->
+            <!-- <?php if($checkLessonPass->status != "pass") {?>
+                <div class="certificate-check">
+                    <a href="#"> <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/cer-warning.png"></a>
+                </div>
+                <h4 style="margin-top:25px;"><?=$failStudy?></h4>
+            <?php }else{?>
+                <div class="certificate-check">
+                    <a href="<?= $this->createUrl('Course/PrintCertificate', array('id' => $course->course_id,'langId'=>1)); ?>"> <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/cer-success.png"></a>
+                </div>
+                <h4 style="margin-top:25px;"><?=$successStudy?></h4>
+                <?php } ?>  -->
+
+                <?php 
+
+                $category = Category::model()->findByPk($course->cate_id);
+                $checkCourseTest = Helpers::lib()->checkCoursePass($course->course_id);
+                $checkHaveCourseTest = Helpers::lib()->checkHaveCourseTestInManage($course->course_id);
+                $criteria = new CDbCriteria;
+                $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y"';
+                $criteria->order = 'create_date ASC';
+                $BestFinalTestScore = Coursescore::model()->findAll($criteria);
+
+                if($checkHaveCourseTest && $checkCourseTest == 'pass'){
+                    $allPassed = true;
+                    if($BestFinalTestScore) {
+                        foreach($BestFinalTestScore as $time => $FinalTest) {
+                            if($FinalTest->score_past == 'n' && $allPassed) {
+                                $allPassed = false;
+                            }
+                            if($FinalTest->score_past == 'y') {
+                                $allPassed = true;
+                            }
+
+                        }
+                    }else{
+                       $allPassed = false;
+                   }
+               } else if($checkCourseTest == 'pass'){
+                $allPassed = true;
+            }
+
+            $pathPassed_Onclick = '';
+            $statePrintCert = false;
+            $disBtn = '';
+            if($allPassed){
+               $certDetail = CertificateNameRelations::model()->find(array('condition'=>'course_id='.$course->course_id));
+               if(empty($certDetail)){
+                   $pathPassed = 'javascript:void(0);';
+                   $pathPassed_Onclick = 'onClick="alertswalNocert()"';
+               }else{
+                $statePrintCert = true;
+                $pathPassed = $this->createUrl('Course/PrintCertificate', array('id' => $course->course_id,'langId'=>1));
+            }
+
+            $targetBlank = 'target="_blank"';
+            $certFaStat = 'text-success';
+            $img_tophy = Yii::app()->theme->baseUrl."/images/cer-success.png";
+        } else {
+        //$pathPassed = $this->createUrl('/course/final', array('id' => $course->course_id));
+            $pathPassed = 'javascript:void(0);';
+            $certFaStat = 'text-muted';
+            $certEvnt = 'onclick="alertswalcert()"';
+            $img_tophy = Yii::app()->theme->baseUrl."/images/cer-warning.png";
+            $disBtn = 'disabled';
+        }
+
+        ?>
+        <div class="certificate-check">
+            <!-- <?php var_dump($pathPassed); ?> -->
+            <a href="<?php echo $pathPassed; ?>" <?= $pathPassed_Onclick; ?> <?php echo $targetBlank." ".$certEvnt; ?>>
+                <div class="text-center">
+                    <i class="" aria-hidden="true"><img src="<?=$img_tophy?>"></i>
+                    <?php if($course->cate_id != 77){ ?>
+                        <p><?= $label->label_printCert ?></p>
                     <?php }else{ ?>
-                        <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png" class="w-100 ">
+                        <p><?= UserModule::t("print_event"); ?></p>
                     <?php } ?>
                 </div>
-                <?php                                         
-                foreach ($lessonList as $key => $lessonListValue) { 
-                 $checkLessonPass = Helpers::lib()->checkLessonPass_Percent($lessonListValue);
-                 ?>
-
-                 <h4 class="text-left"><?= $statusEdu?></h4>
-                 <div class="progress" style="height: 8px;">
-                    <div class="progress-bar" role="progressbar" style="width: <?=$checkLessonPass->percent?>%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <h5 class="text-muted text-left"><?=$checkLessonPass->percent?>%</h5>
-
-                <div class="mt-10"> <a href="#tab-content" onclick = "$('#change_tab2').click();" class="btn btn-success"><?=$lastStatus?></a></div>
-
-                <?php if($checkLessonPass->status != "pass") {?>
-                    <div class="certificate-check">
-                        <a href="#"> <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/cer-warning.png"></a>
-                    </div>
-                    <h4 style="margin-top:25px;"><?=$failStudy?></h4>
-                <?php }else{?>
-                    <div class="certificate-check">
-                        <a href="<?= $this->createUrl('Course/PrintCertificate', array('id' => $course->course_id,'langId'=>1)); ?>"> <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/cer-success.png"></a>
-                    </div>
-                    <h4 style="margin-top:25px;"><?=$successStudy?></h4>
-                <?php } ?> 
-
-            <?php } ?>
+            </a>
         </div>
-    </div>
+
+
+    <?php } ?>
 </div>
 </div>
+</div>
+</div>
+
 <div class="col-sm-8 col-md-8 ">
 
     <div class="topic-course">
@@ -501,194 +576,194 @@ if($model){
                                                                         }
                                                                         ?>
                                                                         <div class="stepcoursediv">
-                                                                         <div> <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?> </span><?php echo $label->label_gotoLesson; ?></div></div>
-                                                                         <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
-                                                                            <li class="list-group-item ">
-                                                                               <?php if($step == 2){ ?>
-                                                                                <!-- <div class="pt-now"> You are here</div> -->
-                                                                            <?php } ?>
-                                                                            <span class="pull-right">
-                                                                                <span id="lblduration-<?=$les->id?>"></span>  <span class="btn btn-warning detailmore"><?php echo $label->label_gotoLesson; ?> <i class="fa fa-play-circle"></i> </span></span>
-                                                                                <span class="vdocourse list__course"><?= $les->getRefileName() ?> </span>&nbsp;<?=$statusValue?>
-                                                                                <div class="hidden">
-                                                                                    <video  id="video_player<?=$les->id?>" width="320" height="240" controls>
-                                                                                        <source src="<?php echo $uploadFolder . $les->filename;?>" type="video/mp4">
-                                                                                        </video>
-                                                                                        <div id="meta"></div>   
-                                                                                    </div>
-                                                                                </li>
-                                                                            </a> 
-                                                                            <script type="text/javascript">
-                                                                               var vid = document.getElementById("video_player"+<?=$les->id?>);
-                                                                               vid.onloadedmetadata = function() {
-                                                                                getDuration(<?=$les->id?>);
-                                                                            };
-                                                                        </script> 
-                                                                        <?php 
-                                                                    } 
-                                                                } else if($lessonListValue->type == 'scorm') {
-                                                                    foreach ($lessonListValue->fileScorm as $les) {
-                                                                        if(!$prelearn){
-                                                                            $learnlink = 'javascript:void(0);';
-                                                                            $learnalert = 'alertswalpretest();';
-                                                                        } else{
-                                                                            $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
-                                                                            $learnalert = '';    
-                                                                        }
-                                                                        $learnFiles = Helpers::lib()->checkLessonFile($les,$learnModel->learn_id);
-                                                                        if ($learnFiles == "notLearn") {
-                                                                            $statusValue = '<span class="label label-default" >'. $label->label_notLearn .'</span>';
-                                                                        } else if ($learnFiles == "learning") {
-                                                                            $statusValue = '<span class="label label-warning" >'. $label->label_learning .'</span>';
-                                                                        } else if ($learnFiles == "pass") {
-                                                                            $statusValue = '<span class="label label-success" >'. $label->label_learnPass .'</span>';
-                                                                        }
-                                                                        ?>
-                                                                        <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
-                                                                            <li class="list-group-item ">
-                                                                                <?php if($step == 2){ ?>
+                                                                            <div> <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?> </span><?php echo $label->label_gotoLesson; ?></div></div>
+                                                                            <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
+                                                                                <li class="list-group-item ">
+                                                                                   <?php if($step == 2){ ?>
                                                                                     <!-- <div class="pt-now"> You are here</div> -->
                                                                                 <?php } ?>
                                                                                 <span class="pull-right">
-                                                                                    <span id="lblduration-<?=$les->id?>"></span>  <span class="label label-default"><?php echo $label->label_gotoLesson; ?> <i class="fa fa-play-circle"></i> </span></span>
-                                                                                    <span class="list__course"><?= $les->filename; ?></span>&nbsp;<?=$statusValue?>
+                                                                                    <span id="lblduration-<?=$les->id?>"></span>  <span class="btn btn-warning detailmore"><?php echo $label->label_gotoLesson; ?> <i class="fa fa-play-circle"></i> </span></span>
+                                                                                    <span class="vdocourse list__course"><?= $les->getRefileName() ?> </span>&nbsp;<?=$statusValue?>
                                                                                     <div class="hidden">
-                                                                                        <video id="video_player<?=$les->id?>" width="320" height="240" controls>
+                                                                                        <video  id="video_player<?=$les->id?>" width="320" height="240" controls>
                                                                                             <source src="<?php echo $uploadFolder . $les->filename;?>" type="video/mp4">
                                                                                             </video>
                                                                                             <div id="meta"></div>   
                                                                                         </div>
                                                                                     </li>
-                                                                                </a>  
-                                                                                <?php 
-                                                                            } 
-                                                                        } else if($lessonListValue->type == 'audio'){
-                                                                            foreach ($lessonListValue->fileAudio as $les) {
-                                                                                if(!$prelearn){
-                                                                                    $learnlink = 'javascript:void(0);';
-                                                                                    $learnalert = 'alertswalpretest();';
-                                                                                } else{
-                                                                                    $criteriaPre = new CDbCriteria;
-                                                                                    $criteriaPre->compare('lesson_id',$lessonListValue->id);
-                                                                                    $criteriaPre->compare('user_id',Yii::app()->user->id);
-                                                                                    $criteriaPre->compare('type','pre');
-                                                                                    $criteriaPre->compare('active','y');
-                                                                                    $modelPreScore = Score::model()->findAll($criteriaPre);
-                                                                                    $flagCheckPre = true;
-                                                                                    if($modelPreScore){
-                                                                                        $checkPrePass = array();
-                                                                                        foreach ($modelPreScore as $key => $scorePre) {
-                                                                                            $checkPrePass[] = $scorePre->score_past;
-                                                                                        }
-                                                                                        if(count($modelPreScore) < $lessonListValue->cate_amount){
-                                                                                            if(!in_array("y", $checkPrePass)){
-                                                                                                $flagCheckPre = false;
-                                                                                            }
-                                                                                        }
-                                                                                    }
-
-                                                                                    if(!$flagCheckPre){
+                                                                                </a> 
+                                                                                <script type="text/javascript">
+                                                                                   var vid = document.getElementById("video_player"+<?=$les->id?>);
+                                                                                   vid.onloadedmetadata = function() {
+                                                                                    getDuration(<?=$les->id?>);
+                                                                                };
+                                                                            </script> 
+                                                                            <?php 
+                                                                        } 
+                                                                    } else if($lessonListValue->type == 'scorm') {
+                                                                        foreach ($lessonListValue->fileScorm as $les) {
+                                                                            if(!$prelearn){
+                                                                                $learnlink = 'javascript:void(0);';
+                                                                                $learnalert = 'alertswalpretest();';
+                                                                            } else{
+                                                                                $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
+                                                                                $learnalert = '';    
+                                                                            }
+                                                                            $learnFiles = Helpers::lib()->checkLessonFile($les,$learnModel->learn_id);
+                                                                            if ($learnFiles == "notLearn") {
+                                                                                $statusValue = '<span class="label label-default" >'. $label->label_notLearn .'</span>';
+                                                                            } else if ($learnFiles == "learning") {
+                                                                                $statusValue = '<span class="label label-warning" >'. $label->label_learning .'</span>';
+                                                                            } else if ($learnFiles == "pass") {
+                                                                                $statusValue = '<span class="label label-success" >'. $label->label_learnPass .'</span>';
+                                                                            }
+                                                                            ?>
+                                                                            <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
+                                                                                <li class="list-group-item ">
+                                                                                    <?php if($step == 2){ ?>
+                                                                                        <!-- <div class="pt-now"> You are here</div> -->
+                                                                                    <?php } ?>
+                                                                                    <span class="pull-right">
+                                                                                        <span id="lblduration-<?=$les->id?>"></span>  <span class="label label-default"><?php echo $label->label_gotoLesson; ?> <i class="fa fa-play-circle"></i> </span></span>
+                                                                                        <span class="list__course"><?= $les->filename; ?></span>&nbsp;<?=$statusValue?>
+                                                                                        <div class="hidden">
+                                                                                            <video id="video_player<?=$les->id?>" width="320" height="240" controls>
+                                                                                                <source src="<?php echo $uploadFolder . $les->filename;?>" type="video/mp4">
+                                                                                                </video>
+                                                                                                <div id="meta"></div>   
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    </a>  
+                                                                                    <?php 
+                                                                                } 
+                                                                            } else if($lessonListValue->type == 'audio'){
+                                                                                foreach ($lessonListValue->fileAudio as $les) {
+                                                                                    if(!$prelearn){
                                                                                         $learnlink = 'javascript:void(0);';
-                                                                                        $learnalert = 'alertswalpretest();';    
-                                                                                    }else{
-                                                                                        $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
-                                                                                        $learnalert = '';    
-                                                                                    }
-                                                                                }
-                                                                                $learnFiles = Helpers::lib()->checkLessonFile($les,$learnModel->learn_id);
-                                                                                if ($learnFiles == "notLearn") {
-                                                                                    $statusValue = '<span class="label label-default" >'.$label->label_notLearn.' </span>';
-                                                                                } else if ($learnFiles == "learning") {
-                                                                                    $statusValue = '<span class="label label-warning" >'. $label->label_learning.'</span>';
-                                                                                } else if ($learnFiles == "pass") {
-                                                                                    $statusValue = '<span class="label label-success" >'.$label->label_learnPass.'</span>';
-                                                                                }
-                                                                                ?>
-                                                                                <div class="stepcoursediv">
-                                                                                 <div> <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?> </span><?php echo $label->label_gotoLesson; ?></div></div>
-                                                                                 <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
-                                                                                    <li class="list-group-item">
-                                                                                        <?php if($step == 2){ ?>
-                                                                                            <!-- <div class="pt-now"> You are here</div> -->
-                                                                                        <?php } ?>
-                                                                                        <span class="pull-right">
-                                                                                            <span id="lblduration-<?=$les->id?>"></span>  <span class="btn btn-warning detailmore"><?php echo $label->label_gotoLesson; ?> <i class="fa fa-play-circle"></i> </span></span>
-                                                                                            <span class="vdocourse list__course"><?= $les->getRefileName() ?> </span>&nbsp;<?=$statusValue?>
-                                                                                            <div class="hidden">
-                                                                                                <video  id="video_player<?=$les->id?>" width="320" height="240" controls>
-                                                                                                    <source src="<?php echo $uploadFolder . $les->filename;?>" type="video/mp4">
-                                                                                                    </video>
-                                                                                                    <div id="meta"></div>   
-                                                                                                </div>
-                                                                                            </li>
-                                                                                        </a>  
-                                                                                        <?php 
-                                                                                    } 
-                                                                                } else if($lessonListValue->type == 'pdf') {
-                                                                                    foreach ($lessonListValue->filePdf as $les) {
-                                                                                        if ($isChecklesson) {
-                                                                                            if(!$prelearn){
-                                                                                                $learnlink = 'javascript:void(0);';
-                                                                                                $learnalert = 'alertswalpretest();';
-                                                                                            } else{
-                                                                                                $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
-                                                                                                $learnalert = '';    
+                                                                                        $learnalert = 'alertswalpretest();';
+                                                                                    } else{
+                                                                                        $criteriaPre = new CDbCriteria;
+                                                                                        $criteriaPre->compare('lesson_id',$lessonListValue->id);
+                                                                                        $criteriaPre->compare('user_id',Yii::app()->user->id);
+                                                                                        $criteriaPre->compare('type','pre');
+                                                                                        $criteriaPre->compare('active','y');
+                                                                                        $modelPreScore = Score::model()->findAll($criteriaPre);
+                                                                                        $flagCheckPre = true;
+                                                                                        if($modelPreScore){
+                                                                                            $checkPrePass = array();
+                                                                                            foreach ($modelPreScore as $key => $scorePre) {
+                                                                                                $checkPrePass[] = $scorePre->score_past;
                                                                                             }
+                                                                                            if(count($modelPreScore) < $lessonListValue->cate_amount){
+                                                                                                if(!in_array("y", $checkPrePass)){
+                                                                                                    $flagCheckPre = false;
+                                                                                                }
+                                                                                            }
+                                                                                        }
+
+                                                                                        if(!$flagCheckPre){
+                                                                                            $learnlink = 'javascript:void(0);';
+                                                                                            $learnalert = 'alertswalpretest();';    
                                                                                         }else{
-                                                                                         $learnlink = 'javascript:void(0);';
-                                                                                         $learnalert = 'alertswal();';
-                                                                                     }
-                                                                                     $learnFiles = Helpers::lib()->checkLessonFile($les,$learnModel->learn_id);
-                                                                                     if ($learnFiles == "notLearn") {
-                                                                                        $statusValue = '<span class="label label-default" >'.$label->label_notLearn .'</span>';
+                                                                                            $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
+                                                                                            $learnalert = '';    
+                                                                                        }
+                                                                                    }
+                                                                                    $learnFiles = Helpers::lib()->checkLessonFile($les,$learnModel->learn_id);
+                                                                                    if ($learnFiles == "notLearn") {
+                                                                                        $statusValue = '<span class="label label-default" >'.$label->label_notLearn.' </span>';
                                                                                     } else if ($learnFiles == "learning") {
-                                                                                        $statusValue = '<span class="label label-warning" >'. $label->label_learning .'</span>';
+                                                                                        $statusValue = '<span class="label label-warning" >'. $label->label_learning.'</span>';
                                                                                     } else if ($learnFiles == "pass") {
-                                                                                        $statusValue = '<span class="label label-success" >'. $label->label_learnPass .'</span>';
+                                                                                        $statusValue = '<span class="label label-success" >'.$label->label_learnPass.'</span>';
                                                                                     }
                                                                                     ?>
                                                                                     <div class="stepcoursediv">
-                                                                                        <div> <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?> </span><?php echo $label->label_gotoLesson; ?>
-                                                                                    </div>
-                                                                                </div>
-                                                                                <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
-                                                                                    <li class="list-group-item ">
-                                                                                        <?php if($step == 2){ ?>
-                                                                                            <!-- <div class="pt-now"> You are here</div> -->
-                                                                                        <?php } ?>
-                                                                                        <span class="pull-right">
-                                                                                            <span id="lblduration-<?=$les->id?>"></span>  <span class="btn btn-warning detailmore"><?php echo $label->label_gotoLesson; ?> <i class="fa fa-play-circle"></i> </span></span>
-                                                                                            <span class="list__course"><?= $les->getRefileName(); ?></span>&nbsp;<?=$statusValue?>
-                                                                                            <div class="hidden">
-                                                                                                <video id="video_player<?=$les->id?>" width="320" height="240" controls>
-                                                                                                    <source src="<?php echo $uploadFolder . $les->filename;?>" type="video/mp4">
-                                                                                                    </video>
-                                                                                                    <div id="meta"></div>   
-                                                                                                </div>
-                                                                                            </li>
-                                                                                        </a>  
-                                                                                        <?php 
-                                                                                    } 
-                                                                                }
-                                                                                ?>
-                                                                                <?php
-                                                                                if ($checkPostTest) {
-                                                                                    $isPostTest = Helpers::isPosttestState($lessonListValue->id);
-                                                                                    if ($isPostTest) {
-                                                                                        if ($lessonStatus != 'pass') {
-                                                                                            $link = 'javascript:void(0);';
-                                                                                            $alert = 'alertswal();';
-                                                                                        } else {
-                                                                                            $link = $this->createUrl('question/preexams', array('id' => $lessonListValue->id));
-                                                                                            $alert = '';
-                                                                                        }
-                                                                                        ?>
+                                                                                     <div> <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?> </span><?php echo $label->label_gotoLesson; ?></div></div>
+                                                                                     <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
                                                                                         <li class="list-group-item">
-                                                                                            <?php if($step == 3){ ?>
+                                                                                            <?php if($step == 2){ ?>
                                                                                                 <!-- <div class="pt-now"> You are here</div> -->
                                                                                             <?php } ?>
-                                                                                            <?php echo $label->label_testPost; ?>  <span class="pull-right"><a href="<?= $link ?>" <?= $alert != '' ? 'onclick="' . $alert . '"' : ''; ?> class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <?php echo $label->label_DoTest; ?></a></span></li>
-                                                                                            <?php
+                                                                                            <span class="pull-right">
+                                                                                                <span id="lblduration-<?=$les->id?>"></span>  <span class="btn btn-warning detailmore"><?php echo $label->label_gotoLesson; ?> <i class="fa fa-play-circle"></i> </span></span>
+                                                                                                <span class="vdocourse list__course"><?= $les->getRefileName() ?> </span>&nbsp;<?=$statusValue?>
+                                                                                                <div class="hidden">
+                                                                                                    <video  id="video_player<?=$les->id?>" width="320" height="240" controls>
+                                                                                                        <source src="<?php echo $uploadFolder . $les->filename;?>" type="video/mp4">
+                                                                                                        </video>
+                                                                                                        <div id="meta"></div>   
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                            </a>  
+                                                                                            <?php 
+                                                                                        } 
+                                                                                    } else if($lessonListValue->type == 'pdf') {
+                                                                                        foreach ($lessonListValue->filePdf as $les) {
+                                                                                            if ($isChecklesson) {
+                                                                                                if(!$prelearn){
+                                                                                                    $learnlink = 'javascript:void(0);';
+                                                                                                    $learnalert = 'alertswalpretest();';
+                                                                                                } else{
+                                                                                                    $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
+                                                                                                    $learnalert = '';    
+                                                                                                }
+                                                                                            }else{
+                                                                                             $learnlink = 'javascript:void(0);';
+                                                                                             $learnalert = 'alertswal();';
+                                                                                         }
+                                                                                         $learnFiles = Helpers::lib()->checkLessonFile($les,$learnModel->learn_id);
+                                                                                         if ($learnFiles == "notLearn") {
+                                                                                            $statusValue = '<span class="label label-default" >'.$label->label_notLearn .'</span>';
+                                                                                        } else if ($learnFiles == "learning") {
+                                                                                            $statusValue = '<span class="label label-warning" >'. $label->label_learning .'</span>';
+                                                                                        } else if ($learnFiles == "pass") {
+                                                                                            $statusValue = '<span class="label label-success" >'. $label->label_learnPass .'</span>';
+                                                                                        }
+                                                                                        ?>
+                                                                                        <div class="stepcoursediv">
+                                                                                            <div> <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?> </span><?php echo $label->label_gotoLesson; ?>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
+                                                                                        <li class="list-group-item ">
+                                                                                            <?php if($step == 2){ ?>
+                                                                                                <!-- <div class="pt-now"> You are here</div> -->
+                                                                                            <?php } ?>
+                                                                                            <span class="pull-right">
+                                                                                                <span id="lblduration-<?=$les->id?>"></span>  <span class="btn btn-warning detailmore"><?php echo $label->label_gotoLesson; ?> <i class="fa fa-play-circle"></i> </span></span>
+                                                                                                <span class="list__course"><?= $les->getRefileName(); ?></span>&nbsp;<?=$statusValue?>
+                                                                                                <div class="hidden">
+                                                                                                    <video id="video_player<?=$les->id?>" width="320" height="240" controls>
+                                                                                                        <source src="<?php echo $uploadFolder . $les->filename;?>" type="video/mp4">
+                                                                                                        </video>
+                                                                                                        <div id="meta"></div>   
+                                                                                                    </div>
+                                                                                                </li>
+                                                                                            </a>  
+                                                                                            <?php 
+                                                                                        } 
+                                                                                    }
+                                                                                    ?>
+                                                                                    <?php
+                                                                                    if ($checkPostTest) {
+                                                                                        $isPostTest = Helpers::isPosttestState($lessonListValue->id);
+                                                                                        if ($isPostTest) {
+                                                                                            if ($lessonStatus != 'pass') {
+                                                                                                $link = 'javascript:void(0);';
+                                                                                                $alert = 'alertswal();';
+                                                                                            } else {
+                                                                                                $link = $this->createUrl('question/preexams', array('id' => $lessonListValue->id));
+                                                                                                $alert = '';
+                                                                                            }
+                                                                                            ?>
+                                                                                            <li class="list-group-item">
+                                                                                                <?php if($step == 3){ ?>
+                                                                                                    <!-- <div class="pt-now"> You are here</div> -->
+                                                                                                <?php } ?>
+                                                                                                <?php echo $label->label_testPost; ?>  <span class="pull-right"><a href="<?= $link ?>" <?= $alert != '' ? 'onclick="' . $alert . '"' : ''; ?> class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> <?php echo $label->label_DoTest; ?></a></span></li>
+                                                                                                <?php
                                                                                         } else { //Post Test
                                                                                             $flagPostTestPass = false;
                                                                                             $criteriaScoreAll = new CDbCriteria;
@@ -951,7 +1026,7 @@ if($model){
         ?>
         <?php if($checkHaveCourseTest || $CourseSurvey){ ?>
          <div class="stepcoursediv">
-            <span class="stepcourse"> <?= $checkHaveCourseTest ? 'Exam' : ''; ?> <?= $checkHaveCourseTest && $CourseSurvey ? '&' : ''; ?> <?= $CourseSurvey ? $Questionnaire : '' ?><?= $course->course_title ?></span>
+            <span class="stepcourse"> <?= $checkHaveCourseTest ? $final : ''; ?> <?= $checkHaveCourseTest && $CourseSurvey ? '&' : ''; ?> <?= $CourseSurvey ? $Questionnaire : '' ?><?= $course->course_title ?></span>
         </div>
     <?php } ?>
 
@@ -1135,6 +1210,14 @@ if($model){
 
     function alertswalNoCourse() {
         swal('<?= $label->label_swal_warning ?>', '<?= $label->label_alert_msg_notFound ?>', "error");
+    }
+
+    function alertswalcert() {
+        swal("<?= $label->label_swal_warning ?>", "<?= $label->label_cantPrintCert ?>", "error");
+    }
+
+    function alertswalNocert() {
+        swal("<?= $label->label_swal_warning ?>", "หลักสูตรนี้ไม่มีใบประกาศนียบัตร กรุณาติดต่อผู้ดูแลระบบ", "error");
     }
 
     function showNotice(coursetype) {
