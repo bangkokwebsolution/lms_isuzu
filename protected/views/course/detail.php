@@ -28,6 +28,8 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
     $successStudy = "You have passed the conditions";
     $Period = "Period";
     $day = "day";
+    $Questionnaire = "Questionnaire ";
+    $Click = "Click";
 }else{  
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -37,6 +39,8 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
     $successStudy = "ท่านเรียนผ่านตามเงื่อนไข";
     $Period = "ระยะเวลา";
     $day = "วัน";
+    $Questionnaire = "แบบสอบถาม ";
+    $Click = "คลิก";
     $courseChildren = CourseOnline::model()->find(array('condition' => 'parent_id = ' . $course->course_id));
     if($courseChildren){
         $course->course_title = $courseChildren->course_title;
@@ -910,27 +914,21 @@ if($model){
                                 }
                             endif; 
                             ?>
-                        </ul>
-                    </div>
-                <?php } ?>
-            </div>
-        </div>
-    </div>
-    <!-- Course question  -->
-    <?php 
-    $ckPassAll = true;
-    foreach ($lessonList as $key => $value) {
-        $state = Helpers::lib()->CheckPostTestAll($value);
-        if(!$state){
-            $ckPassAll = false;
-        }
+                            <!-- Course question  -->
+                            <?php 
+                            $ckPassAll = true;
+                            foreach ($lessonList as $key => $value) {
+                                $state = Helpers::lib()->CheckPostTestAll($value);
+                                if(!$state){
+                                    $ckPassAll = false;
+                                }
             // var_dump($state);
-    }
+                            }
 
-    $criteria = new CDbCriteria;
-    $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y"';
-    $criteria->order = 'create_date ASC';
-    $BestFinalTestScore = Coursescore::model()->findAll($criteria);
+                            $criteria = new CDbCriteria;
+                            $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y"';
+                            $criteria->order = 'create_date ASC';
+                            $BestFinalTestScore = Coursescore::model()->findAll($criteria);
 
         $checkCourseTest = Helpers::lib()->checkCoursePass($course->course_id); //Chekc Lesson all pass to test course exam
         $checkHaveCourseTest = Helpers::lib()->checkHaveCourseTestInManage($course->course_id);
@@ -952,12 +950,11 @@ if($model){
 
         ?>
         <?php if($checkHaveCourseTest || $CourseSurvey){ ?>
-         <div class="stepcoursediv formrating">
-            <span class="stepcourse"><?= $course->course_title ?> <?= $checkHaveCourseTest ? 'Exam' : ''; ?> <?= $checkHaveCourseTest && $CourseSurvey ? '&' : ''; ?> <?= $CourseSurvey ? 'Training Feedback' : '' ?></span>
+         <div class="stepcoursediv">
+            <span class="stepcourse"> <?= $checkHaveCourseTest ? 'Exam' : ''; ?> <?= $checkHaveCourseTest && $CourseSurvey ? '&' : ''; ?> <?= $CourseSurvey ? $Questionnaire : '' ?><?= $course->course_title ?></span>
         </div>
     <?php } ?>
-    
-    
+
     <!-- Check count test -->
     <?php if($BestFinalTestScore){ ?>
         <?php foreach ($BestFinalTestScore as $key => $course_score) {?>
@@ -1059,12 +1056,20 @@ if($model){
                 <?php if($step == 5){ ?>
                     <div class="pt-now"> Step now</div>
                 <?php } ?>
-                <span><i class="fa fa-list" aria-hidden="true"></i> <?= $label->label_surveyCourse; ?></span> <a href="<?= $pathSurvey ?>" <?= $alrtSurvey  ?>  class="btn btn-warning detailmore pull-right"><?= "Click"; ?> <i class="fa fa-check-square-o" aria-hidden="true"></i></a>
+                <span><i class="fa fa-list" aria-hidden="true"></i> <?= $label->label_surveyCourse; ?></span> <a href="<?= $pathSurvey ?>" <?= $alrtSurvey  ?>  class="btn btn-warning detailmore pull-right"><?= $Click ?> <i class="fa fa-check-square-o" aria-hidden="true"></i></a>
             </div>
         <?php } ?>
         <!-- end Survey -->
 
-    </ol>   
+    </ul>
+</div>
+<?php } ?>
+</div>
+</div>
+</div>
+
+
+</ol>   
 </div>
 </div>
 </div>
@@ -1329,9 +1334,6 @@ function getDuration(id){
         var leng = 'ความยาว';
         var min = 'นาที';
     }
-
-    console.log(leng);
-    console.log(min);
 
     if(!isNaN(duration)){
         var sec_num = parseInt(duration);
