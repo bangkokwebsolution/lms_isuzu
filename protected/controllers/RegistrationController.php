@@ -236,14 +236,14 @@ class RegistrationController extends Controller {
 
             // $model = Conditions::model()->findbyPk(1);
             if(!empty($_POST)){
-             Yii::app()->user->setFlash('CheckQues','กรุณายืนยัน');
-             Yii::app()->user->setFlash('checkClass', "warning");
-         } 
-         $this->render('Con_regis',array('model'=>$model,'label'=>$label));
+               Yii::app()->user->setFlash('CheckQues','กรุณายืนยัน');
+               Yii::app()->user->setFlash('checkClass', "warning");
+           } 
+           $this->render('Con_regis',array('model'=>$model,'label'=>$label));
 
-     }
- }
- public function actionIndex() { 
+       }
+   }
+   public function actionIndex() { 
 
 
    //  $gen = Generation::model()->find('active=1');
@@ -279,36 +279,36 @@ class RegistrationController extends Controller {
    //      // $this->redirect(array('site/index','msg'=>$msg));
    //     $this->redirect(array('site/index'));
    // }
-   $users = new User;
-   $profile = new Profile;
-   $ProfilesEdu = new ProfilesEdu;
-   $FileEdu = new FileEdu;
-   $FileTraining = new FileTraining;
+    $users = new User;
+    $profile = new Profile;
+    $ProfilesEdu = new ProfilesEdu;
+    $FileEdu = new FileEdu;
+    $FileTraining = new FileTraining;
 
-   $session = Yii::app()->session;
+    $session = Yii::app()->session;
 
-   $this->performAjaxValidation($ProfilesEdu);
+    $this->performAjaxValidation($ProfilesEdu);
 
-   if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
-    $langId = Yii::app()->session['lang'] = 1;
-    Yii::app()->language = 'en';
-}else{
-    $langId = Yii::app()->session['lang'];
-    Yii::app()->language = (Yii::app()->session['lang'] == 1)? 'en':'th';
-}
+    if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+        $langId = Yii::app()->session['lang'] = 1;
+        Yii::app()->language = 'en';
+    }else{
+        $langId = Yii::app()->session['lang'];
+        Yii::app()->language = (Yii::app()->session['lang'] == 1)? 'en':'th';
+    }
 
-$label = MenuRegistration::model()->find(array(
-    'condition' => 'lang_id=:lang_id',
-    'params' => array(':lang_id' => $langId)
-));
-if(!$label){
     $label = MenuRegistration::model()->find(array(
         'condition' => 'lang_id=:lang_id',
-        'params' => array(':lang_id' => 1)
+        'params' => array(':lang_id' => $langId)
     ));
-}
+    if(!$label){
+        $label = MenuRegistration::model()->find(array(
+            'condition' => 'lang_id=:lang_id',
+            'params' => array(':lang_id' => 1)
+        ));
+    }
 
-if (isset($_POST['Profile'])) {
+    if (isset($_POST['Profile'])) {
    // var_dump($_POST['type_user']);exit();
     //var_dump($_POST);exit();
     // $memberLdap = Helpers::lib()->ldapTms($_POST['User'][email]);
@@ -384,12 +384,12 @@ if (isset($_POST['Profile'])) {
     $profile->religion = $_POST['Profile'][religion];
     $profile->line_id = $_POST['Profile'][line_id];
     $profile->ship_name = $_POST['Profile'][ship_name];
-        $profile->address2 = $_POST['Profile'][address2];
-        $profile->ship_up_date = $_POST['Profile'][ship_up_date];
-        $profile->ship_down_date = $_POST['Profile'][ship_down_date];
-        $profile->phone1 = $_POST['Profile'][phone1];
-        $profile->phone2 = $_POST['Profile'][phone2];
-        $profile->phone3 = $_POST['Profile'][phone3];
+    $profile->address2 = $_POST['Profile'][address2];
+    $profile->ship_up_date = $_POST['Profile'][ship_up_date];
+    $profile->ship_down_date = $_POST['Profile'][ship_down_date];
+    $profile->phone1 = $_POST['Profile'][phone1];
+    $profile->phone2 = $_POST['Profile'][phone2];
+    $profile->phone3 = $_POST['Profile'][phone3];
      //var_dump($_REQUEST);
 
     if(!$chk_status_email){
@@ -453,17 +453,17 @@ if (isset($_POST['Profile'])) {
         if ($_POST['ProfilesEdu']){
             foreach ($_POST['ProfilesEdu'] as $action_index=>$action_value){
 
-               $Edu = new ProfilesEdu;
-               $Edu->user_id = $users->id;
-               $Edu->created_date = date("Y-m-d H:i:s");
-               $Edu->created_by = $users->id;
-               $Edu->attributes = $action_value;
-               $Edu->save();
-           }
-       }
+             $Edu = new ProfilesEdu;
+             $Edu->user_id = $users->id;
+             $Edu->created_date = date("Y-m-d H:i:s");
+             $Edu->created_by = $users->id;
+             $Edu->attributes = $action_value;
+             $Edu->save();
+         }
+     }
 
-       if(isset($uploadFile))
-       {
+     if(isset($uploadFile))
+     {
         Yush::init($users);
         $originalPath = Yush::getPath($users, Yush::SIZE_ORIGINAL, $users->pic_user);
         $thumbPath = Yush::getPath($users, Yush::SIZE_THUMB, $users->pic_user);
@@ -527,18 +527,18 @@ if (isset($_POST['Profile'])) {
         }
     }
     if ($profile->save()) {
-        
+
         // if($chk_status_email){
                                 //////////// send mail /////////
         if ($profile->type_user == 3) {
-           
+
             $activation_url = $this->createAbsoluteUrl('/user/activation/activation', array("activkey" => $users->activkey, "email" => $users->email));
             
             $to = array(
-             'email'=>$users->email,
-             'firstname'=>$profile->firstname,
-             'lastname'=>$profile->lastname,
-         );
+               'email'=>$users->email,
+               'firstname'=>$profile->firstname,
+               'lastname'=>$profile->lastname,
+           );
             $firstname = $profile->firstname;
             $lastname = $profile->lastname;
             $username = $users->username;
@@ -546,36 +546,36 @@ if (isset($_POST['Profile'])) {
             $message = $this->renderPartial('Form_mail',array('email'=>$users->email,'genpass'=>$genpass,'username'=>$username,'firstname'=>$firstname,'lastname'=>$lastname),true);
             $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
             Yii::app()->user->setFlash('profile',$profile->identification);
-             Yii::app()->user->setFlash('users', $users->email);
-             Yii::app()->user->setFlash('icon', "success");
-             $this->redirect(array('site/index'));
-
-          }else if ($profile->type_user == 1){
-
-           $activation_url = $this->createAbsoluteUrl('/user/activation/activation', array("activkey" => $users->activkey, "email" => $users->email));
-            
-            $to = array(
-             'email'=>$users->email,
-             'firstname'=>$profile->firstname,
-             'lastname'=>$profile->lastname,
-         );
-            $firstname = $profile->firstname;
-            $lastname = $profile->lastname;
-           // $username = $users->username;
-            //$message = $this->renderPartial('Form_mail',array('emailshow'=>$users->email,'passwordshow'=>$genpass,'nameshow'=>$profile->firstname,'activation_url'=>$activation_url),true);
-            $message = $this->renderPartial('Form_mail_General',array('firstname'=>$firstname,'lastname'=>$lastname),true);
-            $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
-            Yii::app()->user->setFlash('profile',$profile->identification);
-             Yii::app()->user->setFlash('users', $users->email);
-             Yii::app()->user->setFlash('icon', "success");
-             $this->redirect(array('site/index'));
-         }else{
-            $login = '1';
-            Yii::app()->user->setFlash('profile',$profile->identification);
             Yii::app()->user->setFlash('users', $users->email);
             Yii::app()->user->setFlash('icon', "success");
             $this->redirect(array('site/index'));
-         }
+
+        }else if ($profile->type_user == 1){
+
+         $activation_url = $this->createAbsoluteUrl('/user/activation/activation', array("activkey" => $users->activkey, "email" => $users->email));
+
+         $to = array(
+           'email'=>$users->email,
+           'firstname'=>$profile->firstname,
+           'lastname'=>$profile->lastname,
+       );
+         $firstname = $profile->firstname;
+         $lastname = $profile->lastname;
+           // $username = $users->username;
+            //$message = $this->renderPartial('Form_mail',array('emailshow'=>$users->email,'passwordshow'=>$genpass,'nameshow'=>$profile->firstname,'activation_url'=>$activation_url),true);
+         $message = $this->renderPartial('Form_mail_General',array('firstname'=>$firstname,'lastname'=>$lastname),true);
+         $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
+         Yii::app()->user->setFlash('profile',$profile->identification);
+         Yii::app()->user->setFlash('users', $users->email);
+         Yii::app()->user->setFlash('icon', "success");
+         $this->redirect(array('site/index'));
+     }else{
+        $login = '1';
+        Yii::app()->user->setFlash('profile',$profile->identification);
+        Yii::app()->user->setFlash('users', $users->email);
+        Yii::app()->user->setFlash('icon', "success");
+        $this->redirect(array('site/index'));
+    }
         // }else{
 
         //     $login = '1';
@@ -592,17 +592,31 @@ if (isset($_POST['Profile'])) {
 
         // }
 
-    } else {
-
-            //$this->render('index', array('profile' => $profile, 'users' => $users,'label'=> $label, 'ProfilesEdu' => $ProfilesEdu, 'status_sm' => $status_sm, 'type_user' => $type_user, 'type_employee' => $type_employee, 'history_of_illness' => $history_of_illness));
-    }
 } else {
-    //    unset($session['pathCom']);
-    // unset($session['filenameCom']);
-    // unset($session['idx']);
+    // unset($session['idxDoc']);
     // unset($session['pathComDoc']);
     // unset($session['filenameComDoc']);
-    //     $this->render('index', array('profile' => $profile, 'users' => $users,'label'=> $label, 'ProfilesEdu' => $ProfilesEdu, 'status_sm' => $status_sm, 'type_user' => $type_user, 'type_employee' => $type_employee, 'history_of_illness' => $history_of_illness, 'type_card'=> $type_card, 'FileEdu' => $FileEdu));
+    // unset($session['filenameOriComDoc']);
+
+    // unset($session['idxTrain']);
+    // unset($session['pathComTrain']);
+    // unset($session['filenameComTrain']);
+    // unset($session['filenameOriComTrain']);
+    // $this->render('index', array('profile' => $profile, 'users' => $users,'label'=> $label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining));
+    // echo "okt";
+}
+} else {
+    // unset($session['idxDoc']);
+    // unset($session['pathComDoc']);
+    // unset($session['filenameComDoc']);
+    // unset($session['filenameOriComDoc']);
+
+    // unset($session['idxTrain']);
+    // unset($session['pathComTrain']);
+    // unset($session['filenameComTrain']);
+    // unset($session['filenameOriComTrain']);
+    // $this->render('index', array('profile' => $profile, 'users' => $users,'label'=> $label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining));
+    // echo "ok";
 }
 
 }
@@ -616,6 +630,7 @@ unset($session['pathComTrain']);
 unset($session['filenameComTrain']);
 unset($session['filenameOriComTrain']);
 $this->render('index', array('profile' => $profile, 'users' => $users,'label'=> $label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining));
+
 }
 public function actionUpdate() {
     if(Yii::app()->user->id){
@@ -671,7 +686,7 @@ public function actionUpdate() {
 
     if (isset($_POST['Profile'])) {
         // var_dump($_POST['User']);
-      
+
 //         $Neworg = $_POST['Orgchart'];    
 //         $users->orgchart_lv2 = json_encode($Neworg);
 //         $profile->identification = $_POST['idcard'];
@@ -693,8 +708,8 @@ public function actionUpdate() {
 //         }
 //         $users->position_id = $position->id;
         $users->department_id = $_POST['User'][department_id];
-    $users->position_id = $_POST['User'][position_id];
-    $users->branch_id = $_POST['User'][branch_id];
+        $users->position_id = $_POST['User'][position_id];
+        $users->branch_id = $_POST['User'][branch_id];
         //$users->position_name = $_POST['User'][position_name];
            // $users->position_id = $_POST['User'][position_id];
         // $users->division_id = $_POST['User'][division_id];
@@ -706,8 +721,8 @@ public function actionUpdate() {
         //    $users->department_id = $_POST['User'][department_id];
         //    $users->station_id = $_POST['User'][station_id];
         // }
-         $genpass = ($type_card == 'p')?substr($profile->passport, 0):substr($profile->identification, -6);
-    $users->verifyPassword = $genpass;
+        $genpass = ($type_card == 'p')?substr($profile->passport, 0):substr($profile->identification, -6);
+        $users->verifyPassword = $genpass;
             // $users->password = $_POST['Users'][password];
             // $users->verifyPassword = $_POST['Users'][verifyPassword];
         $users->identification = $_POST['idcard'];
@@ -799,20 +814,20 @@ public function actionUpdate() {
                         $model_ss->save();
                            // echo "a";
                     }else{
-                       $Edu = new ProfilesEdu;
-                       $Edu->user_id = $users->id;
-                       $Edu->created_date = date("Y-m-d H:i:s");
-                       $Edu->created_by = $users->id;
-                       $Edu->attributes = $action_value;
-                       $Edu->save();
+                     $Edu = new ProfilesEdu;
+                     $Edu->user_id = $users->id;
+                     $Edu->created_date = date("Y-m-d H:i:s");
+                     $Edu->created_by = $users->id;
+                     $Edu->attributes = $action_value;
+                     $Edu->save();
                            //echo "b";
 
-                   } 
+                 } 
 
-               } 
-               $model_del = ProfilesEdu::model()->findAll(["select"=>"edu_id",'condition'=>'user_id='.Yii::app()->user->id]);
+             } 
+             $model_del = ProfilesEdu::model()->findAll(["select"=>"edu_id",'condition'=>'user_id='.Yii::app()->user->id]);
 
-               if($model_del){
+             if($model_del){
                 foreach($model_del as $key => $val){
                     if(isset($new_action)){
                         if(!in_array($val->edu_id,$new_action)){
@@ -848,24 +863,24 @@ public function actionUpdate() {
             $thumbImage->save($thumbPath);
         }
 
-         if(isset($session['filenameComDoc']) || count($session['filenameComDoc'])!=0)
+        if(isset($session['filenameComDoc']) || count($session['filenameComDoc'])!=0)
         {
-        foreach ($session['filenameComDoc'] as $filenameComKey => $filenameComValue)
-        {
-            $filenameCheck = explode('.', $filenameComValue);
+            foreach ($session['filenameComDoc'] as $filenameComKey => $filenameComValue)
+            {
+                $filenameCheck = explode('.', $filenameComValue);
                             // if($filenameCheck[1] == 'pdf' or $filenameCheck[1] == 'docx' or $filenameCheck[1] == 'pptx')
                             // {
-            $file = new FileEdu;
-            $file->user_id = $users->id;
-            $file->create_date = date("Y-m-d ");
-            $file->create_by = $users->id;
-            $file->filename = $filenameComValue;
-            $file->file_name = $session['filenameOriComDoc'][$filenameComKey];
-            $file->length = "2.00";
-            $file->save(false);
-            var_dump("ok");
+                $file = new FileEdu;
+                $file->user_id = $users->id;
+                $file->create_date = date("Y-m-d ");
+                $file->create_by = $users->id;
+                $file->filename = $filenameComValue;
+                $file->file_name = $session['filenameOriComDoc'][$filenameComKey];
+                $file->length = "2.00";
+                $file->save(false);
+                var_dump("ok");
                             // }
-        }
+            }
     }//var_dump(count($session['filenameComTrain']));exit();
     if(isset($session['filenameComTrain']) || count($session['filenameComTrain'])!=0)
     {
@@ -886,13 +901,13 @@ public function actionUpdate() {
                             // }
         }
     }
-        $this->redirect(array('site/index'));
-    } else {
+    $this->redirect(array('site/index'));
+} else {
                         // var_dump($users->getErrors());
                         // var_dump($profile->getErrors());
                     // $this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label));
                     // exit();
-    }
+}
 } else {
                     // var_dump($users->getErrors());
                     // var_dump($profile->getErrors());
@@ -1077,106 +1092,106 @@ public function actionUploadifiveEdu() {
 
                 // Save the filevar_dump($targetFile); exit();
                 //  var_dump($session['filenameComDoc']);exit();
-              
-                  if (!isset($session['filenameComTrain']) || count($session['filenameComTrain'])==0)
-                {
-                    $session['filenameComTrain'] = array($fileName);
-                }else{
-                    $filenameComArr = $session['filenameComTrain'];
-                    $filenameComArr[] = $fileName;
-                    $session['filenameComTrain'] = $filenameComArr;
-                }
 
-                if (!isset($session['filenameOriComTrain']) || count($session['filenameOriComTrain'])==0)
-                {
-                    $session['filenameOriComTrain'] = array(str_replace(".".$fileParts,"",$_FILES['Filedata']['name']));
-                }else{
-                    $filenameOriComArr = $session['filenameOriComTrain'];
-                    $filenameOriComArr[] = str_replace(".".$fileParts,"",$_FILES['Filedata']['name']);
-                    $session['filenameOriComTrain'] = $filenameOriComArr;
-                }
+              if (!isset($session['filenameComTrain']) || count($session['filenameComTrain'])==0)
+              {
+                $session['filenameComTrain'] = array($fileName);
+            }else{
+                $filenameComArr = $session['filenameComTrain'];
+                $filenameComArr[] = $fileName;
+                $session['filenameComTrain'] = $filenameComArr;
+            }
 
-                if (!isset($session['pathComTrain']) || count($session['pathComTrain'])==0)
-                {
-                    $session['pathComTrain'] = array($uploadDir);
-                }else{
-                    $pathComArr = $session['pathComTrain'];
-                    $pathComArr[] = $uploadDir;
-                    $session['pathComTrain'] = $pathComArr;
-                }
-                move_uploaded_file($tempFile, $targetFile);
-                echo 1;
+            if (!isset($session['filenameOriComTrain']) || count($session['filenameOriComTrain'])==0)
+            {
+                $session['filenameOriComTrain'] = array(str_replace(".".$fileParts,"",$_FILES['Filedata']['name']));
+            }else{
+                $filenameOriComArr = $session['filenameOriComTrain'];
+                $filenameOriComArr[] = str_replace(".".$fileParts,"",$_FILES['Filedata']['name']);
+                $session['filenameOriComTrain'] = $filenameOriComArr;
+            }
 
-            } else {
+            if (!isset($session['pathComTrain']) || count($session['pathComTrain'])==0)
+            {
+                $session['pathComTrain'] = array($uploadDir);
+            }else{
+                $pathComArr = $session['pathComTrain'];
+                $pathComArr[] = $uploadDir;
+                $session['pathComTrain'] = $pathComArr;
+            }
+            move_uploaded_file($tempFile, $targetFile);
+            echo 1;
+
+        } else {
 
                 // The file type wasn't allowed
-                echo 'Invalid file type.';
-
-            }
+            echo 'Invalid file type.';
 
         }
 
     }
 
-    public function actionEditName()
-    {
-        $FileEdu = FileEdu::model()->findByPK($_GET['id']);
-        if($FileEdu){
-            $FileEdu->file_name = $_GET['name'];
-            $FileEdu->update_date = date("Y-m-d");
-            $FileEdu->update_by = Yii::app()->user->id;
-            $FileEdu->save();
+}
+
+public function actionEditName()
+{
+    $FileEdu = FileEdu::model()->findByPK($_GET['id']);
+    if($FileEdu){
+        $FileEdu->file_name = $_GET['name'];
+        $FileEdu->update_date = date("Y-m-d");
+        $FileEdu->update_by = Yii::app()->user->id;
+        $FileEdu->save();
+    }
+}
+public function actionDeleteFileDoc($id)
+{
+    $FileEdu = FileEdu::model()->findByPk($id);
+
+    if($FileEdu->count()>0){
+
+        $webroot = Yii::app()->basePath."/../uploads/edufile/";
+
+        if(is_file($webroot.$FileEdu->filename)){
+            unlink($webroot.$FileEdu->filename);
+        }
+
+        if($FileEdu->delete($id)){
+            echo 1;
+        }else{
+            echo 0;
         }
     }
-     public function actionDeleteFileDoc($id)
-    {
-        $FileEdu = FileEdu::model()->findByPk($id);
+}
 
-        if($FileEdu->count()>0){
+public function actionEditNameTrain()
+{
+    $FileTraining = FileTraining::model()->findByPK($_GET['id']);
+    if($FileTraining){
+        $FileTraining->file_name = $_GET['name'];
+        $FileTraining->update_date = date("Y-m-d");
+        $FileTraining->update_by = Yii::app()->user->id;
+        $FileTraining->save();
+    }
+}
+public function actionDeleteFileTrain($id)
+{
+    $FileTraining = FileTraining::model()->findByPk($id);
 
-            $webroot = Yii::app()->basePath."/../uploads/edufile/";
+    if($FileTraining->count()>0){
 
-            if(is_file($webroot.$FileEdu->filename)){
-                unlink($webroot.$FileEdu->filename);
-            }
+        $webroot = Yii::app()->basePath."/../uploads/Trainingfile/";
 
-            if($FileEdu->delete($id)){
-                echo 1;
-            }else{
-                echo 0;
-            }
+        if(is_file($webroot.$FileTraining->filename)){
+            unlink($webroot.$FileTraining->filename);
+        }
+
+        if($FileTraining->delete($id)){
+            echo 1;
+        }else{
+            echo 0;
         }
     }
-
-    public function actionEditNameTrain()
-    {
-        $FileTraining = FileTraining::model()->findByPK($_GET['id']);
-        if($FileTraining){
-            $FileTraining->file_name = $_GET['name'];
-            $FileTraining->update_date = date("Y-m-d");
-            $FileTraining->update_by = Yii::app()->user->id;
-            $FileTraining->save();
-        }
-    }
-     public function actionDeleteFileTrain($id)
-    {
-        $FileTraining = FileTraining::model()->findByPk($id);
-        
-        if($FileTraining->count()>0){
-
-            $webroot = Yii::app()->basePath."/../uploads/Trainingfile/";
-
-            if(is_file($webroot.$FileTraining->filename)){
-                unlink($webroot.$FileTraining->filename);
-            }
-
-            if($FileTraining->delete($id)){
-                echo 1;
-            }else{
-                echo 0;
-            }
-        }
-    }
+}
     /**
      * This is the action to handle external exceptions.
      */
@@ -1206,14 +1221,14 @@ public function actionUploadifiveEdu() {
                 $model = Users::model()->findbyattributes(array('id'=>Yii::app()->user->id));
                // var_dump($model);
                 $model->password = $_POST['Users']['password'];
-                    $model->verifyPassword = $_POST['Users']['verifyPassword'];
+                $model->verifyPassword = $_POST['Users']['verifyPassword'];
                     // var_dump($model->save());
                     // var_dump($model->getErrors());
                     // exit();
                 if ($model->validate()) {
 
                     $model->password = UserModule::encrypting($model->password);
-                        $model->verifyPassword = UserModule::encrypting($model->verifyPassword);
+                    $model->verifyPassword = UserModule::encrypting($model->verifyPassword);
                     $model->repass_status = 1;
 
                     if ($model->save(false)) {
@@ -1249,13 +1264,13 @@ public function actionUploadifiveEdu() {
     // }
     public function actionListPosition(){
 
-       $model=Position::model()->findAll('department_id=:department_id',
+     $model=Position::model()->findAll('department_id=:department_id',
         array(':department_id'=>$_POST['id']));
 
-       $data=CHtml::listData($model,'id','position_title',array('empty' => 'ตำแหน่ง'));
-       $sub_list = Yii::app()->session['lang'] == 1?'Select Pocition ':'เลือกตำแหน่ง';
-       $data = '<option value ="">'.$sub_list.'</option>';
-       foreach ($model as $key => $value) {
+     $data=CHtml::listData($model,'id','position_title',array('empty' => 'ตำแหน่ง'));
+     $sub_list = Yii::app()->session['lang'] == 1?'Select Pocition ':'เลือกตำแหน่ง';
+     $data = '<option value ="">'.$sub_list.'</option>';
+     foreach ($model as $key => $value) {
         $data .= '<option value = "'.$value->id.'"'.'>'.$value->position_title.'</option>';
     }
     echo ($data);
@@ -1264,25 +1279,25 @@ public function actionUploadifiveEdu() {
 
 public function actionListBranch(){
 
-       $model=Branch::model()->findAll('position_id=:position_id',
-        array(':position_id'=>$_POST['id']));
+ $model=Branch::model()->findAll('position_id=:position_id',
+    array(':position_id'=>$_POST['id']));
 
-       $data=CHtml::listData($model,'id','branch_name',array('empty' => 'สาขา'));
-       $sub_list = Yii::app()->session['lang'] == 1?'Select Branch ':'เลือกสาขา';
-       $data = '<option value ="">'.$sub_list.'</option>';
-       foreach ($model as $key => $value) {
-        $data .= '<option value = "'.$value->id.'"'.'>'.$value->branch_name.'</option>';
-    }
-    echo ($data);
+ $data=CHtml::listData($model,'id','branch_name',array('empty' => 'สาขา'));
+ $sub_list = Yii::app()->session['lang'] == 1?'Select Branch ':'เลือกสาขา';
+ $data = '<option value ="">'.$sub_list.'</option>';
+ foreach ($model as $key => $value) {
+    $data .= '<option value = "'.$value->id.'"'.'>'.$value->branch_name.'</option>';
+}
+echo ($data);
 
 }
 
 public function actionCalculateBirthday(){
- $birthdays = $_POST['item'];
- $birthdays = explode("-", $birthdays);
- $date_now = date("Y");
- $data = $date_now - $birthdays[0];
- echo ($data);
+   $birthdays = $_POST['item'];
+   $birthdays = explode("-", $birthdays);
+   $date_now = date("Y");
+   $data = $date_now - $birthdays[0];
+   echo ($data);
 }
 
 }
