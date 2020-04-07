@@ -57,7 +57,7 @@ class Profile extends CActiveRecord {
             array('passport', 'length', 'max' => 6),
              array('identification', 'validateIdCard'),
             array('identification', 'unique', 'message' => 'เลขบัตรประชาชนนี้มีในระบบแล้ว'),
-             array('identification', 'length', 'max' => 13,'min'=>13),
+            array('identification', 'length', 'max' => 13,'min'=>13),
             array('identification', 'unique',
                  'criteria' => array(
                      'with' => 'user',
