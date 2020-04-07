@@ -47,9 +47,9 @@ class Profile extends CActiveRecord {
             array('tel', 'numerical', 'integerOnly' => true),
             array('identification, passport', 'numerical', 'integerOnly' => true),
             array('fax', 'numerical', 'integerOnly' => true),
-            array('phone', 'numerical', 'integerOnly' => true),
+            array('phone, phone1, phone2, phone3', 'numerical', 'integerOnly' => true),
            // array('tel', 'length', 'min' => 9),
-            array('bussiness_model_id,bussiness_type_id,company,juristic,title_id, type_user, education, occupation, position, website, province, tel, phone, fax, advisor_email1, advisor_email2, generation, file,department, passport, date_of_expiry, race, nationality, religion, line_id', 'length', 'max' => 255),
+            array('bussiness_model_id,bussiness_type_id,company,juristic,title_id, type_user, education, occupation, position, website, province, tel, phone, fax, advisor_email1, advisor_email2, generation, file,department, passport, date_of_expiry, race, nationality, religion, line_id, ship_name, ship_up_date, ship_down_date, address2, phone1, phone2, phone3', 'length', 'max' => 255),
             array('firstname, lastname', 'length', 'max' => 50),
             array('identification', 'length', 'max'=>13),
             // array('identification', 'length', 'min'=>13),
@@ -61,6 +61,7 @@ class Profile extends CActiveRecord {
             // Please remove those attributes that should not be searched. 
             array('bussiness_model_id,bussiness_type_id,company,juristic,user_id, title_id, firstname, lastname, active, generation, type_user, sex, birthday, age, education, occupation, position, website, address, province, tel, phone, fax, contactfrom, advisor_email1, advisor_email2, file, passport, date_of_expiry, race, nationality, religion, history_of_illness, status_sm, type_employee, type_card, line_id', 'safe', 'on' => 'search'),
             array('file_user', 'file', 'types' => 'pdf', 'allowEmpty' => true, 'on' => 'insert'),
+            //array('ship_name, ship_up_date, ship_down_date, address2, phone1, phone2, phone3', 'allowEmpty' => true, 'on' => 'update'),
             array('file_user', 'file', 'types' => 'pdf',
                 'wrongType' => 'รองรับไฟล์ pdf เท่านั้น', 'allowEmpty' => true, // ข้อความเตือน
                 'maxSize' => 1024 * 1024 * 5, // 5 MB
@@ -188,7 +189,14 @@ class Profile extends CActiveRecord {
             'status_sm' => 'สถานภาพ',
             'type_employee'=> 'ประเภทพนักงาน',
             'type_card'=> 'ประเภทบัตร',
-            'line_id' => 'ID Line'
+            'line_id' => 'ID Line',
+            'ship_name' => 'ชื่อเรือที่ขึ้น',
+            'address2' => 'ที่อยู่ปัจจุบันที่สามารถติดต่อได้',
+            'ship_up_date' => 'วันที่ขึ้นจากเรือ',
+            'ship_down_date'=> 'วันที่กลับไปขึ้นเรือ',
+            'phone1'=> 'เบอร์โทรศัพท์ที่สามารถติดต่อได้',
+            'phone2' => 'เบอร์มือถือ',
+            'phone3' => 'โทรศัพท์อื่นๆที่สามารถติดต่อได้'
         );
 
         // $labels = array(
@@ -210,8 +218,8 @@ class Profile extends CActiveRecord {
         $criteria->compare('title_id', $this->title_id, true);
         $criteria->compare('firstname', $this->firstname, true);
         $criteria->compare('lastname', $this->lastname, true);
-        // $criteria->compare('firstname_en', $this->firstname_en, true);
-        // $criteria->compare('lastname_en', $this->lastname_en, true);
+        $criteria->compare('firstname_en', $this->firstname_en, true);
+        $criteria->compare('lastname_en', $this->lastname_en, true);
         $criteria->compare('identification', $this->identification, true);
         $criteria->compare('type_user', $this->type_user, true);
         $criteria->compare('sex', $this->sex, true);
@@ -240,6 +248,13 @@ class Profile extends CActiveRecord {
         $criteria->compare('type_employee', $this->type_employee, true);
         $criteria->compare('type_card', $this->type_card, true);
         $criteria->compare('line_id', $this->line_id, true);
+        $criteria->compare('ship_name', $this->ship_name, true);
+        $criteria->compare('ship_up_date', $this->ship_up_date, true);
+        $criteria->compare('ship_down_date', $this->ship_down_date, true);
+        $criteria->compare('address2', $this->address2, true);
+        $criteria->compare('phone1', $this->phone1, true);
+        $criteria->compare('phone2', $this->phone2, true);
+        $criteria->compare('phone3', $this->phone3, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

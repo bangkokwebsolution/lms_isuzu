@@ -383,6 +383,13 @@ if (isset($_POST['Profile'])) {
     $profile->nationality = $_POST['Profile'][nationality];
     $profile->religion = $_POST['Profile'][religion];
     $profile->line_id = $_POST['Profile'][line_id];
+    $profile->ship_name = $_POST['Profile'][ship_name];
+        $profile->address2 = $_POST['Profile'][address2];
+        $profile->ship_up_date = $_POST['Profile'][ship_up_date];
+        $profile->ship_down_date = $_POST['Profile'][ship_down_date];
+        $profile->phone1 = $_POST['Profile'][phone1];
+        $profile->phone2 = $_POST['Profile'][phone2];
+        $profile->phone3 = $_POST['Profile'][phone3];
      //var_dump($_REQUEST);
 
     if(!$chk_status_email){
@@ -423,7 +430,7 @@ if (isset($_POST['Profile'])) {
 //                    เข้ารหัสpassword
                     //$users->password = UserModule::encrypting($users->password);
                     //$users->verifyPassword = UserModule::encrypting($users->verifyPassword);
-        $users->password = UserModule::encrypting($users->password);
+        $users->password = UserModule::encrypting($genpass);
         
                     // $users->department_id = 1; // fix ประเภทสมาชิกหน้าบ้านเป็นสมาชิกทั่วไป
     } else {
@@ -482,6 +489,7 @@ if (isset($_POST['Profile'])) {
         $thumbImage->resize(200, 200);
         $thumbImage->save($thumbPath);
     }
+
     if(isset($session['filenameComDoc']) || count($session['filenameComDoc'])!=0)
     {
         foreach ($session['filenameComDoc'] as $filenameComKey => $filenameComValue)
@@ -491,7 +499,7 @@ if (isset($_POST['Profile'])) {
                             // {
             $file = new FileEdu;
             $file->user_id = $users->id;
-            $file->create_date = date("Y-m-d H:i:s");
+            $file->create_date = date("Y-m-d ");
             $file->create_by = $users->id;
             $file->filename = $filenameComValue;
             $file->file_name = $session['filenameOriComDoc'][$filenameComKey];
@@ -509,7 +517,7 @@ if (isset($_POST['Profile'])) {
                             // {
             $fileTrain = new FileTraining;
             $fileTrain->user_id = $users->id;
-            $fileTrain->create_date = date("Y-m-d H:i:s");
+            $fileTrain->create_date = date("Y-m-d ");
             $fileTrain->create_by = $users->id;
             $fileTrain->filename = $filenameComValue;
             $fileTrain->file_name = $session['filenameOriComTrain'][$filenameComKey];
@@ -698,7 +706,8 @@ public function actionUpdate() {
         //    $users->department_id = $_POST['User'][department_id];
         //    $users->station_id = $_POST['User'][station_id];
         // }
-        
+         $genpass = ($type_card == 'p')?substr($profile->passport, 0):substr($profile->identification, -6);
+    $users->verifyPassword = $genpass;
             // $users->password = $_POST['Users'][password];
             // $users->verifyPassword = $_POST['Users'][verifyPassword];
         $users->identification = $_POST['idcard'];
@@ -729,16 +738,14 @@ public function actionUpdate() {
         $profile->race = $_POST['Profile'][race];
         $profile->nationality = $_POST['Profile'][nationality];
         $profile->religion = $_POST['Profile'][religion];
-            // $profile->birthday = $_POST['Profile'][birthday];
-            // $profile->age = $_POST['Profile'][age];
-            //$profile->sex = $_POST['Profile'][sex];
-            // $profile->education = $_POST['Profile'][education];
-            // $profile->occupation = $_POST['Profile'][occupation];
-            // $profile->position = $_POST['Profile'][position];
-            // $profile->tel = $_POST['Profile'][tel];
-            // $profile->phone = $_POST['Profile'][phone];
-            // $profile->fax = $_POST['Profile'][fax];
-            // $profile->address = $_POST['Profile'][address];
+        $profile->ship_name = $_POST['Profile'][ship_name];
+        $profile->address2 = $_POST['Profile'][address2];
+        $profile->ship_up_date = $_POST['Profile'][ship_up_date];
+        $profile->ship_down_date = $_POST['Profile'][ship_down_date];
+        $profile->phone1 = $_POST['Profile'][phone1];
+        $profile->phone2 = $_POST['Profile'][phone2];
+        $profile->phone3 = $_POST['Profile'][phone3];
+        
         //$users->status = 1;
         // if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
         //     $secret = '6LdMXXcUAAAAAK76NVqqh5qMv05wg2QxbHoSrJMc';
@@ -757,12 +764,10 @@ public function actionUpdate() {
      //$users->password = UserModule::encrypting($users->password);
     // $users->verifyPassword = UserModule::encrypting($users->verifyPassword);
      //var_dump($users->verifyPassword);
-           //var_dump($profile->validate());
-           // var_dump($ProfilesEdu->validate());
-           // var_dump($ProfilesEdu->save());
-           //  var_dump($ProfilesEdu->getErrors());
+           // var_dump($profile->validate());
+           // var_dump($users->validate());
+           //  var_dump($profile->getErrors());
            //  exit();
-
 
 //var_dump($session['filenameOriComTrain']);exit();
         if ($profile->validate() && $users->validate()) {
@@ -842,8 +847,9 @@ public function actionUpdate() {
             $thumbImage->resize(350, 200);
             $thumbImage->save($thumbPath);
         }
+
          if(isset($session['filenameComDoc']) || count($session['filenameComDoc'])!=0)
-    {
+        {
         foreach ($session['filenameComDoc'] as $filenameComKey => $filenameComValue)
         {
             $filenameCheck = explode('.', $filenameComValue);
@@ -851,12 +857,13 @@ public function actionUpdate() {
                             // {
             $file = new FileEdu;
             $file->user_id = $users->id;
-            $file->create_date = date("Y-m-d H:i:s");
+            $file->create_date = date("Y-m-d ");
             $file->create_by = $users->id;
             $file->filename = $filenameComValue;
             $file->file_name = $session['filenameOriComDoc'][$filenameComKey];
             $file->length = "2.00";
             $file->save(false);
+            var_dump("ok");
                             // }
         }
     }//var_dump(count($session['filenameComTrain']));exit();
@@ -870,7 +877,7 @@ public function actionUpdate() {
 
             $fileTrain = new FileTraining;
             $fileTrain->user_id = $users->id;
-            $fileTrain->create_date = date("Y-m-d H:i:s");
+            $fileTrain->create_date = date("Y-m-d ");
             $fileTrain->create_by = $users->id;
             $fileTrain->filename = $filenameComValue;
             $fileTrain->file_name = $session['filenameOriComTrain'][$filenameComKey];
@@ -905,7 +912,7 @@ unset($session['pathComTrain']);
 unset($session['filenameComTrain']);
 unset($session['filenameOriComTrain']);
 $users->position_name = isset($_POST['User']['position_name']) ? $_POST['User']['position_name'] : $users->position->position_title;
-$this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label, 'ProfilesEdu' => $ProfilesEdu, 'status_sm' => $status_sm, 'type_user' => $type_user, 'type_employee' => $type_employee, 'history_of_illness' => $history_of_illness, 'type_card'=> $type_card, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining));
+$this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining));
 }
 
 //
@@ -994,13 +1001,13 @@ public function actionUploadifiveEdu() {
             $session['idxDoc'] += 1;
             //$uploadDir  = $_SERVER['DOCUMENT_ROOT'] . $uploadDir;
             $targetFile = $uploadDir . $fileName;
-             //var_dump($fileParts);exit();
+            // var_dump($targetFile);exit();
             // Validate the filetype
             $fileParts = pathinfo($_FILES['Filedata']['name']);
             if (in_array(strtolower($fileParts['extension']), $fileTypes)) {
 
                 // Save the filevar_dump($targetFile); exit();
-                //  var_dump($session['filenameComDoc']);exit();
+                //  var_dump($session['pathComDoc']);exit();
                 if (!isset($session['filenameComDoc']) || count($session['filenameComDoc'])==0)
                 {
                     $session['filenameComDoc'] = array($fileName);

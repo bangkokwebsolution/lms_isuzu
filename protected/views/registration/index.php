@@ -140,7 +140,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         }
         else
         {
-           if($('#queue .uploadifive-queue-item').length == 0 && $('#docqueue .uploadifive-queue-item').length == 0 ){
+         if($('#queue .uploadifive-queue-item').length == 0 && $('#docqueue .uploadifive-queue-item').length == 0 ){
             return true;
         }else{
             if($('#queue .uploadifive-queue-item').length > 0) {
@@ -259,6 +259,8 @@ function editNameTrain(filedoc_id){
             $attTime = array('class' => ' form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_date_of_expiry);
             $graduation = array('class' => 'form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_graduation_year);
             $birthday = array('class' => 'form-control default_datetimepicker birth', 'autocomplete' => 'off', 'placeholder' => $label->label_birthday, 'type' => "text");
+            $ships_up_date = array('class' => ' form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => 'วันที่ขึ้นจากเรือ');
+            $ships_down_date = array('class' => 'form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => 'วันที่กลับไปขึ้นเรือ');
             ?>
             <div class="well">
 
@@ -321,14 +323,14 @@ function editNameTrain(filedoc_id){
 
                         <div class="clearfix"></div>
                     </div>
-
-                    <h4 class="topic-register"><i class="fas fa-user-edit"></i> <?= Yii::app()->session['lang'] == 1?'Basic information ':'ข้อมูลพื้นฐาน'; ?></h4>
+                
+                    <h4 class="topic-register form_name"><i class="fas fa-user-edit"></i> <?= Yii::app()->session['lang'] == 1?'Basic information ':'ข้อมูลพื้นฐาน'; ?></h4>
 
                     <div class="row justify-content-center form_name">
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_title; ?>(TH)</label>
-                                <?php  $country = array('1' => $label->label_dropdown_mr, '2' => $label->label_dropdown_ms, '3' => $label->label_dropdown_mrs); ?>
+                                <?php  $country = array('0' => 'คำนำหน้า','1' => 'นาย', '2' => 'นางสาว', '3' => 'นาง'); ?>
                                 <?php
                                 $htmlOptions = array('class' => 'form-control');
                                 echo $form->dropDownList($profile, 'title_id', $country, $htmlOptions);
@@ -357,7 +359,7 @@ function editNameTrain(filedoc_id){
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_title; ?>(EN)</label>
-                                <?php  $country = array('1' => $label->label_dropdown_mr, '2' => $label->label_dropdown_ms, '3' => $label->label_dropdown_mrs); ?>
+                                <?php  $country = array('0' => 'Prefix','1' => 'Mr.', '2' => 'Miss.', '3' => 'Mrs.'); ?>
                                 <?php
                                 $htmlOptions = array('class' => 'form-control');
                                 echo $form->dropDownList($profile, 'title_id', $country, $htmlOptions);
@@ -425,7 +427,7 @@ function editNameTrain(filedoc_id){
                         <div class="clearfix"></div>
                     </div>
 
-                    <div class="row justify-content-center mt-20">
+                    <div class="row justify-content-center mt-20 form_name">
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group">
                                 <label><?php echo $label->label_birthday; ?></label>
@@ -434,7 +436,7 @@ function editNameTrain(filedoc_id){
                             </div>
                         </div>
 
-                        <div class="col-md-2 col-sm-6 col-xs-12">
+                        <div class="col-md-2 col-sm-6 col-xs-12 form_name">
                             <div class="form-group">
                                 <label><?php echo $label->label_age; ?></label>
                                 <?php echo $form->textField($profile, 'age', array('class' => 'form-control ages', 'placeholder' => $label->label_age)); ?>
@@ -445,7 +447,7 @@ function editNameTrain(filedoc_id){
                         <div class="clearfix"></div>
                     </div>
 
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center form_name">
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="form-group">
                             <!--  <label for="">เชื้อชาติ</label>
@@ -470,7 +472,7 @@ function editNameTrain(filedoc_id){
                     </div>
 
 
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center form_name">
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="form-group">
                             <!-- <label for="">ศาสนา</label>
@@ -506,7 +508,7 @@ function editNameTrain(filedoc_id){
                         <div class="clearfix"></div>
                     </div>
 
-                    <div class="row  mt-1 mb-1 ">
+                    <div class="row  mt-1 mb-1 form_name">
                         <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_marital_status; ?></strong></div>
                         <div class="col-md-4">
                             <div class="form-group">
@@ -525,7 +527,7 @@ function editNameTrain(filedoc_id){
                     </div>
 
 
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center form_name">
                         <div class="col-md-8 col-sm-12 col-xs-12">
                             <div class="form-group">
                             <!-- <label for="card-4" class="bg-danger text-black">ที่อยู่</label>
@@ -540,7 +542,7 @@ function editNameTrain(filedoc_id){
                         <div class="clearfix"></div>
                     </div>
 
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center form_name">
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="form-group">
                             <!-- <label for="">เบอร์โทรศัพท์</label>
@@ -564,7 +566,7 @@ function editNameTrain(filedoc_id){
 
                         <div class="clearfix"></div>
                     </div>
-                    <div class="row justify-content-center">
+                    <div class="row justify-content-center form_name">
                         <div class="col-md-8 col-sm-12 col-xs-12">
                             <div class="form-group">
                                 <label><?php echo $label->label_id_Line;  ?></label>
@@ -575,7 +577,7 @@ function editNameTrain(filedoc_id){
                         <div class="clearfix"></div>
                     </div>
 
-                    <div class="row  mt-1 mb-1 ">
+                    <div class="row  mt-1 mb-1 form_name">
                         <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_history_of_severe_illness;  ?></strong></div>
                         <div class="col-md-4 col-xs-12">
                             <div class="form-group">
@@ -642,7 +644,7 @@ function editNameTrain(filedoc_id){
                     <?php } else {
                         ?>
 
-                        <div class="row">
+                        <div class="row form_name">
                             <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?php echo $label->label_educational;  ?></strong></div>
                             <div class="col-md-2 col-sm-6 col-xs-12 ">
                                 <div class="form-group">
@@ -670,7 +672,7 @@ function editNameTrain(filedoc_id){
                     }
                     ?>
 
-                    <div class="row justify-content-center bb-1 pb-20 mt-20">
+                    <div class="row justify-content-center bb-1 pb-20 mt-20 form_name">
                         <div class="col-md-3 col-sm-12  col-xs-12 text-center">
                             <button class="btn btn-info btn-add add_form_field" type="button" id="moreFields">
                                 <span class="glyphicon glyphicon-plus"> </span> <?= Yii::app()->session['lang'] == 1?'Add education history ':'เพิ่มประวัติการศึกษา'; ?>
@@ -678,7 +680,7 @@ function editNameTrain(filedoc_id){
                         </div>
                     </div>
 
-                    <div id="office-section1">
+                    <div id="office-section1" class="form_name">
                         <div class="row  mt-20 mb-1">
 
                             <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Attachments of Qualification / Professional File ':'เอกสารแนบไฟล์วุฒิการศึกษา/วิชาชีพ'; ?><small class="text-danger d-block">(pdf,png,jpg,jpeg)</small></strong></div>
@@ -715,10 +717,10 @@ function editNameTrain(filedoc_id){
                                                 },
                                                 'onQueueComplete' : function(file, data) {
 
-                                                   $('#registration-form').submit();
+                                                 $('#registration-form').submit();
 
-                                               }
-                                           });
+                                             }
+                                         });
                                     });
                                 </script>
                                 <?php echo $form->error($FileEdu,'file_name'); ?>
@@ -726,7 +728,7 @@ function editNameTrain(filedoc_id){
 
                         </div>
                         <div class="row">
-                         <div class="col-md-offset-3 col-md-4">
+                           <div class="col-md-offset-3 col-md-4">
                             <?php
                             $idx = 1;
                             $uploadFolder = Yii::app()->getUploadUrl('edufile');
@@ -736,8 +738,8 @@ function editNameTrain(filedoc_id){
                             $FileEdu = FileEdu::model()->findAll($criteria);
 
                             if(isset($FileEdu)){
-                               $confirm_del  = Yii::app()->session['lang'] == 1?'Do you want to delete the file ?\nWhen you agree, the system will permanently delete the file from the system. ':'คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร';
-                               foreach($FileEdu as $fileDatas){
+                             $confirm_del  = Yii::app()->session['lang'] == 1?'Do you want to delete the file ?\nWhen you agree, the system will permanently delete the file from the system. ':'คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร';
+                             foreach($FileEdu as $fileDatas){
                                 ?>
 
                                 <div id="filenamedoc<?php echo $idx; ?>">
@@ -753,13 +755,13 @@ function editNameTrain(filedoc_id){
                                         onblur="editName('.$fileDatas->id.');">'; ?>
 
                                         <?php echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
-                                         'id'=>'btnEditName'.$fileDatas->id,
-                                         'class'=>'btn-action glyphicons pencil btn-danger',
-                                         'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                                         'onclick'=>'$("#filenamedoctext'.$fileDatas->id.'").hide();
-                                         $("#filenamedoc'.$fileDatas->id.'").show(); 
-                                         $("#filenamedoc'.$fileDatas->id.'").focus(); 
-                                         $("#btnEditName'.$fileDatas->id.'").hide(); ')); ?>
+                                           'id'=>'btnEditName'.$fileDatas->id,
+                                           'class'=>'btn-action glyphicons pencil btn-danger',
+                                           'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                           'onclick'=>'$("#filenamedoctext'.$fileDatas->id.'").hide();
+                                           $("#filenamedoc'.$fileDatas->id.'").show(); 
+                                           $("#filenamedoc'.$fileDatas->id.'").focus(); 
+                                           $("#btnEditName'.$fileDatas->id.'").hide(); ')); ?>
 
                                         <?php echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
                                             'id'=>'btnSaveName'.$fileDatas->id,
@@ -777,7 +779,7 @@ function editNameTrain(filedoc_id){
                         </div>
                     </div>
 
-                    <div id="office-section2">
+                    <div id="office-section2" class="form_name">
                         <div class="row  mt-20 mb-1">
 
                             <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training file attachment ':'เอกสารแนบไฟล์ฝึกอบรม'; ?><small class="text-danger d-block">(pdf,png,jpg,jpeg)</small></strong></div>
@@ -813,10 +815,10 @@ function editNameTrain(filedoc_id){
                                                 },
                                                 'onQueueComplete' : function(file, data) {
 
-                                                   $('#registration-form').submit();
+                                                 $('#registration-form').submit();
 
-                                               }
-                                           });
+                                             }
+                                         });
                                     });
                                 </script>
                                 <?php echo $form->error($FileTraining,'file_name'); ?>
@@ -839,7 +841,7 @@ function editNameTrain(filedoc_id){
 
                                     ?>
                                     <div id="filenameTrain<?php echo $idx; ?>">
-                                     <!--  <a href="<?php echo $this->createUrl('Trainingfile',array('id' => $fileData->id)); ?>" target="_blank"> -->
+                                       <!--  <a href="<?php echo $this->createUrl('Trainingfile',array('id' => $fileData->id)); ?>" target="_blank"> -->
                                         <?php
                                         echo '<strong id="filenametraintext'.$fileData->id.'">'.$fileData->file_name.'</strong>';
                                         ?>
@@ -933,7 +935,7 @@ function editNameTrain(filedoc_id){
 
                                 </div>
                             </div>
-                        
+
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <!-- <label><?php echo $label->label_company; ?></label> -->
@@ -955,84 +957,115 @@ function editNameTrain(filedoc_id){
                     </div>
 
                 </div>
-                
-                <form>
+                <?php 
+                if (!$users->isNewRecord) {
+                  if ($profile->type_user == 3 && $profile->type_employee == 1) {
+                   ?>
+                   <form>
                     <div class="well">
                         <div id="report-staff">
                             <h3 class="text-center">ใบรายงานตัวคนประจำเรือ</h3>
-                                <div class="row justify-content-center">
-                                    <div class="col-md-4">
-                                        <div class="form-group">
+                            <div class="row justify-content-center">
+                                <div class="col-md-4">
+                                    <div class="form-group">
                                         <label for="">ขึ้นจากเรือชื่อ</label>
-                                        <input type="text" class="form-control" id="" placeholder="ขึ้นจากเรือชื่อ">
-                                        </div>
+                                        <!-- <input type="text" class="form-control" id="" placeholder="ขึ้นจากเรือชื่อ">
+                                        <label><?php echo $label->label_race; ?></label> -->
+                                        <?php echo $form->textField($profile, 'ship_name', array('class' => 'form-control', 'placeholder' => 'ขึ้นจากเรือชื่อ')); ?>
+                                        <?php echo $form->error($profile, 'ship_name', array('class' => 'error2')); ?>
                                     </div>
-        
-                                    <div class="col-md-4">
+                                </div>
+
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>เมื่อวันที่</label>
-                                        <input class="form-control default_datetimepicker " autocomplete="off" placeholder="เมื่อวันที่" type="text" name="" id="" value="">                                                            </div>
+                                        <!-- <input class="form-control default_datetimepicker " autocomplete="off" placeholder="เมื่อวันที่" type="text" name="" id="" value="">  
+                                        <label><?php echo $label->label_race; ?></label> -->
+                                        <?php echo $form->textField($profile, 'ship_up_date', $ships_up_date); ?>
+                                        <?php echo $form->error($profile, 'ship_up_date', array('class' => 'error2')); ?>                                                           </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="row justify-content-center">
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                        <label for="">ที่อยู่ปัจจุบันที่สามารถติดต่อได้</label>
-                                        <textarea class="form-control" name="" id="" cols="30" rows="3" placeholder="เขียนที่อยู่ตรงนี้"></textarea>
+                                            <label for="">ที่อยู่ปัจจุบันที่สามารถติดต่อได้</label>
+                                           <!-- <textarea class="form-control" name="" id="" cols="30" rows="3" placeholder="เขียนที่อยู่ตรงนี้"></textarea> 
+                                            <label><?php echo $label->label_address; ?></label>-->
+                                            <?php echo $form->textArea($profile, 'address2', array('class' => 'form-control', 'cols' => "30", 'rows' => "3", 'placeholder' => 'เขียนที่อยู่ตรงนี้')); ?>
+                                            <?php echo $form->error($profile, 'address2', array('class' => 'error2')); ?>
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="row justify-content-center">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                        <label for="">เบอร์โทรศัพท์ที่สามารถติดต่อได้</label>
-                                        <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้">
+                                            <label for="">เบอร์โทรศัพท์ที่สามารถติดต่อได้</label>
+                                           <!--  <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้"> 
+                                           <label><?php echo $label->label_phone; ?></label>-->
+                                           <?php echo $form->textField($profile, 'phone1', array('class' => 'form-control', 'placeholder' => 'เบอร์โทรศัพท์ที่สามารถติดต่อได้')); ?>
+                                           <?php echo $form->error($profile, 'phone1', array('class' => 'error2')); ?>
                                         </div>
                                     </div>
-        
+
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                        <label for="">เบอร์มือถือ</label>
-                                        <input type="text" class="form-control" id="" placeholder="เบอร์มือถือ">
+                                            <label for="">เบอร์มือถือ</label>
+                                            <!-- <input type="text" class="form-control" id="" placeholder="เบอร์มือถือ"> -->
+                                            <?php echo $form->textField($profile, 'phone2', array('class' => 'form-control', 'placeholder' => 'เบอร์มือถือ')); ?>
+                                           <?php echo $form->error($profile, 'phone2', array('class' => 'error2')); ?>
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="row justify-content-center">
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                        <label for="">โทรศัพท์อื่นๆที่สามารถติดต่อได้</label>
-                                        <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้">
+                                            <label for="">โทรศัพท์อื่นๆที่สามารถติดต่อได้</label>
+                                            <!-- <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้"> -->
+                                            <?php echo $form->textField($profile, 'phone3', array('class' => 'form-control', 'placeholder' => 'โทรศัพท์อื่นๆที่สามารถติดต่อได้')); ?>
+                                           <?php echo $form->error($profile, 'phone3', array('class' => 'error2')); ?>
                                         </div>
                                     </div>
                                 </div>
-        
+
                                 <div class="row justify-content-center">
                                     <div class="col-md-8">
-                                    <div class="form-group">
-                                        <label>สามารถจะลงทำงานเรือครั้งต่อไป</label>
-                                        <input class="form-control default_datetimepicker " autocomplete="off" placeholder="สามารถจะลงทำงานเรือครั้งต่อไป" type="text" name="" id="" value="">                                                            </div>
+                                        <div class="form-group">
+                                            <label>สามารถจะลงทำงานเรือครั้งต่อไป</label>
+                                            <!-- <input class="form-control default_datetimepicker " autocomplete="off" placeholder="สามารถจะลงทำงานเรือครั้งต่อไป" type="text" name="" id="" value=""> -->      
+                                            <?php echo $form->textField($profile, 'ship_down_date', $ships_down_date); ?>
+                                            <?php echo $form->error($profile, 'ship_down_date', array('class' => 'error2')); ?>                                                            </div>
+                                        </div>
                                     </div>
+
                                 </div>
-                                
                             </div>
-                    </div>
-                </form>
+                        </form>
+                        <?php
+                    }
+                }
+                ?>
+                <div class="text-center submit-register">
 
-                    <div class="text-center submit-register">
+                    <?php 
+                    
+                    $new_form = $users->isNewRecord;
+                    $new_return = '';
+                    if ($new_form) {
+                        $new_return = true;
+                    }else{
+                        $new_return = false;
+                    }
+                    if (Yii::app()->user->getId() == null) { ?>
+                        <?php echo CHtml::submitButton($label->label_regis, array('class' => 'btn btn-default bg-greenlight btn-lg center-block ok_2','onclick'=>"return upload();")); ?>
+                    <?php } else {
+                        echo CHtml::submitButton($label->label_save, array('class' => 'btn btn-default bg-greenlight btn-lg center-block ok_2','onclick'=>"return upload();"));
+                    } ?>
+                </div>
 
-                        <?php if (Yii::app()->user->getId() == null) { ?>
-                            <?php echo CHtml::submitButton($label->label_regis, array('class' => 'btn btn-default bg-greenlight btn-lg center-block ok_2','onclick'=>"return upload();")); ?>
-                        <?php } else {
-                            echo CHtml::submitButton($label->label_save, array('class' => 'btn btn-default bg-greenlight btn-lg center-block ok_2','onclick'=>"return upload();"));
-                        } ?>
-                    </div>
-
-
-
-                <?php $this->endWidget();
+           <?php $this->endWidget();
                 ?>
 
             </div>
@@ -1077,6 +1110,19 @@ function editNameTrain(filedoc_id){
                         $(this).parent('.del_edu').remove();
                         x--;
                     });
+
+                          $('#accept').change(function(event) {
+                        $(".id_employee").hide();
+                        $('.form_name').show();
+                        $('.form_number_id').show();
+                        $("#office-section").hide();
+                        });
+                     $("#reject").change(function(event) {
+                        $(".id_employee").show();
+                        $('.form_name').show();
+                        $('.form_number_id').show();
+                        $("#office-section").show();
+                        });
                 });
                 $('.default_datetimepicker').datetimepicker({
                     format: 'Y-m-d',
@@ -1093,37 +1139,27 @@ function editNameTrain(filedoc_id){
                         if (max.length < vals) { 
                             var setval = '' + $(this).val();
                             while (setval.length < max) {
-                               setval = '0' + setval;
-                           }
-                           $(this).val(setval);
+                             setval = '0' + setval;
+                         }
+                         $(this).val(setval);
 
-                       } 
+                     } 
                         // else {
                         //     alert("คุณได้กรอกเลขประจำตัวพนักงานเกินกว่าที่กำหนด");
                         //      $(this).empty();
                         //      $(this).val();
                         // }
                     });
-
-                    $('#accept').change(function(event) {
-                        $(".id_employee").hide();
-                        $('.form_name').show();
-                        $('.form_number_id').show();
-                        $("#office-section").hide();
-                    });
-
-                    $("#reject").change(function() {
-                        $(".id_employee").show();
-                        $('.form_name').show();
-                        $('.form_number_id').show();
-                        $("#office-section").show();
-                    });
-
+        //              var new_forms = '<?php echo $new_return; ?>'; 
+        // alert(new_forms);       
+      //var type_user $("input[name='type_user']:checked").val();
+          // if (new_form) {    
                     $(".id_employee").hide();
                     $('#passport_card').hide();
                     $("#office-section").hide();
                     $('.form_name').hide();
-                    $('.form_number_id').hide();
+                    $('.form_number_id').hide();               
+                // }  
 
                     $('#card-1').change(function(event) {
                         $('#passport_card').hide();
@@ -1149,7 +1185,7 @@ function editNameTrain(filedoc_id){
                             }
                         });
                     });
-                     $(".position").change(function() {
+                    $(".position").change(function() {
                         var id = $(".position").val();
                         $.ajax({
                             type: 'POST',

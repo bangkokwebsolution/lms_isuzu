@@ -90,7 +90,7 @@ class User extends CActiveRecord
 			array('username','checkEmail'),
 		):((Yii::app()->user->id==$this->id)?array(
 			// array('username, email,password,verifyPassword,company_id,division_id,department_id,position_id,position_name', 'required'),
-			array('username, email,password,verifyPassword', 'required'),
+			array('username, email,password', 'required'),
 			array('username', 'length', 'max'=>255),
 			array('superuser, status, online_status,online_user', 'numerical', 'integerOnly'=>true),
 			// array('username', 'length', 'max'=>13, 'min' => 13,'message' => 'กรอกเลขบัตรประชาชน 13 หลักเท่านั้น'),
