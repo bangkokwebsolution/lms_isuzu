@@ -54,6 +54,18 @@
  * @property string $label_graduation_year
  * @property string $label_office
  * @property string $label_ship
+ * @property string $label_branch
+ * @property string $label_placeholder_branch
+ * @property string $label_boat_person_report
+ * @property string $label_boat_name
+ * @property string $label_placeholder_boat_name
+ * @property string $label_adress2
+ * @property string $label_placeholder_address2
+ * @property string $label_ship_up_date
+ * @property string $label_ship_down_date
+ * @property string $label_phone1
+ * @property string $label_phone2
+ * @property string $label_phone3
  */
 class MenuRegistration extends CActiveRecord
 {
@@ -75,12 +87,12 @@ class MenuRegistration extends CActiveRecord
 		return array(
 			array('id', 'required'),
 			array('id, lang_id, parent_id', 'numerical', 'integerOnly'=>true),
-			array('label_regis, label_homepage, label_identification, label_email, label_courseAll, label_placeholder_course, label_title, label_firstname, label_lastname, label_phone, label_station, label_company, label_position, label_placeholder_station, label_placeholder_company, label_placeholder_position, label_save, label_alert_identification, label_alert_notNumber, label_general_public, label_personnel, label_employee_id, label_passport, label_date_of_expiry, label_birthday, label_age, label_race, label_nationality, label_religion, label_sex, label_male, label_female, label_marital_status, label_single, label_marry, label_address, label_id_Line, label_history_of_severe_illness, label_never, label_ever, label_educational, label_education_level, label_academy, label_graduation_year, label_office, label_ship', 'length', 'max'=>255),
+			array('label_regis, label_homepage, label_identification, label_email, label_courseAll, label_placeholder_course, label_title, label_firstname, label_lastname, label_phone, label_station, label_company, label_position, label_placeholder_station, label_placeholder_company, label_placeholder_position, label_save, label_alert_identification, label_alert_notNumber, label_general_public, label_personnel, label_employee_id, label_passport, label_date_of_expiry, label_birthday, label_age, label_race, label_nationality, label_religion, label_sex, label_male, label_female, label_marital_status, label_single, label_marry, label_address, label_id_Line, label_history_of_severe_illness, label_never, label_ever, label_educational, label_education_level, label_academy, label_graduation_year, label_office, label_ship,  label_branch, label_placeholder_branch, label_boat_person_report, label_boat_name, label_placeholder_boat_name, label_adress2, label_placeholder_address2, label_ship_up_date, label_ship_down_date, label_phone1, label_phone2, label_phone3', 'length', 'max'=>255),
 			array('label_accept, label_reject', 'length', 'max'=>100),
 			array('label_dropdown_mr, label_dropdown_ms, label_dropdown_mrs', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, label_regis, label_homepage, label_accept, label_reject, label_identification, label_email, label_courseAll, label_placeholder_course, label_title, label_firstname, label_lastname, label_phone, label_station, label_company, label_position, label_placeholder_station, label_placeholder_company, label_placeholder_position, label_save, label_alert_identification, label_alert_notNumber, label_dropdown_mr, label_dropdown_ms, label_dropdown_mrs, lang_id, parent_id, label_general_public, label_personnel, label_employee_id, label_passport, label_date_of_expiry, label_birthday, label_age, label_race, label_nationality, label_religion, label_sex, label_male, label_female, label_marital_status, label_single, label_marry, label_address, label_id_Line, label_history_of_severe_illness, label_never, label_ever, label_educational, label_education_level, label_academy, label_graduation_year, label_office, label_ship', 'safe', 'on'=>'search'),
+			array('id, label_regis, label_homepage, label_accept, label_reject, label_identification, label_email, label_courseAll, label_placeholder_course, label_title, label_firstname, label_lastname, label_phone, label_station, label_company, label_position, label_placeholder_station, label_placeholder_company, label_placeholder_position, label_save, label_alert_identification, label_alert_notNumber, label_dropdown_mr, label_dropdown_ms, label_dropdown_mrs, lang_id, parent_id, label_general_public, label_personnel, label_employee_id, label_passport, label_date_of_expiry, label_birthday, label_age, label_race, label_nationality, label_religion, label_sex, label_male, label_female, label_marital_status, label_single, label_marry, label_address, label_id_Line, label_history_of_severe_illness, label_never, label_ever, label_educational, label_education_level, label_academy, label_graduation_year, label_office, label_ship,  label_branch, label_placeholder_branch, label_boat_person_report, label_boat_name, label_placeholder_boat_name, label_adress2, label_placeholder_address2, label_ship_up_date, label_ship_down_date, label_phone1, label_phone2, label_phone3', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -153,6 +165,18 @@ class MenuRegistration extends CActiveRecord
 			'label_graduation_year' => 'ปีที่จบการศึกษา',
 			'label_office' => 'ออฟฟิต',
 			'label_ship' => 'เรือ',
+			'label_branch' => 'สาขา',
+			'label_placeholder_branch' => 'เลือกสาขา',
+			'label_boat_person_report' => 'ใบรายงานตัวคนประจำเรือ',
+			'label_boat_name' => 'ขึ้นจากเรือชื่อ',
+			'label_placeholder_boat_name' => 'ขึ้นจากเรือชื่อ',
+			'label_adress2' => 'ที่อยู่ปัจจุบันที่สามารถติดต่อได้',
+			'label_placeholder_address2' => 'เขียนที่อยู่ตรงนี้',
+			'label_ship_up_date' => 'เมื่อวันที่',
+			'label_ship_down_date' => 'สามารถจะลงทำงานเรือครั้งต่อไป',
+			'label_phone1' => 'เบอร์โทรศัพท์ที่สามารถติดต่อได้',
+			'label_phone2' => 'เบอร์มือถือ',
+			'label_phone3' => 'โทรศัพท์อื่นๆที่สามารถติดต่อได้',
 		);
 	}
 
@@ -226,6 +250,18 @@ class MenuRegistration extends CActiveRecord
 		$criteria->compare('label_graduation_year',$this->label_graduation_year,true);
 		$criteria->compare('label_office',$this->label_office,true);
 		$criteria->compare('label_ship',$this->label_ship,true);
+		$criteria->compare('label_branch',$this->label_branch,true);
+		$criteria->compare('label_placeholder_branch',$this->label_placeholder_branch,true);
+		$criteria->compare('label_boat_person_report',$this->label_boat_person_report,true);
+		$criteria->compare('label_boat_name',$this->label_boat_name,true);
+		$criteria->compare('label_placeholder_boat_name',$this->label_placeholder_boat_name,true);
+		$criteria->compare('label_adress2',$this->label_adress2,true);
+		$criteria->compare('label_placeholder_address2',$this->label_placeholder_address2,true);
+		$criteria->compare('label_ship_up_date',$this->label_ship_up_date,true);
+		$criteria->compare('label_ship_down_date',$this->label_ship_down_date,true);
+		$criteria->compare('label_phone1',$this->label_phone1,true);
+		$criteria->compare('label_phone2',$this->label_phone2,true);
+		$criteria->compare('label_phone3',$this->label_phone3,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

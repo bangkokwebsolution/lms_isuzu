@@ -259,8 +259,8 @@ function editNameTrain(filedoc_id){
             $attTime = array('class' => ' form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_date_of_expiry);
             $graduation = array('class' => 'form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_graduation_year);
             $birthday = array('class' => 'form-control default_datetimepicker birth', 'autocomplete' => 'off', 'placeholder' => $label->label_birthday, 'type' => "text");
-            $ships_up_date = array('class' => ' form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => 'วันที่ขึ้นจากเรือ');
-            $ships_down_date = array('class' => 'form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => 'วันที่กลับไปขึ้นเรือ');
+            $ships_up_date = array('class' => ' form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_ship_up_date);
+            $ships_down_date = array('class' => 'form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_ship_down_date);
             ?>
             <div class="well">
 
@@ -939,13 +939,13 @@ function editNameTrain(filedoc_id){
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <!-- <label><?php echo $label->label_company; ?></label> -->
-                                    <label><?= Yii::app()->session['lang'] == 1?'Branch ':'สาขา'; ?> </label>
+                                    <label><?php echo $label->label_branch; ?> </label>
                                     <?php
                                     $BranchModel = Branch::model()->findAll(array(
                                         "condition" => " active = 'y'"
                                     ));
                                     $BranchList = CHtml::listData($BranchModel, 'id', 'branch_name');
-                                    $BranchOption = array('class' => 'form-control Branch', 'empty' => Yii::app()->session['lang'] == 1?'Branch ':'เลือกสาขา' );
+                                    $BranchOption = array('class' => 'form-control Branch', 'empty' => $label->label_placeholder_branch );
                                     ?>
                                     <?php
                                     echo $form->dropDownList($users, 'branch_id', $BranchList, $BranchOption);
@@ -964,21 +964,21 @@ function editNameTrain(filedoc_id){
                    <form>
                     <div class="well">
                         <div id="report-staff">
-                            <h3 class="text-center">ใบรายงานตัวคนประจำเรือ</h3>
+                            <h3 class="text-center"><?php echo $label->label_boat_person_report; ?></h3>
                             <div class="row justify-content-center">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="">ขึ้นจากเรือชื่อ</label>
+                                        <label for=""><?php echo $label->label_boat_name; ?></label>
                                         <!-- <input type="text" class="form-control" id="" placeholder="ขึ้นจากเรือชื่อ">
                                         <label><?php echo $label->label_race; ?></label> -->
-                                        <?php echo $form->textField($profile, 'ship_name', array('class' => 'form-control', 'placeholder' => 'ขึ้นจากเรือชื่อ')); ?>
+                                        <?php echo $form->textField($profile, 'ship_name', array('class' => 'form-control', 'placeholder' => $label->label_placeholder_boat_name)); ?>
                                         <?php echo $form->error($profile, 'ship_name', array('class' => 'error2')); ?>
                                     </div>
                                 </div>
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>เมื่อวันที่</label>
+                                        <label><?php echo $label->label_ship_up_date; ?></label>
                                         <!-- <input class="form-control default_datetimepicker " autocomplete="off" placeholder="เมื่อวันที่" type="text" name="" id="" value="">  
                                         <label><?php echo $label->label_race; ?></label> -->
                                         <?php echo $form->textField($profile, 'ship_up_date', $ships_up_date); ?>
@@ -989,10 +989,10 @@ function editNameTrain(filedoc_id){
                                 <div class="row justify-content-center">
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <label for="">ที่อยู่ปัจจุบันที่สามารถติดต่อได้</label>
+                                            <label for=""><?php echo $label->label_adress2; ?></label>
                                            <!-- <textarea class="form-control" name="" id="" cols="30" rows="3" placeholder="เขียนที่อยู่ตรงนี้"></textarea> 
                                             <label><?php echo $label->label_address; ?></label>-->
-                                            <?php echo $form->textArea($profile, 'address2', array('class' => 'form-control', 'cols' => "30", 'rows' => "3", 'placeholder' => 'เขียนที่อยู่ตรงนี้')); ?>
+                                            <?php echo $form->textArea($profile, 'address2', array('class' => 'form-control', 'cols' => "30", 'rows' => "3", 'placeholder' => $label->label_placeholder_address2)); ?>
                                             <?php echo $form->error($profile, 'address2', array('class' => 'error2')); ?>
                                         </div>
                                     </div>
@@ -1001,19 +1001,19 @@ function editNameTrain(filedoc_id){
                                 <div class="row justify-content-center">
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="">เบอร์โทรศัพท์ที่สามารถติดต่อได้</label>
+                                            <label for=""><?php echo $label->label_phone1; ?></label>
                                            <!--  <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้"> 
                                            <label><?php echo $label->label_phone; ?></label>-->
-                                           <?php echo $form->textField($profile, 'phone1', array('class' => 'form-control', 'placeholder' => 'เบอร์โทรศัพท์ที่สามารถติดต่อได้')); ?>
+                                           <?php echo $form->textField($profile, 'phone1', array('class' => 'form-control', 'placeholder' => $label->label_phone1)); ?>
                                            <?php echo $form->error($profile, 'phone1', array('class' => 'error2')); ?>
                                         </div>
                                     </div>
 
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="">เบอร์มือถือ</label>
+                                            <label for=""><?php echo $label->label_phone2; ?></label>
                                             <!-- <input type="text" class="form-control" id="" placeholder="เบอร์มือถือ"> -->
-                                            <?php echo $form->textField($profile, 'phone2', array('class' => 'form-control', 'placeholder' => 'เบอร์มือถือ')); ?>
+                                            <?php echo $form->textField($profile, 'phone2', array('class' => 'form-control', 'placeholder' => $label->label_phone2)); ?>
                                            <?php echo $form->error($profile, 'phone2', array('class' => 'error2')); ?>
                                         </div>
                                     </div>
@@ -1022,9 +1022,9 @@ function editNameTrain(filedoc_id){
                                 <div class="row justify-content-center">
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <label for="">โทรศัพท์อื่นๆที่สามารถติดต่อได้</label>
+                                            <label for=""><?php echo $label->label_phone3; ?></label>
                                             <!-- <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้"> -->
-                                            <?php echo $form->textField($profile, 'phone3', array('class' => 'form-control', 'placeholder' => 'โทรศัพท์อื่นๆที่สามารถติดต่อได้')); ?>
+                                            <?php echo $form->textField($profile, 'phone3', array('class' => 'form-control', 'placeholder' => $label->label_phone3)); ?>
                                            <?php echo $form->error($profile, 'phone3', array('class' => 'error2')); ?>
                                         </div>
                                     </div>
@@ -1033,7 +1033,7 @@ function editNameTrain(filedoc_id){
                                 <div class="row justify-content-center">
                                     <div class="col-md-8">
                                         <div class="form-group">
-                                            <label>สามารถจะลงทำงานเรือครั้งต่อไป</label>
+                                            <label><?php echo $label->label_ship_down_date; ?></label>
                                             <!-- <input class="form-control default_datetimepicker " autocomplete="off" placeholder="สามารถจะลงทำงานเรือครั้งต่อไป" type="text" name="" id="" value=""> -->      
                                             <?php echo $form->textField($profile, 'ship_down_date', $ships_down_date); ?>
                                             <?php echo $form->error($profile, 'ship_down_date', array('class' => 'error2')); ?>                                                            </div>
@@ -1111,7 +1111,7 @@ function editNameTrain(filedoc_id){
                         x--;
                     });
 
-                          $('#accept').change(function(event) {
+                     $('#accept').change(function(event) {
                         $(".id_employee").hide();
                         $('.form_name').show();
                         $('.form_number_id').show();
@@ -1150,16 +1150,15 @@ function editNameTrain(filedoc_id){
                         //      $(this).val();
                         // }
                     });
-        //              var new_forms = '<?php echo $new_return; ?>'; 
-        // alert(new_forms);       
-      //var type_user $("input[name='type_user']:checked").val();
-          // if (new_form) {    
+                    //  var new_forms = '<?php echo $new_return; ?>'; 
+
+          // if (new_form === true || new_forms === 1) {    
                     $(".id_employee").hide();
                     $('#passport_card').hide();
                     $("#office-section").hide();
                     $('.form_name').hide();
                     $('.form_number_id').hide();               
-                // }  
+           //      }  
 
                     $('#card-1').change(function(event) {
                         $('#passport_card').hide();
