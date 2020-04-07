@@ -81,12 +81,13 @@ EOD
 						array(
 							'name'=>'lesson_id',
 							'value'=>function($data){
-								if(count($data->lesson->courseonlines->Schedules) > 0 || $data->lesson->courseonlines->cate_id == 1){
-									$str = " (TMS)";
-								}else{
-									$str = " (LMS)";
-								}
-								return $data->lesson->title.$str;
+								// if(count($data->lesson->courseonlines->Schedules) > 0 || $data->lesson->courseonlines->cate_id == 1){
+								// 	$str = " (TMS)";
+								// }else{
+								// 	$str = " (LMS)";
+								// }
+								// return $data->lesson->title.$str;
+								return $data->lesson->title;
 							},
 							'filter'=>CHtml::activeTextField($model,'lesson_search'),
 			                'htmlOptions' => array(

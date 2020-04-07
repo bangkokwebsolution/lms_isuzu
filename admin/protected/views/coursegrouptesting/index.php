@@ -73,12 +73,13 @@ EOD
 						array(
 							'name'=>'course_id',
 							'value'=>function($data){
-								if(count($data->course->Schedules) > 0 || $data->course->cate_id == 1){
-									$str = " (TMS)";
-								}else{
-									$str = " (LMS)";
-								}
-								return $data->course->course_title.$str;
+								// if(count($data->course->Schedules) > 0 || $data->course->cate_id == 1){
+								// 	$str = " (TMS)";
+								// }else{
+								// 	$str = " (LMS)";
+								// }
+								// return $data->course->course_title.$str;
+								return $data->course->course_title;
 							},
 							'filter'=>CHtml::activeTextField($model,'course_search'),
 			                'htmlOptions' => array(

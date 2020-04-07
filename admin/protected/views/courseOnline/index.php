@@ -94,19 +94,20 @@ EOD
 							'value'=> 'Controller::ImageShowIndex($data,$data->course_picture)',
 							'htmlOptions'=>array('width'=>'110')
 						),
-						array(
-							'name'=>'course_title',
-							'type'=>'html',
-							// 'value'=>'UHtml::markSearch($data,"course_title")',
-							'value'=>function($data){
-								if(count($data->Schedules) > 0 || $data->cates->cate_id == 1){
-									$str = " (TMS)";
-								}else{
-									$str = " (LMS)";
-								}
-								return UHtml::markSearch($data,"course_title").$str;
-							},
-						),
+						'course_title',
+						// array(
+						// 	'name'=>'course_title',
+						// 	'type'=>'html',
+						// 	// 'value'=>'UHtml::markSearch($data,"course_title")',
+						// 	'value'=>function($data){
+						// 		if(count($data->Schedules) > 0 || $data->cates->cate_id == 1){
+						// 			$str = " (TMS)";
+						// 		}else{
+						// 			$str = " (LMS)";
+						// 		}
+						// 		return UHtml::markSearch($data,"course_title").$str;
+						// 	},
+						// ),
 						array(
 							'name'=>'cate_id',
 							'value'=>'$data->cates->cate_title',

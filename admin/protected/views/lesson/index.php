@@ -92,12 +92,13 @@ EOD
 							'name'=>'course_id',
 							// 'value'=>'$data->courseonlines->course_title',
 							'value'=>function($data){
-								if(count($data->courseonlines->Schedules) || $data->courseonlines->cate_id == 1){
-									$str = " (TMS)";
-								}else{
-									$str = " (LMS)";
-								}
-								return $data->courseonlines->course_title.$str;
+								// if(count($data->courseonlines->Schedules) || $data->courseonlines->cate_id == 1){
+								// 	$str = " (TMS)";
+								// }else{
+								// 	$str = " (LMS)";
+								// }
+								// return $data->courseonlines->course_title.$str;
+								return $data->courseonlines->course_title;
 							},
 							'filter'=>$this->listcourseOnline($model,'course_id'),
 							'htmlOptions'=>array('style'=>'width: 150px;'),
