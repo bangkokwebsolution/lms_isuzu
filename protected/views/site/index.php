@@ -117,7 +117,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     <div class="banner">
         <div id="banner-thoresen"></div>
         <?php
-         $banner_path = Yii::app()->createUrl('/themes/template2/animation/banner-main/main-bg.json');
+        $banner_path = Yii::app()->createUrl('/themes/template2/animation/banner-main/main-bg.json');
         ?>
         <script>
             var animation = bodymovin.loadAnimation({
@@ -245,7 +245,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
 
 
-        <?php if(Yii::app()->user->id != null){ ?>
+        <?php if(Yii::app()->user->id != null && $course_online != null){ ?>
             <section class="course">
                 <div class="container">
                     <div class="page-header">

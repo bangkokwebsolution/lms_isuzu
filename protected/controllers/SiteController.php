@@ -552,43 +552,35 @@ class SiteController extends Controller
 
 		if(!Yii::app()->user->isGuest){
 
-			// $course_online = new CourseOnline('search');
-			// $course_online->unsetAttributes();
-			// $userObject = Users::model()->findByPk(Yii::app()->user->id);
-
 			if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
 				$langId = Yii::app()->session['lang'] = 1;
 			}else{
 				$langId = Yii::app()->session['lang'];
 			}
-			// if($userObject->position_id != 4){
-			// 	if($userObject->orgposition){
-			// 		$courses = $userObject->orgposition;
-			// 	}
-			// }else{
-			// 	$criteria = new CDbCriteria;
-			// 	$criteria->compare('title_all','General');
-			// 	$courses = OrgRoot::model()->findAll($criteria);
-			// }
-
-			// foreach ($courses as $key => $cate) {
-			// 	$courseArr[] = $cate->course->CategoryTitle->cate_id;
-			// }
-			// $courseArray = array();
-			// if(!empty($courses)){
-			// 	$courseArray = CHtml::listData($courses,'course_id','course_id');
-			// }
-			// $course_online->course_id_array = array_values($courseArray);
-			$course = CourseOnline::model()->with("CategoryTitle")->findAll(array("condition" => "course.active='y' and course.status ='1' and categorys.active='y' and categorys.cate_show='1' and course.lang_id = ".$langId));
-		}else{
 
 			$criteria = new CDbCriteria;
-			$criteria->compare('course_id',$id);
-			$criteria->compare('active','y');
-			$criteria->compare('status',1);
-			$criteria->compare('lang_id',$langId);
-			// $criteria->limit = 8;
-			$course = CourseOnline::model()->findAll($criteria);
+			$criteria->compare('active','y'); 
+			$criteria->compare('orgchart_id','2');
+			$modelOrgCourse = OrgCourse::model()->findAll($criteria);
+
+			if($modelOrgCourse){
+				foreach ($modelOrgCourse as $key => $value) {
+					$course_id[] = $value->course_id;
+				}
+
+				$criteria = new CDbCriteria;
+				$criteria->addIncondition('course_id',$course_id);
+				$criteria->compare('active','y');
+				$criteria->compare('status',1);
+				// $criteria->compare('lang_id',$langId);
+				$course = CourseOnline::model()->findAll($criteria);
+
+			}
+			// var_dump($course);exit();
+			// var_dump($course);exit();
+			
+			// $course = CourseOnline::model()->with("CategoryTitle")->findAll(array("condition" => "course.active='y' and course.status ='1' and categorys.active='y' and categorys.cate_show='1' and course.lang_id = ".$langId));
+			
 		}
 
 		// var_dump("<pre>");
