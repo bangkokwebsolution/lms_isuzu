@@ -57,6 +57,13 @@ class Profile extends CActiveRecord {
             array('passport', 'length', 'max' => 6),
              array('identification', 'validateIdCard'),
             array('identification', 'unique', 'message' => 'เลขบัตรประชาชนนี้มีในระบบแล้ว'),
+             array('identification', 'length', 'max' => 13,'min'=>13),
+            array('identification', 'unique',
+                 'criteria' => array(
+                     'with' => 'user',
+                     'condition' => 'del_status= :del_status',
+                     'params' => array(':del_status' => 0))
+             , 'message' => UserModule::t("identification_unique"),'on' => array('idcard')),         
             // The following rule is used by search(). 
             // Please remove those attributes that should not be searched. 
             array('bussiness_model_id,bussiness_type_id,company,juristic,user_id, title_id, firstname, lastname, active, generation, type_user, sex, birthday, age, education, occupation, position, website, address, province, tel, phone, fax, contactfrom, advisor_email1, advisor_email2, file, passport, date_of_expiry, race, nationality, religion, history_of_illness, status_sm, type_employee, type_card, line_id', 'safe', 'on' => 'search'),

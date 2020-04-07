@@ -390,7 +390,7 @@ class RegistrationController extends Controller {
     $profile->phone1 = $_POST['Profile'][phone1];
     $profile->phone2 = $_POST['Profile'][phone2];
     $profile->phone3 = $_POST['Profile'][phone3];
-     //var_dump($_REQUEST);
+     //var_dump($profile);
 
     if(!$chk_status_email){
         $users->status = 1;
@@ -760,7 +760,12 @@ public function actionUpdate() {
         $profile->phone1 = $_POST['Profile'][phone1];
         $profile->phone2 = $_POST['Profile'][phone2];
         $profile->phone3 = $_POST['Profile'][phone3];
-        
+        // var_dump($users);
+        // echo "ddddddddddd";
+        // var_dump($Profile);
+        // echo "eeeeeeeeeee";
+        // var_dump($_REQUEST);
+        // exit();
         //$users->status = 1;
         // if (isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
         //     $secret = '6LdMXXcUAAAAAK76NVqqh5qMv05wg2QxbHoSrJMc';
