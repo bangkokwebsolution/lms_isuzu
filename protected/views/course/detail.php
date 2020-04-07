@@ -31,7 +31,7 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
     $day = "day";
     $Questionnaire = "Questionnaire ";
     $Click = "Click";
-    $final = "Post Test";
+    $final = "Final";
 }else{  
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -43,7 +43,7 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
     $day = "วัน";
     $Questionnaire = "แบบสอบถาม ";
     $Click = "คลิก";
-    $final = "แบบทดสอบหลังเรียน";
+    $final = "การสอบวัดผล";
     $courseChildren = CourseOnline::model()->find(array('condition' => 'parent_id = ' . $course->course_id));
     if($courseChildren){
         $course->course_title = $courseChildren->course_title;
@@ -247,7 +247,6 @@ if($model){
                 <?php } ?>  -->
 
                 <?php 
-
                 $category = Category::model()->findByPk($course->cate_id);
                 $checkCourseTest = Helpers::lib()->checkCoursePass($course->course_id);
                 $checkHaveCourseTest = Helpers::lib()->checkHaveCourseTestInManage($course->course_id);
@@ -284,11 +283,11 @@ if($model){
                    $pathPassed = 'javascript:void(0);';
                    $pathPassed_Onclick = 'onClick="alertswalNocert()"';
                }else{
+                $targetBlank = 'target="_blank"';
                 $statePrintCert = true;
                 $pathPassed = $this->createUrl('Course/PrintCertificate', array('id' => $course->course_id,'langId'=>1));
             }
 
-            $targetBlank = 'target="_blank"';
             $certFaStat = 'text-success';
             $img_tophy = Yii::app()->theme->baseUrl."/images/cer-success.png";
         } else {
@@ -301,26 +300,22 @@ if($model){
         }
 
         ?>
+
         <div class="certificate-check">
-            <!-- <?php var_dump($pathPassed); ?> -->
             <a href="<?php echo $pathPassed; ?>" <?= $pathPassed_Onclick; ?> <?php echo $targetBlank." ".$certEvnt; ?>>
                 <div class="text-center">
                     <i class="" aria-hidden="true"><img src="<?=$img_tophy?>"></i>
-                    <?php if($course->cate_id != 77){ ?>
-                        <p><?= $label->label_printCert ?></p>
-                    <?php }else{ ?>
-                        <p><?= UserModule::t("print_event"); ?></p>
-                    <?php } ?>
+                    <p><?= $label->label_printCert ?></p>
                 </div>
             </a>
         </div>
-
 
     <?php } ?>
 </div>
 </div>
 </div>
 </div>
+
 
 <div class="col-sm-8 col-md-8 ">
 
@@ -1183,9 +1178,8 @@ if($model){
     </div>
 </div> -->
 
-
 </div>
-</section>
+<!-- </section> -->
 <script>
 
     function alertswal() {
@@ -1213,11 +1207,11 @@ if($model){
     }
 
     function alertswalcert() {
-        swal("<?= $label->label_swal_warning ?>", "<?= $label->label_cantPrintCert ?>", "error");
+        swal('<?= $label->label_swal_warning ?>', '<?= $label->label_cantPrintCert ?>', "error");
     }
 
     function alertswalNocert() {
-        swal("<?= $label->label_swal_warning ?>", "หลักสูตรนี้ไม่มีใบประกาศนียบัตร กรุณาติดต่อผู้ดูแลระบบ", "error");
+        swal('<?= $label->label_swal_warning ?>', 'หลักสูตรนี้ไม่มีใบประกาศนียบัตร กรุณาติดต่อผู้ดูแลระบบ', "error");
     }
 
     function showNotice(coursetype) {

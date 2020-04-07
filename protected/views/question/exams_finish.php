@@ -56,7 +56,7 @@ if($modelScore->type=='post' && !$state){
 		color:#fff;
 	}
 </style>
-<div class="header-page parallax-window" data-parallax="scroll" data-image-src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg-header-page.png">
+<!-- <div class="header-page parallax-window" data-parallax="scroll" data-image-src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg-header-page.png">
 	<div class="container">
 		<h1><?= $labelCourse->label_resultFinal; ?>
 		<small class="pull-right">
@@ -68,7 +68,7 @@ if($modelScore->type=='post' && !$state){
 	</h1>
 </div>
 <div class="bottom1"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/kind-bottom.png" class="img-responsive" alt=""></div>
-</div>
+</div> -->
 
 <!-- Content -->
 <section class="content" id="exams-finish">
@@ -179,82 +179,82 @@ if($modelScore->type=='post' && !$state){
 								$question = Question::model()->find(array(
 									'condition' => 'ques_id = '.$val->ques_id
 								));
-							 ?>
-							<tr>
-								<td><?= ($index+1); ?></td>
-								<td class="td-quest" style="text-align: left">
-									<b>คำภาม</b> : <?= $question->ques_title; ?><br>
-									<b>คำตอบ</b> : <?= $ansStr; ?>      
+								?>
+								<tr>
+									<td><?= ($index+1); ?></td>
+									<td class="td-quest" style="text-align: left">
+										<b>คำภาม</b> : <?= $question->ques_title; ?><br>
+										<b>คำตอบ</b> : <?= $ansStr; ?>      
 
-									<br><b>เฉลย</b> : <?php 
-									foreach ($logScore as $key => $log) {
-										echo CHtml::decode($log->choice_detail);
-										if(($arrayCount-1) != $key)echo ',';
-									}; ?>
-									<?php if($question->ques_explain){ ?><br><b>คำอภิปราย</b> : <?= $question->ques_explain; ?>    
-										<?php 
-									}
-									?>
-								</td>
-								<td><?= $icon_score; ?></td>
-							</tr>
+										<br><b>เฉลย</b> : <?php 
+										foreach ($logScore as $key => $log) {
+											echo CHtml::decode($log->choice_detail);
+											if(($arrayCount-1) != $key)echo ',';
+										}; ?>
+										<?php if($question->ques_explain){ ?><br><b>คำอภิปราย</b> : <?= $question->ques_explain; ?>    
+											<?php 
+										}
+										?>
+									</td>
+									<td><?= $icon_score; ?></td>
+								</tr>
 							<?php endforeach; ?>
-							</tbody>
-							</table>
-						</div>
-					</div>
+						</tbody>
+					</table>
 				</div>
-			<?php } ?>
+			</div>
+		</div>
+	<?php } ?>
 
-					<div class="modal fade" id="modal-alert">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h4 class="modal-title"><?= $labelCourse->label_swal_warning; ?></h4>
-								</div>
-								<div class="modal-body">
-									<center>
-										<i class="fa fa-warning" style="font-size:6em; color: #F8BB86; padding-top: 15px;padding-bottom: 15px;"></i>
-										<h2 style="color: #575757;"><?= $labelCourse->label_notPassTest; ?></h2>
-										<?php if($modelScore->type=='post'){ 
-											if($state){
-												?>
-												<p><?=UserModule::t('reTest');?></p>
-											<?php }else{
-												?>
-												<p><?=UserModule::t('reTestFail');?></p>
-												<?php
-											}
-										} ?>
-									</center>
-								</div>
-								<div class="modal-footer">
-									<center>
-										<button type="button" class="btn btn-success"  style="padding: 15px 32px; height: auto" data-dismiss="modal">OK</button>
-									</center>
-								</div>
-							</div>
-						</div>
-					</div>
+	<div class="modal fade" id="modal-alert">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title"><?= $labelCourse->label_swal_warning; ?></h4>
+				</div>
+				<div class="modal-body">
+					<center>
+						<i class="fa fa-warning" style="font-size:6em; color: #F8BB86; padding-top: 15px;padding-bottom: 15px;"></i>
+						<h2 style="color: #575757;"><?= $labelCourse->label_notPassTest; ?></h2>
+						<?php if($modelScore->type=='post'){ 
+							if($state){
+								?>
+								<p><?=UserModule::t('reTest');?></p>
+							<?php }else{
+								?>
+								<p><?=UserModule::t('reTestFail');?></p>
+								<?php
+							}
+						} ?>
+					</center>
+				</div>
+				<div class="modal-footer">
+					<center>
+						<button type="button" class="btn btn-success"  style="padding: 15px 32px; height: auto" data-dismiss="modal">OK</button>
+					</center>
+				</div>
+			</div>
+		</div>
+	</div>
 
-					<div class="modal fade" id="modal-pass">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<h4 class="modal-title"><?= $labelCourse->label_swal_warning; ?></h4>
-								</div>
-								<div class="modal-body">
-									<center>
-										<i class="fa fa-check" style="font-size:6em; color: #4cdb20; padding-top: 15px;padding-bottom: 15px;"></i>
-										<h2 style="color: #575757;"><?= $labelCourse->label_passTest; ?></h2>
-									</center>
-								</div>
-								<div class="modal-footer">
-									<center>
-										<button type="button" class="btn btn-success"  style="padding: 15px 32px; height: auto" data-dismiss="modal">OK</button>
-									</center>
-								</div>
+	<div class="modal fade" id="modal-pass">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title"><?= $labelCourse->label_swal_warning; ?></h4>
+				</div>
+				<div class="modal-body">
+					<center>
+						<i class="fa fa-check" style="font-size:6em; color: #4cdb20; padding-top: 15px;padding-bottom: 15px;"></i>
+						<h2 style="color: #575757;"><?= $labelCourse->label_passTest; ?></h2>
+					</center>
+				</div>
+				<div class="modal-footer">
+					<center>
+						<button type="button" class="btn btn-success"  style="padding: 15px 32px; height: auto" data-dismiss="modal">OK</button>
+					</center>
+				</div>
 
-							</div>
-						</div>
-					</div>
+			</div>
+		</div>
+	</div>
