@@ -27,42 +27,42 @@ $arr = json_decode($real);
 </style>
 <div id="exam-result">
 	
-<!-- 	<div class="container">
+	<div class="container">
 		<nav aria-label="breadcrumb">
 			<ol class="breadcrumb breadcrumb-main">
-				<li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/site/index'); ?>"><?php echo $label->label_homepage; ?></a></li>
-				<li class="breadcrumb-item active" aria-current="page"><?= $lesson->CourseOnlines->course_title; ?></li>
-			</ol>
-		</nav>
-	</div> -->
-	<section class="content" id="exams">
-		<div class="container">
-			<!-- tabtime -->
-			<div class="alert alert-danger stick center shadow">
-				<h4 class="mb-0 text-center">Time : <span id="tabtime">00:00:00</span></h4>
-			</div>
-			<!-- Content -->
+				<li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/course/index'); ?>"><?php echo $labelCourse->label_course; ?></a>
+					<li class="breadcrumb-item active" aria-current="page"><?= $lesson->CourseOnlines->course_title; ?></li>
+				</ol>
+			</nav>
+		</div> 
+		<section class="content" id="exams">
+			<div class="container">
+				<!-- tabtime -->
+				<div class="alert alert-danger stick center shadow">
+					<h4 class="mb-0 text-center">Time : <span id="tabtime">00:00:00</span></h4>
+				</div>
+				<!-- Content -->
 
-			<div class="well">
-				<div class="exams">
-					<div class="row">
-						<div id="ques-show">
-							<form id="question-form" action="#" method="POST" role="form" onSubmit="return false">
-								<div class="col-sm-8">
-									<div class="form-group">
-										<?php
-										$strTotal = 0;
-										$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown');
-										$questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'เลือกได้คำตอบเดียว', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่');
-										?>
-										<label for=""><?= $currentQuiz->number; ?>. ข้อสอบแบบ <?= $questionTypeArrayStr[$model->ques_type] ?> </label>
-										<br>
-										<p><?= $model->ques_title; ?></p>
-										<div class="well answer">
+				<div class="well">
+					<div class="exams">
+						<div class="row">
+							<div id="ques-show">
+								<form id="question-form" action="#" method="POST" role="form" onSubmit="return false">
+									<div class="col-sm-8">
+										<div class="form-group">
 											<?php
-											$ansData = json_decode($currentQuiz->ans_id);
-											$choiceData = json_decode($currentQuiz->question);
-											$arrType4Answer = array();
+											$strTotal = 0;
+											$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown');
+											$questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'เลือกได้คำตอบเดียว', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่');
+											?>
+											<label for=""><?= $currentQuiz->number; ?>. ข้อสอบแบบ <?= $questionTypeArrayStr[$model->ques_type] ?> </label>
+											<br>
+											<p><?= $model->ques_title; ?></p>
+											<div class="well answer">
+												<?php
+												$ansData = json_decode($currentQuiz->ans_id);
+												$choiceData = json_decode($currentQuiz->question);
+												$arrType4Answer = array();
 
 											// echo '<pre>';
 											// var_dump($choiceData);

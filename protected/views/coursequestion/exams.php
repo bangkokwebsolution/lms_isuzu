@@ -37,33 +37,42 @@
 		</div>
 		<div class="bottom1"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/kind-bottom.png" class="img-responsive" alt=""></div>
 	</div> -->
-	<section class="content" id="exams">
-		<div class="container">
-			<!-- tabtime -->
-			<div class="alert alert-danger stick center shadow">
-				<h4 class="mb-0 text-center">Time : <span id="tabtime">00:00:00</span></h4>
-			</div>
-			<!-- Content -->
 
-			<div class="well">
-				<div class="exams">
-					<div class="row">
-						<div id="ques-show">
-							<div class="col-sm-8">
-								<form id="question-form" action="#" method="POST" role="form" onSubmit="return false">
-									<div class="form-group">
-										<?php
-										$strTotal = 0;
-										$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown');
-										$questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'เลือกได้คำตอบเดียว', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่');									
-										?>
-										<label for=""><?= $currentQuiz->number; ?>. ข้อสอบแบบ <?= $questionTypeArrayStr[$model->ques_type]?> </label>
-										<p><?= $model->ques_title; ?></p>
-										<div class="well answer">
-											<?php 
-											$ansData = json_decode($currentQuiz->ans_id);
-											$choiceData = json_decode($currentQuiz->question);
-											$arrType4Answer = array();
+	<div class="container">
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb breadcrumb-main">
+				<li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/course/index'); ?>"><?php echo $labelCourse->label_course; ?></a>
+					<li class="breadcrumb-item active" aria-current="page"><?= $course->course_title; ?></li>
+				</ol>
+			</nav>
+		</div> 
+		<section class="content" id="exams">
+			<div class="container">
+				<!-- tabtime -->
+				<div class="alert alert-danger stick center shadow">
+					<h4 class="mb-0 text-center">Time : <span id="tabtime">00:00:00</span></h4>
+				</div>
+				<!-- Content -->
+
+				<div class="well">
+					<div class="exams">
+						<div class="row">
+							<div id="ques-show">
+								<div class="col-sm-8">
+									<form id="question-form" action="#" method="POST" role="form" onSubmit="return false">
+										<div class="form-group">
+											<?php
+											$strTotal = 0;
+											$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown');
+											$questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'เลือกได้คำตอบเดียว', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่');									
+											?>
+											<label for=""><?= $currentQuiz->number; ?>. ข้อสอบแบบ <?= $questionTypeArrayStr[$model->ques_type]?> </label>
+											<p><?= $model->ques_title; ?></p>
+											<div class="well answer">
+												<?php 
+												$ansData = json_decode($currentQuiz->ans_id);
+												$choiceData = json_decode($currentQuiz->question);
+												$arrType4Answer = array();
 
 											$countchoice = 1; // นับตัวเลือกข้อสอบแบบจับคู่
 											foreach ($choiceData as $key => $val_choice) {
@@ -243,6 +252,8 @@
 	    });
 
 	});
+
+
 	function save_ans(evnt) {
 		$("#actionEvnt").val(evnt);
 		if(evnt=='save' || evnt=='timeup'){
@@ -252,38 +263,87 @@
 			$(".submit").button('loading');
 			$(".submit").attr('disabled','disabled');
 		} 
-		$.ajax({
-			url: "<?php echo Yii::app()->createUrl("coursequestion/index"); ?>",
-			type: "POST",
-			data: $("#question-form").serialize(),
-			success: function (data) {
-				if ($('#last_ques').val() == 1) {
-					var url = '<?php echo Yii::app()->createUrl('coursequestion/exams_finish', array('id' => $course->course_id)); ?>';
-					if(evnt=='save'){
-						// var strMsg = 'คุณทำข้อสอบสำเร็จ';
-						var strMsg = '';
-						var typeMsg = 'success';
-					} else {
-						var strMsg = 'Time out';
-						var typeMsg = 'warning';
-					}
-					swal({
-						title: "Completed",
-						text: strMsg,
-						type: typeMsg,
-						confirmButtonText: "OK",
-					},
-					function () {
+
+		if (evnt == 'save') {
+			swal({
+				title: "ยืนยันเพื่อส่งคำตอบ",
+				text: "(กรุณาตรวจสอบคำตอบของท่านอีกครั้ง !!)",
+				type: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "OK",
+			}, function(isConfirm) {
+				if (isConfirm) {
+					$.ajax({
+						url: "<?php echo Yii::app()->createUrl("coursequestion/index"); ?>",
+						type: "POST",
+						data: $("#question-form").serialize(),
+						success: function (data) {
+							if ($('#last_ques').val() == 1) {
+								var url = '<?php echo Yii::app()->createUrl('coursequestion/exams_finish', array('id' => $course->course_id)); ?>';
+								if (evnt == 'save') {
+									var strMsg = '<?= UserModule::t('success_test'); ?>';
+									var typeMsg = 'success';
+								} else {
+									var strMsg = '<?= UserModule::t('fail_test'); ?>';
+									var typeMsg = 'warning';
+								}
+								swal({
+									title: "<?= UserModule::t('success_test'); ?>",
+									text: '',
+									type: typeMsg,
+									confirmButtonText: "OK",
+								},
+								function () {
 						$('#exam-result').html(data);//window.location.href = url;
 					});
-				} else {
-					$('#ques-show').html(data);
+							} else {
+								$('#ques-show').html(data);
+							}
+						},
+						complete: function(){
+							$(".submit").button('reset');
+						}
+					});
 				}
-			},
-			complete: function(){
-				$(".submit").button('reset');
-			}
-		});
+				else {
+					$('#last_ques').val(2);
+					$(".submit").button('reset');
+				}
+			});
+		} else {
+			$.ajax({
+				url: "<?php echo Yii::app()->createUrl("coursequestion/index"); ?>",
+				type: "POST",
+				data: $("#question-form").serialize(),
+				success: function (data) {
+					if ($('#last_ques').val() == 1) {
+						var url = '<?php echo Yii::app()->createUrl('coursequestion/exams_finish', array('id' => $course->course_id)); ?>';
+						if (evnt == 'save') {
+							var strMsg = '<?= UserModule::t('success_test'); ?>';
+							var typeMsg = 'success';
+						} else {
+							var strMsg = '<?= UserModule::t('fail_test'); ?>';
+							var typeMsg = 'warning';
+						}
+						swal({
+							title: "<?= UserModule::t('success_test'); ?>",
+							text: '',
+							type: typeMsg,
+							confirmButtonText: "OK",
+						},
+						function() {
+								$('#exam-result').html(data); //window.location.href = url;
+							});
+					} else {
+						$('#ques-show').html(data);
+					}
+				},
+				complete: function() {
+					$(".submit").button('reset');
+				}
+			});
+		}
 	}
 
 	function time_test_start(time_down){

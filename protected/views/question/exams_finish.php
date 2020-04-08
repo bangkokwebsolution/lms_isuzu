@@ -56,19 +56,17 @@ if($modelScore->type=='post' && !$state){
 		color:#fff;
 	}
 </style>
-<!-- <div class="header-page parallax-window" data-parallax="scroll" data-image-src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg-header-page.png">
+<!-- <div class="header-page parallax-window" data-parallax="scroll" data-image-src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg-header-page.png"> -->
 	<div class="container">
-		<h1><?= $labelCourse->label_resultFinal; ?>
-		<small class="pull-right">
-			<ul class="list-inline list-unstyled">
-				<li><a href="#"><?= $labelCourse->label_homepage; ?></a></li>/
-				<li><a href="#"><?= $labelCourse->label_resultFinal; ?></a></li>
-			</ul>
-		</small>
-	</h1>
-</div>
-<div class="bottom1"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/kind-bottom.png" class="img-responsive" alt=""></div>
-</div> -->
+		<nav aria-label="breadcrumb">
+			<ol class="breadcrumb breadcrumb-main">
+				<li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/course/index'); ?>"><?php echo $labelCourse->label_course; ?></a>
+					<li class="breadcrumb-item active" aria-current="page"><?= $lesson->CourseOnlines->course_title; ?></li>
+				</ol>
+			</nav>
+		</div> 
+<!-- <div class="bottom1"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/kind-bottom.png" class="img-responsive" alt=""></div>
+</div> --> 
 
 <!-- Content -->
 <section class="content" id="exams-finish">

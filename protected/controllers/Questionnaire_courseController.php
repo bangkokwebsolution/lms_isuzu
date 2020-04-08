@@ -44,7 +44,41 @@ class Questionnaire_courseController extends Controller
             Helpers::lib()->getControllerActionId();
         }
 
+        if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+            $langId = Yii::app()->session['lang'] = 1;
+        }else{
+            $langId = Yii::app()->session['lang'];
+        }
+
+        $label = MenuSite::model()->find(array(
+            'condition' => 'lang_id=:lang_id',
+            'params' => array(':lang_id' => $langId)
+        ));
+        if(!$label){
+            $label = MenuSite::model()->find(array(
+                'condition' => 'lang_id=:lang_id',
+                'params' => array(':lang_id' => 1)
+            ));
+        }
+
+        $labelCourse = MenuCourse::model()->find(array(
+            'condition' => 'lang_id=:lang_id',
+            'params' => array(':lang_id' => $langId)
+        ));
+        if(!$labelCourse){
+            $labelCourse = MenuCourse::model()->find(array(
+                'condition' => 'lang_id=:lang_id',
+                'params' => array(':lang_id' => 1)
+            ));
+        }
+
         $courseTeacher = $this->loadModel($id);
+
+        $course = CourseOnline::model()->findByPk($courseTeacher->course_id);
+
+        // var_dump($course);exit();
+
+
         // echo '<pre>';var_dump($courseTeacher);exit();
         $questAns = QQuestAns_course::model()->find("user_id='" . Yii::app()->user->id . "' AND course_id='" . $courseTeacher->course_id . "' AND header_id='" . $courseTeacher->survey_header_id . "' AND teacher_id='" . $courseTeacher->teacher_id . "'");
         // if ($questAns) {
@@ -141,9 +175,12 @@ class Questionnaire_courseController extends Controller
             }
             $this->redirect(array('/course/questionnaire', 'id' => $courseTeacher->course->course_id));
         }
-        
+        // var_dump($courseTeacher);exit();
         $this->render('index2', array(
             'questionnaire' => $courseTeacher,
+            'label' => $label,
+            'labelCourse' => $labelCourse,
+            'course' => $course,
         ));
     }
 

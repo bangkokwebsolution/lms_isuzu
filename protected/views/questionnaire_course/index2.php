@@ -19,20 +19,29 @@ $path_theme = Yii::app()->theme->baseUrl . '/';
 </div>
 </div> -->
 
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-main">
+           <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/course/index'); ?>"><?php echo $labelCourse->label_course; ?></a>
+            <li class="breadcrumb-item active" aria-current="page"><?= $course->course_title; ?></li>
+        </ol>
+    </nav>
+</div> 
+
 <!-- Content -->
 <section class="content" id="questionnaire">
-   <div class="container">
+ <div class="container">
 
-     <div class="well well-question">
+   <div class="well well-question">
 
-        <?php
-        if (isset($questionnaire->q_header)) {
-            $header = $questionnaire->q_header;
-            if (count($header->sections) > 0) {
-                $sections = $header->sections;
-                ?>
-                <!-- end top script -->
-                <div id="container">
+    <?php
+    if (isset($questionnaire->q_header)) {
+        $header = $questionnaire->q_header;
+        if (count($header->sections) > 0) {
+            $sections = $header->sections;
+            ?>
+            <!-- end top script -->
+            <div id="container">
             <!-- <div class="page-header">
                 <figure class="post-thumbnail">
                     <img alt="" src="<?php echo Yii::app()->theme->baseUrl; ?>/images/about/about.jpg">

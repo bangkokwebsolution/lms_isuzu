@@ -81,6 +81,15 @@ $getLessonAll = Lesson::model()->findAll(array(
 </div>
 </div> -->
 
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-main">
+          <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/course/index'); ?>"><?php echo $labelCourse->label_course; ?></a>
+            <li class="breadcrumb-item active" aria-current="page"><?= $course->course_title ?></li>
+        </ol>
+    </nav>
+</div> 
+
 <!-- Content -->
 <section class="content" id="course-detail">
     <div class="container">

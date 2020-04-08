@@ -281,16 +281,16 @@ public function actionResetLearn($id) {
         // $courseArr = json_decode($userModel->orgchart_lv2);
         $criteria = new CDbCriteria;
         $criteria->with = array('orgchart');
-        if($userDepartment == 1){ 
-            $criteria->compare('depart_id',$userDepartment);
-        }else{
-            $criteria->addIncondition('depart_id',[1,$userDepartment]);
-        }
-
+        // if($userDepartment == 1){ 
+        //     $criteria->compare('depart_id',$userDepartment);
+        // }else{
+        //     $criteria->addIncondition('depart_id',[1,$userDepartment]);
+        // }
         $criteria->compare('orgchart.active','y');
         $criteria->compare('t.active','y');
         $criteria->group = 'orgchart_id';
         $modelOrgDep = OrgDepart::model()->findAll($criteria);
+        // var_dump($modelOrgDep);exit();
 
         foreach ($modelOrgDep as $key => $value) {
          $courseArr[] = $value->orgchart_id;
@@ -346,7 +346,6 @@ public function actionResetLearn($id) {
     $criteria->addCondition('course.course_date_end >= :date_now');
     $criteria->params[':date_now'] = date('Y-m-d H:i');
     $criteria->group = 'course.course_id';
-
     $Model = OrgCourse::model()->findAll($criteria);
 
     // var_dump("<pre>");
@@ -369,7 +368,7 @@ public function actionResetLearn($id) {
         'model_cate_tms'=>$model_cate_tms,
         'modelCourseTms'=>$modelCourseTms,
         'Model' => $Model,
-        'label' => $label
+        'label' => $label,
     ));
 }
 
@@ -1209,12 +1208,24 @@ public function actionDetail($id) {
             ));
         }
 
+        $labelCourse = MenuCourse::model()->find(array(
+            'condition' => 'lang_id=:lang_id',
+            'params' => array(':lang_id' => $langId)
+        ));
+        if(!$labelCourse){
+            $labelCourse = MenuCourse::model()->find(array(
+                'condition' => 'lang_id=:lang_id',
+                'params' => array(':lang_id' => 1)
+            ));
+        }
+
         $this->render('questionnaire', array(
             'course' => $course,
             'lessonList' => $lessonList,
             'lessonCurrent' => $lessonCurrent,
             'model_cate' => $model_cate,
             'label'=>$label,
+            'labelCourse' => $labelCourse,
         ));
     }
 
