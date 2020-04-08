@@ -17,18 +17,18 @@ function DateThai($strDate) {
 ?>
 
 <!-- Header page -->
-<div class="header-page parallax-window">
+<!-- <div class="header-page parallax-window"> -->
     <div class="container">
         <h1><?= $label->label_docs  ?>
         <small class="pull-right">
             <ul class="list-inline list-unstyled">
                 <li><a href="<?php echo $this->createUrl('/site/index'); ?>"><?= $label->label_homepage  ?></a></li> /
-                <li><span class="text-bc"><?= $label->label_docs  ?></span></li>
+                <li><?= $label->label_docs  ?></li>
             </ul>
         </small>
     </h1>
 </div>
-</div>
+<!-- </div> -->
 
 <!-- Content -->
 <section class="content" id="document">
@@ -54,51 +54,43 @@ function DateThai($strDate) {
                                         </div>
                                         <?php foreach ($Document as $doc) { 
                                          if ($doctype->dty_id == $doc->dty_id) { //3?>
-
                                             <div class="doc-list">
-                                            <span class="pull-right"><span class="text-date"><i class="fa fa-calendar"></i>&nbsp<?php echo DateThai($doc->dow_createday); ?></span>&nbsp; <!--  
-<a href="javascript:void(0)" onclick="Download()">dowloadtest</a>   
-                                <a download="<?= Yii::app()->baseUrl.'/admin/uploads/'.$doc->dow_address?>" href="<?= Yii::app()->baseUrl.'/admin/uploads/'.$doc->dow_address?>" >
-                                        <img alt="ดาวน์โหลด" src="">
-                                    </a> -->
-                                    <a class="btn btn-warning" href="<?= Yii::app()->baseUrl?> /admin/uploads/<?= $doc->dow_address ?>" download="<?= Yii::app()->baseUrl?> /admin/uploads/<?= $doc->dow_address ?>" ><i class="fa fa-download"></i>&nbsp;ดาวน์โหลด</a>
-                                    <!--     <a href="#"><i class="fa fa-download"></i> ดาวน์โหลด</a> -->
-                                </span>
+                                                <span class="pull-right"><span class="text-date"><i class="fa fa-calendar"></i>&nbsp<?php echo DateThai($doc->dow_createday); ?></span>&nbsp; 
+                                                <a class="btn btn-warning" href="<?= Yii::app()->baseUrl?>/admin/uploads/<?= $doc->dow_address ?>" download="<?= Yii::app()->baseUrl?>/admin/uploads/<?= $doc->dow_address ?>" ><i class="fa fa-download"></i>&nbsp;ดาวน์โหลด</a>
+                                            </span>
 
-                                <a href="<?= $this->createUrl('site/displayDocument',array('id'=>$doc->dow_id)); ?> " target="_blank" ><?= $doc->dow_name ?></a>  
-                            </div>
-                            <?php
-                        }
-                    }  
-                }
-                ?>
-            </div>
+                                            <!-- <a href="<?= $this->createUrl('site/displayDocument',array('id'=>$doc->dow_id)); ?> " target="_blank" ><?= $doc->dow_name ?></a>   -->
+                                            <a><?= $doc->dow_name ?></a>  
+                                        </div>
+                                        <?php
+                                    }
+                                }  
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+
+                <!--end Doc1-->
+
+                <!--start Doc2-->
+                <!-- <div role="tabpanel" class="tab-pane fade" id="doc-2">
+                    <div class="well">
+                        <?php foreach ($Document as $doc) { ?>
+                            <div class="doc-list">
+                                <span class="pull-right"><span class="text-date"><i class="fa fa-calendar"></i><?php echo DateThai($doc->dow_createday); ?></span>&nbsp;
+                                <a href="<?= Yii::app()->baseUrl?> /admin/uploads/<?= $doc->dow_address ?>"  download="<?= $doc->dow_address ?>"><i class="fa fa-download"></i>&nbsp;ดาวน์โหลด</a>
+                            </span>
+                            <?= $doc->dow_name ?>     
+                            <a href="<?= $this->createUrl('site/displayDocument',array('id'=>$doc->dow_id)); ?> " target="_blank" ><?= $doc->dow_name ?></a>  
+                        </div>
+                    <?php   }   ?>
+                </div>
+            </div> -->
+            <!--end Doc2-->
+            <!--  </div> -->
         </div>
     </div>
-
-    <!--end Doc1-->
-    <!--start Doc2-->
-    <div role="tabpanel" class="tab-pane fade" id="doc-2">
-        <div class="well">
-            <?php foreach ($Document as $doc) { ?>
-                <div class="doc-list">
-                    <span class="pull-right"><span class="text-date"><i class="fa fa-calendar"></i><?php echo DateThai($doc->dow_createday); ?></span>&nbsp;
-                    <a href="<?= Yii::app()->baseUrl?> /admin/uploads/<?= $doc->dow_address ?>"  download="<?= $doc->dow_address ?>"><i class="fa fa-download"></i>&nbsp;ดาวน์โหลด</a>
-                </span>
-                <?= $doc->dow_name ?>     
-                <a href="<?= $this->createUrl('site/displayDocument',array('id'=>$doc->dow_id)); ?> " target="_blank" ><?= $doc->dow_name ?></a>  
-            </div>
-        <?php   }   ?>
-    </div>
-</div>
-
-<?php // var_dump($Document)  ?>
-
-
-<!--end Doc2-->
-<!--  </div> -->
-</div>
-</div>
 </section>	
 
 <iframe id="my_iframe" style="display:none;"></iframe>

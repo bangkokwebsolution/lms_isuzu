@@ -2,53 +2,54 @@
 
 class DocumentController extends Controller{
     public function init()
- {
-  parent::init();
-  $this->lastactivity();
-  
- }
-    public function actionIndex(){
-        if(Yii::app()->user->id){
-            Helpers::lib()->getControllerActionId();
-        }
-        if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
-                    $langId = Yii::app()->session['lang'] = 1;
-                }else{
-                    $langId = Yii::app()->session['lang'];
-                }
-        $Document = Document::model()->findAll('active = 1 and lang_id = '.$langId);
-        if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
-            $langId = Yii::app()->session['lang'] = 1;
-            }else{
-                $langId = Yii::app()->session['lang'];
-            }
+    {
+      parent::init();
+      $this->lastactivity();
 
-            $label = MenuSite::model()->find(array(
-                'condition' => 'lang_id=:lang_id',
-                'params' => array(':lang_id' => $langId)
-            ));
+  }
+  public function actionIndex(){
+    if(Yii::app()->user->id){
+        Helpers::lib()->getControllerActionId();
+    }
+    if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+        $langId = Yii::app()->session['lang'] = 1;
+    }else{
+        $langId = Yii::app()->session['lang'];
+    }
+    $Document = Document::model()->findAll('active = 1 and lang_id = '.$langId);
+    if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+        $langId = Yii::app()->session['lang'] = 1;
+    }else{
+        $langId = Yii::app()->session['lang'];
+    }
 
-            if(!$label){
-                $label = MenuSite::model()->find(array(
-                'condition' => 'lang_id=:lang_id',
-                'params' => array(':lang_id' => 1)
-            ));
-            }
+    $label = MenuSite::model()->find(array(
+        'condition' => 'lang_id=:lang_id',
+        'params' => array(':lang_id' => $langId)
+    ));
 
-           
-//        var_dump($Document);        exit();
-        $this->render('index',array(
-            'Document'=>$Document,'label'=>$label
+    if(!$label){
+        $label = MenuSite::model()->find(array(
+            'condition' => 'lang_id=:lang_id',
+            'params' => array(':lang_id' => 1)
         ));
     }
-    
-    protected function performAjaxValidation($model)
-	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='faq-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-	}
+
+
+    // var_dump($Document);        exit();
+    $this->render('index',array(
+        'Document'=>$Document,'label'=>$label
+    ));
+}
+
+protected function performAjaxValidation($model)
+{
+  if(isset($_POST['ajax']) && $_POST['ajax']==='faq-form')
+  {
+     echo CActiveForm::validate($model);
+     Yii::app()->end();
+ }
+}
+
 }
 ?>
