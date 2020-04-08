@@ -406,7 +406,7 @@ function editNameTrain(filedoc_id){
                             </div>
 
                             <div class="form-group" id="passport_card">
-                                <?php echo $form->labelEx($profile, 'passport'); ?>
+                            <label><?php echo $label->label_passport;?></label>
                                 <?php echo $form->textField($profile, 'passport', array('class' => 'form-control', 'name' => 'passport', 'placeholder' => $label->label_passport)); ?>
                                 <?php echo $form->error($profile, 'passport', array('class' => 'error2')); ?>
                             </div>
