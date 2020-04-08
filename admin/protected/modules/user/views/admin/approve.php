@@ -173,7 +173,8 @@ Yii::app()->clientScript->registerScript('search', "
 									showConfirmButton: false
 								});
 								$.ajax({
-									url: "<?= $this->createUrl('admin/active'); ?>", 
+									//url: "<?= $this->createUrl('admin/active'); ?>", 
+									url: "<?=Yii::app()->createUrl('user/admin/active');?>",
 									type: "POST",
 									data:  {id:id},
 									success: function(result){

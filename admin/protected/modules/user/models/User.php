@@ -421,8 +421,8 @@ public function validateIdCard($attribute,$params){
 	$criteria->compare('group',$this->group);
 
 	$criteria->compare('profile.identification',$this->idensearch,true);
-	$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
-	$criteria->compare('orgchart_lv2',$org,true);
+	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
+	//$criteria->compare('orgchart_lv2',$org,true);
 
 	return new CActiveDataProvider(get_class($this), array(
 		'criteria'=>$criteria,

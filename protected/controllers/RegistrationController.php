@@ -392,11 +392,18 @@ class RegistrationController extends Controller {
     $profile->phone3 = $_POST['Profile'][phone3];
      //var_dump($profile);
 
-    if(!$chk_status_email){
-        $users->status = 1;
-    } else {
-        $users->status = 0;
-    }
+    // if(!$chk_status_email){
+    //     $users->status = 1;
+    // } else {
+    //     $users->status = 0;
+    // }
+if ($profile->type_user == 3) {
+    $users->status = 1;
+}else{
+    $users->status = 0;
+}
+
+
     // $profile->generation = $gen->id_gen;
 
    /* $criteria=new CDbCriteria;
@@ -565,8 +572,8 @@ class RegistrationController extends Controller {
             //$message = $this->renderPartial('Form_mail',array('emailshow'=>$users->email,'passwordshow'=>$genpass,'nameshow'=>$profile->firstname,'activation_url'=>$activation_url),true);
          $message = $this->renderPartial('Form_mail_General',array('firstname'=>$firstname,'lastname'=>$lastname),true);
          $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
-         Yii::app()->user->setFlash('profile',$profile->identification);
-         Yii::app()->user->setFlash('users', $users->email);
+       //  Yii::app()->user->setFlash('profile',$profile->identification);
+         Yii::app()->user->setFlash('users',"ท่านสมัครสมาชิกเรียบร้อยแล้ว รอการอนุมัติจากผู้ดูแลระบบผ่านทางอีเมล");
          Yii::app()->user->setFlash('icon', "success");
          $this->redirect(array('site/index'));
      }else{
@@ -1301,7 +1308,7 @@ public function actionCalculateBirthday(){
    $birthdays = $_POST['item'];
    $birthdays = explode("-", $birthdays);
    $date_now = date("Y");
-   $data = $date_now - $birthdays[0];
+   $data = $date_now - $birthdays[2];
    echo ($data);
 }
 

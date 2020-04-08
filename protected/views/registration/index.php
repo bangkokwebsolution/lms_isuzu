@@ -213,7 +213,8 @@ function editNameTrain(filedoc_id){
         //if (((e_k < 48) || (e_k > 57)) && e_k != 46 ) {
             if (e_k != 13 && (e_k < 48) || (e_k > 57)) {
                 event.returnValue = false;
-                alert('<?= $label->label_alert_notNumber ?>');
+
+                alert("Number only...Please check your information again ...");
             }
         }
     </script>
@@ -253,7 +254,6 @@ function editNameTrain(filedoc_id){
             ?>
             <?php
             $attTime = array('class' => ' form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_date_of_expiry);
-            $graduation = array('class' => 'form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_graduation_year);
             $birthday = array('class' => 'form-control default_datetimepicker birth', 'autocomplete' => 'off', 'placeholder' => $label->label_birthday, 'type' => "text");
             $ships_up_date = array('class' => ' form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_ship_up_date);
             $ships_down_date = array('class' => 'form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_ship_down_date);
@@ -326,7 +326,7 @@ function editNameTrain(filedoc_id){
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_title; ?>(TH)</label>
-                                <?php  $country = array('0' => 'คำนำหน้า','1' => 'นาย', '2' => 'นางสาว', '3' => 'นาง'); ?>
+                                <?php  $country = array('0' => 'คำนำหน้า','1' => 'นาย', '2' => 'นางสาว', '3' => 'นาง');?>
                                 <?php
                                 $htmlOptions = array('class' => 'form-control');
                                 echo $form->dropDownList($profile, 'title_id', $country, $htmlOptions);
@@ -406,7 +406,7 @@ function editNameTrain(filedoc_id){
                             </div>
 
                             <div class="form-group" id="passport_card">
-                            <label><?php echo $label->label_passport;?></label>
+                                <label><?php echo $label->label_passport;?></label>
                                 <?php echo $form->textField($profile, 'passport', array('class' => 'form-control', 'name' => 'passport', 'placeholder' => $label->label_passport)); ?>
                                 <?php echo $form->error($profile, 'passport', array('class' => 'error2')); ?>
                             </div>
@@ -526,7 +526,7 @@ function editNameTrain(filedoc_id){
                     <div class="row justify-content-center form_name">
                         <div class="col-md-8 col-sm-12 col-xs-12">
                             <div class="form-group">
-                            
+
                                 <label><?php echo $label->label_address; ?></label>
                                 <?php echo $form->textArea($profile, 'address', array('class' => 'form-control', 'cols' => "30", 'rows' => "3", 'placeholder' => $label->label_address)); ?>
                                 <?php echo $form->error($profile, 'address', array('class' => 'error2')); ?>
@@ -602,6 +602,18 @@ function editNameTrain(filedoc_id){
                     $modelList = Education::model()->findAll(array("condition" => " active = 'y'"));
                     $list = CHtml::listData($modelList, 'edu_id', 'edu_name');
                     $att_Education = array('class' => 'form-control', 'empty' => $label->label_education_level);
+                    
+                   $starting_year  = 2500;
+                   $ending_year = 543 + date('Y');
+                   if ($ending_year) {
+
+                        for($starting_year; $starting_year <= $ending_year; $starting_year++) {
+                            $edu_lest[]  =  $starting_year;
+                      
+                          }                 
+                   }
+                    $graduation = array('class' => 'form-control', 'autocomplete' => 'off', 'empty' => $label->label_graduation_year);
+                              
                     if (!$ProfilesEdu->isNewRecord) { ?>
                         <div class="add-study">
                             <?php
@@ -625,7 +637,7 @@ function editNameTrain(filedoc_id){
 
                                     <div class="col-md-2 col-sm-6 col-xs-12">
                                         <div class="form-group">
-                                            <?php echo $form->textField($valedu, '[' . $kedu . ']date_graduation', $graduation); ?>
+                                            <?php echo CHtml::activeDropDownList($valedu, '[' . $kedu . ']date_graduation',$edu_lest, $graduation); ?>
                                         </div>
                                     </div>
                                     <span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?> </span>
@@ -655,7 +667,7 @@ function editNameTrain(filedoc_id){
 
                             <div class="col-md-2 col-sm-6 col-xs-12 ">
                                 <div class="form-group">
-                                    <?php echo $form->textField($ProfilesEdu, '[0]date_graduation', $graduation); ?>
+                                    <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]date_graduation',$edu_lest ,$graduation); ?>
                                 </div>
                             </div>
                         </div>
@@ -934,7 +946,7 @@ function editNameTrain(filedoc_id){
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <!-- <label><?php echo $label->label_company; ?></label> -->
-                                    <label><?php echo $label->label_branch; ?> </label>
+                                    <label class="label_branch"><?php echo $label->label_branch; ?> </label>
                                     <?php
                                     $BranchModel = Branch::model()->findAll(array(
                                         "condition" => " active = 'y'"
@@ -1043,7 +1055,13 @@ function editNameTrain(filedoc_id){
                 <div class="text-center submit-register">
 
                     <?php 
-                    
+                   $branch_js = $users->branch_id;
+                   if ($branch_js === null ) {
+                       $branch_js = 0;
+                   }else{
+                       $branch_js = 1;
+                   }
+
                     $new_form = $users->isNewRecord;
                     if ($new_form) {
                      $new_form = true;
@@ -1062,10 +1080,6 @@ function editNameTrain(filedoc_id){
             ?>
 
         </div>
-
-
-
-
         <script type="text/javascript">
             $(document).ready(function() {
                 var max_fields = 10;
@@ -1081,18 +1095,18 @@ function editNameTrain(filedoc_id){
                         numItems++;
                         var level = '<option value=""><?php echo $label->label_education_level; ?></option>';
                         var academy = '<?php echo $label->label_academy; ?>';
-                        var graduation_year = '<?php echo $label->label_graduation_year; ?>';
+                        var graduation_year = '<option value=""><?php echo $label->label_graduation_year; ?></option>';
                         var del = '<?php echo Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?>';
                         $(wrapper).append('<div class="row del_edu"><div class="col-md-3 col-sm-12 text-right-md "><strong><?php echo $label->label_educational; ?></strong></div>'
                             +'<div class="col-md-2 col-sm-6"><div class="form-group"><select class ="form-control" name="ProfilesEdu[' + numItems + '][edu_id]">' + level + '<?php foreach ($list as $key => $value) : ?><option value=<?php echo $key ?>><?php echo $value ?></option><?php endforeach ?></select></div></div>'
                             +'<div class="col-md-3 col-sm-6"><div class="form-group"><input type="text" class="form-control" placeholder="' + academy + '" name="ProfilesEdu[' + numItems + '][institution]"></div></div>'
-                            +'<div class="col-md-2 col-sm-6"><div class="form-group"><input class="form-control datetimepicker" autocomplete="off" id="ProfilesEdu_' + numItems + '_date_graduation" placeholder="' + graduation_year + ' "name="ProfilesEdu[' + numItems + '][date_graduation]"> </div></div><span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> ' + del + '</span></div>'); //add input box
-                        $('.datetimepicker').datetimepicker({
-                            format: 'Y-m-d',
-                            step: 10,
-                            timepickerScrollbar: false
-                        });
-                        $('.xdsoft_timepicker').hide();
+                            +'<div class="col-md-2 col-sm-6"><div class="form-group"><select class="form-control" autocomplete="off" id="ProfilesEdu_' + numItems + '_date_graduation" name="ProfilesEdu[' + numItems + '][date_graduation]">' + graduation_year + '<?php foreach ($edu_lest as $keys => $values): ?><option value="<?php echo $keys ?>"><?php echo $values ?></option><?php endforeach ?></select></div></div><span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> ' + del + '</span></div>'); //add input box
+                        // $('.datetimepicker').datetimepicker({
+                        //     format: 'Y-m-d',
+                        //     step: 10,
+                        //     timepickerScrollbar: false
+                        // });
+                        // $('.xdsoft_timepicker').hide();
 
                     } else {
                         alert('You Reached the limits')
@@ -1116,37 +1130,42 @@ function editNameTrain(filedoc_id){
                     $('.form_number_id').show();
                     $("#office-section").show();
                 });
+
             });
             $('.default_datetimepicker').datetimepicker({
-                format: 'Y-m-d',
-                step: 10,
-                timepickerScrollbar: false
-            });
+               // format: 'Y-m-d',
+               format: 'd-m-Y',
+               step: 10,
+               timepickerScrollbar: false
+           });
 
             $('.xdsoft_timepicker').hide();
 
             $(function() {
                 $('.user_ID').change(function(event,length){
-                    var max = $(this).attr('maxlength');
+                    var max = 13;//$(this).attr('maxlength');
                     var vals = $(this).val();
-                    if (max.length < vals) { 
+                    if (max.length < vals.length) { 
                         var setval = '' + $(this).val();
-                        while (setval.length < max) {
+                        while (setval.length < max.length) {
                          setval = '0' + setval;
                      }
+
                      $(this).val(setval);
 
-                 } 
-                        // else {
-                        //     alert("คุณได้กรอกเลขประจำตัวพนักงานเกินกว่าที่กำหนด");
-                        //      $(this).empty();
-                        //      $(this).val();
-                        // }
-                    });
+                 }else{
+                    var setval = '' + $(this).val();
+                    while (setval.length < max) {
+                     setval = '0' + setval;
+                 }
+
+                 $(this).val(setval);
+             }
+         });
                 var new_forms = <?php echo $new_form; ?>;
                     //console.log(new_forms);
                     if (new_forms === 1 || new_forms === true) {   
-                        console.log(111);
+
                         var type_users = $("input[name='type_user']:checked").val();
                         //console.log(type_users);
                         if (type_users === '3') {
@@ -1185,29 +1204,30 @@ function editNameTrain(filedoc_id){
 
                                 $('#passport_card').hide();
                                 $('#identification_card').show();
-                                $(".id_employee").show();
+                                $(".id_employee").hide();
                                 $('.form_name').show();
                                 $('.form_number_id').show();
-                                $("#office-section").show();
+                                $("#office-section").hide();
                             }else if(type_cards === 'p'){
 
                                 $('#passport_card').show();
                                 $('#identification_card').hide();
-                                $(".id_employee").show();
+                                $(".id_employee").hide();
                                 $('.form_name').show();
                                 $('.form_number_id').show();
-                                $("#office-section").show();
+                                $("#office-section").hide();
                             }else if(type_cards === '' || typeof  type_cards === 'undefined' || typeof  type_cards === null){
 
                                 $('#passport_card').hide();
                                 $('#identification_card').show();
-                                $(".id_employee").show();
+                                $(".id_employee").hide();
                                 $('.form_name').show();
                                 $('.form_number_id').show();
-                                $("#office-section").show();
+                                $("#office-section").hide();
                             }
                         }else if (typeof  type_users === 'undefined' ){
-
+                            $('.Branch').hide();
+                            $('.label_branch').hide();
                             $(".id_employee").hide();
                             $('#passport_card').hide();
                             $("#office-section").hide();
@@ -1222,7 +1242,15 @@ function editNameTrain(filedoc_id){
 
                             var type_cards = $("input[name='type_card']:checked").val();
                             if (type_cards === 'l') {
-
+                                var branch = <?php echo $branch_js; ?>;
+                                //console.log(branch);
+                                 if (branch === 1) {
+                                    $('.Branch').show();
+                                    $('.label_branch').show();
+                                 }else if(branch === 0){
+                                    $('.Branch').hide();
+                                    $('.label_branch').hide();
+                                 }
                                 $('#passport_card').hide();
                                 $('#identification_card').show();
                                 $(".id_employee").show();
@@ -1230,7 +1258,15 @@ function editNameTrain(filedoc_id){
                                 $('.form_number_id').show();
                                 $("#office-section").show();
                             }else if(type_cards === 'p'){
-
+                                var branch = <?php echo $branch_js; ?>;
+                                //console.log(branch);
+                                 if (branch === 1) {
+                                    $('.Branch').show();
+                                    $('.label_branch').show();
+                                 }else if(branch === 0){
+                                    $('.Branch').hide();
+                                    $('.label_branch').hide();
+                                 }
                                 $('#passport_card').show();
                                 $('#identification_card').hide();
                                 $(".id_employee").show();
@@ -1248,7 +1284,7 @@ function editNameTrain(filedoc_id){
                                 $(".id_employee").show();
                                 $('.form_name').show();
                                 $('.form_number_id').show();
-                                $("#office-section").show();
+                                $("#office-section").hide();
                             }else if(type_cards === 'p'){
 
                                 $('#passport_card').show();
@@ -1256,7 +1292,7 @@ function editNameTrain(filedoc_id){
                                 $(".id_employee").show();
                                 $('.form_name').show();
                                 $('.form_number_id').show();
-                                $("#office-section").show();
+                                $("#office-section").hide();
 
                             }
                         }  
@@ -1271,7 +1307,7 @@ function editNameTrain(filedoc_id){
                         $('#passport_card').show();
                         $('#identification_card').hide();
                     });
-
+                    
                     $(".department").change(function() {
                         var id = $(".department").val();
                         $.ajax({
@@ -1295,6 +1331,8 @@ function editNameTrain(filedoc_id){
                                 id: id
                             },
                             success: function(data) {
+                                $('.Branch').show();
+                                $('.label_branch').show();
                                 $('.Branch').empty();
                                 $('.Branch').append(data);
                             }

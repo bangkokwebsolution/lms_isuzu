@@ -193,7 +193,7 @@ Class Helpers
               // return ldap_get_entries($ldap, $search);
     }
 
-    public function SendMail($to, $subject, $message, $fromText = 'E-Learning System (Red-U)')
+    public function SendMail($to, $subject, $message, $fromText = 'E-Learning System Thorsen')
     {
 
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/Exception.php";
@@ -215,8 +215,8 @@ Class Helpers
                 'allow_self_signed' => true
                 )
             );
-        // $adminEmail = 'taaonprem04@airasia.com';
-        // $adminEmailPass = 'P@ssw0rd';
+        // $adminEmail = 'mailerbws@gmail.com';
+        // $adminEmailPass = 'bangkokweb0192';
         // $adminEmail = 'noreply_elearning@airasia.com';
         // $adminEmailPass = '';
        
@@ -231,7 +231,7 @@ Class Helpers
         // $mail->From =  $adminEmail;
         // $mail->Username = $adminEmail;
         // $mail->Password = $adminEmailPass;
-        // $fromText = 'E-Learning System (Red-U)';
+        // $fromText = 'E-Learning System Thorsen';
         // $mail->SetFrom( $adminEmail, $fromText);
             
         // $mail->AddAddress($adminEmail, 'คุณ' . $to['firstname'] . ' ' . $to['lastname']);
@@ -270,7 +270,7 @@ Class Helpers
     }
 
 
-    public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System (Red-U)'){
+    public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System Thorsen'){
         $path = '../uploads/filemail/';
         $SettingAll = Helpers::lib()->SetUpSetting();
         $adminEmail = $SettingAll['USER_EMAIL'];
@@ -289,7 +289,7 @@ Class Helpers
         $mail->SMTPDebug = false;
         $mail->Username = $adminEmail;
         $mail->Password = $adminEmailPass;
-        $fromText = 'E-Learning System (Red-U)';
+        $fromText = 'E-Learning System Thorsen';
         $mail->SetFrom($adminEmail, $fromText);
 
         $address = Mailuser::model()->findAll(array(
@@ -1892,7 +1892,7 @@ public function changeLink($link)
 
     }
 
-    public function SendMailNotification($to, $subject, $message, $fromText = 'E-Learning System (Red-U)'){
+    public function SendMailNotification($to, $subject, $message, $fromText = 'E-Learning System Thorsen'){
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/Exception.php";
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/PHPMailer.php";
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/SMTP.php";
@@ -1901,20 +1901,32 @@ public function changeLink($link)
         $adminEmail = $SettingAll['USER_EMAIL'];
         $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-        $adminEmail = 'taaonprem04@airasia.com';
-        $adminEmailPass = 'P@ssw0rd';
+        $adminEmail = 'mailerbws@gmail.com';
+        
+        $adminEmailPass = 'bangkokweb0192';
         $mail =  new PHPMailer(true);
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+                )
+        );
         $mail->ClearAddresses();
         $mail->CharSet = 'utf-8';
-        $mail->Host = '172.30.110.16'; // gmail server
-        $mail->Port = 25; // port number
+        $mail->IsSMTP();
+        //$mail->Host = '172.30.110.16'; // gmail server
+        //$mail->Port = 25; // port number
+        $mail->Host = 'smtp.gmail.com';
+        $mail->Port = '587'; // port number
+        $mail->SMTPSecure = "tls";
         $mail->SMTPKeepAlive = true;
         $mail->Mailer = "smtp";
         // $mail->SMTPDebug  = 1;
-        $mail->From = 'taaonprem04@airasia.com';
+        $mail->From = 'mailerbws@gmail.com';
         $mail->Username = $adminEmail;
         $mail->Password = $adminEmailPass;
-        $fromText = 'E-Learning System (Red-U)';
+        $fromText = 'E-Learning System Thorsen';
         $mail->SetFrom($adminEmail, $fromText);
         $mail->AddAddress($to['email'],'คุณ' . $to['firstname'] . ' ' . $to['lastname']);
         $mail->Subject = $subject;
@@ -1938,8 +1950,8 @@ public function changeLink($link)
                 $adminEmail = $SettingAll['USER_EMAIL'];
                 $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-                $adminEmail = 'taaonprem04@airasia.com';
-                $adminEmailPass = 'P@ssw0rd';
+                $adminEmail = 'mailerbws@gmail.com';
+                $adminEmailPass = 'bangkokweb0192';
                 $mail =  new PHPMailer(true);
                 $mail->ClearAddresses();
                 $mail->CharSet = 'utf-8';
@@ -1948,10 +1960,10 @@ public function changeLink($link)
             $mail->SMTPKeepAlive = true;
             $mail->Mailer = "smtp";
             // $mail->SMTPDebug  = 1;
-            $mail->From = 'taaonprem04@airasia.com';
+            $mail->From = 'mailerbws@gmail.com';
             $mail->Username = $adminEmail;
             $mail->Password = $adminEmailPass;
-            $fromText = 'E-Learning System (Red-U)';
+            $fromText = 'E-Learning System Thorsen';
             $mail->SetFrom($adminEmail, $fromText);
 
             foreach($address as $data_email){
