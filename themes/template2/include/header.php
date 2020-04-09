@@ -63,7 +63,7 @@ $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact
                     </div>
 
                     <hr>
-                   <div class="text-center"> <button type="submit" class="btn btn-submit btn-report" name="">ยืนยัน</button></div>
+                    <div class="text-center"> <button type="submit" class="btn btn-submit btn-report" name="">ยืนยัน</button></div>
                 </div>
                 <div class="modal-footer">
                 </div>
@@ -109,96 +109,96 @@ $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><span class="pull-right"><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span><?= $label->label_header_msg  ?>
-                                    </h3>
-                                </div>
-                                <div class="panel-body">
-                                    <ul class="list-unstyled">
-                                        <?php for ($i = 0; $i <= 3; $i++) { ?>
-                                            <?php if (!empty($PrivatemessageReturn[$i]->pmr_return)) { ?>
-                                                <li>
-                                                    <span class="pull-right">
-                                                        <?php echo $PrivatemessageReturn[$i]->update_date; ?>
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="list-unstyled">
+                                    <?php for ($i = 0; $i <= 3; $i++) { ?>
+                                        <?php if (!empty($PrivatemessageReturn[$i]->pmr_return)) { ?>
+                                            <li>
+                                                <span class="pull-right">
+                                                    <?php echo $PrivatemessageReturn[$i]->update_date; ?>
+                                                </span>
+                                                <a href="<?php echo $this->createUrl('/privatemessage/index'); ?>">
+                                                    <span class="img-send" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/user.png);">
                                                     </span>
-                                                    <a href="<?php echo $this->createUrl('/privatemessage/index'); ?>">
-                                                        <span class="img-send" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/user.png);">
-                                                        </span>
-                                                        <?php echo $PrivatemessageReturn[$i]->pmr_return; ?>
-                                                    </a>
-                                                </li>
+                                                    <?php echo $PrivatemessageReturn[$i]->pmr_return; ?>
+                                                </a>
+                                            </li>
                                         <?php }
-                                        } ?>
+                                    } ?>
 
-                                    </ul>
-                                </div>
+                                </ul>
+                            </div>
 
-                                <div class="panel-footer">
-                                    <a href="#" class="text-center"><?= $label->label_header_msgAll  ?></a>
-                                </div>
+                            <div class="panel-footer">
+                                <a href="#" class="text-center"><?= $label->label_header_msgAll  ?></a>
                             </div>
                         </div>
-
                     </div>
-                <?php } else {
-                } ?>
-                <a class="navbar-brand hidden-xs" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo.png" height="60px" alt=""></a>
-                <a class="navbar-brand visible-xs" style="width: auto" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-xs.png" height="35px" alt=""></a>
-            </div>
+
+                </div>
+            <?php } else {
+            } ?>
+            <a class="navbar-brand hidden-xs" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo.png" height="60px" alt=""></a>
+            <a class="navbar-brand visible-xs" style="width: auto" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-xs.png" height="35px" alt=""></a>
+        </div>
 
 
 
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav navbar-right">
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav navbar-right">
 
-                    <?php $bar = Yii::app()->controller->id ?>
-                    <?php $bar_action = Yii::app()->controller->action->id;
-                    $mainMenu = MainMenu::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y', 'lang_id' => Yii::app()->session['lang']));
-                    foreach ($mainMenu as $key => $value) {
-                        $url = !empty($value->parent) ? $value->parent->url : $value->url;
-                        $controller = explode('/', $url);
-                        $controller[0] = strtolower($controller[0]);
-                        if ($controller[0] != "registration" && $controller[0] != "privatemessage" && $controller[0] != "search" && $controller[0] != "forgot_password" && $controller[0] != "question") {
-                            $clss =  $bar == $controller[0] && $bar_action == "index" ? "active" : '';
-                            if ($controller[0] != "webboard") {
-                                if ($controller[0] == "course" && Yii::app()->user->id == null) {
-                                    echo '<li class="' . $clss . '">
+                <?php $bar = Yii::app()->controller->id ?>
+                <?php $bar_action = Yii::app()->controller->action->id;
+                $mainMenu = MainMenu::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y', 'lang_id' => Yii::app()->session['lang']));
+                foreach ($mainMenu as $key => $value) {
+                    $url = !empty($value->parent) ? $value->parent->url : $value->url;
+                    $controller = explode('/', $url);
+                    $controller[0] = strtolower($controller[0]);
+                    if ($controller[0] != "registration" && $controller[0] != "privatemessage" && $controller[0] != "search" && $controller[0] != "forgot_password" && $controller[0] != "question") {
+                        $clss =  $bar == $controller[0] && $bar_action == "index" ? "active" : '';
+                        if ($controller[0] != "webboard") {
+                            if ($controller[0] == "course" && Yii::app()->user->id == null) {
+                                echo '<li class="' . $clss . '">
 
                                 <a data-toggle="modal" class="btn-login-course" href="#modal-login" >' . $value->title . '</span></a>
                                 </li>';
-                                } else {
-                                    echo '<li class="' . $clss . '">
-                                <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
-                                </li>';
-                                }
                             } else {
                                 echo '<li class="' . $clss . '">
+                                <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
+                                </li>';
+                            }
+                        } else {
+                            echo '<li class="' . $clss . '">
                             <a href="' . $this->createUrl($url) . '?lang=' . Yii::app()->session['lang'] . '">' . $value->title . '</span></a>
                             </li>';
-                            }
                         }
                     }
-                    ?>
+                }
+                ?>
 
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i></a>
-                        <ul class="dropdown-menu search">
-                            <form id="searchForm" class="navbar-form" action="<?php echo $this->createUrl('Search/index') ?>">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="text" placeholder='<?= $label->label_placeholder_search ?>'>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="submit"><?= $label->label_search ?></button>
-                                    </span>
-                                </div>
-                            </form>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i></a>
+                    <ul class="dropdown-menu search">
+                        <form id="searchForm" class="navbar-form" action="<?php echo $this->createUrl('Search/index') ?>">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="text" placeholder='<?= $label->label_placeholder_search ?>'>
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="submit"><?= $label->label_search ?></button>
+                                </span>
+                            </div>
+                        </form>
 
-                        </ul>
-                    </li>
-                    <?php
-                    $langauge = Language::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y'));
-                    $currentlangauge = Language::model()->findByPk(Yii::app()->session['lang']);
-                    ?>
-                    <li class="changelg">
-                        <a class="btn  dropdown-toggle selectpicker" type="button" data-toggle="dropdown"><img src="<?= Yii::app()->baseUrl . '/uploads/language/' . $currentlangauge->id . '/small/' . $currentlangauge->image; ?>" height="30px" alt="">
-                            <span class="caret"></span></a>
+                    </ul>
+                </li>
+                <?php
+                $langauge = Language::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y'));
+                $currentlangauge = Language::model()->findByPk(Yii::app()->session['lang']);
+                ?>
+                <li class="changelg">
+                    <a class="btn  dropdown-toggle selectpicker" type="button" data-toggle="dropdown"><img src="<?= Yii::app()->baseUrl . '/uploads/language/' . $currentlangauge->id . '/small/' . $currentlangauge->image; ?>" height="30px" alt="">
+                        <span class="caret"></span></a>
                         <ul class="dropdown-menu changelang">
                             <?php
                             foreach ($langauge as $key => $value) {
@@ -212,12 +212,18 @@ $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact
                     <?php $name = Profile::model()->findByPk(Yii::app()->user->getId()); ?>
                     <?php if (Yii::app()->user->id == null) { ?>
                         <li><a class="btn-login " data-toggle="modal" href='#modal-login'><i class="fas fa-sign-in-alt"></i>
-                                <?= $label->label_header_login ?></a></li>
-                    <?php } else { ?>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;"><span class="photo" style="background-image: url('<?php echo Yii::app()->theme->baseUrl; ?>'/images/user.png);"></span> <?php echo $name->firstname; ?>
-                                <b class="caret"></b></a>
-                            <ul class="dropdown-menu">
+                            <?= $label->label_header_login ?></a></li>
+                        <?php } else { ?>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;"><span class="photo" style="background-image: url('<?php echo Yii::app()->theme->baseUrl; ?>'/images/user.png);"></span>
+                                    <?php if (Yii::app()->session['lang'] == 1) {
+                                     echo  $name->firstname_en;
+                                    }else{
+                                     echo   $name->firstname;
+                               }
+                               ?>
+                               <b class="caret"></b></a>
+                               <ul class="dropdown-menu">
                                 <?php if (Yii::app()->user->id !== null) { ?>
                                     <li class="<?= $bar == 'site' && $bar_action == 'dashboard' ? 'active' : '' ?>"><a href="<?php echo $this->createUrl('/site/dashboard'); ?>"><?= $label->label_header_dashboard ?></a></li>
                                 <?php } ?>
@@ -226,84 +232,84 @@ $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact
                                     <?php
                                     $user = Users::model()->findByPk(Yii::app()->user->id);
                                     if ($user->type_register != 3) { ?>
-                                <li>
-                                    <?php $url = Yii::app()->createUrl('registration/Update/'); ?>
-                                    <a href="<?= $url ?>"><?= $label->label_header_update ?></a>
-                                </li>
-                            <?php } ?>
-                            <?php if ($user->superuser == 1) { ?>
-                                <li>
-                                    <?php $url = Yii::app()->createUrl('admin'); ?>
-                                    <a href="<?= $url ?>"><?= UserModule::t("backend"); ?></a>
-                                </li>
-                            <?php } ?>
-                            <li>
+                                        <li>
+                                            <?php $url = Yii::app()->createUrl('registration/Update/'); ?>
+                                            <a href="<?= $url ?>"><?= $label->label_header_update ?></a>
+                                        </li>
+                                    <?php } ?>
+                                    <?php if ($user->superuser == 1) { ?>
+                                        <li>
+                                            <?php $url = Yii::app()->createUrl('admin'); ?>
+                                            <a href="<?= $url ?>"><?= UserModule::t("backend"); ?></a>
+                                        </li>
+                                    <?php } ?>
+                                    <li>
                                 <!-- <a href="<?php //echo $this->createUrl('login/logout') 
-                                                ?>"> --><a href="javascript:void(0)" onclick="logout()"><?= $label->label_header_logout ?></a>
+                                ?>"> --><a href="javascript:void(0)" onclick="logout()"><?= $label->label_header_logout ?></a>
                             </li>
-                            </ul>
-                        </li>
-                    <?php } ?>
-                    <?php
-                    if (Yii::app()->user->id == null) {
-                        $chk_status_reg = $SettingAll = Helpers::lib()->SetUpSetting();
-                        $chk_status_reg = $SettingAll['ACTIVE_REGIS'];
-                        if ($chk_status_reg) {
-                    ?>
-                            <li><a class="btn-register" href="<?php echo $this->createUrl('/registration/ShowForm'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a></li>
-                    <?php }
-                    } ?>
-
-                    <?php if (Yii::app()->user->id !== null) { ?>
-                        <?php
-                        $name = Profile::model()->findByPk(Yii::app()->user->getId());
-
-                        $criteria = new CDbCriteria;
-                        $criteria->addCondition('create_by =' . $name->user_id);
-                        $criteria->order = 'update_date  ASC';
-                        $criteria->compare('status_answer', 1);
-                        $PrivatemessageReturn = PrivateMessageReturn::model()->findAll($criteria);
+                        </ul>
+                    </li>
+                <?php } ?>
+                <?php
+                if (Yii::app()->user->id == null) {
+                    $chk_status_reg = $SettingAll = Helpers::lib()->SetUpSetting();
+                    $chk_status_reg = $SettingAll['ACTIVE_REGIS'];
+                    if ($chk_status_reg) {
                         ?>
-                        <li class="dropdown visible-md visible-lg">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;"><i class="fa fa-envelope" aria-hidden="true"></i></a>
-                            <div class="dropdown-menu user-message">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title"><span class="pull-right"><a href="#"></a></span><?= $label->label_header_msg ?>
-                                        </h3>
-                                    </div>
-                                    <div class="panel-body">
-                                        <ul class="list-unstyled">
-                                            <?php for ($i = 0; $i <= 3; $i++) { ?>
-                                                <?php if (!empty($PrivatemessageReturn[$i]->pmr_return)) {
-                                                ?>
-                                                    <li>
-                                                        <span class="pull-right">
-                                                            <?php echo $PrivatemessageReturn[$i]->update_date; ?>
-                                                        </span>
-                                                        <a href="<?php echo $this->createUrl('/privatemessage/index', array('id' => $PrivatemessageReturn[$i]->pm_id)); ?>">
-                                                            <span class="img-send" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/user.png);">
-                                                            </span>
-                                                            <?php echo $PrivatemessageReturn[$i]->pmr_return; ?>
-                                                        </a>
-                                                    </li>
-                                            <?php }
-                                            } ?>
+                        <li><a class="btn-register" href="<?php echo $this->createUrl('/registration/ShowForm'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a></li>
+                    <?php }
+                } ?>
 
-                                        </ul>
-                                    </div>
-                                    <div class="panel-footer">
-                                        <a href="<?php echo $this->createUrl('/privatemessage/index'); ?>" class="text-center"><?= $label->label_header_msgAll ?></a>
-                                    </div>
-                                </div>
+                <?php if (Yii::app()->user->id !== null) { ?>
+                    <?php
+                    $name = Profile::model()->findByPk(Yii::app()->user->getId());
+
+                    $criteria = new CDbCriteria;
+                    $criteria->addCondition('create_by =' . $name->user_id);
+                    $criteria->order = 'update_date  ASC';
+                    $criteria->compare('status_answer', 1);
+                    $PrivatemessageReturn = PrivateMessageReturn::model()->findAll($criteria);
+                    ?>
+                    <li class="dropdown visible-md visible-lg">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+                        <div class="dropdown-menu user-message">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title"><span class="pull-right"><a href="#"></a></span><?= $label->label_header_msg ?>
+                                </h3>
                             </div>
-                        </li>
-                    <?php } else {
-                    } ?>
-                </ul>
-            </div><!-- /.navbar-collapse -->
-        </div>
-    </nav>
+                            <div class="panel-body">
+                                <ul class="list-unstyled">
+                                    <?php for ($i = 0; $i <= 3; $i++) { ?>
+                                        <?php if (!empty($PrivatemessageReturn[$i]->pmr_return)) {
+                                            ?>
+                                            <li>
+                                                <span class="pull-right">
+                                                    <?php echo $PrivatemessageReturn[$i]->update_date; ?>
+                                                </span>
+                                                <a href="<?php echo $this->createUrl('/privatemessage/index', array('id' => $PrivatemessageReturn[$i]->pm_id)); ?>">
+                                                    <span class="img-send" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/user.png);">
+                                                    </span>
+                                                    <?php echo $PrivatemessageReturn[$i]->pmr_return; ?>
+                                                </a>
+                                            </li>
+                                        <?php }
+                                    } ?>
+
+                                </ul>
+                            </div>
+                            <div class="panel-footer">
+                                <a href="<?php echo $this->createUrl('/privatemessage/index'); ?>" class="text-center"><?= $label->label_header_msgAll ?></a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            <?php } else {
+            } ?>
+        </ul>
+    </div><!-- /.navbar-collapse -->
+</div>
+</nav>
 </header><!-- /header -->
 
 <!-- google login -->
@@ -345,28 +351,28 @@ $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact
 
                 if (result.result == true) {
                     swal({
-                            position: 'top-end',
-                            type: 'success',
-                            title: result.msg,
-                            showConfirmButton: true,
-                        },
-                        function(isConfirm) {
-                            if (isConfirm) {
-                                location.reload();
-                            }
-                        });
+                        position: 'top-end',
+                        type: 'success',
+                        title: result.msg,
+                        showConfirmButton: true,
+                    },
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            location.reload();
+                        }
+                    });
                 } else {
                     swal({
-                            position: 'top-end',
-                            type: 'warning',
-                            title: result.msg,
-                            showConfirmButton: true
-                        },
-                        function(isConfirm) {
-                            if (isConfirm) {
-                                location.reload();
-                            }
-                        });
+                        position: 'top-end',
+                        type: 'warning',
+                        title: result.msg,
+                        showConfirmButton: true
+                    },
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            location.reload();
+                        }
+                    });
                 }
             }
         });
@@ -416,7 +422,7 @@ if (!empty($msg)) { ?>
                                 } else if (!empty($_GET['error']['password'])) {
                                     $error = $_GET['error']['password'][0];
                                 }
-                            ?>
+                                ?>
                                 <script>
                                     $(document).ready(function() {
                                         window.history.replaceState({}, 'error', '<?= $this->createUrl('site/index') ?>');
@@ -444,7 +450,7 @@ if (!empty($msg)) { ?>
                                     <?php $chk_status_reg = $SettingAll = Helpers::lib()->SetUpSetting();
                                     $chk_status_reg = $SettingAll['ACTIVE_REGIS'];
                                     if ($chk_status_reg) {
-                                    ?>
+                                        ?>
                                         <span class="pull-right"><a href="<?php echo $this->createUrl('/registration/ShowForm'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a></span>
                                     <?php } ?>
 
@@ -462,4 +468,3 @@ if (!empty($msg)) { ?>
         </div>
     </div>
 </div>
-                                 
