@@ -109,46 +109,50 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     function upload()
     {
 
-       // tinymce.triggerSave();
+        //tinymce.triggerSave();
         //tinyMCE.triggerSave();
 
-        var file = $('#Lesson_image').val();
-        var exts = ['jpg','gif','png'];
-        if ( file ) {
+        var file = $('#queue').val();
+        var file2 = $('#docqueue').val();
+        var exts = ['jpg','pdf','png','jpeg'];
+        if ( file || file2) {
             var get_ext = file.split('.');
             get_ext = get_ext.reverse();
+
             if ( $.inArray ( get_ext[0].toLowerCase(), exts ) > -1 ){
 
                 if($('#queue .uploadifive-queue-item').length == 0 && $('#docqueue .uploadifive-queue-item').length == 0){
                     return true;
                 }else{
-                    if($('#queue .uploadifive-queue-item').length > 0) {
-                        $('#Training').uploadifive('upload');
-                        return false;
-                    }else if($('#docqueue .uploadifive-queue-item').length > 0){
-                        $('#doc').uploadifive('upload');
-                        return false;
-                    }
-                }
-
-            } 
-
-        }
-        else
-        {
-         if($('#queue .uploadifive-queue-item').length == 0 && $('#docqueue .uploadifive-queue-item').length == 0 ){
-            return true;
-        }else{
-            if($('#queue .uploadifive-queue-item').length > 0) {
+                    if($('#queue .uploadifive-queue-item').length > 0 ) {
                 $('#Training').uploadifive('upload');
                 return false;
             }else if($('#docqueue .uploadifive-queue-item').length > 0){
                 $('#doc').uploadifive('upload');
                 return false;
-            }
+                }
+            } 
         }
+        }else{
+         if($('#queue .uploadifive-queue-item').length == 0 && $('#docqueue .uploadifive-queue-item').length == 0 ){
+            return true;
+        }else{
+               var Training  = $('#Training').uploadifive('upload');
+               var doc =  $('#doc').uploadifive('upload');
+            if($('#queue .uploadifive-queue-item').length > 0 && $('#docqueue .uploadifive-queue-item').length > 0) {
+                return [Training,doc];
+            // }else if($('#docqueue .uploadifive-queue-item').length > 0){
+            //     $('#doc').uploadifive('upload');
+            //     return false;
+         //     }else if($('#queue .uploadifive-queue-item').length > 0){
+         //        $('#Training').uploadifive('upload');
+         //        return false;
+
+          }
+
 
     }
+}
 }
 
 function deleteFileDoc(filedoc_id,file_id){
@@ -264,7 +268,7 @@ function editNameTrain(filedoc_id){
                     <div class="col-sm-4">
                         <div class="upload-img">
                             <div class="fileinput fileinput-new" data-provides="fileinput">
-                                <div class="fileinput-new thumbnail" style="width: 144px; height: 130px;">
+                                <div class="fileinput-new thumbnail" style="max-width: 180px; max-height: 240px;">
                                     <div class="mt-2">
                                         <!-- <input type="file" class="custom-file-input" id="customFileLang" lang="es"> -->
                                         <?php
@@ -274,7 +278,7 @@ function editNameTrain(filedoc_id){
                                         } else {
                                             $registor = new RegistrationForm;
                                             $registor->id = $users->id;
-                                            $img = Yii::app()->baseUrl . '/uploads/user/' . $users->id . '/original/' . $users->pic_user;
+                                            $img = Yii::app()->baseUrl . '/uploads/user/' . $users->id . '/thumb/' . $users->pic_user;
                                         }
                                         ?>
                                         <img src="<?= $img ?>" alt="">
@@ -326,9 +330,9 @@ function editNameTrain(filedoc_id){
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_title; ?>(TH)</label>
-                                <?php  $country = array('0' => 'คำนำหน้า','1' => 'นาย', '2' => 'นางสาว', '3' => 'นาง');?>
+                                <?php  $country = array('1' => 'นาย', '2' => 'นางสาว', '3' => 'นาง');?>
                                 <?php
-                                $htmlOptions = array('class' => 'form-control');
+                                $htmlOptions = array('class' => 'form-control', 'empty' => 'คำนำหน้า');
                                 echo $form->dropDownList($profile, 'title_id', $country, $htmlOptions);
                                 ?>
                             </div>
@@ -355,9 +359,9 @@ function editNameTrain(filedoc_id){
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_title; ?>(EN)</label>
-                                <?php  $country = array('0' => 'Prefix','1' => 'Mr.', '2' => 'Miss.', '3' => 'Mrs.'); ?>
+                                <?php  $country = array('1' => 'Mr.', '2' => 'Miss.', '3' => 'Mrs.'); ?>
                                 <?php
-                                $htmlOptions = array('class' => 'form-control');
+                                $htmlOptions = array('class' => 'form-control', 'empty' => 'Prefix');
                                 echo $form->dropDownList($profile, 'title_id', $country, $htmlOptions);
                                 ?>
                             </div>
@@ -482,22 +486,14 @@ function editNameTrain(filedoc_id){
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_sex; ?></label>
-                                <select class="form-control" name="" id="">
-                                    < <?php
-                                    if ($profile->sex) {
-                                        if ($profile->sex === 'Male') { ?> 
-                                            <option value="1"><?php echo $label->label_male; ?></option>
-                                            <option value="2"><?php echo $label->label_female; ?></option>
-                                        <?php } else { ?>
-                                            <option value="2"><?php echo $label->label_female; ?></option>
-                                            <option value="1"><?php echo $label->label_male; ?></option>
-                                        <?php    }
-                                    } else ?>
-                                    <option value=""><?php echo $label->label_sex; ?></option>
-                                    <option value="1"><?php echo $label->label_male; ?></option>
-                                    <option value="2"><?php echo $label->label_female; ?></option>
-                                    <?php?>
-                                </select>
+                                 <?php
+                                    $sex_list = array('Male' => $label->label_male, 'Female' => $label->label_female);
+                                    $sex_Option = array('class' => 'form-control', 'empty' => $label->label_sex);
+                                    ?>
+                                    <?php
+                                    echo $form->dropDownList($profile, 'sex', $sex_list, $sex_Option);
+                                    ?>
+                                    <?php echo $form->error($profile, 'sex', array('class' => 'error2')); ?>
                             </div>
                         </div>
 
@@ -1333,7 +1329,7 @@ function editNameTrain(filedoc_id){
                             success: function(data) {
                                 //console.log(data);
                                 if (data === '<option value ="">Select Branch </option>') {
-                                    $('.Branch').hide();
+                                $('.Branch').hide();
                                 $('.label_branch').hide();
                                 }else{
 

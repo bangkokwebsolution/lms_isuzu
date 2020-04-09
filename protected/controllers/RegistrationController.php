@@ -796,7 +796,10 @@ public function actionUpdate() {
            //  var_dump($profile->getErrors());
            //  exit();
 
-//var_dump($session['filenameOriComTrain']);exit();
+// var_dump($session['filenameOriComTrain']);
+// echo "ppppppppppppppppppppp";
+// var_dump($session['filenameOriComDoc']);
+// exit();
         if ($profile->validate() && $users->validate()) {
 
 //                    เข้ารหัสpassword
@@ -811,7 +814,13 @@ public function actionUpdate() {
                     //     $users->pic_user = $beautifulName;
                     // }
 //                บันทึกข้อมูล
-
+       $uploadFile = CUploadedFile::getInstance($users, 'pic_user');
+       if (isset($uploadFile)) {
+        $uglyName = strtolower($uploadFile->name);
+        $mediocreName = preg_replace('/[^a-zA-Z0-9]+/', '_', $uglyName);
+        $beautifulName = trim($mediocreName, '_') . "." . $uploadFile->extensionName;
+        $users->pic_user = $beautifulName;
+        }
             if ($users->save() && $profile->save()) { 
                 if ($_POST['ProfilesEdu']){
                     foreach ($_POST['ProfilesEdu'] as $action_index=>$action_value){
@@ -844,9 +853,9 @@ public function actionUpdate() {
                     if(isset($new_action)){
                         if(!in_array($val->edu_id,$new_action)){
                             $model_del_action = ProfilesEdu::model()->find('edu_id="'.$val->edu_id.'" AND user_id='.Yii::app()->user->id); 
-                            $model_del_action->active = 'n';
-                            $model_del_action->save(false);
-                                       // $model_del_action->delete(false);
+                           // $model_del_action->active = 'n';
+                            //$model_del_action->save(false);
+                                        $model_del_action->delete(false);
                                          //echo "c";
                         }
                     }
@@ -855,6 +864,8 @@ public function actionUpdate() {
                         /////// end ลบแอคชั่น
          } //exit();
           //   บันทึกภาพ
+          
+       
          if (isset($uploadFile)) {
                             /////////// SAVE IMAGE //////////
             Yush::init($users);
@@ -875,10 +886,11 @@ public function actionUpdate() {
             $thumbImage->save($thumbPath);
         }
 
-        if(isset($session['filenameComDoc']) || count($session['filenameComDoc'])!=0)
-        {
+        if( count($session['filenameComDoc'])!=0)
+        { 
             foreach ($session['filenameComDoc'] as $filenameComKey => $filenameComValue)
             {
+
                 $filenameCheck = explode('.', $filenameComValue);
                             // if($filenameCheck[1] == 'pdf' or $filenameCheck[1] == 'docx' or $filenameCheck[1] == 'pptx')
                             // {
@@ -887,13 +899,16 @@ public function actionUpdate() {
                 $file->create_date = date("Y-m-d ");
                 $file->create_by = $users->id;
                 $file->filename = $filenameComValue;
+                $file->filename = array_unique($file->filename);
                 $file->file_name = $session['filenameOriComDoc'][$filenameComKey];
                 $file->length = "2.00";
                 $file->save(false);
-                var_dump("ok");
-                            // }
-            }
+               // var_dump("ok");
+              } 
+// }
     }//var_dump(count($session['filenameComTrain']));exit();
+                   
+            //exit();
     if(isset($session['filenameComTrain']) || count($session['filenameComTrain'])!=0)
     {
         foreach ($session['filenameComTrain'] as $filenameComKey => $filenameComValue)
