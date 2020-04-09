@@ -553,7 +553,7 @@ if ($profile->type_user == 3) {
             $message = $this->renderPartial('Form_mail',array('email'=>$users->email,'genpass'=>$genpass,'username'=>$username,'firstname'=>$firstname,'lastname'=>$lastname),true);
             $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
             Yii::app()->user->setFlash('profile',$profile->identification);
-            Yii::app()->user->setFlash('users', $users->email);
+            Yii::app()->user->setFlash('msg', $users->email);
             Yii::app()->user->setFlash('icon', "success");
             $this->redirect(array('site/index'));
 
@@ -573,13 +573,13 @@ if ($profile->type_user == 3) {
          $message = $this->renderPartial('Form_mail_General',array('firstname'=>$firstname,'lastname'=>$lastname),true);
          $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
        //  Yii::app()->user->setFlash('profile',$profile->identification);
-         Yii::app()->user->setFlash('users',"ท่านสมัครสมาชิกเรียบร้อยแล้ว รอการอนุมัติจากผู้ดูแลระบบผ่านทางอีเมล");
+         Yii::app()->user->setFlash('msg',"ท่านสมัครสมาชิกเรียบร้อยแล้ว รอการอนุมัติจากผู้ดูแลระบบผ่านทางอีเมล");
          Yii::app()->user->setFlash('icon', "success");
          $this->redirect(array('site/index'));
      }else{
         $login = '1';
         Yii::app()->user->setFlash('profile',$profile->identification);
-        Yii::app()->user->setFlash('users', $users->email);
+        Yii::app()->user->setFlash('msg', $users->email);
         Yii::app()->user->setFlash('icon', "success");
         $this->redirect(array('site/index'));
     }
