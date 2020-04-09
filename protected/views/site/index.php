@@ -150,9 +150,9 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 // $criteriaimg->order = 'update_date  DESC';
                     $image = Imgslide::model()->findAll($criteriaimg);
                     ?>
-                    <div id="carousel-id" class="carousel slide" data-ride="carousel" data-interval="false">
+                    <div id="carousel-id" class="carousel slide main-slide" data-ride="carousel" data-interval="true">
 
-                    <!-- <ol class="carousel-indicators">
+                    <ol class="carousel-indicators">
 
                         <?php if (!isset($image[0])) { ?>
                             <li data-target="#carousel-id" data-slide-to="0" class="active"></li>
@@ -167,7 +167,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             }
                         }
                         ?>
-                    </ol> -->
+                    </ol>
 
                     <div class="carousel-inner">
 
@@ -209,6 +209,12 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         <a class="right carousel-control" href="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
                     </div>
                 </div>
+<!-- 
+                <script>
+                    $('.main-slide').carousel({
+                    interval: 6000
+                    })
+                </script> -->
 
                 <?php
                 $criteriavdo = new CDbCriteria;

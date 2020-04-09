@@ -46,9 +46,9 @@ $arr = json_decode($real);
 				<div class="well">
 					<div class="exams">
 						<div class="row">
-							<div id="ques-show">
+							<div id="ques-show" class="col-md-12">
 								<form id="question-form" action="#" method="POST" role="form" onSubmit="return false">
-									<div class="col-sm-8">
+									<div class="col-md-8">
 										<div class="form-group">
 											<?php
 											$strTotal = 0;
@@ -172,7 +172,7 @@ $arr = json_decode($real);
 										<!-- 	<.?php if($last_ques==1)echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg','onclick'=>'save_ans("save")'), 'ส่งคำตอบ'); ?> -->
 									</div>
 								</div>
-								<div class="col-sm-4">
+								<div class="col-md-4">
 									<div class="all-exams">
 										<div class="exams-title">
 											Question <span class="pull-right"><?= $countExam . ' / ' . count($temp_all); ?></span>

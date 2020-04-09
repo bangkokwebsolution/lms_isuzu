@@ -40,7 +40,7 @@ body {
   position: relative;
   font-size: 16px;
   margin: 0;
-  padding-bottom: 6rem;
+  /* padding-bottom: 6rem; */
   min-height: 100%;
 }
 
@@ -881,8 +881,8 @@ h4.text22 {
 
 .menu-elearning {
   width: 100%;
-  padding: 1em 0;
-  margin: 1em 0 6em 0;
+  padding: 1em 0 7em;
+  margin: 1em 0 0 0;
 }
 
 .btn-elearning {
@@ -947,24 +947,6 @@ h4.text22 {
 
 .partner .partner-link .text-center a {
   margin-top: 1em;
-}
-
-footer {
-  position: relative;
-  padding: 0 0 0px;
-  color: #ffffff;
-  margin-top: 15px;
-}
-
-footer .top1 {
-  position: absolute;
-  top: -1em;
-  left: 0;
-  right: 0;
-}
-
-footer h1 a:hover {
-  opacity: 0.8;
 }
 
 .form-inline {
@@ -2175,7 +2157,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 
 #pre-exams .well .exams-condition {
   padding: 1em;
-  background-color: #ddd;
+  background-color: #333;
   border-radius: 10px;
   margin-top: -2em;
   color: #ffffff;
@@ -4049,6 +4031,7 @@ ol.stat-alert li::before {
   font-size: 1.5rem;
 }
 
+
 .fixed-header {
   transition: all 0.5s ease;
   animation: smoothScroll .5s forwards;
@@ -4217,7 +4200,7 @@ ol.stat-alert li::before {
 }
 
 .course-detail-main {
-  padding: 1em 0 1.5em;
+  padding: 1em 0 6em;
 }
 
 .course-active {
