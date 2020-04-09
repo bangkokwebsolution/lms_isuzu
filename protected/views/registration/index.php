@@ -1331,10 +1331,17 @@ function editNameTrain(filedoc_id){
                                 id: id
                             },
                             success: function(data) {
+                                //console.log(data);
+                                if (data === '<option value ="">Select Branch </option>') {
+                                    $('.Branch').hide();
+                                $('.label_branch').hide();
+                                }else{
+
                                 $('.Branch').show();
                                 $('.label_branch').show();
                                 $('.Branch').empty();
                                 $('.Branch').append(data);
+                            }
                             }
                         });
                     });
