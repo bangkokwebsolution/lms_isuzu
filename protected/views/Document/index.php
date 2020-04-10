@@ -48,13 +48,17 @@ function DateThai($strDate) {
                         <div role="tabpanel" class="tab-pane fade in active" id="doc-1">
                             <div class="well">
                                 <div class="panel panel-default">
-                                    <?php foreach ($DocumentType as $doctype) { ?>
+                                    <?php foreach ($DocumentType as $key => $doctype) { ?>
                                         <div class="panel-heading">
-                                            <h2 class="panel-title"><li><i class="fa fa-file">&nbsp;&nbsp;</i><?=$doctype->dty_name ?></li></h2> 
-                                        </div>
+                                            <a role="button" data-toggle="collapse" data-target="#collapse<?=$key?>" aria-expanded="true" aria-controls="collapseOne">
+                                             <span class="pull-right"><i class="fa fa-angle-down"></i></span>
+                                             <h2 class="panel-title"><li><i class="fa fa-file">&nbsp;&nbsp;</i><?=$doctype->dty_name ?></li></h2> 
+                                         </a>
+                                     </div>
+                                     <div id="collapse<?=$key?>">
                                         <?php foreach ($Document as $doc) { 
-                                         if ($doctype->dty_id == $doc->dty_id) { //3?>
-                                            <div class="doc-list">
+                                           if ($doctype->dty_id == $doc->dty_id) { //3?>
+                                            <div class="doc-list" >
                                                 <span class="pull-right"><span class="text-date"><i class="fa fa-calendar"></i>&nbsp<?php echo DateThai($doc->dow_createday); ?></span>&nbsp; 
                                                 <a class="btn btn-warning" href="<?= Yii::app()->baseUrl?>/admin/uploads/<?= $doc->dow_address ?>" download="<?= Yii::app()->baseUrl?>/admin/uploads/<?= $doc->dow_address ?>" ><i class="fa fa-download"></i>&nbsp;ดาวน์โหลด</a>
                                             </span>
@@ -65,15 +69,17 @@ function DateThai($strDate) {
                                         <?php
                                     }
                                 }  
-                            }
-                            ?>
-                        </div>
+                                ?>
+                            </div>
+                        <?php } ?>
+
                     </div>
                 </div>
+            </div>
 
-                <!--end Doc1-->
+            <!--end Doc1-->
 
-                <!--start Doc2-->
+            <!--start Doc2-->
                 <!-- <div role="tabpanel" class="tab-pane fade" id="doc-2">
                     <div class="well">
                         <?php foreach ($Document as $doc) { ?>
