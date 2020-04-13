@@ -984,21 +984,27 @@ if($model){
                                 }
                             endif; 
                             ?>
-                            <!-- Course question  -->
-                            <?php 
-                            $ckPassAll = true;
-                            foreach ($lessonList as $key => $value) {
-                                $state = Helpers::lib()->CheckPostTestAll($value);
-                                if(!$state){
-                                    $ckPassAll = false;
-                                }
-            // var_dump($state);
-                            }
 
-                            $criteria = new CDbCriteria;
-                            $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y"';
-                            $criteria->order = 'create_date ASC';
-                            $BestFinalTestScore = Coursescore::model()->findAll($criteria);
+
+                        </ul>
+                    </div>
+                <?php } ?>
+
+                <!-- Course question  -->
+                <?php 
+                $ckPassAll = true;
+                foreach ($lessonList as $key => $value) {
+                    $state = Helpers::lib()->CheckPostTestAll($value);
+                    if(!$state){
+                        $ckPassAll = false;
+                    }
+            // var_dump($state);
+                }
+
+                $criteria = new CDbCriteria;
+                $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y"';
+                $criteria->order = 'create_date ASC';
+                $BestFinalTestScore = Coursescore::model()->findAll($criteria);
 
         $checkCourseTest = Helpers::lib()->checkCoursePass($course->course_id); //Chekc Lesson all pass to test course exam
         $checkHaveCourseTest = Helpers::lib()->checkHaveCourseTestInManage($course->course_id);
@@ -1020,12 +1026,18 @@ if($model){
 
         ?>
         <?php if($checkHaveCourseTest || $CourseSurvey){ ?>
-         <div class="stepcoursediv">
-            <span class="stepcourse"> <?= $checkHaveCourseTest ? $final : ''; ?> <?= $checkHaveCourseTest && $CourseSurvey ? '&' : ''; ?> <?= $CourseSurvey ? $Questionnaire : '' ?><?= $course->course_title ?></span>
-        </div>
-    <?php } ?>
+           <div class="panel-heading headcourse">
+            <a role="button" data-toggle="collapse" data-target="#collapseFinal<?=$key?>" data-parent="#accordion" aria-expanded="true">
+               <li>
+                <span class="stepcourse"> <?= $checkHaveCourseTest ? $final : ''; ?> <?= $checkHaveCourseTest && $CourseSurvey ? '&' : ''; ?> <?= $CourseSurvey ? $Questionnaire : '' ?><?= $course->course_title ?></span>
+                <span class="pull-right"><i class="fa fa-angle-down"></i></span>
+            </li>
+        </a>
+    </div>
+<?php } ?>
 
-    <!-- Check count test -->
+<!-- Check count test -->
+<div id="collapseFinal<?=$key?>">
     <?php if($BestFinalTestScore){ ?>
         <?php foreach ($BestFinalTestScore as $key => $course_score) {?>
             <?php if(count($BestFinalTestScore) < $course->cate_amount){ ?>
@@ -1035,52 +1047,52 @@ if($model){
                         <span class="pull-right  text-danger prepost"> <?= $course_score->score_number ?>/<?= $course_score->score_total ?> <?= $label->label_point; ?></span></a> 
                     </li>
                 <?php }else{ ?>
-                 <li class="list-group-item ">
-                    <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
-                        <span class="pull-right  text-success prepost"> <?= $course_score->score_number ?>/<?= $course_score->score_total ?> <?= $label->label_point; ?></span></a> 
+                    <li class="list-group-item ">
+                        <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
+                            <span class="pull-right  text-success prepost"> <?= $course_score->score_number ?>/<?= $course_score->score_total ?> <?= $label->label_point; ?></span></a> 
+                        </li>
+                    <?php } ?>
+                <?php }else{ ?>
+                    <li class="list-group-item ">
+                        <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
+                            <span class="pull-right  text-success prepost"> <?= $course_score->score_number ?>/<?= $course_score->score_total ?> <?= $label->label_point; ?></span></a> 
+                        </li>
+                    <?php } ?>
+                <?php }?>
+                <?php if($step == 4){ ?>
+                   <li class="list-group-item ">
+                    <!-- <div class="pt-now"> You are here</div> -->
+                    <a href="<?= $pathCourseTest ?>" <?= $alertCourseTest ?> >
+                        <span class="list__course"><?= $label->label_testFinalTimes; ?> <?= $key+2; ?></span>
+                        <span class="btn btn-warning detailmore pull-right"><?= $label->label_gotoLesson ?>
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></a>
                     </li>
                 <?php } ?>
-            <?php }else{ ?>
-                <li class="list-group-item ">
-                    <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
-                        <span class="pull-right  text-success prepost"> <?= $course_score->score_number ?>/<?= $course_score->score_total ?> <?= $label->label_point; ?></span></a> 
-                    </li>
-                <?php } ?>
-            <?php }?>
-            <?php if($step == 4){ ?>
+            <?php }else if($checkHaveCourseTest){ ?>
                <li class="list-group-item ">
-                <!-- <div class="pt-now"> You are here</div> -->
+                <?php if($step == 4){ ?>
+                    <!-- <div class="pt-now"> You are here</div> -->
+                <?php } ?>
                 <a href="<?= $pathCourseTest ?>" <?= $alertCourseTest ?> >
-                    <span class="list__course"><?= $label->label_testFinalTimes; ?> <?= $key+2; ?></span>
+                    <span class="list__course"><?= $label->label_testFinalTimes; ?> 1</span>
                     <span class="btn btn-warning detailmore pull-right"><?= $label->label_gotoLesson ?>
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></a>
                 </li>
             <?php } ?>
-        <?php }else if($checkHaveCourseTest){ ?>
-           <li class="list-group-item ">
-            <?php if($step == 4){ ?>
-                <!-- <div class="pt-now"> You are here</div> -->
-            <?php } ?>
-            <a href="<?= $pathCourseTest ?>" <?= $alertCourseTest ?> >
-                <span class="list__course"><?= $label->label_testFinalTimes; ?> 1</span>
-                <span class="btn btn-warning detailmore pull-right"><?= $label->label_gotoLesson ?>
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></a>
-            </li>
-        <?php } ?>
-        <!-- end Course question  -->
-        <?php 
-        $PaQuest = false;
-        if ($CourseSurvey) {
-            $passQuest = QQuestAns_course::model()->find(array(
-                'condition' => 'user_id = "' . Yii::app()->user->id . '" AND course_id ="' . $course->course_id . '"',
-            ));
-            $countSurvey = count($passQuest);
-            if ($passQuest) {
+            <!-- end Course question  -->
+            <?php 
+            $PaQuest = false;
+            if ($CourseSurvey) {
+                $passQuest = QQuestAns_course::model()->find(array(
+                    'condition' => 'user_id = "' . Yii::app()->user->id . '" AND course_id ="' . $course->course_id . '"',
+                ));
+                $countSurvey = count($passQuest);
+                if ($passQuest) {
+                    $PaQuest = true;
+                }
+            }else{
                 $PaQuest = true;
             }
-        }else{
-            $PaQuest = true;
-        }
 
         if($checkCourseTest == 'pass'){ //Lesson All pass
             if($checkHaveCourseTest){
@@ -1122,7 +1134,7 @@ if($model){
         ?>
         <!-- Survey -->
         <?php if($CourseSurvey){ ?>
-            <div class="list-group-item ">
+            <div class="list-group-item">
                 <?php if($step == 5){ ?>
                     <div class="pt-now"> Step now</div>
                 <?php } ?>
@@ -1130,14 +1142,11 @@ if($model){
             </div>
         <?php } ?>
         <!-- end Survey -->
-
-    </ul>
-</div>
-<?php } ?>
-</div>
+    </div>
 </div>
 </div>
 
+</div>
 
 </ol>   
 </div>
@@ -1179,63 +1188,73 @@ if($model){
 </div> -->
 
 </div>
-<!-- </section> -->
-<script>
 
-    function alertswal() {
-        swal('<?= $label->label_swal_warning ?>', '<?= $label->label_swal_plsLearnPass ?>', "error");
-    }
+<!-- <link href="//cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@3/dark.css" rel="stylesheet">
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@9/dist/sweetalert2.min.js"></script> -->
+    
+    <!-- </section> -->
+    <script>
 
-    function alertSequence() {
-        swal('<?= $label->label_swal_warning ?>', '<?= $label->label_swal_plsLearnPass ?>', "error");
-    }
+        function alertswal() {
+            swal('<?= $label->label_swal_warning ?>', '<?= $label->label_swal_plsLearnPass ?>', "error");
+        }
 
-    function alertswal_test() {
-        swal('<?= $label->label_swal_warning ?>', '<?= $label->label_swal_plsTestPost ?>', "error");
-    }
+        function alertSequence() {
+            swal('<?= $label->label_swal_warning ?>', '<?= $label->label_swal_plsLearnPass ?>', "error");
+        }
 
-    function alertswalpretest() {
-        swal('<?= $label->label_swal_warning ?>', '<?= $label->label_swal_plsTestPre ?>', "error");
-    }
+        function alertswal_test() {
+            swal('<?= $label->label_swal_warning ?>', '<?= $label->label_swal_plsTestPost ?>', "error");
+        }
 
-    function alertswalCourse() {
-        swal('<?= $label->label_swal_warning ?>', '<?= $label->label_noPermis ?>', "error");
-    }
+        function alertswalpretest() {
+            swal('<?= $label->label_swal_warning ?>', '<?= $label->label_swal_plsTestPre ?>', "error");
+        }
 
-    function alertswalNoCourse() {
-        swal('<?= $label->label_swal_warning ?>', '<?= $label->label_alert_msg_notFound ?>', "error");
-    }
+        function alertswalCourse() {
+            swal('<?= $label->label_swal_warning ?>', '<?= $label->label_noPermis ?>', "error");
+        }
 
-    function alertswalcert() {
-        swal('<?= $label->label_swal_warning ?>', '<?= $label->label_cantPrintCert ?>', "error");
-    }
+        function alertswalNoCourse() {
+            swal('<?= $label->label_swal_warning ?>', '<?= $label->label_alert_msg_notFound ?>', "error");
+        }
 
-    function alertswalNocert() {
-        swal('<?= $label->label_swal_warning ?>', 'หลักสูตรนี้ไม่มีใบประกาศนียบัตร กรุณาติดต่อผู้ดูแลระบบ', "error");
-    }
+        function alertswalcert() {
+            swal('<?= $label->label_swal_warning ?>', '<?= $label->label_cantPrintCert ?>', "error");
+      //   Swal.fire({
+      //     icon: 'error',
+      //     title: 'Oops...',
+      //     text: 'Something went wrong!',
+      //     footer: '<a href>Why do I have this issue?</a>'
+      // })
+  }
 
-    function showNotice(coursetype) {
-        if (coursetype != null && coursetype == '36') {
-            swal({
-                title: '<?= $label->label_swal_warning ?>',
-                text: "หากช่วงเวลาการเข้าระบบ (Login) พร้อมกันในหลายวิชา <br> กรมฯ จะนับ CPD ให้ท่าน<span style='color: red;'>เพียงวิชาเดียว</span>เท่านั้น",
-                type: "info",
-                html: true,
-                showCancelButton: false,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: '<?= $label->label_confirm ?>',
-                closeOnConfirm: true
-            }, function () {
+  function alertswalNocert() {
+    swal('<?= $label->label_swal_warning ?>', 'หลักสูตรนี้ไม่มีใบประกาศนียบัตร กรุณาติดต่อผู้ดูแลระบบ', "error");
+}
+
+function showNotice(coursetype) {
+    if (coursetype != null && coursetype == '36') {
+        swal({
+            title: '<?= $label->label_swal_warning ?>',
+            text: "หากช่วงเวลาการเข้าระบบ (Login) พร้อมกันในหลายวิชา <br> กรมฯ จะนับ CPD ให้ท่าน<span style='color: red;'>เพียงวิชาเดียว</span>เท่านั้น",
+            type: "info",
+            html: true,
+            showCancelButton: false,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: '<?= $label->label_confirm ?>',
+            closeOnConfirm: true
+        }, function () {
                 //do something
             });
-        } else {
-            console.log(coursetype);
-        }
+    } else {
+        console.log(coursetype);
     }
+}
 
-    function checkPermissionBeforeLearn(course, type) {
-        $.post("<?= $this->createUrl("CourseStart/Permission") ?>", {course: course},
-            function (respon) {
+function checkPermissionBeforeLearn(course, type) {
+    $.post("<?= $this->createUrl("CourseStart/Permission") ?>", {course: course},
+        function (respon) {
                 // var jsonRespon = JSON.parse(respon);
                 // if (type == '36') {
                 //     if (jsonRespon.status) {
@@ -1306,29 +1325,29 @@ if($model){
                 // }
             }
             );
-    }
+}
 
-    $(window).load(function () {
-        console.log($('#loader1'));
-    });
-    $(function () {
+$(window).load(function () {
+    console.log($('#loader1'));
+});
+$(function () {
 
-        <?php if(Yii::app()->user->hasFlash('CheckQues')){ 
-            ?>
-            var msg = '<?php echo Yii::app()->user->getFlash('CheckQues'); ?>';
-            var cla = '<?php echo Yii::app()->user->getFlash('class'); ?>';
-            swal({
-                title: '<?= $label->label_swal_system ?>',
-                text: msg,
-                type: cla,
-                confirmButtonText: '<?= $label->label_confirm ?>',
-            });
-            <?php 
-            Yii::app()->user->setFlash('CheckQues',null);
-            Yii::app()->user->setFlash('class',null);
-        } 
+    <?php if(Yii::app()->user->hasFlash('CheckQues')){ 
         ?>
-        $('#loader1').hide();
+        var msg = '<?php echo Yii::app()->user->getFlash('CheckQues'); ?>';
+        var cla = '<?php echo Yii::app()->user->getFlash('class'); ?>';
+        swal({
+            title: '<?= $label->label_swal_system ?>',
+            text: msg,
+            type: cla,
+            confirmButtonText: '<?= $label->label_confirm ?>',
+        });
+        <?php 
+        Yii::app()->user->setFlash('CheckQues',null);
+        Yii::app()->user->setFlash('class',null);
+    } 
+    ?>
+    $('#loader1').hide();
         //check permission and show pop-up
         checkPermissionBeforeLearn('<?= $course->course_id ?>', '<?= $course->cate_id ?>');
 
