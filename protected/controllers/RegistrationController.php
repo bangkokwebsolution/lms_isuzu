@@ -345,7 +345,7 @@ class RegistrationController extends Controller {
 //$users->verifyPassword = ($type_card == 'p')?UserModule::encrypting(microtime() . $profile->identification):UserModule::encrypting(microtime() . $profile->passport);
 // var_dump($users->activkey);exit();
 //     $users->password = $_POST['idcard']; 
-
+    $users->repass_status = 0;
     $passwordshow = $_POST['idcard'];
 //    $users->activkey = UserModule::encrypting(microtime() . $_POST['idcard']);
             //$users->activkey = UserModule::encrypting(microtime() . $users->password);
@@ -886,7 +886,7 @@ public function actionUpdate() {
             $thumbImage->save($thumbPath);
         }
 
-        if( count($session['filenameComDoc'])!=0)
+        if(isset($session['filenameComDoc']) || count($session['filenameComDoc'])!=0)
         { 
             foreach ($session['filenameComDoc'] as $filenameComKey => $filenameComValue)
             {
@@ -899,7 +899,6 @@ public function actionUpdate() {
                 $file->create_date = date("Y-m-d ");
                 $file->create_by = $users->id;
                 $file->filename = $filenameComValue;
-                $file->filename = array_unique($file->filename);
                 $file->file_name = $session['filenameOriComDoc'][$filenameComKey];
                 $file->length = "2.00";
                 $file->save(false);
@@ -1240,6 +1239,7 @@ public function actionDeleteFileTrain($id)
     }
 
     public function actionRepassword() {
+
         if (User::model()->findbyPk(Yii::app()->user->id)->repass_status=='0'){
             $model = new Users();
             if (isset($_POST['Users'])) {
@@ -1260,14 +1260,15 @@ public function actionDeleteFileTrain($id)
 
                     if ($model->save(false)) {
 
-                        $to['email'] = $model->email;
-                        $to['firstname'] = $model->profile->firstname;
-                        $to['lastname'] = $model->profile->lastname;
-                        $pass = $_POST['Users']['password'];
-                        $message = $this->renderPartial('Form_mail',array('model' => $model,'pass'=>$pass),true);
-                        if($message){
-                            $send = Helpers::lib()->SendMailNotification($to,'แก้ไขรหัสผ่าน',$message);
-                        }   
+                        // $to['email'] = $model->email;
+                        // $to['firstname'] = $model->profile->firstname;
+                        // $to['lastname'] = $model->profile->lastname;
+                        // $pass = $_POST['Users']['password'];
+                        // $message = $this->renderPartial('Form_mail',array('model' => $model,'pass'=>$pass),true);
+                        // if($message){
+                        //    // $send = Helpers::lib()->SendMailNotification($to,'แก้ไขรหัสผ่าน',$message);
+                        //     $send = Helpers::lib()->SendMail($to,'แก้ไขรหัสผ่าน',$message);
+                        // }   
 
                         $status = "เปลี่ยนรหัสผ่านสำเร็จ";
                         $type_status = "success";

@@ -68,7 +68,7 @@ class Profile extends CActiveRecord {
             // Please remove those attributes that should not be searched. 
             array('bussiness_model_id,bussiness_type_id,company,juristic,user_id, title_id, firstname, lastname, active, generation, type_user, sex, birthday, age, education, occupation, position, website, address, province, tel, phone, fax, contactfrom, advisor_email1, advisor_email2, file, passport, date_of_expiry, race, nationality, religion, history_of_illness, status_sm, type_employee, type_card, line_id', 'safe', 'on' => 'search'),
             array('file_user', 'file', 'types' => 'pdf', 'allowEmpty' => true, 'on' => 'insert'),
-            //array('ship_name, ship_up_date, ship_down_date, address2, phone1, phone2, phone3', 'allowEmpty' => true, 'on' => 'update'),
+           // array('ship_name, ship_up_date, ship_down_date, address2, phone1, phone2, phone3', 'allowEmpty' => true, 'on' => 'update'),
             array('file_user', 'file', 'types' => 'pdf',
                 'wrongType' => 'รองรับไฟล์ pdf เท่านั้น', 'allowEmpty' => true, // ข้อความเตือน
                 'maxSize' => 1024 * 1024 * 5, // 5 MB

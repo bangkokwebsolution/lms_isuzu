@@ -359,10 +359,10 @@ function editNameTrain(filedoc_id){
                         <div class="col-md-2">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_title; ?>(EN)</label>
-                                <?php  $country = array('1' => 'Mr.', '2' => 'Miss.', '3' => 'Mrs.'); ?>
+                                <?php  $country2 = array('1' => 'Mr.', '2' => 'Miss.', '3' => 'Mrs.'); ?>
                                 <?php
                                 $htmlOptions = array('class' => 'form-control', 'empty' => 'Prefix');
-                                echo $form->dropDownList($profile, 'title_id', $country, $htmlOptions);
+                                echo $form->dropDownList($profile, 'title_id', $country2, $htmlOptions);
                                 ?>
                             </div>
                         </div>
@@ -960,12 +960,8 @@ function editNameTrain(filedoc_id){
                     </div>
 
                 </div>
-                <?php 
-                if (!$users->isNewRecord) {
-                  if ($profile->type_user == 3 && $profile->type_employee == 1) {
-                   ?>
-                   <form>
-                    <div class="well">
+            
+                    <div class="well form_ship">
                         <div id="report-staff">
                             <h3 class="text-center"><?php echo $label->label_boat_person_report; ?></h3>
                             <div class="row justify-content-center">
@@ -1043,11 +1039,8 @@ function editNameTrain(filedoc_id){
 
                                 </div>
                             </div>
-                        </form>
-                        <?php
-                    }
-                }
-                ?>
+                   
+                
                 <div class="text-center submit-register">
 
                     <?php 
@@ -1176,6 +1169,7 @@ function editNameTrain(filedoc_id){
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").show();
+                                $('.form_ship').hide();
                             }else if(type_cards === 'p'){
 
                                 $('#passport_card').show();
@@ -1184,6 +1178,7 @@ function editNameTrain(filedoc_id){
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").show();
+                                $('.form_ship').hide();
                             }else if(type_cards === '' || typeof  type_cards === 'undefined' || typeof  type_cards === null){
 
                                 $('#passport_card').hide();
@@ -1192,6 +1187,7 @@ function editNameTrain(filedoc_id){
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").show();
+                                $('.form_ship').hide();
                             }
                         }else if (type_users === '1'){
 
@@ -1204,6 +1200,7 @@ function editNameTrain(filedoc_id){
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").hide();
+                                $('.form_ship').hide();
                             }else if(type_cards === 'p'){
 
                                 $('#passport_card').show();
@@ -1212,6 +1209,7 @@ function editNameTrain(filedoc_id){
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").hide();
+                                $('.form_ship').hide();
                             }else if(type_cards === '' || typeof  type_cards === 'undefined' || typeof  type_cards === null){
 
                                 $('#passport_card').hide();
@@ -1220,6 +1218,7 @@ function editNameTrain(filedoc_id){
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").hide();
+                                $('.form_ship').hide();
                             }
                         }else if (typeof  type_users === 'undefined' ){
                             $('.Branch').hide();
@@ -1228,14 +1227,15 @@ function editNameTrain(filedoc_id){
                             $('#passport_card').hide();
                             $("#office-section").hide();
                             $('.form_name').hide();
-                            $('.form_number_id').hide(); 
+                            $('.form_number_id').hide();
+                            $('.form_ship').hide(); 
                         }              
                     }else if(new_forms === 0 || typeof  new_forms === 'undefined' || new_forms === false){
 
                      var type_users = $("input[name='type_user']:checked").val();
                          //console.log(type_users);
                          if (type_users === '3') {
-
+       
                             var type_cards = $("input[name='type_card']:checked").val();
                             if (type_cards === 'l') {
                                 var branch = <?php echo $branch_js; ?>;
@@ -1247,12 +1247,22 @@ function editNameTrain(filedoc_id){
                                     $('.Branch').hide();
                                     $('.label_branch').hide();
                                  }
+                                var type_employee = $("input[name='type_employee']:checked").val();
+                                    console.log(type_employee);
+                                   if (type_employee === '1') {
+                      
+                                    $('.form_ship').show();
+                                }else{
+               
+                                    $('.form_ship').hide();
+                                }
                                 $('#passport_card').hide();
                                 $('#identification_card').show();
                                 $(".id_employee").show();
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").show();
+
                             }else if(type_cards === 'p'){
                                 var branch = <?php echo $branch_js; ?>;
                                 //console.log(branch);
@@ -1263,33 +1273,42 @@ function editNameTrain(filedoc_id){
                                     $('.Branch').hide();
                                     $('.label_branch').hide();
                                  }
+                                var type_employee = $("input[name='type_employee']:checked").val();
+                                   if (type_employee === '1') {
+                                    $('.form_ship').show();
+                                }else{
+                                    $('.form_ship').hide();
+                                }
                                 $('#passport_card').show();
                                 $('#identification_card').hide();
                                 $(".id_employee").show();
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").show();
+                    
                             }
                         }else if (type_users === '1'){
 
                             var type_cards = $("input[name='type_card']:checked").val();
                             if (type_cards === 'l') {
-
+                               
                                 $('#passport_card').hide();
                                 $('#identification_card').show();
                                 $(".id_employee").show();
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").hide();
-                            }else if(type_cards === 'p'){
+                                $('.form_ship').hide();
 
+                            }else if(type_cards === 'p'){
+                               
                                 $('#passport_card').show();
                                 $('#identification_card').hide();
                                 $(".id_employee").show();
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").hide();
-
+                                $('.form_ship').hide();
                             }
                         }  
                     }  

@@ -53,9 +53,12 @@ class LoginController extends Controller
 
                 // validate user input and redirect to previous page if valid
           if($model->validate()) {
+            if (User::model()->findbyPk(Yii::app()->user->id)->repass_status=='0'){
+                        $this->redirect(array('registration/Repassword'));
+                    }
             $this->lastViset();
-            $this->saveToken();
-            Yii::app()->user->setReturnUrl(Yii::app()->request->urlReferrer);
+            // $this->saveToken();
+            // Yii::app()->user->setReturnUrl(Yii::app()->request->urlReferrer);
             if(Yii::app()->user->id){
               Helpers::lib()->getControllerActionId();
             }
