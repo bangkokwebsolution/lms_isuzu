@@ -70,11 +70,19 @@ $cancel_msg = UserModule::t('Cancel');
        width: 100%;
      }
 
-     /* the usual RWD shebang */
+     .contact-admin{
+      right: 0 !important;
+     }
 
      .video-js {
-       width: auto !important; /* override the plugin's inline dims to let vids scale fluidly */
+       width: auto !important; 
        height: auto !important;
+     }
+
+     @media screen and (min-width:1240px){
+        .video-js {
+         height: 75vh !important;
+       }
      }
 
      .video-js video {

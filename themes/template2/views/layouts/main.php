@@ -41,6 +41,23 @@ Yii::app()->user->returnUrl = $http->getUrl();
       </div>
     </div> -->
     <!-- Start Header Section -->
+    <div class="backtotop"><span><i class="fas fa-arrow-up"></i> <small>top</small></span></div>
+    <a class="contact-admin" data-toggle="modal" href="#user-report">
+        <div id="mascot-contact"></div>
+    </a>
+
+    <?php
+    $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact/mascot-contact.json');
+    ?>
+    <script>
+        var animation = bodymovin.loadAnimation({
+            container: document.getElementById('mascot-contact'),
+            renderer: 'svg',
+            autoplay : true,
+            loop: true,
+            path: '<?php echo $mascot_path; ?>'
+        });
+    </script>
     <?php include("themes/template2/include/header.php"); ?>
     <!-- End Header Section -->
     <?php echo $content; ?>

@@ -591,7 +591,7 @@ header .dropdown-menu.user-message li:last-child {
 }
 
 section {
-  padding: 3% 0;
+  padding: 2% 0;
   z-index: 0;
 }
 
@@ -1680,6 +1680,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
   -webkit-transition: margin-right .5s;
   -o-transition: margin-right .5s;
   transition: margin-right .5s;
+  height: 100%;
 }
 
 @media screen and (max-height: 450px) {
@@ -3915,6 +3916,7 @@ ol.stat-alert li::before {
 
 .cours-card .course-boximg img {
   transition: all .25s ease;
+  width: 100%;
 
 }
 
@@ -4322,6 +4324,15 @@ ol.stat-alert li::before {
   color: #010C65;
 }
 
+.item-course-index{
+  margin: 1em 0;
+}
+
+.slide-main-thor{
+  max-height:315px;
+  min-height:315px;
+}
+
 @media (min-width: 1440px) {
   .course .well .course-img {
     height: 150px;
@@ -4342,6 +4353,10 @@ ol.stat-alert li::before {
   #register .well form .well select {
   width: 100%;
   }
+  .slide-main-thor{
+  max-height:auto;
+  min-height:auto;
+}
 }
 
 @media (max-width: 425px) {

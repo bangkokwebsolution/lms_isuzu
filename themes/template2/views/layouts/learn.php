@@ -55,6 +55,7 @@ Yii::app()->user->returnUrl = $http->getUrl();
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/input.css" media="screen">
     <!-- Slicknav -->
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/slicknav.css" media="screen">
+    <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/lottie.js"></script>
 
     <!-- <link type="text/css" href="<?=Yii::app()->baseUrl?>/cometchat/cometchatcss.php" rel="stylesheet" charset="utf-8">
     <script type="text/javascript" src="<?=Yii::app()->baseUrl?>/cometchat/cometchatjs.php" charset="utf-8"></script> -->
@@ -69,6 +70,23 @@ Yii::app()->user->returnUrl = $http->getUrl();
     </div>
   </div> -->
 <!-- Start Header Section -->
+    <a class="contact-admin" data-toggle="modal" href="#user-report">
+        <div id="mascot-contact"></div>
+    </a>
+
+    <?php
+    $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact/mascot-contact.json');
+    ?>
+    <script>
+        var animation = bodymovin.loadAnimation({
+            container: document.getElementById('mascot-contact'),
+            renderer: 'svg',
+            autoplay : true,
+            loop: true,
+            path: '<?php echo $mascot_path; ?>'
+        });
+    </script>
+
     <?php include("themes/template2/include/header.php"); ?>
 <!-- End Header Section -->
 <?php echo $content; ?>

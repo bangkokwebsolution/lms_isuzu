@@ -189,7 +189,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                 <a href="<?=$value->imgslide_link;  ?>" target="_blank">
                                 <?php } ?>
 
-                                <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" alt="" style="height:315px;">
+                                <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
                             </a>
                         </div>
 
@@ -258,6 +258,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         <h1>
                             <span class="linehead"><?= $label->label_courseOur ?></span> <span class="pull-right"><a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/course/index'); ?>" role="button"><?= $label->label_viewAll ?> <i class="fa fa-angle-right" aria-hidden="true"></i></a></span></h1>
                         </div>
+                        <div class="row">
                         <?php foreach ($course_online as $key => $value) {
                             if($value->status == 1){
 
@@ -327,8 +328,8 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 ?>
 
 
-                <div class="col-lg-3 col-md-3 ">
-                    <div class="item">
+                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    <div class="item item-course-index">
                         <div class="cours-card">
                             <div class="card">
                              <!--  <a href="<?= $url; ?>" <?= $evnt ?>> -->
@@ -396,7 +397,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                     }//condition status
                 }
                 ?>
-
+</div>
             </div>
         </div>
 

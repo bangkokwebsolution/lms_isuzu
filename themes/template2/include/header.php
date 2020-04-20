@@ -1,23 +1,3 @@
-<div class="backtotop"><span><i class="fas fa-arrow-up"></i> <small>top</small></span></div>
-<a class="contact-admin" data-toggle="modal" href="#user-report">
-    <div id="mascot-contact"></div>
-</a>
-
-<?php
-$mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact/mascot-contact.json');
-?>
-<script>
-    var animation = bodymovin.loadAnimation({
-        container: document.getElementById('mascot-contact'),
-        renderer: 'svg',
-        autoplay : true,
-        loop: true,
-        path: '<?php echo $mascot_path; ?>'
-    });
-</script>
-
-
-
 <div class="modal fade" id="user-report">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -28,35 +8,35 @@ $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact
                 </div>
                 <div class="modal-body">
                     <div class="row report-row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-xs-12 col-sm-6">
                             <label for="">ชื่อ</label>
                             <input type="text" class="form-control" placeholder="ชื่อ">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-xs-12 col-sm-6">
                             <label for="">นามสกุล</label>
                             <input type="text" class="form-control" placeholder="นามสกุล">
                         </div>
                     </div>
                     <div class="row report-row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-xs-12 col-sm-6">
                             <label for="">เบอร์โทรศัพท์</label>
                             <input type="text" class="form-control" placeholder="เบอร์โทรศัพท์">
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-xs-12 col-sm-6">
                             <label for="">อีเมล์</label>
                             <input type="text" class="form-control" placeholder="อีเมล์">
                         </div>
                     </div>
 
                     <div class="row report-row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 col-xs-12">
                             <label for="">ข้อความ</label>
                             <textarea name="" class="form-control" placeholder="พิมพ์ข้อความในช่องนี้" id="" cols="30" rows="6"></textarea>
                         </div>
                     </div>
 
                     <div class="row report-row">
-                        <div class="col-md-6">
+                        <div class="col-md-6 col-xs-12">
                             <label for="">อัปโหลดรูปภาพ</label>
                             <input type="file" class="form-control"  multiple>
                         </div>
