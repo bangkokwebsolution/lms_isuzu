@@ -150,7 +150,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 // $criteriaimg->order = 'update_date  DESC';
                     $image = Imgslide::model()->findAll($criteriaimg);
                     ?>
-                    <div id="carousel-id" class="carousel slide main-slide" data-ride="carousel" data-interval="6000">
+                    <div id="carousel-id" class="carousel slide main-slide" data-ride="carousel" data-interval="3000">
 
                     <ol class="carousel-indicators">
 

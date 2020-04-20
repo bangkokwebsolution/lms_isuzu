@@ -302,6 +302,11 @@ function DateThai($strDate)
                                             <p  class="p" style="min-height: 0em; margin-top: 0px; margin-bottom: 0px;"> วันที่สิ้นสุด <?= DateThai($model->course_date_end); ?></p> -->
                                             <p class="p" style="min-height: 0em; margin-top: 0px; margin-bottom: 0px;"> <?= $label->label_dateStart ?> <?php echo Helpers::lib()->DateLang($model->course_date_start, Yii::app()->session['lang']); ?> </p>
                                             <p class="p" style="min-height: 0em; margin-top: 0px; margin-bottom: 0px;"> <?= $label->label_dateExpire ?> <?php echo Helpers::lib()->DateLang($model->course_date_end, Yii::app()->session['lang']); ?></p>
+
+                                            <div class="text-center mt-20">
+                                                <a href="javascript" class="btn btn-danger btn-regislearn">สมัครเรียน</a>
+                                                 <!-- <a href="javascript" class="btn btn-danger btn-learnmore">เข้าสู่บทเรียน</a> -->
+                                            </div>
                                         </div>
                                     </a>
                                 </div>
