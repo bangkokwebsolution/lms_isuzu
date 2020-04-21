@@ -33,7 +33,7 @@ Yii::app()->clientScript->registerScript('search', "
 			</div>
 			<div class="widget-body">
 				<div>
-					<?php echo Rights::t('core', 'ที่นี่คุณสามารถอนุมัติการเข้าใช้งานระบบให้กับผู้ใช้แต่ละราย'); ?>
+					<?php echo Rights::t('core', 'ที่นี่คุณสามารถอนุมัติการสมัครสมาชิกให้กับผู้ใช้แต่ละราย'); ?>
 				</div>
 				<div class="spacer"></div>
 				<div>
@@ -48,13 +48,19 @@ Yii::app()->clientScript->registerScript('search', "
 						<?php 
 						$this->widget('AGridView', array(
 							'id'=>'user-grid',
-							'dataProvider'=>$model->searchapprove(),
+							'dataProvider'=>$model->searchmembership(),
 							'filter'=>$model,
 							'columns'=>array(
 								array(
 									'header'=>'No.',
 									'value'=>'$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
 								),
+			// 					array(
+			// 						'name' => 'idensearch',
+			// 						'type'=>'raw',
+			// 						'value' => '$data->profile->identification',
+			// //'value' => 'CHtml::link(UHtml::markSearch($data, ),array("admin/view","id"=>$data->id))',
+			// 					),
 								array(
 						            'header' => 'ชื่อ - นามสกุล',
 						            'type'=>'html',
@@ -63,23 +69,12 @@ Yii::app()->clientScript->registerScript('search', "
 						            }
 						        ),
 						        array(
-						            'header' => 'ตำแหน่ง',
+						            'header' => 'ตำแหน่งที่สมัคร',
 						            'type'=>'html',
 						            'value'=>function($data){
 						                return $data->position->position_title;
 						            }
 						        ),
-			// 					array(
-			// 						'name' => 'idensearch',
-			// 						'type'=>'raw',
-			// 						'value' => '$data->profile->identification',
-			// //'value' => 'CHtml::link(UHtml::markSearch($data, ),array("admin/view","id"=>$data->id))',
-			// 					),
-								// array(
-								// 	'name'=>'email',
-								// 	'type'=>'raw',
-								// 	'value'=>'CHtml::link(UHtml::markSearch($data,"email"), "mailto:".$data->email)',
-								// ),
 								// array(
 								// 	'name'=>'email',
 								// 	'type'=>'raw',
@@ -126,26 +121,25 @@ Yii::app()->clientScript->registerScript('search', "
 								array(
 									'type'=>'raw',
 									'value'=>function($data){
-										if($data->status == 1){
+										if($data->register_status == 1){
 											echo CHtml::button("ปิด",array("class"=>"btn btn-danger changeStatus","data-id" => $data->id));
 										} else {
-											echo CHtml::button("รออนุมัติ",array("class"=>"btn btn-success changeStatus","data-id" => $data->id));
+											echo CHtml::button("รอการตรวจสอบ",array("class"=>"btn btn-success changeStatus","data-id" => $data->id));
 										}
 									},
-									'header' => 'ยืนยันการสมัครสมาชิก',
+									'header' => 'อนุมัติสมัครสมาชิก',
 									'htmlOptions'=>array('style'=>'text-align: center;'),
 									'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
 								),
 								array(
-                                            'header' => 'พิมพ์ใบสมัคร',
-                                            'type' => 'raw',
-                                            'value' => function($data) {
-                                               //var_dump($data->id);
-                                                return CHtml::button("พิมพ์",array('class' => 'btn btn btn-success print_pdf','data-id' => $data->id));
-                                            },'htmlOptions' => array(
-                                                'style'=> "text-align: center;",
-                                            ),
-                                        ),
+									'type'=>'raw',
+									'value'=>function($data){	
+											echo CHtml::button("ตรวจสอบ",array("class"=>"btn btn-success Check_information","data-id" => $data->id));
+									},
+									'header' => 'ตรวจสอบข้อมูลการสมัคร',
+									'htmlOptions'=>array('style'=>'text-align: center;'),
+									'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
+								),
 								// array(
 								// 	'class'=>'AButtonColumn',
 								// 	'visible'=>Controller::PButton(
@@ -170,12 +164,38 @@ Yii::app()->clientScript->registerScript('search', "
 						));
 
 						?>
+						<!-- modal message -->
+<div class="modal fade" tabindex="-1" role="dialog" id="selectModal1">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
 
+        </div>
+    </div>
+</div>
+<!-- end modal -->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="selectModal">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color: #3C8DBC;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" style="font-size: 25px;color: #fff;}">ข้อความ</h4>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer" style="background-color: #eee;">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                <button id="btnSubmit" type="submit" class="btn btn-primary" onclick="saveModal()">บันทึก</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 
 						<div class="modal fade" id="modal-id-card">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
-										<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times-circle text-white" aria-hidden="true"></i></button> -->
+										
 										<h4 class="modal-title text-white"><i class="fa fa-lock" aria-hidden="true"></i>
 										แก้ไขบัตรประชาชน สำหรับเรียนหลักสูตร CPD</h4>
 									</div>
@@ -189,7 +209,7 @@ Yii::app()->clientScript->registerScript('search', "
 									<button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
 								</div>
 							</div>
-						</div>
+						</div> -->
 						<script>
 							$( ".changeStatus" ).click(function() {
 								var btn = $(this);
@@ -202,15 +222,36 @@ Yii::app()->clientScript->registerScript('search', "
 									showConfirmButton: false
 								});
 								$.ajax({
-									//url: "<?= $this->createUrl('admin/active'); ?>", 
-									url: "<?=Yii::app()->createUrl('user/admin/active');?>",
+									url: "<?= $this->createUrl('admin/confirm'); ?>", 
 									type: "POST",
 									data:  {id:id},
 									success: function(result){
+										console.log(result);
 										if(result == 1) btn.addClass('btn-success').removeClass('btn-danger');
 										else btn.addClass('btn-danger').removeClass('btn-success');
 										btn.val(_items[result]);
 										location.reload();
+									}
+								});
+							});
+
+							$( ".Check_information" ).click(function() {
+								var btn = $(this);
+								var id = btn.attr("data-id");
+								$.ajax({
+									url: "<?= $this->createUrl('admin/Checkinformation'); ?>", 
+									type: "POST",
+									data:  {id:id},
+									success: function(data){
+										//console.log(data);
+										 $('#selectModal .modal-title').html('ตรวจสอบข้อมูลการสมัคร');
+                                         $('#selectModal .modal-body').html(data);
+                                         $('#btnSubmit').css('display','none');
+                                         $('#selectModal').modal('show');
+										// if(result == 1) btn.addClass('btn-success').removeClass('btn-danger');
+										// else btn.addClass('btn-danger').removeClass('btn-success');
+										// btn.val(_items[result]);
+										// location.reload();
 									}
 								});
 							});

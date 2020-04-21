@@ -1,3 +1,4 @@
+
 <?php 
 class AdminController extends Controller
 {
@@ -101,21 +102,30 @@ class AdminController extends Controller
 	{
 		$model = new User('search');
         $model->unsetAttributes();  // clear any default values
+        $model->typeuser = array(1);
+        $model->register_status = array(1);
+        $model->supper_user_status = true;
         if(isset($_GET['User'])){
         	$model->attributes=$_GET['User'];
         }
         $this->render('approve',array(
         	'model'=>$model,
         ));
-		/*$dataProvider=new CActiveDataProvider('User', array(
-			'pagination'=>array(
-				'pageSize'=>Yii::app()->controller->module->user_page_size,
-			),
-		));
+	}
 
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));//*/
+	public function actionMembership ()
+	{
+		$model = new User('search');
+        $model->unsetAttributes();  // clear any default values
+        $model->typeuser = array(1);
+        $model->register_status = array(0);
+        $model->supper_user_status = true;
+        if(isset($_GET['User'])){
+        	$model->attributes=$_GET['User'];
+        }
+        $this->render('Membership',array(
+        	'model'=>$model,
+        ));
 	}
 
 	public function loadDepartment($department_id){
@@ -178,31 +188,43 @@ class AdminController extends Controller
 		exit();
 	}
 
-	public function actionAdmin()
+	// public function actionAdmin()
+	// {
+	// 	$model=new User('search');
+ //        $model->unsetAttributes();  // clear any default values
+ //        if(isset($_GET['User']))
+ //        	$model->attributes=$_GET['User'];
+
+ //        $this->render('index',array(
+ //        	'model'=>$model,
+ //        ));
+	// 	/*$dataProvider=new CActiveDataProvider('User', array(
+	// 		'pagination'=>array(
+	// 			'pageSize'=>Yii::app()->controller->module->user_page_size,
+	// 		),
+	// 	));
+
+	// 	$this->render('index',array(
+	// 		'dataProvider'=>$dataProvider,
+	// 	));//*/
+	// }
+    public function actionEmployee()
 	{
 		$model=new User('search');
         $model->unsetAttributes();  // clear any default values
+        $model->typeuser = array(2,3);
+        $model->supper_user_status = true;
         if(isset($_GET['User']))
         	$model->attributes=$_GET['User'];
-
         $this->render('index',array(
         	'model'=>$model,
         ));
-		/*$dataProvider=new CActiveDataProvider('User', array(
-			'pagination'=>array(
-				'pageSize'=>Yii::app()->controller->module->user_page_size,
-			),
-		));
-
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));//*/
 	}
-
 	public function actionGeneral()
 	{
 		$model=new User('search');
         $model->unsetAttributes();  // clear any default values
+        $model->typeuser = array(1);
         $model->supper_user_status = true;
         if(isset($_GET['User']))
         	$model->attributes=$_GET['User'];
@@ -232,16 +254,47 @@ class AdminController extends Controller
 		// }
 		$genpass = substr($model->identification, -6);
 		$model->username = $model->identification;
+		$model->register_status = 1;
 		$model->save(false);
 		$to['email'] = $model->email;
 		$to['firstname'] = $model->profile->firstname;
 		$to['lastname'] = $model->profile->lastname;
 		$message = $this->renderPartial('_mail_message',array('model' => $model,'genpass' => $genpass),true);
 		if($message){
-			 $send = Helpers::lib()->SendMail($to,'อนุมัติการสมัครสมาชิก',$message);
+			 $send = Helpers::lib()->SendMail($to,'อนุมัติการเข้าใช้งานระบบ',$message);
 			//$send = Helpers::lib()->SendMailNotification($to,'อนุมัติการสมัครสมาชิก',$message);
 		}
 		$this->redirect(array('/user/admin/approve'));
+	}
+
+	public function actionConfirm()
+	{
+		
+		$id = $_POST['id'];
+		$model = User::model()->findByPk($id);
+		if($model->register_status == 1){
+			$model->register_status = 0;
+		} else {
+			$model->register_status = 1;
+		}
+		$model->save(false);
+		$to['email'] = $model->email;
+		$to['firstname'] = $model->profile->firstname;
+		$to['lastname'] = $model->profile->lastname;
+		$message = $this->renderPartial('_mail_membership',array('model' => $model,'genpass' => $genpass),true);
+		if($message){
+			 $send = Helpers::lib()->SendMail($to,'อนุมัติการสมัครสมาชิก',$message);
+		}
+		$this->redirect(array('/user/admin/Membership'));
+	}
+
+	public function actionCheckinformation()
+	{
+		$id = $_POST['id'];
+		$user = User::model()->findByPk($id);
+		$profile = Profile::model()->findByPk($id);
+	
+       $this->renderPartial('Checkinformation',array('user' => $user,'profile' => $profile));
 	}
 
 	public function actionIdCard($id)
@@ -909,24 +962,24 @@ class AdminController extends Controller
 			// 	$model->verifyPassword = $_POST['User']['confirmpass'];
 			// }
 
-				    $member = Helpers::lib()->ldapTms($model->email);
+				    // $member = Helpers::lib()->ldapTms($model->email);
 			 // $member['çount'] = 0;
-				if($member["count"] > 0){ //TMS
-					Helpers::lib()->_insertLdap($member);
-					$modelStation = Station::model()->findByAttributes(array('station_title'=>$member[0]['st'][0]));
-					$modelDepartment = Department::model()->findByAttributes(array('dep_title'=>$member[0]['department'][0]));
-					$modelDivision = Division::model()->findByAttributes(array('div_title'=>$member[0]['division'][0]));
+				// if($member["count"] > 0){ //TMS
+				// 	Helpers::lib()->_insertLdap($member);
+				// 	$modelStation = Station::model()->findByAttributes(array('station_title'=>$member[0]['st'][0]));
+				// 	$modelDepartment = Department::model()->findByAttributes(array('dep_title'=>$member[0]['department'][0]));
+				// 	$modelDivision = Division::model()->findByAttributes(array('div_title'=>$member[0]['division'][0]));
 
-					$model->division_id = $modelDivision->id;
-					$model->station_id = $modelStation->station_id;
-					$model->department_id = $modelDepartment->id;
-					$model->password = md5($model->email);
-					$model->verifyPassword = $model->password;
-					$model->confirmpass = $model->password;
+				// 	$model->division_id = $modelDivision->id;
+				// 	$model->station_id = $modelStation->station_id;
+				// 	$model->department_id = $modelDepartment->id;
+				// 	$model->password = md5($model->email);
+				// 	$model->verifyPassword = $model->password;
+				// 	$model->confirmpass = $model->password;
 					
 
-					$model->email = $member[0]['mail'][0];
-				}else{ //LMS
+				// 	$model->email = $member[0]['mail'][0];
+				// }else{ //LMS
 					$model->email = $_POST['User']['username'];
 					// $model->password = ($_POST['User']['identification']);
 					// $model->verifyPassword = $model->password;
@@ -941,7 +994,7 @@ class AdminController extends Controller
 					$model->confirmpass=UserModule::encrypting($_POST['User']['confirmpass']);
 					}
 					$model->scenario = 'general';
-				}
+				// }
 
 			$profile->attributes=$_POST['Profile'];
 			// $model->verifyPassword = $model->password;
@@ -1029,165 +1082,60 @@ class AdminController extends Controller
 		));
 	}
 
-	public function actionPrintpdf(){
-		
-		$user_id =$_POST['id'];
-		if ($user_id === '') {
+	public function actionPrintPDF(){
+
+		$user_id =$_GET['id'];
+		if ($user_id != '') {
 			$profile = Profile::model()->find(array(
-				//'condition' => 'pro_id=:pro_id AND active=:active',
+				'condition' => 'user_id=:user_id ',
 				'params' => array('user_id' => $user_id)
 			));
 			$user = User::model()->find(array(
-				//'condition' => 'pro_id=:pro_id AND active=:active',
+				'condition' => 'id=:id',
 				'params' => array('id' => $user_id)
 			));
-             $padding_left = 12.7;
-		$padding_right = 12.7;
-		// $padding_right = 25.4;
-		
-		$padding_top = 15;
-		$padding_bottom = 20;
+
+		// 	if(isset($profile))
+		// {
+	  //       $mPDF = Yii::app()->ePdf->mpdf();
+	  //       var_dump($mPDF);
+	  //       $mPDF->setDisplayMode('fullpage');
+	  //       $mPDF->setAutoFont();
+			// $mPDF->AddPage('P');
+			// $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('printpdf', array('profile'=>$profile, 'user'=>$user), true), 'UTF-8', 'UTF-8'));
+			// $mPDF->Output();
+		// $padding_left = 12.7;
+		// $padding_right = 12.7;
+		// $padding_top = 15;
+		// $padding_bottom = 20;
 		Yii::import('application.extensions.*');
 		require_once('THSplitLib/segment.php');
 
+		// $mPDF = Yii::app()->ePdf->mpdf('th', 'A4', '0', '', $padding_left, $padding_right, $padding_top, $padding_bottom);
 
-		$mPDF = Yii::app()->ePdf->mpdf('th', 'A4', '0', '', $padding_left, $padding_right, $padding_top, $padding_bottom);
-		$mPDF->useDictionaryLBR = false;
 		// $mPDF->useDictionaryLBR = false;
-		$mPDF->setDisplayMode('fullpage');
-		$mPDF->autoLangToFont = true;
-		$mPDF->SetTitle("ใบสมัครเข้ารับการศึกษา");
-		$mPDF->AddPage('P'); // แนวตั้ง
-		// $mPDF->showImageErrors = true;
-		$firstpage = '
-			<style type="text/css">
- 		body {
- 			font-family: "sarabun";
- 		}
- 		</style>
+		// $mPDF->setDisplayMode('fullpage');
+		// $mPDF->autoLangToFont = true;
+		// $mPDF->SetTitle("ใบสมัครสมาชิก");
+		// $mPDF->AddPage('P'); // แนวตั้ง
 
+	 //    $footer = "<div><table border='0' width='100%'><tr><td width='80%'></td>ใบสมัครสมาชิก<td width='20%' style='text-align:right;'><p>{PAGENO}</p></td><tr></table></div>";
+		// $mPDF->SetFooter($footer);
+		// $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('PrintPDF/', array('profile'=>$profile, 'user'=>$user), true), 'UTF-8', 'UTF-8'));
+		// $mPDF->Output('Register.pdf');
+	        //require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
+			//$mPDF = new \Mpdf\Mpdf(['orientation' => 'P']);
+			$html2pdf = Yii::app()->ePdf->HTML2PDF();
+			$html2pdf->WriteHTML($this->renderPartial('PrintPDF', array('profile'=>$profile, 'user'=>$user), true));
+			$html2pdf->Output('Register.pdf');
 
-		<div style="padding-bottom:-20px;">
-		<table border="0" width="100%" style="border-collapse:collapse;">
-		<tr>
-		<td style="text-align:center; padding-top:30px;">
-		<p><img src="images/logo_kpi_regis_bw.jpg" width="120"></p>
-		</td>
-		</tr>
-		<tr>
-		<td width="100%" style="text-align:center; font-size:50px; font-weight: bold;">
-		<p>ใบสมัครเข้ารับการศึกษา</p>
-		</td>
-		</tr>
-		<tr>
-		<td width="100%" style="text-align:center; padding-top:100px; font-size:40px; font-weight: bold;">
-		<p>'.$category['cate_title'].'</p>
-		</td>
-		</tr>
-		<tr>
-		<td width="100%" style="text-align:center; font-size:50px; font-weight: bold;">
-		<p>'.$course['course_title'];
-
-		if($generation != 0){
-			$firstpage .= " รุ่นที่ ".$generation; 
-		}
-
-		$firstpage .= '</p>
-		</td>
-		</tr>
-		<tr>
-			<td width="100%" style="text-align:center; font-size:40px; font-weight: bold;">
-				<p>ปีการศึกษา พ.ศ. '.(date('Y', strtotime($issueCourse['ic_regis_date']))+543).'</p>
-			</td>
-		</tr>
-		<tr>
-			<td width="100%" style="text-align:center; padding-top:170px; font-size:42px; font-weight: bold;">
-				<p>';
-				if($issueCourse_ex->course->office->office_name != ""){
-					$firstpage .=  $issueCourse_ex->course->office->office_name;
-				}else{
-					$firstpage .= '<font color="white">-</font>';
-				}
-
-				$firstpage .= '</p>
-			</td>
-		</tr>
-		<tr>
-			<td width="100%" style="text-align:center; font-size:42px; font-weight: bold;">
-				<p>ใบสมัครสมาชิก</p>
-			</td>
-		</tr>
-		<tr>
-			<td width="80%" style="text-align:center; font-size:30px; font-weight: bold;">		
-				<p><img src="images/line_3rd.jpg" width="500"></p>				
-			</td>
-		</tr>
-		</table>
-		</div>';
-
-
-		$firstpage = mb_convert_encoding($firstpage, 'UTF-8', 'UTF-8');
-		$mPDF->WriteHTML($firstpage);
-		$mPDF->AddPage();
-
-		$footer = "<div><table border='0' width='100%'><tr><td width='80%'>".$course_iso_doc."</td><td width='20%' style='text-align:right;'><p>{PAGENO}</p></td><tr></table></div>";
-		$mPDF->SetFooter($footer);
-		$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('prinf', array('profile'=>$profile, 'user'=>$user), true), 'UTF-8', 'UTF-8'));
-		// $mPDF->SetHeader("");
-		// $mPDF->AddPage();
-		// $arr_month = array('มกราคม', 'กุมพาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม');
-		// $export_page = '
-		// <div style="padding-top:20px; padding-bottom:10px; font-size:22px;">
- 	// 	<table border="0" width="100%" style="border-collapse:collapse;">
- 	// 		<tr>
- 	// 			<td rowspan="2" width="10%" style="text-align:center;">
- 	// 				<img src="images/logo_kpi_regis.jpg" width="40">
- 	// 			</td>
- 	// 			<td style="font-size:22px; font-weight: bold; padding-bottom:-5px;" width="90%">
- 	// 				ออกหมายเลขใบสมัคร
- 	// 			</td>
- 	// 		</tr>
- 	// 		<tr>
- 	// 			<td style="font-size:18px; padding-top:-5px;" width="80%">
- 	// 				'.date('d', strtotime($issueCourse['ic_regis_date'])).' '.$arr_month[date('m', strtotime($issueCourse['ic_regis_date']))-1].' '.(date('Y', strtotime($issueCourse['ic_regis_date']))+543).'
- 	// 			</td>
- 	// 		</tr>
- 	// 	</table>
- 	// 	<div class="col-sm-10 col-sm-offset-1" style="text-align:center;">
- 	// 		<div class="text-center">
- 	// 			<img src="images/success-export.jpg">
- 	// 		</div>
- 	// 		<h3 class="text-center success-course">
- 	// 			ลงทะเบียนเสร็จสิ้น
- 	// 			<br>
- 	// 			<div>
- 	// 				<h4>
- 	// 					<div>
- 	// 						<span>'.$category['cate_title'].'<br></span>
- 	// 					</div>';
-
-  //                       if($gen != 0){
-  //                           $export_page .= '<span>'.$course.'<br> ( รุ่นที่ '.$gen.' )</span>';
-
-  //                       }
-  //               $export_page .= '</h4>
- 	// 				<small></small>
- 	// 			</div>
- 	// 		</h3>
- 	// 		<div class="export-code">
- 	// 			<div class="code-box"> หมายเลขใบสมัครของท่าน:
- 	// 				<span id="code-register">'.$issueCourse['ic_code'].'</span>
- 	// 			</div>
- 	// 		</div>
- 	// 	</div>
- 	// 	<div style="text-align:center;">
- 	// 	<img src="images/bottom-export.jpg">
- 	// 	</div>
- 	// </div>
-		// ';
-		// $mPDF->WriteHTML($export_page);
-		// $mPDF->Output('ใบสมัครเข้ารับการศึกษา_'.$issueCourse['ic_code'].'.pdf', 'I');
-		
+			# mPDF
+       
+		// }
+		// else
+		// {
+		// 	throw new CHttpException(404,'The requested page does not exist.');
+		// }
 		}
 	}
 

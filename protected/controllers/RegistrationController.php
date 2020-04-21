@@ -347,6 +347,7 @@ class RegistrationController extends Controller {
 //     $users->password = $_POST['idcard']; 
     $users->repass_status = 0;
     $passwordshow = $_POST['idcard'];
+    $users->create_at = date("Y-m-d H:i:s");
 //    $users->activkey = UserModule::encrypting(microtime() . $_POST['idcard']);
             //$users->activkey = UserModule::encrypting(microtime() . $users->password);
     //$users->orgchart_lv2 = $Neworg;
@@ -397,12 +398,13 @@ class RegistrationController extends Controller {
     // } else {
     //     $users->status = 0;
     // }
-if ($profile->type_user == 3) {
-    $users->status = 1;
-}else{
+if ($profile->type_user == 1) {
     $users->status = 0;
+    $users->register_status = 0;
+}else{
+    $users->register_status = 1;
+    $users->status = 1;
 }
-
 
     // $profile->generation = $gen->id_gen;
 
@@ -455,9 +457,9 @@ if ($profile->type_user == 3) {
     }
     if ($users->save()) {
                         // $findid = User::model()->notsafe()->findbyattributes(array('email'=>$_POST['User'][email]));
-
+                
         $profile->user_id = $users->id;
-        if ($_POST['ProfilesEdu']){
+        if (isset($_POST['ProfilesEdu'])){
             foreach ($_POST['ProfilesEdu'] as $action_index=>$action_value){
 
              $Edu = new ProfilesEdu;

@@ -1166,9 +1166,18 @@ Class MenuLeft extends Controller
 	        			/*====== Check Permissions Sup-User (1) ======*/
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'admin.*',
+	        				'admin.Membership'
+	        			)),
+	        			'label'=>'อนุมัติยืนยันการสมัคร',
+	        			'url'=>array('//user/admin/membership')
+	        		),
+	        		array(
+	        			/*====== Check Permissions Sup-User (1) ======*/
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'admin.*',
 	        				'admin.Approve'
 	        			)),
-	        			'label'=>'อนุมัติสมาชิก',
+	        			'label'=>'อนุมัติการตรวจสอบการสมัครสมาชิก',
 	        			'url'=>array('//user/admin/approve')
 	        		),
 	        		array(
@@ -1189,11 +1198,17 @@ Class MenuLeft extends Controller
 	        			'label'=>'เพิ่มสมาชิกจาก Excel',
 	        			'url'=>array('//user/admin/excel')
 	        		),
+	        		// array(
+	        		// 	/*====== Check Permissions Sup-User (2) ======*/
+	        		// 	'visible'=>true,
+	        		// 	'label'=>'รายชื่อสมาชิก(ผู้ดูแลระบบ)',
+	        		// 	'url'=>array('//user/admin/admin')
+	        		// ),
 	        		array(
 	        			/*====== Check Permissions Sup-User (2) ======*/
 	        			'visible'=>true,
-	        			'label'=>'รายชื่อสมาชิก(ผู้ดูแลระบบ)',
-	        			'url'=>array('//user/admin/admin')
+	        			'label'=>'รายชื่อสมาชิก(พนักงาน)',
+	        			'url'=>array('//user/admin/employee')
 	        		),
 	        		array(
 	        			/*====== Check Permissions Sup-User (2) ======*/

@@ -70,16 +70,17 @@ class User extends CActiveRecord
 			// array('username', 'match', 'pattern' => '/^[0-9_]+$/u','message' => 'กรอกเลขบัตรประชาชน 13 หลักเท่านั้น'),
 			array('status', 'in', 'range'=>array(self::STATUS_NOACTIVE,self::STATUS_ACTIVE,self::STATUS_BANNED)),
 			array('superuser', 'in', 'range'=>array(0,1)),
+			array('register_status', 'in', 'range'=>array(0,1)),
             array('create_at', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
             array('lastvisit_at', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
 			//array('username, email, superuser, status,password', 'required'),
 			// array('username, email, status,password,company_id,division_id,department_id,position_id,position_name', 'required'),
 			array('username, email, status,password,identification', 'required'), //Jae Fix
 			// array('username, email', 'unique'),
-			array('superuser, status, online_status,online_user', 'numerical', 'integerOnly'=>true),
+			array('superuser, status, online_status,online_user,register_status', 'numerical', 'integerOnly'=>true),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'update'),
-			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,station_id,company_id, division_id,position_id,lastactivity,orgchart_lv2,del_status,avatar,pic_cardid2,employee_id,branch_id', 'safe', 'on'=>'search'),
+			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,station_id,company_id, division_id,position_id,lastactivity,orgchart_lv2,del_status,avatar,pic_cardid2,employee_id,branch_id,register_status', 'safe', 'on'=>'search'),
 			//array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
 			array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 			// array('confirmpass', 'compare', 'compareAttribute'=>'newpassword', 'message' => UserModule::t("Retype Password is incorrect.")),
@@ -89,7 +90,7 @@ class User extends CActiveRecord
 			array('email,password,verifyPassword', 'required'),
 			//array('captcha', 'required','message' => "Please verify that you are not a robot."),
 			array('username', 'length', 'max'=>255),
-			array('superuser, status, online_status,online_user', 'numerical', 'integerOnly'=>true),
+			array('superuser, status, online_status,online_user,register_status', 'numerical', 'integerOnly'=>true),
 			// array('username', 'length', 'max'=>13, 'min' => 13,'message' => 'กรอกเลขบัตรประชาชน 13 หลักเท่านั้น'),
 			array('email', 'email'),
 			array('auditor_id', 'length', 'max'=>5, 'min' => 5,'message' => 'กรุณาป้อนเลขผู้สอบ 5 หลัก'),
@@ -258,7 +259,7 @@ class User extends CActiveRecord
 			'employee_id' => 'เลขประจำตัวพนักงาน',
 			'repass_status' => 'สถานะการเปลี่ยนรหัสผ่าน',
 			'branch_id' => UserModule::t("สาขา"),
-
+            'register_status' => 'สถานะการสมัคร'
 			// 'passport' => UserModule::t("passport"),
 		);
 	}
@@ -364,6 +365,7 @@ class User extends CActiveRecord
         $criteria->compare('status',$this->status);
  		$criteria->compare('online_status',$this->online_status);
  		$criteria->compare('online_user',$this->online_user);
+ 		$criteria->compare('register_status',$this->register_status);
  		// $criteria->compare('passport',$this->passport);
  		
         return new CActiveDataProvider(get_class($this), array(

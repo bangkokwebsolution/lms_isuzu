@@ -35,6 +35,8 @@ class User extends CActiveRecord
 	public $idensearch;
 	public $excel_file = null;
 	public $supper_user_status;
+	public $typeuser;
+	public $register_status;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -76,14 +78,14 @@ class User extends CActiveRecord
             array('lastvisit_at', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
 			// array('username, email, superuser, status,password,company_id,division_id,department_id,position_id,position_name', 'required'),
 			// array('username, email, superuser, status,password', 'required'),
-			array('username, email, superuser, status', 'required'),
+			array(' email, superuser, status', 'required'),
 			// array('identification', 'required','on' => 'general'),
 			
 			array('password', 'required', 'on' => 'reset_password'),
 			array('superuser, status, online_status,online_user', 'numerical', 'integerOnly'=>true),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'update'),
-			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,company_id, division_id,position_id,lastactivity,orgchart_lv2, group,idensearch,identification,station_id,supper_user_status,pic_cardid2,employee_id', 'safe', 'on'=>'search'),
+			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,company_id, division_id,position_id,lastactivity,orgchart_lv2, group,idensearch,identification,station_id,supper_user_status,pic_cardid2,employee_id,typeuser,register_status', 'safe', 'on'=>'search'),
 			// array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
 			array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 			array('confirmpass', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
@@ -92,7 +94,7 @@ class User extends CActiveRecord
 			// array('username, email,password,verifyPassword,company_id,division_id,department_id,position_id,position_name', 'required'),
 			array('username, email,password', 'required'),
 			array('username', 'length', 'max'=>255),
-			array('superuser, status, online_status,online_user', 'numerical', 'integerOnly'=>true),
+			array('superuser, status, online_status,online_user,register_status', 'numerical', 'integerOnly'=>true),
 			// array('username', 'length', 'max'=>13, 'min' => 13,'message' => 'กรอกเลขบัตรประชาชน 13 หลักเท่านั้น'),
 			array('email', 'email'),
 			// array('email', 'email','on' => 'test'),
@@ -249,8 +251,10 @@ class User extends CActiveRecord
 			'excel_file' => 'ไฟล์ Excel Import',
 			'supper_user_status' => 'สถานะ',
 			'pic_cardid2' => 'เลขประจำตัวพนักงาน', //ใช้ฟิลนี้ชั่วคราว
-			'employee_id' => 'เลขประจำตัวพนักงาน'
+			'employee_id' => 'เลขประจำตัวพนักงาน',
+			'typeuser' =>'ประเภทผู้ใช้งาน',
 			// 'passport'=> 'รหัสหนังสือเดินทาง',
+			'register_status' => 'สถานะการสมัคร'
 		);
 	}
 
@@ -372,8 +376,7 @@ public function validateIdCard($attribute,$params){
         	$criteria->compare('superuser',1);
         }else{
         	$criteria->compare('superuser',0);
-        }
-        
+        }     
         $criteria->compare('status',$this->status);
         $criteria->compare('del_status',0);
  		$criteria->compare('online_status',$this->online_status);
@@ -381,7 +384,8 @@ public function validateIdCard($attribute,$params){
  		$criteria->compare('group',$this->group);
  		$criteria->compare('identification',$this->identification);
  		$criteria->compare('pic_cardid2',$this->pic_cardid2);
- 		
+ 		$criteria->compare('register_status',$this->register_status);
+ 		$criteria->compare('profile.type_user',$this->typeuser);
  		// $criteria->compare('passport',$this->passport);
 
  		// $criteria->compare('profile.identification',$this->idensearch,true);
@@ -402,12 +406,13 @@ public function validateIdCard($attribute,$params){
 	$criteria=new CDbCriteria;
 
 	$criteria->with = array('profile');
+	$criteria->with = array('position');
 	$criteria->compare('id',$this->id);
 	$criteria->compare('username',$this->username,true);
 	$criteria->compare('password',$this->password);
 	$criteria->compare('pic_user',$this->pic_user);
 	$criteria->compare('department_id',$this->department_id);
-	$criteria->compare('station_id',$this->station_id);
+	$criteria->compare('position_id',$this->position_id);
 	$criteria->compare('email',$this->email,true);
 	$criteria->compare('activkey',$this->activkey);
 	$criteria->compare('create_at',$this->create_at);
@@ -419,7 +424,46 @@ public function validateIdCard($attribute,$params){
 	$criteria->compare('online_status',$this->online_status);
 	$criteria->compare('online_user',$this->online_user);
 	$criteria->compare('group',$this->group);
+    $criteria->compare('register_status',$this->register_status);
+	$criteria->compare('profile.identification',$this->idensearch,true);
 
+	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
+	//$criteria->compare('orgchart_lv2',$org,true);
+
+	return new CActiveDataProvider(get_class($this), array(
+		'criteria'=>$criteria,
+		'pagination'=>array(
+			'pageSize'=>Yii::app()->getModule('user')->user_page_size,
+		),
+	));
+}
+public function searchmembership()
+{
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
+
+	$criteria=new CDbCriteria;
+
+	$criteria->with = array('profile');
+	$criteria->with = array('position');
+	$criteria->compare('id',$this->id);
+	$criteria->compare('username',$this->username,true);
+	$criteria->compare('password',$this->password);
+	$criteria->compare('pic_user',$this->pic_user);
+	$criteria->compare('department_id',$this->department_id);
+	$criteria->compare('position_id',$this->position_id);
+	$criteria->compare('email',$this->email,true);
+	$criteria->compare('activkey',$this->activkey);
+	$criteria->compare('create_at',$this->create_at);
+	$criteria->compare('lastvisit_at',$this->lastvisit_at);
+	$criteria->compare('lastactivity',$this->lastactivity);
+	$criteria->compare('superuser',$this->superuser);
+	$criteria->compare('status',0);
+	$criteria->compare('del_status',0);
+	$criteria->compare('register_status',0);
+	$criteria->compare('online_status',$this->online_status);
+	$criteria->compare('online_user',$this->online_user);
+	$criteria->compare('group',$this->group);
 	$criteria->compare('profile.identification',$this->idensearch,true);
 	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
 	//$criteria->compare('orgchart_lv2',$org,true);
@@ -431,7 +475,6 @@ public function validateIdCard($attribute,$params){
 		),
 	));
 }
-
     public function getCreatetime() {
         return strtotime($this->create_at);
     }

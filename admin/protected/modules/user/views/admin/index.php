@@ -16,6 +16,7 @@ Yii::app()->clientScript->registerScript('search', "
 		$('.search-form').toggle();
 		return false;
 	});
+  
 	$('.search-form form').submit(function(){
 		$.fn.yiiGridView.update('user-grid', {
 			data: $(this).serialize()
@@ -23,7 +24,20 @@ Yii::app()->clientScript->registerScript('search', "
 		return false;
 	});
 	");
+Yii::app()->clientScript->registerScript('register_script_name', "
+	$('.print_pdf').click(function(e){
+		$.ajax({
+			type: 'POST',
+			url: 'printpdf',
+			data: {id: $(this).attr('data-id')},
+			success: function(data){
+				window.location.href = data;
+				},
+		});
+		return false;
+	});
 
+");
 	?>
 	<div id="user" class="innerLR">
 		
@@ -39,7 +53,8 @@ Yii::app()->clientScript->registerScript('search', "
             array('name'=>'superuser','type'=>'list','query' => $model->itemAlias('AdminStatus')),
             array('name'=>'status','type'=>'list','query' => $model->itemAlias('UserStatus')),
         )
-    ));?>
+    ));
+    ?>
 		<div class="widget" style="margin-top: -1px;">
 			<div class="widget-head">
 				<h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Registration"); ?></h4>
@@ -137,6 +152,16 @@ Yii::app()->clientScript->registerScript('search', "
 									'value'=>'User::chk_online($data->id,$data->lastactivity,$data->online_status)',
 									'filter' => User::itemAlias("Online"),
 								),
+								array(
+                                            'header' => 'พิมพ์ใบสมัคร',
+                                            'type' => 'raw',
+                                            'value' => function($data) {
+                                               //var_dump($data->id);
+                                                return CHtml::button("พิมพ์",array('class' => 'btn btn btn-success print_pdf','data-id' => $data->id));
+                                            },'htmlOptions' => array(
+                                                'style'=> "text-align: center;",
+                                            ),
+                                        ),
 								array(            
 									'class'=>'AButtonColumn',
 									'visible'=>Controller::PButton( 
@@ -189,3 +214,6 @@ Yii::app()->clientScript->registerScript('search', "
 		</div>
 	</div>
 	<!-- END innerLR -->
+	<script type="text/javascript">
+
+	</script>

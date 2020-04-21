@@ -368,14 +368,14 @@ function editNameTrain(filedoc_id){
                         </div>
                         <div class="col-md-3 col-lg-3 col-xs-12">
                             <div class="form-group">
-                                <label for=""><?php echo $label->label_firstname; ?>(EN)</label>
+                                <label for=""><?php echo $label->label_firstname; ?>(EN)<font color="red">*</font></label>
                                 <?php echo $form->textField($profile, 'firstname_en', array('class' => 'form-control', 'placeholder' => $label->label_firstname)); ?>
                                 <?php echo $form->error($profile, 'firstname_en', array('class' => 'error2')); ?>
                             </div>
                         </div>
                         <div class="col-md-3 col-lg-3 col-xs-12">
                             <div class="form-group">
-                                <label for=""><?php echo $label->label_lastname; ?>(EN)</label>
+                                <label for=""><?php echo $label->label_lastname; ?>(EN)<font color="red">*</font></label>
                                 <?php echo $form->textField($profile, 'lastname_en', array('class' => 'form-control', 'placeholder' => $label->label_lastname)); ?>
                                 <?php echo $form->error($profile, 'lastname_en', array('class' => 'error2')); ?>
                                 <!--<input type="text" class="form-control" id="">-->
@@ -439,7 +439,7 @@ function editNameTrain(filedoc_id){
                         <div class="col-md-2 col-sm-6 col-xs-12 form_name">
                             <div class="form-group">
                                 <label><?php echo $label->label_age; ?></label>
-                                <?php echo $form->textField($profile, 'age', array('class' => 'form-control ages', 'placeholder' => $label->label_age)); ?>
+                                <?php echo $form->textField($profile, 'age', array('class' => 'form-control ages', 'placeholder' => $label->label_age,'readonly'=>true )); ?>
                                 <?php echo $form->error($profile, 'age', array('class' => 'error2')); ?>
                             </div>
                         </div>
@@ -596,7 +596,12 @@ function editNameTrain(filedoc_id){
                         <?php
                     }
                     $modelList = Education::model()->findAll(array("condition" => " active = 'y'"));
-                    $list = CHtml::listData($modelList, 'edu_id', 'edu_name');
+                    if (Yii::app()->session['lang'] == 1) {
+                      $list = CHtml::listData($modelList, 'edu_id', 'edu_name_EN');
+                    }else{
+                      $list = CHtml::listData($modelList, 'edu_id', 'edu_name');
+                    }
+                    
                     $att_Education = array('class' => 'form-control', 'empty' => $label->label_education_level);
                     
                    $starting_year  = 2500;
@@ -939,9 +944,8 @@ function editNameTrain(filedoc_id){
                                 </div>
                             </div>
 
-                            <div class="col-md-8">
+                            <!-- <div class="col-md-8">
                                 <div class="form-group">
-                                    <!-- <label><?php echo $label->label_company; ?></label> -->
                                     <label class="label_branch"><?php echo $label->label_branch; ?> </label>
                                     <?php
                                     $BranchModel = Branch::model()->findAll(array(
@@ -955,6 +959,29 @@ function editNameTrain(filedoc_id){
                                     ?>
                                     <?php echo $form->error($users, 'branch_id', array('class' => 'error2')); ?>
                                 </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div id="office-section_gen">
+                        <div class="row  mb-1 " id="employee_type" >
+                            <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'The boat position you are interested in applying for ':'ตำแหน่งเรือที่ท่านสนใจสมัคร'; ?></strong></div>
+                            <div class="col-sm-12 col-xs-12 col-md-8">
+                                <div class="col-md-5">
+                                <div class="form-group">
+                                    <label><?php echo $label->label_position; ?></label>
+                                    <?php
+                                    $positionModel = Position::model()->findAll(array(
+                                        "condition" => " active = 'y'"
+                                    ));
+                                    $positionList = CHtml::listData($positionModel, 'id', 'position_title');
+                                    $positiontOption = array('class' => 'form-control position', 'empty' => $label->label_placeholder_position);
+                                    ?>
+                                    <?php
+                                    echo $form->dropDownList($users, 'position_id', $positionList, $positiontOption); ?>
+                                    <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
+
+                                </div>
+                            </div>
                             </div>
                         </div>
                     </div>
@@ -985,7 +1012,7 @@ function editNameTrain(filedoc_id){
                                         </div>
                                     </div>
 
-                                    <div class="row justify-content-center">
+                                    <!-- <div class="row justify-content-center">
                                         <div class="col-md-8">
                                             <div class="form-group">
                                                 <label for=""><?php echo $label->label_adress2; ?></label>
@@ -994,7 +1021,7 @@ function editNameTrain(filedoc_id){
                                             </div>
                                         </div>
                                     </div>
-
+ -->
                                     <div class="row justify-content-center">
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -1005,30 +1032,7 @@ function editNameTrain(filedoc_id){
                                                <?php echo $form->error($profile, 'phone1', array('class' => 'error2')); ?>
                                            </div>
                                        </div>
-
-                                       <div class="col-md-4">
-                                        <div class="form-group">
-                                            <label for=""><?php echo $label->label_phone2; ?></label>
-                                            <!-- <input type="text" class="form-control" id="" placeholder="เบอร์มือถือ"> -->
-                                            <?php echo $form->textField($profile, 'phone2', array('class' => 'form-control', 'placeholder' => $label->label_phone2)); ?>
-                                            <?php echo $form->error($profile, 'phone2', array('class' => 'error2')); ?>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row justify-content-center">
-                                    <div class="col-md-8">
-                                        <div class="form-group">
-                                            <label for=""><?php echo $label->label_phone3; ?></label>
-                                            <!-- <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้"> -->
-                                            <?php echo $form->textField($profile, 'phone3', array('class' => 'form-control', 'placeholder' => $label->label_phone3)); ?>
-                                            <?php echo $form->error($profile, 'phone3', array('class' => 'error2')); ?>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row justify-content-center">
-                                    <div class="col-md-8">
+                                        <div class="col-md-4">
                                         <div class="form-group">
                                             <label><?php echo $label->label_ship_down_date; ?></label>
                                             <!-- <input class="form-control default_datetimepicker " autocomplete="off" placeholder="สามารถจะลงทำงานเรือครั้งต่อไป" type="text" name="" id="" value=""> -->      
@@ -1036,6 +1040,28 @@ function editNameTrain(filedoc_id){
                                             <?php echo $form->error($profile, 'ship_down_date', array('class' => 'error2')); ?>                                                            </div>
                                         </div>
                                     </div>
+                                     <!--   <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for=""><?php echo $label->label_phone2; ?></label>
+                                      
+                                            <?php echo $form->textField($profile, 'phone2', array('class' => 'form-control', 'placeholder' => $label->label_phone2)); ?>
+                                            <?php echo $form->error($profile, 'phone2', array('class' => 'error2')); ?>
+                                        </div>
+                                    </div> -->
+                                </div>
+
+                             <!--    <div class="row justify-content-center">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label for=""><?php echo $label->label_phone3; ?></label>
+                                            <?php echo $form->textField($profile, 'phone3', array('class' => 'form-control', 'placeholder' => $label->label_phone3)); ?>
+                                            <?php echo $form->error($profile, 'phone3', array('class' => 'error2')); ?>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <div class="row justify-content-center">
+                                    
 
                                 </div>
                             </div>
@@ -1112,12 +1138,14 @@ function editNameTrain(filedoc_id){
                     $('.form_name').show();
                     $('.form_number_id').show();
                     $("#office-section").hide();
+                    $("#office-section_gen").show();
                 });
                 $("#reject").change(function(event) {
                     $(".id_employee").show();
                     $('.form_name').show();
                     $('.form_number_id').show();
                     $("#office-section").show();
+                    $("#office-section_gen").hide();
                 });
 
             });
@@ -1156,7 +1184,6 @@ function editNameTrain(filedoc_id){
                     if (new_forms === 1 || new_forms === true) {   
 
                         var type_users = $("input[name='type_user']:checked").val();
-                        //console.log(type_users);
                         if (type_users === '3') {
 
                             var type_cards = $("input[name='type_card']:checked").attr('value');
@@ -1169,6 +1196,7 @@ function editNameTrain(filedoc_id){
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").show();
+                                $("#office-section_gen").hide();
                                 $('.form_ship').hide();
                             }else if(type_cards === 'p'){
 
@@ -1178,6 +1206,7 @@ function editNameTrain(filedoc_id){
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").show();
+                                $("#office-section_gen").hide();
                                 $('.form_ship').hide();
                             }else if(type_cards === '' || typeof  type_cards === 'undefined' || typeof  type_cards === null){
 
@@ -1187,6 +1216,7 @@ function editNameTrain(filedoc_id){
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").show();
+                                $("#office-section_gen").hide();
                                 $('.form_ship').hide();
                             }
                         }else if (type_users === '1'){
@@ -1200,6 +1230,7 @@ function editNameTrain(filedoc_id){
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").hide();
+                                $("#office-section_gen").show();
                                 $('.form_ship').hide();
                             }else if(type_cards === 'p'){
 
@@ -1209,6 +1240,7 @@ function editNameTrain(filedoc_id){
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").hide();
+                                $("#office-section_gen").show();
                                 $('.form_ship').hide();
                             }else if(type_cards === '' || typeof  type_cards === 'undefined' || typeof  type_cards === null){
 
@@ -1218,6 +1250,7 @@ function editNameTrain(filedoc_id){
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").hide();
+                                $("#office-section_gen").show();
                                 $('.form_ship').hide();
                             }
                         }else if (typeof  type_users === 'undefined' ){
@@ -1229,11 +1262,12 @@ function editNameTrain(filedoc_id){
                             $('.form_name').hide();
                             $('.form_number_id').hide();
                             $('.form_ship').hide(); 
+                            $("#office-section_gen").hide();
                         }              
                     }else if(new_forms === 0 || typeof  new_forms === 'undefined' || new_forms === false){
 
                      var type_users = $("input[name='type_user']:checked").val();
-                         //console.log(type_users);
+                        
                          if (type_users === '3') {
        
                             var type_cards = $("input[name='type_card']:checked").val();
@@ -1248,7 +1282,7 @@ function editNameTrain(filedoc_id){
                                     $('.label_branch').hide();
                                  }
                                 var type_employee = $("input[name='type_employee']:checked").val();
-                                    console.log(type_employee);
+
                                    if (type_employee === '1') {
                       
                                     $('.form_ship').show();
@@ -1262,6 +1296,7 @@ function editNameTrain(filedoc_id){
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").show();
+                                $("#office-section_gen").hide();
 
                             }else if(type_cards === 'p'){
                                 var branch = <?php echo $branch_js; ?>;
@@ -1285,6 +1320,7 @@ function editNameTrain(filedoc_id){
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").show();
+                                $("#office-section_gen").hide();
                     
                             }
                         }else if (type_users === '1'){
@@ -1298,6 +1334,7 @@ function editNameTrain(filedoc_id){
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").hide();
+                                $("#office-section_gen").show();
                                 $('.form_ship').hide();
 
                             }else if(type_cards === 'p'){
@@ -1308,6 +1345,7 @@ function editNameTrain(filedoc_id){
                                 $('.form_name').show();
                                 $('.form_number_id').show();
                                 $("#office-section").hide();
+                                $("#office-section_gen").show();
                                 $('.form_ship').hide();
                             }
                         }  
@@ -1337,29 +1375,29 @@ function editNameTrain(filedoc_id){
                             }
                         });
                     });
-                    $(".position").change(function() {
-                        var id = $(".position").val();
-                        $.ajax({
-                            type: 'POST',
-                            url: "<?= Yii::app()->createUrl('Registration/ListBranch'); ?>",
-                            data: {
-                                id: id
-                            },
-                            success: function(data) {
-                                //console.log(data);
-                                if (data === '<option value ="">Select Branch </option>') {
-                                $('.Branch').hide();
-                                $('.label_branch').hide();
-                                }else{
+                    // $(".position").change(function() {
+                    //     var id = $(".position").val();
+                    //     $.ajax({
+                    //         type: 'POST',
+                    //         url: "<?= Yii::app()->createUrl('Registration/ListBranch'); ?>",
+                    //         data: {
+                    //             id: id
+                    //         },
+                    //         success: function(data) {
+                    //             //console.log(data);
+                    //             if (data === '<option value ="">Select Branch </option>') {
+                    //             $('.Branch').hide();
+                    //             $('.label_branch').hide();
+                    //             }else{
 
-                                $('.Branch').show();
-                                $('.label_branch').show();
-                                $('.Branch').empty();
-                                $('.Branch').append(data);
-                            }
-                            }
-                        });
-                    });
+                    //             $('.Branch').show();
+                    //             $('.label_branch').show();
+                    //             $('.Branch').empty();
+                    //             $('.Branch').append(data);
+                    //         }
+                    //         }
+                    //     });
+                    // });
 
                     $(".birth").change(function() {
                         var item = $(".birth").val();
