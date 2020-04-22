@@ -4,31 +4,36 @@
 		color: #000;
 	}
 	.profile-detail h5{
-		margin: 10px 0;
+		margin: 5px 0;
 	}
 	.profile-detail h5 b{
 		color: #333;
 	    padding-right: 8px;
 	    min-width: 120px;
 	    display: inline-block;
-	    text-align: right;
+	    text-align: left;
 	}
 	.profile-detail h5 span{
 		color: #296283;
-		padding: 5px 8px;
+		padding: 8px 8px;
 		background: #f0f0f0;
 		border-radius: 5px;
-	    margin: 0 5px;
+	    margin: 5px 0;
 	    font-weight: 600;
         border: 1px solid #ddd;
+        width: 100%;
+        display: inline-block;
 	}
 
-	}
 	.profile-detail h5 ul{
 		list-style: square;
 	}
 	.profile-detail h5 ul li{
-		margin: 18px 0 0 0;
+		margin: 8px 0 0 0;
+	}
+	.profile-detail h5 ul li span{
+		width: auto !important;
+		margin: 0 5px;
 	}
 	.profile-detail h5 ul li a span{
 		color: #296283 !important;
@@ -44,13 +49,15 @@
 		display: inline-block;
 		width: auto !important;
 	}
+	.register-detail{
+		padding: 0 2em 2em;
 </style>
 
 <form>
 	<div class="well profile-detail">
 
 		<h4 class="topic-info">ข้อมูลพื้นฐาน</h4>
-		<div class="mt-1">
+		<div class="mt-1 register-detail">
 			<div class="row">
 				<div class="col-md-12"><h5><b>ชื่อ-นามสกุล:</b><span>นาย&nbsp;&nbsp;ชื่อเต็ม&nbsp;&nbsp;นามสกุลเต็ม</span></h5></div>
 				<div class="col-md-12"><h5><b>Name:</b><span>mr.&nbsp;&nbsp;firstname&nbsp;&nbsp;lastname</span></h5></div>
