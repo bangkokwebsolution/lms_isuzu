@@ -156,12 +156,12 @@
  						</tr>
  					    <tr>
  							<td width="100%" style="text-align:left; font-size:18px; padding-left:220px; padding-bottom:-22px;">
- 								<p><?php if($profiles['passport'] != ""){ echo $profiles['passport']; }else{ echo "-"; } ?></p>
+ 								<p><?php if($profiles['seamanbook'] != ""){ echo $profiles['seamanbook']; }else{ echo "-"; } ?></p>
  							</td>
  						</tr>
  						<tr>
  							<td width="100%" style="text-align:left; font-size:18px; padding-left:567px; padding-bottom:-22px;">
- 								<p><?php if($profiles['passport'] != ""){ echo $profiles['passport']; }else{ echo "-"; } ?></p>
+ 								<p><?php if($profiles['seaman_expire'] != ""){ echo $profiles['seaman_expire']; }else{ echo "-"; } ?></p>
  							</td>
  						</tr>
  						<tr>
@@ -241,7 +241,7 @@
  							</td>
  						</tr>
  						<?php
-                        $position = Position::model()->find(array(
+              $position = Position::model()->find(array(
  							'condition' => 'id=:position_id',
  							'params' => array(':position_id'=>$user['position_id'])));
  						$position = $position->attributes;
