@@ -236,6 +236,174 @@ class OrgChartController extends Controller
 	/**
 	 * Lists all models.
 	 */
+	public function actionCourse($id){
+		// $model_org = OrgChart::model()->findByPk($id);
+		
+	    if(isset($_GET['name'])){
+	    	$criteria = new CDbCriteria;
+	    	$criteria->with = array('courses');
+	    	$criteria->compare('courseonline.active','y');
+	    	$criteria->compare('title_all',$_GET['name']);
+	    	$criteria->group = 'courseonline.course_id';
+	    	$modelCourse = OrgRoot::model()->findAll($criteria);
+	    }else{
+	    	$criteria = new CDbCriteria;
+	    	$criteria->with = array('courses');
+	    	$criteria->group = 'courseonline.course_id';
+	    	$criteria->compare('courseonline.active','y');
+	    	$criteria->compare('orgchart_id',$id);
+	    	$modelCourse = OrgCourse::model()->findAll($criteria);
+	    }
+	    
+	    $courseArray = array();
+		foreach ($modelCourse as $key => $value) {
+			$courseArray[] = $value->course_id;
+		}
+
+		if(isset($id))
+		{
+			$model = new CourseOnline('search');
+			$model->unsetAttributes();
+			if(isset($_GET['CourseOnline']))
+				$model->attributes=$_GET['CourseOnline'];
+				$model->searchCourse = true;
+				$model->org = $courseArray;
+
+				$this->render('course_list',array(
+					'model' => $model,
+					'modelCourse'=>$modelCourse,
+					'position_id' => $id,
+				));
+		}
+		else
+		{
+			throw new CHttpException(404,'The requested page does not exist.');
+		}
+	}
+
+	 public function actionCheckUser(){
+	 	//User
+	 	$all = $_GET['all'];
+	 	$position_id = $_GET['position_id'];
+	 	$course_id = $_GET['id'];
+	 	$orgRoot = OrgChart::model()->findByPk($position_id);
+
+	 	$criteria = new CDbCriteria();
+	 	$criteria->compare('active','y');
+	 	$criteria->compare('parent_id',$orgRoot->id);
+	 	$ckLevel = OrgChart::model()->findAll($criteria);
+	 	
+	 	// var_dump($orgRoot->title);exit();
+	 	$criteria = new CDbCriteria();
+	 	$criteria->with = array('orgchartDivision','orgchartCompany','orgchartDepartment','orgchartPosition','profiles');
+	 	if($all){
+	 		$criteria->compare('orgchartDivision.title',$orgRoot->title,false,'OR');
+	 		$criteria->compare('orgchartCompany.title',$orgRoot->title,false,'OR');
+	 		$criteria->compare('orgchartDepartment.title',$orgRoot->title,false,'OR');
+	 		$criteria->compare('orgchartPosition.title',$orgRoot->title,false,'OR');
+	 	}else{
+	 		if($ckLevel){
+	 			$criteria->compare('division_id',$position_id,false,'OR');
+	 			$criteria->compare('company_id',$position_id,false,'OR');
+	 			$criteria->compare('department_id',$position_id,false,'OR');
+	 			$criteria->compare('position_id',$position_id,false,'OR');
+	 		}else{
+	 			$criteria->compare('position_id',$position_id);
+	 		}
+	 		
+	 	}
+
+	 	
+		$criteria->compare('del_status',0);
+
+	 	//Org root SO,Club,General
+	 	if($position_id == 2 || $position_id == 3 || $position_id == 4){
+	 		// type_user
+	 		$criteria->compare('profiles.type_user',$position_id,false,'OR');
+	 	}
+
+	 	// $criteria->compare('status',1);
+	 	// $criteria->compare('del_status',0);
+	 	$getAlluser = Users::model()->findAll($criteria);
+
+	 	$state = true;
+
+	 	if($state){
+	 		foreach ($getAlluser as $key => $value) {
+	 			$OrgChartModel = OrgChart::model()->findByPk($value->position_id);
+	 			if($OrgChartModel->orgchartParent->title){
+	 				if($OrgChartModel->orgchartParent->title == "Fitness"){
+	 					$state = false;
+	 				}
+	 			}
+	 		}
+	 	}
+	 	
+
+	 	// $state = false;
+	 	// $OrgChartModel = OrgChart::model()->findByPk($position_id);
+	 	// if($OrgChartModel->orgchartParent->title){
+	 	// 	if($OrgChartModel->orgchartParent->title == "Fitness"){
+	 	// 		$state = true;
+	 	// 	}
+	 	// }
+
+	 	// var_dump($getAlluser);exit();
+	 	// //Orgchart
+	 	
+	 	// var_dump(json_encode($mtId));
+	 	// exit();
+
+	 	if(!empty($_POST)){
+
+	 		if($all){
+	 			$model = OrgPosition::model()->deleteAll(array(
+	 			'condition'=>'course_id = "'.$course_id.'" AND org_root_title = "'.$orgRoot->title.'" AND state = "y"'
+	 			));
+	 		}else{
+	 			$model = OrgPosition::model()->deleteAll(array(
+	 			'condition'=>'course_id = "'.$course_id.'" AND org_root_title = "'.$orgRoot->title.'" AND state = "n"'
+	 			));
+	 		}
+	 		
+	 		$saveUserApplied = $_POST['id'];
+	 		if($saveUserApplied) {
+	 			foreach ($saveUserApplied as $user) {
+	 				$model = new OrgPosition;
+	 				$model->course_id = $course_id;
+	 				$model->user_id = $user;
+	 				$model->org_root_title = $orgRoot->title;
+	 				if($all){
+	 					$model->state = "y";
+	 				}else{
+	 					$model->state = "n";
+	 				}
+	 				$model->save();
+	 			}
+	 		}
+	 	}
+	 	
+	 	$criteria = new CDbCriteria();
+	 	$criteria->compare('course_id',$course_id);
+	 	$criteria->compare('org_root_title',$orgRoot->title);
+	 	if($all){
+	 		$criteria->compare('state','y');
+	 	}else{
+	 		$criteria->compare('state','n');
+	 	}
+	 	$orgs = OrgPosition::model()->findAll($criteria);
+	 	$mtId = array();
+	 	foreach ($orgs as $key => $value) {
+	 		$mtId[$key] = $value->user_id;
+	 	}
+	 	$this->render('user_list',array(
+			'model'=>$getAlluser,
+			'mtId'=>$mtId,
+			'state'=>$state
+		));
+	 }
+
+
 	public function actionIndex()
 	{
 

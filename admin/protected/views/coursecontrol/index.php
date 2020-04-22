@@ -139,6 +139,35 @@ $this->breadcrumbs=array(
         <button type="button" data-action="expand-all">Expand All</button>
         <button type="button" data-action="collapse-all">Collapse All</button>
         <button type="button" id="save">SAVE</button>
+        <?php 
+                
+
+            if(isset($_GET['name'])){
+                $url = Yii::app()->createUrl('OrgChart/course/', array('id' => $_GET['id'],'name'=>$_GET['name'])); 
+                // $all = 'y';
+                $all = $_GET['name'];
+
+                $criteria = new CDbCriteria();
+                $criteria->compare('title_all',$all);
+                $courseonline = OrgRoot::model()->findAll($criteria);
+
+                $dataProvider = OrgRoot::getChildsNew();
+            }else{
+                $url = Yii::app()->createUrl('OrgChart/course/', array('id' => $_GET['id'])); 
+                // $all = 'n';
+                $all = '';
+
+                $criteria = new CDbCriteria();
+                $criteria->compare('parent_id',0);
+                $criteria->compare('orgchart_id',$_GET['id']);
+                $courseonline = OrgCourse::model()->findAll($criteria);
+
+                $dataProvider = OrgCourse::getChilds(0);
+            }
+        ?>
+        <?php if($_GET['id'] != 4){ ?>
+        <a href="<?= $url; ?>"><button type="button" class="btn btn-info pull-right">COURSE MANAGE</button></a>
+        <?php } ?>
     </menu>
 </div>
 
