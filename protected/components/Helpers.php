@@ -283,7 +283,7 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
                 'verify_peer' => false,
                 'verify_peer_name' => false,
                 'allow_self_signed' => true
-                )
+            )
         );
         // $mail->ClearAddresses();
         // $mail->CharSet = 'utf-8';
@@ -314,7 +314,7 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         //     Yii::app()->user->setFlash('mail',$to['email']);
         // }
         // return $mail->Send();
-         $mail->ClearAddresses();
+        $mail->ClearAddresses();
         $mail->CharSet = 'utf-8';
         $mail->IsSMTP();
         //$mail->Host = 'smtp.office365.com'; // gmail server
@@ -334,7 +334,7 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         $mail->IsHTML(true);
 
        // $mail->SMTPSecure = 'tls';
-       
+
 
         return $mail->Send();
     }
@@ -484,21 +484,21 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
 
             $adminEmail = 'mailerbws@gmail.com';
             $adminEmailPass = 'bangkokweb0192';
-           $mail =  new PHPMailer(true);
-        $mail->SMTPOptions = array(
-            'ssl' => array(
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-                'allow_self_signed' => true
+            $mail =  new PHPMailer(true);
+            $mail->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
                 )
-        );
-        $mail->ClearAddresses();
-        $mail->CharSet = 'utf-8';
-        $mail->IsSMTP();
+            );
+            $mail->ClearAddresses();
+            $mail->CharSet = 'utf-8';
+            $mail->IsSMTP();
             // $mail->ClearAddresses();
             // $mail->CharSet = 'utf-8';
-      
-         $mail->Host = 'smtp.gmail.com';
+
+            $mail->Host = 'smtp.gmail.com';
         $mail->Port = '587'; // port number
         $mail->SMTPSecure = "tls";
         $mail->SMTPKeepAlive = true;
@@ -544,7 +544,7 @@ public function SendMailNotificationByUser($subject,$message,$user_id){
         $mail->CharSet = 'utf-8';
         // $mail->Host = '172.30.110.16'; // gmail server
         // $mail->Port = 25; // port number
-         $mail->Host = 'smtp.gmail.com';
+        $mail->Host = 'smtp.gmail.com';
         $mail->Port = '587'; // port number
         $mail->SMTPSecure = "tls";
         $mail->SMTPKeepAlive = true;
@@ -1088,61 +1088,124 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
 
     }
 
-
-    public function checkLessonPass_Percent($lesson,$format=null)
+    public function checkCourseStatus($lesson)
     {
-        $percent_max = 100;
-        $percent = 0;
+        // var_dump($lesson);
         $color = '#00bfff';
         $status = '';
         $user = Yii::app()->getModule('user')->user();
         if ($user) {
             $learnLesson = $user->learns(
                 array(
-                    'condition' => 'lesson_id=:lesson_id AND lesson_active=:status',
-                    'params' => array(':lesson_id' => $lesson->id,':status'=>"y")
+                    'condition' => 'course_id=:course_id AND lesson_active=:status',
+                    'params' => array(':course_id' => $lesson,':status'=>"y")
                 )
             );
-            $countFile = 0;
-            $countLearnCompareTrueVdos = 0;
-            if($lesson->type == 'vdo'){
-                $countFile = $lesson->fileCount;
-                $countLearnCompareTrueVdos = $user->countLearnCompareTrueVdos(
-                    array(
-                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
-                        'params' => array(':lesson_id' => $lesson->id)
-                    )
-                );
-            } else if($lesson->type == 'pdf'){
-                $countFile = $lesson->filePdfCount;
-                $countLearnCompareTrueVdos = $user->countLearnCompareTruePdf(
-                    array(
-                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
-                        'params' => array(':lesson_id' => $lesson->id)
-                    )
-                );
-            } else if($lesson->type == 'scorm'){
-                $countFile = $lesson->fileScormCount;
-                $countLearnCompareTrueVdos = $user->countLearnCompareTrueScorm(
-                    array(
-                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
-                        'params' => array(':lesson_id' => $lesson->id)
-                    )
-                );
-            } else if($lesson->type == 'audio'){
-                $countFile = $lesson->fileAudioCount;
-                $countLearnCompareTrueVdos = $user->countLearnCompareTrueAudio(
-                    array(
-                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
-                        'params' => array(':lesson_id' => $lesson->id)
-                    )
-                );
-            }
-            if ($learnLesson && $learnLesson[0]->lesson_status == 'pass') {
-                $percent = $percent_max;
+
+            $model = Lesson::model()->findAll(array('condition' => 'active = "y" AND lang_id = 1 AND course_id=' . $lesson, 'order' => 'lesson_no'));
+
+            if(empty($learnLesson)){
                 $color = "#fff";
-                $status = "pass";
-                $class = "successcourse";
+                $status = "notLearn";
+                $class = "defaultcourse";
+            }else{
+
+                if(count($learnLesson) == count($model)){
+
+                    foreach ($learnLesson as $key => $value) {
+                        if($value->lesson_status == "learning"){
+                            $color = "#fff";
+                            $status = "learning";
+                            $class = "warningcourse";
+                            break;
+                        }elseif($value->lesson_status == "pass"){
+                          $color = "#fff";
+                          $status = "pass";
+                          $class = "successcourse";
+                        }
+                    }
+
+                    if($status == "pass"){
+                       $criteria = new CDbCriteria;
+                       $criteria->compare('course_id',$lesson);
+                       $criteria->compare('user_id',Yii::app()->user->id);
+                       $criteria->compare('score_past','y');
+                       $criteria->compare('active','y');
+                       $criteria->order = 'score_id';
+                       $courseScorePass = Coursescore::model()->findAll($criteria);
+                       if(!$courseScorePass){
+                                $color = "#fff";
+                                $status = "learning";
+                                $class = "warningcourse";
+                        }
+                    }
+
+                }else{
+                 $color = "#fff";
+                 $status = "learning";
+                 $class = "warningcourse";
+                }
+
+            }
+
+     }
+     return (object)array('color'=>$color,'status'=>$status,'class'=>$class);
+ }
+
+ public function checkLessonPass_Percent($lesson,$format=null)
+ {
+    $percent_max = 100;
+    $percent = 0;
+    $color = '#00bfff';
+    $status = '';
+    $user = Yii::app()->getModule('user')->user();
+    if ($user) {
+        $learnLesson = $user->learns(
+            array(
+                'condition' => 'lesson_id=:lesson_id AND lesson_active=:status',
+                'params' => array(':lesson_id' => $lesson->id,':status'=>"y")
+            )
+        );
+        $countFile = 0;
+        $countLearnCompareTrueVdos = 0;
+        if($lesson->type == 'vdo'){
+            $countFile = $lesson->fileCount;
+            $countLearnCompareTrueVdos = $user->countLearnCompareTrueVdos(
+                array(
+                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
+                    'params' => array(':lesson_id' => $lesson->id)
+                )
+            );
+        } else if($lesson->type == 'pdf'){
+            $countFile = $lesson->filePdfCount;
+            $countLearnCompareTrueVdos = $user->countLearnCompareTruePdf(
+                array(
+                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
+                    'params' => array(':lesson_id' => $lesson->id)
+                )
+            );
+        } else if($lesson->type == 'scorm'){
+            $countFile = $lesson->fileScormCount;
+            $countLearnCompareTrueVdos = $user->countLearnCompareTrueScorm(
+                array(
+                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
+                    'params' => array(':lesson_id' => $lesson->id)
+                )
+            );
+        } else if($lesson->type == 'audio'){
+            $countFile = $lesson->fileAudioCount;
+            $countLearnCompareTrueVdos = $user->countLearnCompareTrueAudio(
+                array(
+                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
+                    'params' => array(':lesson_id' => $lesson->id)
+                )
+            );
+        }
+        if ($learnLesson && $learnLesson[0]->lesson_status == 'pass') {
+            $percent = $percent_max;
+            $color = "#fff";
+            $status = "pass";
+            $class = "successcourse";
 
                     //// check posttest
                     if(self::checkHavePostTestInManage($lesson->id)){ ///ถ้ามีข้อสอบหลังเรียน
@@ -1152,7 +1215,6 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                             $color = "#fff";
                             $status = "learning";
                             $class = "warningcourse";
-
                         }
                     }
                     //end check posttest
@@ -1209,7 +1271,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                         $color = "#fff";
                         $status = "notLearn";
                         $class = "defaultcourse";
-                        
+
                     }
                 }
             }
