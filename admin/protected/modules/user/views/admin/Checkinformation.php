@@ -38,6 +38,9 @@
 	.profile-detail h5 ul li a span{
 		color: #296283 !important;
 	}
+	.m-1{
+		margin: 1em 0;
+	}
 	.mt-1{
 		margin-top: 1em;
 	}
@@ -55,7 +58,9 @@
 
 <form>
 	<div class="well profile-detail">
-
+			<div class="text-center m-1">
+				<img src="/lms_thoresen/themes/template2/images/thumbnail-profile.png" alt="">
+			</div>
 		<h4 class="topic-info">ข้อมูลพื้นฐาน</h4>
 		<div class="mt-1 register-detail">
 			<div class="row">
