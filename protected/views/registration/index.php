@@ -81,6 +81,15 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         border-radius: 4px;
     }
 
+    .birthday-icon{
+        position: relative;
+    }
+    .birthday-icon i{
+        position: absolute;
+        right: 16px;
+        top: 40px;
+    }
+
     @media screen and (max-width: 600px){
         #register .row.justify-content-center{
             justify-content: inherit !important;
@@ -429,7 +438,8 @@ function editNameTrain(filedoc_id){
 
                     <div class="row justify-content-center mt-20 form_name">
                         <div class="col-md-6 col-sm-6 col-xs-12">
-                            <div class="form-group">
+                            <div class="form-group birthday-icon">
+                                <i class="far fa-calendar-alt"></i>
                                 <label><?php echo $label->label_birthday; ?></label>
                                 <?php echo $form->textField($profile, 'birthday', $birthday); ?>
                                 <?php echo $form->error($profile, 'birthday', array('class' => 'error2')); ?>
