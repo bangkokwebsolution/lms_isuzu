@@ -1168,7 +1168,7 @@ Class MenuLeft extends Controller
 	        				'admin.*',
 	        				'admin.Membership'
 	        			)),
-	        			'label'=>'อนุมัติยืนยันการสมัคร',
+	        			'label'=>'อนุมัติการตรวจสอบการสมัครสมาชิก',
 	        			'url'=>array('//user/admin/membership')
 	        		),
 	        		array(
@@ -1177,7 +1177,7 @@ Class MenuLeft extends Controller
 	        				'admin.*',
 	        				'admin.Approve'
 	        			)),
-	        			'label'=>'อนุมัติการตรวจสอบการสมัครสมาชิก',
+	        			'label'=>'อนุมัติยืนยันการสมัคร',
 	        			'url'=>array('//user/admin/approve')
 	        		),
 	        		array(
@@ -1721,39 +1721,39 @@ Class MenuLeft extends Controller
 	        	)
 	        ),
 
-	        array(
-	        	/*====== Check Permissions Position (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Branch.*',
-	        		'Branch.admin',
-	        		'Branch.Create'
-	        	)),
-	        	'label'=>'<i></i><span>สาขา</span>',
-	        	'url'=>'#Branch',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Branch') ), 'id' => 'Branch'),
-	        	'active' => self::SetSubMenu( array('Branch') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Branch (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Branch.*',
-	        				'Branch.Create'
-	        			)),
-	        			'label'=>'เพิ่มสาขา'." (ภาษา ".$mainLang." )",
-	        			'url'=>array('//Branch/create')
-	        		),
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Branch.*',
-	        				'Branch.index'
-	        			)),
-	        			'label'=>'จัดการสาขา',
-	        			'url'=>array('//Branch/index')
-	        		),
-	        	)
-	        ),
+	        // array(
+	        // 	/*====== Check Permissions Position (2) ======*/
+	        // 	'visible'=>self::PermissionsMenu(array(
+	        // 		'Branch.*',
+	        // 		'Branch.admin',
+	        // 		'Branch.Create'
+	        // 	)),
+	        // 	'label'=>'<i></i><span>สาขา</span>',
+	        // 	'url'=>'#Branch',
+	        // 	'linkOptions' => array('data-toggle' => 'collapse'),
+	        // 	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
+	        // 	'submenuOptions' => array('class' => self::SetSubMenu( array('Branch') ), 'id' => 'Branch'),
+	        // 	'active' => self::SetSubMenu( array('Branch') ,false),
+	        // 	'items'=>array(
+	        // 		array(
+	        // 			/*====== Check Permissions Branch (1) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'Branch.*',
+	        // 				'Branch.Create'
+	        // 			)),
+	        // 			'label'=>'เพิ่มสาขา'." (ภาษา ".$mainLang." )",
+	        // 			'url'=>array('//Branch/create')
+	        // 		),
+	        // 		array(
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'Branch.*',
+	        // 				'Branch.index'
+	        // 			)),
+	        // 			'label'=>'จัดการสาขา',
+	        // 			'url'=>array('//Branch/index')
+	        // 		),
+	        // 	)
+	        // ),
 
 	        array(
 	        	/*====== Check Permissions PopUp (2) ======*/

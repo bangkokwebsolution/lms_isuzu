@@ -426,7 +426,8 @@ function editNameTrain(filedoc_id){
                         </div>
 
                         <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="form-group">
+                            <div class="form-group birthday-icon">
+                                <i class="far fa-calendar-alt"></i>
                                 <label> <?php echo $label->label_date_of_expiry;?></label>
                                 <?php echo $form->textField($profile, 'date_of_expiry', $attTime); ?>
                                 <?php echo $form->error($profile, 'date_of_expiry', array('class' => 'error2')); ?>
@@ -437,6 +438,23 @@ function editNameTrain(filedoc_id){
                     </div>
 
                     <div class="row justify-content-center mt-20 form_name">
+                        <div class="col-md-4 col-sm-6 col-xs-12" >
+                            <div class="form-group">
+                                <label><?= Yii::app()->session['lang'] == 1?'Crew identification number ':'เลขหนังสือประจำลูกเรือ'; ?></label>
+                                <?php echo $form->textField($profile, 'seamanbook', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Crew identification number ':'เลขหนังสือประจำลูกเรือ')); ?>
+                                <?php echo $form->error($profile, 'seamanbook', array('class' => 'error2')); ?>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="form-group birthday-icon">
+                                <i class="far fa-calendar-alt"></i>
+                                <label><?= Yii::app()->session['lang'] == 1?'Date Expired ':'วันหมดอายุ'; ?></label>
+                                <?php echo $form->textField($profile, 'seaman_expire', $attTime); ?>
+                                <?php echo $form->error($profile, 'seaman_expire', array('class' => 'error2')); ?>
+                            </div>
+                        </div>
+
                         <div class="col-md-6 col-sm-6 col-xs-12">
                             <div class="form-group birthday-icon">
                                 <i class="far fa-calendar-alt"></i>
@@ -1013,7 +1031,8 @@ function editNameTrain(filedoc_id){
                                     </div>
 
                                     <div class="col-md-4">
-                                        <div class="form-group">
+                                        <div class="form-group birthday-icon">
+                                            <i class="far fa-calendar-alt"></i>
                                             <label><?php echo $label->label_ship_up_date; ?></label>
                                         <!-- <input class="form-control default_datetimepicker " autocomplete="off" placeholder="เมื่อวันที่" type="text" name="" id="" value="">  
                                             <label><?php echo $label->label_race; ?></label> -->
@@ -1043,7 +1062,8 @@ function editNameTrain(filedoc_id){
                                            </div>
                                        </div>
                                         <div class="col-md-4">
-                                        <div class="form-group">
+                                        <div class="form-group birthday-icon">
+                                            <i class="far fa-calendar-alt"></i>
                                             <label><?php echo $label->label_ship_down_date; ?></label>
                                             <!-- <input class="form-control default_datetimepicker " autocomplete="off" placeholder="สามารถจะลงทำงานเรือครั้งต่อไป" type="text" name="" id="" value=""> -->      
                                             <?php echo $form->textField($profile, 'ship_down_date', $ships_down_date); ?>

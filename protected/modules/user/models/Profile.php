@@ -49,7 +49,7 @@ class Profile extends CActiveRecord {
             array('fax', 'numerical', 'integerOnly' => true),
             array('phone, phone1, phone2, phone3', 'numerical', 'integerOnly' => true),
            // array('tel', 'length', 'min' => 9),
-            array('bussiness_model_id,bussiness_type_id,company,juristic,title_id, type_user, education, occupation, position, website, province, tel, phone, fax, advisor_email1, advisor_email2, generation, file,department, passport, date_of_expiry, race, nationality, religion, line_id, ship_name, ship_up_date, ship_down_date, address2, phone1, phone2, phone3', 'length', 'max' => 255),
+            array('bussiness_model_id,bussiness_type_id,company,juristic,title_id, type_user, education, occupation, position, website, province, tel, phone, fax, advisor_email1, advisor_email2, generation, file,department, passport, date_of_expiry, race, nationality, religion, line_id, ship_name, ship_up_date, ship_down_date, address2, phone1, phone2, phone3, seamanbook, seaman_expire, pass_expire, ss_card', 'length', 'max' => 255),
             array('firstname, lastname', 'length', 'max' => 50),
             array('identification', 'length', 'max'=>13),
             // array('identification', 'length', 'min'=>13),
@@ -66,7 +66,7 @@ class Profile extends CActiveRecord {
              , 'message' => UserModule::t("identification_unique"),'on' => array('idcard')),         
             // The following rule is used by search(). 
             // Please remove those attributes that should not be searched. 
-            array('bussiness_model_id,bussiness_type_id,company,juristic,user_id, title_id, firstname, lastname, active, generation, type_user, sex, birthday, age, education, occupation, position, website, address, province, tel, phone, fax, contactfrom, advisor_email1, advisor_email2, file, passport, date_of_expiry, race, nationality, religion, history_of_illness, status_sm, type_employee, type_card, line_id', 'safe', 'on' => 'search'),
+            array('bussiness_model_id,bussiness_type_id,company,juristic,user_id, title_id, firstname, lastname, active, generation, type_user, sex, birthday, age, education, occupation, position, website, address, province, tel, phone, fax, contactfrom, advisor_email1, advisor_email2, file, passport, date_of_expiry, race, nationality, religion, history_of_illness, status_sm, type_employee, type_card, line_id, seamanbook, seaman_expire, pass_expire, ss_car', 'safe', 'on' => 'search'),
             array('file_user', 'file', 'types' => 'pdf', 'allowEmpty' => true, 'on' => 'insert'),
            // array('ship_name, ship_up_date, ship_down_date, address2, phone1, phone2, phone3', 'allowEmpty' => true, 'on' => 'update'),
             array('file_user', 'file', 'types' => 'pdf',
@@ -203,7 +203,11 @@ class Profile extends CActiveRecord {
             'ship_down_date'=> 'วันที่กลับไปขึ้นเรือ',
             'phone1'=> 'เบอร์โทรศัพท์ที่สามารถติดต่อได้',
             'phone2' => 'เบอร์มือถือ',
-            'phone3' => 'โทรศัพท์อื่นๆที่สามารถติดต่อได้'
+            'phone3' => 'โทรศัพท์อื่นๆที่สามารถติดต่อได้',
+            'seamanbook'=> 'seamanbook',
+            'seaman_expire'=> 'seaman_expire',
+            'pass_expire' => 'pass_expire',
+            'ss_car' => 'ss_car'
         );
 
         // $labels = array(
@@ -262,6 +266,10 @@ class Profile extends CActiveRecord {
         $criteria->compare('phone1', $this->phone1, true);
         $criteria->compare('phone2', $this->phone2, true);
         $criteria->compare('phone3', $this->phone3, true);
+        $criteria->compare('seamanbook', $this->seamanbook, true);
+        $criteria->compare('seaman_expire', $this->seaman_expire, true);
+        $criteria->compare('pass_expire', $this->pass_expire, true);
+        $criteria->compare('ss_car', $this->ss_car, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

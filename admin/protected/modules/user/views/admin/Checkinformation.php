@@ -64,43 +64,115 @@
 		<h4 class="topic-info">ข้อมูลพื้นฐาน</h4>
 		<div class="mt-1 register-detail">
 			<div class="row">
-				<div class="col-md-12"><h5><b>ชื่อ-นามสกุล:</b><span>นาย&nbsp;&nbsp;ชื่อเต็ม&nbsp;&nbsp;นามสกุลเต็ม</span></h5></div>
-				<div class="col-md-12"><h5><b>Name:</b><span>mr.&nbsp;&nbsp;firstname&nbsp;&nbsp;lastname</span></h5></div>
-				<div class="col-md-6"><h5><b>เลขบัตรประจำตัวประชาชน:</b><span>xxxxxxxxxxxx</span> </h5></div>
-				<div class="col-md-6"><h5><b>วันที่บัตรหมดอายุ:	</b><span>10/08/2560</span></h5></div>
-				<div class="col-md-6"><h5><b>วันเดือนปีเกิด:</b><span>20/05/2535</span> </h5></div>
-				<div class="col-md-6"><h5><b>อายุ:</b><span>26</span></h5></div>
-				<div class="col-md-6"><h5><b>เชื้อชาติ:</b><span>xxxx</span></h5></div>
-				<div class="col-md-6"><h5><b>สัญชาติ:</b><span>xxxx</span></h5></div>
-				<div class="col-md-6"><h5><b>ศาสนา:</b><span>xxxx</span></h5></div>
-				<div class="col-md-6"><h5><b>เพศ:</b><span>xxxx</span></h5></div>
-				<div class="col-md-6"><h5><b>สถานะภาพทางการสมรส:</b><span>โสด</span></h5></div>
-				<div class="col-md-12"><h5><b>ที่อยู่:</b><span>xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</span></h5></div>
-				<div class="col-md-6"><h5><b>เบอร์โทรศัพท์:</b><span>xxxxxxxxxxxx</span></h5></div>
-				<div class="col-md-6"><h5><b>อีเมล:</b><span>thoresen@mail.com</span></h5></div>
-				<div class="col-md-12"><h5><b>ไอดีไลน์:</b><span>xxxxxxxxx</span></h5></div>
-				<div class="col-md-6"><h5><b>ประวัติการเจ็บป่วยรุนแรง:</b><span>xxxxxxxxx</span></h5></div>
+				<div class="col-md-12"><h5><b>ชื่อ-นามสกุล:</b><span><?php if ($profile['sex'] == 'Male') {
+					echo "นาย";
+				}else{
+					echo "นางสาว";
+				} ?>&nbsp;&nbsp;<?php echo $profile['firstname'] ?>&nbsp;&nbsp;<?php echo $profile['lastname'] ?></span></h5></div>
+				<div class="col-md-12"><h5><b>Name:</b><span><?php if ($profile['sex'] == 'Male') {
+					echo "Mr.";
+				}else{
+					echo "Miss";
+				}?>&nbsp;&nbsp;<?php echo $profile['firstname_en'] ?>&nbsp;&nbsp;<?php echo $profile['lastname_en'] ?></span></h5></div>
+				<div class="col-md-6"><h5><b>เลขบัตรประจำตัวประชาชน:</b><span><?php echo $profile['identification'] ?></span> </h5></div>
+				<div class="col-md-6"><h5><b>วันที่บัตรหมดอายุ:	</b><span><?php echo $profile['date_of_expiry'] ?></span></h5></div>
+				<div class="col-md-6"><h5><b>วันเดือนปีเกิด:</b><span><?php echo $profile['birthday'] ?></span> </h5></div>
+				<div class="col-md-6"><h5><b>อายุ:</b><span><?php echo $profile['age'] ?></span></h5></div>
+				<div class="col-md-6"><h5><b>เชื้อชาติ:</b><span><?php echo $profile['race'] ?></span></h5></div>
+				<div class="col-md-6"><h5><b>สัญชาติ:</b><span><?php echo $profile['nationality'] ?></span></h5></div>
+				<div class="col-md-6"><h5><b>ศาสนา:</b><span><?php echo $profile['religion'] ?></span></h5></div>
+				<div class="col-md-6"><h5><b>เพศ:</b><span><?php if ($profile['sex'] == 'Male') {
+					echo "ชาย";
+				}else{
+					echo "หญิง";
+				} ?></span></h5></div>
+				<div class="col-md-6"><h5><b>สถานะภาพทางการสมรส:</b><span><?php if ($profile['status_sm'] == 's') {
+					echo "โสด";
+				}else{
+					echo "สมรส";
+				} ?></span></h5></div>
+				<div class="col-md-12"><h5><b>ที่อยู่:</b><span><?php echo $profile['address'] ?></span></h5></div>
+				<div class="col-md-6"><h5><b>เบอร์โทรศัพท์:</b><span><?php echo $profile['tel'] ?></span></h5></div>
+				<div class="col-md-6"><h5><b>อีเมล:</b><span><?php echo $user['email'] ?></span></h5></div>
+				<div class="col-md-12"><h5><b>ไอดีไลน์:</b><span><?php echo $profile['line_id'] ?></span></h5></div>
+				<div class="col-md-6"><h5><b>ประวัติการเจ็บป่วยรุนแรง:</b><span><?php if ($profile['status_sm'] == 'y') {
+					echo "เคย";
+				}else{
+					echo "ไม่เคย";
+				} ?></span></h5></div>
 				<div class="col-md-12">
 					<h5><b>ประวัติการศึกษา:</b>
-						<ul>
+						<ul><?php
+    $user_id = $user['id'];
+ 				$ProfilesEdu = ProfilesEdu::model()->findAll(array(
+ 					'condition' => 'user_id=:user_id AND active=:active',
+ 					'params' => array(':user_id'=>$user_id, ':active'=>'y')));
+ 			
+ 				if(!empty($ProfilesEdu)){ 
+ 				foreach ($ProfilesEdu as $key => $value) {					
+
+ 					$education_data = $ProfilesEdu[$key]->attributes;
+ 					$edu_id = $education_data['edu_id'];
+ 					$institution = $education_data['institution'];
+ 					$date_graduation = $education_data['date_graduation'];
+ 				
+ 				 $Education = Education::model()->findAll(array(
+ 					'condition' => 'edu_id=:edu_id AND active=:active',
+ 					'params' => array(':edu_id'=>$edu_id, ':active'=>'y')));
+ 				 $Education = $Education->attributes;
+ 					$edu_name = $Education['edu_name'];
+						?>
 							<li>
-								<span>ระดับการศึกษา</span><span>สถานที่จบการศึกษา</span><span>ปีที่จบการศึกษา</span>
+								<span><?php if($edu_id != ""){
+ 							if($edu_id == 1) {
+                               echo "มัธยมศึกษาตอนต้น(ม.3)";
+ 							}else if($edu_id == 2){
+                               echo "มัธยมศึกษาตอนปลาย(ม.6)"; 
+ 							}else if($edu_id == 3){
+                               echo "ประกาศนียบัตรวิชาชีพ(ปวช.)";
+ 							}else if($edu_id == 4){
+                               echo "ประกาศนียบัตรวิชาชีพชั้นสูง(ปวส.)";
+ 							}else if($edu_id == 5){
+                               echo "ประกาศนียบัตรวิชาชีพเทคนิค (ปวท.)";
+ 							}else if($edu_id == 6){
+                               echo "ปริญญาตรี";
+ 							}else if($edu_id == 7){
+                               echo "ปริญญาโท";
+ 							}else if($edu_id == 8){
+                             echo "ปริญญาเอก";
+ 							}
+                     
+                       }else{ echo "-"; }?></span><span><?php echo $institution; ?></span><span><?php echo 25; echo $date_graduation; ?></span>
 							</li>
-							<li>
-								<span>ระดับการศึกษา</span><span>สถานที่จบการศึกษา</span><span>ปีที่จบการศึกษา</span>
-							</li>
+							<?php
+}
+}
+							?>
 						</ul>
 					</h5>
 				</div>
 				<div class="col-md-12">
 					<h5><b>เอกสารแนบไฟล์วุฒิการศึกษา/วิชาชีพ:</b>
 						<ul>
+						 <?php
+						 $user_id = $user['id'];
+                            $idx = 1;
+                            $uploadFolder = Yii::app()->getUploadUrl('edufile');
+                            $criteria = new CDbCriteria;
+                            $criteria->addCondition('user_id ="'.$user_id.'"');
+                            $criteria->addCondition("active ='y'");
+                            $FileEdu = FileEdu::model()->findAll($criteria);
+
+                            if(isset($FileEdu)){
+                             $confirm_del  = Yii::app()->session['lang'] == 1?'Do you want to delete the file ?\nWhen you agree, the system will permanently delete the file from the system. ':'คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร';
+                             foreach($FileEdu as $fileDatas){?>
 							<li>
-								<a href="#"><span>ไฟล์</span></a>
+								<a href="#"><span><?php echo $fileDatas->file_name;?></span></a>
 							</li>
-							<li>
-								<a href="#"><span>ไฟล์</span></a>
-							</li>
+							<?php
+}
+}
+							?>
 						</ul>
 						</ul>
 					</h5>
@@ -108,20 +180,44 @@
 				<div class="col-md-12">
 					<h5><b>เอกสารแนบไฟล์ฝึกอบรม:</b>
 						<ul>
+						 <?php
+						 $user_id = $user['id'];
+                            $idx = 1;
+                            $uploadFolder = Yii::app()->getUploadUrl('edufile');
+                            $criteria = new CDbCriteria;
+                            $criteria->addCondition('user_id ="'.$user_id.'"');
+                            $criteria->addCondition("active ='y'");
+                            $FileTraining = FileTraining::model()->findAll($criteria);
+
+                            if(isset($FileTraining)){
+                             $confirm_del  = Yii::app()->session['lang'] == 1?'Do you want to delete the file ?\nWhen you agree, the system will permanently delete the file from the system. ':'คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร';
+                             foreach($FileTraining as $fileDatas){?>
 							<li>
-								<a href="#"><span>ไฟล์</span></a>
+								<a href="#"><span><?php echo $fileDatas->file_name;?></span></a>
 							</li>
-							<li>
-								<a href="#"><span>ไฟล์</span></a>
-							</li>
+							<?php
+}
+}
+							?>
+						
 						</ul>
 					</h5>
 				</div>
+				<?php  
+                      $position = Position::model()->find(array(
+ 							'condition' => 'id=:position_id',
+ 							'params' => array(':position_id'=>$user['position_id'])
+ 						));
+                      $position = $position->attributes;
+
+				?>
+				<div class="col-md-6"><h5><b>ตำแหน่งเรือที่ท่านสนใจสมัคร:</b><span><?php echo $position['position_title']; ?></span></h5></div>
+				
 				<div class="col-md-12">
-					<h5><b>ตำแหน่งเรือที่ท่านสนใจสมัคร:</b>
-					<select class="form-control d-inlineblock" name="]" id="">
+					<h5><b>เปลี่ยนตำแหน่งเรือ:</b>
+					<select class="form-control d-inlineblock position_id" name="position_id" id="<?php echo $user['id'];?>">
 						<option value="">เลือกตำแหน่ง</option>
-						<option value="1">C/O</option>
+					 	<option value="1">C/O</option>
 						<option value="2">2/O</option>
 						<option value="3">3/O</option>
 						<option value="4">Bosun</option>
@@ -135,19 +231,15 @@
 						<option value="12">Fitter</option>
 						<option value="13">Oiler</option>
 						<option value="14">E/Boy</option>
-						<option value="15">E/Boy1</option>
+						<option value="15">E/Boy1</option> 
 					</select>
 				</h5>
 				</div>
 			</div>
 			<div class="text-center mt-2">
-                 <button class="btn btn-primary btn-icon "><i></i>บันทึกข้อมูล</button>                        
+                 <button class="btn btn-primary btn-icon save_data"><i></i>บันทึกข้อมูล</button>                        
              </div>
 		</div>
-<!-- <?php
-
-echo $user["email"];
-?> -->	
          
     </div>
 </form>

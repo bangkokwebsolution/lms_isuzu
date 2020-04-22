@@ -73,7 +73,7 @@ class User extends CActiveRecord
 			//array('email', 'unique', 'message' => UserModule::t("This user's email address already exists.")),
 			// array('username', 'match', 'pattern' => '/^[0-9_]+$/u','message' => 'กรอกเลขบัตรประชาชน 13 หลักเท่านั้น'),
 			array('status', 'in', 'range'=>array(self::STATUS_NOACTIVE,self::STATUS_ACTIVE,self::STATUS_BANNED)),
-			array('superuser, register_status', 'in', 'range'=>array(0,1)),
+			array('superuser', 'in', 'range'=>array(0,1)),
             array('create_at', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
             array('lastvisit_at', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
 			// array('username, email, superuser, status,password,company_id,division_id,department_id,position_id,position_name', 'required'),
@@ -254,7 +254,7 @@ class User extends CActiveRecord
 			'employee_id' => 'เลขประจำตัวพนักงาน',
 			'typeuser' =>'ประเภทผู้ใช้งาน',
 			// 'passport'=> 'รหัสหนังสือเดินทาง',
-			'register_status' => UserModule::t("register_status")
+			'register_status' => 'สถานะการสมัครสมาชิก'
 		);
 	}
 
@@ -460,7 +460,6 @@ public function searchmembership()
 	$criteria->compare('superuser',$this->superuser);
 	$criteria->compare('status',0);
 	$criteria->compare('del_status',0);
-	$criteria->compare('register_status',$this->register_status);
 	$criteria->compare('online_status',$this->online_status);
 	$criteria->compare('online_user',$this->online_user);
 	$criteria->compare('group',$this->group);

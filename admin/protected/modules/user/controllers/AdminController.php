@@ -115,7 +115,7 @@ class AdminController extends Controller
 
 	public function actionMembership ()
 	{
-		$model = new User('search');
+		$model = new User;
         $model->unsetAttributes();  // clear any default values
         $model->typeuser = array(1);
         $model->register_status = array(0);
@@ -272,8 +272,30 @@ class AdminController extends Controller
 		
 		$id = $_POST['id'];
 		$model = User::model()->findByPk($id);
-		if($model->register_status == 1){
+		if($model->register_status == 0){
+			$model->register_status = 1;
+		} else {
 			$model->register_status = 0;
+		}
+		$model->save(false);
+		$to['email'] = $model->email;
+		$to['firstname'] = $model->profile->firstname;
+		$to['lastname'] = $model->profile->lastname;
+		$message = $this->renderPartial('_mail_membership',array('model' => $model),true);
+		if($message){
+			 $send = Helpers::lib()->SendMail($to,'อนุมัติการสมัครสมาชิก',$message);
+		}
+		$this->redirect(array('/user/admin/Membership'));
+	}
+
+    public function actionNotapproved()
+    {
+  
+    	$id = $_POST['id'];
+    	$passage = $_POST['passInput'];
+		$model = User::model()->findByPk($id);
+		if($model->register_status == 1 || $model->register_status == 0){
+			$model->register_status = 3;
 		} else {
 			$model->register_status = 1;
 		}
@@ -281,18 +303,39 @@ class AdminController extends Controller
 		$to['email'] = $model->email;
 		$to['firstname'] = $model->profile->firstname;
 		$to['lastname'] = $model->profile->lastname;
-		$message = $this->renderPartial('_mail_membership',array('model' => $model,'genpass' => $genpass),true);
+		$message = $this->renderPartial('_mail_Notapproved',array('model' => $model,'passage' => $passage),true);
 		if($message){
-			 $send = Helpers::lib()->SendMail($to,'อนุมัติการสมัครสมาชิก',$message);
+			 $send = Helpers::lib()->SendMail($to,'ไม่อนุมัติการสมัครสมาชิก',$message);
 		}
 		$this->redirect(array('/user/admin/Membership'));
-	}
+    }
+    
+   public function actionChangeposition()
+   {
+      
+   $value  = $_POST['val'];
+   $id = $_POST['id'];
+		$model = User::model()->findByPk($id);
+		if ($value != '') {
+			$model->position_id = $value;
+		}
+		$model->save(false);
+		$this->redirect(array('/user/admin/Membership'));
+   }
 
 	public function actionCheckinformation()
 	{
 		$id = $_POST['id'];
 		$user = User::model()->findByPk($id);
 		$profile = Profile::model()->findByPk($id);
+		// $profile = Profile::model()->find(array(
+		// 		'condition' => 'user_id=:user_id ',
+		// 		'params' => array('user_id' => $id)
+		// 	));
+		// 	$user = User::model()->find(array(
+		// 		'condition' => 'id=:id',
+		// 		'params' => array('id' => $id)
+		// 	));
 	
        $this->renderPartial('Checkinformation',array('user' => $user,'profile' => $profile));
 	}
@@ -1082,11 +1125,12 @@ class AdminController extends Controller
 		));
 	}
 
-	public function actionPrintPDF(){
+	public function actionPrintpdf(){
+	
 
 		$user_id =$_GET['id'];
 		if ($user_id != '') {
-			$profile = Profile::model()->find(array(
+			$profiles = Profile::model()->find(array(
 				'condition' => 'user_id=:user_id ',
 				'params' => array('user_id' => $user_id)
 			));
@@ -1094,48 +1138,38 @@ class AdminController extends Controller
 				'condition' => 'id=:id',
 				'params' => array('id' => $user_id)
 			));
+        $path_img = Yii::app()->baseUrl. '/images/head_print.png';
+     
+		$padding_left = 12.7;
+		$padding_right = 12.7;
+		// $padding_right = 25.4;
+		
+		$padding_top = 10;
+		$padding_bottom = 20;
 
-		// 	if(isset($profile))
-		// {
-	  //       $mPDF = Yii::app()->ePdf->mpdf();
-	  //       var_dump($mPDF);
-	  //       $mPDF->setDisplayMode('fullpage');
-	  //       $mPDF->setAutoFont();
-			// $mPDF->AddPage('P');
-			// $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('printpdf', array('profile'=>$profile, 'user'=>$user), true), 'UTF-8', 'UTF-8'));
-			// $mPDF->Output();
-		// $padding_left = 12.7;
-		// $padding_right = 12.7;
-		// $padding_top = 15;
-		// $padding_bottom = 20;
 		Yii::import('application.extensions.*');
 		require_once('THSplitLib/segment.php');
-
-		// $mPDF = Yii::app()->ePdf->mpdf('th', 'A4', '0', '', $padding_left, $padding_right, $padding_top, $padding_bottom);
-
+		// var_dump("expression"); exit();
+		$mPDF = Yii::app()->ePdf->mpdf('th', 'A4', '0', 'garuda', $padding_left, $padding_right, $padding_top, $padding_bottom);
+		$mPDF->useDictionaryLBR = false;
+		//$mPDF->SetAutoFont();
 		// $mPDF->useDictionaryLBR = false;
-		// $mPDF->setDisplayMode('fullpage');
-		// $mPDF->autoLangToFont = true;
-		// $mPDF->SetTitle("ใบสมัครสมาชิก");
-		// $mPDF->AddPage('P'); // แนวตั้ง
+		$mPDF->setDisplayMode('fullpage');
+		$mPDF->autoLangToFont = true;
+		$mPDF->SetTitle("ใบสมัครสมาชิก");
+		$texttt= '
+         <style>
+         body { font-family: "garuda"; }
+         </style>
+         <img border="9" src="<?php echo $path_img; ?>" width="150" height="180";>
+         ';
+        // $mPDF->SetHeader("$texttt");
+        $mPDF->WriteHTML($texttt);
+		$mPDF->AddPage('P'); // แนวตั้ง
+		$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('printpdf', array('profiles'=>$profiles,'user'=>$user), true), 'UTF-8', 'UTF-8'));
 
-	 //    $footer = "<div><table border='0' width='100%'><tr><td width='80%'></td>ใบสมัครสมาชิก<td width='20%' style='text-align:right;'><p>{PAGENO}</p></td><tr></table></div>";
-		// $mPDF->SetFooter($footer);
-		// $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('PrintPDF/', array('profile'=>$profile, 'user'=>$user), true), 'UTF-8', 'UTF-8'));
-		// $mPDF->Output('Register.pdf');
-	        //require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
-			//$mPDF = new \Mpdf\Mpdf(['orientation' => 'P']);
-			$html2pdf = Yii::app()->ePdf->HTML2PDF();
-			$html2pdf->WriteHTML($this->renderPartial('PrintPDF', array('profile'=>$profile, 'user'=>$user), true));
-			$html2pdf->Output('Register.pdf');
+		$mPDF->Output('ใบสมัครสมาชิก.pdf', 'I');
 
-			# mPDF
-       
-		// }
-		// else
-		// {
-		// 	throw new CHttpException(404,'The requested page does not exist.');
-		// }
 		}
 	}
 

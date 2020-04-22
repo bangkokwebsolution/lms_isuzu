@@ -129,7 +129,7 @@ Yii::app()->clientScript->registerScript('search', "
 										if($data->status == 1){
 											echo CHtml::button("ปิด",array("class"=>"btn btn-danger changeStatus","data-id" => $data->id));
 										} else {
-											echo CHtml::button("รออนุมัติ",array("class"=>"btn btn-success changeStatus","data-id" => $data->id));
+											echo CHtml::button("ยืนยันการสมัคร",array("class"=>"btn btn-success changeStatus","data-id" => $data->id));
 										}
 									},
 									'header' => 'ยืนยันการสมัครสมาชิก',
@@ -141,7 +141,8 @@ Yii::app()->clientScript->registerScript('search', "
                                             'type' => 'raw',
                                             'value' => function($data) {
                                                //var_dump($data->id);
-                                                return CHtml::button("พิมพ์",array('class' => 'btn btn btn-success print_pdf','data-id' => $data->id));
+                                                //return CHtml::button("พิมพ์",array('class' => 'btn btn btn-success print_pdf','data-id' => $data->id));
+                                                return CHtml::button('พิมพ์ใบสมัคร', array('submit' => array('admin/Printpdf', 'id'=> $data->id),'class' => 'btn btn btn-success'));
                                             },'htmlOptions' => array(
                                                 'style'=> "text-align: center;",
                                             ),

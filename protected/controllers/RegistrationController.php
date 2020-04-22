@@ -380,6 +380,8 @@ class RegistrationController extends Controller {
     $profile->age = $_POST['Profile'][age];
     $profile->address = $_POST['Profile'][address];
     $profile->date_of_expiry = $_POST['Profile'][date_of_expiry];
+    $profile->seamanbook = $_POST['Profile'][seamanbook];
+    $profile->seaman_expire = $_POST['Profile'][seaman_expire];
     $profile->race = $_POST['Profile'][race];
     $profile->nationality = $_POST['Profile'][nationality];
     $profile->religion = $_POST['Profile'][religion];
@@ -391,7 +393,7 @@ class RegistrationController extends Controller {
     $profile->phone1 = $_POST['Profile'][phone1];
     $profile->phone2 = $_POST['Profile'][phone2];
     $profile->phone3 = $_POST['Profile'][phone3];
-     //var_dump($profile);
+   
 
     // if(!$chk_status_email){
     //     $users->status = 1;
@@ -769,6 +771,8 @@ public function actionUpdate() {
         $profile->phone1 = $_POST['Profile'][phone1];
         $profile->phone2 = $_POST['Profile'][phone2];
         $profile->phone3 = $_POST['Profile'][phone3];
+        $profile->seamanbook = $_POST['Profile'][seamanbook];
+        $profile->seaman_expire = $_POST['Profile'][seaman_expire];
         // var_dump($users);
         // echo "ddddddddddd";
         // var_dump($Profile);

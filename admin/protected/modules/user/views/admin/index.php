@@ -24,20 +24,7 @@ Yii::app()->clientScript->registerScript('search', "
 		return false;
 	});
 	");
-Yii::app()->clientScript->registerScript('register_script_name', "
-	$('.print_pdf').click(function(e){
-		$.ajax({
-			type: 'POST',
-			url: 'printpdf',
-			data: {id: $(this).attr('data-id')},
-			success: function(data){
-				window.location.href = data;
-				},
-		});
-		return false;
-	});
 
-");
 	?>
 	<div id="user" class="innerLR">
 		
@@ -157,7 +144,8 @@ Yii::app()->clientScript->registerScript('register_script_name', "
                                             'type' => 'raw',
                                             'value' => function($data) {
                                                //var_dump($data->id);
-                                                return CHtml::button("พิมพ์",array('class' => 'btn btn btn-success print_pdf','data-id' => $data->id));
+                                               // return CHtml::button("พิมพ์",array('class' => 'btn btn btn-success print_pdf','data-id' => $data->id));
+                                            	return CHtml::button('พิมพ์ใบสมัคร', array('submit' => array('admin/Printpdf', 'id'=> $data->id),'class' => 'btn btn btn-success'));
                                             },'htmlOptions' => array(
                                                 'style'=> "text-align: center;",
                                             ),
@@ -215,5 +203,15 @@ Yii::app()->clientScript->registerScript('register_script_name', "
 	</div>
 	<!-- END innerLR -->
 	<script type="text/javascript">
-
+// $('.print_pdf').click(function(e){
+// 		$.ajax({
+// 			type: 'POST',
+// 			url: "<?= $this->createUrl('admin/Printpdf'); ?>",
+// 			data: {id: $(this).attr('data-id')},
+// 			success: function(data){
+// 				window.location.href = data;
+// 				},
+// 		});
+// 		//return false;
+// 	});
 	</script>

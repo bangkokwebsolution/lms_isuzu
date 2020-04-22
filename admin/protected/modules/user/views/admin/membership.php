@@ -80,12 +80,14 @@ Yii::app()->clientScript->registerScript('search', "
 						            'type'=>'html',
 						            'value'=>function($data){
 						 
-						                 if($data->register_status == 0){
+						                if($data->register_status == 0){
 											//echo CHtml::button("ปิด",array("class"=>"btn btn-danger ","data-id" => $data->id));
-											echo "ยังไม่อนุมัติ";
-										} else {
+											echo "รอการตรวจสอบ";
+										} else if($data->register_status == 1){
 											echo "อนุมัติ";
 											//echo CHtml::button("รอการตรวจสอบ",array("class"=>"btn btn-success ","data-id" => $data->id));
+										}else{
+											echo "ไม่อนุมัติ";
 										}
 						            }
 						        ),
@@ -225,28 +227,50 @@ Yii::app()->clientScript->registerScript('search', "
 							</div>
 						</div> -->
 						<script>
-							$( ".changeStatus" ).click(function() {
+									$( ".changeStatus" ).click(function() {
 								var btn = $(this);
 								var id = btn.attr("data-id");
-								var _items = ["ระงับการใช้งาน","เปิดการใช้งาน"];
+								//var _items = ["อนุมัติ","ไม่อนุมัติ"];
 								swal({
-									title: "โปรดรอสักครู่",
-									text: "ระบบกำลังส่งอีเมล",
+									title: "ต้องการอนุมัติการสมัครหรือไม่",
+									text: "เลือก",
 									type: "info",
-									showConfirmButton: false
-								});
-								$.ajax({
+									showCancelButton: true,
+                                    confirmButtonClass: "btn-danger",
+                                    confirmButtonText: "อนุมัติ",
+                                    cancelButtonText: "ไม่อนุมัติ",
+                                    closeOnConfirm: false,
+                                    closeOnCancel: false,
+                                    showLoaderOnConfirm: true
+								},
+								function(isConfirm) {
+								  if (isConfirm) {
+								  	$.ajax({
 									url: "<?= $this->createUrl('admin/confirm'); ?>", 
 									type: "POST",
 									data:  {id:id},
 									success: function(result){
-										console.log(result);
-										if(result == 1) btn.addClass('btn-success').removeClass('btn-danger');
-										else btn.addClass('btn-danger').removeClass('btn-success');
-										btn.val(_items[result]);
-										location.reload();
+										if (result) {
+											setTimeout(function () {
+											swal("อนุมัติสำเร็จ!", "ระบบได้ทำการอนุมัติเรียบร้อยแล้ว", "success");
+										     }, 5000);
+                                            location.reload();
+										}else{
+											setTimeout(function () {
+                                            swal("อนุมัติไม่สำเร็จ!", "ไม่สามารถอนุมัติได้)", "error");
+                                            }, 5000);
+                                            location.reload();
+										}	
 									}
 								});
+								    
+								  } else {
+								  	checkConfirminformation();    
+								  }
+								}
+								);
+
+								
 							});
 
 							$( ".Check_information" ).click(function() {
@@ -266,9 +290,72 @@ Yii::app()->clientScript->registerScript('search', "
 										// else btn.addClass('btn-danger').removeClass('btn-success');
 										// btn.val(_items[result]);
 										// location.reload();
+										$(".save_data").click(function(){
+											var val = $(".position_id").val();
+											var id = $(".position_id").attr('id');
+										if (val != '') {
+											$.ajax({
+									url: "<?= $this->createUrl('admin/Changeposition'); ?>", 
+									type: "POST",
+									data:  {id:id,
+									        val:val},
+									success: function(data){
+										//console.log(data);
+										location.reload();
+									   }
+										});
+										}else{
+											location.reload();
+										}
+									});
 									}
 								});
 							});
+			function checkConfirminformation() {
+                swal({
+                    title: "หมายเหตุ",
+                    text: "ระบุสาเหตุที่ไม่อนุมัติ",
+                    type: "input",
+                    //inputType: "password",
+                    inputPlaceholder: "ข้อความไม่อนุมัติ",
+                    showCancelButton: true,
+                    allowEnterKey: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true,
+                    confirmButtonText: "ตกลง",
+                    cancelButtonText: "ยกเลิก",
+                    animation: "slide-from-top",
+                },
+                function (inputValue) {
+                    if(inputValue != false){
+                    	var id = $('.changeStatus').attr("data-id");
+                        $.ajax({
+                            type : 'POST',
+                            url : "<?= $this->createUrl('admin/Notapproved'); ?>",
+                            data: { passInput:inputValue,
+                                    id:id
+                                 }
+                            ,success:function(data){
+                            	console.log(data);
+                            	if (data) {
+                            		setTimeout(function () {
+                            	swal("สำเร็จ!", "ระบบได้ทำการส่งอีเมลล์แจ้งผู้สมัครเรียบร้อยแล้ว", "success");
+                            	}, 5000);
+                            	location.reload();
+
+                            }else{
+                            	setTimeout(function () {
+                            	swal("ไม่สำเร็จ!", "ไม่สามารถแก้ไขข้อมูลได้)", "error");
+                            	}, 5000);
+                            	location.reload();
+                            }
+             
+                            }
+                        });
+                    }
+                }
+                );
+            }
 						</script>
 					</div>
 
