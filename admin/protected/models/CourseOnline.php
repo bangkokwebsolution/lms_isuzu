@@ -7,6 +7,8 @@ class CourseOnline extends AActiveRecord
 	public $period_start;
 	public $period_end;
 	public $labelState = false;
+	public $org;
+	public $searchCourse;
 
 	public static function model($className=__CLASS__)
 	{
@@ -328,7 +330,14 @@ class CourseOnline extends AActiveRecord
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('courseonline.lang_id',$this->lang_id,true);
 		$criteria->compare('courseonline.parent_id',0);
-		$criteria->order = 'sortOrder ASC';
+		
+		$criteria->order = 'courseonline.create_date DESC';
+
+		if (!empty($this->searchCourse))
+		{
+			$criteria->addIncondition('course_id',$this->org);
+		}
+
 
 		if (!empty($this->course_date))
 		{
