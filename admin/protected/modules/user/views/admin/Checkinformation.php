@@ -4,7 +4,7 @@
 		color: #000;
 	}
 	.profile-detail h5{
-		margin: 8px 0;
+		margin: 10px 0;
 	}
 	.profile-detail h5 b{
 		color: #333;
@@ -14,14 +14,24 @@
 	    text-align: right;
 	}
 	.profile-detail h5 span{
-		color: #333;
-		padding: 0 8px;
+		color: #296283;
+		padding: 5px 8px;
+		background: #f0f0f0;
+		border-radius: 5px;
+	    margin: 0 5px;
+	    font-weight: 600;
+        border: 1px solid #ddd;
+	}
+
 	}
 	.profile-detail h5 ul{
 		list-style: square;
 	}
+	.profile-detail h5 ul li{
+		margin: 18px 0 0 0;
+	}
 	.profile-detail h5 ul li a span{
-		color: blue !important;
+		color: #296283 !important;
 	}
 	.mt-1{
 		margin-top: 1em;
@@ -79,6 +89,7 @@
 							<li>
 								<a href="#"><span>ไฟล์</span></a>
 							</li>
+						</ul>
 						</ul>
 					</h5>
 				</div>
