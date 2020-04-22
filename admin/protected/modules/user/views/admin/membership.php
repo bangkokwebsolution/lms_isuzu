@@ -75,6 +75,20 @@ Yii::app()->clientScript->registerScript('search', "
 						                return $data->position->position_title;
 						            }
 						        ),
+						        array(
+						            'header' => 'สถานะ',
+						            'type'=>'html',
+						            'value'=>function($data){
+						 
+						                 if($data->register_status == 0){
+											//echo CHtml::button("ปิด",array("class"=>"btn btn-danger ","data-id" => $data->id));
+											echo "ยังไม่อนุมัติ";
+										} else {
+											echo "อนุมัติ";
+											//echo CHtml::button("รอการตรวจสอบ",array("class"=>"btn btn-success ","data-id" => $data->id));
+										}
+						            }
+						        ),
 								// array(
 								// 	'name'=>'email',
 								// 	'type'=>'raw',
@@ -165,31 +179,31 @@ Yii::app()->clientScript->registerScript('search', "
 
 						?>
 						<!-- modal message -->
-<div class="modal fade" tabindex="-1" role="dialog" id="selectModal1">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
+							<div class="modal fade" tabindex="-1" role="dialog" id="selectModal1">
+							    <div class="modal-dialog" role="document">
+							        <div class="modal-content">
 
-        </div>
-    </div>
-</div>
-<!-- end modal -->
+							        </div>
+							    </div>
+							</div>
+							<!-- end modal -->
 
-<div class="modal fade" tabindex="-1" role="dialog" id="selectModal">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="background-color: #3C8DBC;">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" style="font-size: 25px;color: #fff;}">ข้อความ</h4>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer" style="background-color: #eee;">
-                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-                <button id="btnSubmit" type="submit" class="btn btn-primary" onclick="saveModal()">บันทึก</button>
-            </div>
-        </div>
-    </div>
-</div>
+							<div class="modal fade" tabindex="-1" role="dialog" id="selectModal">
+							    <div class="modal-dialog modal-lg" role="document">
+							        <div class="modal-content">
+							            <div class="modal-header" style="background-color: #3C8DBC;">
+							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							                <h4 class="modal-title" style="font-size: 25px;color: #fff;}">ข้อความ</h4>
+							            </div>
+							            <div class="modal-body">
+							            </div>
+							            <div class="modal-footer" style="background-color: #eee;">
+							                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+							                <button id="btnSubmit" type="submit" class="btn btn-primary" onclick="saveModal()">บันทึก</button>
+							            </div>
+							        </div>
+							    </div>
+							</div>
 <!-- 
 						<div class="modal fade" id="modal-id-card">
 							<div class="modal-dialog">

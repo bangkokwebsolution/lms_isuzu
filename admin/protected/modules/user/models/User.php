@@ -36,7 +36,7 @@ class User extends CActiveRecord
 	public $excel_file = null;
 	public $supper_user_status;
 	public $typeuser;
-	public $register_status;
+	//public $register_status;
 
 	/**
 	 * Returns the static model of the specified AR class.
@@ -73,7 +73,7 @@ class User extends CActiveRecord
 			//array('email', 'unique', 'message' => UserModule::t("This user's email address already exists.")),
 			// array('username', 'match', 'pattern' => '/^[0-9_]+$/u','message' => 'กรอกเลขบัตรประชาชน 13 หลักเท่านั้น'),
 			array('status', 'in', 'range'=>array(self::STATUS_NOACTIVE,self::STATUS_ACTIVE,self::STATUS_BANNED)),
-			array('superuser', 'in', 'range'=>array(0,1)),
+			array('superuser, register_status', 'in', 'range'=>array(0,1)),
             array('create_at', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
             array('lastvisit_at', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
 			// array('username, email, superuser, status,password,company_id,division_id,department_id,position_id,position_name', 'required'),
@@ -82,7 +82,7 @@ class User extends CActiveRecord
 			// array('identification', 'required','on' => 'general'),
 			
 			array('password', 'required', 'on' => 'reset_password'),
-			array('superuser, status, online_status,online_user', 'numerical', 'integerOnly'=>true),
+			array('superuser, status, online_status,online_user,register_status', 'numerical', 'integerOnly'=>true),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'update'),
 			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,company_id, division_id,position_id,lastactivity,orgchart_lv2, group,idensearch,identification,station_id,supper_user_status,pic_cardid2,employee_id,typeuser,register_status', 'safe', 'on'=>'search'),
@@ -254,7 +254,7 @@ class User extends CActiveRecord
 			'employee_id' => 'เลขประจำตัวพนักงาน',
 			'typeuser' =>'ประเภทผู้ใช้งาน',
 			// 'passport'=> 'รหัสหนังสือเดินทาง',
-			'register_status' => 'สถานะการสมัคร'
+			'register_status' => UserModule::t("register_status")
 		);
 	}
 
@@ -283,7 +283,7 @@ class User extends CActiveRecord
     {
         return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
             'alias'=>'user',
-            'select' => 'user.id, user.username, user.pic_user,user.station_id, user.department_id,user.company_id, user.division_id,user.position_id,user.auditor_id,user.bookkeeper_id, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.online_status, user.online_user, user.pic_cardid,lastactivity,group,user.identification,user.pic_cardid2,user.employee_id',
+            'select' => 'user.id, user.username, user.pic_user,user.station_id, user.department_id,user.company_id, user.division_id,user.position_id,user.auditor_id,user.bookkeeper_id, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.online_status, user.online_user, user.pic_cardid,lastactivity,group,user.identification,user.pic_cardid2,user.employee_id,user.register_status',
         ));
     }
 
@@ -460,7 +460,7 @@ public function searchmembership()
 	$criteria->compare('superuser',$this->superuser);
 	$criteria->compare('status',0);
 	$criteria->compare('del_status',0);
-	$criteria->compare('register_status',0);
+	$criteria->compare('register_status',$this->register_status);
 	$criteria->compare('online_status',$this->online_status);
 	$criteria->compare('online_user',$this->online_user);
 	$criteria->compare('group',$this->group);

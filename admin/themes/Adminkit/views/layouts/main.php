@@ -169,6 +169,7 @@
 				<li class="account" id="profilemenu">
 					<?php
 					$nameAdmin = Yii::app()->getModule('user')->user();
+					
 					?>
 					<?php echo CHtml::link('<span class="hidden-phone text">'.$nameAdmin->username.'</span><i></i>', array(), array('data-toggle'=>'dropdown','class'=>'glyphicons logout lock')); ?>
 					<ul class="dropdown-menu pull-right">
@@ -253,7 +254,7 @@
 	$clientScript->registerScriptFile($path_theme.'/theme/scripts/plugins/other/jquery-slimScroll/jquery.slimscroll.min.js',CClientScript::POS_END);
 	$clientScript->registerScriptFile($path_theme.'/theme/scripts/demo/common.js',CClientScript::POS_END);
 	$clientScript->registerScriptFile($path_theme.'/theme/scripts/plugins/other/holder/holder.js',CClientScript::POS_END);
-	$clientScript->registerScriptFile($path_theme.'/theme/scripts/plugins/forms/pixelmatrix-uniform/jquery.uniform.min.js',CClientScript::POS_END);
+	//$clientScript->registerScriptFile($path_theme.'/theme/scripts/plugins/forms/pixelmatrix-uniform/jquery.uniform.min.js',CClientScript::POS_END);
 
 	//Bootstrap Extended
 	$clientScript->registerScriptFile($path_theme.'/bootstrap/extend/bootstrap-select/bootstrap-select.js',CClientScript::POS_END);
@@ -296,7 +297,7 @@
 	$clientScript->registerScriptFile($path_theme.'/theme/scripts/plugins/charts/easy-pie/jquery.easy-pie-chart.js',CClientScript::POS_END);
 
 	//Sparkline Charts Plugin
-	$clientScript->registerScriptFile($path_theme.'/theme/scripts/plugins/charts/sparkline/jquery.sparkline.min.js',CClientScript::POS_END);
+	//$clientScript->registerScriptFile($path_theme.'/theme/scripts/plugins/charts/sparkline/jquery.sparkline.min.js',CClientScript::POS_END);
 
 	//Ba-Resize Plugin
 	$clientScript->registerScriptFile($path_theme.'/theme/scripts/plugins/other/jquery.ba-resize.js',CClientScript::POS_END);
