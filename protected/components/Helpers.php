@@ -352,7 +352,7 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         $adminEmailPass = 'bangkokweb0192';
 
         $mail =  new PHPMailer(true);
-            $mail =  new PHPMailer(true);
+        $mail =  new PHPMailer(true);
         $mail->SMTPOptions = array(
             'ssl' => array(
                 'verify_peer' => false,
@@ -1137,31 +1137,31 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                           $color = "#fff";
                           $status = "pass";
                           $class = "successcourse";
-                        }
-                    }
+                      }
+                  }
 
-                    if($status == "pass"){
-                       $criteria = new CDbCriteria;
-                       $criteria->compare('course_id',$lesson);
-                       $criteria->compare('user_id',Yii::app()->user->id);
-                       $criteria->compare('score_past','y');
-                       $criteria->compare('active','y');
-                       $criteria->order = 'score_id';
-                       $courseScorePass = Coursescore::model()->findAll($criteria);
-                       if(!$courseScorePass){
-                                $color = "#fff";
-                                $status = "learning";
-                                $class = "warningcourse";
-                        }
-                    }
+                    // if($status == "pass"){
+                    //    $criteria = new CDbCriteria;
+                    //    $criteria->compare('course_id',$lesson);
+                    //    $criteria->compare('user_id',Yii::app()->user->id);
+                    //    $criteria->compare('score_past','y');
+                    //    $criteria->compare('active','y');
+                    //    $criteria->order = 'score_id';
+                    //    $courseScorePass = Coursescore::model()->findAll($criteria);
+                    //    if(!$courseScorePass){
+                    //             $color = "#fff";
+                    //             $status = "learning";
+                    //             $class = "warningcourse";
+                    //     }
+                    // }
 
-                }else{
+              }else{
                  $color = "#fff";
                  $status = "learning";
                  $class = "warningcourse";
-                }
+             }
 
-            }
+         }
 
      }
      return (object)array('color'=>$color,'status'=>$status,'class'=>$class);
