@@ -28,7 +28,7 @@ class OrgChartController extends Controller
     {
     	return array(
         	array('allow',  // allow all users to perform 'index' and 'view' actions
-        		'actions'=>array('index','view','OrgChart2','OrgChartSave','SaveOrgchart'),
+        		'actions'=>array('index','view','OrgChart2','OrgChartSave','SaveOrgchart', 'CheckUser'),
         		'users'=>array('*'),
         	),
         	array('allow',
@@ -282,7 +282,7 @@ class OrgChartController extends Controller
 	}
 
 	 public function actionCheckUser(){
-	 	
+	 		// var_dump("888"); exit();
 	 	//User
 	 	$all = $_GET['all'];
 	 	$org_id = $_GET['position_id'];
@@ -292,11 +292,12 @@ class OrgChartController extends Controller
 
 	 	$orgRoot = OrgChart::model()->findByPk($org_id);
 
-	 	if($orgRoot->department_id != ""){ // dept
+
+	 	if($orgRoot->position_id != ""){ // position
+	 		$con_text = "position_id='".$orgRoot->position_id."'";
+	 	}elseif($orgRoot->department_id != ""){ // dept
 	 		$con_text = "department_id='".$orgRoot->department_id."'";
 
-	 	}elseif($orgRoot->position_id != ""){ // position
-	 		$con_text = "position_id='".$orgRoot->position_id."'";
 	 	}else{
 
 	 	}

@@ -27,12 +27,12 @@ class OrgChart extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('parent_id, level, department_id', 'numerical', 'integerOnly'=>true),
+			array('parent_id, level, department_id, position_id, branch_id', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
 			array('active', 'length', 'max'=>1),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, parent_id, level ,active, department_id, position_id', 'safe', 'on'=>'search'),
+			array('id, title, parent_id, level ,active, department_id, position_id, branch_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,6 +64,9 @@ class OrgChart extends CActiveRecord
 			'active' => 'Active',
 			'department_id' => 'department_id',
 			'position_id' => 'position_id',
+			'branch_id' => 'branch_id',
+
+
 
 
 		);
@@ -100,6 +103,9 @@ class OrgChart extends CActiveRecord
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('department_id',$this->department_id,true);
 		$criteria->compare('position_id',$this->position_id,true);
+		$criteria->compare('branch_id',$this->branch_id,true);
+
+
 
 		
 

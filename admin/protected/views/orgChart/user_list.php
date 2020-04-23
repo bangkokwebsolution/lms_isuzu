@@ -41,7 +41,7 @@ $this->breadcrumbs=array($titleName);
           foreach ($model as $key => $userItem) {
            ?>
            <tr>
-            <td><?= $userItem->id ?></td>
+            <td><input name="chk_<?php echo $userItem->id; ?>" value="<?php echo $userItem->id; ?>" id="chk_id_<?php echo $userItem->id; ?>" type="checkbox" /></td>
             <td><?= $userItem->profiles->firstname.' '.$userItem->profiles->lastname ?></td>
             <td><?= $userItem->email ?></td>
             <?php if(!$state){ ?>
