@@ -72,6 +72,7 @@ class PositionController extends Controller
 				{
 				if($model->save()){
 					$newOrgChart->position_id = $model->id;
+					$newOrgChart->department_id = $department_id;
 				$newOrgChart->save();
 
 

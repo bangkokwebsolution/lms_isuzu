@@ -64,6 +64,7 @@ class Users extends CActiveRecord
 	 */
 	public function relations()
 	{
+
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
@@ -73,6 +74,11 @@ class Users extends CActiveRecord
 			'divisions' => array(self::HAS_ONE, 'Division', array('id' => 'department_id')),
 			'position' => array(self::BELONGS_TO, 'Position', 'position_id'),
 			'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
+			
+			// 'orgchartDivision' => array(self::BELONGS_TO, 'OrgChart', array('division_id' => 'id')),
+			// 'orgchartCompany' => array(self::BELONGS_TO, 'OrgChart', array('company_id' => 'id')),
+			'orgchartDepartment' => array(self::BELONGS_TO, 'OrgChart', array('department_id' => 'department_id')),
+			'orgchartPosition' => array(self::BELONGS_TO, 'OrgChart', array('position_id' => 'position_id')),
 
 		);
 	}

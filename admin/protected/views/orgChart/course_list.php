@@ -124,7 +124,7 @@ EOD
                           'header'=>'เลื่อนตำแหน่ง',
                     
                             'value'=>function($data){
-                                return CHtml::link( '<i class=""></i> To', 'javascript:void(0)', array( 'class' => 'btn btn-primary btn-icon'));
+                                return CHtml::link( '<i class=""></i> To', 'javascript:void(0)', array( 'class' => 'btn btn-primary btn-icon', 'onclick' => 'getUserTo(' . $data->course_id . ')'));
                               },
 
                           'type'=>'raw',
@@ -287,6 +287,10 @@ EOD
 
     function getUser(course_id){
       window.location.href = '<?= Yii::app()->createUrl('OrgChart/CheckUser/'); ?>'+'/'+course_id+'?position_id='+<?= $_GET['id']; ?>+'&all='+<?= $all; ?>; 
+    }
+
+    function getUserTo(course_id){
+      window.location.href = '<?= Yii::app()->createUrl('OrgChart/CheckUserTo/'); ?>'+'/'+course_id+'?position_id='+<?= $_GET['id']; ?>+'&all='+<?= $all; ?>; 
     }
 
 </script>

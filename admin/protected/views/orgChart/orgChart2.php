@@ -155,7 +155,7 @@ var node_to_edit;
 
   <div id="chart" class="orgChart"></div>
   <!-- Add Node box -->
-  <div id="fancy" class="hidden">
+ <!--  <div id="fancy" class="hidden">
     <form action="." method="post" id="add_node_form">
       <h1 class="title_lb">New Node</h1>
       <div class="span12" id="add_nodo">
@@ -168,7 +168,7 @@ var node_to_edit;
         </div>
       </div>
     </form>
-  </div>
+  </div> -->
   <!-- Edit node box -->
   <div id="fancy_edit" class="hidden">
     <form action="." method="post" id="edit_node_form">

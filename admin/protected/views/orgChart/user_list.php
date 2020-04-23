@@ -30,7 +30,7 @@ $this->breadcrumbs=array($titleName);
             <th><input name="select_all" value="1" id="example-select-all" type="checkbox" /></th>
             <th>Name</th>
             <th>Email</th>
-            <th>Grading</th>
+            <!-- <th>Grading</th> -->
             <?php if(!$state){ ?>
             <th>PT-Grading</th>
             <?php } ?>
@@ -44,7 +44,6 @@ $this->breadcrumbs=array($titleName);
             <td><?= $userItem->id ?></td>
             <td><?= $userItem->profiles->firstname.' '.$userItem->profiles->lastname ?></td>
             <td><?= $userItem->email ?></td>
-            <td><?= $userItem->gradeNormal->grade_normal_title ?></td>
             <?php if(!$state){ ?>
              <td><?= $userItem->grades->grade_title ?></td>
             <?php } ?>
@@ -56,7 +55,7 @@ $this->breadcrumbs=array($titleName);
            <th></th>
            <th>Name</th>
            <th>Email</th>
-           <th>Grading</th>
+           <!-- <th>Grading</th> -->
            <?php if(!$state){ ?>
             <th>PT-Grading</th>
             <?php } ?>

@@ -282,66 +282,86 @@ class OrgChartController extends Controller
 	}
 
 	 public function actionCheckUser(){
+	 	
 	 	//User
 	 	$all = $_GET['all'];
-	 	$position_id = $_GET['position_id'];
+	 	$org_id = $_GET['position_id'];
 	 	$course_id = $_GET['id'];
-	 	$orgRoot = OrgChart::model()->findByPk($position_id);
 
-	 	$criteria = new CDbCriteria();
-	 	$criteria->compare('active','y');
-	 	$criteria->compare('parent_id',$orgRoot->id);
-	 	$ckLevel = OrgChart::model()->findAll($criteria);
-	 	
-	 	// var_dump($orgRoot->title);exit();
-	 	$criteria = new CDbCriteria();
-	 	$criteria->with = array('orgchartDivision','orgchartCompany','orgchartDepartment','orgchartPosition','profiles');
-	 	if($all){
-	 		$criteria->compare('orgchartDivision.title',$orgRoot->title,false,'OR');
-	 		$criteria->compare('orgchartCompany.title',$orgRoot->title,false,'OR');
-	 		$criteria->compare('orgchartDepartment.title',$orgRoot->title,false,'OR');
-	 		$criteria->compare('orgchartPosition.title',$orgRoot->title,false,'OR');
+
+
+	 	$orgRoot = OrgChart::model()->findByPk($org_id);
+
+	 	if($orgRoot->department_id != ""){ // dept
+	 		$con_text = "department_id='".$orgRoot->department_id."'";
+
+	 	}elseif($orgRoot->position_id != ""){ // position
+	 		$con_text = "position_id='".$orgRoot->position_id."'";
 	 	}else{
-	 		if($ckLevel){
-	 			$criteria->compare('division_id',$position_id,false,'OR');
-	 			$criteria->compare('company_id',$position_id,false,'OR');
-	 			$criteria->compare('department_id',$position_id,false,'OR');
-	 			$criteria->compare('position_id',$position_id,false,'OR');
-	 		}else{
-	 			$criteria->compare('position_id',$position_id);
-	 		}
-	 		
+
 	 	}
+
+	 	$users = Users::model()->with('profiles')->findAll($con_text);
+	 	// var_dump("<pre>");
+	 	// var_dump($users);
+	 	// exit();
+
+
+	 // 	$criteria = new CDbCriteria();
+	 // 	$criteria->compare('t.active','y');
+	 // 	$criteria->compare('parent_id',$orgRoot->id);
+	 // 	$ckLevel = OrgChart::model()->findAll($criteria);
+	 	
+	 // 	// var_dump($orgRoot->title);exit();
+	 // 	$criteria = new CDbCriteria();
+	 // 	$criteria->with = array('orgchartDepartment','orgchartPosition','profiles');
+	 // 	//'orgchartDivision','orgchartCompany'
+	 // 	if($all){
+	 // 		// $criteria->compare('orgchartDivision.title',$orgRoot->title,false,'OR');
+	 // 		// $criteria->compare('orgchartCompany.title',$orgRoot->title,false,'OR');
+	 // 		$criteria->compare('orgchartDepartment.title',$orgRoot->title,false,'OR');
+	 // 		$criteria->compare('orgchartPosition.title',$orgRoot->title,false,'OR');
+	 // 	}else{
+	 // 		if($ckLevel){
+	 // 			// $criteria->compare('division_id',$org_id,false,'OR');
+	 // 			// $criteria->compare('company_id',$org_id,false,'OR');
+	 // 			$criteria->compare('t.department_id',$org_id,false,'OR');
+	 // 			$criteria->compare('t.position_id',$org_id,false,'OR');
+	 // 		}else{
+	 // 			$criteria->compare('t.position_id',$org_id);
+	 // 		}
+	 		
+	 // 	}
 
 	 	
-		$criteria->compare('del_status',0);
+		// $criteria->compare('del_status',0);
 
-	 	//Org root SO,Club,General
-	 	if($position_id == 2 || $position_id == 3 || $position_id == 4){
-	 		// type_user
-	 		$criteria->compare('profiles.type_user',$position_id,false,'OR');
-	 	}
+	 // 	//Org root SO,Club,General
+	 // 	if($org_id == 2 || $org_id == 3 || $org_id == 4){
+	 // 		// type_user
+	 // 		$criteria->compare('profiles.type_user',$org_id,false,'OR');
+	 // 	}
 
-	 	// $criteria->compare('status',1);
-	 	// $criteria->compare('del_status',0);
-	 	$getAlluser = Users::model()->findAll($criteria);
+	 // 	// $criteria->compare('status',1);
+	 // 	// $criteria->compare('del_status',0);
+	 // 	$getAlluser = Users::model()->findAll($criteria);
 
-	 	$state = true;
+	 // 	$state = true;
 
-	 	if($state){
-	 		foreach ($getAlluser as $key => $value) {
-	 			$OrgChartModel = OrgChart::model()->findByPk($value->position_id);
-	 			if($OrgChartModel->orgchartParent->title){
-	 				if($OrgChartModel->orgchartParent->title == "Fitness"){
-	 					$state = false;
-	 				}
-	 			}
-	 		}
-	 	}
+	 // 	if($state){
+	 // 		foreach ($getAlluser as $key => $value) {
+	 // 			$OrgChartModel = OrgChart::model()->findByPk($value->position_id);
+	 // 			if($OrgChartModel->orgchartParent->title){
+	 // 				if($OrgChartModel->orgchartParent->title == "Fitness"){
+	 // 					$state = false;
+	 // 				}
+	 // 			}
+	 // 		}
+	 // 	}
 	 	
 
 	 	// $state = false;
-	 	// $OrgChartModel = OrgChart::model()->findByPk($position_id);
+	 	// $OrgChartModel = OrgChart::model()->findByPk($org_id);
 	 	// if($OrgChartModel->orgchartParent->title){
 	 	// 	if($OrgChartModel->orgchartParent->title == "Fitness"){
 	 	// 		$state = true;
@@ -354,54 +374,204 @@ class OrgChartController extends Controller
 	 	// var_dump(json_encode($mtId));
 	 	// exit();
 
-	 	if(!empty($_POST)){
+	 	// if(!empty($_POST)){
 
-	 		if($all){
-	 			$model = OrgPosition::model()->deleteAll(array(
-	 			'condition'=>'course_id = "'.$course_id.'" AND org_root_title = "'.$orgRoot->title.'" AND state = "y"'
-	 			));
-	 		}else{
-	 			$model = OrgPosition::model()->deleteAll(array(
-	 			'condition'=>'course_id = "'.$course_id.'" AND org_root_title = "'.$orgRoot->title.'" AND state = "n"'
-	 			));
-	 		}
+	 	// 	if($all){
+	 	// 		$model = OrgPosition::model()->deleteAll(array(
+	 	// 		'condition'=>'course_id = "'.$course_id.'" AND org_root_title = "'.$orgRoot->title.'" AND state = "y"'
+	 	// 		));
+	 	// 	}else{
+	 	// 		$model = OrgPosition::model()->deleteAll(array(
+	 	// 		'condition'=>'course_id = "'.$course_id.'" AND org_root_title = "'.$orgRoot->title.'" AND state = "n"'
+	 	// 		));
+	 	// 	}
 	 		
-	 		$saveUserApplied = $_POST['id'];
-	 		if($saveUserApplied) {
-	 			foreach ($saveUserApplied as $user) {
-	 				$model = new OrgPosition;
-	 				$model->course_id = $course_id;
-	 				$model->user_id = $user;
-	 				$model->org_root_title = $orgRoot->title;
-	 				if($all){
-	 					$model->state = "y";
-	 				}else{
-	 					$model->state = "n";
-	 				}
-	 				$model->save();
-	 			}
-	 		}
-	 	}
+	 	// 	$saveUserApplied = $_POST['id'];
+	 	// 	if($saveUserApplied) {
+	 	// 		foreach ($saveUserApplied as $user) {
+	 	// 			$model = new OrgPosition;
+	 	// 			$model->course_id = $course_id;
+	 	// 			$model->user_id = $user;
+	 	// 			$model->org_root_title = $orgRoot->title;
+	 	// 			if($all){
+	 	// 				$model->state = "y";
+	 	// 			}else{
+	 	// 				$model->state = "n";
+	 	// 			}
+	 	// 			$model->save();
+	 	// 		}
+	 	// 	}
+	 	// }
 	 	
-	 	$criteria = new CDbCriteria();
-	 	$criteria->compare('course_id',$course_id);
-	 	$criteria->compare('org_root_title',$orgRoot->title);
-	 	if($all){
-	 		$criteria->compare('state','y');
-	 	}else{
-	 		$criteria->compare('state','n');
-	 	}
-	 	$orgs = OrgPosition::model()->findAll($criteria);
-	 	$mtId = array();
-	 	foreach ($orgs as $key => $value) {
-	 		$mtId[$key] = $value->user_id;
-	 	}
+	 	// $criteria = new CDbCriteria();
+	 	// $criteria->compare('course_id',$course_id);
+	 	// $criteria->compare('org_root_title',$orgRoot->title);
+	 	// if($all){
+	 	// 	$criteria->compare('state','y');
+	 	// }else{
+	 	// 	$criteria->compare('state','n');
+	 	// }
+	 	// $orgs = OrgPosition::model()->findAll($criteria);
+	 	// $mtId = array();
+	 	// foreach ($orgs as $key => $value) {
+	 	// 	$mtId[$key] = $value->user_id;
+	 	// }
+
+
+	 	$state = true;
 	 	$this->render('user_list',array(
-			'model'=>$getAlluser,
-			'mtId'=>$mtId,
+			'model'=>$users,
+			// 'mtId'=>$mtId,
 			'state'=>$state
 		));
 	 }
+
+
+	  public function actionCheckUserTo(){
+	 	
+	 	//User
+	 	$all = $_GET['all'];
+	 	$org_id = $_GET['position_id'];
+	 	$course_id = $_GET['id'];
+
+
+
+	 	$orgRoot = OrgChart::model()->findByPk($org_id);
+
+	 	if($orgRoot->department_id != ""){ // dept
+	 		$con_text = "department_id='".$orgRoot->department_id."'";
+
+	 	}elseif($orgRoot->position_id != ""){ // position
+	 		$con_text = "position_id='".$orgRoot->position_id."'";
+	 	}else{
+
+	 	}
+
+	 	$users = Users::model()->with('profiles')->findAll($con_text);
+	 	// var_dump("<pre>");
+	 	// var_dump($users);
+	 	// exit();
+
+
+	 // 	$criteria = new CDbCriteria();
+	 // 	$criteria->compare('t.active','y');
+	 // 	$criteria->compare('parent_id',$orgRoot->id);
+	 // 	$ckLevel = OrgChart::model()->findAll($criteria);
+	 	
+	 // 	// var_dump($orgRoot->title);exit();
+	 // 	$criteria = new CDbCriteria();
+	 // 	$criteria->with = array('orgchartDepartment','orgchartPosition','profiles');
+	 // 	//'orgchartDivision','orgchartCompany'
+	 // 	if($all){
+	 // 		// $criteria->compare('orgchartDivision.title',$orgRoot->title,false,'OR');
+	 // 		// $criteria->compare('orgchartCompany.title',$orgRoot->title,false,'OR');
+	 // 		$criteria->compare('orgchartDepartment.title',$orgRoot->title,false,'OR');
+	 // 		$criteria->compare('orgchartPosition.title',$orgRoot->title,false,'OR');
+	 // 	}else{
+	 // 		if($ckLevel){
+	 // 			// $criteria->compare('division_id',$org_id,false,'OR');
+	 // 			// $criteria->compare('company_id',$org_id,false,'OR');
+	 // 			$criteria->compare('t.department_id',$org_id,false,'OR');
+	 // 			$criteria->compare('t.position_id',$org_id,false,'OR');
+	 // 		}else{
+	 // 			$criteria->compare('t.position_id',$org_id);
+	 // 		}
+	 		
+	 // 	}
+
+	 	
+		// $criteria->compare('del_status',0);
+
+	 // 	//Org root SO,Club,General
+	 // 	if($org_id == 2 || $org_id == 3 || $org_id == 4){
+	 // 		// type_user
+	 // 		$criteria->compare('profiles.type_user',$org_id,false,'OR');
+	 // 	}
+
+	 // 	// $criteria->compare('status',1);
+	 // 	// $criteria->compare('del_status',0);
+	 // 	$getAlluser = Users::model()->findAll($criteria);
+
+	 // 	$state = true;
+
+	 // 	if($state){
+	 // 		foreach ($getAlluser as $key => $value) {
+	 // 			$OrgChartModel = OrgChart::model()->findByPk($value->position_id);
+	 // 			if($OrgChartModel->orgchartParent->title){
+	 // 				if($OrgChartModel->orgchartParent->title == "Fitness"){
+	 // 					$state = false;
+	 // 				}
+	 // 			}
+	 // 		}
+	 // 	}
+	 	
+
+	 	// $state = false;
+	 	// $OrgChartModel = OrgChart::model()->findByPk($org_id);
+	 	// if($OrgChartModel->orgchartParent->title){
+	 	// 	if($OrgChartModel->orgchartParent->title == "Fitness"){
+	 	// 		$state = true;
+	 	// 	}
+	 	// }
+
+	 	// var_dump($getAlluser);exit();
+	 	// //Orgchart
+	 	
+	 	// var_dump(json_encode($mtId));
+	 	// exit();
+
+	 	// if(!empty($_POST)){
+
+	 	// 	if($all){
+	 	// 		$model = OrgPosition::model()->deleteAll(array(
+	 	// 		'condition'=>'course_id = "'.$course_id.'" AND org_root_title = "'.$orgRoot->title.'" AND state = "y"'
+	 	// 		));
+	 	// 	}else{
+	 	// 		$model = OrgPosition::model()->deleteAll(array(
+	 	// 		'condition'=>'course_id = "'.$course_id.'" AND org_root_title = "'.$orgRoot->title.'" AND state = "n"'
+	 	// 		));
+	 	// 	}
+	 		
+	 	// 	$saveUserApplied = $_POST['id'];
+	 	// 	if($saveUserApplied) {
+	 	// 		foreach ($saveUserApplied as $user) {
+	 	// 			$model = new OrgPosition;
+	 	// 			$model->course_id = $course_id;
+	 	// 			$model->user_id = $user;
+	 	// 			$model->org_root_title = $orgRoot->title;
+	 	// 			if($all){
+	 	// 				$model->state = "y";
+	 	// 			}else{
+	 	// 				$model->state = "n";
+	 	// 			}
+	 	// 			$model->save();
+	 	// 		}
+	 	// 	}
+	 	// }
+	 	
+	 	// $criteria = new CDbCriteria();
+	 	// $criteria->compare('course_id',$course_id);
+	 	// $criteria->compare('org_root_title',$orgRoot->title);
+	 	// if($all){
+	 	// 	$criteria->compare('state','y');
+	 	// }else{
+	 	// 	$criteria->compare('state','n');
+	 	// }
+	 	// $orgs = OrgPosition::model()->findAll($criteria);
+	 	// $mtId = array();
+	 	// foreach ($orgs as $key => $value) {
+	 	// 	$mtId[$key] = $value->user_id;
+	 	// }
+
+
+	 	$state = true;
+	 	$this->render('user_list_to',array(
+			'model'=>$users,
+			// 'mtId'=>$mtId,
+			'state'=>$state
+		));
+	 }
+
 
 
 	public function actionIndex()
