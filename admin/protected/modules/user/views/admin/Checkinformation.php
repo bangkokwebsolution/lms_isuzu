@@ -59,7 +59,18 @@
 <form>
 	<div class="well profile-detail">
 			<div class="text-center m-1">
-				<img src="/lms_thoresen/themes/template2/images/thumbnail-profile.png" alt="">
+				<?php 
+                                        if ($user['pic_user'] == null) {
+
+                                            $img  = Yii::app()->theme->baseUrl . "/images/thumbnail-profile.png";
+                                        } else {
+                                         
+                                            $img = Yii::app()->baseUrl . '/../uploads/user/' . $user['id'] . '/thumb/' . $user['pic_user'];
+                                            
+                                        }
+
+								?> 
+				<img border="9" src="<?php echo $img; ?>" width="150" height="180">
 			</div>
 		<h4 class="topic-info">ข้อมูลพื้นฐาน</h4>
 		<div class="mt-1 register-detail">
@@ -217,21 +228,41 @@
 					<h5><b>เปลี่ยนตำแหน่งเรือ:</b>
 					<select class="form-control d-inlineblock position_id" name="position_id" id="<?php echo $user['id'];?>">
 						<option value="">เลือกตำแหน่ง</option>
-					 	<option value="1">C/O</option>
-						<option value="2">2/O</option>
-						<option value="3">3/O</option>
-						<option value="4">Bosun</option>
-						<option value="5">AB</option>
-						<option value="6">D/Boy</option>
-						<option value="7">D/Boy1</option>
-						<option value="8">C/E</option>
-						<option value="9">2/E</option>
-						<option value="10">3/E</option>
-						<option value="11">4/E</option>
-						<option value="12">Fitter</option>
-						<option value="13">Oiler</option>
-						<option value="14">E/Boy</option>
-						<option value="15">E/Boy1</option> 
+					 	<option value="16">CHIEF OFFICE</option>
+						<option value="17">SECOND OFFICER</option>
+						<option value="18">THIRD OFFICER</option>
+						<option value="19">BOSAN</option>
+						<option value="20">AB</option>
+						<option value="21">D-FITTER</option>
+						<option value="22">D-BOY</option>
+						<option value="23">D-CADET</option>
+						<option value="24">CHIEF COOK</option>
+						<option value="25">MESSMAN</option>
+						<option value="26">CHIEF ENGINEER</option>
+						<option value="27">SECOND ENGINEER</option>
+						<option value="28">THIRD ENGINEER</option>
+						<option value="29">FOURTH ENGINEER</option>
+						<option value="30">ELECTRICIAN ENGINEER</option> 
+						<option value="31">ASSISTANT ELECTRICIAN</option>
+						<option value="32">OILER</option>
+						<option value="33">E-FITTER</option>
+						<option value="34">E-BOY</option>
+						<option value="35">E-CADET</option>
+						<option value="36">HR</option>
+						<option value="37">ADM</option>
+						<option value="38">BUI</option>
+						<option value="39">ACT</option>
+						<option value="40">FIN</option>
+						<option value="41">Chartering</option>
+						<option value="42">Operation</option>
+						<option value="43">Ins. & Clam</option>
+						<option value="44">MOD Center</option>
+						<option value="45">MAR</option>
+						<option value="46">MPD</option>
+						<option value="47">MTT</option>
+						<option value="48">QAS</option>
+						<option value="49">Technical</option>
+						<option value="50">Procure</option>
 					</select>
 				</h5>
 				</div>

@@ -138,9 +138,11 @@ Yii::app()->clientScript->registerScript('search', "
 									'type'=>'raw',
 									'value'=>function($data){
 										if($data->register_status == 1){
-											echo CHtml::button("ปิด",array("class"=>"btn btn-danger changeStatus","data-id" => $data->id));
-										} else {
+											echo CHtml::button("อนุมัติ",array("class"=>"btn btn-danger","data-id" => $data->id));
+										} else if($data->register_status == 0) {
 											echo CHtml::button("รอการตรวจสอบ",array("class"=>"btn btn-success changeStatus","data-id" => $data->id));
+										} else {
+											echo CHtml::button("ไม่อนุมัติ",array("class"=>"btn btn-success","data-id" => $data->id));
 										}
 									},
 									'header' => 'อนุมัติสมัครสมาชิก',
@@ -253,12 +255,12 @@ Yii::app()->clientScript->registerScript('search', "
 										if (result) {
 											setTimeout(function () {
 											swal("อนุมัติสำเร็จ!", "ระบบได้ทำการอนุมัติเรียบร้อยแล้ว", "success");
-										     }, 5000);
+										     }, 2000);
                                             location.reload();
 										}else{
 											setTimeout(function () {
                                             swal("อนุมัติไม่สำเร็จ!", "ไม่สามารถอนุมัติได้)", "error");
-                                            }, 5000);
+                                            }, 2000);
                                             location.reload();
 										}	
 									}
@@ -313,7 +315,7 @@ Yii::app()->clientScript->registerScript('search', "
 							});
 			function checkConfirminformation() {
                 swal({
-                    title: "หมายเหตุ",
+                    title: "ระบุสาเหตุ",
                     text: "ระบุสาเหตุที่ไม่อนุมัติ",
                     type: "input",
                     //inputType: "password",
@@ -340,13 +342,13 @@ Yii::app()->clientScript->registerScript('search', "
                             	if (data) {
                             		setTimeout(function () {
                             	swal("สำเร็จ!", "ระบบได้ทำการส่งอีเมลล์แจ้งผู้สมัครเรียบร้อยแล้ว", "success");
-                            	}, 5000);
+                            	}, 4000);
                             	location.reload();
 
                             }else{
                             	setTimeout(function () {
                             	swal("ไม่สำเร็จ!", "ไม่สามารถแก้ไขข้อมูลได้)", "error");
-                            	}, 5000);
+                            	}, 2000);
                             	location.reload();
                             }
              
