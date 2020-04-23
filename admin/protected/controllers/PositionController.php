@@ -71,6 +71,10 @@ class PositionController extends Controller
 				if($model->validate())
 				{
 				if($model->save()){
+					$newOrgChart->position_id = $model->id;
+				$newOrgChart->save();
+
+
 					if(Yii::app()->user->id){
 						Helpers::lib()->getControllerActionId();
 					}

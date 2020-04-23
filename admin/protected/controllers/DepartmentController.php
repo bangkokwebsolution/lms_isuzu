@@ -127,6 +127,10 @@ class DepartmentController extends Controller
 
 				$model->attributes=$_POST['Department'];
 				if($model->save()){
+					$newOrgChart->department_id = $model->id;
+				$newOrgChart->save();
+
+
 					if(Yii::app()->user->id){
 						Helpers::lib()->getControllerActionId();
 					}
