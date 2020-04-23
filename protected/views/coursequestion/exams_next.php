@@ -51,12 +51,12 @@
 						}else if($model->ques_type == 4) {
 							$thaichar = array('ก','ข','ค','ง','จ','ฉ','ช','ซ','ฌ','ญ','ฐ','ฑ','ฒ','ณ','ด','ต','ถ','ท','ธ','น','บ','ป','ผ','ฝ','พ','ฟ','ภ','ม','ย','ร','ล','ว','ศ','ษ','ส','ห','ฬ','อ','ฮ');  
 						// $ranNumber = rand(1, 10000000);
-							if($choice->choice_answer == 2){
+							if($choice->CHOICE_ANSWER == 2){
 							// $arrType4Answer[$ranNumber] = $val_choice;
 								$Type4Answer[$choice->choice_id] = $thaichar[$countchoice-1];
 								$countchoice++;			
 							}
-							if($choice->choice_answer == 1){
+							if($choice->CHOICE_ANSWER == 1){
 								$Type4Question[$val_choice] = $key;
 							}
 						}
@@ -92,7 +92,7 @@
 						echo 	CHtml::dropDownList('dropdownVal[]',
 							$selected_value=$selected,
 							$Type4Answer,
-							array('empty'=>$label->label_dropdownChoose,'class'=>'dropdown_value','id'=>'Q'.$key)).' <label>'.CHtml::decode($choice->choice_detail).'</label>';
+							array('empty'=>$label->label_dropdownchoose,'class'=>'dropdown_value','id'=>'Q'.$key)).' <label>'.CHtml::decode($choice->choice_detail).'</label>';
 						echo '<br>';
 						$countQuest++;
 					}
@@ -108,18 +108,9 @@
 			echo CHtml::hiddenField("idx_now",$currentQuiz->number);
 			?>
 			<div class="text-center">
-				<?php 
-				if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
-					$Previous = "Previous";
-					$Next = "Next";
-				}else{  
-					$Previous = "ก่อน";
-					$Next = "ถัดไป";
-				}
-				?>
-				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg','onclick'=>'save_ans("previous")'), $Previous); ?>
-				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg','onclick'=>'save_ans("next")'), $Next); ?>
-				<!-- <?php //if($last_ques==1)echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg','onclick'=>'save_ans("save")'), $label->label_btn_sendQues); ?> -->
+				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg','onclick'=>'save_ans("previous")'), 'Previous'); ?>
+				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg','onclick'=>'save_ans("next")'), 'Next'); ?>
+				<?php //if($last_ques==1)echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg','onclick'=>'save_ans("savevvv")' ), UserModule::t('sendQues') ); ?>
 			</div>
 		</form>
 	</div>
@@ -140,7 +131,6 @@
 							}else {
 								$class = ($val_temp->status == '1') ? 'success' : '';
 							} 
-							//$this->createUrl('index',array('id'=>$course->id,'number'=>$val_temp->number));
 							$link = 'onclick="save_ans(\''.$val_temp->number.'\')"';
 							?>
 							<td><a href="javascript:void(0)" <?= $link; ?> class="btn btn-<?= $class ?> btn-block"><div style="height:100%;width:100%"><?= $val_temp->number; ?></div></a></td>
@@ -154,6 +144,9 @@
 					</tr>
 				</tbody>
 			</table>
+			<center style="margin-top: 80px">
+				<?php if($last_ques==1)echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg','onclick'=>'save_ans("save")' ), UserModule::t('sendQues') ); ?>
+			</center>
 		</div>
 	</div>
 </div>

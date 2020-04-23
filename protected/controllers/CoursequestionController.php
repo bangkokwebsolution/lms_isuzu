@@ -35,32 +35,32 @@ class CoursequestionController extends Controller
         if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
             $langId = Yii::app()->session['lang'] = 1;
             Yii::app()->language = 'en';
-            }else{
-                $langId = Yii::app()->session['lang'];
-                Yii::app()->language = (Yii::app()->session['lang'] == 1)? 'en':'th';
-            }
+        }else{
+            $langId = Yii::app()->session['lang'];
+            Yii::app()->language = (Yii::app()->session['lang'] == 1)? 'en':'th';
+        }
 
+        $label = MenuCoursequestion::model()->find(array(
+            'condition' => 'lang_id=:lang_id',
+            'params' => array(':lang_id' => $langId)
+        ));
+        if(!$label){
             $label = MenuCoursequestion::model()->find(array(
-                    'condition' => 'lang_id=:lang_id',
-                    'params' => array(':lang_id' => $langId)
-                    ));
-            if(!$label){
-                $label = MenuCoursequestion::model()->find(array(
-                    'condition' => 'lang_id=:lang_id',
-                    'params' => array(':lang_id' => 1)
-                    ));
-            }
+                'condition' => 'lang_id=:lang_id',
+                'params' => array(':lang_id' => 1)
+            ));
+        }
 
+        $labelCourse = MenuCourse::model()->find(array(
+            'condition' => 'lang_id=:lang_id',
+            'params' => array(':lang_id' => $langId)
+        ));
+        if(!$labelCourse){
             $labelCourse = MenuCourse::model()->find(array(
-                    'condition' => 'lang_id=:lang_id',
-                    'params' => array(':lang_id' => $langId)
-                    ));
-            if(!$labelCourse){
-                $labelCourse = MenuCourse::model()->find(array(
-                    'condition' => 'lang_id=:lang_id',
-                    'params' => array(':lang_id' => 1)
-                    ));
-            }
+                'condition' => 'lang_id=:lang_id',
+                'params' => array(':lang_id' => 1)
+            ));
+        }
 
         foreach ($Question as $key => $value) {   
             $total_score += count($value->choices);
@@ -104,42 +104,41 @@ class CoursequestionController extends Controller
         if(Yii::app()->user->id){
             $course = CourseOnline::model()->findByPk($id);
             $courseStatus = Helpers::lib()->checkCoursePass($id);
-           
+
             /*if($course) {
                 $courseStatus = "pass";
             }*/
             //$courseStatus = "pass";
             //$lesson = Lesson::model()->findByPk($id);
             if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
-            $langId = Yii::app()->session['lang'] = 1;
-            Yii::app()->language = 'en';
+                $langId = Yii::app()->session['lang'] = 1;
+                Yii::app()->language = 'en';
             }else{
                 $langId = Yii::app()->session['lang'];
                 Yii::app()->language = (Yii::app()->session['lang'] == 1)? 'en':'th';
             }
 
             $label = MenuCoursequestion::model()->find(array(
-                    'condition' => 'lang_id=:lang_id',
-                    'params' => array(':lang_id' => $langId)
-                    ));
+                'condition' => 'lang_id=:lang_id',
+                'params' => array(':lang_id' => $langId)
+            ));
             if(!$label){
                 $label = MenuCoursequestion::model()->find(array(
                     'condition' => 'lang_id=:lang_id',
                     'params' => array(':lang_id' => 1)
-                    ));
-             }
+                ));
+            }
 
-             $labelCourse = MenuCourse::model()->find(array(
-                    'condition' => 'lang_id=:lang_id',
-                    'params' => array(':lang_id' => $langId)
-                    ));
+            $labelCourse = MenuCourse::model()->find(array(
+                'condition' => 'lang_id=:lang_id',
+                'params' => array(':lang_id' => $langId)
+            ));
             if(!$labelCourse){
                 $labelCourse = MenuCourse::model()->find(array(
                     'condition' => 'lang_id=:lang_id',
                     'params' => array(':lang_id' => 1)
-                    ));
+                ));
             }
-
 
             if ($courseStatus == "notPass") {
                 Yii::app()->user->setFlash('CheckQues', $label->label_alert_noPermisTest);
@@ -165,7 +164,7 @@ class CoursequestionController extends Controller
                 $countCoursescore = Coursescore::Model()->count("course_id=:course_id AND user_id=:user_id and active = 'y'", array(
                     "course_id" => $id,
                     "user_id" => Yii::app()->user->id,
-                    
+
                 ));
 
                 if ($countCoursescore == $course->cate_amount) //สอบครบจำนวนครั้งที่กำหนดไว้
@@ -215,11 +214,12 @@ class CoursequestionController extends Controller
                         $temp_all = TempCourseQuiz::model()->findAll(array(
                             'condition' => "user_id=".Yii::app()->user->id." and course_id=".$id.""
                         ));
+
                         // $model = array();
                         if(!$temp_all){     
                             foreach ($manage->getData() as $i => $value) {
-                               $modelQuestion[] = Coursequestion::getLimitData($value['group_id'], $value['manage_row'], $isPreTest);
-                               foreach($modelQuestion as $key1 => $ques){
+                             $modelQuestion[] = Coursequestion::getLimitData($value['group_id'], $value['manage_row'], $isPreTest);
+                             foreach($modelQuestion as $key1 => $ques){
                                 foreach($ques as $key2 => $val){                                
                                     $temp_test = new TempCourseQuiz;
                                     $temp_test->user_id = Yii::app()->user->id;
@@ -321,8 +321,6 @@ class CoursequestionController extends Controller
                                     if(!$update_temp->update()) var_dump($update_temp->getErrors());
                                 }
                             }
-
-
                             if($_POST['actionEvnt']=="save" || $_POST['actionEvnt']=="timeup"){
                                 $modelCoursescore = new Coursescore;
                                 $modelCoursescore->course_id = $id;
@@ -330,8 +328,8 @@ class CoursequestionController extends Controller
                                 $modelCoursescore->save();
 
                                 $temp_accept = TempCourseQuiz::model()->findAll(
-                                 array('condition' => "user_id=".Yii::app()->user->id." and course_id=".$id.""
-                             )); 
+                                   array('condition' => "user_id=".Yii::app()->user->id." and course_id=".$id.""
+                               )); 
                                 $countAllCoursequestion = 0;
                                 $scoreSum = 0;
 
@@ -578,7 +576,6 @@ class CoursequestionController extends Controller
                                         'condition' => "user_id=:user_id AND course_id=:course_id AND status='0' order by id",
                                         'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $id)
                                     ));
-
                                     $last_ques = $count_no_select == 0 ? 1 : 0;
                                     $currentQuiz = TempCourseQuiz::model()->find(array(
                                         'condition' => "user_id=:user_id AND course_id=:course_id AND number=:number order by id",
@@ -601,6 +598,7 @@ class CoursequestionController extends Controller
                                     ));
                                 }
                             } else {
+
                                 $temp_all = TempCourseQuiz::model()->findAll(array(
                                     'condition' => "user_id=".Yii::app()->user->id." and course_id=".$id.""
                                 ));
@@ -608,8 +606,10 @@ class CoursequestionController extends Controller
                                     'condition' => "user_id=:user_id AND course_id=:course_id AND status='0' order by id",
                                     'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $id)
                                 ));
+
                                 $last_ques = $count_no_select == 0 ? 1 : 0;
                                 $countExam = count($temp_all) - $count_no_select;
+
                                 $this->render('exams', array(
                                     'model' => $model,
                                     'course' => $course,
@@ -713,9 +713,9 @@ class CoursequestionController extends Controller
     echo $state;
      // $temp_time_start->time_up = $_POST['time'];
      // echo ($temp_time_start->update()) ? 'success' : 'error';
- }
+}
 
- public function SendMailLearn($id){
+public function SendMailLearn($id){
 
     $user_id = Yii::app()->user->id;
     $modelUser = User::model()->findByPk($user_id);

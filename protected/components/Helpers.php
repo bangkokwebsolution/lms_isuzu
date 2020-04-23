@@ -345,20 +345,34 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/SMTP.php";
 
         $SettingAll = Helpers::lib()->SetUpSetting();
-        $adminEmail = $SettingAll['USER_EMAIL'];
-        $adminEmailPass = $SettingAll['PASS_EMAIL'];
+        // $adminEmail = $SettingAll['USER_EMAIL'];
+        // $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
         $adminEmail = 'mailerbws@gmail.com';
         $adminEmailPass = 'bangkokweb0192';
+
         $mail =  new PHPMailer(true);
+            $mail =  new PHPMailer(true);
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
+
         $mail->ClearAddresses();
         $mail->CharSet = 'utf-8';
-        $mail->Host = '172.30.110.16'; // gmail server
-        $mail->Port = 25; // port number
+        $mail->IsSMTP();
+        $mail->Host = 'smtp.gmail.com'; // gmail server
+        $mail->Port = '587'; // port number
         $mail->SMTPKeepAlive = true;
         $mail->Mailer = "smtp";
+        $mail->SMTPSecure = "tls";
+        $mail->SMTPAuth = true;
+        $mail->SMTPDebug = false;
         // $mail->SMTPDebug  = 1;
-        $mail->From = 'mailerbws@gmail.com';
+        // $mail->From = 'mailerbws@gmail.com';
         $mail->Username = $adminEmail;
         $mail->Password = $adminEmailPass;
         $fromText = 'E-Learning System Thorsen';
@@ -367,6 +381,7 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         $mail->Subject = $subject;
         $mail->Body = $message;
         $mail->IsHTML(true);
+
         $mail->Send();
     }
 
