@@ -1272,12 +1272,10 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 .text-success.prepost {
-  font-size: 20px;
   margin-top: 3px;
 }
 
 .text-danger.prepost {
-  font-size: 20px;
   margin-top: 3px;
 }
 
@@ -4332,6 +4330,18 @@ ol.stat-alert li::before {
 .slide-main-thor{
   max-height:315px;
   min-height:315px;
+}
+
+.course-ol{
+  padding: 0;
+}
+
+.course-ol .panel-default {
+  border-radius: 0;
+}
+
+.btn-group-lg>.btn, .btn-lg{
+  font-size: 16px;
 }
 
 @media (min-width: 1440px) {

@@ -57,8 +57,9 @@
 				<div class="well">
 					<div class="exams">
 						<div class="row">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 							<div id="ques-show">
-								<div class="col-sm-8">
+									<div class="col-sm-8">
 									<form id="question-form" action="#" method="POST" role="form" onSubmit="return false">
 										<div class="form-group">
 											<?php
@@ -213,6 +214,7 @@
 									<?php if ($last_ques == 1) echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg', 'onclick' => 'save_ans("save")'), UserModule::t('sendQues')); ?>
 								</center>
 							</div>
+								</div>
 						</div>
 					</div>
 				</div>

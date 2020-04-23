@@ -350,7 +350,7 @@ if($model){
                     </li>
                 </div>
                 <div role="tabpanel" class="tab-pane active " id="course-unit">
-                    <ol>
+                    <ol class="course-ol">
                         <div class="panel panel-default">
                             <?php                                         
                             foreach ($lessonList as $key => $lessonListValue) {
