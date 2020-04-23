@@ -70,15 +70,15 @@
         ?>
 
 <!-- $model['pageSide']=='2' -->
-<div class="b size36 " style="position:absolute; top: 65mm; left: -190px;">
+<div class="b size36 " style="position:absolute; top: 120mm; left: 60px;">
             Mr.Tester  Tester
 </div>
-<div class="size40 black" style="position:absolute; top: 115mm; left: -200px;">
+<div class="size40 black" style="position:absolute; top: 85mm; left: 60px;">
    <div class="b size40 purple">"COURSE TITLE"</div>
 </div>
 
 
-<div class="size20 black" style="position:absolute; top: 138mm; left: -120px ">
+<div class="size20 black" style="position:absolute; top: 158mm; left: 280px ">
    <div class="size20 black">3 - 4 May 2018</div>
 </div>
 
@@ -105,12 +105,12 @@
 <!-- Signature********************
  -->
  <?php if ($model['renderSign']) {?>
- <div style="position:absolute; left: 120mm; top: 83mm" >
+ <div style="position:absolute; top: 135mm;left: -130px;" >
     <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign']; ?>" >
 </div>
 <?php } ?>
 
-<div style="position:absolute; left: 120mm; top: 115mm" >
+<div style="position:absolute; top: 135mm;left: 60px;" >
     <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign2']; ?>" >
 </div>
 
