@@ -2,9 +2,11 @@
 if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $langId = Yii::app()->session['lang'] = 1;
     $flag = true;
+    $learnn = "Learn lesson";
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
+    $learnn = "สมัครเรียน";
 }
 function DateThai($strDate)
 {
@@ -68,13 +70,13 @@ function DateThai($strDate)
                         if (!$flag) {
                             $m_cChildren  = Category::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $m_c->cate_id, 'order' => 'cate_id'));
                             if ($m_cChildren) {
-                               $m_c->cate_title = $m_cChildren->cate_title;
-                               $m_c->cate_short_detail = $m_cChildren->cate_short_detail;
-                               $m_c->cate_detail = $m_cChildren->cate_detail;
-                               $m_c->cate_image = $m_cChildren->cate_image;
-                           }
-                       }
-                       if ($m_c->lang_id != 1) {
+                             $m_c->cate_title = $m_cChildren->cate_title;
+                             $m_c->cate_short_detail = $m_cChildren->cate_short_detail;
+                             $m_c->cate_detail = $m_cChildren->cate_detail;
+                             $m_c->cate_image = $m_cChildren->cate_image;
+                         }
+                     }
+                     if ($m_c->lang_id != 1) {
                         $m_c->cate_id = $m_c->parent_id;
                     }
                     ?>
@@ -137,16 +139,16 @@ function DateThai($strDate)
                                     if (!$flag) {
                                         $m_cChildren  = Category::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $m_c->cate_id, 'order' => 'cate_id'));
                                         if ($m_cChildren) {
-                                           $m_c->cate_id = $m_cChildren->cate_id;
-                                           $m_c->cate_title = $m_cChildren->cate_title;
-                                           $m_c->cate_short_detail = $m_cChildren->cate_short_detail;
-                                           $m_c->cate_detail = $m_cChildren->cate_detail;
-                                           $m_c->cate_image = $m_cChildren->cate_image;
-                                       }
-                                   }
-                                   ?>
+                                         $m_c->cate_id = $m_cChildren->cate_id;
+                                         $m_c->cate_title = $m_cChildren->cate_title;
+                                         $m_c->cate_short_detail = $m_cChildren->cate_short_detail;
+                                         $m_c->cate_detail = $m_cChildren->cate_detail;
+                                         $m_c->cate_image = $m_cChildren->cate_image;
+                                     }
+                                 }
+                                 ?>
 
-                                   <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/category/' . $m_c->cate_id . '/thumb/' . $m_c->cate_image)) { ?>
+                                 <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/category/' . $m_c->cate_id . '/thumb/' . $m_c->cate_image)) { ?>
                                     <div class="course-img" style="background-image: url(<?php echo Yii::app()->request->baseUrl; ?>/uploads/category/<?php echo $m_c->cate_id . '/thumb/' . $m_c->cate_image; ?>);"></div>
                                 <?php } else { ?>
                                     <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/book.png);"></div>
@@ -304,8 +306,8 @@ function DateThai($strDate)
                                             <p class="p" style="min-height: 0em; margin-top: 0px; margin-bottom: 0px;"> <?= $label->label_dateExpire ?> <?php echo Helpers::lib()->DateLang($model->course_date_end, Yii::app()->session['lang']); ?></p>
 
                                             <div class="text-center mt-20">
-                                                <a href="javascript:void(0)" class="btn btn-danger btn-regislearn">สมัครเรียน</a>
-                                                 <!-- <a href="javascript:void(0)" class="btn btn-danger btn-learnmore">เข้าสู่บทเรียน</a> -->
+                                                <a href="<?= $url; ?>" class="btn btn-danger btn-regislearn"><?= $learnn ?></a>
+                                                <!-- <a href="javascript:void(0)" class="btn btn-danger btn-learnmore">เข้าสู่บทเรียน</a> -->
                                             </div>
                                         </div>
                                     </a>
