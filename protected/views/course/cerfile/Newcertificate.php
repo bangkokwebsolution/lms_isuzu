@@ -47,7 +47,7 @@
 </div>
 
 <?php ( mb_detect_encoding($model['courseTitle']) == 'ASCII')? $fontType = 'eng' : $fontType = 'th'; ?>
-<div class="size30 black <?= $fontType ?> l" style="position:absolute;  top: 80mm; left:510px;">
+<div class="size30 black <?= $fontType ?> l" style="position:absolute;  text-align: center; top: 80mm; left:510px;">
     <div class="b size30 l">"<?= $model['courseTitle'] ?>"</div>
 </div>
 
@@ -56,18 +56,18 @@
 </div> -->
 
 <div class="size16 black eng" style="position:absolute;left: 82mm; top: 160mm">
-   <div class="size16 black"><?= $model['endDateCourse'] ?></div>
+ <div class="size16 black"><?= $model['endDateCourse'] ?></div>
 </div>
 
 <?php if ($model['renderSign']) {?>
 
     <div style="position:absolute;  top: 140mm; left: -100px " >
-     <img src="<?php  echo Yii::app()->baseUrl."/uploads/signature/".$model['renderSign']; ?>" >
- </div>
+       <img src="<?php  echo Yii::app()->baseUrl."../uploads/signature/".$model['renderSign']; ?>" >
+   </div>
 <?php } ?>
 
 <!-- <div style="position:absolute; left: 133mm; top: 115mm" >
- <img src="<?php  echo Yii::app()->baseUrl."/uploads/signature/".$model['renderSign2']; ?>" >
+ <img src="<?php  echo Yii::app()->baseUrl."../uploads/signature/".$model['renderSign2']; ?>" >
 </div> -->
 
 <!-- <div style="position:absolute; right: 97mm; top: 167mm;font-family: 'Trirong', serif;" >
