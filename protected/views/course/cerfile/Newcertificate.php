@@ -1,7 +1,7 @@
 <head>
     <style type="text/css">
         body { 
-            background-image: url('<?= Yii::app()->getBaseUrl(true)."/uploads/certificate/".$model['bgPath']; ?>');
+            background-image: url('<?= Yii::app()->basePath."/../uploads/certificate/".$model['bgPath']; ?>');
             background-position: 0 0;
             background-image-resize: 1;
             background-repeat: no-repeat;
