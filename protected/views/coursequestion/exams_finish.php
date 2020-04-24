@@ -52,9 +52,18 @@ if($course->cate_id != 1){ //LMS
 		color:#fff;
 	}
 </style>
-<div class="header-page parallax-window" data-parallax="scroll" data-image-src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg-header-page.png">
+<div class="container">
+	<nav aria-label="breadcrumb">
+		<ol class="breadcrumb breadcrumb-main">
+			<li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/course/index'); ?>"><?php echo $labelCourse->label_course; ?></a>
+				<li class="breadcrumb-item active" aria-current="page"><?= $course->course_title; ?></li>
+			</ol>
+		</nav>
+	</div> 
+</div>
+<!-- <div class="header-page parallax-window" data-parallax="scroll" data-image-src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg-header-page.png">
 	<div class="container">
-		<h1><?= $labelCourse->label_resultFinal; ?> 
+		<h1><?= $labelCourse->label_resultFinal; ?>
 		<small class="pull-right">
 			<ul class="list-inline list-unstyled">
 				<li><a href="#"><?= $labelCourse->label_homepage; ?></a></li>/
@@ -62,7 +71,7 @@ if($course->cate_id != 1){ //LMS
 			</ul>
 		</small>
 	</h1>
-</div>
+</div> -->
 <div class="bottom1"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/kind-bottom.png" class="img-responsive" alt=""></div>
 </div>
 
@@ -119,89 +128,89 @@ if($course->cate_id != 1){ //LMS
 	</div>
 </section>
 <div class="container">
-<?php if($course->course_refer == 'y'){ ?>	
-<div class="question-content-wrap">
-	<div class="row">
-		<div class="col-md-8">
+	<?php if($course->course_refer == 'y'){ ?>	
+		<div class="question-content-wrap">
+			<div class="row">
+				<div class="col-md-8">
 
-			<table class="table-question table table-bordered">
-				<thead>
-					<tr class="bg-success">
-						<th style="text-align: center">ข้อ</th>
-						<th style="text-align: left">รายละเอียด</th>
-						<th style="text-align: center">สถานะ</th>
-						<!--<th class="right-answer">% Right Answer</th>-->
-					</tr>
-				</thead>
-				<tbody>
-					<?php 
-					foreach($temp_all as $index => $val){ 
-						$modelCoursescore = Coursescore::model()->find(array(
-							'condition' => 'user_id=:user_id AND course_id=:course_id AND active="y"',
-							'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $course->course_id),
-							'order' => 'score_id desc'));
-						$logchoice = Courselogchoice::model()->findAll(array(
-							'condition'=>"score_id=:score_id and logchoice_answer = 1 and ques_id=:ques_id",
-							'params' => array(':score_id' =>  $modelCoursescore->score_id,':ques_id' => $val->ques_id)
-						));
-						$choiceData = 0;
-						$ansStr = '';
-						$arrayCount = count($logchoice);
-						$choiceState = true;
-						if(!$logchoice) $ansStr .= '-';
-						foreach ($logchoice as $key => $valChoice) {
-							$ansStr .= CHtml::decode($valChoice->choices->choice_detail);
-							if(($arrayCount-1) != $key)$ansStr .= ',';
-							if($valChoice->is_valid_choice == 1){
-								$choiceData ++;
-							} else {
-								$choiceState = false;
-							} 
-						}
-						$logCoursescore = Coursechoice::model()->findAll(array(
-							'condition'=>"ques_id=:ques_id and choice_answer='1'",
-							'params' => array(':ques_id' => $val->ques_id)
-						));
-						$arrayCount = count($logCoursescore);
-
-						if($logchoice){
-							if(($choiceData == $arrayCount) && $choiceState){
-								$icon_score = '<i class="fa fa-check text-success"></i>';
-							}else{
-								$icon_score = '<i class="fa fa-times text-danger"></i>';
-							}
-						} else {
-							$icon_score = '<i class="icon icon-err md-close-2"></i>';
-						}
-						$question = CourseQuestion::model()->find(array(
-							'condition' => 'ques_id = '.$val->ques_id
-						));
-						?>
-						<tr>
-							<td><?= ($index+1); ?></td>
-							<td class="td-quest" style="text-align: left">
-								<b>คำภาม</b> : <?= $question->ques_title; ?><br>
-								<b>คำตอบ</b> : <?= $ansStr; ?>      
-
-								<br><b>เฉลย</b> : <?php 
-								foreach ($logCoursescore as $key => $logCourse) {
-									echo CHtml::decode($logCourse->choice_detail);
-									if(($arrayCount-1) != $key)echo ',';
-								}; ?>
-								<?php if($question->ques_explain){ ?><br><b>คำอภิปราย</b> : <?= $question->ques_explain; ?>    
-									<?php 
+					<table class="table-question table table-bordered">
+						<thead>
+							<tr class="bg-success">
+								<th style="text-align: center">ข้อ</th>
+								<th style="text-align: left">รายละเอียด</th>
+								<th style="text-align: center">สถานะ</th>
+								<!--<th class="right-answer">% Right Answer</th>-->
+							</tr>
+						</thead>
+						<tbody>
+							<?php 
+							foreach($temp_all as $index => $val){ 
+								$modelCoursescore = Coursescore::model()->find(array(
+									'condition' => 'user_id=:user_id AND course_id=:course_id AND active="y"',
+									'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $course->course_id),
+									'order' => 'score_id desc'));
+								$logchoice = Courselogchoice::model()->findAll(array(
+									'condition'=>"score_id=:score_id and logchoice_answer = 1 and ques_id=:ques_id",
+									'params' => array(':score_id' =>  $modelCoursescore->score_id,':ques_id' => $val->ques_id)
+								));
+								$choiceData = 0;
+								$ansStr = '';
+								$arrayCount = count($logchoice);
+								$choiceState = true;
+								if(!$logchoice) $ansStr .= '-';
+								foreach ($logchoice as $key => $valChoice) {
+									$ansStr .= CHtml::decode($valChoice->choices->choice_detail);
+									if(($arrayCount-1) != $key)$ansStr .= ',';
+									if($valChoice->is_valid_choice == 1){
+										$choiceData ++;
+									} else {
+										$choiceState = false;
+									} 
 								}
+								$logCoursescore = Coursechoice::model()->findAll(array(
+									'condition'=>"ques_id=:ques_id and choice_answer='1'",
+									'params' => array(':ques_id' => $val->ques_id)
+								));
+								$arrayCount = count($logCoursescore);
+
+								if($logchoice){
+									if(($choiceData == $arrayCount) && $choiceState){
+										$icon_score = '<i class="fa fa-check text-success"></i>';
+									}else{
+										$icon_score = '<i class="fa fa-times text-danger"></i>';
+									}
+								} else {
+									$icon_score = '<i class="icon icon-err md-close-2"></i>';
+								}
+								$question = CourseQuestion::model()->find(array(
+									'condition' => 'ques_id = '.$val->ques_id
+								));
 								?>
-							</td>
-							<td><?= $icon_score; ?></td>
-						</tr>
-					<?php } ?>
-				</tbody>
-			</table>
+								<tr>
+									<td><?= ($index+1); ?></td>
+									<td class="td-quest" style="text-align: left">
+										<b>คำภาม</b> : <?= $question->ques_title; ?><br>
+										<b>คำตอบ</b> : <?= $ansStr; ?>      
+
+										<br><b>เฉลย</b> : <?php 
+										foreach ($logCoursescore as $key => $logCourse) {
+											echo CHtml::decode($logCourse->choice_detail);
+											if(($arrayCount-1) != $key)echo ',';
+										}; ?>
+										<?php if($question->ques_explain){ ?><br><b>คำอภิปราย</b> : <?= $question->ques_explain; ?>    
+											<?php 
+										}
+										?>
+									</td>
+									<td><?= $icon_score; ?></td>
+								</tr>
+							<?php } ?>
+						</tbody>
+					</table>
+				</div>
+			</div>
 		</div>
-	</div>
-</div>
-<?php } ?>
+	<?php } ?>
 </div>
 
 
@@ -237,7 +246,7 @@ if($course->cate_id != 1){ //LMS
 				<center>
 					<i class="fa fa-check" style="font-size:6em; color: #4cdb20; padding-top: 15px;padding-bottom: 15px;"></i>
 					<h2 style="color: #575757;"><?= $labelCourse->label_passTest; ?></h2>
-					<p><?= UserModule::t('msg_pass');?></p>
+					<!-- <p><?= UserModule::t('msg_pass');?></p> -->
 				</center>
 			</div>
 			<div class="modal-footer">
