@@ -10,7 +10,7 @@
  								<?php 
                                         if ($user['pic_user'] == null) {
 
-                                            $img  = Yii::app()->theme->baseUrl . "/images/thumbnail-profile.png";
+                                            $img  = Yii::app()->theme->baseUrl . "/../../../themes/template2/images/thumbnail-profile.png";
                                         } else {
                                          
                                             $img = Yii::app()->baseUrl . '/../uploads/user/' . $user['id'] . '/thumb/' . $user['pic_user'];
@@ -69,7 +69,7 @@
  											</table>
  										</td>
  										<td width="25%" style="text-align:right;">
- 											<img border="9" src="<?php echo $img; ?>" width="150" height="180";>
+ 											<img border="9" src="<?php echo $img; ?>" width="150" height="180">
  										</td>
  									</tr>
  								</table>

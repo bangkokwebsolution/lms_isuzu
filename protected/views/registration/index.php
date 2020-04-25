@@ -34,6 +34,19 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         cursor: pointer;
     }
 
+    .add_form_work {
+        background-color: #1c97f3;
+        border: none;
+        color: #fff;
+        padding: 8px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        cursor: pointer;
+    }
+
 
     input {
         border: 1px solid #1c97f3;
@@ -56,6 +69,20 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         cursor: pointer;
         /* position: absolute;
         right: 0 */
+    }
+    .delete_work {
+        border-radius: 3px;
+        border: none;
+        color: white;
+        padding: 5px 15px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-table;
+        font-size: 14px;
+        margin: 4px 15px;
+        cursor: pointer;
+         position: absolute;
+        right: 0 
     }
     .uploadifive-button {
         float: left;
@@ -88,6 +115,14 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         position: absolute;
         right: 16px;
         top: 40px;
+    }
+    .since-icon{
+        position: relative;
+    }
+    .since-icon i{
+        position: absolute;
+        right: 16px;
+        top: 13px;
     }
 
     @media screen and (max-width: 600px){
@@ -270,6 +305,7 @@ function editNameTrain(filedoc_id){
             $birthday = array('class' => 'form-control default_datetimepicker birth', 'autocomplete' => 'off', 'placeholder' => $label->label_birthday, 'type' => "text");
             $ships_up_date = array('class' => ' form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_ship_up_date);
             $ships_down_date = array('class' => 'form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_ship_down_date);
+            $Since = array('class' => 'form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => Yii::app()->session['lang'] == 1?'Since ':'ตั้งแต่');
             ?>
             <div class="well">
 
@@ -641,8 +677,7 @@ function editNameTrain(filedoc_id){
                       
                           }                 
                    }
-                    $graduation = array('class' => 'form-control', 'autocomplete' => 'off', 'empty' => $label->label_graduation_year);
-                              
+                    $graduation = array('class' => 'form-control', 'autocomplete' => 'off', 'empty' => $label->label_graduation_year);   
                     if (!$ProfilesEdu->isNewRecord) { ?>
                         <div class="add-study">
                             <?php
@@ -656,6 +691,7 @@ function editNameTrain(filedoc_id){
                                             <?php echo CHtml::activeDropDownList($valedu, '[' . $kedu . ']edu_id', $list, $att_Education); ?>
                                         </div>
                                     </div>
+
 
                                     <div class="col-md-3 col-sm-6 col-xs-12">
                                         <div class="form-group">
@@ -712,6 +748,80 @@ function editNameTrain(filedoc_id){
                         <div class="col-md-3 col-sm-12  col-xs-12 text-center">
                             <button class="btn btn-info btn-add add_form_field" type="button" id="moreFields">
                                 <span class="glyphicon glyphicon-plus"> </span> <?= Yii::app()->session['lang'] == 1?'Add education history ':'เพิ่มประวัติการศึกษา'; ?>
+                            </button>
+                        </div>
+                    </div>
+                    <?php if ($ProfilesWorkHistory->isNewRecord === null) { 
+                             
+                        ?>
+                            <div class="add-Work">
+                    <?php
+                            foreach ($ProfilesWorkHistory as $keywh => $valwh) {
+                                  
+                                ?>
+                                <div class="row del_work">
+                            <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?></strong></div>
+                            <div class="col-md-4 col-sm-6 col-xs-12 ">
+                                <div class="form-group">
+                                    <?php echo $form->textField($valwh, '['.$keywh.']company_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Company ':'บริษัท')); ?>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6 col-xs-12 ">
+                                <div class="form-group">
+                                    <?php echo $form->textField($valwh, '['.$keywh.']position_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Position ':'ตำแหน่ง')); ?>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"></div>
+                            <div class="col-md-4 col-sm-6 col-xs-12 ">
+                                <div class="form-group since-icon">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <?php echo $form->textField($valwh, '['.$keywh.']since_date', $Since); ?>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-12 ">
+                                <div class="form-group">
+                                    <?php echo $form->textField($valwh, '['.$keywh.']reason_leaving', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Reason for leaving ':'สาเหตุที่ออก')); ?>
+                                </div>
+                            </div>
+                            <span class="delete_work btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?> </span>
+                    </div>
+
+                                <?php } ?>
+                        </div>
+                    <?php } else {?>
+                    <div class="row form_name">
+                            <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?></strong></div>
+                            <div class="col-md-4 col-sm-6 col-xs-12 ">
+                                <div class="form-group">
+                                    <?php echo $form->textField($ProfilesWorkHistory, '[0]company_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Company ':'บริษัท')); ?>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 col-sm-6 col-xs-12 ">
+                                <div class="form-group">
+                                    <?php echo $form->textField($ProfilesWorkHistory, '[0]position_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Position ':'ตำแหน่ง')); ?>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"></div>
+                            <div class="col-md-4 col-sm-6 col-xs-12 ">
+                                <div class="form-group since-icon">
+                                    <i class="far fa-calendar-alt"></i>
+                                    <?php echo $form->textField($ProfilesWorkHistory, '[0]since_date', $Since); ?>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-6 col-xs-12 ">
+                                <div class="form-group">
+                                    <?php echo $form->textField($ProfilesWorkHistory, '[0]reason_leaving', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Reason for leaving ':'สาเหตุที่ออก')); ?>
+                                </div>
+                            </div>
+                    </div>
+                    <div class="add-Work"></div>
+                <?php } ?>
+                    <div class="row justify-content-center bb-1 pb-20 mt-20 form_name">
+                        <div class="col-md-3 col-sm-12  col-xs-12 text-center">
+                            <button class="btn btn-info btn-add add_form_work" type="button" id="moreFieldsWork">
+                                <span class="glyphicon glyphicon-plus"> </span> <?= Yii::app()->session['lang'] == 1?'Add Work history ':'เพิ่มประวัติการทำงาน'; ?>
                             </button>
                         </div>
                     </div>
@@ -923,7 +1033,7 @@ function editNameTrain(filedoc_id){
                                 <div class="form-group">
 
                                     <span></span>
-                                    <div class="radio radio-danger radio-inline">
+                                    <div class="radio radio-danger radio-inline emp">
                                         <input type="radio" name="type_employee" id="card-7" value="2" <?php if ($profile->type_employee == 2) : ?> checked="checked" <?php endif ?>>
 
                                         <label for="card-7" class="bg-success text-black"> <?php echo $label->label_office ?> </label>
@@ -967,7 +1077,7 @@ function editNameTrain(filedoc_id){
                                     ?>
                                     <?php
                                     echo $form->dropDownList($users, 'position_id', $positionList, $positiontOption); ?>
-                                    <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
+                                    <?php //echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
 
                                 </div>
                             </div>
@@ -996,18 +1106,37 @@ function editNameTrain(filedoc_id){
                             <div class="col-sm-12 col-xs-12 col-md-8">
                                 <div class="col-md-5">
                                 <div class="form-group">
-                                    <label><?php echo $label->label_position; ?></label>
                                     <?php
-                                    $positionModel = Position::model()->findAll(array(
-                                        "condition" => " active = 'y'"
-                                    ));
-                                    $positionList = CHtml::listData($positionModel, 'id', 'position_title');
-                                    $positiontOption = array('class' => 'form-control position', 'empty' => $label->label_placeholder_position);
-                                    ?>
-                                    <?php
-                                    echo $form->dropDownList($users, 'position_id', $positionList, $positiontOption); ?>
-                                    <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
+                                     $Department_ship = Department::model()->findAll(array(
+                                        'condition' => 'type_employee_id=:type_employee_id AND active=:active',
+                                        'params' => array(':type_employee_id'=>1, ':active'=>'y')));
 
+                                    foreach ($Department_ship as $keydepart => $valuedepart) {
+                                    $position_ship = Position::model()->findAll(array(
+                                        'condition' => 'department_id=:department_id AND active=:active',
+                                        'params' => array(':department_id'=>$valuedepart['id'], ':active'=>'y')
+                                    ));
+                                     
+                                  $positionLists[] = CHtml::listData($position_ship, 'id', 'position_title');
+                                 // var_dump($positionLists);
+                                    // foreach ($positionLists as $keypos => $valuepos) { 
+                                       
+                                    //    $positions_id = $valuepos['id'];
+                                    //    $positions_title = $valuepos['position_title'];
+                                    
+                                    //   $positionListss[] = array($positions_id=>$positions_title);
+                                       
+                                    //   var_dump($positionLists);
+                                    //    }
+                                    
+                                    }
+                                    ?> 
+                                    <?php
+                                    $positiontOption = array('class' => 'form-control position_gen ', 'empty' => $label->label_placeholder_position);
+                                    ?>
+                                    <?php echo $form->dropDownList($users, 'position_id', $positionLists, $positiontOption); ?>
+                                    <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
+                                
                                 </div>
                             </div>
                             </div>
@@ -1138,6 +1267,7 @@ function editNameTrain(filedoc_id){
                     if (x < max_fields) {
                         x++;
                         numItems++;
+
                         var level = '<option value=""><?php echo $label->label_education_level; ?></option>';
                         var academy = '<?php echo $label->label_academy; ?>';
                         var graduation_year = '<option value=""><?php echo $label->label_graduation_year; ?></option>';
@@ -1163,6 +1293,42 @@ function editNameTrain(filedoc_id){
                     x--;
                 });
 
+                var max_fields_work = 10;
+                var wrapper_work = $(".add-Work");
+                var add_button_work = $(".add_form_work");
+                var numItems_work = 0;
+                var i = 1;
+
+                $(add_button_work).click(function(e) {
+                    e.preventDefault();
+                    if (i < max_fields_work) {
+                        i++;
+                        numItems_work++;
+                        var head_work = '<?php echo Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?>';
+                        var company_work = '<?php echo Yii::app()->session['lang'] == 1?'Company ':'บริษัท'; ?>';
+                        var position_work = '<?php echo Yii::app()->session['lang'] == 1?'Position ':'ตำแหน่ง'; ?>';
+                        var since_work = '<?php echo Yii::app()->session['lang'] == 1?'Since ':'ตั้งแต่'; ?>';
+                        var reason_for_leaving = '<?php echo Yii::app()->session['lang'] == 1?'Reason for leaving ':'สาเหตุที่ออก'; ?>';
+                        var del_work = '<?php echo Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?>';
+                        $(wrapper_work).append('<div class="row del_work"><div class="col-md-3 col-sm-12 text-right-md "><strong> ' + head_work + '</strong></div>'+'<div class="col-md-4 col-sm-6"><div class="form-group"><input type="text" class="form-control" placeholder="' + company_work + '" name="ProfilesWorkHistory[' + numItems_work + '][company_name]"></div></div>'+'<div class="col-md-4 col-sm-6"><div class="form-group"><input type="text" class="form-control" placeholder="' + position_work + '" name="ProfilesWorkHistory[' + numItems_work + '][position_name]"></div></div>'+'<div class="col-md-3 col-xs-12  col-sm-12 text-right-md"></div>'+'<div class="col-md-4 col-sm-6"><div class="form-group since-icon"><i class="far fa-calendar-alt"></i><input type="text" class="form-control datetimepicker" autocomplete = "off" placeholder="' + since_work + '" name="ProfilesWorkHistory[' + numItems_work + '][since_date]"></div></div>'+'<div class="col-md-4 col-sm-6"><div class="form-group"><input type="text" class="form-control" placeholder="' + reason_for_leaving + '" name="ProfilesWorkHistory[' + numItems_work + '][reason_leaving]"></div></div>'
+                            +'<span class="delete_work btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> ' + del_work + '</span></div>'); //add input box
+                        $('.datetimepicker').datetimepicker({
+                            format: 'd-m-Y',
+                            step: 10,
+                            timepickerScrollbar: false
+                        });
+                        $('.xdsoft_timepicker').hide();
+
+                    } else {
+                        alert('You Reached the limits')
+                    }
+                });
+                $(wrapper_work).on("click", ".delete_work", function(e) {
+                    e.preventDefault();
+                    $(this).parent('.del_work').remove();
+                    i--;
+                });
+
                 $('#accept').change(function(event) {
                     $(".id_employee").hide();
                     $('.form_name').show();
@@ -1177,6 +1343,42 @@ function editNameTrain(filedoc_id){
                     $("#office-section").show();
                     $("#office-section_gen").hide();
                 });
+
+                $("#card-7").change(function(event) {
+                var id = $("input[name='type_employee']:checked").val();
+                  $.ajax({
+                            type: 'POST',
+                            url: "<?= Yii::app()->createUrl('Registration/ListDepartment'); ?>",
+                            data: {
+                                id: id
+                            },
+                            success: function(data) {
+                                $('.department').empty();
+                                $('.department').append(data);
+                            }
+                        });
+                 });
+
+                $("#card-8").change(function(event) {
+                var id = $("input[name='type_employee']:checked").val();
+                  $.ajax({
+                            type: 'POST',
+                            url: "<?= Yii::app()->createUrl('Registration/ListDepartment'); ?>",
+                            data: {
+                                id: id
+                            },
+                            success: function(data) {
+                                $('.department').empty();
+                                $('.department').append(data);
+                            }
+                        });
+                 });
+                // var optGroup = document.getElementsByTagName("optgroup")[0];
+                // var option = document.getElementsByTagName("option")[0];
+                // option.style.display = "display";
+                // optGroup.style.display = "none";
+                // var optGroup = document.getElementsByTagName("optgroup")[1];
+                // optGroup.style.display = "none";
 
             });
             $('.default_datetimepicker').datetimepicker({
@@ -1380,6 +1582,8 @@ function editNameTrain(filedoc_id){
                             }
                         }  
                     }  
+                 // $("input[name='type_employee']").prop("checked", true);
+                    
 
                     $('#card-1').change(function(event) {
                         $('#passport_card').hide();

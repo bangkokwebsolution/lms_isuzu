@@ -284,10 +284,12 @@ class RegistrationController extends Controller {
     $ProfilesEdu = new ProfilesEdu;
     $FileEdu = new FileEdu;
     $FileTraining = new FileTraining;
+    $ProfilesWorkHistory = new ProfilesWorkHistory;
 
     $session = Yii::app()->session;
 
     $this->performAjaxValidation($ProfilesEdu);
+    $this->performAjaxValidation($ProfilesWorkHistory);
 
     if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
         $langId = Yii::app()->session['lang'] = 1;
@@ -436,7 +438,20 @@ if ($profile->type_user == 1) {
 //         var_dump($errors); //or print_r($errors);
 //   //if (isset($_POST['PController']) && isset($_POST['PAction'])) {    
 //     exit();
-
+//    var_dump($_POST['ProfilesWorkHistory']);
+//     if ($_POST['ProfilesWorkHistory']) {
+//         foreach ($_POST['ProfilesWorkHistory'] as $key => $value) {
+//            if (in_array("", $value)) {
+//               echo "ok";
+//            }else{
+//               echo "ppp";
+//            }
+//         }
+//         echo "oooo";
+//     }else{
+//         echo "no";
+//     }
+// exit();
     if ($profile->validate() && $users->validate()) {
 //                    เข้ารหัสpassword
                     //$users->password = UserModule::encrypting($users->password);
@@ -444,11 +459,12 @@ if ($profile->type_user == 1) {
         $users->password = UserModule::encrypting($genpass);
         
                     // $users->department_id = 1; // fix ประเภทสมาชิกหน้าบ้านเป็นสมาชิกทั่วไป
-    } else {
-        //  $errors = $users->getErrors();
-        // var_dump($errors); //or print_r($errors);
-        // exit();
-    }
+    } 
+    // else {
+    //     //  $errors = $users->getErrors();
+    //     // var_dump($errors); //or print_r($errors);
+    //     // exit();
+    // }
 
     $uploadFile = CUploadedFile::getInstance($users, 'pic_user');
     if (isset($uploadFile)) {
@@ -463,13 +479,27 @@ if ($profile->type_user == 1) {
         $profile->user_id = $users->id;
         if (isset($_POST['ProfilesEdu'])){
             foreach ($_POST['ProfilesEdu'] as $action_index=>$action_value){
-
+             if (!in_array("", $action_value)) {
              $Edu = new ProfilesEdu;
              $Edu->user_id = $users->id;
              $Edu->created_date = date("Y-m-d H:i:s");
              $Edu->created_by = $users->id;
              $Edu->attributes = $action_value;
              $Edu->save();
+            }
+         }
+     }
+
+       if (isset($_POST['ProfilesWorkHistory'])){
+            foreach ($_POST['ProfilesWorkHistory'] as $action_work=>$action_value_work){
+             if (!in_array("", $action_value_work)) {
+             $WorkHistory = new ProfilesWorkHistory;
+             $WorkHistory->user_id = $users->id;
+             $WorkHistory->created_date = date("Y-m-d H:i:s");
+             $WorkHistory->created_by = $users->id;
+             $WorkHistory->attributes = $action_value_work;
+             $WorkHistory->save();
+            }
          }
      }
 
@@ -600,7 +630,8 @@ if ($profile->type_user == 1) {
 
         // }
 
-} else {
+} 
+//else {
     // unset($session['idxDoc']);
     // unset($session['pathComDoc']);
     // unset($session['filenameComDoc']);
@@ -612,8 +643,9 @@ if ($profile->type_user == 1) {
     // unset($session['filenameOriComTrain']);
     // $this->render('index', array('profile' => $profile, 'users' => $users,'label'=> $label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining));
     // echo "okt";
-}
-} else {
+//}
+} 
+//else {
     // unset($session['idxDoc']);
     // unset($session['pathComDoc']);
     // unset($session['filenameComDoc']);
@@ -625,7 +657,7 @@ if ($profile->type_user == 1) {
     // unset($session['filenameOriComTrain']);
     // $this->render('index', array('profile' => $profile, 'users' => $users,'label'=> $label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining));
     // echo "ok";
-}
+//}
 
 }
 unset($session['idxDoc']);
@@ -637,7 +669,7 @@ unset($session['idxTrain']);
 unset($session['pathComTrain']);
 unset($session['filenameComTrain']);
 unset($session['filenameOriComTrain']);
-$this->render('index', array('profile' => $profile, 'users' => $users,'label'=> $label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining));
+$this->render('index', array('profile' => $profile, 'users' => $users,'label'=> $label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining, 'ProfilesWorkHistory' => $ProfilesWorkHistory));
 
 }
 public function actionUpdate() {
@@ -683,8 +715,19 @@ public function actionUpdate() {
     $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
     $criteria->addCondition("active ='y'");
     $ProfilesEdu = ProfilesEdu::model()->findAll($criteria);
+   //var_dump($ProfilesEdu);
+   // $ProfilesWorkHistory = ProfilesWorkHistory::model()->find(array(
+   //      'condition' => 'user_id=:user_id AND active=:active',
+   //      'params' => array(':user_id' => Yii::app()->user->id,':active' => 'y')
+   //  ));
+    $criterias = new CDbCriteria;
+    $criterias->addCondition('user_id ="'.Yii::app()->user->id.'"');
+    $criterias->addCondition("active ='y'");
+    $ProfilesWorkHistory = ProfilesWorkHistory::model()->findAll($criterias);
+    //var_dump($ProfilesWorkHistory);exit();
 
-    $this->performAjaxValidation($ProfilesEdu);  
+    $this->performAjaxValidation($ProfilesEdu);
+    $this->performAjaxValidation($ProfilesWorkHistory);  
 
     // $type_user = (!empty($_POST['type_user']))? $_POST['type_user']:3;
     // $history_of_illness = (!empty($_POST['history_of_illness']))? $_POST['history_of_illness']:'n';
@@ -867,8 +910,53 @@ public function actionUpdate() {
                         /////// end ลบแอคชั่น
          } //exit();
           //   บันทึกภาพ
+
+        if ($_POST['ProfilesWorkHistory']){
           
+                    foreach ($_POST['ProfilesWorkHistory'] as $action_indexw=>$action_valuew){
+                        //var_dump($action_valuew['id']);
+                      $new_actions[] = $action_valuew['company_name'];
+                      $ProfilesWorkHistory_old = ProfilesWorkHistory::model()->find('company_name="'.$action_valuew['company_name'].'" AND user_id='.Yii::app()->user->id);
+                          
+                      if ($ProfilesWorkHistory_old){
+                        $ProfilesWorkHistory_old->attributes = $action_valuew;
+                        $ProfilesWorkHistory_old->user_id = $users->id;
+                        $ProfilesWorkHistory_old->update_date = date("Y-m-d H:i:s");
+                        $ProfilesWorkHistory_old->update_by = $users->id;
+                        $ProfilesWorkHistory_old->save();
+                            echo "a";
+                    }else{
+                     $ProfilesWorkHistory_new = new ProfilesWorkHistory;
+                     $ProfilesWorkHistory_new->user_id = $users->id;
+                     $ProfilesWorkHistory_new->created_date = date("Y-m-d H:i:s");
+                     $ProfilesWorkHistory_new->created_by = $users->id;
+                     $ProfilesWorkHistory_new->attributes = $action_valuew;
+                     $ProfilesWorkHistory_new->save();
+                           echo "b";
+
+                 } 
+
+             } 
+             $model_del_work = ProfilesWorkHistory::model()->findAll(["select"=>"company_name",'condition'=>'user_id='.Yii::app()->user->id]);
        
+             if($model_del_work){
+                foreach($model_del_work as $keyw => $valw){
+                    var_dump($valw->company_name);
+                    if(isset($new_actions)){
+                        if(!in_array($valw->company_name,$new_actions)){
+                            //var_dump($new_action);
+                            $ProfilesWorkHistory_del = ProfilesWorkHistory::model()->find('company_name="'.$valw->company_name.'" AND user_id='.Yii::app()->user->id); 
+                           // $model_del_action->active = 'n';
+                            //$model_del_action->save(false);
+                                        $ProfilesWorkHistory_del->delete(false);
+                                         echo "c";
+                        }
+                    }
+                }
+            }
+                        /////// end ลบแอคชั่น
+          } 
+               
          if (isset($uploadFile)) {
                             /////////// SAVE IMAGE //////////
             Yush::init($users);
@@ -956,7 +1044,7 @@ unset($session['pathComTrain']);
 unset($session['filenameComTrain']);
 unset($session['filenameOriComTrain']);
 $users->position_name = isset($_POST['User']['position_name']) ? $_POST['User']['position_name'] : $users->position->position_title;
-$this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining));
+$this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining, 'ProfilesWorkHistory' => $ProfilesWorkHistory));
 }
 
 //
@@ -1318,6 +1406,21 @@ public function actionListBranch(){
  $data = '<option value ="">'.$sub_list.'</option>';
  foreach ($model as $key => $value) {
     $data .= '<option value = "'.$value->id.'"'.'>'.$value->branch_name.'</option>';
+}
+echo ($data);
+
+}
+
+public function actionListDepartment(){
+
+ $model=Department::model()->findAll('type_employee_id=:type_employee_id',
+    array(':type_employee_id'=>$_POST['id']));
+
+ $data=CHtml::listData($model,'id','dep_title',array('empty' => 'แผนก'));
+ $sub_list = Yii::app()->session['lang'] == 1?'Select Branch ':'เลือกแผนก';
+ $data = '<option value ="">'.$sub_list.'</option>';
+ foreach ($model as $key => $value) {
+    $data .= '<option value = "'.$value->id.'"'.'>'.$value->dep_title.'</option>';
 }
 echo ($data);
 
