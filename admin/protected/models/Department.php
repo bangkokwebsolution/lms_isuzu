@@ -61,12 +61,12 @@ class Department extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'division_id' => 'กอง',
-			'dep_title' => 'ชื่อแผนก'.$label_lang,
+			'dep_title' => 'ชื่อแผนก',
 			'create_date' => 'Create Date',
 			'active' => 'Active',
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
-			'type_employee_id' => 'บุคลากร'.$label_lang,
+			'type_employee_id' => 'บุคลากร',
 		);
 	}
 

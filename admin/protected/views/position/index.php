@@ -72,29 +72,29 @@ EOD
 							'type'=>'html',
 							'value'=>'UHtml::markSearch($data,"position_title")'
 						),
-						array(
-                        'header'=>'ภาษา',
-                        'value' => function($val) {
-                           	$lang = Language::model()->findAll(array('condition' =>'active ="y"'));
-                           	$width = (count($lang)*100) + 20;
-					        foreach ($lang as $key => $value) {
-					    		$menu = Position::model()->findByAttributes(array("lang_id" => $value->id,'parent_id'=> $val->id,'active'=>'y'));
-					    		$str = ' (เพิ่ม)';
-					    		$class = "btn btn-icon";
-					    		$link = array("/Position/create","lang_id"=>$value->id,"parent_id"=>$val->id);
-					    		if($menu || $key == 0){
-					    			$id = $menu ? $menu->id : $val->id;
-					    			$str = ' (แก้ไข)';
-					    			$class = "btn btn-success btn-icon";
-					    			$link = array("/Position/update","id"=>$id);
-					    		} 
-					            $langStr .= CHtml::link($value->language.$str, $link, array("class"=>$class,"style" => 'width:100px;border: 1px solid;'));
-					        }
-					        return '<div class="btn-group" role="group" aria-label="Basic example">'.$langStr.'</div>';
-                    	},
-                    'type'=>'raw',
-                    'htmlOptions'=>array('style'=>'text-align: center','width'=>$this->getWidthColumnLang().'px;'),
-                		),
+						// array(
+      //                   'header'=>'ภาษา',
+      //                   'value' => function($val) {
+      //                      	$lang = Language::model()->findAll(array('condition' =>'active ="y"'));
+      //                      	$width = (count($lang)*100) + 20;
+					 //        foreach ($lang as $key => $value) {
+					 //    		$menu = Position::model()->findByAttributes(array("lang_id" => $value->id,'parent_id'=> $val->id,'active'=>'y'));
+					 //    		$str = ' (เพิ่ม)';
+					 //    		$class = "btn btn-icon";
+					 //    		$link = array("/Position/create","lang_id"=>$value->id,"parent_id"=>$val->id);
+					 //    		if($menu || $key == 0){
+					 //    			$id = $menu ? $menu->id : $val->id;
+					 //    			$str = ' (แก้ไข)';
+					 //    			$class = "btn btn-success btn-icon";
+					 //    			$link = array("/Position/update","id"=>$id);
+					 //    		} 
+					 //            $langStr .= CHtml::link($value->language.$str, $link, array("class"=>$class,"style" => 'width:100px;border: 1px solid;'));
+					 //        }
+					 //        return '<div class="btn-group" role="group" aria-label="Basic example">'.$langStr.'</div>';
+      //               	},
+      //               'type'=>'raw',
+      //               'htmlOptions'=>array('style'=>'text-align: center','width'=>$this->getWidthColumnLang().'px;'),
+      //           		),
 						array(            
 							'class'=>'AButtonColumn',
 							'visible'=>Controller::PButton( 

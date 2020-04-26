@@ -87,16 +87,9 @@ class DepartmentController extends Controller
 		));
 	}
 
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
 	public function actionCreate()
 	{
 		$model=new Department;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Department']))
 		{
@@ -105,22 +98,22 @@ class DepartmentController extends Controller
 				$type_employee_id = $_POST['Department'][type_employee_id];
 				$dep_title = $_POST['Department'][dep_title];
 
-				$modelTypeEmp = TypeEmployee::model()->findByPk($type_employee_id);
-				$typeEmpName = $modelTypeEmp->type_employee_name;
+				// $modelTypeEmp = TypeEmployee::model()->findByPk($type_employee_id);
+				// $typeEmpName = $modelTypeEmp->type_employee_name;
 
-				$criteria = new CDbCriteria;
-				$criteria->compare('title',$typeEmpName);
-				$modelOrgChart = OrgChart::model()->findAll($criteria);
+				// $criteria = new CDbCriteria;
+				// $criteria->compare('title',$typeEmpName);
+				// $modelOrgChart = OrgChart::model()->findAll($criteria);
 
-				if($modelOrgChart){
-					foreach ($modelOrgChart as $value) {
-						$idOrgChart = $value->id;
-					}
-				}
+				// if($modelOrgChart){
+				// 	foreach ($modelOrgChart as $value) {
+				// 		$idOrgChart = $value->id;
+				// 	}
+				// }
 
 				$newOrgChart = new OrgChart;
 				$newOrgChart->title = $dep_title;
-				$newOrgChart->parent_id = $idOrgChart;
+				$newOrgChart->parent_id = $type_employee_id;
 				$newOrgChart->level = 4;
 				$newOrgChart->active = 'y';
 				$newOrgChart->save();
@@ -128,7 +121,7 @@ class DepartmentController extends Controller
 				$model->attributes=$_POST['Department'];
 				if($model->save()){
 					$newOrgChart->department_id = $model->id;
-				$newOrgChart->save();
+					$newOrgChart->save();
 
 
 					if(Yii::app()->user->id){
@@ -151,11 +144,26 @@ class DepartmentController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+		$type_employee_id = $_POST['Department'][type_employee_id];
+		$dep_titles = $_POST['Department'][dep_title];
+
+		$modelTypeDep= Department::model()->findByPk($id);
+		$typeDepName = $modelTypeDep->dep_title;
+
+		if(isset($_POST['Department']))
+		{
+			$criteria = new CDbCriteria();
+			$criteria->compare('department_id',$id);
+			$criteria->compare('title',$typeDepName);
+			$modelOrgChart = OrgChart::model()->findAll($criteria);
+				foreach ($modelOrgChart as $key => $value) {
+					$value->title = $dep_titles;
+					$value->parent_id = $type_employee_id;
+					$value->save();
+				}
+		}
+		
 		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['Department']))
 		{
 			$model->attributes=$_POST['Department'];
@@ -179,6 +187,12 @@ class DepartmentController extends Controller
 	 */
 	public function actionDelete($id)
 	{
+		// $modelOrgChart = OrgChart::model()->deleteAll(array("condition"=>"department_id='$id'"));
+		$modelOrgChart=OrgChart::model()->updateAll(
+            array('active' => "n"), 
+            'department_id ='.$id
+            );
+
 		$model = $this->loadModel($id);
 		$model->active = 'n';
 		$model->save(false);

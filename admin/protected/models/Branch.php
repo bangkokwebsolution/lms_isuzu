@@ -69,15 +69,15 @@ class Branch extends CActiveRecord
 		$label_lang = ' (ภาษา '.$mainLang.' )';
 		return array(
 			'id' => 'ID',
-			'branch_name' => 'ชื่อสาขา'.$label_lang,
-			'create_date' => 'สร้างวันที่'.$label_lang,
+			'branch_name' => 'ชื่อสาขา',
+			'create_date' => 'สร้างวันที่',
 			'create_by' => 'Create By',
 			'update_date' => 'Update Date',
 			'update_by' => 'Update By',
-			'active' => 'สถานะ'.$label_lang,
+			'active' => 'สถานะ',
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
-			'position_id' => 'ตำแหน่ง'.$label_lang,
+			'position_id' => 'ตำแหน่ง',
 		);
 	}
 

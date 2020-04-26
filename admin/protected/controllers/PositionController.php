@@ -52,6 +52,7 @@ class PositionController extends Controller
 
 				$criteria = new CDbCriteria;
 				$criteria->compare('title',$typeDepName);
+				$criteria->compare('department_id',$department_id);
 				$modelOrgChart = OrgChart::model()->findAll($criteria);
 
 				if($modelOrgChart){
@@ -73,7 +74,7 @@ class PositionController extends Controller
 				if($model->save()){
 					$newOrgChart->position_id = $model->id;
 					$newOrgChart->department_id = $department_id;
-				$newOrgChart->save();
+					$newOrgChart->save();
 
 
 					if(Yii::app()->user->id){
@@ -93,6 +94,39 @@ class PositionController extends Controller
 
 	public function actionUpdate($id)
 	{
+
+		$type_employee_id = $_POST['Position'][department_id];
+		$posi_titles = $_POST['Position'][position_title];
+
+		$modelTypePosi= Position::model()->findByPk($id);
+		$typePosiName = $modelTypePosi->position_title;
+
+		if(isset($_POST['Position']))
+		{
+		    $modelTypeDepToOrg= Department::model()->findByPk($type_employee_id);
+			$typeDepOrgName = $modelTypeDepToOrg->dep_title;
+
+			$criteria1 = new CDbCriteria();
+			$criteria1->compare('department_id',$type_employee_id);
+			$criteria1->compare('title',$typeDepOrgName);
+			$modelParent = OrgChart::model()->findAll($criteria1);
+			foreach ($modelParent as $key => $value) {
+					$idParent = $value->id;
+			}
+
+			$criteria = new CDbCriteria();
+			$criteria->compare('position_id',$id);
+			$criteria->compare('title',$typePosiName);
+			$modelOrgChart = OrgChart::model()->findAll($criteria);
+				foreach ($modelOrgChart as $key => $value) {
+					$value->title = $posi_titles;
+					$value->department_id = $type_employee_id;
+					$value->parent_id = $idParent;
+					$value->save();
+				}
+		}
+
+
 		$model = $this->loadModel($id);
 		if(isset($_POST['Position']))	
 		{
@@ -118,6 +152,13 @@ class PositionController extends Controller
 	public function actionDelete($id)
 	{
 		//$this->loadModel($id)->delete();
+
+		$modelOrgChart=OrgChart::model()->updateAll(
+            array('active' => "n"), 
+            'position_id ='.$id
+            );
+
+
 		$model = $this->loadModel($id);
 		$model->active = 'n';
 		$model->save(false);

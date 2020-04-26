@@ -1,22 +1,19 @@
-<?php
-/* @var $this DivisionController */
-/* @var $model Division */
 
+<?php
 $this->breadcrumbs=array(
-	'Department'=>array('admin'),
-	$model->id,
+	'จัดการแผนก'=>array('admin'),
+	$model->dep_title,
 );
 
-?>
-
-<h1>View Department #<?php echo $model->id; ?></h1>
-
-<?php $this->widget('zii.widgets.CDetailView', array(
+$this->widget('ADetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
-		'id',
-		'company_id',
 		'dep_title',
-		'create_date',
-	),
-)); ?>
+		array(
+			'name'=>'create_date',
+			'value'=> ClassFunction::datethaiTime($model->create_date)
+		),
+		'active',
+		),
+)); 
+?>

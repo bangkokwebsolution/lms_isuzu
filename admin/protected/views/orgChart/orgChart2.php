@@ -12,7 +12,7 @@
 <!--  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>-->
 <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/js/prettify.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/fancybox/jquery.fancybox.js"></script>
-<script src="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/js/jquery.jOrgChart.js"></script>
+<script src="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/js/jquery.jOrgChart.js"></script><!--ลิ้งปุ่ม add edit-->
 <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/orgchart/js/taffy.js"></script>
 <style type="text/css">
   #getjson {
@@ -78,7 +78,9 @@ var node_to_edit;
     var data = TAFFY([
 
       <?php
-      $categories=OrgChart::model()->findAll();
+      $criteria = new CDbCriteria;
+      $criteria->compare('active','y');
+      $categories=OrgChart::model()->findAll($criteria);
       if($categories){
         foreach($categories as $n=>$category)
         {
@@ -147,7 +149,7 @@ var node_to_edit;
 </head>
 
 <body onload="prettyPrint();">
-  <button id="getjson" onclick="makeArrays()">Save</button>
+  <!-- <button id="getjson" onclick="makeArrays()">Save</button> -->
   <div id="in" style="display:none">
   </div>
 
@@ -155,7 +157,7 @@ var node_to_edit;
 
   <div id="chart" class="orgChart"></div>
   <!-- Add Node box -->
- <!--  <div id="fancy" class="hidden">
+  <div id="fancy" class="hidden">
     <form action="." method="post" id="add_node_form">
       <h1 class="title_lb">New Node</h1>
       <div class="span12" id="add_nodo">
@@ -168,7 +170,7 @@ var node_to_edit;
         </div>
       </div>
     </form>
-  </div> -->
+  </div>
   <!-- Edit node box -->
   <div id="fancy_edit" class="hidden">
     <form action="." method="post" id="edit_node_form">

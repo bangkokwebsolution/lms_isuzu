@@ -14,7 +14,7 @@
  * Dual licensed under the MIT and GPL licenses.
  *
  */
-(function($) {
+ (function($) {
   var cx = 0;
   $.fn.jOrgChart = function(options) {
 
@@ -221,38 +221,38 @@
     // Draw the node
     // Get the contents - any markup except li and ul allowed
     var $nodeContent = $node.clone()
-      .children("ul,li")
-      .remove()
-      .end()
-      .html();
+    .children("ul,li")
+    .remove()
+    .end()
+    .html();
 
     //Increaments the node count which is used to link the source list and the org chart
     nodeCount++;
 
     $node.data("tree-node", nodeCount);
     $nodeDiv = $("<div>").addClass("node")
-      .data("tree-node", nodeCount)
-      .append($nodeContent);
+    .data("tree-node", nodeCount)
+    .append($nodeContent);
 
 
     $nodeDiv.append(
-        "<div class='opciones'>" +
-        "</div>")
-      .mouseenter(function() {
-        if ($(this).find("> .details > span").length == 0) {
-          var duplicate = $(this).find("> span.label_node").clone();
-          $(this).find("> .details").prepend(duplicate);
-        }
-        $(this).find(".details").toggle().parent().css("z-index", "999");
-      }).mouseleave(function() {
-        $(this).find(".details").toggle().parent().removeAttr("style");
-      });
+      "<div class='opciones'>" +
+      "</div>")
+    .mouseenter(function() {
+      if ($(this).find("> .details > span").length == 0) {
+        var duplicate = $(this).find("> span.label_node").clone();
+        $(this).find("> .details").prepend(duplicate);
+      }
+      $(this).find(".details").toggle().parent().css("z-index", "999");
+    }).mouseleave(function() {
+      $(this).find(".details").toggle().parent().removeAttr("style");
+    });
 
     var append_text = "<li class='temp'></li>";
     var $list_element = $node.clone()
-      .children("ul,li")
-      .remove()
-      .end();
+    .children("ul,li")
+    .remove()
+    .end();
 
 
     // Expand and contract nodes
@@ -304,10 +304,10 @@
 
         // horizontal line shouldn't extend beyond the first and last child branches
         $linesRow.find("td:first")
-          .removeClass("top")
-          .end()
-          .find("td:last")
-          .removeClass("top");
+        .removeClass("top")
+        .end()
+        .find("td:last")
+        .removeClass("top");
 
         $tbody.append($linesRow);
         var $childNodesRow = $("<tr/>");
@@ -339,15 +339,16 @@
         }
       });
     }
+    //ปุ่ม add edit
     if (opts.control) {
       if (!$nodeDiv.hasClass("temp")) {
-        $nodeDiv.find(".opciones:eq(0)").append("<span class='edit' href='#fancy_edit'></span>");
-        $nodeDiv.find(".opciones:eq(0)").append("<span class='add' href='#fancy'></span>");
+        // $nodeDiv.find(".opciones:eq(0)").append("<span class='edit' href='#fancy_edit'></span>");
+        // $nodeDiv.find(".opciones:eq(0)").append("<span class='add' href='#fancy'></span>");
         if ($nodeDiv.hasClass("child")) {
-          $nodeDiv.find(".opciones:eq(0)").append("<span class='del'></span>");
+          // $nodeDiv.find(".opciones:eq(0)").append("<span class='del'></span>");
         }
       } else {
-        $nodeDiv.find(".opciones:eq(0)").append("<span class='add' href='#fancy'></span><span class='del'></span>");
+        // $nodeDiv.find(".opciones:eq(0)").append("<span class='add' href='#fancy'></span><span class='del'></span>");
       }
     }
     $table.append($tbody);

@@ -66,9 +66,9 @@ class Position extends CActiveRecord
 		$label_lang = ' (ภาษา '.$mainLang.' )';
 		return array(
 			'id' => 'ID',
-			'department_id' => 'แผนก'.$label_lang,
-			'position_title' => 'ชื่อตำแหน่ง'.$label_lang,
-			'create_date' => 'สร้างวันที่'.$label_lang,
+			'department_id' => 'แผนก',
+			'position_title' => 'ชื่อตำแหน่ง',
+			'create_date' => 'สร้างวันที่',
 			'active' => 'Active',
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
