@@ -81,7 +81,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         font-size: 14px;
         margin: 4px 15px;
         cursor: pointer;
-         position: absolute;
+        position: absolute;
         right: 0 
     }
     .uploadifive-button {
@@ -169,22 +169,22 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                     return true;
                 }else{
                     if($('#queue .uploadifive-queue-item').length > 0 ) {
-                $('#Training').uploadifive('upload');
-                return false;
-            }else if($('#docqueue .uploadifive-queue-item').length > 0){
-                $('#doc').uploadifive('upload');
-                return false;
-                }
-            } 
-        }
+                        $('#Training').uploadifive('upload');
+                        return false;
+                    }else if($('#docqueue .uploadifive-queue-item').length > 0){
+                        $('#doc').uploadifive('upload');
+                        return false;
+                    }
+                } 
+            }
         }else{
-         if($('#queue .uploadifive-queue-item').length == 0 && $('#docqueue .uploadifive-queue-item').length == 0 ){
+           if($('#queue .uploadifive-queue-item').length == 0 && $('#docqueue .uploadifive-queue-item').length == 0 ){
             return true;
         }else{
-               var Training  = $('#Training').uploadifive('upload');
-               var doc =  $('#doc').uploadifive('upload');
-            if($('#queue .uploadifive-queue-item').length > 0 && $('#docqueue .uploadifive-queue-item').length > 0) {
-                return [Training,doc];
+         var Training  = $('#Training').uploadifive('upload');
+         var doc =  $('#doc').uploadifive('upload');
+         if($('#queue .uploadifive-queue-item').length > 0 && $('#docqueue .uploadifive-queue-item').length > 0) {
+            return [Training,doc];
             // }else if($('#docqueue .uploadifive-queue-item').length > 0){
             //     $('#doc').uploadifive('upload');
             //     return false;
@@ -192,10 +192,10 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
          //        $('#Training').uploadifive('upload');
          //        return false;
 
-          }
+     }
 
 
-    }
+ }
 }
 }
 
@@ -550,14 +550,14 @@ function editNameTrain(filedoc_id){
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_sex; ?></label>
-                                 <?php
-                                    $sex_list = array('Male' => $label->label_male, 'Female' => $label->label_female);
-                                    $sex_Option = array('class' => 'form-control', 'empty' => $label->label_sex);
-                                    ?>
-                                    <?php
-                                    echo $form->dropDownList($profile, 'sex', $sex_list, $sex_Option);
-                                    ?>
-                                    <?php echo $form->error($profile, 'sex', array('class' => 'error2')); ?>
+                                <?php
+                                $sex_list = array('Male' => $label->label_male, 'Female' => $label->label_female);
+                                $sex_Option = array('class' => 'form-control', 'empty' => $label->label_sex);
+                                ?>
+                                <?php
+                                echo $form->dropDownList($profile, 'sex', $sex_list, $sex_Option);
+                                ?>
+                                <?php echo $form->error($profile, 'sex', array('class' => 'error2')); ?>
                             </div>
                         </div>
 
@@ -662,192 +662,192 @@ function editNameTrain(filedoc_id){
                     $modelList = Education::model()->findAll(array("condition" => " active = 'y'"));
                     if (Yii::app()->session['lang'] == 1) {
                       $list = CHtml::listData($modelList, 'edu_id', 'edu_name_EN');
-                    }else{
+                  }else{
                       $list = CHtml::listData($modelList, 'edu_id', 'edu_name');
-                    }
-                    
-                    $att_Education = array('class' => 'form-control', 'empty' => $label->label_education_level);
-                    
-                   $starting_year  = 2500;
-                   $ending_year = 543 + date('Y');
-                   if ($ending_year) {
+                  }
 
-                        for($starting_year; $starting_year <= $ending_year; $starting_year++) {
-                            $edu_lest[]  =  $starting_year;
-                      
-                          }                 
-                   }
-                    $graduation = array('class' => 'form-control', 'autocomplete' => 'off', 'empty' => $label->label_graduation_year);   
-                    if (!$ProfilesEdu->isNewRecord) { ?>
-                        <div class="add-study">
-                            <?php
-                            foreach ($ProfilesEdu as $kedu => $valedu) {
-                                ?>
+                  $att_Education = array('class' => 'form-control', 'empty' => $label->label_education_level);
 
-                                <div class="row del_edu">
-                                    <div class="col-md-3 col-sm-12 text-right-md"> <strong><?php echo $label->label_educational;  ?></strong></div>
-                                    <div class="col-md-2 col-sm-6 col-xs-12">
-                                        <div class="form-group">
-                                            <?php echo CHtml::activeDropDownList($valedu, '[' . $kedu . ']edu_id', $list, $att_Education); ?>
-                                        </div>
-                                    </div>
+                  $starting_year  = 2500;
+                  $ending_year = 543 + date('Y');
+                  if ($ending_year) {
 
+                    for($starting_year; $starting_year <= $ending_year; $starting_year++) {
+                        $edu_lest[]  =  $starting_year;
 
-                                    <div class="col-md-3 col-sm-6 col-xs-12">
-                                        <div class="form-group">
-
-                                            <?php echo $form->textField($valedu, '[' . $kedu . ']institution', array('class' => 'form-control', 'placeholder' => $label->label_academy)); ?>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-2 col-sm-6 col-xs-12">
-                                        <div class="form-group">
-                                            <?php echo CHtml::activeDropDownList($valedu, '[' . $kedu . ']date_graduation',$edu_lest, $graduation); ?>
-                                        </div>
-                                    </div>
-                                    <span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?> </span>
-
-                                </div>
-
-                                <?php
-                            } ?>
-                        </div>
-
-                    <?php } else {
-                        ?>
-
-                        <div class="row form_name">
-                            <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?php echo $label->label_educational;  ?></strong></div>
-                            <div class="col-md-2 col-sm-6 col-xs-12 ">
-                                <div class="form-group">
-                                    <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]edu_id', $list, $att_Education); ?>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3 col-sm-6 col-xs-12 ">
-                                <div class="form-group">
-                                    <?php echo $form->textField($ProfilesEdu, '[0]institution', array('class' => 'form-control', 'placeholder' => $label->label_academy)); ?>
-                                </div>
-                            </div>
-
-                            <div class="col-md-2 col-sm-6 col-xs-12 ">
-                                <div class="form-group">
-                                    <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]date_graduation',$edu_lest ,$graduation); ?>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="add-study"></div>
-
+                    }                 
+                }
+                $graduation = array('class' => 'form-control', 'autocomplete' => 'off', 'empty' => $label->label_graduation_year);   
+                if (!$ProfilesEdu->isNewRecord) { ?>
+                    <div class="add-study">
                         <?php
-                    }
+                        foreach ($ProfilesEdu as $kedu => $valedu) {
+                            ?>
+
+                            <div class="row del_edu">
+                                <div class="col-md-3 col-sm-12 text-right-md"> <strong><?php echo $label->label_educational;  ?></strong></div>
+                                <div class="col-md-2 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <?php echo CHtml::activeDropDownList($valedu, '[' . $kedu . ']edu_id', $list, $att_Education); ?>
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+
+                                        <?php echo $form->textField($valedu, '[' . $kedu . ']institution', array('class' => 'form-control', 'placeholder' => $label->label_academy)); ?>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2 col-sm-6 col-xs-12">
+                                    <div class="form-group">
+                                        <?php echo CHtml::activeDropDownList($valedu, '[' . $kedu . ']date_graduation',$edu_lest, $graduation); ?>
+                                    </div>
+                                </div>
+                                <span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?> </span>
+
+                            </div>
+
+                            <?php
+                        } ?>
+                    </div>
+
+                <?php } else {
                     ?>
 
-                    <div class="row justify-content-center bb-1 pb-20 mt-20 form_name">
-                        <div class="col-md-3 col-sm-12  col-xs-12 text-center">
-                            <button class="btn btn-info btn-add add_form_field" type="button" id="moreFields">
-                                <span class="glyphicon glyphicon-plus"> </span> <?= Yii::app()->session['lang'] == 1?'Add education history ':'เพิ่มประวัติการศึกษา'; ?>
-                            </button>
-                        </div>
-                    </div>
-                    <?php if ($ProfilesWorkHistory->isNewRecord === null) { 
-                             
-                        ?>
-                            <div class="add-Work">
-                    <?php
-                            foreach ($ProfilesWorkHistory as $keywh => $valwh) {
-                                  
-                                ?>
-                                <div class="row del_work">
-                            <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?></strong></div>
-                            <div class="col-md-4 col-sm-6 col-xs-12 ">
-                                <div class="form-group">
-                                    <?php echo $form->textField($valwh, '['.$keywh.']company_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Company ':'บริษัท')); ?>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4 col-sm-6 col-xs-12 ">
-                                <div class="form-group">
-                                    <?php echo $form->textField($valwh, '['.$keywh.']position_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Position ':'ตำแหน่ง')); ?>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"></div>
-                            <div class="col-md-4 col-sm-6 col-xs-12 ">
-                                <div class="form-group since-icon">
-                                    <i class="far fa-calendar-alt"></i>
-                                    <?php echo $form->textField($valwh, '['.$keywh.']since_date', $Since); ?>
-                                </div>
-                            </div>
-                            <div class="col-md-4 col-sm-6 col-xs-12 ">
-                                <div class="form-group">
-                                    <?php echo $form->textField($valwh, '['.$keywh.']reason_leaving', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Reason for leaving ':'สาเหตุที่ออก')); ?>
-                                </div>
-                            </div>
-                            <span class="delete_work btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?> </span>
-                    </div>
-
-                                <?php } ?>
-                        </div>
-                    <?php } else {?>
                     <div class="row form_name">
-                            <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?></strong></div>
-                            <div class="col-md-4 col-sm-6 col-xs-12 ">
-                                <div class="form-group">
-                                    <?php echo $form->textField($ProfilesWorkHistory, '[0]company_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Company ':'บริษัท')); ?>
+                        <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?php echo $label->label_educational;  ?></strong></div>
+                        <div class="col-md-2 col-sm-6 col-xs-12 ">
+                            <div class="form-group">
+                                <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]edu_id', $list, $att_Education); ?>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6 col-xs-12 ">
+                            <div class="form-group">
+                                <?php echo $form->textField($ProfilesEdu, '[0]institution', array('class' => 'form-control', 'placeholder' => $label->label_academy)); ?>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 col-sm-6 col-xs-12 ">
+                            <div class="form-group">
+                                <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]date_graduation',$edu_lest ,$graduation); ?>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="add-study"></div>
+
+                    <?php
+                }
+                ?>
+
+                <div class="row justify-content-center bb-1 pb-20 mt-20 form_name">
+                    <div class="col-md-3 col-sm-12  col-xs-12 text-center">
+                        <button class="btn btn-info btn-add add_form_field" type="button" id="moreFields">
+                            <span class="glyphicon glyphicon-plus"> </span> <?= Yii::app()->session['lang'] == 1?'Add education history ':'เพิ่มประวัติการศึกษา'; ?>
+                        </button>
+                    </div>
+                </div>
+                <?php if ($ProfilesWorkHistory->isNewRecord === null) { 
+
+                    ?>
+                    <div class="add-Work">
+                        <?php
+                        foreach ($ProfilesWorkHistory as $keywh => $valwh) {
+
+                            ?>
+                            <div class="row del_work">
+                                <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?></strong></div>
+                                <div class="col-md-4 col-sm-6 col-xs-12 ">
+                                    <div class="form-group">
+                                        <?php echo $form->textField($valwh, '['.$keywh.']company_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Company ':'บริษัท')); ?>
+                                    </div>
                                 </div>
+
+                                <div class="col-md-4 col-sm-6 col-xs-12 ">
+                                    <div class="form-group">
+                                        <?php echo $form->textField($valwh, '['.$keywh.']position_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Position ':'ตำแหน่ง')); ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"></div>
+                                <div class="col-md-4 col-sm-6 col-xs-12 ">
+                                    <div class="form-group since-icon">
+                                        <i class="far fa-calendar-alt"></i>
+                                        <?php echo $form->textField($valwh, '['.$keywh.']since_date', $Since); ?>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-6 col-xs-12 ">
+                                    <div class="form-group">
+                                        <?php echo $form->textField($valwh, '['.$keywh.']reason_leaving', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Reason for leaving ':'สาเหตุที่ออก')); ?>
+                                    </div>
+                                </div>
+                                <span class="delete_work btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?> </span>
                             </div>
 
-                            <div class="col-md-4 col-sm-6 col-xs-12 ">
-                                <div class="form-group">
-                                    <?php echo $form->textField($ProfilesWorkHistory, '[0]position_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Position ':'ตำแหน่ง')); ?>
-                                </div>
+                        <?php } ?>
+                    </div>
+                <?php } else {?>
+                    <div class="row form_name">
+                        <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?></strong></div>
+                        <div class="col-md-4 col-sm-6 col-xs-12 ">
+                            <div class="form-group">
+                                <?php echo $form->textField($ProfilesWorkHistory, '[0]company_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Company ':'บริษัท')); ?>
                             </div>
-                            <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"></div>
-                            <div class="col-md-4 col-sm-6 col-xs-12 ">
-                                <div class="form-group since-icon">
-                                    <i class="far fa-calendar-alt"></i>
-                                    <?php echo $form->textField($ProfilesWorkHistory, '[0]since_date', $Since); ?>
-                                </div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 col-xs-12 ">
+                            <div class="form-group">
+                                <?php echo $form->textField($ProfilesWorkHistory, '[0]position_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Position ':'ตำแหน่ง')); ?>
                             </div>
-                            <div class="col-md-4 col-sm-6 col-xs-12 ">
-                                <div class="form-group">
-                                    <?php echo $form->textField($ProfilesWorkHistory, '[0]reason_leaving', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Reason for leaving ':'สาเหตุที่ออก')); ?>
-                                </div>
+                        </div>
+                        <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"></div>
+                        <div class="col-md-4 col-sm-6 col-xs-12 ">
+                            <div class="form-group since-icon">
+                                <i class="far fa-calendar-alt"></i>
+                                <?php echo $form->textField($ProfilesWorkHistory, '[0]since_date', $Since); ?>
                             </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-12 ">
+                            <div class="form-group">
+                                <?php echo $form->textField($ProfilesWorkHistory, '[0]reason_leaving', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Reason for leaving ':'สาเหตุที่ออก')); ?>
+                            </div>
+                        </div>
                     </div>
                     <div class="add-Work"></div>
                 <?php } ?>
-                    <div class="row justify-content-center bb-1 pb-20 mt-20 form_name">
-                        <div class="col-md-3 col-sm-12  col-xs-12 text-center">
-                            <button class="btn btn-info btn-add add_form_work" type="button" id="moreFieldsWork">
-                                <span class="glyphicon glyphicon-plus"> </span> <?= Yii::app()->session['lang'] == 1?'Add Work history ':'เพิ่มประวัติการทำงาน'; ?>
-                            </button>
-                        </div>
+                <div class="row justify-content-center bb-1 pb-20 mt-20 form_name">
+                    <div class="col-md-3 col-sm-12  col-xs-12 text-center">
+                        <button class="btn btn-info btn-add add_form_work" type="button" id="moreFieldsWork">
+                            <span class="glyphicon glyphicon-plus"> </span> <?= Yii::app()->session['lang'] == 1?'Add Work history ':'เพิ่มประวัติการทำงาน'; ?>
+                        </button>
                     </div>
+                </div>
 
-                    <div id="office-section1" class="form_name">
-                        <div class="row  mt-20 mb-1">
+                <div id="office-section1" class="form_name">
+                    <div class="row  mt-20 mb-1">
 
-                            <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Attachments of Qualification / Professional File ':'เอกสารแนบไฟล์วุฒิการศึกษา/วิชาชีพ'; ?><small class="text-danger d-block">(pdf,png,jpg,jpeg)</small></strong></div>
-                            <!--     <?php echo $form->labelEx($FileEdu,'file_name'); ?> --> 
-                            <div class="col-sm-12 col-xs-12 col-md-8">
-                                <div id="docqueue"></div>
-                                <?php echo $form->fileField($FileEdu,'file_name',array('id'=>'doc','multiple'=>'true')); ?>
-                                <script type="text/javascript">
-                                    <?php $timestamp = time();?>
-                                    $(function() {
-                                        $('#doc').uploadifive({
-                                            'auto'             : false,
+                        <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Attachments of Qualification / Professional File ':'เอกสารแนบไฟล์วุฒิการศึกษา/วิชาชีพ'; ?><small class="text-danger d-block">(pdf,png,jpg,jpeg)</small></strong></div>
+                        <!--     <?php echo $form->labelEx($FileEdu,'file_name'); ?> --> 
+                        <div class="col-sm-12 col-xs-12 col-md-8">
+                            <div id="docqueue"></div>
+                            <?php echo $form->fileField($FileEdu,'file_name',array('id'=>'doc','multiple'=>'true')); ?>
+                            <script type="text/javascript">
+                                <?php $timestamp = time();?>
+                                $(function() {
+                                    $('#doc').uploadifive({
+                                        'auto'             : false,
 
-                                            'formData'         : {
-                                                'timestamp' : '<?php echo $timestamp;?>',
-                                                'token'     : '<?php echo md5("unique_salt" . $timestamp);?>'
-                                            },
-                                            'queueID'          : 'docqueue',
-                                            'uploadScript'     : '<?php echo $this->createUrl("Registration/uploadifiveEdu"); ?>',
-                                            'onAddQueueItem' : function(file){
-                                                var fileName = file.name;
+                                        'formData'         : {
+                                            'timestamp' : '<?php echo $timestamp;?>',
+                                            'token'     : '<?php echo md5("unique_salt" . $timestamp);?>'
+                                        },
+                                        'queueID'          : 'docqueue',
+                                        'uploadScript'     : '<?php echo $this->createUrl("Registration/uploadifiveEdu"); ?>',
+                                        'onAddQueueItem' : function(file){
+                                            var fileName = file.name;
                                                     var ext = fileName.substring(fileName.lastIndexOf('.') + 1); // Extract EXT
                                                     switch (ext) {
                                                         case 'pdf':
@@ -863,89 +863,89 @@ function editNameTrain(filedoc_id){
                                                 },
                                                 'onQueueComplete' : function(file, data) {
 
-                                                 $('#registration-form').submit();
+                                                   $('#registration-form').submit();
 
-                                             }
-                                         });
-                                    });
-                                </script>
-                                <?php echo $form->error($FileEdu,'file_name'); ?>
-                            </div>
-
+                                               }
+                                           });
+                                });
+                            </script>
+                            <?php echo $form->error($FileEdu,'file_name'); ?>
                         </div>
-                        <div class="row">
-                           <div class="col-md-offset-3 col-md-4">
-                            <?php
-                            $idx = 1;
-                            $uploadFolder = Yii::app()->getUploadUrl('edufile');
-                            $criteria = new CDbCriteria;
-                            $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
-                            $criteria->addCondition("active ='y'");
-                            $FileEdu = FileEdu::model()->findAll($criteria);
 
-                            if(isset($FileEdu)){
-                             $confirm_del  = Yii::app()->session['lang'] == 1?'Do you want to delete the file ?\nWhen you agree, the system will permanently delete the file from the system. ':'คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร';
-                             foreach($FileEdu as $fileDatas){
-                                ?>
+                    </div>
+                    <div class="row">
+                     <div class="col-md-offset-3 col-md-4">
+                        <?php
+                        $idx = 1;
+                        $uploadFolder = Yii::app()->getUploadUrl('edufile');
+                        $criteria = new CDbCriteria;
+                        $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
+                        $criteria->addCondition("active ='y'");
+                        $FileEdu = FileEdu::model()->findAll($criteria);
 
-                                <div id="filenamedoc<?php echo $idx; ?>">
-                                    <!-- <a href="<?php echo $this->createUrl('edufile',array('id' => $fileDatas->id)); ?>" target="_blank"> -->
-                                        <?php
-                                        echo '<strong id="filenamedoctext'.$fileDatas->id.'">'.$fileDatas->file_name.'</strong>';
-                                        ?>
-                                        <!-- </a> -->
-                                        <?php echo '<input id="filenamedoc'.$fileDatas->id.'" 
-                                        class="form-control"
-                                        type="text" value="'.$fileDatas->file_name.'" 
-                                        style="display:none;" 
-                                        onblur="editName('.$fileDatas->id.');">'; ?>
+                        if(isset($FileEdu)){
+                           $confirm_del  = Yii::app()->session['lang'] == 1?'Do you want to delete the file ?\nWhen you agree, the system will permanently delete the file from the system. ':'คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร';
+                           foreach($FileEdu as $fileDatas){
+                            ?>
 
-                                        <?php echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
-                                           'id'=>'btnEditName'.$fileDatas->id,
-                                           'class'=>'btn-action glyphicons pencil btn-danger',
-                                           'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                                           'onclick'=>'$("#filenamedoctext'.$fileDatas->id.'").hide();
-                                           $("#filenamedoc'.$fileDatas->id.'").show(); 
-                                           $("#filenamedoc'.$fileDatas->id.'").focus(); 
-                                           $("#btnEditName'.$fileDatas->id.'").hide(); ')); ?>
+                            <div id="filenamedoc<?php echo $idx; ?>">
+                                <!-- <a href="<?php echo $this->createUrl('edufile',array('id' => $fileDatas->id)); ?>" target="_blank"> -->
+                                    <?php
+                                    echo '<strong id="filenamedoctext'.$fileDatas->id.'">'.$fileDatas->file_name.'</strong>';
+                                    ?>
+                                    <!-- </a> -->
+                                    <?php echo '<input id="filenamedoc'.$fileDatas->id.'" 
+                                    class="form-control"
+                                    type="text" value="'.$fileDatas->file_name.'" 
+                                    style="display:none;" 
+                                    onblur="editName('.$fileDatas->id.');">'; ?>
 
-                                        <?php echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
-                                            'id'=>'btnSaveName'.$fileDatas->id,
-                                            'class'=>'btn-action glyphicons btn-danger remove_2',
-                                            'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                                            'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFileDoc("filedoc'.$idx.'","'.$fileDatas->id.'"); }')); ?>
+                                    <?php echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
+                                     'id'=>'btnEditName'.$fileDatas->id,
+                                     'class'=>'btn-action glyphicons pencil btn-danger',
+                                     'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                     'onclick'=>'$("#filenamedoctext'.$fileDatas->id.'").hide();
+                                     $("#filenamedoc'.$fileDatas->id.'").show(); 
+                                     $("#filenamedoc'.$fileDatas->id.'").focus(); 
+                                     $("#btnEditName'.$fileDatas->id.'").hide(); ')); ?>
 
-                                        </div>
-                                        <?php
-                                        $idx++;
-                                    }?><br><?php
-                                }
-                                ?>   
-                            </div>
+                                    <?php echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
+                                        'id'=>'btnSaveName'.$fileDatas->id,
+                                        'class'=>'btn-action glyphicons btn-danger remove_2',
+                                        'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                        'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFileDoc("filedoc'.$idx.'","'.$fileDatas->id.'"); }')); ?>
+
+                                    </div>
+                                    <?php
+                                    $idx++;
+                                }?><br><?php
+                            }
+                            ?>   
                         </div>
                     </div>
+                </div>
 
-                    <div id="office-section2" class="form_name">
-                        <div class="row  mt-20 mb-1">
+                <div id="office-section2" class="form_name">
+                    <div class="row  mt-20 mb-1">
 
-                            <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training file attachment ':'เอกสารแนบไฟล์ฝึกอบรม'; ?><small class="text-danger d-block">(pdf,png,jpg,jpeg)</small></strong></div>
-                            <div class="col-sm-12 col-xs-12 col-md-8">
-                                <div id="queue"></div>
-                                <?php echo $form->fileField($FileTraining,'file_name',array('id'=>'Training','multiple'=>'true')); ?>
-                                <script type="text/javascript">
-                                    <?php $timestamp = time();?>
-                                    $(function() {
-                                        $('#Training').uploadifive({
-                                            'auto'             : false,
+                        <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training file attachment ':'เอกสารแนบไฟล์ฝึกอบรม'; ?><small class="text-danger d-block">(pdf,png,jpg,jpeg)</small></strong></div>
+                        <div class="col-sm-12 col-xs-12 col-md-8">
+                            <div id="queue"></div>
+                            <?php echo $form->fileField($FileTraining,'file_name',array('id'=>'Training','multiple'=>'true')); ?>
+                            <script type="text/javascript">
+                                <?php $timestamp = time();?>
+                                $(function() {
+                                    $('#Training').uploadifive({
+                                        'auto'             : false,
 
-                                            'formData'         : {
-                                                'timestamp' : '<?php echo $timestamp;?>',
-                                                'token'     : '<?php echo md5("unique_salt" . $timestamp);?>'
-                                            },
-                                            'queueID'          : 'queue',
-                                            'uploadScript'     : '<?php echo $this->createUrl("Registration/uploadifiveTraining"); ?>',
-                                            'onAddQueueItem' : function(file){
-                                                var fileName = file.name;
+                                        'formData'         : {
+                                            'timestamp' : '<?php echo $timestamp;?>',
+                                            'token'     : '<?php echo md5("unique_salt" . $timestamp);?>'
+                                        },
+                                        'queueID'          : 'queue',
+                                        'uploadScript'     : '<?php echo $this->createUrl("Registration/uploadifiveTraining"); ?>',
+                                        'onAddQueueItem' : function(file){
+                                            var fileName = file.name;
                                                     var ext = fileName.substring(fileName.lastIndexOf('.') + 1); // Extract EXT
                                                     switch (ext) {
                                                         case 'pdf':
@@ -961,128 +961,227 @@ function editNameTrain(filedoc_id){
                                                 },
                                                 'onQueueComplete' : function(file, data) {
 
-                                                 $('#registration-form').submit();
+                                                   $('#registration-form').submit();
 
-                                             }
-                                         });
-                                    });
-                                </script>
-                                <?php echo $form->error($FileTraining,'file_name'); ?>
-                            </div>
-
+                                               }
+                                           });
+                                });
+                            </script>
+                            <?php echo $form->error($FileTraining,'file_name'); ?>
                         </div>
-                        <div class="row mt-20 mb-3">
-                            <div class="col-md-offset-3 col-md-4">
-                                <?php
-                                $idx = 1;
-                                $uploadFolder = Yii::app()->getUploadUrl('Trainingfile');
-                                $criteria = new CDbCriteria;
-                                $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
-                                $criteria->addCondition("active ='y'");
-                                $Trainingfile = FileTraining::model()->findAll($criteria);
-                                
-                                if(isset($Trainingfile)){
-                                  $confirm_del  = Yii::app()->session['lang'] == 1?'Do you want to delete the file ?\nWhen you agree, the system will permanently delete the file from the system. ':'คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร'; 
-                                  foreach($Trainingfile as $fileData){
 
+                    </div>
+                    <div class="row mt-20 mb-3">
+                        <div class="col-md-offset-3 col-md-4">
+                            <?php
+                            $idx = 1;
+                            $uploadFolder = Yii::app()->getUploadUrl('Trainingfile');
+                            $criteria = new CDbCriteria;
+                            $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
+                            $criteria->addCondition("active ='y'");
+                            $Trainingfile = FileTraining::model()->findAll($criteria);
+
+                            if(isset($Trainingfile)){
+                              $confirm_del  = Yii::app()->session['lang'] == 1?'Do you want to delete the file ?\nWhen you agree, the system will permanently delete the file from the system. ':'คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร'; 
+                              foreach($Trainingfile as $fileData){
+
+                                ?>
+                                <div id="filenameTrain<?php echo $idx; ?>">
+                                 <!--  <a href="<?php echo $this->createUrl('Trainingfile',array('id' => $fileData->id)); ?>" target="_blank"> -->
+                                    <?php
+                                    echo '<strong id="filenametraintext'.$fileData->id.'">'.$fileData->file_name.'</strong>';
                                     ?>
-                                    <div id="filenameTrain<?php echo $idx; ?>">
-                                       <!--  <a href="<?php echo $this->createUrl('Trainingfile',array('id' => $fileData->id)); ?>" target="_blank"> -->
-                                        <?php
-                                        echo '<strong id="filenametraintext'.$fileData->id.'">'.$fileData->file_name.'</strong>';
-                                        ?>
-                                        <!-- </a> -->
-                                        <?php echo '<input id="filenameTrains'.$fileData->id.'" 
-                                        class="form-control"
-                                        type="text" value="'.$fileData->file_name.'" 
-                                        style="display:none;" 
-                                        onblur="editNameTrain('.$fileData->id.');">'; ?>
+                                    <!-- </a> -->
+                                    <?php echo '<input id="filenameTrains'.$fileData->id.'" 
+                                    class="form-control"
+                                    type="text" value="'.$fileData->file_name.'" 
+                                    style="display:none;" 
+                                    onblur="editNameTrain('.$fileData->id.');">'; ?>
 
 
-                                        <?php echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
-                                            'id'=>'btnEditNametrain'.$fileData->id,
-                                            'class'=>'btn-action glyphicons pencil btn-danger',
-                                            'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                                            'onclick'=>'$("#filenametraintext'.$fileData->id.'").hide(); 
-                                            $("#filenameTrains'.$fileData->id.'").show(); 
-                                            $("#filenameTrains'.$fileData->id.'").focus(); 
-                                            $("#btnEditNametrain'.$fileData->id.'").hide(); ')); ?>
+                                    <?php echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
+                                        'id'=>'btnEditNametrain'.$fileData->id,
+                                        'class'=>'btn-action glyphicons pencil btn-danger',
+                                        'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                        'onclick'=>'$("#filenametraintext'.$fileData->id.'").hide(); 
+                                        $("#filenameTrains'.$fileData->id.'").show(); 
+                                        $("#filenameTrains'.$fileData->id.'").focus(); 
+                                        $("#btnEditNametrain'.$fileData->id.'").hide(); ')); ?>
 
-                                            
-                                        <?php echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
-                                            'id'=>'btnSaveNametrain'.$fileData->id,
-                                            'class'=>'btn-action glyphicons btn-danger remove_2',
-                                            'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                                            'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFiletrain("filedoc'.$idx.'","'.$fileData->id.'"); }')); ?>
 
-                                        </div>
+                                    <?php echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
+                                        'id'=>'btnSaveNametrain'.$fileData->id,
+                                        'class'=>'btn-action glyphicons btn-danger remove_2',
+                                        'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                        'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFiletrain("filedoc'.$idx.'","'.$fileData->id.'"); }')); ?>
 
-                                        <?php
-                                        $idx++;
-                                    }?><?php
-                                }
-                                ?> 
-                            </div>  
+                                    </div>
+
+                                    <?php
+                                    $idx++;
+                                }?><?php
+                            }
+                            ?> 
+                        </div>  
+                    </div>
+                </div>
+                <div class="row  mt-1 mb-1 form_name">
+                    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'passport':'พาสปอร์ต'; ?></strong></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <div class="input-append">
+
+                                <div class="">
+                                    <?php echo $form->fileField($AttachName, 'attach_passport', array('id' => 'wizard-picture')); ?>
+                                </div>
+                            </div>
+                        </div>
+                        <?php echo $form->error($AttachName, 'attach_passport'); ?>
+                        <?php 
+                            $passport = Yii::app()->getUploadUrl('attach');
+                            $criteria = new CDbCriteria;
+                            $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
+                            $criteria->addCondition("active ='y'");
+                            $criteria->addCondition("file_data ='1'");
+                            $Attach_passport_File = AttachFile::model()->find($criteria);
+                            if (isset($Attach_passport_File)) {
+                                echo '<strong id="filenametraintext'.$Attach_passport_File->id.'">'.$Attach_passport_File->filename.'</strong>';
+                            }
+                        ?>
+                    </div>
+                </div>
+
+                <div class="row  mt-1 mb-1 form_name">
+                    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'Crew identification':'หนังสือประจำตัวลูกเรือ'; ?></strong></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+
+                               <div class="input-append">
+                                <div class="">
+                                    <?php echo $form->fileField($AttachName, 'attach_crew_identification', array('id' => 'wizard-picture')); ?>
+                                </div>
+                            </div>
+                            <?php echo $form->error($AttachName, 'attach_crew_identification'); ?>
+                            <?php 
+                            $crew_identification = Yii::app()->getUploadUrl('attach');
+                            $criteria = new CDbCriteria;
+                            $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
+                            $criteria->addCondition("active ='y'");
+                            $criteria->addCondition("file_data ='2'");
+                            $Attach_crew_identification_File = AttachFile::model()->find($criteria);
+                            if (isset($Attach_crew_identification_File)) {
+                                echo '<strong id="filenametraintext'.$Attach_crew_identification_File->id.'">'.$Attach_crew_identification_File->filename.'</strong>';
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt-1 mb-1 form_name">
+                    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'identification':'บัตรประชาชน'; ?></strong></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                             <div class="input-append">
+                                <div class="">
+                            <?php echo $form->fileField($AttachName, 'attach_identification', array('id'=>"wizard-picture")); ?> 
+                                 </div>
+                            </div>
+                            <?php echo $form->error($AttachName, 'attach_identification'); ?>
+                            <?php 
+                            $identification = Yii::app()->getUploadUrl('attach');
+                            $criteria = new CDbCriteria;
+                            $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
+                            $criteria->addCondition("active ='y'");
+                            $criteria->addCondition("file_data ='3'");
+                            $Attach_identification_File = AttachFile::model()->find($criteria);
+                            if (isset($Attach_identification_File)) {
+                                echo '<strong id="filenametraintext'.$Attach_identification_File->id.'">'.$Attach_identification_File->filename.'</strong>';
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="row  mt-1 mb-1 form_name">
+                    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'House registration':'สำเนาทะเบียนบ้าน'; ?></strong></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+
+                              <div class="input-append">
+                                <div class="">
+                            <?php echo $form->fileField($AttachName, 'attach_house_registration', array('id'=>"wizard-picture")); ?>
+                            </div>
+                            </div>
+                           <?php echo $form->error($AttachName, 'attach_house_registration'); ?>
+                              <?php 
+                            $house_registration = Yii::app()->getUploadUrl('attach');
+                            $criteria = new CDbCriteria;
+                            $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
+                            $criteria->addCondition("active ='y'");
+                            $criteria->addCondition("file_data ='4'");
+                            $Attach_house_registration_File = AttachFile::model()->find($criteria);
+                            if (isset($Attach_house_registration_File)) {
+                                echo '<strong id="filenametraintext'.$Attach_house_registration_File->id.'">'.$Attach_house_registration_File->filename.'</strong>';
+                            }
+                            ?>
+                        </div>
+                    </div>
+                </div>
+                <div id="office-section">
+                    <div class="row  mb-1 " id="employee_type" >
+                        <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Employee section ':'ส่วนของพนักงาน'; ?></strong></div>
+                        <div class="col-sm-12 col-xs-12 col-md-8">
+                            <div class="form-group">
+
+                                <span></span>
+                                <div class="radio radio-danger radio-inline emp">
+                                    <input type="radio" name="type_employee" id="card-7" value="2" <?php if ($profile->type_employee == 2) : ?> checked="checked" <?php endif ?>>
+
+                                    <label for="card-7" class="bg-success text-black"> <?php echo $label->label_office ?> </label>
+                                </div>
+                                <div class="radio radio-danger radio-inline">
+                                    <input type="radio" name="type_employee" id="card-8" value="1" <?php if ($profile->type_employee == 1) : ?> checked="checked" <?php endif ?>>
+
+                                    <label for="card-8" class="bg-danger text-black"><?php echo $label->label_ship ?> </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div id="office-section">
-                        <div class="row  mb-1 " id="employee_type" >
-                            <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Employee section ':'ส่วนของพนักงาน'; ?></strong></div>
-                            <div class="col-sm-12 col-xs-12 col-md-8">
-                                <div class="form-group">
-
-                                    <span></span>
-                                    <div class="radio radio-danger radio-inline emp">
-                                        <input type="radio" name="type_employee" id="card-7" value="2" <?php if ($profile->type_employee == 2) : ?> checked="checked" <?php endif ?>>
-
-                                        <label for="card-7" class="bg-success text-black"> <?php echo $label->label_office ?> </label>
-                                    </div>
-                                    <div class="radio radio-danger radio-inline">
-                                        <input type="radio" name="type_employee" id="card-8" value="1" <?php if ($profile->type_employee == 1) : ?> checked="checked" <?php endif ?>>
-
-                                        <label for="card-8" class="bg-danger text-black"><?php echo $label->label_ship ?> </label>
-                                    </div>
-                                </div>
+                    <div class="row justify-content-center mb-1 pb-20" id="employee_detail">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><?php echo $label->label_company; ?></label>
+                                <?php
+                                $departmentModel = Department::model()->findAll(array(
+                                    "condition" => " active = 'y'"
+                                ));
+                                $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
+                                $departmentOption = array('class' => 'form-control department', 'empty' => $label->label_placeholder_company);
+                                ?>
+                                <?php
+                                echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption);
+                                ?>
+                                <?php echo $form->error($users, 'department_id', array('class' => 'error2')); ?>
                             </div>
                         </div>
 
-                        <div class="row justify-content-center mb-1 pb-20" id="employee_detail">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label><?php echo $label->label_company; ?></label>
-                                    <?php
-                                    $departmentModel = Department::model()->findAll(array(
-                                        "condition" => " active = 'y'"
-                                    ));
-                                    $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
-                                    $departmentOption = array('class' => 'form-control department', 'empty' => $label->label_placeholder_company);
-                                    ?>
-                                    <?php
-                                    echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption);
-                                    ?>
-                                    <?php echo $form->error($users, 'department_id', array('class' => 'error2')); ?>
-                                </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label><?php echo $label->label_position; ?></label>
+                                <?php
+                                $positionModel = Position::model()->findAll(array(
+                                    "condition" => " active = 'y'"
+                                ));
+                                $positionList = CHtml::listData($positionModel, 'id', 'position_title');
+                                $positiontOption = array('class' => 'form-control position', 'empty' => $label->label_placeholder_position);
+                                ?>
+                                <?php
+                                echo $form->dropDownList($users, 'position_id', $positionList, $positiontOption); ?>
+                                <?php //echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
+
                             </div>
+                        </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label><?php echo $label->label_position; ?></label>
-                                    <?php
-                                    $positionModel = Position::model()->findAll(array(
-                                        "condition" => " active = 'y'"
-                                    ));
-                                    $positionList = CHtml::listData($positionModel, 'id', 'position_title');
-                                    $positiontOption = array('class' => 'form-control position', 'empty' => $label->label_placeholder_position);
-                                    ?>
-                                    <?php
-                                    echo $form->dropDownList($users, 'position_id', $positionList, $positiontOption); ?>
-                                    <?php //echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
-
-                                </div>
-                            </div>
-
-                            <!-- <div class="col-md-8">
+                           <div class="col-md-8">
                                 <div class="form-group">
                                     <label class="label_branch"><?php echo $label->label_branch; ?> </label>
                                     <?php
@@ -1097,7 +1196,7 @@ function editNameTrain(filedoc_id){
                                     ?>
                                     <?php echo $form->error($users, 'branch_id', array('class' => 'error2')); ?>
                                 </div>
-                            </div> -->
+                            </div>
                         </div>
                     </div>
                     <div id="office-section_gen">
@@ -1105,53 +1204,53 @@ function editNameTrain(filedoc_id){
                             <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'The boat position you are interested in applying for ':'ตำแหน่งเรือที่ท่านสนใจสมัคร'; ?></strong></div>
                             <div class="col-sm-12 col-xs-12 col-md-8">
                                 <div class="col-md-5">
-                                <div class="form-group">
-                                    <?php
-                                     $Department_ship = Department::model()->findAll(array(
-                                        'condition' => 'type_employee_id=:type_employee_id AND active=:active',
-                                        'params' => array(':type_employee_id'=>1, ':active'=>'y')));
+                                    <div class="form-group">
+                                        <?php
+                                        $Department_ship = Department::model()->findAll(array(
+                                            'condition' => 'type_employee_id=:type_employee_id AND active=:active',
+                                            'params' => array(':type_employee_id'=>1, ':active'=>'y')));
 
-                                    foreach ($Department_ship as $keydepart => $valuedepart) {
-                                    $position_ship = Position::model()->findAll(array(
-                                        'condition' => 'department_id=:department_id AND active=:active',
-                                        'params' => array(':department_id'=>$valuedepart['id'], ':active'=>'y')
-                                    ));
-                                     
-                                  $positionLists[] = CHtml::listData($position_ship, 'id', 'position_title');
+                                        foreach ($Department_ship as $keydepart => $valuedepart) {
+                                            $position_ship = Position::model()->findAll(array(
+                                                'condition' => 'department_id=:department_id AND active=:active',
+                                                'params' => array(':department_id'=>$valuedepart['id'], ':active'=>'y')
+                                            ));
+
+                                            $positionLists[] = CHtml::listData($position_ship, 'id', 'position_title');
                                  // var_dump($positionLists);
                                     // foreach ($positionLists as $keypos => $valuepos) { 
-                                       
+
                                     //    $positions_id = $valuepos['id'];
                                     //    $positions_title = $valuepos['position_title'];
-                                    
+
                                     //   $positionListss[] = array($positions_id=>$positions_title);
-                                       
+
                                     //   var_dump($positionLists);
                                     //    }
-                                    
-                                    }
-                                    ?> 
-                                    <?php
-                                    $positiontOption = array('class' => 'form-control position_gen ', 'empty' => $label->label_placeholder_position);
-                                    ?>
-                                    <?php echo $form->dropDownList($users, 'position_id', $positionLists, $positiontOption); ?>
-                                    <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
-                                
+
+                                        }
+                                        ?> 
+                                        <?php
+                                        $positiontOption = array('class' => 'form-control position_gen ', 'empty' => $label->label_placeholder_position, 'name' => 'position_gen');
+                                        ?>
+                                        <?php echo $form->dropDownList($users, 'position_id', $positionLists, $positiontOption); ?>
+                                        <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
+
+                                    </div>
                                 </div>
-                            </div>
                             </div>
                         </div>
                     </div>
 
                 </div>
-            
-                    <div class="well form_ship">
-                        <div id="report-staff">
-                            <h3 class="text-center"><?php echo $label->label_boat_person_report; ?></h3>
-                            <div class="row justify-content-center">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for=""><?php echo $label->label_boat_name; ?></label>
+
+                <div class="well form_ship">
+                    <div id="report-staff">
+                        <h3 class="text-center"><?php echo $label->label_boat_person_report; ?></h3>
+                        <div class="row justify-content-center">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for=""><?php echo $label->label_boat_name; ?></label>
                                         <!-- <input type="text" class="form-control" id="" placeholder="ขึ้นจากเรือชื่อ">
                                             <label><?php echo $label->label_race; ?></label> -->
                                             <?php echo $form->textField($profile, 'ship_name', array('class' => 'form-control', 'placeholder' => $label->label_placeholder_boat_name)); ?>
@@ -1179,18 +1278,18 @@ function editNameTrain(filedoc_id){
                                             </div>
                                         </div>
                                     </div>
- -->
-                                    <div class="row justify-content-center">
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for=""><?php echo $label->label_phone1; ?></label>
+                                -->
+                                <div class="row justify-content-center">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for=""><?php echo $label->label_phone1; ?></label>
                                            <!--  <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้"> 
-                                               <label><?php echo $label->label_phone; ?></label>-->
-                                               <?php echo $form->textField($profile, 'phone1', array('class' => 'form-control', 'placeholder' => $label->label_phone1)); ?>
-                                               <?php echo $form->error($profile, 'phone1', array('class' => 'error2')); ?>
-                                           </div>
-                                       </div>
-                                        <div class="col-md-4">
+                                             <label><?php echo $label->label_phone; ?></label>-->
+                                             <?php echo $form->textField($profile, 'phone1', array('class' => 'form-control', 'placeholder' => $label->label_phone1)); ?>
+                                             <?php echo $form->error($profile, 'phone1', array('class' => 'error2')); ?>
+                                         </div>
+                                     </div>
+                                     <div class="col-md-4">
                                         <div class="form-group birthday-icon">
                                             <i class="far fa-calendar-alt"></i>
                                             <label><?php echo $label->label_ship_down_date; ?></label>
@@ -1220,61 +1319,61 @@ function editNameTrain(filedoc_id){
                                 </div> -->
 
                                 <div class="row justify-content-center">
-                                    
+
 
                                 </div>
                             </div>
-                   
-                
-                <div class="text-center submit-register">
 
-                    <?php 
-                   $branch_js = $users->branch_id;
-                   if ($branch_js === null ) {
-                       $branch_js = 0;
-                   }else{
-                       $branch_js = 1;
-                   }
 
-                    $new_form = $users->isNewRecord;
-                    if ($new_form) {
-                     $new_form = true;
-                 }else{
-                    $new_form = 0;
-                }
+                            <div class="text-center submit-register">
 
-                if (Yii::app()->user->getId() == null) { ?>
-                    <?php echo CHtml::submitButton($label->label_regis, array('class' => 'btn btn-default bg-greenlight btn-lg center-block ok_2','onclick'=>"return upload();")); ?>
-                <?php } else {
-                    echo CHtml::submitButton($label->label_save, array('class' => 'btn btn-default bg-greenlight btn-lg center-block ok_2','onclick'=>"return upload();"));
-                } ?>
-            </div>
+                                <?php 
+                                $branch_js = $users->branch_id;
+                                if ($branch_js === null ) {
+                                 $branch_js = 0;
+                             }else{
+                                 $branch_js = 1;
+                             }
 
-            <?php $this->endWidget();
-            ?>
+                             $new_form = $users->isNewRecord;
+                             if ($new_form) {
+                               $new_form = true;
+                           }else{
+                            $new_form = 0;
+                        }
 
-        </div>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                var max_fields = 10;
-                var wrapper = $(".add-study");
-                var add_button = $(".add_form_field");
-                var numItems = 0;
-                var x = 1;
+                        if (Yii::app()->user->getId() == null) { ?>
+                            <?php echo CHtml::submitButton($label->label_regis, array('class' => 'btn btn-default bg-greenlight btn-lg center-block ok_2','onclick'=>"return upload();")); ?>
+                        <?php } else {
+                            echo CHtml::submitButton($label->label_save, array('class' => 'btn btn-default bg-greenlight btn-lg center-block ok_2','onclick'=>"return upload();"));
+                        } ?>
+                    </div>
 
-                $(add_button).click(function(e) {
-                    e.preventDefault();
-                    if (x < max_fields) {
-                        x++;
-                        numItems++;
+                    <?php $this->endWidget();
+                    ?>
 
-                        var level = '<option value=""><?php echo $label->label_education_level; ?></option>';
-                        var academy = '<?php echo $label->label_academy; ?>';
-                        var graduation_year = '<option value=""><?php echo $label->label_graduation_year; ?></option>';
-                        var del = '<?php echo Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?>';
-                        $(wrapper).append('<div class="row del_edu"><div class="col-md-3 col-sm-12 text-right-md "><strong><?php echo $label->label_educational; ?></strong></div>'
-                            +'<div class="col-md-2 col-sm-6"><div class="form-group"><select class ="form-control" name="ProfilesEdu[' + numItems + '][edu_id]">' + level + '<?php foreach ($list as $key => $value) : ?><option value=<?php echo $key ?>><?php echo $value ?></option><?php endforeach ?></select></div></div>'
-                            +'<div class="col-md-3 col-sm-6"><div class="form-group"><input type="text" class="form-control" placeholder="' + academy + '" name="ProfilesEdu[' + numItems + '][institution]"></div></div>'
+                </div>
+                <script type="text/javascript">
+                    $(document).ready(function() {
+                        var max_fields = 10;
+                        var wrapper = $(".add-study");
+                        var add_button = $(".add_form_field");
+                        var numItems = 0;
+                        var x = 1;
+
+                        $(add_button).click(function(e) {
+                            e.preventDefault();
+                            if (x < max_fields) {
+                                x++;
+                                numItems++;
+
+                                var level = '<option value=""><?php echo $label->label_education_level; ?></option>';
+                                var academy = '<?php echo $label->label_academy; ?>';
+                                var graduation_year = '<option value=""><?php echo $label->label_graduation_year; ?></option>';
+                                var del = '<?php echo Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?>';
+                                $(wrapper).append('<div class="row del_edu"><div class="col-md-3 col-sm-12 text-right-md "><strong><?php echo $label->label_educational; ?></strong></div>'
+                                    +'<div class="col-md-2 col-sm-6"><div class="form-group"><select class ="form-control" name="ProfilesEdu[' + numItems + '][edu_id]">' + level + '<?php foreach ($list as $key => $value) : ?><option value=<?php echo $key ?>><?php echo $value ?></option><?php endforeach ?></select></div></div>'
+                                    +'<div class="col-md-3 col-sm-6"><div class="form-group"><input type="text" class="form-control" placeholder="' + academy + '" name="ProfilesEdu[' + numItems + '][institution]"></div></div>'
                             +'<div class="col-md-2 col-sm-6"><div class="form-group"><select class="form-control" autocomplete="off" id="ProfilesEdu_' + numItems + '_date_graduation" name="ProfilesEdu[' + numItems + '][date_graduation]">' + graduation_year + '<?php foreach ($edu_lest as $keys => $values): ?><option value="<?php echo $keys ?>"><?php echo $values ?></option><?php endforeach ?></select></div></div><span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> ' + del + '</span></div>'); //add input box
                         // $('.datetimepicker').datetimepicker({
                         //     format: 'Y-m-d',
@@ -1287,131 +1386,138 @@ function editNameTrain(filedoc_id){
                         alert('You Reached the limits')
                     }
                 });
-                $(wrapper).on("click", ".delete", function(e) {
-                    e.preventDefault();
-                    $(this).parent('.del_edu').remove();
-                    x--;
-                });
+                        $(wrapper).on("click", ".delete", function(e) {
+                            e.preventDefault();
+                            $(this).parent('.del_edu').remove();
+                            x--;
+                        });
 
-                var max_fields_work = 10;
-                var wrapper_work = $(".add-Work");
-                var add_button_work = $(".add_form_work");
-                var numItems_work = 0;
-                var i = 1;
+                        var max_fields_work = 10;
+                        var wrapper_work = $(".add-Work");
+                        var add_button_work = $(".add_form_work");
+                        var numItems_work = 0;
+                        var i = 1;
 
-                $(add_button_work).click(function(e) {
-                    e.preventDefault();
-                    if (i < max_fields_work) {
-                        i++;
-                        numItems_work++;
-                        var head_work = '<?php echo Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?>';
-                        var company_work = '<?php echo Yii::app()->session['lang'] == 1?'Company ':'บริษัท'; ?>';
-                        var position_work = '<?php echo Yii::app()->session['lang'] == 1?'Position ':'ตำแหน่ง'; ?>';
-                        var since_work = '<?php echo Yii::app()->session['lang'] == 1?'Since ':'ตั้งแต่'; ?>';
-                        var reason_for_leaving = '<?php echo Yii::app()->session['lang'] == 1?'Reason for leaving ':'สาเหตุที่ออก'; ?>';
-                        var del_work = '<?php echo Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?>';
-                        $(wrapper_work).append('<div class="row del_work"><div class="col-md-3 col-sm-12 text-right-md "><strong> ' + head_work + '</strong></div>'+'<div class="col-md-4 col-sm-6"><div class="form-group"><input type="text" class="form-control" placeholder="' + company_work + '" name="ProfilesWorkHistory[' + numItems_work + '][company_name]"></div></div>'+'<div class="col-md-4 col-sm-6"><div class="form-group"><input type="text" class="form-control" placeholder="' + position_work + '" name="ProfilesWorkHistory[' + numItems_work + '][position_name]"></div></div>'+'<div class="col-md-3 col-xs-12  col-sm-12 text-right-md"></div>'+'<div class="col-md-4 col-sm-6"><div class="form-group since-icon"><i class="far fa-calendar-alt"></i><input type="text" class="form-control datetimepicker" autocomplete = "off" placeholder="' + since_work + '" name="ProfilesWorkHistory[' + numItems_work + '][since_date]"></div></div>'+'<div class="col-md-4 col-sm-6"><div class="form-group"><input type="text" class="form-control" placeholder="' + reason_for_leaving + '" name="ProfilesWorkHistory[' + numItems_work + '][reason_leaving]"></div></div>'
+                        $(add_button_work).click(function(e) {
+                            e.preventDefault();
+                            if (i < max_fields_work) {
+                                i++;
+                                numItems_work++;
+                                var head_work = '<?php echo Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?>';
+                                var company_work = '<?php echo Yii::app()->session['lang'] == 1?'Company ':'บริษัท'; ?>';
+                                var position_work = '<?php echo Yii::app()->session['lang'] == 1?'Position ':'ตำแหน่ง'; ?>';
+                                var since_work = '<?php echo Yii::app()->session['lang'] == 1?'Since ':'ตั้งแต่'; ?>';
+                                var reason_for_leaving = '<?php echo Yii::app()->session['lang'] == 1?'Reason for leaving ':'สาเหตุที่ออก'; ?>';
+                                var del_work = '<?php echo Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?>';
+                                $(wrapper_work).append('<div class="row del_work"><div class="col-md-3 col-sm-12 text-right-md "><strong> ' + head_work + '</strong></div>'+'<div class="col-md-4 col-sm-6"><div class="form-group"><input type="text" class="form-control" placeholder="' + company_work + '" name="ProfilesWorkHistory[' + numItems_work + '][company_name]"></div></div>'+'<div class="col-md-4 col-sm-6"><div class="form-group"><input type="text" class="form-control" placeholder="' + position_work + '" name="ProfilesWorkHistory[' + numItems_work + '][position_name]"></div></div>'+'<div class="col-md-3 col-xs-12  col-sm-12 text-right-md"></div>'+'<div class="col-md-4 col-sm-6"><div class="form-group since-icon"><i class="far fa-calendar-alt"></i><input type="text" class="form-control datetimepicker" autocomplete = "off" placeholder="' + since_work + '" name="ProfilesWorkHistory[' + numItems_work + '][since_date]"></div></div>'+'<div class="col-md-4 col-sm-6"><div class="form-group"><input type="text" class="form-control" placeholder="' + reason_for_leaving + '" name="ProfilesWorkHistory[' + numItems_work + '][reason_leaving]"></div></div>'
                             +'<span class="delete_work btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> ' + del_work + '</span></div>'); //add input box
-                        $('.datetimepicker').datetimepicker({
-                            format: 'd-m-Y',
-                            step: 10,
-                            timepickerScrollbar: false
-                        });
-                        $('.xdsoft_timepicker').hide();
+                                $('.datetimepicker').datetimepicker({
+                                    format: 'd-m-Y',
+                                    step: 10,
+                                    timepickerScrollbar: false
+                                });
+                                $('.xdsoft_timepicker').hide();
 
-                    } else {
-                        alert('You Reached the limits')
-                    }
-                });
-                $(wrapper_work).on("click", ".delete_work", function(e) {
-                    e.preventDefault();
-                    $(this).parent('.del_work').remove();
-                    i--;
-                });
-
-                $('#accept').change(function(event) {
-                    $(".id_employee").hide();
-                    $('.form_name').show();
-                    $('.form_number_id').show();
-                    $("#office-section").hide();
-                    $("#office-section_gen").show();
-                });
-                $("#reject").change(function(event) {
-                    $(".id_employee").show();
-                    $('.form_name').show();
-                    $('.form_number_id').show();
-                    $("#office-section").show();
-                    $("#office-section_gen").hide();
-                });
-
-                $("#card-7").change(function(event) {
-                var id = $("input[name='type_employee']:checked").val();
-                  $.ajax({
-                            type: 'POST',
-                            url: "<?= Yii::app()->createUrl('Registration/ListDepartment'); ?>",
-                            data: {
-                                id: id
-                            },
-                            success: function(data) {
-                                $('.department').empty();
-                                $('.department').append(data);
+                            } else {
+                                alert('You Reached the limits')
                             }
                         });
-                 });
-
-                $("#card-8").change(function(event) {
-                var id = $("input[name='type_employee']:checked").val();
-                  $.ajax({
-                            type: 'POST',
-                            url: "<?= Yii::app()->createUrl('Registration/ListDepartment'); ?>",
-                            data: {
-                                id: id
-                            },
-                            success: function(data) {
-                                $('.department').empty();
-                                $('.department').append(data);
-                            }
+                        $(wrapper_work).on("click", ".delete_work", function(e) {
+                            e.preventDefault();
+                            $(this).parent('.del_work').remove();
+                            i--;
                         });
-                 });
-                // var optGroup = document.getElementsByTagName("optgroup")[0];
-                // var option = document.getElementsByTagName("option")[0];
-                // option.style.display = "display";
-                // optGroup.style.display = "none";
-                // var optGroup = document.getElementsByTagName("optgroup")[1];
-                // optGroup.style.display = "none";
 
-            });
-            $('.default_datetimepicker').datetimepicker({
+                        $('#accept').change(function(event) {
+                            $(".id_employee").hide();
+                            $('.form_name').show();
+                            $('.form_number_id').show();
+                            $("#office-section").hide();
+                            $("#office-section_gen").show();
+                        });
+                        $("#reject").change(function(event) {
+                            $(".id_employee").show();
+                            $('.form_name').show();
+                            $('.form_number_id').show();
+                            $("#office-section").show();
+                            $("#office-section_gen").hide();
+                        });
+
+                        $("#card-7").change(function(event) {
+                            var id = $("input[name='type_employee']:checked").val();
+                            $.ajax({
+                                type: 'POST',
+                                url: "<?= Yii::app()->createUrl('Registration/ListDepartment'); ?>",
+                                data: {
+                                    id: id
+                                },
+                                success: function(data) {
+                                    $('.department').empty();
+                                    $('.department').append(data);
+                                }
+                            });
+                        });
+
+                        $("#card-8").change(function(event) {
+                            var id = $("input[name='type_employee']:checked").val();
+                            $.ajax({
+                                type: 'POST',
+                                url: "<?= Yii::app()->createUrl('Registration/ListDepartment'); ?>",
+                                data: {
+                                    id: id
+                                },
+                                success: function(data) {
+                                    $('.department').empty();
+                                    $('.department').append(data);
+                                }
+                            });
+                        });
+                // $('.ok_2').click(function(){
+                //     var id = $("#file_Crew_identification").val();
+                //     alert(id);
+                // });
+    //             $("select[name='position_gen']:eq(0)").on("change", function() {                  
+    // $("select[name='position_gen']:eq(1)").find("optgroup, option").hide().filter("[label='" + this.value + "'], [label='" + this.value + "'] > *").show();
+    //         });
+    //             // var optGroup = document.getElementsByTagName("optgroup")[0];
+    //             // var option = document.getElementsByTagName("option")[0];
+    //             // option.style.display = "inline";
+    //             // optGroup.style.display = "none";
+    //             // var optGroup = document.getElementsByTagName("optgroup")[1];
+    //             // optGroup.style.display = "none";
+
+});
+$('.default_datetimepicker').datetimepicker({
                // format: 'Y-m-d',
                format: 'd-m-Y',
                step: 10,
                timepickerScrollbar: false
            });
 
-            $('.xdsoft_timepicker').hide();
+$('.xdsoft_timepicker').hide();
 
-            $(function() {
-                $('.user_ID').change(function(event,length){
+$(function() {
+    $('.user_ID').change(function(event,length){
                     var max = 13;//$(this).attr('maxlength');
                     var vals = $(this).val();
                     if (max.length < vals.length) { 
                         var setval = '' + $(this).val();
                         while (setval.length < max.length) {
-                         setval = '0' + setval;
-                     }
+                           setval = '0' + setval;
+                       }
 
-                     $(this).val(setval);
+                       $(this).val(setval);
 
-                 }else{
+                   }else{
                     var setval = '' + $(this).val();
                     while (setval.length < max) {
-                     setval = '0' + setval;
-                 }
+                       setval = '0' + setval;
+                   }
 
-                 $(this).val(setval);
-             }
-         });
-                var new_forms = <?php echo $new_form; ?>;
+                   $(this).val(setval);
+               }
+           });
+    var new_forms = <?php echo $new_form; ?>;
                     //console.log(new_forms);
                     if (new_forms === 1 || new_forms === true) {   
 
@@ -1498,28 +1604,28 @@ function editNameTrain(filedoc_id){
                         }              
                     }else if(new_forms === 0 || typeof  new_forms === 'undefined' || new_forms === false){
 
-                     var type_users = $("input[name='type_user']:checked").val();
-                        
-                         if (type_users === '3') {
-       
-                            var type_cards = $("input[name='type_card']:checked").val();
-                            if (type_cards === 'l') {
-                                var branch = <?php echo $branch_js; ?>;
+                       var type_users = $("input[name='type_user']:checked").val();
+
+                       if (type_users === '3') {
+
+                        var type_cards = $("input[name='type_card']:checked").val();
+                        if (type_cards === 'l') {
+                            var branch = <?php echo $branch_js; ?>;
                                 //console.log(branch);
-                                 if (branch === 1) {
+                                if (branch === 1) {
                                     $('.Branch').show();
                                     $('.label_branch').show();
-                                 }else if(branch === 0){
+                                }else if(branch === 0){
                                     $('.Branch').hide();
                                     $('.label_branch').hide();
-                                 }
+                                }
                                 var type_employee = $("input[name='type_employee']:checked").val();
 
-                                   if (type_employee === '1') {
-                      
+                                if (type_employee === '1') {
+
                                     $('.form_ship').show();
                                 }else{
-               
+
                                     $('.form_ship').hide();
                                 }
                                 $('#passport_card').hide();
@@ -1533,15 +1639,15 @@ function editNameTrain(filedoc_id){
                             }else if(type_cards === 'p'){
                                 var branch = <?php echo $branch_js; ?>;
                                 //console.log(branch);
-                                 if (branch === 1) {
+                                if (branch === 1) {
                                     $('.Branch').show();
                                     $('.label_branch').show();
-                                 }else if(branch === 0){
+                                }else if(branch === 0){
                                     $('.Branch').hide();
                                     $('.label_branch').hide();
-                                 }
+                                }
                                 var type_employee = $("input[name='type_employee']:checked").val();
-                                   if (type_employee === '1') {
+                                if (type_employee === '1') {
                                     $('.form_ship').show();
                                 }else{
                                     $('.form_ship').hide();
@@ -1553,13 +1659,13 @@ function editNameTrain(filedoc_id){
                                 $('.form_number_id').show();
                                 $("#office-section").show();
                                 $("#office-section_gen").hide();
-                    
+
                             }
                         }else if (type_users === '1'){
 
                             var type_cards = $("input[name='type_card']:checked").val();
                             if (type_cards === 'l') {
-                               
+
                                 $('#passport_card').hide();
                                 $('#identification_card').show();
                                 $(".id_employee").show();
@@ -1570,7 +1676,7 @@ function editNameTrain(filedoc_id){
                                 $('.form_ship').hide();
 
                             }else if(type_cards === 'p'){
-                               
+
                                 $('#passport_card').show();
                                 $('#identification_card').hide();
                                 $(".id_employee").show();
@@ -1583,55 +1689,55 @@ function editNameTrain(filedoc_id){
                         }  
                     }  
                  // $("input[name='type_employee']").prop("checked", true);
-                    
 
-                    $('#card-1').change(function(event) {
-                        $('#passport_card').hide();
-                        $('#identification_card').show();
-                    });
 
-                    $('#card-2').change(function(event) {
-                        $('#passport_card').show();
-                        $('#identification_card').hide();
+                 $('#card-1').change(function(event) {
+                    $('#passport_card').hide();
+                    $('#identification_card').show();
+                });
+
+                 $('#card-2').change(function(event) {
+                    $('#passport_card').show();
+                    $('#identification_card').hide();
+                });
+
+                 $(".department").change(function() {
+                    var id = $(".department").val();
+                    $.ajax({
+                        type: 'POST',
+                        url: "<?= Yii::app()->createUrl('Registration/ListPosition'); ?>",
+                        data: {
+                            id: id
+                        },
+                        success: function(data) {
+                            $('.position').empty();
+                            $('.position').append(data);
+                        }
                     });
-                    
-                    $(".department").change(function() {
-                        var id = $(".department").val();
+                });
+                    $(".position").change(function() {
+                        var id = $(".position").val();
                         $.ajax({
                             type: 'POST',
-                            url: "<?= Yii::app()->createUrl('Registration/ListPosition'); ?>",
+                            url: "<?= Yii::app()->createUrl('Registration/ListBranch'); ?>",
                             data: {
                                 id: id
                             },
                             success: function(data) {
-                                $('.position').empty();
-                                $('.position').append(data);
+                                //console.log(data);
+                                if (data === '<option value ="">Select Branch </option>') {
+                                $('.Branch').hide();
+                                $('.label_branch').hide();
+                                }else{
+
+                                $('.Branch').show();
+                                $('.label_branch').show();
+                                $('.Branch').empty();
+                                $('.Branch').append(data);
+                            }
                             }
                         });
                     });
-                    // $(".position").change(function() {
-                    //     var id = $(".position").val();
-                    //     $.ajax({
-                    //         type: 'POST',
-                    //         url: "<?= Yii::app()->createUrl('Registration/ListBranch'); ?>",
-                    //         data: {
-                    //             id: id
-                    //         },
-                    //         success: function(data) {
-                    //             //console.log(data);
-                    //             if (data === '<option value ="">Select Branch </option>') {
-                    //             $('.Branch').hide();
-                    //             $('.label_branch').hide();
-                    //             }else{
-
-                    //             $('.Branch').show();
-                    //             $('.label_branch').show();
-                    //             $('.Branch').empty();
-                    //             $('.Branch').append(data);
-                    //         }
-                    //         }
-                    //     });
-                    // });
 
                     $(".birth").change(function() {
                         var item = $(".birth").val();

@@ -36,6 +36,9 @@ class User extends CActiveRecord
 	public $excel_file = null;
 	public $supper_user_status;
 	public $typeuser;
+	public $dateRang;
+	public $user_id;
+	public $nameSearch;
 	//public $register_status;
 
 	/**
@@ -85,7 +88,7 @@ class User extends CActiveRecord
 			array('superuser, status, online_status,online_user,register_status', 'numerical', 'integerOnly'=>true),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'update'),
-			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,company_id, division_id,position_id,lastactivity,orgchart_lv2, group,idensearch,identification,station_id,supper_user_status,pic_cardid2,employee_id,typeuser,register_status', 'safe', 'on'=>'search'),
+			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,company_id, division_id,position_id,lastactivity,orgchart_lv2, group,idensearch,identification,station_id,supper_user_status,pic_cardid2,employee_id,typeuser,register_status,dateRang,user_id,nameSearch ', 'safe', 'on'=>'search'),
 			// array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
 			array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 			array('confirmpass', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
@@ -254,7 +257,8 @@ class User extends CActiveRecord
 			'employee_id' => 'เลขประจำตัวพนักงาน',
 			'typeuser' =>'ประเภทผู้ใช้งาน',
 			// 'passport'=> 'รหัสหนังสือเดินทาง',
-			'register_status' => 'สถานะการสมัครสมาชิก'
+			'register_status' => 'สถานะการสมัครสมาชิก',
+			'dateRang' => 'เลือกระยะเวลา'
 		);
 	}
 
@@ -415,21 +419,34 @@ public function validateIdCard($attribute,$params){
 	$criteria->compare('position_id',$this->position_id);
 	$criteria->compare('email',$this->email,true);
 	$criteria->compare('activkey',$this->activkey);
-	$criteria->compare('create_at',$this->create_at);
+	
 	$criteria->compare('lastvisit_at',$this->lastvisit_at);
 	$criteria->compare('lastactivity',$this->lastactivity);
 	$criteria->compare('superuser',$this->superuser);
-	$criteria->compare('status',0);
-	$criteria->compare('del_status',0);
+	//$criteria->compare('status',0);
+	$criteria->compare('del_status',0); 
+	$criteria->compare('register_status',$this->register_status);
+	//$criteria->addBetweenCondition('create_at', $this->create_at, $this->create_at, 'AND');
+	// $criteria->addCondition('create_at >= :startDate AND create_at <= :endDate');
+ //    $criteria->params = array(':startDate' => $this->create_at, ':endDate' => $this->create_at);
+	if(empty($this->create_at)) {
+		$criteria->compare('create_at',$this->create_at,true);
+	}else{
+	    // $criteria->condition = "create_at >= :date1 AND create_at <= :date2";
+     //    $criteria->params = array(':date1' => $this->create_at, ':date2' => $this->create_at);
+		$criteria->addBetweenCondition('create_at', $this->create_at, $this->create_at, 'AND');
+	}
+  
 	$criteria->compare('online_status',$this->online_status);
 	$criteria->compare('online_user',$this->online_user);
 	$criteria->compare('group',$this->group);
-    $criteria->compare('register_status',$this->register_status);
-	$criteria->compare('profile.identification',$this->idensearch,true);
 
+	$criteria->compare('profile.identification',$this->idensearch,true);
+   
 	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
 	//$criteria->compare('orgchart_lv2',$org,true);
-
+ var_dump($criteria);
+ 
 	return new CActiveDataProvider(get_class($this), array(
 		'criteria'=>$criteria,
 		'pagination'=>array(
@@ -474,6 +491,37 @@ public function searchmembership()
 		),
 	));
 }
+
+public function searchmember()
+    {
+        $sql = " SELECT * FROM tbl_users ";
+        $sql .= ' left join tbl_profiles on tbl_profiles.user_id = tbl_users.id';
+        $sql .= ' left join tbl_type_user on tbl_type_user.id = tbl_profiles.type_user';
+        $sql .= ' left join tbl_position on tbl_position.id = tbl_users.position_id';
+        $sql .= " where tbl_users.status = '0' and tbl_users.del_status ='0'";
+
+        if($this->user_id != null) {
+            $sql .= ' and tbl_users.id = "' . $this->user_id . '"';
+        }
+        // if($this->nameSearch != null) {
+        //     $sql .= ' and (tbl_profiles.firstname like "%' . $this->nameSearch . '%" or tbl_profiles.lastname = "%' . $this->nameSearch . '%")';
+        // }
+        // if($this->dateRang != null) {
+        //     $sql .= ' and (tbl_users.create_at like "%' . $this->dateRang . '%" or tbl_users.create_at = "%' . $this->dateRang . '%")';
+        // }
+        // if($this->register_status != null) {
+        //     $sql .= ' and tbl_users.register_status = "' . $this->register_status . '"';
+        // }
+        // if($this->typeuser != null) {
+        //     $sql .= ' and tbl_profiles.type_user = "' . $this->typeuser . '"';
+        // }
+    
+        $sql .= ' group by tbl_users.id';
+
+        $rawData = Yii::app()->db->createCommand($sql)->queryAll();
+        return new CArrayDataProvider($rawData, $poviderArray);
+    }
+
     public function getCreatetime() {
         return strtotime($this->create_at);
     }
@@ -488,5 +536,23 @@ public function searchmembership()
 
     public function setLastvisit($value) {
         $this->lastvisit_at=date('Y-m-d H:i:s',$value);
+    }
+
+    public function getPositionList()
+    {
+        $Position = Position::model()->findAll();
+        $PositionList = CHtml::listData($Position,'position_id','position_title');
+
+        return $PositionList;
+    }
+
+      public function getregisstatusList()
+    {
+        $getregisstatusList = array(
+            '0'=>'รอการตรวจสอบ',
+            '1'=>'อนุมัติ',
+            '2'=>'ไม่อนุมัติ'
+        );
+        return $getregisstatusList;
     }
 }

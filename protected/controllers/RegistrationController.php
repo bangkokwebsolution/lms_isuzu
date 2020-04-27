@@ -285,6 +285,8 @@ class RegistrationController extends Controller {
     $FileEdu = new FileEdu;
     $FileTraining = new FileTraining;
     $ProfilesWorkHistory = new ProfilesWorkHistory;
+    $AttachFile = new AttachFile;
+    $AttachName = new AttachName;
 
     $session = Yii::app()->session;
 
@@ -451,7 +453,11 @@ if ($profile->type_user == 1) {
 //     }else{
 //         echo "no";
 //     }
-// exit();
+    // var_dump($POST['AttachName']);
+    // var_dump(CUploadedFile::getInstance($AttachName, 'attach_crew_identification'));
+    // var_dump(CUploadedFile::getInstance($AttachName, 'attach_identification'));
+    // var_dump(CUploadedFile::getInstance($AttachName, 'attach_house_registration'));
+ 
     if ($profile->validate() && $users->validate()) {
 //                    เข้ารหัสpassword
                     //$users->password = UserModule::encrypting($users->password);
@@ -531,6 +537,106 @@ if ($profile->type_user == 1) {
         $thumbImage->save($thumbPath);
     }
 
+    $attach_passport  = CUploadedFile::getInstance($AttachName, 'attach_passport');
+    if (isset($attach_passport)) {
+        $uglyName = strtolower($attach_passport->name); 
+         $uploadDir = $webroot;
+         $rnd = rand(0,9999999999);
+         $fileName = trim($rnd). "." . $attach_passport->extensionName;
+         $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
+         if(!empty($attach_passport))  
+                        {
+                            $attach_passport->saveAs($webroot);
+                        }
+         $AttachName->attach_passport = 1;
+         $AttachFile = new AttachFile;
+         $AttachFile->user_id = $users->id;
+         $AttachFile->file_data = $AttachName->attach_passport;
+         $AttachFile->file_name = $fileName;
+         $AttachFile->filename = $uglyName;
+         $AttachFile->create_date = date("Y-m-d");
+         $AttachFile->create_by = $users->id;
+         $AttachName->user_id = $users->id;
+         $AttachName->create_date = date("Y-m-d");
+         $AttachName->create_by = $users->id;
+         $AttachFile->save();
+         $AttachName->save();
+    }
+    $attach_crew_identification  = CUploadedFile::getInstance($AttachName, 'attach_crew_identification');
+    if (isset($attach_crew_identification)) {
+        $uglyName = strtolower($attach_crew_identification->name); 
+         $uploadDir = $webroot;
+         $rnd = rand(0,9999999999);
+         $fileName = trim($rnd). "." . $attach_crew_identification->extensionName;
+         $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
+         if(!empty($attach_crew_identification))  
+                        {
+                            $attach_crew_identification->saveAs($webroot);
+                        }
+         $AttachName->attach_crew_identification = 2;
+         $AttachFile = new AttachFile;
+         $AttachFile->user_id = $users->id;
+         $AttachFile->file_data = $AttachName->attach_crew_identification;
+         $AttachFile->file_name = $fileName;
+         $AttachFile->filename = $uglyName;
+         $AttachFile->create_date = date("Y-m-d");
+         $AttachFile->create_by = $users->id;
+         $AttachName->user_id = $users->id;
+         $AttachName->create_date = date("Y-m-d");
+         $AttachName->create_by = $users->id;
+         $AttachFile->save();
+         $AttachName->save();
+    }
+    $attach_identification  = CUploadedFile::getInstance($AttachName, 'attach_identification');
+    if (isset($attach_identification)) {
+        $uglyName = strtolower($attach_identification->name); 
+         $uploadDir = $webroot;
+         $rnd = rand(0,9999999999);
+         $fileName = trim($rnd). "." . $attach_identification->extensionName;
+         $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
+         if(!empty($attach_identification))  
+                        {
+                            $attach_identification->saveAs($webroot);
+                        }
+         $AttachName->attach_identification = 3;
+         $AttachFile = new AttachFile;
+         $AttachFile->user_id = $users->id;
+         $AttachFile->file_data = $AttachName->attach_identification;
+         $AttachFile->file_name = $fileName;
+         $AttachFile->filename = $uglyName;
+         $AttachFile->create_date = date("Y-m-d");
+         $AttachFile->create_by = $users->id;
+         $AttachName->user_id = $users->id;
+         $AttachName->create_date = date("Y-m-d");
+         $AttachName->create_by = $users->id;
+         $AttachFile->save();
+         $AttachName->save();
+    }
+    $attach_house_registration  = CUploadedFile::getInstance($AttachName, 'attach_house_registration');
+    if (isset($attach_house_registration)) {
+        $uglyName = strtolower($attach_house_registration->name); 
+         $uploadDir = $webroot;
+         $rnd = rand(0,9999999999);
+         $fileName = trim($rnd). "." . $attach_house_registration->extensionName;
+         $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
+         if(!empty($attach_house_registration))  
+                        {
+                            $attach_house_registration->saveAs($webroot);
+                        }
+         $AttachName->attach_house_registration = 4;
+         $AttachFile = new AttachFile;
+         $AttachFile->user_id = $users->id;
+         $AttachFile->file_data = $AttachName->attach_house_registration;
+         $AttachFile->file_name = $fileName;
+         $AttachFile->filename = $uglyName;
+         $AttachFile->create_date = date("Y-m-d");
+         $AttachFile->create_by = $users->id;
+         $AttachName->user_id = $users->id;
+         $AttachName->create_date = date("Y-m-d");
+         $AttachName->create_by = $users->id;
+         $AttachFile->save();
+         $AttachName->save();
+    }
     if(isset($session['filenameComDoc']) || count($session['filenameComDoc'])!=0)
     {
         foreach ($session['filenameComDoc'] as $filenameComKey => $filenameComValue)
@@ -669,7 +775,7 @@ unset($session['idxTrain']);
 unset($session['pathComTrain']);
 unset($session['filenameComTrain']);
 unset($session['filenameOriComTrain']);
-$this->render('index', array('profile' => $profile, 'users' => $users,'label'=> $label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining, 'ProfilesWorkHistory' => $ProfilesWorkHistory));
+$this->render('index', array('profile' => $profile, 'users' => $users,'label'=> $label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining, 'ProfilesWorkHistory' => $ProfilesWorkHistory, 'AttachFile' => $AttachFile,'AttachName'=> $AttachName));
 
 }
 public function actionUpdate() {
@@ -679,6 +785,8 @@ public function actionUpdate() {
     }
     $FileEdu = new FileEdu;
     $FileTraining = new FileTraining;
+    $AttachFile = new AttachFile;
+    $AttachName = new AttachName;
     $session = Yii::app()->session;
 
     $users = null ;
@@ -924,7 +1032,7 @@ public function actionUpdate() {
                         $ProfilesWorkHistory_old->update_date = date("Y-m-d H:i:s");
                         $ProfilesWorkHistory_old->update_by = $users->id;
                         $ProfilesWorkHistory_old->save();
-                            echo "a";
+                           // echo "a";
                     }else{
                      $ProfilesWorkHistory_new = new ProfilesWorkHistory;
                      $ProfilesWorkHistory_new->user_id = $users->id;
@@ -932,7 +1040,7 @@ public function actionUpdate() {
                      $ProfilesWorkHistory_new->created_by = $users->id;
                      $ProfilesWorkHistory_new->attributes = $action_valuew;
                      $ProfilesWorkHistory_new->save();
-                           echo "b";
+                          // echo "b";
 
                  } 
 
@@ -949,7 +1057,7 @@ public function actionUpdate() {
                            // $model_del_action->active = 'n';
                             //$model_del_action->save(false);
                                         $ProfilesWorkHistory_del->delete(false);
-                                         echo "c";
+                                      //   echo "c";
                         }
                     }
                 }
@@ -976,6 +1084,106 @@ public function actionUpdate() {
             $thumbImage->resize(350, 200);
             $thumbImage->save($thumbPath);
         }
+        $attach_passport  = CUploadedFile::getInstance($AttachName, 'attach_passport');
+    if (isset($attach_passport)) {
+        $uglyName = strtolower($attach_passport->name); 
+         $uploadDir = $webroot;
+         $rnd = rand(0,9999999999);
+         $fileName = trim($rnd). "." . $attach_passport->extensionName;
+         $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
+         if(!empty($attach_passport))  
+                        {
+                            $attach_passport->saveAs($webroot);
+                        }
+         $AttachName->attach_passport = 1;
+         $AttachFile = new AttachFile;
+         $AttachFile->user_id = $users->id;
+         $AttachFile->file_data = $AttachName->attach_passport;
+         $AttachFile->file_name = $fileName;
+         $AttachFile->filename = $uglyName;
+         $AttachFile->update_date = date("Y-m-d");
+         $AttachFile->update_by = $users->id;
+         $AttachName->user_id = $users->id;
+         $AttachName->update_date = date("Y-m-d");
+         $AttachName->update_by = $users->id;
+         $AttachFile->save();
+         $AttachName->save();
+    }
+    $attach_crew_identification  = CUploadedFile::getInstance($AttachName, 'attach_crew_identification');
+    if (isset($attach_crew_identification)) {
+        $uglyName = strtolower($attach_crew_identification->name); 
+         $uploadDir = $webroot;
+         $rnd = rand(0,9999999999);
+         $fileName = trim($rnd). "." . $attach_crew_identification->extensionName;
+         $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
+         if(!empty($attach_crew_identification))  
+                        {
+                            $attach_crew_identification->saveAs($webroot);
+                        }
+         $AttachName->attach_crew_identification = 2;
+         $AttachFile = new AttachFile;
+         $AttachFile->user_id = $users->id;
+         $AttachFile->file_data = $AttachName->attach_crew_identification;
+         $AttachFile->file_name = $fileName;
+         $AttachFile->filename = $uglyName;
+         $AttachFile->update_date = date("Y-m-d");
+         $AttachFile->update_by = $users->id;
+         $AttachName->user_id = $users->id;
+         $AttachName->update_date = date("Y-m-d");
+         $AttachName->update_by = $users->id;
+         $AttachFile->save();
+         $AttachName->save();
+    }
+    $attach_identification  = CUploadedFile::getInstance($AttachName, 'attach_identification');
+    if (isset($attach_identification)) {
+        $uglyName = strtolower($attach_identification->name); 
+         $uploadDir = $webroot;
+         $rnd = rand(0,9999999999);
+         $fileName = trim($rnd). "." . $attach_identification->extensionName;
+         $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
+         if(!empty($attach_identification))  
+                        {
+                            $attach_identification->saveAs($webroot);
+                        }
+         $AttachName->attach_identification = 3;
+         $AttachFile = new AttachFile;
+         $AttachFile->user_id = $users->id;
+         $AttachFile->file_data = $AttachName->attach_identification;
+         $AttachFile->file_name = $fileName;
+         $AttachFile->filename = $uglyName;
+         $AttachFile->update_date = date("Y-m-d");
+         $AttachFile->update_by = $users->id;
+         $AttachName->user_id = $users->id;
+         $AttachName->update_date = date("Y-m-d");
+         $AttachName->update_by = $users->id;
+         $AttachFile->save();
+         $AttachName->save();
+    }
+    $attach_house_registration  = CUploadedFile::getInstance($AttachName, 'attach_house_registration');
+    if (isset($attach_house_registration)) {
+        $uglyName = strtolower($attach_house_registration->name); 
+         $uploadDir = $webroot;
+         $rnd = rand(0,9999999999);
+         $fileName = trim($rnd). "." . $attach_house_registration->extensionName;
+         $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
+         if(!empty($attach_house_registration))  
+                        {
+                            $attach_house_registration->saveAs($webroot);
+                        }
+         $AttachName->attach_house_registration = 4;
+         $AttachFile = new AttachFile;
+         $AttachFile->user_id = $users->id;
+         $AttachFile->file_data = $AttachName->attach_house_registration;
+         $AttachFile->file_name = $fileName;
+         $AttachFile->filename = $uglyName;
+         $AttachFile->update_date = date("Y-m-d");
+         $AttachFile->update_by = $users->id;
+         $AttachName->user_id = $users->id;
+         $AttachName->update_date = date("Y-m-d");
+         $AttachName->update_by = $users->id;
+         $AttachFile->save();
+         $AttachName->save();
+    }
 
         if(isset($session['filenameComDoc']) || count($session['filenameComDoc'])!=0)
         { 
@@ -1044,7 +1252,7 @@ unset($session['pathComTrain']);
 unset($session['filenameComTrain']);
 unset($session['filenameOriComTrain']);
 $users->position_name = isset($_POST['User']['position_name']) ? $_POST['User']['position_name'] : $users->position->position_title;
-$this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining, 'ProfilesWorkHistory' => $ProfilesWorkHistory));
+$this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining, 'ProfilesWorkHistory' => $ProfilesWorkHistory, 'AttachFile' => $AttachFile,'AttachName'=> $AttachName));
 }
 
 //

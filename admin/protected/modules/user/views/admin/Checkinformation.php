@@ -257,7 +257,7 @@
 				</div>
 			</div>
 			<div class="text-center mt-2">
-				<button class="btn btn-primary btn-icon save_data"><i></i>บันทึกข้อมูล</button>                        
+				<button class="btn btn-success btn-icon save_data"><i></i>บันทึกข้อมูล</button>                        
 			</div>
 		</div>
 

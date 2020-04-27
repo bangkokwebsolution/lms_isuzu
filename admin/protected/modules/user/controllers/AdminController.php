@@ -295,7 +295,7 @@ class AdminController extends Controller
     	$passage = $_POST['passInput'];
 		$model = User::model()->findByPk($id);
 		if($model->register_status == 1 || $model->register_status == 0){
-			$model->register_status = 3;
+			$model->register_status = 2;
 		} else {
 			$model->register_status = 1;
 		}
@@ -320,6 +320,13 @@ class AdminController extends Controller
 			$model->position_id = $value;
 		}
 		$model->save(false);
+		// $to['email'] = $model->email;
+		// $to['firstname'] = $model->profile->firstname;
+		// $to['lastname'] = $model->profile->lastname;
+		// $message = $this->renderPartial('_mail_Changeposition',array('model' => $model,'value' => $value),true);
+		// if($message){
+		// 	 $send = Helpers::lib()->SendMail($to,'ไม่อนุมัติการสมัครสมาชิก',$message);
+		// }
 		$this->redirect(array('/user/admin/Membership'));
    }
 
@@ -1161,11 +1168,10 @@ class AdminController extends Controller
          <style>
          body { font-family: "garuda"; }
          </style>
-         <img border="9" src="<?php echo $path_img; ?>" width="150" height="180";>
          ';
         // $mPDF->SetHeader("$texttt");
         $mPDF->WriteHTML($texttt);
-		$mPDF->AddPage('P'); // แนวตั้ง
+		//$mPDF->AddPage('P'); // แนวตั้ง
 		$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('printpdf', array('profiles'=>$profiles,'user'=>$user), true), 'UTF-8', 'UTF-8'));
 
 		$mPDF->Output('ใบสมัครสมาชิก.pdf', 'I');
