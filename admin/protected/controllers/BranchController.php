@@ -54,6 +54,7 @@ class BranchController extends Controller
 
 				$modelTypePosi = Position::model()->findByPk($position_id);
 				$typePosiName = $modelTypePosi->position_title;
+				$department_id = $modelTypePosi->department_id;
 
 				$criteria = new CDbCriteria;
 				$criteria->compare('title',$typePosiName);
@@ -68,12 +69,17 @@ class BranchController extends Controller
 				$newOrgChart = new OrgChart;
 				$newOrgChart->title = $branch_name;
 				$newOrgChart->parent_id = $idOrgChart;
+				$newOrgChart->department_id = $department_id;
+				$newOrgChart->position_id = $position_id;
 				$newOrgChart->level = 6;
 				$newOrgChart->active = 'y';
 				$newOrgChart->save();
 
 				$model->attributes=$_POST['Branch'];
 				if($model->save())
+					$newOrgChart->branch_id = $model->id;
+					$newOrgChart->save();
+
 					$this->redirect(array('branch/index'));
 			}
 		}
@@ -85,6 +91,44 @@ class BranchController extends Controller
 
 	public function actionUpdate($id)
 	{
+		$type_position_id = $_POST['Branch'][position_id];
+		$branch_titles = $_POST['Branch'][branch_name];	
+
+		$modelTypeBranch = Branch::model()->findByPk($id);
+		$typeBranchName = $modelTypeBranch->branch_name;
+
+		// if(isset($_POST['Branch']))
+		// 		{
+				
+		// 	}
+
+		if(isset($_POST['Branch']))
+		{
+		    $modelTypePosiToOrg= Position::model()->findByPk($type_position_id);
+			$typePosiOrgName = $modelTypePosiToOrg->position_title;
+
+			$criteria1 = new CDbCriteria();
+			$criteria1->compare('position_id',$type_position_id);
+			$criteria1->compare('title',$typePosiOrgName);
+			$modelParent = OrgChart::model()->findAll($criteria1);
+			foreach ($modelParent as $key => $value) {
+					$idParent = $value->id;
+			}
+
+			// var_dump($modelParent);exit();
+
+			$criteria = new CDbCriteria();
+			$criteria->compare('branch_id',$id);
+			$criteria->compare('title',$typeBranchName);
+			$modelOrgChart = OrgChart::model()->findAll($criteria);
+				foreach ($modelOrgChart as $key => $value) {
+					$value->title = $branch_titles;
+					$value->position_id = $type_position_id;
+					$value->parent_id = $idParent;
+					$value->save();
+				}
+		}
+
 		$model = $this->loadModel($id);
 		if(isset($_POST['Branch']))	
 		{
@@ -110,6 +154,12 @@ class BranchController extends Controller
 	public function actionDelete($id)
 	{
 		//$this->loadModel($id)->delete();
+		$modelOrgChart=OrgChart::model()->updateAll(
+            array('active' => "n"), 
+            'branch_id ='.$id
+        );
+
+
 		$model = $this->loadModel($id);
 		$model->active = 'n';
 		$model->save(false);

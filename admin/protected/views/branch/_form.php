@@ -55,7 +55,7 @@
                 
                 <div class="row">
                     <?php echo $form->labelEx($model,'position_id'); ?>
-                    <?php echo $form->dropDownList($model, 'position_id', CHtml::listData(Position::model()->findAll(), 'id', 'position_title'),array('class'=>'span5','empty' => "--เลือก--")); ?>
+                    <?php echo $form->dropDownList($model, 'position_id', CHtml::listData(Position::model()->findAll(array("condition" => 'active = "y"')), 'id', 'position_title'),array('class'=>'span5','empty' => "--เลือก--")); ?>
                     <?php echo $this->NotEmpty(); ?>
                     <?php echo $form->error($model,'position_id'); ?>
                 </div>

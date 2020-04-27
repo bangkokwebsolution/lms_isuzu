@@ -105,9 +105,9 @@ class Branch extends CActiveRecord
 		$criteria->compare('create_by',$this->create_by,true);
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by,true);
-		$criteria->compare('parent_id',0);
-		$criteria->compare('active',$this->active,true);
 		$criteria->compare('position_id',$this->position_id);
+		$criteria->compare('parent_id',0);
+	    $criteria->compare('active',y);
 		$criteria->order = 'id DESC';
 
 		return new CActiveDataProvider($this, array(

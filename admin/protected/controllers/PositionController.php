@@ -96,7 +96,7 @@ class PositionController extends Controller
 	{
 
 		$type_employee_id = $_POST['Position'][department_id];
-		$posi_titles = $_POST['Position'][position_title];
+		$posi_titles = $_POST['Position'][position_title];	
 
 		$modelTypePosi= Position::model()->findByPk($id);
 		$typePosiName = $modelTypePosi->position_title;
