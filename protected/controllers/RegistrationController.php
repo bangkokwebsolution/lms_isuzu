@@ -1096,7 +1096,7 @@ public function actionUpdate() {
                             $attach_passport->saveAs($webroot);
                         }
          $AttachName->attach_passport = 1;
-         $AttachFile = new AttachFile;
+         $AttachFile = AttachFile::model()->find('file_data="1" AND active="y" AND user_id='.Yii::app()->user->id);
          $AttachFile->user_id = $users->id;
          $AttachFile->file_data = $AttachName->attach_passport;
          $AttachFile->file_name = $fileName;
@@ -1121,7 +1121,7 @@ public function actionUpdate() {
                             $attach_crew_identification->saveAs($webroot);
                         }
          $AttachName->attach_crew_identification = 2;
-         $AttachFile = new AttachFile;
+         $AttachFile = AttachFile::model()->find('file_data="2" AND active="y" AND user_id='.Yii::app()->user->id); 
          $AttachFile->user_id = $users->id;
          $AttachFile->file_data = $AttachName->attach_crew_identification;
          $AttachFile->file_name = $fileName;
@@ -1146,7 +1146,7 @@ public function actionUpdate() {
                             $attach_identification->saveAs($webroot);
                         }
          $AttachName->attach_identification = 3;
-         $AttachFile = new AttachFile;
+         $AttachFile = AttachFile::model()->find('file_data="3" AND active="y" AND user_id='.Yii::app()->user->id);
          $AttachFile->user_id = $users->id;
          $AttachFile->file_data = $AttachName->attach_identification;
          $AttachFile->file_name = $fileName;
@@ -1171,7 +1171,7 @@ public function actionUpdate() {
                             $attach_house_registration->saveAs($webroot);
                         }
          $AttachName->attach_house_registration = 4;
-         $AttachFile = new AttachFile;
+         $AttachFile = AttachFile::model()->find('file_data="4" AND active="y" AND user_id='.Yii::app()->user->id);
          $AttachFile->user_id = $users->id;
          $AttachFile->file_data = $AttachName->attach_house_registration;
          $AttachFile->file_name = $fileName;
