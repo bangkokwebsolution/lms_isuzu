@@ -45,7 +45,7 @@ class Profiles extends CActiveRecord
 			array('division_title', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('user_id, lastname, firstname, division_title , identification', 'safe', 'on'=>'search'),
+			array('user_id, lastname, firstname, division_title, type_employee , identification', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -120,6 +120,7 @@ class Profiles extends CActiveRecord
 		$criteria->compare('lastname',$this->lastname,true);
 		$criteria->compare('firstname',$this->firstname,true);
 		$criteria->compare('identification',$this->identification,true);
+	    $criteria->compare('type_employee',$this->type_employee,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
