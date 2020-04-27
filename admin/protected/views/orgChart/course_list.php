@@ -90,11 +90,11 @@ EOD
                     }',
                     'columns'=>array(
                         array(
-                            'header'=>'รูปภาพ',
-                            'type'=>'raw',
-                            'value'=> 'Controller::ImageShowIndex($data,$data->course_picture)',
-                            'htmlOptions'=>array('width'=>'110')
-                        ),
+              'header'=>'รูปภาพ',
+              'type'=>'raw',
+              'value'=> 'Controller::ImageShowIndex($data,$data->course_picture)',
+              'htmlOptions'=>array('width'=>'110')
+            ),
                         array(
                             'name'=>'course_title',
                             'type'=>'html',

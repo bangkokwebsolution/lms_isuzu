@@ -1,8 +1,7 @@
 <!-- Include Datables -->
-<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/DataTables/datatables.min.css" />
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/DataTables/datatables.min.js"></script>
 
-
+<!-- <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/DataTables/datatables.min.css" />
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/DataTables/datatables.min.js"></script> -->
 
 <?php
 $titleName = 'จัดการหลักสูตร';
@@ -28,11 +27,11 @@ $this->breadcrumbs=array($titleName);
          <thead>
           <tr>
             <th><input name="select_all" value="1" id="example-select-all" type="checkbox" /></th>
+            <th>Identification</th>
             <th>Name</th>
             <th>Email</th>
-            <!-- <th>Grading</th> -->
-            <?php if(!$state){ ?>
-            <th>PT-Grading</th>
+            <?php if($state){ ?>
+                <th>Lavel</th>
             <?php } ?>
           </tr>
         </thead>
@@ -42,10 +41,11 @@ $this->breadcrumbs=array($titleName);
            ?>
            <tr>
             <td><input name="chk_<?php echo $userItem->id; ?>" value="<?php echo $userItem->id; ?>" id="chk_id_<?php echo $userItem->id; ?>" type="checkbox" /></td>
+            <td><?= $userItem->identification ?></td>
             <td><?= $userItem->profiles->firstname.' '.$userItem->profiles->lastname ?></td>
             <td><?= $userItem->email ?></td>
-            <?php if(!$state){ ?>
-             <td><?= $userItem->grades->grade_title ?></td>
+            <?php if($state){ ?>
+                <td><?= $userItem->branch->branch_name ?></td>
             <?php } ?>
           </tr>
           <?php } ?>
@@ -53,11 +53,11 @@ $this->breadcrumbs=array($titleName);
         <tfoot>
           <tr>
            <th></th>
+            <th>Identification</th>
            <th>Name</th>
            <th>Email</th>
-           <!-- <th>Grading</th> -->
-           <?php if(!$state){ ?>
-            <th>PT-Grading</th>
+           <?php if($state){ ?>
+                <th>Lavel</th>
             <?php } ?>
          </tr>
        </tfoot>

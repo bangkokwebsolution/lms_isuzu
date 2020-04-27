@@ -28,7 +28,7 @@ class OrgChartController extends Controller
     {
     	return array(
         	array('allow',  // allow all users to perform 'index' and 'view' actions
-        		'actions'=>array('index','view','OrgChart2','OrgChartSave','SaveOrgchart', 'CheckUser'),
+        		'actions'=>array('index','view','OrgChart2','OrgChartSave','SaveOrgchart', 'CheckUser','Course'),
         		'users'=>array('*'),
         	),
         	array('allow',
@@ -236,9 +236,10 @@ class OrgChartController extends Controller
 	/**
 	 * Lists all models.
 	 */
+
+
 	public function actionCourse($id){
 		// $model_org = OrgChart::model()->findByPk($id);
-		
 	    if(isset($_GET['name'])){
 	    	$criteria = new CDbCriteria;
 	    	$criteria->with = array('courses');
@@ -282,147 +283,53 @@ class OrgChartController extends Controller
 	}
 
 	 public function actionCheckUser(){
-	 		// var_dump("888"); exit();
+
 	 	//User
 	 	$all = $_GET['all'];
-	 	$org_id = $_GET['position_id'];
+	 	// var_dump($all);exit();
+	 	$org_id = $_GET['position_id'];	
+	 	// var_dump($org_id);exit();
 	 	$course_id = $_GET['id'];
-
-
+	 	// var_dump($course_id);exit();
 
 	 	$orgRoot = OrgChart::model()->findByPk($org_id);
 
-
-	 	if($orgRoot->position_id != ""){ // position
-	 		$con_text = "position_id='".$orgRoot->position_id."'";
-	 	}elseif($orgRoot->department_id != ""){ // dept
-	 		$con_text = "department_id='".$orgRoot->department_id."'";
-
+	 	// var_dump($orgRoot);exit();
+	 	if($orgRoot->branch_id == null && $orgRoot->position_id == null && $orgRoot->department_id == null){
+	 		if($orgRoot->title == "General"){
+	 			$con_text = "type_user=1";
+	 		}elseif($orgRoot->title == "Personnel"){
+	 			$con_text = "type_user=3";
+	 		}
+	 		elseif($orgRoot->title == "MASTER / CAPTAIN"){
+	 			$con_text = "type_employee=1";
+	 		}
+	 		elseif($orgRoot->title == "Office"){
+	 			$con_text = "type_employee=2";
+	 		}
 	 	}else{
-
+		 	if($orgRoot->branch_id != ""){ // branch
+		 		$con_text = "branch_id='".$orgRoot->branch_id."'";
+		 	}elseif($orgRoot->position_id != ""){ // position
+		 		$con_text = "position_id='".$orgRoot->position_id."'";
+		 	}elseif($orgRoot->department_id != ""){ // dept
+		 		$con_text = "department_id='".$orgRoot->department_id."'";
+		 	}
 	 	}
 
 	 	$users = Users::model()->with('profiles')->findAll($con_text);
-	 	// var_dump("<pre>");
-	 	// var_dump($users);
-	 	// exit();
 
+		$state = null;
+	 	foreach ($users as $value) {
+		 	if($value->profiles->type_employee == '2'){
+		 		$state = true;
+		 	}
+	 	}
 
-	 // 	$criteria = new CDbCriteria();
-	 // 	$criteria->compare('t.active','y');
-	 // 	$criteria->compare('parent_id',$orgRoot->id);
-	 // 	$ckLevel = OrgChart::model()->findAll($criteria);
-	 	
-	 // 	// var_dump($orgRoot->title);exit();
-	 // 	$criteria = new CDbCriteria();
-	 // 	$criteria->with = array('orgchartDepartment','orgchartPosition','profiles');
-	 // 	//'orgchartDivision','orgchartCompany'
-	 // 	if($all){
-	 // 		// $criteria->compare('orgchartDivision.title',$orgRoot->title,false,'OR');
-	 // 		// $criteria->compare('orgchartCompany.title',$orgRoot->title,false,'OR');
-	 // 		$criteria->compare('orgchartDepartment.title',$orgRoot->title,false,'OR');
-	 // 		$criteria->compare('orgchartPosition.title',$orgRoot->title,false,'OR');
-	 // 	}else{
-	 // 		if($ckLevel){
-	 // 			// $criteria->compare('division_id',$org_id,false,'OR');
-	 // 			// $criteria->compare('company_id',$org_id,false,'OR');
-	 // 			$criteria->compare('t.department_id',$org_id,false,'OR');
-	 // 			$criteria->compare('t.position_id',$org_id,false,'OR');
-	 // 		}else{
-	 // 			$criteria->compare('t.position_id',$org_id);
-	 // 		}
-	 		
-	 // 	}
+	 	 // var_dump($state);exit();
 
-	 	
-		// $criteria->compare('del_status',0);
-
-	 // 	//Org root SO,Club,General
-	 // 	if($org_id == 2 || $org_id == 3 || $org_id == 4){
-	 // 		// type_user
-	 // 		$criteria->compare('profiles.type_user',$org_id,false,'OR');
-	 // 	}
-
-	 // 	// $criteria->compare('status',1);
-	 // 	// $criteria->compare('del_status',0);
-	 // 	$getAlluser = Users::model()->findAll($criteria);
-
-	 // 	$state = true;
-
-	 // 	if($state){
-	 // 		foreach ($getAlluser as $key => $value) {
-	 // 			$OrgChartModel = OrgChart::model()->findByPk($value->position_id);
-	 // 			if($OrgChartModel->orgchartParent->title){
-	 // 				if($OrgChartModel->orgchartParent->title == "Fitness"){
-	 // 					$state = false;
-	 // 				}
-	 // 			}
-	 // 		}
-	 // 	}
-	 	
-
-	 	// $state = false;
-	 	// $OrgChartModel = OrgChart::model()->findByPk($org_id);
-	 	// if($OrgChartModel->orgchartParent->title){
-	 	// 	if($OrgChartModel->orgchartParent->title == "Fitness"){
-	 	// 		$state = true;
-	 	// 	}
-	 	// }
-
-	 	// var_dump($getAlluser);exit();
-	 	// //Orgchart
-	 	
-	 	// var_dump(json_encode($mtId));
-	 	// exit();
-
-	 	// if(!empty($_POST)){
-
-	 	// 	if($all){
-	 	// 		$model = OrgPosition::model()->deleteAll(array(
-	 	// 		'condition'=>'course_id = "'.$course_id.'" AND org_root_title = "'.$orgRoot->title.'" AND state = "y"'
-	 	// 		));
-	 	// 	}else{
-	 	// 		$model = OrgPosition::model()->deleteAll(array(
-	 	// 		'condition'=>'course_id = "'.$course_id.'" AND org_root_title = "'.$orgRoot->title.'" AND state = "n"'
-	 	// 		));
-	 	// 	}
-	 		
-	 	// 	$saveUserApplied = $_POST['id'];
-	 	// 	if($saveUserApplied) {
-	 	// 		foreach ($saveUserApplied as $user) {
-	 	// 			$model = new OrgPosition;
-	 	// 			$model->course_id = $course_id;
-	 	// 			$model->user_id = $user;
-	 	// 			$model->org_root_title = $orgRoot->title;
-	 	// 			if($all){
-	 	// 				$model->state = "y";
-	 	// 			}else{
-	 	// 				$model->state = "n";
-	 	// 			}
-	 	// 			$model->save();
-	 	// 		}
-	 	// 	}
-	 	// }
-	 	
-	 	// $criteria = new CDbCriteria();
-	 	// $criteria->compare('course_id',$course_id);
-	 	// $criteria->compare('org_root_title',$orgRoot->title);
-	 	// if($all){
-	 	// 	$criteria->compare('state','y');
-	 	// }else{
-	 	// 	$criteria->compare('state','n');
-	 	// }
-	 	// $orgs = OrgPosition::model()->findAll($criteria);
-	 	// $mtId = array();
-	 	// foreach ($orgs as $key => $value) {
-	 	// 	$mtId[$key] = $value->user_id;
-	 	// }
-
-
-	 	$state = true;
 	 	$this->render('user_list',array(
 			'model'=>$users,
-			// 'mtId'=>$mtId,
 			'state'=>$state
 		));
 	 }
