@@ -35,14 +35,13 @@ Class Helpers
             $enddate = strtotime(date($chk->end_date));
             $currentDate = strtotime(date("Y-m-d H:i:s"));
 
-            if ($currentDate <= $start_date && $currentDate <= $enddate) {
+            if ($currentDate >= $start_date && $currentDate <= $enddate) {
                 $stats = true;
-            }else if ($currentDate >= $start_date ) {
-                $stats = true;
+            }else if ($currentDate >= $start_date && $currentDate >= $enddate ) {
+                $stats = false;
             }else{
              $stats = false;
          }
-
      }
 
 

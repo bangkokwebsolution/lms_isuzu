@@ -244,20 +244,85 @@ function DateThai($strDate)
                             }
 
                             // var_dump(expression)
-                            $expireDate = Helpers::lib()->checkCourseExpire($model);
-                            if ($expireDate) {
-                                $evnt = '';
-                                $url = Yii::app()->createUrl('course/detail/', array('id' => $model->course_id));
-                            } else {
-                            // $evnt = 'onclick="alertMsg(\'ระบบ\',\'หลักสูตรหมดอายุ\',\'error\')"';
-                                if (date($model->course_date_start) > date("Y-m-d")) {
-                                    $evnt = 'onclick="alertMsgNotNow()"';
-                                    $url = 'javascript:void(0)';
-                                } else {
-                                    $evnt = 'onclick="alertMsg()"';
-                                    $url = 'javascript:void(0)';
-                                }
-                            }
+
+                            
+                            $chklearn = Helpers::lib()->getLearn($model->course_id);
+                            $checkUserCourseExpire = Helpers::lib()->checkUserCourseExpire($model); 
+
+                                
+                                            if($chklearn){
+
+                                                if(!$checkUserCourseExpire){
+                                                   $evnt = 'onclick="alertMsg()"';
+                                                   $url = 'javascript:void(0)';
+                                                    if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+                                                        $langId = Yii::app()->session['lang'] = 1;
+                                                        $learnn = 'Timeout lesson';
+                                                        $btcl = 'btn-danger';
+                                                    } else {
+                                                        $langId = Yii::app()->session['lang'];
+                                                        $learnn = 'หมดเวลาเรียน';
+                                                        $btcl = 'btn-danger';
+                                                    }
+
+                                                }else{
+
+                                                     if (date($model->course_date_start) > date("Y-m-d")) {
+                                                    $evnt = 'onclick="alertMsgNotNow()"';
+                                                    $url = 'javascript:void(0)';
+                                                } else {
+                                                    $evnt = '';
+                                                    $url = Yii::app()->createUrl('course/detail/', array('id' => $model->course_id));
+                                                }
+                                                    if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+                                                        $langId = Yii::app()->session['lang'] = 1;
+                                                        $learnn = 'Learn lesson';
+                                                        $btcl = 'btn-success';
+                                                    } else {
+                                                        $langId = Yii::app()->session['lang'];
+                                                        $learnn = 'เข้าสู่บทเรียน';
+                                                        $btcl = 'btn-success';
+                                                    }
+
+                                                }
+
+                                                }else{
+                                                   if (date($model->course_date_start) > date("Y-m-d")) {
+                                                    $evnt = 'onclick="alertMsgNotNow()"';
+                                                    $url = 'javascript:void(0)';
+                                                } else {
+                                                    $evnt = '';
+                                                    $url = Yii::app()->createUrl('course/detail/', array('id' => $model->course_id));
+                                                }
+                                                    
+
+                                                if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+                                                    $langId = Yii::app()->session['lang'] = 1;
+                                                    $learnn = 'register lesson';
+                                                    $btcl = 'btn-primary';
+                                                } else {
+                                                    $langId = Yii::app()->session['lang'];
+                                                    $learnn = 'สมัครเรียน';
+                                                    $btcl = 'btn-primary';
+                                                }
+
+                                                }
+                                             
+
+                            // $expireDate = Helpers::lib()->checkCourseExpire($model);
+                            // if ($expireDate) {
+                            //     $evnt = '';
+                            //     $url = Yii::app()->createUrl('course/detail/', array('id' => $model->course_id));
+                            // } else {
+                            // // $evnt = 'onclick="alertMsg(\'ระบบ\',\'หลักสูตรหมดอายุ\',\'error\')"';
+                            //     if (date($model->course_date_start) > date("Y-m-d")) {
+                            //         $evnt = 'onclick="alertMsgNotNow()"';
+                            //         $url = 'javascript:void(0)';
+                            //     } else {
+                            //         $evnt = 'onclick="alertMsg()"';
+                            //         $url = 'javascript:void(0)';
+                            //     }
+                            // }
                             ?>
                             <div class="gallery_product col-sm-6 col-md-4 filter <?= $model->cate_id ?>" style="display: none;">
                                 <div class="well text-center">
@@ -305,8 +370,14 @@ function DateThai($strDate)
                                             <p class="p" style="min-height: 0em; margin-top: 0px; margin-bottom: 0px;"> <?= $label->label_dateStart ?> <?php echo Helpers::lib()->DateLang($model->course_date_start, Yii::app()->session['lang']); ?> </p>
                                             <p class="p" style="min-height: 0em; margin-top: 0px; margin-bottom: 0px;"> <?= $label->label_dateExpire ?> <?php echo Helpers::lib()->DateLang($model->course_date_end, Yii::app()->session['lang']); ?></p>
 
+
+                                           
+                                        
+
                                             <div class="text-center mt-20">
-                                                <a href="<?= $url; ?>" class="btn btn-danger btn-regislearn"><?= $learnn ?></a>
+
+                                                <a href="<?= $url; ?>" class="btn <?= $btcl ?> btn-regislearn " <?= $evnt ?>><?= $learnn ?></a>
+                                                
                                                 <!-- <a href="javascript:void(0)" class="btn btn-danger btn-learnmore">เข้าสู่บทเรียน</a> -->
                                             </div>
                                         </div>
