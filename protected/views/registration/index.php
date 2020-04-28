@@ -49,10 +49,10 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
 
     input {
-        border: 1px solid #1c97f3;
-        width: 260px;
+        /*border: 1px solid #1c97f3;*/
+       /* width: 260px;
         height: 40px;
-        margin-bottom: 14px;
+        margin-bottom: 14px;*/
     }
 
 
@@ -879,7 +879,7 @@ function editNamehouse_registration(filedoc_id){
                       if (isset($ProfilesWorkHistory)) {
                          $ProfilesWorkHistory = new ProfilesWorkHistory;
                        ?>
-                          <div class="row form_name">
+                          <div class="row form_name pt-20 ">
                         <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?></strong></div>
                         <div class="col-md-4 col-sm-6 col-xs-12 ">
                             <div class="form-group">
@@ -944,7 +944,7 @@ function editNamehouse_registration(filedoc_id){
                         <?php } ?>
                     </div>
                 <?php }} else {?>
-                    <div class="row form_name">
+                    <div class="row form_name pt-20" style="padding-top: 20px;">
                         <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?></strong></div>
                         <div class="col-md-4 col-sm-6 col-xs-12 ">
                             <div class="form-group">
@@ -980,7 +980,7 @@ function editNamehouse_registration(filedoc_id){
                     </div>
                 </div>
 
-                <div id="office-section1" class="form_name">
+                <div id="office-section1" class="form_name ">
                     <div class="row  mt-20 mb-1">
 
                         <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Attachments of Qualification / Professional File ':'เอกสารแนบไฟล์วุฒิการศึกษา/วิชาชีพ'; ?><small class="text-danger d-block">(pdf,png,jpg,jpeg)</small></strong></div>
