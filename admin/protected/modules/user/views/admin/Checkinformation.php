@@ -155,10 +155,44 @@
 												if($edu_id != ""){
 													echo $Education_detail['edu_name'];
 												}else{ echo "-"; }
-												?></span><span><?php if($institution != ""){ echo $institution;}else{ echo "-"; } ?></span><span><?php if($date_graduation != ""){ echo 25; echo $date_graduation;}else{ echo "-"; } ?></span>
+												?></span>
+												<span><?php if($institution != ""){ echo $institution;}else{ echo "-"; } ?></span>
+												<span><?php if($date_graduation != ""){ echo 25; echo $date_graduation;}else{ echo "-"; } ?></span>
 											</li>
 											<?php
 										}
+									}
+								}
+								?>
+							</ul>
+						</h5>
+					</div>
+					<div class="col-md-12">
+							<h5><b>ประวัติการทำงาน:</b>
+								<ul><?php
+								$user_id = $user['id'];
+								$ProfilesWorkHistory = ProfilesWorkHistory::model()->findAll(array(
+									'condition' => 'user_id=:user_id AND active=:active',
+									'params' => array(':user_id'=>$user_id, ':active'=>'y')));
+
+								if(!empty($ProfilesWorkHistory)){ 
+									foreach ($ProfilesWorkHistory as $key => $value) {					
+
+										$WorkHistory_data = $ProfilesWorkHistory[$key]->attributes;
+										$company_name = $WorkHistory_data['company_name'];
+										$since_date = $WorkHistory_data['since_date'];
+										$position_name = $WorkHistory_data['position_name'];
+										$reason_leaving = $WorkHistory_data['reason_leaving']
+											
+											?>
+											<li>
+												<span><?php if($company_name != ""){ echo $company_name;}else{ echo "-"; } ?></span>
+												<span><?php if($position_name != ""){ echo $position_name;}else{ echo "-"; } ?></span>
+												<span><?php if($since_date != ""){ echo $since_date;}else{ echo "-"; } ?></span>
+												<span><?php if($reason_leaving != ""){echo $reason_leaving;}else{ echo "-"; } ?></span>
+											</li>
+											<?php
+									
 									}
 								}
 								?>
@@ -216,6 +250,39 @@
 						</ul>
 					</h5>
 				</div>
+				<div class="col-md-12">
+					<h5><b>เอกสารแนบไฟล์:</b>
+						<ul>
+							<?php
+							$user_id = $user['id'];
+							$idx = 1;
+							$uploadFolder = Yii::app()->getUploadUrl('attach');
+							$criteria = new CDbCriteria;
+							$criteria->addCondition('user_id ="'.$user_id.'"');
+							$criteria->addCondition("active ='y'");
+							$AttachFile = AttachFile::model()->findAll($criteria);
+
+							if(isset($AttachFile)){
+								foreach($AttachFile as $fileDatas){?>
+									<li>
+										<?php if($fileDatas->file_data == 1){
+											echo 'หนังสือเดินทาง';
+										}else if($fileDatas->file_data == 2){
+                                            echo 'หนังสือประจำตัวลูกเรือ';
+										}else if($fileDatas->file_data == 3){
+                                            echo 'บัตรประชาชน';
+										}else if($fileDatas->file_data == 4){
+                                            echo 'ทะเบียนบ้าน';
+										}  ?><a href="<?php echo Yii::app()->baseUrl . '/../uploads/attach/' . $fileDatas->filename; ?>"><span><?php echo $fileDatas->filename;?></span></a>
+									</li>
+									<?php
+								}
+							}
+							?>
+							
+						</ul>
+					</h5>
+				</div>
 				<?php  
 				$position = Position::model()->find(array(
 					'condition' => 'id=:position_id',
@@ -243,7 +310,7 @@
 									'condition' => 'department_id=:department_id AND active=:active',
 									'params' => array(':department_id'=>$depart['id'],':active'=>'y')
 								));
-								
+								//var_dump($positions);
 								foreach ($positions as $ke => $val) {
 									$pos = $positions[$ke]->attributes;
 									?>
