@@ -332,9 +332,7 @@ class RegistrationController extends Controller {
 
     $users->username = $_POST['User'][username];
     $users->email = $_POST['User'][email];
-    $users->department_id = $_POST['User'][department_id];
-    $users->position_id = $_POST['User'][position_id];
-    $users->branch_id = $_POST['User'][branch_id];
+
             // $users->password = $_POST['User'][password];
             // $passwordshow = $_POST['Users'][password];
 
@@ -457,7 +455,9 @@ if ($profile->type_user == 1) {
     // var_dump(CUploadedFile::getInstance($AttachName, 'attach_crew_identification'));
     // var_dump(CUploadedFile::getInstance($AttachName, 'attach_identification'));
     // var_dump(CUploadedFile::getInstance($AttachName, 'attach_house_registration'));
- 
+    $users->department_id = $_POST['User'][department_id];
+    $users->position_id = $_POST['User'][position_id];
+    $users->branch_id = $_POST['User'][branch_id];
     if ($profile->validate() && $users->validate()) {
 //                    เข้ารหัสpassword
                     //$users->password = UserModule::encrypting($users->password);
@@ -1711,7 +1711,7 @@ public function actionListBranch(){
     array(':position_id'=>$_POST['id']));
 
  $data=CHtml::listData($model,'id','branch_name',array('empty' => 'สาขา'));
- $sub_list = Yii::app()->session['lang'] == 1?'Select Branch ':'เลือกสาขา';
+ $sub_list = Yii::app()->session['lang'] == 1?'Select Level ':'เลือกระดับ';
  $data = '<option value ="">'.$sub_list.'</option>';
  foreach ($model as $key => $value) {
     $data .= '<option value = "'.$value->id.'"'.'>'.$value->branch_name.'</option>';

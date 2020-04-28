@@ -1698,7 +1698,7 @@ function editNamehouse_registration(filedoc_id){
                                 success: function(data) {
                                     $('.department').empty();
                                     $('.department').append(data);
-                                    var Branch ='<option value ="">Select Branch </option>';
+                                    var Branch ='<option value ="">Select Level </option>';
                                     var Position ='<option value ="">Select Position </option>';
                                     $('.position').empty();
                                     $('.Branch').empty();
@@ -1981,7 +1981,7 @@ $(function() {
                             },
                             success: function(data) {
                                 //console.log(data);
-                                if (data === '<option value ="">Select Branch </option>') {
+                                if (data === '<option value ="">Select Level </option>') {
                                 $('.Branch').hide();
                                 $('.label_branch').hide();
                                 }else{
