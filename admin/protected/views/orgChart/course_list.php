@@ -133,10 +133,10 @@ EOD
                           ),
 
                         array(
-                          'header'=>'เลือกผู้เรียน',
+                          'header'=>'เพิ่มผู้เรียน',
                     
                             'value'=>function($data){
-                                return CHtml::link( '<i class="fa fa-user-plus"></i> เลือกผู้เรียน', 'javascript:void(0)', array( 'class' => 'btn btn-primary btn-icon', 'onclick' => 'getUser(' . $data->course_id . ')'));
+                                return CHtml::link( '<i class=""></i> เพิ่มผู้เรียน', 'javascript:void(0)', array( 'class' => 'btn btn-primary btn-icon', 'onclick' => 'getUser(' . $data->course_id . ')'));
                               },
 
                           'type'=>'raw',
@@ -148,7 +148,7 @@ EOD
                           'header'=>'ลบผู้เรียน',
                     
                             'value'=>function($data){
-                                return CHtml::link( '<i class=""></i> ลบผู้เรียน', 'javascript:void(0)', array( 'class' => 'btn btn-primary btn-icon'));
+                                return CHtml::link( '<i class=""></i> ลบผู้เรียน', 'javascript:void(0)', array( 'class' => 'btn btn-primary btn-icon', 'onclick' => 'delUser(' . $data->course_id . ')'));
                               },
                               
                           'type'=>'raw',
@@ -286,11 +286,15 @@ EOD
     }
 
     function getUser(course_id){
-      window.location.href = '<?= Yii::app()->createUrl('OrgChart/CheckUser/'); ?>'+'/'+course_id+'?position_id='+<?= $_GET['id']; ?>+'&all='+<?= $all; ?>; 
+      window.location.href = '<?= Yii::app()->createUrl('OrgChart/CheckUser/'); ?>'+'/'+course_id+'?orgchart_id='+<?= $_GET['id']; ?>+'&all='+<?= $all; ?>; 
+    }
+
+    function delUser(course_id){
+      window.location.href = '<?= Yii::app()->createUrl('OrgChart/DelUser/'); ?>'+'/'+course_id+'?orgchart_id='+<?= $_GET['id']; ?>+'&all='+<?= $all; ?>; 
     }
 
     function getUserTo(course_id){
-      window.location.href = '<?= Yii::app()->createUrl('OrgChart/CheckUserTo/'); ?>'+'/'+course_id+'?position_id='+<?= $_GET['id']; ?>+'&all='+<?= $all; ?>; 
+      window.location.href = '<?= Yii::app()->createUrl('OrgChart/CheckUserTo/'); ?>'+'/'+course_id+'?orgchart_id='+<?= $_GET['id']; ?>+'&all='+<?= $all; ?>; 
     }
 
 </script>

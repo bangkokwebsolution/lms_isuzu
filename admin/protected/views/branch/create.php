@@ -1,11 +1,11 @@
 
 <?php
 $this->breadcrumbs=array(
-	'จัดการสาขา'=>array('index'),
-	'เพิ่มสาขา',
+	'จัดการเลเวล'=>array('index'),
+	'เพิ่มเลเวล',
 );
 ?>
 <?php echo $this->renderPartial('_form', array(
 	'model'=>$model,
-	'formtext'=>'เพิ่มสาขา'
+	'formtext'=>'เพิ่มเลเวล'
 )); ?>

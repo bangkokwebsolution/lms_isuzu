@@ -30,9 +30,24 @@ $this->breadcrumbs=array($titleName);
             <th>Identification</th>
             <th>Name</th>
             <th>Email</th>
-            <?php if($state){ ?>
-                <th>Lavel</th>
-            <?php } ?>
+            <th>Phone</th>
+            <?php if($state == "personnel_office") { ?>
+                <th>Department</th>
+                <th>Position</th>
+                <th>Level</th>
+            <?php }elseif ($state == "master_captain") { ?>
+                <th>Department</th>
+                <th>Position</th>
+            <?php }elseif ($state == "state_dep_office") { ?>
+                <th>Position</th>
+                <th>Level</th>
+            <?php }elseif ($state == "state_dep_captain") { ?>
+                 <th>Position</th>
+            <?php }elseif ($state == "state_posi_office") { ?>
+                <th>Level</th>
+           <?php } ?>
+
+
           </tr>
         </thead>
         <tbody>
@@ -44,9 +59,24 @@ $this->breadcrumbs=array($titleName);
             <td><?= $userItem->identification ?></td>
             <td><?= $userItem->profiles->firstname.' '.$userItem->profiles->lastname ?></td>
             <td><?= $userItem->email ?></td>
-            <?php if($state){ ?>
-                <td><?= $userItem->branch->branch_name ?></td>
+            <td><?= $userItem->profiles->phone ?></td>
+
+           <?php if($state == "personnel_office"){ ?>
+              <td><?= $userItem->department->dep_title ?></td>
+              <td><?= $userItem->position->position_title ?></td>
+              <td><?= $userItem->branch->branch_name ?></td>
+            <?php }elseif ($state == "master_captain") { ?>
+              <td><?= $userItem->department->dep_title ?></td>
+              <td><?= $userItem->position->position_title ?></td>
+            <?php }elseif ($state == "state_dep_office") { ?>
+              <td><?= $userItem->position->position_title ?></td>
+              <td><?= $userItem->branch->branch_name ?></td>
+            <?php }elseif ($state == "state_dep_captain") { ?>
+              <td><?= $userItem->position->position_title ?></td>
+            <?php }elseif ($state == "state_posi_office") { ?>
+              <td><?= $userItem->branch->branch_name ?></td>
             <?php } ?>
+
           </tr>
           <?php } ?>
         </tbody>
@@ -56,9 +86,25 @@ $this->breadcrumbs=array($titleName);
             <th>Identification</th>
            <th>Name</th>
            <th>Email</th>
-           <?php if($state){ ?>
-                <th>Lavel</th>
+            <th>Phone</th>
+
+            <?php if($state == "personnel_office") { ?>
+              <th>Department</th>
+              <th>Position</th>
+              <th>Level</th>
+            <?php }elseif ($state == "master_captain") { ?>
+              <th>Department</th>
+              <th>Position</th>
+            <?php }elseif ($state == "state_dep_office") { ?>
+              <th>Position</th>
+              <th>Level</th>
+            <?php }elseif ($state == "state_dep_captain") { ?>
+              <th>Position</th>
+            <?php }elseif ($state == "state_posi_office") { ?>
+              <th>Level</th>
             <?php } ?>
+
+
          </tr>
        </tfoot>
       </table>

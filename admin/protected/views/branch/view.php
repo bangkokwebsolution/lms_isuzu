@@ -1,7 +1,7 @@
 
 <?php
 $this->breadcrumbs=array(
-	'จัดการสาขา'=>array('index'),
+	'จัดการเลเวล'=>array('index'),
 	$model->branch_name,
 );
 

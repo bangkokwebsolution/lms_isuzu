@@ -48,14 +48,14 @@ class Users extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('username, password, email, department_id, create_at', 'required'),
-			array('department_id, branch_id,  superuser, status', 'numerical', 'integerOnly'=>true),
+			array('department_id, branch_id, position_id, superuser, status', 'numerical', 'integerOnly'=>true),
 			array('username', 'length', 'max'=>20),
 			array('password, email, activkey', 'length', 'max'=>128),
 			array('pic_user, group', 'length', 'max'=>255),
 			array('lastvisit_at,employee_id', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, username, password, email, pic_user, department_id, branch_id, activkey, create_at, lastvisit_at, superuser, status, group', 'safe', 'on'=>'search'),
+			array('id, username, password, email, pic_user, department_id, position_id, branch_id, activkey, create_at, lastvisit_at, superuser, status, org_user_status, group', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,9 +72,10 @@ class Users extends CActiveRecord
 			// 'orgchart' => array(self::BELONGS_TO, 'OrgChart', 'user_id'),
 			'orgchart' => array(self::BELONGS_TO, 'OrgChart', 'department_id','foreignKey' => array('department_id'=>'id')),
 			'divisions' => array(self::HAS_ONE, 'Division', array('id' => 'department_id')),
-			'position' => array(self::BELONGS_TO, 'Position', 'position_id'),
 			'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
 
+			'department' => array(self::BELONGS_TO, 'Department', 'department_id'),
+			'position' => array(self::BELONGS_TO, 'Position', 'position_id'),
 			'branch' => array(self::BELONGS_TO, 'Branch', 'branch_id'),
 			
 			// 'orgchartDivision' => array(self::BELONGS_TO, 'OrgChart', array('division_id' => 'id')),
@@ -127,7 +128,9 @@ class Users extends CActiveRecord
 		$criteria->compare('activkey',$this->activkey,true);
 		$criteria->compare('create_at',$this->create_at,true);
 		$criteria->compare('lastvisit_at',$this->lastvisit_at,true);
+		$criteria->compare('position_id',$this->position_id,true);
 		$criteria->compare('branch_id',$this->branch_id,true);
+	    $criteria->compare('org_user_status',$this->org_user_status,true);
 		$criteria->compare('superuser',$this->superuser);
 		$criteria->compare('status',$this->status);
 		$criteria->compare('group',$this->group);

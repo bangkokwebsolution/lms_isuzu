@@ -1,10 +1,10 @@
 <?php
 $this->breadcrumbs=array(
-	'จัดการสาขา'=>array('index'),
-	'แก้ไขสาขา',
+	'จัดการเลเวล'=>array('index'),
+	'แก้ไขเลเวล',
 );
 ?>
 <?php echo $this->renderPartial('_form', array(
 	'model'=>$model,
-	'formtext'=>'แก้ไขสาขา'
+	'formtext'=>'แก้ไขเลเวล'
 )); ?>

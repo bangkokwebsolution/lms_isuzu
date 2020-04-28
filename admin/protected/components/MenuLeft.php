@@ -1728,7 +1728,7 @@ Class MenuLeft extends Controller
 	        		'Branch.admin',
 	        		'Branch.Create'
 	        	)),
-	        	'label'=>'<i></i><span>สาขา</span>',
+	        	'label'=>'<i></i><span>เลเวล</span>',
 	        	'url'=>'#Branch',
 	        	'linkOptions' => array('data-toggle' => 'collapse'),
 	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
@@ -1741,7 +1741,7 @@ Class MenuLeft extends Controller
 	        				'Branch.*',
 	        				'Branch.Create'
 	        			)),
-	        			'label'=>'เพิ่มสาขา',
+	        			'label'=>'เพิ่มเลเวล',
 	        			'url'=>array('//Branch/create')
 	        		),
 	        		array(
@@ -1749,7 +1749,7 @@ Class MenuLeft extends Controller
 	        				'Branch.*',
 	        				'Branch.index'
 	        			)),
-	        			'label'=>'จัดการสาขา',
+	        			'label'=>'จัดการเลเวล',
 	        			'url'=>array('//Branch/index')
 	        		),
 	        	)

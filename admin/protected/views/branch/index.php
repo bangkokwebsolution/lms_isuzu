@@ -1,6 +1,6 @@
 
 <?php
-$titleName = 'จัดการสาขา';
+$titleName = 'จัดการเลเวล';
 $formNameModel = 'Branch';
 
 $this->breadcrumbs=array($titleName);
