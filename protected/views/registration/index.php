@@ -181,16 +181,17 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
            if($('#queue .uploadifive-queue-item').length == 0 && $('#docqueue .uploadifive-queue-item').length == 0 ){
             return true;
         }else{
-         var Training  = $('#Training').uploadifive('upload');
-         var doc =  $('#doc').uploadifive('upload');
-         if($('#queue .uploadifive-queue-item').length > 0 && $('#docqueue .uploadifive-queue-item').length > 0) {
-            return [Training,doc];
-            // }else if($('#docqueue .uploadifive-queue-item').length > 0){
-            //     $('#doc').uploadifive('upload');
-            //     return false;
-         //     }else if($('#queue .uploadifive-queue-item').length > 0){
-         //        $('#Training').uploadifive('upload');
-         //        return false;
+         // var Training  = $('#Training').uploadifive('upload');
+         // var doc =  $('#doc').uploadifive('upload');
+         // if($('#queue .uploadifive-queue-item').length > 0 && $('#docqueue .uploadifive-queue-item').length > 0) {
+         //    return false;
+          //  return [Training,doc];
+             if($('#docqueue .uploadifive-queue-item').length > 0){
+                $('#doc').uploadifive('upload');
+                return false;
+             }else if($('#queue .uploadifive-queue-item').length > 0){
+                $('#Training').uploadifive('upload');
+                return false;
 
      }
 
@@ -206,6 +207,7 @@ function deleteFileDoc(filedoc_id,file_id){
            // notyfy({dismissQueue: false,text: "ลบไฟล์เรียบร้อย",type: 'success'});
            var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
            alert(success_file);
+           location.reload();
            $('#'+filedoc_id).parent().hide('fast');
        }else{
         var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
@@ -234,6 +236,7 @@ function deleteFiletrain(filedoc_id,file_id){
            // notyfy({dismissQueue: false,text: "ลบไฟล์เรียบร้อย",type: 'success'});
            var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
            alert(success_file);
+           location.reload();
            $('#'+filedoc_id).parent().hide('fast');
        }else{
         var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
@@ -251,6 +254,103 @@ function editNameTrain(filedoc_id){
         $('#btnEditNametrain'+filedoc_id).show();
     });
 
+}
+function deleteFilepassport(file_id){
+   console.log(file_id);
+    $.get("<?php echo $this->createUrl('Registration/deleteFilePassport'); ?>",{id:file_id},function(data){
+        if($.trim(data)==1){
+           var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
+           alert(success_file);
+           location.reload();
+           $('#'+filedoc_id).parent().hide('fast');
+       }else{
+        var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
+        alert(Unable_file);
+    }
+});
+}
+
+function editNamepassport(filedoc_id){
+    var name = $('#filename_attach_passport'+filedoc_id).val();
+    $.get("<?php echo $this->createUrl('Registration/editNamePassport'); ?>",{id:filedoc_id,name:name},function(data){
+        $('#filename_attach_passport'+filedoc_id).hide();
+        $('#file_attach_passporttext'+filedoc_id).text(name);
+        $('#file_attach_passporttext'+filedoc_id).show();
+        $('#btnEditName_attach_passport'+filedoc_id).show();
+    });
+    location.reload();
+}
+function deleteFilecrew_identification(file_id){
+    $.get("<?php echo $this->createUrl('Registration/deleteFilePassport'); ?>",{id:file_id},function(data){
+        if($.trim(data)==1){
+           var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
+           alert(success_file);
+           location.reload();
+           $('#'+filedoc_id).parent().hide('fast');
+       }else{
+        var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
+        alert(Unable_file);
+    }
+});
+}
+
+function editNamecrew_identification(filedoc_id){
+    var name = $('#filename_attach_crew_identification'+filedoc_id).val();
+    $.get("<?php echo $this->createUrl('Registration/editNamePassport'); ?>",{id:filedoc_id,name:name},function(data){
+        $('#filename_attach_crew_identification'+filedoc_id).hide();
+        $('#file_crew_identificationtext'+filedoc_id).text(name);
+        $('#file_crew_identificationtext'+filedoc_id).show();
+        $('#btnEditName_attach_crew_identification'+filedoc_id).show();
+    });
+    location.reload();
+}
+function deleteFileidentification(file_id){
+    $.get("<?php echo $this->createUrl('Registration/deleteFilePassport'); ?>",{id:file_id},function(data){
+        if($.trim(data)==1){
+           var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
+           alert(success_file);
+           location.reload();
+           $('#'+filedoc_id).parent().hide('fast');
+       }else{
+        var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
+        alert(Unable_file);
+    }
+});
+}
+
+function editNameidentification(filedoc_id){
+    var name = $('#filename_attach_identification'+filedoc_id).val();
+    $.get("<?php echo $this->createUrl('Registration/editNamePassport'); ?>",{id:filedoc_id,name:name},function(data){
+        $('#filename_attach_identification'+filedoc_id).hide();
+        $('#file_identificationtext'+filedoc_id).text(name);
+        $('#file_identificationtext'+filedoc_id).show();
+        $('#btnEditName_attach_identification'+filedoc_id).show();
+    });
+    location.reload();
+}
+function deleteFilehouse_registration(file_id){
+    $.get("<?php echo $this->createUrl('Registration/deleteFilePassport'); ?>",{id:file_id},function(data){
+        if($.trim(data)==1){
+           var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
+           alert(success_file);
+           location.reload();
+           $('#'+filedoc_id).parent().hide('fast');
+       }else{
+        var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
+        alert(Unable_file);
+    }
+});
+}
+
+function editNamehouse_registration(filedoc_id){
+    var name = $('#filename_attach_house_registration'+filedoc_id).val();
+    $.get("<?php echo $this->createUrl('Registration/editNamePassport'); ?>",{id:filedoc_id,name:name},function(data){
+        $('#filename_attach_house_registration'+filedoc_id).hide();
+        $('#file_house_registrationtext'+filedoc_id).text(name);
+        $('#file_house_registrationtext'+filedoc_id).show();
+        $('#btnEditName_attach_house_registration'+filedoc_id).show();
+    });
+    location.reload();
 }
 </script>
 
@@ -678,11 +778,38 @@ function editNameTrain(filedoc_id){
                     }                 
                 }
                 $graduation = array('class' => 'form-control', 'autocomplete' => 'off', 'empty' => $label->label_graduation_year);   
-                if (!$ProfilesEdu->isNewRecord) { ?>
-                    <div class="add-study">
-                        <?php
-                        foreach ($ProfilesEdu as $kedu => $valedu) {
+                if (!$ProfilesEdu->isNewRecord) { 
+                         if (isset($ProfilesEdu)) {
+                              $ProfilesEdu = new ProfilesEdu;
                             ?>
+                             <div class="row form_name">
+                        <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?php echo $label->label_educational;  ?></strong></div>
+                        <div class="col-md-2 col-sm-6 col-xs-12 ">
+                            <div class="form-group">
+                                <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]edu_id', $list, $att_Education); ?>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-6 col-xs-12 ">
+                            <div class="form-group">
+                                <?php echo $form->textField($ProfilesEdu, '[0]institution', array('class' => 'form-control', 'placeholder' => $label->label_academy)); ?>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2 col-sm-6 col-xs-12 ">
+                            <div class="form-group">
+                                <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]date_graduation',$edu_lest ,$graduation); ?>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="add-study"></div>
+                     <?php  }else{
+                    ?>
+                           <div class="add-study">
+                       
+                       <?php foreach ($ProfilesEdu as $kedu => $valedu) {?>
 
                             <div class="row del_edu">
                                 <div class="col-md-3 col-sm-12 text-right-md"> <strong><?php echo $label->label_educational;  ?></strong></div>
@@ -709,12 +836,9 @@ function editNameTrain(filedoc_id){
 
                             </div>
 
-                            <?php
-                        } ?>
-                    </div>
-
-                <?php } else {
-                    ?>
+                            <?php } ?>
+                           </div>    
+                <?php }} else {  ?>
 
                     <div class="row form_name">
                         <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?php echo $label->label_educational;  ?></strong></div>
@@ -752,7 +876,37 @@ function editNameTrain(filedoc_id){
                     </div>
                 </div>
                 <?php if ($ProfilesWorkHistory->isNewRecord === null) { 
+                      if (isset($ProfilesWorkHistory)) {
+                         $ProfilesWorkHistory = new ProfilesWorkHistory;
+                       ?>
+                          <div class="row form_name">
+                        <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?></strong></div>
+                        <div class="col-md-4 col-sm-6 col-xs-12 ">
+                            <div class="form-group">
+                                <?php echo $form->textField($ProfilesWorkHistory, '[0]company_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Company ':'บริษัท')); ?>
+                            </div>
+                        </div>
 
+                        <div class="col-md-4 col-sm-6 col-xs-12 ">
+                            <div class="form-group">
+                                <?php echo $form->textField($ProfilesWorkHistory, '[0]position_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Position ':'ตำแหน่ง')); ?>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"></div>
+                        <div class="col-md-4 col-sm-6 col-xs-12 ">
+                            <div class="form-group since-icon">
+                                <i class="far fa-calendar-alt"></i>
+                                <?php echo $form->textField($ProfilesWorkHistory, '[0]since_date', $Since); ?>
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-xs-12 ">
+                            <div class="form-group">
+                                <?php echo $form->textField($ProfilesWorkHistory, '[0]reason_leaving', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Reason for leaving ':'สาเหตุที่ออก')); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="add-Work"></div>
+                  <?php }else{
                     ?>
                     <div class="add-Work">
                         <?php
@@ -789,7 +943,7 @@ function editNameTrain(filedoc_id){
 
                         <?php } ?>
                     </div>
-                <?php } else {?>
+                <?php }} else {?>
                     <div class="row form_name">
                         <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?></strong></div>
                         <div class="col-md-4 col-sm-6 col-xs-12 ">
@@ -862,8 +1016,13 @@ function editNameTrain(filedoc_id){
                                                     }
                                                 },
                                                 'onQueueComplete' : function(file, data) {
-
-                                                   $('#registration-form').submit();
+                                                    console.log(file);
+                                                    if($('#queue .uploadifive-queue-item').length == 0) {
+                                                                $('#registration-form').submit();
+                                                            }else{
+                                                                $('#Training').uploadifive('upload');
+                                                            }
+                                                   //$('#registration-form').submit();
 
                                                }
                                            });
@@ -960,8 +1119,13 @@ function editNameTrain(filedoc_id){
                                                     }
                                                 },
                                                 'onQueueComplete' : function(file, data) {
-
+                                                    console.log(data);
                                                    $('#registration-form').submit();
+                                                   // if($('#docqueue .uploadifive-queue-item').length == 0) {
+                                                   //              $('#registration-form').submit();
+                                                   //          }else{
+                                                   //              $('#queue').uploadifive('upload');
+                                                   //          }
 
                                                }
                                            });
@@ -1026,7 +1190,10 @@ function editNameTrain(filedoc_id){
                     </div>
                 </div>
                 <div class="row  mt-1 mb-1 form_name">
-                    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'passport':'พาสปอร์ต'; ?></strong></div>
+                    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'File attachment':'เอกสารแนบไฟล์'; ?><small class="text-danger d-block">(pdf,png,jpg,jpeg)</small></strong></div>
+                </div>
+                <div class="row  mt-1 mb-1 form_name">
+                    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'File attachment passport':'ไฟล์พาสปอร์ต'; ?></strong></div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <div class="input-append">
@@ -1045,14 +1212,33 @@ function editNameTrain(filedoc_id){
                             $criteria->addCondition("file_data ='1'");
                             $Attach_passport_File = AttachFile::model()->find($criteria);
                             if (isset($Attach_passport_File)) {
-                                echo '<strong id="filenametraintext'.$Attach_passport_File->id.'">'.$Attach_passport_File->filename.'</strong>';
+                                echo '<strong id="file_attach_passporttext'.$Attach_passport_File->id.'">'.$Attach_passport_File->filename.'</strong>';
+                                echo '<input id="filename_attach_passport'.$Attach_passport_File->id.'" 
+                                    class="form-control"
+                                    type="text" value="'.$Attach_passport_File->filename.'" 
+                                    style="display:none;" 
+                                    onblur="editNamepassport('.$Attach_passport_File->id.');">'; 
+                                echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
+                                        'id'=>'btnEditName_attach_passport'.$Attach_passport_File->id,
+                                        'class'=>'btn-action glyphicons pencil btn-danger',
+                                        'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                        'onclick'=>'$("#file_attach_passporttext'.$Attach_passport_File->id.'").hide(); 
+                                        $("#filename_attach_passport'.$Attach_passport_File->id.'").show(); 
+                                        $("#filename_attach_passport'.$Attach_passport_File->id.'").focus(); 
+                                        $("#btnEditName_attach_passport'.$Attach_passport_File->id.'").hide(); ')); 
+
+                                echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
+                                        'id'=>'btnSaveName_attach_passport'.$Attach_passport_File->id,
+                                        'class'=>'btn-action glyphicons btn-danger remove_2',
+                                        'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                        'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFilepassport("'.$Attach_passport_File->id.'"); }'));
                             }
                         ?>
                     </div>
                 </div>
 
                 <div class="row  mt-1 mb-1 form_name">
-                    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'Crew identification':'หนังสือประจำตัวลูกเรือ'; ?></strong></div>
+                    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?' File attachment Crew identification':'ไฟล์หนังสือประจำตัวลูกเรือ'; ?></strong></div>
                     <div class="col-md-4">
                         <div class="form-group">
 
@@ -1070,14 +1256,33 @@ function editNameTrain(filedoc_id){
                             $criteria->addCondition("file_data ='2'");
                             $Attach_crew_identification_File = AttachFile::model()->find($criteria);
                             if (isset($Attach_crew_identification_File)) {
-                                echo '<strong id="filenametraintext'.$Attach_crew_identification_File->id.'">'.$Attach_crew_identification_File->filename.'</strong>';
+                                echo '<strong id="file_crew_identificationtext'.$Attach_crew_identification_File->id.'">'.$Attach_crew_identification_File->filename.'</strong>';
+                                echo '<input id="filename_attach_crew_identification'.$Attach_crew_identification_File->id.'" 
+                                    class="form-control"
+                                    type="text" value="'.$Attach_crew_identification_File->filename.'" 
+                                    style="display:none;" 
+                                    onblur="editNamecrew_identification('.$Attach_crew_identification_File->id.');">'; 
+                                echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
+                                        'id'=>'btnEditName_attach_crew_identification'.$Attach_crew_identification_File->id,
+                                        'class'=>'btn-action glyphicons pencil btn-danger',
+                                        'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                        'onclick'=>'$("#file_crew_identificationtext'.$Attach_crew_identification_File->id.'").hide(); 
+                                        $("#filename_attach_crew_identification'.$Attach_crew_identification_File->id.'").show(); 
+                                        $("#filename_attach_crew_identification'.$Attach_crew_identification_File->id.'").focus(); 
+                                        $("#btnEditName_attach_crew_identification'.$Attach_crew_identification_File->id.'").hide(); ')); 
+
+                                echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
+                                        'id'=>'btnSaveName_attach_crew_identification'.$Attach_crew_identification_File->id,
+                                        'class'=>'btn-action glyphicons btn-danger remove_2',
+                                        'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                        'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFilecrew_identification("'.$Attach_crew_identification_File->id.'"); }'));
                             }
                             ?>
                         </div>
                     </div>
                 </div>
                 <div class="row  mt-1 mb-1 form_name">
-                    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'identification':'บัตรประชาชน'; ?></strong></div>
+                    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'File attachment identification':'ไฟล์สำเนาบัตรประชาชน'; ?></strong></div>
                     <div class="col-md-4">
                         <div class="form-group">
                              <div class="input-append">
@@ -1094,14 +1299,34 @@ function editNameTrain(filedoc_id){
                             $criteria->addCondition("file_data ='3'");
                             $Attach_identification_File = AttachFile::model()->find($criteria);
                             if (isset($Attach_identification_File)) {
-                                echo '<strong id="filenametraintext'.$Attach_identification_File->id.'">'.$Attach_identification_File->filename.'</strong>';
+                                echo '<strong id="file_identificationtext'.$Attach_identification_File->id.'">'.$Attach_identification_File->filename.'</strong>';
+                                 echo '<input id="filename_attach_identification'.$Attach_identification_File->id.'" 
+                                    class="form-control"
+                                    type="text" value="'.$Attach_identification_File->filename.'" 
+                                    style="display:none;" 
+                                    onblur="editNameidentification('.$Attach_identification_File->id.');">'; 
+                                echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
+                                        'id'=>'btnEditName_attach_identification'.$Attach_identification_File->id,
+                                        'class'=>'btn-action glyphicons pencil btn-danger',
+                                        'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                        'onclick'=>'$("#file_identificationtext'.$Attach_identification_File->id.'").hide(); 
+                                        $("#filename_attach_identification'.$Attach_identification_File->id.'").show(); 
+                                        $("#filename_attach_identification'.$Attach_identification_File->id.'").focus(); 
+                                        $("#btnEditName_attach_identification'.$Attach_identification_File->id.'").hide(); ')); 
+
+                                echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
+                                        'id'=>'btnSaveName_attach_identification'.$Attach_identification_File->id,
+                                        'class'=>'btn-action glyphicons btn-danger remove_2',
+                                        'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                        'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFileidentification("'.$Attach_identification_File->id.'"); }'));
+
                             }
                             ?>
                         </div>
                     </div>
                 </div>
                 <div class="row  mt-1 mb-1 form_name">
-                    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'House registration':'สำเนาทะเบียนบ้าน'; ?></strong></div>
+                    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'File attachment House registration':'ไฟล์สำเนาทะเบียนบ้าน'; ?></strong></div>
                     <div class="col-md-4">
                         <div class="form-group">
 
@@ -1119,7 +1344,26 @@ function editNameTrain(filedoc_id){
                             $criteria->addCondition("file_data ='4'");
                             $Attach_house_registration_File = AttachFile::model()->find($criteria);
                             if (isset($Attach_house_registration_File)) {
-                                echo '<strong id="filenametraintext'.$Attach_house_registration_File->id.'">'.$Attach_house_registration_File->filename.'</strong>';
+                                echo '<strong id="file_house_registrationtext'.$Attach_house_registration_File->id.'">'.$Attach_house_registration_File->filename.'</strong>';
+                                 echo '<input id="filename_attach_house_registration'.$Attach_house_registration_File->id.'" 
+                                    class="form-control"
+                                    type="text" value="'.$Attach_house_registration_File->filename.'" 
+                                    style="display:none;" 
+                                    onblur="editNamehouse_registration('.$Attach_house_registration_File->id.');">'; 
+                                echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
+                                        'id'=>'btnEditName_attach_house_registration'.$Attach_house_registration_File->id,
+                                        'class'=>'btn-action glyphicons pencil btn-danger',
+                                        'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                        'onclick'=>'$("#file_house_registrationtext'.$Attach_house_registration_File->id.'").hide(); 
+                                        $("#filename_attach_house_registration'.$Attach_house_registration_File->id.'").show(); 
+                                        $("#filename_attach_house_registration'.$Attach_house_registration_File->id.'").focus(); 
+                                        $("#btnEditName_attach_house_registration'.$Attach_house_registration_File->id.'").hide(); ')); 
+
+                                echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
+                                        'id'=>'btnSaveName_attach_house_registration'.$Attach_house_registration_File->id,
+                                        'class'=>'btn-action glyphicons btn-danger remove_2',
+                                        'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                                        'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFilehouse_registration("'.$Attach_house_registration_File->id.'"); }'));
                             }
                             ?>
                         </div>
@@ -1454,6 +1698,12 @@ function editNameTrain(filedoc_id){
                                 success: function(data) {
                                     $('.department').empty();
                                     $('.department').append(data);
+                                    var Branch ='<option value ="">Select Branch </option>';
+                                    var Position ='<option value ="">Select Position </option>';
+                                    $('.position').empty();
+                                    $('.Branch').empty();
+                                    $('.position').append(Position);
+                                    $('.Branch').append(Branch);
                                 }
                             });
                         });
@@ -1469,6 +1719,12 @@ function editNameTrain(filedoc_id){
                                 success: function(data) {
                                     $('.department').empty();
                                     $('.department').append(data);
+                                   var Branch ='<option value ="">Select Branch </option>';
+                                   var Position ='<option value ="">Select Position </option>';
+                                    $('.position').empty();
+                                    $('.Branch').empty();
+                                    $('.position').append(Position);
+                                    $('.Branch').append(Branch);
                                 }
                             });
                         });

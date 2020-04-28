@@ -1095,8 +1095,10 @@ public function actionUpdate() {
                         {
                             $attach_passport->saveAs($webroot);
                         }
-         $AttachName->attach_passport = 1;
+         $AttachName = AttachName::model()->find('active="y" AND user_id='.Yii::app()->user->id);
          $AttachFile = AttachFile::model()->find('file_data="1" AND active="y" AND user_id='.Yii::app()->user->id);
+         if ($AttachName === "" ||$AttachFile === "") {
+         $AttachName->attach_passport = 1;
          $AttachFile->user_id = $users->id;
          $AttachFile->file_data = $AttachName->attach_passport;
          $AttachFile->file_name = $fileName;
@@ -1108,6 +1110,21 @@ public function actionUpdate() {
          $AttachName->update_by = $users->id;
          $AttachFile->save();
          $AttachName->save();
+         }else{
+         $AttachName->attach_passport = 1;
+         $AttachFile = new AttachFile;
+         $AttachFile->user_id = $users->id;
+         $AttachFile->file_data = $AttachName->attach_passport;
+         $AttachFile->file_name = $fileName;
+         $AttachFile->filename = $uglyName;
+         $AttachFile->create_date = date("Y-m-d");
+         $AttachFile->create_by = $users->id;
+         $AttachName->user_id = $users->id;
+         $AttachName->create_date = date("Y-m-d");
+         $AttachName->create_by = $users->id;
+         $AttachFile->save();
+         $AttachName->save();
+     }
     }
     $attach_crew_identification  = CUploadedFile::getInstance($AttachName, 'attach_crew_identification');
     if (isset($attach_crew_identification)) {
@@ -1120,8 +1137,10 @@ public function actionUpdate() {
                         {
                             $attach_crew_identification->saveAs($webroot);
                         }
-         $AttachName->attach_crew_identification = 2;
+         $AttachName = AttachName::model()->find('active="y" AND user_id='.Yii::app()->user->id);
          $AttachFile = AttachFile::model()->find('file_data="2" AND active="y" AND user_id='.Yii::app()->user->id); 
+         if ($AttachName === "" ||$AttachFile === "") {
+         $AttachName->attach_crew_identification = 2;
          $AttachFile->user_id = $users->id;
          $AttachFile->file_data = $AttachName->attach_crew_identification;
          $AttachFile->file_name = $fileName;
@@ -1133,6 +1152,22 @@ public function actionUpdate() {
          $AttachName->update_by = $users->id;
          $AttachFile->save();
          $AttachName->save();
+         }else{
+         $AttachName->attach_crew_identification = 2;
+         $AttachFile = new AttachFile;
+         $AttachFile->user_id = $users->id;
+         $AttachFile->file_data = $AttachName->attach_crew_identification;
+         $AttachFile->file_name = $fileName;
+         $AttachFile->filename = $uglyName;
+         $AttachFile->create_date = date("Y-m-d");
+         $AttachFile->create_by = $users->id;
+         $AttachName->user_id = $users->id;
+         $AttachName->create_date = date("Y-m-d");
+         $AttachName->create_by = $users->id;
+         $AttachFile->save();
+         $AttachName->save();
+         }
+         
     }
     $attach_identification  = CUploadedFile::getInstance($AttachName, 'attach_identification');
     if (isset($attach_identification)) {
@@ -1145,8 +1180,10 @@ public function actionUpdate() {
                         {
                             $attach_identification->saveAs($webroot);
                         }
-         $AttachName->attach_identification = 3;
+         $AttachName = AttachName::model()->find('active="y" AND user_id='.Yii::app()->user->id);
          $AttachFile = AttachFile::model()->find('file_data="3" AND active="y" AND user_id='.Yii::app()->user->id);
+         if ($AttachName === "" ||$AttachFile === "") {
+         $AttachName->attach_identification = 3;
          $AttachFile->user_id = $users->id;
          $AttachFile->file_data = $AttachName->attach_identification;
          $AttachFile->file_name = $fileName;
@@ -1158,6 +1195,23 @@ public function actionUpdate() {
          $AttachName->update_by = $users->id;
          $AttachFile->save();
          $AttachName->save();
+         }else{
+         $AttachName->attach_identification = 3;
+         $AttachFile = new AttachFile;
+         $AttachFile->user_id = $users->id;
+         $AttachFile->file_data = $AttachName->attach_identification;
+         $AttachFile->file_name = $fileName;
+         $AttachFile->filename = $uglyName;
+         $AttachFile->create_date = date("Y-m-d");
+         $AttachFile->create_by = $users->id;
+         $AttachName->user_id = $users->id;
+         $AttachName->create_date = date("Y-m-d");
+         $AttachName->create_by = $users->id;
+         $AttachFile->save();
+         $AttachName->save();
+    }   
+         
+         
     }
     $attach_house_registration  = CUploadedFile::getInstance($AttachName, 'attach_house_registration');
     if (isset($attach_house_registration)) {
@@ -1170,8 +1224,10 @@ public function actionUpdate() {
                         {
                             $attach_house_registration->saveAs($webroot);
                         }
-         $AttachName->attach_house_registration = 4;
+         $AttachName = AttachName::model()->find('active="y" AND user_id='.Yii::app()->user->id);
          $AttachFile = AttachFile::model()->find('file_data="4" AND active="y" AND user_id='.Yii::app()->user->id);
+         if ($AttachName === "" ||$AttachFile === "") {
+         $AttachName->attach_house_registration = 4;
          $AttachFile->user_id = $users->id;
          $AttachFile->file_data = $AttachName->attach_house_registration;
          $AttachFile->file_name = $fileName;
@@ -1182,7 +1238,23 @@ public function actionUpdate() {
          $AttachName->update_date = date("Y-m-d");
          $AttachName->update_by = $users->id;
          $AttachFile->save();
-         $AttachName->save();
+         $AttachName->save(); 
+         }else{
+         $AttachName->attach_house_registration = 4;
+         $AttachFile = new AttachFile;
+         $AttachFile->user_id = $users->id;
+         $AttachFile->file_data = $AttachName->attach_house_registration;
+         $AttachFile->file_name = $fileName;
+         $AttachFile->filename = $uglyName;
+         $AttachFile->create_date = date("Y-m-d");
+         $AttachFile->create_by = $users->id;
+         $AttachName->user_id = $users->id;
+         $AttachName->create_date = date("Y-m-d");
+         $AttachName->create_by = $users->id;
+         $AttachFile->save();
+         $AttachName->save();   
+         }
+         
     }
 
         if(isset($session['filenameComDoc']) || count($session['filenameComDoc'])!=0)
@@ -1517,6 +1589,35 @@ public function actionDeleteFileTrain($id)
         }
     }
 }
+public function actionEditNamePassport()
+{
+    $AttachFile = AttachFile::model()->findByPK($_GET['id']);
+    
+    if($AttachFile){
+        $AttachFile->filename = $_GET['name'];
+        $AttachFile->update_date = date("Y-m-d");
+        $AttachFile->update_by = Yii::app()->user->id;
+        $AttachFile->save();
+    }
+}
+public function actionDeleteFilePassport($id)
+{
+    $AttachFile = AttachFile::model()->findByPk($id);
+    if($AttachFile->count()>0){
+
+        $webroot = Yii::app()->basePath."/../uploads/attach/";
+
+        if(is_file($webroot.$AttachFile->file_name)){
+            unlink($webroot.$AttachFile->file_name);
+        }
+
+        if($AttachFile->delete($id)){
+            echo 1;
+        }else{
+            echo 0;
+        }
+    }
+}
     /**
      * This is the action to handle external exceptions.
      */
@@ -1625,7 +1726,7 @@ public function actionListDepartment(){
     array(':type_employee_id'=>$_POST['id']));
 
  $data=CHtml::listData($model,'id','dep_title',array('empty' => 'แผนก'));
- $sub_list = Yii::app()->session['lang'] == 1?'Select Branch ':'เลือกแผนก';
+ $sub_list = Yii::app()->session['lang'] == 1?'Select Department ':'เลือกแผนก';
  $data = '<option value ="">'.$sub_list.'</option>';
  foreach ($model as $key => $value) {
     $data .= '<option value = "'.$value->id.'"'.'>'.$value->dep_title.'</option>';
