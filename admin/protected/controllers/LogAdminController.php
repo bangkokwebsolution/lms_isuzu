@@ -79,6 +79,17 @@ class LogAdminController extends Controller
             'model'=>$model,
         ));
     }
+    public function actionRegister()
+    {
+        $model=new LogRegister('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['LogRegister']))
+            $model->attributes=$_GET['LogRegister'];
+
+        $this->render('Register',array(
+            'model'=>$model,
+        ));
+    }
 
     public function getStrLog($data){
         $jsonData = json_decode( $data->log_data);

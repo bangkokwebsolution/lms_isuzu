@@ -1833,6 +1833,15 @@ Class MenuLeft extends Controller
 	        			'label'=>'Log การใช้งานผู้ดูแลระบบ',
 	        			'url'=>array('//logAdmin/index')
 	        		),
+	        		array(
+	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'LogAdmin.*',
+	        				'LogAdmin.index'
+	        			)),
+	        			'label'=>'Log การตรวจสอบการสมัครสมาชิก',
+	        			'url'=>array('//logAdmin/register')
+	        		),
 	        		// array(
 	        		// 	/*====== Check Permissions Sup-Passcours (1) ======*/
 	        		// 	'visible'=>self::PermissionsMenu(array(

@@ -1544,6 +1544,23 @@ Boston, MA 02110-1301, USA.
     }
 }
 
+public function getLogregister($model)
+{
+    if ($model != null) {
+       $LogRegister = new LogRegister;
+       $LogRegister->firstname = $model->profile->firstname;
+       $LogRegister->lastname = $model->profile->lastname;
+       $LogRegister->register_date = $model->create_at;
+       $LogRegister->position_id = $model->position_id;
+       $LogRegister->confirm_date = date("Y-m-d H:i:s");
+       $LogRegister->confirm_user = Yii::app()->user->id;
+       $LogRegister->create_date = date("Y-m-d H:i:s");
+       $LogRegister->create_by = Yii::app()->user->id;
+       $LogRegister->user_id = $model->id;
+       $LogRegister->save();
+    }
+}
+
 public function changeNameFunction($name)
 {
     switch ($name){

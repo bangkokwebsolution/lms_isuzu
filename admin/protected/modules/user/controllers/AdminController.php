@@ -257,6 +257,10 @@ class AdminController extends Controller
 		$model->username = $model->identification;
 		$model->register_status = 1;
 		$model->save(false);
+		if(Yii::app()->user->id){
+						Helpers::lib()->getLogregister($model);
+					}
+
 		$to['email'] = $model->email;
 		$to['firstname'] = $model->profile->firstname;
 		$to['lastname'] = $model->profile->lastname;
