@@ -200,6 +200,9 @@ return array(
 			// use 'site/error' action to display errors
 			'errorAction'=>'site/error',
 		),
+        'zip'=>array(
+        'class'=>'application.extensions.zip.EZip',
+        ),
 
 		// 'request'=>array(
 		// 	'class' => 'application.components.HttpRequest',

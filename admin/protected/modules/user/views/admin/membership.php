@@ -1,3 +1,13 @@
+<!-- Include Required Prerequisites -->
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/moment.min.js"></script>
+ <!--Include Date Range Picker--> 
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker-bs2.css" />
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/highcharts.js"></script>
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/modules/exporting.js"></script>
+
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/bootstrap-chosen.css" />
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/chosen.jquery.js"></script>
 <?php
 $this->breadcrumbs=array(
 	UserModule::t('Users')=>array('admin'),
@@ -11,21 +21,51 @@ $this->breadcrumbs=array(
 //     array('label'=>UserModule::t('List User'), 'url'=>array('/user')),
 // );
 
+// Yii::app()->clientScript->registerScript('search', "
+// 	$('.search-button').click(function(){
+// 		$('.search-form').toggle();
+// 		return false;
+// 	});
+// 	$('.search-form form').submit(function(){
+// 		$.fn.yiiGridView.update('user-grid', {
+// 			data: $(this).serialize()
+// 		});
+// 		return false;
+// 	});
+// 	");$('#User_create_at').daterangepicker();
 Yii::app()->clientScript->registerScript('search', "
-	$('.search-button').click(function(){
-		$('.search-form').toggle();
-		return false;
+	$('#SearchFormAjax').submit(function(){
+	    return true;
 	});
-	$('.search-form form').submit(function(){
-		$.fn.yiiGridView.update('user-grid', {
-			data: $(this).serialize()
-		});
-		return false;
-	});
-	");
+");
+Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
+	$('#User_create_at').attr('readonly','readonly');
+	$('#User_create_at').css('cursor','pointer');
+	$('#User_create_at').datepicker();
+
+
+EOD
+, CClientScript::POS_READY);
 
 	?>
 	<div id="user" class="innerLR">
+		<?php
+      $this->widget('AdvanceSearchForm', array(
+        'data'=>$model,
+        'route' => $this->route,
+        //'id'=>'SearchFormAjax',
+        'attributes'=>array(
+//            array('name'=>'company_id','type'=>'list','query'=>Company::getCompanyList()),
+            array('name'=>'register_status','type'=>'list','query'=>User::getregisstatusList()),
+            array('name'=>'position_id','type'=>'list','query'=>Position::getPositionList()),
+            //array('name'=>'nameSearch','type'=>'text'),
+//            array('name'=>'course','type'=>'list','query'=>$model->courseList),
+            array('name'=>'create_at','type'=>'text'),
+
+            //array('name'=>'course_point','type'=>'text'),
+        ),
+    ));?>
+	
 
 		<div class="widget" style="margin-top: -1px;">
 			<div class="widget-head">
@@ -48,8 +88,12 @@ Yii::app()->clientScript->registerScript('search', "
 						<?php 
 						$this->widget('AGridView', array(
 							'id'=>'user-grid',
-							'dataProvider'=>$model->searchmembership(),
+							'dataProvider'=>$model->searchmember(),
 							'filter'=>$model,
+							'afterAjaxUpdate'=>'function(id, data){
+						$.appendFilter("[news_per_page]");	
+						InitialSortTable();
+					     }',
 							'columns'=>array(
 								array(
 									'header'=>'No.',
@@ -65,14 +109,14 @@ Yii::app()->clientScript->registerScript('search', "
 						            'header' => 'ชื่อ - นามสกุล',
 						            'type'=>'html',
 						            'value'=>function($data){
-						                return $data->profile->firstname . ' ' . $data->profile->lastname;
+						                return $data['firstname'] . ' ' . $data['lastname'];
 						            }
 						        ),
 						        array(
 						            'header' => 'ตำแหน่งที่สมัคร',
 						            'type'=>'html',
 						            'value'=>function($data){
-						                return $data->position->position_title;
+						                return $data['position_title'];
 						            }
 						        ),
 						        array(
@@ -80,10 +124,10 @@ Yii::app()->clientScript->registerScript('search', "
 						            'type'=>'html',
 						            'value'=>function($data){
 						 
-						                if($data->register_status == 0){
+						                if($data['register_status'] == 0){
 											//echo CHtml::button("ปิด",array("class"=>"btn btn-danger ","data-id" => $data->id));
 											echo "รอการตรวจสอบ";
-										} else if($data->register_status == 1){
+										} else if($data['register_status'] == 1){
 											echo "อนุมัติ";
 											//echo CHtml::button("รอการตรวจสอบ",array("class"=>"btn btn-success ","data-id" => $data->id));
 										}else{
@@ -98,12 +142,12 @@ Yii::app()->clientScript->registerScript('search', "
 								// ),
 		// 'create_at',
 								array(
-									'name'=>'create_at',
+									'name'=>'วันที่ลงทะเบียน',
 									'type'=>'html',
 									'filter' => false,
 			// 'value'=>'UHtml::markSearch($data,"create_at")'
 									'value'=>function($data){
-										return Helpers::changeFormatDate($data->create_at,'datetime');
+										return Helpers::changeFormatDate($data['create_at'],'datetime');
 									},
 								),
 			// 					array(
@@ -137,12 +181,12 @@ Yii::app()->clientScript->registerScript('search', "
 								array(
 									'type'=>'raw',
 									'value'=>function($data){
-										if($data->register_status == 1){
-											echo CHtml::button("อนุมัติ",array("class"=>"btn btn-danger","data-id" => $data->id));
-										} else if($data->register_status == 0) {
-											echo CHtml::button("รอการตรวจสอบ",array("class"=>"btn btn-success changeStatus","data-id" => $data->id));
-										} else {
-											echo CHtml::button("ไม่อนุมัติ",array("class"=>"btn btn-success","data-id" => $data->id));
+										if($data['register_status'] == 1){
+											echo CHtml::button("อนุมัติ",array("class"=>"btn btn-success","data-id" => $data['user_id']));
+										} else if($data['register_status'] == 0) {
+											echo CHtml::button("รอการตรวจสอบ",array("class"=>"btn btn-info changeStatus","data-id" => $data['user_id']));
+										} else if($data['register_status'] == 3){
+											echo CHtml::button("ไม่อนุมัติ",array("class"=>"btn btn btn-secondary","data-id" => $data['user_id']));
 										}
 									},
 									'header' => 'อนุมัติสมัครสมาชิก',
@@ -152,12 +196,40 @@ Yii::app()->clientScript->registerScript('search', "
 								array(
 									'type'=>'raw',
 									'value'=>function($data){	
-											echo CHtml::button("ตรวจสอบ",array("class"=>"btn btn-success Check_information","data-id" => $data->id));
+											echo CHtml::button("ตรวจสอบ",array("class"=>"btn btn-success Check_information","data-id" => $data['user_id']));
 									},
 									'header' => 'ตรวจสอบข้อมูลการสมัคร',
 									'htmlOptions'=>array('style'=>'text-align: center;'),
 									'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
 								),
+								array(
+                                            'header' => 'พิมพ์ใบสมัคร',
+                                            'type' => 'raw',
+                                            'value' => function($data) {
+                                               //var_dump($data->id);
+                                                //return CHtml::button("พิมพ์",array('class' => 'btn btn btn-success print_pdf','data-id' => $data->id));
+                                                return CHtml::button('พิมพ์ใบสมัคร', array('submit' => array('admin/Printpdf', 'id'=> $data['user_id']),'class' => 'btn btn btn-success'));
+                                            },'htmlOptions' => array(
+                                                'style'=> "text-align: center;",
+                                            ),
+                                        ),
+								array(
+                                            'header' => 'ดาวน์โหลดเอกสารแนบ',
+                                            'type' => 'raw',
+                                            'value' => function($data) {
+                                       
+                                                return CHtml::button('ดาวน์โหลดเอกสารแนบ', array('submit' => array('admin/Attach_load', 'id'=> $data['user_id']),'class' => 'btn btn btn-success'));
+                                            },'htmlOptions' => array(
+                                                'style'=> "text-align: center;",
+                                            ),
+                                        ),
+								array(
+						            'header' => 'หมายเหตุ',
+						            'type'=>'html',
+						            'value'=>function($data){
+						                //return $data->position->position_title;
+						            }
+						        ),
 								// array(
 								// 	'class'=>'AButtonColumn',
 								// 	'visible'=>Controller::PButton(
@@ -202,7 +274,7 @@ Yii::app()->clientScript->registerScript('search', "
 							            <div class="modal-body">
 							            </div>
 							            <div class="modal-footer" style="background-color: #eee;">
-							                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+							                <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
 							                <button id="btnSubmit" type="submit" class="btn btn-primary" onclick="saveModal()">บันทึก</button>
 							            </div>
 							        </div>

@@ -436,13 +436,12 @@ public function validateIdCard($attribute,$params){
      //    $criteria->params = array(':date1' => $this->create_at, ':date2' => $this->create_at);
 		$criteria->addBetweenCondition('create_at', $this->create_at, $this->create_at, 'AND');
 	}
-  
 	$criteria->compare('online_status',$this->online_status);
 	$criteria->compare('online_user',$this->online_user);
 	$criteria->compare('group',$this->group);
 
 	$criteria->compare('profile.identification',$this->idensearch,true);
-   
+     
 	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
 	//$criteria->compare('orgchart_lv2',$org,true);
  var_dump($criteria);
