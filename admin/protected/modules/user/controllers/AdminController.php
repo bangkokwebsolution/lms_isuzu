@@ -103,12 +103,12 @@ class AdminController extends Controller
 		$model = new User('search');
         $model->unsetAttributes();  // clear any default values
         $model->typeuser = array(1);
-        $model->register_status = array(1);
+        //$model->register_status = array(1);
         $model->supper_user_status = true;
         if(isset($_GET['User'])){
         	$model->attributes=$_GET['User'];
         }
-        
+
         $this->render('approve',array(
         	'model'=>$model,
         ));
