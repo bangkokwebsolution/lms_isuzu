@@ -20,6 +20,7 @@
 class LogRegister extends CActiveRecord
 {
 	public $news_per_page;
+	public $search_name;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -39,10 +40,10 @@ class LogRegister extends CActiveRecord
 			array('position_id, confirm_user, create_by, update_by', 'numerical', 'integerOnly'=>true),
 			array('firstname, lastname', 'length', 'max'=>255),
 			array('active', 'length', 'max'=>1),
-			array('news_per_page,register_date, confirm_date, create_date, update_date', 'safe'),
+			array('news_per_page,register_date, confirm_date, create_date, update_date, search_name', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, firstname, lastname, register_date, position_id, confirm_date, confirm_user, create_date, create_by, update_date, update_by, active, user_id, news_per_page', 'safe', 'on'=>'search'),
+			array('id, firstname, lastname, register_date, position_id, confirm_date, confirm_user, create_date, create_by, update_date, update_by, active, user_id, news_per_page, search_name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -79,6 +80,7 @@ class LogRegister extends CActiveRecord
 			'update_by' => 'Update By',
 			'active' => 'Active',
 			'user_id' => 'user_id',
+			'search_name' => 'ชื่อ - สกุล'
 		);
 	}
 

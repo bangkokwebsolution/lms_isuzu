@@ -49,7 +49,7 @@ EOD
                 <?php $this->widget('AGridView', array(
                     'id'=>$formNameModel.'-grid',
                     'dataProvider'=>$model->search(),
-                    //'filter'=>$model,
+                    'filter'=>$model,
                     'selectableRows' => 2,
                     'rowCssClassExpression'=>'"items[]_{$data->id}"',
                     'htmlOptions' => array(
