@@ -34,14 +34,21 @@ $this->breadcrumbs=array(
 // 	});
 // 	");$('#User_create_at').daterangepicker();
 Yii::app()->clientScript->registerScript('search', "
-	$('#SearchFormAjax').submit(function(){
-	    return true;
+	$('.search-button').click(function(){
+		$('.search-form').toggle();
+		return false;
 	});
-");
+	$('.search-form form').submit(function(){
+		$.fn.yiiGridView.update('user-grid', {
+			data: $(this).serialize()
+		});
+		return false;
+	});
+	");
 Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	$('#User_create_at').attr('readonly','readonly');
 	$('#User_create_at').css('cursor','pointer');
-	$('#User_create_at').datepicker();
+	$('#User_create_at').daterangepicker();
 
 
 EOD
@@ -88,7 +95,7 @@ EOD
 						<?php 
 						$this->widget('AGridView', array(
 							'id'=>'user-grid',
-							'dataProvider'=>$model->searchmember(),
+							'dataProvider'=>$model->searchmembership(),
 							'filter'=>$model,
 							'afterAjaxUpdate'=>'function(id, data){
 						$.appendFilter("[news_per_page]");	
@@ -109,14 +116,14 @@ EOD
 						            'header' => 'ชื่อ - นามสกุล',
 						            'type'=>'html',
 						            'value'=>function($data){
-						                return $data['firstname'] . ' ' . $data['lastname'];
+						                return $data->profile->firstname . ' ' . $data->profile->lastname;
 						            }
 						        ),
 						        array(
 						            'header' => 'ตำแหน่งที่สมัคร',
 						            'type'=>'html',
 						            'value'=>function($data){
-						                return $data['position_title'];
+						                return $data->position->position_title;
 						            }
 						        ),
 						        array(
@@ -124,10 +131,10 @@ EOD
 						            'type'=>'html',
 						            'value'=>function($data){
 						 
-						                if($data['register_status'] == 0){
+						                if($data->register_status == 0){
 											//echo CHtml::button("ปิด",array("class"=>"btn btn-danger ","data-id" => $data->id));
 											echo "รอการตรวจสอบ";
-										} else if($data['register_status'] == 1){
+										} else if($data->register_status == 1){
 											echo "อนุมัติ";
 											//echo CHtml::button("รอการตรวจสอบ",array("class"=>"btn btn-success ","data-id" => $data->id));
 										}else{
@@ -147,7 +154,7 @@ EOD
 									'filter' => false,
 			// 'value'=>'UHtml::markSearch($data,"create_at")'
 									'value'=>function($data){
-										return Helpers::changeFormatDate($data['create_at'],'datetime');
+										return Helpers::changeFormatDate($data->create_at,'datetime');
 									},
 								),
 			// 					array(
@@ -181,12 +188,12 @@ EOD
 								array(
 									'type'=>'raw',
 									'value'=>function($data){
-										if($data['register_status'] == 1){
-											echo CHtml::button("อนุมัติ",array("class"=>"btn btn-success","data-id" => $data['user_id']));
-										} else if($data['register_status'] == 0) {
-											echo CHtml::button("รอการตรวจสอบ",array("class"=>"btn btn-info changeStatus","data-id" => $data['user_id']));
-										} else if($data['register_status'] == 3){
-											echo CHtml::button("ไม่อนุมัติ",array("class"=>"btn btn btn-secondary","data-id" => $data['user_id']));
+										if($data->register_status == 1){
+											echo CHtml::button("อนุมัติ",array("class"=>"btn btn-success","data-id" => $data->id));
+										} else if($data->register_status == 0) {
+											echo CHtml::button("รอการตรวจสอบ",array("class"=>"btn btn-info changeStatus","data-id" => $data->id));
+										} else if($data->register_status == 3){
+											echo CHtml::button("ไม่อนุมัติ",array("class"=>"btn btn btn-secondary","data-id" => $data->id));
 										}
 									},
 									'header' => 'อนุมัติสมัครสมาชิก',
@@ -196,7 +203,7 @@ EOD
 								array(
 									'type'=>'raw',
 									'value'=>function($data){	
-											echo CHtml::button("ตรวจสอบ",array("class"=>"btn btn-success Check_information","data-id" => $data['user_id']));
+											echo CHtml::button("ตรวจสอบ",array("class"=>"btn btn-success Check_information","data-id" => $data->id));
 									},
 									'header' => 'ตรวจสอบข้อมูลการสมัคร',
 									'htmlOptions'=>array('style'=>'text-align: center;'),
@@ -208,7 +215,7 @@ EOD
                                             'value' => function($data) {
                                                //var_dump($data->id);
                                                 //return CHtml::button("พิมพ์",array('class' => 'btn btn btn-success print_pdf','data-id' => $data->id));
-                                                return CHtml::button('พิมพ์ใบสมัคร', array('submit' => array('admin/Printpdf', 'id'=> $data['user_id']),'class' => 'btn btn btn-success'));
+                                                return CHtml::button('พิมพ์ใบสมัคร', array('submit' => array('admin/Printpdf', 'id'=> $data->id),'class' => 'btn btn btn-success'));
                                             },'htmlOptions' => array(
                                                 'style'=> "text-align: center;",
                                             ),
@@ -218,7 +225,7 @@ EOD
                                             'type' => 'raw',
                                             'value' => function($data) {
                                        
-                                                return CHtml::button('ดาวน์โหลดเอกสารแนบ', array('submit' => array('admin/Attach_load', 'id'=> $data['user_id']),'class' => 'btn btn btn-success'));
+                                                return CHtml::button('ดาวน์โหลดเอกสารแนบ', array('submit' => array('admin/Attach_load', 'id'=> $data->id),'class' => 'btn btn btn-success'));
                                             },'htmlOptions' => array(
                                                 'style'=> "text-align: center;",
                                             ),

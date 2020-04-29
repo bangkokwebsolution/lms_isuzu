@@ -406,7 +406,7 @@ public function validateIdCard($attribute,$params){
 {
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
-
+    
 	$criteria=new CDbCriteria;
 
 	$criteria->with = array('profile');
@@ -419,33 +419,31 @@ public function validateIdCard($attribute,$params){
 	$criteria->compare('position_id',$this->position_id);
 	$criteria->compare('email',$this->email,true);
 	$criteria->compare('activkey',$this->activkey);
-	
 	$criteria->compare('lastvisit_at',$this->lastvisit_at);
 	$criteria->compare('lastactivity',$this->lastactivity);
 	$criteria->compare('superuser',$this->superuser);
-	//$criteria->compare('status',0);
+	$criteria->compare('status',0);
 	$criteria->compare('del_status',0); 
 	$criteria->compare('register_status',$this->register_status);
-	//$criteria->addBetweenCondition('create_at', $this->create_at, $this->create_at, 'AND');
-	// $criteria->addCondition('create_at >= :startDate AND create_at <= :endDate');
- //    $criteria->params = array(':startDate' => $this->create_at, ':endDate' => $this->create_at);
 	if(empty($this->create_at)) {
 		$criteria->compare('create_at',$this->create_at,true);
-	}else{
-	    // $criteria->condition = "create_at >= :date1 AND create_at <= :date2";
-     //    $criteria->params = array(':date1' => $this->create_at, ':date2' => $this->create_at);
-		$criteria->addBetweenCondition('create_at', $this->create_at, $this->create_at, 'AND');
+	}else {
+		$start_date = substr($this->create_at,0,11);
+		$end_date = substr($this->create_at,13);
+	
+		$date_start = date('Y-m-d', strtotime($start_date));
+		$date_end = date('Y-m-d', strtotime($end_date));
+			
+		$criteria->addBetweenCondition('create_at', $date_start, $date_end, 'AND');
 	}
+	
 	$criteria->compare('online_status',$this->online_status);
 	$criteria->compare('online_user',$this->online_user);
 	$criteria->compare('group',$this->group);
-
 	$criteria->compare('profile.identification',$this->idensearch,true);
      
 	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
 	//$criteria->compare('orgchart_lv2',$org,true);
- var_dump($criteria);
- 
 	return new CActiveDataProvider(get_class($this), array(
 		'criteria'=>$criteria,
 		'pagination'=>array(
@@ -470,7 +468,7 @@ public function searchmembership()
 	$criteria->compare('position_id',$this->position_id);
 	$criteria->compare('email',$this->email,true);
 	$criteria->compare('activkey',$this->activkey);
-	$criteria->compare('create_at',$this->create_at);
+	//$criteria->compare('create_at',$this->create_at);
 	$criteria->compare('lastvisit_at',$this->lastvisit_at);
 	$criteria->compare('lastactivity',$this->lastactivity);
 	$criteria->compare('superuser',$this->superuser);
@@ -480,6 +478,17 @@ public function searchmembership()
 	$criteria->compare('online_user',$this->online_user);
 	$criteria->compare('group',$this->group);
 	$criteria->compare('profile.identification',$this->idensearch,true);
+	if(empty($this->create_at)) {
+		$criteria->compare('create_at',$this->create_at,true);
+	}else {
+		$start_date = substr($this->create_at,0,11);
+		$end_date = substr($this->create_at,13);
+	
+		$date_start = date('Y-m-d', strtotime($start_date));
+		$date_end = date('Y-m-d', strtotime($end_date));
+			
+		$criteria->addBetweenCondition('create_at', $date_start, $date_end, 'AND');
+	}
 	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
 	//$criteria->compare('orgchart_lv2',$org,true);
 
@@ -491,35 +500,35 @@ public function searchmembership()
 	));
 }
 
-public function searchmember()
-    {
-        $sql = " SELECT * FROM tbl_users ";
-        $sql .= ' left join tbl_profiles on tbl_profiles.user_id = tbl_users.id';
-        $sql .= ' left join tbl_type_user on tbl_type_user.id = tbl_profiles.type_user';
-        $sql .= ' left join tbl_position on tbl_position.id = tbl_users.position_id';
-        $sql .= " where tbl_users.status = '0' and tbl_users.del_status ='0'";
+// public function searchmember()
+//     {
+//         $sql = " SELECT * FROM tbl_users ";
+//         $sql .= ' left join tbl_profiles on tbl_profiles.user_id = tbl_users.id';
+//         $sql .= ' left join tbl_type_user on tbl_type_user.id = tbl_profiles.type_user';
+//         $sql .= ' left join tbl_position on tbl_position.id = tbl_users.position_id';
+//         $sql .= " where tbl_users.status = '0' and tbl_users.del_status ='0'";
 
-        if($this->user_id != null) {
-            $sql .= ' and tbl_users.id = "' . $this->user_id . '"';
-        }
-        // if($this->nameSearch != null) {
-        //     $sql .= ' and (tbl_profiles.firstname like "%' . $this->nameSearch . '%" or tbl_profiles.lastname = "%' . $this->nameSearch . '%")';
-        // }
-        // if($this->dateRang != null) {
-        //     $sql .= ' and (tbl_users.create_at like "%' . $this->dateRang . '%" or tbl_users.create_at = "%' . $this->dateRang . '%")';
-        // }
-        // if($this->register_status != null) {
-        //     $sql .= ' and tbl_users.register_status = "' . $this->register_status . '"';
-        // }
-        // if($this->typeuser != null) {
-        //     $sql .= ' and tbl_profiles.type_user = "' . $this->typeuser . '"';
-        // }
+//         if($this->user_id != null) {
+//             $sql .= ' and tbl_users.id = "' . $this->user_id . '"';
+//         }
+//         // if($this->nameSearch != null) {
+//         //     $sql .= ' and (tbl_profiles.firstname like "%' . $this->nameSearch . '%" or tbl_profiles.lastname = "%' . $this->nameSearch . '%")';
+//         // }
+//         // if($this->dateRang != null) {
+//         //     $sql .= ' and (tbl_users.create_at like "%' . $this->dateRang . '%" or tbl_users.create_at = "%' . $this->dateRang . '%")';
+//         // }
+//         // if($this->register_status != null) {
+//         //     $sql .= ' and tbl_users.register_status = "' . $this->register_status . '"';
+//         // }
+//         // if($this->typeuser != null) {
+//         //     $sql .= ' and tbl_profiles.type_user = "' . $this->typeuser . '"';
+//         // }
     
-        $sql .= ' group by tbl_users.id';
+//         $sql .= ' group by tbl_users.id';
 
-        $rawData = Yii::app()->db->createCommand($sql)->queryAll();
-        return new CArrayDataProvider($rawData, $poviderArray);
-    }
+//         $rawData = Yii::app()->db->createCommand($sql)->queryAll();
+//         return new CArrayDataProvider($rawData, $poviderArray);
+//     }
 
     public function getCreatetime() {
         return strtotime($this->create_at);

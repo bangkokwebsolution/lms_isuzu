@@ -37,6 +37,7 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	$('#User_create_at').attr('readonly','readonly');
 	$('#User_create_at').css('cursor','pointer');
 	$('#User_create_at').daterangepicker();
+	
 
 
 EOD
