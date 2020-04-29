@@ -16,6 +16,30 @@
  */
 class Logques extends CActiveRecord
 {
+	public $typeOfUser;
+    public $typeuser;
+    public $university;
+    public $company;
+    public $categoryUniversity;
+    public $categoryCompany;
+    public $dateRang;
+    public $period_start;
+    public $period_end;
+    public $course;
+    public $department;
+    public $nameSearch;
+    public $user_id;
+    public $company_id;
+    public $division_id;
+    public $position_id;
+    public $courseArray;
+    public $course_id;
+    public $learnStatus;
+    public $generation;
+    public $search;
+    public $lesson_id;
+    public $email;
+    public $searchAll;
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
@@ -44,10 +68,12 @@ class Logques extends CActiveRecord
 		return array(
 			array('score_id, ques_id, user_id, create_by, update_by', 'numerical', 'integerOnly'=>true),
 			array('active', 'length', 'max'=>1),
-			array('create_date, update_date', 'safe'),
+			array('create_date, update_date, logques_text , check, confirm', 'safe'),
+
+			array('period_start,period_end,typeOfUser,dateRang,course,nameSearch,university,company,categoryUniversity,categoryCompany,company_id,division_id,position_id,course_id,email,searchAll', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('logques_id, score_id, ques_id, user_id, create_date, create_by, update_date, update_by, active', 'safe', 'on'=>'search'),
+			array('logques_id, score_id, ques_id, user_id, create_date, create_by, update_date, update_by, active,logques_text , check, confirm', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,6 +85,13 @@ class Logques extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'choice' => array(self::BELONGS_TO, 'Choice', array('choice_id'=>'choice_id')),
+			'ques' => array(self::BELONGS_TO, 'Question', array('ques_id'=>'ques_id')),
+			'user'=>array(self::BELONGS_TO, 'Users', 'user_id'),
+            'member'=>array(self::BELONGS_TO, 'Profiles', 'user_id'),
+            'lesson'=>array(self::BELONGS_TO, 'Lesson', array('lesson_id'=> 'id')),
+            'Score'=>array(self::BELONGS_TO, 'Score', 'score_id'),
+            'question'=>array(self::BELONGS_TO, 'Question', 'ques_id'),
 		);
 	}
 
@@ -101,6 +134,25 @@ class Logques extends CActiveRecord
 			'update_date' => 'Update Date',
 			'update_by' => 'Update By',
 			'active' => 'Active',
+			'logques_text' => 'Logchoice Text',
+			'check' => 'check',
+
+			'searchAll' => 'รายชื่อผู้เรียน , E-mail , เลขบัตรประชาชน',
+			'typeOfUser' => 'ประเภทของสมาชิก',
+            'dateRang' => 'เลือกระยะเวลา',
+            'course' => 'หลักสูตร',
+            'nameSearch' => 'รายชื่อผู้เรียน',
+            'company_id' => 'หน่วยงาน',
+            'division_id' => 'ศูนย์/แผนก',
+            'position_id' => 'ตำแหน่ง',
+            'search' => 'ค้นหา',
+            'period_start' => 'วันที่เริ่มต้น',
+            'period_end' => 'วันที่สิ้นสุด',
+            'generation' => 'เลือกรุ่น',
+            'course_id' => 'เลือกหลักสูตร',
+            'lesson_id' => 'เลือกบทเรียน',
+            'email' => 'อีเมลล์ผู้ใช้',
+			'confirm' => 'Confirm',
 		);
 	}
 
@@ -115,16 +167,59 @@ class Logques extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+		// $criteria->compare('logques_id',$this->logques_id);
+		// $criteria->compare('score_id',$this->score_id);
+		// $criteria->compare('ques_id',$this->ques_id);
+		// $criteria->compare('user_id',$this->user_id);
+		// $criteria->compare('create_date',$this->create_date,true);
+		// $criteria->compare('create_by',$this->create_by);
+		// $criteria->compare('update_date',$this->update_date,true);
+		// $criteria->compare('update_by',$this->update_by);
+		// $criteria->compare('active',$this->active,true);
+
 		$criteria->compare('logques_id',$this->logques_id);
+		$criteria->with = array('user','member','question','lesson');
+
+		$modelUser = Users::model()->findByPk(Yii::app()->user->id);
+		$state = in_array("1", json_decode($modelUser->group));
+
+		if($state){
+			$criteria->compare('t.user_id',$this->user_id);
+		}else{
+			$criteriaOrg = new CDbCriteria;
+			$criteriaOrg->compare('parent_id',$modelUser->department_id);
+			$criteriaOrg->compare('active','y');
+			$orgModal = OrgChart::model()->findAll($criteriaOrg);
+			$groupPosition = array();
+			foreach ($orgModal as $key => $value) {
+				$groupPosition[] = $value->id;
+			}
+			$criteria->addIncondition('user.position_id',$groupPosition);
+		}
+
 		$criteria->compare('score_id',$this->score_id);
 		$criteria->compare('ques_id',$this->ques_id);
-		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('lesson_id',$this->lesson_id);
+		$criteria->compare('course_id',$this->course_id);
+		if($this->email != null){
+			$criteria->compare('email',$this->email,true);
+		}
+		if($this->dateRang != null){
+			$criteria->addCondition('t.create_date >= "'.$this->period_start.'" ');
+			$criteria->addCondition('t.create_date <= "'.$this->period_end.'" ');
+		}
+		$criteria->compare('t.confirm',$this->confirm);
+		$criteria->compare('t.test_type',$this->test_type);
+		$criteria->compare('t.ques_type',$this->ques_type);
 		$criteria->compare('create_date',$this->create_date,true);
 		$criteria->compare('create_by',$this->create_by);
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
-
+		$criteria->compare('t.check',$this->check);
+		
+		$criteria->group = 'lesson_id,t.user_id';
+		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));

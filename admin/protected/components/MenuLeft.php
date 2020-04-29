@@ -1289,6 +1289,40 @@ Class MenuLeft extends Controller
 	        	)
 	        ),
 			//====== END Menu Group Contactus ======//
+			array(
+				/*====== Check Permissions Passcours (1) ======*/
+				'visible'=>self::PermissionsMenu(array(
+					'CheckLecture.*',
+					// 'CheckLecture.update',
+				)),
+				'label'=>'<i></i><span>ระบบตรวจข้อสอบบรรยาย</span>',
+				'url'=>'#CheckLecture',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('CheckLecture') ), 'id' => 'CheckLecture'),
+				'active' => self::SetSubMenu( array('CheckLecture') ,false),
+				'items'=>array(
+					array(
+						/*====== Check Permissions Sup-Passcours (1) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'CheckLecture.*',
+							// 'CheckLecture.update'
+						)),
+						'label'=>'ตรวจข้อสอบบรรยายบทเรียน',
+						'url'=>array('//CheckLecture/index')
+					),
+					array(
+						/*====== Check Permissions Sup-Passcours (1) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'Signature.*',
+							'Signature.update'
+						)),
+
+						'label'=>'ตรวจข้อสอบบรรยายหลักสูตร',
+						'url'=>array('//CheckLecture/coureCheck')
+					),
+				)
+			),
 
 	        array(
 	        	/*====== Check Permissions AuthitemAccess (1) ======*/
