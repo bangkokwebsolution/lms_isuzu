@@ -37,7 +37,7 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	$('#User_create_at').attr('readonly','readonly');
 	$('#User_create_at').css('cursor','pointer');
 	$('#User_create_at').daterangepicker();
-	
+
 
 
 EOD
@@ -62,6 +62,12 @@ EOD
 				<div>
 					<?php echo Rights::t('core', 'ที่นี่คุณสามารถอนุมัติการเข้าใช้งานระบบให้กับผู้ใช้แต่ละราย'); ?>
 				</div>
+				<div class="separator bottom form-inline small">
+				<span class="pull-right">
+					<label class="strong">แสดงแถว:</label>
+					<?php echo $this->listPageShow($formNameModel);?>
+				</span>
+			</div>
 				<div class="spacer"></div>
 				<div>
 
@@ -97,7 +103,7 @@ EOD
 						            }
 						        ),
 						        array(
-						            'header' => 'สถานะ',
+						            'header' => 'สถานะตรวจสอบ',
 						            'type'=>'html',
 						            'value'=>function($data){
 						 
@@ -107,7 +113,7 @@ EOD
 										} else if($data->register_status == 1){
 											echo "อนุมัติ";
 											//echo CHtml::button("รอการตรวจสอบ",array("class"=>"btn btn-success ","data-id" => $data->id));
-										}else{
+										}else if($data->register_status == 2){
 											echo "ไม่อนุมัติ";
 										}
 						            }
@@ -170,15 +176,24 @@ EOD
 									'type'=>'raw',
 									'value'=>function($data){
 										if($data->status == 1){
+											echo CHtml::button("ผ่าน",array("class"=>"btn btn-success ","data-id" => $data->id));
+										} else if($data->status == 0) {
+											echo CHtml::button("รออนุมัติ",array("class"=>"btn btn-info changeStatus","data-id" => $data->id));
+										} else if($data->status == 2) {
 											echo CHtml::button("ไม่ผ่าน",array("class"=>"btn btn-danger ","data-id" => $data->id));
-										} else {
-											echo CHtml::button("ผ่าน",array("class"=>"btn btn-success changeStatus","data-id" => $data->id));
 										}
 									},
 									'header' => 'ยืนยันการสมัครสมาชิก',
 									'htmlOptions'=>array('style'=>'text-align: center;'),
 									'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
 								),
+								array(
+						            'header' => 'สาเหตุที่ไม่ผ่าน',
+						            'type'=>'html',
+						            'value'=>function($data){
+						                return $data->not_passed;
+						            }
+						        ),
 								
 								// array(
 								// 	'class'=>'AButtonColumn',
@@ -228,26 +243,90 @@ EOD
 							$( ".changeStatus" ).click(function() {
 								var btn = $(this);
 								var id = btn.attr("data-id");
-								var _items = ["ระงับการใช้งาน","เปิดการใช้งาน"];
+								// var _items = ["ระงับการใช้งาน","เปิดการใช้งาน"];
+								// swal({
+								// 	title: "โปรดรอสักครู่",
+								// 	text: "ระบบกำลังส่งอีเมล",
+								// 	type: "info",
+								// 	showConfirmButton: false
+								// });
 								swal({
-									title: "โปรดรอสักครู่",
-									text: "ระบบกำลังส่งอีเมล",
+									title: "ต้องการอนุมัติการเข้าใช้งานหรือไม่",
+									text: "เลือก",
 									type: "info",
-									showConfirmButton: false
-								});
+									showCancelButton: true,
+                                    confirmButtonClass: "btn-danger",
+                                    confirmButtonText: "อนุมัติ",
+                                    cancelButtonText: "ไม่อนุมัติ",
+                                    closeOnConfirm: false,
+                                    closeOnCancel: false,
+                                    showLoaderOnConfirm: true
+								},
+								function(isConfirm) {
+									if (isConfirm) {
 								$.ajax({
 									//url: "<?= $this->createUrl('admin/active'); ?>", 
 									url: "<?=Yii::app()->createUrl('user/admin/active');?>",
 									type: "POST",
 									data:  {id:id},
 									success: function(result){
-										if(result == 1) btn.addClass('btn-success').removeClass('btn-danger');
-										else btn.addClass('btn-danger').removeClass('btn-success');
-										btn.val(_items[result]);
-										location.reload();
+										// if(result == 1) btn.addClass('btn-success').removeClass('btn-danger');
+										// else btn.addClass('btn-danger').removeClass('btn-success');
+										// btn.val(_items[result]);
+										// location.reload();
 									}
 								});
+							}else {
+								  	checkConfirminformation();    
+								  }
+							}
+							);
 							});
+							function checkConfirminformation() {
+                swal({
+                    title: "ระบุสาเหตุที่ไม่ผ่าน",
+                    text: "ระบุสาเหตุที่ไม่ผ่าน",
+                    type: "input",
+                    //inputType: "password",
+                    inputPlaceholder: "ข้อความไม่แจ้งไม่ผ่าน",
+                    showCancelButton: true,
+                    allowEnterKey: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true,
+                    confirmButtonText: "ตกลง",
+                    cancelButtonText: "ยกเลิก",
+                    animation: "slide-from-top",
+                },
+                function (inputValue) {
+                    if(inputValue != false){
+                    	var id = $('.changeStatus').attr("data-id");
+                        $.ajax({
+                            type : 'POST',
+                            url : "<?= $this->createUrl('admin/NotPassed'); ?>",
+                            data: { passInput:inputValue,
+                                    id:id
+                                 }
+                            ,success:function(data){
+                            	console.log(data);
+                            	if (data) {
+                            		setTimeout(function () {
+                            	swal("สำเร็จ!", "ระบบได้ทำการส่งอีเมลล์แจ้งผู้สมัครเรียบร้อยแล้ว", "success");
+                            	}, 4000);
+                            	location.reload();
+
+                            }else{
+                            	setTimeout(function () {
+                            	swal("ไม่สำเร็จ!", "ไม่สามารถแก้ไขข้อมูลได้)", "error");
+                            	}, 2000);
+                            	location.reload();
+                            }
+             
+                            }
+                        });
+                    }
+                }
+                );
+            }
 						</script>
 					</div>
 

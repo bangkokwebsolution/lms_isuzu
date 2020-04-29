@@ -373,3 +373,127 @@
  		</tbody> 			
  	</table>
  </div>
+ <div style="padding-bottom:10px;">
+  <table border="1" width="100%" style="border-collapse:collapse; overflow: wrap;">
+    <thead>
+      <tr style="background-color:#D3D3D3;">
+        <td colspan="3" width="100%" style="text-align:left; font-size:20px; font-weight: bold;">
+          <p>ประวัติการทำงาน</p>
+        </td>
+      </tr>
+      <tr>
+        <td width="17%" style="padding-bottom:-2px; text-align:center; font-size:19px; font-weight: bold;">
+          <p>บริษัท</p>
+        </td>
+        <td width="17%" style="padding-bottom:-2px; text-align:center; font-size:19px; font-weight: bold;">
+          <p>ตำแหน่ง</p>
+        </td>
+        <td width="13%" style="padding-bottom:-2px; text-align:center; font-size:19px; font-weight: bold;">
+          <p>ตั้งแต่</p>
+        </td>
+        <td width="43%" style="padding-bottom:-2px; text-align:center; font-size:19px; font-weight: bold;">
+          <p>สาเหตุที่ออก</p>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <?php 
+        $user_id = $user['id'];
+        $ProfilesWorkHistory = ProfilesWorkHistory::model()->findAll(array(
+          'condition' => 'user_id=:user_id AND active=:active',
+          'params' => array(':user_id'=>$user_id, ':active'=>'y')));
+      
+        if(!empty($ProfilesWorkHistory)){ 
+        foreach ($ProfilesWorkHistory as $key => $value) {          
+
+          $WorkHistory_data = $ProfilesWorkHistory[$key]->attributes;
+          $company_name = $WorkHistory_data['company_name'];
+          $since_date = $WorkHistory_data['since_date'];
+          $position_name = $WorkHistory_data['position_name'];
+          $reason_leaving = $WorkHistory_data['reason_leaving'];
+    
+          ?>
+          <tr>
+            <td style="text-align:center; font-size:18px;" valign="top">
+              <p><?php if($company_name != ""){ echo $company_name; }else{ echo "-"; } ?></p>
+            </td>
+           <td style="text-align:center; font-size:18px;" valign="top">
+              <p><?php if($position_name != ""){ echo $position_name; }else{ echo "-"; } ?></p>
+            </td>
+            <td style="text-align:center; font-size:18px;" valign="top">
+              <p><?php if($since_date != ""){ echo $since_date; }else{ echo "-"; } ?></p>
+            </td>
+            <td style="text-align:center; font-size:18px;" valign="top">
+              <p><?php if($reason_leaving != ""){echo $reason_leaving; }else{ echo "-"; } ?></p>
+            </td>
+          </tr>  
+          <?php
+        }
+      }else{
+        ?>
+        <tr>
+          
+          <td style="text-align:center; font-size:18px; font-style:italic;">-</td>
+          <td style="text-align:center; font-size:18px; font-style:italic;">-</td>
+          <td style="text-align:center; font-size:18px; font-style:italic;">-</td>
+          <td style="text-align:center; font-size:18px; font-style:italic;">-</td>          
+        </tr> 
+        <?php
+      }
+      ?>
+    </tbody>      
+  </table>
+ </div>
+ <table border="0" width="100%" style="border-collapse:collapse;">
+            <tr>
+              <td width="100%" style="text-align:center;">   
+                <table border="0" width="100%" style="border-collapse:collapse;">
+                  
+                  <tr>
+                    <td width="75%" style="padding-top: 10px;">
+                      <table border="0" width="100%" style="border-collapse:collapse;">
+                        
+                    <img border="9" src="<?php echo $img; ?>" width="150" height="180">
+                      </table>
+                    </td>
+                    <td width="25%" style="text-align:right;">
+                      <tr>
+                          <td style="padding-left:200px; padding-bottom:-40px; text-align:left; font-size:20px;">
+        
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="text-align:left; font-size:200px;">
+                            <p></p>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td style="padding-left:304px; padding-bottom:-20px; text-align:left; font-size:18px;">
+                            <p><?php if($profiles['firstname_en'] != ""){ echo $profiles['firstname_en'];?>&nbsp;&nbsp;
+                            <?php echo $profiles['lastname_en']; }else{ echo "-"; } ?></p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding-left:204px;text-align:left; font-size:18px;">
+                            <p>Name : .................................................................</p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding-left:304px; padding-bottom:-20px; text-align:left; font-size:18px;">
+                            <p><?php if($profiles['firstname'] != ""){ echo $profiles['firstname'];?>&nbsp;&nbsp;
+                            <?php echo $profiles['lastname']; }else{ echo "-"; } ?></p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding-left:204px;text-align:left; font-size:18px;">
+                            <p>ชื่อ : .......................................................................</p>
+                          </td>
+                        </tr>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>         
+            
+        </table>

@@ -82,6 +82,12 @@ EOD
 				<div>
 					<?php echo Rights::t('core', 'ที่นี่คุณสามารถอนุมัติการสมัครสมาชิกให้กับผู้ใช้แต่ละราย'); ?>
 				</div>
+				<div class="separator bottom form-inline small">
+				<span class="pull-right">
+					<label class="strong">แสดงแถว:</label>
+					<?php echo $this->listPageShow($formNameModel);?>
+				</span>
+			   </div>
 				<div class="spacer"></div>
 				<div>
 
@@ -137,7 +143,7 @@ EOD
 										} else if($data->register_status == 1){
 											echo "อนุมัติ";
 											//echo CHtml::button("รอการตรวจสอบ",array("class"=>"btn btn-success ","data-id" => $data->id));
-										}else{
+										}else if($data->register_status == 2){
 											echo "ไม่อนุมัติ";
 										}
 						            }
@@ -192,7 +198,7 @@ EOD
 											echo CHtml::button("อนุมัติ",array("class"=>"btn btn-success","data-id" => $data->id));
 										} else if($data->register_status == 0) {
 											echo CHtml::button("รอการตรวจสอบ",array("class"=>"btn btn-info changeStatus","data-id" => $data->id));
-										} else if($data->register_status == 3){
+										} else if($data->register_status == 2){
 											echo CHtml::button("ไม่อนุมัติ",array("class"=>"btn btn btn-secondary","data-id" => $data->id));
 										}
 									},
@@ -234,7 +240,7 @@ EOD
 						            'header' => 'หมายเหตุ',
 						            'type'=>'html',
 						            'value'=>function($data){
-						                //return $data->position->position_title;
+						                return $data->note;
 						            }
 						        ),
 								// array(
@@ -327,7 +333,7 @@ EOD
 								function(isConfirm) {
 								  if (isConfirm) {
 								  	$.ajax({
-									url: "<?= $this->createUrl('admin/confirm'); ?>", 
+									url: "<?= $this->createUrl('admin/active'); ?>", 
 									type: "POST",
 									data:  {id:id},
 									success: function(result){

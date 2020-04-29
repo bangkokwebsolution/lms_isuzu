@@ -108,6 +108,7 @@ class AdminController extends Controller
         if(isset($_GET['User'])){
         	$model->attributes=$_GET['User'];
         }
+        
         $this->render('approve',array(
         	'model'=>$model,
         ));
@@ -299,11 +300,37 @@ class AdminController extends Controller
 		} else {
 			$model->register_status = 1;
 		}
+		$model->note = $passage;
 		$model->save(false);
 		$to['email'] = $model->email;
 		$to['firstname'] = $model->profile->firstname;
 		$to['lastname'] = $model->profile->lastname;
+
 		$message = $this->renderPartial('_mail_Notapproved',array('model' => $model,'passage' => $passage),true);
+		if($message){
+			 $send = Helpers::lib()->SendMail($to,'ไม่อนุมัติการสมัครสมาชิก',$message);
+		}
+		$this->redirect(array('/user/admin/Membership'));
+    }
+    public function actionNotPassed()
+    {
+  
+    	$id = $_POST['id'];
+    	$passage = $_POST['passInput'];
+		$model = User::model()->findByPk($id);
+		if($model->status == 1 || $model->status == 0){
+			$model->status = 2;
+		} else {
+			$model->status = 1;
+		}
+		$model->username = '';
+		$model->not_passed = $passage;
+		$model->save(false);
+		$to['email'] = $model->email;
+		$to['firstname'] = $model->profile->firstname;
+		$to['lastname'] = $model->profile->lastname;
+
+		$message = $this->renderPartial('_mail_NotPassed',array('model' => $model,'passage' => $passage),true);
 		if($message){
 			 $send = Helpers::lib()->SendMail($to,'ไม่อนุมัติการสมัครสมาชิก',$message);
 		}
@@ -345,6 +372,139 @@ class AdminController extends Controller
 		// 	));
 	
        $this->renderPartial('Checkinformation',array('user' => $user,'profile' => $profile));
+	}
+
+	public function actionAttach_load()
+	{
+
+		$user_id = $_GET["id"];
+		$criteria = new CDbCriteria;
+        $criteria->addCondition('user_id ="'.$user_id.'"');
+        $criteria->addCondition("active ='y'");     
+		$Attach_file = AttachFile::model()->findAll($criteria);
+
+		$criteria = new CDbCriteria;
+        $criteria->addCondition('user_id ="'.$user_id.'"');
+        $criteria->addCondition("active ='y'");     
+		$Edu_file = FileEdu::model()->findAll($criteria);
+
+		$criteria = new CDbCriteria;
+        $criteria->addCondition('user_id ="'.$user_id.'"');
+        $criteria->addCondition("active ='y'");     
+		$Training_file = FileTraining::model()->findAll($criteria);
+
+		$path_zip_attach = array();
+		$name_file_attach = array();
+
+		$path_zip_edu = array();
+		$name_file_edu = array();
+
+		$path_zip_training = array();
+		$name_file_training = array();
+    
+	     foreach ($Attach_file as $key => $value) {
+	     	$attach_all  = glob(Yii::app()->getUploadPath('attach').$value->file_name);
+	    	if(!empty($attach_all)){
+				$path_zip_attach[] = "../uploads/attach/".basename($attach_all[0]);	
+				$name_file_attach[] = basename($attach_all[0]);	
+			}
+			
+	     }
+	     foreach ($Edu_file as $keyedu => $valueedu) {
+	     	$edu_all  = glob(Yii::app()->getUploadPath('edufile').$valueedu->filename);
+	    	if(!empty($edu_all)){
+				$path_zip_edu[] = "../uploads/edufile/".basename($edu_all[0]);	
+				$name_file_edu[] = basename($edu_all[0]);	
+			}
+			
+	     }
+	     foreach ($Training_file as $keytn => $valuetn) {
+	     	$Training_all  = glob(Yii::app()->getUploadPath('Trainingfile').$valuetn->filename);
+	    	if(!empty($edu_all)){
+				$path_zip_training[] = "../uploads/Trainingfile/".basename($Training_all[0]);	
+				$name_file_training[] = basename($Training_all[0]);	
+			}
+	     }
+
+		// // สร้าง folder
+		// if (!is_dir(Yii::app()->getUploadPath(null)."../zip/all/")) {
+		// 	mkdir(Yii::app()->getUploadPath(null)."../zip/all/", 0777, true);
+		// }else{  //ลบ zip all
+		// 	$file_in_folder = glob(Yii::app()->getUploadPath(null)."..\\zip\\all\\*");		
+		// 	if(!empty($file_in_folder)){
+		// 		foreach($file_in_folder as $file){ // iterate files
+		// 			if(is_file($file)){
+		// 				unlink($file); // delete file
+		// 			}             
+		// 		}										
+		// 	}
+		// }
+
+		$criteria = new CDbCriteria;
+        $criteria->addCondition('user_id ="'.$user_id.'"');
+		$Profile = Profile::model()->find($criteria);
+
+		$criteria = new CDbCriteria;
+        $criteria->addCondition('user_id ="'.$user_id.'"');
+		$user = User::model()->find($criteria);
+        
+        $criteria = new CDbCriteria;
+        $criteria->addCondition('id ="'.$user->position_id.'"');
+		$position = Position::model()->find($criteria);
+
+		$firstname = $Profile->firstname;
+		$positionName = $position->position_title;
+          
+		if(!empty($path_zip_attach) || !empty($path_zip_training) || !empty($path_zip_edu)){
+			$zip = Yii::app()->zip;
+			$path_in_zip = "..\uploads\attachZib\\";
+			$name_zip = "$firstname"."-"."$positionName.zip";
+			foreach ($path_zip_attach as $key => $link_file) {
+
+				 $zip->makeZip_nn($link_file, $path_in_zip.$name_zip, $name_file_attach[$key]);
+			}
+			foreach ($path_zip_training as $keyt => $valuet) {
+                 $zip->makeZip_nn($valuet, $path_in_zip.$name_zip, $name_file_training[$keyt]);
+			}
+			foreach ($path_zip_edu as $keye => $valuee) {
+                 $zip->makeZip_nn($valuee, $path_in_zip.$name_zip, $name_file_edu[$keye]);
+			}
+			$file_in_folder = glob(Yii::app()->getUploadPath(null)."..\\attachZib\\*");
+			foreach($file_in_folder as $file_in){ // วนลบไฟล์ในโฟลเดอร์
+				if(is_file($file_in)){
+					$file = basename($file_in); 
+					if($file == $name_zip){
+						$zip_susess = "..\uploads\attachZib\\$name_zip";
+
+   if(file_exists($zip_susess)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: application/octet-stream');
+            header('Content-Disposition: attachment; filename="'.basename($zip_susess).'"');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($zip_susess));
+            flush(); // Flush system output buffer
+            readfile($zip_susess);
+            die();
+        } else {
+            http_response_code(404);
+	        die();
+        }
+//}
+						// if($zip_susess != ""){
+		    //              echo '<b><a href="'.$zip_susess.'" target="_blank" class="btn btn-success btn-icon"></a></b>';
+	     //                }	
+					}
+				}
+			}
+			// echo "no_checked";
+			// exit();
+		}
+		// else{
+		// 	// echo "null";
+		// 	// exit();
+		// }
 	}
 
 	public function actionIdCard($id)
