@@ -386,7 +386,7 @@ $cancel_msg = UserModule::t('Cancel');
                     <div class="collapse show" id="course-note">
                         <div class="p-3">
                             <div class="form-group">
-                                <textarea class="form-control" placeholder="พิมพ์ข้อความและกด enter เพื่อจดบันทึก" id="note-1" rows="3"></textarea>
+                                <textarea class="form-control" placeholder="พิมพ์ข้อความและจดบันทึก" id="note-1" rows="3"></textarea>
                                 <button type="button" onclick="save_learn_note();" class="btn btn-sm btn-dark mt-2">จดบันทึก</button>
                             </div>
                             <div class="note-save">
@@ -3190,6 +3190,7 @@ function time_test_start(time_down){
                       var video = $("#"+'example_video_'+video_id_last+'_html5_api').get(0);
                       // console.log("เวลา วิดีโอ "+video.currentTime); 
                     }else{
+                      console.log(id_video_file_open+" = "+id_video_file);
                       swal({
                         type: "warning",
                         title: "แจ้งเตือน!",
@@ -3224,6 +3225,8 @@ function time_test_start(time_down){
                       document.getElementById('example_video_'+video_id_last+'_html5_api').play();
                       document.getElementById('example_video_'+video_id_last+'_html5_api').currentTime = id_video_time;
                     }else{
+                      console.log(id_video_file_open+" = "+id_video_file);
+                      
                       swal({
                         type: "warning",
                         title: "แจ้งเตือน!",
