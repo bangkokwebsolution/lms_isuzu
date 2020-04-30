@@ -2016,6 +2016,190 @@ public function actionCourseLearn($id = null){
         $this->redirect(array('//courseOnline/index','id'=>Yii::app()->user->getState('getLesson')));
     }
 }
+
+public function actionCourseLearnNote($id = null){
+
+    $param = $_GET['file'];
+    $str = CHtml::encode($param);
+
+    if(!is_numeric($str)){
+        throw new CHttpException(404, 'The requested page does not exist.');
+    }
+
+    if(Yii::app()->user->id){
+        Helpers::lib()->getControllerActionId();
+    }
+
+    if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+        $langId = Yii::app()->session['lang'] = 1;
+        Yii::app()->language = 'en';
+    }else{
+        $langId = Yii::app()->session['lang'];
+        Yii::app()->language = (Yii::app()->session['lang'] == 1)? 'en':'th';
+    }
+
+    $label = MenuCourse::model()->find(array(
+        'condition' => 'lang_id=:lang_id',
+        'params' => array(':lang_id' => $langId)
+    ));
+    if(!$label){
+        $label = MenuCourse::model()->find(array(
+            'condition' => 'lang_id=:lang_id',
+            'params' => array(':lang_id' => 1)
+        ));
+    }
+
+    $modelCapt = new ValidateCaptcha;
+    $model = Lesson::model()->findByPk($id);
+    $time = ConfigCaptchaCourseRelation::model()->with('captchaTime')->find(array(
+        'condition'=>'cnid=:cnid AND captchaTime.capt_hide="1" AND captchaTime.capt_active="y"',
+        'params' => array('cnid' => $model->course_id)));
+    if(!$time){
+        $time = ConfigCaptchaCourseRelation::model()->findByPk(0);
+    }
+
+
+    $lessonList = Lesson::model()->findAll(array(
+        'condition'=>'course_id=:course_id AND active=:active AND lang_id=:lang_id',
+        'params'=>array(':course_id'=>$model->course_id,':active'=>'y',':lang_id'=>1),
+        'order'=>'lesson_no ASC'
+    ));
+
+    Helpers::lib()->checkDateStartandEnd(Yii::app()->user->id,$model->course_id);
+
+    if(Helpers::lib()->CheckBuyItem($model->course_id,false) == true && ! Helpers::isPretestState($id))
+    {
+        $learn_id = "";
+                // if($model->count() > 0)
+        if(count($model) > 0)
+        {
+            $user = Yii::app()->getModule('user')->user();
+            $learnModel = Learn::model()->find(array(
+                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active="y"',
+                'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id)
+            ));
+            if(!$learnModel)
+            {
+                $learnLog = new Learn;
+                $learnLog->user_id = $user->id;
+                $learnLog->lesson_id = $id;
+                $learnLog->learn_date = new CDbExpression('NOW()');
+                $learnLog->course_id = $model->course_id;
+                $learnLog->save();
+                $learn_id = $learnLog->learn_id;
+            }
+            else
+            {
+                $learnModel->learn_date = new CDbExpression('NOW()');
+                $learnModel->save();
+                $learn_id = $learnModel->learn_id;
+            }
+        }
+
+        $file_id_learn_note = $_GET['file'];
+        // $learn_note = LearnNote::model()->findAll(array(
+        //     'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND active="y" AND file_id=:file_id',
+        //     'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id, ':file_id'=>$file_id_learn_note),
+        //     'order'=> 'note_time ASC'
+        // ));
+
+         $learn_note = LearnNote::model()->findAll(array(
+            'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND active="y"',
+            'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id),
+            'order'=> 'file_id DESC, note_time ASC'
+        ));
+
+
+
+        $this->layout = "//layouts/learn";
+        $this->render('course-learn-note',array(
+            'model'=>$model,
+            'learn_id'=>$learn_id,
+            'modelCapt' => $modelCapt,
+            'time' => $time,
+            'lessonList' => $lessonList,
+            'label' => $label,
+            'learn_note' => $learn_note
+        ));
+    }
+    else
+    {
+        Yii::app()->user->setFlash('CheckQues', array('msg'=>'Error','class'=>'error'));
+        $this->redirect(array('//courseOnline/index','id'=>Yii::app()->user->getState('getLesson')));
+    }
+}
+
+public function actionCourseLearnNoteSave(){
+    if(isset($_POST["note_text"])){
+        $note_lesson_id = $_POST["note_lesson_id"];
+        $note_file_id = $_POST["note_file_id"];
+        $note_time = $_POST["note_time"];
+        $note_text = $_POST["note_text"];
+        $note_id = $_POST["note_id"];
+        $user_id = Yii::app()->user->id;
+
+        if($note_lesson_id != "" && $note_file_id != "" && $note_time != "" && $user_id != "" && $note_text != ""){
+            $learn_note = LearnNote::model()->find(array(
+                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND file_id=:file_id AND note_time=:note_time',
+                'params'=>array(':lesson_id'=>$note_lesson_id,':user_id'=>$user_id, ':file_id'=>$note_file_id, ':note_time'=>$note_time),
+            ));
+
+            if(!empty($learn_note)){
+                $learn_note = LearnNote::model()->findByPk($learn_note->note_id);
+                $learn_note->note_times = $learn_note->note_times+1;
+                $learn_note->active = 'y';
+            }else{
+                $learn_note = new LearnNote;
+                $learn_note->user_id = $user_id;
+                $learn_note->lesson_id = $note_lesson_id;
+                $learn_note->file_id = $note_file_id;
+                $learn_note->note_time = $note_time;
+                $learn_note->note_times = 1;
+            }
+
+            $learn_note->note_text = $note_text;
+            if($learn_note->save()){
+                $file = File::model()->findByPk($note_file_id);
+
+                echo "<tr id='tr_note_".$learn_note->note_id."'>";
+                echo "<td>";
+                echo $file->filename;
+                echo "</td>";
+                echo "<td style='cursor:pointer;' id='td_time_note_".$learn_note->note_id."' onclick='fn_td_time_note(".$learn_note->note_id.");' note_file='".$note_file_id."' note_time='".$note_time."' name_video='".$file->filename."'>";
+                echo $note_time;
+                echo "</td>";
+                echo "<td style='cursor:pointer;' ".'onclick="fn_edit_note('.$learn_note->note_id.');"'.">";
+                echo '<span id="span_id_'.$learn_note->note_id.'">';
+                echo $note_text;
+                echo '</span>';
+                echo "</td>";
+                echo "</tr>";
+            }else{
+                echo "error";
+            }
+
+
+        }elseif ($note_id != "") { //// if($note_lesson_id != ""
+        $learn_note = LearnNote::model()->findByPk($note_id);
+        $learn_note->note_times = $learn_note->note_times+1;
+        $learn_note->note_text = $note_text;
+        if($note_text == ""){
+           $learn_note->active = 'n'; 
+        }
+        if($learn_note->save()){
+            echo "success";
+        }
+
+
+
+        } 
+
+
+    }
+}
+
+
+
 public function actionLessonShow() {
     $vars = array_merge($_GET,$_POST);
     $lesson = Lesson::model()->findByPk($vars['lid']);
