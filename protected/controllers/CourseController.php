@@ -2106,7 +2106,7 @@ public function actionCourseLearnNote($id = null){
          $learn_note = LearnNote::model()->findAll(array(
             'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND active="y"',
             'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id),
-            'order'=> 'file_id DESC, note_time ASC'
+            'order'=> 'file_id DESC, note_time + 0 ASC'
         ));
 
 
