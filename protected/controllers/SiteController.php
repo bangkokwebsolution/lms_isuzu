@@ -442,20 +442,21 @@ class SiteController extends Controller
 			foreach ($modelOrgDep as $key => $value) {
 				$courseArr[] = $value->id;
 			}
-	
+
 			$criteria = new CDbCriteria;
 			$criteria->with = array('course','course.CategoryTitle');
 			$criteria->addIncondition('orgchart_id',$courseArr);
 			$criteria->compare('course.active','y');
 			$criteria->compare('course.status','1');
 			$criteria->compare('categorys.cate_show','1');
-			$criteria->group = 'course.cate_id';
+			// $criteria->group = 'course.cate_id';
 			$criteria->addCondition('course.course_date_end >= :date_now');
 			$criteria->params[':date_now'] = date('Y-m-d H:i');
 			$criteria->order = 'course.course_id';
 			// $criteria->limit = 5;
 			$modelOrgCourse = OrgCourse::model()->findAll($criteria);
-
+	
+	
 			if($modelOrgCourse){
 				foreach ($modelOrgCourse as $key => $value) {
 
@@ -476,27 +477,24 @@ class SiteController extends Controller
 
 				}
 
+				$modelUsers_To = ChkUsercourseto::model()->findAll(
+						array(
+							'condition' => 'user_id=:user_id',
+							'params' => array(':user_id'=>Yii::app()->user->id)
+						)
+					);
+
+					foreach ($modelUsers_To as $key => $val) {
+						$course_id[] += $val->course_id;
+					}
+
+				
 				$criteria = new CDbCriteria;
 				$criteria->addIncondition('course_id',$course_id);
 				$course = CourseOnline::model()->findAll($criteria);
 			}
-
 		} 
-		// else {
-		// 	$criteria = new CDbCriteria;
-		// 	$criteria->with = array('Schedules');
-		// 	$criteria->compare('active','y');
-		// 	$criteria->compare('lang_id',$langId);
-		// 	$criteria->compare('status','1');
-		// 	// $criteria->order = 'update_date  DESC';
-		// 	// $criteria->compare('lang_id',Yii::app()->session['lang']);
-		// 	$criteria->order = 'course.course_id,Schedules.id desc';
-		// 	$criteria->addCondition('Schedules.id IS NULL');
-		// 	$criteria->addCondition('course_date_end >= :date_now');
-		// 	$criteria->params[':date_now'] = date('Y-m-d H:i');
-		// 	$criteria->limit = 4;
-		// 	$model = CourseOnline::model()->findAll($criteria); 
-		// }
+		
 
 // 		//News
 // 		$news_data = News::model()->findAll(array(

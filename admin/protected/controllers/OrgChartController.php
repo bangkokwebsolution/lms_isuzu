@@ -331,7 +331,7 @@ class OrgChartController extends Controller
 		 if($modelUsers_old){
 		 	$criteria->compare('chk_usercourse.org_user_status',1);
 		 	$criteria->compare('chk_usercourse.course_id',$course_id);
-		 	
+
 		 }
 
 	 	$users = Users::model()->with('profiles')->findAll($criteria);
@@ -563,10 +563,6 @@ class OrgChartController extends Controller
 	  			echo "passnew";
 	  		}
 	  	}
-
-
-
-
 	  }
 
 
@@ -700,11 +696,68 @@ class OrgChartController extends Controller
 
 	 	 // var_dump($state);exit();
 
-	 	$this->render('user_list',array(
+	 	$this->render('user_to',array(
 			'model'=>$users,
 			'state'=>$state
 		));
 	 }
+
+
+
+	   public function actionAddUserTo(){
+
+	  	$id = $_POST['user_id'];
+	  	$org_id = $_POST['org_id'];	
+	  	$course_id = $_POST['course_id'];
+
+	  	$modelUsers_old_chk = ChkUsercourseto::model()->find(
+	  		array(
+	  			'condition' => 'course_id=:course_id AND user_id=:user_id AND orgchart_id=:orgchart_id',
+	  			'params' => array(':course_id'=>$course_id, ':user_id'=>$id , ':orgchart_id'=>$org_id )
+	  		)
+	  	);
+
+	  	if(empty($modelUsers_old_chk)){
+	  		$modelUsers = new ChkUsercourseto;
+	  		$modelUsers->user_id = $id;
+	  		$modelUsers->course_id = $course_id;
+	  		$modelUsers->orgchart_id = $org_id;
+
+	  		if($modelUsers->save()){
+	  		echo "passnew";
+	  		}
+	  	}else{
+	  		echo "pass";
+	  	}
+
+
+	  }
+
+	    public function actionDelteUserTo(){
+
+	  	$id = $_POST['user_id'];
+	  	$org_id = $_POST['org_id'];	
+	  	$course_id = $_POST['course_id'];
+
+	  	$modelUsers_old_chk = ChkUsercourseto::model()->find(
+	  		array(
+	  			'condition' => 'course_id=:course_id AND user_id=:user_id AND orgchart_id=:orgchart_id',
+	  			'params' => array(':course_id'=>$course_id, ':user_id'=>$id , ':orgchart_id'=>$org_id )
+	  		)
+	  	);
+
+	  	if(!empty($modelUsers_old_chk)){
+	  		if($modelUsers_old_chk->delete()){
+	  		echo "delete";
+	  		}
+	  	}else{
+	  		echo "nodata";
+	  	}
+
+
+	  }
+
+
 
 
 
@@ -809,4 +862,38 @@ class OrgChartController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+	public function actionLoadPos()
+	{
+		$dep_id  = $_POST["dep_id"];
+		$criteria = new CDbCriteria;
+		$criteria->compare('department_id',$dep_id);
+		$criteria->order = 'position_title  ASC';
+		$data = Position::model()->findAll($criteria);
+
+		$datalist = CHtml::listdata($data,'id', 'position_title');
+		echo "<option value=''> ทั้งหมด </option>";
+		foreach ($datalist as $value => $Position){ 
+			echo CHtml::tag('option',array('value' => $value),CHtml::encode($Position),true);
+		}
+	}
+
+
+	public function actionLoadBranch()
+	{
+		$pos_id  = $_POST["pos_id"];
+		$criteria = new CDbCriteria;
+		$criteria->compare('position_id',$pos_id);
+		$criteria->order = 'branch_name  ASC';
+		$data = Branch::model()->findAll($criteria);
+
+		$datalist = CHtml::listdata($data,'id', 'branch_name');
+		echo "<option value=''> ทั้งหมด </option>";
+		foreach ($datalist as $value => $Branch){ 
+			echo CHtml::tag('option',array('value' => $value),CHtml::encode($Branch),true);
+		}
+	}
+
+
+
 }
