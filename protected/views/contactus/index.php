@@ -48,13 +48,12 @@ if(!empty($msg)){
 <!-- Content -->
 <section class="content" id="contact-us">
     <div class="container">
-<!-- 
-        <div class="contact-map">
+<div class="contact-map">
             <div class="well">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1937.1530680156468!2d100.51359305819234!3d13.820646952131426!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29b9c2071065f%3A0xaad4af9da5efa4e5!2z4Lih4Lir4Liy4Lin4Li04LiX4Lii4Liy4Lil4Lix4Lii4LmA4LiX4LiE4LmC4LiZ4LmC4Lil4Lii4Li14Lie4Lij4Liw4LiI4Lit4Lih4LmA4LiB4Lil4LmJ4Liy4Lie4Lij4Liw4LiZ4LiE4Lij4LmA4Lir4LiZ4Li34Lit!5e0!3m2!1sth!2sth!4v1527240275564" width="100%" height="400" frameborder="0" style="border:0" allowfullscreen></iframe>
+                <div class="mapouter"><div class="gmap_canvas"><iframe width="1300" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Thoresen%20Thai%20Agencies%20&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.embedgooglemap.net">embed custom google maps</a></div><style>.mapouter{position:relative;text-align:right;height:500px;width:1300px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:1300px;}</style></div> 
             </div>
-            <h4 class="text-center">แผนที่ : มหาวิทยาลัยพระจอมเกล้าพระนครเหนือ</h4>
-        </div> -->
+            <h4 class="text-center">แผนที่ : บริษัท โทรีเซนไทย เอเยนต์ซีส์ จำกัด</h4>
+        </div>
         <?php
         $form = $this->beginWidget('CActiveForm');
         ?>

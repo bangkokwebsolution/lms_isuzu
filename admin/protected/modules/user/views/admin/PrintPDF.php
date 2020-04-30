@@ -1,7 +1,16 @@
 
+<?php
+ if ($user != null) {
+                                         $head  = Yii::app()->baseUrl . "/../admin/images/head.jpg";
+                                        } else {
+                                         $head  = Yii::app()->baseUrl . "/../admin/images/head.jpg";                                            
+                                        }
+                                     
+?>
+ <img border="9" src="<?php echo $head; ?> " width="700" height="180">
+
  	<div style="padding-bottom:10px;">
  		<table border="1" width="100%" style="border-collapse:collapse;overflow: wrap;">
-
  			<tr>
  				<td>
  					<table border="0" width="100%" style="border-collapse:collapse;">
@@ -19,7 +28,6 @@
 
 								?> 		
  								<table border="0" width="100%" style="border-collapse:collapse;">
- 									
  									<tr>
  										<td width="75%" style="padding-top: 10px;">
  											<table border="0" width="100%" style="border-collapse:collapse;">
@@ -452,8 +460,7 @@
                   <tr>
                     <td width="75%" style="padding-top: 10px;">
                       <table border="0" width="100%" style="border-collapse:collapse;">
-                        
-                    <img border="9" src="<?php echo $img; ?>" width="150" height="180">
+        
                       </table>
                     </td>
                     <td width="25%" style="text-align:right;">
@@ -470,13 +477,12 @@
 
                         <tr>
                           <td style="padding-left:304px; padding-bottom:-20px; text-align:left; font-size:18px;">
-                            <p><?php if($profiles['firstname_en'] != ""){ echo $profiles['firstname_en'];?>&nbsp;&nbsp;
-                            <?php echo $profiles['lastname_en']; }else{ echo "-"; } ?></p>
+                            <p></p>
                           </td>
                         </tr>
                         <tr>
                           <td style="padding-left:204px;text-align:left; font-size:18px;">
-                            <p>Name : .................................................................</p>
+                            <p>ลงชื่อผู้สมัคร : .................................................................</p>
                           </td>
                         </tr>
                         <tr>
@@ -487,7 +493,17 @@
                         </tr>
                         <tr>
                           <td style="padding-left:204px;text-align:left; font-size:18px;">
-                            <p>ชื่อ : .......................................................................</p>
+                            <p>(.......................................................................)</p>
+                          </td>
+                        </tr>
+                          <tr>
+                          <td style="padding-left:304px; padding-bottom:-20px; text-align:left; font-size:18px;">
+                            <p></p>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style="padding-left:204px;text-align:left; font-size:18px;">
+                            <p>วันที่ : .......................................................................</p>
                           </td>
                         </tr>
                     </td>
