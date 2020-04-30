@@ -28,7 +28,7 @@ class OrgChartController extends Controller
     {
     	return array(
         	array('allow',  // allow all users to perform 'index' and 'view' actions
-        		'actions'=>array('index','view','OrgChart2','OrgChartSave','SaveOrgchart', 'CheckUser','Course', 'DelUser'),
+        		'actions'=>array('index','view','OrgChart2','OrgChartSave','SaveOrgchart', 'CheckUser','Course', 'DelUser','DelteUser','CreateUser'),
         		'users'=>array('*'),
         	),
         	array('allow',
@@ -286,46 +286,100 @@ class OrgChartController extends Controller
 
 	 	//User
 	 	$all = $_GET['all'];
-	 	$org_id = $_GET['orgchart_id'];	
 	 	$course_id = $_GET['id'];
-
-	 	if(isset($_POST['user-list_length'])){
-	 		$user_id_arr = $_POST;
-	 		unset($user_id_arr['user-list_length']);
-	 		unset($user_id_arr['yt0']);
-
-	 		foreach ($user_id_arr as $value) {	
-	 			$modelUsers = Users::model()->findByPk($value);
-	 			$modelUsers->org_user_status = '0';
-	 			$modelUsers->save();
-	 		}
-	 	}
+	 	$org_id = $_GET['orgchart_id'];	
 
 	 	$orgRoot = OrgChart::model()->findByPk($org_id);
 
+	 	 $modelUsers_old = ChkUsercourse::model()->findAll(
+	 						array(
+	 							'condition' => 'course_id=:course_id  ',
+	 							'params' => array(':course_id'=>$course_id)
+	 						)
+	 					);
+
+	 	$criteria = new CDbCriteria; 
+	 	$criteria->with = array('chk_usercourse');
 	 	if($orgRoot->branch_id == null && $orgRoot->position_id == null && $orgRoot->department_id == null){
 	 		if($orgRoot->title == "General"){
-	 			$con_text = "type_user='1' AND org_user_status='1'";
+	 			$criteria->compare('type_user',1);
+
+
 	 		}elseif($orgRoot->title == "Personnel"){
-	 			$con_text = "type_user='3' AND org_user_status='1'";
+	 			$criteria->compare('type_user',3);
+
 	 		}
 	 		elseif($orgRoot->title == "MASTER / CAPTAIN"){
-	 			$con_text = "type_employee='1' AND org_user_status='1'";
+	 			$criteria->compare('type_employee',1);
 	 		}
 	 		elseif($orgRoot->title == "Office"){
-	 			$con_text = "type_employee='2' AND org_user_status='1'";
+	 			$criteria->compare('type_employee',2);
 	 		}
 	 	}else{
-		 	if($orgRoot->branch_id != ""){ // branch
-		 		$con_text = "branch_id='".$orgRoot->branch_id."'" ." AND ". "org_user_status='1'";
-		 	}elseif($orgRoot->position_id != ""){ // position
-		 		$con_text = "position_id='".$orgRoot->position_id."'" ." AND ". "org_user_status='1'";
-		 	}elseif($orgRoot->department_id != ""){ // dept
-		 		$con_text = "department_id='".$orgRoot->department_id."'" ." AND ". "org_user_status='1'";
-		 	}
-	 	}
 
-	 	$users = Users::model()->with('profiles')->findAll($con_text);
+		 	if($orgRoot->branch_id != ""){ // branch
+		 		$criteria->compare('branch_id',$orgRoot->branch_id);
+
+		 	}elseif($orgRoot->position_id != ""){ // position
+		 		$criteria->compare('position_id',$orgRoot->position_id);
+
+		 	}elseif($orgRoot->department_id != ""){ // dept
+		 		$criteria->compare('department_id',$orgRoot->department_id);
+		 	}
+		 }
+
+		 if($modelUsers_old){
+		 	$criteria->compare('chk_usercourse.org_user_status',1);
+		 	$criteria->compare('chk_usercourse.course_id',$course_id);
+		 	
+		 }
+
+	 	$users = Users::model()->with('profiles')->findAll($criteria);
+
+	 	if(!$modelUsers_old){
+		 	$users = array();
+		 }
+
+	 	$criteria = new CDbCriteria; 
+	 	$criteria->with = array('chk_usercourse');
+	 	if($orgRoot->branch_id == null && $orgRoot->position_id == null && $orgRoot->department_id == null){
+	 		if($orgRoot->title == "General"){
+	 			$criteria->compare('type_user',1);
+
+	 		}elseif($orgRoot->title == "Personnel"){
+	 			$criteria->compare('type_user',3);
+
+	 		}
+	 		elseif($orgRoot->title == "MASTER / CAPTAIN"){
+	 			$criteria->compare('type_employee',1);
+	 		}
+	 		elseif($orgRoot->title == "Office"){
+	 			$criteria->compare('type_employee',2);
+	 		}
+	 	}else{
+
+		 	if($orgRoot->branch_id != ""){ // branch
+		 		$criteria->compare('branch_id',$orgRoot->branch_id);
+
+		 	}elseif($orgRoot->position_id != ""){ // position
+		 		$criteria->compare('position_id',$orgRoot->position_id);
+
+		 	}elseif($orgRoot->department_id != ""){ // dept
+		 		$criteria->compare('department_id',$orgRoot->department_id);
+		 	}
+		 }
+
+
+		 $usersall_chk = Users::model()->with('profiles')->findAll($criteria);
+
+		 if($modelUsers_old){
+		 	$criteria->compare('chk_usercourse.org_user_status',0);
+		 	$criteria->compare('chk_usercourse.course_id',$course_id);
+		 }
+
+		 $usersall = Users::model()->with('profiles')->findAll($criteria);
+
+
 
 		$state = "";
 		$paren = $orgRoot->parent_id;
@@ -352,9 +406,169 @@ class OrgChartController extends Controller
 
 	 	$this->render('user_list',array(
 			'model'=>$users,
-			'state'=>$state
+			'modelall'=>$usersall,
+			'state'=>$state,
+			'usersall_chk'=>$usersall_chk
+
 		));
 	 }
+
+
+ public function actionCreateUser(){
+
+
+	 $org_id = $_POST['org_id'];	
+	 $course_id = $_POST['course_id'];
+
+	 	$orgRoot = OrgChart::model()->findByPk($org_id);
+
+	 	$criteria = new CDbCriteria; 
+	 	$criteria->with = array('chk_usercourse');
+	 	$criteria->compare('chk_usercourse.org_user_status',1);
+	 	if($orgRoot->branch_id == null && $orgRoot->position_id == null && $orgRoot->department_id == null){
+	 		if($orgRoot->title == "General"){
+	 			$criteria->compare('type_user',1);
+
+	 		}elseif($orgRoot->title == "Personnel"){
+	 			$criteria->compare('type_user',3);
+
+	 		}
+	 		elseif($orgRoot->title == "MASTER / CAPTAIN"){
+	 				$criteria->compare('type_employee',1);
+	 		}
+	 		elseif($orgRoot->title == "Office"){
+	 			$criteria->compare('type_employee',2);
+	 		}
+	 	}else{
+
+		 	if($orgRoot->branch_id != ""){ // branch
+		 		$criteria->compare('branch_id',$orgRoot->branch_id);
+
+		 	}elseif($orgRoot->position_id != ""){ // position
+		 		$criteria->compare('position_id',$orgRoot->position_id);
+
+		 	}elseif($orgRoot->department_id != ""){ // dept
+		 		$criteria->compare('department_id',$orgRoot->department_id);
+		 	}
+	 	}
+
+
+
+	 	$users_test = Users::model()->with('profiles')->findAll($criteria);
+
+	 	if($_POST['all'] != null){
+	 			foreach ($users_test as $key => $val) {
+	 				$modelUsers_old = ChkUsercourse::model()->find(
+	 						array(
+	 							'condition' => 'course_id=:course_id AND user_id=:user_id ',
+	 							'params' => array(':course_id'=>$course_id, ':user_id'=>$val->id)
+	 						)
+	 					);
+	 					if($modelUsers_old){
+	 						$modelUsers_old->org_user_status = '0';
+	 						if($modelUsers_old->save()){
+	 							echo "pass";
+	 						}
+	 					}else{
+	 						$modelUsers = new ChkUsercourse;
+	 						$modelUsers->user_id = $val->id;
+	 						$modelUsers->course_id = $course_id;
+	 						if($modelUsers->save()){
+	 							echo "passnew";
+	 						}
+	 					}
+	 			}
+
+	 	}else{
+
+	 			foreach ($_POST['id_arr']  as $key => $value) {
+	 				if($value != null){
+
+	 					$modelUsers_old = ChkUsercourse::model()->find(
+	 						array(
+	 							'condition' => 'course_id=:course_id AND user_id=:user_id ',
+	 							'params' => array(':course_id'=>$course_id, ':user_id'=>$value)
+	 						)
+	 					);
+
+	 					if($modelUsers_old){
+	 						$modelUsers_old->org_user_status = '0';
+	 						if($modelUsers_old->save()){
+	 							echo "pass";
+	 						}
+	 					}else{
+	 						$modelUsers = new ChkUsercourse;
+	 						$modelUsers->user_id = $value;
+	 						$modelUsers->course_id = $course_id;
+	 						if($modelUsers->save()){
+	 							echo "passnew";
+	 						}
+	 					}
+
+	 					
+	 				}
+	 			}
+	 	}
+}
+	  public function actionDelteUser(){
+
+	  	$id = $_POST['user_id'];
+	  	$org_id = $_POST['org_id'];	
+	  	$course_id = $_POST['course_id'];
+	  	$id_all = $_POST['id_all'];
+
+	  	foreach ($id_all as $key => $value) {
+
+	  		if($id != $value){
+
+	  			$modelUsers_old_chk = ChkUsercourse::model()->find(
+	  				array(
+	  					'condition' => 'course_id=:course_id AND user_id=:user_id',
+	  					'params' => array(':course_id'=>$course_id, ':user_id'=>$value )
+	  				)
+	  			);
+
+	  			if(!$modelUsers_old_chk){
+	  				$modelUsers = new ChkUsercourse;
+	  				$modelUsers->user_id = $value;
+	  				$modelUsers->course_id = $course_id;
+	  				$modelUsers_old->org_user_status = '0';
+	  				if($modelUsers->save()){
+	  				}
+	  			}
+
+	  		}
+
+	  	}
+
+
+	  	$modelUsers_old = ChkUsercourse::model()->find(
+	  		array(
+	  			'condition' => 'course_id=:course_id AND user_id=:user_id',
+	  			'params' => array(':course_id'=>$course_id, ':user_id'=>$id)
+	  		)
+	  	);
+
+	  	if($modelUsers_old){
+	  		$modelUsers_old->org_user_status = '1';
+	  		if($modelUsers_old->save()){
+	  			echo "pass";
+	  		}
+	  	}else{
+	  		$modelUsers = new ChkUsercourse;
+	  		$modelUsers->user_id = $id;
+	  		$modelUsers->course_id = $course_id;
+	  		$modelUsers->org_user_status = '1';
+	  		if($modelUsers->save()){
+	  			echo "passnew";
+	  		}
+	  	}
+
+
+
+
+	  }
+
 
 	  public function actionDelUser(){
 

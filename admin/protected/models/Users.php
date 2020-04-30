@@ -73,6 +73,7 @@ class Users extends CActiveRecord
 			'orgchart' => array(self::BELONGS_TO, 'OrgChart', 'department_id','foreignKey' => array('department_id'=>'id')),
 			'divisions' => array(self::HAS_ONE, 'Division', array('id' => 'department_id')),
 			'company' => array(self::BELONGS_TO, 'Company', 'company_id'),
+			'chk_usercourse' => array(self::HAS_ONE, 'ChkUsercourse', 'user_id'),
 
 			'department' => array(self::BELONGS_TO, 'Department', 'department_id'),
 			'position' => array(self::BELONGS_TO, 'Position', 'position_id'),
@@ -82,6 +83,7 @@ class Users extends CActiveRecord
 			// 'orgchartCompany' => array(self::BELONGS_TO, 'OrgChart', array('company_id' => 'id')),
 			'orgchartDepartment' => array(self::BELONGS_TO, 'OrgChart', array('department_id' => 'department_id')),
 			'orgchartPosition' => array(self::BELONGS_TO, 'OrgChart', array('position_id' => 'position_id')),
+
 
 		);
 	}

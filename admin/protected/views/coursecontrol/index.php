@@ -143,7 +143,7 @@ $this->breadcrumbs=array(
                 
 
             if(isset($_GET['name'])){
-                $url = Yii::app()->createUrl('OrgChart/course/', array('id' => $_GET['id'],'name'=>$_GET['name'])); 
+                $url = Yii::app()->createUrl('OrgChart/Course/', array('id' => $_GET['id'],'name'=>$_GET['name'])); 
                 // $all = 'y';
                 $all = $_GET['name'];
 
@@ -153,7 +153,7 @@ $this->breadcrumbs=array(
 
                 $dataProvider = OrgRoot::getChildsNew();
             }else{
-                $url = Yii::app()->createUrl('OrgChart/course/', array('id' => $_GET['id'])); 
+                $url = Yii::app()->createUrl('OrgChart/Course/', array('id' => $_GET['id'])); 
                 // $all = 'n';
                 $all = '';
 

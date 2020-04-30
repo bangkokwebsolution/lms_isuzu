@@ -1,7 +1,3 @@
-<!-- Include Datables -->
-<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/DataTables/datatables.min.css" />
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/DataTables/datatables.min.js"></script>
-
 <?php
 $titleName = 'หลักสูตร';
 $formNameModel = 'CourseOnline';
@@ -144,17 +140,17 @@ EOD
                               'headerHtmlOptions'=>array('style'=>'text-align: center'),
                           ),
 
-                         array(
-                          'header'=>'ลบผู้เรียน',
+                         // array(
+                         //  'header'=>'ลบผู้เรียน',
                     
-                            'value'=>function($data){
-                                return CHtml::link( '<i class=""></i> ลบผู้เรียน', 'javascript:void(0)', array( 'class' => 'btn btn-primary btn-icon', 'onclick' => 'delUser(' . $data->course_id . ')'));
-                              },
+                         //    'value'=>function($data){
+                         //        return CHtml::link( '<i class=""></i> ลบผู้เรียน', 'javascript:void(0)', array( 'class' => 'btn btn-primary btn-icon', 'onclick' => 'delUser(' . $data->course_id . ')'));
+                         //      },
                               
-                          'type'=>'raw',
-                                'htmlOptions'=>array('style'=>'text-align: center;vertical-align: middle;','width'=>'100px'),
-                              'headerHtmlOptions'=>array('style'=>'text-align: center'),
-                          ),
+                         //  'type'=>'raw',
+                         //        'htmlOptions'=>array('style'=>'text-align: center;vertical-align: middle;','width'=>'100px'),
+                         //      'headerHtmlOptions'=>array('style'=>'text-align: center'),
+                         //  ),
 
                         // array(
                         //         'header' => 'จัดการสมาชิก',
