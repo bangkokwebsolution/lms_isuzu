@@ -2133,10 +2133,14 @@ public function actionCourseLearnNoteSave(){
     if(isset($_POST["note_text"])){
         $note_lesson_id = $_POST["note_lesson_id"];
         $note_file_id = $_POST["note_file_id"];
-        $note_time = $_POST["note_time"];
+        $note_time = floor($_POST["note_time"]);
         $note_text = $_POST["note_text"];
         $note_id = $_POST["note_id"];
         $user_id = Yii::app()->user->id;
+
+        if($note_time <= 0){
+            $note_time = "0";
+        }
 
         if($note_lesson_id != "" && $note_file_id != "" && $note_time != "" && $user_id != "" && $note_text != ""){
             $learn_note = LearnNote::model()->find(array(
@@ -2166,7 +2170,11 @@ public function actionCourseLearnNoteSave(){
                 echo $file->filename;
                 echo "</td>";
                 echo "<td style='cursor:pointer;' id='td_time_note_".$learn_note->note_id."' onclick='fn_td_time_note(".$learn_note->note_id.");' note_file='".$note_file_id."' note_time='".$note_time."' name_video='".$file->filename."'>";
-                echo $note_time;
+                if($note_time <= 60){
+                  echo "00:".sprintf("%02d", floor($note_time%60));
+                }else{
+                  echo sprintf("%02d", floor($note_time/60)).":".sprintf("%02d", floor($note_time%60));
+                }
                 echo "</td>";
                 echo "<td style='cursor:pointer;' ".'onclick="fn_edit_note('.$learn_note->note_id.');"'.">";
                 echo '<span id="span_id_'.$learn_note->note_id.'">';
@@ -2179,18 +2187,18 @@ public function actionCourseLearnNoteSave(){
             }
 
 
-        }elseif ($note_id != "") { //// if($note_lesson_id != ""
-        $learn_note = LearnNote::model()->findByPk($note_id);
-        $learn_note->note_times = $learn_note->note_times+1;
-        $learn_note->note_text = $note_text;
-        if($note_text == ""){
-           $learn_note->active = 'n'; 
-        }
-        if($learn_note->save()){
-            echo "success";
-        }
-
-
+        }elseif ($note_id != "") { // if($note_lesson_id != ""
+            $learn_note = LearnNote::model()->findByPk($note_id);
+            $learn_note->note_times = $learn_note->note_times+1;
+            $learn_note->note_text = $note_text;
+            if($note_text == ""){
+             $learn_note->active = 'n'; 
+            }
+             if($learn_note->save()){
+                echo "success";
+            }
+        }else{ // if($note_lesson_id != ""
+            echo "error2";
 
         } 
 

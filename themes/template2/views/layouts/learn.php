@@ -60,6 +60,17 @@ Yii::app()->user->returnUrl = $http->getUrl();
     <!-- <link type="text/css" href="<?=Yii::app()->baseUrl?>/cometchat/cometchatcss.php" rel="stylesheet" charset="utf-8">
     <script type="text/javascript" src="<?=Yii::app()->baseUrl?>/cometchat/cometchatjs.php" charset="utf-8"></script> -->
 
+
+
+    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/../template/vendors/bootstrap-select/bootstrap-select.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/../template/vendors/fontawesome/fontawesome.css" media="screen" />
+    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/../template/vendors/sweetalert/sweetalert2.css" crossorigin="anonymous">
+    <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/../template/vendors/sweetalert/sweetalert2.min.js"></script>
+
+
+    <link href="https://vjs.zencdn.net/7.6.6/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+    <!-- <script src='themes/vendors/lottie.js'></script> -->
 </head>
 
 <body>

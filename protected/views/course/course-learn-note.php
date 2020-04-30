@@ -366,7 +366,6 @@ $cancel_msg = UserModule::t('Cancel');
             </style>
             <div id="course-learn">
               <div id="mySidenav" class="sidenav">
-
                <div role="tabpanel">
                 <ul class="nav nav-tabs nav-justified" role="tablist">                  
                   <li role="presentation">
@@ -408,9 +407,14 @@ $cancel_msg = UserModule::t('Cancel');
                                             <td><?php echo $value->file->filename; ?></td>
                                             <td style='cursor:pointer;' class="td_time_note" note_file="<?php echo $value->file_id; ?>" note_time="<?php echo $value->note_time; ?>" name_video="<?php echo $value->file->filename; ?>">
                                               <!-- <a href="#"> -->
-                                                <?php echo $value->note_time; ?>
-                                                
-                                              <!-- </a> -->
+                                                <?php 
+                                                if($value->note_time <= 60){
+                                                  echo "00:".sprintf("%02d", floor($value->note_time%60));
+                                                }else{
+                                                  echo sprintf("%02d", floor($value->note_time/60)).":".sprintf("%02d", floor($value->note_time%60));
+                                                }
+                                                ?>
+                                                <!-- </a> -->
                                             </td>
                                             <td style='cursor:pointer;'>
                                               <span class="edit-note" id="span_id_<?php echo $value->note_id; ?>"><?php echo $value->note_text; ?></span>
@@ -3182,8 +3186,17 @@ function time_test_start(time_down){
                     if(id_video_file_open == id_video_file){
                       document.getElementById('example_video_'+video_id_last+'_html5_api').play();
                       document.getElementById('example_video_'+video_id_last+'_html5_api').currentTime = id_video_time;
+
+                      var video = $("#"+'example_video_'+video_id_last+'_html5_api').get(0);
+                      // console.log("เวลา วิดีโอ "+video.currentTime); 
                     }else{
-                      alert("เปิดแถบวิดีโอ "+name_video_file+" ก่อน");
+                      swal({
+                        type: "warning",
+                        title: "แจ้งเตือน!",
+                        text: "เปิดแถบวิดีโอ "+name_video_file+" ก่อน",
+                        timer: 1000
+                      });
+                      // alert("เปิดแถบวิดีโอ "+name_video_file+" ก่อน");
                     }
 
                     // console.log("file "+id_video_file);
@@ -3211,7 +3224,13 @@ function time_test_start(time_down){
                       document.getElementById('example_video_'+video_id_last+'_html5_api').play();
                       document.getElementById('example_video_'+video_id_last+'_html5_api').currentTime = id_video_time;
                     }else{
-                      alert("เปิดแถบวิดีโอ "+name_video_file+" ก่อน");
+                      swal({
+                        type: "warning",
+                        title: "แจ้งเตือน!",
+                        text: "เปิดแถบวิดีโอ "+name_video_file+" ก่อน",
+                        timer: 1000
+                      });
+                      // alert("เปิดแถบวิดีโอ "+name_video_file+" ก่อน");
                     }
 
                     // console.log("file "+id_video_file);
@@ -3269,26 +3288,51 @@ function time_test_start(time_down){
                             note_text: note_text,
                           }),
                           success: function(data) {
-                            if(data != "error"){
+                            if(data != "error" && data != "error2"){
                               $("#note-1").val("");
-                              $("#tr_note_"+data.split("'")[1].replace("tr_note_", "")).hide();
+                              console.log();
+                              // $("#tr_note_"+data.split("'")[1].replace("tr_note_", "")).hide();
                               $("#tbody_note").append(data)
 
                             }else{
-                              alert("ทำรายการไม่สำเร็จ");
+                              swal({
+                                type: "warning",
+                                title: "แจ้งเตือน!",
+                                text: "ทำรายการไม่สำเร็จ",
+                                timer: 1000
+                              });
+                              // alert("ทำรายการไม่สำเร็จ");
                             }
                           }
                         });
                       }else{ // if(note_lesson_id != null
-                        alert("ทำรายการไม่สำเร็จ");
+                        swal({
+                        type: "warning",
+                        title: "แจ้งเตือน!",
+                        text: "ทำรายการไม่สำเร็จ",
+                        timer: 1000
+                      });
+                        // alert("ทำรายการไม่สำเร็จ");
                       }
                     }else{ // if(note_text != ""){
-                        alert("กรุณาพิมพ์ข้อความก่อนจดบันทึก");
+                      swal({
+                        type: "warning",
+                        title: "แจ้งเตือน!",
+                        text: "กรุณาพิมพ์ข้อความก่อนจดบันทึก",
+                        timer: 1000
+                      });
+                        // alert("กรุณาพิมพ์ข้อความก่อนจดบันทึก");
 
                     }
 
                     }else{
-                        alert("กรุณาเปิดแถบวิดีโอก่อนจดโน๊ต");
+                      swal({
+                        type: "warning",
+                        title: "แจ้งเตือน!",
+                        text: "กรุณาเปิดแถบวิดีโอก่อนจดโน๊ต",
+                        timer: 1000
+                      });
+                        // alert("กรุณาเปิดแถบวิดีโอก่อนจดโน๊ต");
                     }
                   } //  function save_learn_note()
                   
@@ -3296,7 +3340,8 @@ function time_test_start(time_down){
                      var note_id = this.getAttribute("id").replace("span_id_", "");
 
                     Swal.fire({
-                      icon: 'info',
+                      // icon: 'info',
+                      title: "แก้ไข",                      
                       html: '<div class="form-group p-4"><textarea class="form-control" placeholder="พิมพ์ข้อความและกดจดบันทึก" id="note-2" rows="3">'+this.innerHTML+'</textarea>' +
                       '<button type="button" onclick="edit_learn_note('+note_id+');" class="btn btn-sm btn-dark mt-4 ">จดบันทึก</button></div>',
                       showCloseButton: true,
@@ -3308,7 +3353,8 @@ function time_test_start(time_down){
 
                   function fn_edit_note(note_id){
                     Swal.fire({
-                      icon: 'info',
+                      // icon: 'info',
+                      title: "แก้ไข",                      
                       html: '<div class="form-group p-4"><textarea class="form-control" placeholder="พิมพ์ข้อความและกดจดบันทึก" id="note-2" rows="3">'+document.getElementById("span_id_"+note_id).innerHTML+'</textarea>' +
                       '<button type="button" onclick="edit_learn_note('+note_id+');" class="btn btn-sm btn-dark mt-4 ">จดบันทึก</button></div>',
                       showCloseButton: true,
@@ -3330,7 +3376,7 @@ function time_test_start(time_down){
                             note_text: note_text,
                           }),
                           success: function(data) {
-                            if(data != "error"){
+                            if(data != "error" && data != "error2"){
                               $("#note-2").val("");
                               if(note_text != ""){
                                 document.getElementById("span_id_"+note_id).innerHTML = note_text;
@@ -3340,32 +3386,18 @@ function time_test_start(time_down){
                               
                               Swal.close();
                             }else{
-                              alert("ทำรายการไม่สำเร็จ");
+                              swal({
+                                type: "warning",
+                                title: "แจ้งเตือน!",
+                                text: "ทำรายการไม่สำเร็จ",
+                                timer: 1000
+                              });
+                              // alert("ทำรายการไม่สำเร็จ");
                             }
                           }
                         });                      
                     }
                   }
-
-
-
-
-
-        $(".h-course-title").click(function() {
-
-        });
-
-        function openNav() {
-            document.getElementById("mySidenav").style.width = "320px";
-            // document.getElementById("main-video").style.marginRight = "320px";
-        }
-
-        function closeNav() {
-            document.getElementById("mySidenav").style.width = "0";
-            // document.getElementById("main-video").style.marginRight = "0";
-        }
-
-
 
 
                 </script>
