@@ -3676,7 +3676,8 @@ public function checkStepLesson($lesson){
                 if($value->score_past == 'y'){
                     $step = 2;
                     }else{ //ไม่ผ่านและยังมีสิทธสอบได้อยู่
-                        $step = 1;
+                        // $step = 1;
+                        $step = 2;
                     }
                 }
                 if(count($scorePre) == $lesson->cate_amount){
