@@ -33,10 +33,10 @@ class LearnNote extends CActiveRecord
 
 		if($this->isNewRecord)
 		{
-			$this->created_by = $id;
+			$this->created_by = Yii::app()->user->id;
 			$this->created_date = date("Y-m-d H:i:s");
 		}else {
-			$this->updated_by = $id;
+			$this->updated_by = Yii::app()->user->id;
 			$this->update_date = date("Y-m-d H:i:s");
 		}
 
