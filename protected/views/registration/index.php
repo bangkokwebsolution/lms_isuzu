@@ -134,6 +134,31 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
 </style>
 <script language="javascript">
+
+    function isThaichar(str,obj){
+    var isThai=true;
+    var orgi_text=" ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ";
+    var chk_text=str.split("");
+    chk_text.filter(function(s){        
+        if(orgi_text.indexOf(s)==-1){
+            isThai=false;
+            obj.value=str.replace(RegExp(s, "g"),'');
+        }           
+    }); 
+    return isThai; // ถ้าเป็น true แสดงว่าเป็นภาษาไทยทั้งหมด*/
+}
+function isEngchar(str,obj){
+    var isEng=true;
+    var orgi_text="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var chk_text=str.split("");
+    chk_text.filter(function(s){        
+        if(orgi_text.indexOf(s)==-1){
+            isEng=false;
+            obj.value=str.replace(RegExp(s, "g"),'');
+        }           
+    }); 
+    return isEng; // ถ้าเป็น true แสดงว่าเป็นภาษาไทยทั้งหมด*/
+}
     function checkID(id) {
         if (id.length != 13) return false;
         for (i = 0, sum = 0; i < 12; i++)
@@ -161,12 +186,13 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
             swal(idcard)
             return false; 
              }
-           // if ($('.passport').val() != "") {
+
               if ($('.firstname').val() == "") {
                  var firstname = "<?php echo Yii::app()->session['lang'] == 1?'Please enter name! ':'กรุณากรอกชื่อ!'; ?>";
                  swal(firstname)
                  return false;
               }
+
               if ($('.lastname').val() == "") {
                 var lastname = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your surname! ':'กรุณากรอกนามสกุล!'; ?>";
                 swal(lastname)
@@ -198,43 +224,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 return false;
               }
             
-        // }else{
-        //        if ($('.firstname').val() == "") {
-        //          var firstname = "<?php echo Yii::app()->session['lang'] == 1?'Please enter name! ':'กรุณากรอกชื่อ!'; ?>";
-        //          swal(firstname)
-        //          return false;
-        //       }
-        //       if ($('.lastname').val() == "") {
-        //         var lastname = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your surname! ':'กรุณากรอกนามสกุล!'; ?>";
-        //         swal(lastname)
-        //         return false;
-        //       }
-        //       if ($('.prefix').val() == "") {
-        //         var prefix = "<?php echo Yii::app()->session['lang'] == 1?'Please choose a name prefix! ':'กรุณาเลือกคำนำหน้าชื่อ!'; ?>";
-        //         swal(prefix)
-        //         return false;
-        //       }
-        //       if ($('.firstname_en').val() == "") {
-        //         var firstname_en = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your name in English! ':'กรุณากรอกชื่อเป็นภาษาอังกฤษ!'; ?>";
-        //         swal(firstname_en)
-        //         return false;
-        //       }
-        //       if ($('.lastname_en').val() == "") {
-        //         var firstname_en = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your surname in English! ':'กรุณากรอกนามสกุลเป็นภาษาอังกฤษ!'; ?>";
-        //         swal(firstname_en)
-        //         return false;
-        //       } 
-        //       if ($('.prefix_en').val() == "") {
-        //         var prefix_en = "<?php echo Yii::app()->session['lang'] == 1?'Please choose an English name prefix! ':'กรุณาเลือกคำนำหน้าชื่อภาษาอังกฤษ!'; ?>";
-        //         swal(prefix_en)
-        //         return false;
-        //       }
-        //       if ($('.email').val() == "") {
-        //         var email = "<?php echo Yii::app()->session['lang'] == 1?'Please enter email! ':'กรุณากรอกอีเมล!'; ?>";
-        //         swal(email)
-        //         return false;
-        //       }
-        // }
+        
 
     
         var file = $('#queue').val();
@@ -561,14 +551,14 @@ function editNamehouse_registration(filedoc_id){
                         <div class="col-md-3 col-lg-3 col-xs-12">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_firstname; ?>(TH)<font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control firstname', 'placeholder' => $label->label_firstname)); ?>
+                                <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control firstname', 'placeholder' => $label->label_firstname,'onkeyup'=>"isThaichar(this.value,this)")); ?>
                                 <?php echo $form->error($profile, 'firstname', array('class' => 'error2')); ?>
                             </div>
                         </div>
                         <div class="col-md-3 col-lg-3 col-xs-12">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_lastname; ?>(TH)<font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control lastname', 'placeholder' => $label->label_lastname)); ?>
+                                <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control lastname', 'placeholder' => $label->label_lastname,'onkeyup'=>"isThaichar(this.value,this)")); ?>
                                 <?php echo $form->error($profile, 'lastname', array('class' => 'error2')); ?>
                                 <!--<input type="text" class="form-control" id="">-->
                             </div>
@@ -590,14 +580,14 @@ function editNamehouse_registration(filedoc_id){
                         <div class="col-md-3 col-lg-3 col-xs-12">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_firstname; ?>(EN)<font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'firstname_en', array('class' => 'form-control firstname_en', 'placeholder' => $label->label_firstname)); ?>
+                                <?php echo $form->textField($profile, 'firstname_en', array('class' => 'form-control firstname_en', 'placeholder' => $label->label_firstname,'onkeyup'=>"isEngchar(this.value,this)")); ?>
                                 <?php echo $form->error($profile, 'firstname_en', array('class' => 'error2')); ?>
                             </div>
                         </div>
                         <div class="col-md-3 col-lg-3 col-xs-12">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_lastname; ?>(EN)<font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'lastname_en', array('class' => 'form-control lastname_en', 'placeholder' => $label->label_lastname)); ?>
+                                <?php echo $form->textField($profile, 'lastname_en', array('class' => 'form-control lastname_en', 'placeholder' => $label->label_lastname,'onkeyup'=>"isEngchar(this.value,this)")); ?>
                                 <?php echo $form->error($profile, 'lastname_en', array('class' => 'error2')); ?>
                                 <!--<input type="text" class="form-control" id="">-->
                             </div>
@@ -1525,6 +1515,30 @@ function editNamehouse_registration(filedoc_id){
         <div class="col-sm-12 col-xs-12 col-md-8">
             <div class="col-md-5">
                 <div class="form-group">
+             <!--        <select class="form-control d-inlineblock position_id" name="position_id" >
+                            <option value="">เลือกตำแหน่ง</option>
+                            <?php
+                            
+                            $departmentModel = Department::model()->findAll(array(
+                                'condition' => 'active=:active AND type_employee_id=:type_employee_id',
+                                'params' => array(':active'=>'y',':type_employee_id'=>1)
+                            ));
+                            foreach ($departmentModel as $keys => $values) {
+                                $depart = $departmentModel[$key]->attributes;
+                                $positions = Position::model()->findAll(array(
+                                    'condition' => 'department_id=:department_id AND active=:active',
+                                    'params' => array(':department_id'=>$depart['id'],':active'=>'y')
+                                ));
+                
+                                foreach ($positions as $ke => $val) {
+                                    $pos = $positions[$ke]->attributes;
+                                    ?>
+                                    <option value="<?php echo $pos['id']; ?>"><?php echo $pos['position_title']; ?></option>
+                                <?php   }
+                            }
+                            
+                            ?>
+                        </select> -->
                     <?php
                     $Department_ship = Department::model()->findAll(array(
                         'condition' => 'type_employee_id=:type_employee_id AND active=:active',
@@ -1535,23 +1549,7 @@ function editNamehouse_registration(filedoc_id){
                             'condition' => 'department_id=:department_id AND active=:active',
                             'params' => array(':department_id'=>$valuedepart['id'], ':active'=>'y')
                         ));
-                        foreach ($position_ship as $key => $value) {
-                            // var_dump($value->position_title);
-                             $positionLists[] =  array('$key->id' => $key->position_title);
-                        }
-
-                        //$positionLists[] = CHtml::listData($position_ship, 'id', 'position_title');
-                                 // var_dump($positionLists);
-                                    // foreach ($positionLists as $keypos => $valuepos) { 
-
-                                    //    $positions_id = $valuepos['id'];
-                                    //    $positions_title = $valuepos['position_title'];
-
-                                    //   $positionListss[] = array($positions_id=>$positions_title);
-
-                                    //   var_dump($positionLists);
-                                    //    }
-
+                        $positionLists[] = CHtml::listData($position_ship, 'id', 'position_title');
                     }
                     ?> 
                     <?php

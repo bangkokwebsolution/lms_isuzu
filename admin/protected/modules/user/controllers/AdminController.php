@@ -50,53 +50,97 @@ class AdminController extends Controller
 	// 		);
 	// }
 
-	public function actionGetAjaxDivision(){
-        if(isset($_GET['company_id']) && $_GET['company_id'] != ""){
-            $datalist = Division::model()->findAll('active = "y" and company_id = '.$_GET['company_id']);
-            if($datalist){
-                    echo "<option value=''> เลือกกอง</option>";
-                foreach($datalist as $index => $val){
-                    echo "<option value='".$val->id."'>".$val->div_title."</option>";
-                }
-            }else{
-                    echo "<option value=''> ไม่พบกอง</option>";
-            }
-        }else{
-            echo "<option value=''> เลือกกอง</option>";
-        }
-    }
+	// public function actionGetAjaxDivision(){
+ //        if(isset($_GET['company_id']) && $_GET['company_id'] != ""){
+ //            $datalist = Division::model()->findAll('active = "y" and company_id = '.$_GET['company_id']);
+ //            if($datalist){
+ //                    echo "<option value=''> เลือกกอง</option>";
+ //                foreach($datalist as $index => $val){
+ //                    echo "<option value='".$val->id."'>".$val->div_title."</option>";
+ //                }
+ //            }else{
+ //                    echo "<option value=''> ไม่พบกอง</option>";
+ //            }
+ //        }else{
+ //            echo "<option value=''> เลือกกอง</option>";
+ //        }
+ //    }
 
-    public function actionGetAjaxDepartment(){
-        if(isset($_GET['division_id']) && $_GET['division_id'] != ""){
-            $datalist = Department::model()->findAll('active = "y" and division_id = '.$_GET['division_id']);
-            if($datalist){
-                    echo "<option value=''> เลือกแผนก</option>";
-                foreach($datalist as $index => $val){
-                    echo "<option value='".$val->id."'>".$val->dep_title."</option>";
-                }
-            }else{
-                    echo "<option value=''> ไม่พบแผนก</option>";
-            }
-        }else{
-            echo "<option value=''> เลือกแผนก</option>";
-        }
-    }
+ //    public function actionGetAjaxDepartment(){
+ //        if(isset($_GET['division_id']) && $_GET['division_id'] != ""){
+ //            $datalist = Department::model()->findAll('active = "y" and division_id = '.$_GET['division_id']);
+ //            if($datalist){
+ //                    echo "<option value=''> เลือกแผนก</option>";
+ //                foreach($datalist as $index => $val){
+ //                    echo "<option value='".$val->id."'>".$val->dep_title."</option>";
+ //                }
+ //            }else{
+ //                    echo "<option value=''> ไม่พบแผนก</option>";
+ //            }
+ //        }else{
+ //            echo "<option value=''> เลือกแผนก</option>";
+ //        }
+ //    }
 
-    public function actionGetAjaxPosition(){
-        if(isset($_GET['department_id']) && $_GET['department_id'] != ""){
-            $datalist = Position::model()->findAll('active = "y" and department_id = '.$_GET['department_id']);
-            if($datalist){
-                    echo "<option value=''> เลือกตำแหน่ง</option>";
-                foreach($datalist as $index => $val){
-                    echo "<option value='".$val->id."'>".$val->position_title."</option>";
-                }
-            }else{
-                    echo "<option value=''> ไม่พบตำแหน่ง</option>";
-            }
-        }else{
-            echo "<option value=''> เลือกตำแหน่ง</option>";
-        }
+ //    public function actionGetAjaxPosition(){
+ //        if(isset($_GET['department_id']) && $_GET['department_id'] != ""){
+ //            $datalist = Position::model()->findAll('active = "y" and department_id = '.$_GET['department_id']);
+ //            if($datalist){
+ //                    echo "<option value=''> เลือกตำแหน่ง</option>";
+ //                foreach($datalist as $index => $val){
+ //                    echo "<option value='".$val->id."'>".$val->position_title."</option>";
+ //                }
+ //            }else{
+ //                    echo "<option value=''> ไม่พบตำแหน่ง</option>";
+ //            }
+ //        }else{
+ //            echo "<option value=''> เลือกตำแหน่ง</option>";
+ //        }
+ //    }
+	  public function actionListPosition(){
+
+     $model=Position::model()->findAll('department_id=:department_id',
+        array(':department_id'=>$_POST['id']));
+
+     $data=CHtml::listData($model,'id','position_title',array('empty' => 'ตำแหน่ง'));
+     $sub_list = 'เลือกตำแหน่ง';
+     $data = '<option value ="">'.$sub_list.'</option>';
+     foreach ($model as $key => $value) {
+        $data .= '<option value = "'.$value->id.'"'.'>'.$value->position_title.'</option>';
     }
+    echo ($data);
+
+}
+
+public function actionListBranch(){
+
+ $model=Branch::model()->findAll('position_id=:position_id',
+    array(':position_id'=>$_POST['id']));
+
+ $data=CHtml::listData($model,'id','branch_name',array('empty' => 'สาขา'));
+ $sub_list = 'เลือกระดับ';
+ $data = '<option value ="">'.$sub_list.'</option>';
+ foreach ($model as $key => $value) {
+    $data .= '<option value = "'.$value->id.'"'.'>'.$value->branch_name.'</option>';
+}
+echo ($data);
+
+}
+
+public function actionListDepartment(){
+
+ $model=Department::model()->findAll('type_employee_id=:type_employee_id',
+    array(':type_employee_id'=>$_POST['id']));
+
+ $data=CHtml::listData($model,'id','dep_title',array('empty' => 'แผนก'));
+ $sub_list = 'เลือกแผนก';
+ $data = '<option value ="">'.$sub_list.'</option>';
+ foreach ($model as $key => $value) {
+    $data .= '<option value = "'.$value->id.'"'.'>'.$value->dep_title.'</option>';
+}
+echo ($data);
+
+}
 
     public function actionApprove()
 	{
@@ -116,11 +160,12 @@ class AdminController extends Controller
 
 	public function actionMembership ()
 	{
-		$model = new User;
+		$model = new User('search');
         $model->unsetAttributes();  // clear any default values
         $model->typeuser = array(1);
         $model->register_status = array(0);
         $model->supper_user_status = true;
+      
         if(isset($_GET['User'])){
         	$model->attributes=$_GET['User'];
         }

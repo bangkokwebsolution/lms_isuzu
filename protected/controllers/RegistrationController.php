@@ -199,6 +199,22 @@ class RegistrationController extends Controller {
      * This is the default 'index' action that is invoked
      * when an action is not explicitly requested by users.
      */
+// public function actionReport_problem()
+//     {
+//         $model=new ReportProblem;
+
+//         if(isset($_POST['ReportProblem']))
+//         {
+//             $model->attributes=$_POST['ReportProblem'];
+//             if($model->save())
+//                 $this->redirect(array('index'));
+//         }
+
+//         $this->render('report_problem',array(
+//             'model'=>$model,
+//         ));
+//     }
+
     public function actionShowForm(){
 
         $chk_status_reg = $SettingAll = Helpers::lib()->SetUpSetting();
@@ -405,9 +421,11 @@ class RegistrationController extends Controller {
 if ($profile->type_user == 1) {
     $users->status = 0;
     $users->register_status = 0;
+    $users->position_id = $_POST['position_gen'];
 }else{
     $users->register_status = 1;
     $users->status = 1;
+    $users->position_id = $_POST['User'][position_id];
 }
 
     // $profile->generation = $gen->id_gen;
@@ -456,8 +474,9 @@ if ($profile->type_user == 1) {
     // var_dump(CUploadedFile::getInstance($AttachName, 'attach_identification'));
     // var_dump(CUploadedFile::getInstance($AttachName, 'attach_house_registration'));
     $users->department_id = $_POST['User'][department_id];
-    $users->position_id = $_POST['User'][position_id];
+
     $users->branch_id = $_POST['User'][branch_id];
+
     if ($profile->validate() && $users->validate()) {
 //                    เข้ารหัสpassword
                     //$users->password = UserModule::encrypting($users->password);

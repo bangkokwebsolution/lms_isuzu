@@ -300,41 +300,45 @@ date_default_timezone_set("Asia/Bangkok");
                                                 <?php echo $form->error($model, 'company_id'); ?>
                                             </div>
                                         </div> -->
-                                        <?php
-                                            $divisiondata = Division::model()->getDivisionListNew();
-                                        ?>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label><?php echo $form->labelEx($model, 'division_id'); ?></label>
-                                                
-                                                <?php
-                                                echo $form->dropDownList($model, 'division_id', $divisiondata, array('empty' => 'เลือกกอง', 'class' => 'form-control', 'style' => 'width:100%')); ?>
-                                                <?php echo $form->error($model, 'division_id'); ?>
-                                            </div>
-                                        </div>
+                                        
+                                         <?php
 
-                                        <?php
                                             $department = Department::model()->getDepartmentListNew();
                                         ?>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label><?php echo $form->labelEx($model, 'department_id'); ?></label>
                                                 <?php
-                                                echo $form->dropDownList($model, 'department_id', $department, array('empty' => 'เลือกแผนก', 'class' => 'form-control', 'style' => 'width:100%')); 
+                                                echo $form->dropDownList($model, 'department_id', $department, array('empty' => 'เลือกแผนก', 'class' => 'form-control department', 'style' => 'width:100%')); 
                                                 ?>
                                                 <?php echo $form->error($model, 'department_id'); ?>
                                             </div>
                                         </div>
-
-                                        <?php
-                                            $station = Station::model()->getStationList();
+                                        <?php   
+                                         $Positiondata = Position::model()->getPositionListNew();
                                         ?>
                                         <div class="col-md-6">
                                             <div class="form-group">
-                                                <label><?php echo $form->labelEx($model, 'station_id'); ?></label>
+                                                <label><?php echo $form->labelEx($model, 'position_id'); ?></label>
+                                                
                                                 <?php
-                                                echo $form->dropDownList($model, 'station_id', $station, array('empty' => 'เลือกสถานี', 'class' => 'form-control', 'style' => 'width:100%')); ?>
-                                                <?php echo $form->error($model, 'station_id'); ?>
+                                                echo $form->dropDownList($model, 'position_id', $Positiondata, array('empty' => 'เลือกตำแหน่ง', 'class' => 'form-control position', 'style' => 'width:100%')); ?>
+                                                <?php echo $form->error($model, 'position_id'); ?>
+                                            </div>
+                                        </div>
+
+                                       
+
+                                        <?php
+                                            $Branch = Branch::model()->getBranchList();
+                                        ?>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label><?php //echo $form->labelEx($model, 'branch_id'); ?></label>
+                                                <label class="label_branch">ระดับ</label>
+                                                <?php
+                                                echo $form->dropDownList($model, 'branch_id', $Branch, array('empty' => 'เลือกระดับ', 'class' => 'form-control branch', 'style' => 'width:100%')); ?>
+                                                <?php echo $form->error($model, 'branch_id'); ?>
                                             </div>
                                         </div>
                                         <?php if(!$model->isNewRecord): ?>
@@ -383,3 +387,45 @@ date_default_timezone_set("Asia/Bangkok");
                 </div>
             </div>
         </div>
+        <script type="text/javascript">
+            $('.branch').hide();
+            $('.label_branch').hide();
+            $(".department").change(function() {
+                    var id = $(".department").val();
+                    $.ajax({
+                        type: 'POST',
+                        url: "<?= Yii::app()->createUrl('user/admin/ListPosition'); ?>",
+                        data: {
+                            id: id
+                        },
+                        success: function(data) {
+                            $('.position').empty();
+                            $('.position').append(data);
+                        }
+                    });
+                });
+                 $(".position").change(function() {
+                    var id = $(".position").val();
+                    $.ajax({
+                        type: 'POST',
+                        url: "<?= Yii::app()->createUrl('user/admin/ListBranch'); ?>",
+                        data: {
+                            id: id
+                        },
+                        success: function(data) {
+                                console.log(data);
+                                if (data == '<option value ="">เลือกระดับ</option>') {
+                                    console.log(555);
+                                    $('.branch').hide();
+                                    $('.label_branch').hide();
+                                }else{
+                                    console.log(666);
+                                    $('.branch').show();
+                                    $('.label_branch').show();
+                                    $('.branch').empty();
+                                    $('.branch').append(data);
+                                }
+                            }
+                        });
+                });
+        </script>

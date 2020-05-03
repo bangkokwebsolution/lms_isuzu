@@ -143,4 +143,17 @@ class Branch extends CActiveRecord
 		return parent::beforeSave();
 	}
 
+	public function getBranchList($position_id = null){
+		$strSql = $position_id != null ? ' AND position_id='.$position_id : '';
+		$model = Branch::model()->findAll('active = "y"'.$strSql);
+		$list = CHtml::listData($model,'id','branch_name');
+		return $list;
+	}
+
+	public function getBranchListNew(){
+		$model = Branch::model()->findAll('active = "y" AND lang_id = 1');
+		$list = CHtml::listData($model,'id','branch_name');
+		return $list;
+	}
+
 }
