@@ -107,7 +107,7 @@
                                            if($lesson_online) {
                                                 foreach($lesson_online as $lesson) {
                                                     $statusLearn = Learn::model()->with('les')->find(array(
-                                                        'condition' => 'lesson_active = "y" and user_id ="'.$user['id'].'" and lesson_id ="'. $lesson['id'] .'"' . $startdate . $enddate ,
+                                                        'condition' => 'Learn.active = "y" and user_id ="'.$user['id'].'" and lesson_id ="'. $lesson['id'] .'"' . $startdate . $enddate ,
                                                         'alias' => 'learn'
                                                     ));
                                                     $statusArray = array('learning'=>'<b style="color: green;">กำลังเรียน</b>', 'pass' => '<b style="color: blue;">ผ่าน</b>','notlearn'=>'<b style="color: red;">ยังไม่เรียน</b>');

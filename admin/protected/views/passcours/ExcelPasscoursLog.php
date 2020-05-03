@@ -70,11 +70,11 @@
 									'group' => 'pclog_target'
 								));
 								$allLearn = Learn::model()->with('les')->findAll(array(
-									'condition' => 't.course_id = "' . $Course['course_id'] . '" and lesson_active = "y"',
+									'condition' => 't.course_id = "' . $Course['course_id'] . '" and t.active = "y"',
 									'group' => 'user_id'
 								));
 								$pass = Learn::model()->with('les')->findAll(array(
-									'condition' => 't.course_id = "' . $Course['course_id'] . '" and lesson_status = "pass" and lesson_active = "y"',
+									'condition' => 't.course_id = "' . $Course['course_id'] . '" and lesson_status = "pass" and t.active = "y"',
 									'group' => 'user_id'
 								));
 								$CurrentLesson = Lesson::model()->findAll(array(

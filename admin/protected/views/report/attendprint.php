@@ -150,9 +150,9 @@ EOD
             array('name'=>'course','type'=>'list','query'=>$listCourse),
             array('name'=>'schedule_id','type'=>'list','query'=>$listSchedules),
             array('name'=>'course_type','type'=>'list','query'=>$course_type_list),
-            array('name'=>'division_id','type'=>'listMultiple','query'=>$divisiondata),
+           // array('name'=>'division_id','type'=>'listMultiple','query'=>$divisiondata),
             array('name'=>'department','type'=>'listMultiple','query'=>$departmentdata),
-            array('name'=>'station','type'=>'listMultiple','query'=>$stationdata),
+            //array('name'=>'station','type'=>'listMultiple','query'=>$stationdata),
             array('name'=>'date_start','type'=>'text'),
             array('name'=>'date_end','type'=>'text'),
             //array('name'=>'course_point','type'=>'text'),
@@ -382,9 +382,9 @@ EOD
                             $lesson_title = $lessonItem['title'];
                             $arrLearnLesson = array();
 
-                            $sqlregis = " SELECT count(learn_id) as regis from tbl_learn where lesson_active='y' and lesson_id = $lesson_id and lesson_status is null";
+                            $sqlregis = " SELECT count(learn_id) as regis from tbl_learn where active='y' and lesson_id = $lesson_id and lesson_status is null";
 
-                            $sqlregisAll = " SELECT user_id as regis from tbl_learn where lesson_active='y' and lesson_id = $lesson_id";
+                            $sqlregisAll = " SELECT user_id as regis from tbl_learn where active='y' and lesson_id = $lesson_id";
 
                             if(!empty($_GET['ReportUser']['generation'])){
                               $sqlregisWhere .= "   and user_id in((select user_id from tbl_profiles where generation = ".$_GET['ReportUser']['generation']."))";
@@ -422,7 +422,7 @@ EOD
                             $regis = Yii::app()->db->createCommand($sqlregis.$sqlregisWhere)->queryAll();
                             $result_regis += $regis[0]['regis'];
      
-                            $sqllearning = " SELECT count(learn_id) as learning from tbl_learn where lesson_active='y' and lesson_id = $lesson_id and (lesson_status = 'learning' or lesson_status is null)";
+                            $sqllearning = " SELECT count(learn_id) as learning from tbl_learn where active='y' and lesson_id = $lesson_id and (lesson_status = 'learning' or lesson_status is null)";
 
                             if(!empty($_GET['ReportUser']['generation'])){
                               $sqllearning .= "   and user_id in((select user_id from tbl_profiles where generation = ".$_GET['ReportUser']['generation']."))";
@@ -462,7 +462,7 @@ EOD
                             $learning = Yii::app()->db->createCommand($sqllearning)->queryAll();
                             
                             $result_learning += $learning[0]['learning'];
-                            $sqlpass = " SELECT * from tbl_learn where lesson_active='y' and lesson_id = $lesson_id and lesson_status = 'pass'";
+                            $sqlpass = " SELECT * from tbl_learn where active='y' and lesson_id = $lesson_id and lesson_status = 'pass'";
                             if(!empty($_GET['ReportUser']['generation'])){
                               $sqlpass .= "   and user_id in((select user_id from tbl_profiles where generation = ".$_GET['ReportUser']['generation']."))";
                             }

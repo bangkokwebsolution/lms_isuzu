@@ -558,7 +558,7 @@ public function actionCateIndex($id) {
                     $lessonStatus = Helpers::lib()->checkLessonPass($lesson);
                     $learnLesson = $user->learns(
                         array(
-                            'condition' => 'lesson_id=:lesson_id AND lesson_active="y"',
+                            'condition' => 'lesson_id=:lesson_id AND active="y"',
                             'params' => array(':lesson_id' => $lesson->id)
                         )
                     );
@@ -682,7 +682,7 @@ public function actionCateIndex($id) {
                         $lessonStatus = Helpers::lib()->checkLessonPass($lesson);
                         $learnLesson = $user->learns(
                             array(
-                                'condition' => 'lesson_id=:lesson_id AND lesson_active="y"',
+                                'condition' => 'lesson_id=:lesson_id AND active="y"',
                                 'params' => array(':lesson_id' => $lesson->id)
                             )
                         );
@@ -803,7 +803,7 @@ public function actionCateIndex($id) {
                         $lessonStatus = Helpers::lib()->checkLessonPass($lesson);
                         $learnLesson = $user->learns(
                             array(
-                                'condition' => 'lesson_id=:lesson_id AND lesson_active="y"',
+                                'condition' => 'lesson_id=:lesson_id AND active="y"',
                                 'params' => array(':lesson_id' => $lesson->id)
                             )
                         );
@@ -956,7 +956,7 @@ public function actionCateIndex($id) {
         $criteria->join = " INNER JOIN `tbl_lesson` AS les ON (les.`id`=t.`lesson_id`)";
         $criteria->compare('t.course_id',$id);
         $criteria->compare('user_id',$user_id);
-        $criteria->compare('lesson_active','y');
+        $criteria->compare('t.active','y');
         $criteria->compare('les.active','y');
         $learn = Learn::model()->findAll($criteria);
         $message = $this->renderPartial('_emailLearn',array(
@@ -1980,7 +1980,7 @@ public function actionCourseLearn($id = null){
         {
             $user = Yii::app()->getModule('user')->user();
             $learnModel = Learn::model()->find(array(
-                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active="y"',
+                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND active="y"',
                 'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id)
             ));
             if(!$learnModel)
@@ -2075,7 +2075,7 @@ public function actionCourseLearnNote($id = null){
         {
             $user = Yii::app()->getModule('user')->user();
             $learnModel = Learn::model()->find(array(
-                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active="y"',
+                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND active="y"',
                 'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id)
             ));
             if(!$learnModel)

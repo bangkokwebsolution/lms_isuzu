@@ -115,7 +115,7 @@ EOD
                 $criteria = new CDbCriteria();
                 $criteria->compare('course_id',$courseItem->course_id);
                 $criteria->compare('user_id',$user[0][user_id]);
-                $criteria->compare('lesson_active',"y");
+                $criteria->compare('active',"y");
                 $criteria->addInCondition('lesson_id', $chk_null_learn);
                 $chk_learn = Learn::model()->findAll($criteria);
 
@@ -159,7 +159,7 @@ EOD
                                 foreach ($lesson as $lessonItem) {
 
                                 $lern = Learn::model()->findAll(array(
-                                    'condition' => 'course_id = "' . $courseItem->course_id . '" AND lesson_active ="y" AND lesson_id ="' . $lessonItem->id . '"  and user_id = "' . $user[0][user_id] . '"'
+                                    'condition' => 'course_id = "' . $courseItem->course_id . '" AND active ="y" AND lesson_id ="' . $lessonItem->id . '"  and user_id = "' . $user[0][user_id] . '"'
                                 ));
 
                                 if(count($lern) > 0){

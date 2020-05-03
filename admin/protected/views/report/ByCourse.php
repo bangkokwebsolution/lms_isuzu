@@ -139,9 +139,9 @@ EOD
             array('name'=>'type_user','type'=>'list','query'=>$type_user),
             array('name'=>'search','type'=>'text','placeholder'=>'สามารถค้นหาด้วย ชื่อ, สกุล และอีเมลล์'),
            
-            array('name'=>'division_id','type'=>'listMultiple','query'=>$divisiondata),
+            //array('name'=>'division_id','type'=>'listMultiple','query'=>$divisiondata),
             array('name'=>'department','type'=>'listMultiple','query'=>$departmentdata),
-            array('name'=>'station','type'=>'listMultiple','query'=>$stationdata),
+            //array('name'=>'station','type'=>'listMultiple','query'=>$stationdata),
 
             array('name'=>'period_start','type'=>'text'),
             array('name'=>'period_end','type'=>'text'),

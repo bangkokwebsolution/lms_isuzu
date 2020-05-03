@@ -695,7 +695,7 @@ public function actionReset_university()
         $criteria = new CDbCriteria;
         $criteria->join = " INNER JOIN `tbl_lesson` AS les ON (les.`id`=t.`lesson_id`)";
         $criteria->compare('user_id',$user_id);
-        $criteria->compare('lesson_active','y');
+        $criteria->compare('t.active','y');
         $criteria->compare('les.active','y');
         $criteria->addCondition('lesson_status IS NOT NULL');
         //$criteria->group = 't.course_id';
@@ -770,7 +770,7 @@ public function actionReset_university()
                  $sc->active = 'n';
                  $sc->save();
              }
-             $data->lesson_active = 'n';
+             $data->active = 'n';
              $data->save();
          }
          //Reset Course

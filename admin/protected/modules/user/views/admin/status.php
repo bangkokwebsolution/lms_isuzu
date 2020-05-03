@@ -93,9 +93,9 @@ EOD
             // array('name'=>'type_user','type'=>'list','query'=>$model->getTypeuserList()),
             // array('name'=>'occupation','type'=>'list','query'=>$model->getOccupationList()),
             // array('name'=>'email','type'=>'text'),
-            array('name'=>'division_id','type'=>'listMultiple','query'=>$divisiondata),
+            //array('name'=>'division_id','type'=>'listMultiple','query'=>$divisiondata),
             array('name'=>'department','type'=>'listMultiple','query'=>$departmentdata),
-            array('name'=>'station','type'=>'listMultiple','query'=>$stationdata),
+           // array('name'=>'station','type'=>'listMultiple','query'=>$stationdata),
 
             array('name'=>'date_start','type'=>'text'),
             array('name'=>'date_end','type'=>'text'),

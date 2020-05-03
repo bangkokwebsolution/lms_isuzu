@@ -818,7 +818,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                     );*/
                     $learnFiles = $user->learnFiles(
                         array(
-                            'condition' => 'file_id=:file_id AND learns.learn_id=:learn_id AND learns.lesson_active=:status',
+                            'condition' => 'file_id=:file_id AND learns.learn_id=:learn_id AND learns.active=:status',
                             'params' => array(':file_id' => $file->id,':learn_id'=>$learn_id,':status'=>'y')
                         )
                     );
@@ -922,7 +922,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
 
             $learnLesson = $user->learns(
                 array(
-                    'condition' => 'lesson_id=:lesson_id AND lesson_active=:status',
+                    'condition' => 'lesson_id=:lesson_id AND active=:status',
                     'params' => array(':lesson_id' => $lesson->id,':status' => "y")
                 )
             );
@@ -1019,7 +1019,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
 
             $learnLesson = $user->learns(
                 array(
-                    'condition' => 'lesson_id=:lesson_id AND lesson_active=:status',
+                    'condition' => 'lesson_id=:lesson_id AND active=:status',
                     'params' => array(':lesson_id' => $lesson->id,':status' => "y")
                 )
             );
@@ -1029,7 +1029,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                 $countFile = $lesson->fileCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTrueVdos(
                     array(
-                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND t.active="y"',
                         'params' => array(':lesson_id' => $lesson->id)
                     )
                 );
@@ -1037,7 +1037,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                 $countFile = $lesson->filePdfCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTruePdf(
                     array(
-                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND t.active="y"',
                         'params' => array(':lesson_id' => $lesson->id)
                     )
                 );
@@ -1045,7 +1045,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                 $countFile = $lesson->fileScormCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTrueScorm(
                     array(
-                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND t.active="y"',
                         'params' => array(':lesson_id' => $lesson->id)
                     )
                 );
@@ -1053,7 +1053,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                 $countFile = $lesson->fileAudioCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTrueAudio(
                     array(
-                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND t.active="y"',
                         'params' => array(':lesson_id' => $lesson->id)
                     )
                 );
@@ -1111,7 +1111,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
         if ($user) {
             $learnLesson = $user->learns(
                 array(
-                    'condition' => 'course_id=:course_id AND lesson_active=:status',
+                    'condition' => 'course_id=:course_id AND active=:status',
                     'params' => array(':course_id' => $lesson,':status'=>"y")
                 )
             );
@@ -1176,7 +1176,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
     if ($user) {
         $learnLesson = $user->learns(
             array(
-                'condition' => 'lesson_id=:lesson_id AND lesson_active=:status',
+                'condition' => 'lesson_id=:lesson_id AND active=:status',
                 'params' => array(':lesson_id' => $lesson->id,':status'=>"y")
             )
         );
@@ -1186,7 +1186,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
             $countFile = $lesson->fileCount;
             $countLearnCompareTrueVdos = $user->countLearnCompareTrueVdos(
                 array(
-                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
+                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND t.active="y"',
                     'params' => array(':lesson_id' => $lesson->id)
                 )
             );
@@ -1194,7 +1194,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
             $countFile = $lesson->filePdfCount;
             $countLearnCompareTrueVdos = $user->countLearnCompareTruePdf(
                 array(
-                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
+                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND t.active="y"',
                     'params' => array(':lesson_id' => $lesson->id)
                 )
             );
@@ -1202,7 +1202,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
             $countFile = $lesson->fileScormCount;
             $countLearnCompareTrueVdos = $user->countLearnCompareTrueScorm(
                 array(
-                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
+                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND t.active="y"',
                     'params' => array(':lesson_id' => $lesson->id)
                 )
             );
@@ -1210,7 +1210,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
             $countFile = $lesson->fileAudioCount;
             $countLearnCompareTrueVdos = $user->countLearnCompareTrueAudio(
                 array(
-                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
+                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND t.active="y"',
                     'params' => array(':lesson_id' => $lesson->id)
                 )
             );
@@ -1839,7 +1839,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
         if ($user) {
             $learnLesson = $user->learns(
                 array(
-                    'condition' => 'lesson_id=:lesson_id and lesson_active ="y"',
+                    'condition' => 'lesson_id=:lesson_id and active ="y"',
                     'params' => array(':lesson_id' => $lesson->id)
                 )
             );
@@ -2490,7 +2490,7 @@ public function sendApiLms_old($schedule)
 
         $criteria = new CDbCriteria;
         $criteria->compare('course_id',$course_id);
-        $criteria->compare('lesson_active','y');
+        $criteria->compare('active','y');
         // $criteria->compare('lesson_status','pass');
         $criteria->compare('user_id',$user_id);
         $learns = Learn::model()->findAll($criteria);
@@ -2654,7 +2654,7 @@ if($learnfiles){
             }else if($learnStatus == "notPass"){
                 $criteria = new CDbCriteria;
                 $criteria->compare('course_id',$value->course_id);
-                $criteria->compare('lesson_active','y');
+                $criteria->compare('active','y');
                 $criteria->compare('user_id',$value->user_id);
                 $learns = Learn::model()->findAll($criteria);
                 if($learns){
@@ -2734,7 +2734,7 @@ public function sendApiLms($scheduleMain,$scheduleId)
             }else if($learnStatus == "notPass"){
                 $criteria = new CDbCriteria;
                 $criteria->compare('course_id',$value->course_id);
-                $criteria->compare('lesson_active','y');
+                $criteria->compare('active','y');
                 $criteria->compare('user_id',$value->user_id);
                 $learns = Learn::model()->findAll($criteria);
                 if($learns){
@@ -3619,7 +3619,7 @@ public function Checkparentlesson($les_id){
         if ($lesson[0]->sequence_id!=0) {
             $model = learn::model()->findAllByAttributes(array(
                 'lesson_id' => $lesson[0]->sequence_id,
-                'lesson_active'=>'y',
+                'active'=>'y',
                 'user_id'=>Yii::app()->user->id
             ));
 
@@ -3702,7 +3702,7 @@ public function checkStepLesson($lesson){
 
         foreach ($file as $les) {
             $learnModel = Learn::model()->find(array(
-                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active=:status',
+                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND active=:status',
                 'params'=>array(':lesson_id'=>$lesson->id,':user_id'=>Yii::app()->user->id,':status'=>'y')
             ));
                 $learnFiles = self::lib()->checkLessonFile($les,$learnModel->learn_id); //notLearn,learning,pass
@@ -3759,8 +3759,8 @@ public function checkStepLesson($lesson){
 
         public function resetScore($lesson_id){
             $learn = Learn::model()->findAll(array(
-                'condition' => "user_id=:user_id AND lesson_id=:lesson AND lesson_active=:lesson_active",
-                'params' => array(':user_id' => Yii::app()->user->id,':lesson' => $lesson_id,':lesson_active' => 'y')
+                'condition' => "user_id=:user_id AND lesson_id=:lesson AND active=:active",
+                'params' => array(':user_id' => Yii::app()->user->id,':lesson' => $lesson_id,':active' => 'y')
             ));
 
             foreach ($learn as $key => $value) {
@@ -3771,7 +3771,7 @@ public function checkStepLesson($lesson){
                 ));
 
 
-                $value->lesson_active = 'n';
+                $value->active = 'n';
                 $value->save(false);
             }
 

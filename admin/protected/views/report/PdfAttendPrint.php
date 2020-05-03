@@ -206,9 +206,9 @@
                             $lesson_id = $lessonItem['id'];
                             $lesson_title = $lessonItem['title'];
 
-                            $sqlregis = " SELECT count(learn_id) as regis from tbl_learn where lesson_active='y' and lesson_id = $lesson_id and lesson_status is null";
+                            $sqlregis = " SELECT count(learn_id) as regis from tbl_learn where active='y' and lesson_id = $lesson_id and lesson_status is null";
 
-                            $sqlregisAll = " SELECT user_id as regis from tbl_learn where lesson_active='y' and lesson_id = $lesson_id";
+                            $sqlregisAll = " SELECT user_id as regis from tbl_learn where active='y' and lesson_id = $lesson_id";
 
                             if(!empty($_GET['ReportUser']['generation'])){
                               $sqlregisWhere .= "   and user_id in((select user_id from tbl_profiles where generation = ".$_GET['ReportUser']['generation']."))";
@@ -246,7 +246,7 @@
                             $regis = Yii::app()->db->createCommand($sqlregis.$sqlregisWhere)->queryAll();
                             $result_regis += $regis[0]['regis'];
      
-                            $sqllearning = " SELECT count(learn_id) as learning from tbl_learn where lesson_active='y' and lesson_id = $lesson_id and (lesson_status = 'learning' or lesson_status is null)";
+                            $sqllearning = " SELECT count(learn_id) as learning from tbl_learn where active='y' and lesson_id = $lesson_id and (lesson_status = 'learning' or lesson_status is null)";
 
                             if(!empty($_GET['ReportUser']['generation'])){
                               $sqllearning .= "   and user_id in((select user_id from tbl_profiles where generation = ".$_GET['ReportUser']['generation']."))";

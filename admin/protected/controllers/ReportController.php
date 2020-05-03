@@ -123,6 +123,14 @@ class ReportController extends Controller
             $model->attributes=$_GET['Report'];
         $this->render('score',array('model'=>$model));
     }
+    public function actionIndividual()
+    {
+        $model=new Report();
+        $model->unsetAttributes();
+        if(isset($_GET['Report']))
+            $model->attributes=$_GET['Report'];
+        $this->render('individual',array('model'=>$model));
+    }
 
     public function actionAttendPrint()
     {
@@ -144,7 +152,7 @@ class ReportController extends Controller
             $criteria = new CDbCriteria;
             $criteria->compare('lesson_id',$id);
             $criteria->compare('lesson_status','pass');
-            $criteria->compare('lesson_active','y');
+            $criteria->compare('active','y');
             if(!empty($schedule_id)){
                 $criteria->addCondition('user_id IN((select user_id from tbl_auth_course where schedule_id='.$schedule_id.'))');
             }
@@ -170,7 +178,7 @@ class ReportController extends Controller
             $criteria = new CDbCriteria;
             $criteria->compare('lesson_id',$id);
             $criteria->compare('lesson_status','pass');
-            $criteria->compare('lesson_active','y');
+            $criteria->compare('active','y');
             if(!empty($schedule_id)){
                 $criteria->addCondition('user_id IN((select user_id from tbl_auth_course where schedule_id='.$schedule_id.'))');
             }
@@ -206,7 +214,7 @@ class ReportController extends Controller
                 $criteria->compare('t.course_id',$course_id);
                 $criteria->compare('t.lesson_id',$value->id);
                 $criteria->compare('lesson_status','pass');
-                $criteria->compare('lesson_active','y');
+                $criteria->compare('t.active','y');
                 $criteria->compare('lesson.active',"y");
                 if(!empty($schedule_id)){
                     $criteria->addCondition('user_id IN((select user_id from tbl_auth_course where schedule_id='.$schedule_id.'))');
@@ -256,7 +264,7 @@ class ReportController extends Controller
                 $criteria->compare('t.course_id',$course_id);
                 $criteria->compare('t.lesson_id',$value->id);
                 $criteria->compare('lesson_status','pass');
-                $criteria->compare('lesson_active','y');
+                $criteria->compare('t.active','y');
                 $criteria->compare('lesson.active',"y");
                 if(!empty($schedule_id)){
                     $criteria->addCondition('user_id IN((select user_id from tbl_auth_course where schedule_id='.$schedule_id.'))');
@@ -307,7 +315,7 @@ class ReportController extends Controller
             $criteria = new CDbCriteria;
             $criteria->compare('lesson_id',$id);
             $criteria->compare('lesson_status','learning');
-            $criteria->compare('lesson_active','y');
+            $criteria->compare('active','y');
             if(!empty($schedule_id)){
                 $criteria->addCondition('user_id IN((select user_id from tbl_auth_course where schedule_id='.$schedule_id.'))');
             }
@@ -333,7 +341,7 @@ class ReportController extends Controller
             $criteria = new CDbCriteria;
             $criteria->compare('lesson_id',$id);
             $criteria->compare('lesson_status','learning');
-            $criteria->compare('lesson_active','y');
+            $criteria->compare('active','y');
             if(!empty($schedule_id)){
                 $criteria->addCondition('user_id IN((select user_id from tbl_auth_course where schedule_id='.$schedule_id.'))');
             }
@@ -356,7 +364,7 @@ class ReportController extends Controller
         if(!empty($lesson)){
             $criteria = new CDbCriteria;
             $criteria->compare('lesson_id',$id);
-            $criteria->compare('lesson_active','y');
+            $criteria->compare('active','y');
             if(!empty($schedule_id)){
                 $criteria->addCondition('user_id IN((select user_id from tbl_auth_course where schedule_id='.$schedule_id.'))');
             }
@@ -382,7 +390,7 @@ class ReportController extends Controller
       if(!empty($lesson)){
         $criteria = new CDbCriteria;
         $criteria->compare('lesson_id',$id);
-        $criteria->compare('lesson_active','y');
+        $criteria->compare('active','y');
         if(!empty($schedule_id)){
             $criteria->addCondition('user_id IN((select user_id from tbl_auth_course where schedule_id='.$schedule_id.'))');
         }
@@ -623,7 +631,7 @@ class ReportController extends Controller
 
                 $criteria = new CDbCriteria;
                 $criteria->compare('course_id',$schedule->course_id);
-                $criteria->compare('lesson_active','y');
+                $criteria->compare('active','y');
                 if(!empty($schedule_id)){
                     $criteria->addCondition('user_id IN((select user_id from tbl_auth_course where schedule_id='.$schedule_id.'))');
                 }
@@ -646,7 +654,7 @@ class ReportController extends Controller
             $titleName = 'รายงานผู้ที่ไม่เข้าเรียนบทเรียน';
             $criteria = new CDbCriteria;
             $criteria->compare('lesson_id',$lesson_id);
-            $criteria->compare('lesson_active','y');
+            $criteria->compare('active','y');
             if(!empty($schedule_id)){
                 $criteria->addCondition('user_id IN((select user_id from tbl_auth_course where schedule_id='.$schedule_id.'))');
             }
@@ -689,7 +697,7 @@ class ReportController extends Controller
 
                 $criteria = new CDbCriteria;
                 $criteria->compare('course_id',$schedule->course_id);
-                $criteria->compare('lesson_active','y');
+                $criteria->compare('active','y');
                 if(!empty($schedule_id)){
                     $criteria->addCondition('user_id IN((select user_id from tbl_auth_course where schedule_id='.$schedule_id.'))');
                 }
@@ -712,7 +720,7 @@ class ReportController extends Controller
             $titleName = 'รายงานผู้ที่ไม่เข้าเรียนบทเรียน';
             $criteria = new CDbCriteria;
             $criteria->compare('lesson_id',$lesson_id);
-            $criteria->compare('lesson_active','y');
+            $criteria->compare('active','y');
             if(!empty($schedule_id)){
                 $criteria->addCondition('user_id IN((select user_id from tbl_auth_course where schedule_id='.$schedule_id.'))');
             }

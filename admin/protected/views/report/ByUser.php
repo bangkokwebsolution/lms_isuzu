@@ -68,9 +68,9 @@ EOD
                 ),
                 array('name'=>'search','type'=>'text','placeholder'=> 'สามารถค้นหาด้วย ชื่อ,นามสกุล,อีเมลล์'),
                 array('name'=>'type_user','type'=>'list','query'=>$type_user),
-                array('name'=>'division_id','type'=>'listMultiple','query'=>$divisiondata),
+               // array('name'=>'division_id','type'=>'listMultiple','query'=>$divisiondata),
                 array('name'=>'department','type'=>'listMultiple','query'=>$departmentdata),
-                array('name'=>'station','type'=>'listMultiple','query'=>$stationdata),
+               // array('name'=>'station','type'=>'listMultiple','query'=>$stationdata),
                 array('name'=>'period_start','type'=>'text'),
                 array('name'=>'period_end','type'=>'text'),
         ),
@@ -214,7 +214,7 @@ EOD
                                                     if($curLesson) {
                                                         foreach($curLesson as $les) {
                                                             $statusLearn = Learn::model()->find(array(
-                                                                'condition' => 'lesson_active = "y" and user_id = "' . $user['id'] . '" and lesson_id = "' . $les['id'] . '"' . $startdate . $enddate .$startdate_schedule .$enddate_schedule,
+                                                                'condition' => 'Learn.active = "y" and user_id = "' . $user['id'] . '" and lesson_id = "' . $les['id'] . '"' . $startdate . $enddate .$startdate_schedule .$enddate_schedule,
                                                                 'alias' => 'learn'
                                                             ));
                                                             $statusArray = array('learning'=>'<b style="color: green;">กำลังเรียน</b>', 'pass' => '<b style="color: blue;">ผ่าน</b>','notlearn'=>'<b style="color: red;">ยังไม่เรียน</b>');
@@ -306,7 +306,7 @@ EOD
                                 foreach($dataProvider->getData() as $i => $user) {
 
                                   $lern = Learn::model()->findAll(array(
-                                    'condition' => 'course_id = "' . $course_chk[0] . '" AND lesson_active ="y" AND  user_id = "' . $user->id . '"'
+                                    'condition' => 'course_id = "' . $course_chk[0] . '" AND active ="y" AND  user_id = "' . $user->id . '"'
                                 ));
 
                                   if(count($lern) > 0){
@@ -327,7 +327,7 @@ EOD
                                                     if($curLesson) {
                                                         foreach($curLesson as $les) {
                                                             $statusLearn = Learn::model()->find(array(
-                                                                'condition' => 'lesson_active = "y" and user_id = "' . $user['id'] . '" and lesson_id = "' . $les['id'] . '"' . $startdate . $enddate .$startdate_schedule .$enddate_schedule,
+                                                                'condition' => 'Learn.active = "y" and user_id = "' . $user['id'] . '" and lesson_id = "' . $les['id'] . '"' . $startdate . $enddate .$startdate_schedule .$enddate_schedule,
                                                                 'alias' => 'learn'
                                                             ));
                                                             $statusArray = array('learning'=>'<b style="color: green;">กำลังเรียน</b>', 'pass' => '<b style="color: blue;">ผ่าน</b>','notlearn'=>'<b style="color: red;">ยังไม่เรียน</b>');
