@@ -36,6 +36,8 @@ class AttachName extends CActiveRecord
 		return array(
 			array('user_id, create_by, update_by', 'numerical', 'integerOnly'=>true),
 			array('attach_passport, attach_crew_identification, attach_identification, attach_house_registration', 'length', 'max'=>255),
+			array('attach_passport, attach_crew_identification, attach_identification, attach_house_registration', 'file', 'types'=>'pdf,jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
+			array('attach_passport, attach_crew_identification, attach_identification, attach_house_registration', 'file', 'types'=>'pdf,jpg, png, gif','allowEmpty' => true, 'on'=>'update'),
 			array('active', 'length', 'max'=>1),
 			array('create_date, update_date', 'safe'),
 			// The following rule is used by search().

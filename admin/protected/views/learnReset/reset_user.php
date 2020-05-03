@@ -71,12 +71,12 @@ Yii::app()->clientScript->registerScript('search', "
                                                 $criteria->with = array('les');
                                                 $criteria->compare('user_id',$val->user_id);
 
-                                                $criteria->compare('lesson_active','y');
+                                                $criteria->compare('t.active','y');
                                    // $criteria->addCondition('lesson_status IS NOT NULL');
                                     // $criteria->compare('lesson.type','vdo');
 
                                                 $modelLearn = Learn::model()->find($criteria);
-                                              
+                              
                     //return $modelLearn->learn_id.'|'.$modelLearn->user_id.'|'.$modelLearn->course_id;
                                                 if($modelLearn){
                                                     $evntLearn = 'reset_learn';
@@ -246,7 +246,7 @@ function InitialResetLearn() {
         type: 'POST',
         url: "<?=Yii::app()->createUrl('LearnReset/get_dialog_learn');?>",
         data:{ user_id:id },
-        success: function(data) {
+        success: function(data) {console.log(data);
             $('#selectModal .modal-title').html('Reset การเรียน');
             $('#selectModal .modal-body').html(data);
             $('#btnSubmit').css('display','');

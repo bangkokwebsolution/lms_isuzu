@@ -688,12 +688,12 @@ public function actionReset_university()
         $user_id = $_POST['user_id'];
         $test = '';
         $criteria = new CDbCriteria();
-        $criteria->condition = "user_id = $user_id AND lesson_active = 'y' AND courseonline.active = 'y'";
+        $criteria->condition = "user_id = $user_id AND t.active = 'y' AND courseonline.active = 'y'";
         $criteria->group = "t.course_id";
         $course = learn::model()->with('course')->findAll($criteria);
-
+  //var_dump($course);exit();
         $respon = '';
-        $respon = $this->renderPartial('_modal_learn',array('course' => $course,'user_id' => $user_id,'type' => $type));     
+        $respon = $this->renderPartial('_modal_learn',array('course' => $course,'user_id' => $user_id,'type' => $type));
     }
 
     public function actionGet_dialog_pre()
@@ -702,13 +702,12 @@ public function actionReset_university()
         $user_id = $_POST['user_id'];
         $test = '';
         $criteria = new CDbCriteria();
-        $criteria->condition = "t.user_id = $user_id AND t.active ='y' AND t.type='pre' AND courseonline.active = 'y'";
+        $criteria->condition = "t.user_id = $user_id AND t.active='y' AND t.type='pre' AND courseonline.active = 'y'";
         $criteria->group = "t.course_id";
         $course = Score::model()->with('course')->findAll($criteria);
 
         $respon = '';
         $respon = $this->renderPartial('_modal_pre',array('course' => $course,'user_id' => $user_id,'type' => $type));
-        
     }
 
     public function actionGet_dialog_post()
@@ -717,7 +716,7 @@ public function actionReset_university()
         $user_id = $_POST['user_id'];
         $test = '';
         $criteria = new CDbCriteria();
-        $criteria->condition = "t.user_id = $user_id AND t.active ='y' AND t.type='post' AND courseonline.active = 'y'";
+        $criteria->condition = "t.user_id = $user_id AND t.active='y' AND t.type='post' AND courseonline.active = 'y'";
         $criteria->group = "t.course_id";
         $course = Score::model()->with('course')->findAll($criteria);
 
@@ -752,9 +751,9 @@ public function actionReset_university()
                     'user_id' => $user_id,
                     'lesson_id' => $lesson_id,
                     'course_id' => $course_id,
-                    'lesson_active' => 'y'
+                    'active' => 'y'
                 ));
-   
+
                 if ($learn) {
 
                     foreach ($learn as $key => $data) {
@@ -783,7 +782,7 @@ public function actionReset_university()
                         }
 
                         $data->lesson_status = null;
-                        $data->lesson_active = 'n';
+                        $data->active = 'n';
                         $data->save(false);
 
                     }
@@ -1199,31 +1198,31 @@ public function actionGet_dialog_all()
 }
 
     // Uncomment the following methods and override them if needed
-	/*
-	public function filters()
-	{
-		// return the filter configuration for this controller, e.g.:
-		return array(
-			'inlineFilterName',
-			array(
-				'class'=>'path.to.FilterClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
+    /*
+    public function filters()
+    {
+        // return the filter configuration for this controller, e.g.:
+        return array(
+            'inlineFilterName',
+            array(
+                'class'=>'path.to.FilterClass',
+                'propertyName'=>'propertyValue',
+            ),
+        );
+    }
 
-	public function actions()
-	{
-		// return external action classes, e.g.:
-		return array(
-			'action1'=>'path.to.ActionClass',
-			'action2'=>array(
-				'class'=>'path.to.AnotherActionClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
-	*/
+    public function actions()
+    {
+        // return external action classes, e.g.:
+        return array(
+            'action1'=>'path.to.ActionClass',
+            'action2'=>array(
+                'class'=>'path.to.AnotherActionClass',
+                'propertyName'=>'propertyValue',
+            ),
+        );
+    }
+    */
     public function actionCheckCourseAccept(){
         $user = Users::model()->findByPk(Yii::app()->user->id);
         $type =  $_POST['reset_type'];

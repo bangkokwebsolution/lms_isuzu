@@ -35,6 +35,8 @@ class AttachFile extends CActiveRecord
 		return array(
 			array('user_id, create_by, update_by', 'numerical', 'integerOnly'=>true),
 			array('file_data, file_name, filename', 'length', 'max'=>255),
+			array('file_name, filename', 'file', 'types'=>'pdf,jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
+			array('file_name, filename', 'file', 'types'=>'pdf,jpg, png, gif','allowEmpty' => true, 'on'=>'update'),
 			array('active', 'length', 'max'=>1),
 			array('create_date, update_date', 'safe'),
 			// The following rule is used by search().

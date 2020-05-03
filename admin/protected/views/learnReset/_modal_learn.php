@@ -32,7 +32,7 @@
 
                                      $modelData = null;
                                      $modelData = learn::model()->with('les')->findAll(array(
-                                         'condition'=>'t.user_id=:user_id AND t.course_id=:course_id AND lesson_active="y" AND lesson.active="y"',
+                                         'condition'=>'t.user_id=:user_id AND t.course_id=:course_id AND t.active="y" AND lesson.active="y"',
                                          'params' => array('user_id' => $user_id,':course_id'=>$value->course_id)
                                      ));
                                      if($modelData){

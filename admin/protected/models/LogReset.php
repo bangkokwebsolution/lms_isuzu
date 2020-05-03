@@ -11,7 +11,6 @@
  * @property string $reset_description
  * @property string $reset_date
  * @property integer $reset_type
- * @property integer $reset_by
  */
 class LogReset extends CActiveRecord
 {
@@ -20,7 +19,7 @@ class LogReset extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'log_reset';
+		return '{{log_reset}}';
 	}
 
 	/**
@@ -47,9 +46,12 @@ class LogReset extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'course' => array(self::BELONGS_TO, 'CourseOnline', 'course_id'),
-			'lesson' => array(self::BELONGS_TO, 'Lesson', 'lesson_id'),
-			'reset' => array(self::BELONGS_TO,'Profiles','reset_by'),
+			'user' => array(self::BELONGS_TO,'User','user_id'),
+			// 'reset' => array(self::BELONGS_TO,'MMember','reset_by'),
+			'reset' => array(self::BELONGS_TO, 'Profiles', 'reset_by'),
+			'course' => array(self::BELONGS_TO,'CourseOnline','course_id'),
+			// 'lesson' => array(self::BELONGS_TO,'LessonList','lesson_id'),
+			'lesson' => array(self::BELONGS_TO, 'lesson', 'lesson_id'),
 		);
 	}
 
@@ -66,7 +68,6 @@ class LogReset extends CActiveRecord
 			'reset_description' => 'Reset Description',
 			'reset_date' => 'Reset Date',
 			'reset_type' => '0=บทเรียน 1=สอบ',
-			'reset_by' => 'Reset By',
 		);
 	}
 
@@ -96,9 +97,17 @@ class LogReset extends CActiveRecord
 		$criteria->compare('reset_date',$this->reset_date,true);
 		$criteria->compare('reset_type',$this->reset_type);
 		$criteria->compare('reset_by',$this->reset_by);
+		$criteria->with = array('course');
+		$criteria->compare('courseonline.active', $this->course->active='y', true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
+			'sort'=>array(
+			    'defaultOrder'=>'reset_date DESC',
+			  ),
+            'pagination'=>array(
+                'pageSize'=>100,
+            )
 		));
 	}
 

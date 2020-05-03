@@ -43,10 +43,9 @@ class Learn extends CActiveRecord
 		return array(
 			array('user_id, lesson_id, learn_date', 'required'),
 			array('user_id, lesson_id', 'numerical', 'integerOnly'=>true),
-			array('lesson_active', 'length', 'max'=>1),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('learn_id, user_id, lesson_id, learn_date,create_date,search_value,searchname, lesson_active', 'safe', 'on'=>'search'),
+			array('learn_id, user_id, lesson_id, learn_date,create_date,search_value,searchname,active', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -79,7 +78,7 @@ class Learn extends CActiveRecord
 			'learn_date' => 'Learn Date',
 			'create_date' => 'Create Date',
 			'searchname' => 'ชื่อ-สกุล',
-			'lesson_active' => 'active'
+			'active'=>'active',
 		);
 	}
 
@@ -94,7 +93,6 @@ class Learn extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-       
 		$criteria->compare('learn_id',$this->learn_id);
 		$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('lesson_id',$this->lesson_id);
@@ -112,18 +110,19 @@ class Learn extends CActiveRecord
 		// $criteria->join .= ' LEFT JOIN tbl_learn AS learn ON learn.user_id = User.id';
 		// /*$criteria->join .= ' LEFT JOIN tbl_coursescore AS coursescore ON coursescore.user_id = t.user_id ';*/
 		$criteria->group = 't.user_id';
+
 		// //$criteria->compare('t.course_id',$this->search_course);
-		$criteria->addCondition("lesson_active = 'y'");
+		$criteria->addCondition('t.active = "y"');
 		$criteria->addCondition('User.del_status = "0"');
 		$criteria->compare('CONCAT(User.username)',$this->search_value,true);
 		$criteria->compare('concat(Profile.firstname," ",Profile.lastname)',$this->searchname,true);
 		//$criteria->compare('search_course',$this->search_course);
-       
+   
+
 		$poviderArray = array('criteria' => $criteria);
 
 
         // Page
-
 		if (isset($this->news_per_page)) {
 			$poviderArray['pagination'] = array('pageSize' => intval($this->news_per_page));
 		} else {
