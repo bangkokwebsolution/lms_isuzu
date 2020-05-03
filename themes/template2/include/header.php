@@ -1,49 +1,50 @@
 <div class="modal fade" id="user-report">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form action="<" method="POST" role="form" name='user-report'>
+            <form action="<?php echo $this->createUrl('/ReportProblem/ReportProblem'); ?>" method="POST" role="form" name='user-report' enctype="multipart/form-data">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"><i class="fa fa-exclamation-circle" aria-hidden="true"></i> แจ้งปัญหาการใช้งาน</h4>
+                    <h4 class="modal-title"><i class="fa fa-exclamation-circle" aria-hidden="true"></i><?= Yii::app()->session['lang'] == 1?'Report a problem':'แจ้งปัญหาการใช้งาน'; ?> </h4>
                 </div>
                 <div class="modal-body">
                     <div class="row report-row">
+
                         <div class="col-md-6 col-xs-12 col-sm-6">
-                            <label for="">ชื่อ</label>
-                            <input type="text" class="form-control" placeholder="ชื่อ">
+                            <label for=""><?= Yii::app()->session['lang'] == 1?'Name':'ชื่อ'; ?></label>
+                            <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1?'Name':'ชื่อ'; ?>" name="ReportProblem[firstname]">
                         </div>
                         <div class="col-md-6 col-xs-12 col-sm-6">
-                            <label for="">นามสกุล</label>
-                            <input type="text" class="form-control" placeholder="นามสกุล">
+                            <label for=""><?= Yii::app()->session['lang'] == 1?'Last name':'นามสกุล'; ?></label>
+                            <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1?'Last name':'นามสกุล'; ?>" name="ReportProblem[lastname]">
                         </div>
                     </div>
                     <div class="row report-row">
                         <div class="col-md-6 col-xs-12 col-sm-6">
-                            <label for="">เบอร์โทรศัพท์</label>
-                            <input type="text" class="form-control" placeholder="เบอร์โทรศัพท์">
+                            <label for=""><?= Yii::app()->session['lang'] == 1?'Phone number':'เบอร์โทรศัพท์'; ?></label>
+                            <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1?'Phone number':'เบอร์โทรศัพท์'; ?>" name="ReportProblem[tel]">
                         </div>
                         <div class="col-md-6 col-xs-12 col-sm-6">
-                            <label for="">อีเมล์</label>
-                            <input type="text" class="form-control" placeholder="อีเมล์">
+                            <label for=""><?= Yii::app()->session['lang'] == 1?'email':'อีเมล์'; ?></label>
+                            <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1?'email':'อีเมล์'; ?>" name="ReportProblem[email]">
                         </div>
                     </div>
 
                     <div class="row report-row">
                         <div class="col-md-12 col-xs-12">
-                            <label for="">ข้อความ</label>
-                            <textarea name="" class="form-control" placeholder="พิมพ์ข้อความในช่องนี้" id="" cols="30" rows="6"></textarea>
+                            <label for=""><?= Yii::app()->session['lang'] == 1?'The message':'ข้อความ'; ?></label>
+                            <textarea name="ReportProblem[report_detail]" class="form-control" placeholder="<?php echo Yii::app()->session['lang'] == 1?'Type your message in this box.':'พิมพ์ข้อความในช่องนี้'; ?>" id="" cols="30" rows="6"></textarea>
                         </div>
                     </div>
 
                     <div class="row report-row">
                         <div class="col-md-6 col-xs-12">
-                            <label for="">อัปโหลดรูปภาพ</label>
-                            <input type="file" class="form-control"  multiple>
+                            <label for=""><?= Yii::app()->session['lang'] == 1?'Upload photo':'อัปโหลดรูปภาพ'; ?></label>
+                            <input type="file" class="form-control" name="ReportProblem[report_pic]">
                         </div>
                     </div>
 
                     <hr>
-                    <div class="text-center"> <button type="submit" class="btn btn-submit btn-report" name="">ยืนยัน</button></div>
+                    <div class="text-center"> <button type="submit" class="btn btn-submit btn-report" name=""><?= Yii::app()->session['lang'] == 1?'Confirm':'ยืนยัน'; ?></button></div>
                 </div>
                 <div class="modal-footer">
                 </div>
@@ -312,6 +313,10 @@
                 onGoogleSignIn(googleUser);
             });
     }
+</script>
+<script type="text/javascript">
+   // var tr = "<?= Yii::app()->createUrl('registration/Report_problem'); ?>";
+   // $('.modal-body').load(tr);
 </script>
 <script>
     function onGoogleSignIn(googleUser) {

@@ -13,12 +13,13 @@
  * @property string $report_title
  * @property string $report_detail
  * @property string $report_pic
+ * @property string $report_date
+ * @property string $accept_report_date
+ * @property string $status
+ * @property string $answer
  */
 class ReportProblem extends CActiveRecord
 {
-	public $file;
-	public $tel2;
-	public $report_type2;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -35,15 +36,13 @@ class ReportProblem extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('firstname, lastname, email, tel, report_type, report_title, report_detail', 'required'),
 			array('firstname, lastname, email, tel, report_type, report_title, report_pic', 'length', 'max'=>255),
-			array('email', 'email'),
-			array('tel', 'numerical', 'integerOnly'=>true),
-			array('tel','length','min'=>9),
+			array('status', 'length', 'max'=>7),
+			array('report_pic', 'file','types'=>'jpg, gif, png', 'allowEmpty'=>true),
+			array('report_detail, report_date, accept_report_date, answer', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, firstname, lastname, email, tel, report_type, report_title, report_detail, report_pic,status,report_date', 'safe', 'on'=>'search'),
-			array('file', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
+			array('id, firstname, lastname, email, tel, report_type, report_title, report_detail, report_pic, report_date, accept_report_date, status, answer', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -65,14 +64,18 @@ class ReportProblem extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'firstname' => 'ชื่อ',
-			'lastname' => 'นามสกุล',
-			'email' => 'อีเมล์',
-			'tel' => 'เบอร์โทรศัพท์',
-			'report_type' => 'ประเภทปัญหา',
-			'report_title' => 'หัวข้อ',
-			'report_detail' => 'ข้อความ',
+			'firstname' => 'Firstname',
+			'lastname' => 'Lastname',
+			'email' => 'Email',
+			'tel' => 'Tel',
+			'report_type' => 'Report Type',
+			'report_title' => 'Report Title',
+			'report_detail' => 'Report Detail',
 			'report_pic' => 'Report Pic',
+			'report_date' => 'Report Date',
+			'accept_report_date' => 'Accept Report Date',
+			'status' => 'Status',
+			'answer' => 'Answer',
 		);
 	}
 
@@ -103,6 +106,10 @@ class ReportProblem extends CActiveRecord
 		$criteria->compare('report_title',$this->report_title,true);
 		$criteria->compare('report_detail',$this->report_detail,true);
 		$criteria->compare('report_pic',$this->report_pic,true);
+		$criteria->compare('report_date',$this->report_date,true);
+		$criteria->compare('accept_report_date',$this->accept_report_date,true);
+		$criteria->compare('status',$this->status,true);
+		$criteria->compare('answer',$this->answer,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

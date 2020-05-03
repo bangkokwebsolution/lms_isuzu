@@ -47,7 +47,7 @@ Yii::app()->user->returnUrl = $http->getUrl();
     </a>
 
     <?php
-    $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact/mascot-contact.json');
+   $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact/mascot-contact.json');
     ?>
     <script>
         var animation = bodymovin.loadAnimation({
