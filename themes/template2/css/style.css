@@ -1455,11 +1455,28 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
   margin-right: 0;
 }
 
-#course-learn .navbar .container-fluid .back {
+#course-learn .back ,.back-home {
   padding: 15px 20px;
-  background: #e50000;
+  background:#010C65;
   color: #ffffff;
 }
+
+.back-home:hover{
+  color: #fff !important;
+  background:#041077;
+}
+
+.menu-learn{
+    color: #fff;
+    background:#010C65;
+    padding: 15px 20px;
+}
+
+.menu-learn:hover{
+  color: #fff !important;
+  background:#041077;
+}
+
 
 #course-learn .navbar .container-fluid p {
   padding: 10px 0;
@@ -1467,7 +1484,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #course-learn .navbar .container-fluid .menu {
-  background: #e50000;
+  background: #010C65;
   color: #ffffff;
   padding: 15px 20px;
 }
@@ -1520,7 +1537,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 #course-learn .sidenav .nav>li>a:hover,
 #course-learn .sidenav .nav>li>a:focus,
 #course-learn .sidenav .nav>li.active>a {
-  background-color: #e50000;
+  background-color: #010C65;
   color: #ffffff;
 }
 
@@ -4342,6 +4359,45 @@ ol.stat-alert li::before {
 
 .btn-group-lg>.btn, .btn-lg{
   font-size: 16px;
+}
+
+.h-course-title {
+    padding: 1em;
+    border: 1px solid #ddd;
+    background-color: #0C5EB0;
+    color: #fff;
+    display: block;
+    width: 100%;
+    text-align: left;
+}
+
+.note-input{
+  padding: 1em
+}
+.btn-note{
+    color: #fff;
+    background-color: #b2282b;
+    border-color: #b2282b;
+    display: block; 
+    padding: 10px ;
+    width: 100%;
+    margin-top: 10px;
+    font-size: 16px;
+}
+
+.btn-note:hover{
+  color: #fff;
+}
+#tbody_note{
+  font-size: 14px;
+}
+
+.td_time_note{
+  color: #007bff;
+  }
+
+.text-left{
+  text-align: left !important;
 }
 
 @media (min-width: 1440px) {

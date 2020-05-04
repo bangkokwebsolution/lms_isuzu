@@ -34,31 +34,20 @@ Yii::app()->user->returnUrl = $http->getUrl();
     <meta name="viewport" content="width=device-width, initial-scale=1">
    
 
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/bootstrap_learn.min.css"  crossorigin="anonymous">
 
-    <!-- Video JS -->
-    <!-- <link href="http://vjs.zencdn.net/6.2.8/video-js.css" rel="stylesheet"> -->
-
-    <!-- Owl carousel -->
     <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/owl.carousel.min.css" type="text/css" media="screen">
     <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/owl.theme.default.min.css" type="text/css" media="screen">
 
-    <!-- Bootstrap Jasny -->
     <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/jasny-bootstrap.min.css" type="text/css" media="screen">
 
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/font-awesome.min.css" type="text/css" media="screen">
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/sweetalert/dist/sweetalert.css" />
-    <!-- Style CSS -->
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/style.css" media="screen">
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/input.css" media="screen">
-    <!-- Slicknav -->
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/slicknav.css" media="screen">
     <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/lottie.js"></script>
 
-    <!-- <link type="text/css" href="<?=Yii::app()->baseUrl?>/cometchat/cometchatcss.php" rel="stylesheet" charset="utf-8">
-    <script type="text/javascript" src="<?=Yii::app()->baseUrl?>/cometchat/cometchatjs.php" charset="utf-8"></script> -->
 
 
 
@@ -68,20 +57,19 @@ Yii::app()->user->returnUrl = $http->getUrl();
     <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/../template/vendors/sweetalert/sweetalert2.min.js"></script>
 
 
-    <link href="https://vjs.zencdn.net/7.6.6/video-js.css" rel="stylesheet" />
-    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
-    <!-- <script src='themes/vendors/lottie.js'></script> -->
+   <!--  <link href="https://vjs.zencdn.net/7.6.6/video-js.css" rel="stylesheet" />
+    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script> -->
+   <!--  <?php include("themes/template2/include/css.php"); ?> -->
 </head>
 
 <body>
-<!-- <div id="loader">
+  <!-- <div id="loader">
     <div class="spinner">
       <div class="dot1"></div>
       <div class="dot2"></div>
     </div>
   </div> -->
-<!-- Start Header Section -->
-    <a class="contact-admin" data-toggle="modal" href="#user-report">
+    <!-- <a class="contact-admin" data-toggle="modal" href="#user-report">
         <div id="mascot-contact"></div>
     </a>
 
@@ -96,16 +84,13 @@ Yii::app()->user->returnUrl = $http->getUrl();
             loop: true,
             path: '<?php echo $mascot_path; ?>'
         });
-    </script>
+    </script> -->
 
     <?php include("themes/template2/include/header.php"); ?>
-<!-- End Header Section -->
 <?php echo $content; ?>
 
 
-<!-- Start Footer Section -->
     <?php include("themes/template2/include/footer.php"); ?>
-<!-- End Footer Section -->
 
 <?php
 $cs = Yii::app()->clientScript;
