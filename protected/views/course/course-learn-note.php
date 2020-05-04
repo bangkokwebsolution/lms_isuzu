@@ -30,8 +30,6 @@ $cancel_msg = UserModule::t('Cancel');
  <link href="<?php echo $themeBaseUrl; ?>/css/learn/prettyPhoto.css" rel="stylesheet" type="text/css">
  <link href="<?php echo $themeBaseUrl; ?>/css/learn/jquery.wizard.css" rel="stylesheet" type="text/css">
  <link href="<?php echo $themeBaseUrl; ?>/css/learn/pace-learn.css" rel="stylesheet" type="text/css">
- <!-- <link href="<?php echo $themeBaseUrl; ?>/js/video-js/splitter/src/touchsplitter.css" rel="stylesheet"/> -->
- <!-- <script src="<?php echo $themeBaseUrl; ?>/js/video-js/splitter/src/jquery.touchsplitter.js"></script> -->
  <script src="<?php echo $themeBaseUrl; ?>/plugins/video-js/video.js"></script>
  <script src="<?php echo $themeBaseUrl; ?>/js/library/jquery.prettyPhoto.js"></script>
  <script src="<?php echo $themeBaseUrl; ?>/js/library/jquery.wizard.js"></script>
@@ -39,10 +37,6 @@ $cancel_msg = UserModule::t('Cancel');
  <script type="text/javascript" src="<?php echo $themeBaseUrl; ?>/plugins/knob/jquery.knob.js"></script>
  <script src="<?php echo $themeBaseUrl; ?>/js/library/pace.js" rel="stylesheet"></script>
  <script type='text/javascript' src='<?php echo $themeBaseUrl; ?>/js/library/jquery.countdown.min.js'></script>
- <!-- audio -->
-<!-- <link href="<?php echo $themeBaseUrl; ?>/css/audioplayer.css" rel="stylesheet" type="text/css">
-<link href="https://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
-<script src="<?php echo $themeBaseUrl; ?>/js/audioplayer.js" rel="stylesheet"></script> -->
 <style type="text/css" media="screen">
   .vjs-play-control .vjs-control  .vjs-paused 
   {
@@ -52,7 +46,6 @@ $cancel_msg = UserModule::t('Cancel');
   header{display: none;}
   footer{display: none!important;}
 </style>
-<!-- fotorama.css & fotorama.js. -->
 <script>
   var status_in_learn_note = "no";
 
@@ -98,12 +91,7 @@ $cancel_msg = UserModule::t('Cancel');
      .vjs-duration-display{
        font-family: '';
      }
-    /* The video should expand to force the height of the containing div.
-    One in-flow element is good. As long as everything else in the container
-    div stays `position: absolute` we're okay */
-    /*.split-me>div{*/
-      /*background: #444;*/
-      /*}*/
+ 
       .split-me > div:first-child {
         background: #555;
       }
@@ -374,27 +362,25 @@ $cancel_msg = UserModule::t('Cancel');
                 </ul>
               </div>                
 
-                <!-- Tab panes -->
                 <div class="tab-content">
 
-                  <!-- สมุดโน๊ต note -->
                   <div class="box-note">
-                    <button class="h-course-title bg-secondary text-white" type="button" data-toggle="collapse" data-target="#course-note" aria-expanded="false" aria-controls="course-note">
+                    <button class="h-course-title" type="button" data-toggle="collapse" data-target="#course-note" aria-expanded="false" aria-controls="course-note">
                         <i class="fas fa-edit"></i> จดบันทึก
-                        <span class="float-right"><i class="fas fa-angle-up"></i></span>
+                        <span class="pull-right"><i class="fas fa-angle-up"></i></span>
                     </button>
-                    <div class="collapse show" id="course-note">
-                        <div class="p-3">
+                    <div class="collapse" id="course-note">
+                        <div class="note-input">
                             <div class="form-group">
                                 <textarea class="form-control" placeholder="พิมพ์ข้อความและจดบันทึก" id="note-1" rows="3"></textarea>
-                                <button type="button" onclick="save_learn_note();" class="btn btn-sm btn-dark mt-2">จดบันทึก</button>
+                                <button type="button" onclick="save_learn_note();" class="btn btn-note">จดบันทึก</button>
                             </div>
                             <div class="note-save">
                                 <table class="table table-borderless table-hover">
                                     <thead>
                                         <tr>
                                           <th width="20%">วิดีโอ</th>
-                                            <th scope="col" width="20%" class="text-center"><i class="far fa-clock"></i>เวลา</th>
+                                            <th scope="col" width="20%" class="text-center"><i class="far fa-clock"></i> เวลา</th>
                                             <th scope="col" width="60%" class="text-left"><i class="far fa-comment-alt"></i> ข้อความ</th>
                                         </tr>
                                     </thead>
@@ -406,7 +392,6 @@ $cancel_msg = UserModule::t('Cancel');
                                           <tr id="tr_note_<?php echo $value->note_id; ?>">
                                             <td><?php echo $value->file->filename; ?></td>
                                             <td style='cursor:pointer;' class="td_time_note" note_file="<?php echo $value->file_id; ?>" note_time="<?php echo $value->note_time; ?>" name_video="<?php echo $value->file->filename; ?>">
-                                              <!-- <a href="#"> -->
                                                 <?php 
                                                 if($value->note_time <= 60){
                                                   echo "00:".sprintf("%02d", floor($value->note_time%60));
@@ -414,9 +399,8 @@ $cancel_msg = UserModule::t('Cancel');
                                                   echo sprintf("%02d", floor($value->note_time/60)).":".sprintf("%02d", floor($value->note_time%60));
                                                 }
                                                 ?>
-                                                <!-- </a> -->
                                             </td>
-                                            <td style='cursor:pointer;'>
+                                            <td style='cursor:pointer;' class="text-left">
                                               <span class="edit-note" id="span_id_<?php echo $value->note_id; ?>"><?php echo $value->note_text; ?></span>
                                             </td>
                                         </tr>
@@ -433,7 +417,6 @@ $cancel_msg = UserModule::t('Cancel');
                         </div>
                     </div>
                 </div>
-                 <!-- จบ สมุดโน๊ต note -->
 
                   <div role="tabpanel" class="tab-pane " id="video">
                     <div class="panel panel-default">
@@ -994,7 +977,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                         <div class="container-fluid">                   
                           <div class="row">
                             <div class="col-sm-4 hidden-xs pl-0">
-                              <a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $model->course_id)); ?>" class="pull-left back"><i class="fa fa-home" aria-hidden="true"></i>  <?= $label->label_back; ?> </a>
+                              <a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $model->course_id)); ?>" class="pull-left back back-home"><i class="fa fa-home" aria-hidden="true"></i>  <?= $label->label_back; ?> </a>
                             </div>
 
                             <div class="col-xs-12 col-sm-4">
@@ -1002,11 +985,11 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                             </div>
 
                             <div class="col-xs-6 visible-xs pl-0">
-                              <a class="pull-left back" href="course-detail.php"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                              <a class="pull-left back back-home" href="course-detail.php"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
                             </div>
 
                             <div class="col-xs-6 col-sm-4 pr-0">
-                              <a class="pull-right menu" href="javascript:void(0)" onclick="openNav()"><i class="fa fa-bars" aria-hidden="true"></i></a>
+                              <a class="pull-right menu menu-learn" href="javascript:void(0)" onclick="openNav()"><i class="fa fa-bars" aria-hidden="true"></i></a>
                             </div>
                           </div>
                         </div>
@@ -3162,6 +3145,8 @@ function time_test_start(time_down){
                   });
 
 
+
+                  // เริ่ม สมุดโน๊ต
                   var $myGroup = $('#myGroup'); // บังคับเปิดแถบโชว์ วิดีโอ ได้ 1 อัน
                   $myGroup.on('show.bs.collapse','.collapse', function() {                    
                     $myGroup.find('.collapse.in').collapse('hide');
@@ -3181,7 +3166,8 @@ function time_test_start(time_down){
                     video_id_last = $("[fileid="+id_video_file+"]").attr("index");
                     // var video = $("#"+'example_video_'+video_id_last+'_html5_api').get(0); 
 
-                    var id_video_file_open = jQuery('.collapse.in').attr("id").replace("collapse", "");
+                    var id_video_file_open = jQuery('.collapse.in');
+                    id_video_file_open = id_video_file_open[1].getAttribute("id").replace("collapse", "");
 
                     if(id_video_file_open == id_video_file){
                       document.getElementById('example_video_'+video_id_last+'_html5_api').play();
@@ -3190,7 +3176,7 @@ function time_test_start(time_down){
                       var video = $("#"+'example_video_'+video_id_last+'_html5_api').get(0);
                       // console.log("เวลา วิดีโอ "+video.currentTime); 
                     }else{
-                      console.log(id_video_file_open+" = "+id_video_file);
+                      // console.log(id_video_file_open+" = "+id_video_file);
                       swal({
                         type: "warning",
                         title: "แจ้งเตือน!",
@@ -3219,7 +3205,9 @@ function time_test_start(time_down){
                     video_id_last = $("[fileid="+id_video_file+"]").attr("index");
                     // var video = $("#"+'example_video_'+video_id_last+'_html5_api').get(0); 
 
-                    var id_video_file_open = jQuery('.collapse.in').attr("id").replace("collapse", "");
+                    // var id_video_file_open = jQuery('.collapse.in').attr("id").replace("collapse", "");
+                    var id_video_file_open = jQuery('.collapse.in');
+                    id_video_file_open = id_video_file_open[1].getAttribute("id").replace("collapse", "");
 
                     if(id_video_file_open == id_video_file){
                       document.getElementById('example_video_'+video_id_last+'_html5_api').play();
@@ -3249,12 +3237,20 @@ function time_test_start(time_down){
                   function save_learn_note(){                    
                     var num_show_video = jQuery('.collapse.in').length;
 
-                    if(num_show_video == 1 ){ // ถ้า แถบวิดีโอไม่เปิด บันทึกไม่ได้
+                    if(num_show_video >= 1 ){ // ถ้า แถบวิดีโอไม่เปิด บันทึกไม่ได้
                       var num_video_file = "<?php echo $idx; ?>";
                       var video_check, note_time, video, note_text;
                       status_in_learn_note = 1; // เข้าฟังชัน ไม่ให้ video หยุดเล่น
 
-                      var id_video_file = jQuery('.collapse.in').attr("id").replace("collapse", "");
+                      // var id_video_file = jQuery('.collapse.in').attr("id").replace("collapse", "");
+
+                      var id_video_file = jQuery('.collapse.in');
+                      // console.log(id_video_file[1].getAttribute("id"));
+
+                    id_video_file = id_video_file[1].getAttribute("id").replace("collapse", "");
+
+
+
                       video_id_last = $("[fileid="+id_video_file+"]").attr("index");
 
 
@@ -3293,8 +3289,11 @@ function time_test_start(time_down){
                           success: function(data) {
                             if(data != "error" && data != "error2"){
                               $("#note-1").val("");
-                              console.log();
-                              // $("#tr_note_"+data.split("'")[1].replace("tr_note_", "")).hide();
+                              // console.log(+data.split("'")[1].replace("tr_note_", ""));
+                              // console.log(data.split(":")[1]);
+                              $("#tr_note_"+data.split("'")[1].replace("tr_note_", "")).remove();
+                                // $("#tr_note_"+note_id).hide();
+
                               $("#tbody_note").append(data)
 
                             }else{
@@ -3384,7 +3383,7 @@ function time_test_start(time_down){
                               if(note_text != ""){
                                 document.getElementById("span_id_"+note_id).innerHTML = note_text;
                               }else{
-                                $("#tr_note_"+note_id).hide();
+                                $("#tr_note_"+note_id).remove();
                               }
                               
                               Swal.close();

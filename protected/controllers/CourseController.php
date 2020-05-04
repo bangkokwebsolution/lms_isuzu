@@ -2169,15 +2169,15 @@ public function actionCourseLearnNoteSave(){
                 echo "<td>";
                 echo $file->filename;
                 echo "</td>";
-                echo "<td style='cursor:pointer;' id='td_time_note_".$learn_note->note_id."' onclick='fn_td_time_note(".$learn_note->note_id.");' note_file='".$note_file_id."' note_time='".$note_time."' name_video='".$file->filename."'>";
+                echo "<td class='td_time_note' style='cursor:pointer;' id='td_time_note_".$learn_note->note_id."' onclick='fn_td_time_note(".$learn_note->note_id.");' note_file='".$note_file_id."' note_time='".$note_time."' name_video='".$file->filename."'>";
                 if($note_time <= 60){
                   echo "00:".sprintf("%02d", floor($note_time%60));
                 }else{
                   echo sprintf("%02d", floor($note_time/60)).":".sprintf("%02d", floor($note_time%60));
                 }
                 echo "</td>";
-                echo "<td style='cursor:pointer;' ".'onclick="fn_edit_note('.$learn_note->note_id.');"'.">";
-                echo '<span id="span_id_'.$learn_note->note_id.'">';
+                echo "<td class='text-left' style='cursor:pointer;' ".'onclick="fn_edit_note('.$learn_note->note_id.');"'.">";
+                echo '<span class="edit-note" id="span_id_'.$learn_note->note_id.'">';
                 echo $note_text;
                 echo '</span>';
                 echo "</td>";
