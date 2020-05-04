@@ -629,10 +629,11 @@ IMG;
 	
 	public static function ImageShowIndex($data,$image)
 	{
+
 		if($image != null)
 			$imgCheck = CHtml::image(Yush::getUrl($data, Yush::SIZE_SMALL, $image),$image);
 		else
-			$imgCheck = CHtml::image(Yii::app()->request->baseUrl.'/images/logo_course.png', 'No Image', array(
+			$imgCheck = CHtml::image(Yii::app()->request->baseUrl.'/../themes/template2/images/thumbnail-course.png', 'No Image', array(
 				'style'=>'width:110px;height:90px;'
 			));
 
