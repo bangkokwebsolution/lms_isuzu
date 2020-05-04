@@ -2176,10 +2176,13 @@ public function actionCourseLearnNoteSave(){
                   echo sprintf("%02d", floor($note_time/60)).":".sprintf("%02d", floor($note_time%60));
                 }
                 echo "</td>";
-                echo "<td class='text-left' style='cursor:pointer;' ".'onclick="fn_edit_note('.$learn_note->note_id.');"'.">";
+                // 'onclick="fn_edit_note('.$learn_note->note_id.');"'.
+                echo "<td class='text-left box_note' style='cursor:pointer;' ".">";
                 echo '<span class="edit-note" id="span_id_'.$learn_note->note_id.'">';
                 echo $note_text;
                 echo '</span>';
+                echo '<button type="button" class="note-funtion text-danger" onclick="remove_learn_note('.$learn_note->note_id.');"><i class="fas fa-times"></i></button>
+                <button type="button" class="note-funtion text-primary" onclick="fn_edit_note('.$learn_note->note_id.');"><i class="fas fa-edit"></i></button>';
                 echo "</td>";
                 echo "</tr>";
             }else{
@@ -2203,6 +2206,17 @@ public function actionCourseLearnNoteSave(){
         } 
 
 
+    }
+}
+
+public function actionCourseLearnNoteRemove(){
+    if(isset($_POST["note_id"])){
+        $note_id = $_POST["note_id"];
+        $learn_note = LearnNote::model()->findByPk($note_id);
+        $learn_note->active = 'n'; 
+        if($learn_note->save()){
+            echo "success";
+        }
     }
 }
 

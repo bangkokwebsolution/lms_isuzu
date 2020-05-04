@@ -402,9 +402,9 @@ $cancel_msg = UserModule::t('Cancel');
                                             </td>
                                             <td style='cursor:pointer;' class="text-left box_note">
                                               <span class="edit-note" id="span_id_<?php echo $value->note_id; ?>"><?php echo $value->note_text; ?></span>
-                                                <button type="button" class="note-funtion text-danger" href=""><i class="fas fa-times"></i></button>
-                                              <button type="button" class="note-funtion text-primary" href=""><i class="fas fa-edit"></i></button>
-                                            
+                                                <button type="button" class="note-funtion text-danger" onclick="remove_learn_note(<?php echo $value->note_id; ?>);"><i class="fas fa-times"></i></button>
+                                              <button type="button" class="note-funtion text-primary" onclick="fn_edit_note(<?php echo $value->note_id; ?>);"><i class="fas fa-edit"></i></button>
+                                              
                                             </td>
                                         </tr>
                                           <?php
@@ -3159,6 +3159,14 @@ function time_test_start(time_down){
                   //   status_in_learn_note = 1; // เข้าฟังชัน ไม่ให้ video หยุดเล่น
                   // });
 
+
+                  $("#note-1").keydown(function (event) {
+                    // console.log(event.keyCode);
+                    if (event.keyCode == 13) { // enter
+                      save_learn_note();
+                    }
+                  });
+
                   $( ".td_time_note" ).click(function() { // mote time click
                     status_in_learn_note = 1; // เข้าฟังชัน ไม่ให้ video หยุดเล่น                    
                     // console.log(this.getAttribute("note_file"));
@@ -3341,32 +3349,46 @@ function time_test_start(time_down){
                     }
                   } //  function save_learn_note()
                   
-                  $(".edit-note").click(function() {
-                     var note_id = this.getAttribute("id").replace("span_id_", "");
+                  // $(".edit-note").click(function() {
+                  //    var note_id = this.getAttribute("id").replace("span_id_", "");
 
-                    Swal.fire({
-                      // icon: 'info',
-                      title: "แก้ไข",                      
-                      html: '<div class="form-group p-4"><textarea class="form-control" placeholder="พิมพ์ข้อความและกดจดบันทึก" id="note-2" rows="3">'+this.innerHTML+'</textarea>' +
-                      '<button type="button" onclick="edit_learn_note('+note_id+');" class="btn btn-sm btn-dark mt-4 ">จดบันทึก</button></div>',
-                      showCloseButton: true,
-                      showCancelButton: false,
-                      showConfirmButton: false,
-                      focusConfirm: false
-                    })
-                  });
+                  //   Swal.fire({
+                  //     // icon: 'info',
+                  //     title: "แก้ไข",                      
+                  //     html: '<div class="form-group p-4"><textarea onKeyPress="check_enter('+');" class="form-control" placeholder="พิมพ์ข้อความและกดจดบันทึก" id="note-2" rows="3">'+this.innerHTML+'</textarea>' +
+                  //     '<button type="button" onclick="edit_learn_note('+note_id+');" class="btn-note btn btn-sm btn-dark mt-4 ">จดบันทึก</button></div>',
+                  //     showCloseButton: true,
+                  //     showCancelButton: false,
+                  //     showConfirmButton: false,
+                  //     focusConfirm: false
+                  //   })
+                  // });
 
                   function fn_edit_note(note_id){
                     Swal.fire({
                       // icon: 'info',
                       title: "แก้ไข",                      
-                      html: '<div class="form-group p-4"><textarea class="form-control" placeholder="พิมพ์ข้อความและกดจดบันทึก" id="note-2" rows="3">'+document.getElementById("span_id_"+note_id).innerHTML+'</textarea>' +
-                      '<button type="button" onclick="edit_learn_note('+note_id+');" class="btn btn-sm btn-dark mt-4 ">จดบันทึก</button></div>',
+                      html: '<div class="form-group p-4"><textarea onKeyPress="check_enter('+');" class="form-control" placeholder="พิมพ์ข้อความและกดจดบันทึก" id="note-2" rows="3">'+document.getElementById("span_id_"+note_id).innerHTML+'</textarea>' +
+                      '<button type="button" onclick="edit_learn_note('+note_id+');" class="btn-note btn btn-sm btn-dark mt-4 ">จดบันทึก</button></div>',
                       showCloseButton: true,
                       showCancelButton: false,
                       showConfirmButton: false,
                       focusConfirm: false
                     })
+
+
+                  //   $("#note-2").keydown(function (event) {
+                  //   if (event.keyCode == 13) { // enter
+                  //     edit_learn_note(note_id);
+                  //   }
+                  // });
+                  }
+
+
+                  function check_enter(){
+                    // console.log(this.event);
+                    // console.log(this.event.keyCode);
+                    // console.log(note_id);
                   }
 
                   function edit_learn_note(note_id){
@@ -3388,6 +3410,41 @@ function time_test_start(time_down){
                               }else{
                                 $("#tr_note_"+note_id).remove();
                               }
+                              
+                              Swal.close();
+                            }else{
+                              swal({
+                                type: "warning",
+                                title: "แจ้งเตือน!",
+                                text: "ทำรายการไม่สำเร็จ",
+                                timer: 1000
+                              });
+                              // alert("ทำรายการไม่สำเร็จ");
+                            }
+                          }
+                        });                      
+                    }
+                  }
+
+                  function remove_learn_note(note_id){
+                    var note_text = $("#note-2").val();
+
+                    if(note_id != ""){
+                      $.ajax({
+                          type: 'POST',
+                          url: '<?php echo Yii::app()->createAbsoluteUrl("/Course/CourseLearnNoteRemove"); ?>',
+                          data: ({
+                            note_id: note_id,
+                            // note_text: note_text,
+                          }),
+                          success: function(data) {
+                            if(data != "error" && data != "error2"){
+                              $("#note-2").val("");
+                              // if(note_text != ""){
+                              //   document.getElementById("span_id_"+note_id).innerHTML = note_text;
+                              // }else{
+                                $("#tr_note_"+note_id).remove();
+                              // }
                               
                               Swal.close();
                             }else{
