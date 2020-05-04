@@ -3152,9 +3152,9 @@ function time_test_start(time_down){
                     $myGroup.find('.collapse.in').collapse('hide');
                   });
 
-                  $( "#note-1" ).click(function() { // text area note
-                    status_in_learn_note = 1; // เข้าฟังชัน ไม่ให้ video หยุดเล่น
-                  });
+                  // $( "#note-1" ).click(function() { // text area note
+                  //   status_in_learn_note = 1; // เข้าฟังชัน ไม่ให้ video หยุดเล่น
+                  // });
 
                   $( ".td_time_note" ).click(function() { // mote time click
                     status_in_learn_note = 1; // เข้าฟังชัน ไม่ให้ video หยุดเล่น                    
