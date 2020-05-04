@@ -490,7 +490,7 @@ if($model){
                                                                     $ckLinkTest_onClick = 'onclick="alertSequence();"';
                                                                 }
 
-                                                                if ($isPreTest) {
+                                                                if ($isPreTest) { // สอบ pre 1 ครั้ง แล้ว ไม่เข้า
                                                                     $prelearn = false;
                                                                     ?>
                                                                     <li class="list-group-item">
@@ -502,9 +502,10 @@ if($model){
                                                                                 <?= $ckLinkTest_onClick; ?> class="btn btn-warning"><i class="fa fa-pencil-square-o" aria-hidden="true">
                                                                                 </i> <?php echo $label->label_DoTest; ?></a></span></li>
                                                                                 <?php
-                                                                } else { //Pre Test
+                                                                } else { //Pre Test // สอบ pre 1 ครั้ง แล้ว เข้านี่
                                                                     $prelearn = true;
-                                                                    $flagPreTestPass = false;
+                                                                    // $flagPreTestPass = false;
+                                                                    $flagPreTestPass = true;
                                                                     $criteriaScoreAll = new CDbCriteria;
                                                                     $criteriaScoreAll->condition = ' type = "pre" AND lesson_id="' . $lessonListValue->id . '" AND user_id="' . Yii::app()->user->id . '" and active = "y"';
                                                                     $scoreAll = Score::model()->findAll($criteriaScoreAll);
@@ -524,7 +525,11 @@ if($model){
                                                                     } //end foreach
                                                                 }
                                                                 ?>
-                                                                <?php if(count($scoreAll) < $lessonListValue->cate_amount && !$flagPreTestPass && count($scoreAll) != 0){ ?>
+                                                                <?php 
+                                                                $pre_test_again = 2; // ไม่ให้โชว์ สอบ pre อีก
+                                                                // $lessonListValue->cate_amount = 1;
+                                                                if($pre_test_again == 1 && count($scoreAll) < 1 && !$flagPreTestPass && count($scoreAll) != 0){ 
+                                                                    ?>
                                                                     <li class="list-group-item">
                                                                         <?php if($step == 1){ ?>
                                                                             <!-- <div class="pt-now"> You are here</div> -->
@@ -565,7 +570,7 @@ if($model){
                                                                                 // }
                                                                                     }
                                                                                     if(!in_array("y", $checkPrePass)){
-                                                                                        if(count($modelPreScore) < $lessonListValue->cate_amount){
+                                                                                        if(count($modelPreScore) < 1){
                                                                                             $flagCheckPre = false;
                                                                                         }
                                                                                     }
@@ -681,7 +686,7 @@ if($model){
                                                                                             foreach ($modelPreScore as $key => $scorePre) {
                                                                                                 $checkPrePass[] = $scorePre->score_past;
                                                                                             }
-                                                                                            if(count($modelPreScore) < $lessonListValue->cate_amount){
+                                                                                            if(count($modelPreScore) < 1){
                                                                                                 if(!in_array("y", $checkPrePass)){
                                                                                                     $flagCheckPre = false;
                                                                                                 }
