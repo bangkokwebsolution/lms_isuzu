@@ -366,7 +366,7 @@ $cancel_msg = UserModule::t('Cancel');
 
                   <div class="box-note">
                     <button class="h-course-title" type="button" data-toggle="collapse" data-target="#course-note" aria-expanded="false" aria-controls="course-note">
-                        <i class="fas fa-edit"></i> จดบันทึก
+                        <i class="fas fa-edit"></i> จดบันทึก 
                         <span class="pull-right"><i class="fas fa-angle-up"></i></span>
                     </button>
                     <div class="collapse" id="course-note">
@@ -400,8 +400,11 @@ $cancel_msg = UserModule::t('Cancel');
                                                 }
                                                 ?>
                                             </td>
-                                            <td style='cursor:pointer;' class="text-left">
+                                            <td style='cursor:pointer;' class="text-left box_note">
                                               <span class="edit-note" id="span_id_<?php echo $value->note_id; ?>"><?php echo $value->note_text; ?></span>
+                                                <button type="button" class="note-funtion text-danger" href=""><i class="fas fa-times"></i></button>
+                                              <button type="button" class="note-funtion text-primary" href=""><i class="fas fa-edit"></i></button>
+                                            
                                             </td>
                                         </tr>
                                           <?php

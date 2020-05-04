@@ -4385,8 +4385,10 @@ ol.stat-alert li::before {
     font-size: 16px;
 }
 
-.btn-note:hover{
-  color: #fff;
+.btn-note:hover,.btn-note:focus{
+  color: #fff !important;
+  background: #b2282b;
+  opacity: .95;
 }
 #tbody_note{
   font-size: 14px;
@@ -4398,6 +4400,18 @@ ol.stat-alert li::before {
 
 .text-left{
   text-align: left !important;
+}
+.note-funtion{
+    float: right;
+    font-size: 12px;
+    background: transparent;
+    border: none;
+    opacity: 0;
+    transition: all .25s ease;
+}
+
+.box_note:hover .note-funtion{
+  opacity: 1
 }
 
 @media (min-width: 1440px) {
