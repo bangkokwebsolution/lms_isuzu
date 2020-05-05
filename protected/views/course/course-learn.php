@@ -515,7 +515,7 @@ $cancel_msg = UserModule::t('Cancel');
 
           <?php
           $learnModel = Learn::model()->find(array(
-            'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND active=:status',
+            'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active=:status',
             'params'=>array(':lesson_id'=>$lessonListValue->id,':user_id'=>Yii::app()->user->id,':status'=>'y')
           ));
           if($lessonListValue->type == 'vdo'){

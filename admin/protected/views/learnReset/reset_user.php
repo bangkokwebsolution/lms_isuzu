@@ -71,12 +71,12 @@ Yii::app()->clientScript->registerScript('search', "
                                                 $criteria->with = array('les');
                                                 $criteria->compare('user_id',$val->user_id);
 
-                                                $criteria->compare('t.active','y');
+                                                $criteria->compare('lesson_active','y');
                                    // $criteria->addCondition('lesson_status IS NOT NULL');
                                     // $criteria->compare('lesson.type','vdo');
 
                                                 $modelLearn = Learn::model()->find($criteria);
-                              
+                                  //var_dump($modelLearn);exit();
                     //return $modelLearn->learn_id.'|'.$modelLearn->user_id.'|'.$modelLearn->course_id;
                                                 if($modelLearn){
                                                     $evntLearn = 'reset_learn';
@@ -464,6 +464,7 @@ function saveModal() {
                                 url : url,
                                 data: { checkedList:JSON.stringify(checkLessonList), id:id,reset_type:type,description:inputValue }
                                 ,success:function(data){
+                                    console.log(data);
                                     if(data=='learn'){
                                         swal({
                                             title: "ระบบ",

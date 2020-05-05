@@ -446,7 +446,7 @@ public function actionResetUser()
     // $criteria->group = 'user_id';
     // $model = Learn::model()->findAll($criteria);
     $model = new Learn('searchReset');
-    // var_dump($model);exit();
+     //var_dump($model);exit();
     // $model = new MtAuthCourseName('searchReset');
     if(isset($_GET['Learn'])){
         $model->attributes = $_GET['Learn'];
@@ -688,7 +688,7 @@ public function actionReset_university()
         $user_id = $_POST['user_id'];
         $test = '';
         $criteria = new CDbCriteria();
-        $criteria->condition = "user_id = $user_id AND t.active = 'y' AND courseonline.active = 'y'";
+        $criteria->condition = "user_id = $user_id AND lesson_active = 'y' AND courseonline.active = 'y'";
         $criteria->group = "t.course_id";
         $course = learn::model()->with('course')->findAll($criteria);
   //var_dump($course);exit();
@@ -731,6 +731,7 @@ public function actionReset_university()
         $lesson = json_decode($_POST['checkedList']);
         $reset_type = $_POST['reset_type'];
         $courseMsg = 'ผู้ดูแลระบบ ทำการ Reset ข้อมูลการเรียนบทเรียนต่อไปนี้ <br>';
+         
         foreach ($lesson as $key => $value) {
             $val = array();
             $val = explode(",", $value);
@@ -751,7 +752,7 @@ public function actionReset_university()
                     'user_id' => $user_id,
                     'lesson_id' => $lesson_id,
                     'course_id' => $course_id,
-                    'active' => 'y'
+                    'lesson_active' => 'y'
                 ));
 
                 if ($learn) {
@@ -782,7 +783,7 @@ public function actionReset_university()
                         }
 
                         $data->lesson_status = null;
-                        $data->active = 'n';
+                        $data->lesson_active = 'n';
                         $data->save(false);
 
                     }

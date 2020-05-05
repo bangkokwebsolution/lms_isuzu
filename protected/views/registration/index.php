@@ -540,7 +540,7 @@ function editNamehouse_registration(filedoc_id){
                     <div class="row justify-content-center form_name">
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label for=""><?php echo $label->label_title; ?>(TH)</label>
+                                <label for=""><?php echo $label->label_title; ?>(TH)<font color="red">*</font></label>
                                 <?php  $country = array('1' => 'นาย', '2' => 'นางสาว', '3' => 'นาง');?>
                                 <?php
                                 $htmlOptions = array('class' => 'form-control prefix', 'empty' => 'คำนำหน้า');
@@ -569,7 +569,7 @@ function editNamehouse_registration(filedoc_id){
                     <div class="row justify-content-center form_name">
                         <div class="col-md-2">
                             <div class="form-group">
-                                <label for=""><?php echo $label->label_title; ?>(EN)</label>
+                                <label for=""><?php echo $label->label_title; ?>(EN)<font color="red">*</font></label>
                                 <?php  $country2 = array('1' => 'Mr.', '2' => 'Miss.', '3' => 'Mrs.'); ?>
                                 <?php
                                 $htmlOptions = array('class' => 'form-control prefix_en', 'empty' => 'Prefix');
@@ -1515,49 +1515,29 @@ function editNamehouse_registration(filedoc_id){
         <div class="col-sm-12 col-xs-12 col-md-8">
             <div class="col-md-5">
                 <div class="form-group">
-             <!--        <select class="form-control d-inlineblock position_id" name="position_id" >
-                            <option value="">เลือกตำแหน่ง</option>
-                            <?php
-                            
-                            $departmentModel = Department::model()->findAll(array(
-                                'condition' => 'active=:active AND type_employee_id=:type_employee_id',
-                                'params' => array(':active'=>'y',':type_employee_id'=>1)
-                            ));
-                            foreach ($departmentModel as $keys => $values) {
-                                $depart = $departmentModel[$key]->attributes;
-                                $positions = Position::model()->findAll(array(
-                                    'condition' => 'department_id=:department_id AND active=:active',
-                                    'params' => array(':department_id'=>$depart['id'],':active'=>'y')
-                                ));
-                
-                                foreach ($positions as $ke => $val) {
-                                    $pos = $positions[$ke]->attributes;
-                                    ?>
-                                    <option value="<?php echo $pos['id']; ?>"><?php echo $pos['position_title']; ?></option>
-                                <?php   }
-                            }
-                            
-                            ?>
-                        </select> -->
-                    <?php
+                  <?php
                     $Department_ship = Department::model()->findAll(array(
                         'condition' => 'type_employee_id=:type_employee_id AND active=:active',
                         'params' => array(':type_employee_id'=>1, ':active'=>'y')));
 
+                    $dep_id = [];
                     foreach ($Department_ship as $keydepart => $valuedepart) {
-                        $position_ship = Position::model()->findAll(array(
-                            'condition' => 'department_id=:department_id AND active=:active',
-                            'params' => array(':department_id'=>$valuedepart['id'], ':active'=>'y')
-                        ));
-                        $positionLists[] = CHtml::listData($position_ship, 'id', 'position_title');
-                    }
+                       $dep_id[] = $valuedepart->id;
+                   }
+
+                   $criteria= new CDbCriteria;
+                   $criteria->compare('active','y');
+                   $criteria->addInCondition('department_id', $dep_id);
+                   $position_ship = Position::model()->findAll($criteria);
                     ?> 
                     <?php
+                    $positionLists = CHtml::listData($position_ship, 'id', 'position_title');
+                    
                     $positiontOption = array('class' => 'form-control position_gen ', 'empty' => $label->label_placeholder_position, 'name' => 'position_gen');
                     ?>
                     <?php echo $form->dropDownList($users, 'position_id', $positionLists, $positiontOption); ?>
                     <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
-
+                    
                 </div>
             </div>
         </div>
@@ -1806,13 +1786,7 @@ function editNamehouse_registration(filedoc_id){
                                     }
                                 });
                             });
-                // $('.ok_2').click(function(){
-                //     var id = $("#file_Crew_identification").val();
-                //     alert(id);
-                // });
-    //             $("select[name='position_gen']:eq(0)").on("change", function() {                  
-    // $("select[name='position_gen']:eq(1)").find("optgroup, option").hide().filter("[label='" + this.value + "'], [label='" + this.value + "'] > *").show();
-    //         });
+
     //             // var optGroup = document.getElementsByTagName("optgroup")[0];
     //             // var option = document.getElementsByTagName("option")[0];
     //             // option.style.display = "inline";

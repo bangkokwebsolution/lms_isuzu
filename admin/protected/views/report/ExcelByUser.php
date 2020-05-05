@@ -139,7 +139,7 @@ header("Pragma:no-cache");
                                 foreach($dataProvider->getData() as $i => $user) {
                                     
                                     $lern = Learn::model()->findAll(array(
-                                    'condition' => 'course_id = "' . $course_chk[0] . '" AND Learn.active ="y" AND  user_id = "' . $user->id . '"'
+                                    'condition' => 'course_id = "' . $course_chk[0] . '" AND lesson_active ="y" AND  user_id = "' . $user->id . '"'
                                 ));
                                   if(count($lern) > 0){
                                     ?>
@@ -158,7 +158,7 @@ header("Pragma:no-cache");
                                                     if($curLesson) {
                                                         foreach($curLesson as $les) {
                                                             $statusLearn = Learn::model()->find(array(
-                                                                'condition' => 'Learn.active = "y" and user_id = "' . $user['id'] . '" and lesson_id = "' . $les['id'] . '"' . $startdate . $enddate .$startdate_schedule .$enddate_schedule,
+                                                                'condition' => 'lesson_active = "y" and user_id = "' . $user['id'] . '" and lesson_id = "' . $les['id'] . '"' . $startdate . $enddate .$startdate_schedule .$enddate_schedule,
                                                                 'alias' => 'learn'
                                                             ));
                                                             $statusArray = array('learning'=>'<b style="color: green;">กำลังเรียน</b>', 'pass' => '<b style="color: blue;">ผ่าน</b>','notlearn'=>'<b style="color: red;">ยังไม่เรียน</b>');
