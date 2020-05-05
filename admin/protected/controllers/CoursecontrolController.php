@@ -219,8 +219,10 @@ class CoursecontrolController extends Controller
 
 			foreach (json_decode($json2, true) as $key => $value) {
 				$orgc = OrgCourse::model()->findByPk($value['id']);
+				$course_id_del = $orgc->course_id;
 				if($orgc){
 					$orgc->delete();
+
 				}
 					// echo $_GET['id'];
 					// if(isset($value['children'])){
@@ -231,11 +233,46 @@ class CoursecontrolController extends Controller
 					}
 				}
 
+				$orgchart1 = OrgChart::model()->findAll(array(
+					'condition'=>'parent_id=:parent_id',
+					'params' => array(':parent_id' =>  $_POST['org_id'])
+				));
+
+				if($orgchart1){
+					foreach ($orgchart1 as $key => $val) {
+
+						$orgc_del = OrgCourse::model()->find(array(
+							'condition'=>'orgchart_id=:orgchart_id AND course_id=:course_id',
+							'params' => array(':orgchart_id' =>  $val->id , ':course_id' => $course_id_del)
+						));
+
+						if($orgc_del){
+							$orgc_del->delete();
+						}
+						foreach ($value['children'] as $key_children => $value_children) {
+							$orgc2 = OrgCourse::model()->findByPk($value_children['id']);
+							if($orgc2){
+								$orgc2->delete();
+							}
+						}
+					}
+				}
+
+
+
+
 			}
 			
 			foreach ($this->parseJsonArray($data) as $key => $value) {
 
 				$orgc = OrgCourse::model()->findByPk($value['id']);
+
+				$orgchart = OrgChart::model()->findAll(array(
+					'condition'=>'parent_id=:parent_id',
+					'params' => array(':parent_id' =>  $_POST['org_id'])
+				));
+
+
 				if($orgc){
 						// $course_online = CourseOnline::model()->findByPk($orgc->course_id);
 					$orgc->parent_id = $value['parentID'];
@@ -250,29 +287,46 @@ class CoursecontrolController extends Controller
 					$orgc->parent_id = $value['parentID'];
 					$orgc->active = 'y';
 					$orgc->save();
+
+					if($orgchart){
+
+					foreach ($orgchart as $key => $val) {
+
+							$orgc = new OrgCourse;
+							$orgc->orgchart_id = $val->id;
+							$orgc->course_id = $value['id'];
+							$orgc->parent_id = $value['parentID'];
+							$orgc->active = 'y';
+							$orgc->save();
+					}
 				}
-					// echo $_GET['id'];
-					// if(isset($value['children'])){
-						// foreach ($value['children'] as $key_children => $value_children) {
-						// 	$orgc2 = OrgCourse::model()->findByPk($value_children['id']);
-						// 		if($orgc2){
-						// 			// $course_online = CourseOnline::model()->findByPk($orgc2->course_id);
-						// 			// $orgc->course_id = $course_online->course_id;
-						// 			$orgc2->parent_id = $orgc->id;
-						// 			$orgc2->save();
-						// 			// echo $value_children['id'];
-						// 		}else{
-						// 			$orgc2 = new OrgCourse;
-						// 			// $orgc->save();
-						// 			// $course_online = CourseOnline::model()->findByPk($value['id']);
-						// 			$orgc2->orgchart_id = $_POST['org_id'];
-						// 			$orgc2->course_id = $value_children['id'];
-						// 			$orgc2->parent_id = $orgc->id;
-						// 			$orgc2->active = 'y';
-						// 			$orgc2->save();
-						// 		}
-						// }
-					// }
+
+				}
+				
+
+
+					echo $_GET['id'];
+					if(isset($value['children'])){
+						foreach ($value['children'] as $key_children => $value_children) {
+							$orgc2 = OrgCourse::model()->findByPk($value_children['id']);
+								if($orgc2){
+									// $course_online = CourseOnline::model()->findByPk($orgc2->course_id);
+									// $orgc->course_id = $course_online->course_id;
+									$orgc2->parent_id = $orgc->id;
+									$orgc2->save();
+									// echo $value_children['id'];
+								}else{
+									$orgc2 = new OrgCourse;
+									// $orgc->save();
+									// $course_online = CourseOnline::model()->findByPk($value['id']);
+									$orgc2->orgchart_id = $_POST['org_id'];
+									$orgc2->course_id = $value_children['id'];
+									$orgc2->parent_id = $orgc->id;
+									$orgc2->active = 'y';
+									$orgc2->save();
+								}
+						}
+					}
 
 			}
 
