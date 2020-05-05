@@ -57,7 +57,7 @@ if(!empty($msg)){
         <?php
         $form = $this->beginWidget('CActiveForm');
         ?>
-        <div class="well">
+<!--         <div class="well">
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group">
@@ -69,7 +69,6 @@ if(!empty($msg)){
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for=""><?= $label->label_lastname  ?></label>
-                        <!--<input type="text" class="form-control input-lg" id="lastname" name="lastname">-->
                         <?php echo $form->textField($model, 'contac_by_surname', array('class' => 'form-control input-lg')); ?>
                         <font color="red"><?php echo $form->error($model, 'contac_by_surname'); ?></font>
                     </div>
@@ -79,7 +78,6 @@ if(!empty($msg)){
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for=""><?= $label->label_phone  ?></label>
-                        <!--<input type="text" class="form-control input-lg" id="tel" name="tel">-->
                         <?php echo $form->textField($model, 'contac_by_tel', array('class' => 'form-control input-lg', 'onKeyPress' => 'return check_number()', 'maxlength' => '15')); ?>
                         <font color="red"><?php echo $form->error($model, 'contac_by_tel'); ?></font>
                     </div>
@@ -87,7 +85,6 @@ if(!empty($msg)){
                 <div class="col-sm-6">
                     <div class="form-group">
                         <label for=""><?= $label->label_email  ?></label>
-                        <!--<input type="text" class="form-control input-lg" id="email" name="email">-->
                         <?php echo $form->textField($model, 'contac_by_email', array('class' => 'form-control input-lg')); ?>
                         <font color="red"><?php echo $form->error($model, 'contac_by_email'); ?></font>
                     </div>
@@ -97,11 +94,10 @@ if(!empty($msg)){
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label for=""><?= $label->label_topic  ?></label>
-                        <!--<input type="text" class="form-control input-lg" id="topics" name="topics">-->
                         <?php echo $form->textField($model, 'contac_subject', array('class' => 'form-control input-lg', 'maxlength' => '100')); ?>
                         <font color="red"><?php echo $form->error($model, 'contac_subject'); ?></font>
                     </div>
-                </div>
+                </div>  -->
                 <?php
                 // $criteria = new CDbCriteria;
                 // $criteria->compare('active',y);
@@ -127,12 +123,11 @@ if(!empty($msg)){
                         <font color="red"><?php echo $form->error($model, 'contac_type'); ?></font>
                     </div>
                 </div> -->
-            </div>
+<!--             </div>
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
                         <label for=""><?= $label->label_detail  ?></label>
-                        <!--<textarea name="detail" id="detail" class="form-control" rows="6" ></textarea>-->
                         <?php echo $form->textarea($model, 'contac_detail', array('class' => 'form-control', 'rows' => '6')); ?>
                         <font color="red"><?php echo $form->error($model, 'contac_detail'); ?></font>
                     </div>
@@ -148,10 +143,9 @@ if(!empty($msg)){
             </div>          
 
             <div class="text-center">
-                <!--<button type="submit" class="btn btn-warning btn-lg">ส่งข้อความ</button>-->
                 <?php echo CHtml::submitButton($label->label_button, array('class' => 'btn btn-warning btn-lg')); ?>
             </div>
-        </div>
+        </div> -->
 
         <?php $this->endWidget();
         ?>
