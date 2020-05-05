@@ -1922,7 +1922,7 @@ private function savePassCourseLog($action, $passcours_id) {
     }
 }
 
-public function actionCourseLearn($id = null){
+public function actionCourseLearnOLD($id = null){ // อันเก่า ตัด old ออก
 
     $param = $_GET['file'];
     $str = CHtml::encode($param);
@@ -2017,8 +2017,8 @@ public function actionCourseLearn($id = null){
     }
 }
 
-public function actionCourseLearnNote($id = null){
-
+public function actionCourseLearn($id = null){ // อันใหม่ ใส่ note Note ด้านหลัง
+ 
     $param = $_GET['file'];
     $str = CHtml::encode($param);
 
