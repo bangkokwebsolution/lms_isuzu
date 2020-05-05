@@ -427,7 +427,8 @@ public function validateIdCard($attribute,$params){
 	$criteria->compare('not_passed',$this->not_passed);
 	$criteria->compare('status',array(0,2));
 	$criteria->compare('del_status',0); 
-	$criteria->compare('register_status',array(1));
+	//$criteria->compare('register_status',array(1));
+	$criteria->compare('register_status',$this->register_status);
 	if(empty($this->create_at)) {
 		$criteria->compare('create_at',$this->create_at,true);
 	}else {
@@ -480,6 +481,7 @@ public function searchmembership()
 	$criteria->compare('del_status',0);
 	$criteria->compare('online_status',$this->online_status);
 	$criteria->compare('online_user',$this->online_user);
+	$criteria->compare('register_status',$this->register_status);
 	$criteria->compare('group',$this->group);
 	$criteria->compare('profile.identification',$this->idensearch,true);
 	if(empty($this->create_at)) {
@@ -495,7 +497,6 @@ public function searchmembership()
 	}
 	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
 	//$criteria->compare('orgchart_lv2',$org,true);
-
 	return new CActiveDataProvider(get_class($this), array(
 		'criteria'=>$criteria,
 		'pagination'=>array(
