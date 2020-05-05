@@ -62,7 +62,14 @@ class LoginController extends Controller
             if(Yii::app()->user->id){
               Helpers::lib()->getControllerActionId();
             }
-            $this->redirect(Yii::app()->user->returnUrl);
+            $arr_url   =  explode("/",Yii::app()->user->returnUrl);
+
+            if(in_array("themes", $arr_url)){
+              $this->redirect(array('site/index'));
+            }else{
+              $this->redirect(Yii::app()->user->returnUrl);
+
+            }
                     // if (Yii::app()->user->returnUrl=='/index.php'){
                     //     $this->redirect(Yii::app()->controller->module->returnUrl);
                     // } else{

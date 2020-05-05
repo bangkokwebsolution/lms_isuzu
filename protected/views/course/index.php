@@ -108,7 +108,7 @@ function DateThai($strDate)
 
                                     <div class="course-img" style="background-image: url(<?php echo Yii::app()->request->baseUrl; ?>/uploads/category/<?php echo $model_cate_tms->cate_id . '/thumb/' . $model_cate_tms->cate_image; ?>);"></div>
                                 <?php } else { ?>
-                                    <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/book.png);"></div>
+                                    <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png);"></div>
                                 <?php } ?>
                                 <div class="course-detail">
                                     <h4 class="text11"><?= $model_cate_tms->cate_title ?>....</h4>
@@ -151,7 +151,7 @@ function DateThai($strDate)
                                  <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/category/' . $m_c->cate_id . '/thumb/' . $m_c->cate_image)) { ?>
                                     <div class="course-img" style="background-image: url(<?php echo Yii::app()->request->baseUrl; ?>/uploads/category/<?php echo $m_c->cate_id . '/thumb/' . $m_c->cate_image; ?>);"></div>
                                 <?php } else { ?>
-                                    <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/book.png);"></div>
+                                    <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png);"></div>
                                 <?php } ?>
                                 <div class="course-detail">
                                     <h4 class="text11"><?= $m_c->cate_title ?>....</h4>
@@ -204,7 +204,7 @@ function DateThai($strDate)
                                         <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/courseonline/' . $model->course_id . '/thumb/' . $model->course_picture)) { ?>
                                             <div class="course-img" style="background-image: url(<?php echo Yii::app()->request->baseUrl; ?>/uploads/courseonline/<?php echo $model->course_id . '/thumb/' . $model->course_picture; ?>);"></div>
                                         <?php } else { ?>
-                                            <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/book.png);"></div>
+                                            <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png);"></div>
                                         <?php } ?>
                                         <div class="course-detail">
 
@@ -235,9 +235,8 @@ function DateThai($strDate)
                                 </div>
                             </div>
                         <?php  } ?>
-
                         <?php foreach ($Model as $model) {
-                            $model = $model->course;
+                            // $model = $model->course;
 
                             if ($model->lang_id != 1) {
                                 $model->course_id = $model->parent_id;
@@ -343,7 +342,7 @@ function DateThai($strDate)
                                             <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/courseonline/' . $model->course_id . '/thumb/' . $model->course_picture)) { ?>
                                                 <div class="course-img" style="background-image: url(<?php echo Yii::app()->request->baseUrl; ?>/uploads/courseonline/<?php echo $model->course_id . '/thumb/' . $model->course_picture; ?>);"></div>
                                             <?php } else { ?>
-                                                <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/book.png);"></div>
+                                                <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png);"></div>
                                             <?php } ?>
                                             <div class="course-detail">
 

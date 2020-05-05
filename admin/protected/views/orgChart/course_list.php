@@ -129,10 +129,10 @@ EOD
                           ),
 
                         array(
-                          'header'=>'เพิ่มผู้เรียน',
+                          'header'=>'เพิ่ม / ลบ ผู้เรียน',
                     
                             'value'=>function($data){
-                                return CHtml::link( '<i class=""></i> เพิ่มผู้เรียน', 'javascript:void(0)', array( 'class' => 'btn btn-primary btn-icon', 'onclick' => 'getUser(' . $data->course_id . ')'));
+                                return CHtml::link( '<i class=""></i> เพิ่ม / ลบ ผู้เรียน', 'javascript:void(0)', array( 'class' => 'btn btn-primary btn-icon', 'onclick' => 'getUser(' . $data->course_id . ')'));
                               },
 
                           'type'=>'raw',
