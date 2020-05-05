@@ -1980,7 +1980,7 @@ public function actionCourseLearn($id = null){
         {
             $user = Yii::app()->getModule('user')->user();
             $learnModel = Learn::model()->find(array(
-                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND active="y"',
+                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active="y"',
                 'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id)
             ));
             if(!$learnModel)
@@ -2075,7 +2075,7 @@ public function actionCourseLearnNote($id = null){
         {
             $user = Yii::app()->getModule('user')->user();
             $learnModel = Learn::model()->find(array(
-                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND active="y"',
+                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active="y"',
                 'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id)
             ));
             if(!$learnModel)
@@ -2166,9 +2166,9 @@ public function actionCourseLearnNoteSave(){
                 $file = File::model()->findByPk($note_file_id);
 
                 echo "<tr id='tr_note_".$learn_note->note_id."'>";
-                echo "<td>";
-                echo $file->filename;
-                echo "</td>";
+                // echo "<td>";
+                // echo $file->filename;
+                // echo "</td>";
                 echo "<td class='td_time_note' style='cursor:pointer;' id='td_time_note_".$learn_note->note_id."' onclick='fn_td_time_note(".$learn_note->note_id.");' note_file='".$note_file_id."' note_time='".$note_time."' name_video='".$file->filename."'>";
                 if($note_time <= 60){
                   echo "00:".sprintf("%02d", floor($note_time%60));

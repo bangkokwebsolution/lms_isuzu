@@ -922,7 +922,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
 
             $learnLesson = $user->learns(
                 array(
-                    'condition' => 'lesson_id=:lesson_id AND active=:status',
+                    'condition' => 'lesson_id=:lesson_id AND lesson_active=:status',
                     'params' => array(':lesson_id' => $lesson->id,':status' => "y")
                 )
             );

@@ -365,6 +365,80 @@ $cancel_msg = UserModule::t('Cancel');
                 <div class="tab-content">
 
                   <div class="box-note">
+                    <button class="h-course-title" type="button" data-toggle="collapse" data-target="#course-video" aria-expanded="false" aria-controls="course-video">
+                        <i class="fas fa-edit"></i> รายการวิดีโอ 
+                        <span class="pull-right"><i class="fas fa-angle-up"></i></span>
+                    </button>
+                    <div class="collapse" id="course-video">
+                        <div class="note-input">
+                            <div class="note-save">
+                              <h3><?= $model->title; ?></h3>
+                              <ul class="section-list">
+                                <li class="list-body"><?php echo $lessonListValue->title; ?></li>
+                                <?php 
+                                foreach ($lessonList as $key => $lessonListValue) { 
+                                $learnModel = Learn::model()->find(array(
+                                  'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active=:status',
+                                  'params'=>array(':lesson_id'=>$lessonListValue->id,':user_id'=>Yii::app()->user->id,':status'=>'y')
+                                ));
+                                if($lessonListValue->type == 'vdo'){ 
+                                  foreach ($lessonListValue->files as $les) {
+                                   if($learnModel->lesson_status == 'pass'){
+                                    $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
+                                    $learnalert = '';
+                                  }else if(!$lessonParentStatus){ 
+                                    $learnlink = 'javascript:void(0);';
+                                    $learnalert = "alertMsg('คำเตือน','คุณต้องเรียน ".$lessonListValue->lessonParent->title."ให้ผ่านก่อน','error');";
+                                  }else if(!$prelearn){
+                                    $learnlink = 'javascript:void(0);';
+                                    $learnalert = 'alertswalpretest();';
+                                  }else{
+                                    $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
+                                    $learnalert = '';
+                                  }
+                                  $learnFiles = Helpers::lib()->checkLessonFile($les,$learnModel->learn_id);
+                                  if ($learnFiles == "notLearn") {
+                                    $statusValue = '<span class="label label-default" >'.$msg_notLearn.'</span>';
+                                    $statuslearn = 'list-body';
+                                  } else if ($learnFiles == "learning") {
+                                    $statusValue = '<span class="label label-warning" >'.$msg_learning.'</span>';
+                                    $statuslearn = 'primary';
+                                  } else if ($learnFiles == "pass") {
+                                    $statusValue = '<span class="label label-success" >'.$msg_learn_pass.'</span>';
+                                    $statuslearn = 'success';
+                                  }
+                                  ?>
+
+                                  <li class="<?=$statuslearn?>" id="imageCheckBar">
+                                    <div class="list-body">
+                                     <a href="#collapse<?= $les->id;?>" data-toggle="collapse"
+                                      data-parent="#myGroup" aria-expanded="true"
+                                      aria-controls="collapse<?php echo $les->id; ?>">
+                                      <h6><?= $les->getRefileName(); ?> <?=$statusValue?></h6>
+                                    </a>
+                                  </div>
+                                  <div class="div-x">
+                                  </div>
+                                </li>
+                                <?php
+                              }
+                            } // if($lessonListValue->type == 'vdo'){ 
+                            } //  foreach ($lessonList
+
+                                 ?>
+                              </ul>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
                     <button class="h-course-title" type="button" data-toggle="collapse" data-target="#course-note" aria-expanded="false" aria-controls="course-note">
                         <i class="fas fa-edit"></i> จดบันทึก 
                         <span class="pull-right"><i class="fas fa-angle-up"></i></span>
@@ -375,22 +449,30 @@ $cancel_msg = UserModule::t('Cancel');
                                 <textarea class="form-control" placeholder="พิมพ์ข้อความและจดบันทึก" id="note-1" rows="3"></textarea>
                                 <button type="button" onclick="save_learn_note();" class="btn btn-note">จดบันทึก</button>
                             </div>
-                            <div class="note-save">
-                                <table class="table table-borderless table-hover">
-                                    <thead>
-                                        <tr>
-                                          <th width="20%">วิดีโอ</th>
-                                            <th scope="col" width="20%" class="text-center"><i class="far fa-clock"></i> เวลา</th>
-                                            <th scope="col" width="60%" class="text-left"><i class="far fa-comment-alt"></i> ข้อความ</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tbody_note">
+                            <div class="note-save">                                
                                       <?php 
                                       if(!empty($learn_note)){
+                                        $name_video = "";
+                                        $status_name_video = 2;
                                         foreach ($learn_note as $key => $value) {
+
+                                          if($name_video != $value->file->filename){
+                                           $name_video =  $value->file->filename;
+                                              
+                                            ?>  
+                                            <h3><?php echo $value->file->filename; ?></h3>
+                                            <table class="table table-borderless table-hover">
+                                              <thead>
+                                                <tr>
+                                                  <th scope="col" width="20%" class="text-center"><i class="far fa-clock"></i> เวลา</th>
+                                                  <th scope="col" width="80%" class="text-left"><i class="far fa-comment-alt"></i> ข้อความ</th>
+                                                </tr>
+                                              </thead>
+                                              <tbody id="tbody_note_<?php echo $value->file->id; ?>">
+                                                <?php
+                                              } // if($name_video != $value->file->filename)
                                           ?>
                                           <tr id="tr_note_<?php echo $value->note_id; ?>">
-                                            <td><?php echo $value->file->filename; ?></td>
                                             <td style='cursor:pointer;' class="td_time_note" note_file="<?php echo $value->file_id; ?>" note_time="<?php echo $value->note_time; ?>" name_video="<?php echo $value->file->filename; ?>">
                                                 <?php 
                                                 if($value->note_time <= 60){
@@ -407,15 +489,25 @@ $cancel_msg = UserModule::t('Cancel');
                                               
                                             </td>
                                         </tr>
-                                          <?php
+                                        <?php                                                               
+                                           if($name_video !=  $learn_note[$key+1]->file->filename){
+                                            ?>
+                                          </tbody>
+                                        </table>
+                                        <hr>
+                                            <?php
+                                           }
                                         } // foreach ($learn_note
                                       }else{ // if(!empty($learn_note)){
 
                                       }
 
                                        ?>
-                                    </tbody>
-                                </table>
+                                   
+                               
+
+
+
                             </div>
                         </div>
                     </div>
@@ -555,7 +647,7 @@ $cancel_msg = UserModule::t('Cancel');
 
           <?php
           $learnModel = Learn::model()->find(array(
-            'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND active=:status',
+            'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active=:status',
             'params'=>array(':lesson_id'=>$lessonListValue->id,':user_id'=>Yii::app()->user->id,':status'=>'y')
           ));
           if($lessonListValue->type == 'vdo'){
@@ -3159,7 +3251,6 @@ function time_test_start(time_down){
                   //   status_in_learn_note = 1; // เข้าฟังชัน ไม่ให้ video หยุดเล่น
                   // });
 
-
                   $("#note-1").keydown(function (event) {
                     // console.log(event.keyCode);
                     if (event.keyCode == 13) { // enter
@@ -3178,7 +3269,20 @@ function time_test_start(time_down){
                     // var video = $("#"+'example_video_'+video_id_last+'_html5_api').get(0); 
 
                     var id_video_file_open = jQuery('.collapse.in');
-                    id_video_file_open = id_video_file_open[1].getAttribute("id").replace("collapse", "");
+
+                    var num_show_video_i;
+                    for(var i=0; i< jQuery('.collapse.in').length; i++){
+                      var name_collapse = jQuery('.collapse.in')[i].getAttribute("id").replace("collapse", "");
+                      name_collapse = parseInt(name_collapse);
+                      if(Number.isInteger(name_collapse)){
+                      num_show_video_i = i;
+                      break;
+                      } 
+                    }
+
+
+
+                    id_video_file_open = id_video_file_open[num_show_video_i].getAttribute("id").replace("collapse", "");
 
                     if(id_video_file_open == id_video_file){
                       document.getElementById('example_video_'+video_id_last+'_html5_api').play();
@@ -3194,7 +3298,6 @@ function time_test_start(time_down){
                         text: "เปิดแถบวิดีโอ "+name_video_file+" ก่อน",
                         timer: 1000
                       });
-                      // alert("เปิดแถบวิดีโอ "+name_video_file+" ก่อน");
                     }
 
                     // console.log("file "+id_video_file);
@@ -3218,7 +3321,18 @@ function time_test_start(time_down){
 
                     // var id_video_file_open = jQuery('.collapse.in').attr("id").replace("collapse", "");
                     var id_video_file_open = jQuery('.collapse.in');
-                    id_video_file_open = id_video_file_open[1].getAttribute("id").replace("collapse", "");
+
+                    var num_show_video_i;
+                    for(var i=0; i< jQuery('.collapse.in').length; i++){
+                      var name_collapse = jQuery('.collapse.in')[i].getAttribute("id").replace("collapse", "");
+                      name_collapse = parseInt(name_collapse);
+                      if(Number.isInteger(name_collapse)){
+                      num_show_video_i = i;
+                      break;
+                      } 
+                    }
+
+                    id_video_file_open = id_video_file_open[num_show_video_i].getAttribute("id").replace("collapse", "");
 
                     if(id_video_file_open == id_video_file){
                       document.getElementById('example_video_'+video_id_last+'_html5_api').play();
@@ -3232,9 +3346,7 @@ function time_test_start(time_down){
                         text: "เปิดแถบวิดีโอ "+name_video_file+" ก่อน",
                         timer: 1000
                       });
-                      // alert("เปิดแถบวิดีโอ "+name_video_file+" ก่อน");
                     }
-
                     // console.log("file "+id_video_file);
                     // console.log("idx "+video_id_last);
                     // console.log("time "+id_video_time);
@@ -3248,7 +3360,21 @@ function time_test_start(time_down){
                   function save_learn_note(){                    
                     var num_show_video = jQuery('.collapse.in').length;
 
-                    if(num_show_video >= 1 ){ // ถ้า แถบวิดีโอไม่เปิด บันทึกไม่ได้
+                    var num_show_video_status = 2;
+                    var num_show_video_i;
+                    for(var i=0; i< num_show_video; i++){
+                      var name_collapse = jQuery('.collapse.in')[i].getAttribute("id").replace("collapse", "");
+                      name_collapse = parseInt(name_collapse);
+                      if(Number.isInteger(name_collapse)){
+                      num_show_video_status = 1;
+                      num_show_video_i = i;
+                      break;
+                      } 
+                    }
+
+
+                    // if(num_show_video >= 1 ){ // ถ้า แถบวิดีโอไม่เปิด บันทึกไม่ได้
+                    if(num_show_video_status == 1 ){ // ถ้า แถบวิดีโอไม่เปิด บันทึกไม่ได้
                       var num_video_file = "<?php echo $idx; ?>";
                       var video_check, note_time, video, note_text;
                       status_in_learn_note = 1; // เข้าฟังชัน ไม่ให้ video หยุดเล่น
@@ -3258,12 +3384,8 @@ function time_test_start(time_down){
                       var id_video_file = jQuery('.collapse.in');
                       // console.log(id_video_file[1].getAttribute("id"));
 
-                    id_video_file = id_video_file[1].getAttribute("id").replace("collapse", "");
-
-
-
+                    id_video_file = id_video_file[num_show_video_i].getAttribute("id").replace("collapse", "");
                       video_id_last = $("[fileid="+id_video_file+"]").attr("index");
-
 
                     for (var i = 1; i <= num_video_file; i++) {
                       video_check = $("#"+'example_video_'+i+'_html5_api').get(0); 
@@ -3298,14 +3420,16 @@ function time_test_start(time_down){
                             note_text: note_text,
                           }),
                           success: function(data) {
-                            if(data != "error" && data != "error2"){
+                            if(data != "error" && data != "error2"){                              
                               $("#note-1").val("");
                               // console.log(+data.split("'")[1].replace("tr_note_", ""));
                               // console.log(data.split(":")[1]);
                               $("#tr_note_"+data.split("'")[1].replace("tr_note_", "")).remove();
                                 // $("#tr_note_"+note_id).hide();
 
-                              $("#tbody_note").append(data)
+                                // console.log(data.split("'")[11]);
+                                var tbody_note = data.split("'")[11];
+                              $("#tbody_note_"+tbody_note).append(data);
 
                             }else{
                               swal({
@@ -3314,7 +3438,6 @@ function time_test_start(time_down){
                                 text: "ทำรายการไม่สำเร็จ",
                                 timer: 1000
                               });
-                              // alert("ทำรายการไม่สำเร็จ");
                             }
                           }
                         });
@@ -3325,7 +3448,6 @@ function time_test_start(time_down){
                         text: "ทำรายการไม่สำเร็จ",
                         timer: 1000
                       });
-                        // alert("ทำรายการไม่สำเร็จ");
                       }
                     }else{ // if(note_text != ""){
                       swal({
@@ -3334,8 +3456,6 @@ function time_test_start(time_down){
                         text: "กรุณาพิมพ์ข้อความก่อนจดบันทึก",
                         timer: 1000
                       });
-                        // alert("กรุณาพิมพ์ข้อความก่อนจดบันทึก");
-
                     }
 
                     }else{
@@ -3345,7 +3465,6 @@ function time_test_start(time_down){
                         text: "กรุณาเปิดแถบวิดีโอก่อนจดโน๊ต",
                         timer: 1000
                       });
-                        // alert("กรุณาเปิดแถบวิดีโอก่อนจดโน๊ต");
                     }
                   } //  function save_learn_note()
                   
@@ -3368,27 +3487,20 @@ function time_test_start(time_down){
                     Swal.fire({
                       // icon: 'info',
                       title: "แก้ไข",                      
-                      html: '<div class="form-group p-4"><textarea onKeyPress="check_enter('+');" class="form-control" placeholder="พิมพ์ข้อความและกดจดบันทึก" id="note-2" rows="3">'+document.getElementById("span_id_"+note_id).innerHTML+'</textarea>' +
+                      html: '<div class="form-group p-4"><textarea onKeyPress="check_enter(event, '+note_id+');" class="form-control" placeholder="พิมพ์ข้อความและกดจดบันทึก" id="note-2" rows="3">'+document.getElementById("span_id_"+note_id).innerHTML+'</textarea>' +
                       '<button type="button" onclick="edit_learn_note('+note_id+');" class="btn-note btn btn-sm btn-dark mt-4 ">จดบันทึก</button></div>',
                       showCloseButton: true,
                       showCancelButton: false,
                       showConfirmButton: false,
                       focusConfirm: false
                     })
-
-
-                  //   $("#note-2").keydown(function (event) {
-                  //   if (event.keyCode == 13) { // enter
-                  //     edit_learn_note(note_id);
-                  //   }
-                  // });
                   }
 
 
-                  function check_enter(){
-                    // console.log(this.event);
-                    // console.log(this.event.keyCode);
-                    // console.log(note_id);
+                  function check_enter(event, note_id){ // enter sweet alert
+                    if (event.keyCode == 13) { // enter
+                      edit_learn_note(note_id);
+                    }
                   }
 
                   function edit_learn_note(note_id){
@@ -3409,8 +3521,7 @@ function time_test_start(time_down){
                                 document.getElementById("span_id_"+note_id).innerHTML = note_text;
                               }else{
                                 $("#tr_note_"+note_id).remove();
-                              }
-                              
+                              }                              
                               Swal.close();
                             }else{
                               swal({
@@ -3454,7 +3565,6 @@ function time_test_start(time_down){
                                 text: "ทำรายการไม่สำเร็จ",
                                 timer: 1000
                               });
-                              // alert("ทำรายการไม่สำเร็จ");
                             }
                           }
                         });                      
