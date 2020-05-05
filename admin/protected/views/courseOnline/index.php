@@ -117,6 +117,18 @@ EOD
 			                ),  
 						),
 						array(
+							'header'=>'รุ่น',
+							'value'=>'CHtml::link("จัดการรุ่น (".$data->getCountGen().")", array(
+					      		"courseGeneration/index",
+					      		"id"=>$data->course_id,
+					      		), array(
+								"class"=>"btn btn-primary btn-icon"
+						    )); ',
+							'type'=>'raw',
+							'htmlOptions'=>array('style'=>'text-align: center','width'=>'100px'),
+						),
+
+						array(
 							'header'=>'จัดเรียงบทเรียน',
 							'value'=>'CHtml::link("จัดเรียงบท (".$data->getCountLesson().")", array(
 					      		"CourseOnline/sortLesson",

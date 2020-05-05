@@ -189,6 +189,14 @@ class CourseOnline extends AActiveRecord
 		return $count;
 	}
 
+	public function getCountGen()
+	{
+		$count = courseGeneration::Model()->count("course_id=:course_id", array(
+			"course_id"=>$this->course_id,
+		));
+		return $count;
+	}
+
 	public function afterFind() 
 	{
 		$this->course_title = CHtml::decode($this->course_title);
