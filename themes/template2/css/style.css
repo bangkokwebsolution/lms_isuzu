@@ -1164,9 +1164,9 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 
 #contact-us .contact-map {
   border-radius: 10px;
-  background-color: #423672c2;
+  background-color: #010c65;
   padding: 1em;
-  margin-bottom: 1em;
+  margin: 1em;
 }
 
 #contact-us .contact-map h4 {
