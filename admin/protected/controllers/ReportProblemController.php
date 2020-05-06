@@ -253,10 +253,10 @@ class ReportProblemController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$model = new Contactus('search');
+		$model = new ReportProblem('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Contactus']))
-			$model->attributes=$_GET['Contactus'];
+		if(isset($_GET['ReportProblem']))
+			$model->attributes=$_GET['ReportProblem'];
 		
 		$this->render('index',array(
 			'model'=>$model,
@@ -264,16 +264,19 @@ class ReportProblemController extends Controller
 	}
 
 	public function actionSendMailMessage(){
-		$con_id = $_POST['contac_id'];
+		$id = $_POST['id'];
 		$msg  = $_POST['inputValue'];
-		$model = Contactus::model()->findByPk($con_id);
-		$model->contac_answer = 'y';
-		$model->save();
+		$model = ReportProblem::model()->findByPk($id);
+		$model->status = 'success';
+		$model->accept_report_date = date("Y-m-d H:i:s");
+		$model->answer = $msg;
+		$model->save(false);
+		$Usability = Usability::model()->findByPk($model->report_type);
 		$to = array();
-       	$to['email'] = $model->contac_by_email;
-      	$to['firstname'] = $model->contac_by_name;
-       	$to['lastname'] = $model->contac_by_surname;
-       	$subject = 'ตอบคำถาม เรื่อง  : ' . $model->contac_subject ;
+       	$to['email'] = $model->email;
+      	$to['firstname'] = $model->firstname;
+       	$to['lastname'] = $model->lastname;
+       	$subject = 'ตอบคำถาม เรื่อง  : ' . $Usability->usa_title;
        	$message = $msg;
         $mail = Helpers::lib()->SendMail($to, $subject, $message);
 }

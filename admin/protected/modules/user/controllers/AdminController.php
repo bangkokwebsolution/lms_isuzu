@@ -148,6 +148,7 @@ echo ($data);
         $model->unsetAttributes();  // clear any default values
         $model->typeuser = array(1);
         $model->register_status = array(1);
+        $model->status = array(1);
         $model->supper_user_status = true;
         if(isset($_GET['User'])){
         	$model->attributes=$_GET['User'];
@@ -444,18 +445,22 @@ echo ($data);
 
 		$path_zip_attach = array();
 		$name_file_attach = array();
+		$nameold_file_attach = array();
 
 		$path_zip_edu = array();
 		$name_file_edu = array();
+		$nameold_file_edu = array();
 
 		$path_zip_training = array();
 		$name_file_training = array();
+		$nameold_file_training = array();
     
 	     foreach ($Attach_file as $key => $value) {
 	     	$attach_all  = glob(Yii::app()->getUploadPath('attach').$value->file_name);
 	    	if(!empty($attach_all)){
 				$path_zip_attach[] = "../uploads/attach/".basename($attach_all[0]);	
-				$name_file_attach[] = basename($attach_all[0]);	
+				$name_file_attach[] = basename($attach_all[0]);
+				$nameold_file_attach[] = $value->filename;		
 			}
 			
 	     }
@@ -463,18 +468,20 @@ echo ($data);
 	     	$edu_all  = glob(Yii::app()->getUploadPath('edufile').$valueedu->filename);
 	    	if(!empty($edu_all)){
 				$path_zip_edu[] = "../uploads/edufile/".basename($edu_all[0]);	
-				$name_file_edu[] = basename($edu_all[0]);	
+				$name_file_edu[] = basename($edu_all[0]);
+				$nameold_file_edu[] = $valueedu->file_name;		
 			}
 			
 	     }
 	     foreach ($Training_file as $keytn => $valuetn) {
 	     	$Training_all  = glob(Yii::app()->getUploadPath('Trainingfile').$valuetn->filename);
-	    	if(!empty($edu_all)){
+	    	if(!empty($Training_all)){
 				$path_zip_training[] = "../uploads/Trainingfile/".basename($Training_all[0]);	
 				$name_file_training[] = basename($Training_all[0]);	
+				$nameold_file_training[] = $valuetn->file_name;	
 			}
 	     }
-
+ 
 		// // สร้าง folder
 		// if (!is_dir(Yii::app()->getUploadPath(null)."../zip/all/")) {
 		// 	mkdir(Yii::app()->getUploadPath(null)."../zip/all/", 0777, true);
@@ -508,15 +515,23 @@ echo ($data);
 			$zip = Yii::app()->zip;
 			$path_in_zip = "..\uploads\attachZib\\";
 			$name_zip = "$firstname"."-"."$positionName.zip";
+				$file_in_folders = glob(Yii::app()->getUploadPath(null)."..\\attachZib\\*");		
+			if(!empty($file_in_folders)){
+				foreach($file_in_folders as $file){ // iterate files
+					if(is_file($file)){
+						unlink($file); // delete file
+					}             
+				}										
+			}
 			foreach ($path_zip_attach as $key => $link_file) {
 
-				 $zip->makeZip_nn($link_file, $path_in_zip.$name_zip, $name_file_attach[$key]);
+				 $zip->makeZip_nn($link_file, $path_in_zip.$name_zip, $nameold_file_attach[$key]);
 			}
 			foreach ($path_zip_training as $keyt => $valuet) {
-                 $zip->makeZip_nn($valuet, $path_in_zip.$name_zip, $name_file_training[$keyt]);
+                 $zip->makeZip_nn($valuet, $path_in_zip.$name_zip, $nameold_file_training[$keyt]);
 			}
 			foreach ($path_zip_edu as $keye => $valuee) {
-                 $zip->makeZip_nn($valuee, $path_in_zip.$name_zip, $name_file_edu[$keye]);
+                 $zip->makeZip_nn($valuee, $path_in_zip.$name_zip, $nameold_file_edu[$keye]);
 			}
 			$file_in_folder = glob(Yii::app()->getUploadPath(null)."..\\attachZib\\*");
 			foreach($file_in_folder as $file_in){ // วนลบไฟล์ในโฟลเดอร์
@@ -540,20 +555,12 @@ echo ($data);
             http_response_code(404);
 	        die();
         }
-//}
-						// if($zip_susess != ""){
-		    //              echo '<b><a href="'.$zip_susess.'" target="_blank" class="btn btn-success btn-icon"></a></b>';
-	     //                }	
 					}
 				}
 			}
-			// echo "no_checked";
-			// exit();
+
 		}
-		// else{
-		// 	// echo "null";
-		// 	// exit();
-		// }
+		
 	}
 
 	public function actionIdCard($id)
@@ -1371,7 +1378,14 @@ echo ($data);
 		//$mPDF->SetAutoFont();
 		// $mPDF->useDictionaryLBR = false;
 		$mPDF->setDisplayMode('fullpage');
+		// $mPDF->useFixedNormalLineHeight = false;
+  //       $mPDF->useFixedTextBaseline = ture;
+  //       $mPDF->adjustFontDescLineheight = 10.14;
 		$mPDF->autoLangToFont = true;
+		//
+
+
+		$mPDF->shrink_tables_to_fit = 1;
 		$mPDF->SetTitle("ใบสมัครสมาชิก");
 		$texttt= '
          <style>

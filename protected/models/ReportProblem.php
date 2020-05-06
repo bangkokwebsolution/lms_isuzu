@@ -36,13 +36,13 @@ class ReportProblem extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('firstname, lastname, email, tel, report_type, report_title, report_pic', 'length', 'max'=>255),
+			array('firstname, lastname, email, tel, report_type, report_title, report_pic, report_course', 'length', 'max'=>255),
 			array('status', 'length', 'max'=>7),
 			array('report_pic', 'file','types'=>'jpg, gif, png', 'allowEmpty'=>true),
 			array('report_detail, report_date, accept_report_date, answer', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, firstname, lastname, email, tel, report_type, report_title, report_detail, report_pic, report_date, accept_report_date, status, answer', 'safe', 'on'=>'search'),
+			array('id, firstname, lastname, email, tel, report_type, report_title, report_detail, report_pic, report_date, accept_report_date, status, answer, report_course', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -76,6 +76,7 @@ class ReportProblem extends CActiveRecord
 			'accept_report_date' => 'Accept Report Date',
 			'status' => 'Status',
 			'answer' => 'Answer',
+			'report_course'=> 'report_course',
 		);
 	}
 
@@ -110,6 +111,7 @@ class ReportProblem extends CActiveRecord
 		$criteria->compare('accept_report_date',$this->accept_report_date,true);
 		$criteria->compare('status',$this->status,true);
 		$criteria->compare('answer',$this->answer,true);
+		$criteria->compare('report_course',$this->report_course,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -148,5 +148,27 @@ class Position extends CActiveRecord
 		$list = CHtml::listData($model,'id','position_title');
 		return $list;
 	}
+	 public function getPositionListSearch()
+    {
+    	$Department = Department::model()->findAll(array(
+								'condition' => 'active=:active AND type_employee_id=:type_employee_id',
+								'params' => array(':active'=>'y',':type_employee_id'=>1)
+							));
+    	 $dep_id = [];
+                    foreach ($Department as $keydepart => $valuedepart) {
+                       $dep_id[] = $valuedepart->id;
+                   }
+
+                   $criteria= new CDbCriteria;
+                   $criteria->compare('active','y');
+                   $criteria->addInCondition('department_id', $dep_id);
+                   $Position = Position::model()->findAll($criteria);
+    
+
+        $PositionList = CHtml::listData($Position,'id','position_title');
+
+        return $PositionList;
+    }
+
 
 }

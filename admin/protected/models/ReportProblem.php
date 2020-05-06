@@ -36,13 +36,13 @@ class ReportProblem extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('firstname, lastname, email, tel, report_type, report_title, report_detail', 'required'),
+			array('firstname, lastname, email, tel, report_type, report_title, report_detail, report_course', 'required'),
             array('firstname, lastname, email, tel, report_type, report_title, report_pic', 'length', 'max'=>255),
             array('status', 'length', 'max'=>7),
             array('report_date, accept_report_date, news_per_page,answer', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id, firstname, lastname, email, tel, report_type, report_title, report_detail, report_pic, report_date, accept_report_date, status, answer', 'safe', 'on'=>'search'),
+            array('id, firstname, lastname, email, tel, report_type, report_title, report_detail, report_pic, report_date, accept_report_date, status, answer, report_course', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -75,6 +75,7 @@ class ReportProblem extends CActiveRecord
 			'answer' => 'คำตอบ',
 			'report_date'=>'วันที่ส่งปัญหา',
 			'accept_report_date' => 'วันที่ตอบกลับ',
+			'report_course'=> 'คอร์ส',
 		);
 	}
 
@@ -123,6 +124,7 @@ class ReportProblem extends CActiveRecord
 		$criteria->compare('accept_report_date',$this->accept_report_date,true);
 		$criteria->compare('report_date',$this->report_date,true);
 		$criteria->compare('answer',$this->answer,true);
+		$criteria->compare('report_course',$this->report_course,true);
 
 		$poviderArray = array('criteria'=>$criteria);
 

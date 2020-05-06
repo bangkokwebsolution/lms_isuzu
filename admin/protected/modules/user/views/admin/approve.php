@@ -50,7 +50,7 @@ EOD
 		'attributes'=>array(
 			//array('name'=>'status','type'=>'text'),
 			array('name'=>'register_status','type'=>'list','query'=>$model->getregisstatusList()),
-			array('name'=>'position_id','type'=>'list','query'=>Position::getPositionList()),
+			array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
 			array('name'=>'create_at','type'=>'text'),
 		),
 	));?>

@@ -425,7 +425,7 @@ public function validateIdCard($attribute,$params){
 	$criteria->compare('lastactivity',$this->lastactivity);
 	$criteria->compare('superuser',$this->superuser);
 	$criteria->compare('not_passed',$this->not_passed);
-	$criteria->compare('status',array(0,2));
+	$criteria->compare('status',$this->status);
 	$criteria->compare('del_status',0); 
 	//$criteria->compare('register_status',array(1));
 	$criteria->compare('register_status',$this->register_status);
@@ -551,13 +551,7 @@ public function searchmembership()
         $this->lastvisit_at=date('Y-m-d H:i:s',$value);
     }
 
-    public function getPositionList()
-    {
-        $Position = Position::model()->findAll();
-        $PositionList = CHtml::listData($Position,'position_id','position_title');
 
-        return $PositionList;
-    }
 
       public function getregisstatusList()
     {

@@ -36,7 +36,7 @@ EOD
 	'data'=>$model,
 	'route' => $this->route,
 	'attributes'=>array(
-		array('name'=>'firstname','type'=>'text'),
+		array('name'=>'contac_by_name','type'=>'text'),
 	),
 	));?>
 
@@ -69,17 +69,17 @@ EOD
                         'value'=>'$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
                     ),		
                     array(
-						'name'=>'report_date',
+						'name'=>'create_date',
 						'type'=>'html',
 						// 'value'=>'UHtml::markSearch($data,"report_date")'
 						'value'=>function($data){
-			                return Helpers::changeFormatDate($data->report_date,'datetime');
+			                return Helpers::changeFormatDate($data->create_date,'datetime');
 			            },
 					),		
 					array(
 						'header'=>'ชื่อ - สกุล',
                         'value'=>function($data){
-							return $data->firstname.' '.$data->lastname;
+							return $data->contac_by_name.' '.$data->contac_by_surname;
 						}
 				    ),
 					
@@ -87,9 +87,9 @@ EOD
                         'header'=>'อีเมล์',
                         'value'=>function($data){
 							$user = User::model()->findByAttributes(array(
-								'email' => $data->email,
+								'email' => $data->contac_by_email,
 							));
-						
+							// var_dump($user);
 							if($user){
 								if($user->bookkeeper_id){
 									return $user->bookkeeper_id;
@@ -98,7 +98,7 @@ EOD
 								}
 							} else {
 								$user = Profile::model()->findByAttributes(array(
-									'firstname' => $data->firstname,
+									'firstname' => $data->contac_by_name,
 								));
 								if($user){
 									if($user->user->bookkeeper_id){
@@ -114,46 +114,37 @@ EOD
 				        },
                     ),
                     array(
-						'name'=>'tel',
+						'name'=>'contac_by_tel',
 						'type'=>'html',
-						'value'=>'UHtml::markSearch($data,"tel")'
+						'value'=>'UHtml::markSearch($data,"contac_by_tel")'
 					),
 					
 					array(
-						'name'=>'report_type',
+						'name'=>'contac_type',
 						'type'=>'html',
-						//'value'=>'UHtml::markSearch($data,"report_type")'
-                        'value'=>function($data){
-                            $Usability = Usability::model()->findByAttributes(array(
-                                'usa_id' => $data->report_type,
-                            ));
-                           return $Usability->usa_title;
-                        },
+						'value'=>'UHtml::markSearch($data,"contac_type")'
 					),
 					
 					array(
-						'name'=>'report_detail',
+						'name'=>'contac_detail',
 						'type'=>'html',
 						// 'value'=>'UHtml::markSearch($data,"accept_report_date")'
 						'value'=>function($data){
-			                $output = UHtml::markSearch($data,"report_detail");
+			                $output = UHtml::markSearch($data,"contac_detail");
 			                	return $output;
 			            },
 					),
 					array(
-						'name'=>'answer',
+						'name'=>'contac_answer',
 						'type'=>'html',
 						'value'=>function($data){
-							if($data->status == 'success'){
+							if($data->contac_answer == 'y'){
 								$output = 'ตอบกลับแล้ว';
 								$color = 'green';
-				            } else if($data->status == 'eject'){
+				            } else {
 				            	$color = 'red';
-				            	$output = 'ยกเลิก';
-				            }else if($data->status == 'wait'){
-                                $color = 'red';
-                                $output = 'ยังไม่ได้ตอบ';
-                            }
+				            	$output = 'ยังไม่ได้ตอบ';
+				            }
 			                return '<span style="color: '.$color.'">'.$output.'</span>';
 			            },
 					),
@@ -163,7 +154,7 @@ EOD
                 'visible' => Controller::PButton( array("ReportProblem.*", "ReportProblem.sendMailMessage") ),
                 'htmlOptions'=>array('style'=>'text-align: center; width:10%'),
                 'value' => function($data) {
-                    return  CHtml::button("ส่งข้อความ",array('onclick'=>'sendMsg('.$data->id.')','class' => 'btn btn-danger','style'=>'font-size: 8px;'));
+                    return  CHtml::button("ส่งข้อความ",array('onclick'=>'sendMsg('.$data->contac_id.')','class' => 'btn btn-danger','style'=>'font-size: 8px;'));
               },  
               ),
 				),
@@ -174,7 +165,7 @@ EOD
 </div>
 
 <script>
-	function sendMsg(id){
+	function sendMsg(contac_id){
       swal({
         title: "ส่งข้อความ",
         //text: "ระบุข้อความ",
@@ -199,11 +190,10 @@ EOD
                     //confirmButtonText: "ตกลง",
                     showConfirmButton: false
                   });
-       
                    $.ajax({
                     type: "POST",
                     url: '<?php echo $this->createUrl('reportProblem/sendMailMessage'); ?>',
-                    data: {inputValue: inputValue,'id': id},
+                    data: {inputValue: inputValue,'contac_id': contac_id},
                     success: function (data) {
                       swal({
                         type: "success",
@@ -308,17 +298,17 @@ $columns=array(
     //     ),
     // ),
         array(
-                        'name'=>'report_date',
+                        'name'=>'create_date',
                         'type'=>'html',
                         // 'value'=>'UHtml::markSearch($data,"report_date")'
                         'value'=>function($data){
-                            return Helpers::changeFormatDate($data->report_date,'datetime');
+                            return Helpers::changeFormatDate($data->create_date,'datetime');
                         },
                     ),      
                     array(
                         'header'=>'ชื่อ - สกุล',
                         'value'=>function($data){
-                            return $data->firstname.' '.$data->lastname;
+                            return $data->contac_by_name.' '.$data->contac_by_surname;
                         }
                     ),
                     
@@ -326,7 +316,7 @@ $columns=array(
                         'header'=>'อีเมล์',
                         'value'=>function($data){
                             $user = User::model()->findByAttributes(array(
-                                'email' => $data->email,
+                                'email' => $data->contac_by_email,
                             ));
                             // var_dump($user);
                             if($user){
@@ -353,37 +343,34 @@ $columns=array(
                         },
                     ),
                     array(
-                        'name'=>'tel',
+                        'name'=>'contac_by_tel',
                         'type'=>'html',
-                        'value'=>'UHtml::markSearch($data,"tel")'
+                        'value'=>'UHtml::markSearch($data,"contac_by_tel")'
                     ),
                     
                     array(
-                        'name'=>'report_type',
+                        'name'=>'contac_type',
                         'type'=>'html',
-                        'value'=>'UHtml::markSearch($data,"report_type")'
+                        'value'=>'UHtml::markSearch($data,"contac_type")'
                     ),
                     
                     array(
-                        'name'=>'report_detail',
+                        'name'=>'contac_detail',
                         'type'=>'html',
                         // 'value'=>'UHtml::markSearch($data,"accept_report_date")'
                         'value'=>function($data){
-                            $output = UHtml::markSearch($data,"report_detail");
+                            $output = UHtml::markSearch($data,"contac_detail");
                                 return $output;
                         },
                     ),
                     array(
-                        'name'=>'answer',
+                        'name'=>'contac_answer',
                         'type'=>'html',
                         'value'=>function($data){
-                            if($data->status == 'success'){
-                                $output = 'ตอบกลับแล้ว';
+                            if($data->contac_answer == 'y'){
+                                $output = 'ตอบแกลับล้ว';
                                 $color = 'green';
-                            } else if($data->status == 'eject'){
-                                $color = 'red';
-                                $output = 'ยกเลิก';
-                            }else if($data->status == 'wait'){
+                            } else {
                                 $color = 'red';
                                 $output = 'ยังไม่ได้ตอบ';
                             }

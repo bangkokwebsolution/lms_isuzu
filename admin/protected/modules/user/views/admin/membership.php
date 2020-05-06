@@ -64,7 +64,7 @@ EOD
         'attributes'=>array(
 //            array('name'=>'company_id','type'=>'list','query'=>Company::getCompanyList()),
             array('name'=>'register_status','type'=>'list','query'=>User::getregisstatusList()),
-            array('name'=>'position_id','type'=>'list','query'=>Position::getPositionList()),
+            array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
             //array('name'=>'nameSearch','type'=>'text'),
 //            array('name'=>'course','type'=>'list','query'=>$model->courseList),
             array('name'=>'create_at','type'=>'text'),

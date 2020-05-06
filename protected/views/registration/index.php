@@ -179,8 +179,16 @@ function isEngchar(str,obj){
     {
 
         //tinymce.triggerSave();
-        //tinyMCE.triggerSave();   
-
+        //tinyMCE.triggerSave(); 
+        var up_new = <?php echo $users->isNewRecord; ?>;
+        console.log(up_new);
+        if (up_new) {  
+        if ($('.picture_pic').val() == "" ) {
+            var picture = "<?php echo Yii::app()->session['lang'] == 1?'Please add a picture! ':'กรุณาเพิ่มรูปภาพ!'; ?>";
+            swal(picture)
+            return false; 
+             }
+         }
         if ($('.idcard').val() == "" ) {
             var idcard = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your ID number! ':'กรุณากรอกเลขบัตรประชาชน!'; ?>";
             swal(idcard)
@@ -222,9 +230,7 @@ function isEngchar(str,obj){
                 var email = "<?php echo Yii::app()->session['lang'] == 1?'Please enter email! ':'กรุณากรอกอีเมล!'; ?>";
                 swal(email)
                 return false;
-              }
-            
-        
+              }        
 
     
         var file = $('#queue').val();
@@ -500,7 +506,7 @@ function editNamehouse_registration(filedoc_id){
                                     <!--  <?php echo $form->fileField($users, 'pic_user', array('id' => 'wizard-picture')); ?> 
                                     <label class="btn btn-success" for="customFileLang"><span class="fileinput-new"> เลือกรูปภาพ</span></label> -->
                                     <span class="btn btn-info btn-file"><span class="fileinput-new"><?= Yii::app()->session['lang'] == 1?'Choose image ':'เลือกรูปภาพ'; ?></span>
-                                    <?php echo $form->fileField($users, 'pic_user', array('id' => 'wizard-picture')); ?>
+                                    <?php echo $form->fileField($users, 'pic_user', array('id' => 'wizard-picture','class'=>'picture_pic')); ?>
                                     <a href="#" class=" btn-info fileinput-exists" data-dismiss="fileinput"><?= Yii::app()->session['lang'] == 1?'Change picture ':'เปลี่ยนรูปภาพ'; ?></a>
                                 </div>
                             </div>

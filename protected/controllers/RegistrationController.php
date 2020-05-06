@@ -474,7 +474,6 @@ if ($profile->type_user == 1) {
     // var_dump(CUploadedFile::getInstance($AttachName, 'attach_identification'));
     // var_dump(CUploadedFile::getInstance($AttachName, 'attach_house_registration'));
     $users->department_id = $_POST['User'][department_id];
-
     $users->branch_id = $_POST['User'][branch_id];
 
     if ($profile->validate() && $users->validate()) {
@@ -578,8 +577,8 @@ if ($profile->type_user == 1) {
          $AttachName->user_id = $users->id;
          $AttachName->create_date = date("Y-m-d");
          $AttachName->create_by = $users->id;
-         $AttachFile->save();
-         $AttachName->save();
+         $AttachFile->save(false);
+         $AttachName->save(false);
     }
     $attach_crew_identification  = CUploadedFile::getInstance($AttachName, 'attach_crew_identification');
     if (isset($attach_crew_identification)) {
@@ -603,8 +602,8 @@ if ($profile->type_user == 1) {
          $AttachName->user_id = $users->id;
          $AttachName->create_date = date("Y-m-d");
          $AttachName->create_by = $users->id;
-         $AttachFile->save();
-         $AttachName->save();
+         $AttachFile->save(false);
+         $AttachName->save(false);
     }
     $attach_identification  = CUploadedFile::getInstance($AttachName, 'attach_identification');
     if (isset($attach_identification)) {
@@ -628,8 +627,8 @@ if ($profile->type_user == 1) {
          $AttachName->user_id = $users->id;
          $AttachName->create_date = date("Y-m-d");
          $AttachName->create_by = $users->id;
-         $AttachFile->save();
-         $AttachName->save();
+         $AttachFile->save(false);
+         $AttachName->save(false);
     }
     $attach_house_registration  = CUploadedFile::getInstance($AttachName, 'attach_house_registration');
     if (isset($attach_house_registration)) {
@@ -653,8 +652,8 @@ if ($profile->type_user == 1) {
          $AttachName->user_id = $users->id;
          $AttachName->create_date = date("Y-m-d");
          $AttachName->create_by = $users->id;
-         $AttachFile->save();
-         $AttachName->save();
+         $AttachFile->save(false);
+         $AttachName->save(false);
     }
     if(isset($session['filenameComDoc']) || count($session['filenameComDoc'])!=0)
     {
@@ -972,7 +971,7 @@ public function actionUpdate() {
 // var_dump($session['filenameOriComTrain']);
 // echo "ppppppppppppppppppppp";
 // var_dump($session['filenameOriComDoc']);
-// exit();
+ // exit();
         if ($profile->validate() && $users->validate()) {
 
 //                    เข้ารหัสpassword
@@ -1116,7 +1115,7 @@ public function actionUpdate() {
                         }
          $AttachName = AttachName::model()->find('active="y" AND user_id='.Yii::app()->user->id);
          $AttachFile = AttachFile::model()->find('file_data="1" AND active="y" AND user_id='.Yii::app()->user->id);
-         if ($AttachName === "" ||$AttachFile === "") {
+         if (isset($AttachName)) {
          $AttachName->attach_passport = 1;
          $AttachFile->user_id = $users->id;
          $AttachFile->file_data = $AttachName->attach_passport;
@@ -1127,8 +1126,8 @@ public function actionUpdate() {
          $AttachName->user_id = $users->id;
          $AttachName->update_date = date("Y-m-d");
          $AttachName->update_by = $users->id;
-         $AttachFile->save();
-         $AttachName->save();
+         $AttachFile->save(false);
+         $AttachName->save(false);
          }else{
          $AttachName->attach_passport = 1;
          $AttachFile = new AttachFile;
@@ -1141,8 +1140,8 @@ public function actionUpdate() {
          $AttachName->user_id = $users->id;
          $AttachName->create_date = date("Y-m-d");
          $AttachName->create_by = $users->id;
-         $AttachFile->save();
-         $AttachName->save();
+         $AttachFile->save(false);
+         $AttachName->save(false);
      }
     }
     $attach_crew_identification  = CUploadedFile::getInstance($AttachName, 'attach_crew_identification');
@@ -1158,7 +1157,7 @@ public function actionUpdate() {
                         }
          $AttachName = AttachName::model()->find('active="y" AND user_id='.Yii::app()->user->id);
          $AttachFile = AttachFile::model()->find('file_data="2" AND active="y" AND user_id='.Yii::app()->user->id); 
-         if ($AttachName === "" ||$AttachFile === "") {
+         if (isset($AttachName)) {
          $AttachName->attach_crew_identification = 2;
          $AttachFile->user_id = $users->id;
          $AttachFile->file_data = $AttachName->attach_crew_identification;
@@ -1169,8 +1168,8 @@ public function actionUpdate() {
          $AttachName->user_id = $users->id;
          $AttachName->update_date = date("Y-m-d");
          $AttachName->update_by = $users->id;
-         $AttachFile->save();
-         $AttachName->save();
+         $AttachFile->save(false);
+         $AttachName->save(false);
          }else{
          $AttachName->attach_crew_identification = 2;
          $AttachFile = new AttachFile;
@@ -1183,8 +1182,8 @@ public function actionUpdate() {
          $AttachName->user_id = $users->id;
          $AttachName->create_date = date("Y-m-d");
          $AttachName->create_by = $users->id;
-         $AttachFile->save();
-         $AttachName->save();
+         $AttachFile->save(false);
+         $AttachName->save(false);
          }
          
     }
@@ -1201,7 +1200,7 @@ public function actionUpdate() {
                         }
          $AttachName = AttachName::model()->find('active="y" AND user_id='.Yii::app()->user->id);
          $AttachFile = AttachFile::model()->find('file_data="3" AND active="y" AND user_id='.Yii::app()->user->id);
-         if ($AttachName === "" ||$AttachFile === "") {
+         if (isset($AttachName)) {
          $AttachName->attach_identification = 3;
          $AttachFile->user_id = $users->id;
          $AttachFile->file_data = $AttachName->attach_identification;
@@ -1212,8 +1211,8 @@ public function actionUpdate() {
          $AttachName->user_id = $users->id;
          $AttachName->update_date = date("Y-m-d");
          $AttachName->update_by = $users->id;
-         $AttachFile->save();
-         $AttachName->save();
+         $AttachFile->save(false);
+         $AttachName->save(false);
          }else{
          $AttachName->attach_identification = 3;
          $AttachFile = new AttachFile;
@@ -1226,8 +1225,8 @@ public function actionUpdate() {
          $AttachName->user_id = $users->id;
          $AttachName->create_date = date("Y-m-d");
          $AttachName->create_by = $users->id;
-         $AttachFile->save();
-         $AttachName->save();
+         $AttachFile->save(false);
+         $AttachName->save(false);
     }   
          
          
@@ -1245,7 +1244,7 @@ public function actionUpdate() {
                         }
          $AttachName = AttachName::model()->find('active="y" AND user_id='.Yii::app()->user->id);
          $AttachFile = AttachFile::model()->find('file_data="4" AND active="y" AND user_id='.Yii::app()->user->id);
-         if ($AttachName === "" ||$AttachFile === "") {
+         if (isset($AttachName)) {
          $AttachName->attach_house_registration = 4;
          $AttachFile->user_id = $users->id;
          $AttachFile->file_data = $AttachName->attach_house_registration;
@@ -1256,8 +1255,8 @@ public function actionUpdate() {
          $AttachName->user_id = $users->id;
          $AttachName->update_date = date("Y-m-d");
          $AttachName->update_by = $users->id;
-         $AttachFile->save();
-         $AttachName->save(); 
+         $AttachFile->save(false);
+         $AttachName->save(false); 
          }else{
          $AttachName->attach_house_registration = 4;
          $AttachFile = new AttachFile;
@@ -1270,8 +1269,8 @@ public function actionUpdate() {
          $AttachName->user_id = $users->id;
          $AttachName->create_date = date("Y-m-d");
          $AttachName->create_by = $users->id;
-         $AttachFile->save();
-         $AttachName->save();   
+         $AttachFile->save(false);
+         $AttachName->save(false);   
          }
          
     }
