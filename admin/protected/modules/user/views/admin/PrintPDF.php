@@ -46,11 +46,14 @@
     tr td{
       padding: 5px 0;
     }
-
+table .t-edu {
+/* page-break-after: always;*/
+}
   
 </style>
 
 <div class="border-main"> 
+
     
     <?php
  if ($user != null) {
@@ -301,7 +304,7 @@
             $position = $position->attributes;
             ?>
             <tr>
-              <td style="text-align:left;  padding-left:160px; padding-bottom:-19px;">
+              <td style="text-align:left;  padding-left:160px; padding-bottom:-19px; ">
                 <p class="f-14"><?php if($position['position_title'] != ""){ echo $position['position_title']; }else{ echo "-"; } ?></p>
               </td>
             </tr>
@@ -312,7 +315,7 @@
             </tr>  
           </table>
 
-<table border="1" style="border-collapse:collapse; overflow: wrap; width: 100%;margin-top: 3em;page-break-inside: avoid;" >
+<table border="1" class="t-edu" style="border-collapse:collapse; overflow: wrap; width: 100%;margin-top: 3em;" >
   <thead>
     <tr style="background-color:#D3D3D3;">
       <td colspan="3" style="text-align:left;  font-weight: bold; padding:10px;">
@@ -476,14 +479,14 @@
     </tr>
 
     <tr>
-      <td style="padding-left:204px;text-align:right; >
+      <td style="padding-left:430px;text-align:left; padding-bottom:-18px;" >
         <p class="f-14"><?php if($profiles['firstname'] != ""){ echo $profiles['firstname'];?>&nbsp;&nbsp;
         <?php echo $profiles['lastname']; }else{ echo "-"; } ?></p>
       </td>
     </tr>
 
       <tr>
-        <td style="padding-left:204px;text-align:right; >
+        <td style="padding-left:204px;text-align:right;" >
           <p class="f-14">(.......................................................................)</p>
         </td>
       </tr>

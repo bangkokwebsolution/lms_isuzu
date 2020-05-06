@@ -1383,9 +1383,9 @@ echo ($data);
   //       $mPDF->adjustFontDescLineheight = 10.14;
 		$mPDF->autoLangToFont = true;
 		//
-
-
-		$mPDF->shrink_tables_to_fit = 1;
+        $mPDF->autoPageBreak = true;
+        //$mPDF->setTestTdInOnePage =true;
+		//$mPDF->shrink_tables_to_fit = 1;
 		$mPDF->SetTitle("ใบสมัครสมาชิก");
 		$texttt= '
          <style>
