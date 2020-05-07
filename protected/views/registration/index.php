@@ -47,15 +47,6 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         cursor: pointer;
     }
 
-
-    input {
-        /*border: 1px solid #1c97f3;*/
-       /* width: 260px;
-        height: 40px;
-        margin-bottom: 14px;*/
-    }
-
-
     .delete {
         border-radius: 3px;
         border: none;
@@ -115,7 +106,11 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         position: absolute;
         right: 16px;
         top: 40px;
+        z-index: 2;
+        display: block;
+        pointer-events: none;
     }
+
     .since-icon{
         position: relative;
     }
@@ -123,6 +118,8 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         position: absolute;
         right: 16px;
         top: 13px;
+        display: block;
+        pointer-events: none;
     }
 
     @media screen and (max-width: 600px){
@@ -635,10 +632,10 @@ function editNamehouse_registration(filedoc_id){
 
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="form-group birthday-icon">
-                                <i class="far fa-calendar-alt"></i>
                                 <label> <?php echo $label->label_date_of_expiry;?></label>
                                 <?php echo $form->textField($profile, 'date_of_expiry', $attTime); ?>
                                 <?php echo $form->error($profile, 'date_of_expiry', array('class' => 'error2')); ?>
+                                <i class="far fa-calendar-alt"></i>
                             </div>
                         </div>
 
