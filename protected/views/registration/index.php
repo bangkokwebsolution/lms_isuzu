@@ -1075,6 +1075,139 @@ function editNamehouse_registration(filedoc_id){
             </div>
         </div>
 
+        <div class="row lang-box">
+            <div class="table-responsive w-100 t-regis-language">
+              <table class="table">
+                 <thead>
+                     <tr>
+                        <th colspan="2">Language</th>
+                        <th>Excellent</th> 
+                        <th>Good</th>
+                        <th>Fair</th>
+                        <th>Poor</th>
+                      </tr>
+                 </thead>
+
+                    <tbody class="group-language">
+                        <tr>
+                             <td rowspan="2">Thai</td>
+                             <td>Written</td>
+                                <td>
+                                    <div class="radio radio-danger ">
+                                        <input type="radio" name="lang-1" id="lang-1" value="">
+                                        <label for="lang-1"></label>
+                                    </div>
+                                </td>
+                                 <td>
+                                    <div class="radio radio-danger ">
+                                        <input type="radio" name="lang-2" id="lang-1" value="">
+                                        <label for="lang-1"></label>
+                                    </div>
+                                </td>
+                                 <td>
+                                    <div class="radio radio-danger ">
+                                        <input type="radio" name="lang-1" id="lang-1" value="">
+                                        <label for="lang-1"></label>
+                                    </div>
+                                </td>
+                                 <td>
+                                    <div class="radio radio-danger ">
+                                        <input type="radio" name="lang-1" id="lang-1" value="">
+                                        <label for="lang-1"></label>
+                                    </div>
+                                </td>
+                        </tr>
+                        <tr>
+                             <td>Spoken</td>
+                                 <td>
+                                    <div class="radio radio-danger ">
+                                        <input type="radio" name="lang-1" id="lang-1" value="">
+                                        <label for="lang-1"></label>
+                                    </div>
+                                </td>
+                                 <td>
+                                    <div class="radio radio-danger ">
+                                        <input type="radio" name="lang-1" id="lang-1" value="">
+                                        <label for="lang-1"></label>
+                                    </div>
+                                </td>
+                                 <td>
+                                    <div class="radio radio-danger ">
+                                        <input type="radio" name="lang-1" id="lang-1" value="">
+                                        <label for="lang-1"></label>
+                                    </div>
+                                </td>
+                                 <td>
+                                    <div class="radio radio-danger ">
+                                        <input type="radio" name="lang-1" id="lang-1" value="">
+                                        <label for="lang-1"></label>
+                                    </div>
+                                </td>
+                        </tr>
+                    </tbody>
+
+                    <tbody class="group-language">
+                        <tr>
+                             <td rowspan="2">English</td>
+                             <td>Written</td>
+                              <td>
+                                <div class="radio radio-danger ">
+                                        <input type="radio" name="lang-1" id="lang-1" value="">
+                                        <label for="lang-1"></label>
+                                    </div>
+                            </td>
+                             <td>
+                                <div class="radio radio-danger ">
+                                        <input type="radio" name="lang-2" id="lang-2" value="">
+                                        <label for="lang-2"></label>
+                                    </div>
+                            </td>
+                             <td>
+                                <div class="radio radio-danger ">
+                                        <input type="radio" name="lang-3" id="lang-3" value="">
+                                        <label for="lang-3"></label>
+                                    </div>
+                            </td>
+                             <td>
+                                <div class="radio radio-danger ">
+                                        <input type="radio" name="lang-4" id="lang-4" value="">
+                                        <label for="lang-4"></label>
+                                    </div>
+                            </td>
+                        </tr>
+                        <tr>
+                             <td>Spoken</td>
+                             <td>
+                                <div class="radio radio-danger ">
+                                        <input type="radio" name="lang-5" id="lang-5" value="">
+                                        <label for="lang-5"></label>
+                                </div>
+                            </td>
+                             <td>
+                                <div class="radio radio-danger ">
+                                        <input type="radio" name="lang-6" id="lang-6" value="">
+                                        <label for="lang-6"></label>
+                                </div>
+                            </td>
+                             <td>
+                                <div class="radio radio-danger ">
+                                        <input type="radio" name="lang-7" id="lang-7" value="">
+                                        <label for="lang-7"></label>
+                                </div>
+                            </td>
+                             <td>
+                                <div class="radio radio-danger ">
+                                        <input type="radio" name="lang-8" id="lang-8" value="">
+                                        <label for="lang-8"></label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+
+              </table>
+            </div>
+        </div>
+
         <div id="office-section1" class="form_name ">
             <div class="row  mt-20 mb-1">
 
@@ -2095,6 +2228,8 @@ $(function() {
                 });
              });
          </script>
+
+
 
 
      </section>

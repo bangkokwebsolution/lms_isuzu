@@ -4414,6 +4414,21 @@ ol.stat-alert li::before {
   opacity: 1
 }
 
+.t-regis-language{
+  padding: 2em;
+  margin-top: 1em;
+}
+
+.t-regis-language tr th{
+  background:  #010C65;
+  color: #fff;
+}
+.t-regis-language input{
+  height: 20px;
+  width: 20px;
+  cursor: pointer;
+}
+
 @media (min-width: 1440px) {
   .course .well .course-img {
     height: 150px;
