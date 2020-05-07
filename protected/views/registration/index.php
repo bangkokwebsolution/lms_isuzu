@@ -278,12 +278,12 @@ function deleteFileDoc(filedoc_id,file_id){
         if($.trim(data)==1){
            // notyfy({dismissQueue: false,text: "ลบไฟล์เรียบร้อย",type: 'success'});
            var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
-           alert(success_file);
+           swal(success_file);
            location.reload();
            $('#'+filedoc_id).parent().hide('fast');
        }else{
         var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
-        alert(Unable_file);
+        swal(Unable_file);
     }
 });
 }
@@ -307,12 +307,12 @@ function deleteFiletrain(filedoc_id,file_id){
         if($.trim(data)==1){
            // notyfy({dismissQueue: false,text: "ลบไฟล์เรียบร้อย",type: 'success'});
            var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
-           alert(success_file);
+           swal(success_file);
            location.reload();
            $('#'+filedoc_id).parent().hide('fast');
        }else{
         var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
-        alert(Unable_file);
+        swal(Unable_file);
     }
 });
 }
@@ -332,12 +332,12 @@ function deleteFilepassport(file_id){
  $.get("<?php echo $this->createUrl('Registration/deleteFilePassport'); ?>",{id:file_id},function(data){
     if($.trim(data)==1){
      var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
-     alert(success_file);
+     swal(success_file);
      location.reload();
      $('#'+filedoc_id).parent().hide('fast');
  }else{
     var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
-    alert(Unable_file);
+    swal(Unable_file);
 }
 });
 }
@@ -356,12 +356,12 @@ function deleteFilecrew_identification(file_id){
     $.get("<?php echo $this->createUrl('Registration/deleteFilePassport'); ?>",{id:file_id},function(data){
         if($.trim(data)==1){
          var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
-         alert(success_file);
+         swal(success_file);
          location.reload();
          $('#'+filedoc_id).parent().hide('fast');
      }else{
         var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
-        alert(Unable_file);
+        swal(Unable_file);
     }
 });
 }
@@ -380,12 +380,12 @@ function deleteFileidentification(file_id){
     $.get("<?php echo $this->createUrl('Registration/deleteFilePassport'); ?>",{id:file_id},function(data){
         if($.trim(data)==1){
          var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
-         alert(success_file);
+         swal(success_file);
          location.reload();
          $('#'+filedoc_id).parent().hide('fast');
      }else{
         var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
-        alert(Unable_file);
+        swal(Unable_file);
     }
 });
 }
@@ -404,12 +404,12 @@ function deleteFilehouse_registration(file_id){
     $.get("<?php echo $this->createUrl('Registration/deleteFilePassport'); ?>",{id:file_id},function(data){
         if($.trim(data)==1){
          var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
-         alert(success_file);
+         swal(success_file);
          location.reload();
          $('#'+filedoc_id).parent().hide('fast');
      }else{
         var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
-        alert(Unable_file);
+        swal(Unable_file);
     }
 });
 }
@@ -1082,7 +1082,8 @@ function editNamehouse_registration(filedoc_id){
                                                         case 'jpeg':
                                                         break;
                                                         default:
-                                                        alert('Wrong filetype');
+                                                        var filetype = "<?php echo Yii::app()->session['lang'] == 1?'Wrong filetype! ':'ประเภทไฟล์ไม่ถูกต้อง!'; ?>";
+                                                        swal(filetype);
                                                         $('#doc').uploadifive('cancel', file);
                                                         break;
                                                     }
@@ -1185,7 +1186,8 @@ function editNamehouse_registration(filedoc_id){
                                                         case 'jpeg':
                                                         break;
                                                         default:
-                                                        alert('Wrong filetype');
+                                                        var filetype = "<?php echo Yii::app()->session['lang'] == 1?'Wrong filetype! ':'ประเภทไฟล์ไม่ถูกต้อง!'; ?>";
+                                                        swal(filetype);
                                                         $('#Training').uploadifive('cancel', file);
                                                         break;
                                                     }
