@@ -177,76 +177,81 @@ function isEngchar(str,obj){
 
         //tinymce.triggerSave();
         //tinyMCE.triggerSave(); 
+         var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+         var up_new = <?php echo $users->isNewRecord; ?>;
+       
+         if (up_new) {  
+         if ($('.picture_pic').val() == "" ) {
+            var picture = "<?php echo Yii::app()->session['lang'] == 1?'Please add a picture! ':'กรุณาเพิ่มรูปภาพ!'; ?>";
+            swal(alert_message,picture)
+            return false; 
+             }
+         }
+         var type_cards = $("input[name='type_card']:checked").val();
+         if (type_cards === 'l') {
+
+             if ($('.idcard').val() == "" ) {
+            var idcard = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your ID number! ':'กรุณากรอกเลขบัตรประชาชน!'; ?>";
+            swal(alert_message,idcard)
+            return false; 
+             }
+         }else if (type_cards === 'p'){
+
+             if ($('.passport').val() == "" ) {
+            var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
+            swal(alert_message,passport)
+            return false; 
+             }
+         }else if(typeof  type_cards === 'undefined' || typeof  type_cards === null){
+       
+            var card = "<?php echo Yii::app()->session['lang'] == 1?'Please choose to check your ID card or passport! ':'กรุณาเลือกเช็คบัตรประชาชนหรือพาสปอร์ต!'; ?>";
+            swal(alert_message,card)
+            return false;
+         }
          var type_users = $("input[name='type_user']:checked").val();
 
             if (type_users === '1') {
                   if ($('.position_gen').val() == "" ) {
             var position_gen = "<?php echo Yii::app()->session['lang'] == 1?'Please choose the position you want to apply! ':'กรุณาเลือกตำแหน่งที่ต้องการสมัคร!'; ?>";
-            swal(position_gen)
+            swal(alert_message,position_gen)
             return false; 
              }
-         }
-         var type_cards = $("input[name='type_card']:checked").val();
-         console.log(type_cards);
-         if (type_users === 'l') {
-             if ($('.idcard').val() == "" ) {
-            var idcard = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your ID number! ':'กรุณากรอกเลขบัตรประชาชน!'; ?>";
-            swal(idcard)
-            return false; 
-             }
-         }else if (type_users === 'p'){
-             if ($('.passport').val() == "" ) {
-            var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
-            swal(passport)
-            return false; 
-             }
-         }
-                 
-        var up_new = <?php echo $users->isNewRecord; ?>;
-       
-        if (up_new) {  
-        if ($('.picture_pic').val() == "" ) {
-            var picture = "<?php echo Yii::app()->session['lang'] == 1?'Please add a picture! ':'กรุณาเพิ่มรูปภาพ!'; ?>";
-            swal(picture)
-            return false; 
-             }
-         }
-      
+         }      
 
               if ($('.firstname').val() == "") {
                  var firstname = "<?php echo Yii::app()->session['lang'] == 1?'Please enter name! ':'กรุณากรอกชื่อ!'; ?>";
-                 swal(firstname)
+                 swal(alert_message,firstname)
                  return false;
               }
 
               if ($('.lastname').val() == "") {
                 var lastname = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your surname! ':'กรุณากรอกนามสกุล!'; ?>";
-                swal(lastname)
+                swal(alert_message,lastname)
                 return false;
               }
               if ($('.prefix').val() == "") {
                 var prefix = "<?php echo Yii::app()->session['lang'] == 1?'Please choose a name prefix! ':'กรุณาเลือกคำนำหน้าชื่อ!'; ?>";
-                swal(prefix)
+                swal(alert_message,prefix)
                 return false;
               }
               if ($('.firstname_en').val() == "") {
                 var firstname_en = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your name in English! ':'กรุณากรอกชื่อเป็นภาษาอังกฤษ!'; ?>";
-                swal(firstname_en)
+                swal(alert_message,firstname_en)
                 return false;
               }
               if ($('.lastname_en').val() == "") {
                 var firstname_en = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your surname in English! ':'กรุณากรอกนามสกุลเป็นภาษาอังกฤษ!'; ?>";
-                swal(firstname_en)
+                swal(alert_message,firstname_en)
                 return false;
               } 
               if ($('.prefix_en').val() == "") {
                 var prefix_en = "<?php echo Yii::app()->session['lang'] == 1?'Please choose an English name prefix! ':'กรุณาเลือกคำนำหน้าชื่อภาษาอังกฤษ!'; ?>";
-                swal(prefix_en)
+                swal(alert_message,prefix_en)
                 return false;
               }
               if ($('.email').val() == "") {
                 var email = "<?php echo Yii::app()->session['lang'] == 1?'Please enter email! ':'กรุณากรอกอีเมล!'; ?>";
-                swal(email)
+                swal(alert_message,email)
                 return false;
               }        
 
@@ -1554,6 +1559,7 @@ function editNamehouse_registration(filedoc_id){
                    $criteria= new CDbCriteria;
                    $criteria->compare('active','y');
                    $criteria->addInCondition('department_id', $dep_id);
+                   $criteria->order = 'position_title ASC';
                    $position_ship = Position::model()->findAll($criteria);
                     ?> 
                     <?php
