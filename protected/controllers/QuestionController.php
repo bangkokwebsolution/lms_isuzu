@@ -373,6 +373,7 @@ class QuestionController extends Controller
                             $modelCoursescore->lesson_id = $id;
                            //$modelCoursescore->manage_id = $value['group_id'];
                             $modelCoursescore->type = $testType;
+                            $modelCoursescore->course_id = $lesson->course_id;
                             $modelCoursescore->user_id = Yii::app()->user->id;
                             $modelCoursescore->save();
 

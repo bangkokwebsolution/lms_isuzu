@@ -162,8 +162,8 @@ class Position extends CActiveRecord
                    $criteria= new CDbCriteria;
                    $criteria->compare('active','y');
                    $criteria->addInCondition('department_id', $dep_id);
+                   $criteria->order = 'position_title ASC';
                    $Position = Position::model()->findAll($criteria);
-    
 
         $PositionList = CHtml::listData($Position,'id','position_title');
 

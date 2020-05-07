@@ -177,8 +177,33 @@ function isEngchar(str,obj){
 
         //tinymce.triggerSave();
         //tinyMCE.triggerSave(); 
+         var type_users = $("input[name='type_user']:checked").val();
+
+            if (type_users === '1') {
+                  if ($('.position_gen').val() == "" ) {
+            var position_gen = "<?php echo Yii::app()->session['lang'] == 1?'Please choose the position you want to apply! ':'กรุณาเลือกตำแหน่งที่ต้องการสมัคร!'; ?>";
+            swal(position_gen)
+            return false; 
+             }
+         }
+         var type_cards = $("input[name='type_card']:checked").val();
+         console.log(type_cards);
+         if (type_users === 'l') {
+             if ($('.idcard').val() == "" ) {
+            var idcard = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your ID number! ':'กรุณากรอกเลขบัตรประชาชน!'; ?>";
+            swal(idcard)
+            return false; 
+             }
+         }else if (type_users === 'p'){
+             if ($('.passport').val() == "" ) {
+            var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
+            swal(passport)
+            return false; 
+             }
+         }
+                 
         var up_new = <?php echo $users->isNewRecord; ?>;
-        console.log(up_new);
+       
         if (up_new) {  
         if ($('.picture_pic').val() == "" ) {
             var picture = "<?php echo Yii::app()->session['lang'] == 1?'Please add a picture! ':'กรุณาเพิ่มรูปภาพ!'; ?>";
@@ -186,11 +211,7 @@ function isEngchar(str,obj){
             return false; 
              }
          }
-        if ($('.idcard').val() == "" ) {
-            var idcard = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your ID number! ':'กรุณากรอกเลขบัตรประชาชน!'; ?>";
-            swal(idcard)
-            return false; 
-             }
+      
 
               if ($('.firstname').val() == "") {
                  var firstname = "<?php echo Yii::app()->session['lang'] == 1?'Please enter name! ':'กรุณากรอกชื่อ!'; ?>";
@@ -624,7 +645,7 @@ function editNamehouse_registration(filedoc_id){
                             </div>
 
                             <div class="form-group" id="passport_card">
-                                <label><?php echo $label->label_passport;?></label>
+                                <label><?php echo $label->label_passport;?><font color="red">*</font></label>
                                 <?php echo $form->textField($profile, 'passport', array('class' => 'form-control passport', 'name' => 'passport', 'placeholder' => $label->label_passport)); ?>
                                 <?php echo $form->error($profile, 'passport', array('class' => 'error2')); ?>
                             </div>
@@ -1516,7 +1537,7 @@ function editNamehouse_registration(filedoc_id){
 </div>
 <div id="office-section_gen">
     <div class="row  mb-1 " id="employee_type" >
-        <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'The boat position you are interested in applying for ':'ตำแหน่งเรือที่ท่านสนใจสมัคร'; ?></strong></div>
+        <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'The boat position you are interested in applying for ':'ตำแหน่งเรือที่ท่านสนใจสมัคร'; ?></strong><font color="red">*</font></div>
         <div class="col-sm-12 col-xs-12 col-md-8">
             <div class="col-md-5">
                 <div class="form-group">

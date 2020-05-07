@@ -348,6 +348,8 @@ class RegistrationController extends Controller {
 
     $users->username = $_POST['User'][username];
     $users->email = $_POST['User'][email];
+    $users->department_id = $_POST['User'][department_id];
+    $users->branch_id = $_POST['User'][branch_id];
 
             // $users->password = $_POST['User'][password];
             // $passwordshow = $_POST['Users'][password];
@@ -473,9 +475,7 @@ if ($profile->type_user == 1) {
     // var_dump(CUploadedFile::getInstance($AttachName, 'attach_crew_identification'));
     // var_dump(CUploadedFile::getInstance($AttachName, 'attach_identification'));
     // var_dump(CUploadedFile::getInstance($AttachName, 'attach_house_registration'));
-    $users->department_id = $_POST['User'][department_id];
-    $users->branch_id = $_POST['User'][branch_id];
-
+//exit();
     if ($profile->validate() && $users->validate()) {
 //                    เข้ารหัสpassword
                     //$users->password = UserModule::encrypting($users->password);

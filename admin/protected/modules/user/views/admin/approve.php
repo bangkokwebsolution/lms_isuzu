@@ -136,7 +136,8 @@ EOD
 								// ),
 		// 'create_at',
 								array(
-									'name'=>'create_at',
+									'header' => 'วันที่ลงทะเบียน',
+									//'name'=>'create_at',
 									'type'=>'html',
 									'filter' => false,
 			// 'value'=>'UHtml::markSearch($data,"create_at")'
