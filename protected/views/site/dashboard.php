@@ -209,7 +209,7 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
                                         //$percent_learn_net = 100;
                                         ?>
                                         <tr>
-                                            <td class="text-left" style="text-align: left;"><span class="text23"><?= $value->course_title ?></span></td>
+                                            <td class="text-left" style="text-align: left;"><span class="text23"><?= $value->course_title ?> <?= $value->getGen($value->course_id); ?></span></td>
                                             <td width="50%" style="border-right: none;">
                                              
                                              <div class="progress">
@@ -312,7 +312,7 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
             'course_id' => $value->course_id
         ));
         $checkStatus = true;
-        $herf = Yii::app()->createUrl('course/detail/', array('id' => $value->course_id));
+        $herf = Yii::app()->createUrl('course/detail/', array('id' => $value->course_id, 'gen' => $value->getGenID($value->course_id)));
         $status =  $label->label_notLearn;
         $status_button = '<span class="badge" id="badgethree"><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_notLearn.'</span>';
         foreach ($lesson as $key => $lessonList) {
@@ -346,9 +346,9 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
                         <div class="panel-heading" role="tab" id="headingTwo">
                             <h4 class="text1">
                                 <a role="button" <?= (!$checkStatus)? 'data-toggle="collapse"':'' ?>  data-parent="#accordion2" href="<?= $herf; ?>" aria-expanded="true" aria-controls="collapseOne" class="">
-                                <span class="head_titledash"><?= $status_button ?> <i class="fa fa-book"></i>  <?=  $label->label_course ?> <?= $value->course_title ?> </span> <span class="pull-right"><i class="fa fa-angle-down" style="margin-top: 7px;"></i></span> <div class="pull-right" style="margin-right: 15px">
+                                <span class="head_titledash"><?= $status_button ?> <i class="fa fa-book"></i>  <?=  $label->label_course ?> <?= $value->course_title ?> <?= $value->getGen($value->course_id); ?></span> <span class="pull-right"><i class="fa fa-angle-down" style="margin-top: 7px;"></i></span> <div class="pull-right" style="margin-right: 15px">
                                     <?php if(empty($data->CourseOnlines->Schedules)){ ?>
-                                <a class="btn btn-success btn-sm btn__printdashboard><?= $printCer ?>" href="<?= $this->createUrl('course/certificate', array('id' => $value->course_id)) ?>" role="button"><i class="fa fa-print"></i> <?=  $label->label_printCert ?>
+                                <a class="btn btn-success btn-sm btn__printdashboard><?= $printCer ?>" href="<?= $this->createUrl('course/certificate', array('id' => $value->course_id, 'gen' => $value->getGenID($value->course_id))) ?>" role="button"><i class="fa fa-print"></i> <?=  $label->label_printCert ?>
                                 </a>
                                 <?php } ?>
                                 </div>
@@ -388,7 +388,7 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
                                                 $isChecklesson = Helpers::Checkparentlesson($data->id);
                                         ?>
                                     <tr class="active text-center">
-                                        <td class="text-left"><a href="<?= $isChecklesson ? $this->createUrl('/course/detail', array('id' => $data->course_id,'lid' => $data->id)).'#collapseles'.$data->id : 'javascript:void()'; ?>"><?= $data->title  ?></a></td>
+                                        <td class="text-left"><a href="<?= $isChecklesson ? $this->createUrl('/course/detail', array('id' => $data->course_id,'lid' => $data->id, 'gen' => $value->getGenID($value->course_id))).'#collapseles'.$data->id : 'javascript:void()'; ?>"><?= $data->title  ?></a></td>
                                         <?php if ($checkLessonPass->status == "pass") { ?>
                                         <td class="success"><?=  $label->label_learned ?></td>
                                         <?php } else { ?>
@@ -401,7 +401,7 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
                                                 if($isPreTest) {
                                                 ?>
                                                 <div>
-                                                <a href="<?php echo $this->createUrl('course/learning', array('id' => $value->course_id, 'lesson_id' => $data->id)); ?>" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>&nbsp;<?=  $label->label_DotestPre ?></a>
+                                                <a href="<?php echo $this->createUrl('course/learning', array('id' => $value->course_id, 'lesson_id' => $data->id, 'gen' => $value->getGenID($value->course_id))); ?>" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>&nbsp;<?=  $label->label_DotestPre ?></a>
                                                 </div>
                                             <?php
                                                 } else {
@@ -478,7 +478,7 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
                                                         $z++;
                                                         if($z == 1){
                                         ?>
-                                        <td rowspan="<?php echo count($lesson) ?>"><a class="btn btn-info btn-sm" href="<?php echo $this->createUrl('course/questionnaire', array('id' => $value->course_id)); ?>" role="button"><i class="fa fa-eye"></i> <?=  $label->label_seeResult ?></a></td>
+                                        <td rowspan="<?php echo count($lesson) ?>"><a class="btn btn-info btn-sm" href="<?php echo $this->createUrl('course/questionnaire', array('id' => $value->course_id, 'gen' => $value->getGenID($value->course_id))); ?>" role="button"><i class="fa fa-eye"></i> <?=  $label->label_seeResult ?></a></td>
                                         
                                         <?php
                                                 }
@@ -568,7 +568,7 @@ return false;
   },
   function(isConfirm){
     if (isConfirm) {
-      window.location.href = "<?= $this->createUrl('/course/resetLearn/'); ?>"+'/'+course_id;
+      window.location.href = "<?= $this->createUrl('/course/resetLearn/'); ?>"+'/'+course_id+"?gen=";
       // swal("Deleted!", "Your imaginary file has been deleted.", "success");
     } else {
       return false;

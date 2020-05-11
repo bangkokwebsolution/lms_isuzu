@@ -180,7 +180,7 @@ if($model){
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-main">
             <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/course/index'); ?>"><?php echo $label->label_course; ?></a></li>
-            <li class="breadcrumb-item active" aria-current="page"><?= $course->course_title ?></li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $course->course_title ?> <?= $course->getGen($course->course_id); ?></li>
         </ol>
     </nav>
 </div>
@@ -351,7 +351,7 @@ if($model){
 <div class="col-sm-8 col-md-8 ">
 
     <div class="topic-course">
-        <h3><?= $course->course_title ?></h3>
+        <h3><?= $course->course_title ?>  <?= $course->getGen($course->course_id); ?></h3>
         <div class="alert alert-warning mt-20" role="alert">
             <?=$Period?> <?=$course->course_day_learn?> <?=$day?> <?= (!empty($course))? "(".Helpers::lib()->CuttimeLang($course->course_date_start,$langId)." - ".Helpers::lib()->CuttimeLang($course->course_date_end,$langId).")":""; ?>
         </div>
@@ -1049,7 +1049,7 @@ if($model){
         <?php 
         if($checkHaveCourseTest){
             if($checkCourseTest == 'pass' && count($BestFinalTestScore) < $course->cate_amount && $ckPassAll){ //มีสิทธิสอบและยังสามารถสอบได้อีก
-                $pathCourseTest = $this->createUrl('coursequestion/preexams', array('id' => $course->course_id));
+                $pathCourseTest = $this->createUrl('coursequestion/preexams', array('id' => $course->course_id, 'gen' => $course->getGenID($course->course_id)));
                 $alertCourseTest = '';
             }else{
                 $pathCourseTest = 'javascript:void(0);';
@@ -1065,7 +1065,7 @@ if($model){
            <div class="panel-heading headcourse">
             <a role="button" data-toggle="collapse" data-target="#collapseFinal<?=$key?>" data-parent="#accordion" aria-expanded="true">
                <li>
-                <span class="stepcourse"> <?= $checkHaveCourseTest ? $final : ''; ?> <?= $checkHaveCourseTest && $CourseSurvey ? '&' : ''; ?> <?= $CourseSurvey ? $Questionnaire : '' ?><?= $course->course_title ?></span>
+                <span class="stepcourse"> <?= $checkHaveCourseTest ? $final : ''; ?> <?= $checkHaveCourseTest && $CourseSurvey ? '&' : ''; ?> <?= $CourseSurvey ? $Questionnaire : '' ?><?= $course->course_title ?>  <?= $course->getGen($course->course_id); ?></span>
                 <span class="pull-right"><i class="fa fa-angle-down"></i></span>
             </li>
         </a>
@@ -1143,7 +1143,7 @@ if($model){
 
                         if($PaQuest){ //ทำแบบสอบถามแล้ว
                             $step = 0;
-                            $pathSurvey = $this->createUrl('course/questionnaire', array('id' => $course->course_id));
+                            $pathSurvey = $this->createUrl('course/questionnaire', array('id' => $course->course_id, 'gen' => $course->getGenID($course->course_id)));
                         }else{
                             $pathSurvey = $this->createUrl('questionnaire_course/index', array('id' =>$CourseSurvey[0]->id));
                         }
@@ -1155,7 +1155,7 @@ if($model){
             }else{
                 if($PaQuest){ //ทำแบบสอบถามแล้ว
                     $step = 0;
-                    $pathSurvey = $this->createUrl('course/questionnaire', array('id' => $course->course_id));
+                    $pathSurvey = $this->createUrl('course/questionnaire', array('id' => $course->course_id, 'gen' => $course->getGenID($course->course_id)));
                 }else{
                     $pathSurvey = $this->createUrl('questionnaire_course/index', array('id' =>$CourseSurvey[0]->id));
                 }
@@ -1256,7 +1256,7 @@ if($model){
         <center>
             <i class="fas fa-exclamation-triangle" style="font-size:6em; color: #F8BB86; padding-top: 15px;padding-bottom: 15px;"></i>
             <h2 style="color: #575757;"><?= $label->label_swal_regis ?></h2>
-            <h2><?= $label->label_course ?> "<?= $course->course_title ?>" <?= $label->label_swal_success ?></h2>
+            <h2><?= $label->label_course ?> "<?= $course->course_title ?>  <?= $course->getGen($course->course_id); ?>" <?= $label->label_swal_success ?></h2>
             <p><?= $label->label_swal_alltimelearn?> 
             <?= $course->course_day_learn ?> 
             <?= $label->label_day ?></p>
