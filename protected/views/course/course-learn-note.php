@@ -365,8 +365,8 @@ $cancel_msg = UserModule::t('Cancel');
                 <div class="tab-content">
 
                   <div class="box-note">
-                    <button class="h-course-title" type="button" data-toggle="collapse" data-target="#course-video" aria-expanded="false" aria-controls="course-video">
-                        <i class="fas fa-edit"></i> รายการวิดีโอ 
+                    <button class="h-course-title-main" type="button" data-toggle="collapse" data-target="#course-video" aria-expanded="false" aria-controls="course-video">
+                        <i class="fas fa-list"></i>รายการวิดีโอ 
                         <span class="pull-right"><i class="fas fa-angle-up"></i></span>
                     </button>
                     <div class="collapse" id="course-video">
@@ -409,7 +409,7 @@ $cancel_msg = UserModule::t('Cancel');
                                   }
                                   ?>
 
-                                  <li class="<?=$statuslearn?>" id="imageCheckBar">
+                                  <li class="<?=$statuslearn?> list-coursemain" id="imageCheckBar">
                                     <div class="list-body">
                                      <a href="#collapse<?= $les->id;?>" data-toggle="collapse"
                                       data-parent="#myGroup" aria-expanded="true"
@@ -440,7 +440,7 @@ $cancel_msg = UserModule::t('Cancel');
 
 
                     <button class="h-course-title" type="button" data-toggle="collapse" data-target="#course-note" aria-expanded="false" aria-controls="course-note">
-                        <i class="fas fa-edit"></i> จดบันทึก 
+                        <i class="fas fa-edit"></i>จดบันทึก 
                         <span class="pull-right"><i class="fas fa-angle-up"></i></span>
                     </button>
                     <div class="collapse" id="course-note">
@@ -460,8 +460,8 @@ $cancel_msg = UserModule::t('Cancel');
                                            $name_video =  $value->file->filename;
                                               
                                             ?>  
-                                            <h3><?php echo $value->file->filename; ?></h3>
-                                            <table class="table table-borderless table-hover">
+                                            <h4 class="title-note"><?php echo $value->file->filename; ?></h3>
+                                            <table class="table table-hover table-note">
                                               <thead>
                                                 <tr>
                                                   <th scope="col" width="20%" class="text-center"><i class="far fa-clock"></i> เวลา</th>
@@ -494,7 +494,7 @@ $cancel_msg = UserModule::t('Cancel');
                                             ?>
                                           </tbody>
                                         </table>
-                                        <hr>
+                                        
                                             <?php
                                            }
                                         } // foreach ($learn_note
