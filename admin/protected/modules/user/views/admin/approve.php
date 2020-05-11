@@ -176,11 +176,11 @@ EOD
 								array(
 									'type'=>'raw',
 									'value'=>function($data){
-										if($data->status == 1){
+										if($data->register_status == 1){
 											echo CHtml::button("ผ่าน",array("class"=>"btn btn-success ","data-id" => $data->id));
-										} else if($data->status == 0) {
+										} else if($data->register_status == 0) {
 											echo CHtml::button("รออนุมัติ",array("class"=>"btn btn-info changeStatus","data-id" => $data->id));
-										} else if($data->status == 2) {
+										} else if($data->register_status == 2) {
 											echo CHtml::button("ไม่ผ่าน",array("class"=>"btn btn-danger ","data-id" => $data->id));
 										}
 									},
@@ -221,29 +221,11 @@ EOD
 
 						?>
 
-						<div class="modal fade" id="modal-id-card">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times-circle text-white" aria-hidden="true"></i></button> -->
-										<h4 class="modal-title text-white"><i class="fa fa-lock" aria-hidden="true"></i>
-										แก้ไขบัตรประชาชน สำหรับเรียนหลักสูตร CPD</h4>
-									</div>
-									<div class="modal-body"
-									style="padding: 4em 0;background: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/books.png"
-									);
-									">
-								</div>
-								<div class="modal-footer">
-									<?php echo CHtml::submitButton('ยืนยัน', array('class' => 'btn btn-sm', 'style' => 'font-size:20px;')); ?>
-									<button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-								</div>
-							</div>
-						</div>
 						<script>
 							$( ".changeStatus" ).click(function() {
 								var btn = $(this);
 								var id = btn.attr("data-id");
+								console.log(id);
 								// var _items = ["ระงับการใช้งาน","เปิดการใช้งาน"];
 								// swal({
 								// 	title: "โปรดรอสักครู่",

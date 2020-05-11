@@ -146,10 +146,10 @@ echo ($data);
 	{
 		$model = new User('search');
         $model->unsetAttributes();  // clear any default values
-        $model->typeuser = array(1);
+        //$model->type_user = array(1);
         $model->register_status = array(1);
         $model->status = array(1);
-        $model->supper_user_status = true;
+        $model->supper_user_status = false;
         if(isset($_GET['User'])){
         	$model->attributes=$_GET['User'];
         }
@@ -165,6 +165,7 @@ echo ($data);
         $model->unsetAttributes();  // clear any default values
         $model->typeuser = array(1);
         $model->register_status = array(0);
+        $model->status = array(0);
         $model->supper_user_status = true;
       
         if(isset($_GET['User'])){
@@ -286,8 +287,10 @@ echo ($data);
 		//$member = Helpers::lib()->ldapTms($model->email);
 		if($model->status == 1){
 			$model->status = 0;
+			$model->register_status = 0;
 		} else {
 			$model->status = 1;
+			$model->register_status = 2;
 		}
 		// $model->passwordChange = 1;
 

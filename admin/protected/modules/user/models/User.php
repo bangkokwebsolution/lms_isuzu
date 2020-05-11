@@ -425,10 +425,12 @@ public function validateIdCard($attribute,$params){
 	$criteria->compare('lastactivity',$this->lastactivity);
 	$criteria->compare('superuser',$this->superuser);
 	$criteria->compare('not_passed',$this->not_passed);
-	$criteria->compare('status',$this->status);
+	$criteria->compare('status',1);
 	$criteria->compare('del_status',0); 
-	//$criteria->compare('register_status',array(1));
-	$criteria->compare('register_status',$this->register_status);
+	//$criteria->compare('register_status',$this->register_status);
+	$criteria->compare('profile.type_user',array(1));
+
+	//$criteria->compare('register_status',$this->register_status);
 	if(empty($this->create_at)) {
 		$criteria->compare('create_at',$this->create_at,true);
 	}else {
