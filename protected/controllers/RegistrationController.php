@@ -1055,12 +1055,7 @@ public function actionUpdate() {
      //var_dump($users->verifyPassword);
            // var_dump($profile->validate());
            // var_dump($users->validate());
-           //  var_dump($profile->getErrors());
-           //  exit();
-
-// var_dump($session['filenameOriComTrain']);
-// echo "ppppppppppppppppppppp";
-// var_dump($session['filenameOriComDoc']);
+            // var_dump($_POST['ProfilesLanguage']->getErrors());
  // exit();
         if ($profile->validate() && $users->validate()) {
 
@@ -1182,14 +1177,14 @@ public function actionUpdate() {
                       if ($ProfilesTraining_old){
                         $ProfilesTraining_old->attributes = $action_valuTn;
                         $ProfilesTraining_old->user_id = $users->id;
-                        $ProfilesTraining_old->update_date = date("Y-m-d H:i:s");
+                        $ProfilesTraining_old->update_date = date("Y-m-d");
                         $ProfilesTraining_old->update_by = $users->id;
                         $ProfilesTraining_old->save(false);
                            // echo "a";
                     }else{
                      $ProfilesTraining_new = new ProfilesTraining;
                      $ProfilesTraining_new->user_id = $users->id;
-                     $ProfilesTraining_new->create_date = date("Y-m-d H:i:s");
+                     $ProfilesTraining_new->create_date = date("Y-m-d");
                      $ProfilesTraining_new->create_by = $users->id;
                      $ProfilesTraining_new->attributes = $action_valuTn;
                      $ProfilesTraining_new->save(false);
@@ -1202,7 +1197,6 @@ public function actionUpdate() {
        
              if($model_del_Training){
                 foreach($model_del_Training as $keyTn => $valTn){
-                    var_dump($valTn->message);
                     if(isset($new_actionsTn)){
                         if(!in_array($valTn->message,$new_actionsTn)){
                             //var_dump($new_action);
@@ -1217,29 +1211,29 @@ public function actionUpdate() {
             }
                         /////// end ลบแอคชั่น
           } 
-          if ($_POST['ProfilesLanguage']){
-          
+       if ($_POST['ProfilesLanguage']){
+         
                     foreach ($_POST['ProfilesLanguage'] as $action_indLg=>$action_valuLg){
-                        //var_dump($action_valuLg['id']);
                       $new_actionsLg[] = $action_valuLg['language_name'];
                       $ProfilesLanguage_old = ProfilesLanguage::model()->find('language_name="'.$action_valuLg['language_name'].'" AND user_id='.Yii::app()->user->id);
-                          
+        
                       if ($ProfilesLanguage_old){
                         $ProfilesLanguage_old->attributes = $action_valuLg;
                         $ProfilesLanguage_old->user_id = $users->id;
-                        $ProfilesLanguage_old->update_date = date("Y-m-d H:i:s");
+                        $ProfilesLanguage_old->update_date = date("Y-m-d");
                         $ProfilesLanguage_old->update_by = $users->id;
                         $ProfilesLanguage_old->save(false);
-                           // echo "a";
+
                     }else{
                      $ProfilesLanguage_new = new ProfilesLanguage;
                      $ProfilesLanguage_new->user_id = $users->id;
-                     $ProfilesLanguage_new->create_date = date("Y-m-d H:i:s");
-                     $ProfilesLanguage_new->create_date = $users->id;
+                     $ProfilesLanguage_new->create_date = date("Y-m-d");
+                     $ProfilesLanguage_new->create_by = $users->id;
                      $ProfilesLanguage_new->attributes = $action_valuLg;
-                     $ProfilesLanguage_new->save(false);
-                          // echo "b";
-
+                     if ($ProfilesLanguage_new->language_name != NULL) {
+                        $ProfilesLanguage_new->save(false);
+                     }
+                     
                  } 
 
              } 
@@ -1247,15 +1241,12 @@ public function actionUpdate() {
        
              if($model_del_Language){
                 foreach($model_del_Language as $keyLg => $valLg){
-                    var_dump($valLg->language_name);
                     if(isset($new_actionsLg)){
                         if(!in_array($valLg->language_name,$new_actionsLg)){
-                            //var_dump($new_action);
+                        
                             $ProfilesLanguage_del = ProfilesLanguage::model()->find('language_name="'.$valLg->language_name.'" AND user_id='.Yii::app()->user->id); 
-                           // $model_del_action->active = 'n';
-                            //$model_del_action->save(false);
                                         $ProfilesLanguage_del->delete(false);
-                                      //   echo "c";
+            
                         }
                     }
                 }
@@ -1889,10 +1880,15 @@ public function actionDeleteFilePassport($id)
     //     $member = Helpers::lib()->ldapTms('taaonprem04@airasia.com');
     //     var_dump($member);exit();
     // }
-    public function actionListPosition(){
+public function actionListPosition(){
 
-     $model=Position::model()->findAll('department_id=:department_id',
-        array(':department_id'=>$_POST['id']));
+     // $model=Position::model()->findAll('department_id=:department_id',
+     //    array(':department_id'=>$_POST['id']));
+ $criteria= new CDbCriteria;
+ $criteria->condition='department_id=:department_id AND active=:active';
+ $criteria->params=array(':department_id'=>$_POST['id'],':active'=>'y');
+ $criteria->order = 'position_title ASC';
+ $model = Position::model()->findAll($criteria);
 
      $data=CHtml::listData($model,'id','position_title',array('empty' => 'ตำแหน่ง'));
      $sub_list = Yii::app()->session['lang'] == 1?'Select Pocition ':'เลือกตำแหน่ง';
@@ -1906,8 +1902,13 @@ public function actionDeleteFilePassport($id)
 
 public function actionListBranch(){
 
- $model=Branch::model()->findAll('position_id=:position_id',
-    array(':position_id'=>$_POST['id']));
+ // $model=Branch::model()->findAll('position_id=:position_id',
+ //    array(':position_id'=>$_POST['id']));
+ $criteria= new CDbCriteria;
+ $criteria->condition='position_id=:position_id AND active=:active';
+ $criteria->params=array(':position_id'=>$_POST['id'],':active'=>'y');
+ $criteria->order = 'branch_name ASC';
+ $model = Branch::model()->findAll($criteria);
 
  $data=CHtml::listData($model,'id','branch_name',array('empty' => 'สาขา'));
  $sub_list = Yii::app()->session['lang'] == 1?'Select Level ':'เลือกระดับ';
@@ -1921,8 +1922,11 @@ echo ($data);
 
 public function actionListDepartment(){
 
- $model=Department::model()->findAll('type_employee_id=:type_employee_id',
-    array(':type_employee_id'=>$_POST['id']));
+ $criteria= new CDbCriteria;
+ $criteria->condition='type_employee_id=:type_employee_id AND active=:active';
+ $criteria->params=array(':type_employee_id'=>$_POST['id'],':active'=>'y');
+ $criteria->order = 'dep_title ASC';
+ $model = Department::model()->findAll($criteria);
 
  $data=CHtml::listData($model,'id','dep_title',array('empty' => 'แผนก'));
  $sub_list = Yii::app()->session['lang'] == 1?'Select Department ':'เลือกแผนก';

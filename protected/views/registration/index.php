@@ -1192,7 +1192,7 @@ function editNamehouse_registration(filedoc_id){
                 }
                 $graduation = array('class' => 'form-control', 'autocomplete' => 'off', 'empty' => $label->label_graduation_year);   
                 if (!$ProfilesEdu->isNewRecord) { 
-                   if (isset($ProfilesEdu)) {
+                   if (!isset($ProfilesEdu)) {
                       $ProfilesEdu = new ProfilesEdu;
                       ?>
                       <div class="row form_name">
@@ -1289,7 +1289,7 @@ function editNamehouse_registration(filedoc_id){
                 </div>
             </div>
             <?php if ($ProfilesWorkHistory->isNewRecord === null) { 
-              if (isset($ProfilesWorkHistory)) {
+              if (!isset($ProfilesWorkHistory)) {
                $ProfilesWorkHistory = new ProfilesWorkHistory;
                ?>
                <div class="row form_name pt-20 ">
@@ -1406,35 +1406,38 @@ function editNamehouse_registration(filedoc_id){
                 </thead>
 <?php 
 if ($ProfilesLanguage->isNewRecord === null) { 
+    $i = 1;
    foreach ($ProfilesLanguage as $keylg => $vallg) {
-
+   $i++;
+   $p = 1;
+   $m = 1;
     ?> 
     <tbody class="group-language">
             <tr>
-             <td rowspan="2"><?php echo $form->textField($vallg,'['.$keylg.']language_name' , array('class' => 'form-control' ,'style'=>' width:100px;line-height:28px;padding: 20px 10px;')); ?></td>
+             <td rowspan="2"><?php echo $form->textField($vallg,'['.$keylg.']language_name' , array('class' => 'form-control' ,'style'=>' width:100px;line-height:28px;padding: 20px 10px;','readonly'=>true)); ?></td>
              <td><?= Yii::app()->session['lang'] == 1?'Written ':'เขียน'; ?></td>
              <td>
                 <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[][write]" id="lang_w_en-1" value="1"<?php if ($vallg["write"] == "1") : ?> checked="checked" <?php endif ?>>
-                    <label for="lang_w_en-1"></label>
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo$p++; ?>" value="1"<?php if ($vallg["write"] == "1") : ?> checked="checked" <?php endif ?>>
+                    <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
                 </div>
             </td>
             <td>
                 <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[][write]" id="lang_w_en-2" value="2"<?php if ($vallg["write"] == "2") : ?> checked="checked" <?php endif ?>>
-                    <label for="lang_w_en-2"></label>
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["write"] == "2") : ?> checked="checked" <?php endif ?>>
+                    <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
                 </div>
             </td>
             <td>
                 <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[][write]" id="lang_w_en-3" value="3"<?php if ($vallg["write"] == "3") : ?> checked="checked" <?php endif ?>>
-                    <label for="lang_w_en-3"></label>
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="3"<?php if ($vallg["write"] == "3") : ?> checked="checked" <?php endif ?>>
+                    <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
                 </div>
             </td>
             <td>
                 <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[][write]" id="lang_w_en-4" value="4"<?php if ($vallg["write"] == "4") : ?> checked="checked" <?php endif ?>>
-                    <label for="lang_w_en-4"></label>
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="4"<?php if ($vallg["write"] == "4") : ?> checked="checked" <?php endif ?>>
+                    <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
                 </div>
             </td>
         </tr>
@@ -1442,26 +1445,26 @@ if ($ProfilesLanguage->isNewRecord === null) {
          <td><?= Yii::app()->session['lang'] == 1?'Spoken ':'พูด'; ?></td>
          <td>
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[][spoken]" id="lang_s_en-5" value="1"<?php if ($vallg["spoken"] == "1") : ?> checked="checked" <?php endif ?>>
-                <label for="lang_s_en-5"></label>
+                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="1"<?php if ($vallg["spoken"] == "1") : ?> checked="checked" <?php endif ?>>
+                <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
             </div>
         </td>
         <td>
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[][spoken]" id="lang_s_en-6" value="2"<?php if ($vallg["spoken"] == "2") : ?> checked="checked" <?php endif ?>>
-                <label for="lang_s_en-6"></label>
+                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["spoken"] == "2") : ?> checked="checked" <?php endif ?>>
+                <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
             </div>
         </td>
         <td>
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[][spoken]" id="lang_s_en-7" value="3"<?php if ($vallg["spoken"] == "3") : ?> checked="checked" <?php endif ?>>
-                <label for="lang_s_en-7"></label>
+                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="3"<?php if ($vallg["spoken"] == "3") : ?> checked="checked" <?php endif ?>>
+                <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
             </div>
         </td>
         <td>
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[][spoken]" id="lang_s_en-8" value="4"<?php if ($vallg["spoken"] == "4") : ?> checked="checked" <?php endif ?>>
-                <label for="lang_s_en-8"></label>
+                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="4"<?php if ($vallg["spoken"] == "4") : ?> checked="checked" <?php endif ?>>
+                <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
             </div>
         </td>
     </tr>
@@ -1585,7 +1588,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
     </tr>
 </tbody>
 <?php } ?>
-<tbody class="group-language add-language" id="del_language"></tbody>
+<tbody class="group-language add-language" id="del_languages"></tbody>
 <!-- <div class="add-language"></div> -->
 </table>
 
@@ -1655,7 +1658,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
 
 
     <?php if ($ProfilesTraining->isNewRecord === null) { 
-      if (isset($ProfilesTraining)) {
+      if (!isset($ProfilesTraining)) {
        $ProfilesTraining = new ProfilesTraining;
        ?>
        <div class="row form_name pt-20 ">
@@ -1669,19 +1672,21 @@ if ($ProfilesLanguage->isNewRecord === null) {
         </div>
  <div class="add-train"></div>
 <?php } else { ?>
-  
-   <div class="add-train">
-    <?php foreach ($ProfilesTraining as $keytn => $valtn) {?>
+
+    <?php foreach ($ProfilesTraining as $keytn => $valtn) {
+        ?>
+       <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
         <div class="row del_training">
-            <div class="col-md-7 col-sm-6 col-xs-12 ">
+            <div class="col-md-10 col-sm-6 col-xs-12 ">
                 <div class="form-group">
                  <?php echo $form->textField($valtn, '['.$keytn.']message', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Training name. ':'ชื่อการอบรม')); ?>
                 </div>
             </div>
           <span class="delete_training btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?></span>
         </div>
-     <?php } ?>
-    </div>
+
+
+        <?php } ?>
 <?php }} else { ?>
   <div class="row form_name pt-20 ">
     <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
@@ -2065,10 +2070,11 @@ if ($ProfilesLanguage->isNewRecord === null) {
             <div class="form-group">
                 <label><?php echo $label->label_company; ?></label>
                 <?php
-                $departmentModel = Department::model()->findAll(array(
-                    "condition" => " active = 'y'",
-                    "order"=>"dep_title ASC"
-                ));
+           
+                $criteria= new CDbCriteria;
+                $criteria->compare('active','y');
+                $criteria->order = 'dep_title ASC';
+                $departmentModel = Department::model()->findAll($criteria);
                 $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
                 $departmentOption = array('class' => 'form-control department', 'empty' => $label->label_placeholder_company);
                 ?>
@@ -2081,12 +2087,13 @@ if ($ProfilesLanguage->isNewRecord === null) {
 
         <div class="col-md-4">
             <div class="form-group">
-                <label><?php echo $label->label_position; ?></label>
+                <label class="label_position"><?php echo $label->label_position; ?></label>
                 <?php
-                $positionModel = Position::model()->findAll(array(
-                    "condition" => " active = 'y'",
-                    "order"=>"position_title ASC"
-                ));
+           
+                $criteria= new CDbCriteria;
+                $criteria->compare('active','y');
+                $criteria->order = 'position_title ASC';
+                $positionModel = Position::model()->findAll($criteria);
                 $positionList = CHtml::listData($positionModel, 'id', 'position_title');
                 $positiontOption = array('class' => 'form-control position', 'empty' => $label->label_placeholder_position);
                 ?>
@@ -2101,10 +2108,14 @@ if ($ProfilesLanguage->isNewRecord === null) {
             <div class="form-group">
                 <label class="label_branch"><?php echo $label->label_branch; ?> </label>
                 <?php
-                $BranchModel = Branch::model()->findAll(array(
-                    "condition" => " active = 'y'"
+                // $BranchModel = Branch::model()->findAll(array(
+                //     "condition" => " active = 'y'"
 
-                ));
+                // ));
+                $criteria= new CDbCriteria;
+                $criteria->compare('active','y');
+                $criteria->order = 'branch_name ASC';
+                $BranchModel = Branch::model()->findAll($criteria);
                 $BranchList = CHtml::listData($BranchModel, 'id', 'branch_name');
                 $BranchOption = array('class' => 'form-control Branch', 'empty' => $label->label_placeholder_branch );
                 ?>
@@ -2342,10 +2353,10 @@ $(wrapper_train).on("click", ".delete_training", function(e) {
     t--;
 });
 ////////////////////////////////////////// ภาษา /////////////////////////////////////////////////////////////////////////
-var max_fields_language = 2;
+var max_fields_language = 10;
 var wrapper_language = $(".add-language");
 var add_form_language = $(".add_form_language");
-var numItems_language = 3;
+var numItems_language = 100;
 var l = 1;
 
 $(add_form_language).click(function(e) {
@@ -2362,22 +2373,38 @@ $(add_form_language).click(function(e) {
          var del_language = '<?php echo Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?>';
          var language_Written = '<?php echo Yii::app()->session['lang'] == 1?'Written ':'เขียน' ?>';
          var language_Spoken = '<?php echo Yii::app()->session['lang'] == 1?'Spoken ':'พูด' ?>'; 
-
-        $(wrapper_language).append('<tr><td rowspan="2"><input type="text" class="form-control" placeholder="' + language_name + '" name="ProfilesLanguage[' + numItems_language + '][language_name]" style="width:100px;line-height:28px;padding: 20px 10px;"></td><td>'+language_Written+'</td><td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-8" value="1" <?php if ($ProfilesLanguage->write == "1") : ?> checked="checked" <?php endif ?>><label for="lang_w-8"></label></div></td><td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-9" value="2"<?php if ($ProfilesLanguage->write == "2") : ?> checked="checked" <?php endif ?>><label for="lang_w-9"></label></div></td><td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-10" value="3"<?php if ($ProfilesLanguage->write == "3") : ?> checked="checked" <?php endif ?>><label for="lang_w-10"></label></div></td><td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-11" value="4"<?php if ($ProfilesLanguage->write == "4") : ?> checked="checked" <?php endif ?>><label for="lang_w-11"></label></div></td></tr><tr><td>'+language_Spoken+'</td><td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-9" value="1"<?php if ($ProfilesLanguage->spoken == "1") : ?> checked="checked" <?php endif ?>><label for="lang_s-9"></label></div></td><td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-10" value="2"<?php if ($ProfilesLanguage->spoken == "2") : ?> checked="checked" <?php endif ?>><label for="lang_s-10"></label></div></td><td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-11" value="3"<?php if ($ProfilesLanguage->spoken == "3") : ?> checked="checked" <?php endif ?>><label for="lang_s-11"></label></div></td><td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-12" value="4"<?php if ($ProfilesLanguage->spoken == "4") : ?> checked="checked" <?php endif ?>><label for="lang_s-12"></label></div></td></tr> '
-                            ); //add input box
+         <?php 
+         $h = 10; 
+         $v = 10;
+         ?>
+        $(wrapper_language).append('<tr><td rowspan="2">'
+            +'<input type="text" class="form-control" placeholder="' + language_name + '" name="ProfilesLanguage[' + numItems_language + '][language_name]" style="width:100px;line-height:28px;padding: 20px 10px;">'
+            +'</td>'
+            +'<td>'+language_Written+'</td>'
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="1"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="2"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="3"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="4"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td></tr>'
+            +'<tr><td>'+language_Spoken+'</td>'
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="1"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="2"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="3"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="4"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td></tr>'); //add input box
 
     } else {
         alert('You Reached the limits');
     }
 });
+
 ///$('.delete_language').find('.add-language').empty();
-$('.delete_language').on('click', ()=>{
-   $('#del_language').empty();
-});
+// $('.delete_language').on('click', ()=>{
+//    $('#del_languages').empty();
+// });
+
 // $(wrapper_language).on("click", ".delete_language", function(e) {
 //     e.preventDefault();
-
-//     $(this).parent('tbody').remove();
+// $(this).parent('#del_languages').remove();
+  
 //     l--;
 // });
 ////////////////////////////////////////// ประวัติการทำงาน /////////////////////////////////////////////////////////////////////////
@@ -2731,10 +2758,18 @@ $("#card-6").change(function(event) {
                             id: id
                         },
                         success: function(data) {
+                            console.log(data);
+                            // if (data === '<option value ="">Select Pocition </option>' || data === '<option value ="">เลือกตำแหน่ง</option>') {
+                            // $('.position').hide();
+                            // $('.label_position').hide();
+                            // $('.Branch').hide();
+                            // $('.label_branch').hide();
+                            // }else{
                             $('.position').empty();
                             $('.position').append(data);
                             $('.Branch').hide();
                             $('.label_branch').hide();
+                            // }
                         }
                     });
                 });
