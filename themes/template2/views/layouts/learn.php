@@ -32,65 +32,38 @@ Yii::app()->user->returnUrl = $http->getUrl();
    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-   
+            
+    <link rel="shortcout icon" type="icon/png" href="<?php echo Yii::app()->theme->baseUrl; ?>/images/icon.png">
+    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/bootstrap.min.css" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/bootstrap_learn.min.css"  crossorigin="anonymous">
-
-    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/owl.carousel.min.css" type="text/css" media="screen">
-    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/owl.theme.default.min.css" type="text/css" media="screen">
-
+    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/fresco-2.3.0/css/fresco.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/owlcarousel/owl.carousel.min.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/owlcarousel/owl.theme.default.min.css" media="screen">
     <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/jasny-bootstrap.min.css" type="text/css" media="screen">
 
-    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/font-awesome.min.css" type="text/css" media="screen">
+
+    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/fontawesome/fontawesome.css" type="text/css" media="screen">
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/sweetalert/dist/sweetalert.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/style.css" media="screen">
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/input.css" media="screen">
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/slicknav.css" media="screen">
-    <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/lottie.js"></script>
 
+    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/bootstrap-select/bootstrap-select.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/fontawesome/fontawesome.css" media="screen" />
+    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/sweetalert/sweetalert2.css" crossorigin="anonymous">
+    <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/sweetalert/sweetalert2.min.js"></script>
 
-
-
-    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/../template/vendors/bootstrap-select/bootstrap-select.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/../template/vendors/fontawesome/fontawesome.css" media="screen" />
-    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/../template/vendors/sweetalert/sweetalert2.css" crossorigin="anonymous">
-    <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/../template/vendors/sweetalert/sweetalert2.min.js"></script>
-
-
-   <!--  <link href="https://vjs.zencdn.net/7.6.6/video-js.css" rel="stylesheet" />
-    <script src="https://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script> -->
-   <!--  <?php include("themes/template2/include/css.php"); ?> -->
+    <!-- <?php include("themes/template2/include/css.php"); ?>  -->
 </head>
 
 <body>
-  <!-- <div id="loader">
-    <div class="spinner">
-      <div class="dot1"></div>
-      <div class="dot2"></div>
-    </div>
-  </div> -->
-    <!-- <a class="contact-admin" data-toggle="modal" href="#user-report">
-        <div id="mascot-contact"></div>
-    </a>
 
-    <?php
-    $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact/mascot-contact.json');
-    ?>
-    <script>
-        var animation = bodymovin.loadAnimation({
-            container: document.getElementById('mascot-contact'),
-            renderer: 'svg',
-            autoplay : true,
-            loop: true,
-            path: '<?php echo $mascot_path; ?>'
-        });
-    </script> -->
+<?php include("themes/template2/include/header.php"); ?>
 
-    <?php include("themes/template2/include/header.php"); ?>
 <?php echo $content; ?>
 
 
-    <?php include("themes/template2/include/footer.php"); ?>
+<?php include("themes/template2/include/footer.php"); ?>
 
 <?php
 $cs = Yii::app()->clientScript;
