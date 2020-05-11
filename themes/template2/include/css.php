@@ -11,12 +11,16 @@
 <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/jasny-bootstrap.min.css" type="text/css" media="screen">
 
 
-
 <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/fontawesome/fontawesome.css" type="text/css" media="screen">
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/sweetalert/dist/sweetalert.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/style.css" media="screen">
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/input.css" media="screen">
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/slicknav.css" media="screen">
+
+<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/bootstrap-select/bootstrap-select.min.css" crossorigin="anonymous">
+<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/fontawesome/fontawesome.css" media="screen" />
+<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/sweetalert/sweetalert2.css" crossorigin="anonymous">
+<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/sweetalert/sweetalert2.min.js"></script>
 
 <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/lottie.js"></script>
  <script src="<?php echo Yii::app()->theme->baseUrl; ?>/js/jquery.js"></script>
