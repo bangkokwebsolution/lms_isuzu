@@ -53,6 +53,11 @@ $cancel_msg = UserModule::t('Cancel');
     init_knob();
         // $('audio').audioPlayer();
       });
+
+  function show_div_note(file_id){
+    $("#table_note_"+file_id).show();
+  }
+
     </script>
 
     <style type="text/css">
@@ -376,6 +381,7 @@ $cancel_msg = UserModule::t('Cancel');
                               <ul class="section-list">
                                 <li class="list-body"><?php echo $lessonListValue->title; ?></li>
                                 <?php 
+                                $arr_file_list = array();
                                 foreach ($lessonList as $key => $lessonListValue) { 
                                 $learnModel = Learn::model()->find(array(
                                   'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active=:status',
@@ -415,6 +421,7 @@ $cancel_msg = UserModule::t('Cancel');
                                       data-parent="#myGroup" aria-expanded="true"
                                       aria-controls="collapse<?php echo $les->id; ?>">
                                       <h6><?= $les->getRefileName(); ?> <?=$statusValue?></h6>
+                                      <?php $arr_file_list[$les->id] = $les->getRefileName(); ?>
                                     </a>
                                   </div>
                                   <div class="div-x">
@@ -451,16 +458,10 @@ $cancel_msg = UserModule::t('Cancel');
                             </div>
                             <div class="note-save">                                
                                       <?php 
-                                      if(!empty($learn_note)){
-                                        $name_video = "";
-                                        $status_name_video = 2;
-                                        foreach ($learn_note as $key => $value) {
-
-                                          if($name_video != $value->file->filename){
-                                           $name_video =  $value->file->filename;
-                                              
-                                            ?>  
-                                            <h3><?php echo $value->file->filename; ?></h3>
+                                      foreach ($arr_file_list as $keyy => $valuee) {
+                                        ?>
+                                        <div id="table_note_<?php echo $keyy; ?>" style="display: none;"> 
+                                            <h3><?php echo $valuee; ?></h3>
                                             <table class="table table-borderless table-hover">
                                               <thead>
                                                 <tr>
@@ -468,10 +469,13 @@ $cancel_msg = UserModule::t('Cancel');
                                                   <th scope="col" width="80%" class="text-left"><i class="far fa-comment-alt"></i> ข้อความ</th>
                                                 </tr>
                                               </thead>
-                                              <tbody id="tbody_note_<?php echo $value->file->id; ?>">
-                                                <?php
-                                              } // if($name_video != $value->file->filename)
+                                              <tbody id="tbody_note_<?php echo $keyy; ?>">
+                                        <?php
+                                      if(!empty($learn_note)){
+                                        foreach ($learn_note as $key => $value) {
+                                          if($value->file_id == $keyy){
                                           ?>
+                                          <script type="text/javascript"> show_div_note("<?php echo $value->file_id; ?>"); </script>
                                           <tr id="tr_note_<?php echo $value->note_id; ?>">
                                             <td style='cursor:pointer;' class="td_time_note" note_file="<?php echo $value->file_id; ?>" note_time="<?php echo $value->note_time; ?>" name_video="<?php echo $value->file->filename; ?>">
                                                 <?php 
@@ -489,26 +493,20 @@ $cancel_msg = UserModule::t('Cancel');
                                               
                                             </td>
                                         </tr>
-                                        <?php                                                               
-                                           if($name_video !=  $learn_note[$key+1]->file->filename){
-                                            ?>
+                                        <?php   
+                                          } // if($value->file_id == $keyy)
+                                        } // foreach ($learn_note
+                                      }else{ // if(!empty($learn_note)){
+                                      }
+                                        ?>
                                           </tbody>
                                         </table>
                                         <hr>
+                                      </div>
                                             <?php
-                                           }
-                                        } // foreach ($learn_note
-                                      }else{ // if(!empty($learn_note)){
-
-                                      }
-
+                                       } //  foreach ($arr_file_list 
                                        ?>
-                                   
-                               
-
-
-
-                            </div>
+                                     </div>
                         </div>
                     </div>
                 </div>
@@ -3429,7 +3427,20 @@ function time_test_start(time_down){
 
                                 // console.log(data.split("'")[11]);
                                 var tbody_note = data.split("'")[11];
+                                // console.log($("#tbody_note_"+tbody_note).html());
+
+                                // if(typeof($("#tbody_note_"+tbody_note).html()) == "undefined"){
+                                //   console.log("888 "+tbody_note);
+                                // }
+
+                                // if($("#tbody_note_"+tbody_note).html() == ){
+                                //   console.log("999 "+tbody_note);
+                                // }
+
+
                               $("#tbody_note_"+tbody_note).append(data);
+                              $("#table_note_"+tbody_note).show();
+
 
                             }else{
                               swal({
@@ -3538,8 +3549,23 @@ function time_test_start(time_down){
                   }
 
                   function remove_learn_note(note_id){
-                    var note_text = $("#note-2").val();
+                    Swal.fire({
+                      title: 'ยืนยันใช่ไหม',
+                      text: "ว่าต้องการลบบันทึก",
+                      icon: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      confirmButtonText: 'ยืนยัน',
+                      cancelButtonText: 'ยกเลิก'
+                    }).then((result) => {
+                      if (result.value) {
+                        console.log("อิอิ");
+                     
 
+
+
+                    var note_text = $("#note-2").val();
                     if(note_id != ""){
                       $.ajax({
                           type: 'POST',
@@ -3569,6 +3595,10 @@ function time_test_start(time_down){
                           }
                         });                      
                     }
+
+                     }
+                    });
+
                   }
 
 

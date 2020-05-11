@@ -3619,7 +3619,7 @@ public function Checkparentlesson($les_id){
         if ($lesson[0]->sequence_id!=0) {
             $model = learn::model()->findAllByAttributes(array(
                 'lesson_id' => $lesson[0]->sequence_id,
-                'active'=>'y',
+                'lesson_active'=>'y',
                 'user_id'=>Yii::app()->user->id
             ));
 
