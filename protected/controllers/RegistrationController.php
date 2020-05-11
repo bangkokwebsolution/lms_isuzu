@@ -303,11 +303,15 @@ class RegistrationController extends Controller {
     $ProfilesWorkHistory = new ProfilesWorkHistory;
     $AttachFile = new AttachFile;
     $AttachName = new AttachName;
+    $ProfilesTraining = new ProfilesTraining;
+    $ProfilesLanguage = new ProfilesLanguage;
 
     $session = Yii::app()->session;
 
     $this->performAjaxValidation($ProfilesEdu);
     $this->performAjaxValidation($ProfilesWorkHistory);
+    $this->performAjaxValidation($ProfilesTraining);
+    $this->performAjaxValidation($ProfilesLanguage);
 
     if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
         $langId = Yii::app()->session['lang'] = 1;
@@ -385,7 +389,7 @@ class RegistrationController extends Controller {
         // var_dump($users->station_id);exit();
         // $users->company_id = $_POST['User'][company_id];
     $profile->type_user = $_POST['type_user']; 
-    $profile->history_of_illness = $_POST['history_of_illness'];;
+    $profile->history_of_illness = $_POST['history_of_illness'];
     $profile->status_sm = $_POST['status_sm'];
     $profile->type_employee = $_POST['type_employee'];
     $profile->type_card = $_POST['type_card'];
@@ -413,7 +417,33 @@ class RegistrationController extends Controller {
     $profile->phone1 = $_POST['Profile'][phone1];
     $profile->phone2 = $_POST['Profile'][phone2];
     $profile->phone3 = $_POST['Profile'][phone3];
-   
+    
+    $profile->ss_card = $_POST['Profile'][ss_card];
+    $profile->tax_payer = $_POST['Profile'][tax_payer];
+    $profile->number_of_children = $_POST['Profile'][number_of_children];
+    $profile->place_of_birth = $_POST['Profile'][place_of_birth];
+    $profile->hight = $_POST['Profile'][hight];
+    $profile->weight = $_POST['Profile'][weight];
+    $profile->hair_color = $_POST['Profile'][hair_color];
+    $profile->eye_color = $_POST['Profile'][eye_color];
+    $profile->place_issued = $_POST['Profile'][place_issued];
+    $profile->date_issued = $_POST['Profile'][date_issued];
+    $profile->blood = $_POST['Profile'][blood];
+    $profile->spouse_firstname = $_POST['Profile'][spouse_firstname];
+    $profile->spouse_lastname = $_POST['Profile'][spouse_lastname];
+    $profile->father_firstname = $_POST['Profile'][father_firstname];
+    $profile->father_lastname = $_POST['Profile'][father_lastname];
+    $profile->mother_firstname = $_POST['Profile'][mother_firstname];
+    $profile->mother_lastname = $_POST['Profile'][mother_lastname];
+    $profile->military = $_POST['Profile'][military];
+    $profile->sickness = $_POST['Profile'][sickness];
+    $profile->expected_salary = $_POST['Profile'][expected_salary];
+    $profile->start_working = $_POST['Profile'][start_working];
+    $profile->accommodation = $_POST['accommodation'];
+    $profile->domicile_address = $_POST['Profile'][domicile_address];
+    $profile->occupation_spouse = $_POST['Profile'][occupation_spouse];
+    $profile->occupation_father = $_POST['Profile'][occupation_father];
+    $profile->occupation_mother = $_POST['Profile'][occupation_mother];
 
     // if(!$chk_status_email){
     //     $users->status = 1;
@@ -475,7 +505,7 @@ if ($profile->type_user == 1) {
     // var_dump(CUploadedFile::getInstance($AttachName, 'attach_crew_identification'));
     // var_dump(CUploadedFile::getInstance($AttachName, 'attach_identification'));
     // var_dump(CUploadedFile::getInstance($AttachName, 'attach_house_registration'));
-//exit();
+
     if ($profile->validate() && $users->validate()) {
 //                    เข้ารหัสpassword
                     //$users->password = UserModule::encrypting($users->password);
@@ -525,6 +555,31 @@ if ($profile->type_user == 1) {
              $WorkHistory->save();
             }
          }
+     }
+
+         if (isset($_POST['ProfilesTraining'])){
+            foreach ($_POST['ProfilesTraining'] as $action_Training=>$action_value_Training){
+             if (!in_array("", $action_value_Training)) {
+             $ProfilesTraining = new ProfilesTraining;
+             $ProfilesTraining->user_id = $users->id;
+             $ProfilesTraining->create_date = date("Y-m-d");
+             $ProfilesTraining->create_by = $users->id;
+             $ProfilesTraining->attributes = $action_value_Training;
+             $ProfilesTraining->save();
+            }
+         }
+     }
+    if (isset($_POST['ProfilesLanguage'])){   
+            foreach ($_POST['ProfilesLanguage'] as $action_Language=>$action_value_Language){
+             if (!in_array("", $action_value_Language)) {
+             $ProfilesLanguage = new ProfilesLanguage;
+             $ProfilesLanguage->user_id = $users->id;
+             $ProfilesLanguage->create_date = date("Y-m-d");
+             $ProfilesLanguage->create_by = $users->id;
+             $ProfilesLanguage->attributes = $action_value_Language;
+             $ProfilesLanguage->save(false);       
+            }
+        }
      }
 
      if(isset($uploadFile))
@@ -793,7 +848,7 @@ unset($session['idxTrain']);
 unset($session['pathComTrain']);
 unset($session['filenameComTrain']);
 unset($session['filenameOriComTrain']);
-$this->render('index', array('profile' => $profile, 'users' => $users,'label'=> $label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining, 'ProfilesWorkHistory' => $ProfilesWorkHistory, 'AttachFile' => $AttachFile,'AttachName'=> $AttachName));
+$this->render('index', array('profile' => $profile, 'users' => $users,'label'=> $label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining, 'ProfilesWorkHistory' => $ProfilesWorkHistory, 'AttachFile' => $AttachFile,'AttachName'=> $AttachName,'ProfilesTraining'=>$ProfilesTraining,'ProfilesLanguage' => $ProfilesLanguage));
 
 }
 public function actionUpdate() {
@@ -841,19 +896,27 @@ public function actionUpdate() {
     $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
     $criteria->addCondition("active ='y'");
     $ProfilesEdu = ProfilesEdu::model()->findAll($criteria);
-   //var_dump($ProfilesEdu);
-   // $ProfilesWorkHistory = ProfilesWorkHistory::model()->find(array(
-   //      'condition' => 'user_id=:user_id AND active=:active',
-   //      'params' => array(':user_id' => Yii::app()->user->id,':active' => 'y')
-   //  ));
+
+    $criterias = new CDbCriteria;
+    $criterias->addCondition('user_id ="'.Yii::app()->user->id.'"');
+    $criterias->addCondition("active ='y'");
+    $ProfilesTraining = ProfilesTraining::model()->findAll($criterias);
+
     $criterias = new CDbCriteria;
     $criterias->addCondition('user_id ="'.Yii::app()->user->id.'"');
     $criterias->addCondition("active ='y'");
     $ProfilesWorkHistory = ProfilesWorkHistory::model()->findAll($criterias);
+
+    $criterias = new CDbCriteria;
+    $criterias->addCondition('user_id ="'.Yii::app()->user->id.'"');
+    $criterias->addCondition("active ='y'");
+    $ProfilesLanguage = ProfilesLanguage::model()->findAll($criterias);
     //var_dump($ProfilesWorkHistory);exit();
 
     $this->performAjaxValidation($ProfilesEdu);
-    $this->performAjaxValidation($ProfilesWorkHistory);  
+    $this->performAjaxValidation($ProfilesWorkHistory);
+    $this->performAjaxValidation($ProfilesTraining);
+    $this->performAjaxValidation($ProfilesLanguage);  
 
     // $type_user = (!empty($_POST['type_user']))? $_POST['type_user']:3;
     // $history_of_illness = (!empty($_POST['history_of_illness']))? $_POST['history_of_illness']:'n';
@@ -939,6 +1002,33 @@ public function actionUpdate() {
         $profile->phone3 = $_POST['Profile'][phone3];
         $profile->seamanbook = $_POST['Profile'][seamanbook];
         $profile->seaman_expire = $_POST['Profile'][seaman_expire];
+
+        $profile->ss_card = $_POST['Profile'][ss_card];
+    $profile->tax_payer = $_POST['Profile'][tax_payer];
+    $profile->number_of_children = $_POST['Profile'][number_of_children];
+    $profile->place_of_birth = $_POST['Profile'][place_of_birth];
+    $profile->hight = $_POST['Profile'][hight];
+    $profile->weight = $_POST['Profile'][weight];
+    $profile->hair_color = $_POST['Profile'][hair_color];
+    $profile->eye_color = $_POST['Profile'][eye_color];
+    $profile->place_issued = $_POST['Profile'][place_issued];
+    $profile->date_issued = $_POST['Profile'][date_issued];
+    $profile->blood = $_POST['Profile'][blood];
+    $profile->spouse_firstname = $_POST['Profile'][spouse_firstname];
+    $profile->spouse_lastname = $_POST['Profile'][spouse_lastname];
+    $profile->father_firstname = $_POST['Profile'][father_firstname];
+    $profile->father_lastname = $_POST['Profile'][father_lastname];
+    $profile->mother_firstname = $_POST['Profile'][mother_firstname];
+    $profile->mother_lastname = $_POST['Profile'][mother_lastname];
+    $profile->military = $_POST['Profile'][military];
+    $profile->sickness = $_POST['Profile'][sickness];
+    $profile->expected_salary = $_POST['Profile'][expected_salary];
+    $profile->start_working = $_POST['Profile'][start_working];
+    $profile->accommodation = $_POST['accommodation'];
+    $profile->domicile_address = $_POST['Profile'][domicile_address];
+    $profile->occupation_spouse = $_POST['Profile'][occupation_spouse];
+    $profile->occupation_father = $_POST['Profile'][occupation_father];
+    $profile->occupation_mother = $_POST['Profile'][occupation_mother];
         // var_dump($users);
         // echo "ddddddddddd";
         // var_dump($Profile);
@@ -1004,7 +1094,7 @@ public function actionUpdate() {
                         $model_ss->user_id = $users->id;
                         $model_ss->update_date = date("Y-m-d H:i:s");
                         $model_ss->update_by = $users->id;
-                        $model_ss->save();
+                        $model_ss->save(false);
                            // echo "a";
                     }else{
                      $Edu = new ProfilesEdu;
@@ -1012,9 +1102,8 @@ public function actionUpdate() {
                      $Edu->created_date = date("Y-m-d H:i:s");
                      $Edu->created_by = $users->id;
                      $Edu->attributes = $action_value;
-                     $Edu->save();
+                     $Edu->save(false);
                            //echo "b";
-
                  } 
 
              } 
@@ -1049,7 +1138,7 @@ public function actionUpdate() {
                         $ProfilesWorkHistory_old->user_id = $users->id;
                         $ProfilesWorkHistory_old->update_date = date("Y-m-d H:i:s");
                         $ProfilesWorkHistory_old->update_by = $users->id;
-                        $ProfilesWorkHistory_old->save();
+                        $ProfilesWorkHistory_old->save(false);
                            // echo "a";
                     }else{
                      $ProfilesWorkHistory_new = new ProfilesWorkHistory;
@@ -1057,7 +1146,7 @@ public function actionUpdate() {
                      $ProfilesWorkHistory_new->created_date = date("Y-m-d H:i:s");
                      $ProfilesWorkHistory_new->created_by = $users->id;
                      $ProfilesWorkHistory_new->attributes = $action_valuew;
-                     $ProfilesWorkHistory_new->save();
+                     $ProfilesWorkHistory_new->save(false);
                           // echo "b";
 
                  } 
@@ -1075,6 +1164,97 @@ public function actionUpdate() {
                            // $model_del_action->active = 'n';
                             //$model_del_action->save(false);
                                         $ProfilesWorkHistory_del->delete(false);
+                                      //   echo "c";
+                        }
+                    }
+                }
+            }
+                        /////// end ลบแอคชั่น
+          } 
+
+          if ($_POST['ProfilesTraining']){
+          
+                    foreach ($_POST['ProfilesTraining'] as $action_indexTn=>$action_valuTn){
+                        //var_dump($action_valuTn['id']);
+                      $new_actionsTn[] = $action_valuTn['message'];
+                      $ProfilesTraining_old = ProfilesTraining::model()->find('message="'.$action_valuTn['message'].'" AND user_id='.Yii::app()->user->id);
+                          
+                      if ($ProfilesTraining_old){
+                        $ProfilesTraining_old->attributes = $action_valuTn;
+                        $ProfilesTraining_old->user_id = $users->id;
+                        $ProfilesTraining_old->update_date = date("Y-m-d H:i:s");
+                        $ProfilesTraining_old->update_by = $users->id;
+                        $ProfilesTraining_old->save(false);
+                           // echo "a";
+                    }else{
+                     $ProfilesTraining_new = new ProfilesTraining;
+                     $ProfilesTraining_new->user_id = $users->id;
+                     $ProfilesTraining_new->create_date = date("Y-m-d H:i:s");
+                     $ProfilesTraining_new->create_by = $users->id;
+                     $ProfilesTraining_new->attributes = $action_valuTn;
+                     $ProfilesTraining_new->save(false);
+                          // echo "b";
+
+                 } 
+
+             } 
+             $model_del_Training = ProfilesTraining::model()->findAll(["select"=>"message",'condition'=>'user_id='.Yii::app()->user->id]);
+       
+             if($model_del_Training){
+                foreach($model_del_Training as $keyTn => $valTn){
+                    var_dump($valTn->message);
+                    if(isset($new_actionsTn)){
+                        if(!in_array($valTn->message,$new_actionsTn)){
+                            //var_dump($new_action);
+                            $ProfilesTraining_del = ProfilesTraining::model()->find('message="'.$valTn->message.'" AND user_id='.Yii::app()->user->id); 
+                           // $model_del_action->active = 'n';
+                            //$model_del_action->save(false);
+                                        $ProfilesTraining_del->delete(false);
+                                      //   echo "c";
+                        }
+                    }
+                }
+            }
+                        /////// end ลบแอคชั่น
+          } 
+          if ($_POST['ProfilesLanguage']){
+          
+                    foreach ($_POST['ProfilesLanguage'] as $action_indLg=>$action_valuLg){
+                        //var_dump($action_valuLg['id']);
+                      $new_actionsLg[] = $action_valuLg['language_name'];
+                      $ProfilesLanguage_old = ProfilesLanguage::model()->find('language_name="'.$action_valuLg['language_name'].'" AND user_id='.Yii::app()->user->id);
+                          
+                      if ($ProfilesLanguage_old){
+                        $ProfilesLanguage_old->attributes = $action_valuLg;
+                        $ProfilesLanguage_old->user_id = $users->id;
+                        $ProfilesLanguage_old->update_date = date("Y-m-d H:i:s");
+                        $ProfilesLanguage_old->update_by = $users->id;
+                        $ProfilesLanguage_old->save(false);
+                           // echo "a";
+                    }else{
+                     $ProfilesLanguage_new = new ProfilesLanguage;
+                     $ProfilesLanguage_new->user_id = $users->id;
+                     $ProfilesLanguage_new->create_date = date("Y-m-d H:i:s");
+                     $ProfilesLanguage_new->create_date = $users->id;
+                     $ProfilesLanguage_new->attributes = $action_valuLg;
+                     $ProfilesLanguage_new->save(false);
+                          // echo "b";
+
+                 } 
+
+             } 
+             $model_del_Language = ProfilesLanguage::model()->findAll(["select"=>"language_name",'condition'=>'user_id='.Yii::app()->user->id]);
+       
+             if($model_del_Language){
+                foreach($model_del_Language as $keyLg => $valLg){
+                    var_dump($valLg->language_name);
+                    if(isset($new_actionsLg)){
+                        if(!in_array($valLg->language_name,$new_actionsLg)){
+                            //var_dump($new_action);
+                            $ProfilesLanguage_del = ProfilesLanguage::model()->find('language_name="'.$valLg->language_name.'" AND user_id='.Yii::app()->user->id); 
+                           // $model_del_action->active = 'n';
+                            //$model_del_action->save(false);
+                                        $ProfilesLanguage_del->delete(false);
                                       //   echo "c";
                         }
                     }
@@ -1342,7 +1522,8 @@ unset($session['pathComTrain']);
 unset($session['filenameComTrain']);
 unset($session['filenameOriComTrain']);
 $users->position_name = isset($_POST['User']['position_name']) ? $_POST['User']['position_name'] : $users->position->position_title;
-$this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining, 'ProfilesWorkHistory' => $ProfilesWorkHistory, 'AttachFile' => $AttachFile,'AttachName'=> $AttachName));
+$this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining, 'ProfilesWorkHistory' => $ProfilesWorkHistory, 'AttachFile' => $AttachFile,'AttachName'=> $AttachName, 'ProfilesLanguage'=>$ProfilesLanguage,
+'ProfilesTraining'=>$ProfilesTraining));
 }
 
 //
