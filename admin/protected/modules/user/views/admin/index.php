@@ -96,6 +96,15 @@ Yii::app()->clientScript->registerScript('search', "
 						            'type'=>'html',
 						            'value'=>function($data){
 						                return $data->profile->firstname . ' ' . $data->profile->lastname;
+						            	
+						            }
+						        ),
+						        array(
+						            'header' => 'รหัสพนักงาน',
+						            'type'=>'html',
+						            'value'=>function($data){
+						                return $data->username;
+						            	//var_dump($data->profile->type_user);
 						            }
 						        ),
 								array(
@@ -139,17 +148,17 @@ Yii::app()->clientScript->registerScript('search', "
 									'value'=>'User::chk_online($data->id,$data->lastactivity,$data->online_status)',
 									'filter' => User::itemAlias("Online"),
 								),
-								array(
-                                            'header' => 'พิมพ์ใบสมัคร',
-                                            'type' => 'raw',
-                                            'value' => function($data) {
-                                               //var_dump($data->id);
-                                               // return CHtml::button("พิมพ์",array('class' => 'btn btn btn-success print_pdf','data-id' => $data->id));
-                                            	return CHtml::button('พิมพ์ใบสมัคร', array('submit' => array('admin/Printpdf', 'id'=> $data->id),'class' => 'btn btn btn-success'));
-                                            },'htmlOptions' => array(
-                                                'style'=> "text-align: center;",
-                                            ),
-                                        ),
+								// array(
+        //                                     'header' => 'พิมพ์ใบสมัคร',
+        //                                     'type' => 'raw',
+        //                                     'value' => function($data) {
+        //                                        //var_dump($data->id);
+        //                                        // return CHtml::button("พิมพ์",array('class' => 'btn btn btn-success print_pdf','data-id' => $data->id));
+        //                                     	return CHtml::button('พิมพ์ใบสมัคร', array('submit' => array('admin/Printpdf', 'id'=> $data->id),'class' => 'btn btn btn-success'));
+        //                                     },'htmlOptions' => array(
+        //                                         'style'=> "text-align: center;",
+        //                                     ),
+        //                                 ),
 								array(            
 									'class'=>'AButtonColumn',
 									'visible'=>Controller::PButton( 

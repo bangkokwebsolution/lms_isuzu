@@ -55,7 +55,7 @@ if ($course) {
         $totallesson = 0;
         foreach ($LessonCourseList as $Lesson) {
             $checkLearnPass = Learn::model()->find(array(
-                'condition' => 'lesson_id = "' . $Lesson->id . '" AND user_id = "' . Yii::app()->user->id . '" AND lesson_status = "pass"  and active ="y"',
+                'condition' => 'lesson_id = "' . $Lesson->id . '" AND user_id = "' . Yii::app()->user->id . '" AND lesson_status = "pass"  and lesson_active ="y"',
             ));
             if ($checkLearnPass) {
                 $countPass++;

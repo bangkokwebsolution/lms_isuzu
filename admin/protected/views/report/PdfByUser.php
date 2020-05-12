@@ -128,7 +128,7 @@
                                 foreach($dataProvider->getData() as $i => $user) {
                                     
                                     $lern = Learn::model()->findAll(array(
-                                    'condition' => 'course_id = "' . $course_chk[0] . '" AND active ="y" AND  user_id = "' . $user->id . '"'
+                                    'condition' => 'course_id = "' . $course_chk[0] . '" AND lesson_active ="y" AND  user_id = "' . $user->id . '"'
                                 ));
                                   if(count($lern) > 0){
                                     ?>

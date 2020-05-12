@@ -579,7 +579,7 @@ public function actionCateIndex($id) {
                     $lessonStatus = Helpers::lib()->checkLessonPass($lesson);
                     $learnLesson = $user->learns(
                         array(
-                            'condition' => 'lesson_id=:lesson_id AND active="y"',
+                            'condition' => 'lesson_id=:lesson_id AND lesson_active="y"',
                             'params' => array(':lesson_id' => $lesson->id)
                         )
                     );

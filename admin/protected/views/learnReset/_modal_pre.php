@@ -35,7 +35,7 @@
                                     'params' => array('lesson_id' => $valuecourse->lesson_id,':course_id'=>$valuecourse->course_id)
                                 ));
 
-
+          
                                  if($modelData){
                                     foreach ($modelData as $keylearn => $valuelearn) {
                                         ?>

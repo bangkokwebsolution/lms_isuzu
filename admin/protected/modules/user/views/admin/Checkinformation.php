@@ -168,6 +168,82 @@
 						</h5>
 					</div>
 					<div class="col-md-12">
+						<h5><b>เอกสารแนบไฟล์วุฒิการศึกษา/วิชาชีพ:</b>
+							<ul>
+								<?php
+								$user_id = $user['id'];
+								$idx = 1;
+								$uploadFolder = Yii::app()->getUploadUrl('edufile');
+								$criteria = new CDbCriteria;
+								$criteria->addCondition('user_id ="'.$user_id.'"');
+								$criteria->addCondition("active ='y'");
+								$FileEdu = FileEdu::model()->findAll($criteria);
+
+								if(isset($FileEdu)){
+									foreach($FileEdu as $fileDatas){?>
+										<li>
+											<a href="<?php echo Yii::app()->baseUrl . '/../uploads/edufile/' . $fileDatas->filename; ?>"><span><?php echo $fileDatas->file_name;?></span></a>
+										</li>
+										<?php
+									}
+								}
+								?>
+							</ul>
+						</ul>
+					</h5>
+				</div>
+				<div class="col-md-12">
+							<h5><b>ประวัติการฝึกอบรม:</b>
+								<ul><?php
+								$user_id = $user['id'];
+								$ProfilesTraining = ProfilesTraining::model()->findAll(array(
+									'condition' => 'user_id=:user_id AND active=:active',
+									'params' => array(':user_id'=>$user_id, ':active'=>'y')));
+
+								if(!empty($ProfilesTraining)){ 
+									foreach ($ProfilesTraining as $key => $value) {					
+
+										$training_data = $ProfilesTraining[$key]->attributes;
+										$message = $training_data['message'];
+											
+											?>
+											<li>	
+												<span><?php if($message != ""){ echo $message;}else{ echo "-"; } ?></span>
+											</li>
+											<?php
+									}
+								}
+								?>
+							</ul>
+						</h5>
+					</div>
+				<div class="col-md-12">
+					<h5><b>เอกสารแนบไฟล์ฝึกอบรม:</b>
+						<ul>
+							<?php
+							$user_id = $user['id'];
+							$idx = 1;
+							$uploadFolder = Yii::app()->getUploadUrl('Trainingfile');
+							$criteria = new CDbCriteria;
+							$criteria->addCondition('user_id ="'.$user_id.'"');
+							$criteria->addCondition("active ='y'");
+							$FileTraining = FileTraining::model()->findAll($criteria);
+
+							if(isset($FileTraining)){
+
+								foreach($FileTraining as $fileDatas){?>
+									<li>
+										<a href="<?php echo Yii::app()->baseUrl . '/../uploads/Trainingfile/' . $fileDatas->filename; ?>"><span><?php echo $fileDatas->file_name;?></span></a>
+									</li>
+									<?php
+								}
+							}
+							?>
+							
+						</ul>
+					</h5>
+				</div>
+				<div class="col-md-12">
 							<h5><b>ประวัติการทำงาน:</b>
 								<ul><?php
 								$user_id = $user['id'];
@@ -199,57 +275,6 @@
 							</ul>
 						</h5>
 					</div>
-					<div class="col-md-12">
-						<h5><b>เอกสารแนบไฟล์วุฒิการศึกษา/วิชาชีพ:</b>
-							<ul>
-								<?php
-								$user_id = $user['id'];
-								$idx = 1;
-								$uploadFolder = Yii::app()->getUploadUrl('edufile');
-								$criteria = new CDbCriteria;
-								$criteria->addCondition('user_id ="'.$user_id.'"');
-								$criteria->addCondition("active ='y'");
-								$FileEdu = FileEdu::model()->findAll($criteria);
-
-								if(isset($FileEdu)){
-									foreach($FileEdu as $fileDatas){?>
-										<li>
-											<a href="<?php echo Yii::app()->baseUrl . '/../uploads/edufile/' . $fileDatas->filename; ?>"><span><?php echo $fileDatas->file_name;?></span></a>
-										</li>
-										<?php
-									}
-								}
-								?>
-							</ul>
-						</ul>
-					</h5>
-				</div>
-				<div class="col-md-12">
-					<h5><b>เอกสารแนบไฟล์ฝึกอบรม:</b>
-						<ul>
-							<?php
-							$user_id = $user['id'];
-							$idx = 1;
-							$uploadFolder = Yii::app()->getUploadUrl('Trainingfile');
-							$criteria = new CDbCriteria;
-							$criteria->addCondition('user_id ="'.$user_id.'"');
-							$criteria->addCondition("active ='y'");
-							$FileTraining = FileTraining::model()->findAll($criteria);
-
-							if(isset($FileTraining)){
-
-								foreach($FileTraining as $fileDatas){?>
-									<li>
-										<a href="<?php echo Yii::app()->baseUrl . '/../uploads/Trainingfile/' . $fileDatas->filename; ?>"><span><?php echo $fileDatas->file_name;?></span></a>
-									</li>
-									<?php
-								}
-							}
-							?>
-							
-						</ul>
-					</h5>
-				</div>
 				<div class="col-md-12">
 					<h5><b>เอกสารแนบไฟล์:</b>
 						<ul>
@@ -283,6 +308,66 @@
 						</ul>
 					</h5>
 				</div>
+				<div class="col-md-12">
+					<h5><b>ภาษา</b>
+						<table>
+							<thead>
+								<tr style="background-color:#0066FF;">
+									<td width="17%">ภาษา</td>
+									<td width="17%">เขียน</td>
+									<td width="17%">พูด</td>
+								</tr>
+							</thead>
+							<tbody>
+								<?php
+							 $user_id = $user['id'];
+                             $criteria= new CDbCriteria;
+                             $criteria->addCondition('user_id ="'.$user_id.'"');
+                             $ProfilesLanguage = ProfilesLanguage::model()->findAll($criteria);
+   
+                             foreach ($ProfilesLanguage as $key => $value) {
+                             	if ($value != "") {
+
+								?>
+								<tr >
+									<td><?php echo $value['language_name']; ?></td>
+									<td><?php 
+                                      if ($value['write'] == 1) {
+                                        echo "ใช้ไม่ได้";
+                                      }else if($value['write'] == 2){
+                                      	echo "พอใช้ได้";
+                                      }else if($value['write'] == 3){
+                                      	echo "ดี";
+                                      }else if($value['write'] == 4){
+                                      	echo "ดีมาก";
+                                      }
+									 ?></td>
+									<td><?php 
+                                      if ($value['spoken'] == 1) {
+                                        echo "ใช้ไม่ได้";
+                                      }else if($value['spoken'] == 2){
+                                      	echo "พอใช้ได้";
+                                      }else if($value['spoken'] == 3){
+                                      	echo "ดี";
+                                      }else if($value['spoken'] == 4){
+                                      	echo "ดีมาก";
+                                      }
+									 ?></td>
+								</tr>
+								<?php
+							       }else{?>
+                                <tr>
+									<td><?php echo "-"; ?></td>
+									<td><?php echo "-"; ?></td>
+									<td><?php echo "-"; ?></td>
+								</tr>
+                               <?php  }
+                           }
+								?>
+							</tbody>
+						</table>
+				    </h5>
+				</div>
 				<?php  
 				$position = Position::model()->find(array(
 					'condition' => 'id=:position_id',
@@ -293,31 +378,33 @@
 				?>
 				
 				<div class="col-md-6"><h5><b>ตำแหน่งเรือที่ท่านสนใจสมัคร:</b><span><?php echo $position['position_title']; ?></span></h5></div>
-				
+
 				<div class="col-md-12">
 					<h5><b>เปลี่ยนตำแหน่งเรือ:</b>
 						<select class="form-control d-inlineblock position_id" name="position_id" id="<?php echo $user['id'];?>">
 							<option value="">เลือกตำแหน่ง</option>
 							<?php
+							 $departmentModel = Department::model()->findAll(array(
+                    'condition' => 'type_employee_id=:type_employee_id AND active=:active',
+                    'params' => array(':type_employee_id'=>1, ':active'=>'y')));
 							
-							$departmentModel = Department::model()->findAll(array(
-								'condition' => 'active=:active AND type_employee_id=:type_employee_id',
-								'params' => array(':active'=>'y',':type_employee_id'=>1)
-							));
-							foreach ($departmentModel as $keys => $values) {
-								$depart = $departmentModel[$key]->attributes;
-								$positions = Position::model()->findAll(array(
-									'condition' => 'department_id=:department_id AND active=:active',
-									'params' => array(':department_id'=>$depart['id'],':active'=>'y')
-								));
-								//var_dump($positions);
+						  $dep_id = [];
+                  foreach ($departmentModel as $keydepart => $valuedepart) {
+                   $dep_id[] = $valuedepart->id;
+
+                   }
+							 $criteria= new CDbCriteria;
+                             $criteria->compare('active','y');
+                             $criteria->addInCondition('department_id', $dep_id);
+                             $criteria->order = 'position_title ASC';
+                             $positions = Position::model()->findAll($criteria);
+							
 								foreach ($positions as $ke => $val) {
 									$pos = $positions[$ke]->attributes;
 									?>
 									<option value="<?php echo $pos['id']; ?>"><?php echo $pos['position_title']; ?></option>
-								<?php   }
-							}
-							
+								<?php   
+							}						
 							?>
 						</select>
 					</h5>

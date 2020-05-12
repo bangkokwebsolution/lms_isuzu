@@ -704,8 +704,8 @@ class QuestionController extends Controller
     {
 
         $learn = Learn::model()->findAll(array(
-            'condition' => "user_id=:user_id AND lesson_id=:lesson AND active=:active",
-            'params' => array(':user_id' => Yii::app()->user->id,':lesson' => $id,':active' => 'y')
+            'condition' => "user_id=:user_id AND lesson_id=:lesson AND lesson_active=:lesson_active",
+            'params' => array(':user_id' => Yii::app()->user->id,':lesson' => $id,':lesson_active' => 'y')
         ));
 
         foreach ($learn as $key => $value) {
@@ -716,7 +716,7 @@ class QuestionController extends Controller
             ));
 
 
-            $value->active = 'n';
+            $value->lesson_active = 'n';
             $value->save(false);
         }
 

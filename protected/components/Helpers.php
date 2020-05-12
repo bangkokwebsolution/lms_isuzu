@@ -1839,7 +1839,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
         if ($user) {
             $learnLesson = $user->learns(
                 array(
-                    'condition' => 'lesson_id=:lesson_id and active ="y"',
+                    'condition' => 'lesson_id=:lesson_id and lesson_active ="y"',
                     'params' => array(':lesson_id' => $lesson->id)
                 )
             );
@@ -2490,7 +2490,7 @@ public function sendApiLms_old($schedule)
 
         $criteria = new CDbCriteria;
         $criteria->compare('course_id',$course_id);
-        $criteria->compare('active','y');
+        $criteria->compare('lesson_active','y');
         // $criteria->compare('lesson_status','pass');
         $criteria->compare('user_id',$user_id);
         $learns = Learn::model()->findAll($criteria);
@@ -2654,7 +2654,7 @@ if($learnfiles){
             }else if($learnStatus == "notPass"){
                 $criteria = new CDbCriteria;
                 $criteria->compare('course_id',$value->course_id);
-                $criteria->compare('active','y');
+                $criteria->compare('lesson_active','y');
                 $criteria->compare('user_id',$value->user_id);
                 $learns = Learn::model()->findAll($criteria);
                 if($learns){
@@ -2734,7 +2734,7 @@ public function sendApiLms($scheduleMain,$scheduleId)
             }else if($learnStatus == "notPass"){
                 $criteria = new CDbCriteria;
                 $criteria->compare('course_id',$value->course_id);
-                $criteria->compare('active','y');
+                $criteria->compare('lesson_active','y');
                 $criteria->compare('user_id',$value->user_id);
                 $learns = Learn::model()->findAll($criteria);
                 if($learns){
@@ -3771,7 +3771,7 @@ public function checkStepLesson($lesson){
                 ));
 
 
-                $value->active = 'n';
+                $value->lesson_active = 'n';
                 $value->save(false);
             }
 
