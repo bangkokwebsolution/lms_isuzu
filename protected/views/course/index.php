@@ -85,7 +85,7 @@ function DateThai($strDate)
                         $m_c->cate_id = $m_c->parent_id;
                     }
                     ?>
-                    <button style="white-space: normal;" class="btn btn-default filter-button btn-lg" data-filter="<?= $m_c->cate_id ?>"><?= $m_c->cate_title ?> 999</button>
+                    <button style="white-space: normal;" class="btn btn-default filter-button btn-lg" data-filter="<?= $m_c->cate_id ?>"><?= $m_c->cate_title ?></button>
                 <?php 
             } 
         }
@@ -129,8 +129,12 @@ function DateThai($strDate)
                     </div>
                 <?php  } ?>
 
-
+                <?php  $cate_id_show = ""; ?>
                 <?php foreach ($model_cate as $m_c) {
+                     if($cate_id_show != $m_c->course->cate_id){
+                            $cate_id_show = $m_c->course->cate_id;
+
+
                     $m_c  = $m_c->course->CategoryTitle;
 
                     if ($m_c->lang_id != 1) {
@@ -172,7 +176,7 @@ function DateThai($strDate)
                                 </button>
                             </div>
                         </div>
-                    <?php  } ?>
+                    <?php  } } ?>
 
                     <?php foreach ($modelCourseTms as $val) {
                         $model = $val->course;
