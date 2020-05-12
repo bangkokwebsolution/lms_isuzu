@@ -333,7 +333,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             <div class="cours-card">
                                 <div class="card">
                                  <!--  <a href="<?= $url; ?>" <?= $evnt ?>> -->
-                                  <a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $value->course_id, 'gen' => $value->getGenID($value->course_id))); ?>"
+                                  <a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)); ?>"
                                     class="course_site">
                                     <!-- Check image -->
                                     <?php $idCourse_img = (!$flag)? $modelChildren->course_id: $value->course_id; ?>
@@ -348,8 +348,8 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                 <?php } ?>
 
                                 <div class="card-body" style="padding: 20px;">
-                                    <a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $value->course_id, 'gen' => $value->getGenID($value->course_id))); ?>">
-                                        <h5 class="card-title"><?= $value->course_title; ?> <?= $value->getGen($value->course_id); ?></h5>
+                                    <a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)); ?>">
+                                        <h5 class="card-title"><?= $value->course_title; ?></h5>
                                     </a>
                                     <?php 
                                     $lessonList = Lesson::model()->findAll(array('condition' => 'active = "y" AND lang_id = 1 AND course_id=' . $value->course_id, 'order' => 'lesson_no'));
@@ -491,13 +491,13 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             <div class="row">
                                 <div class="col-sm-8 col-sm-offset-2 text-center">
                                     <h3><?= (Yii::app()->user->id) ? $labelcourse->label_swal_regiscourse : $labelcourse->label_detail; ?></h3>
-                                    <h2>"<?= $value->course_title ?> <?= $value->getGen($value->course_id); ?>"</h2>
+                                    <h2>"<?= $value->course_title ?>"</h2>
                                     <h3>(<?= $value->CategoryTitle->cate_title ?>)</h3>
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <a class="btn btn-success" href="<?php echo Yii::app()->createUrl('course/detail/', array('id' => $value->course_id, 'gen' => $value->getGenID($value->course_id))) ?>"><?= UserModule::t("Ok") ?></a>
+                            <a class="btn btn-success" href="<?php echo Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)) ?>"><?= UserModule::t("Ok") ?></a>
                             <a class="btn btn-warning" href="#" class="close" data-dismiss="modal" aria-hidden="true"><?= UserModule::t("Cancel") ?></a>
                         </div>
                     </div>

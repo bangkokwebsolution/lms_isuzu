@@ -490,9 +490,8 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
 
                         </div>
                     </div>
-                </div>
-                <!-- end show detail -->
-                <!--end no loop-->
+                </div> 
+                
         </div>
     </div>
     <?php

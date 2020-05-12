@@ -53,11 +53,6 @@ $cancel_msg = UserModule::t('Cancel');
     init_knob();
         // $('audio').audioPlayer();
       });
-
-  function show_div_note(file_id){
-    $("#table_note_"+file_id).show();
-  }
-
     </script>
 
     <style type="text/css">
@@ -370,8 +365,8 @@ $cancel_msg = UserModule::t('Cancel');
                 <div class="tab-content">
 
                   <div class="box-note">
-                    <button class="h-course-title" type="button" data-toggle="collapse" data-target="#course-video" aria-expanded="false" aria-controls="course-video">
-                        <i class="fas fa-edit"></i> รายการวิดีโอ 
+                    <button class="h-course-title-main" type="button" data-toggle="collapse" data-target="#course-video" aria-expanded="false" aria-controls="course-video">
+                        <i class="fas fa-list"></i>รายการวิดีโอ 
                         <span class="pull-right"><i class="fas fa-angle-up"></i></span>
                     </button>
                     <div class="collapse" id="course-video">
@@ -381,7 +376,6 @@ $cancel_msg = UserModule::t('Cancel');
                               <ul class="section-list">
                                 <li class="list-body"><?php echo $lessonListValue->title; ?></li>
                                 <?php 
-                                $arr_file_list = array();
                                 foreach ($lessonList as $key => $lessonListValue) { 
                                 $learnModel = Learn::model()->find(array(
                                   'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active=:status',
@@ -415,13 +409,12 @@ $cancel_msg = UserModule::t('Cancel');
                                   }
                                   ?>
 
-                                  <li class="<?=$statuslearn?>" id="imageCheckBar">
+                                  <li class="<?=$statuslearn?> list-coursemain" id="imageCheckBar">
                                     <div class="list-body">
                                      <a href="#collapse<?= $les->id;?>" data-toggle="collapse"
                                       data-parent="#myGroup" aria-expanded="true"
                                       aria-controls="collapse<?php echo $les->id; ?>">
                                       <h6><?= $les->getRefileName(); ?> <?=$statusValue?></h6>
-                                      <?php $arr_file_list[$les->id] = $les->getRefileName(); ?>
                                     </a>
                                   </div>
                                   <div class="div-x">
@@ -447,7 +440,7 @@ $cancel_msg = UserModule::t('Cancel');
 
 
                     <button class="h-course-title" type="button" data-toggle="collapse" data-target="#course-note" aria-expanded="false" aria-controls="course-note">
-                        <i class="fas fa-edit"></i> จดบันทึก 
+                        <i class="fas fa-edit"></i>จดบันทึก 
                         <span class="pull-right"><i class="fas fa-angle-up"></i></span>
                     </button>
                     <div class="collapse" id="course-note">
@@ -458,24 +451,27 @@ $cancel_msg = UserModule::t('Cancel');
                             </div>
                             <div class="note-save">                                
                                       <?php 
-                                      foreach ($arr_file_list as $keyy => $valuee) {
-                                        ?>
-                                        <div id="table_note_<?php echo $keyy; ?>" style="display: none;"> 
-                                            <h3><?php echo $valuee; ?></h3>
-                                            <table class="table table-borderless table-hover">
+                                      if(!empty($learn_note)){
+                                        $name_video = "";
+                                        $status_name_video = 2;
+                                        foreach ($learn_note as $key => $value) {
+
+                                          if($name_video != $value->file->filename){
+                                           $name_video =  $value->file->filename;
+                                              
+                                            ?>  
+                                            <h4 class="title-note"><?php echo $value->file->filename; ?></h3>
+                                            <table class="table table-hover table-note">
                                               <thead>
                                                 <tr>
                                                   <th scope="col" width="20%" class="text-center"><i class="far fa-clock"></i> เวลา</th>
                                                   <th scope="col" width="80%" class="text-left"><i class="far fa-comment-alt"></i> ข้อความ</th>
                                                 </tr>
                                               </thead>
-                                              <tbody id="tbody_note_<?php echo $keyy; ?>">
-                                        <?php
-                                      if(!empty($learn_note)){
-                                        foreach ($learn_note as $key => $value) {
-                                          if($value->file_id == $keyy){
+                                              <tbody id="tbody_note_<?php echo $value->file->id; ?>">
+                                                <?php
+                                              } // if($name_video != $value->file->filename)
                                           ?>
-                                          <script type="text/javascript"> show_div_note("<?php echo $value->file_id; ?>"); </script>
                                           <tr id="tr_note_<?php echo $value->note_id; ?>">
                                             <td style='cursor:pointer;' class="td_time_note" note_file="<?php echo $value->file_id; ?>" note_time="<?php echo $value->note_time; ?>" name_video="<?php echo $value->file->filename; ?>">
                                                 <?php 
@@ -493,20 +489,26 @@ $cancel_msg = UserModule::t('Cancel');
                                               
                                             </td>
                                         </tr>
-                                        <?php   
-                                          } // if($value->file_id == $keyy)
-                                        } // foreach ($learn_note
-                                      }else{ // if(!empty($learn_note)){
-                                      }
-                                        ?>
+                                        <?php                                                               
+                                           if($name_video !=  $learn_note[$key+1]->file->filename){
+                                            ?>
                                           </tbody>
                                         </table>
-                                        <hr>
-                                      </div>
+                                        
                                             <?php
-                                       } //  foreach ($arr_file_list 
+                                           }
+                                        } // foreach ($learn_note
+                                      }else{ // if(!empty($learn_note)){
+
+                                      }
+
                                        ?>
-                                     </div>
+                                   
+                               
+
+
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1074,7 +1076,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                             </div>
 
                             <div class="col-xs-12 col-sm-4">
-                              <p class="text-center nameheadcl"><?= $model->CourseOnlines->course_title; ?> <?= $model->CourseOnlines->getGen($model->CourseOnlines->course_id); ?></p>
+                              <p class="text-center nameheadcl"><?= $model->CourseOnlines->course_title; ?></p>
                             </div>
 
                             <div class="col-xs-6 visible-xs pl-0">
@@ -3427,20 +3429,7 @@ function time_test_start(time_down){
 
                                 // console.log(data.split("'")[11]);
                                 var tbody_note = data.split("'")[11];
-                                // console.log($("#tbody_note_"+tbody_note).html());
-
-                                // if(typeof($("#tbody_note_"+tbody_note).html()) == "undefined"){
-                                //   console.log("888 "+tbody_note);
-                                // }
-
-                                // if($("#tbody_note_"+tbody_note).html() == ){
-                                //   console.log("999 "+tbody_note);
-                                // }
-
-
                               $("#tbody_note_"+tbody_note).append(data);
-                              $("#table_note_"+tbody_note).show();
-
 
                             }else{
                               swal({
@@ -3549,23 +3538,8 @@ function time_test_start(time_down){
                   }
 
                   function remove_learn_note(note_id){
-                    Swal.fire({
-                      title: 'ยืนยันใช่ไหม',
-                      text: "ว่าต้องการลบบันทึก",
-                      icon: 'warning',
-                      showCancelButton: true,
-                      confirmButtonColor: '#3085d6',
-                      cancelButtonColor: '#d33',
-                      confirmButtonText: 'ยืนยัน',
-                      cancelButtonText: 'ยกเลิก'
-                    }).then((result) => {
-                      if (result.value) {
-                        console.log("อิอิ");
-                     
-
-
-
                     var note_text = $("#note-2").val();
+
                     if(note_id != ""){
                       $.ajax({
                           type: 'POST',
@@ -3595,10 +3569,6 @@ function time_test_start(time_down){
                           }
                         });                      
                     }
-
-                     }
-                    });
-
                   }
 
 
