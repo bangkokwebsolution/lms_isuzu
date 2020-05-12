@@ -451,7 +451,7 @@ $cancel_msg = UserModule::t('Cancel');
                                       foreach ($arr_file_list as $keyy => $valuee) {
                                         ?>
                                         <div id="table_note_<?php echo $keyy; ?>" style="display: none;"> 
-                                            <h3 class="titile-note"><?php echo $valuee; ?></h3>
+                                            <h4 class="titile-note"><?php echo $valuee; ?></h4>
                                             <table class="table table-hover table-note">
                                               <thead>
                                                 <tr>
@@ -478,8 +478,10 @@ $cancel_msg = UserModule::t('Cancel');
                                             </td>
                                             <td style='cursor:pointer;' class="text-left box_note">
                                               <span class="edit-note" id="span_id_<?php echo $value->note_id; ?>"><?php echo $value->note_text; ?></span>
-                                                <button type="button" class="note-funtion text-danger" onclick="remove_learn_note(<?php echo $value->note_id; ?>);"><i class="fas fa-times"></i></button>
-                                              <button type="button" class="note-funtion text-primary" onclick="fn_edit_note(<?php echo $value->note_id; ?>);"><i class="fas fa-edit"></i></button>
+                                                <div class="pull-right">
+                                                  <button type="button" class="note-funtion text-danger" onclick="remove_learn_note(<?php echo $value->note_id; ?>);"><i class="fas fa-times"></i></button>
+                                                <button type="button" class="note-funtion text-primary" onclick="fn_edit_note(<?php echo $value->note_id; ?>);"><i class="fas fa-edit"></i></button>
+                                                </div>
                                               
                                             </td>
                                         </tr>
@@ -491,7 +493,6 @@ $cancel_msg = UserModule::t('Cancel');
                                         ?>
                                           </tbody>
                                         </table>
-                                        <hr>
                                       </div>
                                             <?php
                                        } //  foreach ($arr_file_list 

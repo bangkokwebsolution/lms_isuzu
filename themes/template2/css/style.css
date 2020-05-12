@@ -3283,7 +3283,7 @@ footer {
 .table>thead>tr>td,
 .table>thead>tr>th {
   border: 1px solid #d8d8d8 !important;
-  vertical-align: middle !important;
+  vertical-align: middle ;
   text-align: center;
 }
 
@@ -4424,6 +4424,7 @@ ol.stat-alert li::before {
 
 .td_time_note{
   color: #007bff;
+  vertical-align: top !important;
   }
 
 .text-left{
@@ -4436,6 +4437,10 @@ ol.stat-alert li::before {
     border: none;
     opacity: 0;
     transition: all .25s ease;
+}
+
+.box_note span{
+  word-break: break-word;
 }
 
 .box_note:hover .note-funtion{
