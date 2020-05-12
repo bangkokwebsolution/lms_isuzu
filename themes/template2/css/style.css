@@ -4391,6 +4391,20 @@ ol.stat-alert li::before {
 .note-input{
   padding: 1em
 }
+.title-note{
+    margin-top: 1em;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 3px;
+    background: #010c65;
+    color: #fff;
+}
+
+.title-note i {
+  margin-right: 5px;
+  color: #fff;
+}
+
 .note-save{
   margin-top: 1em;
 }

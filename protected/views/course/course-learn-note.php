@@ -137,10 +137,7 @@ $cancel_msg = UserModule::t('Cancel');
             padding: 0;
           }
 
-    /* article.blog-post .post-content .showslidethumb img {
-        height: 108px;
-        cursor: pointer;
-        } */
+
 
         .showslidethumb ul {
           float: left;
@@ -161,7 +158,9 @@ $cancel_msg = UserModule::t('Cancel');
           display: block;
           border: 1px solid #A3CBE0;
           height: 108px;
+          max-height: 120px;
           cursor: pointer;
+          margin: 10px 0;
         }
 
         .showslidethumb a:active img, .showslidethumb a:focus img, .showslidethumb a:hover img {
@@ -451,7 +450,7 @@ $cancel_msg = UserModule::t('Cancel');
                                       foreach ($arr_file_list as $keyy => $valuee) {
                                         ?>
                                         <div id="table_note_<?php echo $keyy; ?>" style="display: none;"> 
-                                            <h4 class="titile-note"><?php echo $valuee; ?></h4>
+                                            <h4 class="title-note"><i class="fas fa-file-video"></i><?php echo $valuee; ?></h4>
                                             <table class="table table-hover table-note">
                                               <thead>
                                                 <tr>
@@ -3247,7 +3246,7 @@ function time_test_start(time_down){
                     }
                   });
 
-                  function show_collapse(file){
+                  function show_collapse(file){ // เปิด แถบวิดีโอ
                     var num_show_video_i;
 
                     for(var i=0; i< jQuery('.collapse.in').length; i++){
@@ -3266,8 +3265,11 @@ function time_test_start(time_down){
                     $("#collapse"+id_video_file_open).removeClass("collapse in");
                     $("#collapse"+id_video_file_open).addClass("collapse");
 
+
                     $("#collapse"+file).removeClass("collapse");
                     $("#collapse"+file).addClass("collapse in");
+                    $("#collapse"+file).css({"height": "auto"});
+
                   }
 
                   $( ".td_time_note" ).click(function() { // mote time click                    
