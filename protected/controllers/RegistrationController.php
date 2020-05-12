@@ -1875,6 +1875,58 @@ public function actionDeleteFilePassport($id)
             $this->redirect(array('site/index'));
         }
     }
+public function actionCheckMail(){
+   
+ $criteria= new CDbCriteria;
+ $criteria->condition='email=:email';
+ $criteria->params=array(':email'=>$_POST['text_mail']);
+ $model = Users::model()->findAll($criteria);
+ if ($model != null) {
+    $data = false;
+    echo ($data);
+  }else{ 
+   $data = true; 
+   echo ($data);
+  }
+
+}
+
+public function actionCheckIdcard(){
+   $str = $_POST['idcard'];
+   $chk = strlen($str);
+        if($chk == "13"){
+            $id = str_split(str_replace('-', '', $_POST['idcard'])); //ตัดรูปแบบและเอา ตัวอักษร ไปแยกเป็น array $id
+            $sum = 0;
+            $total = 0;
+            $digi = 13;
+            for ($i = 0; $i < 12; $i++) {
+                $sum = $sum + (intval($id[$i]) * $digi);
+                $digi--;
+            }
+            $total = (11 - ($sum % 11)) % 10;
+            if ($total != $id[12]) { //ตัวที่ 13 มีค่าไม่เท่ากับผลรวมจากการคำนวณ ให้ add error
+              //  $this->addError('identification', 'เลขบัตรประชาชนนี้ไม่ถูกต้อง ตามการคำนวณของระบบฐานข้อมูลทะเบียนราษฎร์*');
+                $data = 'no';
+                echo ($data);
+            }else{
+                 $criteria= new CDbCriteria;
+                 $criteria->condition='user.identification=:identification';
+                 $criteria->params=array(':identification'=>$str);
+                 $model = Users::model()->findAll($criteria);
+                 if ($model) {
+                       $data = 'yes';
+                       echo ($data);
+                 }else{ 
+                      $data = 'bool'; 
+                      echo ($data);
+                 }
+            }
+        }else{
+            $data = 'little';
+            echo ($data);
+        }
+ 
+}
 
     // public function actionLdap(){
     //     $member = Helpers::lib()->ldapTms('taaonprem04@airasia.com');

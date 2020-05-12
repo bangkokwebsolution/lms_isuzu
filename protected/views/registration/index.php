@@ -2553,6 +2553,64 @@ $("#card-6").change(function(event) {
     $('.form_sickness').hide();
   }
   });
+$(".email").change(function() {
+                    var text_mail = $(".email").val();
+                    if (text_mail != "") {
+                    $.ajax({
+                        type: 'POST',
+                        url: "<?= Yii::app()->createUrl('Registration/CheckMail'); ?>",
+                        data: {
+                            text_mail: text_mail
+                        },
+                        success: function(data) {
+        
+                                if (data != true) {
+                                     $(".email").empty();
+                                    var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+                                    var msg ="<?php echo Yii::app()->session['lang'] == 1?'The email name already exists in the database! ':'อีเมลนี้มีผู้ใช้งานแล้ว!'; ?>"; 
+                                    swal(alert_message,msg);
+                                   
+                                }
+                                
+                            }
+                        });
+                     }
+                });
+
+$(".idcard").change(function() {
+                    var idcard = $(".idcard").val();
+                    if (idcard != "") {
+                    $.ajax({
+                        type: 'POST',
+                        url: "<?= Yii::app()->createUrl('Registration/CheckIdcard'); ?>",
+                        data: {
+                            idcard: idcard
+                        },
+                        success: function(data) {
+                   
+                                if (data == 'yes') {
+                                     $(".idcard").empty();
+                                    var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+                                    var msg ="<?php echo Yii::app()->session['lang'] == 1?'This identification number already has a database! ':'เลขประจำตัวประชาชนนี้มีฐานข้อมูลแล้ว!'; ?>"; 
+                                    swal(alert_message,msg);
+                                   
+                                }else if(data == "no"){
+                                    $(".idcard").empty();
+                                    var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+                                    var msg ="<?php echo Yii::app()->session['lang'] == 1?'This ID card number is not correct as per the calculation of the civil registration database! ':'เลขบัตรประชาชนนี้ไม่ถูกต้อง ตามการคำนวณของระบบฐานข้อมูลทะเบียนราษฎร์!'; ?>"; 
+                                    swal(alert_message,msg);
+                                }else if(data == 'little'){
+                                    $(".idcard").empty();
+                                    var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+                                    var msg ="<?php echo Yii::app()->session['lang'] == 1?'Incomplete 13 digit ID card number! ':'เลขบัตรประชาชนไม่ครบจำนวน13หลัก!'; ?>"; 
+                                    swal(alert_message,msg);
+                                }
+                                
+                            }
+                        });
+                     }
+                });
+
     var new_forms = <?php echo $new_form; ?>;
                     //console.log(new_forms);
                     if (new_forms === 1 || new_forms === true) {   
