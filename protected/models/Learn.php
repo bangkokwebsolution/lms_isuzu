@@ -41,7 +41,7 @@ class Learn extends CActiveRecord
 			array('user_id, lesson_id', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('learn_id, user_id, lesson_id, learn_date, create_date', 'safe', 'on'=>'search'),
+			array('learn_id, user_id, lesson_id, learn_date, create_date, gen_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,6 +56,8 @@ class Learn extends CActiveRecord
 			'LessonMapper' => array(self::BELONGS_TO, 'Lesson', 'lesson_id'),
 			'learnfile' => array(self::BELONGS_TO, 'LearnFile', 'learn_id'),
 			'learnfileDate' => array(self::BELONGS_TO, 'LearnFile', array('learn_id'=>'learn_id')),
+			'CourseGeneration' => array(self::BELONGS_TO, 'CourseGeneration', 'gen_id'),
+			
 		);
 	}
 
@@ -70,6 +72,7 @@ class Learn extends CActiveRecord
 			'lesson_id' => 'Lesson',
 			'learn_date' => 'Learn Date',
 			'create_date' => 'Create Date',
+			'gen_id' => 'gen_id',
 		);
 	}
 
@@ -89,6 +92,7 @@ class Learn extends CActiveRecord
 		$criteria->compare('lesson_id',$this->lesson_id);
 		$criteria->compare('learn_date',$this->learn_date,true);
 		$criteria->compare('create_date',$this->create_date,true);
+		$criteria->compare('gen_id',$this->gen_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

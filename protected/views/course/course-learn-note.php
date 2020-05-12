@@ -1074,7 +1074,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                             </div>
 
                             <div class="col-xs-12 col-sm-4">
-                              <p class="text-center nameheadcl"><?= $model->CourseOnlines->course_title; ?></p>
+                              <p class="text-center nameheadcl"><?= $model->CourseOnlines->course_title; ?> <?= $model->CourseOnlines->getGen($model->CourseOnlines->course_id); ?></p>
                             </div>
 
                             <div class="col-xs-6 visible-xs pl-0">

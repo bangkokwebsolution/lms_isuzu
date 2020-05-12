@@ -60,13 +60,13 @@ $doFinalTest = true;
 <div class="header-page parallax-window" data-parallax="scroll" data-image-src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg-header-page.png">
         <div class="container">
             <?php // $Model = CourseOnline::model()->findByAttributes(array('cate_id'=>$id,)); ?>    
-            <h1><?= $course->course_title ?>
+            <h1><?= $course->course_title ?> <?= $course->getGen($course->course_id); ?>
 
                 <small class="pull-right">
                     <ul class="list-inline list-unstyled">
                         <li><a href="<?php echo $this->createUrl('/site/index'); ?>"><?= $label->label_homepage ?></a></li>/
                         <li><a href="<?php echo $this->createUrl('/course/index'); ?>"><?= $label->label_course ?></a></li>/
-                        <li><span class="text-bc"><?= $course->course_title ?></span></li>
+                        <li><span class="text-bc"><?= $course->course_title ?> <?= $course->getGen($course->course_id); ?></span></li>
                     </ul>
                 </small>
             </h1>

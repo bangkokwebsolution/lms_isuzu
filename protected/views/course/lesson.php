@@ -17,7 +17,7 @@ $checkLearnAll = Helpers::lib()->checkLearnAll_Questionnaire($lessonList,'pass')
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h2 class="text-white"><?php echo $course->course_title; ?></h2>
+                    <h2 class="text-white"><?php echo $course->course_title; ?> <?= $course->getGen($course->course_id); ?></h2>
                     <p class="grey lighten-1">โดย วิทยากร 
                     <a href="#"><?php echo (isset($teacher->teacher_name)) ? $teacher->teacher_name : '-'; ?></a>
                     </p>

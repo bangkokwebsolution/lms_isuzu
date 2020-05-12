@@ -57,7 +57,7 @@ class LearnNote extends CActiveRecord
 			array('note_text, created_date, update_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('note_id, user_id, course_id, lesson_id, file_id, note_time, note_text, note_times, active, created_by, created_date, updated_by, update_date', 'safe', 'on'=>'search'),
+			array('note_id, user_id, course_id, lesson_id, file_id, note_time, note_text, note_times, active, created_by, created_date, updated_by, update_date, gen_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -70,7 +70,7 @@ class LearnNote extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'file' => array(self::BELONGS_TO, 'File', 'file_id'),
-
+			'CourseGeneration' => array(self::BELONGS_TO, 'CourseGeneration', 'gen_id'),
 		);
 	}
 
@@ -93,6 +93,7 @@ class LearnNote extends CActiveRecord
 			'created_date' => 'Created Date',
 			'updated_by' => 'Updated By',
 			'update_date' => 'Update Date',
+			'gen_id' => 'gen_id',
 		);
 	}
 
@@ -127,6 +128,7 @@ class LearnNote extends CActiveRecord
 		$criteria->compare('created_date',$this->created_date,true);
 		$criteria->compare('updated_by',$this->updated_by);
 		$criteria->compare('update_date',$this->update_date,true);
+		$criteria->compare('gen_id',$this->gen_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -43,7 +43,7 @@ class LearnFile extends CActiveRecord
 			array('learn_file_status', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('learn_file_id, learn_id, file_id, learn_file_date, learn_file_status', 'safe', 'on'=>'search'),
+			array('learn_file_id, learn_id, file_id, learn_file_date, learn_file_status, gen_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,6 +56,7 @@ class LearnFile extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'learn' => array(self::BELONGS_TO,'Learn','learn_id'),
+			'CourseGeneration' => array(self::BELONGS_TO, 'CourseGeneration', 'gen_id'),
 		);
 	}
 
@@ -70,6 +71,7 @@ class LearnFile extends CActiveRecord
 			'file_id' => 'File',
 			'learn_file_date' => 'Learn File Date',
 			'learn_file_status' => 'Learn File Status',
+			'gen_id' => 'gen_id',
 		);
 	}
 
@@ -89,6 +91,7 @@ class LearnFile extends CActiveRecord
 		$criteria->compare('file_id',$this->file_id);
 		$criteria->compare('learn_file_date',$this->learn_file_date,true);
 		$criteria->compare('learn_file_status',$this->learn_file_status,true);
+		$criteria->compare('gen_id',$this->gen_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
