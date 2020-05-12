@@ -31,6 +31,12 @@ EOD
             array('name'=>'name_search','type'=>'text'),
         ),
     ));?>
+    <div class="col-md-9">
+        <a href="<?= Yii::app()->createUrl('adminUser/create'); ?>" type="button" class="btn btn-primary"><i
+            class="fa fa-plus" aria-hidden="true"></i> 
+            เพิ่มผู้ดูแลระบบ
+        </a>
+    </div>
 <div class="separator bottom form-inline small">
     <span class="pull-right">
         <label class="strong">แสดงแถว:</label>
