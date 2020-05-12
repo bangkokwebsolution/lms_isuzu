@@ -1102,7 +1102,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                   ));
                                   $imageSlide = ImageSlide::model()->findAll('file_id=:file_id AND image_slide_time != \'\'', array(':file_id' => $file->id));
                                   ?>
-                                  <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+                                  <div class="panel-group" id="accordion<?= $file->id;?>" role="tablist" aria-multiselectable="true">
                                     <div class="panel panel-default">
                                       <div class="panel-heading" role="tab" id="heading<?php echo $file->id; ?>">
                                         <h4 class="panel-title">
@@ -3247,18 +3247,37 @@ function time_test_start(time_down){
                     }
                   });
 
-                  $( ".td_time_note" ).click(function() { // mote time click
-                    status_in_learn_note = 1; // เข้าฟังชัน ไม่ให้ video หยุดเล่น                    
-                    // console.log(this.getAttribute("note_file"));
-                    // console.log(this.getAttribute("note_time"));
+                  function show_collapse(file){
+                    var num_show_video_i;
+
+                    for(var i=0; i< jQuery('.collapse.in').length; i++){
+                      var name_collapse = jQuery('.collapse.in')[i].getAttribute("id").replace("collapse", "");
+                      name_collapse = parseInt(name_collapse);
+                      if(Number.isInteger(name_collapse)){
+                        num_show_video_i = i;
+                        break;
+                      } 
+                    }
+                    if(num_show_video_i != null){
+                      var id_video_file_open = jQuery('.collapse.in');                    
+                      id_video_file_open = id_video_file_open[num_show_video_i].getAttribute("id").replace("collapse", "");
+                    }
+
+                    $("#collapse"+id_video_file_open).removeClass("collapse in");
+                    $("#collapse"+id_video_file_open).addClass("collapse");
+
+                    $("#collapse"+file).removeClass("collapse");
+                    $("#collapse"+file).addClass("collapse in");
+                  }
+
+                  $( ".td_time_note" ).click(function() { // mote time click                    
+                    status_in_learn_note = 1; // เข้าฟังชัน ไม่ให้ video หยุดเล่น
                     var id_video_file = this.getAttribute("note_file");
                     var name_video_file = this.getAttribute("name_video");
                     var id_video_time = this.getAttribute("note_time");
+                    show_collapse(id_video_file);
                     video_id_last = $("[fileid="+id_video_file+"]").attr("index");
-                    // var video = $("#"+'example_video_'+video_id_last+'_html5_api').get(0); 
-
                     var id_video_file_open = jQuery('.collapse.in');
-
                     var num_show_video_i;
                     for(var i=0; i< jQuery('.collapse.in').length; i++){
                       var name_collapse = jQuery('.collapse.in')[i].getAttribute("id").replace("collapse", "");
@@ -3268,19 +3287,12 @@ function time_test_start(time_down){
                       break;
                       } 
                     }
-
-
-
                     id_video_file_open = id_video_file_open[num_show_video_i].getAttribute("id").replace("collapse", "");
-
                     if(id_video_file_open == id_video_file){
                       document.getElementById('example_video_'+video_id_last+'_html5_api').play();
                       document.getElementById('example_video_'+video_id_last+'_html5_api').currentTime = id_video_time;
-
                       var video = $("#"+'example_video_'+video_id_last+'_html5_api').get(0);
-                      // console.log("เวลา วิดีโอ "+video.currentTime); 
                     }else{
-                      // console.log(id_video_file_open+" = "+id_video_file);
                       swal({
                         type: "warning",
                         title: "แจ้งเตือน!",
@@ -3288,29 +3300,18 @@ function time_test_start(time_down){
                         timer: 1000
                       });
                     }
-
-                    // console.log("file "+id_video_file);
-                    // console.log("idx "+video_id_last);
-                    // console.log("time "+id_video_time);
-                    // console.log(document.getElementById('example_video_'+video_id_last+'_html5_api'));
-
                   });
+
 
                   function fn_td_time_note(id){
                     var td = document.getElementById('td_time_note_'+id);
-
-                    status_in_learn_note = 1; // เข้าฟังชัน ไม่ให้ video หยุดเล่น                    
-                    // console.log(td.getAttribute("note_file"));
-                    // console.log(td.getAttribute("note_time"));
+                    status_in_learn_note = 1; // เข้าฟังชัน ไม่ให้ video หยุดเล่น
                     var id_video_file = td.getAttribute("note_file");
                     var name_video_file = td.getAttribute("name_video");
                     var id_video_time = td.getAttribute("note_time");
+                    show_collapse(id_video_file);
                     video_id_last = $("[fileid="+id_video_file+"]").attr("index");
-                    // var video = $("#"+'example_video_'+video_id_last+'_html5_api').get(0); 
-
-                    // var id_video_file_open = jQuery('.collapse.in').attr("id").replace("collapse", "");
                     var id_video_file_open = jQuery('.collapse.in');
-
                     var num_show_video_i;
                     for(var i=0; i< jQuery('.collapse.in').length; i++){
                       var name_collapse = jQuery('.collapse.in')[i].getAttribute("id").replace("collapse", "");
@@ -3320,15 +3321,12 @@ function time_test_start(time_down){
                       break;
                       } 
                     }
-
                     id_video_file_open = id_video_file_open[num_show_video_i].getAttribute("id").replace("collapse", "");
-
                     if(id_video_file_open == id_video_file){
                       document.getElementById('example_video_'+video_id_last+'_html5_api').play();
                       document.getElementById('example_video_'+video_id_last+'_html5_api').currentTime = id_video_time;
                     }else{
-                      console.log(id_video_file_open+" = "+id_video_file);
-                      
+                      console.log(id_video_file_open+" = "+id_video_file);                      
                       swal({
                         type: "warning",
                         title: "แจ้งเตือน!",
@@ -3336,12 +3334,8 @@ function time_test_start(time_down){
                         timer: 1000
                       });
                     }
-                    // console.log("file "+id_video_file);
-                    // console.log("idx "+video_id_last);
-                    // console.log("time "+id_video_time);
-                    // console.log(document.getElementById('example_video_'+video_id_last+'_html5_api'));
-
                   }
+
 
                   var video_id_last = 1;
                   var note_lesson_id = "";
