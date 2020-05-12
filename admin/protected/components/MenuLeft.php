@@ -807,8 +807,6 @@ Class MenuLeft extends Controller
 	        ),
 			//====== END Menu FAQ ======//
 
-
-
 	        array(
 	        	/*====== Check Permissions Rights (6) ======*/
 	        	'visible'=>self::PermissionsMenu(array(
@@ -1430,7 +1428,17 @@ Class MenuLeft extends Controller
 	        			)),
 	        			'label'=>'4.) รายงานติดตามผู้เรียนรายบุคคล',
 	        			'url'=>array('//Report/ByUser')
-	        		)
+	        		),
+	        		// array(
+	        		// 	/*====== Check Permissions Sup-Passcours (1) ======*/
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'Report.*',
+	        		// 	)),
+	        		// 	'label'=>'5.) รายงานผู้ประเมินระดับผู้เรียนรายบุคคล',
+	        		// 	'url'=>array('//Report/Individual')
+	        		// 	//'url'=>array('//Report/score')
+	        		// ),
+
 	        	)
 	        ),
 			//====== END Menu Passcours ======//
@@ -1496,7 +1504,6 @@ Class MenuLeft extends Controller
 	        			'label'=>'6.) รายงานแบบสอบถามสำหรับใช้ภายนอก',
 	        			'url'=>array('//Questionnaire/Report_list')
 	        		),
-
 	        	)
 	        ),
 
@@ -1762,7 +1769,7 @@ Class MenuLeft extends Controller
 	        		'Branch.admin',
 	        		'Branch.Create'
 	        	)),
-	        	'label'=>'<i></i><span>เลเวล</span>',
+	        	'label'=>'<i></i><span>Level</span>',
 	        	'url'=>'#Branch',
 	        	'linkOptions' => array('data-toggle' => 'collapse'),
 	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
@@ -1775,7 +1782,7 @@ Class MenuLeft extends Controller
 	        				'Branch.*',
 	        				'Branch.Create'
 	        			)),
-	        			'label'=>'เพิ่มเลเวล',
+	        			'label'=>'เพิ่มLevel',
 	        			'url'=>array('//Branch/create')
 	        		),
 	        		array(
@@ -1783,7 +1790,7 @@ Class MenuLeft extends Controller
 	        				'Branch.*',
 	        				'Branch.index'
 	        			)),
-	        			'label'=>'จัดการเลเวล',
+	        			'label'=>'จัดการLevel',
 	        			'url'=>array('//Branch/index')
 	        		),
 	        	)
@@ -1841,6 +1848,15 @@ Class MenuLeft extends Controller
 	        			)),
 	        			'label'=>'Log การตรวจสอบการสมัครสมาชิก',
 	        			'url'=>array('//logAdmin/register')
+	        		),
+	        		array(
+	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'LogAdmin.*',
+	        				'LogAdmin.index'
+	        			)),
+	        			'label'=>'Log การตรวจสอบการอนุมัติการเข้าใช้งาน',
+	        			'url'=>array('//logAdmin/approve')
 	        		),
 	        		// array(
 	        		// 	/*====== Check Permissions Sup-Passcours (1) ======*/

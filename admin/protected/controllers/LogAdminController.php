@@ -90,6 +90,18 @@ class LogAdminController extends Controller
             'model'=>$model,
         ));
     }
+     
+    public function actionApprove()
+    {
+        $model=new LogApprove('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['LogApprove']))
+            $model->attributes=$_GET['LogApprove'];
+
+        $this->render('Approve',array(
+            'model'=>$model,
+        ));
+    }
 
     public function getStrLog($data){
         $jsonData = json_decode( $data->log_data);

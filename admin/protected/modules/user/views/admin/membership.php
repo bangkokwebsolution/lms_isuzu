@@ -1,6 +1,6 @@
 <!-- Include Required Prerequisites -->
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/moment.min.js"></script>
- <!--Include Date Range Picker--> 
+<!--Include Date Range Picker--> 
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker-bs2.css" />
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/highcharts.js"></script>
@@ -37,19 +37,18 @@ Yii::app()->clientScript->registerScript('search', "
 	$('.search-button').click(function(){
 		$('.search-form').toggle();
 		return false;
-	});
-	$('.search-form form').submit(function(){
-		$.fn.yiiGridView.update('user-grid', {
-			data: $(this).serialize()
 		});
-		return false;
-	});
-	");
+		$('.search-form form').submit(function(){
+			$.fn.yiiGridView.update('user-grid', {
+				data: $(this).serialize()
+				});
+				return false;
+				});
+				");
 Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	$('#User_create_at').attr('readonly','readonly');
 	$('#User_create_at').css('cursor','pointer');
 	$('#User_create_at').daterangepicker();
-
 
 EOD
 , CClientScript::POS_READY);
@@ -57,22 +56,22 @@ EOD
 	?>
 	<div id="user" class="innerLR">
 		<?php
-      $this->widget('AdvanceSearchForm', array(
-        'data'=>$model,
-        'route' => $this->route,
+		$this->widget('AdvanceSearchForm', array(
+			'data'=>$model,
+			'route' => $this->route,
         //'id'=>'SearchFormAjax',
-        'attributes'=>array(
+			'attributes'=>array(
 //            array('name'=>'company_id','type'=>'list','query'=>Company::getCompanyList()),
-            array('name'=>'register_status','type'=>'list','query'=>User::getregisstatusList()),
-            array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
+				array('name'=>'register_status','type'=>'list','query'=>User::getregisstatusList()),
+				array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
             //array('name'=>'nameSearch','type'=>'text'),
 //            array('name'=>'course','type'=>'list','query'=>$model->courseList),
-            array('name'=>'create_at','type'=>'text'),
+				array('name'=>'create_at','type'=>'text'),
 
             //array('name'=>'course_point','type'=>'text'),
-        ),
-    ));?>
-	
+			),
+		));?>
+
 
 		<div class="widget" style="margin-top: -1px;">
 			<div class="widget-head">
@@ -83,11 +82,11 @@ EOD
 					<?php echo Rights::t('core', 'ที่นี่คุณสามารถอนุมัติการสมัครสมาชิกให้กับผู้ใช้แต่ละราย'); ?>
 				</div>
 				<div class="separator bottom form-inline small">
-				<span class="pull-right">
-					<label class="strong">แสดงแถว:</label>
-					<?php echo $this->listPageShow($formNameModel);?>
-				</span>
-			   </div>
+					<span class="pull-right">
+						<label class="strong">แสดงแถว:</label>
+						<?php echo $this->listPageShow($formNameModel);?>
+					</span>
+				</div>
 				<div class="spacer"></div>
 				<div>
 
@@ -104,9 +103,9 @@ EOD
 							'dataProvider'=>$model->searchmembership(),
 							'filter'=>$model,
 							'afterAjaxUpdate'=>'function(id, data){
-						$.appendFilter("[news_per_page]");	
-						InitialSortTable();
-					     }',
+								$.appendFilter("[news_per_page]");	
+								InitialSortTable();
+							}',
 							'columns'=>array(
 								array(
 									'header'=>'No.',
@@ -119,25 +118,25 @@ EOD
 			// //'value' => 'CHtml::link(UHtml::markSearch($data, ),array("admin/view","id"=>$data->id))',
 			// 					),
 								array(
-						            'header' => 'ชื่อ - นามสกุล',
-						            'type'=>'html',
-						            'value'=>function($data){
-						                return $data->profile->firstname . ' ' . $data->profile->lastname;
-						            }
-						        ),
-						        array(
-						            'header' => 'ตำแหน่งที่สมัคร',
-						            'type'=>'html',
-						            'value'=>function($data){
-						                return $data->position->position_title;
-						            }
-						        ),
-						        array(
-						            'header' => 'สถานะ',
-						            'type'=>'html',
-						            'value'=>function($data){
-						 
-						                if($data->register_status == 0){
+									'header' => 'ชื่อ - นามสกุล',
+									'type'=>'html',
+									'value'=>function($data){
+										return $data->profile->firstname . ' ' . $data->profile->lastname;
+									}
+								),
+								array(
+									'header' => 'ตำแหน่งที่สมัคร',
+									'type'=>'html',
+									'value'=>function($data){
+										return $data->position->position_title;
+									}
+								),
+								array(
+									'header' => 'สถานะ',
+									'type'=>'html',
+									'value'=>function($data){
+
+										if($data->register_status == 0){
 											//echo CHtml::button("ปิด",array("class"=>"btn btn-danger ","data-id" => $data->id));
 											echo "รอการตรวจสอบ";
 										} else if($data->register_status == 1){
@@ -146,8 +145,8 @@ EOD
 										}else if($data->register_status == 2){
 											echo "ไม่อนุมัติ";
 										}
-						            }
-						        ),
+									}
+								),
 								// array(
 								// 	'name'=>'email',
 								// 	'type'=>'raw',
@@ -209,40 +208,40 @@ EOD
 								array(
 									'type'=>'raw',
 									'value'=>function($data){	
-											echo CHtml::button("ตรวจสอบ",array("class"=>"btn btn-success Check_information","data-id" => $data->id));
+										echo CHtml::button("ตรวจสอบ",array("class"=>"btn btn-success Check_information","data-id" => $data->id));
 									},
 									'header' => 'ตรวจสอบข้อมูลการสมัคร',
 									'htmlOptions'=>array('style'=>'text-align: center;'),
 									'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
 								),
 								array(
-                                            'header' => 'พิมพ์ใบสมัคร',
-                                            'type' => 'raw',
-                                            'value' => function($data) {
+									'header' => 'พิมพ์ใบสมัคร',
+									'type' => 'raw',
+									'value' => function($data) {
                                                //var_dump($data->id);
                                                 //return CHtml::button("พิมพ์",array('class' => 'btn btn btn-success print_pdf','data-id' => $data->id));
-                                                return CHtml::button('พิมพ์ใบสมัคร', array('submit' => array('admin/Printpdf', 'id'=> $data->id),'class' => 'btn btn btn-success'));
-                                            },'htmlOptions' => array(
-                                                'style'=> "text-align: center;",
-                                            ),
-                                        ),
+										return CHtml::button('พิมพ์ใบสมัคร', array('submit' => array('admin/Printpdf', 'id'=> $data->id),'class' => 'btn btn btn-success'));
+									},'htmlOptions' => array(
+										'style'=> "text-align: center;",
+									),
+								),
 								array(
-                                            'header' => 'ดาวน์โหลดเอกสารแนบ',
-                                            'type' => 'raw',
-                                            'value' => function($data) {
-                                       
-                                                return CHtml::button('ดาวน์โหลดเอกสารแนบ', array('submit' => array('admin/Attach_load', 'id'=> $data->id),'class' => 'btn btn btn-success'));
-                                            },'htmlOptions' => array(
-                                                'style'=> "text-align: center;",
-                                            ),
-                                        ),
+									'header' => 'ดาวน์โหลดเอกสารแนบ',
+									'type' => 'raw',
+									'value' => function($data) {
+
+										return CHtml::button('ดาวน์โหลดเอกสารแนบ', array('submit' => array('admin/Attach_load', 'id'=> $data->id),'class' => 'btn btn btn-success'));
+									},'htmlOptions' => array(
+										'style'=> "text-align: center;",
+									),
+								),
 								array(
-						            'header' => 'หมายเหตุ',
-						            'type'=>'html',
-						            'value'=>function($data){
-						                return $data->note;
-						            }
-						        ),
+									'header' => 'หมายเหตุ',
+									'type'=>'html',
+									'value'=>function($data){
+										return $data->note;
+									}
+								),
 								// array(
 								// 	'class'=>'AButtonColumn',
 								// 	'visible'=>Controller::PButton(
@@ -264,35 +263,35 @@ EOD
 								// 	),
 								// ),
 							),
-						));
+));
 
-						?>
-						<!-- modal message -->
-							<div class="modal fade" tabindex="-1" role="dialog" id="selectModal1">
-							    <div class="modal-dialog" role="document">
-							        <div class="modal-content">
+?>
+<!-- modal message -->
+<div class="modal fade" tabindex="-1" role="dialog" id="selectModal1">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
 
-							        </div>
-							    </div>
-							</div>
-							<!-- end modal -->
+		</div>
+	</div>
+</div>
+<!-- end modal -->
 
-							<div class="modal fade" tabindex="-1" role="dialog" id="selectModal">
-							    <div class="modal-dialog modal-lg" role="document">
-							        <div class="modal-content">
-							            <div class="modal-header" style="background-color: #3C8DBC;">
-							                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: #fff;font-size: 22px;">&times;</span></button>
-							                <h4 class="modal-title" style="font-size: 20px;color: #fff;padding: .3em;">ข้อความ</h4>
-							            </div>
-							            <div class="modal-body">
-							            </div>
-							            <div class="modal-footer" style="background-color: #eee;">
-							                <button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
-							                <button id="btnSubmit" type="submit" class="btn btn-primary" onclick="saveModal()">บันทึก</button>
-							            </div>
-							        </div>
-							    </div>
-							</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="selectModal">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header" style="background-color: #3C8DBC;">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color: #fff;font-size: 22px;">&times;</span></button>
+				<h4 class="modal-title" style="font-size: 20px;color: #fff;padding: .3em;">ข้อความ</h4>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer" style="background-color: #eee;">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
+				<button id="btnSubmit" type="submit" class="btn btn-primary" onclick="saveModal()">บันทึก</button>
+			</div>
+		</div>
+	</div>
+</div>
 <!-- 
 						<div class="modal fade" id="modal-id-card">
 							<div class="modal-dialog">
@@ -314,7 +313,7 @@ EOD
 							</div>
 						</div> -->
 						<script>
-									$( ".changeStatus" ).click(function() {
+							$( ".changeStatus" ).click(function() {
 								var btn = $(this);
 								var id = btn.attr("data-id");
 								//var _items = ["อนุมัติ","ไม่อนุมัติ"];
@@ -323,37 +322,78 @@ EOD
 									text: "เลือก",
 									type: "info",
 									showCancelButton: true,
-                                    confirmButtonClass: "btn-danger",
-                                    confirmButtonText: "อนุมัติ",
-                                    cancelButtonText: "ไม่อนุมัติ",
-                                    closeOnConfirm: false,
-                                    closeOnCancel: false,
-                                    showLoaderOnConfirm: true
+									confirmButtonClass: "btn-danger",
+									confirmButtonText: "อนุมัติ",
+									cancelButtonText: "ไม่อนุมัติ",
+									closeOnConfirm: false,
+									closeOnCancel: false,
+									showLoaderOnConfirm: true
 								},
 								function(isConfirm) {
-								  if (isConfirm) {
-								  	$.ajax({
-									url: "<?= $this->createUrl('admin/active'); ?>", 
-									type: "POST",
-									data:  {id:id},
-									success: function(result){
-										if (result) {
-											setTimeout(function () {
-											swal("อนุมัติสำเร็จ!", "ระบบได้ทำการอนุมัติเรียบร้อยแล้ว", "success");
-										     }, 2000);
-                                            location.reload();
-										}else{
-											setTimeout(function () {
-                                            swal("อนุมัติไม่สำเร็จ!", "ไม่สามารถอนุมัติได้)", "error");
-                                            }, 2000);
-                                            location.reload();
-										}	
+									if (isConfirm) {
+										$.ajax({
+											url: "<?= $this->createUrl('admin/Confirm'); ?>", 
+											type: "POST",
+											data:  {id:id},
+											success: function(result){
+												if (result) {
+													setTimeout(function () {
+														swal("อนุมัติสำเร็จ!", "ระบบได้ทำการอนุมัติเรียบร้อยแล้ว", "success");
+													}, 2000);
+													location.reload();
+												}else{
+													setTimeout(function () {
+														swal("อนุมัติไม่สำเร็จ!", "ไม่สามารถอนุมัติได้)", "error");
+													}, 2000);
+													location.reload();
+												}	
+											}
+										});
+
+									} else {
+										swal({
+											title: "ระบุสาเหตุ",
+											text: "ระบุสาเหตุที่ไม่อนุมัติ",
+											type: "input",
+											inputPlaceholder: "ข้อความไม่อนุมัติ",
+											showCancelButton: true,
+											allowEnterKey: true,
+											closeOnConfirm: false,
+											showLoaderOnConfirm: true,
+											confirmButtonText: "ตกลง",
+											cancelButtonText: "ยกเลิก",
+											animation: "slide-from-top",
+										},
+										function (inputValue) {
+											if(inputValue != false){
+
+												$.ajax({
+													type : 'POST',
+													url : "<?= $this->createUrl('admin/Notapproved'); ?>",
+													data: { passInput:inputValue,
+														id:id
+													}
+													,success:function(data){
+														console.log(data);
+														if (data) {
+															setTimeout(function () {
+																swal("สำเร็จ!", "ระบบได้ทำการส่งอีเมลล์แจ้งผู้สมัครเรียบร้อยแล้ว", "success");
+															}, 4000);
+															location.reload();
+
+														}else{
+															setTimeout(function () {
+																swal("ไม่สำเร็จ!", "ไม่สามารถแก้ไขข้อมูลได้)", "error");
+															}, 2000);
+															location.reload();
+														}
+
+													}
+												});
+											}
+										}
+										);  
 									}
-								});
-								    
-								  } else {
-								  	checkConfirminformation();    
-								  }
 								}
 								);
 
@@ -369,10 +409,10 @@ EOD
 									data:  {id:id},
 									success: function(data){
 										//console.log(data);
-										 $('#selectModal .modal-title').html('ตรวจสอบข้อมูลการสมัคร');
-                                         $('#selectModal .modal-body').html(data);
-                                         $('#btnSubmit').css('display','none');
-                                         $('#selectModal').modal('show');
+										$('#selectModal .modal-title').html('ตรวจสอบข้อมูลการสมัคร');
+										$('#selectModal .modal-body').html(data);
+										$('#btnSubmit').css('display','none');
+										$('#selectModal').modal('show');
 										// if(result == 1) btn.addClass('btn-success').removeClass('btn-danger');
 										// else btn.addClass('btn-danger').removeClass('btn-success');
 										// btn.val(_items[result]);
@@ -380,69 +420,25 @@ EOD
 										$(".save_data").click(function(){
 											var val = $(".position_id").val();
 											var id = $(".position_id").attr('id');
-										if (val != '') {
-											$.ajax({
-									url: "<?= $this->createUrl('admin/Changeposition'); ?>", 
-									type: "POST",
-									data:  {id:id,
-									        val:val},
-									success: function(data){
+											if (val != '') {
+												$.ajax({
+													url: "<?= $this->createUrl('admin/Changeposition'); ?>", 
+													type: "POST",
+													data:  {id:id,
+														val:val},
+														success: function(data){
 										//console.log(data);
 										location.reload();
-									   }
+									}
+								});
+											}else{
+												location.reload();
+											}
 										});
-										}else{
-											location.reload();
-										}
-									});
 									}
 								});
 							});
-			function checkConfirminformation() {
-                swal({
-                    title: "ระบุสาเหตุ",
-                    text: "ระบุสาเหตุที่ไม่อนุมัติ",
-                    type: "input",
-                    //inputType: "password",
-                    inputPlaceholder: "ข้อความไม่อนุมัติ",
-                    showCancelButton: true,
-                    allowEnterKey: true,
-                    closeOnConfirm: false,
-                    showLoaderOnConfirm: true,
-                    confirmButtonText: "ตกลง",
-                    cancelButtonText: "ยกเลิก",
-                    animation: "slide-from-top",
-                },
-                function (inputValue) {
-                    if(inputValue != false){
-                    	var id = $('.changeStatus').attr("data-id");
-                        $.ajax({
-                            type : 'POST',
-                            url : "<?= $this->createUrl('admin/Notapproved'); ?>",
-                            data: { passInput:inputValue,
-                                    id:id
-                                 }
-                            ,success:function(data){
-                            	console.log(data);
-                            	if (data) {
-                            		setTimeout(function () {
-                            	swal("สำเร็จ!", "ระบบได้ทำการส่งอีเมลล์แจ้งผู้สมัครเรียบร้อยแล้ว", "success");
-                            	}, 4000);
-                            	location.reload();
 
-                            }else{
-                            	setTimeout(function () {
-                            	swal("ไม่สำเร็จ!", "ไม่สามารถแก้ไขข้อมูลได้)", "error");
-                            	}, 2000);
-                            	location.reload();
-                            }
-             
-                            }
-                        });
-                    }
-                }
-                );
-            }
 						</script>
 					</div>
 

@@ -146,8 +146,8 @@ echo ($data);
 	{
 		$model = new User('search');
         $model->unsetAttributes();  // clear any default values
-        //$model->type_user = array(1);
-        $model->register_status = array(1);
+        $model->typeuser = array(1);
+        $model->register_status = array(1,3);
         $model->status = array(1);
         $model->supper_user_status = false;
         if(isset($_GET['User'])){
@@ -164,7 +164,7 @@ echo ($data);
 		$model = new User('search');
         $model->unsetAttributes();  // clear any default values
         $model->typeuser = array(1);
-        $model->register_status = array(0);
+        $model->register_status = array(0,2);
         $model->status = array(0);
         $model->supper_user_status = true;
       
@@ -285,12 +285,12 @@ echo ($data);
 		$id = $_POST['id'];
 		$model = User::model()->findByPk($id);
 		//$member = Helpers::lib()->ldapTms($model->email);
-		if($model->status == 1){
-			$model->status = 0;
-			$model->register_status = 0;
-		} else {
+		if($model->status == 0){
+			// $model->status = 0;
 			$model->status = 1;
-			$model->register_status = 2;
+		} else {
+			//$model->status = 1;
+			$model->status = 0;
 		}
 		// $model->passwordChange = 1;
 
@@ -302,18 +302,16 @@ echo ($data);
 		// }else{
 		// 	$model->newpassword = $model->identification;
 		// }
-		$genpass = substr($model->identification, -6);
-		$model->username = $model->identification;
-		$model->register_status = 1;
+	
 		$model->save(false);
 		if(Yii::app()->user->id){
-						Helpers::lib()->getLogregister($model);
+						Helpers::lib()->getLogapprove($model);
 					}
 
 		$to['email'] = $model->email;
 		$to['firstname'] = $model->profile->firstname;
 		$to['lastname'] = $model->profile->lastname;
-		$message = $this->renderPartial('_mail_message',array('model' => $model,'genpass' => $genpass),true);
+		$message = $this->renderPartial('_mail_membership',array('model' => $model),true);
 		if($message){
 			 $send = Helpers::lib()->SendMail($to,'อนุมัติการเข้าใช้งานระบบ',$message);
 			//$send = Helpers::lib()->SendMailNotification($to,'อนุมัติการสมัครสมาชิก',$message);
@@ -331,11 +329,16 @@ echo ($data);
 		} else {
 			$model->register_status = 0;
 		}
+		$genpass = substr($model->identification, -6);
+		$model->username = $model->identification;
 		$model->save(false);
+		if(Yii::app()->user->id){
+						Helpers::lib()->getLogregister($model);
+					}
 		$to['email'] = $model->email;
 		$to['firstname'] = $model->profile->firstname;
 		$to['lastname'] = $model->profile->lastname;
-		$message = $this->renderPartial('_mail_membership',array('model' => $model),true);
+		$message = $this->renderPartial('_mail_message',array('model' => $model,'genpass' => $genpass),true);
 		if($message){
 			 $send = Helpers::lib()->SendMail($to,'อนุมัติการสมัครสมาชิก',$message);
 		}
@@ -348,7 +351,7 @@ echo ($data);
     	$id = $_POST['id'];
     	$passage = $_POST['passInput'];
 		$model = User::model()->findByPk($id);
-		if($model->register_status == 1 || $model->register_status == 0){
+		if($model->register_status == 0){
 			$model->register_status = 2;
 		} else {
 			$model->register_status = 1;
@@ -371,8 +374,9 @@ echo ($data);
     	$id = $_POST['id'];
     	$passage = $_POST['passInput'];
 		$model = User::model()->findByPk($id);
-		if($model->status == 1 || $model->status == 0){
-			$model->status = 2;
+		if($model->status == 0){
+			$model->status = 0;
+			$model->register_status = 3;
 		} else {
 			$model->status = 1;
 		}
@@ -385,7 +389,7 @@ echo ($data);
 
 		$message = $this->renderPartial('_mail_NotPassed',array('model' => $model,'passage' => $passage),true);
 		if($message){
-			 $send = Helpers::lib()->SendMail($to,'ไม่อนุมัติการสมัครสมาชิก',$message);
+			 $send = Helpers::lib()->SendMail($to,'ไม่อนุมัติการเข้าใช้งานระบบ',$message);
 		}
 		$this->redirect(array('/user/admin/Membership'));
     }
