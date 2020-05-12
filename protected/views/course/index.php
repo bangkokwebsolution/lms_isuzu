@@ -121,7 +121,7 @@ function DateThai($strDate)
                                     <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png);"></div>
                                 <?php } ?>
                                 <div class="course-detail">
-                                    <h4 class="text11"><?= $model_cate_tms->cate_title ?>....</h4>
+                                    <h4 class="text11"><?= $model_cate_tms->cate_title ?></h4>
                                     <p class="p"><?= $model_cate_tms->cate_short_detail ?></p>
                                 </div>
                             </button>
@@ -168,7 +168,7 @@ function DateThai($strDate)
                                     <div class="course-img" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png);"></div>
                                 <?php } ?>
                                 <div class="course-detail">
-                                    <h4 class="text11"><?= $m_c->cate_title ?>....</h4>
+                                    <h4 class="text11"><?= $m_c->cate_title ?></h4>
                                     <p class="p"><?= $m_c->cate_short_detail ?></p>
                                         <!-- <i class="fa fa-calendar"></i>&nbsp;<? php // echo DateThai($m_c->update_date); 
                                         ?> -->
@@ -235,7 +235,7 @@ function DateThai($strDate)
                                             ?>
 
 
-                                            <h4 class="text11"><i class="fa fa-trophy fa-sm text-<?= $statusLearnClass; ?>"></i> &nbsp <?= $model->course_title ?>....</h4>
+                                            <h4 class="text11"><i class="fa fa-trophy fa-sm text-<?= $statusLearnClass; ?>"></i> &nbsp <?= $model->course_title ?></h4>
 
                                             <p class="p"><?= $model->course_short_title ?></p>
                                             <!-- <i class="fa fa-calendar"></i> -->
@@ -373,7 +373,7 @@ function DateThai($strDate)
                                                 ?>
 
 
-                                                <h4 class="text11"><i class="fa fa-trophy fa-sm text-<?= $statusLearnClass; ?>"></i> &nbsp <?= $model->course_title ?>....</h4>
+                                                <h4 class="text11"><i class="fa fa-trophy fa-sm text-<?= $statusLearnClass; ?>"></i> &nbsp <?= $model->course_title ?></h4>
 
                                                 <p class="p"><?= $model->course_short_title ?></p>
                                                 <!-- <i class="fa fa-calendar"></i> -->
