@@ -65,7 +65,12 @@ function DateThai($strDate)
                 <h4 class="text-center courseindex"><?php echo $label->label_cate; ?></h4>
                 <div class="type-menu gallery">
                     <button class="btn btn-default filter-button btn-lg " data-filter="cate-all"><?php echo $label->label_courseAll; ?></button>
-                    <?php foreach ($model_cate as $m_c) {
+                    <?php 
+                    $cate_id_show = "";
+
+                    foreach ($model_cate as $m_c) {
+                        if($cate_id_show != $m_c->course->cate_id){
+                            $cate_id_show = $m_c->course->cate_id;
                         $m_c  = $m_c->course->CategoryTitle;
                         if (!$flag) {
                             $m_cChildren  = Category::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $m_c->cate_id, 'order' => 'cate_id'));
@@ -80,10 +85,15 @@ function DateThai($strDate)
                         $m_c->cate_id = $m_c->parent_id;
                     }
                     ?>
-                    <button style="white-space: normal;" class="btn btn-default filter-button btn-lg" data-filter="<?= $m_c->cate_id ?>"><?= $m_c->cate_title ?></button>
-                <?php } ?>
+                    <button style="white-space: normal;" class="btn btn-default filter-button btn-lg" data-filter="<?= $m_c->cate_id ?>"><?= $m_c->cate_title ?> 999</button>
+                <?php 
+            } 
+        }
 
-                <?php if ($model_cate_tms) {
+                ?>
+
+                <?php 
+                if ($model_cate_tms) {
                     if ($model_cate_tms->lang_id != 1) {
                         $model_cate_tms->cate_id = $m_c->parent_id;
                     }
