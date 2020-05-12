@@ -180,7 +180,7 @@ if($model){
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-main">
             <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/course/index'); ?>"><?php echo $label->label_course; ?></a></li>
-            <li class="breadcrumb-item active" aria-current="page"><?= $course->course_title ?></li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $course->course_title ?> <?= $course->getGen($course->course_id); ?></li>
         </ol>
     </nav>
 </div>
@@ -351,7 +351,7 @@ if($model){
 <div class="col-sm-8 col-md-8 ">
 
     <div class="topic-course">
-        <h3><?= $course->course_title ?></h3>
+        <h3><?= $course->course_title ?> <?= $course->getGen($course->course_id); ?></h3>
         <div class="alert alert-warning mt-20" role="alert">
             <?=$Period?> <?=$course->course_day_learn?> <?=$day?> <?= (!empty($course))? "(".Helpers::lib()->CuttimeLang($course->course_date_start,$langId)." - ".Helpers::lib()->CuttimeLang($course->course_date_end,$langId).")":""; ?>
         </div>
@@ -589,7 +589,7 @@ if($model){
                                                                                     $learnlink = 'javascript:void(0);';
                                                                                     $learnalert = 'alertswalpretest();';    
                                                                                 }else{
-                                                                                    $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
+                                                                                    $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id, 'gen'=>$lessonListValue->CourseOnlines->getGenID($lessonListValue->CourseOnlines->course_id)));
                                                                                     $learnalert = '';    
                                                                                 }
                                                                             }
@@ -638,7 +638,7 @@ if($model){
                                                                                 $learnlink = 'javascript:void(0);';
                                                                                 $learnalert = 'alertswalpretest();';
                                                                             } else{
-                                                                                $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
+                                                                                $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id, 'gen'=>$lessonListValue->CourseOnlines->getGenID($lessonListValue->CourseOnlines->course_id)));
                                                                                 $learnalert = '';    
                                                                             }
                                                                             $learnFiles = Helpers::lib()->checkLessonFile($les,$learnModel->learn_id);
@@ -697,7 +697,7 @@ if($model){
                                                                                             $learnlink = 'javascript:void(0);';
                                                                                             $learnalert = 'alertswalpretest();';    
                                                                                         }else{
-                                                                                            $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
+                                                                                            $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id, 'gen'=>$lessonListValue->CourseOnlines->getGenID($lessonListValue->CourseOnlines->course_id)));
                                                                                             $learnalert = '';    
                                                                                         }
                                                                                     }
@@ -737,7 +737,7 @@ if($model){
                                                                                                     $learnlink = 'javascript:void(0);';
                                                                                                     $learnalert = 'alertswalpretest();';
                                                                                                 } else{
-                                                                                                    $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
+                                                                                                    $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id, 'gen'=>$lessonListValue->CourseOnlines->getGenID($lessonListValue->CourseOnlines->course_id)));
                                                                                                     $learnalert = '';    
                                                                                                 }
                                                                                             }else{
@@ -1065,7 +1065,7 @@ if($model){
            <div class="panel-heading headcourse">
             <a role="button" data-toggle="collapse" data-target="#collapseFinal<?=$key?>" data-parent="#accordion" aria-expanded="true">
                <li>
-                <span class="stepcourse"> <?= $checkHaveCourseTest ? $final : ''; ?> <?= $checkHaveCourseTest && $CourseSurvey ? '&' : ''; ?> <?= $CourseSurvey ? $Questionnaire : '' ?><?= $course->course_title ?></span>
+                <span class="stepcourse"> <?= $checkHaveCourseTest ? $final : ''; ?> <?= $checkHaveCourseTest && $CourseSurvey ? '&' : ''; ?> <?= $CourseSurvey ? $Questionnaire : '' ?><?= $course->course_title ?> <?= $course->getGen($course->course_id); ?></span>
                 <span class="pull-right"><i class="fa fa-angle-down"></i></span>
             </li>
         </a>

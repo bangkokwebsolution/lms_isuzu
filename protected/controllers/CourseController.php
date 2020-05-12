@@ -359,6 +359,14 @@ public function actionResetLearn($id) {
             // $criteria->limit = 5;
                 $model_cate = OrgCourse::model()->findAll($criteria);
 
+                $course_id_check = "";
+                foreach ($model_cate as $key => $value) { // ลบ course id ที่ซ้ำ
+                    if($course_id_check != $value->course_id){
+                        $course_id_check = $value->course_id;
+                    }else{
+                        unset($model_cate[$key]);
+                    }
+                }
             }
 
     // var_dump("<pre>");
@@ -2116,9 +2124,10 @@ public function actionCourseLearn($id = null){ // อันใหม่ ใส�
         //     'order'=> 'note_time ASC'
         // ));
 
+        $gen_id = $_GET['gen'];
          $learn_note = LearnNote::model()->findAll(array(
-            'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND active="y"',
-            'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id),
+            'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND active="y" AND gen_id=:gen_id',
+            'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id, ':gen_id'=>$gen_id),
             'order'=> 'file_id DESC, note_time + 0 ASC'
         ));
 
@@ -2149,6 +2158,7 @@ public function actionCourseLearnNoteSave(){
         $note_time = floor($_POST["note_time"]);
         $note_text = $_POST["note_text"];
         $note_id = $_POST["note_id"];
+        $note_gen_id = $_POST["note_gen_id"];
         $user_id = Yii::app()->user->id;
 
         if($note_time <= 0){
@@ -2156,9 +2166,10 @@ public function actionCourseLearnNoteSave(){
         }
 
         if($note_lesson_id != "" && $note_file_id != "" && $note_time != "" && $user_id != "" && $note_text != ""){
+            $lesson_fine_course = Lesson::model()->findByPk($note_lesson_id);
             $learn_note = LearnNote::model()->find(array(
-                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND file_id=:file_id AND note_time=:note_time',
-                'params'=>array(':lesson_id'=>$note_lesson_id,':user_id'=>$user_id, ':file_id'=>$note_file_id, ':note_time'=>$note_time),
+                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND file_id=:file_id AND note_time=:note_time AND gen_id=:gen_id',
+                'params'=>array(':lesson_id'=>$note_lesson_id,':user_id'=>$user_id, ':file_id'=>$note_file_id, ':note_time'=>$note_time, ':gen_id'=>$note_gen_id),
             ));
 
             if(!empty($learn_note)){
@@ -2172,6 +2183,8 @@ public function actionCourseLearnNoteSave(){
                 $learn_note->file_id = $note_file_id;
                 $learn_note->note_time = $note_time;
                 $learn_note->note_times = 1;
+                $learn_note->course_id = $lesson_fine_course->course_id;
+                $learn_note->gen_id = $note_gen_id;
             }
 
             $learn_note->note_text = $note_text;
