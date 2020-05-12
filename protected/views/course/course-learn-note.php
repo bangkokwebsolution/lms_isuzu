@@ -3408,6 +3408,8 @@ function time_test_start(time_down){
                       // console.log("note_lesson_id = "+note_lesson_id);
                       // console.log("note_file_id = "+note_file_id);
 
+                      var note_gen_id = "<?php echo $_GET['gen']; ?>";
+
                       if(note_text != ""){
                       if(note_lesson_id != null && note_file_id != null && note_time != null){
                         $.ajax({
@@ -3418,6 +3420,7 @@ function time_test_start(time_down){
                             note_file_id: note_file_id,
                             note_time: note_time,
                             note_text: note_text,
+                            note_gen_id: note_gen_id,
                           }),
                           success: function(data) {
                             if(data != "error" && data != "error2"){                              
