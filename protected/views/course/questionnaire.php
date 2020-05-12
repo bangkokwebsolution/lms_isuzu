@@ -85,7 +85,7 @@ $getLessonAll = Lesson::model()->findAll(array(
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-main">
           <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/course/index'); ?>"><?php echo $labelCourse->label_course; ?></a>
-            <li class="breadcrumb-item active" aria-current="page"><?= $course->course_title ?></li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $course->course_title ?> <?= $course->getGen($course->course_id); ?></li>
         </ol>
     </nav>
 </div> 
@@ -123,7 +123,7 @@ $getLessonAll = Lesson::model()->findAll(array(
                                                                 <div class="col-md-9">
                                                                     <div class="box-content-body panel-body">
                                                                         <h4><?= $SurveyCourse->survey_name ?></h4>
-                                                                        <h5 style="font-size: 20px;"><?= $label->label_surveyCourse ?>: <font style="font-weight: 500;"><?= $course->course_title ?></font></h5>
+                                                                        <h5 style="font-size: 20px;"><?= $label->label_surveyCourse ?>: <font style="font-weight: 500;"><?= $course->course_title ?> <?= $course->getGen($course->course_id); ?></font></h5>
                                                                         <hr>
                                                                     </div>
                                                                 </div>

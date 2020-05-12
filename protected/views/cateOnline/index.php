@@ -185,7 +185,7 @@ MSG;
                                             </div>
                                             <div class="media-body">
                                                 <h6 class="media-heading margin-v-5-3"><a
-                                                        href="#"><?= iconv_substr($course_online_data->course_title, 0, 100, 'utf-8'); ?></a>
+                                                        href="#"><?= iconv_substr($course_online_data->course_title, 0, 100, 'utf-8'); ?> <?= $course_online_data->getGen($course_online_data->course_id); ?></a>
                                                 </h6>
                                             </div>
                                         </div>

@@ -1523,9 +1523,10 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
   margin-top: 5px;
 }
 
-#course-learn .nameheadcl {
-  font-size: 23px;
-  font-weight: 6
+.nameheadcl {
+  font-size: 18px;
+  font-weight: 600;
+  padding-top: 10px;
 }
 
 #course-learn .sidenav .nav-tabs.nav-justified>li>a {
@@ -2707,7 +2708,9 @@ ol {
   /*border-bottom: 1px dotted #547986;*/
   background-color: #efefef;
 }
-
+.list-group-item  span{
+  font-size: 14px !important;
+}
 .detailmore {
   font-size: 12px;
 }
@@ -3359,8 +3362,8 @@ footer {
 }
 
 /*.statuscourse{
-	margin-top: 10px;
-	background-color: #000;
+  margin-top: 10px;
+  background-color: #000;
 
   }*/
 
@@ -4371,8 +4374,25 @@ ol.stat-alert li::before {
     text-align: left;
 }
 
+
+.h-course-title-main {
+    padding: 1em;
+    border: 1px solid #ddd;
+    background-color: #b2282b;
+    display: block;
+    width: 100%;
+    text-align: left;
+    color: #fff;
+}
+.h-course-title-main i,.h-course-title i{
+  margin-right: 5px;
+}
+
 .note-input{
   padding: 1em
+}
+.note-save{
+  margin-top: 1em;
 }
 .btn-note{
     color: #fff;
@@ -4383,6 +4403,14 @@ ol.stat-alert li::before {
     width: 100%;
     margin-top: 10px;
     font-size: 16px;
+}
+.title-note{
+   margin-top: 1em;
+}
+.table.table-note th, .table.table-note td{
+  border:none!important;
+  border-bottom: 1px dashed #ddd !important;
+  padding: 10px;
 }
 
 .btn-note:hover,.btn-note:focus{
@@ -4427,6 +4455,20 @@ ol.stat-alert li::before {
   height: 20px;
   width: 20px;
   cursor: pointer;
+}
+.section-list{
+  padding: 0;
+}
+.list-coursemain{
+  border-bottom: 1px solid #ddd;
+  padding: 0;
+}
+
+.list-coursemain a{
+  padding: 8px !important;
+}
+.list-coursemain a h6{
+  font-size: 16px ;
 }
 
 @media (min-width: 1440px) {

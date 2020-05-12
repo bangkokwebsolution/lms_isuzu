@@ -151,7 +151,7 @@
                                     <li class="list-group-item media v-middle">
                                         <div class="media-body">
                                             <a href="<?=Yii::app()->createUrl('course/detail',array('id'=>$cs->course_id))?>" class="text-subhead list-group-link">
-                                                <?php echo $cs->course_title; ?>
+                                                <?php echo $cs->course_title; ?> <?= $cs->getGen($cs->course_id); ?>
                                             </a>
                                             <br>
                                             <p style="font-size:18px;">เรียนแล้ว <label style="color: #00A000; font-weight: 600;"><?=$pass?></label> : ยังไม่เรียน <label style="color: red; font-weight: 600;"><?=$notlearn?> </label> : กำลังเรียน <label><?php echo $learning?></label></p>
@@ -198,7 +198,7 @@
                                            href="#collapse<?=$j?>">
                                             <h4 class="panel-title panel-title-adjust">
                                                 <!-- หลักสูตร: หลักสูตรการทำงานเป็นทีม -->
-                                                หลักสูตร: <?php echo $cs->course_title; ?>
+                                                หลักสูตร: <?php echo $cs->course_title; ?> <?= $cs->getGen($cs->course_id); ?>
                                             </h4>
                                         </a>
                                     </div>
