@@ -2748,6 +2748,18 @@ $(".idcard").change(function() {
 
                                     $('.form_ship').hide();
                                 }
+                                 var sick = $("input[name='history_of_illness']:checked").val();
+                                if (sick === 'y') {
+                                    $('.form_ship').show();
+                                }else{
+                                    $('.form_ship').hide();
+                                }
+                                var child = $("input[name='status_sm']:checked").val();
+                                if (child == 'm') {
+                                   $('.children').show();
+                                }else{
+                                   $('.children').hide();
+                                }
                                 $('#passport_card').hide();
                                 $('#identification_card').show();
                                 $(".id_employee").show();
@@ -2772,6 +2784,18 @@ $(".idcard").change(function() {
                                     $('.form_ship').show();
                                 }else{
                                     $('.form_ship').hide();
+                                }
+                                 var sick = $("input[name='history_of_illness']:checked").val();
+                                if (sick === 'y') {
+                                    $('.form_ship').show();
+                                }else{
+                                    $('.form_ship').hide();
+                                }
+                                var child = $("input[name='status_sm']:checked").val();
+                                if (child == 'm') {
+                                   $('.children').show();
+                                }else{
+                                   $('.children').hide();
                                 }
                                 $('#passport_card').show();
                                 $('#identification_card').hide();
