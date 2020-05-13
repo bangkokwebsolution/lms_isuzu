@@ -94,7 +94,18 @@ EOD
 						// 	'htmlOptions'=>array('style'=>'text-align: center;'),
 						// 	'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
 						// ),
-
+						array(
+							'name'=>'status',
+							'type'=>'html',
+							'value'=> function($data){
+								if($data->status == 1){
+									$text = "<font color='green' size='4'>ใช้งาน</font>";
+								}else{
+									$text = "";
+								}
+								return $text;
+							}
+						),
 
 						array(
 							'name'=>'gen_period_start',
