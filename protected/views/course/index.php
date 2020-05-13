@@ -280,7 +280,7 @@ function DateThai($strDate)
 
                                                 }else{
 
-                                                     if (date($model->course_date_start) > date("Y-m-d")) {
+                                                     if (date($model->course_date_start) > date("Y-m-d H:i:s")) {
                                                     $evnt = 'onclick="alertMsgNotNow()"';
                                                     $url = 'javascript:void(0)';
                                                 } else {
@@ -300,7 +300,7 @@ function DateThai($strDate)
                                                 }
 
                                                 }else{
-                                                   if (date($model->course_date_start) > date("Y-m-d")) {
+                                                   if (date($model->course_date_start) > date("Y-m-d H:i:s")) {
                                                     $evnt = 'onclick="alertMsgNotNow()"';
                                                     $url = 'javascript:void(0)';
                                                 } else {
