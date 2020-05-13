@@ -101,14 +101,19 @@ public function actionListPosition(){
 
      $model=Position::model()->findAll('department_id=:department_id',
         array(':department_id'=>$_POST['id']));
-
+     
      $data=CHtml::listData($model,'id','position_title',array('empty' => 'ตำแหน่ง'));
+      if ($data) {     
      $sub_list = 'เลือกตำแหน่ง';
      $data = '<option value ="">'.$sub_list.'</option>';
      foreach ($model as $key => $value) {
         $data .= '<option value = "'.$value->id.'"'.'>'.$value->position_title.'</option>';
     }
     echo ($data);
+    }else{
+    echo '<option value = "">ไม่พบข้อมูล</option>';
+     	
+     }
 
 }
 
@@ -118,12 +123,17 @@ public function actionListBranch(){
     array(':position_id'=>$_POST['id']));
 
  $data=CHtml::listData($model,'id','branch_name',array('empty' => 'สาขา'));
+  if ($data) {  
  $sub_list = 'เลือกระดับ';
  $data = '<option value ="">'.$sub_list.'</option>';
  foreach ($model as $key => $value) {
     $data .= '<option value = "'.$value->id.'"'.'>'.$value->branch_name.'</option>';
 }
 echo ($data);
+ }else{
+    echo '<option value = "">ไม่พบข้อมูล</option>';
+     	
+     }
 
 }
 
@@ -419,14 +429,7 @@ echo ($data);
 		$id = $_POST['id'];
 		$user = User::model()->findByPk($id);
 		$profile = Profile::model()->findByPk($id);
-		// $profile = Profile::model()->find(array(
-		// 		'condition' => 'user_id=:user_id ',
-		// 		'params' => array('user_id' => $id)
-		// 	));
-		// 	$user = User::model()->find(array(
-		// 		'condition' => 'id=:id',
-		// 		'params' => array('id' => $id)
-		// 	));
+
 	
        $this->renderPartial('Checkinformation',array('user' => $user,'profile' => $profile));
 	}
@@ -488,20 +491,6 @@ echo ($data);
 				$nameold_file_training[] = $valuetn->file_name;	
 			}
 	     }
- 
-		// // สร้าง folder
-		// if (!is_dir(Yii::app()->getUploadPath(null)."../zip/all/")) {
-		// 	mkdir(Yii::app()->getUploadPath(null)."../zip/all/", 0777, true);
-		// }else{  //ลบ zip all
-		// 	$file_in_folder = glob(Yii::app()->getUploadPath(null)."..\\zip\\all\\*");		
-		// 	if(!empty($file_in_folder)){
-		// 		foreach($file_in_folder as $file){ // iterate files
-		// 			if(is_file($file)){
-		// 				unlink($file); // delete file
-		// 			}             
-		// 		}										
-		// 	}
-		// }
 
 		$criteria = new CDbCriteria;
         $criteria->addCondition('user_id ="'.$user_id.'"');
@@ -522,6 +511,11 @@ echo ($data);
 			$zip = Yii::app()->zip;
 			$path_in_zip = "..\uploads\attachZib\\";
 			$name_zip = "$firstname"."-"."$positionName.zip";
+
+			$name_attach = "เอกสารไฟล์แนบ.zip";
+			$name_edu = "เอกสารไฟล์แนบการศึกษา.zip";
+			$name_training = "เอกสารไฟล์แนบการฝึกอบรม.zip";
+
 				$file_in_folders = glob(Yii::app()->getUploadPath(null)."..\\attachZib\\*");		
 			if(!empty($file_in_folders)){
 				foreach($file_in_folders as $file){ // iterate files
@@ -540,6 +534,33 @@ echo ($data);
 			foreach ($path_zip_edu as $keye => $valuee) {
                  $zip->makeZip_nn($valuee, $path_in_zip.$name_zip, $nameold_file_edu[$keye]);
 			}
+			// foreach ($path_zip_attach as $key => $link_file) {
+
+			// 	 $zip->makeZip_nn($link_file, $path_in_zip.$name_attach, $nameold_file_attach[$key]);
+			// }
+			// foreach ($path_zip_training as $keyt => $valuet) {
+   //               $zip->makeZip_nn($valuet, $path_in_zip.$name_training, $nameold_file_training[$keyt]);
+			// }
+			// foreach ($path_zip_edu as $keye => $valuee) {
+   //               $zip->makeZip_nn($valuee, $path_in_zip.$name_edu, $nameold_file_edu[$keye]);
+			// }
+
+   //         $file_in = glob(Yii::app()->getUploadPath(null)."..\\attachZib\\*");
+     
+    
+   //         foreach ($file_in as $keys => $val) {
+
+   //               $zip->makeZip_nn($val, $path_in_zip.$name_zip, $name_attach[$keys]);
+			// }
+			// foreach ($file_in as $keys => $val) {
+
+   //               $zip->makeZip_nn($val, $path_in_zip.$name_zip, $name_training[$keys]);
+			// }
+			// foreach ($file_in as $keys => $val) {
+
+   //               $zip->makeZip_nn($val, $path_in_zip.$name_zip, $name_edu[$keys]);
+			// }
+
 			$file_in_folder = glob(Yii::app()->getUploadPath(null)."..\\attachZib\\*");
 			foreach($file_in_folder as $file_in){ // วนลบไฟล์ในโฟลเดอร์
 				if(is_file($file_in)){

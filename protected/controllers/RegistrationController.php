@@ -1943,12 +1943,17 @@ public function actionListPosition(){
  $model = Position::model()->findAll($criteria);
 
      $data=CHtml::listData($model,'id','position_title',array('empty' => 'ตำแหน่ง'));
+     if ($data) {
      $sub_list = Yii::app()->session['lang'] == 1?'Select Pocition ':'เลือกตำแหน่ง';
      $data = '<option value ="">'.$sub_list.'</option>';
      foreach ($model as $key => $value) {
         $data .= '<option value = "'.$value->id.'"'.'>'.$value->position_title.'</option>';
     }
     echo ($data);
+    }else{
+    echo '<option value = "">ไม่พบข้อมูล</option>';
+        
+     }
 
 }
 

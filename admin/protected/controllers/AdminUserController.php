@@ -88,12 +88,17 @@ class AdminUserController extends Controller
         array(':department_id'=>$_POST['id']));
 
      $data=CHtml::listData($model,'id','position_title',array('empty' => 'ตำแหน่ง'));
+     if ($data) {  
      $sub_list = 'เลือกตำแหน่ง';
      $data = '<option value ="">'.$sub_list.'</option>';
      foreach ($model as $key => $value) {
         $data .= '<option value = "'.$value->id.'"'.'>'.$value->position_title.'</option>';
     }
     echo ($data);
+    }else{
+    echo '<option value = "">ไม่พบข้อมูล</option>';
+     	
+     }
 
 }
 
@@ -103,12 +108,17 @@ public function actionListBranch(){
     array(':position_id'=>$_POST['id']));
 
  $data=CHtml::listData($model,'id','branch_name',array('empty' => 'สาขา'));
+ if ($data) {
  $sub_list = 'เลือกระดับ';
  $data = '<option value ="">'.$sub_list.'</option>';
  foreach ($model as $key => $value) {
     $data .= '<option value = "'.$value->id.'"'.'>'.$value->branch_name.'</option>';
 }
 echo ($data);
+}else{
+    echo '<option value = "">ไม่พบข้อมูล</option>';
+     	
+     }
 
 }
 
