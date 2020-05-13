@@ -95,7 +95,7 @@ th.info{
     color: #6c6c6c;
 }
 thead th{
-    background-color: rgba(0,0,0,.5) !important;
+    background-color: #010c65 !important;
     color: #f8f8f8;
     vertical-align: middle !important;
 }
@@ -157,8 +157,8 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne"><span class="font-weight-bold text-white text25"> <?=  $label->label_statusCourse ?></span> <span class="pull-right"><i class="fa fa-caret-down text-white" aria-hidden="true"></i></span></a>
                         </h4>
                     </div>
-                <div id="collapseOne" class="panel-collapse collapse">
-                    <div class="panel-body">
+                <div id="collapseOne" class="panel-collapse collapse in">
+                    <div class="panel-body dashboard-pd">
                          <table class="table table-bordered table-striped" >
                                 <thead>
                                     <tr class="tr">
