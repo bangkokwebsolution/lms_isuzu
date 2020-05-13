@@ -179,8 +179,10 @@ class CourseGenerationController extends Controller
 	 */
 	public function actionIndex($id)
 	{
-		$model=new CourseGeneration('search');
+		$model=new CourseGeneration('search');		
 		$model->unsetAttributes();  // clear any default values
+		$model->course_id = $id;
+		$model->active = 'y';
 		if(isset($_GET['CourseGeneration']))
 			$model->attributes=$_GET['CourseGeneration'];
 
