@@ -2,7 +2,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<link rel="shortcout icon" type="icon/png" href="<?php echo Yii::app()->theme->baseUrl; ?>/images/icon.png">
+<link rel="shortcout icon" type="icon/png" href="<?php echo Yii::app()->theme->baseUrl; ?>/images/favicon.png">
 <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/bootstrap.min.css" crossorigin="anonymous">
 
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/fresco-2.3.0/css/fresco.css" media="screen">

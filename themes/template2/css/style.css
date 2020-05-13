@@ -4274,23 +4274,6 @@ ol.stat-alert li::before {
   border-top: 1px solid #ddd;
 }
 
-.contact-admin {
-  position: fixed;
-  right: 55px;
-  bottom: 0;
-  margin: 0;
-  z-index: 10000;
-  color: #fff;
-  cursor: pointer;
-  height: 94px;
-  width: 290px;
-  transition: all 0.3s ease 0s;
-}
-
-.contact-admin:hover {
-  height: 264px;
-}
-
 #user-report .modal-body {
   padding: 2em;
 }
@@ -4505,6 +4488,47 @@ ol.stat-alert li::before {
 @media (max-width: 1024px) {
   .course .well .course-img {
     height: 120px;
+  }
+}
+
+@media (min-width:600px){
+  .contact-admin {
+    position: fixed;
+    right: 55px;
+    bottom: 0;
+    margin: 0;
+    z-index: 10000;
+    color: #fff;
+    cursor: pointer;
+    height: 94px;
+    width: 290px;
+    transition: all 0.3s ease 0s;
+  }
+  #contact-mobile{
+    display: none;
+  }
+
+  .contact-admin:hover {
+    height: 264px;
+  }
+}
+
+@media (max-width:599px){
+  #mascot-contact{
+    display: none;
+  }
+  .contact-admin #contact-mobile {
+    position: fixed;
+    right: 85px;
+    bottom: 0;
+    margin: 0;
+    z-index: 10000;
+    color: #fff;
+    cursor: pointer;
+    background:#CC0B21 ;
+    border-radius: 5px 5px 0 0;
+    padding: 18px;
+    transition: all 0.3s ease 0s;
   }
 }
 

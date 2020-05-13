@@ -37,16 +37,31 @@ Yii::app()->user->returnUrl = $http->getUrl();
         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/sweetalert/dist/sweetalert.min.js"></script>
        
 	</head>
-	<body style="overflow-x: hidden; margin:0;" >
+	<body>
     <!-- onload="init();" -->
 <!-- <a data-toggle="modal" href="#modal-contactus" class="contact">
     <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/contact.png" alt="" class="hidden-xs">
 </a> -->
 
-<!-- Start Header Section -->
+<div id="loader">
+      <div class="spinner">
+        <div class="dot1"></div>
+        <div class="dot2"></div>
+      </div>
+</div>  
+
 <div class="backtotop"><span><i class="fas fa-arrow-up"></i> <small>top</small></span></div>
 <a class="contact-admin" data-toggle="modal" href="#user-report">
     <div id="mascot-contact"></div>
+    <div id="contact-mobile">
+      <?php
+      if (Yii::app()->session['lang'] == 1) {
+        echo "<span><i class='fas fa-exclamation-triangle></i> Report Problem</span>"; //อังกฤษ
+      } else {
+        echo "<span><i class='fas fa-exclamation-triangle'></i> แจ้งปัญหาการใช้งาน</span>"; //ไทย
+      }
+      ?>
+    </div>
 </a>
 
  <?php
@@ -67,12 +82,10 @@ if (Yii::app()->session['lang'] == 1) {
 </script>
 
 <?php include("themes/template2/include/header.php"); ?>
-<!-- End Header Section -->
+
 <?php echo $content; ?>
 
-<!-- Start Footer Section -->
 <?php include("themes/template2/include/footer.php"); ?>
-<!-- End Footer Section -->
 
 
 <?php include("themes/template2/include/javascript.php"); ?>
@@ -82,18 +95,6 @@ if (Yii::app()->session['lang'] == 1) {
 	});
 </script>
 
-
-
-	 <div id="loader">
-      <div class="spinner">
-        <div class="dot1"></div>
-        <div class="dot2"></div>
-      </div>
-    </div>  
-
-
-
-<!-- Modal News -->
 <?php
 $time = date("Y-m-d");
 $criteriapopup = new CDbCriteria;

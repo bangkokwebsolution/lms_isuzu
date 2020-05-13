@@ -19,7 +19,6 @@ Yii::app()->user->returnUrl = $http->getUrl();
 
   <head>
   
-    <!-- Basic -->
     <?php if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
             $langId = Yii::app()->session['lang'] = 1;
             $this->pageTitle = 'Thoresen e-Learning';
@@ -40,10 +39,18 @@ Yii::app()->user->returnUrl = $http->getUrl();
         <div class="dot2"></div>
       </div>
     </div> -->
-    <!-- Start Header Section -->
     <div class="backtotop"><span><i class="fas fa-arrow-up"></i> <small>top</small></span></div>
     <a class="contact-admin" data-toggle="modal" href="#user-report">
         <div id="mascot-contact"></div>
+        <div id="contact-mobile">
+          <?php
+          if (Yii::app()->session['lang'] == 1) {
+            echo "<span><i class='fas fa-exclamation-triangle></i> Report Problem</span>"; //อังกฤษ
+          } else {
+            echo "<span><i class='fas fa-exclamation-triangle'></i> แจ้งปัญหาการใช้งาน</span>"; //ไทย
+          }
+          ?>
+        </div>
     </a>
 
     <?php
@@ -63,13 +70,10 @@ Yii::app()->user->returnUrl = $http->getUrl();
         });
     </script>
     <?php include("themes/template2/include/header.php"); ?>
-    <!-- End Header Section -->
+
     <?php echo $content; ?>
 
-
-    <!-- Start Footer Section -->
     <?php include("themes/template2/include/footer.php"); ?>
-    <!-- End Footer Section -->
     
     <?php include("themes/template2/include/javascript.php"); ?>
     
