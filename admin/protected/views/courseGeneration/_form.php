@@ -44,13 +44,13 @@
 
 				<div class="row">
 					<?php echo $form->labelEx($model,'gen_period_start'); ?>
-					<?php echo $form->textField($model,'gen_period_start',array('rows'=>6, 'cols'=>50, 'class' => 'default_datetimepicker')); ?>
+					<?php echo $form->textField($model,'gen_period_start',array('rows'=>6, 'cols'=>50, 'class' => 'default_datetimepicker', 'autocomplete'=>'off')); ?>
 					<?php echo $form->error($model,'gen_period_start'); ?>
 				</div>
 
 				<div class="row">
 					<?php echo $form->labelEx($model,'gen_period_end'); ?>
-					<?php echo $form->textField($model,'gen_period_end',array('rows'=>6, 'cols'=>50, 'class' => 'default_datetimepicker')); ?>
+					<?php echo $form->textField($model,'gen_period_end',array('rows'=>6, 'cols'=>50, 'class' => 'default_datetimepicker', 'autocomplete'=>'off')); ?>
 					<?php echo $form->error($model,'gen_period_end'); ?>
 				</div>
 				<div class="row">

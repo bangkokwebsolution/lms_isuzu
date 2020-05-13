@@ -83,7 +83,7 @@ class CourseGeneration extends CActiveRecord
 			'course_id' => 'หลักสูตร',
 			'gen_period_start' => 'เวลาเริ่มเรียน',
 			'gen_period_end' => 'เวลาเรียนสิ้นสุด',
-			'gen_title' => 'ชื่อร่น',
+			'gen_title' => 'ชื่อรุ่น',
 			'create_date' => 'วันที่สร้าง',
 			'create_by' => 'ผู้สร้าง',
 			'update_date' => 'วันที่แก้ไข',
@@ -148,7 +148,7 @@ class CourseGeneration extends CActiveRecord
 		// var_dump($this->gen_title); exit();
 
 		if($this->gen_title != ""){
-			$model = CourseGeneration::model()->findAll("course_id='".$this->course_id."' AND gen_title = '".$this->gen_title."'");
+			$model = CourseGeneration::model()->findAll("course_id='".$this->course_id."' AND gen_title = '".$this->gen_title."' AND active='y'");
 
 			if(!empty($model)){
 				$this->addError('gen_title', 'ชื่อรุ่นซ้ำ กรุณากรอกใหม่');

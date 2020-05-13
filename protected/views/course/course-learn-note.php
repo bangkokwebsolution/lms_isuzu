@@ -2465,14 +2465,14 @@ $idx++;
            var myVar;
            var width = $(document).width();
            var height = $(document).height();
+           var arr_videoId = new Array();
            $(".video-js").each(function (videoIndex) {
-            // console.log(videoId);
             var videoId = $(this).attr("id");
             var lessonId = $(this).attr("lesson_id");
             var index = $(this).attr("index");
             var fileId = $(this).attr("fileId");
             var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-
+            arr_videoId.push(videoId);
             var myPlayer = videojs(videoId);
                             //detect Click out bound video
                                 var $win = $(window); // or $box parent container
@@ -2528,7 +2528,7 @@ $idx++;
                                         $('#stopLearn').modal({backdrop: 'static', keyboard: false});
                                         $('#stopLearn').modal('show');
                                         // $('video').click(false);
-                               // console.log("6 : "+status_in_learn_note);
+                                      // console.log("6 : "+status_in_learn_note);
 
                                         myPlayer.pause();
                                       }else{
@@ -2543,10 +2543,12 @@ $idx++;
 
                                 window.onblur = function() { 
                                     // console.log('blur'); 
-                               // console.log("7 : "+status_in_learn_note);
-
-                                    myPlayer.pause();
+                                    for (var i = 0; i < arr_videoId.length; i++) {
+                                      videojs(arr_videoId[i]).pause();
+                                    // console.log("7 : "+status_in_learn_note);
+                                    // myPlayer.pause();
                                   }
+                                }
 
                                   _V_(videoId).ready(function () {
                                     if(iOS){
@@ -3240,7 +3242,6 @@ function time_test_start(time_down){
                   // });
 
                   $("#note-1").keydown(function (event) {
-                    // console.log(event.keyCode);
                     if (event.keyCode == 13) { // enter
                       save_learn_note();
                     }
@@ -3327,8 +3328,7 @@ function time_test_start(time_down){
                     if(id_video_file_open == id_video_file){
                       document.getElementById('example_video_'+video_id_last+'_html5_api').play();
                       document.getElementById('example_video_'+video_id_last+'_html5_api').currentTime = id_video_time;
-                    }else{
-                      console.log(id_video_file_open+" = "+id_video_file);                      
+                    }else{                    
                       swal({
                         type: "warning",
                         title: "แจ้งเตือน!",
@@ -3364,10 +3364,7 @@ function time_test_start(time_down){
                       var video_check, note_time, video, note_text;
                       status_in_learn_note = 1; // เข้าฟังชัน ไม่ให้ video หยุดเล่น
 
-                      // var id_video_file = jQuery('.collapse.in').attr("id").replace("collapse", "");
-
                       var id_video_file = jQuery('.collapse.in');
-                      // console.log(id_video_file[1].getAttribute("id"));
 
                     id_video_file = id_video_file[num_show_video_i].getAttribute("id").replace("collapse", "");
                       video_id_last = $("[fileid="+id_video_file+"]").attr("index");
@@ -3389,10 +3386,6 @@ function time_test_start(time_down){
                     note_time = video.currentTime;
                     note_text = $("#note-1").val();
 
-                      // console.log("time = "+note_time);
-                      // console.log("note_lesson_id = "+note_lesson_id);
-                      // console.log("note_file_id = "+note_file_id);
-
                       var note_gen_id = "<?php echo $_GET['gen']; ?>";
 
                       if(note_text != ""){
@@ -3410,12 +3403,7 @@ function time_test_start(time_down){
                           success: function(data) {
                             if(data != "error" && data != "error2"){                              
                               $("#note-1").val("");
-                              // console.log(+data.split("'")[1].replace("tr_note_", ""));
-                              // console.log(data.split(":")[1]);
                               $("#tr_note_"+data.split("'")[1].replace("tr_note_", "")).remove();
-                                // $("#tr_note_"+note_id).hide();
-
-                                // console.log(data.split("'")[11]);
                                 var tbody_note = data.split("'")[11];
                               $("#tbody_note_"+tbody_note).append(data);
                               $("#table_note_"+tbody_note).show();
@@ -3538,8 +3526,6 @@ function time_test_start(time_down){
                       cancelButtonText: 'ยกเลิก'
                     }).then((result) => {
                       if (result.value) {
-                        console.log("อิอิ");
-
                         var note_text = $("#note-2").val();
                         if(note_id != ""){
                           $.ajax({
