@@ -4479,6 +4479,23 @@ ol.stat-alert li::before {
   font-size: 16px ;
 }
 
+.contact-admin {
+  position: fixed;
+  right: 55px;
+  bottom: 0;
+  margin: 0;
+  z-index: 10000;
+  color: #fff;
+  cursor: pointer;
+  height: 94px;
+  width: 290px;
+  transition: all 0.3s ease 0s;
+}
+
+.contact-admin:hover {
+  height: 264px;
+}
+
 @media (min-width: 1440px) {
   .course .well .course-img {
     height: 150px;
@@ -4490,14 +4507,14 @@ ol.stat-alert li::before {
     height: 120px;
   }
 }
-
+/*
 @media (min-width:600px){
   .contact-admin {
     position: fixed;
     right: 55px;
     bottom: 0;
     margin: 0;
-    z-index: 1000;
+    z-index: 10000;
     color: #fff;
     cursor: pointer;
     height: 94px;
@@ -4508,10 +4525,11 @@ ol.stat-alert li::before {
   .contact-admin:hover {
     height: 264px;
   }
-}
+}*/
 
+/*
 @media (max-width:599px){
-  /* .contact-admin #mascot-contact{
+   .contact-admin #mascot-contact{
     display: none;
     visibility: hidden;
   }
@@ -4527,8 +4545,8 @@ ol.stat-alert li::before {
     border-radius: 5px 5px 0 0;
     padding: 18px;
     transition: all 0.3s ease 0s;
-  } */
-}
+  } 
+}*/
 
 @media (max-width: 767px) {
   .course .well .course-img {

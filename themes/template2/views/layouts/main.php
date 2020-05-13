@@ -43,7 +43,7 @@ Yii::app()->user->returnUrl = $http->getUrl();
     <a class="contact-admin" data-toggle="modal" href="#user-report">
         <div id="mascot-contact"></div>
         <!-- <div id="contact-mobile">
-          <?php
+          < ?php
           if (Yii::app()->session['lang'] == 1) {
             echo "<span><i class='fas fa-exclamation-triangle></i> Report Problem</span>"; //อังกฤษ
           } else {
