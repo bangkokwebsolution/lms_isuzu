@@ -87,15 +87,25 @@
 					}else{
 						echo "Miss";
 					}?>&nbsp;&nbsp;<?php echo $profile['firstname_en'] ?>&nbsp;&nbsp;<?php echo $profile['lastname_en'] ?></span></h5></div>
-					<div class="col-md-6"><h5><b>เลขบัตรประจำตัวประชาชน:</b><span><?php if($profile['identification'] != ""){ echo $profile['identification'];}else{echo "-";} ?></span> </h5></div>
-					<div class="col-md-6"><h5><b>วันที่บัตรหมดอายุ:</b><span><?php if($profile['date_of_expiry'] != ""){ echo $profile['date_of_expiry'];}else{echo "-";} ?></span></h5></div>
-					<div class="col-md-6"><h5><b>หนังสือประจำตัวลูกเรือ:</b><span><?php if($profile['seamanbook'] != ""){ echo $profile['seamanbook'];}else{echo "-";} ?></span> </h5></div>
-					<div class="col-md-6"><h5><b>วันที่บัตรหมดอายุ:</b><span><?php if($profile['seaman_expire'] != ""){ echo $profile['seaman_expire'];}else{echo "-";}  ?></span></h5></div>
 					<div class="col-md-6"><h5><b>วันเดือนปีเกิด:</b><span><?php if($profile['birthday'] != ""){ echo $profile['birthday'];}else{echo "-";}  ?></span> </h5></div>
 					<div class="col-md-6"><h5><b>อายุ:</b><span><?php if($profile['age'] != ""){ echo $profile['age'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-6"><h5><b>สถานที่เกิด:</b><span><?php if($profile['place_of_birth'] != ""){ echo $profile['place_of_birth'];}else{echo "-";}  ?></span> </h5></div>
+					<div class="col-md-6"><h5><b>กรุ๊ปเลือด:</b><span><?php if($profile['blood'] != ""){ echo $profile['blood'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-6"><h5><b>ส่วนสูง:</b><span><?php if($profile['hight'] != ""){ echo $profile['hight'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-6"><h5><b>น้ำหนัก:</b><span><?php if($profile['weight'] != ""){ echo $profile['weight'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-6"><h5><b>เลขบัตรประจำตัวประชาชน:</b><span><?php if($profile['identification'] != ""){ echo $profile['identification'];}else{echo "-";} ?></span> </h5></div>
+					<div class="col-md-6"><h5><b>วันที่บัตรหมดอายุ:</b><span><?php if($profile['date_of_expiry'] != ""){ echo $profile['date_of_expiry'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-6"><h5><b>สถานที่ออกบัตร:</b><span><?php if($profile['place_issued'] != ""){ echo $profile['place_issued'];}else{echo "-";} ?></span> </h5></div>
+					<div class="col-md-6"><h5><b>วันที่ออกบัตร:</b><span><?php if($profile['date_issued'] != ""){ echo $profile['date_issued'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-6"><h5><b>หนังสือเดินทาง:</b><span><?php if($profile['passport'] != ""){ echo $profile['passport'];}else{echo "-";} ?></span> </h5></div>
+					<div class="col-md-6"><h5><b>วันที่บัตรหมดอายุ:</b><span><?php if($profile['pass_expire'] != ""){ echo $profile['pass_expire'];}else{echo "-";}  ?></span></h5></div>
+					<div class="col-md-6"><h5><b>หนังสือประจำตัวลูกเรือ:</b><span><?php if($profile['seamanbook'] != ""){ echo $profile['seamanbook'];}else{echo "-";} ?></span> </h5></div>
+					<div class="col-md-6"><h5><b>วันที่บัตรหมดอายุ:</b><span><?php if($profile['seaman_expire'] != ""){ echo $profile['seaman_expire'];}else{echo "-";}  ?></span></h5></div>
+					<div class="col-md-6"><h5><b>บัตรประกันสังคมเลขที่:</b><span><?php if($profile['ss_card'] != ""){ echo $profile['ss_card'];}else{echo "-";} ?></span> </h5></div>
+					<div class="col-md-6"><h5><b>เลขที่บัตรประจำตัวผู้เสียภาษีอากร:</b><span><?php if($profile['tax_payer'] != ""){ echo $profile['tax_payer'];}else{echo "-";}  ?></span></h5></div>
 					<div class="col-md-6"><h5><b>เชื้อชาติ:</b><span><?php if($profile['race'] != ""){ echo $profile['race'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>สัญชาติ:</b><span><?php if($profile['nationality'] != ""){ echo $profile['nationality'];}else{echo "-";} ?></span></h5></div>
-					<div class="col-md-6"><h5><b>ศาสนา:</b><span><?php if($profile['nationality'] != ""){ echo $profile['religion'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-6"><h5><b>ศาสนา:</b><span><?php if($profile['religion'] != ""){ echo $profile['religion'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>เพศ:</b><span><?php 
 					if($profile['sex'] != ""){
 						if ($profile['sex'] == 'Male') {
@@ -114,19 +124,49 @@
 						}
 					}else{echo "-";}
 					?></span></h5></div>
+					<div class="col-md-6"><h5><b>จำนวนบุตร:</b><span><?php if($profile['number_of_children'] != ""){ echo $profile['number_of_children'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-7"><h5><b>ชื่อ-นามสกุลคู่สมรส:</b><span><?php if ($profile['spouse_firstname'] != '') {
+					echo $profile['spouse_firstname']; ?>&nbsp;&nbsp;<?php echo $profile['spouse_lastname'];
+					}else{echo "-";}  ?></span></h5></div>
+					<div class="col-md-5"><h5><b>อาชีพ:</b><span><?php if($profile['occupation_spouse'] != ""){ echo $profile['occupation_spouse'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-7"><h5><b>ชื่อ-นามสกุลบิดา:</b><span><?php if ($profile['father_firstname'] != '') {
+					echo $profile['father_firstname']; ?>&nbsp;&nbsp;<?php echo $profile['father_lastname'];
+					}else{echo "-";}  ?></span></h5></div>
+					<div class="col-md-5"><h5><b>อาชีพ:</b><span><?php if($profile['occupation_father'] != ""){ echo $profile['occupation_father'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-7"><h5><b>ชื่อ-นามสกุลมารดา:</b><span><?php if ($profile['mother_firstname'] != '') {
+					echo $profile['mother_firstname']; ?>&nbsp;&nbsp;<?php echo $profile['mother_lastname'];
+					}else{echo "-";}  ?></span></h5></div>
+					<div class="col-md-5"><h5><b>อาชีพ:</b><span><?php if($profile['occupation_father'] != ""){ echo $profile['occupation_father'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-6"><h5><b>บ้าน:</b><span><?php if($profile['accommodation'] != ""){
+					if ($profile['accommodation'] == 'own house') {
+					     echo "ของตนเอง";
+					}else if($profile['accommodation'] == 'rent house'){
+						 echo "บ้านเช่า";
+					}else if($profile['accommodation'] == 'with parents'){
+						 echo "อาศัยอยู่กับบิดามารดา";
+					}else if($profile['accommodation'] == 'apartment'){
+						 echo "อพาร์ทเม้นท์";
+					}else if($profile['accommodation'] == 'with relative'){
+						 echo "อยู่กับญาติ/เพื่อน";
+					}
+					}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-12"><h5><b>ที่อยู่:</b><span><?php if($profile['address'] != ""){ echo $profile['address'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-12"><h5><b>ที่อยู่ตามภูมิลำเนา:</b><span><?php if($profile['domicile_address'] != ""){ echo $profile['domicile_address'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-6"><h5><b>เบอร์โทรศัพท์บ้าน:</b><span><?php if($profile['phone'] != ""){ echo $profile['phone'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>เบอร์โทรศัพท์:</b><span><?php if($profile['tel'] != ""){ echo $profile['tel'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>อีเมล:</b><span><?php if($profile['email'] != ""){ echo $user['email'];}else{echo "-";} ?></span></h5></div>
-					<div class="col-md-12"><h5><b>ไอดีไลน์:</b><span><?php  if($profile['line_id'] != ""){ echo $profile['line_id'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-6"><h5><b>ไอดีไลน์:</b><span><?php  if($profile['line_id'] != ""){ echo $profile['line_id'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>ประวัติการเจ็บป่วยรุนแรง:</b><span><?php 
-					if($profile['status_sm'] != ""){
-						if ($profile['status_sm'] == 'y') {
+					if($profile['history_of_illness'] != ""){
+						if ($profile['history_of_illness'] == 'y') {
 							echo "เคย";
 						}else{
 							echo "ไม่เคย";
 						}
 						;}else{echo "-";} 
 						?></span></h5></div>
+					<div class="col-md-6"><h5><b>โรคที่เคยป่วย:</b><span><?php  if($profile['sickness'] != ""){ echo $profile['sickness'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-6"><h5><b>สถานะการรับใช้ชาติ:</b><span><?php  if($profile['military'] != ""){ echo $profile['military'];}else{echo "-";} ?></span></h5></div>
 						<div class="col-md-12">
 							<h5><b>ประวัติการศึกษา:</b>
 								<ul><?php
@@ -192,7 +232,7 @@
 						</ul>
 					</h5>
 				</div>
-				<div class="col-md-12">
+			<!-- 	<div class="col-md-12">
 							<h5><b>ประวัติการฝึกอบรม:</b>
 								<ul><?php
 								$user_id = $user['id'];
@@ -215,6 +255,48 @@
 								}
 								?>
 							</ul>
+						</h5>
+					</div> -->
+					<div class="col-md-12">
+							<h5><b>ประวัติการฝึกอบรม:</b>
+						     <table border="1">
+									<thead>
+										<tr style="background-color:#66CCFF	;">
+											<td width="1%">ลำดับ</td>
+											<td width="17%">การฝึกอบรม</td>
+											
+										</tr>
+									</thead>
+									<tbody><?php 
+								$user_id = $user['id'];
+                             $criteria= new CDbCriteria;
+                             $criteria->addCondition('user_id ="'.$user_id.'"');
+                             $ProfilesTraining = ProfilesTraining::model()->findAll($criteria);
+
+								if(!empty($ProfilesTraining)){ 
+									$i = 1;
+									foreach ($ProfilesTraining as $key => $value) {																
+											?>
+										<tr>
+											<td><?php echo $i++; ?></td>
+											<td><?php echo $value['message']; ?></td>
+		
+										</tr>
+										<?php
+									}
+                                    }else{
+                                    	?>
+                                    	<tr>
+											<td><?php echo ''; ?></td>
+											<td><?php echo ''; ?></td>
+				
+										</tr>
+										
+                                   <?php 
+                                       }
+                                   ?>
+									</tbody>
+								</table>
 						</h5>
 					</div>
 				<div class="col-md-12">
@@ -243,7 +325,7 @@
 						</ul>
 					</h5>
 				</div>
-				<div class="col-md-12">
+				<!-- <div class="col-md-12">
 							<h5><b>ประวัติการทำงาน:</b>
 								<ul><?php
 								$user_id = $user['id'];
@@ -273,6 +355,50 @@
 								}
 								?>
 							</ul>
+						</h5>
+					</div> -->
+					<div class="col-md-12">
+							<h5><b>ประวัติการทำงาน:</b>
+								<table border="1">
+									<thead>
+										<tr style="background-color:#66CCFF	;">
+											<td width="17%">บริษัท</td>
+											<td width="17%">ตำแหน่ง</td>
+											<td width="17%">ออกเมื่อ</td>
+											<td width="17%">สาเหตุที่ออก</td>
+										</tr>
+									</thead>
+									<tbody><?php 
+								$user_id = $user['id'];
+                             $criteria= new CDbCriteria;
+                             $criteria->addCondition('user_id ="'.$user_id.'"');
+                             $ProfilesWorkHistory = ProfilesWorkHistory::model()->findAll($criteria);
+
+								if(!empty($ProfilesWorkHistory)){ 
+									foreach ($ProfilesWorkHistory as $key => $value) {																
+											?>
+										<tr>
+											<td><?php echo $value['company_name']; ?></td>
+											<td><?php echo $value['position_name']; ?></td>
+											<td><?php echo $value['since_date']; ?></td>
+											<td><?php echo $value['reason_leaving']; ?></td>
+										</tr>
+										<?php
+									}
+                                    }else{
+                                    	?>
+                                    	<tr>
+											<td><?php echo ''; ?></td>
+											<td><?php echo ''; ?></td>
+											<td><?php echo ''; ?></td>
+											<td><?php echo ''; ?></td>
+										</tr>
+										
+                                   <?php 
+                                       }
+                                   ?>
+									</tbody>
+								</table>
 						</h5>
 					</div>
 				<div class="col-md-12">
@@ -310,9 +436,9 @@
 				</div>
 				<div class="col-md-12">
 					<h5><b>ภาษา</b>
-						<table>
+						<table border="1">
 							<thead>
-								<tr style="background-color:#0066FF;">
+								<tr style="background-color:#66CCFF	;">
 									<td width="17%">ภาษา</td>
 									<td width="17%">เขียน</td>
 									<td width="17%">พูด</td>
@@ -330,7 +456,7 @@
 
 								?>
 								<tr >
-									<td><?php echo $value['language_name']; ?></td>
+									<td style="background-color:#F5F5F5;"><?php echo $value['language_name']; ?></td>
 									<td><?php 
                                       if ($value['write'] == 1) {
                                         echo "ใช้ไม่ได้";
@@ -409,6 +535,8 @@
 						</select>
 					</h5>
 				</div>
+				<div class="col-md-6"><h5><b>เงินเดือนที่คาดหวัง:</b><span><?php if($profile['expected_salary'] != ""){ echo $profile['expected_salary'];}else{echo "-";} ?></span></h5></div>
+				<div class="col-md-6"><h5><b>พร้อมที่จะเริ่มงานเมื่อ:</b><span><?php if($profile['start_working'] != ""){ echo $profile['start_working'];}else{echo "-";} ?></span></h5></div>
 			</div>
 			<div class="text-center mt-2">
 				<button class="btn btn-success btn-icon save_data"><i></i>บันทึกข้อมูล</button>                        
