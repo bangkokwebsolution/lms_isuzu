@@ -34,7 +34,7 @@ class CourseStart extends CActiveRecord
 			array('create_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_id, course_id, ip_address, device, create_date', 'safe', 'on'=>'search'),
+			array('id, user_id, course_id, ip_address, device, create_date, gen_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,6 +57,7 @@ class CourseStart extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'user_id' => 'User',
+			'gen_id' => 'gen_id',
 			'course_id' => 'Course',
 			'ip_address' => 'Ip Address',
 			'device' => 'Device',
@@ -88,6 +89,7 @@ class CourseStart extends CActiveRecord
 		$criteria->compare('ip_address',$this->ip_address,true);
 		$criteria->compare('device',$this->device,true);
 		$criteria->compare('create_date',$this->create_date,true);
+		$criteria->compare('gen_id',$this->gen_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

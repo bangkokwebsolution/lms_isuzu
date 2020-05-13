@@ -27,7 +27,7 @@ class Passcours extends AActiveRecord
 		return array(
 			array('passcours_cours, passcours_user', 'numerical', 'integerOnly'=>true),
 			array('passcours_date, user_name, cours_name, news_per_page', 'safe'),
-			array('cate_title, cours_name, user_name, passcours_id, passcours_cours,passcours_cates, passcours_user, passcours_date', 'safe', 'on'=>'search'),
+			array('cate_title, cours_name, user_name, passcours_id, passcours_cours,passcours_cates, passcours_user, passcours_date, gen_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,6 +50,7 @@ class Passcours extends AActiveRecord
 			'passcours_cates' => 'ชื่อหลักสูตร',
 			'passcours_user' => 'ชื่อผู้อบรม',
 			'passcours_date' => 'วันที่สอบผ่าน',
+			'gen_id' => 'gen_id',
 		);
 	}
 
@@ -78,6 +79,10 @@ class Passcours extends AActiveRecord
 		//check course id
 		if(isset($this->passcours_cours) && $this->passcours_cours != null) {
 			$criteria->addInCondition('passcours_cours', $this->passcours_cours, 'AND');
+		}
+
+		if(isset($this->gen_id) && $this->gen_id != null) {
+			$criteria->addInCondition('gen_id', $this->gen_id, 'AND');
 		}
 
 		//check period start - end
@@ -119,6 +124,8 @@ class Passcours extends AActiveRecord
 
 		$criteria->compare('course_title', $this->cours_name, true);
 		$criteria->compare('passcours_id', $this->passcours_id, true);
+		$criteria->compare('gen_id', $this->gen_id, true);
+
 
 		$poviderArray = array('criteria'=>$criteria);
 

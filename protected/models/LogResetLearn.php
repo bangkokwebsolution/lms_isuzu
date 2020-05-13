@@ -35,7 +35,7 @@ class LogResetLearn extends CActiveRecord
 			array('create_date, update_date, update_by', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, course_id, user_id, create_date, create_by, update_date, update_by', 'safe', 'on'=>'search'),
+			array('id, course_id, user_id, create_date, create_by, update_date, update_by, gen_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -59,6 +59,7 @@ class LogResetLearn extends CActiveRecord
 			'id' => 'ID',
 			'course_id' => 'Course',
 			'user_id' => 'User',
+			'gen_id' => 'gen_id',
 			'create_date' => 'Create Date',
 			'create_by' => 'Create By',
 			'update_date' => 'Update Date',
@@ -91,6 +92,7 @@ class LogResetLearn extends CActiveRecord
 		$criteria->compare('create_by',$this->create_by,true);
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by,true);
+		$criteria->compare('gen_id',$this->gen_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

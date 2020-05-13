@@ -33,7 +33,7 @@ class PasscoursLog extends CActiveRecord
 			array('pclog_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('pclog_id, pclog_userid, pclog_event, pclog_target, pclog_date', 'safe', 'on'=>'search'),
+			array('pclog_id, pclog_userid, pclog_event, pclog_target, pclog_date, gen_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,6 +61,8 @@ class PasscoursLog extends CActiveRecord
 			'pclog_event' => 'Pclog Event',
 			'pclog_target' => 'Pclog Target',
 			'pclog_date' => 'Pclog Date',
+			'gen_id' => 'gen_id',
+
 		);
 	}
 
@@ -89,6 +91,7 @@ class PasscoursLog extends CActiveRecord
 		$criteria->compare('pclog_event',$this->pclog_event,true);
 		$criteria->compare('pclog_target',$this->pclog_target);
 		$criteria->compare('pclog_date',$this->pclog_date,true);
+		$criteria->compare('gen_id',$this->gen_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
