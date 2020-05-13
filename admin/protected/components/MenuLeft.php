@@ -693,40 +693,40 @@ Class MenuLeft extends Controller
 
 			//====== END Menu division ======//
 
-	        array(
-	        	/*====== Check Permissions featuredlinks (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'FeaturedLinks.*',
-	        		'FeaturedLinks.admin',
-	        		'FeaturedLinks.Create'
-	        	)),
-	        	'label'=>'<i></i><span>ระบบจัดการหน่วยงานที่เกี่ยวข้อง</span>',
-	        	'url'=>'#FeaturedLinks',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('FeaturedLinks') ), 'id' => 'FeaturedLinks'),
-	        	'active' => self::SetSubMenu( array('FeaturedLinks') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Sup-FeaturedLinks (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'FeaturedLinks.*',
-	        				'FeaturedLinks.Create'
-	        			)),
-	        			'label'=>'เพิ่มลิงค์แนะนำ',
-	        			'url'=>array('//FeaturedLinks/create')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-FeaturedLinks (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'FeaturedLinks.*',
-	        				'FeaturedLinks.admin'
-	        			)),
-	        			'label'=>'จัดการลิงค์แนะนำ',
-	        			'url'=>array('//FeaturedLinks/admin')
-	        		),
-	        	)
-	        ),
+	        // array(
+	        // 	/*====== Check Permissions featuredlinks (2) ======*/
+	        // 	'visible'=>self::PermissionsMenu(array(
+	        // 		'FeaturedLinks.*',
+	        // 		'FeaturedLinks.admin',
+	        // 		'FeaturedLinks.Create'
+	        // 	)),
+	        // 	'label'=>'<i></i><span>ระบบจัดการหน่วยงานที่เกี่ยวข้อง</span>',
+	        // 	'url'=>'#FeaturedLinks',
+	        // 	'linkOptions' => array('data-toggle' => 'collapse'),
+	        // 	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
+	        // 	'submenuOptions' => array('class' => self::SetSubMenu( array('FeaturedLinks') ), 'id' => 'FeaturedLinks'),
+	        // 	'active' => self::SetSubMenu( array('FeaturedLinks') ,false),
+	        // 	'items'=>array(
+	        // 		array(
+	        // 			/*====== Check Permissions Sup-FeaturedLinks (1) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'FeaturedLinks.*',
+	        // 				'FeaturedLinks.Create'
+	        // 			)),
+	        // 			'label'=>'เพิ่มลิงค์แนะนำ',
+	        // 			'url'=>array('//FeaturedLinks/create')
+	        // 		),
+	        // 		array(
+	        // 			/*====== Check Permissions Sup-FeaturedLinks (2) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'FeaturedLinks.*',
+	        // 				'FeaturedLinks.admin'
+	        // 			)),
+	        // 			'label'=>'จัดการลิงค์แนะนำ',
+	        // 			'url'=>array('//FeaturedLinks/admin')
+	        // 		),
+	        // 	)
+	        // ),
 			//====== END Menu FeaturedLinks ======//
 
 	        array(

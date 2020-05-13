@@ -198,12 +198,11 @@ date_default_timezone_set("Asia/Bangkok");
                                         <?php echo $form->error($model, 'email'); ?>
                                     </div>
 
-
-                                   <!--  <div class="form-group">
+                                    <div class="form-group">
                                         <label><?php echo $form->labelEx($profile, 'identification'); ?></label>
                                         <?php echo $form->textField($profile, 'identification', array('class' => 'form-control','placeholder' => 'รหัสบัตรประชาชน','oninput' => 'fillfield(this.value)')); ?>
                                         <?php echo $form->error($profile, 'identification'); ?>
-                                    </div> -->
+                                    </div>
                                     <div class="row">
                                     <?php if($model->isNewRecord) { ?>
                                         <div class="col-md-6">
@@ -325,9 +324,9 @@ date_default_timezone_set("Asia/Bangkok");
                                        
 
                                         <?php
-                                            $Branch = Branch::model()->getBranchList();
+                                        //    $Branch = Branch::model()->getBranchList();
                                         ?>
-                                        <div class="col-md-6">
+                                       <!--  <div class="col-md-6">
                                             <div class="form-group">
                                                 <label><?php //echo $form->labelEx($model, 'branch_id'); ?></label>
                                                 <label class="label_branch">ระดับ</label>
@@ -335,7 +334,7 @@ date_default_timezone_set("Asia/Bangkok");
                                                 echo $form->dropDownList($model, 'branch_id', $Branch, array('empty' => 'เลือกระดับ', 'class' => 'form-control branch', 'style' => 'width:100%')); ?>
                                                 <?php echo $form->error($model, 'branch_id'); ?>
                                             </div>
-                                        </div>
+                                        </div> -->
 
                                         <?php
                                             // $station = (!$model->station_id)?array():Station::model()->getStationList($model->station_id);

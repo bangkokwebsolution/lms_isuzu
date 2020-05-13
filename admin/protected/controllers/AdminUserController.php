@@ -159,7 +159,8 @@ echo ($data);
 			}
 
 		if(isset($_POST['User']))
-		{
+		{		
+
 			$Neworg = $_POST['Orgchart'];           
             $Neworg = json_encode($Neworg);
             $PGoup = $_POST['PGoup'];           
@@ -182,16 +183,22 @@ echo ($data);
             $model->position_id = $position->id;
             $model->company_id = $_POST['User']['company_id'];
 			$model->username = $_POST['User']['username'];
-            $model->email = $_POST['User']['username'];
+            $model->email = $_POST['User']['email'];
             $model->group = $PGoup;
             $model->password = $_POST['User']['password'];
             $model->verifyPassword = $_POST['User']['verifyPassword'];
             $model->department_id = $_POST['User']['department_id'];
+            $model->create_at = date("Y-m-d H:i:s");
 
 			$model->activkey=UserModule::encrypting(microtime().$model->password);
 			$profile->attributes=$_POST['Profile'];
 			$profile->user_id=0;
 
+ //$errors = $model->getErrors();
+
+       // var_dump($errors);
+       // exit();
+        
 			if($model->validate()&&$profile->validate()) {
 				$model->password=UserModule::encrypting($model->password);
 				$model->verifyPassword=UserModule::encrypting($model->verifyPassword);
@@ -207,6 +214,7 @@ echo ($data);
 				// }
                 $model->status = 1;
                 $model->superuser = 1;
+
 				if($model->save()) {
 					// if(isset($uploadFile))
 					// {
@@ -392,7 +400,7 @@ echo ($data);
 	            $profile->identification = $_POST['Profile']['identification']; //**
 
 	            $model->superuser = $_POST['User']['superuser'];
-	            $member = Helpers::lib()->ldapTms($model->email);
+	            //$member = Helpers::lib()->ldapTms($model->email);
 
 	            // $member['count']  = 1;
 	            // $member[0]['samaccountname'][0] = 'taaonprem03';

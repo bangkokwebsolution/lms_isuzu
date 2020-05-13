@@ -3,6 +3,11 @@
   body{
     line-height:10.4 !important;
   }
+  div{
+     line-height:1;
+     margin: 0;
+     padding: 0;
+  }
     .t-center{
       text-align: center;
     }
@@ -27,6 +32,9 @@
       width: 100%;
       display:block;
     }
+    .mt-1{
+      margin-top: 1em;
+    }
     
     .border-main{
       /*border: 3px solid #000;*/
@@ -48,6 +56,10 @@
     }
 table .t-edu {
 /* page-break-after: always;*/
+}
+
+.license-block{
+  position: relative;
 }
   
 </style>
@@ -83,7 +95,7 @@ table .t-edu {
                     $img = Yii::app()->baseUrl . '/../uploads/user/' . $user['id'] . '/thumb/' . $user['pic_user'];
                 }
                 ?>   
-                    <img src="<?php echo $img; ?>" width="150" height="180" style="border: 1px solid #999"> 
+                    <img src="<?php echo $img; ?>" width="150" height="180" style="border: 1px solid #999; height: 180px;width: 150px;"> 
                 </td>
             </tr>
 
@@ -148,6 +160,37 @@ table .t-edu {
                 </p>
               </td>
             </tr>
+            <tr>
+              <td  style="  padding-left:90px; padding-bottom:-28px;">
+                <p class="f-14">
+                  <?php if($profiles['place_of_birth'] != ""){ echo $profiles['place_of_birth']; }else{ echo "-"; } ?>
+                </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="  padding-left:400px;padding-bottom:-28px;">
+                <p class="f-14">
+                    <?php if($profiles['hight'] != ""){ echo $profiles['hight']; }else{ echo "-"; } ?>
+                  </p>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align:left;  padding-left:570px; padding-bottom:-19px;">
+                <p class="f-14">
+                  <?php if($profiles['weight'] != ""){ echo $profiles['weight']; }else{ echo "-"; } ?>
+                  </p>
+              </td>
+            </tr>
+
+            <tr width="100%">
+              <td width="100%">
+                <p class="f-14">
+                  สถานที่เกิด : ....................................................... ส่วนสูง : .............................  น้ำหนัก : ................................
+                </p>
+              </td>
+            </tr>
 
             <tr>
               <td style="text-align:left;  padding-left:90px; padding-bottom:-25px;">
@@ -176,10 +219,34 @@ table .t-edu {
                  </p>
               </td>
             </tr>
-
+            <tr>
+              <td style="text-align:left;  padding-left:120px; padding-bottom:-20px;">
+                <p class="f-14"><?php if($profiles['blood'] != ""){ echo $profiles['blood']; }else{ echo "-"; } ?></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:left; ">
+                <p class="f-14">กรุ๊ปเลือด : ............................................................... </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:left;  padding-left:180px; padding-bottom:-24px;">
+                <p class="f-14"><?php if($profiles['identification'] != ""){ echo $profiles['identification']; }else{ echo "-"; } ?></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:left;  padding-left:490px; padding-bottom:-20px;">
+                <p class="f-14"><?php if($profiles['place_issued'] != ""){ echo $profiles['place_issued']; }else{ echo "-"; } ?></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:left; ">
+                <p class="f-14">บัตรประจำตัวประชาชน : .....................................................  สถานที่ออกบัตร : ................................................ </p>
+              </td>
+            </tr>
             <tr>
               <td style="text-align:left;  padding-left:190px; padding-bottom:-24px;">
-                <p class="f-14"><?php if($profiles['identification'] != ""){ echo $profiles['identification']; }else{ echo "-"; } ?></p>
+                <p class="f-14"><?php if($profiles['date_issued'] != ""){ echo $profiles['date_issued']; }else{ echo "-"; } ?></p>
               </td>
             </tr>
             <tr>
@@ -189,7 +256,7 @@ table .t-edu {
             </tr>
             <tr>
               <td style="text-align:left; ">
-                <p class="f-14">บัตรประจำตัวประชาชน : ........................................................  วันหมดอายุ....................................................... </p>
+                <p class="f-14">วันที่ออกบัตร : ...............................................................  วันหมดอายุ : ........................................................... </p>
               </td>
             </tr>
                 
@@ -207,7 +274,7 @@ table .t-edu {
             </tr>
             <tr>
               <td style="text-align:left; ">
-                <p class="f-14">หนังสือเดินทางเลขที่ : ...........................................................  วันหมดอายุ : ....................................................</p>
+                <p class="f-14">หนังสือเดินทางเลขที่ : ...........................................................  วันหมดอายุ :  ....................................................</p>
               </td>
             </tr>
               <tr>
@@ -225,6 +292,21 @@ table .t-edu {
                 <p class="f-14">หนังสือประจำตัวลูกเรือ : ........................................................  วันหมดอายุ : ....................................................</p>
               </td>
             </tr>
+              <tr>
+              <td style="text-align:left;  padding-left:170px; padding-bottom:-22px;">
+                <p class="f-14"><?php if($profiles['ss_card'] != ""){ echo $profiles['ss_card']; }else{ echo "-"; } ?></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:left;  padding-left:520px; padding-bottom:-22px;">
+                <p class="f-14"><?php if($profiles['tax_payer'] != ""){ echo $profiles['tax_payer']; }else{ echo "-"; } ?></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:left; ">
+                <p class="f-14">บัตรประกันสังคมเลขที่ : ......................................  เลขที่บัตรประจำตัวผู้เสียภาษีอากร : .....................................</p>
+              </td>
+            </tr>
                 <tr>
               <td style="text-align:left;  padding-left:250px; padding-bottom:-20px;">
                 <p class="f-14"><?php if($profiles['status_sm'] != ""){ 
@@ -239,13 +321,75 @@ table .t-edu {
               </td>
             </tr>
             <tr>
+              <td style="text-align:left;  padding-left:520px; padding-bottom:-22px;">
+                <p class="f-14"><?php if($profiles['number_of_children'] != ""){ echo $profiles['number_of_children']; }else{ echo "-"; } ?></p>
+              </td>
+            </tr>
+            <tr>
               <td style="text-align:left; ">
-                <p class="f-14">สถานภาพทางการสมรส : .........................................................</p>
+                <p class="f-14">สถานภาพทางการสมรส : ......................................................... จำนวนบุตร : ..................................................</p>
+              </td>
+            </tr>
+            <tr>
+                <td width="100%" style="padding-left:104px; padding-bottom:-26px; text-align:left; ">
+                  <p class="f-14"><?php if($profiles['spouse_firstname'] != ""){ echo $profiles['spouse_firstname'];?>&nbsp;&nbsp;
+                  <?php echo $profiles['spouse_lastname']; }else{ echo "-"; } ?></p>
+                </td>
+              </tr>
+            <tr>
+              <td style="text-align:left;  padding-left:500px; padding-bottom:-19px;">
+                <p class="f-14"><?php if($profiles['occupation_spouse'] != ""){ echo $profiles['occupation_spouse']; }else{ echo "-"; } ?></p>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align:left; ">
+                <p class="f-14">
+                   ชื่อคู่สมรส : ................................................................................. อาชีพ : .......................................................
+                 </p>
+              </td>
+            </tr>
+            <tr>
+                <td width="100%" style="padding-left:104px; padding-bottom:-26px; text-align:left; ">
+                  <p class="f-14"><?php if($profiles['father_firstname'] != ""){ echo $profiles['father_firstname'];?>&nbsp;&nbsp;
+                  <?php echo $profiles['father_lastname']; }else{ echo "-"; } ?></p>
+                </td>
+              </tr>
+            <tr>
+              <td style="text-align:left;  padding-left:500px; padding-bottom:-19px;">
+                <p class="f-14"><?php if($profiles['occupation_father'] != ""){ echo $profiles['occupation_father']; }else{ echo "-"; } ?></p>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align:left; ">
+                <p class="f-14">
+                   ชื่อบิดา : ...................................................................................... อาชีพ : ......................................................
+                 </p>
+              </td>
+            </tr>
+            <tr>
+                <td width="100%" style="padding-left:104px; padding-bottom:-24px; text-align:left; ">
+                  <p class="f-14"><?php if($profiles['mother_firstname'] != ""){ echo $profiles['mother_firstname'];?>&nbsp;&nbsp;
+                  <?php echo $profiles['mother_lastname']; }else{ echo "-"; } ?></p>
+                </td>
+              </tr>
+            <tr>
+              <td style="text-align:left;  padding-left:500px; padding-bottom:-19px;">
+                <p class="f-14"><?php if($profiles['occupation_mother'] != ""){ echo $profiles['occupation_mother']; }else{ echo "-"; } ?></p>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="text-align:left; ">
+                <p class="f-14">
+                   ชื่อมารดา : .................................................................................. อาชีพ : .......................................................
+                 </p>
               </td>
             </tr>
             <tr>
               <td style="text-align:left;  padding-left:58px; padding-bottom:-21px;">
-                <p class="f-14"><?php if($profiles['address'] != ""){ echo $profile['address']; }else{ echo "-"; } ?></p>
+                <p class="f-14"><?php if($profiles['address'] != ""){ echo $profiles['address']; }else{ echo "-"; } ?></p>
               </td>
             </tr>
             <tr>
@@ -254,18 +398,62 @@ table .t-edu {
               </td>
             </tr>
             <tr>
-              <td style="text-align:left;  padding-left:90px; padding-bottom:-23px;">
+              <td style="text-align:left;  padding-left:120px; padding-bottom:-21px;">
+                <p class="f-14"><?php if($profiles['domicile_address'] != ""){ echo $profiles['domicile_address']; }else{ echo "-"; } ?></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:left; ">
+                <p class="f-14" style="line-height:10px;">ที่อยู่ตามภูมิลำเนา : .........................................................................................................................................</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:left;  padding-left:45px; padding-bottom:-22px;">
+                <p class="f-14"><?php if($profiles['accommodation'] != ""){ 
+                  if ($profiles['accommodation'] == 'own house') {
+                    echo "ของตนเอง";
+                  }else if ($profiles['accommodation'] == 'rent house'){
+                    echo "บ้านเช่า"; 
+                  }else if ($profiles['accommodation'] == 'with parents'){
+                    echo "อาศัยอยู่กับบิดามารดา"; 
+                  }else if ($profiles['accommodation'] == 'apartment'){
+                    echo "อพาร์ทเม้นท์"; 
+                  }else if ($profiles['accommodation'] == 'with relative'){
+                    echo "อยู่กับญติ/เพื่อน"; 
+                  }
+                }else{ 
+                  echo "-"; 
+                } ?></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:left;  padding-left:500px; padding-bottom:-22px;">
+                <p class="f-14"><?php if($profiles['military'] != ""){ echo $profiles['military']; }else{ echo "-"; } ?></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:left; ">
+                <p class="f-14">บ้าน : ....................................................... สถานะการรับใช้ชาติ : ....................................................................</p>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:left;  padding-left:100px; padding-bottom:-26px;">
+                <p class="f-14"><?php if($profiles['phone'] != ""){ echo $profiles['phone']; }else{ echo "-"; } ?></p>
+              </td>
+            </tr>
+              <tr>
+              <td style="text-align:left;  padding-left:290px; padding-bottom:-23px;">
                 <p class="f-14"><?php if($profiles['tel'] != ""){ echo $profiles['tel']; }else{ echo "-"; } ?></p>
               </td>
             </tr>
             <tr>
-              <td style="text-align:left;  padding-left:408px; padding-bottom:-20px;">
+              <td style="text-align:left;  padding-left:500px; padding-bottom:-20px;">
                 <p class="f-14"><?php if($profiles['line_id'] != ""){ echo $profiles['line_id']; }else{ echo "-"; } ?></p>
               </td>
             </tr>
             <tr>
               <td style="text-align:left; ">
-                <p class="f-14">มือถือ : .....................................................................  ID-Line : ...................................................................... </p>
+                <p class="f-14">โทรศัพท์บ้าน : ...................................... มือถือ : ..................................... ID-Line : ........................................ </p>
               </td>
             </tr>
             <tr>
@@ -292,8 +480,13 @@ table .t-edu {
               </td>
             </tr>
             <tr>
+              <td style="text-align:left;  padding-left:500px; padding-bottom:-20px;">
+                <p class="f-14"><?php if($profiles['sickness'] != ""){ echo $profiles['sickness']; }else{ echo "-"; } ?></p>
+              </td>
+            </tr>
+            <tr>
               <td style="text-align:left; ">
-                <p class="f-14">เคยเจ็บป่วยรุนแรงหรือไม่ : ........................................</p>
+                <p class="f-14">เคยเจ็บป่วยรุนแรงหรือไม่ : ........................................ ป่วยเป็นโรคอะไร : ........................................................</p>
               </td>
             </tr>
   
@@ -304,7 +497,7 @@ table .t-edu {
             $position = $position->attributes;
             ?>
             <tr>
-              <td style="text-align:left;  padding-left:160px; padding-bottom:-19px; ">
+              <td style="text-align:left;  padding-left:130px; padding-bottom:-19px; ">
                 <p class="f-14"><?php if($position['position_title'] != ""){ echo $position['position_title']; }else{ echo "-"; } ?></p>
               </td>
             </tr>
@@ -312,10 +505,25 @@ table .t-edu {
               <td style="text-align:left; ">
                 <p class="f-14">ตำแหน่งที่สมัคร : ......................................................</p>
               </td>
+            </tr>
+              <tr>
+              <td style="text-align:left;  padding-left:190px; padding-bottom:-22px;">
+                <p class="f-14"><?php if($profiles['expected_salary'] != ""){ echo $profiles['expected_salary']; }else{ echo "-"; } ?></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:left;  padding-left:500px; padding-bottom:-22px;">
+                <p class="f-14"><?php if($profiles['start_working'] != ""){ echo $profiles['start_working']; }else{ echo "-"; } ?></p>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:left; ">
+                <p class="f-14">เงินเดือนที่คาดหวัง : .............................................  พร้อมที่จะเริ่มงานเมื่อ : ......................................................</p>
+              </td>
             </tr>  
           </table>
 
-<table border="1" class="t-edu" style="border-collapse:collapse; overflow: wrap; width: 100%;margin-top: 3em;" >
+<!-- <table border="1" class="t-edu" style="border-collapse:collapse; overflow: wrap; width: 100%;margin-top: 3em;" >
   <thead>
     <tr style="background-color:#D3D3D3;">
       <td colspan="3" style="text-align:left;  font-weight: bold; padding:10px;">
@@ -399,12 +607,158 @@ table .t-edu {
     }
     ?>
   </tbody>      
-</table>   
+</table>   -->
+<table border="1" class="t-edu" style="border-collapse:collapse; overflow: wrap; width: 100%;margin-top: 3em;" >
+  <thead>
+    <tr style="background-color:#D3D3D3;">
+      <td colspan="3" style="text-align:left;  font-weight: bold; padding:10px;">
+        <p class="f-14">ประวัติการศึกษา</p>
+      </td>
+    </tr>
+    <tr>
+      <td width="17%" style="padding-bottom:-2px; text-align:center;  font-weight: bold;padding:10px;">
+        <p class="f-14 ">ระดับการศึกษา</p>
+      </td>
+      <td width="45% " style="padding-bottom:-2px; text-align:center;  font-weight: bold;padding:10px;">
+        <p class="f-14">สถาบันการศึกษา</p>
+      </td>
+      <td width="13%" style="padding-bottom:-2px; text-align:center;  font-weight: bold;padding:10px;">
+        <p class="f-14 ">ปี พ.ศ.</p>
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <?php 
 
-<table border="1" style="border-collapse:collapse; overflow: wrap; width: 100%;">
+       $Education = Education::model()->findAll(array(
+        'condition' => 'active=:active',
+        'params' => array(':active'=>'y')));
+       
+       if (isset($Education)) {
+
+      
+       foreach ($Education as $keys => $values) {
+         $Education_datas = $Education[$keys]->attributes;
+         $edu_id = $Education_datas['edu_id'];
+          $edu_name = $Education_datas['edu_name'];
+       
+      $user_id = $user['id'];
+      $ProfilesEdu = ProfilesEdu::model()->findAll(array(
+        'condition' => 'user_id=:user_id AND active=:active AND edu_id=:edu_id',
+        'params' => array(':user_id'=>$user_id, ':active'=>'y', ':edu_id'=>$edu_id)));
+
+         $institution = array();
+        $date_graduation = array();
+       foreach ($ProfilesEdu as $key => $value) {          
+        
+         $education_data = $ProfilesEdu[$key]->attributes;
+    
+         $edu_ids = $education_data['edu_id'];
+         $institution = $education_data['institution'];
+         $date_graduation = $education_data['date_graduation'];
+     
+   }
+
+   //   ?>
+        <tr>
+          <td style="text-align:left;padding-left: 10px; " valign="top">
+            <p class="f-14"><?php echo $edu_name; ?></p>
+          </td>
+          <td style="text-align:center; " valign="top">
+            <p class="f-14"><?php 
+            if ($edu_id == $edu_ids) {
+          echo  $institution;
+            }else{
+           echo "-";   
+            }  
+            ?></p>
+          </td>
+          <td style="text-align:center; " valign="top">
+            <p class="f-14"><?php
+        if ($edu_id == $edu_ids) {
+         echo 25; echo  $date_graduation;
+            }else{
+           echo "-";   
+            }  
+             ?></p>
+          </td>
+        </tr>  
+       <?php 
+     }  }else{ ?>
+      <tr>
+          <td style="text-align:center; " valign="top">
+            <p class="f-14"><?php echo "-"; ?></p>
+          </td>
+          <td style="text-align:center; " valign="top">
+            <p class="f-14"><?php echo  "-"; ?></p>
+          </td>
+          <td style="text-align:center; " valign="top">
+            <p class="f-14"><?php echo "-";?></p>
+          </td>
+        </tr>  
+     <?php
+      }
+     ?>
+    
+  </tbody>      
+</table>  
+
+<table border="1" style="border-collapse:collapse; overflow: wrap; width: 100%;" class="mt-1">
   <thead >
     <tr style="background-color:#D3D3D3;">
-      <td colspan="4" style="text-align:left;  font-weight: bold; padding:10px; border-top: none;">
+      <td colspan="4" style="text-align:left;  font-weight: bold; padding:10px;">
+        <p class="f-14">ประวัติการฝึกอบรม</p>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%" style="padding-bottom:-2px; text-align:center;  font-weight: bold;padding:10px;">
+        <p class="f-14">ลำดับ</p>
+      </td>
+      <td width="90%" style="padding-bottom:-2px; text-align:center;  font-weight: bold;padding:10px;">
+        <p class="f-14">ชื่อการฝึกอบรม</p>
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <?php 
+      $user_id = $user['id'];
+      $ProfilesTraining = ProfilesTraining::model()->findAll(array(
+        'condition' => 'user_id=:user_id AND active=:active',
+        'params' => array(':user_id'=>$user_id, ':active'=>'y')));
+    $i = 1;
+      if(!empty($ProfilesTraining)){ 
+      foreach ($ProfilesTraining as $key => $value) {          
+
+        $ProfilesTraining_data = $ProfilesTraining[$key]->attributes;
+        $message = $ProfilesTraining_data['message'];
+
+        ?>
+        <tr>
+          <td style="text-align:center; " valign="top">
+            <p class="f-14"><?php echo $i++; ?></p>
+          </td>
+          <td style="text-align:center; " valign="top">
+            <p class="f-14"><?php if($message != ""){ echo $message; }else{ echo "-"; } ?></p>
+          </td>        
+        </tr>  
+        <?php
+      }
+    }else{
+      ?>
+      <tr>
+        
+        <td style="text-align:center;  font-style:italic;">-</td>        
+      </tr> 
+      <?php
+    }
+    ?>
+  </tbody>      
+</table>
+
+<table border="1" style="border-collapse:collapse; overflow: wrap; width: 100%;" class="mt-1">
+  <thead >
+    <tr style="background-color:#D3D3D3;">
+      <td colspan="4" style="text-align:left;  font-weight: bold; padding:10px;">
         <p class="f-14">ประวัติการทำงาน</p>
       </td>
     </tr>
@@ -470,11 +824,95 @@ table .t-edu {
     ?>
   </tbody>      
 </table>
+
+ <table border="1" style="border-collapse:collapse; overflow: wrap; width: 100%;" class="mt-1">
+                 <thead>
+                     <tr style="background-color:#D3D3D3;">
+                        <th colspan="2" style="padding-bottom:-2px; text-align:center;  font-weight: bold;padding:10px;">
+                        <p class="f-14">ภาษา</p></th>
+                        <th width="17%" style="padding-bottom:-2px; text-align:center;  font-weight: bold;padding:10px;"><p class="f-14">ดีมาก</p></th> 
+                        <th width="17%" style="padding-bottom:-2px; text-align:center;  font-weight: bold;padding:10px;"><p class="f-14">ดี</p></th>
+                        <th width="17%" style="padding-bottom:-2px; text-align:center;  font-weight: bold;padding:10px;"><p class="f-14">พอใช้ได้</p></th>
+                        <th width="17%" style="padding-bottom:-2px; text-align:center;  font-weight: bold;padding:10px;"><p class="f-14">ใช้ไม่ได้</p></th>
+                    </tr>
+                </thead>
+<?php 
+ $ProfilesLanguage = ProfilesLanguage::model()->findAll(array(
+        'condition' => 'user_id=:user_id AND active=:active',
+        'params' => array(':user_id'=>$user_id, ':active'=>'y')));
+    $i = 1;
+   foreach ($ProfilesLanguage as $keylg => $vallg) {
+   $i++;
+   $p = 1;
+   $m = 1;
+    ?> 
+    <tbody>
+            <tr>
+             <td rowspan="2" style="text-align:center;"><?php echo $vallg['language_name'] ?></td>
+             <td style="text-align:center;">เขียน</td>
+             <td style="text-align:center;">
+                <div class="radio radio-danger ">
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo$p++; ?>" value="1"<?php if ($vallg["write"] == "1") : ?> checked="checked" <?php endif ?>>
+                    <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
+                </div>
+            </td>
+            <td style="text-align:center;">
+                <div class="radio radio-danger ">
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["write"] == "2") : ?> checked="checked" <?php endif ?>>
+                    <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
+                </div>
+            </td>
+            <td style="text-align:center;">
+                <div class="radio radio-danger ">
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="3"<?php if ($vallg["write"] == "3") : ?> checked="checked" <?php endif ?>>
+                    <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
+                </div>
+            </td>
+            <td style="text-align:center;">
+                <div class="radio radio-danger ">
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="4"<?php if ($vallg["write"] == "4") : ?> checked="checked" <?php endif ?>>
+                    <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
+                </div>
+            </td>
+        </tr>
+        <tr>
+    
+         <td style="text-align:center;">พูด</td>
+         <td style="text-align:center;">
+            <div class="radio radio-danger ">
+                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="1"<?php if ($vallg["spoken"] == "1") : ?> checked="checked" <?php endif ?>>
+                <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
+            </div>
+        </td>
+        <td style="text-align:center;">
+            <div class="radio radio-danger ">
+                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["spoken"] == "2") : ?> checked="checked" <?php endif ?>>
+                <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
+            </div>
+        </td>
+        <td style="text-align:center;">
+            <div class="radio radio-danger ">
+                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="3"<?php if ($vallg["spoken"] == "3") : ?> checked="checked" <?php endif ?>>
+                <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
+            </div>
+        </td>
+        <td style="text-align:center;">
+            <div class="radio radio-danger ">
+                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="4"<?php if ($vallg["spoken"] == "4") : ?> checked="checked" <?php endif ?>>
+                <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
+            </div>
+        </td>
+    </tr>
+</tbody>
+<?php
+}
+?>
+</table>
  
 <table style="border-collapse:collapse; width: 100%;margin-top: 3em;">
     <tr> 
       <td style="padding-left:204px;text-align:right;">
-        <p class="f-14">ลงชื่อผู้สมัคร : .................................................................</p>
+        <p class="f-14">ลงชื่อผู้สมัคร : .............................................................</p>
       </td>
     </tr>
 
@@ -487,17 +925,37 @@ table .t-edu {
 
       <tr>
         <td style="padding-left:204px;text-align:right;" >
-          <p class="f-14">(.......................................................................)</p>
+          <p class="f-14">(...................................................................)</p>
         </td>
       </tr>
-  
+    <tr>
+      <td style="padding-left:430px;text-align:left; padding-bottom:-18px;" >
+        <p class="f-14"><?php if($user['create_at'] != ""){
+        $date = strtotime(substr($user['create_at'],0,-9));
+        $newformat = date('d-m-Y',$date);
+       echo $newformat; 
+           }else{ echo "-"; } ?></p>
+      </td>
+    </tr>
       <tr>
         <td style="padding-left:204px;text-align:right; ">
-          <p class="f-14">วันที่ : .......................................................................</p>
+          <p class="f-14">วันที่ : ...................................................................</p>
         </td>
       </tr>
     
 </table>
+<div class="license-block">
+  <div style="padding-left:0;padding-top: 50px;">
+    <p class="f-14" >ฝ่าย : .............................................................</p>
+     <p class="f-14">(...................................................................)</p>
+     <p class="f-14">วันที่ : .................................................................</p>
+ </div>
+  <div  style="padding-left:350px;padding-top: -105px;">
+    <p class="f-14">ผู้อนุมัติ : .............................................................</p>
+    <p class="f-14">(..................................................................)</p>
+     <p class="f-14">วันที่ : ....................................................................</p>
+  </div>
+</div>
 
 
 </div>

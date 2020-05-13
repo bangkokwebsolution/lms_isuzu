@@ -97,7 +97,7 @@ class AdminController extends Controller
  //            echo "<option value=''> เลือกตำแหน่ง</option>";
  //        }
  //    }
-	  public function actionListPosition(){
+public function actionListPosition(){
 
      $model=Position::model()->findAll('department_id=:department_id',
         array(':department_id'=>$_POST['id']));
