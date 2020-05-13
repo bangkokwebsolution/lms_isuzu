@@ -42,7 +42,7 @@ Yii::app()->user->returnUrl = $http->getUrl();
     <div class="backtotop"><span><i class="fas fa-arrow-up"></i> <small>top</small></span></div>
     <a class="contact-admin" data-toggle="modal" href="#user-report">
         <div id="mascot-contact"></div>
-        <div id="contact-mobile">
+        <!-- <div id="contact-mobile">
           <?php
           if (Yii::app()->session['lang'] == 1) {
             echo "<span><i class='fas fa-exclamation-triangle></i> Report Problem</span>"; //อังกฤษ
@@ -50,7 +50,7 @@ Yii::app()->user->returnUrl = $http->getUrl();
             echo "<span><i class='fas fa-exclamation-triangle'></i> แจ้งปัญหาการใช้งาน</span>"; //ไทย
           }
           ?>
-        </div>
+        </div> -->
     </a>
 
     <?php
@@ -69,6 +69,7 @@ Yii::app()->user->returnUrl = $http->getUrl();
             path: '<?php echo $mascot_path; ?>'
         });
     </script>
+   
     <?php include("themes/template2/include/header.php"); ?>
 
     <?php echo $content; ?>

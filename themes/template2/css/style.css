@@ -4497,15 +4497,12 @@ ol.stat-alert li::before {
     right: 55px;
     bottom: 0;
     margin: 0;
-    z-index: 10000;
+    z-index: 1000;
     color: #fff;
     cursor: pointer;
     height: 94px;
     width: 290px;
     transition: all 0.3s ease 0s;
-  }
-  #contact-mobile{
-    display: none;
   }
 
   .contact-admin:hover {
@@ -4514,22 +4511,23 @@ ol.stat-alert li::before {
 }
 
 @media (max-width:599px){
-  #mascot-contact{
+  /* .contact-admin #mascot-contact{
     display: none;
+    visibility: hidden;
   }
   .contact-admin #contact-mobile {
     position: fixed;
     right: 85px;
     bottom: 0;
     margin: 0;
-    z-index: 10000;
+    z-index: 1000;
     color: #fff;
     cursor: pointer;
     background:#CC0B21 ;
     border-radius: 5px 5px 0 0;
     padding: 18px;
     transition: all 0.3s ease 0s;
-  }
+  } */
 }
 
 @media (max-width: 767px) {

@@ -43,17 +43,10 @@ Yii::app()->user->returnUrl = $http->getUrl();
     <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/contact.png" alt="" class="hidden-xs">
 </a> -->
 
-<div id="loader">
-      <div class="spinner">
-        <div class="dot1"></div>
-        <div class="dot2"></div>
-      </div>
-</div>  
-
 <div class="backtotop"><span><i class="fas fa-arrow-up"></i> <small>top</small></span></div>
 <a class="contact-admin" data-toggle="modal" href="#user-report">
     <div id="mascot-contact"></div>
-    <div id="contact-mobile">
+    <!-- <div id="contact-mobile">
       <?php
       if (Yii::app()->session['lang'] == 1) {
         echo "<span><i class='fas fa-exclamation-triangle></i> Report Problem</span>"; //อังกฤษ
@@ -61,7 +54,7 @@ Yii::app()->user->returnUrl = $http->getUrl();
         echo "<span><i class='fas fa-exclamation-triangle'></i> แจ้งปัญหาการใช้งาน</span>"; //ไทย
       }
       ?>
-    </div>
+    </div> -->
 </a>
 
  <?php
@@ -89,6 +82,14 @@ if (Yii::app()->session['lang'] == 1) {
 
 
 <?php include("themes/template2/include/javascript.php"); ?>
+
+<div id="loader">
+      <div class="spinner">
+        <div class="dot1"></div>
+        <div class="dot2"></div>
+      </div>
+</div>  
+
 <script>
 	$(document).ready(function(){
 		$('#modal-news').modal('show');
