@@ -1844,19 +1844,19 @@ Class MenuLeft extends Controller
 	        			/*====== Check Permissions Sup-Passcours (1) ======*/
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'LogAdmin.*',
-	        				'LogAdmin.index'
+	        				'LogAdmin.approve'
 	        			)),
-	        			'label'=>'Log การตรวจสอบการสมัครสมาชิก',
-	        			'url'=>array('//logAdmin/register')
+	        			'label'=>'Log การยืนยันสมัครสมาชิก',
+	        			'url'=>array('//logAdmin/approve')
 	        		),
 	        		array(
 	        			/*====== Check Permissions Sup-Passcours (1) ======*/
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'LogAdmin.*',
-	        				'LogAdmin.index'
+	        				'LogAdmin.register'
 	        			)),
-	        			'label'=>'Log การตรวจสอบการอนุมัติการเข้าใช้งาน',
-	        			'url'=>array('//logAdmin/approve')
+	        			'label'=>'Log การตรวจสอบการสมัครสมาชิก',
+	        			'url'=>array('//logAdmin/register')
 	        		),
 	        		// array(
 	        		// 	/*====== Check Permissions Sup-Passcours (1) ======*/

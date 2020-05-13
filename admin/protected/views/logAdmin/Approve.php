@@ -107,7 +107,7 @@ EOD
             }
         ),
         array(
-            'header' => 'วันที่อนุมัติการเข้าใช้งาน',
+            'header' => 'วันที่กดยืนยันการสมัคร',
            // 'name'=>'search_name',
             'type'=>'raw',
             'value'=>function($data){
@@ -115,7 +115,7 @@ EOD
             }
         ),
         array(
-            'header' => 'ผู้อนุมัติการเข้าใช้งาน',
+            'header' => 'ผู้ที่กดยืนยัน',
            // 'name'=>'search_name',
             'type'=>'raw',
             'value'=>function($data){
