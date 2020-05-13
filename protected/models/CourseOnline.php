@@ -159,7 +159,7 @@ class CourseOnline extends CActiveRecord implements IECartPosition
 
 	public function getGenID($course_id){
 
-		$text_gen = "";		
+		$text_gen = 0;		
 		$today = date("Y-m-d H:i:s");
 
 		$model = CourseGeneration::Model()->findAll([

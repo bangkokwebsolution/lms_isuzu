@@ -198,7 +198,7 @@ function DateThai($strDate)
                         $expireDate = Helpers::lib()->checkCourseExpireTms($schedule);
                         if ($expireDate) {
                             $evnt = '';
-                            $url = Yii::app()->createUrl('course/detail/', array('id' => $model->course_id, 'courseType' => 'tms'));
+                            $url = Yii::app()->createUrl('course/detail/', array('id' => $model->course_id, 'courseType' => 'tms', 'gen'=>$model->getGenID($model->course_id)));
                         } else {
             // $evnt = 'onclick="alertMsg(\'ระบบ\',\'หลักสูตรหมดอายุ\',\'error\')"';
                             if (date($schedule->training_date_start) > date("Y-m-d")) {
@@ -235,7 +235,7 @@ function DateThai($strDate)
                                             ?>
 
 
-                                            <h4 class="text11"><i class="fa fa-trophy fa-sm text-<?= $statusLearnClass; ?>"></i> &nbsp <?= $model->course_title ?></h4>
+                                            <h4 class="text11"><i class="fa fa-trophy fa-sm text-<?= $statusLearnClass; ?>"></i> &nbsp <?= $model->course_title ?> <?= $model->getGen($model->course_id) ?></h4>
 
                                             <p class="p"><?= $model->course_short_title ?></p>
                                             <!-- <i class="fa fa-calendar"></i> -->
@@ -285,7 +285,7 @@ function DateThai($strDate)
                                                     $url = 'javascript:void(0)';
                                                 } else {
                                                     $evnt = '';
-                                                    $url = Yii::app()->createUrl('course/detail/', array('id' => $model->course_id));
+                                                    $url = Yii::app()->createUrl('course/detail/', array('id' => $model->course_id, 'gen'=>$model->getGenID($model->course_id)));
                                                 }
                                                     if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                                         $langId = Yii::app()->session['lang'] = 1;
@@ -305,7 +305,7 @@ function DateThai($strDate)
                                                     $url = 'javascript:void(0)';
                                                 } else {
                                                     $evnt = '';
-                                                    $url = Yii::app()->createUrl('course/detail/', array('id' => $model->course_id));
+                                                    $url = Yii::app()->createUrl('course/detail/', array('id' => $model->course_id, 'gen'=>$model->getGenID($model->course_id)));
                                                 }
                                                     
 
@@ -373,7 +373,7 @@ function DateThai($strDate)
                                                 ?>
 
 
-                                                <h4 class="text11"><i class="fa fa-trophy fa-sm text-<?= $statusLearnClass; ?>"></i> &nbsp <?= $model->course_title ?></h4>
+                                                <h4 class="text11"><i class="fa fa-trophy fa-sm text-<?= $statusLearnClass; ?>"></i> &nbsp <?= $model->course_title ?> <?= $model->getGen($model->course_id) ?></h4>
 
                                                 <p class="p"><?= $model->course_short_title ?></p>
                                                 <!-- <i class="fa fa-calendar"></i> -->

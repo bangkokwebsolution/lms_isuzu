@@ -47,7 +47,7 @@ class Logques extends CActiveRecord
             array('create_date, update_date, test_type, ques_type', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('logques_id, score_id, ques_id, user_id, create_date, create_by, update_date, update_by, active, test_type, ques_type', 'safe', 'on'=>'search'),
+            array('logques_id, score_id, ques_id, user_id, create_date, create_by, update_date, update_by, active, test_type, ques_type, gen_id', 'safe', 'on'=>'search'),
         );
     }
 
@@ -104,6 +104,9 @@ class Logques extends CActiveRecord
             'update_date' => 'Update Date',
             'update_by'   => 'Update By',
             'active'      => 'Active',
+            'gen_id'      => 'gen_id',
+
+
         );
     }
 
@@ -129,6 +132,7 @@ class Logques extends CActiveRecord
         $criteria->compare('update_date',$this->update_date,true);
         $criteria->compare('update_by',$this->update_by);
         $criteria->compare('active',$this->active,true);
+        $criteria->compare('gen_id',$this->gen_id,true);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,

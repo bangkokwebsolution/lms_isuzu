@@ -57,7 +57,7 @@ class LogStartcourse extends CActiveRecord
 			array('start_date, create_date, update_date, end_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_id, course_id, start_date, create_date, create_by, update_date, update_by, active, end_date', 'safe', 'on'=>'search'),
+			array('id, user_id, course_id, start_date, create_date, create_by, update_date, update_by, active, end_date, gen_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -83,6 +83,7 @@ class LogStartcourse extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'user_id' => 'User',
+			'gen_id' => 'gen_id',
 			'course_id' => 'Course',
 			'start_date' => 'Start Date',
 			'create_date' => 'Create Date',
@@ -91,6 +92,8 @@ class LogStartcourse extends CActiveRecord
 			'update_by' => 'Update By',
 			'active' => 'Active',
 			'end_date' => 'End Date',
+
+
 		);
 	}
 
@@ -122,6 +125,7 @@ class LogStartcourse extends CActiveRecord
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('end_date',$this->end_date,true);
+		$criteria->compare('gen_id',$this->gen_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
