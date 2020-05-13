@@ -926,7 +926,7 @@ function editNamehouse_registration(filedoc_id){
                     </div>
                     <div class="col-md-3 col-sm-12 col-xs-12">
                         <div class="form-group">
-                            <?php echo $form->textField($profile, 'number_of_children', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Number of children ':'จำนวนบุตร')); ?>
+                            <?php echo $form->textField($profile, 'number_of_children', array('class' => 'form-control children', 'placeholder' => Yii::app()->session['lang'] == 1?'Number of children ':'จำนวนบุตร')); ?>
                             <?php echo $form->error($profile, 'number_of_children', array('class' => 'error2')); ?>
 
                         </div>
@@ -2553,6 +2553,23 @@ $("#card-6").change(function(event) {
     $('.form_sickness').hide();
   }
   });
+
+$("#card-3").change(function(event) {    
+  var sick = $("input[name='status_sm']:checked").val();
+  if (sick == 's') {
+      $('.children').hide();
+  }else{
+    $('.children').show();
+  }
+  });
+$("#card-4").change(function(event) {    
+  var child = $("input[name='status_sm']:checked").val();
+  if (child == 'm') {
+      $('.children').show();
+  }else{
+    $('.children').hide();
+  }
+  });
 $(".email").change(function() {
                     var text_mail = $(".email").val();
                     if (text_mail != "") {
@@ -2703,6 +2720,7 @@ $(".idcard").change(function() {
                             $(".form_language").hide(); 
                             $("#office-section_gen").hide();
                             $('.form_sickness').hide();
+                            $('.children').hide();
                         }              
                     }else if(new_forms === 0 || typeof  new_forms === 'undefined' || new_forms === false){
 
@@ -2769,7 +2787,18 @@ $(".idcard").change(function() {
 
                             var type_cards = $("input[name='type_card']:checked").val();
                             if (type_cards === 'l') {
-
+                                var sick = $("input[name='history_of_illness']:checked").val();
+                                if (sick === 'y') {
+                                    $('.form_ship').show();
+                                }else{
+                                    $('.form_ship').hide();
+                                }
+                                var child = $("input[name='status_sm']:checked").val();
+                                if (child == 'm') {
+                                   $('.children').show();
+                                }else{
+                                   $('.children').hide();
+                                }
                                 $('#passport_card').hide();
                                 $('#identification_card').show();
                                 $(".id_employee").hide();
@@ -2782,6 +2811,18 @@ $(".idcard").change(function() {
 
                             }else if(type_cards === 'p'){
 
+                                var sick = $("input[name='history_of_illness']:checked").val();
+                                if (sick === 'y') {
+                                    $('.form_ship').show();
+                                }else{
+                                    $('.form_ship').hide();
+                                }
+                                var child = $("input[name='status_sm']:checked").val();
+                                if (child == 'm') {
+                                   $('.children').show();
+                                }else{
+                                   $('.children').hide();
+                                }
                                 $('#passport_card').show();
                                 $('#identification_card').hide();
                                 $(".id_employee").hide();
