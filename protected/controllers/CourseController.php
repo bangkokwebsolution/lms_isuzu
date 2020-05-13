@@ -133,24 +133,28 @@ public function actionResetLearn($id) {
     }
     $lesson = CourseOnline::model()->findAllByAttributes(array('course_id' => $id));
 
+    $course_model = CourseOnline::model()->findByPk($id);
+    $gen_id = $course_model->getGenID($course_model->course_id);
+
         //var_dump($lesson);
     if ($lesson) {
         foreach ($lesson as $key => $value) {
-            $scoreLesson = Score::model()->deleteAll('user_id="' . Yii::app()->user->id . '" AND lesson_id="' . $value->id . '"');
-            $scoreCourse = Coursescore::model()->deleteAll('user_id="' . Yii::app()->user->id . '" AND course_id="' . $id . '"');
+            $scoreLesson = Score::model()->deleteAll('user_id="' . Yii::app()->user->id . '" AND lesson_id="' . $value->id . '" AND gen_id="'.$gen_id.'"');
+            $scoreCourse = Coursescore::model()->deleteAll('user_id="' . Yii::app()->user->id . '" AND course_id="' . $id . '" AND gen_id="'.$gen_id.'"');
             $learn = Learn::model()->findAllByAttributes(array(
                 'user_id' => Yii::app()->user->id,
                 'lesson_id' => $value->id,
+                'gen_id'=>$gen_id,
             ));
             foreach ($learn as $key => $data) {
-                $learnFile = LearnFile::model()->deleteAll('user_id_file="' . Yii::app()->user->id . '" AND learn_id="' . $data->learn_id . '"');
+                $learnFile = LearnFile::model()->deleteAll('user_id_file="' . Yii::app()->user->id . '" AND learn_id="' . $data->learn_id . '" AND gen_id="'.$gen_id.'"');
             }
-            $learn = Learn::model()->deleteAll('user_id="' . Yii::app()->user->id . '" AND lesson_id="' . $value->id . '"');
+            $learn = Learn::model()->deleteAll('user_id="' . Yii::app()->user->id . '" AND lesson_id="' . $value->id . '" AND gen_id="'.$gen_id.'"');
             $questAns = QQuestAns_course::model()->deleteAll("user_id='" . Yii::app()->user->id . "' AND course_id='" . $id . "'");
             $questAns = QQuestAns::model()->deleteAll("user_id='" . Yii::app()->user->id . "' AND lesson_id='" . $value->id . "'");
                 //reset course start
             $courseStart = CourseStart::model()->find(array(
-                'condition' => 'course_id = "' . $id . '" AND user_id ="' . Yii::app()->user->id . '"',
+                'condition' => 'course_id = "' . $id . '" AND user_id ="' . Yii::app()->user->id . '" AND gen_id="'.$gen_id.'"',
             ));
             if ($courseStart) {
                 if ($courseStart->status == 1) {
@@ -161,7 +165,8 @@ public function actionResetLearn($id) {
         }
         $logReset = LogResetLearn::model()->findByAttributes(array(
             'course_id' => $id,
-            'user_id' => Yii::app()->user->id
+            'user_id' => Yii::app()->user->id,
+            'gen_id'=>$gen_id,
         ));
         if ($logReset) {
             $logReset->update_date = date('Y-m-d H:i:s');
@@ -170,6 +175,7 @@ public function actionResetLearn($id) {
         } else {
             $logReset = new LogResetLearn;
             $logReset->course_id = $id;
+            $logReset->gen_id = $gen_id;
             $logReset->user_id = Yii::app()->user->id;
             $logReset->create_date = date('Y-m-d H:i:s');
             $logReset->create_by = Yii::app()->user->id;
@@ -429,14 +435,21 @@ public function actionCateIndex($id) {
 
         if (count($lessonCurrent) > 0) {
             $user = Yii::app()->getModule('user')->user();
+
+            $lesson_model = Lesson::model()->findByPk($lessonCurrent->id);
+            $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
+
             $learnModel = Learn::model()->find(array(
-                'condition' => 'lesson_id=:lesson_id AND user_id=:user_id',
-                'params' => array(':lesson_id' => $lessonCurrent->id, ':user_id' => $user->id)
-            ));
+                'condition' => 'lesson_id=:lesson_id AND user_id=:user_id AND gen_id=:gen_id',
+                'params' => array(':lesson_id' => $lessonCurrent->id, ':user_id' => $user->id, ':gen_id'=>$gen_id)
+            ));            
+
             if (!$learnModel) {
                 $learnLog = new Learn;
                 $learnLog->user_id = $user->id;
                 $learnLog->lesson_id = $lessonCurrent->id;
+                $learnLog->gen_id = $gen_id;
                 $learnLog->learn_date = new CDbExpression('NOW()');
                 $learnLog->save();
                 $learn_id = $learnLog->learn_id;
@@ -481,15 +494,20 @@ public function actionCateIndex($id) {
 
             if (count($lessonCurrent) > 0) {
                 $user = Yii::app()->getModule('user')->user();
+
+                $lesson_model = Lesson::model()->findByPk($lessonCurrent->id);
+                $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
                 $learnModel = Learn::model()->find(array(
-                    'condition' => 'lesson_id=:lesson_id AND user_id=:user_id',
-                    'params' => array(':lesson_id' => $lessonCurrent->id, ':user_id' => $user->id)
-                ));
+                    'condition' => 'lesson_id=:lesson_id AND user_id=:user_id AND gen_id=:gen_id',
+                    'params' => array(':lesson_id' => $lessonCurrent->id, ':user_id' => $user->id, ':gen_id'=>$gen_id)
+                ));                
 
                 if (empty($learnModel)) {
                     $learnLog = new Learn;
                     $learnLog->user_id = $user->id;
                     $learnLog->lesson_id = $lessonCurrent->id;
+                    $learnLog->gen_id = $gen_id;
                     $learnLog->learn_date = new CDbExpression('NOW()');
                     $learnLog->course_id = $id;
                     $learnLog->save();
@@ -534,10 +552,15 @@ public function actionCateIndex($id) {
 
         if (count($model) > 0) {
             //$user = Yii::app()->getModule('user')->user();
+
+            $learn_model = Learn::model()->findByPk($learn_id);
+            $gen_id = $learn_model->LessonMapper->CourseOnlines->getGenID($learn_model->LessonMapper->course_id);
+
+
             $learnVdoModel = LearnFile::model()->find(array(
-                'condition' => 'file_id=:file_id AND learn_id=:learn_id',
-                'params' => array(':file_id' => $id, ':learn_id' => $learn_id)
-            ));
+                'condition' => 'file_id=:file_id AND learn_id=:learn_id AND gen_id=:gen_id',
+                'params' => array(':file_id' => $id, ':learn_id' => $learn_id, ':gen_id'=>$gen_id)
+            ));            
 
 
             if (empty($learnVdoModel)) {
@@ -545,6 +568,7 @@ public function actionCateIndex($id) {
                 $learnLog->learn_id = $learn_id;
                 $learnLog->user_id_file = Yii::app()->user->id;
                 $learnLog->file_id = $id;
+                $learnLog->gen_id = $gen_id;
                 $learnLog->learn_file_date = new CDbExpression('NOW()');
                 $learnLog->learn_file_status = "l";
                 $learnLog->save();
@@ -595,12 +619,14 @@ public function actionCateIndex($id) {
                     if ($courseStats == "pass" && !$postTestHave && !$courseManageHave) {
                         $passCoursModel = Passcours::model()->findByAttributes(array(
                             'passcours_cates' => $lesson->CourseOnlines->cate_id,
-                            'passcours_user' => Yii::app()->user->id
+                            'passcours_user' => Yii::app()->user->id,
+                            'gen_id'=>$gen_id,
                         ));
                         if (!$passCoursModel) {
                             $modelPasscours = new Passcours;
                             $modelPasscours->passcours_cates = $lesson->CourseOnlines->cate_id;
                             $modelPasscours->passcours_cours = $lesson->course_id;
+                            $modelPasscours->gen_id = $gen_id;
                             $modelPasscours->passcours_user = Yii::app()->user->id;
                             $modelPasscours->passcours_date = new CDbExpression('NOW()');
                             $modelPasscours->save();
@@ -618,7 +644,8 @@ public function actionCateIndex($id) {
     public function actionLearnVdo($id=null, $learn_id=null) {
         if(Yii::app()->user->id){
             Helpers::lib()->getControllerActionId();
-        }
+        }        
+
         $type = isset($_POST['type']) ? $_POST['type'] : $_GET['type'];
         $id = isset($_POST['id']) ? $_POST['id'] : $_GET['id']; 
         $learn_id = isset($_POST['learn_id']) ? $_POST['learn_id'] : $_GET['learn_id']; 
@@ -626,6 +653,11 @@ public function actionCateIndex($id) {
         $status = isset($_POST['status']) ? $_POST['status'] : $_GET['status'];
         $counter = isset($_POST['counter']) ? $_POST['counter'] : $_GET['counter'];
         $currentTime = isset($_POST['current_time']) ? $_POST['current_time'] : $_GET['current_time'];
+
+        $learn_model = Learn::model()->findByPk($learn_id);
+        $gen_id = $learn_model->LessonMapper->CourseOnlines->getGenID($learn_model->LessonMapper->course_id);
+
+
         if($type == 'scorm'){
             $model = fileScorm::model()->findByPk($id);
         } else {
@@ -634,9 +666,10 @@ public function actionCateIndex($id) {
 
         if (count($model) > 0) {
             //$user = Yii::app()->getModule('user')->user();
+
             $learnVdoModel = LearnFile::model()->find(array(
-                'condition' => 'file_id=:file_id AND learn_id=:learn_id',
-                'params' => array(':file_id' => $id, ':learn_id' => $learn_id)
+                'condition' => 'file_id=:file_id AND learn_id=:learn_id AND gen_id=:gen_id',
+                'params' => array(':file_id' => $id, ':learn_id' => $learn_id, ':gen_id'=>$gen_id)
             ));
 
             if ($counter == "counter") {
@@ -649,6 +682,7 @@ public function actionCateIndex($id) {
                 $learnLog->learn_id = $learn_id;
                 $learnLog->user_id_file = Yii::app()->user->id;
                 $learnLog->file_id = $id;
+                $learnLog->gen_id = $gen_id;
                 $learnLog->learn_file_date = new CDbExpression('NOW()');
                 $learnLog->learn_file_status = "l";
                 $learnLog->save();
@@ -719,12 +753,14 @@ public function actionCateIndex($id) {
                         if ($courseStats == "pass" && !$postTestHave && !$courseManageHave) {
                             $passCoursModel = Passcours::model()->findByAttributes(array(
                                 'passcours_cates' => $lesson->CourseOnlines->cate_id,
-                                'passcours_user' => Yii::app()->user->id
+                                'passcours_user' => Yii::app()->user->id,
+                                'gen_id'=>$gen_id
                             ));
                             if (!$passCoursModel) {
                                 $modelPasscours = new Passcours;
                                 $modelPasscours->passcours_cates = $lesson->CourseOnlines->cate_id;
                                 $modelPasscours->passcours_cours = $lesson->course_id;
+                                $modelPasscours->gen_id = $gen_id;
                                 $modelPasscours->passcours_user = Yii::app()->user->id;
                                 $modelPasscours->passcours_date = new CDbExpression('NOW()');
                                 $modelPasscours->save();
@@ -755,9 +791,13 @@ public function actionCateIndex($id) {
             $model = FileAudio::model()->findByPk($id);
             if (count($model) > 0) {
             //$user = Yii::app()->getModule('user')->user();
+
+                $learn_model = Learn::model()->findByPk($learn_id);
+                $gen_id = $learn_model->LessonMapper->CourseOnlines->getGenID($learn_model->LessonMapper->course_id);
+
                 $learnVdoModel = LearnFile::model()->find(array(
-                    'condition' => 'file_id=:file_id AND learn_id=:learn_id',
-                    'params' => array(':file_id' => $id, ':learn_id' => $learn_id)
+                    'condition' => 'file_id=:file_id AND learn_id=:learn_id AND gen_id=:gen_id',
+                    'params' => array(':file_id' => $id, ':learn_id' => $learn_id, ':gen_id'=>$gen_id)
                 ));
 
                 if ($counter == "counter") {
@@ -770,6 +810,7 @@ public function actionCateIndex($id) {
                     $learnLog->learn_id = $learn_id;
                     $learnLog->user_id_file = Yii::app()->user->id;
                     $learnLog->file_id = $id;
+                    $learnLog->gen_id = $gen_id;
                     $learnLog->learn_file_date = new CDbExpression('NOW()');
                     $learnLog->learn_file_status = "l";
                     $learnLog->save();
@@ -824,8 +865,8 @@ public function actionCateIndex($id) {
                         $lessonStatus = Helpers::lib()->checkLessonPass($lesson);
                         $learnLesson = $user->learns(
                             array(
-                                'condition' => 'lesson_id=:lesson_id AND active="y"',
-                                'params' => array(':lesson_id' => $lesson->id)
+                                'condition' => 'lesson_id=:lesson_id AND active="y" AND gen_id=:gen_id',
+                                'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                             )
                         );
 
@@ -840,12 +881,14 @@ public function actionCateIndex($id) {
                         if ($courseStats == "pass" && !$postTestHave && !$courseManageHave) {
                             $passCoursModel = Passcours::model()->findByAttributes(array(
                                 'passcours_cates' => $lesson->CourseOnlines->cate_id,
+                                'gen_id' => $gen_id,
                                 'passcours_user' => Yii::app()->user->id
                             ));
                             if (!$passCoursModel) {
                                 $modelPasscours = new Passcours;
                                 $modelPasscours->passcours_cates = $lesson->CourseOnlines->cate_id;
                                 $modelPasscours->passcours_cours = $lesson->course_id;
+                                $modelPasscours->gen_id = $gen_id;
                                 $modelPasscours->passcours_user = Yii::app()->user->id;
                                 $modelPasscours->passcours_date = new CDbExpression('NOW()');
                                 $modelPasscours->save();
@@ -872,9 +915,15 @@ public function actionCateIndex($id) {
             $slide = $slide != null ? $slide : $_POST['slide'];
             $model = FilePdf::model()->findByPk($id);
             $countFile = PdfSlide::model()->count(array('condition' => 'file_id="'.$id.'"'));
+
+            $learn_model = Learn::model()->findByPk($learn_id);
+            $gen_id = $learn_model->LessonMapper->CourseOnlines->getGenID($learn_model->LessonMapper->course_id);
+
+
+
             $modelLearnFilePdf = LearnFile::model()->find(array(
-                'condition' => 'file_id=:file_id AND learn_id=:learn_id',
-                'params' => array(':file_id' => $id, ':learn_id' => $learn_id)
+                'condition' => 'file_id=:file_id AND learn_id=:learn_id AND gen_id=:gen_id',
+                'params' => array(':file_id' => $id, ':learn_id' => $learn_id, ':gen_id'=>$gen_id)
             ));
             $filePdfSlide = PdfSlide::model()->find(array(
                 'condition' => 'file_id=:file_id AND image_slide_time=:image_slide_time',
@@ -888,6 +937,7 @@ public function actionCateIndex($id) {
                $learnLog->learn_id = $learn_id;
                $learnLog->user_id_file = Yii::app()->user->id;
                $learnLog->file_id = $id;
+               $learnLog->gen_id = $gen_id;
                $learnLog->learn_file_date = new CDbExpression('NOW()');
                $learnLog->learn_file_status = "1";
                $learnLog->save();
@@ -947,12 +997,14 @@ public function actionCateIndex($id) {
                 if ($courseStats == "pass" && !$postTestHave && !$courseManageHave) {
                     $passCoursModel = Passcours::model()->findByAttributes(array(
                         'passcours_cates' => $lesson->CourseOnlines->cate_id,
-                        'passcours_user' => Yii::app()->user->id
+                        'passcours_user' => Yii::app()->user->id,
+                        'gen_id' => $gen_id
                     ));
                     if (!$passCoursModel) {
                         $modelPasscours = new Passcours;
                         $modelPasscours->passcours_cates = $lesson->CourseOnlines->cate_id;
                         $modelPasscours->passcours_cours = $lesson->course_id;
+                        $modelPasscours->gen_id = $gen_id;
                         $modelPasscours->passcours_user = Yii::app()->user->id;
                         $modelPasscours->passcours_date = new CDbExpression('NOW()');
                         $modelPasscours->save();
@@ -973,9 +1025,15 @@ public function actionCateIndex($id) {
         $user_id = Yii::app()->user->id;
         $modelUser = User::model()->findByPk($user_id);
         $modelCourseName = CourseOnline::model()->findByPk($id);
+
+        $course_model = CourseOnline::model()->findByPk($id);
+        $gen_id = $course_model->getGenID($course_model->course_id);
+
+
         $criteria = new CDbCriteria;
         $criteria->join = " INNER JOIN `tbl_lesson` AS les ON (les.`id`=t.`lesson_id`)";
         $criteria->compare('t.course_id',$id);
+        $criteria->compare('t.gen_id',$gen_id);
         $criteria->compare('user_id',$user_id);
         $criteria->compare('t.active','y');
         $criteria->compare('les.active','y');
@@ -1131,10 +1189,12 @@ public function actionDetail($id) {
                 $course->course_date_end = $authData->schedule->training_date_end;
             }
             if (!empty(Yii::app()->user->id)) {
+                $course_model = CourseOnline::model()->findByPk($id);
+                $gen_id = $course_model->getGenID($course_model->course_id);
 
                 $logtime = LogStartcourse::model()->find(array(
-                    'condition'=>'course_id=:course_id AND user_id=:user_id AND active=:active',
-                    'params' => array(':course_id' => $id, ':user_id' => Yii::app()->user->id , ':active' => 'y')
+                    'condition'=>'course_id=:course_id AND user_id=:user_id AND active=:active AND gen_id=:gen_id',
+                    'params' => array(':course_id' => $id, ':user_id' => Yii::app()->user->id , ':active' => 'y', ':gen_id'=>$gen_id)
                 ));
 
     // $Endlearncourse = helpers::lib()->getEndlearncourse($course->course_day_learn);
@@ -1146,7 +1206,7 @@ public function actionDetail($id) {
         // }
 
                     $now = date('Y-m-d H:i:s');
-                    $Endlearncourse = strtotime("+".$course->course_day_learn." day", strtotime($now));
+                    $Endlearncourse = strtotime("+".$course->course_day_learn." day", strtotime($now));                    
                     $Endlearncourse = date("Y-m-d", $Endlearncourse);
 
                     $logtime = new LogStartcourse;
@@ -1156,6 +1216,7 @@ public function actionDetail($id) {
                     $logtime->start_date = $now;
                     $logtime->end_date = $Endlearncourse;
                     $logtime->course_day = $course->course_day_learn;
+                    $logtime->gen_id = $gen_id;
                     $logtime->save();
 
                 }else if($logtime->course_day != $course->course_day_learn) {
@@ -1386,6 +1447,9 @@ public function actionDetail($id) {
         //
         $currentUser = User::model()->findByPk($UserId);
 
+        $course_model = CourseOnline::model()->findByPk($id);
+        $gen_id = $course_model->getGenID($course_model->course_id);
+
         if ($PassCoursId != null) {
             $CourseModel = CourseOnline::model()->findByAttributes(array(
                 'course_id' => $PassCoursId,
@@ -1400,17 +1464,17 @@ public function actionDetail($id) {
 
         if ($CertificateType) {
             $model = Passcours::model()->find(array(
-                'condition' => 'passcours_cours = "' . $PassCoursId . '" AND passcours_user = "' . $UserId . '"',
+                'condition' => 'passcours_cours = "' . $PassCoursId . '" AND passcours_user = "' . $UserId . '" AND gen_id="'.$gen_id.'"',
             )
         );
             if ($model == null) {
                 $model = Coursescore::model()->find(array(
-                    'condition' => 'course_id= " ' . $PassCoursId . '" AND user_id= "' . $UserId . '"'
+                    'condition' => 'course_id= " ' . $PassCoursId . '" AND user_id= "' . $UserId . '" AND gen_id="'.$gen_id.'"'
                 ));
             }
         } else {
             $model = Passcours::model()->find(array(
-                'condition' => 'passcours_cours = "' . $PassCoursId . '" AND passcours_user = "' . $UserId . '"',
+                'condition' => 'passcours_cours = "' . $PassCoursId . '" AND passcours_user = "' . $UserId . '" AND gen_id="'.$gen_id.'"',
             )
         );
             if ($model == null) {
@@ -1441,7 +1505,7 @@ public function actionDetail($id) {
 
         //get start & end learn date of current course
         $StartDateLearnThisCourse = Learn::model()->with('LessonMapper')->find(array(
-            'condition' => 'learn.user_id = ' . $UserId . ' AND learn.course_id = ' . $PassCoursId,
+            'condition' => 'learn.user_id = ' . $UserId . ' AND learn.course_id = ' . $PassCoursId.' AND gen_id='.$gen_id,
             'alias' => 'learn',
             'order' => 'learn.create_date ASC',
         ));
@@ -1462,7 +1526,7 @@ public function actionDetail($id) {
         //     'order' => 'create_date ASC'
         //     ));
         $CoursePassedModel = Passcours::model()->find(array(
-            'condition' => 'passcours_user = ' . $UserId . ' AND passcours_cours = ' . $PassCoursId 
+            'condition' => 'passcours_user = ' . $UserId . ' AND passcours_cours = ' . $PassCoursId .' AND gen_id='.$gen_id
         ));
 
         // if ($CoursePassedModel) {
@@ -1531,7 +1595,10 @@ public function actionDetail($id) {
             $pageFormat = 'L';
         }
 
-        $logStartTime = LogStartcourse::model()->findByAttributes(array('user_id' => $UserId,'course_id'=> $PassCoursId));
+        $course_model = CourseOnline::model()->findByPk($PassCoursId);
+        $gen_id = $course_model->getGenID($course_model->course_id);
+
+        $logStartTime = LogStartcourse::model()->findByAttributes(array('user_id' => $UserId,'course_id'=> $PassCoursId, 'gen_id'=>$gen_id));
 
 
         if(!$logStartTime){
@@ -1649,6 +1716,9 @@ public function actionDetail($id) {
             Helpers::lib()->getControllerActionId();
         }
 
+        $course_model = CourseOnline::model()->findByPk($id);
+        $gen_id = $course_model->getGenID($course_model->course_id);
+
         if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
             $langId = Yii::app()->session['lang'] = 1;
             Yii::app()->language = 'en';
@@ -1689,17 +1759,17 @@ public function actionDetail($id) {
 
         if ($CertificateType) {
             $model = Passcours::model()->find(array(
-                'condition' => 'passcours_cours = "' . $PassCoursId . '" AND passcours_user = "' . $UserId . '"',
+                'condition' => 'passcours_cours = "' . $PassCoursId . '" AND passcours_user = "' . $UserId . '" AND gen_id="'.$gen_id.'"',
             )
         );
             if ($model == null) {
                 $model = Coursescore::model()->find(array(
-                    'condition' => 'course_id= " ' . $PassCoursId . '" AND user_id= "' . $UserId . '"'
+                    'condition' => 'course_id= " ' . $PassCoursId . '" AND user_id= "' . $UserId . '" AND gen_id="'.$gen_id.'"'
                 ));
             }
         } else {
             $model = Passcours::model()->find(array(
-                'condition' => 'passcours_cours = "' . $PassCoursId . '" AND passcours_user = "' . $UserId . '"',
+                'condition' => 'passcours_cours = "' . $PassCoursId . '" AND passcours_user = "' . $UserId . '" AND gen_id="'.$gen_id.'"',
             )
         );
             if ($model == null) {
@@ -1747,7 +1817,7 @@ public function actionDetail($id) {
         $CourseDatePass = $CourseDatePassModel->passcours_date;
 
         $CoursePassedModel = Passcours::model()->find(array(
-            'condition' => 'passcours_user = ' . $UserId . ' AND passcours_cours = ' . $PassCoursId 
+            'condition' => 'passcours_user = ' . $UserId . ' AND passcours_cours = ' . $PassCoursId . ' AND gen_id='.$gen_id
         ));
 
         //get period when test score over thai 60 percent **remark select just only first time
@@ -1787,7 +1857,11 @@ public function actionDetail($id) {
             $pageFormat = 'L';
         }
     }
-    $logStartTime = LogStartcourse::model()->findByAttributes(array('user_id' => $UserId,'course_id'=> $PassCoursId));
+
+    $course_model = CourseOnline::model()->findByPk($PassCoursId);
+    $gen_id = $course_model->getGenID($course_model->course_id);
+
+    $logStartTime = LogStartcourse::model()->findByAttributes(array('user_id' => $UserId,'course_id'=> $PassCoursId, 'gen_id'=>$gen_id));
 
 
     if(!$logStartTime){
@@ -1929,10 +2003,16 @@ public function actionTest(){
 private function savePassCourseLog($action, $passcours_id) {
 
     if (Yii::app()->user->id) {
+
+        $course_model = CourseOnline::model()->findByPk($passcours_id);
+        $gen_id = $course_model->getGenID($course_model->course_id);
+
+
         $model = new PasscoursLog();
             //set model data
         $model->pclog_userid = Yii::app()->user->id;
         $model->pclog_event = $action;
+        $model->gen_id = $gen_id;
         $model->pclog_target = $passcours_id;
         $model->pclog_date = date('Y-m-d H:i:s');
 
@@ -2000,15 +2080,22 @@ public function actionCourseLearnOLD($id = null){ // อันเก่า ต�
         if(count($model) > 0)
         {
             $user = Yii::app()->getModule('user')->user();
+
+            $lesson_model = Lesson::model()->findByPk($id);
+            $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
+
             $learnModel = Learn::model()->find(array(
-                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active="y"',
-                'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id)
-            ));
+                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active="y" AND gen_id=:gen_id',
+                'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id, ':gen_id'=>$gen_id)
+            ));            
+
             if(!$learnModel)
             {
                 $learnLog = new Learn;
                 $learnLog->user_id = $user->id;
                 $learnLog->lesson_id = $id;
+                $learnLog->gen_id = $gen_id;
                 $learnLog->learn_date = new CDbExpression('NOW()');
                 $learnLog->course_id = $model->course_id;
                 $learnLog->save();
@@ -2086,6 +2173,7 @@ public function actionCourseLearn($id = null){ // อันใหม่ ใส�
         'order'=>'lesson_no ASC'
     ));
 
+
     Helpers::lib()->checkDateStartandEnd(Yii::app()->user->id,$model->course_id);
 
     if(Helpers::lib()->CheckBuyItem($model->course_id,false) == true && ! Helpers::isPretestState($id))
@@ -2095,15 +2183,21 @@ public function actionCourseLearn($id = null){ // อันใหม่ ใส�
         if(count($model) > 0)
         {
             $user = Yii::app()->getModule('user')->user();
+
+            $lesson_model = Lesson::model()->findByPk($id);
+            $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
+
             $learnModel = Learn::model()->find(array(
-                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active="y"',
-                'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id)
+                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active="y" AND gen_id=:gen_id',
+                'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id, ':gen_id'=>$gen_id)
             ));
             if(!$learnModel)
             {
                 $learnLog = new Learn;
                 $learnLog->user_id = $user->id;
                 $learnLog->lesson_id = $id;
+                $learnLog->gen_id = $gen_id;
                 $learnLog->learn_date = new CDbExpression('NOW()');
                 $learnLog->course_id = $model->course_id;
                 $learnLog->save();
@@ -2124,7 +2218,9 @@ public function actionCourseLearn($id = null){ // อันใหม่ ใส�
         //     'order'=> 'note_time ASC'
         // ));
 
-        $gen_id = $_GET['gen'];
+        $lesson_model = Lesson::model()->findByPk($id);
+        $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
          $learn_note = LearnNote::model()->findAll(array(
             'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND active="y" AND gen_id=:gen_id',
             'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id, ':gen_id'=>$gen_id),
@@ -2309,10 +2405,16 @@ public function actionCheckCaptcha()
         $data = array();
         $data['count'] = $imageCount;
         $data['fileIndex'] = $file_index->image_slide_name;
+
+        $course_model = CourseOnline::model()->findByPk($_POST['course_id']);
+        $gen_id = $course_model->getGenID($course_model->course_id);
+
+
         $criteria=new CDbCriteria;
         $criteria->with = "learn";
         $criteria->compare('user_id_file',$user->id);
         $criteria->compare('file_id',$_POST['id']);
+        $criteria->compare('t.gen_id',$gen_id);
         $criteria->compare('learn.cnid',$_POST['course_id']);
         $criteria->compare('learn.lid',$_POST['lesson_id']);
         $criteria->addCondition('learn_file_status != "s"');
@@ -2393,11 +2495,15 @@ public function actionCheckCaptchaPdf()
             // }
     if(isset($_POST['file_id'])){
 
+        $learn_model = Learn::model()->findByPk($_POST['learn_id']);
+        $gen_id = $learn_model->LessonMapper->CourseOnlines->getGenID($learn_model->LessonMapper->course_id);
+
         $data = array();
         $criteria=new CDbCriteria;
         $criteria->compare('user_id_file',$user->id);
         $criteria->compare('file_id',$_POST['file_id']);
         $criteria->compare('learn_id',$_POST['learn_id']);
+        $criteria->compare('gen_id',$gen_id);
         $criteria->addCondition('learn_file_status != "s"');
         $learn_state = LearnFile::model()->find($criteria);
 
@@ -2467,9 +2573,13 @@ public function actionSaveCaptchaStart(){
 public function actionCountdownAjax(){
         // var_dump($_POST);
         // exit();
+    $learn_model = Learn::model()->findByPk($_POST['learn_pdf_id']);
+    $gen_id = $learn_model->LessonMapper->CourseOnlines->getGenID($learn_model->LessonMapper->course_id);
+
+
     $modelLearnFilePdf = LearnFile::model()->find(array(
-        'condition' => 'user_id_file=:user_id AND file_id=:file_id AND learn_id=:learn_id',
-        'params' => array(':user_id' => Yii::app()->user->id,':file_id' => $_POST['file_id'],':learn_id' => $_POST['learn_pdf_id'])));
+        'condition' => 'user_id_file=:user_id AND file_id=:file_id AND learn_id=:learn_id AND gen_id=:gen_id',
+        'params' => array(':user_id' => Yii::app()->user->id,':file_id' => $_POST['file_id'],':learn_id' => $_POST['learn_pdf_id'], ':gen_id'=>$gen_id)));
     if(is_numeric($modelLearnFilePdf->learn_file_status) || empty($modelLearnFilePdf->learn_file_status))$statSlide = true;
     if($statSlide){
         $attr = array();
@@ -2508,9 +2618,13 @@ public function actionCaptchaPdf(){
     public function actionGetSlide(){
         $id = (isset($_POST['id'])) ? $_POST['id'] : '';
         $learn_id = (isset($_POST['learn_id'])) ? $_POST['learn_id'] : '';
+
+        $learn_model = Learn::model()->findByPk($learn_id);
+        $gen_id = $learn_model->LessonMapper->CourseOnlines->getGenID($learn_model->LessonMapper->course_id);
+
         $modelLearnFilePdf = LearnFile::model()->find(array(
-            'condition' => 'file_id=:file_id AND learn_id=:learn_id',
-            'params' => array(':file_id' => $id, ':learn_id' => $learn_id)
+            'condition' => 'file_id=:file_id AND learn_id=:learn_id AND gen_id=:gen_id',
+            'params' => array(':file_id' => $id, ':learn_id' => $learn_id, ':gen_id'=>$gen_id)
         ));
         $data = array();
         if($modelLearnFilePdf->learn_file_status != 's'){

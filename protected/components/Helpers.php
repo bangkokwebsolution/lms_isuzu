@@ -1,6 +1,7 @@
 <?php
 Class Helpers
 {
+    
     public static function lib()
     {
         return new Helpers();
@@ -817,6 +818,12 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                 public function checkLessonFile($file,$learn_id)
                 {
                     $user = Yii::app()->getModule('user')->user();
+
+                    $learn_model = Learn::model()->findByPk($learn_id);
+                    if($learn_model != null){
+                        $gen_id = $learn_model->LessonMapper->CourseOnlines->getGenID($learn_model->LessonMapper->course_id);
+                    }
+
                 /*$learnFiles = $user->learnFiles(
                     array(
                         'condition' => 'file_id=:file_id',
@@ -825,8 +832,8 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                     );*/
                     $learnFiles = $user->learnFiles(
                         array(
-                            'condition' => 'file_id=:file_id AND learns.learn_id=:learn_id AND lesson_active=:status',
-                            'params' => array(':file_id' => $file->id,':learn_id'=>$learn_id,':status'=>'y')
+                            'condition' => 'file_id=:file_id AND learns.learn_id=:learn_id AND lesson_active=:status AND learns.gen_id=:gen_id',
+                            'params' => array(':file_id' => $file->id,':learn_id'=>$learn_id,':status'=>'y', ':gen_id'=>$gen_id)
                         )
                     );
                     if ($learnFiles) {
@@ -1401,13 +1408,17 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
     public function checkTestCourse($course){
         if ($course){
             $data = "";
+
+            $course_model = CourseOnline::model()->findByPk($course->id);
+            $gen_id = $course_model->getGenID($course_model->course_id);
+
             $criteria = new CDbCriteria;
             // $criteria->select = '*';
-            $criteria->condition = ' course_id="' . $course->id . '" AND user_id="' . Yii::app()->user->id . '"';
+            $criteria->condition = ' course_id="' . $course->id . '" AND user_id="' . Yii::app()->user->id . '" AND gen_id="'.$gen_id.'"';
             $criteria->order = 'score_number DESC';
 
             $criteria2 = new CDbCriteria;
-            $criteria2->condition = ' course_id="' . $course->id . '" AND score_past="y" AND user_id="' . Yii::app()->user->id . '"';
+            $criteria2->condition = ' course_id="' . $course->id . '" AND score_past="y" AND user_id="' . Yii::app()->user->id . '" AND gen_id="'.$gen_id.'"';
             $criteria2->order = 'score_number ASC';
             $score = Coursescore::model()->find($criteria);
             $score_past = Coursescore::model()->find($criteria2);
@@ -1482,8 +1493,11 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
 //                    "lesson_id" => $id, "user_id" => Yii::app()->user->id, "type" => $type
 //                ));
 
-                $countScorePast = Score::Model()->count("lesson_id=:lesson_id AND user_id=:user_id AND type=:type ", array(
-                    "lesson_id" => $id, "user_id" => Yii::app()->user->id, "type" => $type
+                $lesson_model = Lesson::model()->findByPk($id);
+                $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
+                $countScorePast = Score::Model()->count("lesson_id=:lesson_id AND user_id=:user_id AND type=:type AND gen_id=:gen_id", array(
+                    "lesson_id" => $id, "user_id" => Yii::app()->user->id, "type" => $type, 'gen_id'=>$gen_id
                 ));
 
                 if (!empty($countScorePast)) {
@@ -1606,9 +1620,14 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
 
     public function CountTestIng($id, $amount, $type)
     {
-        $countScore = Score::Model()->count("lesson_id=:lesson_id AND user_id=:user_id AND type='".$type."'", array(
+
+        $lesson_model = Lesson::model()->findByPk($id);
+        $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
+        $countScore = Score::Model()->count("lesson_id=:lesson_id AND user_id=:user_id AND type='".$type."' AND gen_id=:gen_id", array(
             "user_id" => Yii::app()->user->id,
-            "lesson_id" => $id
+            "lesson_id" => $id,
+            'gen_id'=>$gen_id
         ));
         $lesson_new = TestAmount::model()->count("lesson_id=:lesson_id AND user_id=:user_id AND type = '".$type."'",
             array("lesson_id" => $id, "user_id" => Yii::app()->user->id));
@@ -1629,10 +1648,14 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
 
     public function CountTestIngTF($status, $id, $amount)
     {
+        $lesson_model = Lesson::model()->findByPk($id);
+        $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
         if ($status == "pass") {
-            $countScore = Score::Model()->count("lesson_id=:lesson_id AND user_id=:user_id AND type='post'", array(
+            $countScore = Score::Model()->count("lesson_id=:lesson_id AND user_id=:user_id AND type='post' AND gen_id=:gen_id", array(
                 "user_id" => Yii::app()->user->id,
-                "lesson_id" => $id
+                "lesson_id" => $id,
+                'gen_id'=>$gen_id
             ));
 
             $sum = intval($amount - $countScore);
@@ -1651,9 +1674,12 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
 
     public function ScorePercent($id,$type)
     {
+        $lesson_model = Lesson::model()->findByPk($id);
+        $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
         $criteria = new CDbCriteria;
         $criteria->select = '*,MAX(score_number) as score_number';
-        $criteria->condition = ' type = "'.$type.'" AND lesson_id="' . $id . '" AND user_id="' . Yii::app()->user->id . '"';
+        $criteria->condition = ' type = "'.$type.'" AND lesson_id="' . $id . '" AND user_id="' . Yii::app()->user->id . '" AND gen_id="'.$gen_id.'"';
         $Score = Score::model()->find($criteria);
 
         if (!empty($Score->score_number)) {
@@ -1669,9 +1695,12 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
 
     public function ScoreToTal($id,$type)
     {
+        $lesson_model = Lesson::model()->findByPk($id);
+        $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
         $criteria = new CDbCriteria;
         $criteria->select = '*,MAX(score_total) as score_total';
-        $criteria->condition = ' type = "'.$type.'" AND lesson_id="' . $id . '" AND user_id="' . Yii::app()->user->id . '"';
+        $criteria->condition = ' type = "'.$type.'" AND lesson_id="' . $id . '" AND user_id="' . Yii::app()->user->id . '" AND gen_id="'.$gen_id.'"';
         $Score = Score::model()->find($criteria);
 
         if (!empty($Score->score_total)) {
@@ -1695,6 +1724,9 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
         $scoreCheck = 0;
         $totalCheck = 0;
         $PassLearnCout = 0;
+
+        $course_model = CourseOnline::model()->findByPk($id);
+        $gen_id = $course_model->getGenID($course_model->course_id);
 
         foreach ($lessonModel as $key => $value) {
             $lessonStatus = $this->checkLessonPass($value);
@@ -1721,9 +1753,10 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
             }
 
             //========== เช็คว่าสอบครบทุกบทหรือยัง ==========//
-            $countScore = Score::Model()->count("lesson_id=:lesson_id AND user_id=:user_id", array(
+            $countScore = Score::Model()->count("lesson_id=:lesson_id AND user_id=:user_id AND gen_id=:gen_id", array(
                 "user_id" => Yii::app()->user->id,
-                "lesson_id" => $value->id
+                "lesson_id" => $value->id,
+                'gen_id'=>$gen_id
             ));
 
             if ($countScore >= "1") {
@@ -1966,11 +1999,16 @@ public function chkRegister_status()
 public function CheckTest($lesson,$type){
     if ($lesson){
         $data = "";
+
+        $lesson_model = Lesson::model()->findByPk($lesson->id);
+        $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
         if ($type=="post"){
             $criteria = new CDbCriteria;
             // $criteria->select = '*,MAX(score_number) as score_number';
             $criteria->compare('type',$type);
             $criteria->compare('lesson_id',$lesson->id);
+            $criteria->compare('gen_id',$gen_id);
             $criteria->compare('user_id',Yii::app()->user->id);
             $criteria->compare('active',"y");
             // $criteria->condition = ' type = "'.$type.'" AND lesson_id="' . $lesson->id . '" AND user_id="' . Yii::app()->user->id . '" and active = "y"';
@@ -2016,7 +2054,7 @@ public function CheckTest($lesson,$type){
         }elseif ($type=="pre"){
             $criteria = new CDbCriteria;
             $criteria->select = '*,MAX(score_number) as score_number';
-            $criteria->condition = ' type = "'.$type.'" AND lesson_id="' . $lesson->id . '" AND user_id="' . Yii::app()->user->id . '" and active ="y"';
+            $criteria->condition = ' type = "'.$type.'" AND lesson_id="' . $lesson->id . '" AND user_id="' . Yii::app()->user->id . '" and active ="y" AND gen_id="'.$gen_id.'"';
             $score = Score::model()->find($criteria);
 
             if ($score->score_past != null){
@@ -2139,6 +2177,10 @@ public function checkTestPassAll($course_id){
     $flagTestPre = false;
     $flagTestPost = false;
     $data = array();
+
+    $course_model = CourseOnline::model()->findByPk($course_id);
+    $gen_id = $course_model->getGenID($course_model->course_id);
+
     $criteria = new CDbCriteria;
     $criteria->compare('course_id',$course_id);
     $criteria->compare('active','y');
@@ -2154,6 +2196,7 @@ public function checkTestPassAll($course_id){
             $criteria->compare('active','y');
             $criteria->compare('user_id',Yii::app()->user->id);
             $criteria->compare('lesson_id',$lesson->id);
+            $criteria->compare('gen_id',$gen_id);
             $ScoreType = Score::model()->findAll($criteria);
             foreach ($ScoreType as $key => $score) {
                 if($score->score_past == 'y'){
@@ -2170,6 +2213,7 @@ public function checkTestPassAll($course_id){
             $criteria->compare('active','y');
             $criteria->compare('user_id',Yii::app()->user->id);
             $criteria->compare('lesson_id',$lesson->id);
+            $criteria->compare('gen_id',$gen_id);            
             $ScoreType = Score::model()->findAll($criteria);
             foreach ($ScoreType as $key => $score) {
                 if($score->score_past == 'y'){
@@ -2398,11 +2442,15 @@ public function checkProgressStep($course) {
         }
 
         public static function CheckPassLessontest($lesid,$type){
+            $lesson_model = Lesson::model()->findByPk($lesid);
+            $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
             $score = Score::model()->findAll(array(
                 'condition' => ' lesson_id = "' . $lesid . '"
                 AND user_id    = "' . Yii::app()->user->id . '"
                 AND type       ="'.$type . '" 
                 AND active       = "y"
+                 AND gen_id = "'.$gen_id.'"
                 ',
             ));
 
@@ -2460,7 +2508,7 @@ public function sendApiLms_old($schedule)
             $logStart = LogStartcourse::model()->findByPk(array('user_id' => $value->user->id,'course_id'=> $value->course_id, 'gen_id'=>$gen_id));
             $member[$key]['date'] = $logStart->end_date;
             if($this->checkHaveCourseTestInManage($value->course_id)){
-                $courseScore = Coursescore::model()->findByAttributes(array('user_id' => $value->user->id,'course_id'=> $value->course_id,'score_past' => 'y','active'=>'y'));
+                $courseScore = Coursescore::model()->findByAttributes(array('user_id' => $value->user->id,'course_id'=> $value->course_id,'score_past' => 'y','active'=>'y', 'gen_id'=>$gen_id));
                 $member[$key]['score'] = $courseScore->score_total;
             }
         }else if($learnStatus == "notPass"){
@@ -2522,11 +2570,15 @@ public function sendApiLms_old($schedule)
 
     public function checlAllLessonLearnPass($course_id,$user_id){
 
+        $course_model = CourseOnline::model()->findByPk($course_id);
+        $gen_id = $course_model->getGenID($course_model->course_id);
+
         $criteria = new CDbCriteria;
         $criteria->compare('course_id',$course_id);
         $criteria->compare('lesson_active','y');
         // $criteria->compare('lesson_status','pass');
         $criteria->compare('user_id',$user_id);
+        $criteria->compare('gen_id',$gen_id);
         $learns = Learn::model()->findAll($criteria);
         if($learns){
             foreach ($learns as $key => $value) {
@@ -2547,6 +2599,9 @@ public function sendApiLms_old($schedule)
     public function checlAllLessonPass($course_id,$user_id){
 
         $state = array();
+
+        $course_model = CourseOnline::model()->findByPk($course_id);
+        $gen_id = $course_model->getGenID($course_model->course_id);
 
         $criteria = new CDbCriteria;
         $criteria->compare('course_id',$course_id);
@@ -2598,6 +2653,7 @@ public function sendApiLms_old($schedule)
 $criteria = new CDbCriteria;
 $criteria->addIncondition('file_id',$id_file);
 $criteria->compare('user_id_file',$user_id);
+$criteria->compare('gen_id',$gen_id);
         // $criteria->compare('learn_file_status','s');
 $learnfiles = LearnFile::model()->findAll($criteria);
         // var_dump(count($learnfiles));
@@ -2636,7 +2692,7 @@ if($learnfiles){
         if($result == 'pass'){
             foreach ($lesson as $key => $val_les) {
                 if($this->checkHavePostTestInManage($val_les->id)){
-                    $courseScore = Score::model()->findByAttributes(array('user_id' => $user_id,'lesson_id'=> $val_les->id,'score_past' => 'y','active'=>'y','type'=>'post'));
+                    $courseScore = Score::model()->findByAttributes(array('user_id' => $user_id,'lesson_id'=> $val_les->id,'score_past' => 'y','active'=>'y','type'=>'post', 'gen_id'=>$gen_id));
                     if($courseScore){
                         $chk_postmanage[] = 'pass';
                     }else{
@@ -2664,6 +2720,9 @@ if($learnfiles){
     {
         $member = array();
         foreach ($scheduleMain as $key => $value) {
+            $course_model = CourseOnline::model()->findByPk($value->course_id);
+            $gen_id = $course_model->getGenID($course_model->course_id);
+
             $userModel = Users::model()->findByPK($value->user_id);
             if($userModel){
                 $learnStatus = $this->checlAllLessonPass($value->course_id,$value->user_id);
@@ -2673,14 +2732,13 @@ if($learnfiles){
                 $member[$key]['score'] = 0;
             if($learnStatus == "pass"){ //learn pass
 
-                $course_model = CourseOnline::model()->findByPk($value->course_id);
-                $gen_id = $course_model->getGenID($course_model->course_id);
+                
 
                 $logStart = LogStartcourse::model()->findByAttributes(array('user_id' => $value->user_id,'course_id'=> $value->course_id,'active'=>'y', 'gen_id'=>$gen_id));
                 $member[$key]['date'] = $logStart->end_date;
                 
                 if($this->checkHaveCourseTestInManage($value->course_id)){
-                    $courseScore = Coursescore::model()->findByAttributes(array('user_id' => $value->user_id,'course_id'=> $value->course_id,'score_past' => 'y','active'=>'y'));
+                    $courseScore = Coursescore::model()->findByAttributes(array('user_id' => $value->user_id,'course_id'=> $value->course_id,'score_past' => 'y','active'=>'y', 'gen_id'=>$gen_id));
                     
                     if($courseScore){
                         $member[$key]['status'] = "P";
@@ -2694,6 +2752,7 @@ if($learnfiles){
                 $criteria->compare('course_id',$value->course_id);
                 $criteria->compare('lesson_active','y');
                 $criteria->compare('user_id',$value->user_id);
+                $criteria->compare('gen_id',$gen_id);
                 $learns = Learn::model()->findAll($criteria);
                 if($learns){
                     $member[$key]['status'] = "N";
@@ -2727,6 +2786,8 @@ public function sendApiLms($scheduleMain,$scheduleId)
     // $aut = AuthCourse::model()->findAll($criteria);
     // foreach ($aut as $key => $value) {
     foreach ($scheduleMain as $key => $value) {
+        $course_model = CourseOnline::model()->findByPk($value->course_id);
+        $gen_id = $course_model->getGenID($course_model->course_id);
     // foreach ($scheduleMain->auth as $key => $value) {
             // var_dump($value);
         $userModel = Users::model()->findByPK($value->user_id);
@@ -2749,8 +2810,7 @@ public function sendApiLms($scheduleMain,$scheduleId)
 
             if($learnStatus == "pass"){ //learn pass
 
-                $course_model = CourseOnline::model()->findByPk($value->course_id);
-                $gen_id = $course_model->getGenID($course_model->course_id);
+                
 
                 $logStart = LogStartcourse::model()->findByAttributes(array('user_id' => $value->user_id,'course_id'=> $value->course_id,'active'=>'y', 'gen_id'=>$gen_id));
                 $member[$key]['date'] = $logStart->end_date;
@@ -2761,7 +2821,7 @@ public function sendApiLms($scheduleMain,$scheduleId)
 
                 if($this->checkHaveCourseTestInManage($value->course_id)){
 
-                    $courseScore = Coursescore::model()->findByAttributes(array('user_id' => $value->user_id,'course_id'=> $value->course_id,'score_past' => 'y','active'=>'y'));
+                    $courseScore = Coursescore::model()->findByAttributes(array('user_id' => $value->user_id,'course_id'=> $value->course_id,'score_past' => 'y','active'=>'y', 'gen_id'=>$gen_id));
 
                     if($courseScore){
                         $member[$key]['status'] = "P";
@@ -2777,6 +2837,7 @@ public function sendApiLms($scheduleMain,$scheduleId)
                 $criteria->compare('course_id',$value->course_id);
                 $criteria->compare('lesson_active','y');
                 $criteria->compare('user_id',$value->user_id);
+                $criteria->compare('gen_id',$gen_id);
                 $learns = Learn::model()->findAll($criteria);
                 if($learns){
                     $member[$key]['status'] = "N";
@@ -2881,8 +2942,8 @@ public function sendApiLms($scheduleMain,$scheduleId)
         ));
 
         $passCourse = Passcours::model()->find(array(
-            'condition'=>'passcours_cours=:passcours_cours AND passcours_user=:passcours_user',
-            'params' => array(':passcours_cours' => $course_id, ':passcours_user' => $user_id)
+            'condition'=>'passcours_cours=:passcours_cours AND passcours_user=:passcours_user AND gen_id=:gen_id',
+            'params' => array(':passcours_cours' => $course_id, ':passcours_user' => $user_id, ':gen_id'=>$gen_id)
         ));
 
         if (empty($logtime) ) {
@@ -2890,14 +2951,14 @@ public function sendApiLms($scheduleMain,$scheduleId)
             $logtime->user_id = Yii::app()->user->id;
             $logtime->course_id = $course_id;
             $logtime->start_date = new CDbExpression('NOW()');
-            $logtime->end_date = new CDbExpression('NOW()');
+            // $logtime->end_date = new CDbExpression('NOW()');
             $logtime->gen_id = $gen_id;
             $logtime->save();
         }else if(empty($passCourse)){
-            LogStartcourse::model()->updateByPk($logtime->id, array(
-                'end_date' => new CDbExpression('NOW()'),
+            // LogStartcourse::model()->updateByPk($logtime->id, array(
+            //     'end_date' => new CDbExpression('NOW()'),
 
-            ));
+            // ));
 
         }
     }
@@ -3093,6 +3154,9 @@ public static function isMultipleChoice($lesson,$type,$quesType = null){
 
 public static function isTestState($lesson_id,$type,$quesType)
 {
+    $lesson_model = Lesson::model()->findByPk($lesson_id);
+    $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
     $lesson = Lesson::model()->findByPk($lesson_id);
     if (!$lesson) {
         return false;
@@ -3103,10 +3167,10 @@ public static function isTestState($lesson_id,$type,$quesType)
     }
     if($quesType != '3'){
       $haveScore = Score::Model()->findAll(
-        "lesson_id=:lesson_id AND type=:type AND ques_type <> 3 AND user_id=:user_id AND active='y'",
-        array("lesson_id" => $lesson_id,"type" => $type ,"user_id" => Yii::app()->user->id));
+        "lesson_id=:lesson_id AND type=:type AND ques_type <> 3 AND user_id=:user_id AND active='y' AND gen_id=:gen_id",
+        array("lesson_id" => $lesson_id,"type" => $type ,"user_id" => Yii::app()->user->id, ':gen_id'=>$gen_id));
   } else {
-    $haveScore = Score::model()->findAllByAttributes(array('lesson_id' => $lesson_id,'ques_type' => '3','type' =>  $type, 'user_id' => Yii::app()->user->id,'active'=>'y'));
+    $haveScore = Score::model()->findAllByAttributes(array('lesson_id' => $lesson_id,'ques_type' => '3','type' =>  $type, 'user_id' => Yii::app()->user->id,'active'=>'y', 'gen_id'=>$gen_id));
 }
 if (count($haveScore) < $lesson->cate_amount) {
     return true;
@@ -3117,6 +3181,9 @@ return false;
 
 public static function isCheckTestState($lesson_id,$type,$quesType)
 {
+    $lesson_model = Lesson::model()->findByPk($lesson_id);
+    $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
     $lesson = Lesson::model()->findByPk($lesson_id);
     if (!$lesson) {
         return false;
@@ -3127,10 +3194,10 @@ public static function isCheckTestState($lesson_id,$type,$quesType)
     }
     if($quesType != '3'){
       $haveScore = Score::Model()->findAll(
-        "lesson_id=:lesson_id AND type=:type AND ques_type <> 3 AND user_id=:user_id AND active='y' AND confirm='0'",
-        array("lesson_id" => $lesson_id,"type" => $type ,"user_id" => Yii::app()->user->id));
+        "lesson_id=:lesson_id AND type=:type AND ques_type <> 3 AND user_id=:user_id AND active='y' AND confirm='0' AND gen_id=:gen_id",
+        array("lesson_id" => $lesson_id,"type" => $type ,"user_id" => Yii::app()->user->id, ':gen_id'=>$gen_id));
   } else {
-    $haveScore = Score::model()->findAllByAttributes(array('lesson_id' => $lesson_id,'ques_type' => '3','type' =>  $type, 'user_id' => Yii::app()->user->id,'active'=>'y','confirm'=>'0'));
+    $haveScore = Score::model()->findAllByAttributes(array('lesson_id' => $lesson_id,'ques_type' => '3','type' =>  $type, 'user_id' => Yii::app()->user->id,'active'=>'y','confirm'=>'0', 'gen_id'=>$gen_id));
 }
 if ($haveScore) {
     return true;
@@ -3291,7 +3358,10 @@ return (object)$data;
 
 
 public static function isPosttestStatusPass($lesson_id){
-    $passPostTest = Score::model()->findAllByAttributes(array('lesson_id' => $lesson_id, 'user_id' => Yii::app()->user->id,'active'=>'y','score_past' => 'y','type' => 'post'));
+    $lesson_model = Lesson::model()->findByPk($lesson_id);
+    $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
+    $passPostTest = Score::model()->findAllByAttributes(array('lesson_id' => $lesson_id, 'user_id' => Yii::app()->user->id,'active'=>'y','score_past' => 'y','type' => 'post', 'gen_id'=>$gen_id));
 
     if($passPostTest){
         return true;
@@ -3405,6 +3475,9 @@ public function listDataLdap($email){
 public function CheckPostTest($course_id,$user_id){
     $data = array();
 
+    $course_model = CourseOnline::model()->findByPk($course_id);
+    $gen_id = $course_model->getGenID($course_model->course_id);
+
     $criteria=new CDbCriteria;
     $criteria->compare('active',"y");
     $criteria->compare('course_id',$course_id);
@@ -3425,6 +3498,7 @@ public function CheckPostTest($course_id,$user_id){
                 ':ques_type' => 3,
             );
             $criteria->compare('user_id',$user_id);
+            $criteria->compare('gen_id',$gen_id);
             $criteria->compare('active',"y");
             $criteria->compare('lesson_id',$value->id);
             $criteria->compare('type',"post");
@@ -3435,6 +3509,7 @@ public function CheckPostTest($course_id,$user_id){
         if($manage2){
             $criteria=new CDbCriteria;
             $criteria->compare('user_id',$user_id);
+            $criteria->compare('gen_id',$gen_id);
             $criteria->compare('ques_type',3);
             $criteria->compare('active',"y");
             $criteria->compare('lesson_id',$value->id);
@@ -3509,6 +3584,9 @@ public function CheckPostTest($course_id,$user_id){
     // }
 
 public function CheckPostTestAll($lesson){
+    $lesson_model = Lesson::model()->findByPk($lesson->id);
+    $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
     $manage = Manage::Model()->with('question')->findAll("id=:id AND type=:type AND question.ques_type<>3 AND manage.active='y'",
         array("id" => $lesson->id,"type" => 'post'));
     if($manage){
@@ -3520,6 +3598,7 @@ public function CheckPostTestAll($lesson){
         $criteria->compare('user_id',Yii::app()->user->id);
         $criteria->compare('active',"y");
         $criteria->compare('lesson_id',$lesson->id);
+        $criteria->compare('gen_id',$gen_id);
         $criteria->compare('type',"post");
         $score1 = Score::model()->findAll($criteria);
         $count_score = count($score1);
@@ -3659,13 +3738,16 @@ public function Checkparentlesson($les_id){
     $status_post = true;
     if ($les_id != 0) {
 
+        $lesson_model = Lesson::model()->findByPk($les_id);
+        $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
         $lesson = Lesson::model()->findAllByAttributes(array('id' => $les_id,'active'=>'y'));
 
         if ($lesson[0]->sequence_id!=0) {
             $model = learn::model()->findAllByAttributes(array(
                 'lesson_id' => $lesson[0]->sequence_id,
                 'lesson_active'=>'y',
-                'user_id'=>Yii::app()->user->id
+                'user_id'=>Yii::app()->user->id, 'gen_id'=>$gen_id
             ));
 
             if (empty($model)) {
@@ -3704,6 +3786,10 @@ public function checkStepLesson($lesson){
         // 5 = ตอบแบบสอบถาม
     $step;
         //Check Pre test
+
+    $lesson_model = Lesson::model()->findByPk($lesson->id);
+            $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
     $checkPreTest = self::checkHavePreTestInManage($lesson->id);
         if($checkPreTest){ //Have pre test
             $isPreTest = self::isPretestState($lesson->id); //true คือยังไม่ได้สอบ
@@ -3715,6 +3801,7 @@ public function checkStepLesson($lesson){
              $criteria->compare('active','y');
              $criteria->compare('user_id',Yii::app()->user->id);
              $criteria->compare('lesson_id',$lesson->id);
+             $criteria->compare('gen_id',$gen_id);
              $scorePre = Score::model()->findAll($criteria);
 
              foreach ($scorePre as $key => $value) {
@@ -3772,6 +3859,7 @@ public function checkStepLesson($lesson){
              $criteria->compare('active','y');
              $criteria->compare('user_id',Yii::app()->user->id);
              $criteria->compare('lesson_id',$lesson->id);
+             $criteria->compare('gen_id',$gen_id);
              $scorePost = Score::model()->findAll($criteria);
 
              foreach ($scorePost as $key => $value) {
