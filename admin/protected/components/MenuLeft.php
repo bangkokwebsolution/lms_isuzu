@@ -299,30 +299,30 @@ Class MenuLeft extends Controller
 			//====== END Menu Conditions ======//
 
 
-			array(
-				/*====== Check Permissions Contactus (2) ======*/
-				'visible'=>self::PermissionsMenu(array(
-					'Contactus.*',
-					'Contactus.Index'
-				)),
-				'label'=>'<i></i><span>ติดต่อเรา</span>',
-				'url'=>'#Contactus',
-				'linkOptions' => array('data-toggle' => 'collapse'),
-				'itemOptions' => array('class' => 'hasSubmenu glyphicons adress_book'),
-				'submenuOptions' => array('class' => self::SetSubMenu( array('Contactus') ), 'id' => 'Contactus'),
-				'active' => self::SetSubMenu( array('Contactus') ,false),
-				'items'=>array(
-					array(
-						/*====== Check Permissions Sup-Contactus (2) ======*/
-						'visible'=>self::PermissionsMenu(array(
-							'Contactus.*',
-							'Contactus.Index'
-						)),
-						'label'=>'ดูรายละเอียดติดต่อเรา',
-						'url'=>array('//Contactus/index')
-					),
-				)
-			),
+			// array(
+			// 	/*====== Check Permissions Contactus (2) ======*/
+			// 	'visible'=>self::PermissionsMenu(array(
+			// 		'Contactus.*',
+			// 		'Contactus.Index'
+			// 	)),
+			// 	'label'=>'<i></i><span>ติดต่อเรา</span>',
+			// 	'url'=>'#Contactus',
+			// 	'linkOptions' => array('data-toggle' => 'collapse'),
+			// 	'itemOptions' => array('class' => 'hasSubmenu glyphicons adress_book'),
+			// 	'submenuOptions' => array('class' => self::SetSubMenu( array('Contactus') ), 'id' => 'Contactus'),
+			// 	'active' => self::SetSubMenu( array('Contactus') ,false),
+			// 	'items'=>array(
+			// 		array(
+			// 			/*====== Check Permissions Sup-Contactus (2) ======*/
+			// 			'visible'=>self::PermissionsMenu(array(
+			// 				'Contactus.*',
+			// 				'Contactus.Index'
+			// 			)),
+			// 			'label'=>'ดูรายละเอียดติดต่อเรา',
+			// 			'url'=>array('//Contactus/index')
+			// 		),
+			// 	)
+			// ),
 			//====== END Menu Contactus ======//
 
 

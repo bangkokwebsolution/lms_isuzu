@@ -1,4 +1,4 @@
-<div class="header-page parallax-window">
+<!-- <div class="header-page parallax-window">
   <div class="container">
     <h1><?php echo $label->label_about; ?>
     <small class="pull-right">
@@ -9,7 +9,16 @@
     </small>
     </h1>
   </div>
+</div> -->
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-main">
+      <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/site/index'); ?>"><?php echo $label->label_homepage; ?></a></li>
+      <li class="breadcrumb-item active" aria-current="page"><?= $label->label_about ?></li>
+    </ol>
+  </nav>
 </div>
+
 
 
 <section class="content" id="about-us">

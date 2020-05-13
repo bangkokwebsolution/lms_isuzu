@@ -287,8 +287,8 @@
                                     }else{
                                     	?>
                                     	<tr>
-											<td><?php echo ''; ?></td>
-											<td><?php echo ''; ?></td>
+											<td><?php echo "-"; ?></td>
+											<td><?php echo "-"; ?></td>
 				
 										</tr>
 										
@@ -388,10 +388,10 @@
                                     }else{
                                     	?>
                                     	<tr>
-											<td><?php echo ''; ?></td>
-											<td><?php echo ''; ?></td>
-											<td><?php echo ''; ?></td>
-											<td><?php echo ''; ?></td>
+											<td><?php echo "-"; ?></td>
+											<td><?php echo "-"; ?></td>
+											<td><?php echo "-"; ?></td>
+											<td><?php echo "-"; ?></td>
 										</tr>
 										
                                    <?php 
