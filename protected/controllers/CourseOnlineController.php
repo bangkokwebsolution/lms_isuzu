@@ -38,12 +38,16 @@ class CourseOnlineController extends Controller
 
     public function actionPrintPDF($id)
     {
+        $course_model = CourseOnline::model()->findByPk($id);
+        $gen_id = $course_model->getGenID($course_model->course_id);
+
         if(Helpers::lib()->CheckTestingPass($id,false,true) == true)
         {
             $CheckPasscoursCheck = Passcours::model()->find(array(
-                'condition'=>'passcours_cours=:id AND passcours_user=:user','params' => array(
+                'condition'=>'passcours_cours=:id AND passcours_user=:user AND gen_id=:gen_id',
+                'params' => array(
                     ':id' => $id,
-                    ':user' => Yii::app()->user->id
+                    ':user' => Yii::app()->user->id, ':gen_id'=>$gen_id
                 )
             ));
             if(!isset($CheckPasscoursCheck))
@@ -51,6 +55,7 @@ class CourseOnlineController extends Controller
                 //////// Save PassCourseOnline //////////
                 $modelPasscours = new Passcours;
                 $modelPasscours->passcours_cours = $id;
+                $modelPasscours->gen_id = $gen_id;
                 $modelPasscours->passcours_user = Yii::app()->user->id;
                 $modelPasscours->passcours_date = date("Y-m-d H:i:s");
                 $modelPasscours->save();
@@ -60,9 +65,10 @@ class CourseOnlineController extends Controller
         //$CheckPrint = Helpers::lib()->CheckTestingPassCourseOnline($id);
         $CheckPrint =  Helpers::lib()->CheckTestingPass($id,false,true);
         $CheckPasscours = Passcours::model()->find(array(
-            'condition'=>'passcours_cours=:id AND passcours_user=:user','params' => array(
+            'condition'=>'passcours_cours=:id AND passcours_user=:user AND gen_id=:gen_id',
+            'params' => array(
                 ':id' => $id,
-                ':user' => Yii::app()->user->id
+                ':user' => Yii::app()->user->id, ':gen_id'=>$gen_id
             )
         ));
 
@@ -175,33 +181,40 @@ class CourseOnlineController extends Controller
                         'user_id'=>Yii::app()->user->id
                     ));
                     if($value->fileCount != 0 && $learnLesson){
+                        $lesson_model = Lesson::model()->findByPk($value->id);
+                        $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
                         $lessonModel = Learn::model()->findAll(array(
-                            'condition'=>'lesson_id=:lesson_id AND user_id=:user_id',
-                                'params'=>array(':lesson_id'=>$value->id,':user_id'=>Yii::app()->user->id)
+                            'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND gen_id=:gen_id',
+                                'params'=>array(':lesson_id'=>$value->id,':user_id'=>Yii::app()->user->id, ':gen_id'=>$gen_id)
                         ));
                         foreach ($lessonModel as $keylesson => $valuelesson) {
                             LearnFile::model()->deleteAllByAttributes(array(
                                 'learn_id'=>$valuelesson->learn_id,
-                                'user_id_file'=>Yii::app()->user->id
+                                'user_id_file'=>Yii::app()->user->id,
+                                'gen_id'=>$gen_id
                             ));
                         }
                         Learn::model()->deleteAllByAttributes(array(
                             'lesson_id'=>$value->id,
-                            'user_id'=>Yii::app()->user->id
+                            'user_id'=>Yii::app()->user->id,
+                            'gen_id'=>$gen_id
                         ));
                         //Log
                         Logques::model()->deleteAllByAttributes(array(
                             'lesson_id'=>$value->id,
-                            'user_id'=>Yii::app()->user->id
+                            'user_id'=>Yii::app()->user->id,
+                            'gen_id'=>$gen_id
                         ));
                         Logchoice::model()->deleteAllByAttributes(array(
                             'lesson_id'=>$value->id,
-                            'user_id'=>Yii::app()->user->id
+                            'user_id'=>Yii::app()->user->id,
+                            'gen_id'=>$gen_id
                         ));
                         //Score
                         Score::model()->deleteAllByAttributes(array(
                             'lesson_id'=>$value->id,
-                            'user_id'=>Yii::app()->user->id
+                            'user_id'=>Yii::app()->user->id,
+                            'gen_id'=>$gen_id
                         ));
                     }
                 }
@@ -308,33 +321,35 @@ class CourseOnlineController extends Controller
                         'user_id'=>Yii::app()->user->id
                     ));
                     if($value->fileCount != 0 && $learnLesson){
+                        $lesson_model = Lesson::model()->findByPk($value->id);
+                        $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
                         $lessonModel = Learn::model()->findAll(array(
-                            'condition'=>'lesson_id=:lesson_id AND user_id=:user_id',
-                                'params'=>array(':lesson_id'=>$value->id,':user_id'=>Yii::app()->user->id)
+                            'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND gen_id=:gen_id',
+                                'params'=>array(':lesson_id'=>$value->id,':user_id'=>Yii::app()->user->id, ':gen_id'=>$gen_id)
                         ));
                         foreach ($lessonModel as $keylesson => $valuelesson) {
                             LearnFile::model()->deleteAllByAttributes(array(
                                 'learn_id'=>$valuelesson->learn_id,
-                                'user_id_file'=>Yii::app()->user->id
+                                'user_id_file'=>Yii::app()->user->id, 'gen_id'=>$gen_id
                             ));
                         }
                         Learn::model()->deleteAllByAttributes(array(
                             'lesson_id'=>$value->id,
-                            'user_id'=>Yii::app()->user->id
+                            'user_id'=>Yii::app()->user->id, 'gen_id'=>$gen_id
                         ));
                         //Log
                         Logques::model()->deleteAllByAttributes(array(
                             'lesson_id'=>$value->id,
-                            'user_id'=>Yii::app()->user->id
+                            'user_id'=>Yii::app()->user->id, 'gen_id'=>$gen_id
                         ));
                         Logchoice::model()->deleteAllByAttributes(array(
                             'lesson_id'=>$value->id,
-                            'user_id'=>Yii::app()->user->id
+                            'user_id'=>Yii::app()->user->id, 'gen_id'=>$gen_id
                         ));
                         //Score
                         Score::model()->deleteAllByAttributes(array(
                             'lesson_id'=>$value->id,
-                            'user_id'=>Yii::app()->user->id
+                            'user_id'=>Yii::app()->user->id, 'gen_id'=>$gen_id
                         ));
                     }
                 }
@@ -358,6 +373,7 @@ class CourseOnlineController extends Controller
     public function actionLearn($id)
     {
         $model = Lesson::model()->findByPk($id);
+        $gen_id = $model->CourseOnlines->getGenID($model->course_id);
         if(Helpers::lib()->CheckBuyItem($model->course_id,false) == true && ! Helpers::isPretestState($id))
         {
             $learn_id = "";
@@ -365,13 +381,14 @@ class CourseOnlineController extends Controller
             {
                 $user = Yii::app()->getModule('user')->user();
                 $learnModel = Learn::model()->find(array(
-                    'condition'=>'lesson_id=:lesson_id AND user_id=:user_id',
-                    'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id)
+                    'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND gen_id=:gen_id',
+                    'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id, ':gen_id'=>$gen_id)
                 ));
                 if(!$learnModel)
                 {
                     $learnLog = new Learn;
                     $learnLog->user_id = $user->id;
+                    $learnLog->gen_id = $gen_id;
                     $learnLog->lesson_id = $id;
                     $learnLog->learn_date = new CDbExpression('NOW()');
                     $learnLog->save();
@@ -400,18 +417,20 @@ class CourseOnlineController extends Controller
     public function actionLearnVdo($id,$learn_id)
     {
         $model=File::model()->findByPk($id);
-
+        $learn_model = Learn::model()->findByPk($learn_id);
+        $gen_id = $learn_model->LessonMapper->CourseOnlines->getGenID($learn_model->LessonMapper->course_id);
         if($model->count() > 0){
             //$user = Yii::app()->getModule('user')->user();
             $learnVdoModel = LearnFile::model()->find(array(
-                'condition'=>'file_id=:file_id AND learn_id=:learn_id',
-                'params'=>array(':file_id'=>$id,':learn_id'=>$learn_id)
+                'condition'=>'file_id=:file_id AND learn_id=:learn_id AND gen_id=:gen_id',
+                'params'=>array(':file_id'=>$id,':learn_id'=>$learn_id, ':gen_id'=>$gen_id)
             ));
 
             if(empty($learnVdoModel))
             {
                 $learnLog = new LearnFile;
                 $learnLog->learn_id = $learn_id;
+                $learnLog->gen_id = $gen_id;
                 $learnLog->user_id_file = Yii::app()->user->id;
                 $learnLog->file_id = $id;
                 $learnLog->learn_file_date = new CDbExpression('NOW()');
@@ -462,8 +481,8 @@ class CourseOnlineController extends Controller
                     $lessonStatus = Helpers::lib()->checkLessonPass($lesson);
                     $learnLesson = $user->learns(
                         array(
-                            'condition' => 'lesson_id=:lesson_id',
-                            'params' => array(':lesson_id' => $lesson->id)
+                            'condition' => 'lesson_id=:lesson_id AND gen_id=:gen_id',
+                            'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                         )
                     );
 
@@ -475,12 +494,14 @@ class CourseOnlineController extends Controller
                     if($cateStatus == "pass"){
                         $passCoursModel = Passcours::model()->findByAttributes(array(
                             'passcours_cours'=>$lesson->course_id,
+                            'gen_id'=>$gen_id,
                             'passcours_user'=>Yii::app()->user->id
                         ));
                         if(!$passCoursModel){
                             $modelPasscours = new Passcours;
                             $modelPasscours->passcours_cates = $lesson->CourseOnlines->cate_id;
                             $modelPasscours->passcours_cours = $lesson->course_id;
+                            $modelPasscours->gen_id = $gen_id;
                             $modelPasscours->passcours_user = Yii::app()->user->id;
                             $modelPasscours->passcours_date = date("Y-m-d H:i:s");
                             $modelPasscours->save();
@@ -561,38 +582,38 @@ class CourseOnlineController extends Controller
                             $user = Yii::app()->getModule('user')->user();
                             $learnLesson = $user->learns(
                                 array(
-                                    'condition'=>'lesson_id=:lesson_id',
-                                    'params' => array(':lesson_id' => $value->id)
+                                    'condition'=>'lesson_id=:lesson_id AND gen_id=:gen_id',
+                                    'params' => array(':lesson_id' => $value->id, ':gen_id'=>$gen_id)
                                 )
                             );
                             if($value->fileCount != 0 && $learnLesson){
                                 $lessonModel = Learn::model()->findAll(array(
-                                    'condition'=>'lesson_id=:lesson_id AND user_id=:user_id',
-                                        'params'=>array(':lesson_id'=>$value->id,':user_id'=>Yii::app()->user->id)
+                                    'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND gen_id=:gen_id',
+                                        'params'=>array(':lesson_id'=>$value->id,':user_id'=>Yii::app()->user->id, ':gen_id'=>$gen_id)
                                 ));
                                 foreach ($lessonModel as $keylesson => $valuelesson) {
                                     LearnFile::model()->deleteAllByAttributes(array(
                                         'learn_id'=>$valuelesson->learn_id,
-                                        'user_id_file'=>Yii::app()->user->id
+                                        'user_id_file'=>Yii::app()->user->id, 'gen_id'=>$gen_id
                                     ));
                                 }
                                 Learn::model()->deleteAllByAttributes(array(
                                     'lesson_id'=>$value->id,
-                                    'user_id'=>Yii::app()->user->id
+                                    'user_id'=>Yii::app()->user->id, 'gen_id'=>$gen_id
                                 ));
                                 //Log
                                 Logques::model()->deleteAllByAttributes(array(
                                     'lesson_id'=>$value->id,
-                                    'user_id'=>Yii::app()->user->id
+                                    'user_id'=>Yii::app()->user->id, 'gen_id'=>$gen_id
                                 ));
                                 Logchoice::model()->deleteAllByAttributes(array(
                                     'lesson_id'=>$value->id,
-                                    'user_id'=>Yii::app()->user->id
+                                    'user_id'=>Yii::app()->user->id, 'gen_id'=>$gen_id
                                 ));
                                 //Score
                                 Score::model()->deleteAllByAttributes(array(
                                     'lesson_id'=>$value->id,
-                                    'user_id'=>Yii::app()->user->id
+                                    'user_id'=>Yii::app()->user->id, 'gen_id'=>$gen_id
                                 ));
                             }
                         }
