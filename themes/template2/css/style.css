@@ -2717,8 +2717,8 @@ ol {
 
 .stepcoursediv {
   padding: 10px 0px 10px 10px;
-  /*border-bottom: 1px dotted #547986;*/
   background-color: #efefef;
+  border-top: 1px solid #ddd;
 }
 .list-group-item  span{
   font-size: 14px !important;
@@ -4255,7 +4255,7 @@ ol.stat-alert li::before {
 
 .form-control {
   height: calc(2em + .75rem + 2px);
-  border: 2px solid #ccc ;
+  border: 2px solid #ddd !important;
 }
 .form-control:focus {
   border-color: #010C65 !important;

@@ -187,21 +187,6 @@ if($model){
         </ol>
     </nav>
 </div>
-<!-- <div class="header-page parallax-window">
-    <div class="container">
-        <h1><?= $course->course_title ?>
-
-        <small class="pull-right">
-            <ul class="list-inline list-unstyled">
-                <li><a href="<?php echo $this->createUrl('/site/index'); ?>"><?php echo $label->label_homepage; ?></a></li> /
-                <li><a href="<?php echo $this->createUrl('/course/index'); ?>"><?php echo $label->label_course; ?></a></li> /
-                <li><span class="text-bc"><?php echo $label->label_courseName; ?></span></li>
-            </ul>
-        </small>
-    </h1>
-    <h5 style="color: #ff0000;"><b>Period <?=$course->course_day_learn?> day <?= (!empty($course))? "(".Helpers::lib()->CuttimeLang($course->course_date_start,$langId)." - ".Helpers::lib()->CuttimeLang($course->course_date_end,$langId).")":""; ?> </b></h5>
-</div>
-</div> -->
 
 <div class="course-detail-main">
  <div class="container">
@@ -221,7 +206,7 @@ if($model){
            <div class="card-body" align="center">
                <div class="mb-3">
                 <?php if($course->course_picture != null) {?>
-                    <img src="<?php echo Yii::app()->baseUrl; ?>/uploads/courseonline/<?= $course->course_id ?>/thumb/<?= $course->course_picture?>" style="height:185px;" class="w-100 ">
+                    <img src="<?php echo Yii::app()->baseUrl; ?>/uploads/courseonline/<?= $course->course_id ?>/thumb/<?= $course->course_picture?>" class="w-100 ">
                 <?php }else{ ?>
                     <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png" class="w-100 ">
                 <?php } ?>
