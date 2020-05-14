@@ -32,7 +32,7 @@ class LogEmail extends CActiveRecord
 			array('create_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, course_id, message, user_id, create_date', 'safe', 'on'=>'search'),
+			array('id, course_id, message, user_id, create_date, gen_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -60,6 +60,8 @@ class LogEmail extends CActiveRecord
 			'message' => 'message',
 			'user_id' => 'User',
 			'create_date' => 'Create Date',
+			'gen_id' => 'gen_id',
+
 		);
 	}
 
@@ -86,6 +88,7 @@ class LogEmail extends CActiveRecord
 		$criteria->compare('message',$this->message,true);
 		$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('create_date',$this->create_date,true);
+		$criteria->compare('gen_id',$this->gen_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

@@ -40,7 +40,7 @@ class QQuestAns_course extends CActiveRecord
 			array('date', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, user_id, date', 'safe', 'on'=>'search'),
+			array('id, user_id, date, gen_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -65,6 +65,8 @@ class QQuestAns_course extends CActiveRecord
 			'id' => 'ID',
 			'user_id' => 'User',
 			'date' => 'Date',
+			'gen_id' => 'gen_id',
+
 		);
 	}
 
@@ -82,6 +84,8 @@ class QQuestAns_course extends CActiveRecord
 		$criteria->compare('id',$this->id,true);
 		$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('date',$this->date,true);
+		$criteria->compare('gen_id',$this->gen_id,true);
+		
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

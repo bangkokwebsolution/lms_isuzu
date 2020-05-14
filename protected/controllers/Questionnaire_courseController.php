@@ -75,12 +75,13 @@ class Questionnaire_courseController extends Controller
         $courseTeacher = $this->loadModel($id);
 
         $course = CourseOnline::model()->findByPk($courseTeacher->course_id);
+        $gen_id = $course->getGenID($course->course_id);
 
         // var_dump($course);exit();
 
 
         // echo '<pre>';var_dump($courseTeacher);exit();
-        $questAns = QQuestAns_course::model()->find("user_id='" . Yii::app()->user->id . "' AND course_id='" . $courseTeacher->course_id . "' AND header_id='" . $courseTeacher->survey_header_id . "' AND teacher_id='" . $courseTeacher->teacher_id . "'");
+        $questAns = QQuestAns_course::model()->find("user_id='" . Yii::app()->user->id . "' AND course_id='" . $courseTeacher->course_id . "' AND header_id='" . $courseTeacher->survey_header_id . "' AND teacher_id='" . $courseTeacher->teacher_id . "' AND gen_id='".$gen_id."'");
         // if ($questAns) {
         //     $this->redirect(array('/course/detail', 'id' => $courseTeacher->course_id));
         //     echo "คุณเคยทำแบบสอบถามแล้ว";
@@ -89,7 +90,7 @@ class Questionnaire_courseController extends Controller
         $PaQuest = false;
         if ($courseTeacher) {
             $passQuest = QQuestAns_course::model()->find(array(
-                'condition' => 'user_id = "' . Yii::app()->user->id . '" AND course_id ="' . $courseTeacher->course->course_id . '"',
+                'condition' => 'user_id = "' . Yii::app()->user->id . '" AND course_id ="' . $courseTeacher->course->course_id . '"'." AND gen_id='".$gen_id."'",
             ));
             $countSurvey = count($passQuest);
             if ($passQuest) {
@@ -107,7 +108,7 @@ class Questionnaire_courseController extends Controller
             $log = new QQuestAns_course;
             $log->user_id = Yii::app()->user->id;
             $log->course_id = $courseTeacher->course_id;
-
+            $log->gen_id = $gen_id;
             $log->header_id = $courseTeacher->survey_header_id;
             $log->teacher_id = $courseTeacher->teacher_id;
             $log->date = date('Y-m-d H:i:s');
@@ -117,6 +118,7 @@ class Questionnaire_courseController extends Controller
                 foreach ($_POST['choice']['input'] as $option_choice_id => $value) {
                     $answers = new QAnswers_course;
                     $answers->user_id = Yii::app()->user->id;
+                    $answers->gen_id = $gen_id;
                     $answers->choice_id = $option_choice_id;
                     $answers->answer_text = $value;
                     $answers->quest_ans_id = $log->id;
@@ -127,6 +129,7 @@ class Questionnaire_courseController extends Controller
             if (isset($_POST['choice']['radio'])) {
                 foreach ($_POST['choice']['radio'] as $question_id => $option_choice_id) {
                     $answers = new QAnswers_course;
+                    $answers->gen_id = $gen_id;
                     $answers->user_id = Yii::app()->user->id;
                     $answers->choice_id = $option_choice_id;
                     if (isset($_POST['choice']['radioOther'][$question_id][$option_choice_id])) {
@@ -141,6 +144,7 @@ class Questionnaire_courseController extends Controller
                 foreach ($_POST['choice']['checkbox'] as $question_id => $checkboxArray) {
                     foreach ($checkboxArray as $key => $option_choice_id) {
                         $answers = new QAnswers_course;
+                        $answers->gen_id = $gen_id;
                         $answers->user_id = Yii::app()->user->id;
                         $answers->choice_id = $option_choice_id;
                         if (isset($_POST['choice']['checkboxOther'][$question_id][$option_choice_id])) {
@@ -155,6 +159,7 @@ class Questionnaire_courseController extends Controller
             if (isset($_POST['choice']['contentment'])) {
                 foreach ($_POST['choice']['contentment'] as $option_choice_id => $score) {
                     $answers = new QAnswers_course;
+                    $answers->gen_id = $gen_id;
                     $answers->user_id = Yii::app()->user->id;
                     $answers->choice_id = $option_choice_id;
                     $answers->answer_numeric = $score;
@@ -166,6 +171,7 @@ class Questionnaire_courseController extends Controller
             if (isset($_POST['choice']['text'])) {
                 foreach ($_POST['choice']['text'] as $option_choice_id => $value) {
                     $answers = new QAnswers_course;
+                    $answers->gen_id = $gen_id;
                     $answers->user_id = Yii::app()->user->id;
                     $answers->choice_id = $option_choice_id;
                     $answers->answer_textarea = $value;
@@ -212,7 +218,7 @@ class Questionnaire_courseController extends Controller
             exit;
         }
         $header = QHeader::model()->findByPk($id);
-        $questAns = QQuestAns_course::model()->find("user_id='" . $user->id . "' AND header_id='" . $header->survey_header_id . "'");
+        $questAns = QQuestAns_course::model()->find("user_id='" . $user->id . "' AND header_id='" . $header->survey_header_id . "' AND gen_id IS NULL");
 
         if ($questAns) {
             echo "คุณเคยทำแบบสอบถามแล้ว";

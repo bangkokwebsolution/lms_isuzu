@@ -24,6 +24,7 @@ class CoursequestionController extends Controller
         }
         $isPreTest = Helpers::isPretestState($id);
         $course = CourseOnline::model()->findByPk($id);
+        $gen_id = $course->getGenID($course->course_id);
         $Coursemanage = Coursemanage::Model()->find("id=:id AND active=:active", 
             array("id" => $id,"active" => "y"));
 
@@ -67,8 +68,8 @@ class CoursequestionController extends Controller
         }
 
         $currentQuiz = TempCourseQuiz::model()->find(array(
-            'condition' => "user_id=:user_id AND course_id=:course_id order by id",
-            'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $id)
+            'condition' => "user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id order by id",
+            'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $id, ':gen_id'=>$gen_id)
         ));
         // Not found and redirect
         if (!$Coursemanage) {
@@ -103,6 +104,7 @@ class CoursequestionController extends Controller
         $id = isset($_POST['course_id']) ? $_POST['course_id'] : $id;
         if(Yii::app()->user->id){
             $course = CourseOnline::model()->findByPk($id);
+            $gen_id = $course->getGenID($course->course_id);
             $courseStatus = Helpers::lib()->checkCoursePass($id);
 
             /*if($course) {
@@ -161,9 +163,9 @@ class CoursequestionController extends Controller
                         "//course/detail/$id",
                     ));
                 }
-                $countCoursescore = Coursescore::Model()->count("course_id=:course_id AND user_id=:user_id and active = 'y'", array(
+                $countCoursescore = Coursescore::Model()->count("course_id=:course_id AND user_id=:user_id and active = 'y' AND gen_id=:gen_id", array(
                     "course_id" => $id,
-                    "user_id" => Yii::app()->user->id,
+                    "user_id" => Yii::app()->user->id, ':gen_id'=>$gen_id
 
                 ));
 
@@ -173,7 +175,7 @@ class CoursequestionController extends Controller
                         'condition' => ' course_id = "' . $id . '"
                         AND user_id    = "' . Yii::app()->user->id . '"
                         AND score_past = "y" and active = "y"
-                        ',
+                        '." AND gen_id='".$gen_id."'",
                     ));
                     
                     if (!empty($countCoursescorePast)) {
@@ -190,10 +192,10 @@ class CoursequestionController extends Controller
                         $this->redirect(array('//course/detail', 'id' => $id));
                     }
                 } else {                          
-                    $countCoursescorePast = Coursescore::Model()->count("course_id=:course_id AND user_id=:user_id AND score_past=:score_past  and active = 'y'", array(
+                    $countCoursescorePast = Coursescore::Model()->count("course_id=:course_id AND user_id=:user_id AND score_past=:score_past  and active = 'y' AND gen_id=:gen_id", array(
                         "course_id" => $id,
                         "user_id" => Yii::app()->user->id,
-                        "score_past" => "y",
+                        "score_past" => "y", ':gen_id'=>$gen_id
                     ));
 
 
@@ -212,7 +214,7 @@ class CoursequestionController extends Controller
                             ))
                     );
                         $temp_all = TempCourseQuiz::model()->findAll(array(
-                            'condition' => "user_id=".Yii::app()->user->id." and course_id=".$id.""
+                            'condition' => "user_id=".Yii::app()->user->id." and course_id=".$id." AND gen_id='".$gen_id."'"
                         ));
 
                         // $model = array();
@@ -224,6 +226,7 @@ class CoursequestionController extends Controller
                                     $temp_test = new TempCourseQuiz;
                                     $temp_test->user_id = Yii::app()->user->id;
                                     $temp_test->course_id = $id;
+                                    $temp_test->gen_id = $gen_id;
                                     $temp_test->group_id = $val['group_id'];
                                     $temp_test->ques_id = $val['ques_id'];
                                     $choice = array();
@@ -283,14 +286,14 @@ class CoursequestionController extends Controller
                     }
 
                     $currentQuiz = TempCourseQuiz::model()->find(array(
-                        'condition' => "user_id=:user_id AND course_id=:course_id $sql_number order by id",
-                        'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $id)
+                        'condition' => "user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id $sql_number order by id",
+                        'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $id, ':gen_id'=>$gen_id)
                     ));
 
                     if(empty($currentQuiz)){
                         $currentQuiz = TempCourseQuiz::model()->find(array(
-                            'condition' => "user_id=:user_id AND course_id=:course_id order by id",
-                            'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $id)
+                            'condition' => "user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id order by id",
+                            'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $id, ':gen_id'=>$gen_id)
                         ));
                     }
                     $model = Coursequestion::getTempData($currentQuiz['ques_id']);
@@ -300,7 +303,7 @@ class CoursequestionController extends Controller
                             if(isset($_POST['Choice'])){
                                 foreach ($_POST['Question_type'] as $question_id => $value) {
                                     $update_temp = TempCourseQuiz::model()->find(array(
-                                        'condition' => "user_id=".Yii::app()->user->id." and course_id=".$id." and ques_id=".$question_id.""
+                                        'condition' => "user_id=".Yii::app()->user->id." and course_id=".$id." and ques_id=".$question_id." AND gen_id='".$gen_id."'"
                                     ));
                                     $update_temp->status = 1;
                                     $update_temp->ans_id = json_encode($_POST['Choice'][$question_id]);
@@ -312,7 +315,7 @@ class CoursequestionController extends Controller
                                 foreach ($_POST['Question_type'] as $question_id => $value) {
 
                                     $update_temp = TempCourseQuiz::model()->find(array(
-                                        'condition' => "user_id=".Yii::app()->user->id." and course_id=".$id." and ques_id=".$question_id
+                                        'condition' => "user_id=".Yii::app()->user->id." and course_id=".$id." and ques_id=".$question_id." AND gen_id='".$gen_id."'"
                                     ));
 
                                     $update_temp->status = 1;
@@ -324,11 +327,12 @@ class CoursequestionController extends Controller
                             if($_POST['actionEvnt']=="save" || $_POST['actionEvnt']=="timeup"){
                                 $modelCoursescore = new Coursescore;
                                 $modelCoursescore->course_id = $id;
+                                $modelCoursescore->gen_id = $gen_id;
                                 $modelCoursescore->user_id = Yii::app()->user->id;
                                 $modelCoursescore->save();
 
                                 $temp_accept = TempCourseQuiz::model()->findAll(
-                                   array('condition' => "user_id=".Yii::app()->user->id." and course_id=".$id.""
+                                   array('condition' => "user_id=".Yii::app()->user->id." and course_id=".$id." AND gen_id='".$gen_id."'"
                                )); 
                                 $countAllCoursequestion = 0;
                                 $scoreSum = 0;
@@ -364,6 +368,7 @@ class CoursequestionController extends Controller
                                             $modelCourselogchoice = new Courselogchoice;
                                             $modelCourselogchoice->course_id = $id; // $_GET ID
                                             $modelCourselogchoice->logchoice_select = 1;
+                                            $modelCourselogchoice->gen_id = $gen_id;
                                             $modelCourselogchoice->score_id = $modelCoursescore->score_id;
                                             $modelCourselogchoice->choice_id = $choice->choice_id;
                                             $modelCourselogchoice->ques_id = $coursequestion->ques_id;
@@ -378,6 +383,7 @@ class CoursequestionController extends Controller
                                         // Save Logques
                                         $modelCourselogques = new Courselogques;
                                         $modelCourselogques->course_id = $id; // $_GET ID
+                                        $modelCourselogques->gen_id = $gen_id;
                                         $modelCourselogques->score_id = $modelCoursescore->score_id;
                                         $modelCourselogques->ques_id = $value->ques_id;
                                         $modelCourselogques->user_id = Yii::app()->user->id;
@@ -412,6 +418,7 @@ class CoursequestionController extends Controller
                                             // Save Logchoice
                                             $modelCourselogchoice = new Courselogchoice;
                                             $modelCourselogchoice->course_id = $id; // $_GET ID
+                                            $modelCourselogchoice->gen_id = $gen_id;                                            
                                             $modelCourselogchoice->logchoice_select = 1;
                                             $modelCourselogchoice->score_id = $modelCoursescore->score_id;
                                             $modelCourselogchoice->choice_id = $choice->choice_id;
@@ -427,6 +434,7 @@ class CoursequestionController extends Controller
                                         // Save Logques
                                         $modelCourselogques = new Courselogques;
                                         $modelCourselogques->course_id = $id; // $_GET ID
+                                        $modelCourselogques->gen_id = $gen_id;
                                         $modelCourselogques->score_id = $modelCoursescore->score_id;
                                         $modelCourselogques->ques_id = $value->ques_id;
                                         $modelCourselogques->user_id = Yii::app()->user->id;
@@ -489,6 +497,7 @@ class CoursequestionController extends Controller
 
                                             $modelCourselogchoice = new Courselogchoice;
                                                 $modelCourselogchoice->course_id = $id; // $_POST ID
+                                                $modelCourselogchoice->gen_id = $gen_id;
                                                 $modelCourselogchoice->logchoice_select = 1;
                                                 $modelCourselogchoice->score_id = $modelCoursescore->score_id;
                                                 $modelCourselogchoice->choice_id = $choice->choice_id;
@@ -518,6 +527,7 @@ class CoursequestionController extends Controller
 
                                             $modelCourselogques = new Courselogques;
                                             $modelCourselogques->course_id = $id; // $_POST ID
+                                            $modelCourselogques->gen_id = $gen_id;
                                             $modelCourselogques->score_id = $modelCoursescore->score_id;
                                             $modelCourselogques->ques_id = $value->ques_id;
                                             $modelCourselogques->user_id = Yii::app()->user->id;
@@ -538,11 +548,13 @@ class CoursequestionController extends Controller
                                     if ($sumPoint >= $scorePercent) {
                                         $passCoursModel = Passcours::model()->findByAttributes(array(
                                             'passcours_cates' => $course->cate_id,
-                                            'passcours_user' => Yii::app()->user->id
+                                            'passcours_user' => Yii::app()->user->id,
+                                            'gen_id' => $gen_id
                                         ));
                                         if (!$passCoursModel) {
                                             $modelPasscours = new Passcours;
                                             $modelPasscours->passcours_cates = $course->cate_id;
+                                            $modelPasscours->gen_id = $gen_id;
                                             $modelPasscours->passcours_cours = $course->course_id;
                                             $modelPasscours->passcours_user = Yii::app()->user->id;
                                             $modelPasscours->passcours_date = new CDbExpression('NOW()');
@@ -573,17 +585,17 @@ class CoursequestionController extends Controller
                                     }
 
                                     $count_no_select = TempCourseQuiz::model()->count(array(
-                                        'condition' => "user_id=:user_id AND course_id=:course_id AND status='0' order by id",
-                                        'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $id)
+                                        'condition' => "user_id=:user_id AND course_id=:course_id AND status='0' AND gen_id=:gen_id order by id",
+                                        'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $id, ':gen_id'=>$gen_id)
                                     ));
                                     $last_ques = $count_no_select == 0 ? 1 : 0;
                                     $currentQuiz = TempCourseQuiz::model()->find(array(
-                                        'condition' => "user_id=:user_id AND course_id=:course_id AND number=:number order by id",
-                                        'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $id,':number' => $idx)
+                                        'condition' => "user_id=:user_id AND course_id=:course_id AND number=:number AND gen_id=:gen_id order by id",
+                                        'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $id,':number' => $idx, ':gen_id'=>$gen_id)
                                     ));
                                     $model = Coursequestion::getTempData($currentQuiz['ques_id']);
                                     $temp_all = TempCourseQuiz::model()->findAll(array(
-                                        'condition' => "user_id=".Yii::app()->user->id." and course_id=".$id.""
+                                        'condition' => "user_id=".Yii::app()->user->id." and course_id=".$id." AND gen_id='".$gen_id."'"
                                     ));
                                     $countExam = count($temp_all) - $count_no_select;
                                     $this->renderPartial('exams_next', array(
@@ -600,11 +612,11 @@ class CoursequestionController extends Controller
                             } else {
 
                                 $temp_all = TempCourseQuiz::model()->findAll(array(
-                                    'condition' => "user_id=".Yii::app()->user->id." and course_id=".$id.""
+                                    'condition' => "user_id=".Yii::app()->user->id." and course_id=".$id." AND gen_id='".$gen_id."'"
                                 ));
                                 $count_no_select = TempCourseQuiz::model()->count(array(
-                                    'condition' => "user_id=:user_id AND course_id=:course_id AND status='0' order by id",
-                                    'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $id)
+                                    'condition' => "user_id=:user_id AND course_id=:course_id AND status='0' AND gen_id=:gen_id order by id",
+                                    'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $id, ':gen_id'=>$gen_id)
                                 ));
 
                                 $last_ques = $count_no_select == 0 ? 1 : 0;
@@ -666,8 +678,10 @@ class CoursequestionController extends Controller
         if(Yii::app()->user->id){
             Helpers::lib()->getControllerActionId();
         }
+        $course_model = CourseOnline::model()->findByPk($id);
+        $gen_id = $course_model->getGenID($course_model->course_id);
         $model = Coursescore::model()->findAll(array(
-            'condition' => 'course_id=' . $id . ' and active = "y" AND user_id=' . Yii::app()->user->id,
+            'condition' => 'course_id=' . $id . ' and active = "y" AND user_id=' . Yii::app()->user->id." AND gen_id='".$gen_id."'",
         ));
         $this->render('scoreAll', array('model' => $model));
     }
@@ -690,14 +704,18 @@ class CoursequestionController extends Controller
     }
 
     public function actiondeleteTemp($lesson_id=null){
+        $lesson_model = Lesson::model()->findByPk($lesson_id);
+        $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
         TempCourseQuiz::model()->deleteAll(array(
-            'condition' => "user_id=:user_id AND course_id=:course_id",
-            'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $lesson_id)
+            'condition' => "user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id",
+            'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $lesson_id, ':gen_id'=>$gen_id)
         )); 
     }
     public function actionSaveTimeExam(){
+        $course_model = CourseOnline::model()->findByPk($_POST['course_id']);
+        $gen_id = $course_model->getGenID($course_model->course_id);
        $temp_time_start = TempCourseQuiz::model()->find(array(
-        'condition' => "user_id=".Yii::app()->user->id." and course_id=".$_POST['course_id']." and time_start is not null"
+        'condition' => "user_id=".Yii::app()->user->id." and course_id=".$_POST['course_id']." and time_start is not null AND gen_id='".$gen_id."'"
     ));
        if($temp_time_start){
         $temp_time_start->time_up = $_POST['time'];
@@ -720,9 +738,11 @@ public function SendMailLearn($id){
     $user_id = Yii::app()->user->id;
     $modelUser = User::model()->findByPk($user_id);
     $modelCourseName = CourseOnline::model()->findByPk($id);
+    $gen_id = $modelCourseName->getGenID($modelCourseName->course_id);
     $criteria = new CDbCriteria;
     $criteria->join = " INNER JOIN `tbl_lesson` AS les ON (les.`id`=t.`lesson_id`)";
     $criteria->compare('t.course_id',$id);
+    $criteria->compare('t.gen_id',$gen_id);
     $criteria->compare('t.user_id',$user_id);
     $criteria->compare('lesson_active','y');
     $criteria->compare('les.active','y');
@@ -749,6 +769,7 @@ public function SendMailLearn($id){
             $model = new LogEmail;
             $model->user_id = $user_id;
             $model->course_id = $id;
+            $model->gen_id = $gen_id;
             $model->message = $message;
             if(!$model->save())var_dump($model->getErrors()); 
         }

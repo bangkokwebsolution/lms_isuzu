@@ -48,7 +48,7 @@ class QAnswers_course extends CActiveRecord
 			array('answer_textarea', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('answer_id, user_id, question_option_id, choice_id, answer_numeric, answer_text, answer_textarea, answer_yn, quest_ans_id', 'safe', 'on'=>'search'),
+			array('answer_id, user_id, question_option_id, choice_id, answer_numeric, answer_text, answer_textarea, answer_yn, quest_ans_id, gen_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,6 +71,7 @@ class QAnswers_course extends CActiveRecord
 		return array(
 			'answer_id' => 'Answer',
 			'user_id' => 'User',
+			'gen_id' => 'gen_id',
 			'question_option_id' => 'Question Option',
 			'choice_id' => 'Choice',
 			'answer_numeric' => 'Answer Numeric',
@@ -101,6 +102,7 @@ class QAnswers_course extends CActiveRecord
 		$criteria->compare('answer_textarea',$this->answer_textarea,true);
 		$criteria->compare('answer_yn',$this->answer_yn,true);
 		$criteria->compare('quest_ans_id',$this->quest_ans_id);
+		$criteria->compare('gen_id',$this->gen_id);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
