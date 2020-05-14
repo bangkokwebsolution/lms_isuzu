@@ -236,7 +236,17 @@
                             <?= $label->label_header_login ?></a></li>
                         <?php } else { ?>
                             <li class="dropdown user-menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;"><span class="photo" style="background-image: url('<?php echo Yii::app()->theme->baseUrl; ?>'/images/user.png);"></span>
+                            <?php
+                                        if ($users->pic_user == null) {
+
+                                            $img  = Yii::app()->theme->baseUrl . "/images/thumbnail-profile.png";
+                                        } else {
+                                            $registor = new RegistrationForm;
+                                            $registor->id = $users->id;
+                                            $img = Yii::app()->baseUrl . '/uploads/user/' . $users->id . '/thumb/' . $users->pic_user;
+                                        }
+                            ?>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;"><span class="photo" style="background-image: url('<?= $img ?>"></span>
                                     <?php if (Yii::app()->session['lang'] == 1) {
                                      echo  $name->firstname_en;
                                     }else{

@@ -380,14 +380,16 @@ header .navbar-toggle {
 }
 
 header span.photo {
-  width: 25px;
-  height: 25px;
+  width: 40px;
+  height: 40px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   display: inline-block;
   vertical-align: middle;
   margin-top: -10px;
+  margin-right: 10px;
+  border-radius: 50px;
 }
 
 header .dropdown-menu {
