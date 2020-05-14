@@ -53,6 +53,9 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
     }  
 }
 
+$course_model = CourseOnline::model()->findByPk($course->course_id);
+$gen_id = $course_model->getGenID($course_model->course_id);
+
 function Cuttime($date){
     $strYear = date("Y", strtotime($date)) + 543;
     $strMonth = date("n", strtotime($date));
@@ -107,7 +110,7 @@ if($model){
                      $msg_step = UserModule::t('learning_lesson').': '.$value->title;
                  }else{
                     $criteria = new CDbCriteria;
-                    $criteria->condition = ' lesson_id="' . $value->id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y" AND score_past = "y" AND type = "post"';
+                    $criteria->condition = ' lesson_id="' . $value->id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y" AND score_past = "y" AND type = "post"'." AND gen_id='".$gen_id."'";
                     $criteria->order = 'create_date ASC';
                     $BestFinalTestScore = Score::model()->findAll($criteria);
                     if(!$BestFinalTestScore){
@@ -140,7 +143,7 @@ if($model){
         $stopId = $_GET['lid'];
     }
     $criteria = new CDbCriteria;
-    $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y" AND score_past = "y"';
+    $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y" AND score_past = "y"'." AND gen_id='".$gen_id."'";
     $criteria->order = 'create_date ASC';
     $FinalScore = Coursescore::model()->findAll($criteria);
     ?>
@@ -282,7 +285,7 @@ if($model){
                 $checkCourseTest = Helpers::lib()->checkCoursePass($course->course_id);
                 $checkHaveCourseTest = Helpers::lib()->checkHaveCourseTestInManage($course->course_id);
                 $criteria = new CDbCriteria;
-                $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y"';
+                $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y"'." AND gen_id='".$gen_id."'";
                 $criteria->order = 'create_date ASC';
                 $BestFinalTestScore = Coursescore::model()->findAll($criteria);
 
@@ -435,6 +438,7 @@ if($model){
                                                         $criteria->compare('active','y');
                                                         $criteria->compare('user_id',Yii::app()->user->id);
                                                         $criteria->compare('course_id',$course->course_id);
+                                                        $criteria->compare('gen_id',$gen_id);
                                                         $scoreCourse = Coursescore::model()->findAll($criteria);
                                                         $status_courseTest = array();
                                                         foreach ($scoreCourse as $key => $value) {
@@ -507,7 +511,7 @@ if($model){
                                                                     // $flagPreTestPass = false;
                                                                     $flagPreTestPass = true;
                                                                     $criteriaScoreAll = new CDbCriteria;
-                                                                    $criteriaScoreAll->condition = ' type = "pre" AND lesson_id="' . $lessonListValue->id . '" AND user_id="' . Yii::app()->user->id . '" and active = "y"';
+                                                                    $criteriaScoreAll->condition = ' type = "pre" AND lesson_id="' . $lessonListValue->id . '" AND user_id="' . Yii::app()->user->id . '" and active = "y"'." AND gen_id='".$gen_id."'";
                                                                     $scoreAll = Score::model()->findAll($criteriaScoreAll);
                                                                     foreach ($scoreAll as $keyx => $score_ck) {
                                                                     // $preStatus = Helpers::lib()->CheckTest($lessonListValue, "pre");
@@ -544,8 +548,8 @@ if($model){
                                                                     <?php
                                                                 }
                                                                 $learnModel = Learn::model()->find(array(
-                                                                    'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active=:status',
-                                                                    'params'=>array(':lesson_id'=>$lessonListValue->id,':user_id'=>Yii::app()->user->id,':status'=>'y')
+                                                                    'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active=:status AND gen_id=:gen_id',
+                                                                    'params'=>array(':lesson_id'=>$lessonListValue->id,':user_id'=>Yii::app()->user->id,':status'=>'y', ':gen_id'=>$gen_id)
                                                                 ));
                                                                 if($lessonListValue->type == 'vdo'){
                                                                     foreach ($lessonListValue->files as $les) {
@@ -558,6 +562,7 @@ if($model){
                                                                                 $criteriaPre->compare('lesson_id',$lessonListValue->id);
                                                                                 $criteriaPre->compare('user_id',Yii::app()->user->id);
                                                                                 $criteriaPre->compare('type','pre');
+                                                                                $criteriaPre->compare('gen_id', $gen_id);
                                                                                 $criteriaPre->compare('active','y');
                                                                                 $modelPreScore = Score::model()->findAll($criteriaPre);
                                                                                 $flagCheckPre = true;
@@ -676,6 +681,7 @@ if($model){
                                                                                     } else{
                                                                                         $criteriaPre = new CDbCriteria;
                                                                                         $criteriaPre->compare('lesson_id',$lessonListValue->id);
+                                                                                        $criteriaPre->compare('gen_id',$gen_id);
                                                                                         $criteriaPre->compare('user_id',Yii::app()->user->id);
                                                                                         $criteriaPre->compare('type','pre');
                                                                                         $criteriaPre->compare('active','y');
@@ -798,7 +804,7 @@ if($model){
                                                                                         } else { //Post Test
                                                                                             $flagPostTestPass = false;
                                                                                             $criteriaScoreAll = new CDbCriteria;
-                                                                                            $criteriaScoreAll->condition = ' type = "post" AND lesson_id="' . $lessonListValue->id . '" AND user_id="' . Yii::app()->user->id . '" and active = "y"';
+                                                                                            $criteriaScoreAll->condition = ' type = "post" AND lesson_id="' . $lessonListValue->id . '" AND user_id="' . Yii::app()->user->id . '" and active = "y"'." AND gen_id='".$gen_id."'";
                                                                                             $scoreAll = Score::model()->findAll($criteriaScoreAll);
                                                                                             ?>
                                                                                             <div class="stepcoursediv">
@@ -904,7 +910,7 @@ if($model){
                                                                 echo '<ul>';
                                                                 foreach($QQuestion->choices as $QChoices) {
                                                                     $currentAnswer = QAnswers::model()->find(array(
-                                                                        'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $lessonQuestionAns->id . '"',
+                                                                        'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $lessonQuestionAns->id . '"'." AND gen_id='".$gen_id."'",
                                                                     ));
 
                                                                     if($currentAnswer->choice_id == $QChoices->option_choice_id){
@@ -923,7 +929,7 @@ if($model){
                                                                 echo '<ul>';
                                                                 foreach($QQuestion->choices as $QChoices) {
                                                                     $currentAnswer = QAnswers::model()->find(array(
-                                                                        'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $lessonQuestionAns->id . '"',
+                                                                        'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $lessonQuestionAns->id . '"'." AND gen_id='".$gen_id."'",
                                                                     ));
 
                                                                     if($currentAnswer->choice_id == $QChoices->option_choice_id){
@@ -961,7 +967,7 @@ if($model){
                                                                         foreach($QQuestion->choices as $QChoices) {
                                                                                                 // $currentAnswer
                                                                             $currentAnswer = QAnswers::model()->find(array(
-                                                                                'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $lessonQuestionAns->id . '"',
+                                                                                'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $lessonQuestionAns->id . '"'." AND gen_id='".$gen_id."'",
                                                                             ));
                                                                             ?>
                                                                             <tr>
@@ -1038,7 +1044,7 @@ if($model){
                 }
 
                 $criteria = new CDbCriteria;
-                $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y"';
+                $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y"'." AND gen_id='".$gen_id."'";
                 $criteria->order = 'create_date ASC';
                 $BestFinalTestScore = Coursescore::model()->findAll($criteria);
 
@@ -1120,7 +1126,7 @@ if($model){
             $PaQuest = false;
             if ($CourseSurvey) {
                 $passQuest = QQuestAns_course::model()->find(array(
-                    'condition' => 'user_id = "' . Yii::app()->user->id . '" AND course_id ="' . $course->course_id . '"',
+                    'condition' => 'user_id = "' . Yii::app()->user->id . '" AND course_id ="' . $course->course_id . '"'." AND gen_id='".$gen_id."'",
                 ));
                 $countSurvey = count($passQuest);
                 if ($passQuest) {
@@ -1134,6 +1140,7 @@ if($model){
             if($checkHaveCourseTest){
              $criteria = new CDbCriteria;
              $criteria->compare('course_id',$course->course_id);
+             $criteria->compare('gen_id',$gen_id);
              $criteria->compare('user_id',Yii::app()->user->id);
              $criteria->compare('score_past','y');
              $criteria->compare('active','y');

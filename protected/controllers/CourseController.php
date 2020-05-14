@@ -150,8 +150,8 @@ public function actionResetLearn($id) {
                 $learnFile = LearnFile::model()->deleteAll('user_id_file="' . Yii::app()->user->id . '" AND learn_id="' . $data->learn_id . '" AND gen_id="'.$gen_id.'"');
             }
             $learn = Learn::model()->deleteAll('user_id="' . Yii::app()->user->id . '" AND lesson_id="' . $value->id . '" AND gen_id="'.$gen_id.'"');
-            $questAns = QQuestAns_course::model()->deleteAll("user_id='" . Yii::app()->user->id . "' AND course_id='" . $id . "'");
-            $questAns = QQuestAns::model()->deleteAll("user_id='" . Yii::app()->user->id . "' AND lesson_id='" . $value->id . "'");
+            $questAns = QQuestAns_course::model()->deleteAll("user_id='" . Yii::app()->user->id . "' AND course_id='" . $id . "' AND gen_id='".$gen_id."'");
+            $questAns = QQuestAns::model()->deleteAll("user_id='" . Yii::app()->user->id . "' AND lesson_id='" . $value->id . "' AND gen_id='".$gen_id."'");
                 //reset course start
             $courseStart = CourseStart::model()->find(array(
                 'condition' => 'course_id = "' . $id . '" AND user_id ="' . Yii::app()->user->id . '" AND gen_id="'.$gen_id.'"',
@@ -603,8 +603,8 @@ public function actionCateIndex($id) {
                     $lessonStatus = Helpers::lib()->checkLessonPass($lesson);
                     $learnLesson = $user->learns(
                         array(
-                            'condition' => 'lesson_id=:lesson_id AND lesson_active="y"',
-                            'params' => array(':lesson_id' => $lesson->id)
+                            'condition' => 'lesson_id=:lesson_id AND lesson_active="y" AND gen_id=:gen_id',
+                            'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                         )
                     );
 
@@ -737,8 +737,8 @@ public function actionCateIndex($id) {
                         $lessonStatus = Helpers::lib()->checkLessonPass($lesson);
                         $learnLesson = $user->learns(
                             array(
-                                'condition' => 'lesson_id=:lesson_id AND lesson_active="y"',
-                                'params' => array(':lesson_id' => $lesson->id)
+                                'condition' => 'lesson_id=:lesson_id AND lesson_active="y" AND gen_id=:gen_id',
+                                'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                             )
                         );
 
@@ -919,8 +919,6 @@ public function actionCateIndex($id) {
             $learn_model = Learn::model()->findByPk($learn_id);
             $gen_id = $learn_model->LessonMapper->CourseOnlines->getGenID($learn_model->LessonMapper->course_id);
 
-
-
             $modelLearnFilePdf = LearnFile::model()->find(array(
                 'condition' => 'file_id=:file_id AND learn_id=:learn_id AND gen_id=:gen_id',
                 'params' => array(':file_id' => $id, ':learn_id' => $learn_id, ':gen_id'=>$gen_id)
@@ -1035,7 +1033,7 @@ public function actionCateIndex($id) {
         $criteria->compare('t.course_id',$id);
         $criteria->compare('t.gen_id',$gen_id);
         $criteria->compare('user_id',$user_id);
-        $criteria->compare('t.active','y');
+        $criteria->compare('t.lesson_active','y');
         $criteria->compare('les.active','y');
         $learn = Learn::model()->findAll($criteria);
         $message = $this->renderPartial('_emailLearn',array(
@@ -1056,6 +1054,7 @@ public function actionCateIndex($id) {
         if(Helpers::lib()->SendMailLearnPass($to, $subject, $message)){
             $model = new LogEmail;
             $model->user_id = $user_id;
+            $model->gen_id = $gen_id;
             $model->course_id = $id;
             $model->message = $message;
             if(!$model->save())var_dump($model->getErrors()); 
@@ -1518,7 +1517,7 @@ public function actionDetail($id) {
         //get date passed final test **future change
         $CourseDatePass = null;
         //Pass Course Date
-        $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId));
+        $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId.' AND gen_id='.$gen_id));
         $CourseDatePass = $CourseDatePassModel->passcours_date;
 
         // $CoursePassedModel = Coursescore::model()->find(array(
@@ -1800,7 +1799,7 @@ public function actionDetail($id) {
 
         //get start & end learn date of current course
         $StartDateLearnThisCourse = Learn::model()->with('LessonMapper')->find(array(
-            'condition' => 'learn.user_id = ' . $UserId . ' AND learn.course_id = ' . $PassCoursId,
+            'condition' => 'learn.user_id = ' . $UserId . ' AND learn.course_id = ' . $PassCoursId.' AND gen_id='.$gen_id,
             'alias' => 'learn',
             'order' => 'learn.create_date ASC',
         ));
@@ -1813,7 +1812,7 @@ public function actionDetail($id) {
         //get date passed final test **future change
         $CourseDatePass = null;
         //Pass Course Date
-        $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId));
+        $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId. ' AND gen_id='.$gen_id));
         $CourseDatePass = $CourseDatePassModel->passcours_date;
 
         $CoursePassedModel = Passcours::model()->find(array(
@@ -2003,10 +2002,10 @@ public function actionTest(){
 private function savePassCourseLog($action, $passcours_id) {
 
     if (Yii::app()->user->id) {
-
-        $course_model = CourseOnline::model()->findByPk($passcours_id);
+        
+        $passcours_model = Passcours::model()->findByPk($passcours_id);
+        $course_model = CourseOnline::model()->findByPk($passcours_model->passcours_cours);
         $gen_id = $course_model->getGenID($course_model->course_id);
-
 
         $model = new PasscoursLog();
             //set model data
@@ -2159,6 +2158,7 @@ public function actionCourseLearn($id = null){ // อันใหม่ ใส�
 
     $modelCapt = new ValidateCaptcha;
     $model = Lesson::model()->findByPk($id);
+    $gen_id = $model->CourseOnlines->getGenID($model->course_id);
     $time = ConfigCaptchaCourseRelation::model()->with('captchaTime')->find(array(
         'condition'=>'cnid=:cnid AND captchaTime.capt_hide="1" AND captchaTime.capt_active="y"',
         'params' => array('cnid' => $model->course_id)));
@@ -2237,6 +2237,7 @@ public function actionCourseLearn($id = null){ // อันใหม่ ใส�
             'time' => $time,
             'lessonList' => $lessonList,
             'label' => $label,
+            'gen_id'=>$gen_id,
             'learn_note' => $learn_note
         ));
     }

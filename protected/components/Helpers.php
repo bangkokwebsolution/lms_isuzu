@@ -955,32 +955,32 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                 $countFile = $lesson->fileCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTrueVdos(
                     array(
-                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\'',
-                        'params' => array(':lesson_id' => $lesson->id)
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                     )
                 );
             } else if($lesson->type == 'pdf'){
                 $countFile = $lesson->filePdfCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTruePdf(
                     array(
-                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\'',
-                        'params' => array(':lesson_id' => $lesson->id)
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                     )
                 );
             } else if($lesson->type == 'scorm'){
                 $countFile = $lesson->fileScormCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTrueScorm(
                     array(
-                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\'',
-                        'params' => array(':lesson_id' => $lesson->id)
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                     )
                 );
             } else if($lesson->type == 'audio'){
                 $countFile = $lesson->fileAudioCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTrueAudio(
                     array(
-                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\'',
-                        'params' => array(':lesson_id' => $lesson->id)
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                     )
                 );
             }
@@ -1049,38 +1049,39 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                     'params' => array(':lesson_id' => $lesson->id,':status' => "y", ':gen_id'=>$gen_id)
                 )
             );
+
             $countFile = 0;
             $countLearnCompareTrueVdos = 0;
             if($lesson->type == 'vdo'){
                 $countFile = $lesson->fileCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTrueVdos(
                     array(
-                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
-                        'params' => array(':lesson_id' => $lesson->id)
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                     )
                 );
             } else if($lesson->type == 'pdf'){
                 $countFile = $lesson->filePdfCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTruePdf(
                     array(
-                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
-                        'params' => array(':lesson_id' => $lesson->id)
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                     )
                 );
             } else if($lesson->type == 'scorm'){
                 $countFile = $lesson->fileScormCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTrueScorm(
                     array(
-                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
-                        'params' => array(':lesson_id' => $lesson->id)
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                     )
                 );
             } else if($lesson->type == 'audio'){
                 $countFile = $lesson->fileAudioCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTrueAudio(
                     array(
-                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
-                        'params' => array(':lesson_id' => $lesson->id)
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                     )
                 );
             }
@@ -1219,32 +1220,32 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
             $countFile = $lesson->fileCount;
             $countLearnCompareTrueVdos = $user->countLearnCompareTrueVdos(
                 array(
-                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
-                    'params' => array(':lesson_id' => $lesson->id)
+                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                    'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                 )
             );
         } else if($lesson->type == 'pdf'){
             $countFile = $lesson->filePdfCount;
             $countLearnCompareTrueVdos = $user->countLearnCompareTruePdf(
                 array(
-                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
-                    'params' => array(':lesson_id' => $lesson->id)
+                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                    'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                 )
             );
         } else if($lesson->type == 'scorm'){
             $countFile = $lesson->fileScormCount;
             $countLearnCompareTrueVdos = $user->countLearnCompareTrueScorm(
                 array(
-                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
-                    'params' => array(':lesson_id' => $lesson->id)
+                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                    'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                 )
             );
         } else if($lesson->type == 'audio'){
             $countFile = $lesson->fileAudioCount;
             $countLearnCompareTrueVdos = $user->countLearnCompareTrueAudio(
                 array(
-                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y"',
-                    'params' => array(':lesson_id' => $lesson->id)
+                    'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                    'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                 )
             );
         }
@@ -1945,13 +1946,13 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
 
                        $countLearnCompareTrue = $lesson->type == 'vdo' ? $user->countLearnCompareTrueVdos(
                         array(
-                            'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\'',
-                            'params' => array(':lesson_id' => $lesson->id)
+                            'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\'  AND t.gen_id=:gen_id',
+                            'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                         )
                     ) : $user->countLearnCompareTruePdf(
                         array(
-                            'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\'',
-                            'params' => array(':lesson_id' => $lesson->id)
+                            'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\'  AND t.gen_id=:gen_id',
+                            'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                         )
                     );
 

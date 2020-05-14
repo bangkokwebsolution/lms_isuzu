@@ -384,8 +384,8 @@ $cancel_msg = UserModule::t('Cancel');
                                     <!-- <li class="list-body"><?php //echo $lessonListValue->title; ?></li> -->
                                     <?php
                                 $learnModel = Learn::model()->find(array(
-                                  'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active=:status',
-                                  'params'=>array(':lesson_id'=>$lessonListValue->id,':user_id'=>Yii::app()->user->id,':status'=>'y')
+                                  'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active=:status AND gen_id=:gen_id',
+                                  'params'=>array(':lesson_id'=>$lessonListValue->id,':user_id'=>Yii::app()->user->id,':status'=>'y', ':gen_id'=>$gen_id)
                                 ));
                                 if($lessonListValue->type == 'vdo'){ 
                                   foreach ($lessonListValue->files as $les) {
@@ -542,8 +542,8 @@ $cancel_msg = UserModule::t('Cancel');
                             foreach ($questTypeArr as $key => $value) {
                              $questType = !empty($value) ? $value : 0 ;
                              $score = Score::model()->findAll(array(
-                              'condition' => 't.lesson_id=:lesson_id AND t.active = "y" AND t.type ="pre" AND t.user_id=:user_id AND ques_type=:ques_type',
-                              'params' => array(':lesson_id' => $lessonListValue->id,':user_id' => Yii::app()->user->id,':ques_type' => $questType)));
+                              'condition' => 't.lesson_id=:lesson_id AND t.active = "y" AND t.type ="pre" AND t.user_id=:user_id AND ques_type=:ques_type AND gen_id=:gen_id',
+                              'params' => array(':lesson_id' => $lessonListValue->id,':user_id' => Yii::app()->user->id,':ques_type' => $questType, ':gen_id'=>$gen_id)));
                              if(Helpers::isMultipleChoice($lessonListValue,'pre',$value)){
                               $isPreTest = Helpers::isTestState($lessonListValue->id,'pre',$value);
                               if($value != '3'){
@@ -639,8 +639,8 @@ $cancel_msg = UserModule::t('Cancel');
 
           <?php
           $learnModel = Learn::model()->find(array(
-            'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active=:status',
-            'params'=>array(':lesson_id'=>$lessonListValue->id,':user_id'=>Yii::app()->user->id,':status'=>'y')
+            'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active=:status AND gen_id=:gen_id',
+            'params'=>array(':lesson_id'=>$lessonListValue->id,':user_id'=>Yii::app()->user->id,':status'=>'y', ':gen_id'=>$gen_id)
           ));
           if($lessonListValue->type == 'vdo'){
             foreach ($lessonListValue->files as $les) {
@@ -731,8 +731,8 @@ $cancel_msg = UserModule::t('Cancel');
      foreach ($questTypeArr as $key => $value) {
       $questType = !empty($value) ? $value : 0 ;
       $score = Score::model()->findAll(array(
-       'condition' => 't.lesson_id=:lesson_id AND t.active = "y" AND t.type ="post" AND t.user_id=:user_id AND ques_type=:ques_type',
-       'params' => array(':lesson_id' => $lessonListValue->id,':user_id' => Yii::app()->user->id,':ques_type' => $questType)));
+       'condition' => 't.lesson_id=:lesson_id AND t.active = "y" AND t.type ="post" AND t.user_id=:user_id AND ques_type=:ques_type AND gen_id=:gen_id',
+       'params' => array(':lesson_id' => $lessonListValue->id,':user_id' => Yii::app()->user->id,':ques_type' => $questType, ':gen_id'=>$gen_id)));
 
       if(Helpers::isMultipleChoice($lessonListValue,'post',$value)){
        $isPostTest = Helpers::isTestState($lessonListValue->id,'post',$value);
@@ -894,6 +894,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                                       'user_id' => Yii::app()->user->id,
                                                       'header_id' => $survey->survey_header_id,
                                                       'course_id' => $model->course_id,
+                                                      'gen_id' => $gen_id,
                                                     ));
                                                      if($SurveyCourse) {
                                                       ?>
@@ -966,7 +967,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                              $PaQuest = false;
                                              if ($CourseSurvey) {
                                               $passQuest = QQuestAns_course::model()->find(array(
-                                               'condition' => 'user_id = "' . Yii::app()->user->id . '" AND course_id ="' . $model->course_id . '"',
+                                               'condition' => 'user_id = "' . Yii::app()->user->id . '" AND course_id ="' . $model->course_id . '"'."AND gen_id='".$gen_id."'",
                                              ));
 
                                               if ($passQuest) {
@@ -994,7 +995,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
 
                                        $passed = false;
                                        $criteria = new CDbCriteria;
-                                       $criteria->condition = ' course_id="' . $model->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active = "y"';
+                                       $criteria->condition = ' course_id="' . $model->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active = "y"'." AND gen_id='".$gen_id."'";
                                             // $criteria->group = 'score_count';
                                        $criteria->order = 'create_date ASC';
                                        $allFinalTest = Coursescore::model()->findAll($criteria);
@@ -1100,8 +1101,8 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                   }
 
                                   $learnVdoModel = LearnFile::model()->find(array(
-                                    'condition' => 'file_id=:file_id AND learn_id=:learn_id',
-                                    'params' => array(':file_id' => $file->id, ':learn_id' => $learn_id)
+                                    'condition' => 'file_id=:file_id AND learn_id=:learn_id AND gen_id=:gen_id',
+                                    'params' => array(':file_id' => $file->id, ':learn_id' => $learn_id, ':gen_id'=>$gen_id)
                                   ));
                                   $imageSlide = ImageSlide::model()->findAll('file_id=:file_id AND image_slide_time != \'\'', array(':file_id' => $file->id));
                                   ?>
@@ -1150,7 +1151,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                                   <div class="row">
                                                    <?php
                                                             // $learnFiles = $user->learnFiles(array('condition' => 'file_id=' . $file->id));
-                                                   $learnFiles = LearnFile::model()->findAll(array('condition' => 'file_id =' . $file->id . ' AND user_id_file = '.Yii::app()->user->id));
+                                                   $learnFiles = LearnFile::model()->findAll(array('condition' => 'file_id =' . $file->id . ' AND user_id_file = '.Yii::app()->user->id." AND gen_id='".$gen_id."'"));
                                                    foreach ($imageSlide as $key => $imageSlideItem) {
                                                     $displayNone = "display:none;";
                                                     if ($learnFiles[0]->learn_file_status != 'l' && $learnFiles[0]->learn_file_status != 's') {
@@ -1467,8 +1468,8 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
              }
 
              $learnVdoModel = LearnFile::model()->find(array(
-               'condition' => 'file_id=:file_id AND learn_id=:learn_id',
-               'params' => array(':file_id' => $file->id, ':learn_id' => $learn_id)
+               'condition' => 'file_id=:file_id AND learn_id=:learn_id AND gen_id=:gen_id',
+               'params' => array(':file_id' => $file->id, ':learn_id' => $learn_id, ':gen_id'=>$gen_id)
              ));
 
              $imageTimeLast = 0;
@@ -1609,8 +1610,8 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                               }
 
                               $learnVdoModel = LearnFile::model()->find(array(
-                                'condition' => 'file_id=:file_id AND learn_id=:learn_id',
-                                'params' => array(':file_id' => $file->id, ':learn_id' => $learn_id)
+                                'condition' => 'file_id=:file_id AND learn_id=:learn_id AND gen_id=:gen_id',
+                                'params' => array(':file_id' => $file->id, ':learn_id' => $learn_id, ':gen_id'=>$gen_id)
                               ));
                               $imageSlide = AudioSlide::model()->findAll('file_id=:file_id AND image_slide_time != \'\'', array(':file_id' => $file->id));
                               ?>
@@ -1644,7 +1645,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                         <div class="row">
                                          <?php
                                                             // $learnFiles = $user->learnFiles(array('condition' => 'file_id=' . $file->id));
-                                         $learnFiles = LearnFile::model()->findAll(array('condition' => 'file_id =' . $file->id . ' AND user_id_file = '.Yii::app()->user->id));
+                                         $learnFiles = LearnFile::model()->findAll(array('condition' => 'file_id =' . $file->id . ' AND user_id_file = '.Yii::app()->user->id." AND gen_id='".$gen_id."'"));
                                          foreach ($imageSlide as $key => $imageSlideItem) {
                                           $displayNone = "display:none;";
                                           if ($learnFiles[0]->learn_file_status != 'l' && $learnFiles[0]->learn_file_status != 's') {
@@ -2001,8 +2002,8 @@ $idx++;
     <!-- Indicators --> 
     <?php 
     $modelLearnFilePdf = LearnFile::model()->find(array(
-     'condition' => 'file_id=:file_id AND learn_id=:learn_id',
-     'params' => array(':file_id' => $file->id, ':learn_id' => $learn_id)
+     'condition' => 'file_id=:file_id AND learn_id=:learn_id AND gen_id=:gen_id',
+     'params' => array(':file_id' => $file->id, ':learn_id' => $learn_id, ':gen_id'=>$gen_id)
    ));
 
     if($modelLearnFilePdf->learn_file_status == 's'){
