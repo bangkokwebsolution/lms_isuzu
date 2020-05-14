@@ -64,7 +64,7 @@ class EZip extends CApplicationComponent {
 
         $zip = new ZipArchive;
         $src = is_array($src) ? $src : array($src);
-        var_dump($src); exit();
+
         if ($zip->open($dest, ZipArchive::CREATE) === true)
         {
             foreach ($src as $item)

@@ -401,6 +401,8 @@ date_default_timezone_set("Asia/Bangkok");
                         success: function(data) {
                             $('.position').empty();
                             $('.position').append(data);
+                            $('.branch').hide();
+                            $('.label_branch').hide();
                         }
                     });
                 });
@@ -414,12 +416,12 @@ date_default_timezone_set("Asia/Bangkok");
                         },
                         success: function(data) {
                                 console.log(data);
-                                if (data == '<option value ="">เลือกระดับ</option>') {
-                                    console.log(555);
+                                if (data == 'n') {
+                           
                                     $('.branch').hide();
                                     $('.label_branch').hide();
                                 }else{
-                                    console.log(666);
+                                  
                                     $('.branch').show();
                                     $('.label_branch').show();
                                     $('.branch').empty();

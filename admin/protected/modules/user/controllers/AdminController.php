@@ -524,43 +524,45 @@ echo ($data);
 					}             
 				}										
 			}
-			foreach ($path_zip_attach as $key => $link_file) {
-
-				 $zip->makeZip_nn($link_file, $path_in_zip.$name_zip, $nameold_file_attach[$key]);
-			}
-			foreach ($path_zip_training as $keyt => $valuet) {
-                 $zip->makeZip_nn($valuet, $path_in_zip.$name_zip, $nameold_file_training[$keyt]);
-			}
-			foreach ($path_zip_edu as $keye => $valuee) {
-                 $zip->makeZip_nn($valuee, $path_in_zip.$name_zip, $nameold_file_edu[$keye]);
-			}
 			// foreach ($path_zip_attach as $key => $link_file) {
 
-			// 	 $zip->makeZip_nn($link_file, $path_in_zip.$name_attach, $nameold_file_attach[$key]);
+			// 	 $zip->makeZip_nn($link_file, $path_in_zip.$name_zip, $nameold_file_attach[$key]);
 			// }
 			// foreach ($path_zip_training as $keyt => $valuet) {
-   //               $zip->makeZip_nn($valuet, $path_in_zip.$name_training, $nameold_file_training[$keyt]);
+   //               $zip->makeZip_nn($valuet, $path_in_zip.$name_zip, $nameold_file_training[$keyt]);
 			// }
 			// foreach ($path_zip_edu as $keye => $valuee) {
-   //               $zip->makeZip_nn($valuee, $path_in_zip.$name_edu, $nameold_file_edu[$keye]);
+   //               $zip->makeZip_nn($valuee, $path_in_zip.$name_zip, $nameold_file_edu[$keye]);
 			// }
+			foreach ($path_zip_attach as $key => $link_file) {
 
-   //         $file_in = glob(Yii::app()->getUploadPath(null)."..\\attachZib\\*");
-     
-    
-   //         foreach ($file_in as $keys => $val) {
+				 $zip->makeZip_nn($link_file, $path_in_zip.$name_attach, $nameold_file_attach[$key]);
+			}
+			foreach ($path_zip_training as $keyt => $valuet) {
+                 $zip->makeZip_nn($valuet, $path_in_zip.$name_training, $nameold_file_training[$keyt]);
+			}
+			foreach ($path_zip_edu as $keye => $valuee) {
+                 $zip->makeZip_nn($valuee, $path_in_zip.$name_edu, $nameold_file_edu[$keye]);
+			}
+          
+          $path_zip =array();
+          $name_file = array();
 
-   //               $zip->makeZip_nn($val, $path_in_zip.$name_zip, $name_attach[$keys]);
-			// }
-			// foreach ($file_in as $keys => $val) {
+           $file_in = glob(Yii::app()->getUploadPath(null)."..\\attachZib\\*");
+ 
+           if(isset($file_in)){
+				$path_zip[] = "../uploads/attachZib/".basename($file_in[0]);
+				$path_zip[] = "../uploads/attachZib/".basename($file_in[1]);
+				$path_zip[] = "../uploads/attachZib/".basename($file_in[2]);	
+				$name_file[] = basename($file_in[0]);
+				$name_file[] = basename($file_in[1]);
+				$name_file[] = basename($file_in[2]);
+			}          
 
-   //               $zip->makeZip_nn($val, $path_in_zip.$name_zip, $name_training[$keys]);
-			// }
-			// foreach ($file_in as $keys => $val) {
+           foreach ($path_zip as $keys => $val) {
 
-   //               $zip->makeZip_nn($val, $path_in_zip.$name_zip, $name_edu[$keys]);
-			// }
-
+                 $zip->makeZip_nn($val, $path_in_zip.$name_zip, $name_file[$keys]);
+			}
 			$file_in_folder = glob(Yii::app()->getUploadPath(null)."..\\attachZib\\*");
 			foreach($file_in_folder as $file_in){ // วนลบไฟล์ในโฟลเดอร์
 				if(is_file($file_in)){

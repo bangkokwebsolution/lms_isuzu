@@ -283,15 +283,15 @@
 
                 <?php if (Yii::app()->user->id !== null) { ?>
                     <?php
-                    $name = Profile::model()->findByPk(Yii::app()->user->getId());
+                    // $name = Profile::model()->findByPk(Yii::app()->user->getId());
 
-                    $criteria = new CDbCriteria;
-                    $criteria->addCondition('create_by =' . $name->user_id);
-                    $criteria->order = 'update_date  ASC';
-                    $criteria->compare('status_answer', 1);
-                    $PrivatemessageReturn = PrivateMessageReturn::model()->findAll($criteria);
+                    // $criteria = new CDbCriteria;
+                    // $criteria->addCondition('create_by =' . $name->user_id);
+                    // $criteria->order = 'update_date  ASC';
+                    // $criteria->compare('status_answer', 1);
+                    // $PrivatemessageReturn = PrivateMessageReturn::model()->findAll($criteria);
                     ?>
-                    <li class="dropdown visible-md visible-lg">
+                    <!-- <li class="dropdown visible-md visible-lg">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;"><i class="fa fa-envelope" aria-hidden="true"></i></a>
                         <div class="dropdown-menu user-message">
                             <div class="panel panel-default">
@@ -324,7 +324,7 @@
                             </div>
                         </div>
                     </div>
-                </li>
+                </li> -->
             <?php } else {
             } ?>
         </ul>
