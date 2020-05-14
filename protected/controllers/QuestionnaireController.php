@@ -48,6 +48,7 @@ class QuestionnaireController extends Controller
             Helpers::lib()->getControllerActionId();
         }
 		$lesson = $this->loadModel($id);
+		$gen_id = $lesson->CourseOnlines->getGenID($lesson->course_id);
 		$questAns = Helpers::lib()->checkLessonQuestion($lesson);
 		if($questAns){
 			$this->redirect(array('/course/detail','id'=>$lesson->course_id));
@@ -58,6 +59,7 @@ class QuestionnaireController extends Controller
 			$log = new QQuestAns;
 			$log->user_id = Yii::app()->user->id;
 			$log->lesson_id = $lesson->id;
+			$log->gen_id = $gen_id;
 			$log->header_id = $lesson->header->survey_header_id;
 			$log->date = date('Y-m-d H:i:s');
 			$log->save();
@@ -67,6 +69,7 @@ class QuestionnaireController extends Controller
 					$answers = new QAnswers;
 					$answers->user_id = Yii::app()->user->id;
 					$answers->choice_id = $option_choice_id;
+					$answers->gen_id = $gen_id;
 					$answers->answer_text = $value;
 					$answers->quest_ans_id = $log->id;
 					$answers->save();
@@ -77,6 +80,7 @@ class QuestionnaireController extends Controller
 				foreach ($_POST['choice']['radio'] as $question_id => $option_choice_id) {
 					$answers = new QAnswers;
 					$answers->user_id = Yii::app()->user->id;
+					$answers->gen_id = $gen_id;
 					$answers->choice_id = $option_choice_id;
 					if(isset($_POST['choice']['radioOther'][$question_id][$option_choice_id])){
 						$answers->answer_text = $_POST['choice']['radioOther'][$question_id][$option_choice_id];
@@ -90,6 +94,7 @@ class QuestionnaireController extends Controller
 				foreach ($_POST['choice']['checkbox'] as $question_id => $checkboxArray) {
 					foreach ($checkboxArray as $key => $option_choice_id) {
 						$answers = new QAnswers;
+						$answers->gen_id = $gen_id;
 						$answers->user_id = Yii::app()->user->id;
 						$answers->choice_id = $option_choice_id;
 						if(isset($_POST['choice']['checkboxOther'][$question_id][$option_choice_id])){
@@ -105,6 +110,7 @@ class QuestionnaireController extends Controller
 				foreach ($_POST['choice']['contentment'] as $option_choice_id => $score) {
 					$answers = new QAnswers;
 					$answers->user_id = Yii::app()->user->id;
+					$answers->gen_id = $gen_id;
 					$answers->choice_id = $option_choice_id;
 					$answers->answer_numeric = $score;
 					$answers->quest_ans_id = $log->id;
@@ -117,6 +123,7 @@ class QuestionnaireController extends Controller
 					$answers = new QAnswers;
 					$answers->user_id = Yii::app()->user->id;
 					$answers->choice_id = $option_choice_id;
+					$answers->gen_id = $gen_id;
 					$answers->answer_textarea = $value;
 					$answers->quest_ans_id = $log->id;
 					$answers->save();

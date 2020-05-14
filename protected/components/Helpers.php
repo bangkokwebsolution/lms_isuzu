@@ -2289,12 +2289,14 @@ public function checkProgressStep($course) {
             if(!$checkLearnAll){
                 return false;
             }
+            $course_model = CourseOnline::model()->findByPk($id);
+            $gen_id = $course_model->getGenID($course_model->course_id);
             $courseTec = CourseTeacher::model()->findAllByAttributes(array('course_id'=>$id));
             $num = 0;
             $countQues = count($courseTec);
             if($courseTec){
                 foreach ($courseTec as $key => $value) {
-                    $questAns = QQuestAns_course::model()->find("user_id='" . Yii::app()->user->id . "' AND course_id='" . $value->course_id . "' AND header_id='" . $value->survey_header_id . "' AND teacher_id='" . $value->teacher_id . "'");
+                    $questAns = QQuestAns_course::model()->find("user_id='" . Yii::app()->user->id . "' AND course_id='" . $value->course_id . "' AND header_id='" . $value->survey_header_id . "' AND teacher_id='" . $value->teacher_id . "' AND gen_id='".$gen_id."'");
                     if ($questAns) {
                         $num++;
                     }
@@ -2312,11 +2314,13 @@ public function checkProgressStep($course) {
         public function checkCourseQuesALl($id) 
         {
             $courseTec = CourseTeacher::model()->findAllByAttributes(array('course_id'=>$id));
+            $course_model = CourseOnline::model()->findByPk($id);
+            $gen_id = $course_model->getGenID($course_model->course_id);
             $num = 0;
             $countQues = count($courseTec);
             if($courseTec){
                 foreach ($courseTec as $key => $value) {
-                    $questAns = QQuestAns_course::model()->find("user_id='" . Yii::app()->user->id . "' AND course_id='" . $value->course_id . "' AND header_id='" . $value->survey_header_id . "' AND teacher_id='" . $value->teacher_id . "'");
+                    $questAns = QQuestAns_course::model()->find("user_id='" . Yii::app()->user->id . "' AND course_id='" . $value->course_id . "' AND header_id='" . $value->survey_header_id . "' AND teacher_id='" . $value->teacher_id . "' AND gen_id='".$gen_id."'");
                     if ($questAns) {
                         $num++;
                     }
@@ -2334,11 +2338,13 @@ public function checkProgressStep($course) {
         public function checkCourseQuestion($id) 
         {
             $courseTec = CourseTeacher::model()->findAllByAttributes(array('course_id'=>$id));
+            $course_model = CourseOnline::model()->findByPk($id);
+            $gen_id = $course_model->getGenID($course_model->course_id);
             $num = 0;
             $countQues = count($courseTec);
             if($courseTec){
                 foreach ($courseTec as $key => $value) {
-                    $questAns = QQuestAns_course::model()->find("user_id='" . Yii::app()->user->id . "' AND course_id='" . $value->course_id . "' AND header_id='" . $value->survey_header_id . "' AND teacher_id='" . $value->teacher_id . "'");
+                    $questAns = QQuestAns_course::model()->find("user_id='" . Yii::app()->user->id . "' AND course_id='" . $value->course_id . "' AND header_id='" . $value->survey_header_id . "' AND teacher_id='" . $value->teacher_id . "' AND gen_id='".$gen_id."'");
                     if ($questAns) {
                         $num++;
                     }
@@ -2354,7 +2360,9 @@ public function checkProgressStep($course) {
         }
 
         public function checkLessonQuestion($lesson){
-            $questAns = QQuestAns::model()->find("user_id='".Yii::app()->user->id."' AND lesson_id='".$lesson->id."' AND header_id='".$lesson->header_id."'");
+            $lesson_model = Lesson::model()->findByPk($lesson->id);
+            $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+            $questAns = QQuestAns::model()->find("user_id='".Yii::app()->user->id."' AND lesson_id='".$lesson->id."' AND header_id='".$lesson->header_id."' AND gen_id='".$gen_id."'");
             if($questAns){
                 return $questAns;
             } else {

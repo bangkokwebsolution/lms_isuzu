@@ -32,7 +32,7 @@ if($checkLearnAll) {
                 'lesson_id' => $lesson->id,
                 'user_id' => Yii::app()->user->id,
                 'type' => 'post',
-                'active' => 'y',
+                'active' => 'y', 'gen_id'=>$gen_id
             ));        
             if($checkPassScore) {
                 $passtotal++;
@@ -115,7 +115,7 @@ $getLessonAll = Lesson::model()->findAll(array(
                                                         $checkAnswerYet = QQuestAns_course::model()->findByAttributes(array(
                                                             'user_id' => Yii::app()->user->id,
                                                             'header_id' => $survey->survey_header_id,
-                                                            'course_id' => $course->course_id,
+                                                            'course_id' => $course->course_id, 'gen_id'=>$gen_id
                                                         ));
                                                         if($SurveyCourse) {
                                                             ?>
@@ -229,7 +229,7 @@ $getLessonAll = Lesson::model()->findAll(array(
                                                                                             foreach($QQuestion->choices as $QChoices) {
                                                                                         // $currentAnswer
                                                                                                 $currentAnswer = QAnswers_course::model()->find(array(
-                                                                                                    'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $checkAnswerYet->id . '"',
+                                                                                                    'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $checkAnswerYet->id . '"'." AND gen_id='".$gen_id."'",
                                                                                                 ));
                                                                                                 ?>
                                                                                                 <tr>
@@ -269,7 +269,7 @@ $getLessonAll = Lesson::model()->findAll(array(
                                                                                             foreach($QQuestion->choices as $QChoices) {
                                                                                         // $currentAnswer
                                                                                                 $currentAnswer = QAnswers_course::model()->find(array(
-                                                                                                    'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $checkAnswerYet->id . '"',
+                                                                                                    'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $checkAnswerYet->id . '"'." AND gen_id='".$gen_id."'",
                                                                                                 ));
                                                                                                 ?>
                                                                                                 <tr>
@@ -299,7 +299,7 @@ $getLessonAll = Lesson::model()->findAll(array(
                                                                                         foreach($QQuestion->choices as $QChoices) {
                                                                                         // $currentAnswer
                                                                                             $currentAnswer = QAnswers_course::model()->find(array(
-                                                                                                'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $checkAnswerYet->id . '"',
+                                                                                                'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $checkAnswerYet->id . '"'." AND gen_id='".$gen_id."'",
                                                                                             ));
                                                                                             ?>
                                                                                             <tr>
@@ -325,7 +325,7 @@ $getLessonAll = Lesson::model()->findAll(array(
                                                                                         foreach($QQuestion->choices as $QChoices) {
                                                                                         // $currentAnswer
                                                                                             $currentAnswer = QAnswers_course::model()->find(array(
-                                                                                                'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $checkAnswerYet->id . '"',
+                                                                                                'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $checkAnswerYet->id . '"'." AND gen_id='".$gen_id."'",
                                                                                             ));
                                                                                             ?>
                                                                                             <tr>
@@ -350,7 +350,7 @@ $getLessonAll = Lesson::model()->findAll(array(
                                                                                         foreach($QQuestion->choices as $QChoices) {
                                                                                         // $currentAnswer
                                                                                             $currentAnswer = QAnswers_course::model()->find(array(
-                                                                                                'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $checkAnswerYet->id . '"',
+                                                                                                'condition' => 'user_id = "' . Yii::app()->user->id . '" AND choice_id ="' . $QChoices->option_choice_id . '" AND quest_ans_id ="' . $checkAnswerYet->id . '"'." AND gen_id='".$gen_id."'",
                                                                                             ));
                                                                                             ?>
                                                                                             <tr>
