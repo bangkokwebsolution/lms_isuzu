@@ -41,7 +41,7 @@ class TempQuiz extends CActiveRecord
 			array('time_start', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_id, type, lesson, group_id, ques_id, number, ans_id, status, time_start, question, time_up', 'safe', 'on'=>'search'),
+			array('id, user_id, type, lesson, group_id, ques_id, number, ans_id, status, time_start, question, time_up, gen_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -75,6 +75,7 @@ class TempQuiz extends CActiveRecord
 			'time_start' => 'Time Start',
 			'question' => 'Question',
 			'time_up' => 'Time Up',
+			'gen_id' => 'gen_id',
 		);
 	}
 
@@ -108,6 +109,7 @@ class TempQuiz extends CActiveRecord
 		$criteria->compare('time_start',$this->time_start,true);
 		$criteria->compare('question',$this->question,true);
 		$criteria->compare('time_up',$this->time_up,true);
+		$criteria->compare('gen_id',$this->gen_id,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

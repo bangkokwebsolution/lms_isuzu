@@ -375,11 +375,14 @@ $cancel_msg = UserModule::t('Cancel');
                         <div class="note-input">
                             <div class="note-save">
                               <h3><?= $model->title; ?></h3>
-                              <ul class="section-list">
-                                <li class="list-body"><?php echo $lessonListValue->title; ?></li>
+                              <ul class="section-list">                                
                                 <?php 
                                 $arr_file_list = array();
                                 foreach ($lessonList as $key => $lessonListValue) { 
+                                  if($model->id == $lessonListValue->id){
+                                    ?>
+                                    <!-- <li class="list-body"><?php //echo $lessonListValue->title; ?></li> -->
+                                    <?php
                                 $learnModel = Learn::model()->find(array(
                                   'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active=:status',
                                   'params'=>array(':lesson_id'=>$lessonListValue->id,':user_id'=>Yii::app()->user->id,':status'=>'y')
@@ -401,13 +404,13 @@ $cancel_msg = UserModule::t('Cancel');
                                   }
                                   $learnFiles = Helpers::lib()->checkLessonFile($les,$learnModel->learn_id);
                                   if ($learnFiles == "notLearn") {
-                                    $statusValue = '<span class="label label-default" >'.$msg_notLearn.'</span>';
+                                    $statusValue = '<span id="status_block_'.$les->id.'" class="label label-default" >'.$msg_notLearn.'</span>';
                                     $statuslearn = 'list-body';
                                   } else if ($learnFiles == "learning") {
-                                    $statusValue = '<span class="label label-warning" >'.$msg_learning.'</span>';
+                                    $statusValue = '<span id="status_block_'.$les->id.'" class="label label-warning" >'.$msg_learning.'</span>';
                                     $statuslearn = 'primary';
                                   } else if ($learnFiles == "pass") {
-                                    $statusValue = '<span class="label label-success" >'.$msg_learn_pass.'</span>';
+                                    $statusValue = '<span id="status_block_'.$les->id.'" class="label label-success" >'.$msg_learn_pass.'</span>';
                                     $statuslearn = 'success';
                                   }
                                   ?>
@@ -427,6 +430,7 @@ $cancel_msg = UserModule::t('Cancel');
                                 <?php
                               }
                             } // if($lessonListValue->type == 'vdo'){ 
+                            }// lesson id
                             } //  foreach ($lessonList
 
                                  ?>
@@ -1284,7 +1288,12 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                    learn_id: <?php echo $learn_id; ?>
                                  }, function (data) {
                                    data = JSON.parse(data);
+                                   //อัพเดต ให้ไอคอนบอกว่า กำลังเรียน
                                    $('#imageCheck' + data.no).html(data.image);
+                                   $('#status_block_' + data.no).removeClass();
+                                   $('#status_block_' + data.no).addClass("label label-warning");
+                                   $('#status_block_' + data.no).html("<?php echo $msg_learning; ?>");
+                                   // console.log("imageCheck 1");
                                    $('#imageCheckBar' + data.no).removeClass();
                                    $('#imageCheckBar' + data.no).addClass(data.imageBar);
                                    init_knob();
@@ -1306,6 +1315,10 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                  }, function (data) {
                                    data = JSON.parse(data);
                                    $('#imageCheck' + data.no).html(data.image);
+                                   $('#status_block_' + data.no).removeClass();
+                                   $('#status_block_' + data.no).addClass("label label-success");
+                                   $('#status_block_' + data.no).html("<?php echo $msg_learn_pass; ?>");
+                                   // console.log("imageCheck 2");
                                    $('#imageCheckBar' + data.no).removeClass();
                                    $('#imageCheckBar' + data.no).addClass(data.imageBar);
                                    init_knob();
@@ -1497,6 +1510,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                     }, function (data) {
                                       data = JSON.parse(data);
                                       $('#imageCheck' + data.no).html(data.image);
+                                   console.log("imageCheck 3");
                                       $('#imageCheckBar' + data.no).removeClass();
                                       $('#imageCheckBar' + data.no).addClass(data.imageBar);
                                       init_knob();
@@ -1515,6 +1529,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                        }, function (data) {
                                          data = JSON.parse(data);
                                          $('#imageCheck' + data.no).html(data.image);
+                                   console.log("imageCheck 4");
                                          $('#imageCheckBar' + data.no).removeClass();
                                          $('#imageCheckBar' + data.no).addClass(data.imageBar);
                                          init_knob();
@@ -1760,6 +1775,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                           }, function (data) {
                             data = JSON.parse(data);
                             $('#imageCheck' + data.no).html(data.image);
+                            console.log("imageCheck 5");
                             $('#imageCheckBar' + data.no).removeClass();
                             $('#imageCheckBar' + data.no).addClass(data.imageBar);
                             init_knob();
@@ -1781,6 +1797,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                             }, function (data) {
                               data = JSON.parse(data);
                               $('#imageCheck' + data.no).html(data.image);
+                              console.log("imageCheck 6");
                               $('#imageCheckBar' + data.no).removeClass();
                               $('#imageCheckBar' + data.no).addClass(data.imageBar);
                               init_knob();
@@ -2173,6 +2190,7 @@ $idx++;
 
                                                         //if(data.camera)
                                                         $('#imageCheck_' + data.no).html(data.image);
+                                                        console.log("imageCheck 7");
                                                         if(data.timeNext) {
                                                           $("#nextPageTag<?= $file->id; ?>").css("display", "none");
                                                           countdownTime(data.timeNext,<?= $file->id; ?>,data.status);
@@ -2236,6 +2254,7 @@ $idx++;
 
                                         //if(data.camera)
                                         $('#imageCheck_' + data.no).html(data.image);
+                                        console.log("imageCheck 8");
                                         if(data.timeNext) {
                                           $("#nextPageTag<?= $file->id; ?>").css("display", "none");
                                           countdownTime(data.timeNext,<?= $file->id; ?>,data.status);
@@ -2807,6 +2826,7 @@ function countdownTime(time_down,file,type){
       }
 
       $('#imageCheck_' + data.no).html(data.image);
+      console.log("imageCheck 9");
       if(data.timeNext) {
         $("#nextPageTag<?= $file->id; ?>").css("display", "none");
         countdownTime(data.timeNext,<?= $file->id; ?>,data.status);
@@ -2890,6 +2910,7 @@ function countdownTime(time_down,file,type){
 
                                             //if(data.camera)
                                             $('#imageCheck_' + data.no).html(data.image);
+                                            console.log("imageCheck 10");
                                             if(data.timeNext) {
                                               $("#nextPageTag<?= $file->id; ?>").css("display", "none");
                                               countdownTime(data.timeNext,<?= $file->id; ?>,data.status);
