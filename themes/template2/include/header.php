@@ -6,9 +6,100 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title"><i class="fa fa-exclamation-circle" aria-hidden="true"></i><?= Yii::app()->session['lang'] == 1?'Report a problem':'แจ้งปัญหาการใช้งาน'; ?> </h4>
                 </div>
-                <div class="modal-body">
+               <?php if (Yii::app()->user->id !== null){
+                            $criteria = new CDbCriteria;
+                            $criteria->addCondition('user_id ='.Yii::app()->user->id);
+                            $Profile = Profile::model()->findAll($criteria);
+                            foreach ($Profile as $key => $value) {   
+                    ?> 
+                    <div class="modal-body"> 
+                    <div class="row report-row">                
+                        <div class="col-md-6 col-xs-12 col-sm-6">
+                            <label for=""><?= Yii::app()->session['lang'] == 1?'Name':'ชื่อ'; ?></label>
+                            <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1?'Name':'ชื่อ'; ?>" name="ReportProblem[firstname]" value="<?php echo $value->firstname; ?>">
+                        </div>
+                        <div class="col-md-6 col-xs-12 col-sm-6">
+                            <label for=""><?= Yii::app()->session['lang'] == 1?'Last name':'นามสกุล'; ?></label>
+                            <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1?'Last name':'นามสกุล'; ?>" name="ReportProblem[lastname]" value="<?php echo $value->lastname; ?>">
+                        </div>
+                    </div>
                     <div class="row report-row">
+                        <div class="col-md-6 col-xs-12 col-sm-6">
+                            <label for=""><?= Yii::app()->session['lang'] == 1?'Phone number':'เบอร์โทรศัพท์'; ?></label>
+                            <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1?'Phone number':'เบอร์โทรศัพท์'; ?>" name="ReportProblem[tel]" value="<?php echo $value->tel; ?>">
+                        </div>
+                    <?php }
+                            $criteria = new CDbCriteria;
+                            $criteria->addCondition('user_id ='.Yii::app()->user->id);
+                            $Users = Users::model()->findAll($criteria);
+                     foreach ($Users as $key => $value) {   
+                     ?>
+                        <div class="col-md-6 col-xs-12 col-sm-6">
+                            <label for=""><?= Yii::app()->session['lang'] == 1?'email':'อีเมล์'; ?></label>
+                            <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1?'email':'อีเมล์'; ?>" name="ReportProblem[email]" value="<?php echo $value->email; ?>">
+                        </div>
+                    </div>
+                 <?php } ?>
+                    <div class="row report-row">
+                        <div class="col-md-6 col-xs-12 col-sm-6">
+                            <label for=""><?= Yii::app()->session['lang'] == 1?'Problem type':'ประเภทปัญหา'; ?></label>
+                            <select class="form-control d-inlineblock " name="ReportProblem[report_type]" >
+                            <option value=""><?= Yii::app()->session['lang'] == 1?'Problem type':'ไม่ระบุประเภท'; ?></option>
+                            <?php 
+                            $criteria = new CDbCriteria;
+                            $criteria->addCondition('active ="y"');
+                            $criteria->addCondition('lang_id ='.Yii::app()->session['lang']);
+                            $Usability = Usability::model()->findAll($criteria);
+                            foreach ($Usability as $key => $value) {
+            
+                            ?>
+                            <option value="<?php echo $value->usa_id;?>"><?php echo $value->usa_title; ?></option>
+                            <?php 
+                            }
+                            ?>
+                            </select>
+                        </div>
+                        <div class="col-md-6 col-xs-12 col-sm-6">
+                            <label for=""><?= Yii::app()->session['lang'] == 1?'Course':'หลักสูตร'; ?></label>
+                            <select class="form-control d-inlineblock " name="ReportProblem[report_course]">
+                            <option value=""><?= Yii::app()->session['lang'] == 1?'No course specified':'ไม่ระบุหลักสูตร'; ?></option>
+                            <?php 
+                            $criteria = new CDbCriteria;
+                            $criteria->addCondition('active ="y"');
+                            $criteria->addCondition('lang_id ='.Yii::app()->session['lang']);
+                            $CourseOnline = CourseOnline::model()->findAll($criteria);
+                            foreach ($CourseOnline as $key => $value) {
+            
+                            ?>
+                            <option value="<?php echo $value->course_id;?>"><?php echo $value->course_title; ?></option>
+                            <?php 
+                            }
+                            ?>
+                            </select>
+                        </div>
+                    </div>
 
+                    <div class="row report-row">
+                        <div class="col-md-12 col-xs-12">
+                            <label for=""><?= Yii::app()->session['lang'] == 1?'The message':'ข้อความ'; ?></label>
+                            <textarea name="ReportProblem[report_detail]" class="form-control" placeholder="<?php echo Yii::app()->session['lang'] == 1?'Type your message in this box.':'พิมพ์ข้อความในช่องนี้'; ?>" id="" cols="30" rows="6"></textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="row report-row">
+                        <div class="col-md-6 col-xs-12">
+                            <label for=""><?= Yii::app()->session['lang'] == 1?'Upload photo':'อัปโหลดรูปภาพ'; ?></label>
+                            <input type="file" class="form-control" name="ReportProblem[report_pic]">
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div class="text-center"> <button type="submit" class="btn btn-submit btn-report" name=""><?= Yii::app()->session['lang'] == 1?'Confirm':'ยืนยัน'; ?></button></div>
+                </div>
+                <?php }else{?>
+                <div class="modal-body"> 
+                    <div class="row report-row">                
                         <div class="col-md-6 col-xs-12 col-sm-6">
                             <label for=""><?= Yii::app()->session['lang'] == 1?'Name':'ชื่อ'; ?></label>
                             <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1?'Name':'ชื่อ'; ?>" name="ReportProblem[firstname]">
@@ -86,6 +177,7 @@
                     <hr>
                     <div class="text-center"> <button type="submit" class="btn btn-submit btn-report" name=""><?= Yii::app()->session['lang'] == 1?'Confirm':'ยืนยัน'; ?></button></div>
                 </div>
+                <?php } ?>
                 <div class="modal-footer">
                 </div>
             </form>
@@ -237,13 +329,18 @@
                         <?php } else { ?>
                             <li class="dropdown user-menu">
                             <?php
-                                        if ($users->pic_user == null) {
+
+                                        if (Yii::app()->user->id == null) {
 
                                             $img  = Yii::app()->theme->baseUrl . "/images/thumbnail-profile.png";
                                         } else {
-                                            $registor = new RegistrationForm;
-                                            $registor->id = $users->id;
-                                            $img = Yii::app()->baseUrl . '/uploads/user/' . $users->id . '/thumb/' . $users->pic_user;
+                                          $criteria = new CDbCriteria;
+                                          $criteria->addCondition('id ='.Yii::app()->user->id);
+                                          $Users = Users::model()->findAll($criteria);
+                                          foreach ($Users as $key => $value) {
+                                           $img = Yii::app()->baseUrl . '/uploads/user/' . $value->id . '/thumb/' . $value->pic_user;
+                                          }
+                                            
                                         }
                             ?>
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;"><span class="photo" style="background-image: url('<?= $img ?>"></span>

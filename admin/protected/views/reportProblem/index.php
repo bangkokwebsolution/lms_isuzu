@@ -86,33 +86,34 @@ EOD
 					array(
                         'header'=>'อีเมล์',
                         'value'=>function($data){
-							$user = User::model()->findByAttributes(array(
-								'email' => $data->email,
-							));
+                            return $data->email;
+							// $user = User::model()->findByAttributes(array(
+							// 	'email' => $data->email,
+							// ));
 						
-							if($user){
-								if($user->bookkeeper_id){
-									return $user->bookkeeper_id;
-								} else {
-									return $user->username;
-								}
-							} else {
-								$user = Profile::model()->findByAttributes(array(
-									'firstname' => $data->firstname,
-								));
-								if($user){
-									if($user->user->bookkeeper_id){
-										return $user->user->bookkeeper_id;
-									} else {
-										return $user->user->username;
-									}
-								} else {
-									return 'ไม่มีในระบบ';
-								}
-							}
+							// if($user){
+							// 	if($user->bookkeeper_id){
+							// 		return $user->bookkeeper_id;
+							// 	} else {
+							// 		return $user->username;
+							// 	}
+							// } else {
+							// 	$user = Profile::model()->findByAttributes(array(
+							// 		'firstname' => $data->firstname,
+							// 	));
+							// 	if($user){
+							// 		if($user->user->bookkeeper_id){
+							// 			return $user->user->bookkeeper_id;
+							// 		} else {
+							// 			return $user->user->username;
+							// 		}
+							// 	} else {
+							// 		return 'ไม่มีในระบบ';
+							// 	}
+							// }
 		                	
-				        },
-                    ),
+				         },
+                     ),
                     array(
 						'name'=>'tel',
 						'type'=>'html',
