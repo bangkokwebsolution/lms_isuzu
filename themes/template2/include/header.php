@@ -235,7 +235,7 @@
                         <li><a class="btn-login " data-toggle="modal" href='#modal-login'><i class="fas fa-sign-in-alt"></i>
                             <?= $label->label_header_login ?></a></li>
                         <?php } else { ?>
-                            <li class="dropdown">
+                            <li class="dropdown user-menu">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;"><span class="photo" style="background-image: url('<?php echo Yii::app()->theme->baseUrl; ?>'/images/user.png);"></span>
                                     <?php if (Yii::app()->session['lang'] == 1) {
                                      echo  $name->firstname_en;
@@ -246,7 +246,7 @@
                                <b class="caret"></b></a>
                                <ul class="dropdown-menu">
                                 <?php if (Yii::app()->user->id !== null) { ?>
-                                    <li class="<?= $bar == 'site' && $bar_action == 'dashboard' ? 'active' : '' ?>"><a href="<?php echo $this->createUrl('/site/dashboard'); ?>"><?= $label->label_header_dashboard ?></a></li>
+                                    <li class="<?= $bar == 'site' && $bar_action == 'dashboard' ? 'active' : '' ?>"><a href="<?php echo $this->createUrl('/site/dashboard'); ?>"><i class="fas fa-list-ul"></i><?= $label->label_header_dashboard ?></a></li>
                                 <?php } ?>
 
                                 <li>
@@ -255,18 +255,18 @@
                                     if ($user->type_register != 3) { ?>
                                         <li>
                                             <?php $url = Yii::app()->createUrl('registration/Update/'); ?>
-                                            <a href="<?= $url ?>"><?= $label->label_header_update ?></a>
+                                            <a href="<?= $url ?>"><i class="fas fa-edit"></i><?= $label->label_header_update ?></a>
                                         </li>
                                     <?php } ?>
                                     <?php if ($user->superuser == 1) { ?>
                                         <li>
                                             <?php $url = Yii::app()->createUrl('admin'); ?>
-                                            <a href="<?= $url ?>"><?= UserModule::t("backend"); ?></a>
+                                            <a href="<?= $url ?>"><i class="fas fa-cog"></i><?= UserModule::t("backend"); ?></a>
                                         </li>
                                     <?php } ?>
                                     <li>
                                 <!-- <a href="<?php //echo $this->createUrl('login/logout') 
-                                ?>"> --><a href="javascript:void(0)" onclick="logout()"><?= $label->label_header_logout ?></a>
+                                ?>"> --><a href="javascript:void(0)" class="text-danger log-out" onclick="logout()"><i class="fas fa-sign-out-alt"></i><?= $label->label_header_logout ?></a>
                             </li>
                         </ul>
                     </li>

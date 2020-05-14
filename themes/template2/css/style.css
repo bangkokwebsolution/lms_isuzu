@@ -391,9 +391,9 @@ header span.photo {
 }
 
 header .dropdown-menu {
-  border-radius: 10px;
-  border: 0;
-  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: #fff;
 }
 
 header .dropdown-menu li {
@@ -401,9 +401,17 @@ header .dropdown-menu li {
 }
 
 header .dropdown-menu li a {
-  padding: 5px 20px;
+  padding: 8px 20px;
   font-size: 15px;
   transition: all .3s linear;
+}
+
+header .dropdown-menu li:not(:last-child){
+  border-bottom: 1px solid #ddd;
+}
+
+header .dropdown-menu li a i{
+  margin-right: 8px;
 }
 
 header .dropdown-menu.full-w {
@@ -1267,7 +1275,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 .text-danger {
-  color: rgb(232, 42, 37);
+  color: rgb(232, 42, 37) !important;
 }
 
 .text-success.prepost {
@@ -1276,6 +1284,10 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 
 .text-danger.prepost {
   margin-top: 3px;
+}
+
+.log-out:hover{
+  color: #fff !important;
 }
 
 #course-detail #tab-content .headcourse a li {
@@ -2288,10 +2300,6 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
   border-color: rgba(26, 26, 26, 0.14901960784313725);
 }
 
-.form-control {
-  font-size: 15px;
-}
-
 #register .well form .well input,
 #register .well form .well select {
   border-radius: 5px;
@@ -2550,13 +2558,6 @@ ol {
   list-style: none;
 }
 
-.form-control:focus {
-  border-color: #010C65 !important;
-  box-shadow: 0 0 5px 0px #010C65;
-}
-
-
-/*end btn2*/
 .btn-outline-secondary {
   color: #6c757d;
   background-color: transparent;
@@ -2588,7 +2589,18 @@ ol {
 }
 
 .headcourse{
-  background-color: #010C65 !important;
+  background-color: #323fa3 !important;
+  color: #fff;
+  border-radius: 0;
+}
+
+.final-test{
+  background-color: #ff5722 !important;
+}
+
+.final-test span{
+  color:#fff;
+  font-weight: 500;
 }
 
 .dashboard {
@@ -4046,7 +4058,7 @@ ol.stat-alert li::before {
   color: #fff;
   cursor: pointer;
   text-align: center;
-  background-color: #b2282b;
+  background-color: #cc0b21;
   box-sizing: border-box;
   -webkit-transition: opacity .2s ease-out, visibility .2s ease-out, color .2s ease-out;
   -moz-transition: opacity .2s ease-out, visibility .2s ease-out, color .2s ease-out;
@@ -4243,6 +4255,10 @@ ol.stat-alert li::before {
 
 .form-control {
   height: calc(2em + .75rem + 2px);
+  border: 2px solid #ccc ;
+}
+.form-control:focus {
+  border-color: #010C65 !important;
 }
 
 .topic-register {

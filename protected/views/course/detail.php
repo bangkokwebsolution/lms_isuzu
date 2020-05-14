@@ -1068,7 +1068,7 @@ if($model){
 
         ?>
         <?php if($checkHaveCourseTest || $CourseSurvey){ ?>
-           <div class="panel-heading headcourse">
+           <div class="panel-heading headcourse final-test">
             <a role="button" data-toggle="collapse" data-target="#collapseFinal<?=$key?>" data-parent="#accordion" aria-expanded="true">
                <li>
                 <span class="stepcourse"> <?= $checkHaveCourseTest ? $final : ''; ?> <?= $checkHaveCourseTest && $CourseSurvey ? '&' : ''; ?> <?= $CourseSurvey ? $Questionnaire : '' ?><?= $course->course_title ?> <?= $course->getGen($course->course_id); ?></span>
