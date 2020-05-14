@@ -74,8 +74,8 @@ EOD
 
     <?php
     /**  */
-    $type_user[1] = 'บุคลากรทั่วไป';
-    $type_user[2] = 'บุคลากรภายใน';
+    $type_user[1] = 'บุคคลทั่วไป';
+    $type_user[2] = 'พนักงาน';
 
     $divisiondata = Division::model()->getDivisionListNew(); 
     $departmentdata = Department::model()->getDepartmentListNew();
