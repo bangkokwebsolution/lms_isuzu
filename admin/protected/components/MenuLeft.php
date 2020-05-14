@@ -1187,15 +1187,15 @@ Class MenuLeft extends Controller
 	        			'label'=>'เพิ่มสมาชิก',
 	        			'url'=>array('//user/admin/create')
 	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-User (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'admin.*',
-	        				'admin.Excel'
-	        			)),
-	        			'label'=>'เพิ่มสมาชิกจาก Excel',
-	        			'url'=>array('//user/admin/excel')
-	        		),
+	        		// array(
+	        		// 	/*====== Check Permissions Sup-User (1) ======*/
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'admin.*',
+	        		// 		'admin.Excel'
+	        		// 	)),
+	        		// 	'label'=>'เพิ่มสมาชิกจาก Excel',
+	        		// 	'url'=>array('//user/admin/excel')
+	        		// ),
 	        		// array(
 	        		// 	/*====== Check Permissions Sup-User (2) ======*/
 	        		// 	'visible'=>true,
