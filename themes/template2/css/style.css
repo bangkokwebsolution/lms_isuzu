@@ -406,9 +406,9 @@ header .dropdown-menu li a {
   transition: all .3s linear;
 }
 
-header .dropdown-menu li:not(:last-child){
+/* header .dropdown-menu li:not(:last-child){
   border-bottom: 1px solid #ddd;
-}
+} */
 
 header .dropdown-menu li a i{
   margin-right: 8px;

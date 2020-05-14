@@ -14,21 +14,15 @@ Yii::app()->user->setFlash('msg',null);
 } 
 ?>
 
-<div class="header-page parallax-window" data-parallax="scroll" data-image-src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg-header-page.png">
-    <div class="container">
-        <h1><?= $label->label_Forgot_password  ?>
-            <small class="pull-right">
-                <ul class="list-inline list-unstyled">
-                    <li><a href="<?php echo $this->createUrl('/site/index'); ?>"><?= $label->label_homepage  ?></a></li>/
-                    <li><a href="#"><?= $label->label_Forgot_password  ?></a></li>
-                </ul>
-            </small>
-        </h1>
-    </div>
-
-    <div class="bottom1"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/kind-bottom.png" class="img-responsive" alt=""></div>
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-main">
+            <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/course/index'); ?>"><?php echo $label->label_course; ?></a></li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $label->label_Forgot_password  ?></li>
+        </ol>
+    </nav>
 </div>
-<!-- Content -->
+
 <section class="content" id="contact-us">
     <div class="container">
         <?php
