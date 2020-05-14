@@ -1506,6 +1506,38 @@ Class MenuLeft extends Controller
 	        		),
 	        	)
 	        ),
+	        array(
+	        	/*====== Check Permissions Passcours (1) ======*/
+	        	'visible'=>self::PermissionsMenu(array(
+	        		'Certificate.*',
+	        		'Certificate.update',
+	        	)),
+	        	'label'=>'<i></i><span>ระบบพิมพ์ใบประกาศนียบัตร</span>',
+	        	'url'=>'#Certificate',
+	        	'linkOptions' => array('data-toggle' => 'collapse'),
+	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
+	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Certificate') ), 'id' => 'Certificate'),
+	        	'active' => self::SetSubMenu( array('Certificate') ,false),
+	        	'items'=>array(
+	        		array(
+	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'Passcours.*',
+	        			)),
+	        			'label'=>'รายงานผู้ผ่านการเรียน',
+	        			'url'=>array('//Passcours/index')
+	        		),
+	        	    array(
+	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'Passcours.*',
+	        			)),
+	        			'label'=>'รายงานสถิติจำนวนผู้พิมพ์ใบประกาศฯ',
+	        			'url'=>array('//Passcours/PasscoursLog')
+	        		),
+	        		
+	        	)
+	        ),
 
 			//====== END Menu Information ======//
 	        array(

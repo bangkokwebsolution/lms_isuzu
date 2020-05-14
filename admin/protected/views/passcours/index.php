@@ -86,8 +86,8 @@ EOD
     )); //LMS Only
 	}
 
-	$type_user[1] = 'บุคลากรทั่วไป';
-	$type_user[2] = 'บุคลากรภายใน';
+	$type_user[1] = 'บุคคลทั่วไป';
+	$type_user[2] = 'พนักงาน';
 	
     $listCourse = CHtml::listData($CourseOnline,'course_id','course_title');
 
@@ -103,9 +103,9 @@ EOD
 			array('name'=>'passcours_cours','type'=>'list','query'=>$listCourse),
 			array('name'=>'search','type'=>'text'),
 			array('name'=>'type_register','type'=>'list','query'=>$type_user),
-			array('name'=>'division_id','type'=>'listMultiple','query'=>$divisiondata),
+			//array('name'=>'division_id','type'=>'listMultiple','query'=>$divisiondata),
 			array('name'=>'department','type'=>'listMultiple','query'=>$departmentdata),
-			array('name'=>'station','type'=>'listMultiple','query'=>$stationdata),
+			//array('name'=>'station','type'=>'listMultiple','query'=>$stationdata),
 			array('name'=>'period_start','type'=>'text'),
 			array('name'=>'period_end','type'=>'text'),
 	),
@@ -169,30 +169,30 @@ EOD
 						    	'width'=>'120',
 						  	),
 						),
-						// array(
-						// 	'header' => 'รหัสบัตรประชาชน',
-						// 	'type' => 'raw',
-						// 	'value' => function($data) {
-						// 		return $data->user->identification;
-						// 	},
-						// ),
-						// array(
-						// 	'header' => 'ประเภทสมาชิก',
-						// 	'type' => 'html',
-						// 	'value' => function($data) {
-						// 		return $data->Profiles->Type->name;
-						// 	},
-						// ),
-						// array(
-						// 	'header' => 'ที่อยู่',
-						// 	'type' => 'html',
-						// 	'value' => function($data) {
-						// 		return $data->Profiles->address;
-						// 	},
-						// 	'htmlOptions' => array(
-						// 		'width' => '200',
-						// 	),
-						// ),
+						array(
+							'header' => 'รหัสบัตรประชาชน',
+							'type' => 'raw',
+							'value' => function($data) {
+								return $data->user->identification;
+							},
+						),
+						array(
+							'header' => 'ประเภทสมาชิก',
+							'type' => 'html',
+							'value' => function($data) {
+								return $data->Profiles->Type->name;
+							},
+						),
+						array(
+							'header' => 'ที่อยู่',
+							'type' => 'html',
+							'value' => function($data) {
+								return $data->Profiles->address;
+							},
+							'htmlOptions' => array(
+								'width' => '200',
+							),
+						),
 						// array(
 						// 	'header' => 'จังหวัด',
 						// 	'type' => 'html',
@@ -234,14 +234,14 @@ EOD
 							'type' => 'raw',
 							'value'=>'$data->CourseOnlines->course_title',
 						),
-						array(
-							'header'=>'ฝ่าย',
-							'type' => 'raw',
-							'value'=>'$data->user->division->div_title',
-							'htmlOptions' => array(
-								'width' => '100',
-							),
-						),
+						// array(
+						// 	'header'=>'ฝ่าย',
+						// 	'type' => 'raw',
+						// 	'value'=>'$data->user->division->div_title',
+						// 	'htmlOptions' => array(
+						// 		'width' => '100',
+						// 	),
+						// ),
 						array(
 							'header'=>'แผนก',
 							'type' => 'raw',
@@ -250,14 +250,14 @@ EOD
 								'width' => '100',
 							),
 						),
-						array(
-							'header'=>'สถานี',
-							'type' => 'raw',
-							'value'=>'$data->user->station->station_title',
-							'htmlOptions' => array(
-								'width' => '100',
-							),
-						),
+						// array(
+						// 	'header'=>'สถานี',
+						// 	'type' => 'raw',
+						// 	'value'=>'$data->user->station->station_title',
+						// 	'htmlOptions' => array(
+						// 		'width' => '100',
+						// 	),
+						// ),
 						array(
 							'name'=>'passcours_date',
 							'value' => function($data) {
