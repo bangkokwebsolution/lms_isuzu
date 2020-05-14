@@ -591,6 +591,10 @@ header .dropdown-menu.user-message li:last-child {
   background-color: #a93232;
 }
 
+.panel-default>.panel-heading i{
+  color: #fff;
+}
+
 section {
   padding: 2% 0;
   z-index: 0;
@@ -789,15 +793,6 @@ div.course-detail2 h4.text11 {
   transition: all 0.3s ease;
 }
 
-/* 
-.news .well:hover .news-img {
-  -webkit-box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
-  -webkit-transition: all 0.3s ease;
-  -o-transition: all 0.3s ease;
-  transition: all 0.3s ease;
-  } */
-
 .news .well .news-img {
   height: 120px;
   width: 120px;
@@ -916,6 +911,11 @@ h4.text22 {
 
 .btn-elearning:hover {
   transform: scale(1.05);
+  -webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .partner .partner-link {
@@ -972,7 +972,6 @@ h4.text22 {
   margin-top: 4px;
   font-size: 14px;
 }
-
 
 @media (max-width: 767px) {
   .header-page h1 small {
@@ -2588,6 +2587,10 @@ ol {
   background-color: #f8f8f8;
 }
 
+.headcourse{
+  background-color: #010C65 !important;
+}
+
 .dashboard {
   padding-bottom: 6em;
   padding-top: 0em;
@@ -2635,6 +2638,7 @@ ol {
   display: inline-block;
   position: relative;
   top: 4px;
+  color: #fff;
 }
 
 .list__course {
@@ -4494,6 +4498,10 @@ ol.stat-alert li::before {
 
 .contact-admin:hover {
   height: 264px;
+}
+
+.course-detail .tab-content{
+  margin-top: 1em;
 }
 
 @media (min-width: 1440px) {

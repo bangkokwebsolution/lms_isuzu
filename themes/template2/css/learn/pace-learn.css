@@ -32,6 +32,15 @@
   overflow: hidden;
 }
 
+.pace-running:before{
+  content: '';
+    background: rgba(0, 0, 0, 0.46);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 1000;
+}
+
 .pace .pace-progress {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
