@@ -1,3 +1,13 @@
+<!-- Include Required Prerequisites -->
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/moment.min.js"></script>
+<!--Include Date Range Picker--> 
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker-bs2.css" />
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/highcharts.js"></script>
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/modules/exporting.js"></script>
+
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/bootstrap-chosen.css" />
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/chosen.jquery.js"></script>
 <?php
 $formNameModel = 'LogAdmin';
 $titleName = 'Log การตรวจสอบการสมัครสมาชิก';
@@ -25,6 +35,17 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	$.appendFilter("LogAdmin[news_per_page]", "news_per_page");
 EOD
     , CClientScript::POS_READY);
+Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
+    $('#LogRegister_register_date').attr('readonly','readonly');
+    $('#LogRegister_register_date').css('cursor','pointer');
+    $('#LogRegister_register_date').datepicker();
+
+    $('#LogRegister_confirm_date').attr('readonly','readonly');
+    $('#LogRegister_confirm_date').css('cursor','pointer');
+    $('#LogRegister_confirm_date').datepicker();
+
+EOD
+, CClientScript::POS_READY);
 ?>
     <!-- <div class="separator bottom form-inline small">
     <span class="pull-right">
@@ -33,6 +54,17 @@ EOD
     </span>
     </div> -->
     <div class="innerLR">
+        <?php $this->widget('AdvanceSearchForm', array(
+            'data'=>$model,
+            'route' => $this->route,
+            'attributes'=>array(
+            //array('name'=>'status','type'=>'text'),
+                // array('name'=>'register_status','type'=>'list','query'=>$model->getregisstatusList()),
+                array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
+                array('name'=>'register_date','type'=>'text'),
+                array('name'=>'confirm_date','type'=>'text'),
+            ),
+        ));?>
 <div class="widget" style="margin-top: -1px;">
         <div class="widget-head">
             <h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $titleName;?></h4>

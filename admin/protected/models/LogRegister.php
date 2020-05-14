@@ -96,27 +96,100 @@ class LogRegister extends CActiveRecord
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
+	// public function search()
+	// {
+	// 	// @todo Please modify the following code to remove attributes that should not be searched.
+
+	// 	$criteria=new CDbCriteria;
+
+   
+	// 	$criteria->compare('id',$this->id);
+	// 	$criteria->with = array('user','position','profile');
+	// 	$criteria->compare('firstname',$this->firstname,true);
+	// 	$criteria->compare('lastname',$this->lastname,true);
+	// 	$criteria->compare('register_date',$this->register_date,true);
+	// 	$criteria->compare('position_id',$this->position_id);
+	// 	$criteria->compare('confirm_date',$this->confirm_date,true);
+	// 	$criteria->compare('confirm_user',$this->confirm_user);
+	// 	$criteria->compare('create_date',$this->create_date,true);
+	// 	$criteria->compare('create_by',$this->create_by);
+	// 	$criteria->compare('update_date',$this->update_date,true);
+	// 	$criteria->compare('update_by',$this->update_by);
+	// 	$criteria->compare('active',$this->active,true);
+
+	// 	$poviderArray = array('criteria' => $criteria);
+
+ //        // Page
+ //        if (isset($this->news_per_page)) {
+ //            $poviderArray['pagination'] = array('pageSize' => intval($this->news_per_page));
+ //        } else {
+ //            $poviderArray['pagination'] = array('pageSize' => intval(10));
+ //        }
+
+ //        return new CActiveDataProvider($this, $poviderArray);
+
+	// 	// return new CActiveDataProvider($this, array(
+	// 	// 	'criteria'=>$criteria,
+	// 	// ));
+	// }
+
 	public function search()
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
 
-   
 		$criteria->compare('id',$this->id);
 		$criteria->with = array('user','position','profile');
 		$criteria->compare('firstname',$this->firstname,true);
 		$criteria->compare('lastname',$this->lastname,true);
-		$criteria->compare('register_date',$this->register_date,true);
-		$criteria->compare('position_id',$this->position_id);
-		$criteria->compare('confirm_date',$this->confirm_date,true);
+		//$criteria->compare('register_date',$this->register_date,true);
+		$criteria->compare('t.position_id',$this->position_id);
+		//$criteria->compare('confirm_date',$this->confirm_date,true);
 		$criteria->compare('confirm_user',$this->confirm_user);
 		$criteria->compare('create_date',$this->create_date,true);
 		$criteria->compare('create_by',$this->create_by);
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
+		$criteria->compare('user_id',$this->user_id);
+		$regis_date = $this->register_date;
+		if(!empty($regis_date)) {
+		
+		// $start_dates = substr($this->register_date,0,11);
+		// $end_dates = substr($this->register_date,13);
+	       $start_dates = $this->register_date;
+		   $end_dates = $this->register_date;
+    
+		$date_starts = date('Y-m-d 00:00:00',strtotime($start_dates));
+		$date_ends = date('Y-m-d 23:59:59', strtotime($end_dates));
+		// $date_starts = date('Y-m-d 00:00:00',strtotime($this->$register_date));
+		// $date_ends = date('Y-m-d 23:59:59', strtotime($this->$register_date));
 
+		$criteria->addBetweenCondition('register_date', $date_starts, $date_ends, 'AND');
+		
+	     }else {
+
+		$criteria->compare('register_date',$this->register_date,true);
+	    }
+        $firm_date = $this->confirm_date;
+		if(!empty($firm_date)) {
+		// $start_date = substr($this->confirm_date,0,11);
+		// $end_date = substr($this->confirm_date,13);
+		$start_date = $this->confirm_date;
+		$end_date = $this->confirm_date;
+ 
+		$date_start = date('Y-m-d 00:00:00',strtotime($start_date));
+		$date_end = date('Y-m-d 23:59:59', strtotime($end_date));
+
+		$criteria->addBetweenCondition('confirm_date', $date_start, $date_end, 'AND');
+		
+	     }else {
+
+        $criteria->compare('confirm_date',$this->confirm_date,true);
+		
+	    }
+        
 		$poviderArray = array('criteria' => $criteria);
 
         // Page
