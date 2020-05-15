@@ -183,16 +183,16 @@ EOD
 								return $data->Profiles->Type->name;
 							},
 						),
-						array(
-							'header' => 'ที่อยู่',
-							'type' => 'html',
-							'value' => function($data) {
-								return $data->Profiles->address;
-							},
-							'htmlOptions' => array(
-								'width' => '200',
-							),
-						),
+						// array(
+						// 	'header' => 'ที่อยู่',
+						// 	'type' => 'html',
+						// 	'value' => function($data) {
+						// 		return $data->Profiles->address;
+						// 	},
+						// 	'htmlOptions' => array(
+						// 		'width' => '200',
+						// 	),
+						// ),
 						// array(
 						// 	'header' => 'จังหวัด',
 						// 	'type' => 'html',
@@ -246,6 +246,14 @@ EOD
 							'header'=>'แผนก',
 							'type' => 'raw',
 							'value'=>'$data->user->department->dep_title',
+							'htmlOptions' => array(
+								'width' => '100',
+							),
+						),
+						array(
+							'header'=>'ตำแหน่ง',
+							'type' => 'raw',
+							'value'=>'$data->user->position->position_title',
 							'htmlOptions' => array(
 								'width' => '100',
 							),

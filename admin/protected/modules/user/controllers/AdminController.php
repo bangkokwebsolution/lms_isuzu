@@ -453,6 +453,62 @@ echo ($data);
         $criteria->addCondition("active ='y'");     
 		$Training_file = FileTraining::model()->findAll($criteria);
 
+		if ($user_id != '') {
+			$profiles = Profile::model()->find(array(
+				'condition' => 'user_id=:user_id ',
+				'params' => array('user_id' => $user_id)
+			));
+			$user = User::model()->find(array(
+				'condition' => 'id=:id',
+				'params' => array('id' => $user_id)
+			));
+        $path_img = Yii::app()->baseUrl. '/images/head_print.png';
+     
+		$padding_left = 12.7;
+		$padding_right = 12.7;
+		$padding_top = 10;
+		$padding_bottom = 20;
+
+		Yii::import('application.extensions.*');
+		require_once('THSplitLib/segment.php');
+		$mPDF = Yii::app()->ePdf->mpdf('th', 'A4', '0', 'garuda', $padding_left, $padding_right, $padding_top, $padding_bottom);
+		$mPDF->useDictionaryLBR = false;
+		$mPDF->setDisplayMode('fullpage');
+		$mPDF->autoLangToFont = true;
+        $mPDF->autoPageBreak = true;
+		$mPDF->SetTitle("ใบสมัครสมาชิก");
+		$texttt= '
+         <style>
+         body { font-family: "garuda"; }
+         </style>
+         ';
+        $mPDF->WriteHTML($texttt);
+		$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('printpdf', array('profiles'=>$profiles,'user'=>$user), true), 'UTF-8', 'UTF-8'));
+
+		$uploadDir = Yii::app()->getUploadPath(null);
+		$path1 = "pdf_regis";
+	    $path2 = $user_id;  
+
+	    if (!is_dir($uploadDir."../".$path1."/")) {
+		    mkdir($uploadDir."../".$path1."/", 0777, true);
+			}
+
+		if (!is_dir($uploadDir."../".$path1."/".$path2."/")) {
+			mkdir($uploadDir."../".$path1."/".$path2."/", 0777, true);
+			}else{ // ลบ file เก่า
+			$files = glob($uploadDir."../".$path1."/".$path2.'/*');
+			foreach($files as $file){ // iterate files
+				    if(is_file($file)){
+				        unlink($file); // delete file
+				              }             
+				    }
+		}
+
+		$mPDF->Output($uploadDir.'../pdf_regis\\'.$user_id.'\เอกสารสมัครสมาชิก.pdf', 'F');
+		//$mPDF->Output($uploadDir.'../pdf_regis/ใบสมัครสมาชิก.pdf', 'F');
+
+		}
+        $name_register_file = "เอกสารสมัครสมาชิก.pdf";
 		$path_zip_attach = array();
 		$name_file_attach = array();
 		$nameold_file_attach = array();
@@ -464,6 +520,9 @@ echo ($data);
 		$path_zip_training = array();
 		$name_file_training = array();
 		$nameold_file_training = array();
+
+		$path_zip_register = array();
+		$nameold_file_register = array();
     
 	     foreach ($Attach_file as $key => $value) {
 	     	$attach_all  = glob(Yii::app()->getUploadPath('attach').$value->file_name);
@@ -471,8 +530,7 @@ echo ($data);
 				$path_zip_attach[] = "../uploads/attach/".basename($attach_all[0]);	
 				$name_file_attach[] = basename($attach_all[0]);
 				$nameold_file_attach[] = $value->filename;		
-			}
-			
+			}	
 	     }
 	     foreach ($Edu_file as $keyedu => $valueedu) {
 	     	$edu_all  = glob(Yii::app()->getUploadPath('edufile').$valueedu->filename);
@@ -480,8 +538,7 @@ echo ($data);
 				$path_zip_edu[] = "../uploads/edufile/".basename($edu_all[0]);	
 				$name_file_edu[] = basename($edu_all[0]);
 				$nameold_file_edu[] = $valueedu->file_name;		
-			}
-			
+			}	
 	     }
 	     foreach ($Training_file as $keytn => $valuetn) {
 	     	$Training_all  = glob(Yii::app()->getUploadPath('Trainingfile').$valuetn->filename);
@@ -491,7 +548,21 @@ echo ($data);
 				$nameold_file_training[] = $valuetn->file_name;	
 			}
 	     }
+	         $Register_all  = glob(Yii::app()->getUploadPath(null)."..\\pdf_regis\\".$user_id."\\*");
+	         if(!empty($Register_all)){
+				$path_zip_register[] = "../uploads/pdf_regis/".$user_id."/".basename($Register_all[0]);	
+				$nameold_file_register[] = basename($Register_all[0]);	
+			}
 
+			// $Register_all  = glob(Yii::app()->getUploadPath('pdf_regis').$name_register_file);
+
+	  //   	if(!empty($Register_all)){
+	    		
+	  //   			$path_zip_register[] = "../uploads/pdf_regis/".basename($Register_all[0]);	
+			// 	    $nameold_file_register[] = basename($Register_all[0]);	
+	    		
+			//    }  
+	
 		$criteria = new CDbCriteria;
         $criteria->addCondition('user_id ="'.$user_id.'"');
 		$Profile = Profile::model()->find($criteria);
@@ -507,7 +578,7 @@ echo ($data);
 		$firstname = $Profile->firstname;
 		$positionName = $position->position_title;
           
-		if(!empty($path_zip_attach) || !empty($path_zip_training) || !empty($path_zip_edu)){
+		if(!empty($path_zip_attach) || !empty($path_zip_training) || !empty($path_zip_edu) || !empty($path_zip_register)){
 			$zip = Yii::app()->zip;
 			$path_in_zip = "..\uploads\attachZib\\";
 			$name_zip = "$firstname"."-"."$positionName.zip";
@@ -515,6 +586,7 @@ echo ($data);
 			$name_attach = "เอกสารไฟล์แนบ.zip";
 			$name_edu = "เอกสารไฟล์แนบการศึกษา.zip";
 			$name_training = "เอกสารไฟล์แนบการฝึกอบรม.zip";
+			$name_register = "เอกสารสมัครสมาชิก.zip";
 
 				$file_in_folders = glob(Yii::app()->getUploadPath(null)."..\\attachZib\\*");		
 			if(!empty($file_in_folders)){
@@ -534,6 +606,7 @@ echo ($data);
 			// foreach ($path_zip_edu as $keye => $valuee) {
    //               $zip->makeZip_nn($valuee, $path_in_zip.$name_zip, $nameold_file_edu[$keye]);
 			// }
+		
 			foreach ($path_zip_attach as $key => $link_file) {
 
 				 $zip->makeZip_nn($link_file, $path_in_zip.$name_attach, $nameold_file_attach[$key]);
@@ -543,8 +616,11 @@ echo ($data);
 			}
 			foreach ($path_zip_edu as $keye => $valuee) {
                  $zip->makeZip_nn($valuee, $path_in_zip.$name_edu, $nameold_file_edu[$keye]);
+			}	
+			foreach ($path_zip_register as $keyrg => $valuerg) {
+                 $zip->makeZip_nn($valuerg, $path_in_zip.$name_register, $nameold_file_register[$keyrg]);
 			}
-          
+			          
           $path_zip =array();
           $name_file = array();
 
@@ -553,38 +629,53 @@ echo ($data);
            if(isset($file_in)){
 				$path_zip[] = "../uploads/attachZib/".basename($file_in[0]);
 				$path_zip[] = "../uploads/attachZib/".basename($file_in[1]);
-				$path_zip[] = "../uploads/attachZib/".basename($file_in[2]);	
+				$path_zip[] = "../uploads/attachZib/".basename($file_in[2]);
+				$path_zip[] = "../uploads/attachZib/".basename($file_in[3]);	
 				$name_file[] = basename($file_in[0]);
 				$name_file[] = basename($file_in[1]);
 				$name_file[] = basename($file_in[2]);
-			}          
+				$name_file[] = basename($file_in[3]);
 
+			}          
+       
            foreach ($path_zip as $keys => $val) {
 
                  $zip->makeZip_nn($val, $path_in_zip.$name_zip, $name_file[$keys]);
 			}
 			$file_in_folder = glob(Yii::app()->getUploadPath(null)."..\\attachZib\\*");
+
 			foreach($file_in_folder as $file_in){ // วนลบไฟล์ในโฟลเดอร์
+
 				if(is_file($file_in)){
-					$file = basename($file_in); 
+					$file = basename($file_in); 	
 					if($file == $name_zip){
 						$zip_susess = "..\uploads\attachZib\\$name_zip";
 
-   if(file_exists($zip_susess)) {
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename="'.basename($zip_susess).'"');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($zip_susess));
-            flush(); // Flush system output buffer
-            readfile($zip_susess);
-            die();
-        } else {
-            http_response_code(404);
-	        die();
-        }
+	        if(file_exists($zip_susess)) {	
+
+	        header('Content-Description: File Transfer');
+				header('Content-Type: application/octet-stream');
+				Header ("Content-disposition: attachment; filename=".basename($zip_susess).".zip");
+				header('Content-Transfer-Encoding: binary');
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+				header('Pragma: public');
+				ob_clean();
+				flush();			 
+                // header('Content-Description: File Transfer');
+                // header('Content-Type: application/octet-stream');
+                // header('Content-Disposition: attachment; filename="'.basename($zip_susess).'"');
+                // header('Expires: 0');
+                // header('Cache-Control: must-revalidate');
+                // header('Pragma: public');
+                // header('Content-Length: ' . filesize($zip_susess));
+                // flush(); // Flush system output buffer
+                 readfile($zip_susess);
+                die();
+            } else {
+                http_response_code(404);
+	            die();
+            }
 					}
 				}
 			}
@@ -1426,7 +1517,6 @@ echo ($data);
         $mPDF->WriteHTML($texttt);
 		//$mPDF->AddPage('P'); // แนวตั้ง
 		$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('printpdf', array('profiles'=>$profiles,'user'=>$user), true), 'UTF-8', 'UTF-8'));
-
 		$mPDF->Output('ใบสมัครสมาชิก.pdf', 'I');
 
 		}
