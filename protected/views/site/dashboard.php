@@ -238,12 +238,15 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
         $checkStatus = true;
         $text_status_study = "";
         $text_status_study_class_id = "";
+        $text_cursor_context_menu = 'style="cursor: context-menu;"';
         if($checkCourseGenCanStudy){
             $herf = Yii::app()->createUrl('course/detail/', array('id' => $value->course_id,));
+            $text_cursor_context_menu = '';
         }else{
             $text_status_study_class_id = "badgefour";
             // $text_status_study = "<font color='red'>ห้ามเรียน</font>";
             $herf = '#collapse-'.i;
+            
         }
         
         $status =  $label->label_notLearn;
@@ -253,7 +256,7 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
         }else{
             $status_button .= $text_status_study_class_id;
         }
-        $status_button .= '" style="cursor: context-menu;"><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_notLearn.'</span>';
+        $status_button .= '" '.$text_cursor_context_menu.'><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_notLearn.'</span>';
 
         foreach ($lesson as $key => $lessonList) {
             $checkLearn = Learn::model()->findByAttributes(array(
@@ -267,7 +270,7 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
                         $status = $label->label_learned;
                         $checkStatus = false;
                         $herf = '#collapse-'.i;
-                        $status_button = '<span class="badge" id="';
+                        $status_button = '<span class="badge" id="'.$text_cursor_context_menu;
                         if($text_status_study_class_id == ""){
                             $status_button .= "badgeone";
                         }else{
@@ -284,7 +287,7 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
                         }else{
                             $status_button .= $text_status_study_class_id;
                         }
-                        $status_button .= '" style="cursor: context-menu;"><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_learning.'</span>';
+                        $status_button .= '" '.$text_cursor_context_menu.'><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_learning.'</span>';
                     } 
                     // else {
                     //     $status = $label->label_notLearn;
@@ -304,8 +307,8 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
                     <div class="panel panel-default">
                         <div class="panel-heading" role="tab" id="headingTwo">
                             <h4 class="text1">
-                                <a role="button" <?= (!$checkStatus)? 'data-toggle="collapse"':'' ?>  data-parent="#accordion2" href="<?= $herf; ?>" aria-expanded="true" aria-controls="collapseOne" class="">
-                                <span class="head_titledash" style="cursor: context-menu;"><?= $status_button ?> <i class="fa fa-book"></i>  <?=  $label->label_course ?> <?= $value->course_title ?> <?php if($gen_id != "0"){ if($langId != 1){echo "รุ่น "; }else{ echo "gen "; } echo $CourseGeneration->gen_title; } echo " ".$text_status_study; ?></span> <span class="pull-right"><i class="fa fa-angle-down" style="margin-top: 7px;"></i></span> <div class="pull-right" style="margin-right: 15px">
+                                <a <?php echo $text_cursor_context_menu; ?> role="button" <?= (!$checkStatus)? 'data-toggle="collapse"':'' ?>  data-parent="#accordion2" href="<?= $herf; ?>" aria-expanded="true" aria-controls="collapseOne" class="">
+                                <span class="head_titledash"><?= $status_button ?> <i class="fa fa-book"></i>  <?=  $label->label_course ?> <?= $value->course_title ?> <?php if($gen_id != "0"){ if($langId != 1){echo "รุ่น "; }else{ echo "gen "; } echo $CourseGeneration->gen_title; } echo " ".$text_status_study; ?></span> <span class="pull-right"><i class="fa fa-angle-down" style="margin-top: 7px;"></i></span> <div class="pull-right" style="margin-right: 15px">
                                     <?php if(empty($data->CourseOnlines->Schedules) && $passCourse != null){ ?>
                                 <a class="btn btn-success btn-sm btn__printdashboard><?= $printCer ?>" href="../course/certificate/<?php echo $value->course_id; ?>" role="button"><i class="fa fa-print"></i> <?=  $label->label_printCert ?>
                                 </a>
@@ -467,7 +470,14 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
                                                         $z++;
                                                         if($z == 1){
                                         ?>
-                                        <td rowspan="<?php echo count($lesson) ?>"><a class="btn btn-info btn-sm" href="../course/questionnaire/<?php echo $value->course_id; ?>?gen=<?php echo $gen_id; ?>" role="button"><i class="fa fa-eye"></i> <?=  $label->label_seeResult ?></a></td>
+                                        <td rowspan="<?php echo count($lesson) ?>">
+                                            <?php 
+                                            $checkQuestionnaireDone = Helpers::lib()->checkQuestionnaireDone($value->course_id, $gen_id);
+                                            if($checkQuestionnaireDone){ 
+                                                ?>
+                                                <a class="btn btn-info btn-sm" href="../course/questionnaire/<?php echo $value->course_id; ?>?gen=<?php echo $gen_id; ?>" role="button"><i class="fa fa-eye"></i> <?=  $label->label_seeResult ?></a>
+                                            <?php } ?>
+                                        </td>
                                         
                                         <?php
                                                 }

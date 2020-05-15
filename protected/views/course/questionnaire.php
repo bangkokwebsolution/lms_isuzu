@@ -410,8 +410,8 @@ $getLessonAll = Lesson::model()->findAll(array(
 
                     </div>
                     <div class="btn-learn hidden-xs">
-
-                        <a class="btn btn-warning btn-lg " href="<?php echo $this->createUrl('/course/detail', array('id' => $course->course_id)); ?>" role="button"><?= $Completed ?></a>
+                        <!-- href="<?php echo $this->createUrl('/course/detail', array('id' => $course->course_id)); ?>" -->
+                        <a class="btn btn-warning btn-lg" role="button" href="javascript:history.back()" ><?= $Completed ?></a>
                     </div>
                 </div>
 

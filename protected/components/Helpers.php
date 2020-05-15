@@ -4105,6 +4105,19 @@ public function checkStepLesson($lesson){
 
 
             return $return_val;
-        } // function checkCorseGenCanStudy
+        } // function checkCourseGenCanStudy
+
+        public function checkQuestionnaireDone($course_id, $gen_id){ 
+            $QQuestAns_course = QQuestAns_course::model()->find(array(
+                'condition' => 'course_id=:course_id AND gen_id=:gen_id AND user_id=:user_id',
+                'params' => array(':course_id'=>$course_id, ':gen_id'=>$gen_id, ':user_id'=>Yii::app()->user->id),
+            ));
+
+            if($QQuestAns_course != ""){
+                return true;
+            }
+            return false;
+        }
+
 
     }
