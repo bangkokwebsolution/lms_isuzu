@@ -389,6 +389,14 @@ class SiteController extends Controller
             	'order' => 'sortOrder ASC'
             ));
 
+            // if(isset($_GET['course'])){
+            // 	$course = CourseOnline::model()->findAll(array(
+            // 		'condition' => 'lang_id=:lang_id AND active=:active AND course_id=:course_id',
+            // 		'params' => array(':lang_id'=>'1', ':active'=>'y', ':course_id'=>$_GET['course']),
+            // 		'order' => 'sortOrder ASC'
+            // 	));
+            // }
+
             $logStartCourse_model = LogStartcourse::model()->findAll(array(
             	'condition' => 'user_id=:user_id AND active=:active',
             	'params' => array(':user_id'=>Yii::app()->user->id, ':active'=>'y')

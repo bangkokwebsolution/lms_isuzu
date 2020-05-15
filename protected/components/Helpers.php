@@ -4064,16 +4064,16 @@ public function checkStepLesson($lesson){
                                 if (($paymentDate >= $contractDateBegin) && ($paymentDate <= $contractDateEnd)){
                                 //เช็ค log start course
                                     $LogStartcourse = LogStartcourse::model()->find(array(
-                                        'condition' => 'active=:active AND course_id=:course_id AND gen_id=:gen_id',
-                                        'params' => array(':active'=>'y', ':course_id'=>$course_id_chk, ':gen_id'=>$gen_id),
+                                        'condition' => 'active=:active AND course_id=:course_id AND gen_id=:gen_id AND user_id=:user_id',
+                                        'params' => array(':active'=>'y', ':course_id'=>$course_id_chk, ':gen_id'=>$gen_id, ':user_id'=>Yii::app()->user->id),
                                     ));
-                                    $paymentDate = date('Y-m-d H:i:s');
-                                    $paymentDate = date('Y-m-d H:i:s', strtotime($paymentDate));
-                                    $contractDateBegin = date('Y-m-d H:i:s', strtotime($LogStartcourse->start_date));
-                                    $contractDateEnd = date('Y-m-d H:i:s', strtotime($LogStartcourse->end_date));
-                                    if (($paymentDate >= $contractDateBegin) && ($paymentDate <= $contractDateEnd)){
-                                 $return_val = true; // หลักสูตรเปิด รุ่นเปิด logเปิด
-                             }
+                                        $paymentDate = date('Y-m-d H:i:s');
+                                        $paymentDate = date('Y-m-d H:i:s', strtotime($paymentDate));
+                                        $contractDateBegin = date('Y-m-d H:i:s', strtotime($LogStartcourse->start_date));
+                                        $contractDateEnd = date('Y-m-d H:i:s', strtotime($LogStartcourse->end_date));
+                                        if (($paymentDate >= $contractDateBegin) && ($paymentDate <= $contractDateEnd)){
+                                            $return_val = true; // หลักสูตรเปิด รุ่นเปิด logเปิด
+                                        }
                          }
                             // else{  // หมดเวลารุ่น
                             //     $return_val = false; // รุ่น ไม่เปิด
@@ -4083,8 +4083,8 @@ public function checkStepLesson($lesson){
                     }else{ // ไม่มีรุ่น
                         //เช็ค log start course
                         $LogStartcourse = LogStartcourse::model()->find(array(
-                            'condition' => 'active=:active AND course_id=:course_id AND gen_id=:gen_id',
-                            'params' => array(':active'=>'y', ':course_id'=>$course_id_chk, ':gen_id'=>$gen_id),
+                            'condition' => 'active=:active AND course_id=:course_id AND gen_id=:gen_id AND user_id=:user_id',
+                            'params' => array(':active'=>'y', ':course_id'=>$course_id_chk, ':gen_id'=>$gen_id, ':user_id'=>Yii::app()->user->id),
                         ));
                         $paymentDate = date('Y-m-d H:i:s');
                         $paymentDate = date('Y-m-d H:i:s', strtotime($paymentDate));
