@@ -931,9 +931,12 @@ table .t-edu {
     <tr>
       <td style="padding-left:430px;text-align:left; padding-bottom:-18px;" >
         <p class="f-14"><?php if($user['create_at'] != ""){
-        $date = strtotime(substr($user['create_at'],0,-9));
-        $newformat = date('d-m-Y',$date);
-       echo $newformat; 
+       // $date = strtotime(substr($user['create_at'],0,-9));    
+       // $newformat = date('d-m-Y',$date);
+       // echo $newformat; 
+        $check = Helpers::lib()->changeFormatDate($user['create_at'],'datetime');
+        $newformat = substr($check,0,-10);
+        echo $newformat;    
            }else{ echo "-"; } ?></p>
       </td>
     </tr>
