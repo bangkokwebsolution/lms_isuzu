@@ -79,6 +79,7 @@ class CourseOnline extends CActiveRecord implements IECartPosition
 		return array(
 			'teachers' => array(self::BELONGS_TO, 'Teacher', 'course_lecturer'),
 			'lessons' => array(self::HAS_MANY, 'Lesson', 'course_id'),
+			'CourseGeneration' => array(self::HAS_MANY , 'CourseGeneration', 'course_id'),
 			'lessonCount'=>array(self::STAT, 'Lesson', 'course_id'),
 			'CategoryTitle' => array(self::BELONGS_TO, 'Category', 'cate_id'),
 			// 'Schedules' => array(self::BELONGS_TO, 'Schedule', 'course_id'),

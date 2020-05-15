@@ -148,7 +148,11 @@ class CourseGeneration extends CActiveRecord
 		// var_dump($this->gen_title); exit();
 
 		if($this->gen_title != ""){
-			$model = CourseGeneration::model()->findAll("course_id='".$this->course_id."' AND gen_title = '".$this->gen_title."' AND active='y'");
+				$text = "";
+			if($this->gen_id != null){
+				$text = " AND gen_id!=".$this->gen_id;
+			}
+			$model = CourseGeneration::model()->findAll("course_id='".$this->course_id."' AND gen_title = '".$this->gen_title."' AND active='y'".$text);
 
 			if(!empty($model)){
 				$this->addError('gen_title', 'ชื่อรุ่นซ้ำ กรุณากรอกใหม่');

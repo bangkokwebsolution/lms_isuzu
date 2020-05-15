@@ -847,7 +847,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                     }
                 }
 
-                public static function isPretestState($lesson_id)
+                public static function isPretestState($lesson_id, $gen_id=null)
                 {
                     $lesson = Lesson::model()->findByPk($lesson_id);
 
@@ -863,8 +863,11 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
             return false;
         }
 
-        $course_model = CourseOnline::model()->findByPk($lesson->course_id);
-        $gen_id = $course_model->getGenID($course_model->course_id);
+        if($gen_id == null){
+            $course_model = CourseOnline::model()->findByPk($lesson->course_id);
+            $gen_id = $course_model->getGenID($course_model->course_id);
+        }
+        
 
         $haveScore = Score::model()->findAllByAttributes(array('lesson_id' => $lesson_id, 'user_id' => Yii::app()->user->id,'active'=>'y', 'gen_id'=>$gen_id));
 
@@ -875,7 +878,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
         return false;
     }
 
-    public static function isPosttestState($lesson_id)
+    public static function isPosttestState($lesson_id, $gen_id=null)
     {
         $lesson = Lesson::model()->findByPk($lesson_id);
 
@@ -891,8 +894,10 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
             return false;
         }
 
-        $course_model = CourseOnline::model()->findByPk($lesson->course_id);
-        $gen_id = $course_model->getGenID($course_model->course_id);
+        if($gen_id == null){
+            $course_model = CourseOnline::model()->findByPk($lesson->course_id);
+            $gen_id = $course_model->getGenID($course_model->course_id);
+        }
 
         $haveScore = Score::model()->findAllByAttributes(array('lesson_id' => $lesson_id, 'user_id' => Yii::app()->user->id, 'type' => 'post','active'=>'y', 'gen_id'=>$gen_id));
 
@@ -1035,14 +1040,14 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
 
     }
 
-    public function checkLessonPass($lesson)
+    public function checkLessonPass($lesson, $gen_id=null)
     {
         $user = Yii::app()->getModule('user')->user();
         if ($user) {
-
-            $lesson_model = Lesson::model()->findByPk($lesson->id);
-            $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
-
+            if($gen_id == null){
+                $lesson_model = Lesson::model()->findByPk($lesson->id);
+                $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+            }
             $learnLesson = $user->learns(
                 array(
                     'condition' => 'lesson_id=:lesson_id AND lesson_active=:status AND gen_id=:gen_id',
@@ -1196,7 +1201,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
      return (object)array('color'=>$color,'status'=>$status,'class'=>$class);
  }
 
- public function checkLessonPass_Percent($lesson,$format=null)
+ public function checkLessonPass_Percent($lesson,$format=null, $gen_id=null)
  {
     $percent_max = 100;
     $percent = 0;
@@ -1204,16 +1209,18 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
     $status = '';
     $user = Yii::app()->getModule('user')->user();
     if ($user) {
-
-        $lesson_model = Lesson::model()->findByPk($lesson->id);
-        $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
-
+        if($gen_id == null){
+            $lesson_model = Lesson::model()->findByPk($lesson->id);
+            $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+        }
+        
         $learnLesson = $user->learns(
             array(
                 'condition' => 'lesson_id=:lesson_id AND lesson_active=:status AND gen_id=:gen_id',
                 'params' => array(':lesson_id' => $lesson->id,':status'=>"y", ':gen_id'=>$gen_id)
             )
         );
+
         $countFile = 0;
         $countLearnCompareTrueVdos = 0;
         if($lesson->type == 'vdo'){
@@ -1249,7 +1256,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                 )
             );
         }
-        if ($learnLesson && $learnLesson[0]->lesson_status == 'pass') {
+        if (!empty($learnLesson) && $learnLesson[0]->lesson_status == 'pass') {
             $percent = $percent_max;
             $color = "#fff";
             $status = "pass";
@@ -1257,7 +1264,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
 
                     //// check posttest
                     if(self::checkHavePostTestInManage($lesson->id)){ ///ถ้ามีข้อสอบหลังเรียน
-                        $checkpretest_do = self::CheckTest($lesson,'post');
+                        $checkpretest_do = self::CheckTest($lesson,'post', $gen_id);
                         if(!$checkpretest_do->value['statusBoolean']){
                             $percent = 0;
                             $color = "#fff";
@@ -1274,8 +1281,8 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                     $status = "pass";
                     $class = "successcourse";
                     //// check pretest
-                    if(self::isPretestState($lesson->id)){ ///ถ้ามีข้อสอบก่อนเรียน
-                        $checkpretest_do = self::CheckTest($lesson,'pre');
+                    if(self::isPretestState($lesson->id, $gen_id)){ ///ถ้ามีข้อสอบก่อนเรียน
+                        $checkpretest_do = self::CheckTest($lesson,'pre', $gen_id);
                         if(!$checkpretest_do->value->boolean){
                             $percent = 0;
                             $color = "#fff";
@@ -1286,8 +1293,8 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                     ////end check pretest
 
                     //// check posttest
-                    if(self::isPosttestState($lesson->id)){ ///ถ้ามีข้อสอบหลังเรียน
-                        $checkpretest_do = self::CheckTest($lesson,'post');
+                    if(self::isPosttestState($lesson->id, $gen_id)){ ///ถ้ามีข้อสอบหลังเรียน
+                        $checkpretest_do = self::CheckTest($lesson,'post', $gen_id);
                         if(!$checkpretest_do->value->boolean){
                             $percent = 0;
                             $color = "#fff";
@@ -1298,7 +1305,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                     }
                     //end check posttest
                 } else {
-                    if ($countFile != 0 && $learnLesson) {
+                    if ($countFile != 0 && !empty($learnLesson)) {
                         if ($countLearnCompareTrueVdos != $countFile) {
                             $percent_fn = ($countLearnCompareTrueVdos*100)/$countFile;
                             $percent = number_format($percent_fn,2);
@@ -1997,12 +2004,14 @@ public function chkRegister_status()
     }
 }
 
-public function CheckTest($lesson,$type){
+public function CheckTest($lesson,$type, $gen_id=null){
     if ($lesson){
         $data = "";
 
-        $lesson_model = Lesson::model()->findByPk($lesson->id);
-        $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+        if($gen_id == null){
+            $lesson_model = Lesson::model()->findByPk($lesson->id);
+            $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+        }        
 
         if ($type=="post"){
             $criteria = new CDbCriteria;
@@ -3741,15 +3750,16 @@ public static function isPretestStatusPass($lesson_id){
     }
 }
 
-public function Checkparentlesson($les_id){
+public function Checkparentlesson($les_id, $gen_id=null){
     $stats = true;
     $status_pre = true;
     $status_post = true;
     if ($les_id != 0) {
 
-        $lesson_model = Lesson::model()->findByPk($les_id);
-        $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
-
+        if($gen_id == null){
+            $lesson_model = Lesson::model()->findByPk($les_id);
+            $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+        }
         $lesson = Lesson::model()->findAllByAttributes(array('id' => $les_id,'active'=>'y'));
 
         if ($lesson[0]->sequence_id!=0) {
@@ -3941,5 +3951,160 @@ public function checkStepLesson($lesson){
                 $value->save(false);
             }
         }
+
+ 
+        public function checkCourseGenCanStudy($course_id_chk, $gen_id){ // เช็คว่า ณ ตอนนี้ หลักสูตรนี้ กดเรียนได้ไหม
+            $userModel = Users::model()->findByPK(Yii::app()->user->id);
+        $userDepartment = $userModel->department_id;
+        $userPosition = $userModel->position_id;
+        $userBranch = $userModel->branch_id;
+
+        $criteria = new CDbCriteria;
+        $criteria->compare('department_id',$userDepartment);
+        $criteria->compare('position_id',$userPosition);
+        $criteria->compare('branch_id',$userBranch);
+        $criteria->compare('active','y');
+        $modelOrgDep = OrgChart::model()->findAll($criteria);
+
+        foreach ($modelOrgDep as $key => $value) {
+            $courseArr[] = $value->id;
+        }
+
+        $criteria = new CDbCriteria;
+        $criteria->with = array('course','course.CategoryTitle');
+        $criteria->addIncondition('orgchart_id',$courseArr);
+        $criteria->compare('course.active','y');
+        $criteria->compare('course.status','1');
+        $criteria->compare('categorys.cate_show','1');
+        $criteria->addCondition('course.course_date_end >= :date_now');
+        $criteria->params[':date_now'] = date('Y-m-d H:i');
+        $criteria->group = 'course.course_id';
+        $modelOrgCourse = OrgCourse::model()->findAll($criteria);
+
+        if($modelOrgCourse){
+            foreach ($modelOrgCourse as $key => $value) {
+                $modelUsers_old = ChkUsercourse::model()->find(
+                    array(
+                        'condition' => 'course_id=:course_id AND user_id=:user_id AND org_user_status=:org_user_status',
+                        'params' => array(':course_id'=>$value->course_id, ':user_id'=>Yii::app()->user->id, ':org_user_status'=>1)
+                    )
+                );
+
+                if($modelUsers_old){
+                    if($modelUsers_old->course_id !=  $value->course_id){
+                        $course_id[] = $value->course_id;
+                    }
+                }else{
+                    $course_id[] = $value->course_id;
+                }
+            }
+
+            $modelUsers_To = ChkUsercourseto::model()->findAll(
+                array(
+                    'condition' => 'user_id=:user_id',
+                    'params' => array(':user_id'=>Yii::app()->user->id)
+                )
+            );
+
+            foreach ($modelUsers_To as $key => $val) {
+                $course_id[] += $val->course_id;
+            }
+
+            $criteria = new CDbCriteria;
+            $criteria->addIncondition('course_id',$course_id);
+            $course = CourseOnline::model()->findAll($criteria);
+
+            $criteria = new CDbCriteria;
+            $criteria->with = array('course','course.CategoryTitle');
+            $criteria->addIncondition('orgchart_id',$courseArr);
+            $criteria->compare('course.active','y');
+            $criteria->compare('course.status','1');
+            $criteria->compare('categorys.cate_show','1');
+            $criteria->addIncondition('course.course_id',$course_id);
+            $criteria->addCondition('course.course_date_end >= :date_now');
+            $criteria->params[':date_now'] = date('Y-m-d H:i');
+            $criteria->order = 'course.course_id';
+            $model_cate = OrgCourse::model()->findAll($criteria);
+
+            $course_id_check = "";
+            $check_can_org = 2;
+                foreach ($model_cate as $key => $value) { // ลบ course id ที่ซ้ำ
+                    if($course_id_check != $value->course_id){
+                        $course_id_check = $value->course_id;
+                        if($course_id_chk == $value->course_id){
+                            $check_can_org = 1;
+                        }
+                    }else{
+                        unset($model_cate[$key]);
+                    }
+                }
+            }
+
+
+            $return_val = false;
+            if($check_can_org == 1){ // หลักสูตรนี้ อยู่ใน org
+                $course_online_model = CourseOnline::model()->findByPk($course_id_chk);
+                $paymentDate = date('Y-m-d H:i:s');
+                $paymentDate = date('Y-m-d H:i:s', strtotime($paymentDate));
+                $contractDateBegin = date('Y-m-d H:i:s', strtotime($course_online_model->course_date_start));
+                $contractDateEnd = date('Y-m-d H:i:s', strtotime($course_online_model->course_date_end));
+
+                if (($paymentDate >= $contractDateBegin) && ($paymentDate <= $contractDateEnd)){
+                    $course_gen_model = CourseGeneration::model()->findAll(array(
+                        'condition' => 'active=:active AND course_id=:course_id AND gen_id=:gen_id',
+                        'params' => array(':active'=>'y', ':course_id'=>$course_id_chk, ':gen_id'=>$gen_id),
+                    ));
+                    if(!empty($course_gen_model)){
+                        foreach ($course_gen_model as $key_g => $value_g) {
+                            if($value_g->status == "1"){
+                                $paymentDate = date('Y-m-d H:i:s');
+                                $paymentDate = date('Y-m-d H:i:s', strtotime($paymentDate));
+                                $contractDateBegin = date('Y-m-d H:i:s', strtotime($value_g->gen_period_start));
+                                $contractDateEnd = date('Y-m-d H:i:s', strtotime($value_g->gen_period_end));
+                                if (($paymentDate >= $contractDateBegin) && ($paymentDate <= $contractDateEnd)){
+                                //เช็ค log start course
+                                    $LogStartcourse = LogStartcourse::model()->find(array(
+                                        'condition' => 'active=:active AND course_id=:course_id AND gen_id=:gen_id',
+                                        'params' => array(':active'=>'y', ':course_id'=>$course_id_chk, ':gen_id'=>$gen_id),
+                                    ));
+                                    $paymentDate = date('Y-m-d H:i:s');
+                                    $paymentDate = date('Y-m-d H:i:s', strtotime($paymentDate));
+                                    $contractDateBegin = date('Y-m-d H:i:s', strtotime($LogStartcourse->start_date));
+                                    $contractDateEnd = date('Y-m-d H:i:s', strtotime($LogStartcourse->end_date));
+                                    if (($paymentDate >= $contractDateBegin) && ($paymentDate <= $contractDateEnd)){
+                                 $return_val = true; // หลักสูตรเปิด รุ่นเปิด logเปิด
+                             }
+                         }
+                            // else{  // หมดเวลารุ่น
+                            //     $return_val = false; // รุ่น ไม่เปิด
+                            // }
+                     }
+                        } // foreach ($course_gen_model
+                    }else{ // ไม่มีรุ่น
+                        //เช็ค log start course
+                        $LogStartcourse = LogStartcourse::model()->find(array(
+                            'condition' => 'active=:active AND course_id=:course_id AND gen_id=:gen_id',
+                            'params' => array(':active'=>'y', ':course_id'=>$course_id_chk, ':gen_id'=>$gen_id),
+                        ));
+                        $paymentDate = date('Y-m-d H:i:s');
+                        $paymentDate = date('Y-m-d H:i:s', strtotime($paymentDate));
+                        $contractDateBegin = date('Y-m-d H:i:s', strtotime($LogStartcourse->start_date));
+                        $contractDateEnd = date('Y-m-d H:i:s', strtotime($LogStartcourse->end_date));
+                        if (($paymentDate >= $contractDateBegin) && ($paymentDate <= $contractDateEnd)){
+                                 $return_val = true; // หลักสูตรเปิด logเปิด
+                        }
+                    }
+                }
+                // else{ // หมดเวลา หลักสูตร
+                //     $return_val = false; // หลักสูตร ไม่เปิด
+                // }
+            }
+            // else{  //if($check_can_org == 1)
+            //     $return_val = false; //ไม่อยู่ใน org
+            // } // if($check_can_org == 1)
+
+
+            return $return_val;
+        } // function checkCorseGenCanStudy
 
     }

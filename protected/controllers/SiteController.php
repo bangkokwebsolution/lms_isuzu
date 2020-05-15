@@ -273,7 +273,6 @@ class SiteController extends Controller
 		}
 
 		//Label Multi lang
-
 		$label = MenuSite::model()->find(array(
 			'condition' => 'lang_id=:lang_id',
 			'params' => array(':lang_id' => $langId)
@@ -284,9 +283,137 @@ class SiteController extends Controller
 				'params' => array(':lang_id' => 1)
 			));
 		}
+
+		// query course ตาม org
+
+		$userModel = Users::model()->findByPK(Yii::app()->user->id);
+		$userDepartment = $userModel->department_id;
+		$userPosition = $userModel->position_id;
+		$userBranch = $userModel->branch_id;
+
+		$criteria = new CDbCriteria;
+		$criteria->compare('department_id',$userDepartment);
+		$criteria->compare('position_id',$userPosition);
+		$criteria->compare('branch_id',$userBranch);
+		$criteria->compare('active','y');
+		$modelOrgDep = OrgChart::model()->findAll($criteria);
+
+		foreach ($modelOrgDep as $key => $value) {
+			$courseArr[] = $value->id;
+		}
+
+		$criteria = new CDbCriteria;
+		$criteria->with = array('course','course.CategoryTitle');
+		$criteria->addIncondition('orgchart_id',$courseArr);
+		$criteria->compare('course.active','y');
+		$criteria->compare('course.status','1');
+		$criteria->compare('categorys.cate_show','1');
+		$criteria->addCondition('course.course_date_end >= :date_now');
+		$criteria->params[':date_now'] = date('Y-m-d H:i');
+		$criteria->group = 'course.course_id';
+		$modelOrgCourse = OrgCourse::model()->findAll($criteria);
+
+		if($modelOrgCourse){
+			foreach ($modelOrgCourse as $key => $value) {
+				$modelUsers_old = ChkUsercourse::model()->find(
+					array(
+						'condition' => 'course_id=:course_id AND user_id=:user_id AND org_user_status=:org_user_status',
+						'params' => array(':course_id'=>$value->course_id, ':user_id'=>Yii::app()->user->id, ':org_user_status'=>1)
+					)
+				);
+
+				if($modelUsers_old){
+					if($modelUsers_old->course_id !=  $value->course_id){
+						$course_id[] = $value->course_id;
+					}
+				}else{
+					$course_id[] = $value->course_id;
+				}
+			}
+
+			$modelUsers_To = ChkUsercourseto::model()->findAll(
+				array(
+					'condition' => 'user_id=:user_id',
+					'params' => array(':user_id'=>Yii::app()->user->id)
+				)
+			);
+
+			foreach ($modelUsers_To as $key => $val) {
+				$course_id[] += $val->course_id;
+			}
+
+			$criteria = new CDbCriteria;
+			$criteria->addIncondition('course_id',$course_id);
+			$course = CourseOnline::model()->findAll($criteria);
+
+			$criteria = new CDbCriteria;
+			$criteria->with = array('course','course.CategoryTitle');
+			$criteria->addIncondition('orgchart_id',$courseArr);
+			$criteria->compare('course.active','y');
+			$criteria->compare('course.status','1');
+			$criteria->compare('categorys.cate_show','1');
+			$criteria->addIncondition('course.course_id',$course_id);
+			$criteria->addCondition('course.course_date_end >= :date_now');
+			$criteria->params[':date_now'] = date('Y-m-d H:i');
+			$criteria->order = 'course.course_id';
+			$model_cate = OrgCourse::model()->findAll($criteria);
+
+			$course_id_check = "";
+                foreach ($model_cate as $key => $value) { // ลบ course id ที่ซ้ำ
+                	if($course_id_check != $value->course_id){
+                		$course_id_check = $value->course_id;
+                	}else{
+                		unset($model_cate[$key]);
+                	}
+                }
+            }          
+
+
+		//  จบ query course ตาม org
+
+
+            $arr_course_id = array();
+            foreach ($course as $key => $value) {
+            	$arr_course_id[] = $value->course_id;
+            }
+
+            // $course = CourseOnline::model()->findAllByAttributes(array(
+            // 	'active' => 'y',
+            // 	// 'status' => '1',
+            // 	'lang_id' => '1'
+            // ), array('order' => 'sortOrder ASC'));
+
+            $course = CourseOnline::model()->findAll(array(
+            	'condition' => 'lang_id=:lang_id AND active=:active',
+            	'params' => array(':lang_id'=>'1', ':active'=>'y'),
+            	'order' => 'sortOrder ASC'
+            ));
+
+            $logStartCourse_model = LogStartcourse::model()->findAll(array(
+            	'condition' => 'user_id=:user_id AND active=:active',
+            	'params' => array(':user_id'=>Yii::app()->user->id, ':active'=>'y')
+            ));
+
+            $arr_log_course_id = array();            
+            $arr_log_course_gen_id = array();            
+            $arr_log_gen_id = array();            
+            foreach ($logStartCourse_model as $key => $value) {
+            	$arr_log_course_id[] = $value->course_id;
+            	$arr_log_course_gen_id[$value->gen_id] = $value->course_id;
+            	$arr_log_gen_id[] = $value->gen_id;
+            }
+
+            // var_dump("<pre>");
+            // var_dump($arr_log_course_id); exit();
+
 		$this->render('dashboard', array(
 			'user'=>$user,
 			'label'=> $label,
+			'course'=> $course,
+			'arr_course_id'=> $arr_course_id,
+			'arr_log_course_id'=> $arr_log_course_id,
+			'arr_log_gen_id'=> $arr_log_gen_id,
+			'arr_log_course_gen_id'=> $arr_log_course_gen_id,
 		));
 	}
 

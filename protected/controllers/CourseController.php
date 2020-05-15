@@ -1268,7 +1268,11 @@ public function actionDetail($id) {
             Helpers::lib()->getControllerActionId();
         }
         $course = CourseOnline::model()->findByPk($id);
-        $gen_id = $course->getGenID($course->course_id);
+        if(isset($_GET['gen'])){
+            $gen_id = $_GET['gen'];
+        }else{
+            $gen_id = $course->getGenID($course->course_id);
+        }
         $lessonList = Lesson::model()->findAll('course_id=' . $id);
         $lessonCurrent = Lesson::model()->findByPk($_GET['lesson_id']);
 

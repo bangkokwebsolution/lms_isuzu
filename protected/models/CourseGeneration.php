@@ -67,7 +67,7 @@ class CourseGeneration extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'course' => array(self::BELONGS_TO, 'CourseOnline', 'course_id','condition'=>'CourseOnline.active=:active','params'=>[':active'=>'y']),
+			'course' => array(self::BELONGS_TO, 'CourseOnline', 'course_id','condition'=>'course.active=:active','params'=>[':active'=>'y']),
 			'create' => array(self::BELONGS_TO, 'User', 'create_by'),
 			'update' => array(self::BELONGS_TO, 'User', 'update_by'),
 		);

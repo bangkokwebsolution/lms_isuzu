@@ -126,7 +126,7 @@ class CourseGenerationController extends Controller
 
 				if($model->save()){
 					if($model->status == 1){ // เปิดรุ่น ได้แค่ รุ่นเดียว
-						$model_check = CourseGeneration::model()->findAll("course_id='".$id."' AND gen_id != '".$model->gen_id."'");
+						$model_check = CourseGeneration::model()->findAll("course_id='".$model->course_id."' AND gen_id != '".$model->gen_id."'");
 						if(!empty($model_check)){
 						foreach ($model_check as $key => $value) {
 							$model_edit = CourseGeneration::model()->findByPk($value->gen_id);
