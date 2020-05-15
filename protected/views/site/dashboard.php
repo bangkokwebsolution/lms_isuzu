@@ -13,6 +13,9 @@
 #badgethree {
     background-color: #a93232;
 }
+#badgefour {
+    background-color: #989898;
+}
 
 .classic-title {
     padding-bottom: 4px;
@@ -102,25 +105,25 @@ thead th{
 </style>
 
 <?php
-if(!empty($_GET['course']) || !empty($_GET['year']) ){
-    $course = CourseOnline::model()->findAllByAttributes(array(
-        'active' => 'y',
-        'status' => '1',
-        'lang_id' => '1'
-    ), array('order' => 'sortOrder ASC'));
-    if (is_numeric($_GET['course']) ) {
-        $course = CourseOnline::model()->findAllByAttributes(array(
-            'active' => 'y',
-            'course_id' => $_GET['course']
-        ));
-    }
-}else{
-    $course = CourseOnline::model()->findAllByAttributes(array(
-        'active' => 'y',
-        'status' => '1',
-        'lang_id' => '1'
-    ), array('order' => 'sortOrder ASC'));
-}
+// if(!empty($_GET['course']) || !empty($_GET['year']) ){
+//     $course = CourseOnline::model()->findAllByAttributes(array(
+//         'active' => 'y',
+//         'status' => '1',
+//         'lang_id' => '1'
+//     ), array('order' => 'sortOrder ASC'));
+//     if (is_numeric($_GET['course']) ) {
+//         $course = CourseOnline::model()->findAllByAttributes(array(
+//             'active' => 'y',
+//             'course_id' => $_GET['course']
+//         ));
+//     }
+// }else{
+//     $course = CourseOnline::model()->findAllByAttributes(array(
+//         'active' => 'y',
+//         'status' => '1',
+//         'lang_id' => '1'
+//     ), array('order' => 'sortOrder ASC'));
+// }
 
 
 if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
@@ -136,6 +139,355 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
     $yearsRange = range($currentYear, $yearFrom);
     return array_combine($yearsRange, $yearsRange);
 }
+
+function CourseShowStatus($flag, $langId, $value, $gen_id){
+    if(!$flag){
+     $courseChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = '.$langId.' AND parent_id = ' . $value->course_id));
+         if($courseChildren){
+            $value->course_title = $courseChildren->course_title;
+            $value->course_short_title = $courseChildren->course_short_title;
+        }
+    }
+    $lesson = Lesson::model()->findAllByAttributes(array(
+        'active' => 'y',
+        'lang_id' => '1',
+        'course_id' => $value->course_id
+    ));
+    $percent_learn_net = 0;
+    foreach ($lesson as $key => $lessonList) {
+        $checkLessonPass = Helpers::lib()->checkLessonPass_Percent($lessonList, 0, $gen_id);
+        $checkPostTest = Helpers::checkHavePostTestInManage($lessonList->id);
+        $lessonStatus = Helpers::lib()->checkLessonPass($lessonList, $gen_id);
+        if ($checkPostTest) {
+            $isPostTest = Helpers::isPosttestState($lessonList->id, $gen_id);
+            if ($lessonStatus == 'pass') {
+                if ($isPostTest) {
+                    $percent_learn = $checkLessonPass->percent - 10;
+                } else {
+                    $percent_learn = $checkLessonPass->percent;
+                }
+            } else {
+                $percent_learn = $checkLessonPass->percent;
+            }
+        } else {
+            $percent_learn = $checkLessonPass->percent;
+        }
+        $percent_learn_net += $percent_learn;
+    }
+    $percent_learn_net = count($lesson) > 0 ? $percent_learn_net/count($lesson) : 0;
+    //$percent_learn_net = 100;
+    if($gen_id != "0"){
+        $CourseGeneration = CourseGeneration::model()->findByPk($gen_id);
+    }    
+    ?>
+    <tr>
+        <td class="text-left" style="text-align: left;"><span class="text23"><?= $value->course_title ?> <?php if($gen_id != "0"){ if($langId != 1){echo "รุ่น "; }else{ echo "gen "; } echo $CourseGeneration->gen_title; } ?></span></td>
+        <td width="50%" style="border-right: none;">
+
+         <div class="progress">
+            <div class="progress-bar<?=($percent_learn_net == 100)? " full":"";?>" role="progressbar" data-percentage="<?= $percent_learn_net; ?>" style="width:<?= $percent_learn_net; ?>%;">
+              <span class="progress-bar-span"><?= number_format($percent_learn_net,2); ?>%</span>
+              <span class="sr-only"><?= number_format($percent_learn_net,2); ?>% Complete</span>
+          </div>
+      </div>
+  </td>
+</tr>
+<?php
+} //function CourseShowStatus()
+
+
+function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $langId){
+    $_GET['course'] = $getcourse;
+    $_GET['year'] = $getyear;
+
+    if($gen_id != "0"){
+        $CourseGeneration = CourseGeneration::model()->findByPk($gen_id);
+    }  
+
+    $checkCourseGenCanStudy = Helpers::lib()->checkCourseGenCanStudy($value->course_id, $gen_id);
+
+    $passCourse = Passcours::model()->find(array(
+        'condition'=>'passcours_cours=:passcours_cours AND passcours_user=:passcours_user AND gen_id=:gen_id',
+        'params' => array(':passcours_cours' => $value->course_id, ':passcours_user' => Yii::app()->user->id, ':gen_id'=>$gen_id)
+    ));
+
+    $state = true;
+        if(empty($value->course_date_start)){
+            $value->course_date_start = $value->Schedules->training_date_start;
+        }
+        
+        if(empty($_GET['course'])){
+            if(!empty($_GET['year'])){
+                $now = $_GET['year'];
+                $dateCurrent = DateTime::createFromFormat('Y-m-d H:i:s', $now.'-01-01 00:00:00');
+                $dateCourse = DateTime::createFromFormat('Y-m-d H:i:s', $value->course_date_start);
+
+                if( $dateCourse >= $dateCurrent){
+                    $state = true;
+                }else{
+                    $state = false;
+                }
+            }
+        }
+
+        if($state){
+        $lesson = Lesson::model()->findAllByAttributes(array(
+            'active' => 'y',
+            'course_id' => $value->course_id
+        ));
+        $checkStatus = true;
+        $text_status_study = "";
+        $text_status_study_class_id = "";
+        if($checkCourseGenCanStudy){
+            $herf = Yii::app()->createUrl('course/detail/', array('id' => $value->course_id,));
+        }else{
+            $text_status_study_class_id = "badgefour";
+            // $text_status_study = "<font color='red'>ห้ามเรียน</font>";
+            $herf = '#collapse-'.i;
+        }
+        
+        $status =  $label->label_notLearn;
+        $status_button = '<span class="badge" id="';
+        if($text_status_study_class_id == ""){
+            $status_button .= "badgethree";
+        }else{
+            $status_button .= $text_status_study_class_id;
+        }
+        $status_button .= '" style="cursor: context-menu;"><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_notLearn.'</span>';
+
+        foreach ($lesson as $key => $lessonList) {
+            $checkLearn = Learn::model()->findByAttributes(array(
+                'user_id' => Yii::app()->user->id,
+                'lesson_id' => $lessonList->id,
+                'gen_id' => $gen_id,
+            ));                     
+            if ($checkLearn) {
+                if ($checkStatus) {
+                    if ($checkLearn->lesson_status == 'pass') {
+                        $status = $label->label_learned;
+                        $checkStatus = false;
+                        $herf = '#collapse-'.i;
+                        $status_button = '<span class="badge" id="';
+                        if($text_status_study_class_id == ""){
+                            $status_button .= "badgeone";
+                        }else{
+                            $status_button .= $text_status_study_class_id;
+                        }
+                        $status_button .= '"><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_learned.'</span>';
+                    }elseif($checkLearn->lesson_status == 'learning'){
+                        $status = $label->label_learning;
+                        $checkStatus = false;
+                        $herf = '#collapse-'.i;
+                        $status_button = '<span class="badge" id="';
+                        if($text_status_study_class_id == ""){
+                            $status_button .= "badgetwo";
+                        }else{
+                            $status_button .= $text_status_study_class_id;
+                        }
+                        $status_button .= '" style="cursor: context-menu;"><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_learning.'</span>';
+                    } 
+                    // else {
+                    //     $status = $label->label_notLearn;
+                    //     $checkStatus = false;
+                    //     $herf = '#collapse-'.i;
+                    //     $status_button = '<span class="badge" id="badgetwo" style="cursor: context-menu;"><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_notLearn.'</span>';
+                    // }
+                }
+            }
+        }    
+        ?>
+        <!-- 1 -->
+    <div class="row">
+        <div class="col-md-12 bg-white">
+                <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+                    <!--statr no loop -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingTwo">
+                            <h4 class="text1">
+                                <a role="button" <?= (!$checkStatus)? 'data-toggle="collapse"':'' ?>  data-parent="#accordion2" href="<?= $herf; ?>" aria-expanded="true" aria-controls="collapseOne" class="">
+                                <span class="head_titledash" style="cursor: context-menu;"><?= $status_button ?> <i class="fa fa-book"></i>  <?=  $label->label_course ?> <?= $value->course_title ?> <?php if($gen_id != "0"){ if($langId != 1){echo "รุ่น "; }else{ echo "gen "; } echo $CourseGeneration->gen_title; } echo " ".$text_status_study; ?></span> <span class="pull-right"><i class="fa fa-angle-down" style="margin-top: 7px;"></i></span> <div class="pull-right" style="margin-right: 15px">
+                                    <?php if(empty($data->CourseOnlines->Schedules) && $passCourse != null){ ?>
+                                <a class="btn btn-success btn-sm btn__printdashboard><?= $printCer ?>" href="../course/certificate/<?php echo $value->course_id; ?>" role="button"><i class="fa fa-print"></i> <?=  $label->label_printCert ?>
+                                </a>
+                                <?php } ?>
+                                </div>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapse-<?= $i ?>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="true" style="">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr class="active">
+                                        <th rowspan="2"><?=  $label->label_lesson ?></th>
+                                        <th rowspan="2"><?=  $label->label_result ?></th>
+                                        <th colspan="2"><?=  $label->label_test ?></th>
+                                        <th rowspan="2"><?=  $label->label_testFinal ?></th>
+                                        <th rowspan="2"><?=  $label->label_assessSatisfaction ?></th>
+                                    </tr>
+
+                                    <tr >
+                                        <th><?=  $label->label_testPre ?></th>
+                                        <th><?=  $label->label_testPost ?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        $x = 1;
+                                        $y = 0;
+                                        $z = 0;
+                                        $lesson = Lesson::model()->findAll(array(
+                                            'condition' => 'active=:active AND course_id=:course_id AND lang_id=:lang_id',
+                                            'params' => array(':active' => 'y',':course_id' => $value->course_id, ':lang_id'=>$langId),
+                                            'order' => 'lesson_no'));
+                                        foreach ($lesson as $key => $data) { 
+                                            if($langId != 1){
+                                                $data->id = $data->parent_id;
+                                            }
+                                                $checkLessonPass = Helpers::lib()->checkLessonPass_Percent($data, 0, $gen_id);
+                                                $checkPreTest = Helpers::checkHavePreTestInManage($data->id);
+                                                $checkPostTest = Helpers::checkHavePostTestInManage($data->id);
+                                                $lessonStatus = Helpers::lib()->checkLessonPass($data, $gen_id);
+                                                $isChecklesson = Helpers::Checkparentlesson($data->id, $gen_id);
+
+                                        ?>
+                                    <tr class="active text-center">
+                                        <td class="text-left">
+                                            <?php if($checkCourseGenCanStudy){ ?>
+                                                <a href="<?= $isChecklesson ? "../course/detail/".$data->course_id."?lid=".$data->id.'#collapseles'.$data->id : 'javascript:void()'; ?>">
+                                            <?php } ?>
+                                                <?= $data->title  ?>
+                                            <?php if($checkCourseGenCanStudy){ ?>
+                                                </a>
+                                            <?php } ?>
+                                        </td>
+                                        <?php if ($checkLessonPass->status == "pass") { ?>
+                                        <td class="success"><?=  $label->label_learned ?></td>
+                                        <?php }elseif($checkLessonPass->status == "learning"){
+                                            ?>
+                                            <td class="warning"><?=  $label->label_learning ?></td>
+                                            <?php
+                                        } else { ?>
+                                        <td class="danger"><?=  $label->label_notLearn ?></td>
+                                        <?php } ?>
+                                        <td>
+                                            <?php 
+                                            if($checkPreTest){
+                                                $isPreTest = Helpers::isPretestState($data->id, $gen_id);
+                                                if($isPreTest && $checkCourseGenCanStudy) {
+                                                ?>
+                                                <div>
+                                                <a href="../course/learning/<?php echo $value->course_id; ?>?lesson_id=<?php echo $data->id; ?>" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>&nbsp;<?=  $label->label_DotestPre ?></a>
+                                                </div>
+                                            <?php
+                                                } else {
+                                                    $preStatus = Helpers::lib()->CheckTest($data,"pre", $gen_id); 
+                                                    if($preStatus->value['score'] != null){
+                                                        echo $preStatus->value['score'].'/'.$preStatus->value['total'];
+                                                    }else{
+                                                     ?>
+                                                     <div>
+                                                        <a href="javascript:void(0);" style="cursor: context-menu;" class=""><?=  $label->label_NoPreTest ?></a>
+                                                    </div>
+                                                    <?php 
+                                                    }                                                    
+                                                }
+                                            } else {
+                                            ?>
+                                                <div>
+                                                <a href="javascript:void(0);" style="cursor: context-menu;" class=""><?=  $label->label_NoPreTest ?></a>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
+                                        </td>
+                                        <td>
+                    <?php 
+                                            if($checkPostTest) { 
+                                                $isPostTest = Helpers::isPosttestState($data->id, $gen_id);
+                                                if($isPostTest && $checkCourseGenCanStudy) {
+                                                    if($lessonStatus != 'pass') {
+                                                        $link = 'javascript:void(0);';
+                                                        $alert = 'alertswal();';
+                                                    } else {
+                                                        $link = "question/index/".$data->id;
+                                                        $alert = '';
+                                                    }
+                                                    ?>
+                                                    <div>
+                                                    <a href="<?= $link ?>" <?= $alert != '' ? 'onclick="'.$alert.'"' : ''; ?> class="btn btn-danger btn-sm"><i class="fa fa-pencil"></i>&nbsp;<?=  $label->label_DotestPost ?></a>
+                                                    </div>
+                                                            <?php
+                                                } else {
+                                                    $postStatus = Helpers::lib()->CheckTest($data,"post", $gen_id);
+                                                    if($postStatus->value['score'] != null){
+                                                        echo $postStatus->value['score'].'/'.$postStatus->value['total'];
+                                                    }else{
+                                                        ?>
+                                                        <a href="javascript:void(0);" class="" style="cursor: context-menu;"><?=  $label->label_NoPostTest ?></a>
+                                                        <?php
+                                                    }
+                                                }
+                                            } else { 
+                                        ?>
+                                                <a href="javascript:void(0);" class="" style="cursor: context-menu;"><?=  $label->label_NoPostTest ?></a>
+                                        <?php } ?>
+                                        </td>
+                                        <?php 
+                                            $y++;
+                                            if($y == 1){
+                                                    echo '<td rowspan="'.count($lesson).'">';
+                                                    $criteria = new CDbCriteria;
+                                                    $criteria->condition = ' course_id="' . $data->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND gen_id="'.$gen_id.'"';
+                                                    $criteria->order = 'create_date DESC';
+                                                    $allFinalTest = Coursescore::model()->find($criteria);
+
+                                                    $CourseSurvey = CourseTeacher::model()->findAllByAttributes(array('course_id'=>$data->course_id));
+                                                    $PaQuest = false;
+                                                    if ($CourseSurvey) {
+                                                        $passQuest = QQuestAns_course::model()->find(array(
+                                                            'condition' => 'user_id = "' . Yii::app()->user->id . '" AND course_id ="' . $data->course_id . '" AND gen_id="'.$gen_id.'"',
+                                                        ));
+                                                        $countSurvey = count($passQuest);
+                                                        if ($passQuest) {
+                                                            $PaQuest = true;
+                                                        }
+                                                    }else{
+                                                        $PaQuest = true;
+                                                    }
+                                                    if($allFinalTest && $PaQuest){
+
+                                                        $printCer = '';
+                                                        echo $allFinalTest->score_number.'/'.$allFinalTest->score_total;
+                                                    } else {
+                                                        $printCer = 'disabled';
+                                                        echo $label->label_haveNotTest;
+                                                    }
+                                                                echo '</td>';
+                                                        }
+                                                        $z++;
+                                                        if($z == 1){
+                                        ?>
+                                        <td rowspan="<?php echo count($lesson) ?>"><a class="btn btn-info btn-sm" href="../course/questionnaire/<?php echo $value->course_id; ?>?gen=<?php echo $gen_id; ?>" role="button"><i class="fa fa-eye"></i> <?=  $label->label_seeResult ?></a></td>
+                                        
+                                        <?php
+                                                }
+                                        ?>
+                                    </tr>
+                                    <?php $x++; } ?>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div> 
+                
+        </div>
+    </div>
+    <?php
+       
+        } // if state
+
+} // function CourseShowHistory()
 
 ?>
 
@@ -170,61 +522,71 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
                                 <tbody>
                                     <?php
                                     $i = 1;
+                                    $arr_course_show_now = array();
                                     foreach ($course as $key => $value) {
-                                        if(!$flag){
-                                                 $courseChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = '.$langId.' AND parent_id = ' . $value->course_id));
-                                                 if($courseChildren){
-                                                    $value->course_title = $courseChildren->course_title;
-                                                    $value->course_short_title = $courseChildren->course_short_title;
-                                                }
-                                            }
-                                        $lesson = Lesson::model()->findAllByAttributes(array(
-                                            'active' => 'y',
-                                            'lang_id' => '1',
-                                            'course_id' => $value->course_id
+                                        $CourseGeneration = CourseGeneration::model()->findAll(array(
+                                            'condition' => 'active=:active AND course_id=:course_id',
+                                            'params' => array(':active'=>'y', ':course_id'=>$value->course_id),
                                         ));
-                                        $percent_learn_net = 0;
-                                        foreach ($lesson as $key => $lessonList) {
-                                            
-                                            $checkLessonPass = Helpers::lib()->checkLessonPass_Percent($lessonList, 0);
-                                            $checkPostTest = Helpers::checkHavePostTestInManage($lessonList->id);
-                                            $lessonStatus = Helpers::lib()->checkLessonPass($lessonList);
-                                            if ($checkPostTest) {
-                                                $isPostTest = Helpers::isPosttestState($lessonList->id);
-                                                if ($lessonStatus == 'pass') {
-                                                    if ($isPostTest) {
-                                                        $percent_learn = $checkLessonPass->percent - 10;
-                                                    } else {
-                                                        $percent_learn = $checkLessonPass->percent;
+                                        if(!empty($CourseGeneration)){ // หลักสูตร มีรุ่น
+                                            if(in_array($value->course_id, $arr_course_id)){ // มีรุ่น อยู่ใน org
+                                                foreach ($CourseGeneration as $gen_key => $gen_value) {
+                                                    if($gen_value->status == "1"){ // เปิดรุ่น เห็น
+                                                        if((isset($_GET['course']) && $value->course_id == $_GET['course']) || (!isset($_GET['course'])) || ($_GET['course'] == "")){
+                                                            CourseShowStatus($flag, $langId, $value, $gen_value->gen_id);
+                                                        }                                                        
+                                                        $arr_course_show_now[] = $value;
+                                                    }else{ // รุ่นปิด เช็ค ประวัติ
+                                                        $logStartCourse_model = LogStartcourse::model()->find(array(
+                                                            'condition' => 'user_id=:user_id AND active=:active AND course_id=:course_id AND gen_id=:gen_id',
+                                                            'params' => array(':user_id'=>Yii::app()->user->id, ':active'=>'y', ':course_id'=>$value->course_id, ':gen_id'=>$gen_value->gen_id)
+                                                        ));
+                                                        if(!empty($logStartCourse_model)){
+                                                            if((isset($_GET['course']) && $value->course_id == $_GET['course']) || (!isset($_GET['course'])) || ($_GET['course'] == "")){
+                                                                CourseShowStatus($flag, $langId, $value, $gen_value->gen_id);
+                                                        }
+                                                        $arr_course_show_now[] = $value;
+                                                        }
                                                     }
-                                                } else {
-                                                    $percent_learn = $checkLessonPass->percent;
+                                                } // foreach ($CourseGeneration
+                                                }else{ // มีรุ่น ไม่อยู่ใน org
+                                                 foreach ($CourseGeneration as $gen_key => $gen_value) {
+                                                    $logStartCourse_model = LogStartcourse::model()->find(array(
+                                                        'condition' => 'user_id=:user_id AND active=:active AND course_id=:course_id AND gen_id=:gen_id',
+                                                        'params' => array(':user_id'=>Yii::app()->user->id, ':active'=>'y', ':course_id'=>$value->course_id, ':gen_id'=>$gen_value->gen_id)
+                                                    ));
+                                                    if(!empty($logStartCourse_model)){
+                                                        //*****โชว์ 1 หลักสูตร หลายรุ่น ที่เคยเรียน
+                                                        if((isset($_GET['course']) && $value->course_id == $_GET['course']) || (!isset($_GET['course'])) || ($_GET['course'] == "")){
+                                                            CourseShowStatus($flag, $langId, $value, $gen_value->gen_id);
+                                                        }
+                                                        $arr_course_show_now[] = $value;
+                                                    } //if(!empty($logStartCourse_model))
+                                                } //foreach ($CourseGeneration 
+                                            } //if(in_array($value->course_id, $arr_course_id)){
+                                        }else{ //if(!empty($CourseGeneration)){ // หลักสูตร ไม่มีรุ่น
+                                            if(in_array($value->course_id, $arr_course_id)){ //อยู่ใน org
+                                                //*****โชว์ 1 หลักสูตร
+                                                if((isset($_GET['course']) && $value->course_id == $_GET['course']) || (!isset($_GET['course'])) || ($_GET['course'] == "")){
+                                                    CourseShowStatus($flag, $langId, $value, "0");
+                                                        }                                                
+                                                $arr_course_show_now[] = $value;
+
+                                            }else{ // ไม่อยู่ใน org
+                                                $logStartCourse_model = LogStartcourse::model()->findAll(array(
+                                                    'condition' => 'user_id=:user_id AND active=:active AND course_id=:course_id AND gen_id=:gen_id',
+                                                    'params' => array(':user_id'=>Yii::app()->user->id, ':active'=>'y', ':course_id'=>$value->course_id, ':gen_id'=>'0')
+                                                ));
+                                                //*****โชว์ 1 หลักสูตร ที่เคยเรียน
+                                                if(!empty($logStartCourse_model)){
+                                                    if((isset($_GET['course']) && $value->course_id == $_GET['course']) || (!isset($_GET['course'])) || ($_GET['course'] == "")){
+                                                        CourseShowStatus($flag, $langId, $value, "0");
+                                                        }                                                    
+                                                    $arr_course_show_now[] = $value;
                                                 }
-                                            } else {
-                                                $percent_learn = $checkLessonPass->percent;
                                             }
-                                            $percent_learn_net += $percent_learn;
-                                        }
-                                        $percent_learn_net = count($lesson) > 0 ? $percent_learn_net/count($lesson) : 0;
-                                        //$percent_learn_net = 100;
-                                        ?>
-                                        <tr>
-                                            <td class="text-left" style="text-align: left;"><span class="text23"><?= $value->course_title ?> <?= $value->getGen($value->course_id); ?></span></td>
-                                            <td width="50%" style="border-right: none;">
-                                             
-                                             <div class="progress">
-                                                <div class="progress-bar<?=($percent_learn_net == 100)? " full":"";?>" role="progressbar" data-percentage="<?= $percent_learn_net; ?>" style="width:<?= $percent_learn_net; ?>%;">
-                                                  <span class="progress-bar-span"><?= number_format($percent_learn_net,2); ?>%</span>
-                                                   <span class="sr-only"><?= number_format($percent_learn_net,2); ?>% Complete</span>
-                                                </div>
-                                                           
-                                                  
-                                                    </div>
-                                                </td>
-                                              
-                                            </tr>
-                                            <?php
-                                        }
+                                        } //if(!empty($CourseGeneration)){
+                                        } // foreach ($course
                                         ?>
                                     </tbody>
                                 </table>
@@ -248,13 +610,14 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
 <div class="container">
     <h2 class="classic-title text-center"><span> History </span></h2>
     <form class="form-inline text-center" action="<?php echo $this->createUrl('/site/dashboard'); ?>" method="get">
-        <div class="form-group">
-            <label for="exampleInputName3"><?=  UserModule::t('year'); ?></label>
+        <!-- <div class="form-group">
+            <label for="exampleInputName3"><?=  UserModule::t('year'); ?></label> -->
             <?php
-            $yearList = getYearsList();
-            echo CHtml::dropDownList('year', '', $yearList, array('class' => 'form-control', 'prompt' => UserModule::t('year')));
+
+            // $yearList = getYearsList();
+            // echo CHtml::dropDownList('year', '', $yearList, array('class' => 'form-control', 'prompt' => UserModule::t('year')));
             ?>
-        </div>
+        <!-- </div>  -->
         
         <label for=""><strong><?=  $label->label_search ?> | <?=  $label->label_course ?></strong></label>
         <div class="form-group">
@@ -262,21 +625,20 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
             $courses = CourseOnline::model()->findAllByAttributes(array(
                 'active' => 'y',
                     ), array('order' => 'sortOrder ASC'));
-            $courseList = CHtml::listData($course, 'course_id', 'course_title');
+            $courseList = CHtml::listData($arr_course_show_now, 'course_id', 'course_title');
             echo CHtml::dropDownList('course', '', $courseList, array('class' => 'form-control', 'prompt' => $label->label_courseSearch));
             ?>
         </div>
         <!-- <div class="form-group">
-            <label for="exampleInputName3"><?=  $label->label_gen ?></label>
+            <label for="exampleInputName3"><?=  $label->label_gen ?></label> -->
             <?php
-            $generation = Generation::model()->findAllByAttributes(array(
-                'active' => '1',
-            ));
-            $genList = CHtml::listData($generation, 'id_gen', 'name');
-            echo CHtml::dropDownList('gen', '', $genList, array('class' => 'form-control'));
+            // $generation = Generation::model()->findAllByAttributes(array(
+            //     'active' => '1',
+            // ));
+            // $genList = CHtml::listData($generation, 'id_gen', 'name');
+            // echo CHtml::dropDownList('gen', '', $genList, array('class' => 'form-control'));
             ?>
-        </div> -->
-
+        <!-- </div> --> 
         
         <button type="submit" class="btn btn-success btn-sm" style="margin-top: 0;"><i class="fa fa-search"></i> <?=  $label->label_search ?></button>
         <!--<a href="<?php echo $this->createUrl('/site/allStatus'); ?>" class="btn btn-primary btn-sm" style="margin-top: 0; margin-left: 25px;"><i class="fa fa-bars"></i> สถานะทั้งหมด</a>-->
@@ -287,217 +649,71 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
     <?php
     $i = 1;
     foreach ($course as $key => $value) {
-    $state = true;
-        if(empty($value->course_date_start)){
-            $value->course_date_start = $value->Schedules->training_date_start;
-        }
-        
-        if(empty($_GET['course'])){
-            if(!empty($_GET['year'])){
-                $now = $_GET['year'];
-                $dateCurrent = DateTime::createFromFormat('Y-m-d H:i:s', $now.'-01-01 00:00:00');
-                $dateCourse = DateTime::createFromFormat('Y-m-d H:i:s', $value->course_date_start);
-
-                if( $dateCourse >= $dateCurrent){
-                    $state = true;
-                }else{
-                    $state = false;
-                }
-            }
-        }
-
-        if($state){
-        $lesson = Lesson::model()->findAllByAttributes(array(
-            'active' => 'y',
-            'course_id' => $value->course_id
+        $CourseGeneration = CourseGeneration::model()->findAll(array(
+            'condition' => 'active=:active AND course_id=:course_id',
+            'params' => array(':active'=>'y', ':course_id'=>$value->course_id),
         ));
-        $checkStatus = true;
-        $herf = Yii::app()->createUrl('course/detail/', array('id' => $value->course_id, 'gen' => $value->getGenID($value->course_id)));
-        $status =  $label->label_notLearn;
-        $status_button = '<span class="badge" id="badgethree"><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_notLearn.'</span>';
-        foreach ($lesson as $key => $lessonList) {
-            $checkLearn = Learn::model()->findByAttributes(array(
-                'user_id' => Yii::app()->user->id,
-                'lesson_id' => $lessonList->id,
-            ));
-            if ($checkLearn) {
-                if ($checkStatus) {
-                    if ($checkLearn->lesson_status == 'pass') {
-                        $status = $label->label_learned;
-                        $checkStatus = false;
-                        $herf = '#collapse-'.i;
-                        $status_button = '<span class="badge" id="badgeone"><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_learned.'</span>';
-                    } else {
-                        $status = $label->label_learning;
-                        $checkStatus = false;
-                        $herf = '#collapse-'.i;
-                        $status_button = '<span class="badge" id="badgetwo"><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_learning.'</span>';
+        if(!empty($CourseGeneration)){ // หลักสูตร มีรุ่น
+            if(in_array($value->course_id, $arr_course_id)){ // มีรุ่น อยู่ใน org
+                foreach ($CourseGeneration as $gen_key => $gen_value) {
+                    if($gen_value->status == "1"){ // เปิดรุ่น เห็น
+                        if((isset($_GET['course']) && $value->course_id == $_GET['course']) || (!isset($_GET['course'])) || ($_GET['course'] == "")){
+                        CourseShowHistory($i, $value, $gen_value->gen_id, $_GET['course'], $_GET['year'], $label, $langId);
                     }
+                        $i++;
+                    }else{ // รุ่นปิด เช็ค ประวัติ
+                        $logStartCourse_model = LogStartcourse::model()->find(array(
+                            'condition' => 'user_id=:user_id AND active=:active AND course_id=:course_id AND gen_id=:gen_id',
+                            'params' => array(':user_id'=>Yii::app()->user->id, ':active'=>'y', ':course_id'=>$value->course_id, ':gen_id'=>$gen_value->gen_id)
+                        ));
+                        if(!empty($logStartCourse_model)){
+                            if((isset($_GET['course']) && $value->course_id == $_GET['course']) || (!isset($_GET['course'])) || ($_GET['course'] == "")){
+                            CourseShowHistory($i, $value, $gen_value->gen_id, $_GET['course'], $_GET['year'], $label, $langId);
+                        }
+                        $i++;
+                        }
+                    }
+                } // foreach ($CourseGeneration
+                }else{ // มีรุ่น ไม่อยู่ใน org
+               foreach ($CourseGeneration as $gen_key => $gen_value) {
+                $logStartCourse_model = LogStartcourse::model()->find(array(
+                    'condition' => 'user_id=:user_id AND active=:active AND course_id=:course_id AND gen_id=:gen_id',
+                    'params' => array(':user_id'=>Yii::app()->user->id, ':active'=>'y', ':course_id'=>$value->course_id, ':gen_id'=>$gen_value->gen_id)
+                ));
+
+                if(!empty($logStartCourse_model)){
+                        //*****โชว์ 1 หลักสูตร หลายรุ่น ที่เคยเรียน
+                    if((isset($_GET['course']) && $value->course_id == $_GET['course']) || (!isset($_GET['course'])) || ($_GET['course'] == "")){
+                    CourseShowHistory($i, $value, $gen_value->gen_id, $_GET['course'], $_GET['year'], $label, $langId);
+                }
+                    $i++;
+                    } //if(!empty($logStartCourse_model))
+                } //foreach ($CourseGeneration 
+            } //if(in_array($value->course_id, $arr_course_id)){
+        }else{ //if(!empty($CourseGeneration)){ // หลักสูตร ไม่มีรุ่น
+            if(in_array($value->course_id, $arr_course_id)){ //อยู่ใน org
+                //*****โชว์ 1 หลักสูตร
+                if((isset($_GET['course']) && $value->course_id == $_GET['course']) || (!isset($_GET['course'])) || ($_GET['course'] == "")){
+                CourseShowHistory($i, $value, "0", $_GET['course'], $_GET['year'], $label, $langId);
+            }
+                $i++;
+
+            }else{ // ไม่อยู่ใน org
+                $logStartCourse_model = LogStartcourse::model()->findAll(array(
+                    'condition' => 'user_id=:user_id AND active=:active AND course_id=:course_id AND gen_id=:gen_id',
+                    'params' => array(':user_id'=>Yii::app()->user->id, ':active'=>'y', ':course_id'=>$value->course_id, ':gen_id'=>'0')
+                ));
+                //*****โชว์ 1 หลักสูตร ที่เคยเรียน
+                if(!empty($logStartCourse_model)){
+                    if((isset($_GET['course']) && $value->course_id == $_GET['course']) || (!isset($_GET['course'])) || ($_GET['course'] == "")){
+                    CourseShowHistory($i, $value, "0", $_GET['course'], $_GET['year'], $label, $langId);
+                }
+                    $i++;
                 }
             }
-        }    
-        ?>
-    <!-- 1 -->
-    <div class="row">
-        <div class="col-md-12 bg-white">
-                <div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
-                    <!--statr no loop -->
-                    <div class="panel panel-default">
-                        <div class="panel-heading" role="tab" id="headingTwo">
-                            <h4 class="text1">
-                                <a role="button" <?= (!$checkStatus)? 'data-toggle="collapse"':'' ?>  data-parent="#accordion2" href="<?= $herf; ?>" aria-expanded="true" aria-controls="collapseOne" class="">
-                                <span class="head_titledash"><?= $status_button ?> <i class="fa fa-book"></i>  <?=  $label->label_course ?> <?= $value->course_title ?> <?= $value->getGen($value->course_id); ?></span> <span class="pull-right"><i class="fa fa-angle-down" style="margin-top: 7px;"></i></span> <div class="pull-right" style="margin-right: 15px">
-                                    <?php if(empty($data->CourseOnlines->Schedules)){ ?>
-                                <a class="btn btn-success btn-sm btn__printdashboard><?= $printCer ?>" href="<?= $this->createUrl('course/certificate', array('id' => $value->course_id, 'gen' => $value->getGenID($value->course_id))) ?>" role="button"><i class="fa fa-print"></i> <?=  $label->label_printCert ?>
-                                </a>
-                                <?php } ?>
-                                </div>
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapse-<?= $i ?>" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="true" style="">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr class="active">
-                                        <th rowspan="2"><?=  $label->label_lesson ?></th>
-                                        <th rowspan="2"><?=  $label->label_result ?></th>
-                                        <th colspan="2"><?=  $label->label_test ?></th>
-                                        <th rowspan="2"><?=  $label->label_testFinal ?></th>
-                                        <th rowspan="2"><?=  $label->label_assessSatisfaction ?></th>
-                                    </tr>
+        } //if(!empty($CourseGeneration)){
+    } // foreach ($course
 
-                                    <tr >
-                                        <th><?=  $label->label_testPre ?></th>
-                                        <th><?=  $label->label_testPost ?></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php 
-                                        $x = 1;
-                                        $y = 0;
-                                        $z = 0;
-                                        $lesson = Lesson::model()->findAll(array(
-                                            'condition' => 'active=:active AND course_id=:course_id',
-                                            'params' => array(':active' => 'y',':course_id' => $value->course_id),
-                                            'order' => 'lesson_no'));
-                                        foreach ($lesson as $key => $data) { 
-                                                $checkLessonPass = Helpers::lib()->checkLessonPass_Percent($data);
-                                                $checkPreTest = Helpers::checkHavePreTestInManage($data->id);
-                                                $checkPostTest = Helpers::checkHavePostTestInManage($data->id);
-                                                $lessonStatus = Helpers::lib()->checkLessonPass($data);
-                                                $isChecklesson = Helpers::Checkparentlesson($data->id);
-                                        ?>
-                                    <tr class="active text-center">
-                                        <td class="text-left"><a href="<?= $isChecklesson ? $this->createUrl('/course/detail', array('id' => $data->course_id,'lid' => $data->id, 'gen' => $value->getGenID($value->course_id))).'#collapseles'.$data->id : 'javascript:void()'; ?>"><?= $data->title  ?></a></td>
-                                        <?php if ($checkLessonPass->status == "pass") { ?>
-                                        <td class="success"><?=  $label->label_learned ?></td>
-                                        <?php } else { ?>
-                                        <td class="danger"><?=  $label->label_notLearn ?></td>
-                                        <?php } ?>
-                                        <td>
-                                            <?php 
-                                            if($checkPreTest){
-                                                $isPreTest = Helpers::isPretestState($data->id);
-                                                if($isPreTest) {
-                                                ?>
-                                                <div>
-                                                <a href="<?php echo $this->createUrl('course/learning', array('id' => $value->course_id, 'lesson_id' => $data->id, 'gen' => $value->getGenID($value->course_id))); ?>" class="btn btn-warning btn-sm"><i class="fa fa-pencil"></i>&nbsp;<?=  $label->label_DotestPre ?></a>
-                                                </div>
-                                            <?php
-                                                } else {
-                                                    $preStatus = Helpers::lib()->CheckTest($data,"pre"); 
-                                                    echo $preStatus->value['score'].'/'.$preStatus->value['total'];
-                                                }
-                                            } else {
-                                            ?>
-                                                <div>
-                                                <a href="javascript:void(0);" class=""><?=  $label->label_NoPreTest ?></a>
-                                                </div>
-                                            <?php
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>
-					<?php 
-                                            if($checkPostTest) { 
-                                                $isPostTest = Helpers::isPosttestState($data->id);
-                                                if($isPostTest) {
-                                                    if($lessonStatus != 'pass') {
-                                                        $link = 'javascript:void(0);';
-                                                        $alert = 'alertswal();';
-                                                    } else {
-                                                        $link = $this->createUrl('question/index', array('id' => $data->id));
-                                                        $alert = '';
-                                                    }
-                                                    ?>
-                                                    <div>
-                                                    <a href="<?= $link ?>" <?= $alert != '' ? 'onclick="'.$alert.'"' : ''; ?> class="btn btn-danger btn-sm"><i class="fa fa-pencil"></i>&nbsp;<?=  $label->label_DotestPost ?></a>
-                                                    </div>
-                                                            <?php
-                                                } else {
-                                                    $postStatus = Helpers::lib()->CheckTest($data,"post");
-                                                    echo $postStatus->value['score'].'/'.$postStatus->value['total'];
-                                                }
-                                            } else { 
-                                        ?>
-                                                <a href="javascript:void(0);" class=""><?=  $label->label_NoPostTest ?></a>
-                                        <?php } ?>
-                                        </td>
-                                        <?php 
-                                            $y++;
-                                            if($y == 1){
-                                                    echo '<td rowspan="'.count($lesson).'">';
-                                                    $criteria = new CDbCriteria;
-                                                    $criteria->condition = ' course_id="' . $data->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL';
-                                                    $criteria->order = 'create_date DESC';
-                                                    $allFinalTest = Coursescore::model()->find($criteria);
-
-                                                    $CourseSurvey = CourseTeacher::model()->findAllByAttributes(array('course_id'=>$data->course_id));
-                                                    $PaQuest = false;
-                                                    if ($CourseSurvey) {
-                                                        $passQuest = QQuestAns_course::model()->find(array(
-                                                            'condition' => 'user_id = "' . Yii::app()->user->id . '" AND course_id ="' . $data->course_id . '"',
-                                                        ));
-                                                        $countSurvey = count($passQuest);
-                                                        if ($passQuest) {
-                                                            $PaQuest = true;
-                                                        }
-                                                    }else{
-                                                        $PaQuest = true;
-                                                    }
-                                                    if($allFinalTest && $PaQuest){
-
-                                                        $printCer = '';
-                                                        echo $allFinalTest->score_number.'/'.$allFinalTest->score_total;
-                                                    } else {
-                                                        $printCer = 'disabled';
-                                                        echo $label->label_haveNotTest;
-                                                    }
-                                                                echo '</td>';
-                                                        }
-                                                        $z++;
-                                                        if($z == 1){
-                                        ?>
-                                        <td rowspan="<?php echo count($lesson) ?>"><a class="btn btn-info btn-sm" href="<?php echo $this->createUrl('course/questionnaire', array('id' => $value->course_id, 'gen' => $value->getGenID($value->course_id))); ?>" role="button"><i class="fa fa-eye"></i> <?=  $label->label_seeResult ?></a></td>
-                                        
-                                        <?php
-                                                }
-                                        ?>
-                                    </tr>
-                                    <?php $x++; } ?>
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
-                </div> 
-                
-        </div>
-    </div>
-    <?php
-        $i++;
-        }
-    } //end loop course online
     ?>
 </div>
 </section>
