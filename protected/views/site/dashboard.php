@@ -185,9 +185,14 @@ function CourseShowStatus($flag, $langId, $value, $gen_id){
         <td width="50%" style="border-right: none;">
 
          <div class="progress">
-            <div class="progress-bar<?=($percent_learn_net == 100)? " full":"";?>" role="progressbar" data-percentage="<?= $percent_learn_net; ?>" style="width:<?= $percent_learn_net; ?>%;">
+            <!-- <div class="progress-bar<?=($percent_learn_net == 100)? " full":"";?>" role="progressbar" data-percentage="<?= $percent_learn_net; ?>" style="width:<?= $percent_learn_net; ?>%;">
               <span class="progress-bar-span"><?= number_format($percent_learn_net,2); ?>%</span>
               <span class="sr-only"><?= number_format($percent_learn_net,2); ?>% Complete</span>
+          </div> -->
+
+          <div class="progress-bar<?=($percent_learn_net == 100)? " full":"";?>" role="progressbar" data-percentage="<?= $percent_learn_net; ?>" style="width:<?= Helpers::lib()->percent_CourseGen($value->course_id, $gen_id) ?>%;">
+              <span class="progress-bar-span"><?= Helpers::lib()->percent_CourseGen($value->course_id, $gen_id) ?>%</span>
+              <span class="sr-only"><?= Helpers::lib()->percent_CourseGen($value->course_id, $gen_id) ?>% Complete</span>
           </div>
       </div>
   </td>
@@ -270,13 +275,13 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
                         $status = $label->label_learned;
                         $checkStatus = false;
                         $herf = '#collapse-'.i;
-                        $status_button = '<span class="badge" id="'.$text_cursor_context_menu;
+                        $status_button = '<span class="badge" id="';
                         if($text_status_study_class_id == ""){
                             $status_button .= "badgeone";
                         }else{
                             $status_button .= $text_status_study_class_id;
                         }
-                        $status_button .= '"><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_learned.'</span>';
+                        $status_button .= '" '.$text_cursor_context_menu.'"><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_learned.'</span>';
                     }elseif($checkLearn->lesson_status == 'learning'){
                         $status = $label->label_learning;
                         $checkStatus = false;

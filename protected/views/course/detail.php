@@ -247,9 +247,11 @@ if($model){
 
             <h4 class="text-left"><?= $statusEdu?></h4>
             <div class="progress" style="height: 8px;">
-                <div class="progress-bar" role="progressbar" style="width: <?=$percent_learn_net ?>%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                <!-- <div class="progress-bar" role="progressbar" style="width: <?=$percent_learn_net ?>%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div> -->
+                <div class="progress-bar" role="progressbar" style="width: <?= Helpers::lib()->percent_CourseGen($course->course_id, $gen_id) ?>%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            <h5 class="text-muted text-left"><?=$percent_learn_net ?>%</h5>
+            <!-- <h5 class="text-muted text-left"><?=$percent_learn_net ?>%</h5> -->
+            <h5 class="text-muted text-left"><?= Helpers::lib()->percent_CourseGen($course->course_id, $gen_id) ?>%</h5>
 
             <div class="mt-10"> <a href="#tab-content" onclick = "$('#change_tab2').click();" class="btn btn-success"><?=$lastStatus?></a></div>
             <!--old-->
