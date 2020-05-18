@@ -254,10 +254,10 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 <?php if(Yii::app()->user->id != null && $course_online != null){ ?>
             <section class="course">
                 <div class="container">
-                    <div class="page-header">
-                        <h1>
-                            <span class="linehead"><?= $label->label_courseOur ?></span> <span class="pull-right"><a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/course/index'); ?>" role="button"><?= $label->label_viewAll ?> <i class="fa fa-angle-right" aria-hidden="true"></i></a></span></h1>
-                        </div>
+                        <h4 class="course-recommend clearfix">
+                            <?= $label->label_courseOur ?>
+                        </h4>
+                        
                         <div class="row course-main owl-carousel owl-theme">
                             <?php foreach ($course_online as $key => $value) {
                                 if($value->status == 1){
@@ -393,6 +393,9 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                     }
                 }
                 ?>
+            </div>
+            <div class="text-center">
+            <a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/course/index'); ?>" role="button"><?= $label->label_viewAll ?> <i class="fa fa-angle-right" aria-hidden="true"></i></a>
             </div>
         </div>
     </div>
