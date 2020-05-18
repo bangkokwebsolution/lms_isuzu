@@ -52,6 +52,7 @@ $cancel_msg = UserModule::t('Cancel');
   $(function () {
     init_knob();
         // $('audio').audioPlayer();
+  show_collapse("<?php echo $_GET['file']; ?>"); // เปิดแถบวิดีโอ ตาม file ที่คลิ๊ก
       });
   function show_div_note(file_id){
     $("#table_note_"+file_id).show();
@@ -1477,7 +1478,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
              ?>
              <script type="text/javascript">
               $(document).ready(function () {
-                InitPlayer();
+                InitPlayer();                
               });
               function InitPlayer() {
                                      // PlayerConfiguration.Debug = true;
