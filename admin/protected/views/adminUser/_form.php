@@ -187,11 +187,11 @@ date_default_timezone_set("Asia/Bangkok");
                                            );?>   
                                         
                                     </div>                                
-                                    <!-- <div class="form-group">
+                                     <div class="form-group">
                                         <label><?php echo $form->labelEx($model, 'username'); ?></label>
                                         <?php echo $form->textField($model, 'username', array('class' => 'form-control', 'placeholder' => 'ชื่อผู้ใช้ (Email)')); ?>
                                         <?php echo $form->error($model, 'username'); ?>
-                                    </div> -->
+                                    </div>
                                      <div class="form-group">
                                         <label><?php echo $form->labelEx($model, 'email'); ?></label>
                                         <?php echo $form->textField($model, 'email', array('class' => 'form-control', 'placeholder' => 'อีเมลล์')); ?>
