@@ -4,7 +4,7 @@
             <form action="<?php echo $this->createUrl('/ReportProblem/ReportProblem'); ?>" method="POST" role="form" name='user-report' enctype="multipart/form-data">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"><i class="fa fa-exclamation-circle" aria-hidden="true"></i><?= Yii::app()->session['lang'] == 1?'Report a problem':'แจ้งปัญหาการใช้งาน'; ?> </h4>
+                    <h4 class="modal-title"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>&nbsp;<?= Yii::app()->session['lang'] == 1?'Report a problem':'แจ้งปัญหาการใช้งาน'; ?> </h4>
                 </div>
                <?php if (Yii::app()->user->id !== null){
                             $criteria = new CDbCriteria;

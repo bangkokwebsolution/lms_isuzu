@@ -114,151 +114,151 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
             });
         </script>
     <?php } ?>
-    <div class="banner">
-        <div id="banner-thoresen"></div>
-        <?php
-        $banner_path = Yii::app()->createUrl('/themes/template2/animation/banner-main/main-bg.json');
-        ?>
-        <script>
-            var animation = bodymovin.loadAnimation({
-                container: document.getElementById('banner-thoresen'),
-                renderer: 'svg',
-                autoplay : true,
-                loop: true,
-                path: '<?php echo $banner_path; ?>'
-            });
-        </script>
-    </div>
+<div class="banner">
+    <div id="banner-thoresen"></div>
+    <?php
+    $banner_path = Yii::app()->createUrl('/themes/template2/animation/banner-main/main-bg.json');
+    ?>
+    <script>
+        var animation = bodymovin.loadAnimation({
+            container: document.getElementById('banner-thoresen'),
+            renderer: 'svg',
+            autoplay : true,
+            loop: true,
+            path: '<?php echo $banner_path; ?>'
+        });
+    </script>
+</div>
 
-    <section class="slide-video">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8  col-xs-12 col-sm-8">
-                    <div class="page-header">
-                        <h1 class="title-topic">
-                            <?= $label->label_imgslide ?>
-                            <span class="pull-right">
-                                <a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/banner/index'); ?>" role="button"><?= $label->label_viewAll ?>
-                                <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-                            </span>
-                        </h1>
-                    </div>
-                    <?php
-                    $criteriaimg = new CDbCriteria;
-                    $criteriaimg->compare('active', y);
-                    $criteriaimg->compare('lang_id', 1);
-                // $criteriaimg->order = 'update_date  DESC';
-                    $image = Imgslide::model()->findAll($criteriaimg);
-                    ?>
-                    <div id="carousel-id" class="carousel slide main-slide" data-ride="carousel" data-interval="3000">
-
-                        <ol class="carousel-indicators">
-
-                            <?php if (!isset($image[0])) { ?>
-                                <li data-target="#carousel-id" data-slide-to="0" class="active"></li>
-                                <li data-target="#carousel-id" data-slide-to="1" class=""></li>
-                                <li data-target="#carousel-id" data-slide-to="2" class=""></li>
-                            <?php } else {
-                                foreach ($image as $key => $value) {
-                                    ?>
-                                    <li data-target="#carousel-id" data-slide-to="<?= $key; ?>" class="<?php if ($key == 0) echo 'active'; ?>"></li>
-
-                                    <?php
-                                }
-                            }
-                            ?>
-                        </ol>
-
-                        <div class="carousel-inner">
-
-                            <?php 
-                            foreach ($image as $key => $value) { 
-                              $criteriaType = new CDbCriteria;
-                              $criteriaType->compare('active', y);
-                              $criteriaType->compare('gallery_type_id', $value->gallery_type_id);
-                              $galleryType = Gallery::model()->findAll($criteriaType);
-                              ?>
-
-                              <div class="item <?php if ($key == 0) echo 'active'; ?>">
-                                <?php 
-                                if($value->imgslide_link == "" && $value->gallery_type_id != null) {
-                                   foreach ($galleryType as $data) { ?>
-                                    <a href="<?php echo Yii::app()->request->baseUrl; ?>/uploads/gallery/images/<?= $data->image; ?>" class="liquid-lp-read-more zoom fresco" data-fresco-group="ld-pf-1[<?= $value->id ?>]" >
-                                    <?php } ?>
-                                <?php }else if($value->imgslide_link != "" && $value->gallery_type_id == null){ ?>
-                                    <a href="<?=$value->imgslide_link;  ?>" target="_blank">
-                                    <?php } ?>
-
-                                    <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
-                                </a>
-                            </div>
-
-
-                        <?php } ?>
-                        <!-- <?php 
-                        foreach ($image as $key => $value) { ?>
-                            <div class="item <?php if ($key == 0) echo 'active'; ?>">
-                                <a class="fresco" href="<?= empty($value->imgslide_link) ? 'javascript:void(0)' : $value->imgslide_link;  ?>" target="_blank">
-                                    <img alt="<?= $value->imgslide_title; ?>" src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>">
-                                </a>
-                            </div>
-
-                            <?php } ?> -->
-                        </div>
-                        <a class="left carousel-control" href="#carousel-id" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
-                        <a class="right carousel-control" href="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
-                    </div>
-                </div>
-<!-- 
-                <script>
-                    $('.main-slide').carousel({
-                    interval: 6000
-                    })
-                </script> -->
-
-                <?php
-                $criteriavdo = new CDbCriteria;
-                $criteriavdo->compare('active', 'y');
-                $criteriavdo->order = 'vdo_id  DESC';
-                $vdoshow = vdo::model()->find($criteriavdo);
-                ?>
-                <div class="col-lg-4 col-xs-12 col-sm-4">
-                    <div class="page-header">
-                        <h1><span class="linehead"><?= $label->label_vdo ?></span> <span class="pull-right"><a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/video/index'); ?>" role="button"><?= $label->label_viewAll ?> <i class="fa fa-angle-right" aria-hidden="true"></i></a></span></h1>
-                    </div>
-                    <?php
-                    if ($vdoshow->vdo_type == 'link') {
-                        $vdoName = $vdoshow->vdo_path;
-                        $new_link = str_replace("watch?v=", "embed/", $vdoName);
-                        $show = '<iframe class="embed-responsive-item" width="100%" height="88"  src="' . $new_link . '" allowfullscreen style="box-shadow:1px 4px 6px #767676"></iframe>';
-                        echo $show;
-                        $href = 'href="' . $vdoshow->vdo_path . '" target="_blank"';
-                    } else {
-                        ?>
-                        <video class="video-js" controls preload="auto" style="width: 100%; height: 315;">
-                            <source src="<?php echo Yii::app()->homeurl . 'admin/uploads/' . $vdoshow->vdo_path; ?>" type='video/mp4'>
-                                <p class="vjs-no-js">
-                                    To view this video please enable JavaScript, and consider upgrading to a web browser that
-                                    <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
-                                </p>
-                            </video>
-                        <?php } ?>
-                    </div>
-
-                </div>
+<section class="slide-video">
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8  col-xs-12 col-sm-8">
+            <div class="page-header">
+                <h1 class="title-topic">
+                    <?= $label->label_imgslide ?>
+                    <span class="pull-right">
+                        <a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/banner/index'); ?>" role="button"><?= $label->label_viewAll ?>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                    </span>
+                </h1>
             </div>
-        </section>
+            <?php
+            $criteriaimg = new CDbCriteria;
+            $criteriaimg->compare('active', y);
+            $criteriaimg->compare('lang_id', 1);
+        // $criteriaimg->order = 'update_date  DESC';
+            $image = Imgslide::model()->findAll($criteriaimg);
+            ?>
+            <div id="carousel-id" class="carousel slide main-slide" data-ride="carousel" data-interval="3000">
+
+                <ol class="carousel-indicators">
+
+                    <?php if (!isset($image[0])) { ?>
+                        <li data-target="#carousel-id" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-id" data-slide-to="1" class=""></li>
+                        <li data-target="#carousel-id" data-slide-to="2" class=""></li>
+                    <?php } else {
+                        foreach ($image as $key => $value) {
+                            ?>
+                            <li data-target="#carousel-id" data-slide-to="<?= $key; ?>" class="<?php if ($key == 0) echo 'active'; ?>"></li>
+
+                            <?php
+                        }
+                    }
+                    ?>
+                </ol>
+
+                <div class="carousel-inner">
+
+                    <?php 
+                    foreach ($image as $key => $value) { 
+                        $criteriaType = new CDbCriteria;
+                        $criteriaType->compare('active', y);
+                        $criteriaType->compare('gallery_type_id', $value->gallery_type_id);
+                        $galleryType = Gallery::model()->findAll($criteriaType);
+                        ?>
+
+                        <div class="item <?php if ($key == 0) echo 'active'; ?>">
+                        <?php 
+                        if($value->imgslide_link == "" && $value->gallery_type_id != null) {
+                            foreach ($galleryType as $data) { ?>
+                            <a href="<?php echo Yii::app()->request->baseUrl; ?>/uploads/gallery/images/<?= $data->image; ?>" class="liquid-lp-read-more zoom fresco" data-fresco-group="ld-pf-1[<?= $value->id ?>]" >
+                            <?php } ?>
+                        <?php }else if($value->imgslide_link != "" && $value->gallery_type_id == null){ ?>
+                            <a href="<?=$value->imgslide_link;  ?>" target="_blank">
+                            <?php } ?>
+
+                            <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
+                        </a>
+                    </div>
+
+
+                <?php } ?>
+                <!-- <?php 
+                foreach ($image as $key => $value) { ?>
+                    <div class="item <?php if ($key == 0) echo 'active'; ?>">
+                        <a class="fresco" href="<?= empty($value->imgslide_link) ? 'javascript:void(0)' : $value->imgslide_link;  ?>" target="_blank">
+                            <img alt="<?= $value->imgslide_title; ?>" src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>">
+                        </a>
+                    </div>
+
+                    <?php } ?> -->
+                </div>
+                <a class="left carousel-control" href="#carousel-id" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                <a class="right carousel-control" href="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+            </div>
+        </div>
+<!-- 
+        <script>
+            $('.main-slide').carousel({
+            interval: 6000
+            })
+        </script> -->
+
+        <?php
+        $criteriavdo = new CDbCriteria;
+        $criteriavdo->compare('active', 'y');
+        $criteriavdo->order = 'vdo_id  DESC';
+        $vdoshow = vdo::model()->find($criteriavdo);
+        ?>
+        <div class="col-lg-4 col-xs-12 col-sm-4">
+            <div class="page-header">
+                <h1><span class="linehead"><?= $label->label_vdo ?></span> <span class="pull-right"><a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/video/index'); ?>" role="button"><?= $label->label_viewAll ?> <i class="fa fa-angle-right" aria-hidden="true"></i></a></span></h1>
+            </div>
+            <?php
+            if ($vdoshow->vdo_type == 'link') {
+                $vdoName = $vdoshow->vdo_path;
+                $new_link = str_replace("watch?v=", "embed/", $vdoName);
+                $show = '<iframe class="embed-responsive-item" width="100%" height="88"  src="' . $new_link . '" allowfullscreen style="box-shadow:1px 4px 6px #767676"></iframe>';
+                echo $show;
+                $href = 'href="' . $vdoshow->vdo_path . '" target="_blank"';
+            } else {
+                ?>
+                <video class="video-js" controls preload="auto" style="width: 100%; height: 315;">
+                    <source src="<?php echo Yii::app()->homeurl . 'admin/uploads/' . $vdoshow->vdo_path; ?>" type='video/mp4'>
+                        <p class="vjs-no-js">
+                            To view this video please enable JavaScript, and consider upgrading to a web browser that
+                            <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                        </p>
+                    </video>
+                <?php } ?>
+            </div>
+
+        </div>
+    </div>
+</section>
 
 
 
-        <?php if(Yii::app()->user->id != null && $course_online != null){ ?>
+<?php if(Yii::app()->user->id != null && $course_online != null){ ?>
             <section class="course">
                 <div class="container">
                     <div class="page-header">
                         <h1>
                             <span class="linehead"><?= $label->label_courseOur ?></span> <span class="pull-right"><a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/course/index'); ?>" role="button"><?= $label->label_viewAll ?> <i class="fa fa-angle-right" aria-hidden="true"></i></a></span></h1>
                         </div>
-                        <div class="row">
+                        <div class="row course-main owl-carousel owl-theme">
                             <?php foreach ($course_online as $key => $value) {
                                 if($value->status == 1){
 
@@ -323,31 +323,23 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         $evnt = 'onclick="alertMsg(\'ระบบ\',\''.$labelcourse->label_swal_timeoutcourse.'\',\'error\')"';
                         $url = 'javascript:void(0)';
                     }
-                            // $evnt = '';
-                          //             $url = Yii::app()->createUrl('course/detail/', array('id' => $value->course_id));
                     ?>
 
 
-                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12">
+                    <div class="course-item">
                         <div class="item item-course-index">
                             <div class="cours-card">
                                 <div class="card">
-                                 <!--  <a href="<?= $url; ?>" <?= $evnt ?>> -->
                                   <a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)); ?>"
                                     class="course_site">
-                                    <!-- Check image -->
                                     <?php $idCourse_img = (!$flag)? $modelChildren->course_id: $value->course_id; ?>
                                     <?php if ($value->course_picture != null) { ?>
-                                     <div class="course-boximg">
-                                        <img src="<?php echo Yii::app()->baseUrl; ?>/uploads/courseonline/<?= $idCourse_img ?>/thumb/<?= $value->course_picture?>" alt="" style="width:259px; height:185px;">
-                                    </div>
+                                     <div class="course-boximg" style="background-image:url(<?php echo Yii::app()->baseUrl; ?>/uploads/courseonline/<?= $idCourse_img ?>/thumb/<?= $value->course_picture?>)"></div>
                                 <?php }else{ ?>
-                                    <div class="course-boximg">
-                                        <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png" alt="">
-                                    </div>
+                                    <div class="course-boximg" style="background-image:url(<?php echo Yii::app()->theme->baseUrl; ?>/images/thumbnail-course.png);"></div>
                                 <?php } ?>
 
-                                <div class="card-body" style="padding: 20px;">
+                                <div class="card-body">
                                     <a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)); ?>">
                                         <h5 class="card-title"><?= $value->course_title; ?></h5>
                                     </a>
@@ -398,7 +390,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
                 <?php
 
-                    }//condition status
+                    }
                 }
                 ?>
             </div>
@@ -409,7 +401,6 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
 </section>
 <?php } ?>
-<!--end course-->
 
 <section class="news">
     <div class="container">
