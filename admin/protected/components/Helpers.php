@@ -204,8 +204,10 @@ Class Helpers
         $adminEmail = $SettingAll['USER_EMAIL'];
         $adminEmailPass = $SettingAll['PASS_EMAIL'];
         
-        $adminEmail = 'mailerbws@gmail.com';
-        $adminEmailPass = 'bangkokweb0192';
+        // $adminEmail = 'mailerbws@gmail.com';
+        // $adminEmailPass = 'bangkokweb0192';
+        $adminEmail = 'thorcdpt@gmail.com';
+        $adminEmailPass = 'thoresendigital';
 
         $mail =  new PHPMailer(true);
         $mail->SMTPOptions = array(
@@ -1935,9 +1937,10 @@ public function changeLink($link)
         $adminEmail = $SettingAll['USER_EMAIL'];
         $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-        $adminEmail = 'mailerbws@gmail.com';
-        
-        $adminEmailPass = 'bangkokweb0192';
+        // $adminEmail = 'mailerbws@gmail.com';
+        // $adminEmailPass = 'bangkokweb0192';
+         $adminEmail = 'thorcdpt@gmail.com';
+        $adminEmailPass = 'thoresendigital';
         $mail =  new PHPMailer(true);
         $mail->SMTPOptions = array(
             'ssl' => array(
@@ -1984,8 +1987,10 @@ public function changeLink($link)
                 $adminEmail = $SettingAll['USER_EMAIL'];
                 $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-                $adminEmail = 'mailerbws@gmail.com';
-                $adminEmailPass = 'bangkokweb0192';
+                // $adminEmail = 'mailerbws@gmail.com';
+                // $adminEmailPass = 'bangkokweb0192';
+                 $adminEmail = 'thorcdpt@gmail.com';
+                 $adminEmailPass = 'thoresendigital';
                 $mail =  new PHPMailer(true);
                 $mail->ClearAddresses();
                 $mail->CharSet = 'utf-8';
