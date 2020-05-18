@@ -214,6 +214,7 @@ function upload()
         //tinymce.triggerSave();
         //tinyMCE.triggerSave(); 
          var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+
          var up_new = <?php echo $users->isNewRecord; ?>;
 
          if (up_new) {  
@@ -2183,8 +2184,12 @@ if ($ProfilesLanguage->isNewRecord === null) {
 </div>
 </div>
 
-</div>
+</div>  
+<?php 
 
+if (!$users->isNewRecord && $profile->type_employee) {
+
+ ?>
 <div class="well form_ship">
     <div id="report-staff">
         <h3 class="text-center"><?php echo $label->label_boat_person_report; ?></h3>
@@ -2264,6 +2269,9 @@ if ($ProfilesLanguage->isNewRecord === null) {
 
                                 </div>
                             </div>
+                            <?php
+}
+                            ?>
 
 
                             <div class="text-center submit-register">
@@ -2647,7 +2655,7 @@ $(".idcard").change(function() {
                                 $("#office-section").show();
                                 $(".form_language").hide();
                                 $("#office-section_gen").hide();
-                                $('.form_ship').hide();
+                                //$('.form_ship').hide();
                             }else if(type_cards === 'p'){
 
                                 $('#passport_card').show();
@@ -2658,7 +2666,7 @@ $(".idcard").change(function() {
                                 $("#office-section").show();
                                 $(".form_language").hide();
                                 $("#office-section_gen").hide();
-                                $('.form_ship').hide();
+                               // $('.form_ship').hide();
                             }else if(type_cards === '' || typeof  type_cards === 'undefined' || typeof  type_cards === null){
 
                                 $('#passport_card').hide();
@@ -2669,7 +2677,7 @@ $(".idcard").change(function() {
                                 $("#office-section").show();
                                 $(".form_language").hide();
                                 $("#office-section_gen").hide();
-                                $('.form_ship').hide();
+                              //  $('.form_ship').hide();
                             }
                         }else if (type_users === '1'){
 
@@ -2684,7 +2692,7 @@ $(".idcard").change(function() {
                                 $("#office-section").hide();
                                 $(".form_language").show();
                                 $("#office-section_gen").show();
-                                $('.form_ship').hide();
+                             //   $('.form_ship').hide();
                             }else if(type_cards === 'p'){
 
                                 $('#passport_card').show();
@@ -2695,7 +2703,7 @@ $(".idcard").change(function() {
                                 $("#office-section").hide();
                                 $(".form_language").show();
                                 $("#office-section_gen").show();
-                                $('.form_ship').hide();
+                             //   $('.form_ship').hide();
                             }else if(type_cards === '' || typeof  type_cards === 'undefined' || typeof  type_cards === null){
 
                                 $('#passport_card').hide();
@@ -2706,7 +2714,7 @@ $(".idcard").change(function() {
                                 $("#office-section").hide();
                                 $(".form_language").show();
                                 $("#office-section_gen").show();
-                                $('.form_ship').hide();
+                              //  $('.form_ship').hide();
                             }
                         }else if (typeof  type_users === 'undefined' ){
                             $('.Branch').hide();
@@ -2716,14 +2724,14 @@ $(".idcard").change(function() {
                             $("#office-section").hide();
                             $('.form_name').hide();
                             $('.form_number_id').hide();
-                            $('.form_ship').hide();
+                          //  $('.form_ship').hide();
                             $(".form_language").hide(); 
                             $("#office-section_gen").hide();
                             $('.form_sickness').hide();
                             $('.children').hide();
                         }              
                     }else if(new_forms === 0 || typeof  new_forms === 'undefined' || new_forms === false){
-
+                  
                      var type_users = $("input[name='type_user']:checked").val();
 
                      if (type_users === '3') {
@@ -2731,7 +2739,7 @@ $(".idcard").change(function() {
                         var type_cards = $("input[name='type_card']:checked").val();
                         if (type_cards === 'l') {
                             var branch = <?php echo $branch_js; ?>;
-                                //console.log(branch);
+                
                                 if (branch === 1) {
                                     $('.Branch').show();
                                     $('.label_branch').show();
@@ -2739,20 +2747,20 @@ $(".idcard").change(function() {
                                     $('.Branch').hide();
                                     $('.label_branch').hide();
                                 }
-                                var type_employee = $("input[name='type_employee']:checked").val();
+                                // var type_employee = $("input[name='type_employee']:checked").val();
 
-                                if (type_employee === '1') {
+                                // if (type_employee === '1') {
 
-                                    $('.form_ship').show();
-                                }else{
+                                //     $('.form_ship').show();
+                                // }else{
 
-                                    $('.form_ship').hide();
-                                }
+                                //     $('.form_ship').hide();
+                                // }
                                  var sick = $("input[name='history_of_illness']:checked").val();
                                 if (sick === 'y') {
-                                    $('.form_ship').show();
+                                    $('.form_sickness').show();
                                 }else{
-                                    $('.form_ship').hide();
+                                    $('.form_sickness').hide();
                                 }
                                 var child = $("input[name='status_sm']:checked").val();
                                 if (child == 'm') {
@@ -2779,17 +2787,17 @@ $(".idcard").change(function() {
                                     $('.Branch').hide();
                                     $('.label_branch').hide();
                                 }
-                                var type_employee = $("input[name='type_employee']:checked").val();
-                                if (type_employee === '1') {
-                                    $('.form_ship').show();
-                                }else{
-                                    $('.form_ship').hide();
-                                }
+                                // var type_employee = $("input[name='type_employee']:checked").val();
+                                // if (type_employee === '1') {
+                                //     $('.form_ship').show();
+                                // }else{
+                                //     $('.form_ship').hide();
+                                // }
                                  var sick = $("input[name='history_of_illness']:checked").val();
                                 if (sick === 'y') {
-                                    $('.form_ship').show();
+                                    $('.form_sickness').show();
                                 }else{
-                                    $('.form_ship').hide();
+                                    $('.form_sickness').hide();
                                 }
                                 var child = $("input[name='status_sm']:checked").val();
                                 if (child == 'm') {
@@ -2813,9 +2821,9 @@ $(".idcard").change(function() {
                             if (type_cards === 'l') {
                                 var sick = $("input[name='history_of_illness']:checked").val();
                                 if (sick === 'y') {
-                                    $('.form_ship').show();
+                                    $('.form_sickness').show();
                                 }else{
-                                    $('.form_ship').hide();
+                                    $('.form_sickness').hide();
                                 }
                                 var child = $("input[name='status_sm']:checked").val();
                                 if (child == 'm') {
@@ -2831,15 +2839,15 @@ $(".idcard").change(function() {
                                 $("#office-section").hide();
                                 $(".form_language").show();
                                 $("#office-section_gen").show();
-                                $('.form_ship').hide();
+                                //$('.form_ship').hide();
 
                             }else if(type_cards === 'p'){
 
                                 var sick = $("input[name='history_of_illness']:checked").val();
                                 if (sick === 'y') {
-                                    $('.form_ship').show();
+                                    $('.form_sickness').show();
                                 }else{
-                                    $('.form_ship').hide();
+                                    $('.form_sickness').hide();
                                 }
                                 var child = $("input[name='status_sm']:checked").val();
                                 if (child == 'm') {
@@ -2855,7 +2863,7 @@ $(".idcard").change(function() {
                                 $("#office-section").hide();
                                 $(".form_language").show();
                                 $("#office-section_gen").show();
-                                $('.form_ship').hide();
+                               // $('.form_ship').hide();
                             }
                         }  
                     }  
