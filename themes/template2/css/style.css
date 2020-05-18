@@ -3969,6 +3969,7 @@ ol.stat-alert li::before {
 
 .cours-card .course-boximg{
   background-repeat: no-repeat;
+  background-position: top center;
   background-size: contain;
   height: 200px;
   width: 100%;
