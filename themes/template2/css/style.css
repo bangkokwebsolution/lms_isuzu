@@ -4538,6 +4538,10 @@ ol.stat-alert li::before {
   margin-top: 1em;
 }
 
+section#faq{
+  padding-bottom: 8em;
+} 
+
 @media (min-width: 1440px) {
   .course .well .course-img {
     height: 150px;
