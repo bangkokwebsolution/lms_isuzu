@@ -416,7 +416,7 @@ $userid = Yii::app()->user->id;
                 $courseRecommend = CourseOnline::model()->findAll($criteria);
                 if($courseRecommend):
                 ?>
-                <div class="course-popular">
+                <!-- <div class="course-popular">
                     <div class="page-header">
                         <h3><span class="inline"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/course-popular.png" class="img-responsive" alt=""></span> หลักสูตรแนะนำ</h3>
                     </div>
@@ -435,7 +435,7 @@ $userid = Yii::app()->user->id;
                     ?>
                 </ul>
             </div>
-        </div>
+        </div> -->
     <?php endif; ?>
     <!--  -->
 </div>

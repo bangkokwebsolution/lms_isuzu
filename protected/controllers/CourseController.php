@@ -2275,6 +2275,16 @@ public function actionCourseLearnNoteSave(){
                 'params'=>array(':lesson_id'=>$note_lesson_id,':user_id'=>$user_id, ':file_id'=>$note_file_id, ':note_time'=>$note_time, ':gen_id'=>$note_gen_id),
             ));
 
+            $learn_model = Learn::model()->find(array(
+                'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id',
+                'params'=>array(':lesson_id'=>$note_lesson_id,':user_id'=>$user_id, ':course_id'=>$lesson_fine_course->course_id, ':gen_id'=>$note_gen_id),
+            ));
+
+            $learn_file_model = LearnFile::model()->find(array(
+                'condition'=>'file_id=:file_id AND user_id_file=:user_id AND learn_id=:learn_id AND gen_id=:gen_id',
+                'params'=>array(':file_id'=>$note_file_id,':user_id'=>$user_id, ':learn_id'=>$learn_model->learn_id, ':gen_id'=>$note_gen_id),
+            ));
+
             if(!empty($learn_note)){
                 $learn_note = LearnNote::model()->findByPk($learn_note->note_id);
                 $learn_note->note_times = $learn_note->note_times+1;
@@ -2292,6 +2302,18 @@ public function actionCourseLearnNoteSave(){
 
             $learn_note->note_text = $note_text;
             if($learn_note->save()){
+                if($learn_file_model->learn_file_status != 's'){
+                    if($learn_file_model->learn_file_status != 'l'){
+                        if($learn_file_model->learn_file_status < $note_time){
+                            $learn_file_model->learn_file_status = $note_time;
+                        }
+                    }else{
+                        $learn_file_model->learn_file_status = $note_time;
+                    }
+                }
+                $learn_file_model->save();
+
+
                 $file = File::model()->findByPk($note_file_id);
 
                 echo "<tr id='tr_note_".$learn_note->note_id."'>";
