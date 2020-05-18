@@ -1193,7 +1193,7 @@ function editNamehouse_registration(filedoc_id){
                 }
                 $graduation = array('class' => 'form-control', 'autocomplete' => 'off', 'empty' => $label->label_graduation_year);   
                 if (!$ProfilesEdu->isNewRecord) { 
-                   if (!isset($ProfilesEdu)) {
+                   if (empty($ProfilesEdu)) {
                       $ProfilesEdu = new ProfilesEdu;
                       ?>
                       <div class="row form_name">
@@ -1290,7 +1290,7 @@ function editNamehouse_registration(filedoc_id){
                 </div>
             </div>
             <?php if ($ProfilesWorkHistory->isNewRecord === null) { 
-              if (!isset($ProfilesWorkHistory)) {
+              if (empty($ProfilesWorkHistory)) {
                $ProfilesWorkHistory = new ProfilesWorkHistory;
                ?>
                <div class="row form_name pt-20 ">
@@ -1659,7 +1659,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
 
 
     <?php if ($ProfilesTraining->isNewRecord === null) { 
-      if (!isset($ProfilesTraining)) {
+      if (empty($ProfilesTraining)) {
        $ProfilesTraining = new ProfilesTraining;
        ?>
        <div class="row form_name pt-20 ">
@@ -1673,12 +1673,13 @@ if ($ProfilesLanguage->isNewRecord === null) {
         </div>
  <div class="add-train"></div>
 <?php } else { ?>
-
+  <div class="add-train">
     <?php foreach ($ProfilesTraining as $keytn => $valtn) {
         ?>
+    <div class="row del_training">
        <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
-        <div class="row del_training">
-            <div class="col-md-10 col-sm-6 col-xs-12 ">
+        
+            <div class="col-md-7 col-sm-6 col-xs-12 ">
                 <div class="form-group">
                  <?php echo $form->textField($valtn, '['.$keytn.']message', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Training name. ':'ชื่อการอบรม')); ?>
                 </div>
@@ -1688,6 +1689,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
 
 
         <?php } ?>
+    </div>
 <?php }} else { ?>
   <div class="row form_name pt-20 ">
     <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
