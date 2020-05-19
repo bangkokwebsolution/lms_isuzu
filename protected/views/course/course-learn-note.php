@@ -1302,14 +1302,14 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                  });
                                 });
 
-                                 myPlayer<?php echo $idx;?>.on('ended', function () {
-                                  swal({
-                                   title: "<?= $pass_msg ?>",
-                                   text: "Waiting",
-                                   type: "success",
-                                   showConfirmButton: true,
-                                   showCancelButton: false,
-                                 });
+                                 myPlayer<?php echo $idx;?>.on('ended', function () { // เรียนจบคลิป
+                                 //  swal({
+                                 //   title: "<?= $pass_msg ?>",
+                                 //   text: "Waiting",
+                                 //   type: "success",
+                                 //   showConfirmButton: true,
+                                 //   showCancelButton: false,
+                                 // });
                                   $.post('<?php echo $this->createUrl("//course/LearnVdo"); ?>', {
                                    id: <?php echo $file->id; ?>,
                                    learn_id: <?php echo $learn_id; ?>,
@@ -1324,7 +1324,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                    $('#imageCheckBar' + data.no).removeClass();
                                    $('#imageCheckBar' + data.no).addClass(data.imageBar);
                                    init_knob();
-                                   if(data.imageBar == 'success'){
+                                   if(data.imageBar == 'success'){ // แถบสถานะ เรียบจบ
                                     swal({
                                      title: "<?= $pass_msg ?>",
                                      text: "<?= $next_step_msg ?>",

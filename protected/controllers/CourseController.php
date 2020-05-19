@@ -1453,7 +1453,11 @@ public function actionDetail($id) {
         $currentUser = User::model()->findByPk($UserId);
 
         $course_model = CourseOnline::model()->findByPk($id);
-        $gen_id = $course_model->getGenID($course_model->course_id);
+        if(isset($_GET['gen']) && $_GET['gen'] != ""){
+            $gen_id = $_GET['gen'];
+        }else{
+            $gen_id = $course_model->getGenID($course_model->course_id);
+        }
 
         if ($PassCoursId != null) {
             $CourseModel = CourseOnline::model()->findByAttributes(array(
