@@ -24,7 +24,7 @@
                             <ul style='list-style-type: none;'>
                              <?php
                              $modelcourse = Score::model()->findAll(array(
-                                'condition'=>'course_id=:course_id AND type="pre" AND active="y" AND gen_id=:gen_id AND user_id=:user_id GROUP BY gen_id',
+                                'condition'=>'course_id=:course_id AND type="pre" AND active="y" AND gen_id=:gen_id AND user_id=:user_id GROUP BY lesson_id ,gen_id',
                                 'params' => array(':course_id'=>$value->course_id, ':gen_id'=>$value->gen_id, ':user_id'=>$user_id)
                             ));
 
