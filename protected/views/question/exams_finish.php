@@ -212,7 +212,7 @@ if($modelScore->type=='post' && !$state){
 				</div>
 				<div class="modal-body">
 					<center>
-						<i class="fa fa-warning" style="font-size:6em; color: #F8BB86; padding-top: 15px;padding-bottom: 15px;"></i>
+						<i class="fa fa-exclamation-triangle" style="font-size:6em; color: #F8BB86; padding-top: 15px;padding-bottom: 15px;"></i>
 						<h2 style="color: #575757;"><?= $labelCourse->label_notPassTest; ?></h2>
 						<?php if($modelScore->type=='post'){ 
 							if($state){
