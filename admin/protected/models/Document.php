@@ -69,6 +69,7 @@ class Document extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'documentType' => array(self::BELONGS_TO, 'DocumentType', 'dty_id'),
 		);
 	}
 
@@ -137,7 +138,8 @@ class Document extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
+        
+        $criteria->with = array('documentType');
 		$criteria->compare('dow_id',$this->dow_id);
 		$criteria->compare('dow_name',$this->dow_name,true);
 		$criteria->compare('dow_address',$this->dow_address,true);
@@ -152,20 +154,20 @@ class Document extends CActiveRecord
 		$criteria->compare('dow_timeend',$this->dow_timeend,true);
 		$criteria->compare('dow_detail',$this->dow_detail,true);
 		$criteria->compare('dty_id',$this->dty_id);
-		$criteria->compare('active',1);
+		$criteria->compare('t.active',1);
 		$criteria->compare('createby_id',$this->createby_id);
 		$criteria->compare('createby_min',$this->createby_min);
 		$criteria->compare('createby',$this->createby,true);
 		$criteria->compare('createdate',$this->createdate,true);
 		$criteria->compare('updateby',$this->updateby,true);
 		$criteria->compare('updatedate',$this->updatedate,true);
-		$criteria->compare('lang_id',$this->lang_id);
+		$criteria->compare('t.lang_id',$this->lang_id);
 		$criteria->compare('reference',$this->reference);
 		$criteria->compare('dow_internet',$this->dow_internet);
 		$criteria->compare('dow_intranet',$this->dow_intranet);
 		$criteria->compare('approve',$this->approve);
 		$criteria->compare('category',$this->category,true);
-		$criteria->compare('parent_id',0);
+		$criteria->compare('t.parent_id',0);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

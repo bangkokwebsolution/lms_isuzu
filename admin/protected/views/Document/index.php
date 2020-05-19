@@ -72,6 +72,12 @@ EOD
 							'class'=>'CCheckBoxColumn',
 							'id'=>'chk',
 						),
+						array(
+							'header'=>'หมวดเอกสาร',
+							'type'=>'raw',
+							'value'=> '$data->documentType->dty_name',
+							'htmlOptions'=>array('width'=>'110')
+						),
 
 						array(
 							'header'=>'ไฟล์',
