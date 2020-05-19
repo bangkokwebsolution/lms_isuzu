@@ -9,9 +9,9 @@ class UsabilityController extends Controller
   
  }
 	
-	public function actionIndex()
+		public function actionIndex()
 	{
-        if(Yii::app()->user->id){
+		if(Yii::app()->user->id){
             Helpers::lib()->getControllerActionId();
         }
 		$id = $_GET['id'];
@@ -24,9 +24,14 @@ class UsabilityController extends Controller
 		    $usability_data = Usability::model()->findAll(array(
             'condition'=>'lang_id=:lang_id AND active=:active',
             'params' => array(':lang_id' => $langId, ':active' => 'y'),
-            'order'=> 'sortOrder ASC'
+             'order'=> 'sortOrder ASC'
               ));
-
+		    if(!$usability_data){
+		    	$usability_data = Usability::model()->findAll(array(
+	            'condition'=>'lang_id=:lang_id AND active=:active',
+	            'params' => array(':lang_id' => 1, ':active' => 'y')
+	              ));
+		    }
             $label = MenuUsability::model()->find(array(
                     'condition' => 'lang_id=:lang_id',
                     'params' => array(':lang_id' => $langId)
@@ -37,15 +42,33 @@ class UsabilityController extends Controller
                     'params' => array(':lang_id' => 1)
                     ));
              }
-		    // var_dump($langId);exit();
-		// $usability_data = Usability::model()->findByAttributes(array(
-		// 	'active'=>'y',
-  //           'usa_id'=>$id,
-		// ));
+
+             $labelSite = MenuSite::model()->find(array(
+                    'condition' => 'lang_id=:lang_id',
+                    'params' => array(':lang_id' => $langId)
+                    ));
+            if(!$labelSite){
+                $labelSite = MenuSite::model()->find(array(
+                    'condition' => 'lang_id=:lang_id',
+                    'params' => array(':lang_id' => 1)
+                    ));
+             }
+
+            // $labelSearch = MenuSearch::model()->find(array(
+            //         'condition' => 'lang_id=:lang_id',
+            //         'params' => array(':lang_id' => $langId)
+            //         ));
+            // if(!$labelSearch){
+            //     $labelSearch = MenuSearch::model()->find(array(
+            //         'condition' => 'lang_id=:lang_id',
+            //         'params' => array(':lang_id' => 1)
+            //         ));
+            //  }
+
 		$this->render('index',array(
-			'usability_data'=>$usability_data,'label'=>$label
+			'usability_data'=>$usability_data,'label'=>$label,'labelSite'=>$labelSite
 		));
-		
+
 	}
 
 public function actionsearch($text) {

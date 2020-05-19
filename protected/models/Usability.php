@@ -32,7 +32,7 @@ class Usability extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('create_by, update_by, sortOrder', 'numerical', 'integerOnly'=>true),
-			array('usa_title', 'length', 'max'=>255),
+			array('usa_title, usa_address', 'length', 'max'=>255),
 			array('active', 'length', 'max'=>1),
 			array('usa_detail, create_date, update_date, parent_id, lang_id,usaMutiLang', 'safe'),
 			// The following rule is used by search().
@@ -69,7 +69,8 @@ class Usability extends CActiveRecord
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
 			'usaMutiLang' => 'หัวข้อวิธีการใช้งานภาษาอื่น',
-			'sortOrder'=>'ย้ายตำแหน่ง'
+			'sortOrder'=>'ย้ายตำแหน่ง',
+			'usa_address' => 'รูปภาพหน้าปก'
 		);
 	}
 

@@ -383,14 +383,14 @@ date_default_timezone_set("Asia/Bangkok");
                                         ?>
                                         
                                         <?php 
-                                            $type = array(0 =>'สมาชิกทั่วไป',1 => 'แอดมิน');
+                                           // $type = array(0 =>'สมาชิกทั่วไป',1 => 'แอดมิน');
                                          ?>
-                                        <div class="form-group">
+                                      <!--   <div class="form-group">
                                             <label><?php echo $form->labelEx($model, 'superuser'); ?></label>
                                             <?php
                                             echo $form->dropDownList($model, 'superuser', $type, array('class' => 'form-control', 'style' => 'width:100%')); ?>
                                             <?php echo $form->error($model, 'superuser'); ?>
-                                        </div>
+                                        </div> -->
                                     
                                         <div class="form-group" style="text-align: right;">
                                             <?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t("Register") : 'บันทึก', array('class' => 'btn btn-primary',)); ?>

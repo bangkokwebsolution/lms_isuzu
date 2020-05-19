@@ -37,6 +37,42 @@
 					</div>
 
 					<br>
+				<div class="row">
+					<div class="col-md-12">
+					<?php
+					if(isset($imageShow)){
+						echo CHtml::image(Yush::getUrl($model, Yush::SIZE_THUMB, $imageShow), $imageShow,array(
+							"class"=>"thumbnail"
+						));
+					}
+					?>
+					</div>
+				</div>
+				<br>
+					<div class="row">
+					<?php echo $form->labelEx($model, 'usa_address'); ?>
+					<div class="fileupload fileupload-new" data-provides="fileupload">
+						<div class="input-append">
+							<div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span>
+							</div>
+							<span class="btn btn-default btn-file"><span class="fileupload-new">Select file</span>
+							<?php echo $form->fileField($model, 'usa_address', array('id' => 'wizard-picture')); ?>
+							<span class="fileupload-exists">Change</span>
+							<?php echo $form->fileField($model, 'usa_address'); ?>
+						</span>
+						<a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+					</div>
+				</div>
+				<?php echo $form->error($model, 'usa_address'); ?>
+			</div>
+			<div class="row">
+					<div class="col-md-12">
+					<font color="#990000">
+						<?php echo $this->NotEmpty();?> รูปภาพควรมีขนาด 225x150px(แนวนอน) หรือ ขนาด 255x(xxx)px (แนวยาว)
+					</font>
+					</div>
+				</div>
+			<br>
 					<div class="row buttons">
 						<?php echo CHtml::tag('button',array('class' => 'btn btn-primary btn-icon glyphicons ok_2'),'<i></i>บันทึกข้อมูล');?>
 					</div>
