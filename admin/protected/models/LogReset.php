@@ -105,7 +105,7 @@ class LogReset extends CActiveRecord
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 			'sort'=>array(
-			    'defaultOrder'=>'reset_date DESC',
+			    'defaultOrder'=>'id DESC',
 			  ),
             'pagination'=>array(
                 'pageSize'=>100,
