@@ -1,10 +1,12 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
 <?php
+
 // Load the Google API PHP Client Library.
 require_once __DIR__ . '/../../extensions/google-api-php-client/vendor/autoload.php';
 $path_theme = Yii::app()->theme->baseUrl."/assets";
 $clientScript = Yii::app()->clientScript;
-	$clientScript->registerCssFile($path_theme.'/css/AdminLTE.css');
+  $clientScript->registerCssFile($path_theme.'/css/AdminLTE.css');
         $clientScript->registerCssFile('https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css');
 //var_dump($path_theme.'/css/AdminLTE.css');exit();
 //require_once $path_theme.'/css/AdminLTE.css';
@@ -81,7 +83,7 @@ function initializeAnalytics()
 function getReport($analytics,$expression=null,$dateStart=null,$endDate=null,$alias=null) {
 
   // Replace with your view ID, for example XXXX.
-  $VIEW_ID = "176038090";
+  $VIEW_ID = "218914195";
 
   // Create the DateRange object.
   $dateRange = new Google_Service_AnalyticsReporting_DateRange();
@@ -140,7 +142,7 @@ function printResults($reports) {
 }
 
 function printResultsNumber($reports) {
-	$val = 0;
+  $val = 0;
   for ( $reportIndex = 0; $reportIndex < count( $reports ); $reportIndex++ ) {
     $report = $reports[ $reportIndex ];
     $header = $report->getColumnHeader();
@@ -195,10 +197,10 @@ $this->pageTitle=Yii::app()->name;
 <!-- <section class="content" style="background: url(<?= Yii::app()->baseUrl; ?>/themes/AdminLMS/base_assets//images/bg-admin.png) no-repeat center center;background-size: cover;min-height: 768px;"> -->
 <section class="content">
 
-	<div class="page-content">
+  <div class="page-content">
 
-		<div class="site-index">
-			<div class="body-content">
+    <div class="site-index">
+      <div class="body-content">
 
         <div class="row">
          <!-- <div class="col-lg-2 col-xs-6"> -->
@@ -287,44 +289,44 @@ $this->pageTitle=Yii::app()->name;
           <!-- ./col -->
         </div>
 
-				<div class="row hidden">
-					<div class="col-sm-6 col-lg-3">
-						<div class="panel panel-primary">
-							<div class="panel-heading">
-								<div>Sessions 7 Days</div>
+        <div class="row hidden">
+          <div class="col-sm-6 col-lg-3">
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                <div>Sessions 7 Days</div>
                   <!-- <div class="huge" id="totalSessions"><?= printResults($test2); ?></div> -->
-								<div class="huge" id="totalSessions"><?= printResults($session7Day); ?></div>
+                <div class="huge" id="totalSessions"><?= printResults($session7Day); ?></div>
                 <input type="hidden" id="sessionsUser" value="<?= printResults($session7Day); ?>">
-							</div>
-						</div>
-					</div>                            
-					<div class="col-sm-6 col-lg-3">
-						<div class="panel panel-green">
-							<div class="panel-heading">
-								<div>Visitors 7 Days</div>
-								<div class="huge" id="totalUsers"><?= printResults($visitors7Day); ?></div>
-							</div>
-						</div>
-					</div>                            
-					<div class="col-sm-6 col-lg-3">
-						<div class="panel panel-yellow">
-							<div class="panel-heading">
-								<div>Pageviews 7 Days</div>
-								<div class="huge" id="totalPageViews"><?= printResults($Pageviews7Day); ?></div>
-							</div>
-						</div>
-					</div>                            
-					<div class="col-sm-6 col-lg-3">
-						<div class="panel panel-red">
-							<div class="panel-heading">
-								<div>Days Since Last Session</div>
-								<div class="huge" id="averageSessionLength"><?= number_format(printResultsNumber($sessionsPerUser),2); ?></div>
+              </div>
+            </div>
+          </div>                            
+          <div class="col-sm-6 col-lg-3">
+            <div class="panel panel-green">
+              <div class="panel-heading">
+                <div>Visitors 7 Days</div>
+                <div class="huge" id="totalUsers"><?= printResults($visitors7Day); ?></div>
+              </div>
+            </div>
+          </div>                            
+          <div class="col-sm-6 col-lg-3">
+            <div class="panel panel-yellow">
+              <div class="panel-heading">
+                <div>Pageviews 7 Days</div>
+                <div class="huge" id="totalPageViews"><?= printResults($Pageviews7Day); ?></div>
+              </div>
+            </div>
+          </div>                            
+          <div class="col-sm-6 col-lg-3">
+            <div class="panel panel-red">
+              <div class="panel-heading">
+                <div>Days Since Last Session</div>
+                <div class="huge" id="averageSessionLength"><?= number_format(printResultsNumber($sessionsPerUser),2); ?></div>
                 
                
-							</div>
-						</div>
-					</div>                        
-				</div>
+              </div>
+            </div>
+          </div>                        
+        </div>
 
         <div class="row">
           <div class="col-md-8">
@@ -379,12 +381,12 @@ $this->pageTitle=Yii::app()->name;
                     <tbody>
                       <tr>
                         <td class="bg-mute">E-mail</td>
-                        <td>kmutnb.elearning@gmail.com</td>
+                        <td>thorcdpt@gmail.com</td>
                       </tr>
-                      <tr>
+<!--                      <tr>
                         <td class="bg-mute">Password</td>
-                        <td>adminelearning</td>
-                      </tr>
+                        <td>KPIElearning</td>
+                      </tr>-->
                       <tr>
                         <td class="bg-mute">ไปที่</td>
                         <td><a href="https://www.google.com/analytics/" class="btn btn-primary" target = "_blank">Google Analytics</a>  </td>
@@ -400,7 +402,7 @@ $this->pageTitle=Yii::app()->name;
 
       </div>
 
-	</section>
+  </section>
 
     <input type="hidden" id="newUser" value="<?=printResults($newUsers); ?>">
     <script type="text/javascript">
