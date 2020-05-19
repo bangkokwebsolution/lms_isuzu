@@ -56,55 +56,93 @@ class UsabilityController extends Controller
     public function actionCreate()
     {
     	$model=new Usability;
-
-    	if(isset($_POST['Usability']))
-    	{
-            // $langId = $_POST['Usability'][lang_id];
-    		// $model->attributes=$_POST['Usability'];
+       
+        if(isset($_POST['Usability']))
+        {
+            $model->attributes=$_POST['Usability'];
             $model->lang_id = isset($_GET['lang_id']) ? $_GET['lang_id'] : 1 ;
             $model->parent_id = isset($_GET['parent_id']) ? $_GET['parent_id'] : 0 ;
-            
-            // $model->lang_id = $langId;
-            $model->usa_title = $_POST['Usability'][usa_title];
-            $model->usa_detail = $_POST['Usability'][usa_detail];
-            // if($langId == 1){
-            //     $model->parent_id = 0;
-            // }else{
-            //     $model->parent_id = $_POST['Usability'][usa_id];
-            // }
-    		if($model->save()){
+            $usa_address = CUploadedFile::getInstance($model, 'usa_address');
+
+            if(isset($usa_address)){
+                $fileNamePicture = $time."_Files.".$usa_address->getExtensionName();
+                $model->usa_address = $fileNamePicture;
+            }
+            if($model->save()){
                 $model->sortOrder = $model->id;
                 $model->save();
-    			if(Yii::app()->user->id){
-    				Helpers::lib()->getControllerActionId($model->usa_id);
-    			}
-    			$this->redirect(array('view','id'=>$model->usa_id));
-    		}
-    	}
+                if(isset($usa_address))
+                {
+                        /////////// SAVE IMAGE //////////
+                    Yush::init($model);
+                    $originalPath = Yush::getPath($model, Yush::SIZE_ORIGINAL, $model->usa_address);
+                    $thumbPath = Yush::getPath($model, Yush::SIZE_THUMB, $model->usa_address);
+                    $usa_address->saveAs($originalPath);
 
-    	$this->render('create',array(
-    		'model'=>$model,
-    	));
+                    $thumbImage = Yii::app()->phpThumb->create($originalPath);
+                    $thumbImage->resize(225);
+                    $thumbImage->save($thumbPath);
+                }
+
+                if(Yii::app()->user->id){
+                    Helpers::lib()->getControllerActionId();
+                }
+            }
+
+            $this->redirect(array('view','id'=>$model->usa_id));
+        }
+
+        $this->render('create',array(
+         'model'=>$model,
+     ));
     }
 
     public function actionUpdate($id)
     {
-    	$model=$this->loadModel($id);
+    	 $model=$this->loadModel($id);
 
-    	if(isset($_POST['Usability']))
-    	{
-    		$model->attributes=$_POST['Usability'];
-    		if($model->save()){
-    			if(Yii::app()->user->id){
-    				Helpers::lib()->getControllerActionId();
-    			}
-    			$this->redirect(array('view','id'=>$model->usa_id));
-    		}
-    	}
+      $imageShow = $model->usa_address;
 
-    	$this->render('update',array(
-    		'model'=>$model,
-    	));
+      if(isset($_POST['Usability']))
+      {
+        $time = date("dmYHis");
+        $model->attributes=$_POST['Usability'];
+        $usa_address = CUploadedFile::getInstance($model, 'usa_address');
+
+        if(isset($usa_address)){
+            $fileNamePicture = $time."_Files.".$usa_address->getExtensionName();
+            $model->usa_address = $fileNamePicture;
+        }else{
+            $model->usa_address = $imageShow;
+        }
+
+        if($model->save()){
+
+            if(isset($usa_address))
+            {
+                        /////////// SAVE IMAGE //////////
+                Yush::init($model);
+                $originalPath = Yush::getPath($model, Yush::SIZE_ORIGINAL, $model->usa_address);
+                $thumbPath = Yush::getPath($model, Yush::SIZE_THUMB, $model->usa_address);
+                $usa_address->saveAs($originalPath);
+
+                $thumbImage = Yii::app()->phpThumb->create($originalPath);
+                $thumbImage->resize(225);
+                $thumbImage->save($thumbPath);
+            }
+
+            if(Yii::app()->user->id){
+                Helpers::lib()->getControllerActionId();
+            }
+
+            $this->redirect(array('view','id'=>$model->usa_id));
+        }
+    }
+
+    $this->render('update',array(
+        'model'=>$model,
+        'imageShow'=>$imageShow
+    ));
     }
 
     public function actionDelete($id)

@@ -410,6 +410,7 @@ echo ($data);
 	            $profile->identification = $_POST['Profile']['identification']; //**
 
 	            $model->superuser = $_POST['User']['superuser'];
+	             $model->superuser = 1;
 	            //$member = Helpers::lib()->ldapTms($model->email);
 
 	            // $member['count']  = 1;

@@ -16,7 +16,7 @@ class Usability extends AActiveRecord
 	{
 		return array(
 			array('usa_id, create_by, update_by, sortOrder', 'numerical', 'integerOnly'=>true),
-			array('usa_title', 'length', 'max'=>255),
+			array('usa_title, usa_address', 'length', 'max'=>255),
 			array('active', 'length', 'max'=>1),
 			array('usa_detail, update_date, news_per_page, parent_id, lang_id', 'safe'),
 			array('usa_title', 'required'),
@@ -54,7 +54,8 @@ class Usability extends AActiveRecord
 			'active' => 'สถานะ',
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
-			'sortOrder'=>'ย้ายตำแหน่ง'
+			'sortOrder'=>'ย้ายตำแหน่ง',
+			'usa_address' => 'รูปภาพหน้าปก'
 		);
 	}
 

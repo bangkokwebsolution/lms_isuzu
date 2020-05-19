@@ -88,7 +88,6 @@ $usability_data = Usability::model()->findAll(array(
 
 <section class="content" id="manual">
     <div class="container">
-        <div class="row">
             
          <div class="row">
             <?php if($total !== 0) { ?>
@@ -107,18 +106,25 @@ $usability_data = Usability::model()->findAll(array(
             ?>
                     <div class="col-sm-4 col-md-3">
                         <div class="well">
+                            <div class="manual-icon">
                             <a data-toggle="modal" href='#modal-manual-detail-<?= $str_id ?>'>
-                                <div class="manual-icon"><i class="fa fa-sign-in fa-3x" aria-hidden="true"></i></div>
+                               <!--  <div class="manual-icon"><i class="fa fa-sign-in fa-3x" aria-hidden="true"></i></div> -->
+                                <?php if(file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/usability/' .  $str_id.'/thumb/'.$mod->usa_address)){?>
+                            <img src="<?= Yii::app()->baseUrl; ?>/uploads/usability/<?= $str_id.'/thumb/'.$mod->usa_address; ?>" width="auto" > 
+                            <?php }else{ ?>
+                            <div class="manual-icon"></i><i class="fas fa-info-circle fa-4x"></i></div>
+                            <?php } ?>
                                 <h4> <?php echo str_ireplace($keyword, '<span class="bg-primary">' . $keyword . '</span>', $str); ?></h4>
                             </a>
+                            </div>
                         </div>
-                    </div>   <?php } } else{
+                    </div>   
+                <?php } } else{
             echo '<div class="well">';
             echo 'ไม่พบข้อมูลที่ต้องการค้นหา'  ;
             echo '</div>';
         } ?>
     
-        </div>
         </div>
       
         <!-- Modal detail -->
