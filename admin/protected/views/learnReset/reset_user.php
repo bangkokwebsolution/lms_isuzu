@@ -246,7 +246,8 @@ function InitialResetLearn() {
         type: 'POST',
         url: "<?=Yii::app()->createUrl('LearnReset/get_dialog_learn');?>",
         data:{ user_id:id },
-        success: function(data) {console.log(data);
+        success: function(data) {
+            // console.log(data);
             $('#selectModal .modal-title').html('Reset การเรียน');
             $('#selectModal .modal-body').html(data);
             $('#btnSubmit').css('display','');

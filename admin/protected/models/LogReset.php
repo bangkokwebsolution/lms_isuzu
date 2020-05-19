@@ -34,7 +34,7 @@ class LogReset extends CActiveRecord
 			array('reset_description, reset_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_id, course_id, lesson_id, reset_description, reset_date, reset_type, reset_by', 'safe', 'on'=>'search'),
+			array('id, user_id, course_id, lesson_id, reset_description, reset_date, reset_type, reset_by, gen_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,6 +68,7 @@ class LogReset extends CActiveRecord
 			'reset_description' => 'Reset Description',
 			'reset_date' => 'Reset Date',
 			'reset_type' => '0=บทเรียน 1=สอบ',
+			'gen_id' => 'gen_id',
 		);
 	}
 
@@ -97,6 +98,7 @@ class LogReset extends CActiveRecord
 		$criteria->compare('reset_date',$this->reset_date,true);
 		$criteria->compare('reset_type',$this->reset_type);
 		$criteria->compare('reset_by',$this->reset_by);
+		$criteria->compare('gen_id',$this->gen_id);
 		$criteria->with = array('course');
 		$criteria->compare('courseonline.active', $this->course->active='y', true);
 

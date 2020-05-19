@@ -11,21 +11,23 @@
                 <tbody>
 
                     <input type='hidden' name='reset_type' value="<?= $type; ?>">
-                    <input type='hidden' name='user_id' value="<?= $user_id ?>">
+                    <input type='hidden' name='user_id' value="<?= $user_id ?>">                    
                     <!-- <input type='checkbox' id='checkAll' /> เลือกทั้งหมด -->
                     <?php
                     foreach ($course as $key => $value) {
                         $courseScore = Coursescore::model()->find(array(
-                            'condition' => 'course_id=:course_id AND user_id=:user_id AND active="y"',
-                            'params' => array(':course_id' => $value->course_id,':user_id' => $user_id)
+                            'condition' => 'course_id=:course_id AND user_id=:user_id AND active="y" AND gen_id=:gen_id',
+                            'params' => array(':course_id' => $value->course_id, ':user_id' => $user_id, ':gen_id'=>$value->gen_id)
                         ));
                         ?>
                         <?php
                         if($courseScore){
                          ?>
                          <tr>
-                            <td width="10%" class="text-center" style="vertical-align: middle;"><center><input class="checkCourse" type='checkbox' name=course_id[<?= $value->course_id; ?>]  value="<?= $value->course_id; ?>" /></center></td>
-                            <td></center><?= $value->course->course_title; ?></center></td>
+                            <td width="10%" class="text-center" style="vertical-align: middle;"><center>
+                                <input class="checkCourse" type='checkbox' name=course_id[<?= $value->course_id; ?>_<?= $value->gen_id; ?>]  value="<?= $value->course_id; ?>_<?= $value->gen_id; ?>" />
+                            </center></td>
+                            <td></center><?= $value->course->course_title; ?> <?php if($value->gen_id != 0){ echo "รุ่น ".$value->gen->gen_title; } ?></center></td>
                         </tr>
                         <?php
                     }

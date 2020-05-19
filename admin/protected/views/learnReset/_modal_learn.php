@@ -12,34 +12,33 @@
 
                 <input type='hidden' name='reset_type' value="<?= $type; ?>">
                 <input type='hidden' name='user_id' value="<?= $user_id ?>">
-
                 <tbody>
                     <?php 
 
-                    foreach ($course as $key => $value) {
+                    foreach ($course as $key => $value) { // learn model
                         // $modelData = Learn::model()->find(array(
                         //     'condition' => 'user_id=:user_id AND course_id=:course_id AND lesson_id=:lesson_id AND active="y"',
                         //     'params' => array(':user_id'=>$user_id,':course_id'=>$value->course_id,'lesson_id' => $value->lesson_id)));                         
                         ?>
                         <tr>
-                            <td width="10%" class="text-center"><center><input class="checkCourse" type='checkbox' name=course_id[<?= $value->course_id; ?>]  value="<?= $value->course_id; ?>" /></center></td>
+                            <td width="10%" class="text-center"><center><input class="checkCourse" type='checkbox' name=course_id[<?= $value->course_id; ?>_<?= $value->gen_id; ?>]  value="<?= $value->course_id; ?>_<?= $value->gen_id; ?>" /></center></td>
                             <td><center>    
-                                <?= $value->course->course_title; ?></center></td>
-                                
+                                <?= $value->course->course_title; ?> <?php if($value->gen_id != 0){ echo "รุ่น ".$value->gen->gen_title; } ?></center></td>
+
                                 <td>
                                     <ul style='list-style-type: none;'>
                                      <?php
 
                                      $modelData = null;
                                      $modelData = learn::model()->with('les')->findAll(array(
-                                         'condition'=>'t.user_id=:user_id AND t.course_id=:course_id AND lesson_active="y" AND lesson.active="y"',
-                                         'params' => array('user_id' => $user_id,':course_id'=>$value->course_id)
+                                         'condition'=>'t.user_id=:user_id AND t.course_id=:course_id AND lesson_active="y" AND lesson.active="y" AND gen_id=:gen_id',
+                                         'params' => array('user_id' => $user_id,':course_id'=>$value->course_id, ':gen_id'=>$value->gen_id)
                                      ));
                                      if($modelData){
                                         foreach ($modelData as $keylearn => $valuelearn) {
                                             ?>
                                             <li>
-                                                <input class="checkLesson<?= $value->course_id; ?> checkedLesson" type='checkbox' name=lesson_id[]  value="<?=$valuelearn->course_id; ?>,<?= $valuelearn->lesson_id; ?>,<?= $valuelearn->learn_id; ?>" />
+                                                <input class="checkLesson<?= $value->course_id; ?>_<?= $value->gen_id; ?> checkedLesson" type='checkbox' name=lesson_id[]  value="<?=$valuelearn->course_id; ?>,<?= $valuelearn->lesson_id; ?>,<?= $valuelearn->learn_id; ?>,<?= $valuelearn->gen_id ?>" />
                                                 <?= $valuelearn->les->title; ?>
                                             </li>
                                             <?php

@@ -49,7 +49,7 @@ class Coursescore extends CActiveRecord
             array('create_date, update_date, type', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('score_id, course_id, user_id, score_number,score_totle, create_date, create_by, update_date, update_by, active', 'safe', 'on'=>'search'),
+            array('score_id, course_id, user_id, score_number,score_totle, create_date, create_by, update_date, update_by, active, gen_id', 'safe', 'on'=>'search'),
         );
     }
 
@@ -66,6 +66,7 @@ class Coursescore extends CActiveRecord
             'Profiles'=>array(self::BELONGS_TO, 'Profiles', 'user_id'),
             'user'=>array(self::BELONGS_TO, 'User', 'user_id'),
             'Period' => array(self::HAS_MANY, 'CoursePeriod', array( 'id_course' => 'course_id' )),
+            'gen' => array(self::BELONGS_TO, 'CourseGeneration', 'gen_id', 'on'=>'gen.gen_id!=0'),
             'CourseOnlines'=>array(self::BELONGS_TO, 'CourseOnline', 'course_id'),
         );
     }
@@ -102,6 +103,7 @@ class Coursescore extends CActiveRecord
         return array(
             'score_id'     => 'Score',
             'course_id'    => 'Lesson',
+            'gen_id'    => 'gen_id',
             'user_id'      => 'User',
             'type'         => 'type',
             'score_totle'  => 'Score Totle',
@@ -136,6 +138,7 @@ class Coursescore extends CActiveRecord
         $criteria->compare('update_date',$this->update_date,true);
         $criteria->compare('update_by',$this->update_by);
         $criteria->compare('active',$this->active,true);
+        $criteria->compare('gen_id',$this->gen_id,true);
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,

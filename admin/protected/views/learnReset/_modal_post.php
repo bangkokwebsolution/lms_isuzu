@@ -15,19 +15,20 @@
                     <input type='hidden' name='user_id' value="<?= $user_id ?>">
                     <!-- <input type='checkbox' id='checkAll' /> เลือกทั้งหมด -->
                     <?php
+                    // var_dump($course); exit();
                     foreach ($course as $key => $value) { ?>
 
                     <tr>
-                        <td width="10%" class="text-center" style="vertical-align: middle;"><center><input class="checkCourse" type='checkbox' name=course_id[<?= $value->course_id; ?>]  value="<?= $value->course_id; ?>" /></center></td>
-                        <td><center><?= $value->course->course_title; ?></center></td>
+                        <td width="10%" class="text-center" style="vertical-align: middle;"><center><input class="checkCourse" type='checkbox' name=course_id[<?= $value->course_id; ?>_<?= $value->gen_id; ?>]  value="<?= $value->course_id; ?>_<?= $value->gen_id; ?>" /></center></td>
+                        <td><center><?= $value->course->course_title; ?> <?php if($value->gen_id != 0){ echo "รุ่น ".$value->gen->gen_title; } ?></center></td>
                         <td>
                             <ul style='list-style-type: none;'>
                              <?php
                              $modelcourse = Score::model()->findAll(array(
-                                'condition'=>'course_id=:course_id AND type="post" AND active="y" GROUP BY lesson_id',
-                                'params' => array(':course_id'=>$value->course_id)
+                                'condition'=>'course_id=:course_id AND type="post" AND active="y" AND gen_id=:gen_id AND user_id=:user_id GROUP BY gen_id',
+                                'params' => array(':course_id'=>$value->course_id, ':gen_id'=>$value->gen_id, ':user_id'=>$user_id)
                             ));
-
+                             
                              foreach ($modelcourse as $keycourse=> $valuecourse) {
                                  $modelData = null;
                                  $modelData = Lesson::model()->findAll(array(
@@ -40,7 +41,7 @@
                                     foreach ($modelData as $keylearn => $valuelearn) {
                                         ?>
                                         <li>
-                                            <input class="checkLesson<?= $value->course_id; ?> checkedLesson" type='checkbox' name=lesson_id[]  value="<?=$valuelearn->course_id; ?>,<?= $valuelearn->id; ?>,0" />
+                                            <input class="checkLesson<?= $value->course_id; ?>_<?= $value->gen_id; ?> checkedLesson" type='checkbox' name=lesson_id[]  value="<?=$valuelearn->course_id; ?>,<?= $valuelearn->id; ?>,0,<?= $value->gen_id; ?>" />
                                             <?= $valuelearn->title; ?>
                                         </li>
                                         <?php
