@@ -67,7 +67,8 @@ class LoginController extends Controller
             if(in_array("themes", $arr_url)){
               $this->redirect(array('site/index'));
             }else{
-              $this->redirect(Yii::app()->user->returnUrl);
+              $this->redirect(array('site/index'));
+              // $this->redirect(Yii::app()->user->returnUrl); บนเซิฟ มันเป็น path video ไรสักอย่าง
 
             }
                     // if (Yii::app()->user->returnUrl=='/index.php'){
