@@ -16,21 +16,16 @@ function DateThai($strDate) {
 }
 ?>
 
-<!-- Header page -->
-<!-- <div class="header-page parallax-window"> -->
-    <div class="container">
-        <h1><?= $label->label_docs  ?>
-        <small class="pull-right">
-            <ul class="list-inline list-unstyled">
-                <li><a href="<?php echo $this->createUrl('/site/index'); ?>"><?= $label->label_homepage  ?></a></li> /
-                <li><?= $label->label_docs  ?></li>
-            </ul>
-        </small>
-    </h1>
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-main">
+            <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/site/index'); ?>"><?php echo $label->label_homepage; ?></a></li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $label->label_docs  ?></li>
+        </ol>
+    </nav>
 </div>
-<!-- </div> -->
 
-<!-- Content -->
+
 <section class="content" id="document">
     <div class="container">
         <!-- <div role="tabpanel"> -->

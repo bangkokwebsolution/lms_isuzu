@@ -838,6 +838,10 @@ h4.text22 {
   padding: 0;
 }
 
+#document .panel-default>.panel-heading i{
+  color: #010c65;
+}
+
 .document .page-header {
   margin: 30px 0 40px;
   border-bottom: 3px solid #010C65;
