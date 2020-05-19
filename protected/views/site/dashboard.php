@@ -447,7 +447,7 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
                                             if($y == 1){
                                                     echo '<td rowspan="'.count($lesson).'">';
                                                     $criteria = new CDbCriteria;
-                                                    $criteria->condition = ' course_id="' . $data->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND gen_id="'.$gen_id.'"';
+                                                    $criteria->condition = ' course_id="' . $data->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND gen_id="'.$gen_id.'" AND active="y"';
                                                     $criteria->order = 'create_date DESC';
                                                     $allFinalTest = Coursescore::model()->find($criteria);
 

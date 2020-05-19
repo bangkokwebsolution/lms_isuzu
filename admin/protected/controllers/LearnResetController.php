@@ -875,11 +875,15 @@ public function actionReset_university()
     $courseMsg = 'ผู้ดูแลระบบ ทำการ Reset ผลสอบวัดผลหลักสูตรต่อไปนี้ <br>';
 
     foreach ($courseData as $key => $value) {
+        $ex = explode("_", $value);
+        $value = $ex[0];
+        $gen_id = $ex[1];
                 // $scoreLesson = Score::model()->deleteAll('user_id="' . Yii::app()->user->id . '" AND lesson_id="' . $value->id . '"');
 
         $logReset = new LogReset;
         $logReset->user_id = $user_id;
         $logReset->course_id = $value;
+        $logReset->gen_id = $gen_id;
         $logReset->reset_description = $_POST['description'];
         $logReset->reset_date = date('Y-m-d h:i:s');
         $logReset->reset_type = 1;
@@ -887,11 +891,11 @@ public function actionReset_university()
         if($logReset->save()){
             $courseScore = Coursescore::model()->findAll(array(
                 'condition' => 'course_id=:course_id AND user_id=:user_id AND active = "y" AND gen_id=:gen_id',
-                'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$value->gen_id)));
+                'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$gen_id)));
 
             TempCourseQuiz::model()->deleteAll(array(
                 'condition' => 'course_id=:course_id AND user_id=:user_id AND gen_id=:gen_id',
-                'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$value->gen_id)));
+                'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$gen_id)));
 
             foreach ($courseScore as $valScore) {
              $valScore->active = 'n';
@@ -902,15 +906,15 @@ public function actionReset_university()
 
      Courselogques::model()->deleteAll(array(
         'condition' => 'course_id=:course_id AND user_id=:user_id AND gen_id=:gen_id',
-        'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$value->gen_id)));
+        'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$gen_id)));
 
      Courselogchoice::model()->deleteAll(array(
         'condition' => 'course_id=:course_id AND user_id=:user_id AND gen_id=:gen_id',
-        'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$value->gen_id)));
+        'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$gen_id)));
 
      Passcours::model()->deleteAll(array(
         'condition' => 'passcours_cours=:passcours_cours AND passcours_user=:passcours_user AND gen_id=:gen_id',
-        'params' => array(':passcours_cours' => $value,':passcours_user' => $user_id, ':gen_id'=>$value->gen_id)));
+        'params' => array(':passcours_cours' => $value,':passcours_user' => $user_id, ':gen_id'=>$gen_id)));
 
         $courseName = CourseOnline::model()->findByPk($value);
         $courseMsg .= ($key+1)." หลักสูตร : ".$courseName->course_title.'<br>';
