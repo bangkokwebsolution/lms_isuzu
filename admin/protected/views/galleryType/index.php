@@ -38,7 +38,7 @@ EOD
 					array(
 							'type'=>'list',
 							'name'=>'name_gallery_type',
-							'query'=>CHtml::listData(GalleryType::model()->findAll(),'id', 'name_gallery_type')
+							'query'=>CHtml::listData(GalleryType::model()->findAll(),'name_gallery_type', 'name_gallery_type')
 						),
 				),
 			));?>

@@ -1085,29 +1085,29 @@ Class MenuLeft extends Controller
 	        	)
 	        ),
 
-	        array(
-	        	/*====== Check Permissions Rights (6) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Privatemessage.*',
-	        		'Privatemessage.update',
-	        	)),
-	        	'label'=>'<i></i><span>ระบบข้อความส่วนตัว</span>',
-	        	'url'=>'#privatemessage',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons wallet'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('privatemessage') ), 'id' => 'privatemessage'),
-	        	'active' => self::SetSubMenu( array('privatemessage') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Sup-Rights (3) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Privatemessage.*',
-	        			)),
-	        			'label'=>'ข้อความส่วนตัว',
-	        			'url'=>array('//Privatemessage/index')
-	        		),
-	        	)
-	        ),
+	        // array(
+	        // 	/*====== Check Permissions Rights (6) ======*/
+	        // 	'visible'=>self::PermissionsMenu(array(
+	        // 		'Privatemessage.*',
+	        // 		'Privatemessage.update',
+	        // 	)),
+	        // 	'label'=>'<i></i><span>ระบบข้อความส่วนตัว</span>',
+	        // 	'url'=>'#privatemessage',
+	        // 	'linkOptions' => array('data-toggle' => 'collapse'),
+	        // 	'itemOptions' => array('class' => 'hasSubmenu glyphicons wallet'),
+	        // 	'submenuOptions' => array('class' => self::SetSubMenu( array('privatemessage') ), 'id' => 'privatemessage'),
+	        // 	'active' => self::SetSubMenu( array('privatemessage') ,false),
+	        // 	'items'=>array(
+	        // 		array(
+	        // 			/*====== Check Permissions Sup-Rights (3) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'Privatemessage.*',
+	        // 			)),
+	        // 			'label'=>'ข้อความส่วนตัว',
+	        // 			'url'=>array('//Privatemessage/index')
+	        // 		),
+	        // 	)
+	        // ),
 
 
 
