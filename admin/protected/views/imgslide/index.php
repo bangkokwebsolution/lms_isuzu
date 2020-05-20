@@ -35,7 +35,7 @@ EOD
 		'data'=>$model,
 		'route' => $this->route,
 		'attributes'=>array( 
-			array('name'=>'imgslide_link','type'=>'text'),
+			array('name'=>'imgslide_title','type'=>'text'),
 		),
 	));?>
 	<div class="widget" style="margin-top: -1px;">
