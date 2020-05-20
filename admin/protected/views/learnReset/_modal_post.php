@@ -1,3 +1,6 @@
+    <h4 style="color: red;">
+        ***เมื่อ Reset สอบหลังเรียน การสอบวัดผลจะถูก Reset ไปด้วย***
+    </h4>
     <form method='post'>
 
         <div class="table-responsive">

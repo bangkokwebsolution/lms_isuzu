@@ -773,6 +773,11 @@ public function actionReset_university()
                 if ($learn) {
                     foreach ($learn as $key => $data) {
                         $learnFile = LearnFile::model()->deleteAll('user_id_file="' . $user_id . '" AND learn_id="' . $data->learn_id . '" AND gen_id="'.$gen_id.'"');
+                        $LearnNote = LearnNote::model()->findAll('user_id="' . $user_id . '" AND gen_id="'.$gen_id.'"');
+                        foreach ($LearnNote as $key => $value_note) {
+                            $value_note->active = 'n';
+                            $value_note->save(false);
+                        }
                         $score = Score::model()->findAllByAttributes(array(
                             'user_id' => $user_id,
                             'lesson_id' => $lesson_id,
@@ -998,6 +1003,12 @@ public function actionSaveResetPre()
         ));
 
         foreach ($learn as $key => $data) {
+            $learnFile = LearnFile::model()->deleteAll('user_id_file="' . $user_id . '" AND learn_id="' . $data->learn_id . '" AND gen_id="'.$gen_id.'"');
+            $LearnNote = LearnNote::model()->findAll('user_id="' . $user_id . '" AND gen_id="'.$gen_id.'"');
+            foreach ($LearnNote as $key => $value_note) {
+                $value_note->active = 'n';
+                $value_note->save(false);
+            }
 
             $data->lesson_status = null;
             $data->lesson_active = 'n';
