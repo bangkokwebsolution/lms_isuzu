@@ -157,29 +157,45 @@ EOD
                                     'notLearn' => '<div style="color: red;"><strong>ไม่ได้เข้าเรียน</strong></div>',
                                 );
                                 foreach ($lesson as $lessonItem) {
+                                    $course_gen = CourseGeneration::model()->findAll(array(
+                                        'condition' => 'course_id=:course_id AND active=:active ',
+                                        'params' => array(':course_id'=>$lessonItem->course_id, ':active'=>"y"),
+                                        'order' => 'gen_title ASC',
+                                    ));
 
-                                $lern = Learn::model()->findAll(array(
-                                    'condition' => 'course_id = "' . $courseItem->course_id . '" AND lesson_active ="y" AND lesson_id ="' . $lessonItem->id . '"  and user_id = "' . $user[0][user_id] . '"'
-                                ));
+                                    if(empty($course_gen)){
+                                        $course_gen[]->gen_id = 0;
+                                    }
+                                    foreach ($course_gen as $key => $genn) {
+                                        $text_gen = "";
+                                        if($genn->gen_id != 0){
+                                            $text_gen = " รุ่น ".$genn->gen_title;
+                                        }
 
-                                if(count($lern) > 0){
 
-                                    /** @var Lesson $lessonItem */
-                                    ?>
-                                    <!-- Table row -->
-                                    <tr>
-                                        <!--<td class="center"><?php echo $orderNumber++; ?></td>-->
-                                        <td ><?php echo $lessonItem->title; ?></td>
-                                        <td class="center"><?php 
-                                        $learnStatus = Helpers::lib()->checkLessonPassById($lessonItem, $user[0]['id'], $model->dateRang);
-                                        echo $statusArray[$learnStatus];
-                                        ?></td>
-                                        <td class="center"><?php echo Helpers::lib()->CheckTestCount($learnStatus, $lessonItem->id, true); ?></td>
-                                    </tr>
-                                    <!-- // Table row END -->
-                                <?php } 
+                                        $lern = Learn::model()->findAll(array(
+                                            'condition' => 'gen_id="'.$genn->gen_id.'" AND course_id = "' . $courseItem->course_id . '" AND lesson_active ="y" AND lesson_id ="' . $lessonItem->id . '"  and user_id = "' . $user[0][user_id] . '"'
+                                        ));
 
-                            }?>
+                                        if(count($lern) > 0){
+
+                                            /** @var Lesson $lessonItem */
+                                            ?>
+                                            <!-- Table row -->
+                                            <tr>
+                                                <!--<td class="center"><?php echo $orderNumber++; ?></td>-->
+                                                <td ><?php echo $lessonItem->title.$text_gen; ?></td>
+                                                <td class="center"><?php 
+                                                $learnStatus = Helpers::lib()->checkLessonPassById($lessonItem, $user[0]['id'], $model->dateRang);
+                                                echo $statusArray[$learnStatus];
+                                                ?></td>
+                                                <td class="center"><?php echo Helpers::lib()->CheckTestCount($learnStatus, $lessonItem->id, true); ?></td>
+                                            </tr>
+                                            <!-- // Table row END -->
+                                        <?php } 
+                            } // gen
+                            }
+                            ?>
 
 
 

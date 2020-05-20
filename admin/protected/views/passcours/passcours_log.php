@@ -108,6 +108,15 @@ EOD
 							$last_cate_id = null;
 							$lastCategory = null;
 							foreach($allCurrentCourse as $Course) {
+								$course_gen = CourseGeneration::model()->findAll(array(
+									'condition' => 'course_id=:course_id AND active=:active ',
+									'params' => array(':course_id'=>$Course['course_id'], ':active'=>"y"),
+									'order' => 'gen_title ASC',
+								));
+								if(empty($course_gen)){
+									$course_gen[]->gen_id = 0;
+								}
+								foreach($course_gen as $key => $gen) {
 								if($last_cate_id != $Course['cate_id']) { 
 									$last_cate_id = $Course['cate_id'];
 									?>
@@ -125,15 +134,15 @@ EOD
 									<?php
 								}
 								$print = PasscoursLog::model()->with('Course')->findAll(array(
-									'condition' => 'passcours_cours = "' . $Course['course_id'] . '"' . $startdate . $enddate,
+									'condition' => 'passcours_cours = "' . $Course['course_id'] . '"' . $startdate . $enddate.' AND t.gen_id="'.$gen->gen_id.'"',
 									'group' => 'pclog_target'
 								));
 								$allLearn = Learn::model()->with('les')->findAll(array(
-									'condition' => 't.course_id = "' . $Course['course_id'] . '" and lesson_active = "y"',
+									'condition' => 't.course_id = "' . $Course['course_id'] . '" and lesson_active = "y"'.' AND gen_id="'.$gen->gen_id.'"',
 									'group' => 'user_id'
 								));
 								$pass = Learn::model()->with('les')->findAll(array(
-									'condition' => 't.course_id = "' . $Course['course_id'] . '" and lesson_status = "pass" and lesson_active = "y"',
+									'condition' => 't.course_id = "' . $Course['course_id'] . '" and lesson_status = "pass" and lesson_active = "y"'.' AND gen_id="'.$gen->gen_id.'"',
 									'group' => 'user_id'
 								));
 								$CurrentLesson = Lesson::model()->findAll(array(
@@ -160,9 +169,13 @@ EOD
 								$sumNotPrint = $sumNotPrint + $count_notprint;
 								$sumPercentage = $sumPrint*100/$sumPass;
 								
+								$text_gen = "";
+								if($gen->gen_id != 0){
+									$text_gen = " รุ่น ".$gen->gen_title;
+								}
 								?>
 								<tr>
-									<td><span style="padding-left: 60px; "><?= $Course['course_title'] ?></span></td>
+									<td><span style="padding-left: 60px; "><?= $Course['course_title'].$text_gen ?></span></td>
 									<td class="center"><?= $count_learn ?></td>
 									<td class="center"><?= $count_pass ?></td>
 									<td class="center"><?= $count_print ?></td>
@@ -170,6 +183,7 @@ EOD
 									<td class="center"><?= ($calPercentage>0)?round($calPercentage, 2).'%':0 ?></td>
 								</tr>
 								<?php
+							} // gen
 							}
 						} else {
 							echo 'no course yet.';

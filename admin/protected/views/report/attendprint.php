@@ -99,6 +99,26 @@ EOD
                $("#ReportUser_date_start").datepicker("option","maxDate", selected)
             }
         }); 
+
+        $("#ReportUser_course").change(function(){
+            var course_id = $("#ReportUser_course option:selected").val();
+            if(course_id != ""){
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo Yii::app()->createAbsoluteUrl("/Report/ajaxFindGen"); ?>',
+                    data: ({
+                        course_id: course_id,
+                    }),
+                    success: function(data) {
+                        if(data != ""){
+                            $("#ReportUser_gen_id").html(data);
+                        }
+                    }
+                });
+            }
+        });
+
+
 });
 </script>
 
@@ -140,7 +160,10 @@ EOD
         $criteria->compare('course_id',$_GET['ReportUser']['course']);
         $schedule = Schedule::model()->findAll($criteria);
         $listSchedules = CHtml::listData($schedule,'id','schedule_id');
-    }
+    }    
+
+    $listGen = array();
+    $listGen[0] = "ไม่มี";
 
     $this->widget('AdvanceSearchForm', array(
         'data'=>$model,
@@ -148,13 +171,14 @@ EOD
         'attributes'=>array(
             // array('name'=>'generation','type'=>'list','query'=>$model->getGenerationList()),
             array('name'=>'course','type'=>'list','query'=>$listCourse),
+            array('name'=>'gen_id','type'=>'list','query'=>$listGen),
             array('name'=>'schedule_id','type'=>'list','query'=>$listSchedules),
             array('name'=>'course_type','type'=>'list','query'=>$course_type_list),
            // array('name'=>'division_id','type'=>'listMultiple','query'=>$divisiondata),
             array('name'=>'department','type'=>'listMultiple','query'=>$departmentdata),
             //array('name'=>'station','type'=>'listMultiple','query'=>$stationdata),
             array('name'=>'date_start','type'=>'text'),
-            array('name'=>'date_end','type'=>'text'),
+            array('name'=>'date_end','type'=>'text'),            
             //array('name'=>'course_point','type'=>'text'),
         ),
     ));?>

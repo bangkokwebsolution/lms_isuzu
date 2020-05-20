@@ -41,7 +41,7 @@ class PasscoursLog extends CActiveRecord
 			array('pclog_date,period_start,period_end,type_register,station,department,division_id', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('pclog_id, pclog_userid, pclog_event, pclog_target, pclog_date, period_start, period_end,type_register,station,department,division_id', 'safe', 'on'=>'search'),
+			array('pclog_id, pclog_userid, pclog_event, pclog_target, pclog_date, period_start, period_end,type_register,station,department,division_id, gen_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -76,6 +76,7 @@ class PasscoursLog extends CActiveRecord
 			'department' => 'แผนก',
 			'station' => 'สถานี',
 			'type_register' => 'ประเภทสมาชิก',
+			'gen_id' => 'gen_id',
 			
 		);
 	}
@@ -134,6 +135,7 @@ class PasscoursLog extends CActiveRecord
 		$criteria->compare('pclog_userid',$this->pclog_userid);
 		$criteria->compare('pclog_event',$this->pclog_event,true);
 		$criteria->compare('pclog_target',$this->pclog_target);
+		$criteria->compare('gen_id',$this->gen_id);
 		// $criteria->compare('pclog_date',$this->pclog_date,true);
 
 		//check period start - end

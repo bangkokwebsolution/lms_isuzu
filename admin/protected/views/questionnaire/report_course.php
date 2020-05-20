@@ -100,11 +100,29 @@ EOD
                 $teacher_id = $course->teacher_id;
                 $header_id = $header->survey_header_id;
                 $course_id = $course->course_id;
-                ?>
+
+                $course_gen = CourseGeneration::model()->findAll(array(
+                    'condition' => 'course_id=:course_id AND active=:active ',
+                    'params' => array(':course_id'=>$course_id, ':active'=>"y"),
+                    'order' => 'gen_title ASC',
+                ));
+                if(empty($course_gen)){
+                    $course_gen[]->gen_id = 0;
+                }
+                foreach($course_gen as $key => $gen) {
+                    $text_gen = "";
+                    if($gen->gen_id != 0){
+                        $text_gen = " รุ่น ".$gen->gen_title;
+                        ?>
+                        <h4><?php echo $text_gen; ?></h4>
+                        <?php
+                    }
+                ?>                
                 <h2><?php echo $header->survey_name; ?></h2>
                 <?php echo CHtml::decode($header->instructions); ?>
                 <hr>
                 <?php
+
                 if (count($header->sections) > 0) {
 
                     $sections = $header->sections;
@@ -138,7 +156,7 @@ EOD
                                             foreach ($questionValue->choices as $choiceKey => $choiceValue) {
                                                 $label = $choiceValue->option_choice_name;
                                                 $sql = "SELECT COUNT(*) AS radiocount FROM q_answers_course INNER JOIN q_quest_ans_course ON q_answers_course.quest_ans_id = q_quest_ans_course.id ";
-                                                $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id . "' AND q_quest_ans_course.teacher_id='" . $teacher_id . "' ";
+                                                $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id . "' AND q_quest_ans_course.teacher_id='" . $teacher_id . "' AND q_quest_ans_course.gen_id='".$gen->gen_id."'";
 
                                                 if($schedule){
                                                     $sql .= ' AND (q_quest_ans_course.date >= "'.$schedule->training_date_start.'" AND q_quest_ans_course.date <= "'.$schedule->training_date_end.'")';
@@ -208,7 +226,7 @@ EOD
                                             foreach ($questionValue->choices as $choiceKey => $choiceValue) {
                                                 $label = $choiceValue->option_choice_name;
                                                 $sql = "SELECT COUNT(*) AS radiocount FROM q_answers_course INNER JOIN q_quest_ans_course ON q_answers_course.quest_ans_id = q_quest_ans_course.id ";
-                                                $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id . "' AND q_quest_ans_course.teacher_id='" . $teacher_id . "' ";
+                                                $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id . "' AND q_quest_ans_course.teacher_id='" . $teacher_id . "'  AND q_quest_ans_course.gen_id='".$gen->gen_id."'";
 
                                                 if($schedule){
                                                     $sql .= ' AND (q_quest_ans_course.date >= "'.$schedule->training_date_start.'" AND q_quest_ans_course.date <= "'.$schedule->training_date_end.'")';
@@ -291,7 +309,7 @@ EOD
 								SUM(CASE WHEN (answer_numeric=1) THEN 1 ELSE 0 END)*1 AS onem 
 								FROM q_answers_course INNER JOIN q_quest_ans_course ON q_answers_course.quest_ans_id = q_quest_ans_course.id ";
                                                 // $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id . "' AND q_quest_ans_course.teacher_id='" . $teacher_id . "' ";
-                                $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id."'";
+                                $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id."' AND q_quest_ans_course.gen_id='".$gen->gen_id."'";
                                 
                                                 if(!empty($teacher_id)){
                                                     $sql .= " AND q_quest_ans_course.teacher_id='" . $teacher_id . "' ";
@@ -362,6 +380,8 @@ EOD
 
 
 							", CClientScript::POS_END);
+
+
                                         }
                                         ?>
                                     </div>
@@ -421,7 +441,7 @@ EOD
                         <?php
                     }
                 }
-
+            } // gen
             }
             ?>
             <a href="<?= Yii::app()->createUrl('Questionnaire/excel_course', array('id' => $course->id,'schedule_id' => $schedule->schedule_id)); ?>"

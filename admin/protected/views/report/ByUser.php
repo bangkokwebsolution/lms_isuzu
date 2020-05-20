@@ -261,7 +261,29 @@ EOD
                             <th rowspan="2">ลำดับ1</th>
                             <th rowspan="2">ชื่อ - สกุล</th>
                             <th rowspan="2" class="center">อีเมลล์</th>
-                            <th colspan="<?= $course_count?>" class="center">รายหลักสูตร</th>
+                             <?php 
+                            $count_td = 0;
+                            foreach($course_online as $i => $course) {
+                                $cur_Lesson = Lesson::model()->findAll(array(
+                                        'condition' => 'lang_id = 1 and course_id ="' . $course['course_id'] . '" and active="y"' . $sqlLessonQuery,
+                                        'order' => 'lesson_no ASC' 
+                                    ));
+                                foreach($cur_Lesson as $lesson) {
+                                    $course_gen = CourseGeneration::model()->findAll(array(
+                                        'condition' => 'course_id=:course_id AND active=:active ',
+                                        'params' => array(':course_id'=>$lesson['course_id'], ':active'=>"y"),
+                                        'order' => 'gen_title ASC',
+                                    ));
+                                    if(empty($course_gen)){
+                                        $course_gen[]->gen_id = 0;
+                                    }
+                                    foreach ($course_gen as $key => $genn) {
+                                        $count_td++;
+                                    }
+                                }
+                            }
+                             ?>
+                            <th colspan="<?= $count_td?>" class="center">รายหลักสูตร</th>
                         </tr>
                         <tr>
                             <?php
@@ -274,9 +296,23 @@ EOD
                                     ));
                                     if($cur_Lesson) {
                                         foreach($cur_Lesson as $lesson) {
-                                            ?>
-                                            <th class="center"><?= $lesson['title'] ?></th>
-                                        <?php
+                                            $course_gen = CourseGeneration::model()->findAll(array(
+                                                'condition' => 'course_id=:course_id AND active=:active ',
+                                                'params' => array(':course_id'=>$lesson['course_id'], ':active'=>"y"),
+                                                'order' => 'gen_title ASC',
+                                            ));
+                                            if(empty($course_gen)){
+                                                $course_gen[]->gen_id = 0;
+                                            }
+                                            foreach ($course_gen as $key => $genn) {
+                                                $text_gen = "";
+                                                if($genn->gen_id != 0){
+                                                    $text_gen = " รุ่น ".$genn->gen_title;
+                                                }
+                                                ?>
+                                                <th class="center"><?= $lesson['title'].$text_gen ?></th>
+                                                <?php
+                                            }
                                         }
                                     }
                                 }
@@ -326,15 +362,29 @@ EOD
                                                     ));
                                                     if($curLesson) {
                                                         foreach($curLesson as $les) {
-                                                            $statusLearn = Learn::model()->find(array(
-                                                                'condition' => 'lesson_active = "y" and user_id = "' . $user['id'] . '" and lesson_id = "' . $les['id'] . '"' . $startdate . $enddate .$startdate_schedule .$enddate_schedule,
-                                                                'alias' => 'learn'
-                                                            ));
-                                                            $statusArray = array('learning'=>'<b style="color: green;">กำลังเรียน</b>', 'pass' => '<b style="color: blue;">ผ่าน</b>','notlearn'=>'<b style="color: red;">ยังไม่เรียน</b>');
-                                                            ?>
-                                                            <td class="center"><?= ($statusLearn['lesson_status']==null)?$statusArray['notlearn']:$statusArray[$statusLearn['lesson_status']] ?> </td>
-                                                            <?php
-                                                        }
+                                                            $course_gen = CourseGeneration::model()->findAll(array(
+                                                'condition' => 'course_id=:course_id AND active=:active ',
+                                                'params' => array(':course_id'=>$lesson['course_id'], ':active'=>"y"),
+                                                'order' => 'gen_title ASC',
+                                            ));
+                                                            if(empty($course_gen)){
+                                                                $course_gen[]->gen_id = 0;
+                                                            }
+                                                            foreach ($course_gen as $key => $genn) {
+                                                                $text_gen = "";
+                                                                if($genn->gen_id != 0){
+                                                                    $text_gen = " รุ่น ".$genn->gen_title;
+                                                                }
+                                                                $statusLearn = Learn::model()->find(array(
+                                                                    'condition' => 'lesson_active = "y"and gen_id="'.$genn->gen_id.'" and user_id = "' . $user['id'] . '" and lesson_id = "' . $les['id'] . '"' . $startdate . $enddate .$startdate_schedule .$enddate_schedule,
+                                                                    'alias' => 'learn'
+                                                                ));
+                                                                $statusArray = array('learning'=>'<b style="color: green;">กำลังเรียน</b>', 'pass' => '<b style="color: blue;">ผ่าน</b>','notlearn'=>'<b style="color: red;">ยังไม่เรียน</b>');
+                                                                ?>
+                                                                <td class="center"><?= ($statusLearn['lesson_status']==null)?$statusArray['notlearn']:$statusArray[$statusLearn['lesson_status']] ?> </td>
+                                                                <?php
+                                                        } // gen
+                                                    }
                                                     }else{ 
                                                         ?>
                                                         <td>

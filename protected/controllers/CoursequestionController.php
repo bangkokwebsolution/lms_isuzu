@@ -704,8 +704,9 @@ class CoursequestionController extends Controller
     }
 
     public function actiondeleteTemp($lesson_id=null){
-        $lesson_model = Lesson::model()->findByPk($lesson_id);
-        $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+        $course_model = CourseOnline::model()->findByPk($lesson_id);
+        $gen_id = $course_model->getGenID($course_model->course_id);
+        
         TempCourseQuiz::model()->deleteAll(array(
             'condition' => "user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id",
             'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $lesson_id, ':gen_id'=>$gen_id)

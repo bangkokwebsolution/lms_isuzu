@@ -33,7 +33,7 @@ class Passcours extends AActiveRecord
 		return array(
 			array('passcours_cours, passcours_user', 'numerical', 'integerOnly'=>true),
 			array('passcours_date, user_name, cours_name, news_per_page,page_false', 'safe'),
-			array('cate_title, cours_name, user_name, passcours_id, passcours_cours,passcours_cates, passcours_user, passcours_date,division_id,department,station,type_register', 'safe', 'on'=>'search'),
+			array('cate_title, cours_name, user_name, passcours_id, passcours_cours,passcours_cates, passcours_user, passcours_date,division_id,department,station,type_register, gen_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,6 +46,7 @@ class Passcours extends AActiveRecord
 			'user'=>array(self::BELONGS_TO, 'User', 'passcours_user'),
 			'register'=>array(self::BELONGS_TO, 'RegistrationForm', 'passcours_user'),
 			'Period' => array(self::HAS_MANY, 'CoursePeriod', array( 'id_course' => 'passcours_cours' )),
+			'gen'=>array(self::BELONGS_TO, 'CourseGeneration', 'gen_id'),
 		);
 	}
 
@@ -64,7 +65,8 @@ class Passcours extends AActiveRecord
 			'division_id' => 'ฝ่าย',
 			'department' => 'แผนก',
 			'station' => 'สถานี',
-			'type_register' => 'ประเภทผู้ใช้งาน'
+			'type_register' => 'ประเภทผู้ใช้งาน',
+			'gen_id' => 'รุ่น'
 
 		);
 	}
@@ -130,6 +132,10 @@ class Passcours extends AActiveRecord
 			$criteria->compare('passcours_cours', $this->passcours_cours);
 		}
 
+		// if(isset($this->gen_id) && $this->gen_id != null) {
+			$criteria->compare('gen_id', $this->gen_id);
+		// }
+
 		//check period start - end
 		if(isset($this->period_start) && $this->period_start != null) {
 			$criteria->addCondition('passcours_date >= "' . date('Y-m-d 00:00:00', strtotime($this->period_start)) . '"');
@@ -170,6 +176,8 @@ class Passcours extends AActiveRecord
 
 		$criteria->compare('course_title', $this->cours_name, true);
 		$criteria->compare('passcours_id', $this->passcours_id, true);
+		$criteria->compare('gen_id', $this->gen_id, true);
+
 
 		$poviderArray = array('criteria'=>$criteria);
 
@@ -204,6 +212,7 @@ class Passcours extends AActiveRecord
 				'params' => array(
 					'CourseId' => $this->passcours_cours,
 					'UserId' => $this->passcours_user,
+					'gen_id' => $this->gen_id,
 					'CertificateType' => $CertificateType,
 					'Download' => true,
 				),
@@ -227,6 +236,7 @@ class Passcours extends AActiveRecord
 				'params' => array(
 					'CourseId' => $this->passcours_cours,
 					'UserId' => $this->passcours_user,
+					'gen_id' => $this->gen_id,
 					'CertificateType' => $CertificateType,
 				),
 				'target' => '_blank',
@@ -248,6 +258,7 @@ class Passcours extends AActiveRecord
 				'submit' => array('//PassCpd/PrintCertificate/'),
 				'params' => array(
 					'CourseId' => $this->passcours_cours,
+					'gen_id' => $this->gen_id,
 					'UserId' => $this->passcours_user,
 					'CertificateType' => $CertificateType,
 				),

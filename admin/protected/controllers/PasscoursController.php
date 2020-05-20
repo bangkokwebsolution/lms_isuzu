@@ -126,14 +126,22 @@ class PasscoursController extends Controller
 		//get all $_POST data
 		$PassCoursId = Yii::app()->request->getPost('CourseId');
 		$UserId = Yii::app()->request->getPost('UserId');
+		$gen_id = Yii::app()->request->getPost('gen_id');
 		$CertificateType = Yii::app()->request->getPost('CertificateType');
 		$Download = Yii::app()->request->getPost('Download');
 		$model = Passcours::model()->find(array(
-			'condition'=>'passcours_cours=:id AND passcours_user=:user','params' => array(
+			'condition'=>'passcours_cours=:id AND passcours_user=:user AND gen_id=:gen_id',
+			'params' => array(
 				':id' => $PassCoursId,
-				':user' => $UserId
+				':user' => $UserId,
+				':gen_id' => $gen_id
 			)
 	    ));
+	    // var_dump($model); exit();
+	    // var_dump($PassCoursId); 
+	    // var_dump($UserId); 
+	    // var_dump($gen_id); 
+	    // exit();
 	    //set default text + data
 		$PrintTypeArray = array( 
             '2' => array( 'text' => 'ผู้ทำบัญชีรหัสเลขที่', 'id' => $model->user->bookkeeper_id ), 
@@ -155,8 +163,8 @@ class PasscoursController extends Controller
 
         //get start & end learn date of current course
         $StartDateLearnThisCourse = Learn::model()->with('LessonMapper')->find(array(
-            'condition' => 'learn.user_id=:user_id AND learn.course_id =:course_id ',
-            'params' => array(':user_id' => $UserId,':course_id'=>$PassCoursId),
+            'condition' => 'learn.user_id=:user_id AND learn.course_id =:course_id AND learn.gen_id=:gen_id',
+            'params' => array(':user_id' => $UserId,':course_id'=>$PassCoursId, ':gen_id'=>$gen_id),
             'alias' => 'learn',
             'order' => 'learn.create_date ASC',
         ));
@@ -169,11 +177,11 @@ class PasscoursController extends Controller
         //get date passed final test **future change
         $CourseDatePass = null;
         $CoursePassedModel = Coursescore::model()->find(array(
-            'condition' => 'user_id = ' . $UserId . ' AND course_id = ' . $PassCoursId . ' AND score_past = "y"',
+            'condition' => 'user_id = ' . $UserId . ' AND course_id = ' . $PassCoursId . ' AND score_past = "y" AND gen_id="'.$gen_id.'"',
             'order' => 'create_date ASC'
         ));
         //Pass Course Date
-        $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId));
+        $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId.' AND gen_id="'.$gen_id.'"'));
         $CourseDatePass = $CourseDatePassModel->passcours_date;
         
         $identification= null;
@@ -186,7 +194,7 @@ class PasscoursController extends Controller
 
          // $CourseDatePass = null;
         $CoursePassedModel = Coursescore::model()->find(array(
-            'condition' => 'user_id = ' . $UserId . ' AND course_id = ' . $PassCoursId . ' AND score_past = "y"',
+            'condition' => 'user_id = ' . $UserId . ' AND course_id = ' . $PassCoursId . ' AND score_past = "y" AND gen_id="'.$gen_id.'"',
             'order' => 'create_date ASC'
         ));
 

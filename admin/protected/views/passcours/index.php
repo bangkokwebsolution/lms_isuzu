@@ -232,7 +232,30 @@ EOD
 							'name'=>'passcours_cours',
 							'filter'=>CHtml::activeTextField($model,'cours_name'),
 							'type' => 'raw',
-							'value'=>'$data->CourseOnlines->course_title',
+							'value' => function($data) {
+								$text_gen = "";
+								if($data->gen_id != 0){
+									$text_gen = " รุ่น ".$data->gen->gen_title;
+								}
+
+
+								return $data->CourseOnlines->course_title;
+							},
+							// 'value'=>'$data->CourseOnlines->course_title',
+						),
+						array(
+							'name'=>'gen_id',
+							'type' => 'raw',
+							'value' => function($data) {
+								$text_gen = "";
+								if($data->gen_id != 0){
+									$text_gen = "รุ่น ".$data->gen->gen_title;
+								}
+
+
+								return $text_gen;
+							},
+							// 'value'=>'$data->CourseOnlines->course_title',
 						),
 						// array(
 						// 	'header'=>'ฝ่าย',

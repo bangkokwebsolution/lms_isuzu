@@ -36,11 +36,12 @@ class ReportUser extends CFormModel {
     public $station;
     public $course_type;
     public $schedule_id;
+    public $gen_id;
 
     public function rules()
     {
         return array(
-            array('generation,typeOfUser,dateRang,date_start,date_start_lastuse,date_end,date_end_lastuse,course,lesson,nameSearch,nameIdenSearch,university,company,categoryUniversity,categoryCompany,company_id,division_id,position_id,type_user,department,occupation,email,identification,status_login,status_learn,station,course_type,schedule_id', 'safe'),
+            array('generation,typeOfUser,dateRang,date_start,date_start_lastuse,date_end,date_end_lastuse,course,lesson,nameSearch,nameIdenSearch,university,company,categoryUniversity,categoryCompany,company_id,division_id,position_id,type_user,department,occupation,email,identification,status_login,status_learn,station,course_type,schedule_id, gen_id', 'safe'),
         );
     }
 
@@ -70,7 +71,9 @@ class ReportUser extends CFormModel {
             'department'=>'แผนก',
             'station'=>'สถานี',
             'course_type'=>'ประเภทหลักสูตร',
-            'schedule_id' => 'ตารางเรียน'
+            'schedule_id' => 'ตารางเรียน',
+            'gen_id' => 'รุ่น',
+
         );
     }
 

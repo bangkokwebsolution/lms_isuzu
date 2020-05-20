@@ -1303,6 +1303,21 @@ public function actionListSchedule(){
     echo ($data);
 }
 
+ public function actionAjaxFindGen(){
+        $course_id = $_POST['course_id'];
+        $gen_course = CourseGeneration::model()->findAll(array(
+            'condition' => 'course_id=:course_id and active=:active',
+            'params' => array(':course_id' => $course_id, ':active'=>'y'),
+            'order'=>'gen_title ASC',
+        ));
+        if(!empty($gen_course)){
+            foreach ($gen_course as $key => $value) {
+                echo "<option value='".$value->gen_id."'>".$value->gen_title."</option>";
+            }
+        }
+
+    }
+
 public function actionListLesson(){
 
     $course_id  = $_POST['course_id'];
@@ -1552,4 +1567,5 @@ public  function actionReport_list(){
           'teacher'=>$teacher,
       ));
     }
+
 }

@@ -374,15 +374,46 @@ EOD
                             <th rowspan="2">ลำดับ</th>
                             <th rowspan="2">ชื่อ - สกุล</th>
                             <th rowspan="2">อีเมลล์</th>
-                            <th colspan="<?= $lesson_count?>" class="center">สถานะผู้เรียนรายวิชา</th>
+                            <?php 
+                            $count_td = 0;
+                            foreach($lesson_online as $lesson) {
+                                $course_gen = CourseGeneration::model()->findAll(array(
+                                    'condition' => 'course_id=:course_id AND active=:active ',
+                                    'params' => array(':course_id'=>$lesson['course_id'], ':active'=>"y"),
+                                    'order' => 'gen_title ASC',
+                                ));
+                                if(empty($course_gen)){
+                                    $course_gen[]->gen_id = 0;
+                                }
+                                foreach ($course_gen as $key => $genn) {
+                                    $count_td++;
+                                }
+                            }
+                             ?>
+                            <th colspan="<?= $count_td?>" class="center">สถานะผู้เรียนรายวิชา</th>
                         </tr>
                         <tr>
                             <?php
-                                foreach($lesson_online as $lesson) {
-                                   ?>
-                                <th style="writing-mode: tb-rl;"><?= $lesson['title'] ?></th>
-                                   <?php
+                            foreach($lesson_online as $lesson) {
+                                $course_gen = CourseGeneration::model()->findAll(array(
+                                    'condition' => 'course_id=:course_id AND active=:active ',
+                                    'params' => array(':course_id'=>$lesson['course_id'], ':active'=>"y"),
+                                    'order' => 'gen_title ASC',
+                                ));
+
+                                if(empty($course_gen)){
+                                    $course_gen[]->gen_id = 0;
                                 }
+                                foreach ($course_gen as $key => $genn) {
+                                    $text_gen = "";
+                                    if($genn->gen_id != 0){
+                                        $text_gen = " รุ่น ".$genn->gen_title;
+                                    }
+                                    ?>
+                                    <th style="writing-mode: tb-rl;"><?= $lesson['title'].$text_gen ?></th>
+                                    <?php
+                                }
+                            }
                             ?>
                         </tr>
                     </thead>
@@ -414,14 +445,29 @@ EOD
                                         <?php
                                            if($lesson_online) {
                                                 foreach($lesson_online as $lesson) {
-                                                    $statusLearn = Learn::model()->with('les')->find(array(
-                                                        'condition' => 'lesson_active = "y" and user_id ="'.$user['id'].'" and lesson_id ="'. $lesson['id'] .'"' . $startdate . $enddate ,
-                                                        'alias' => 'learn'
+                                                    $course_gen = CourseGeneration::model()->findAll(array(
+                                                        'condition' => 'course_id=:course_id AND active=:active ',
+                                                        'params' => array(':course_id'=>$lesson['course_id'], ':active'=>"y"),
+                                                        'order' => 'gen_title ASC',
                                                     ));
-                                                    $statusArray = array('learning'=>'<b style="color: green;">กำลังเรียน</b>', 'pass' => '<b style="color: blue;">ผ่าน</b>','notlearn'=>'<b style="color: red;">ยังไม่เรียน</b>');
-                                                    ?>
-                                                    <td class="center"><?= ($statusLearn['lesson_status']==null)?$statusArray['notlearn']:$statusArray[$statusLearn['lesson_status']] ?></td>
-                                                    <?php
+
+                                                    if(empty($course_gen)){
+                                                        $course_gen[]->gen_id = 0;
+                                                    }
+                                                    foreach ($course_gen as $key => $genn) {
+                                                        $text_gen = "";
+                                                        if($genn->gen_id != 0){
+                                                            $text_gen = " รุ่น ".$genn->gen_title;
+                                                        }
+                                                        $statusLearn = Learn::model()->with('les')->find(array(
+                                                            'condition' => 'lesson_active = "y" and gen_id="'.$genn->gen_id.'" and user_id ="'.$user['id'].'" and lesson_id ="'. $lesson['id'] .'"' . $startdate . $enddate ,
+                                                            'alias' => 'learn'
+                                                        ));
+                                                        $statusArray = array('learning'=>'<b style="color: green;">กำลังเรียน</b>', 'pass' => '<b style="color: blue;">ผ่าน</b>','notlearn'=>'<b style="color: red;">ยังไม่เรียน</b>');
+                                                        ?>
+                                                        <td class="center"><?= ($statusLearn['lesson_status']==null)?$statusArray['notlearn']:$statusArray[$statusLearn['lesson_status']] ?></td>
+                                                        <?php
+                                                    } // gen
                                                 }
                                            }
                                         ?>

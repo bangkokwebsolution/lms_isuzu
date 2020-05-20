@@ -4189,8 +4189,8 @@ public function checkStepLesson($lesson){
             if ($checkHaveCourseTest) { // สอบ final
                 $num_step++; 
                 $score_final = Coursescore::model()->find(array( // หลังเรียน ต้องผ่าน
-                    'condition' => 'course_id=:course_id AND gen_id=:gen_id AND user_id=:user_id AND score_past=:score_past',
-                    'params' => array(':course_id'=>$course->course_id, ':gen_id'=>$gen_id, ':user_id'=>Yii::app()->user->id, ':score_past'=>'y'),
+                    'condition' => 'course_id=:course_id AND gen_id=:gen_id AND user_id=:user_id AND score_past=:score_past AND active=:active',
+                    'params' => array(':course_id'=>$course->course_id, ':gen_id'=>$gen_id, ':user_id'=>Yii::app()->user->id, ':score_past'=>'y', ':active'=>'y'),
                 ));
                 if($score_final != ""){
                     $step_pass++;
