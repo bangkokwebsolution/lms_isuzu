@@ -178,7 +178,37 @@ if($model){
 <?php } ?>
 <link href="<?php echo $themeBaseUrl; ?>/plugins/video-js/video-js.css" rel="stylesheet" type="text/css">
 <script src="<?php echo $themeBaseUrl; ?>/plugins/video-js/video.js"></script>
+<script type="text/javascript">
+    function getDuration(id){
 
+    var myVideoPlayer = document.getElementById('video_player'+id);
+    var duration = myVideoPlayer.duration;
+    var time = '';
+
+    var lang = "<?= Yii::app()->session['lang']?>";
+
+    if(lang == 1 ){
+        var leng = 'Length';
+        var min = 'Minutes';
+    }else{  
+        var leng = 'ความยาว';
+        var min = 'นาที';
+    }
+
+    if(!isNaN(duration)){
+        var sec_num = parseInt(duration);
+        var hours   = Math.floor(sec_num / 3600);
+        var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+        var seconds = sec_num - (hours * 3600) - (minutes * 60);
+        if (hours   < 10) {hours   = "0"+hours;}
+        if (minutes < 10) {minutes = "0"+minutes;}
+        if (seconds < 10) {seconds = "0"+seconds;}
+        time = '<i class="far fa-clock"></i> '+hours+':'+minutes+':'+seconds+' '+min;
+    } 
+    $("#lblduration-"+id).html(time);
+    console.log(time);
+}
+</script>
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-main">
@@ -539,6 +569,14 @@ if($model){
                                                                     'params'=>array(':lesson_id'=>$lessonListValue->id,':user_id'=>Yii::app()->user->id,':status'=>'y', ':gen_id'=>$gen_id)
                                                                 ));
                                                                 if($lessonListValue->type == 'vdo'){
+                                                                    ?>
+                                                                    <div class="stepcoursediv">
+                                                                        <div>
+                                                                            <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?>
+                                                                            </span><?php echo $label->label_gotoLesson; ?>
+                                                                        </div>
+                                                                    </div>
+                                                                    <?php
                                                                     foreach ($lessonListValue->files as $les) {
                                                                         if ($isChecklesson) {
                                                                             if(!$prelearn){
@@ -581,7 +619,7 @@ if($model){
                                                                                     $learnlink = 'javascript:void(0);';
                                                                                     $learnalert = 'alertswalpretest();';    
                                                                                 }else{
-                                                                                    $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id, 'gen'=>$lessonListValue->CourseOnlines->getGenID($lessonListValue->CourseOnlines->course_id)));
+                                                                                    $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
                                                                                     $learnalert = '';    
                                                                                 }
                                                                             }
@@ -598,8 +636,12 @@ if($model){
                                                                             $statusValue = '<span class="label label-success" >'.$label->label_learnPass.'</span>';
                                                                         }
                                                                         ?>
-                                                                        <div class="stepcoursediv">
-                                                                            <div> <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?> </span><?php echo $label->label_gotoLesson; ?></div></div>
+                                                                        <!-- <div class="stepcoursediv"> -->
+                                                                        <!-- <div>
+                                                                                <span class="stepcourse"><?php echo $label->label_step; ?> 
+                                                                            </span><?php echo $label->label_gotoLesson; ?>
+                                                                        </div> -->
+                                                                        <!-- </div> -->
                                                                             <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
                                                                                 <li class="list-group-item ">
                                                                                    <?php if($step == 2){ ?>
@@ -630,7 +672,7 @@ if($model){
                                                                                 $learnlink = 'javascript:void(0);';
                                                                                 $learnalert = 'alertswalpretest();';
                                                                             } else{
-                                                                                $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id, 'gen'=>$lessonListValue->CourseOnlines->getGenID($lessonListValue->CourseOnlines->course_id)));
+                                                                                $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
                                                                                 $learnalert = '';    
                                                                             }
                                                                             $learnFiles = Helpers::lib()->checkLessonFile($les,$learnModel->learn_id);
@@ -690,7 +732,7 @@ if($model){
                                                                                             $learnlink = 'javascript:void(0);';
                                                                                             $learnalert = 'alertswalpretest();';    
                                                                                         }else{
-                                                                                            $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id, 'gen'=>$lessonListValue->CourseOnlines->getGenID($lessonListValue->CourseOnlines->course_id)));
+                                                                                            $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
                                                                                             $learnalert = '';    
                                                                                         }
                                                                                     }
@@ -730,7 +772,7 @@ if($model){
                                                                                                     $learnlink = 'javascript:void(0);';
                                                                                                     $learnalert = 'alertswalpretest();';
                                                                                                 } else{
-                                                                                                    $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id, 'gen'=>$lessonListValue->CourseOnlines->getGenID($lessonListValue->CourseOnlines->course_id)));
+                                                                                                    $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
                                                                                                     $learnalert = '';    
                                                                                                 }
                                                                                             }else{
@@ -782,6 +824,12 @@ if($model){
                                                                                                 $alert = '';
                                                                                             }
                                                                                             ?>
+                                                                        <div class="stepcoursediv">
+                                                                            <div>
+                                                                                <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?>
+                                                                                </span><?php echo $label->label_testPost; ?>
+                                                                            </div>
+                                                                        </div>
                                                                                             <li class="list-group-item">
                                                                                                 <?php if($step == 3){ ?>
                                                                                                     <!-- <div class="pt-now"> You are here</div> -->
@@ -1508,35 +1556,5 @@ $(function () {
 //     $min = "นาที";
 // }
 // }
-
-
-function getDuration(id){
-
-    var myVideoPlayer = document.getElementById('video_player'+id);
-    var duration = myVideoPlayer.duration;
-    var time = '';
-
-    var lang = "<?= Yii::app()->session['lang']?>";
-
-    if(lang == 1 ){
-        var leng = 'Length';
-        var min = 'Minutes';
-    }else{  
-        var leng = 'ความยาว';
-        var min = 'นาที';
-    }
-
-    if(!isNaN(duration)){
-        var sec_num = parseInt(duration);
-        var hours   = Math.floor(sec_num / 3600);
-        var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-        var seconds = sec_num - (hours * 3600) - (minutes * 60);
-        if (hours   < 10) {hours   = "0"+hours;}
-        if (minutes < 10) {minutes = "0"+minutes;}
-        if (seconds < 10) {seconds = "0"+seconds;}
-        time = '<i class="far fa-clock"></i> '+hours+':'+minutes+':'+seconds+' '+min;
-    } 
-    $("#lblduration-"+id).html(time);
-}
 
 </script>
