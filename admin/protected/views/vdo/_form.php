@@ -66,8 +66,13 @@ function typeVdo(val){
 		            'validateOnSubmit'=>true
 		        ),
 		        'errorMessageCssClass' => 'label label-important',
-		        'htmlOptions' => array('enctype' => 'multipart/form-data')
-			)); ?>
+		        'htmlOptions' => array('enctype' => 'multipart/form-data'),
+        //         'pluginOptions'=>array(
+        // 'allowedFileExtensions'=>array('mp4', 'avi', 'mpge'),
+        // 'maxFileSize' => 1024 * 1024 * 2,)
+			)); 
+     
+            ?>
 				<div class="row">
 					<?php echo $form->labelEx($model,'vdo_title'); ?>
 					<?php echo $form->textField($model,'vdo_title',array('size'=>60,'maxlength'=>255,'class'=>'span7')); ?>
@@ -84,8 +89,8 @@ function typeVdo(val){
                 </div>
                 <!-- thumbnail -->
                 <!-- <?php echo $form->labelEx($model, 'vdo_thumbnail'); ?> -->
-                รูปภาพหน้าปกวีดีโอ
-                <div class="fileupload fileupload-new" data-provides="fileupload">
+              <!--   รูปภาพหน้าปกวีดีโอ -->
+       <!--          <div class="fileupload fileupload-new" data-provides="fileupload">
                     <div class="input-append">
                         <div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span>
                             </div>
@@ -97,15 +102,15 @@ function typeVdo(val){
                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
                         </div>
                     </div>
-                    <?php echo $form->error($model, 'vdo_thumbnail'); ?>
+                    <?php echo $form->error($model, 'vdo_thumbnail'); ?> -->
                
-                <div class="row">
+               <!--  <div class="row">
 				     <font color="#990000">
 				      <?php echo $this->NotEmpty();?> ไฟล์รูปภาพนามสกุลต่างๆ
 				     </font>
 				<br>
 				<br>
-			    </div>
+			    </div> -->
                
 				<!-- upload vdo -->
                 <div class="vdo-file">
@@ -117,13 +122,56 @@ function typeVdo(val){
                                     <span class="btn btn-default btn-file"><span class="fileupload-new">    Select file</span>
                                             <?php echo $form->fileField($model, 'vdo_path', array('id' => 'wizard-picture')); ?>
                                     <span class="fileupload-exists">Change</span>
-                                            <?php echo $form->fileField($model, 'vdo_path'); ?>
+                                            <?php echo $form->fileField($model, 'vdo_path',array('class' => 'name_file')); ?>
                                     </span>
                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
                         </div>
                     </div>
                     <?php echo $form->error($model, 'vdo_path'); ?>
                 </div>
+                <?php
+        
+                if(!$model->isNewRecord){
+                    if (!empty($model)) {
+                        if ($model->vdo_type =='link') {
+                            $vdoName = $model->link_vdo;
+                            $new_link = str_replace("watch?v=", "embed/", $vdoName);
+                            $show = '<iframe class="embed-responsive-item" width="40%" height="300"  src="' . $new_link . '" allowfullscreen style="box-shadow:1px 4px 6px #767676"></iframe>';
+                             echo $show;
+                             $href = 'href="' . $vdo->vdo_path . '" target="_blank"';
+                         
+                        }else{
+           
+                      $criteria= new CDbCriteria;
+                      $criteria->compare('vdo_id',$model->vdo_id);
+                      $criteria->compare('active','y');
+                      $criteria->compare('lang_id',$model->lang_id);
+                      $Vdos = Vdo::model()->findAll($criteria);
+                       foreach ($Vdos as $vdo) {
+                            ?>
+                            <video class="video-js" poster="<?php echo Yii::app()->baseUrl . "/uploads/$vdo->vdo_thumbnail"; ?>" controls preload="auto" style="width: 40%; height: 300px;">
+                                <!-- video show-->
+                                <?php
+                                if (file_exists(YiiBase::getPathOfAlias('webroot') . '/../uploads/' . $vdo->vdo_path)) {
+                                    $file_name = Yii::app()->baseUrl . '/../uploads/' . $vdo->vdo_path;
+                             
+                                } 
+                                $show = "<source src=" . $file_name . " type='video/mp4'>";
+                                echo $show;
+                                ?>
+                                <!-- video show-->
+                                <p class="vjs-no-js">
+                                    To view this video please enable JavaScript, and consider upgrading to a web browser that
+                                    <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                                </p>
+                            </video>
+                       <?php }
+                   }
+                       
+                    }
+
+                }
+                ?>
                 <div class="row vdo-file">
 				     <font color="#990000">
 				      <?php echo $this->NotEmpty();?> ไฟล์ขนาดไม่เกิน 100 Mb
@@ -136,6 +184,7 @@ function typeVdo(val){
                     <?php echo $form->labelEx($model,'link_vdo'); ?>
 					<?php echo $form->textField($model,'link_vdo',array('size'=>60,'maxlength'=>255,'class'=>'span7')); ?>
 					<?php echo $form->error($model,'link_vdo'); ?>
+
                 </div>
                 <div class="row vdo-link"  style="display: none;">
 				     <font color="#990000">
