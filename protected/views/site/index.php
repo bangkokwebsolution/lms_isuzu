@@ -146,7 +146,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
             <?php
             $criteriaimg = new CDbCriteria;
             $criteriaimg->compare('active', y);
-            $criteriaimg->compare('lang_id', 1);
+            $criteriaimg->compare('lang_id',Yii::app()->session['lang']);
         // $criteriaimg->order = 'update_date  DESC';
             $image = Imgslide::model()->findAll($criteriaimg);
             ?>
