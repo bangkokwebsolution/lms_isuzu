@@ -3,7 +3,7 @@
         /*background-image: url("/lms_airasia/admin/protected/../../uploads/certificate/5ea13923b42b7_13434763.png");*/
         background-image: url('<?= Yii::app()->basePath."/../../uploads/certificate/".$model['bgPath']; ?>');
         background-position: 0 0;
-        background-image-resize: 1;
+        background-image-resize: 4;
         background-repeat: no-repeat;
         font-family: 'coco';
     }
@@ -17,6 +17,7 @@
         /*background-color: red;*/
     }
     .b {}
+    .size12 { font-size: 12px; }
     .size16 { font-size: 16px; }
     .size18 { font-size: 18px; }
     .size20 { font-size: 20px; }
@@ -32,53 +33,69 @@
     .dark- { color: #262262; }
     . { color: #4E3892; }
     .dark-yellow { color: #EBA022; }
+    .red { color: #d05951; }
 </style>
 
-<?php if($model['pageSide']=='1'){ ?>
-    <div class="b size32 " style="position:absolute; top: 70mm;">
-        วุฒิบัตรฉบับนี้ให้ไว้เพื่อแสดงว่า
+<?php if($model['pageSide']=='1'){  // แนวตั้ง
+    ?>
+    <div class="b size36" style="position:absolute; top: 93mm;">
+        Mr.Tester  Tester
     </div>
-
-    <div class="b size32 " style="position:absolute; top: 85mm; font-weight: bold;">
-        <?= $model['fulltitle'] ?>
+    <div style="position:absolute; top: 120mm;">
+     <div class="b size40 red">COURSE TITLE</div>
     </div>
-    <div class="b size32 " style="position:absolute; top: 100mm;">
-        ได้รับการอบรมครบถ้วนตามหลักสูตร
-        <div class="b size30 " style="position:absolute; top: 115mm; font-weight: bold;">
-            <?= $model['courseTitle'] ?>
-        </div>
+    <div style="position:absolute; top: 150mm; left:30mm;">
+     <div class="size16">10th December 2020</div>
+    </div> 
+    <div style="position:absolute; top: 177mm;">
+       <div class="size12">
+           This course is intended to provide with understanding of IMO 2020 Global Sulphur regulation and the ship implementation plan in accorddance with the regulation 14.1.3 of MARPOL Annex VI.
+       </div>
+    </div> 
 
-        <div class="b size26 " style="position:absolute; top: 200mm;">
-            ให้ไว้ ณ วันที่ <?= Helpers::lib()->changeFormatDate(date('Y-m-d')) ?>
-        </div>
-
-        <!-- <img src="" id="tableBanner" /> -->
-        <div style="position:absolute; top: 215mm;" >
-            <img src="<?= Yii::app()->basePath."/../../uploads/signature/".$model['renderSign']; ?>">
-        </div>
-        <div style="position:absolute; top: 250mm;" >
-            <span class="b size26 "><?php echo $model['nameSign']; ?></span>
-        </div>
-        <div style="position:absolute; top: 260mm;" >
-            <div class="b size26 "><?php echo $model['positionSign']; ?></div>
-        </div>
-        <div class="b size26 " style="position:absolute; top: 270mm; ">
-            สมาคมบริษัทหลักทรัพย์ไทย
-        </div>
+    <?php if ($model['renderSign']) {?>
+    <div style="position:absolute; top: 190mm; left: -170px;" >
+         <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign']; ?>" >
+        <!-- <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/sign_border.png"; ?>" > -->
+    </div>
+<?php } ?>
+<?php if ($model['renderSign2']) {?>
+<div style="position:absolute; top: 190mm; right: -170px;" >
+    <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign2']; ?>" >
+    <!-- <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/sign_border.png"; ?>" > -->
+</div>
+<?php } ?>
         <?php
     } else {
         ?>
 
-        <!-- $model['pageSide']=='2' -->
-        <div class="b size36 " style="position:absolute; top: 120mm; left: 60px;">
-            Mr.Tester  Tester
-        </div>
-        <div class="size40 black" style="position:absolute; top: 85mm; left: 60px;">
-           <div class="b size40 purple">"COURSE TITLE"</div>
+        <div style="position:absolute; top: 70mm;">
+           <div class="b size40 red">"COURSE TITLE"</div>
        </div>
 
+        <div class="b size36 " style="position:absolute; top: 115mm;">
+            Mr.Tester  Tester
+        </div>
 
-       <div class="size20 black" style="position:absolute; top: 158mm; left: 280px ">
+        <div style="position:absolute; top: 132mm;">
+         <div class="size12">
+             This course is intended to provide with understanding of IMO 2020 Global Sulphur regulation and the ship implementation plan in accorddance with the regulation 14.1.3 of MARPOL Annex VI.
+         </div>
+     </div> 
+
+<?php if ($model['renderSign']) {?>
+    <div style="position:absolute; top: 138mm;left: -130px;" >
+        <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign']; ?>" >
+    </div>
+<?php } ?>
+<?php if ($model['renderSign2']) {?>
+<div style="position:absolute; top: 138mm; right: -130px;" >
+    <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign2']; ?>" >
+    <!-- <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/sign_border.png"; ?>" > -->
+</div>
+<?php } ?>
+
+       <div class="size20 black" style="position:absolute; top: 177mm; left: 280px ">
            <div class="size20 black">3 - 4 May 2018</div>
        </div>
 
@@ -102,17 +119,8 @@
  }
  ?>
 
-<!-- Signature********************
--->
-<?php if ($model['renderSign']) {?>
-    <div style="position:absolute; top: 140mm;left: -130px;" >
-        <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign']; ?>" >
-    </div>
-<?php } ?>
-<!-- 
-<div style="position:absolute; top: 135mm;left: 60px;" >
-    <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign2']; ?>" >
-</div> -->
+
+
 
 <!-- <div style="position:absolute; right: 90mm; top: 167mm;font-family: 'Trirong', serif;" >
     <span class="b size20 purple"><?php echo $model['nameSign']; ?></span>

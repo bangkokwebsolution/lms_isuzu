@@ -53,6 +53,7 @@ class CertificateController extends Controller
 		if(isset($_POST['Certificate']))
 		{
 			$model->attributes=$_POST['Certificate'];
+			$model->cert_text = $_POST['Certificate']['cert_text'];
 			$cert_background = Slim::getImages('cert_background');
 			$path =  Yii::app()->basePath."/../../uploads/certificate/";
 			
@@ -90,6 +91,7 @@ class CertificateController extends Controller
 		if(isset($_POST['Certificate']))
 		{
 			$model->attributes=$_POST['Certificate'];
+			$model->cert_text = $_POST['Certificate']['cert_text'];
 			$cert_background = Slim::getImages('cert_background');
 			$path =  Yii::app()->basePath."/../../uploads/certificate/";
 			if ($cert_background == false) {
@@ -102,6 +104,7 @@ class CertificateController extends Controller
 				}
 				$model->cert_background = Helpers::lib()->uploadImage($cert_background,$path);
 			}
+
 			if($model->save()){
 				if(Yii::app()->user->id){
 					Helpers::lib()->getControllerActionId($model->cert_id);
@@ -166,6 +169,8 @@ class CertificateController extends Controller
 				'condition' => 'passcours_user=:user_id AND passcours_cours=:course_id',
 				'params' => array(':user_id' => $user_id,':course_id' => $course_id)
 			));
+			$lastPasscourse = $CoursePassedModel->passcours_date;
+			
 			if($CoursePassedModel) {
 				$CourseDatePass = date('Y-m-d', strtotime($CoursePassedModel->passcours_date));
 			}
@@ -193,6 +198,8 @@ class CertificateController extends Controller
 			$setCertificateData = array(
 				'fulltitle' => $fullName,
 				'courseTitle' => $courseTitle,
+				'cert_text' => $model->cert_text,
+				'lastPasscourse' => $lastPasscourse,
 				// 'positionUser' => $position_title,
 				// 'companyUser' => $company_title,
 
@@ -211,7 +218,7 @@ class CertificateController extends Controller
 			);
 
 			require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
-			$mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
+			$mPDF = new \Mpdf\Mpdf(['orientation' => $pageFormat]);
 			$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('display', array('model'=>$setCertificateData), true), 'UTF-8', 'UTF-8'));
 			// $mPDF->Output();
 			// exit();
