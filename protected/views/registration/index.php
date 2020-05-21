@@ -1915,7 +1915,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
     </div>
 </div>
 
-<div class="row  mt-1 mb-1 form_name">
+<!-- <div class="row  mt-1 mb-1 form_name">
     <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?' File attachment Crew identification':'ไฟล์หนังสือประจำตัวลูกเรือ'; ?></strong></div>
     <div class="col-md-4">
         <div class="form-group">
@@ -1958,7 +1958,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
         ?>
     </div>
 </div>
-</div>
+</div> -->
 <div class="row  mt-1 mb-1 form_name">
     <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'File attachment identification':'ไฟล์สำเนาบัตรประชาชน'; ?></strong></div>
     <div class="col-md-4">
