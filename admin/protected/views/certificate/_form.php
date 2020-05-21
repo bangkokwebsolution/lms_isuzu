@@ -25,13 +25,18 @@ $formNameModel = 'Certificate';
                      'errorMessageCssClass' => 'label label-important',
                     'htmlOptions' => array('enctype' => 'multipart/form-data')
                 )); ?>
-                <p class="note">ค่าที่มี <?php echo $this->NotEmpty();?> จำเป็นต้องใส่ให้ครบ</p>
+                <p class="note">ค่าที่มี <?php echo $this->NotEmpty();?> จำเป็นต้องใส่ให้ครบ</p>                    
                     <div class="row">
                         <?php echo $form->labelEx($model,'cert_name'); ?>
                         <?php echo $form->textField($model,'cert_name',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
                         <?php echo $form->error($model,'cert_name'); ?>
                     </div>
-
+                    <div class="row">
+                        <?php echo $form->labelEx($model,'cert_text'); ?>
+                        <?php echo $form->textarea($model,'cert_text',array('row'=>10, 'class'=>'span8')); ?>
+                        <?php echo $form->error($model,'cert_text'); ?>
+                    </div>
+                    
                     <div class="row">
                         <?php echo $form->labelEx($model,'cert_background'); ?>
                         <div class="col-sm-5 col-offset-sm-4">
@@ -66,11 +71,11 @@ $formNameModel = 'Certificate';
                     $display[1] = 'รูปแบบแนวตั้ง';
                     $display[2] = 'รูปแบบแนวนอน';
                     ?>
-                    <!-- <div class="row">
+                    <div class="row">
                         <?php echo $form->labelEx($model,'cert_display'); ?>
                         <?php echo $form->dropDownList($model,'cert_display', $display, array('empty'=>'-- กรุณาเลือกรูปแบบแสดงผล --','class'=>'span8')); ?>
                         <?php echo $form->error($model,'cert_display'); ?>
-                    </div> -->
+                    </div>
 
                     <div class="row">
                         <?php echo $form->labelEx($model,'cert_number'); ?>

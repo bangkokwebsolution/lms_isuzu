@@ -58,7 +58,7 @@ class Certificate extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('sign_id', 'required'),
-			array('sign_id2', 'required'),
+			// array('sign_id2', 'required'),
 			array('sign_id , sign_id2, cert_hide, cert_hour, cert_display, create_by, update_by', 'numerical', 'integerOnly'=>true),
 			array('cert_number', 'length', 'max'=>100),
 			array('cert_name', 'length', 'max'=>250),
@@ -66,7 +66,7 @@ class Certificate extends CActiveRecord
 			array('cert_background, create_date, update_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('cert_id, sign_id, sign_id2 , cert_course_number, cert_number,cert_name, cert_background, cert_hide, cert_hour, cert_display, create_date, create_by, update_date, update_by, active', 'safe', 'on'=>'search'),
+			array('cert_id, sign_id, sign_id2 , cert_course_number, cert_number,cert_name, cert_background, cert_hide, cert_hour, cert_display, create_date, create_by, update_date, update_by, active, cert_text', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -103,6 +103,8 @@ class Certificate extends CActiveRecord
 			'update_date' => 'วันที่แก้ไขข้อมูล',
 			'update_by' => 'ผู้แก้ไขข้อมูล',
 			'active' => 'y=แสดงผล n=ไม่แสดงผล',
+			'cert_text' => 'ข้อความ',
+
 		);
 	}
 
@@ -141,6 +143,7 @@ class Certificate extends CActiveRecord
 		$criteria->compare('create_by',$this->create_by);
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by);
+		$criteria->compare('cert_text',$this->cert_text);
 
 		$poviderArray = array('criteria'=>$criteria);
 
