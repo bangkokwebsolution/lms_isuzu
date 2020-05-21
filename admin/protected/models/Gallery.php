@@ -15,12 +15,12 @@ class Gallery extends AActiveRecord
 	{
 		return array(
 			array('gallery_type_id', 'required'),
-			array('gallery_type_id', 'numerical', 'integerOnly'=>true),
+			array('gallery_type_id, group_gallery_id', 'numerical', 'integerOnly'=>true),
 			array('image, create_by, update_by', 'length', 'max'=>255),
 			array('active', 'length', 'max'=>1),
 			array('create_date, update_date', 'safe'),
 
-			array('id, image, gallery_type_id, create_date, create_by, update_date, update_by, active', 'safe', 'on'=>'search'),
+			array('id, image, gallery_type_id, create_date, create_by, update_date, update_by, active, group_gallery_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,9 +52,10 @@ class Gallery extends AActiveRecord
 	public function relations()
 	{
 		return array(
-			'gType' => array(self::BELONGS_TO, 'GalleryType', 'gallery_type_id'),
+			'gType' => array(self::BELONGS_TO, 'GalleryType', 'id'),
 			'usercreate' => array(self::BELONGS_TO, 'User', 'create_by'),
 			'userupdate' => array(self::BELONGS_TO, 'User', 'update_by'),
+			//'gallerygroup' => array(self::BELONGS_TO, 'GalleryGroup', 'group_gallery_id'),
 		);
 	}
 	
@@ -147,7 +148,9 @@ class Gallery extends AActiveRecord
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by,true);
 		$criteria->compare('active',$this->active,true);
-
+		$criteria->compare('group_gallery_id',$this->group_gallery_id,true);
+		$criteria->group='gallery_type_id';
+        
 		$poviderArray = array('criteria'=>$criteria);
 
 		// Page

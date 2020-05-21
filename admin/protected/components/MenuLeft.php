@@ -988,36 +988,70 @@ Class MenuLeft extends Controller
 	        	)
 	        ),
 
+	        // array(
+	        // 	//////// Gallery ////////
+	        // 	'visible'=>self::PermissionsMenu(array(
+	        // 		'Gallery.*',
+	        // 		'Gallery.Index',
+	        // 		'Gallery.Create'
+	        // 	)),
+	        // 	'label'=>'<span class="label label-primary"></span> <i></i><span>แกลลอรี่</span>',
+	        // 	'url'=>'#Gallery',
+	        // 	'linkOptions' => array('data-toggle' => 'collapse'),
+	        // 	'itemOptions' => array('class' => 'hasSubmenu glyphicons posterous_spaces'),
+	        // 	'submenuOptions' => array('class' => self::SetSubMenu( array('Gallery') ), 'id' => 'Gallery'),
+	        // 	'active' => self::SetSubMenu( array('Gallery') ,false),
+	        // 	'items'=>array(
+
+	        // 		array(
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'Gallery.*',
+	        // 				'Gallery.create'
+	        // 			)),
+	        // 			'label'=>'เพิ่มแกลลอรี่',
+	        // 			'url'=>array('//Gallery/create')
+	        // 		),
+	        // 		array(
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'Gallery.*',
+	        // 				'Gallery.Index'
+	        // 			)),
+	        // 			'label'=>'จัดการแกลลอรี่',
+	        // 			'url'=>array('//Gallery/Index')
+	        // 		),
+	        // 	)
+	        // ),
+
 	        array(
 	        	//////// Gallery ////////
 	        	'visible'=>self::PermissionsMenu(array(
-	        		'Gallery.*',
-	        		'Gallery.Index',
-	        		'Gallery.Create'
+	        		'GalleryGroup.*',
+	        		'GalleryGroup.Index',
+	        		'GalleryGroup.Create'
 	        	)),
 	        	'label'=>'<span class="label label-primary"></span> <i></i><span>แกลลอรี่</span>',
-	        	'url'=>'#Gallery',
+	        	'url'=>'#GalleryGroup',
 	        	'linkOptions' => array('data-toggle' => 'collapse'),
 	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons posterous_spaces'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Gallery') ), 'id' => 'Gallery'),
-	        	'active' => self::SetSubMenu( array('Gallery') ,false),
+	        	'submenuOptions' => array('class' => self::SetSubMenu( array('GalleryGroup') ), 'id' => 'GalleryGroup'),
+	        	'active' => self::SetSubMenu( array('GalleryGroup') ,false),
 	        	'items'=>array(
 
 	        		array(
 	        			'visible'=>self::PermissionsMenu(array(
-	        				'Gallery.*',
-	        				'Gallery.create'
+	        				'GalleryGroup.*',
+	        				'GalleryGroup.create'
 	        			)),
 	        			'label'=>'เพิ่มแกลลอรี่',
-	        			'url'=>array('//Gallery/create')
+	        			'url'=>array('//GalleryGroup/create')
 	        		),
 	        		array(
 	        			'visible'=>self::PermissionsMenu(array(
-	        				'Gallery.*',
-	        				'Gallery.Index'
+	        				'GalleryGroup.*',
+	        				'GalleryGroup.Index'
 	        			)),
 	        			'label'=>'จัดการแกลลอรี่',
-	        			'url'=>array('//Gallery/Index')
+	        			'url'=>array('//GalleryGroup/Index')
 	        		),
 	        	)
 	        ),
