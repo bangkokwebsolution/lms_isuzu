@@ -140,20 +140,8 @@ class VdoController extends Controller
 					}
 
 					$this->redirect(array('view','id'=>$model->vdo_id));
-				} else {
-					// var_Dump($model->getErrors());
-					// exit();
-					$this->render('create',array(
-			'model'=>$model,
-		));
-				}
-			} else {
-				// var_Dump($model->getErrors());
-				// exit();
-				$this->render('create',array(
-			'model'=>$model,
-		));
-			}
+				} 
+			} 
 		}
 
 		$this->render('create',array(
@@ -255,15 +243,8 @@ class VdoController extends Controller
 					}
 
 					$this->redirect(array('view','id'=>$model->vdo_id));
-				} else {
-					var_dump($model->getErros());
-					echo "not save data";
-					exit();
-				}
-			} else {
-				var_Dump($model->getErrors());
-				exit();
-			}
+				} 
+			} 
 		}
 		$this->render('update',array(
 			'model'=>$model,
