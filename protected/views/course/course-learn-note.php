@@ -3409,7 +3409,7 @@ function time_test_start(time_down){
                     note_time = video.currentTime;
                     note_text = $("#note-1").val();
 
-                      var note_gen_id = "<?php echo $_GET['gen']; ?>";
+                      var note_gen_id = "<?php echo $gen_id; ?>";
 
                       if(note_text != ""){
                       if(note_lesson_id != null && note_file_id != null && note_time != null){

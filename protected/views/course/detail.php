@@ -206,7 +206,6 @@ if($model){
         time = '<i class="far fa-clock"></i> '+hours+':'+minutes+':'+seconds+' '+min;
     } 
     $("#lblduration-"+id).html(time);
-    console.log(time);
 }
 </script>
 <div class="container">
