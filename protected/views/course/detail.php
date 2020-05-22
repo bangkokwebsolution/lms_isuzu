@@ -350,16 +350,21 @@ if($model){
         }
 
         ?>
+        <?php 
+        $CheckHaveCer = Helpers::lib()->CheckHaveCer($course->course_id);
+        if($CheckHaveCer){ 
+            ?>
+            <div class="certificate-check">
 
-        <div class="certificate-check">
-            <a href="<?php echo $pathPassed; ?>" <?= $pathPassed_Onclick; ?> <?php echo $targetBlank." ".$certEvnt; ?>>
-                <div class="text-center">
-                    <i class="" aria-hidden="true"><img src="<?=$img_tophy?>"></i>
-                    <p><?= $label->label_printCert ?></p>
-                </div>
-            </a>
-        </div>
-
+                <a href="<?php echo $pathPassed; ?>" <?= $pathPassed_Onclick; ?> <?php echo $targetBlank." ".$certEvnt; ?>>
+                    <div class="text-center">
+                        <i class="" aria-hidden="true"><img src="<?=$img_tophy?>"></i>
+                        <p><?= $label->label_printCert ?></p>
+                    </div>
+                </a>
+                
+            </div>
+        <?php } ?>
         <?php //} ?>
     </div>
 </div>

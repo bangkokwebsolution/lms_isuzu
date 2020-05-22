@@ -314,11 +314,18 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
                             <h4 class="text1">
                                 <a <?php echo $text_cursor_context_menu; ?> role="button" <?= (!$checkStatus)? 'data-toggle="collapse"':'' ?>  data-parent="#accordion2" href="<?= $herf; ?>" aria-expanded="true" aria-controls="collapseOne" class="">
                                 <span class="head_titledash"><?= $status_button ?> <i class="fa fa-book"></i>  <?=  $label->label_course ?> <?= $value->course_title ?> <?php if($gen_id != "0"){ if($langId != 1){echo "รุ่น "; }else{ echo "gen "; } echo $CourseGeneration->gen_title; } echo " ".$text_status_study; ?></span> <span class="pull-right"><i class="fa fa-angle-down" style="margin-top: 7px;"></i></span> <div class="pull-right" style="margin-right: 15px">
-                                    <?php if(empty($data->CourseOnlines->Schedules) && $passCourse != null){ ?>
+                                    <?php if(empty($data->CourseOnlines->Schedules) && $passCourse != null){
+                                        // var_dump($passCourse); exit();
+                                     ?>
                                         <!-- ../course/certificate/<?php echo $value->course_id; ?> -->
                                         <?php //echo $this->createUrl('Course/PrintCertificate', array('id' => $value->course_id, 'langId'=>1,'gen'=>$gen_id)); ?>
-                                <a class="btn btn-success btn-sm btn__printdashboard><?= $printCer ?>" href="../Course/PrintCertificate/<?php echo $value->course_id; ?>?langId=1&gen=<?php echo $gen_id; ?>" role="button"><i class="fa fa-print"></i> <?=  $label->label_printCert ?>
-                                </a>
+                                        <?php 
+                                        $CheckHaveCer = Helpers::lib()->CheckHaveCer($value->course_id);
+                                        if($CheckHaveCer){ 
+                                            ?>
+                                            <a class="btn btn-success btn-sm btn__printdashboard><?= $printCer ?>" href="../Course/PrintCertificate/<?php echo $value->course_id; ?>?langId=1&gen=<?php echo $gen_id; ?>" role="button"><i class="fa fa-print"></i> <?=  $label->label_printCert ?>
+                                        </a>
+                                    <?php } ?>
                                 <?php } ?>
                                 </div>
                                 </a>

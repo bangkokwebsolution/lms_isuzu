@@ -1537,6 +1537,7 @@ public function actionDetail($id) {
         $CoursePassedModel = Passcours::model()->find(array(
             'condition' => 'passcours_user = ' . $UserId . ' AND passcours_cours = ' . $PassCoursId .' AND gen_id='.$gen_id
         ));
+        
 
         // if ($CoursePassedModel) {
         //     $CourseDatePass = date('Y-m-d', strtotime($CoursePassedModel->passcours_date));
@@ -1643,6 +1644,9 @@ public function actionDetail($id) {
         }else{ //TMS
             $course_model->course_date_end = Helpers::lib()->PeriodDate($course_model->Schedules->training_date_end,true);
         }
+
+        $lastPasscourse = Helpers::lib()->PeriodDate($CourseDatePass, true);
+
         
         if ($model) {
             $fulltitle = $currentUser->profile->ProfilesTitle->prof_title ."". $currentUser->profile->firstname . " " . $currentUser->profile->lastname;
@@ -1650,11 +1654,15 @@ public function actionDetail($id) {
 
             if (isset($model->Profiles)) {
                 $fulltitle = $model->Profiles->firstname . " " . $model->Profiles->lastname;
+                $fulltitle_en =  $model->Profiles->firstname_en . " " . $model->Profiles->lastname_en;
             }
             $setCertificateData = array(
                 'fulltitle' => $fulltitle,
+                'fulltitle_en' => $fulltitle_en,
+                'cert_text' => $certDetail->certificate->cert_text,
                 'userAccountCode' => $userAccountCode,
-                'courseTitle' => (isset($model->CourseOnlines)) ? $model->CourseOnlines->course_title : $model->course_title,
+                'courseTitle_en' => (isset($model->CourseOnlines)) ? $model->CourseOnlines->course_title : $model->course_title,
+                'lastPasscourse' => $lastPasscourse,                
                 'courseCode' => (isset($courseCode)) ? 'รหัสหลักสูตร ' . $courseCode : null,
                 'courseAccountHour' => (isset($courseAccountHour)) ? $courseAccountHour : null,
                 'courseEtcHour' => (isset($courseEtcHour)) ? $courseEtcHour : null,

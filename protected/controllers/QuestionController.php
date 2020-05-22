@@ -614,7 +614,7 @@ class QuestionController extends Controller
                                         $modelPasscours->save();
                                     }
                                 }
-                                $this->actiondeleteTemp($id,$testType);
+                                $this->actiondeleteTemp($id,$testType,$gen_id);
                                 $this->renderPartial('exams_finish', array(
                                     'model' => $model,
                                     'lesson' => $lesson,
@@ -706,6 +706,7 @@ class QuestionController extends Controller
             $this->redirect(array('//course/detail', 'id' => $lesson->course_id, 'lesson_id' => $id));
         }
     }
+    
     public function actionExamsFinish()
     {
         $this->render('exams-finish');
@@ -713,6 +714,8 @@ class QuestionController extends Controller
 
     public function actionResetpost($id=null,$course=null)
     {
+        $lesson_model = Lesson::model()->findByPk($id);
+        $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
 
         $learn = Learn::model()->findAll(array(
             'condition' => "user_id=:user_id AND lesson_id=:lesson AND lesson_active=:lesson_active AND gen_id=:gen_id",
@@ -752,44 +755,43 @@ class QuestionController extends Controller
 
     }
 
-
-
-
-    /**
-     * This is the action to handle external exceptions.
-     */
     public function actionError()
     {
         if($error=Yii::app()->errorHandler->error)
-            {
-                if(Yii::app()->request->isAjaxRequest)
-                    echo $error['message'];
-                    else
-                        $this->render('error', $error);
-                }
-            }
+        {
+            if(Yii::app()->request->isAjaxRequest)
+                echo $error['message'];
+            else
+                $this->render('error', $error);
+        }
+    }
 
-            public function actiondeleteTemp($lesson_id=null,$type=null){
-             TempQuiz::model()->deleteAll(array(
-                'condition' => "user_id=:user_id AND lesson=:lesson AND type=:type AND gen_id=:gen_id",
-                'params' => array(':user_id' => Yii::app()->user->id,':lesson' => $lesson_id,':type'=>$type, ':gen_id'=>$gen_id)
-            )); 
-         }
-         public function actionSaveTimeExam(){
-           $temp_time_start = TempQuiz::model()->find(array(
+    public function actiondeleteTemp($lesson_id=null,$type=null,$gen_id=null){
+       TempQuiz::model()->deleteAll(array(
+        'condition' => "user_id=:user_id AND lesson=:lesson AND type=:type AND gen_id=:gen_id",
+        'params' => array(':user_id' => Yii::app()->user->id,':lesson' => $lesson_id,':type'=>$type, ':gen_id'=>$gen_id)
+        )); 
+    }
+
+    public function actionSaveTimeExam(){
+        $lesson_model = Lesson::model()->findByPk($_POST['lesson_id']);
+        $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
+        $temp_time_start = TempQuiz::model()->find(array(
             'condition' => "user_id=".Yii::app()->user->id." and lesson=".$_POST['lesson_id']." and time_start is not null AND gen_id='".$gen_id."'"
         )); 
-           if($temp_time_start){
-                $temp_time_start->time_up = $_POST['time'];
+        if($temp_time_start){
+            $temp_time_start->time_up = $_POST['time'];
                // echo ($temp_time_start->update()) ? 'success' : 'error';
-               if($temp_time_start->update()){
-                    $state = 'success';
-               }else{
-                    $state = 'error';
-               }
-           }else{
+            if($temp_time_start->update()){
+                $state = 'success';
+            }else{
                 $state = 'error';
-           }
-           echo $state;
-       }
+            }
+        }else{
+            $state = 'error';
+        }
+        echo $state;
+    }  
+
    }

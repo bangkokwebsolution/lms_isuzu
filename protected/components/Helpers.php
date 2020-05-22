@@ -4205,7 +4205,18 @@ public function checkStepLesson($lesson){
                 $percent_pass = $step_pass*$percent_average;
             }
             return round($percent_pass, 2);
+        }       
+
+        public function CheckHaveCer($course_id){ // เช็คว่า หลักสูตรนี้มีใบ Cer ไหม
+            if($course_id != ""){
+                $cert = CertificateNameRelations::model()->findAll(array('condition'=>'course_id='.$course_id));
+                if(!empty($cert)){
+                    return true;
+                }
+            }
+            return false;
         }
+
 
 
     }
