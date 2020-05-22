@@ -100,7 +100,7 @@ table .t-edu {
             </tr>
 
           </table>
-          <table style="width: 100%">
+          <table style="width: 100%;">
 
            <tr>
               <td width="100%" style="padding-left:104px; padding-bottom:-19px; text-align:left; ">
@@ -616,7 +616,7 @@ table .t-edu {
     ?>
   </tbody>      
 </table>   -->
-<table border="1" class="t-edu" style="border-collapse:collapse; overflow: wrap; width: 100%;margin-top: 3em;" >
+<table border="1" class="t-edu" style="border-collapse:collapse; overflow: wrap; width: 100%;margin-top: 3em;">
   <thead>
     <tr style="background-color:#D3D3D3;">
       <td colspan="3" style="text-align:left;  font-weight: bold; padding:10px;">
@@ -836,7 +836,7 @@ table .t-edu {
   </tbody>      
 </table>
 
- <table border="1" style="border-collapse:collapse; overflow: wrap; width: 100%;" class="mt-1">
+ <table border="1" style="border-collapse:collapse; overflow: wrap; width: 100%;page-break-after: always;" class="mt-1">
                  <thead>
                      <tr style="background-color:#D3D3D3;">
                         <th colspan="2" style="padding-bottom:-2px; text-align:center;  font-weight: bold;padding:10px;">
@@ -920,7 +920,7 @@ table .t-edu {
 ?>
 </table>
  
-<table style="border-collapse:collapse; width: 100%;margin-top: 3em;">
+<table style="border-collapse:collapse; width: 100%;margin-top: 3em; ">
     <tr> 
       <td style="padding-left:204px;text-align:right;">
         <p class="f-14">ลงชื่อผู้สมัคร : .............................................................</p>
@@ -966,8 +966,8 @@ table .t-edu {
  </div>
   <div  style="padding-left:350px;padding-top: -105px;">
     <p class="f-14">ผู้อนุมัติ : .............................................................</p>
-    <p class="f-14">(..................................................................)</p>
-     <p class="f-14">วันที่ : ....................................................................</p>
+    <p class="f-14">(........................................................................)</p>
+     <p class="f-14">วันที่ : ...................................................................</p>
   </div>
 </div>
 

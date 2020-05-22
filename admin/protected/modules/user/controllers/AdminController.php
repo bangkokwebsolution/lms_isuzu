@@ -1468,9 +1468,7 @@ echo ($data);
 			'profile'=>$profile,
 		));
 	}
-
 	public function actionPrintpdf(){
-	
 
 		$user_id =$_GET['id'];
 		if ($user_id != '') {
@@ -1486,43 +1484,30 @@ echo ($data);
      
 		$padding_left = 12.7;
 		$padding_right = 12.7;
-		// $padding_right = 25.4;
-		
 		$padding_top = 10;
 		$padding_bottom = 20;
 
 		Yii::import('application.extensions.*');
 		require_once('THSplitLib/segment.php');
-		// var_dump("expression"); exit();
+		// require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
+		// $mPDF = new \Mpdf\Mpdf('th', 'A4', '0', 'garuda');
 		$mPDF = Yii::app()->ePdf->mpdf('th', 'A4', '0', 'garuda', $padding_left, $padding_right, $padding_top, $padding_bottom);
 		$mPDF->useDictionaryLBR = false;
-		//$mPDF->SetAutoFont();
-		// $mPDF->useDictionaryLBR = false;
 		$mPDF->setDisplayMode('fullpage');
-		// $mPDF->useFixedNormalLineHeight = false;
-  //       $mPDF->useFixedTextBaseline = ture;
-  //       $mPDF->adjustFontDescLineheight = 10.14;
 		$mPDF->autoLangToFont = true;
-		//
         $mPDF->autoPageBreak = true;
-        //$mPDF->setTestTdInOnePage =true;
-		//$mPDF->shrink_tables_to_fit = 1;
 		$mPDF->SetTitle("ใบสมัครสมาชิก");
 		$texttt= '
          <style>
          body { font-family: "garuda"; }
          </style>
          ';
-        // $mPDF->SetHeader("$texttt");
         $mPDF->WriteHTML($texttt);
-		//$mPDF->AddPage('P'); // แนวตั้ง
 		$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('printpdf', array('profiles'=>$profiles,'user'=>$user), true), 'UTF-8', 'UTF-8'));
 		$mPDF->Output('ใบสมัครสมาชิก.pdf', 'I');
 
 		}
 	}
-
-
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'index' page.
