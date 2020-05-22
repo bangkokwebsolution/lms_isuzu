@@ -114,7 +114,7 @@ class Learn extends CActiveRecord
 		// /*$criteria->join .= ' LEFT JOIN tbl_coursescore AS coursescore ON coursescore.user_id = t.user_id ';*/
 	 	$criteria->group = 't.user_id';
 		// //$criteria->compare('t.course_id',$this->search_course);
-		$criteria->addCondition('lesson_active = "y"');
+		// $criteria->addCondition('lesson_active = "y"');
 	    $criteria->addCondition('User.del_status = "0"');
 		$criteria->compare('CONCAT(User.username)',$this->search_value,true);
 		$criteria->compare('concat(Profile.firstname," ",Profile.lastname)',$this->searchname,true);

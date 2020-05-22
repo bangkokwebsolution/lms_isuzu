@@ -62,6 +62,27 @@ Yii::app()->clientScript->registerScript('search', "
                                                 return $strName;
                                             },
                                         ),
+                                        
+                                        array(
+                                            'header' => 'Reset สอบก่อนเรียน',
+                                            'type' => 'raw',
+                                            'value' => function($val) {
+                                                $examData = score::model()->find(array(
+                                                    'condition' => 'user_id=:user_id AND active="y" AND type="pre"',
+                                                    'params' => array(':user_id' => $val->user_id)));
+                                                if($examData){
+                                                    $evntExam = 'reset_pre';
+                                                    $btnClassExam = 'btn-danger';
+                                                } else {
+                                                    $evntExam = '';
+                                                    $btnClassExam = '';
+                                                }
+                                                return CHtml::button("Reset",array('class' => 'btn '.$evntExam.' '.$btnClassExam.'','data-id' => $val->user_id));
+                                            },'htmlOptions' => array(
+                                                'style'=> "text-align: center;",
+                                            ),
+                                        ),
+
                                         array(
                                             'header' => 'Reset การเรียน',
                                             'type' => 'raw',
@@ -119,25 +140,7 @@ Yii::app()->clientScript->registerScript('search', "
                     //                 'style'=> "text-align: center;",
                     //             ),
                     //         ),
-                                        array(
-                                            'header' => 'Reset สอบก่อนเรียน',
-                                            'type' => 'raw',
-                                            'value' => function($val) {
-                                                $examData = score::model()->find(array(
-                                                    'condition' => 'user_id=:user_id AND active="y" AND type="pre"',
-                                                    'params' => array(':user_id' => $val->user_id)));
-                                                if($examData){
-                                                    $evntExam = 'reset_pre';
-                                                    $btnClassExam = 'btn-danger';
-                                                } else {
-                                                    $evntExam = '';
-                                                    $btnClassExam = '';
-                                                }
-                                                return CHtml::button("Reset",array('class' => 'btn '.$evntExam.' '.$btnClassExam.'','data-id' => $val->user_id));
-                                            },'htmlOptions' => array(
-                                                'style'=> "text-align: center;",
-                                            ),
-                                        ),
+                                        
                                         array(
                                             'header' => 'Reset สอบหลังเรียน',
                                             'type' => 'raw',
