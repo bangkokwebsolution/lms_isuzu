@@ -376,7 +376,7 @@ echo ($data);
     	$id = $_POST['id'];
     	$passage = $_POST['passInput'];
 		$model = User::model()->findByPk($id);
-		if($model->status == 0){
+		if($model->status == 1 && $model->register_status == 1){
 			$model->status = 0;
 			$model->register_status = 3;
 		} else {
