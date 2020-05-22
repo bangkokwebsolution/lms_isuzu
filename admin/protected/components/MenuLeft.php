@@ -1486,8 +1486,8 @@ Class MenuLeft extends Controller
 	        	'url'=>'#Report',
 	        	'linkOptions' => array('data-toggle' => 'collapse'),
 	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Report') ), 'id' => 'Report'),
-	        	'active' => self::SetSubMenu( array('Report') ,false),
+	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Report', 'Passcours', 'Questionnaire') ), 'id' => 'Report'),
+	        	'active' => self::SetSubMenu( array('Report', 'Questionnaire', 'Passcours') ,false),
 	        	'items'=>array(
 					//set new menu
 	        		array(
@@ -1543,15 +1543,15 @@ Class MenuLeft extends Controller
 	        array(
 	        	/*====== Check Permissions Passcours (1) ======*/
 	        	'visible'=>self::PermissionsMenu(array(
-	        		'Certificate.*',
-	        		'Certificate.update',
+	        		'Passcours.*',
+	        		'Passcours.update',
 	        	)),
 	        	'label'=>'<i></i><span>ระบบพิมพ์ใบประกาศนียบัตร</span>',
-	        	'url'=>'#Certificate',
+	        	'url'=>'#Passcours',
 	        	'linkOptions' => array('data-toggle' => 'collapse'),
 	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Certificate') ), 'id' => 'Certificate'),
-	        	'active' => self::SetSubMenu( array('Certificate') ,false),
+	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Passcours') ), 'id' => 'Passcours'),
+	        	'active' => self::SetSubMenu( array('Passcours') ,false),
 	        	'items'=>array(
 	        		array(
 	        			/*====== Check Permissions Sup-Passcours (1) ======*/
@@ -1584,8 +1584,8 @@ Class MenuLeft extends Controller
 	        	'url'=>'#Certificate',
 	        	'linkOptions' => array('data-toggle' => 'collapse'),
 	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Certificate') ), 'id' => 'Certificate'),
-	        	'active' => self::SetSubMenu( array('Certificate') ,false),
+	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Certificate', 'Signature') ), 'id' => 'Certificate'),
+	        	'active' => self::SetSubMenu( array('Certificate', 'Signature') ,false),
 	        	'items'=>array(
 	        		array(
 	        			/*====== Check Permissions Sup-Passcours (1) ======*/

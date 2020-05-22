@@ -272,14 +272,17 @@ class PasscoursController extends Controller
 			$period = $startLogDate." - ".$endLogDate;
 		}
 		$model->CourseOnlines->course_date_end =  Helpers::lib()->PeriodDate($model->CourseOnlines->course_date_end,true);
-
+		$lastPasscourse = Helpers::lib()->PeriodDate($CourseDatePass, true);
 	    if($model) {
 			// $fulltitle = $model->Profiles->ProfilesTitle->prof_title . $model->Profiles->firstname . " " . $model->Profiles->lastname;
 			$fulltitle =  $model->Profiles->firstname . " " . $model->Profiles->lastname;
+			$fulltitle_en =  $model->Profiles->firstname_en . " " . $model->Profiles->lastname_en;
 	    	$setCertificateData = array(
 	    		'fulltitle' => $fulltitle,
+	    		'fulltitle_en' => $fulltitle_en,
+				'cert_text' => $modelSign->cert_text,
 	    		'userAccountCode' => $userAccountCode,
-	    		'courseTitle' => $model->CourseOnlines->course_title,
+	    		'courseTitle_en' => $model->CourseOnlines->course_title,
 	    		'courseCode' => (isset($courseCode))?'รหัสหลักสูตร '.$courseCode:null,
 	    		'courseAccountHour' => (isset($courseAccountHour))?$courseAccountHour:null,
 	    		'courseEtcHour' => (isset($courseEtcHour))?$courseEtcHour:null,
@@ -299,6 +302,7 @@ class PasscoursController extends Controller
 	    		'bgPath' => $modelSign->cert_background,
 	    		'identification' => $identification['identification'],
 	    		'positionUser' => $positionUser,
+	    		'lastPasscourse' => $lastPasscourse,
 	    		'companyUser' => $companyUser
 	    		);
 	    	// // var_dump($model->identification);exit();
