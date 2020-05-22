@@ -425,9 +425,10 @@ public function validateIdCard($attribute,$params){
 	$criteria->compare('lastactivity',$this->lastactivity);
 	$criteria->compare('superuser',$this->superuser);
 	$criteria->compare('not_passed',$this->not_passed);
-	$criteria->compare('status',0);
+	$criteria->compare('status',$this->status);
 	$criteria->compare('del_status',0); 
-	$criteria->compare('register_status',$this->register_status);
+	$criteria->compare('register_status',array(1,3));
+	$criteria->compare('profile.type_user',array(1,2));
 	$criteria->order = 'user.id DESC';
 	//$criteria->compare('profile.type_user',array(1));
 
@@ -561,8 +562,16 @@ public function searchmembership()
     {
         $getregisstatusList = array(
             '0'=>'รอการตรวจสอบ',
-            '1'=>'อนุมัติ',
+           // '1'=>'อนุมัติ',
             '2'=>'ไม่อนุมัติ'
+        );
+        return $getregisstatusList;
+    }
+     public function getapproveList()
+    {
+        $getregisstatusList = array(
+            '1'=>'รออนุมัติ ',
+            '0'=>'ไม่ผ่านอนุมัติ '
         );
         return $getregisstatusList;
     }

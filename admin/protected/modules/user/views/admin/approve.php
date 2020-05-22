@@ -49,7 +49,7 @@ EOD
 			'route' => $this->route,
 			'attributes'=>array(
 			//array('name'=>'status','type'=>'text'),
-				array('name'=>'register_status','type'=>'list','query'=>$model->getregisstatusList()),
+				array('name'=>'status','type'=>'list','query'=>$model->getapproveList()),
 				array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
 				array('name'=>'create_at','type'=>'text'),
 			),
@@ -107,14 +107,14 @@ EOD
 									'type'=>'html',
 									'value'=>function($data){
 
-										if($data->status == 0){
+										if($data->status == 1 && $data->register_status == 1){
 											//echo CHtml::button("ปิด",array("class"=>"btn btn-danger ","data-id" => $data->id));
-											echo "รอการตรวจสอบ";
-										} else if($data->status == 1){
-											echo "อนุมัติ";
+											echo "รออนุมัติ";
+										} else if($data->status == 0 && $data->register_status == 1){
+											echo "ไม่ผ่านอนุมัติ";
 											//echo CHtml::button("รอการตรวจสอบ",array("class"=>"btn btn-success ","data-id" => $data->id));
-										}else {
-											echo "ไม่อนุมัติ";
+										}else if($data->register_status == 3 && $data->status == 0){
+											echo "ไม่ผ่านอนุมัติ";
 										}
 									}
 								),
@@ -177,14 +177,15 @@ EOD
 									'type'=>'raw',
 									'value'=>function($data){
 										if($data->status == 1 && $data->register_status == 1){
-											echo CHtml::button("ผ่าน",array("class"=>"btn btn-success ","data-id" => $data->id));
-										} else if($data->status == 0 && $data->register_status == 1) {
 											echo CHtml::button("รออนุมัติ",array("class"=>"btn btn-info changeStatus","data-id" => $data->id));
+										} else if($data->status == 0 && $data->register_status == 1) {
+											echo CHtml::button("ไม่ผ่านอนุมัติ",array("class"=>"btn btn-danger","data-id" => $data->id));
 										} else if($data->register_status == 3 && $data->status == 0){
-											echo CHtml::button("ไม่ผ่าน",array("class"=>"btn btn-danger ","data-id" => $data->id));
-										}else {
-											echo CHtml::button("ไม่ผ่าน",array("class"=>"btn btn-danger ","data-id" => $data->id));
+											echo CHtml::button("ไม่ผ่านอนุมัติ",array("class"=>"btn btn-danger ","data-id" => $data->id));
 										}
+										// else {
+										// 	echo CHtml::button("ไม่ผ่าน",array("class"=>"btn btn-danger ","data-id" => $data->id));
+										// }
 									},
 									'header' => 'ยืนยันการสมัครสมาชิก',
 									'htmlOptions'=>array('style'=>'text-align: center;'),
@@ -255,6 +256,7 @@ EOD
 									type: "POST",
 									data:  {id:id},
 									success: function(result){
+										console.log(result);
 									if (result) {
 													setTimeout(function () {
 														swal("อนุมัติสำเร็จ!", "ระบบได้ทำการอนุมัติเรียบร้อยแล้ว", "success");
@@ -266,7 +268,7 @@ EOD
 													}, 2000);
 													location.reload();
 												}	
-									}
+									   }
 								});
 									}else {
 										swal({

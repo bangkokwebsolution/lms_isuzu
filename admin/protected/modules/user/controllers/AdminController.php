@@ -156,9 +156,9 @@ echo ($data);
 	{
 		$model = new User('search');
         $model->unsetAttributes();  // clear any default values
-        $model->typeuser = array(1);
+        //$model->typeuser = array(1);
         $model->register_status = array(1,3);
-        $model->status = array(1);
+        //$model->status = array(1);
         $model->supper_user_status = false;
         if(isset($_GET['User'])){
         	$model->attributes=$_GET['User'];
@@ -294,25 +294,16 @@ echo ($data);
 	public function actionActive(){
 		$id = $_POST['id'];
 		$model = User::model()->findByPk($id);
-		//$member = Helpers::lib()->ldapTms($model->email);
-		if($model->status == 0){
+		$profile = Profile::model()->findByPk($id);
+
+		if($model->status == 1 && $model->register_status == 1){
 			// $model->status = 0;
-			$model->status = 1;
+			// $model->status = 1;
+			$profile->type_user = 3;
+			$profile->save(false);
 		} else {
-			//$model->status = 1;
 			$model->status = 0;
 		}
-		// $model->passwordChange = 1;
-
-		// $password = $this->RandomPassword();
-		// $model->password = md5($password);
-		// $model->newpassword = $password;
-		// if($member['count'] > 0){
-		// 	$model->newpassword = $model->email;
-		// }else{
-		// 	$model->newpassword = $model->identification;
-		// }
-	
 		$model->save(false);
 		if(Yii::app()->user->id){
 						Helpers::lib()->getLogapprove($model);
@@ -324,7 +315,7 @@ echo ($data);
 		$message = $this->renderPartial('_mail_membership',array('model' => $model),true);
 		if($message){
 			 $send = Helpers::lib()->SendMail($to,'อนุมัติการเข้าใช้งานระบบ',$message);
-			//$send = Helpers::lib()->SendMailNotification($to,'อนุมัติการสมัครสมาชิก',$message);
+	
 		}
 		$this->redirect(array('/user/admin/approve'));
 	}
@@ -336,6 +327,7 @@ echo ($data);
 		$model = User::model()->findByPk($id);
 		if($model->register_status == 0){
 			$model->register_status = 1;
+			$model->status = 1;
 		} else {
 			$model->register_status = 0;
 		}
@@ -1482,13 +1474,11 @@ echo ($data);
 			));
         $path_img = Yii::app()->baseUrl. '/images/head_print.png';
      
-		$padding_left = 12.7;
-		$padding_right = 12.7;
-		$padding_top = 10;
-		$padding_bottom = 20;
+		// $padding_left = 12.7;
+		// $padding_right = 12.7;
+		// $padding_top = 10;
+		// $padding_bottom = 20;
 
-		// Yii::import('application.extensions.*');
-		// require_once('THSplitLib/segment.php');
 		 require_once __DIR__ . '/../../../vendors/mpdf7/autoload.php';
 		 $mPDF = new \Mpdf\Mpdf();
 		//$mPDF = Yii::app()->ePdf->mpdf('th', 'A4', '0', 'garuda', $padding_left, $padding_right, $padding_top, $padding_bottom);
