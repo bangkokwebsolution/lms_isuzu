@@ -95,7 +95,7 @@ table .t-edu {
                     $img = Yii::app()->baseUrl . '/../uploads/user/' . $user['id'] . '/thumb/' . $user['pic_user'];
                 }
                 ?>   
-                    <img src="<?php echo $img; ?>" width="150" height="180" style="border: 1px solid #999; height: 180px;width: 150px;"> 
+                    <img src="<?php echo $img; ?>" width="100" height="130" style="border: 1px solid #999; height: 130px;width: 100px;"> 
                 </td>
             </tr>
 
@@ -148,7 +148,9 @@ table .t-edu {
             <tr>
               <td style="text-align:left;  padding-left:500px; padding-bottom:-19px;">
                 <p class="f-14">
-                  <?php if($profiles['birthday'] != ""){ echo $profiles['birthday']; }else{ echo "-"; } ?>
+                  <?php if($profiles['birthday'] != ""){
+                   $birthday = Helpers::lib()->changeFormatDateNew($profiles['birthday']);
+                   echo $birthday; }else{ echo "-"; } ?>
                   </p>
               </td>
             </tr>
@@ -161,7 +163,7 @@ table .t-edu {
               </td>
             </tr>
             <tr>
-              <td  style="  padding-left:90px; padding-bottom:-28px;">
+              <td  style="  padding-left:90px; padding-bottom:-27px;">
                 <p class="f-14">
                   <?php if($profiles['place_of_birth'] != ""){ echo $profiles['place_of_birth']; }else{ echo "-"; } ?>
                 </p>
@@ -169,7 +171,7 @@ table .t-edu {
             </tr>
 
             <tr>
-              <td style="  padding-left:400px;padding-bottom:-28px;">
+              <td style="  padding-left:330px;padding-bottom:-27px;">
                 <p class="f-14">
                     <?php if($profiles['hight'] != ""){ echo $profiles['hight']; }else{ echo "-"; } ?>
                   </p>
@@ -177,17 +179,22 @@ table .t-edu {
             </tr>
 
             <tr>
-              <td style="text-align:left;  padding-left:570px; padding-bottom:-19px;">
+              <td style="text-align:left;  padding-left:450px; padding-bottom:-24px;">
                 <p class="f-14">
                   <?php if($profiles['weight'] != ""){ echo $profiles['weight']; }else{ echo "-"; } ?>
                   </p>
+              </td>
+            </tr>
+             <tr>
+              <td style="text-align:left;  padding-left:600px; padding-bottom:-20px;">
+                <p class="f-14"><?php if($profiles['blood'] != ""){ echo $profiles['blood']; }else{ echo "-"; } ?></p>
               </td>
             </tr>
 
             <tr width="100%">
               <td width="100%">
                 <p class="f-14">
-                  สถานที่เกิด : ....................................................... ส่วนสูง : .............................  น้ำหนัก : ................................
+                  สถานที่เกิด : ................................................ ส่วนสูง : ............... น้ำหนัก : .............. กรุ๊ปเลือด : .....................
                 </p>
               </td>
             </tr>
@@ -220,16 +227,6 @@ table .t-edu {
               </td>
             </tr>
             <tr>
-              <td style="text-align:left;  padding-left:120px; padding-bottom:-20px;">
-                <p class="f-14"><?php if($profiles['blood'] != ""){ echo $profiles['blood']; }else{ echo "-"; } ?></p>
-              </td>
-            </tr>
-            <tr>
-              <td style="text-align:left; ">
-                <p class="f-14">กรุ๊ปเลือด : ............................................................... </p>
-              </td>
-            </tr>
-            <tr>
               <td style="text-align:left;  padding-left:180px; padding-bottom:-24px;">
                 <p class="f-14"><?php if($profiles['identification'] != ""){ echo $profiles['identification']; }else{ echo "-"; } ?></p>
               </td>
@@ -246,12 +243,17 @@ table .t-edu {
             </tr>
             <tr>
               <td style="text-align:left;  padding-left:190px; padding-bottom:-24px;">
-                <p class="f-14"><?php if($profiles['date_issued'] != ""){ echo $profiles['date_issued']; }else{ echo "-"; } ?></p>
+                <p class="f-14"><?php if($profiles['date_issued'] != ""){
+                  $date_issued = Helpers::lib()->changeFormatDateNew($profiles['date_issued']);
+                 echo $date_issued; }else{ echo "-"; } ?></p>
               </td>
             </tr>
             <tr>
               <td style="text-align:left;  padding-left:460px; padding-bottom:-20px;">
-                <p class="f-14"><?php if($profiles['date_of_expiry'] != ""){ echo $profiles['date_of_expiry']; }else{ echo "-"; } ?></p>
+                <p class="f-14"><?php if($profiles['date_of_expiry'] != ""){
+                 $date_of_expiry = Helpers::lib()->changeFormatDateNew($profiles['date_of_expiry']);
+                 echo $date_of_expiry;
+                 }else{ echo "-"; } ?></p>
               </td>
             </tr>
             <tr>
@@ -269,7 +271,9 @@ table .t-edu {
             </tr>
             <tr>
               <td style="text-align:left;  padding-left:460px; padding-bottom:-22px;">
-                <p class="f-14"><?php if($profiles['passport'] != ""){ echo $profiles['passport']; }else{ echo "-"; } ?></p>
+                <p class="f-14"><?php if($profiles['pass_expire'] != ""){
+                 $pass_expire = Helpers::lib()->changeFormatDateNew($profiles['pass_expire']);
+                 echo $pass_expire; }else{ echo "-"; } ?></p>
               </td>
             </tr>
             <tr>
@@ -284,7 +288,9 @@ table .t-edu {
             </tr>
             <tr>
               <td style="text-align:left;  padding-left:460px; padding-bottom:-22px;">
-                <p class="f-14"><?php if($profiles['seaman_expire'] != ""){ echo $profiles['seaman_expire']; }else{ echo "-"; } ?></p>
+                <p class="f-14"><?php if($profiles['seaman_expire'] != ""){ 
+                  $seaman_expire = Helpers::lib()->changeFormatDateNew($profiles['seaman_expire']);
+                  echo $seaman_expire; }else{ echo "-"; } ?></p>
               </td>
             </tr>
             <tr>
@@ -513,7 +519,9 @@ table .t-edu {
             </tr>
             <tr>
               <td style="text-align:left;  padding-left:500px; padding-bottom:-22px;">
-                <p class="f-14"><?php if($profiles['start_working'] != ""){ echo $profiles['start_working']; }else{ echo "-"; } ?></p>
+                <p class="f-14"><?php if($profiles['start_working'] != ""){
+                 $start_working = Helpers::lib()->changeFormatDateNew($profiles['start_working']);
+                 echo $start_working; }else{ echo "-"; } ?></p>
               </td>
             </tr>
             <tr>
@@ -747,7 +755,8 @@ table .t-edu {
       ?>
       <tr>
         
-        <td style="text-align:center;  font-style:italic;">-</td>        
+        <td style="text-align:center;  font-style:italic;">-</td>
+        <td style="text-align:center;  font-style:italic;">-</td>         
       </tr> 
       <?php
     }
@@ -802,7 +811,9 @@ table .t-edu {
             <p class="f-14"><?php if($position_name != ""){ echo $position_name; }else{ echo "-"; } ?></p>
           </td>
           <td style="text-align:center; " valign="top">
-            <p class="f-14"><?php if($since_date != ""){ echo $since_date; }else{ echo "-"; } ?></p>
+            <p class="f-14"><?php if($since_date != ""){
+             $since_date_new = Helpers::lib()->changeFormatDateNew($since_date);
+             echo $since_date_new; }else{ echo "-"; } ?></p>
           </td>
           <td style="text-align:center; " valign="top">
             <p class="f-14"><?php if($reason_leaving != ""){echo $reason_leaving; }else{ echo "-"; } ?></p>

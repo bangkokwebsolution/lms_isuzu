@@ -58,6 +58,112 @@ Class Helpers
             array( "o" , "๑" , "๒" , "๓" , "๔" , "๕" , "๖" , "๗" , "๘" , "๙" ),
             $num);
     }
+    public function changeFormatDateNew($date,$type=null)
+    {
+        if($type=='date' && $date != ''){
+            $date = explode('-', $date);
+            $day = $date[0];
+            $month = $date[1];
+            $year = $date[2]+543;
+            if($year == '543' && $month == '00' && $day == '00'){
+                return 'ยังไม่เข้าสู่ระบบ';
+            }
+            switch ($month) {
+                case '01':
+                    $month = 'มกราคม';
+                    break;
+                case '02':
+                    $month = 'กุมภาพันธ์';
+                    break;
+                case '03':
+                    $month = 'มีนาคม';
+                    break;
+                case '04':
+                    $month = 'เมษายน';
+                    break;
+                case '05':
+                    $month = 'พฤษภาคม';
+                    break;
+                case '06':
+                    $month = 'มิถุนายน';
+                    break;
+                case '07':
+                    $month = 'กรกฎาคม';
+                    break;
+                case '08':
+                    $month = 'สิงหาคม';
+                    break;
+                case '09':
+                    $month = 'กันยายน';
+                    break;
+                case '10':
+                    $month = 'ตุลาคม';
+                    break;
+                case '11':
+                    $month = 'พฤศจิกายน';
+                    break;
+                case '12':
+                    $month = 'ธันวาคม';
+                    break;
+                default:
+                    $month = 'error';
+                    break;
+            }
+            return $days.' '.$month.' '.$year;
+        } else if($date != '') {
+            if($date == '0000-00-00'){
+            return '-';
+            }else{
+            $date = explode('-', $date);
+            $day = $date[0];
+            $month = $date[1];
+            $year = $date[2]+543;
+            switch ($month) {
+                case '01':
+                    $month = 'มกราคม';
+                    break;
+                case '02':
+                    $month = 'กุมภาพันธ์';
+                    break;
+                case '03':
+                    $month = 'มีนาคม';
+                    break;
+                case '04':
+                    $month = 'เมษายน';
+                    break;
+                case '05':
+                    $month = 'พฤษภาคม';
+                    break;
+                case '06':
+                    $month = 'มิถุนายน';
+                    break;
+                case '07':
+                    $month = 'กรกฎาคม';
+                    break;
+                case '08':
+                    $month = 'สิงหาคม';
+                    break;
+                case '09':
+                    $month = 'กันยายน';
+                    break;
+                case '10':
+                    $month = 'ตุลาคม';
+                    break;
+                case '11':
+                    $month = 'พฤศจิกายน';
+                    break;
+                case '12':
+                    $month = 'ธันวาคม';
+                    break;
+                default:
+                    $month = 'error';
+                    break;
+            }
+            return $day.' '.$month.' '.$year;
+         }
+        }
+        return $date;
+    }
 
     public function changeFormatDate($date,$type=null)
     {

@@ -268,7 +268,7 @@ EOD
 ?>
 <!-- modal message -->
 <div class="modal fade" tabindex="-1" role="dialog" id="selectModal1">
-	<div class="modal-dialog" role="document">
+	<div class="modal-dialog modal-lg" >
 		<div class="modal-content">
 
 		</div>

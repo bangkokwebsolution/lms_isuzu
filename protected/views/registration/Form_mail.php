@@ -12,6 +12,6 @@
   <h4>- User : <?= $username; ?></h4>
   <h4>- Password : <?= $genpass; ?></h4>
 
-  <h4>ท่านสามารถเข้าสู่ระบบได้ ที่ <a href="http://203.154.140.77/lms_thoresen/site/index">http://203.154.140.77/lms_thoresen/site/index</a></h4>
+  <h4>ท่านสามารถเข้าสู่ระบบได้ ที่ <a href="http://thorconn.com">http://thorconn.com</a></h4>
 </body>
 </html>

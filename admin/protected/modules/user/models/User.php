@@ -428,6 +428,7 @@ public function validateIdCard($attribute,$params){
 	$criteria->compare('status',0);
 	$criteria->compare('del_status',0); 
 	$criteria->compare('register_status',$this->register_status);
+	$criteria->order = 'user.id DESC';
 	//$criteria->compare('profile.type_user',array(1));
 
 	//$criteria->compare('register_status',$this->register_status);
@@ -486,6 +487,7 @@ public function searchmembership()
 	$criteria->compare('register_status',$this->register_status);
 	$criteria->compare('group',$this->group);
 	$criteria->compare('profile.identification',$this->idensearch,true);
+	$criteria->order = 'user.id DESC';
 	if(empty($this->create_at)) {
 		$criteria->compare('create_at',$this->create_at,true);
 	}else {

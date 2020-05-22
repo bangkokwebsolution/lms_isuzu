@@ -87,20 +87,20 @@
 					}else{
 						echo "Miss";
 					}?>&nbsp;&nbsp;<?php echo $profile['firstname_en'] ?>&nbsp;&nbsp;<?php echo $profile['lastname_en'] ?></span></h5></div>
-					<div class="col-md-6"><h5><b>วันเดือนปีเกิด:</b><span><?php if($profile['birthday'] != ""){ echo $profile['birthday'];}else{echo "-";}  ?></span> </h5></div>
+					<div class="col-md-6"><h5><b>วันเดือนปีเกิด:</b><span><?php if($profile['birthday'] != ""){$birthday = Helpers::lib()->changeFormatDateNew($profile['birthday']); echo $birthday;}else{echo "-";}  ?></span> </h5></div>
 					<div class="col-md-6"><h5><b>อายุ:</b><span><?php if($profile['age'] != ""){ echo $profile['age'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>สถานที่เกิด:</b><span><?php if($profile['place_of_birth'] != ""){ echo $profile['place_of_birth'];}else{echo "-";}  ?></span> </h5></div>
 					<div class="col-md-6"><h5><b>กรุ๊ปเลือด:</b><span><?php if($profile['blood'] != ""){ echo $profile['blood'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>ส่วนสูง:</b><span><?php if($profile['hight'] != ""){ echo $profile['hight'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>น้ำหนัก:</b><span><?php if($profile['weight'] != ""){ echo $profile['weight'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>เลขบัตรประจำตัวประชาชน:</b><span><?php if($profile['identification'] != ""){ echo $profile['identification'];}else{echo "-";} ?></span> </h5></div>
-					<div class="col-md-6"><h5><b>วันที่บัตรหมดอายุ:</b><span><?php if($profile['date_of_expiry'] != ""){ echo $profile['date_of_expiry'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-6"><h5><b>วันที่บัตรหมดอายุ:</b><span><?php if($profile['date_of_expiry'] != ""){$date_of_expiry = Helpers::lib()->changeFormatDateNew($profile['date_of_expiry']); echo $date_of_expiry;}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>สถานที่ออกบัตร:</b><span><?php if($profile['place_issued'] != ""){ echo $profile['place_issued'];}else{echo "-";} ?></span> </h5></div>
-					<div class="col-md-6"><h5><b>วันที่ออกบัตร:</b><span><?php if($profile['date_issued'] != ""){ echo $profile['date_issued'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-6"><h5><b>วันที่ออกบัตร:</b><span><?php if($profile['date_issued'] != ""){$date_issued = Helpers::lib()->changeFormatDateNew($profile['date_issued']); echo $date_issued;}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>หนังสือเดินทาง:</b><span><?php if($profile['passport'] != ""){ echo $profile['passport'];}else{echo "-";} ?></span> </h5></div>
-					<div class="col-md-6"><h5><b>วันที่บัตรหมดอายุ:</b><span><?php if($profile['pass_expire'] != ""){ echo $profile['pass_expire'];}else{echo "-";}  ?></span></h5></div>
+					<div class="col-md-6"><h5><b>วันที่บัตรหมดอายุ:</b><span><?php if($profile['pass_expire'] != ""){$pass_expire = Helpers::lib()->changeFormatDateNew($profile['pass_expire']); echo $pass_expire;}else{echo "-";}  ?></span></h5></div>
 					<div class="col-md-6"><h5><b>หนังสือประจำตัวลูกเรือ:</b><span><?php if($profile['seamanbook'] != ""){ echo $profile['seamanbook'];}else{echo "-";} ?></span> </h5></div>
-					<div class="col-md-6"><h5><b>วันที่บัตรหมดอายุ:</b><span><?php if($profile['seaman_expire'] != ""){ echo $profile['seaman_expire'];}else{echo "-";}  ?></span></h5></div>
+					<div class="col-md-6"><h5><b>วันที่บัตรหมดอายุ:</b><span><?php if($profile['seaman_expire'] != ""){$seaman_expire = Helpers::lib()->changeFormatDateNew($profile['seaman_expire']); echo $seaman_expire;}else{echo "-";}  ?></span></h5></div>
 					<div class="col-md-6"><h5><b>บัตรประกันสังคมเลขที่:</b><span><?php if($profile['ss_card'] != ""){ echo $profile['ss_card'];}else{echo "-";} ?></span> </h5></div>
 					<div class="col-md-6"><h5><b>เลขที่บัตรประจำตัวผู้เสียภาษีอากร:</b><span><?php if($profile['tax_payer'] != ""){ echo $profile['tax_payer'];}else{echo "-";}  ?></span></h5></div>
 					<div class="col-md-6"><h5><b>เชื้อชาติ:</b><span><?php if($profile['race'] != ""){ echo $profile['race'];}else{echo "-";} ?></span></h5></div>
@@ -380,7 +380,8 @@
 										<tr>
 											<td><?php echo $value['company_name']; ?></td>
 											<td><?php echo $value['position_name']; ?></td>
-											<td><?php echo $value['since_date']; ?></td>
+											<td><?php $since_date = Helpers::lib()->changeFormatDateNew($value['since_date']); 
+											echo $since_date; ?></td>
 											<td><?php echo $value['reason_leaving']; ?></td>
 										</tr>
 										<?php
@@ -435,7 +436,7 @@
 					</h5>
 				</div>
 				<div class="col-md-12">
-					<h5><b>ภาษา</b>
+					<h5><b>ความสามารถด้านภาษา</b>
 						<table border="1">
 							<thead>
 								<tr style="background-color:#66CCFF	;">
@@ -507,6 +508,9 @@
 
 				<div class="col-md-12">
 					<h5><b>เปลี่ยนตำแหน่งเรือ:</b>
+						<?php
+                         if($user['register_status'] == 0){
+						?>
 						<select class="form-control d-inlineblock position_id" name="position_id" id="<?php echo $user['id'];?>">
 							<option value="">เลือกตำแหน่ง</option>
 							<?php
@@ -533,10 +537,17 @@
 							}						
 							?>
 						</select>
+						<?php
+                         }else{?>
+                         	<select class="form-control d-inlineblock" disabled>
+                         		<option value="">เลือกตำแหน่ง</option>
+                         		</select>
+                        <?php }
+						?>
 					</h5>
 				</div>
 				<div class="col-md-6"><h5><b>เงินเดือนที่คาดหวัง:</b><span><?php if($profile['expected_salary'] != ""){ echo $profile['expected_salary'];}else{echo "-";} ?></span></h5></div>
-				<div class="col-md-6"><h5><b>พร้อมที่จะเริ่มงานเมื่อ:</b><span><?php if($profile['start_working'] != ""){ echo $profile['start_working'];}else{echo "-";} ?></span></h5></div>
+				<div class="col-md-6"><h5><b>พร้อมที่จะเริ่มงานเมื่อ:</b><span><?php if($profile['start_working'] != ""){$start_working = Helpers::lib()->changeFormatDateNew($profile['start_working']); echo $start_working;}else{echo "-";} ?></span></h5></div>
 			</div>
 			<div class="text-center mt-2">
 				<button class="btn btn-success btn-icon save_data"><i></i>บันทึกข้อมูล</button>                        

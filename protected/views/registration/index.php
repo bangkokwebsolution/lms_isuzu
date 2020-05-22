@@ -507,6 +507,12 @@ function editNamehouse_registration(filedoc_id){
                 alert("Number only...Please check your information again ...");
             }
         }
+
+function numberWithCommas() {
+    var x = document.getElementById("Profile_expected_salary").value;
+    var c = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    $(".salary").val(c);
+}
     </script>
 
     <!-- Header -->
@@ -2168,7 +2174,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
     <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="form-group">
             <label><?= Yii::app()->session['lang'] == 1?'Expected salary':'เงินเดือนที่คาดหวัง'; ?></label>
-            <?php echo $form->textField($profile, 'expected_salary', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Expected salary':'เงินเดือนที่คาดหวัง')); ?>
+            <?php echo $form->textField($profile, 'expected_salary', array('class' => 'form-control salary','onchange'=>'numberWithCommas();', 'placeholder' => Yii::app()->session['lang'] == 1?'Expected salary':'เงินเดือนที่คาดหวัง')); ?>
             <?php echo $form->error($profile, 'expected_salary', array('class' => 'error2')); ?>
 
         </div>
@@ -2514,6 +2520,12 @@ $("#card-8").change(function(event) {
         }
     });
 });
+
+// $('.salary').change(function(event){
+//     var num = $(this).val();
+   
+//     console.log(Number(num));
+// });
 
 
 });
