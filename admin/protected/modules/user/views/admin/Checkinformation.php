@@ -451,10 +451,8 @@
                              $criteria= new CDbCriteria;
                              $criteria->addCondition('user_id ="'.$user_id.'"');
                              $ProfilesLanguage = ProfilesLanguage::model()->findAll($criteria);
-   
+                             if(!empty($ProfilesLanguage)){ 
                              foreach ($ProfilesLanguage as $key => $value) {
-                             	if ($value != "") {
-
 								?>
 								<tr >
 									<td style="background-color:#F5F5F5;"><?php echo $value['language_name']; ?></td>
@@ -482,14 +480,16 @@
 									 ?></td>
 								</tr>
 								<?php
-							       }else{?>
+							       }
+
+							       }else{
+							       	?>
                                 <tr>
-									<td><?php echo "-"; ?></td>
-									<td><?php echo "-"; ?></td>
-									<td><?php echo "-"; ?></td>
+									<td>-</td>
+									<td>-</td>
+									<td>-</td>
 								</tr>
                                <?php  }
-                           }
 								?>
 							</tbody>
 						</table>

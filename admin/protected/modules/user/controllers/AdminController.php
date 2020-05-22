@@ -1487,11 +1487,11 @@ echo ($data);
 		$padding_top = 10;
 		$padding_bottom = 20;
 
-		Yii::import('application.extensions.*');
-		require_once('THSplitLib/segment.php');
-		// require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
-		// $mPDF = new \Mpdf\Mpdf('th', 'A4', '0', 'garuda');
-		$mPDF = Yii::app()->ePdf->mpdf('th', 'A4', '0', 'garuda', $padding_left, $padding_right, $padding_top, $padding_bottom);
+		// Yii::import('application.extensions.*');
+		// require_once('THSplitLib/segment.php');
+		 require_once __DIR__ . '/../../../vendors/mpdf7/autoload.php';
+		 $mPDF = new \Mpdf\Mpdf();
+		//$mPDF = Yii::app()->ePdf->mpdf('th', 'A4', '0', 'garuda', $padding_left, $padding_right, $padding_top, $padding_bottom);
 		$mPDF->useDictionaryLBR = false;
 		$mPDF->setDisplayMode('fullpage');
 		$mPDF->autoLangToFont = true;
