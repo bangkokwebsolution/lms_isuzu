@@ -1,4 +1,6 @@
 <?php
+
+
 require_once Yii::app()->basePath . '/extensions/virtualclassroomapi/includes/bbb-api.php';
 $titleName = 'Virtual Classroom';
 $formNameModel = 'VRoom';
@@ -31,14 +33,7 @@ EOD
 <script src="<?php echo Yii::app()->baseUrl; ?>/js/jquery.uploadifive.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/uploadifive.css">
 <div class="innerLR">
-	<?php $this->widget('AdvanceSearchForm', array(
-		'data'=>$model,
-		'route' => $this->route,
-		'attributes'=>array(
-			array('name'=>'name','type'=>'text'),
-			//array('name'=>'course_point','type'=>'text'),
-		),
-	));?>
+	
 	<div class="widget" style="margin-top: -1px;">
 		<div class="widget-head">
 			<h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $titleName;?></h4>
@@ -93,21 +88,22 @@ EOD
 								'style' => 'width:150px',
 							),
 						),
+
 						array(
 							'header'=>'ผู้เข้าร่วม',
 							'type'=>'html',
 							'value'=>function ($data){
 								
 								$bbb = new BigBlueButton();
-								
 								// Get the URL to join meeting:
 								$itsAllGood = true;
 								
 								$infoParams = array(
 									'meetingId' => $data->id,		
-									'password' => $data->moderatorPw		
+									'password' => $data->moderatorPw,
+									'moderatorCount' => 100		
 								);
-
+                    
 								try {$result = $bbb->getMeetingInfoWithXmlResponseArray($infoParams);}
 									catch (Exception $e) {
 										//echo 'Caught exception: ', $e->getMessage(), "\n";
@@ -115,13 +111,14 @@ EOD
 										$itsAllGood = false;
 									}
 
+									// var_dump($returncode[0]);
 								if ($itsAllGood == true) {
 									//Output results to see what we're getting:
 									$returncode = (array)$result['returncode'];
 									if($returncode[0] == 'FAILED'){
 										return "0 คน";											
 									}else if($returncode[0] == 'SUCCESS'){
-										return $result['participantCount']." คน";
+										//return $result['participantCount']." คน";
 									}
 								}
 
@@ -167,7 +164,7 @@ EOD
 								return $btnUpload.$docList;
 							}
 						),
-						array(
+				/*		array(
 							'header'=>'ดูบันทึก',
 							'type'=>'raw',
 							'value'=>function ($data){
@@ -211,6 +208,11 @@ EOD
 									}
 								}	
 							}
+						),*/
+					   array(
+							'header'=>'รหัสในการเข้าห้องเรียน',
+							'type'=>'raw',
+							'value'=>'$data->show_key'
 						),
 						array(
 							'header'=>'จัดการ',
@@ -279,6 +281,7 @@ EOD
 										    ));
 
 										    return $btnJoin." ".$btnEnd;
+										    
 										}
 
 									}

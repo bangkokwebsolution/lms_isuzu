@@ -728,6 +728,49 @@ Class MenuLeft extends Controller
 	        // 	)
 	        // ),
 			//====== END Menu FeaturedLinks ======//
+			array(
+               /*====== Check Permissions AuthitemAccess (1) ======*/
+                'visible'=>self::PermissionsMenu(array(
+                   'VirtualClassroom.*',
+                   'VirtualClassroom.Index',
+                )),
+                'label'=>'<i></i><span>Virtual Classroom</span>',
+                                'url'=>'#VirtualClassroom',
+                'linkOptions' => array('data-toggle' => 'collapse'),
+                'itemOptions' => array('class' => 'hasSubmenu glyphicons eye_open'),
+                'submenuOptions' => array('class' => self::SetSubMenu( array('VirtualClassroom') ), 'id' => 'VirtualClassroom'),
+                'active' => self::SetSubMenu( array('VirtualClassroom') ,false),
+                'items'=>array(
+                    array(
+                        /*====== Check Permissions Sup-AuthitemAccess (1) ======*/
+                        'visible'=>self::PermissionsMenu(array(
+                            'VirtualClassroom.*',
+                            'VirtualClassroom.Create'
+                        )),
+                        'label'=>'เพิ่ม',
+                        'url'=>array('//VirtualClassroom/create')
+                    ),
+                    array(
+	                	/*====== Check Permissions Sup-User (1) ======*/
+	                	'visible'=>self::PermissionsMenu(array(
+	                		'VirtualClassroom.*',
+	                		'VirtualClassroom.Index'
+	                	)),
+	                	'label'=>'จัดการ',
+	                	'url'=>array('//VirtualClassroom/index')
+	                ),
+	                //    array(
+	                // 	/*====== Check Permissions Sup-User (1) ======*/
+	                // 	'visible'=>self::PermissionsMenu(array(
+	                // 		'VirtualClassroom.*',
+	                // 		'VirtualClassroom.Logmeeting'
+	                // 	)),
+	                // 	'label'=>'Logmeeting',
+	                // 	'url'=>array('//VirtualClassroom/logmeeting')
+	                // ),
+
+               )
+            ),
 
 	        array(
 	        	/*====== Check Permissions Usability (2) ======*/
@@ -1247,6 +1290,15 @@ Class MenuLeft extends Controller
 	        			'visible'=>true,
 	        			'label'=>'รายชื่อสมาชิก(สมาชิกทั่วไป)',
 	        			'url'=>array('//user/admin/General')
+	        		),
+	        		array(
+	        			/*====== Check Permissions Sup-User (2) ======*/
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'admin.*',
+	        				'admin.Access'
+	        			)),
+	        			'label'=>'ระบบตรวจสอบการเข้าใช้งาน',
+	        			'url'=>array('//user/admin/access')
 	        		),
 	        		array(
 	        			/*====== Check Permissions Sup-Passcours (1) ======*/

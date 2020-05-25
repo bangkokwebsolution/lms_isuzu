@@ -386,6 +386,15 @@ class MainMenuController extends Controller
 			    		$label = MainMenu::model()->find($criteria);
 			    	
 				    break; 
+
+				case "virtualclassroom":
+				    $modelNew = new MenuVroom();
+				    $form = '_formVroom';
+				    $nameModel = "MainVroom";
+				
+			    		$label = MenuVroom::model()->find($criteria);
+			    	
+				    break; 
 			}
 			$value = array('label'=>$label,'formName'=> $form,'nameModel'=> $nameModel,'modelNew'=>$modelNew);
 		return $value;
@@ -447,6 +456,11 @@ class MainMenuController extends Controller
 
 				case "webboard":
 				    $updateMenu = MainMenu::model()->find(array('condition' => "lang_id=".$lang_id));
+			    	$updateMenu->attributes = $value;
+				    break;
+
+				case "virtualclassroom":
+				    $updateMenu = MainVroom::model()->find(array('condition' => "lang_id=".$lang_id));
 			    	$updateMenu->attributes = $value;
 				    break;
 				    

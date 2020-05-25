@@ -38,11 +38,16 @@ class VRoom extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, attendeePw, moderatorPw', 'length', 'max'=>255),
-			array('welcomeMsg', 'safe'),
+			array('name, attendeePw, moderatorPw,name_EN', 'length', 'max'=>255),
+			array('name_EN', 'match', 'pattern' => '/^[A-Za-z_0-9]+$/u','message' => UserModule::t("Variable name may consist of A-z, 0-9, underscores, begin with a letter.")),
+			array('name, welcomeMsg , start_learn_room , end_learn_room, status_key,name_EN', 'safe'),
+			array('number_learn', 'numerical', 'integerOnly'=>true),
+			// array('name,start_learn_room , end_learn_room', 'required'),
+			array('name,name_EN', 'required'),
+
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, name, attendeePw, moderatorPw, welcomeMsg', 'safe', 'on'=>'search'),
+			array('id, name, attendeePw, moderatorPw, welcomeMsg,status_key, name_EN', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -65,10 +70,19 @@ class VRoom extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'name' => 'ชื่อห้องเรียน',
+			'name' => 'ชื่อห้องเรียน TH',
+			'name_EN' => 'ชื่อห้องเรียน EN',
 			'attendeePw' => 'Attendee Pw',
 			'moderatorPw' => 'Moderator Pw',
 			'welcomeMsg' => 'ข้อความต้อนรับ',
+			'ckeck_key' => 'รหัสในการเข้าห้องเรียน',
+			'number_learn' => 'จำนวนคนที่สามารถเข้าเรียนได้',
+			'start_learn_room' => 'วันที่เริ่มต้นการเรียน',
+			'end_learn_room' => 'วันที่สิ้นสุดการเรียน',
+			'active' => 'สถานะ',
+			'status_key' => 'ปิด / เปิด สิทธิในการเข้าเรียน',
+			'show_key' => 'แสดง รหัสในการเข้าห้องเรียน',
+
 		);
 	}
 
@@ -85,12 +99,25 @@ class VRoom extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);
+		$criteria->compare('name_EN',$this->name_EN,true);
 		$criteria->compare('attendeePw',$this->attendeePw,true);
 		$criteria->compare('moderatorPw',$this->moderatorPw,true);
 		$criteria->compare('welcomeMsg',$this->welcomeMsg,true);
+		$criteria->compare('active',y);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
 	}
+
+	public function getvroomList(){
+		$model = VRoom::model()->findAll(array(
+                      'condition' => 'active = :active',
+                      'params'    => array(':active' => 'y')
+                  ));
+		$list = CHtml::listData($model,'id','name');
+		return $list;
+	}
+
+
 }

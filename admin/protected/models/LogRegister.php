@@ -21,6 +21,8 @@ class LogRegister extends CActiveRecord
 {
 	public $news_per_page;
 	public $search_name;
+	public $search_admin;
+	//public $news_per_page;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -40,10 +42,10 @@ class LogRegister extends CActiveRecord
 			array('position_id, confirm_user, create_by, update_by', 'numerical', 'integerOnly'=>true),
 			array('firstname, lastname', 'length', 'max'=>255),
 			array('active', 'length', 'max'=>1),
-			array('news_per_page,register_date, confirm_date, create_date, update_date, search_name', 'safe'),
+			array('news_per_page,register_date, confirm_date, create_date, update_date, search_name, search_admin', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, firstname, lastname, register_date, position_id, confirm_date, confirm_user, create_date, create_by, update_date, update_by, active, user_id, news_per_page, search_name', 'safe', 'on'=>'search'),
+			array('id, firstname, lastname, register_date, position_id, confirm_date, confirm_user, create_date, create_by, update_date, update_by, active, user_id, news_per_page, search_name, search_admin', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -70,9 +72,9 @@ class LogRegister extends CActiveRecord
 			'id' => 'ID',
 			'firstname' => 'Firstname',
 			'lastname' => 'Lastname',
-			'register_date' => 'Register Date',
-			'position_id' => 'Position',
-			'confirm_date' => 'Confirm Date',
+			'register_date' => 'วันที่เข้าสมัคร',
+			'position_id' => 'ตำแหน่ง',
+			'confirm_date' => 'วันที่กดยืนยันการสมัคร',
 			'confirm_user' => 'Confirm User',
 			'create_date' => 'Create Date',
 			'create_by' => 'Create By',
@@ -80,7 +82,8 @@ class LogRegister extends CActiveRecord
 			'update_by' => 'Update By',
 			'active' => 'Active',
 			'user_id' => 'user_id',
-			'search_name' => 'ชื่อ - สกุล'
+			'search_name' => 'ชื่อ - สกุล',
+			'search_admin' => 'admin'
 		);
 	}
 
@@ -141,8 +144,8 @@ class LogRegister extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->with = array('user','position','profile');
-		$criteria->compare('firstname',$this->firstname,true);
-		$criteria->compare('lastname',$this->lastname,true);
+		// $criteria->compare('profile.firstname',$this->firstname,true);
+		// $criteria->compare('lastname',$this->lastname,true);
 		//$criteria->compare('register_date',$this->register_date,true);
 		$criteria->compare('t.position_id',$this->position_id);
 		//$criteria->compare('confirm_date',$this->confirm_date,true);
@@ -152,19 +155,23 @@ class LogRegister extends CActiveRecord
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
-		$criteria->compare('user_id',$this->user_id);
+		//$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('concat(Profile.firstname," ",Profile.lastname)',$this->search_name,true);
+		$criteria->compare('user.id',$this->search_admin,true);
+		// $name = $this->search_name;
+		// if (empty($name)) {
+  //        $criteria->compare('firstname',$this->firstname,true); 
+  //        $criteria->compare('lastname',$this->lastname,true);   
+		// }else{
+
+		// }
 		$regis_date = $this->register_date;
 		if(!empty($regis_date)) {
-		
-		// $start_dates = substr($this->register_date,0,11);
-		// $end_dates = substr($this->register_date,13);
 	       $start_dates = $this->register_date;
 		   $end_dates = $this->register_date;
     
 		$date_starts = date('Y-m-d 00:00:00',strtotime($start_dates));
 		$date_ends = date('Y-m-d 23:59:59', strtotime($end_dates));
-		// $date_starts = date('Y-m-d 00:00:00',strtotime($this->$register_date));
-		// $date_ends = date('Y-m-d 23:59:59', strtotime($this->$register_date));
 
 		$criteria->addBetweenCondition('register_date', $date_starts, $date_ends, 'AND');
 		
@@ -174,8 +181,7 @@ class LogRegister extends CActiveRecord
 	    }
         $firm_date = $this->confirm_date;
 		if(!empty($firm_date)) {
-		// $start_date = substr($this->confirm_date,0,11);
-		// $end_date = substr($this->confirm_date,13);
+
 		$start_date = $this->confirm_date;
 		$end_date = $this->confirm_date;
  
@@ -189,7 +195,7 @@ class LogRegister extends CActiveRecord
         $criteria->compare('confirm_date',$this->confirm_date,true);
 		
 	    }
-        
+       //var_dump($_REQUEST);exit();
 		$poviderArray = array('criteria' => $criteria);
 
         // Page
@@ -200,7 +206,7 @@ class LogRegister extends CActiveRecord
         }
 
         return new CActiveDataProvider($this, $poviderArray);
-
+  
 		// return new CActiveDataProvider($this, array(
 		// 	'criteria'=>$criteria,
 		// ));

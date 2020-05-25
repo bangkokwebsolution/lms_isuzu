@@ -196,6 +196,22 @@ echo ($data);
 		return $data;
 	}
 
+	public function actionAccess ()
+	{
+		$model = new User('searchaccess');
+        $model->unsetAttributes();  // clear any default values
+        $model->register_status = array(1);
+        $model->repass_status = array(1);
+        $model->status = array(1);
+
+        if(isset($_GET['User'])){
+        	$model->attributes=$_GET['User'];
+        }
+        $this->render('Access',array(
+        	'model'=>$model,
+        ));
+	}
+
 	public function actionEditTable(){
 		$model = TypeUser::model()->findAll(array('condition'=>'active = 1'));
 		foreach ($model as $key => $value) {
@@ -415,6 +431,19 @@ echo ($data);
 		// }
 		$this->redirect(array('/user/admin/Membership'));
    }
+
+     public function actionDelete_employee()
+   {
+        $id = $_POST['id'];
+		$model = User::model()->findByPk($id);
+		if ($model != '') {
+			$model->del_status = 1;
+		}
+		$model->save(false);
+
+		$this->redirect(array('/user/admin/access'));
+   }
+
 
 	public function actionCheckinformation()
 	{
