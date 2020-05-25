@@ -64,13 +64,13 @@ EOD
 						$.appendFilter("CourseGeneration[news_per_page]");
 					}',
 					'columns'=>array(
-						// array(
-						// 	'visible'=>Controller::PButton(
-						// 		array($formNameModel.".Delete", $formNameModel.".MultiDelete")
-						// 	),
-						// 	'class'=>'CCheckBoxColumn',
-						// 	'id'=>'chk',
-						// ),						
+						array(
+							'visible'=>Controller::PButton(
+								array($formNameModel.".Delete", $formNameModel.".MultiDelete")
+							),
+							'class'=>'CCheckBoxColumn',
+							'id'=>'chk',
+						),						
 						array(
 							'name'=>'course_id',
 							'htmlOptions'=>array('style'=>'text-align: left','width'=>'300px;'),
@@ -149,7 +149,8 @@ EOD
 		</div>
 	</div>
 
-		<?php if( Controller::DeleteAll(array("CourseGeneration.*", "CourseGeneration.Delete", "CourseGeneration.MultiDelete")) ) : ?>
+		<?php 
+		if(Controller::PButton(array($formNameModel.".Multidelete",$formNameModel.".Delete"))) : ?>
 		<!-- Options -->
 		<div class="separator top form-inline small">
 			<!-- With selected actions -->

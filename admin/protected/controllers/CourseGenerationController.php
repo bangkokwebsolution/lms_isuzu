@@ -28,15 +28,15 @@ class CourseGenerationController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'delete', 'Active'),
+				'actions'=>array('index','view', 'delete', 'Active', 'MultiDelete'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update', 'delete', 'Active'),
+				'actions'=>array('create','update', 'delete', 'Active', 'MultiDelete'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete', 'Active'),
+				'actions'=>array('admin','delete', 'Active', 'MultiDelete'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -172,6 +172,16 @@ class CourseGenerationController extends Controller
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
 
+	}
+
+	public function actionMultiDelete()
+	{
+		// header('Content-type: application/json');
+		if(isset($_POST['chk'])) {
+			foreach($_POST['chk'] as $val) {
+				$this->actionDelete($val);
+			}
+		}
 	}
 
 	/**
