@@ -111,11 +111,11 @@ EOD
 					        'value'=> 'ClassFunction::textcut($data->cate_short_detail,0,200)',
 					        'htmlOptions'=>array('style'=>'width:330px; vertical-align:top;'),
 					    ),*/
-						array(
-							'header'=>'วีดีโอตัวอย่าง',
-							'value'=>'$data->fileCount',
-							'htmlOptions'=>array('style'=>'width: 90px; text-align:center;'),
-						),
+						// array(
+						// 	'header'=>'วีดีโอตัวอย่าง',
+						// 	'value'=>'$data->fileCount',
+						// 	'htmlOptions'=>array('style'=>'width: 90px; text-align:center;'),
+						// ),
 				        // array(
 				        // 	'name'=>'cate_show',
 				        // 	'class'=>'JToggleColumn',
