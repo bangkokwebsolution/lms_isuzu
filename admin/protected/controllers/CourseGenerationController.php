@@ -28,15 +28,15 @@ class CourseGenerationController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'delete'),
+				'actions'=>array('index','view', 'delete', 'Active'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update', 'delete'),
+				'actions'=>array('create','update', 'delete', 'Active'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin','delete', 'Active'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -204,6 +204,30 @@ class CourseGenerationController extends Controller
 		$this->render('admin',array(
 			'model'=>$model,
 		));
+	}
+
+	public function actionActive($id){
+		$model = CourseGeneration::model()->find("gen_id = '".$id."'");
+
+		if($model->status == 2){
+			$model_check = CourseGeneration::model()->findAll("course_id='".$model->course_id."' AND gen_id != '".$model->gen_id."'");
+			if(!empty($model_check)){
+				foreach ($model_check as $key => $value) {
+					$model_edit = CourseGeneration::model()->findByPk($value->gen_id);
+					if($model_edit->status != 2){
+						$model_edit->status = 2;
+						$model_edit->save(false);
+					}
+				}
+			}
+
+			$model->status = 1;
+			$model->save();
+		}else{
+			$model->status = 2;
+			$model->save();
+		}
+		$this->redirect(array('/courseGeneration/index/'.$model->course_id));
 	}
 
 	/**

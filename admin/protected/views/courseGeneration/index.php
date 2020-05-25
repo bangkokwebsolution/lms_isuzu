@@ -99,11 +99,10 @@ EOD
 							'type'=>'html',
 							'value'=> function($data){
 								if($data->status == 1){
-									$text = "<font color='green' size='4'>ใช้งาน</font>";
-								}else{
-									$text = "";
+									return CHtml::link("เปิด",array("/CourseGeneration/active","id"=>$data->gen_id), array("class"=>"btn btn-success"));
+								} else {
+									return CHtml::link("ปิด",array("/CourseGeneration/active","id"=>$data->gen_id), array("class"=>"btn btn-danger"));
 								}
-								return $text;
 							}
 						),
 
