@@ -73,6 +73,7 @@ EOD
 						// ),						
 						array(
 							'name'=>'course_id',
+							'htmlOptions'=>array('style'=>'text-align: left','width'=>'300px;'),
 							'type'=>'html',
 							'filter'=>false,
 							'value'=> function($data){
@@ -96,7 +97,9 @@ EOD
 						// ),
 						array(
 							'name'=>'status',
+							'htmlOptions'=>array('style'=>'text-align: center','width'=>'100px;'),
 							'type'=>'html',
+							'filter'=>false,
 							'value'=> function($data){
 								if($data->status == 1){
 									return CHtml::link("เปิด",array("/CourseGeneration/active","id"=>$data->gen_id), array("class"=>"btn btn-success"));
@@ -109,6 +112,7 @@ EOD
 						array(
 							'name'=>'gen_period_start',
 							'type'=>'html',
+							'filter'=>false,
 							'value'=> function($data){
 								return Helpers::lib()->changeFormatDate($data->gen_period_start,'datetime');
 							}
@@ -116,6 +120,7 @@ EOD
 						array(
 							'name'=>'gen_period_end',
 							'type'=>'html',
+							'filter'=>false,
 							'value'=> function($data){
 								return Helpers::lib()->changeFormatDate($data->gen_period_end,'datetime');
 							}
