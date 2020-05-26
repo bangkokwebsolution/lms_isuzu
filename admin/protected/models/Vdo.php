@@ -19,7 +19,7 @@ class Vdo extends AActiveRecord
 			array('vdo_id, create_by, update_by', 'numerical', 'integerOnly'=>true),
 			array('vdo_title, vdo_path , vdo_thumbnail', 'length', 'max'=>255),
 			//array('vdo_path', 'file', 'types' => ('mp4', 'avi', 'mpge'), 'maxSize' => 1024 * 1024 * 2),
-			array('vdo_path', 'file', 'types' => 'mp4,avi,mpge', 'maxSize'=>100000000 ,'tooLarge'=>'ไฟล์จะต้องมีขนาดไม่เกิน 100 Mb กรุณาเลือกไฟล์ใหม่'),
+			array('vdo_path', 'file', 'types' => 'mp4,avi,mpge', 'maxSize'=>100000000 ,'message'=>'ไฟล์จะต้องมีขนาดไม่เกิน 100 Mb กรุณาเลือกไฟล์ใหม่','on'=>'file'),
 			array('active', 'length', 'max'=>1),
 			array('create_date, update_date, news_per_page,vdo_type,link_vdo,lang_id,parent_id', 'safe'),
 			array('vdo_title', 'required' ),

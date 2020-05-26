@@ -52,6 +52,7 @@ class VdoController extends Controller
     		$model->lang_id = isset($_GET['lang_id']) ? $_GET['lang_id'] : 1 ;
 			$model->parent_id = isset($_GET['parent_id']) ? $_GET['parent_id'] : 0 ;
     		$time = date("dmYHis");
+    		$model->scenario = $model->vdo_type;
     		if($model->vdo_type == 'file'){
     			$vdo_path = CUploadedFile::getInstance($model, 'vdo_path');
     			$uploadFile = CUploadedFile::getInstance($model, 'vdo_path');
@@ -141,9 +142,10 @@ class VdoController extends Controller
 
 					$this->redirect(array('view','id'=>$model->vdo_id));
 				} 
-			} 
+				$this->redirect(array('view','id'=>$model->vdo_id));
+			}
 		}
-
+		
 		$this->render('create',array(
 			'model'=>$model,
 		));

@@ -102,10 +102,10 @@ EOD
 							'id'=>'user-grid',
 							'dataProvider'=>$model->searchmembership(),
 							'filter'=>$model,
-							'afterAjaxUpdate'=>'function(id, data){
-								$.appendFilter("[news_per_page]");	
-								InitialSortTable();
-							}',
+							// 'afterAjaxUpdate'=>'function(id, data){
+							// 	$.appendFilter("[news_per_page]");	
+							// 	InitialSortTable();
+							// }',
 							'columns'=>array(
 								array(
 									'header'=>'No.',
@@ -139,10 +139,7 @@ EOD
 										if($data->register_status == 0){
 											//echo CHtml::button("ปิด",array("class"=>"btn btn-danger ","data-id" => $data->id));
 											echo "รอการตรวจสอบ";
-										} else if($data->register_status == 1){
-											echo "อนุมัติ";
-											//echo CHtml::button("รอการตรวจสอบ",array("class"=>"btn btn-success ","data-id" => $data->id));
-										}else if($data->register_status == 2){
+										} else if($data->register_status == 2){
 											echo "ไม่อนุมัติ";
 										}
 									}
@@ -193,12 +190,11 @@ EOD
 								array(
 									'type'=>'raw',
 									'value'=>function($data){
-										if($data->register_status == 1){
-											echo CHtml::button("อนุมัติ",array("class"=>"btn btn-success","data-id" => $data->id));
-										} else if($data->register_status == 0) {
-											echo CHtml::button("รอการตรวจสอบ",array("class"=>"btn btn-info changeStatus","data-id" => $data->id));
-										} else if($data->register_status == 2){
-											echo CHtml::button("ไม่อนุมัติ",array("class"=>"btn btn btn-secondary","data-id" => $data->id));
+										 if($data->register_status == 0) {
+										 	return  CHtml::button("รอการตรวจสอบ",array('onclick'=>'sendMsg('.$data->id.')','class' => 'btn btn-info changeStatus','data-id' =>$data->id));
+										
+									} else if($data->register_status == 2){
+											echo CHtml::button("ไม่อนุมัติ",array('onclick'=>'',"class"=>"btn btn btn-secondary","data-id" => $data->id));
 										}
 									},
 									'header' => 'อนุมัติสมัครสมาชิก',
@@ -208,7 +204,7 @@ EOD
 								array(
 									'type'=>'raw',
 									'value'=>function($data){	
-										echo CHtml::button("ตรวจสอบ",array("class"=>"btn btn-success Check_information","data-id" => $data->id));
+										echo CHtml::button("ตรวจสอบ",array('onclick'=>'sendMsgCheck('.$data->id.')',"class"=>"btn btn-success Check_information","data-id" => $data->id));
 									},
 									'header' => 'ตรวจสอบข้อมูลการสมัคร',
 									'htmlOptions'=>array('style'=>'text-align: center;'),
@@ -313,9 +309,10 @@ EOD
 							</div>
 						</div> -->
 						<script>
-							$( ".changeStatus" ).click(function() {
-								var btn = $(this);
-								var id = btn.attr("data-id");
+							//$( ".changeStatus" ).click(function() {
+								function sendMsg(id){
+								// var btn = $(this);
+								// var id = btn.attr("data-id");
 								//var _items = ["อนุมัติ","ไม่อนุมัติ"];
 								swal({
 									title: "ต้องการอนุมัติการสมัครหรือไม่",
@@ -397,12 +394,13 @@ EOD
 								}
 								);
 
-								
-							});
+								}
+						//	});
 
-							$( ".Check_information" ).click(function() {
-								var btn = $(this);
-								var id = btn.attr("data-id");
+						//	$( ".Check_information" ).click(function() {
+							function sendMsgCheck(id){
+								// var btn = $(this);
+								// var id = btn.attr("data-id");
 								$.ajax({
 									url: "<?= $this->createUrl('admin/Checkinformation'); ?>", 
 									type: "POST",
@@ -437,7 +435,8 @@ EOD
 										});
 									}
 								});
-							});
+							}
+							//});
 
 						</script>
 					</div>

@@ -157,7 +157,7 @@ echo ($data);
 		$model = new User('search');
         $model->unsetAttributes();  // clear any default values
         //$model->typeuser = array(1);
-        $model->register_status = array(1,3);
+        $model->register_status = array(1);
         //$model->status = array(1);
         $model->supper_user_status = false;
         if(isset($_GET['User'])){
@@ -173,9 +173,7 @@ echo ($data);
 	{
 		$model = new User('search');
         $model->unsetAttributes();  // clear any default values
-        $model->typeuser = array(1);
         $model->register_status = array(0,2);
-        $model->status = array(0);
         $model->supper_user_status = true;
       
         if(isset($_GET['User'])){

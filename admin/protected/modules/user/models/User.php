@@ -485,7 +485,25 @@ public function searchmembership()
 	$criteria->compare('del_status',0);
 	$criteria->compare('online_status',$this->online_status);
 	$criteria->compare('online_user',$this->online_user);
-	$criteria->compare('register_status',$this->register_status);
+	//$criteria->compare('register_status',$this->register_status);
+	$regis = $this->register_status;		
+
+	if (isset($this->register_status)) {
+
+		if ($regis == "") {
+			
+			$criteria->compare('register_status',array(0,2));
+		}else if($regis == 2){
+		
+		    $criteria->compare('register_status', array(2));
+        }else if($regis == 0){
+        
+        	$criteria->compare('register_status',array(0));
+        }
+	}else{
+	
+        $criteria->compare('register_status',$this->register_status);
+	}
 	$criteria->compare('group',$this->group);
 	$criteria->compare('profile.identification',$this->idensearch,true);
 	$criteria->order = 'user.id DESC';
@@ -500,6 +518,7 @@ public function searchmembership()
 			
 		$criteria->addBetweenCondition('create_at', $date_start, $date_end, 'AND');
 	}
+	//var_dump($_REQUEST);exit();
 	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
 	//$criteria->compare('orgchart_lv2',$org,true);
 	return new CActiveDataProvider(get_class($this), array(
@@ -623,7 +642,6 @@ protected function afterFind ()
     {
         $getregisstatusList = array(
             '0'=>'รอการตรวจสอบ',
-           // '1'=>'อนุมัติ',
             '2'=>'ไม่อนุมัติ'
         );
         return $getregisstatusList;
