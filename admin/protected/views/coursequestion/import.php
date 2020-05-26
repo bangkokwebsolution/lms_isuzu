@@ -1,6 +1,6 @@
 <?php
 $this->breadcrumbs=array(
-    'ระบบชุดข้อสอบหลักสูตร'=>array('index'),
+    'ระบบชุดข้อสอบหลักสูตร'=>array('/Coursegrouptesting/index'),
     'เพิ่มชุดข้อสอบอบรมออนไลน์',
 );
 $formtext = "Import excel ข้อสอบ";
