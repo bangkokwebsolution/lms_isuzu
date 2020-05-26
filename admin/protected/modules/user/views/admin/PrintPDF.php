@@ -69,9 +69,9 @@ table .t-edu {
     
     <?php
  if ($user != null) {
-   $head  = Yii::app()->baseUrl . "/../admin/images/head.jpg";
+   $head  = Yii::app()->basePath . "/../../admin/images/head.jpg";
   } else {
-   $head  = Yii::app()->baseUrl . "/../admin/images/head.jpg";                                            
+   $head  = Yii::app()->basePath . "/../../admin/images/head.jpg";                                            
   }
 ?>
  <img src="<?php echo $head; ?> " style="height:180px; padding-left: 20px;">
@@ -89,11 +89,13 @@ table .t-edu {
                   <?php 
                 if ($user['pic_user'] == null) {
 
-                    $img  = Yii::app()->theme->baseUrl . "/../../../themes/template2/images/thumbnail-profile.png";
+                    $img  = Yii::app()->basePath . "/../../themes/template2/images/thumbnail-profile.png";
                 } else {
                  
-                    $img = Yii::app()->baseUrl . '/../uploads/user/' . $user['id'] . '/thumb/' . $user['pic_user'];
+                    $img = Yii::app()->basePath . '/../../uploads/user/' . $user['id'] . '/thumb/' . $user['pic_user'];
                 }
+
+
                 ?>   
                     <img src="<?php echo $img; ?>" width="100" height="130" style="border: 1px solid #999; height: 130px;width: 100px;"> 
                 </td>
