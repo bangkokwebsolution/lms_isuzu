@@ -109,12 +109,12 @@ class PController extends CActiveRecord
         $criteria->compare('update_date', $this->update_date, true);
         $criteria->compare('update_by', $this->update_by, true);
         $criteria->compare('priority', $this->priority, true);
-
-        if (isset($_GET['sort'])) {
-            if ($_GET['sort'] == "") {
-                $criteria->order = 'priority ASC';
-            }
-        }
+        $criteria->order = 'priority ASC';
+        // if (isset($_GET['sort'])) {
+        //     if ($_GET['sort'] == "") {
+        //         $criteria->order = 'priority ASC';
+        //     }
+        // }
 
         $poviderArray = array('criteria' => $criteria);
 

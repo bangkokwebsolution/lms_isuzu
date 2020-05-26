@@ -39,7 +39,7 @@ EOD
                 update : function () {
                     serial = $('#".$formNameId." tbody').sortable('serialize', {key: 'items[]', attribute: 'class'});
                     $.ajax({
-                        'url': '" . $this->createUrl('site/priority',array('model'=>$formNameModel)) . "',
+                        'url': '" . $this->createUrl('PController/priority',array('model'=>$formNameModel)) . "',
                         'type': 'post',
                         'data': serial,
                         'success': function(data){
@@ -82,7 +82,7 @@ EOD
             </div>
         </div>
         <div class="col-md-12">
-    <?php $this->widget('AGridView', array(
+    <?php $this->widget('booster.widgets.TbGridView', array(
         'id'=>'PController-grid',
         'dataProvider' => $model->search(),
         'filter' => $model,
