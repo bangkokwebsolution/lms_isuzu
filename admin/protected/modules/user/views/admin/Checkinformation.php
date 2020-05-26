@@ -54,6 +54,16 @@
 	}
 	.register-detail{
 		padding: 0 2em 2em;
+	}
+
+	.baht {
+        position: absolute;
+        left:  16px;
+        top: 40px;
+        z-index: 2;
+        display: block;
+        pointer-events: none;
+    }
 	</style>
 
 	<form>
@@ -458,24 +468,24 @@
 									<td style="background-color:#F5F5F5;"><?php echo $value['language_name']; ?></td>
 									<td><?php 
                                       if ($value['write'] == 1) {
-                                        echo "ใช้ไม่ได้";
+                                        echo "ดีมาก";
                                       }else if($value['write'] == 2){
-                                      	echo "พอใช้ได้";
-                                      }else if($value['write'] == 3){
                                       	echo "ดี";
+                                      }else if($value['write'] == 3){
+                                      	echo "พอใช้ได้";
                                       }else if($value['write'] == 4){
-                                      	echo "ดีมาก";
+                                      	echo "ใช้ไม่ได้";
                                       }
 									 ?></td>
 									<td><?php 
-                                      if ($value['spoken'] == 1) {
-                                        echo "ใช้ไม่ได้";
+                                            if ($value['spoken'] == 1) {
+                                        echo "ดีมาก";
                                       }else if($value['spoken'] == 2){
-                                      	echo "พอใช้ได้";
-                                      }else if($value['spoken'] == 3){
                                       	echo "ดี";
+                                      }else if($value['spoken'] == 3){
+                                      	echo "พอใช้ได้";
                                       }else if($value['spoken'] == 4){
-                                      	echo "ดีมาก";
+                                      	echo "ใช้ไม่ได้";
                                       }
 									 ?></td>
 								</tr>
@@ -546,8 +556,9 @@
 						?>
 					</h5>
 				</div>
-				<div class="col-md-6"><h5><b>เงินเดือนที่คาดหวัง:</b><span><?php if($profile['expected_salary'] != ""){ echo $profile['expected_salary'];}else{echo "-";} ?></span></h5></div>
-				<div class="col-md-6"><h5><b>พร้อมที่จะเริ่มงานเมื่อ:</b><span><?php if($profile['start_working'] != ""){$start_working = Helpers::lib()->changeFormatDateNew($profile['start_working']); echo $start_working;}else{echo "-";} ?></span></h5></div>
+				<div class="col-md-4"><h5><b>เงินเดือนที่คาดหวัง:</b><span><?php if($profile['expected_salary'] != ""){ echo $profile['expected_salary'];}else{echo "-";} ?></span></h5></div>
+				<div class="col-md-1"><h5><b class="baht">บาท</b></h5></div>
+				<div class="col-md-7"><h5><b>พร้อมที่จะเริ่มงานเมื่อ:</b><span><?php if($profile['start_working'] != ""){$start_working = Helpers::lib()->changeFormatDateNew($profile['start_working']); echo $start_working;}else{echo "-";} ?></span></h5></div>
 			</div>
 			<div class="text-center mt-2">
 				<button class="btn btn-success btn-icon save_data"><i></i>บันทึกข้อมูล</button>                        

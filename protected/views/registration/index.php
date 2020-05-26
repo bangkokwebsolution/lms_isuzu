@@ -146,6 +146,14 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         display: block;
         pointer-events: none;
     }
+    .baht {
+        position: absolute;
+        left:  16px;
+        top: 40px;
+        z-index: 2;
+        display: block;
+        pointer-events: none;
+    }
 
     .since-icon{
         position: relative;
@@ -511,6 +519,7 @@ function editNamehouse_registration(filedoc_id){
 function numberWithCommas() {
     var x = document.getElementById("Profile_expected_salary").value;
     var c = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+
     $(".salary").val(c);
 }
     </script>
@@ -1921,7 +1930,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
     </div>
 </div>
 
-<!-- <div class="row  mt-1 mb-1 form_name">
+ <div class="row  mt-1 mb-1 form_language">
     <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?' File attachment Crew identification':'ไฟล์หนังสือประจำตัวลูกเรือ'; ?></strong></div>
     <div class="col-md-4">
         <div class="form-group">
@@ -1964,7 +1973,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
         ?>
     </div>
 </div>
-</div> -->
+</div> 
 <div class="row  mt-1 mb-1 form_name">
     <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'File attachment identification':'ไฟล์สำเนาบัตรประชาชน'; ?></strong></div>
     <div class="col-md-4">
@@ -2171,14 +2180,20 @@ if ($ProfilesLanguage->isNewRecord === null) {
    </div>
 </div>
 <div class="row justify-content-center form_name">
-    <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="form-group">
             <label><?= Yii::app()->session['lang'] == 1?'Expected salary':'เงินเดือนที่คาดหวัง'; ?></label>
             <?php echo $form->textField($profile, 'expected_salary', array('class' => 'form-control salary','onchange'=>'numberWithCommas();', 'placeholder' => Yii::app()->session['lang'] == 1?'Expected salary':'เงินเดือนที่คาดหวัง')); ?>
             <?php echo $form->error($profile, 'expected_salary', array('class' => 'error2')); ?>
 
         </div>
-    </div>
+
+    </div> 
+    <div class="col-md-1 col-sm-6 col-xs-12">
+        <div class="form-group baht">
+       <label><?= Yii::app()->session['lang'] == 1?'Baht':'บาท'; ?></label>
+        </div>
+    </div>    
     <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="form-group birthday-icon">
             <i class="far fa-calendar-alt"></i>

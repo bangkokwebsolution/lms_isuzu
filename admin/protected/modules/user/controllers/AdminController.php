@@ -205,7 +205,7 @@ echo ($data);
         if(isset($_GET['User'])){
         	$model->attributes=$_GET['User'];
         }
-        $this->render('Access',array(
+        $this->render('access',array(
         	'model'=>$model,
         ));
 	}
