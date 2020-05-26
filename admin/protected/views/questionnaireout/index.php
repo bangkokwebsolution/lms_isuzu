@@ -110,7 +110,7 @@ EOD
 					    	'htmlOptions'=>array('style'=>'text-align: center','width'=>'100px'),
 					    ),*/
 						array(
-							'header'=>'link ทำข้อสอบ',
+							'header'=>'link ทำแบบสอบถาม',
 							'value'=>function($data){
 								$url = Yii::app()->createAbsoluteUrl('questionnaire/out');
 								$url = str_replace("admin/", "", $url);
