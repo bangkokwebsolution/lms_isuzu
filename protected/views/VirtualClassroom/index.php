@@ -102,8 +102,8 @@
                 <span class="icon-block half bg-blue-500 text-white" style="margin-top:50px; height: 45px;"><i class="fa fa-fw fa-book"></i></span>
             </div>
             <div class="media-body">
-                <h3 class="text-display-2 text-white margin-none"><?= Yii::app()->session['lang'] == 1?'Virtual Classroom':'ห้องเรียนเสมือน';?></h3>
-                <p class="text-white text-subhead" style=" font-size: 1.6rem;"><?= Yii::app()->session['lang'] == 1?'Includes a list of virtual classrooms that are currently online':'รวมรายชื่อห้องเรียนเสมือนที่กำลัง ออนไลน์อยู่';?></p>
+                <h3 class="text-display-2 text-black margin-none"><?= Yii::app()->session['lang'] == 1?'Virtual Classroom':'ห้องเรียนเสมือน';?></h3>
+                <p class="text-black text-subhead" style=" font-size: 1.6rem;"><?= Yii::app()->session['lang'] == 1?'Includes a list of virtual classrooms that are currently online':'รวมรายชื่อห้องเรียนเสมือนที่กำลัง ออนไลน์อยู่';?></p>
             </div>
         </div>
     </div>
@@ -181,8 +181,8 @@
                         if(!empty($room->ckeck_key)){ ?>
                                 <a href="#modal-ckeck-key<?=$meetingId[0]?>"
                                    class="padding-none overlay overlay-full icon-block bg-default bigblue-link" data-toggle="modal">
-                                    <span class="v-center">
-                                        <?php echo CHtml::image(Yii::app()->theme->baseUrl.'/images/logo_course.jpg', 'No Image'); ?>
+                                    <span class="v-center" style="margin-top:50px; height: 45px;">
+                                        <?php echo CHtml::image(Yii::app()->theme->baseUrl.'/images/e-room.jpg', 'No Image', array('width'=>'350px','height'=>'300px' )); ?>
                                     </span>
                                 </a>
 
@@ -190,8 +190,8 @@
                         <?php }else{?>
                                 <a href="<?php echo $this->createUrl('virtualclassroom/joinid',array('id'=>$meetingId[0])); ?>"
                                    class="padding-none overlay overlay-full icon-block bg-default bigblue-link">
-                                        <span class="v-center">
-                                        <?php echo CHtml::image(Yii::app()->theme->baseUrl.'/images/logo_course.jpg', 'No Image'); ?>
+                                        <span class="v-center" style="margin-top:50px; height: 45px;">
+                                        <?php echo CHtml::image(Yii::app()->theme->baseUrl.'/images/e-room.jpg', 'No Image',array('width'=>'350px','height'=>'300px' )); ?>
                                     </span>
                                 </a>
                              
