@@ -60,12 +60,12 @@ EOD
 				<div>
 					<?php echo Rights::t('core', 'ที่นี่คุณสามารถอนุมัติการเข้าใช้งานระบบให้กับผู้ใช้แต่ละราย'); ?>
 				</div>
-				<!-- <div class="separator bottom form-inline small">
+			 <div class="separator bottom form-inline small">
 					<span class="pull-right">
 						<label class="strong">แสดงแถว:</label>
 						<?php echo $this->listPageShow($formNameModel);?>
 					</span>
-				</div> -->
+				</div>
 				<div class="spacer"></div>
 				<div>
 
@@ -77,11 +77,10 @@ EOD
 						</div> -->
 
 						<?php 
-						$this->widget('AGridView', array(
+						$this->widget('zii.widgets.grid.CGridView', array(
 							'id'=>'user-grid',
 							'dataProvider'=>$model->searchapprove(),
 							'filter'=>$model,
-							'template'=>'{items}{summary}{pager}',
 							'columns'=>array(
 								array(
 									'header'=>'No.',

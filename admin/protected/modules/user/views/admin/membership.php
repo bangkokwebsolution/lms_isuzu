@@ -98,7 +98,7 @@ EOD
 						</div> --><!-- search-form -->
 
 						<?php 
-						$this->widget('AGridView', array(
+						$this->widget('zii.widgets.grid.CGridView', array(
 							'id'=>'user-grid',
 							'dataProvider'=>$model->searchmembership(),
 							'filter'=>$model,

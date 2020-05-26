@@ -264,12 +264,13 @@
 
                 <?php $bar = Yii::app()->controller->id ?>
                 <?php $bar_action = Yii::app()->controller->action->id;
+            if (Yii::app()->user->id == null) {
                 $mainMenu = MainMenu::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y', 'lang_id' => Yii::app()->session['lang']));
                 foreach ($mainMenu as $key => $value) {
                     $url = !empty($value->parent) ? $value->parent->url : $value->url;
                     $controller = explode('/', $url);
                     $controller[0] = strtolower($controller[0]);
-                    if ($controller[0] != "registration" && $controller[0] != "privatemessage" && $controller[0] != "search" && $controller[0] != "forgot_password" && $controller[0] != "question") {
+                    if ($controller[0] != "registration" && $controller[0] != "privatemessage" && $controller[0] != "search" && $controller[0] != "forgot_password" && $controller[0] != "question" && $controller[0] != "virtualclassroom") {
                         $clss =  $bar == $controller[0] && $bar_action == "index" ? "active" : '';
                         if ($controller[0] != "webboard") {
                             if ($controller[0] == "course" && Yii::app()->user->id == null) {
@@ -289,6 +290,33 @@
                         }
                     }
                 }
+           }else{
+                $mainMenu = MainMenu::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y', 'lang_id' => Yii::app()->session['lang']));
+                foreach ($mainMenu as $key => $value) {
+                    $url = !empty($value->parent) ? $value->parent->url : $value->url;
+                    $controller = explode('/', $url);
+                    $controller[0] = strtolower($controller[0]);
+                    if ($controller[0] != "registration" && $controller[0] != "privatemessage" && $controller[0] != "search" && $controller[0] != "forgot_password" && $controller[0] != "question" ) {
+                        $clss =  $bar == $controller[0] && $bar_action == "index" ? "active" : '';
+                        if ($controller[0] != "webboard") {
+                            if ($controller[0] == "course" && Yii::app()->user->id == null) {
+                                echo '<li class="' . $clss . '">
+
+                                <a data-toggle="modal" class="btn-login-course" href="#modal-login" >' . $value->title . '</span></a>
+                                </li>';
+                            } else {
+                                echo '<li class="' . $clss . '">
+                                <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
+                                </li>';
+                            }
+                        } else {
+                            echo '<li class="' . $clss . '">
+                            <a href="' . $this->createUrl($url) . '?lang=' . Yii::app()->session['lang'] . '">' . $value->title . '</span></a>
+                            </li>';
+                        }
+                    }
+                }
+           }
                 ?>
 
                 <li class="dropdown">

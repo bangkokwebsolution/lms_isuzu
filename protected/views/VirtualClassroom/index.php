@@ -114,7 +114,6 @@
             <div class="col-md-12">
                 <div class="row" data-toggle="isotope" style="margin-top:50px; min-height: 76vh;">
                 <?php
-
                 require_once Yii::app()->basePath . '/extensions/virtualclassroomapi/includes/bbb-api.php';
                 $bbb = new BigBlueButton();
                

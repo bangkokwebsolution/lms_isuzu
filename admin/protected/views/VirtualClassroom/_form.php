@@ -508,7 +508,6 @@ $("#opt2").attr('checked', 'checked');
      $(this).val("");
    }
  });
-
 </script>
 <script>
   $(function () {

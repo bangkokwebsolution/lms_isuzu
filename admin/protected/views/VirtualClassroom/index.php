@@ -30,7 +30,7 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 EOD
 , CClientScript::POS_READY);
 ?>
-<script src="<?php echo Yii::app()->baseUrl; ?>/js/jquery.uploadifive.min.js" type="text/javascript"></script>
+<script src="<?php echo $this->assetsBase;; ?>/js/jquery.uploadifive.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/uploadifive.css">
 <div class="innerLR">
 	

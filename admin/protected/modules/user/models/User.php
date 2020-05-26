@@ -504,7 +504,6 @@ public function searchmembership()
 	//$criteria->compare('orgchart_lv2',$org,true);
 	return new CActiveDataProvider(get_class($this), array(
 		'criteria'=>$criteria,
-		'summaryText' => '',
 		'pagination'=>array(
 			'pageSize'=>Yii::app()->getModule('user')->user_page_size,
 		),

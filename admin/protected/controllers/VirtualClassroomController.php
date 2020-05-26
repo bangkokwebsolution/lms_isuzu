@@ -285,7 +285,8 @@ class VirtualClassroomController extends Controller
 				'attendeePw' => $room->attendeePw, 					// Match this value in getJoinMeetingURL() to join as attendee.
 				'moderatorPw' => $room->moderatorPw, 					// Match this value in getJoinMeetingURL() to join as moderator.
 				'welcomeMsg' => $room->welcomeMsg,
-				'logoutUrl' => 'lms-bangkokweb.com/index.php/VirtualClassroom/logoutroom/?vroom_id='.$room->id.''
+			//	'logoutUrl' => 'http://thorconn.com/index.php/VirtualClassroom/logoutroom/?vroom_id='.$room->id.''
+				'logoutUrl' => 'http://thorconn.com/index.php/VirtualClassroom/index/?vroom_id='.$room->id.''
 				, 	 					// ''= use default. Change to customize.
 	/*			'dialNumber' => '', 					// The main number to call into. Optional.
 				'voiceBridge' => '12345', 				// 5 digit PIN to join voice conference.  Required.
