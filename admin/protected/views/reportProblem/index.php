@@ -123,13 +123,13 @@ EOD
 					array(
 						'name'=>'report_type',
 						'type'=>'html',
-						//'value'=>'UHtml::markSearch($data,"report_type")'
-                        'value'=>function($data){
-                            $Usability = Usability::model()->findByAttributes(array(
-                                'usa_id' => $data->report_type,
-                            ));
-                           return $Usability->usa_title;
-                        },
+						'value'=>'UHtml::markSearch($data->usa,"usa_title")'
+                        // 'value'=>function($data){
+                        //     $Usability = Usability::model()->findByAttributes(array(
+                        //         'usa_id' => $data->report_type,
+                        //     ));
+                        //    return $Usability->usa_title;
+                        // },
 					),
 					
 					array(

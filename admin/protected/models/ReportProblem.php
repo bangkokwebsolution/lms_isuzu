@@ -54,6 +54,7 @@ class ReportProblem extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'usa' => array(self::BELONGS_TO, 'Usability', 'report_type'),
 		);
 	}
 
@@ -110,7 +111,8 @@ class ReportProblem extends CActiveRecord
 		// @todo Please modify the following code to remove attributes that should not be searched.
 
 		$criteria=new CDbCriteria;
-
+        
+        $criteria->with = array('usa');
 		$criteria->compare('id',$this->id);
 		$criteria->compare('firstname',$this->firstname,true);
 		$criteria->compare('lastname',$this->lastname,true);
@@ -127,7 +129,6 @@ class ReportProblem extends CActiveRecord
 		$criteria->compare('report_course',$this->report_course,true);
 
 		$poviderArray = array('criteria'=>$criteria);
-
 		// Page
 		if(isset($this->news_per_page))
 		{

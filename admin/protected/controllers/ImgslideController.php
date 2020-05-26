@@ -94,7 +94,7 @@ class ImgslideController extends Controller
 					}
 				}
 
-				$this->redirect(array('view','id'=>$model->imgslide_id));
+				$this->redirect(array('index','id'=>$model->imgslide_id));
 			}
 		}
 
@@ -113,6 +113,7 @@ class ImgslideController extends Controller
 			// $model->imgslide_link=$_POST['Imgslide'][imgslide_link];
 			$model->imgslide_detail=$_POST['Imgslide'][imgslide_detail];
 			$model->imgslide_title=$_POST['Imgslide'][imgslide_title];
+			$model->gallery_type_id=$_POST['Imgslide'][gallery_type_id];
 
 			$imageOld = $model->imgslide_picture; // Image Old
 
@@ -133,7 +134,7 @@ class ImgslideController extends Controller
 					{
 						Yii::app()->getDeleteImageYush('imgslide',$model->id,$imageShow);
 					}
-
+                     
 					if(isset($imgslide_picture))
 					{
 						/////////// SAVE IMAGE //////////
@@ -155,7 +156,8 @@ class ImgslideController extends Controller
 							$thumbImage = Yii::app()->phpThumb->create($originalPath);
 							$thumbImage->resize(750,416);
 							$thumbImage->save($thumbPath);
-						} else {
+						} 
+						else {
 							unlink($originalPath);
 							$notsave = 1;
 							$this->render('create',array(
@@ -163,7 +165,7 @@ class ImgslideController extends Controller
 						}
 					}
 				}
-				$this->redirect(array('view','id'=>$model->imgslide_id));
+				$this->redirect(array('index','id'=>$model->imgslide_id));
 			}
 		}
 

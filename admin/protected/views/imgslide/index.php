@@ -106,7 +106,7 @@ EOD
 					    			$id = $menu ? $menu->id : $val->imgslide_id;
 					    			$str = ' (แก้ไข)';
 					    			$class = "btn btn-success btn-icon";
-					    			$link = array("/imgslide/update","id"=>$id);
+					    			$link = array("/imgslide/update","id"=>$id,"lang_id"=>$value->id);
 					    		} 
 					            $langStr .= CHtml::link($value->language.$str, $link, array("class"=>$class,"style" => 'width:100px;border: 1px solid;'));
 					        }
