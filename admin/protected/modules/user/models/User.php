@@ -452,18 +452,18 @@ public function validateIdCard($attribute,$params){
      
 	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
 	//$criteria->compare('orgchart_lv2',$org,true);
-	return new CActiveDataProvider(get_class($this), array(
+	$dataProvider = new CActiveDataProvider(get_class($this), array(
 		'criteria'=>$criteria,
 		'pagination'=>array(
 			'pageSize'=>Yii::app()->getModule('user')->user_page_size,
 		),
 	));
+	return $dataProvider;
 }
 public function searchmembership()
 {
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
-
 	$criteria=new CDbCriteria;
 
 	$criteria->with = array('profile');
@@ -485,24 +485,18 @@ public function searchmembership()
 	$criteria->compare('del_status',0);
 	$criteria->compare('online_status',$this->online_status);
 	$criteria->compare('online_user',$this->online_user);
-	//$criteria->compare('register_status',$this->register_status);
-	$regis = $this->register_status;		
-
+	//$criteria->compare('register_status',$this->register_status);		
 	if (isset($this->register_status)) {
-
-		if ($regis == "") {
-			
-			$criteria->compare('register_status',array(0,2));
-		}else if($regis == 2){
-		
-		    $criteria->compare('register_status', array(2));
-        }else if($regis == 0){
-        
-        	$criteria->compare('register_status',array(0));
+		if($this->register_status == null){
+        $criteria->addIncondition('register_status',array(0,2));
+		}else if($this->register_status == 2){
+		    $criteria->compare('register_status', 2);
+        }else if($this->register_status == 1){
+        	$criteria->compare('register_status',0);
         }
+        $criteria->addIncondition('register_status',array(0,2));
 	}else{
-	
-        $criteria->compare('register_status',$this->register_status);
+         $criteria->addIncondition('register_status',array(0,2));
 	}
 	$criteria->compare('group',$this->group);
 	$criteria->compare('profile.identification',$this->idensearch,true);
@@ -521,12 +515,13 @@ public function searchmembership()
 	//var_dump($_REQUEST);exit();
 	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
 	//$criteria->compare('orgchart_lv2',$org,true);
-	return new CActiveDataProvider(get_class($this), array(
+	$dataProvider = new CActiveDataProvider(get_class($this), array(
 		'criteria'=>$criteria,
 		'pagination'=>array(
 			'pageSize'=>Yii::app()->getModule('user')->user_page_size,
 		),
 	));
+	return  $dataProvider;
 }
 
  public function searchaccess()
@@ -581,15 +576,7 @@ public function searchmembership()
 		),
 	));
 }
-protected function afterFind ()
 
-    {
-
-    	$this->lastvisit_at=date("Y-m-d h:i:s",strtotime('-6 month'));
-
-        parent::afterFind ();
-
-    }
 // public function searchmember()
 //     {
 //         $sql = " SELECT * FROM tbl_users ";
@@ -641,7 +628,7 @@ protected function afterFind ()
       public function getregisstatusList()
     {
         $getregisstatusList = array(
-            '0'=>'รอการตรวจสอบ',
+            '1'=>'รอการตรวจสอบ',
             '2'=>'ไม่อนุมัติ'
         );
         return $getregisstatusList;

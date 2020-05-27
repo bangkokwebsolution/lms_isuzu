@@ -21,18 +21,18 @@ $this->breadcrumbs=array(
 //     array('label'=>UserModule::t('List User'), 'url'=>array('/user')),
 // );
 
-Yii::app()->clientScript->registerScript('search', "
-	$('.search-button').click(function(){
-		$('.search-form').toggle();
-		return false;
-		});
-		$('.search-form form').submit(function(){
-			$.fn.yiiGridView.update('user-grid', {
-				data: $(this).serialize()
-				});
-				return false;
-				});
-				");
+// Yii::app()->clientScript->registerScript('search', "
+// 	$('.search-button').click(function(){
+// 		$('.search-form').toggle();
+// 		return false;
+// 		});
+// 		$('.search-form form').submit(function(){
+// 			$.fn.yiiGridView.update('user-grid', {
+// 				data: $(this).serialize()
+// 				});
+// 				return false;
+// 				});
+// 				");
 Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	$('#User_create_at').attr('readonly','readonly');
 	$('#User_create_at').css('cursor','pointer');
@@ -41,6 +41,15 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 EOD
 , CClientScript::POS_READY);
 	?>
+<style type="text/css">
+.coolContainer h4:first-of-type {
+    float: left;
+}
+.coolContainer h4:last-of-type {
+    float: left;
+}
+
+</style>
 	<div id="user" class="innerLR">
 		<?php $this->widget('AdvanceSearchForm', array(
 			'data'=>$model,
@@ -60,6 +69,9 @@ EOD
 				<div>
 					<?php echo Rights::t('core', 'ที่นี่คุณสามารถอนุมัติการเข้าใช้งานระบบให้กับผู้ใช้แต่ละราย'); ?>
 				</div>
+				<div class="coolContainer">
+					<h4 class="name_pos"></h4><h4 class="num"> จำนวนผู้สมัคร <?= $model->searchmembership()->getItemCount(); ?> คน  จาก <?= $model->searchmembership()->getTotalItemCount(); ?> คน</h4>	
+				</div>
 			 <div class="separator bottom form-inline small">
 					<span class="pull-right">
 						<label class="strong">แสดงแถว:</label>
@@ -77,10 +89,14 @@ EOD
 						</div> -->
 
 						<?php 
-						$this->widget('zii.widgets.grid.CGridView', array(
+						$this->widget('AGridView', array(
 							'id'=>'user-grid',
 							'dataProvider'=>$model->searchapprove(),
 							'filter'=>$model,
+							'afterAjaxUpdate'=>'function(id, data){
+								$.appendFilter("[news_per_page]");	
+								InitialSortTable();
+							}',
 							'columns'=>array(
 								array(
 									'header'=>'No.',
@@ -175,7 +191,7 @@ EOD
 									'type'=>'raw',
 									'value'=>function($data){
 										if($data->status == 1 && $data->register_status == 1){
-											echo CHtml::button("รออนุมัติ",array("class"=>"btn btn-info changeStatus","data-id" => $data->id));
+											echo CHtml::button("รออนุมัติ",array('onclick'=>'sendMsgCheck('.$data->id.')',"class"=>"btn btn-info changeStatus","data-id" => $data->id));
 										} else if($data->status == 0 && $data->register_status == 1) {
 											echo CHtml::button("ไม่ผ่านอนุมัติ",array("class"=>"btn btn-danger","data-id" => $data->id));
 										} else if($data->register_status == 3 && $data->status == 0){
@@ -223,10 +239,10 @@ EOD
 ?>
 
 <script>
-	$( ".changeStatus" ).click(function() {
-		var btn = $(this);
-		var id = btn.attr("data-id");
-		
+	// $( ".changeStatus" ).click(function() {
+	// 	var btn = $(this);
+	// 	var id = btn.attr("data-id");
+		function sendMsgCheck(id){
 								// var _items = ["ระงับการใช้งาน","เปิดการใช้งาน"];
 								// swal({
 								// 	title: "โปรดรอสักครู่",
@@ -315,8 +331,27 @@ EOD
 									}
 								}
 								);
-							});
+							//});
+}
 
+ $(document).ready(function() {      
+           var e = document.getElementById("User_position_id");
+           var strUser = e.options[e.selectedIndex].text;
+           if (strUser === "ทั้งหมด") {
+            $('.name_pos').hide();
+           }else{
+                var format =  "ตำแหน่ง"+" "+strUser;
+             $('.name_pos').text(format);
+           }
+     
+            var tex = $('.empty').text();
+            if (tex) {
+            	$('.name_pos').hide();
+            	$('.num').text("จำนวนผู้สมัคร 0 คน จาก 0 คน")
+            }else{
+            	$('.num').show()            
+            }
+           	});
 						</script>
 					</div>
 

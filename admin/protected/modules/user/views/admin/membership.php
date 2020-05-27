@@ -6,8 +6,7 @@
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/highcharts.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/modules/exporting.js"></script>
 
-<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/bootstrap-chosen.css" />
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/chosen.jquery.js"></script>
+
 <?php
 $this->breadcrumbs=array(
 	UserModule::t('Users')=>array('admin'),
@@ -33,18 +32,18 @@ $this->breadcrumbs=array(
 // 		return false;
 // 	});
 // 	");$('#User_create_at').daterangepicker();
-Yii::app()->clientScript->registerScript('search', "
-	$('.search-button').click(function(){
-		$('.search-form').toggle();
-		return false;
-		});
-		$('.search-form form').submit(function(){
-			$.fn.yiiGridView.update('user-grid', {
-				data: $(this).serialize()
-				});
-				return false;
-				});
-				");
+// Yii::app()->clientScript->registerScript('search', "
+// 	$('.search-button').click(function(){
+// 		$('.search-form').toggle();
+// 		return false;
+// 		});
+// 		$('.search-form form').submit(function(){
+// 			$.fn.yiiGridView.update('user-grid', {
+// 				data: $(this).serialize()
+// 				});
+// 				return false;
+// 				});
+// 				");
 Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	$('#User_create_at').attr('readonly','readonly');
 	$('#User_create_at').css('cursor','pointer');
@@ -62,6 +61,7 @@ EOD
         //'id'=>'SearchFormAjax',
 			'attributes'=>array(
 //            array('name'=>'company_id','type'=>'list','query'=>Company::getCompanyList()),
+				//array('name'=>'register_status','type'=>'list','query'=>$register_status),
 				array('name'=>'register_status','type'=>'list','query'=>User::getregisstatusList()),
 				array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
             //array('name'=>'nameSearch','type'=>'text'),
@@ -71,7 +71,15 @@ EOD
             //array('name'=>'course_point','type'=>'text'),
 			),
 		));?>
+<style type="text/css">
+.coolContainer h4:first-of-type {
+    float: left;
+}
+.coolContainer h4:last-of-type {
+    float: left;
+}
 
+</style>
 
 		<div class="widget" style="margin-top: -1px;">
 			<div class="widget-head">
@@ -81,10 +89,14 @@ EOD
 				<div>
 					<?php echo Rights::t('core', 'ที่นี่คุณสามารถอนุมัติการสมัครสมาชิกให้กับผู้ใช้แต่ละราย'); ?>
 				</div>
+				<div class="coolContainer">
+					<h4 class="name_pos"></h4><h4 class="num"> จำนวนผู้สมัคร <?= $model->searchmembership()->getItemCount(); ?> คน  จาก <?= $model->searchmembership()->getTotalItemCount(); ?> คน</h4>	
+				</div>
 				<div class="separator bottom form-inline small">
 					<span class="pull-right">
 						<label class="strong">แสดงแถว:</label>
-						<?php echo $this->listPageShow($formNameModel);?>
+						<?php echo $this->listPageShow($formNameModel);
+						?>
 					</span>
 				</div>
 				<div class="spacer"></div>
@@ -95,17 +107,16 @@ EOD
 						< ?php $this->renderPartial('_search',array(
 							'model'=>$model,
 							)); ?>
-						</div> --><!-- search-form -->
-
-						<?php 
-						$this->widget('zii.widgets.grid.CGridView', array(
+						</div> --><!-- search-form -->					  
+						<?php
+						$this->widget('AGridView', array(
 							'id'=>'user-grid',
 							'dataProvider'=>$model->searchmembership(),
 							'filter'=>$model,
-							// 'afterAjaxUpdate'=>'function(id, data){
-							// 	$.appendFilter("[news_per_page]");	
-							// 	InitialSortTable();
-							// }',
+							'afterAjaxUpdate'=>'function(id, data){
+								$.appendFilter("[news_per_page]");	
+								InitialSortTable();
+							}',
 							'columns'=>array(
 								array(
 									'header'=>'No.',
@@ -117,6 +128,12 @@ EOD
 			// 						'value' => '$data->profile->identification',
 			// //'value' => 'CHtml::link(UHtml::markSearch($data, ),array("admin/view","id"=>$data->id))',
 			// 					),
+
+								 // array(
+         //    // 'name' => 'posts',
+         //   				 'header' => 'Post Count',
+         //   				 'value' => 'count($data->id)',
+        	// 			),
 								array(
 									'header' => 'ชื่อ - นามสกุล',
 									'type'=>'html',
@@ -309,6 +326,12 @@ EOD
 							</div>
 						</div> -->
 						<script>
+							$(document).ready(function() { 
+							 $('#User_register_status').empty(); //remove all child nodes
+                               var newOption = $('<option value="">ทั้งหมด</option><option value="1">รอการตรวจสอบ</option><option value="2">ไม่อนุมัติ</option>');
+                               $('#User_register_status').append(newOption);
+							$('#User_register_status').trigger('chosen:updated');
+							});
 							//$( ".changeStatus" ).click(function() {
 								function sendMsg(id){
 								// var btn = $(this);
@@ -437,6 +460,23 @@ EOD
 								});
 							}
 							//});
+           $(document).ready(function() {      
+           var e = document.getElementById("User_position_id");
+           var strUser = e.options[e.selectedIndex].text;
+           if (strUser === "ทั้งหมด") {
+            $('.name_pos').hide();
+           }else{
+                var format =  "ตำแหน่ง"+" "+strUser;
+             $('.name_pos').text(format);
+           }
+               var tex = $('.empty').text();
+            if (tex) {
+            	$('.name_pos').hide();
+            	$('.num').text("จำนวนผู้สมัคร 0 คน จาก 0 คน")
+            }else{
+            	$('.num').show()            
+            }
+           	});
 
 						</script>
 					</div>
