@@ -115,7 +115,7 @@ function typeVdo(val){
 				<!-- upload vdo -->
                 <div class="vdo-file">
                     <?php echo $form->labelEx($model, 'vdo_path'); ?>
-                    <div class="fileupload fileupload-new " data-provides="fileupload">
+                   <!--  <div class="fileupload fileupload-new " data-provides="fileupload">
                         <div class="input-append">
                             <div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span>
                                 </div>
@@ -126,8 +126,10 @@ function typeVdo(val){
                                     </span>
                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
                         </div>
-                    </div>
-                    <?php echo $form->error($model, 'vdo_path'); ?>
+                    </div>-->
+                    
+                     <?php echo $form->fileField($model, 'vdo_path', array('id' => 'wizard-picture')); ?>
+                      <?php echo $form->error($model, 'vdo_path'); ?> 
                 </div>
                 <?php
         
@@ -208,4 +210,28 @@ function typeVdo(val){
     $(function () {
         init_tinymce();
     });
+</script>
+<script type="text/javascript">
+    document.getElementById('wizard-picture').addEventListener('change', checkFile, false);
+
+function checkFile(e) {
+    var file_list = e.target.files;
+    for (var i = 0, file; file = file_list[i]; i++) {
+        var fileExtension = file.name.split('.')[file.name.split('.').length - 1].toLowerCase();
+        var iConvert = (file.size / 1024).toFixed(2);
+           
+        //txt = "File type : " +fileExtension + "\n";
+        if(file.size > (1024 * 1024 * 100)){
+       
+            swal("ไฟล์มีขนาดใหญ่เกิน กรุณาเลือกไฟล์ขนาดไม่เกิน 100 M");
+            document.getElementById('wizard-picture').value = []
+           // txt += "Size: " + (file.size / (1024*1024)).toFixed(2) + " MB \n";
+        } 
+        // else {
+        //     return false;
+       // txt += "Size: " + (file.size / 1024).toFixed(2) + " KB \n";
+        //}
+        // alert(txt);
+    }
+}
 </script>

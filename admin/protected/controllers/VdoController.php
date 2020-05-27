@@ -138,11 +138,12 @@ class VdoController extends Controller
 					          	$this->redirect(array('create','lang_id'=> $lang->id,'parent_id'=> $rootId));
 					          	exit();
 							}
-					}
+					  }
 
-					$this->redirect(array('view','id'=>$model->vdo_id));
+                      $this->redirect('index',array('model'=>$model));
+					//$this->redirect(array('view','id'=>$model->vdo_id));
 				} 
-				$this->redirect(array('view','id'=>$model->vdo_id));
+				$this->redirect('index',array('model'=>$model));
 			}
 		}
 		
@@ -243,9 +244,10 @@ class VdoController extends Controller
 					if(Yii::app()->user->id){
 						Helpers::lib()->getControllerActionId();
 					}
-
-					$this->redirect(array('view','id'=>$model->vdo_id));
+                    $this->redirect('../index',array('model'=>$model));
+					//$this->redirect(array('view','id'=>$model->vdo_id));
 				} 
+				$this->redirect('../index',array('model'=>$model));
 			} 
 		}
 		$this->render('update',array(
