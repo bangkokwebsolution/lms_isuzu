@@ -1117,6 +1117,13 @@ hr {
   margin-bottom: 1em;
 }
 
+#manual .well .manual-icon img{
+  max-height: 170px;
+  padding: .50em;
+  border-radius: 15px;
+}
+
+
 #manual .well .manual-icon:hover {
   transform: scale(1.03);
   -webkit-box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);
