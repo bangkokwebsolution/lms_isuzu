@@ -304,8 +304,8 @@ public function actionDeleteFile($id)
 
 		$model=new GalleryGroup('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Gallery']))
-			$model->attributes=$_GET['Gallery'];
+		if(isset($_GET['GalleryGroup']))
+			$model->attributes=$_GET['GalleryGroup'];
 
 		$this->render('index',array(
 			'model'=>$model,

@@ -37,7 +37,7 @@ EOD
 						array(
 							'type'=>'list',
 							'name'=>'gallery_type_id',
-							'query'=>CHtml::listData(GalleryType::model()->findAll(),'name_gallery_type', 'name_gallery_type')
+							'query'=>CHtml::listData(GalleryType::model()->findAll(),'id', 'name_gallery_type')
 						),
 					),
 				));?> 
@@ -55,19 +55,22 @@ EOD
 						</div>
 						<div class="clear-div"></div>
 						<div class="overflow-table">
-							<?php $this->widget('AGridView', array(
+							<?php 
+                              // var_dump($model->gallerygroupcheck()->search());
+							$this->widget('AGridView', array(
 								'id'=>$formNameModel.'-grid',
-								'dataProvider'=>$model->gallerygroupcheck()->search(),
-								// 'filter'=>$model,
-								'selectableRows' => 2,	
-								'htmlOptions' => array(
-									'style'=> "margin-top: -1px;",
-								),
-								'afterAjaxUpdate'=>'function(id, data){
-									$.appendFilter("GalleryGroup[news_per_page]");
-									InitialSortTable();	
-								}',
+								'dataProvider'=>$model->search(),
+							    //'filter'=>$model,
+								// 'selectableRows' => 2,	
+								// 'htmlOptions' => array(
+								// 	'style'=> "margin-top: -1px;",
+								// ),
+								// 'afterAjaxUpdate'=>'function(id, data){
+								// 	$.appendFilter("GalleryGroup[news_per_page]");
+								// 	InitialSortTable();	
+								// }',
 								'columns'=>array(
+
 									array(
 										'visible'=>Controller::DeleteAll(
 											array("GalleryGroup.*", "GalleryGroup.Delete", "GalleryGroup.MultiDelete")
@@ -75,8 +78,12 @@ EOD
 										'class'=>'CCheckBoxColumn',
 										'id'=>'chk',
 									),
+									// array(
+         //                                 'header'=>'No.',
+         //                                 'value'=>'$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
+         //                            ), 
 									array(
-										'name'=>'image',
+										'header'=>'image',
 										'type' => 'raw',
 										'value'=> function ($model){
 											 $criteria = new CDbCriteria;
@@ -99,12 +106,13 @@ EOD
            //                                   $criteria->addCondition('id ="'.$model->gallery_type_id.'"');
            //                                   $GalleryType = GalleryType::model()->find($criteria);
 											// return $GalleryType->name_gallery_type;
-											return $model->gType->name_gallery_type;
+
+											 return $model->gType->name_gallery_type;
 										
 										},
 									),
 									array(
-										'name'=>'จำนวนรูป',
+										'header'=>'จำนวนรูป',
 										'type'=>'html',
 										'value'=> function ($model){
 											 $criteria = new CDbCriteria;
