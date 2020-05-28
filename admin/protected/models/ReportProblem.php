@@ -120,7 +120,7 @@ class ReportProblem extends CActiveRecord
 		$criteria->compare('tel',$this->tel,true);
 		if (empty($this->report_date)) {
 		$criteria->compare('report_date',$this->report_date,true);	
-		
+
 		}else{
 		$start_date = explode("/",$this->report_date);
 		$start_dates = $start_date[2]."-".$start_date[0]."-".$start_date[1]; 
@@ -200,4 +200,12 @@ class ReportProblem extends CActiveRecord
         );
         return $getregisstatusList;
     }
+
+    public function getUsabilityListNew(){
+
+		$model = Usability::model()->findAll('active = "y"');
+		$list = CHtml::listData($model,'id','usa_title');
+		return $list;
+		
+	}
 }
