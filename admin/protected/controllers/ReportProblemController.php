@@ -65,9 +65,6 @@ class ReportProblemController extends Controller
 		{
 			$production = 'grid';
 		}
-    	// var_dump($model);
-     // var_export($production);
-     // exit();
 		$this->render('report', array('model' => $model, 'production' => $production));
 	}
 

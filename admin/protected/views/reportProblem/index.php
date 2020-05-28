@@ -87,7 +87,6 @@ EOD
                     array(
                         'header'=>'วันที่ส่งปัญหา',
                         'type'=>'html',
-                        // 'value'=>'UHtml::markSearch($data,"report_date")'
                         'value'=>function($data){
                             return Helpers::changeFormatDate($data->report_date,'datetime');
                         },

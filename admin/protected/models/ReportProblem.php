@@ -120,13 +120,12 @@ class ReportProblem extends CActiveRecord
 		$criteria->compare('tel',$this->tel,true);
 		if (empty($this->report_date)) {
 		$criteria->compare('report_date',$this->report_date,true);	
+		
 		}else{
-
 		$start_date = explode("/",$this->report_date);
 		$start_dates = $start_date[2]."-".$start_date[0]."-".$start_date[1]; 
 		$date_start = date('Y-m-d 00:00:00', strtotime($start_dates));
 		$date_end = date('Y-m-d 23:59:59', strtotime($start_dates));
-
 		$criteria->addBetweenCondition('report_date', $date_start, $date_end, 'AND');
 
 		}
