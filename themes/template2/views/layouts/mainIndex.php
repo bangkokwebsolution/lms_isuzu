@@ -35,7 +35,17 @@ Yii::app()->user->returnUrl = $http->getUrl();
 		<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/jquery.themepunch.revolution.min.js"></script>
 		<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/jquery.themepunch.tools.min.js"></script>  
         <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/sweetalert/dist/sweetalert.min.js"></script>
-       
+     <!-- Global site tag (gtag.js) - Google Analytics -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-167113577-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-167113577-2');
+</script>
+
 	</head>
 	<body>
     <!-- onload="init();" -->
@@ -102,9 +112,11 @@ $criteriapopup = new CDbCriteria;
 $criteriapopup->compare('active', 'y');
 $criteriapopup->condition = "start_date <= :time AND end_date >= :time";
 $criteriapopup->params = array(':time' => $time);
+$criteriapopup->addCondition('lang_id ='.Yii::app()->session['lang']);
 $criteriapopup->order = 'sortOrder  ASC';
 $popup = Popup::model()->findAll($criteriapopup);
-$popup = null;
+
+//$popup = null;
 ?>
 
 <?php if (!empty($popup)) { ?>
@@ -113,7 +125,7 @@ $popup = null;
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title">หัวข้อ</h4>
+                    <h4 class="modal-title"><?= Yii::app()->session['lang'] == 1?'The topic':'หัวข้อ'; ?></h4>
                 </div>
                 <div class="modal-body pd-0">
                     <div id="carousel-id2" class="carousel slide" data-ride="carousel">
@@ -131,7 +143,7 @@ $popup = null;
 
 
                         </ol>
-                        <?php /*$imgpopup = 'holder.js/900x500/auto/#666:#6a6a6a/text:First slide" alt="First slide" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MDAiIGhlaWdodD0iNTAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzY2NiI+PC9yZWN0Pjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjQ1MCIgeT0iMjUwIiBzdHlsZT0iZmlsbDojNmE2YTZhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjU2cHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+U2Vjb25kIHNsaWRlPC90ZXh0Pjwvc3ZnPg==';*/ ?>
+                        <?php //$imgpopup = 'holder.js/900x500/auto/#666:#6a6a6a/text:First slide" alt="First slide" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MDAiIGhlaWdodD0iNTAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzY2NiI+PC9yZWN0Pjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjQ1MCIgeT0iMjUwIiBzdHlsZT0iZmlsbDojNmE2YTZhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjU2cHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+U2Vjb25kIHNsaWRlPC90ZXh0Pjwvc3ZnPg=='; ?>
                         <div class="carousel-inner">
 
 
@@ -139,7 +151,7 @@ $popup = null;
                             <div class="item <?php if($key==0) echo 'active';?>">
                                     <h3 align="center"><?= $value->name; ?></h3>
                                     <img alt="First slide"
-                                         src="<?= Yii::app()->request->baseUrl; ?>/uploads/popup/<?= $value->id; ?>/Thumb/<?= $value->pic_file; ?>">
+                                         src="<?= Yii::app()->request->baseUrl; ?>/uploads/popup/<?= $value->id; ?>/original/<?= $value->pic_file; ?>">
                                         <div align="center">
                                             <?= $value->detail; ?>
                                         </div>
@@ -164,8 +176,9 @@ $popup = null;
     </div>
 <?php } ?>
 <?php
-    include_once("analyticstracking.php");
+   // $rrrr = include_once("analyticstracking.php");
     ?>
 </body>
 
 </html>
+<!-- Global site tag (gtag.js) - Google Analytics -->
