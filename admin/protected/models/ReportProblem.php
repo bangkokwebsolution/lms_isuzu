@@ -118,13 +118,56 @@ class ReportProblem extends CActiveRecord
 		$criteria->compare('lastname',$this->lastname,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('tel',$this->tel,true);
+		if (empty($this->report_date)) {
+		$criteria->compare('report_date',$this->report_date,true);	
+		}else{
+
+		$start_date = explode("/",$this->report_date);
+		$start_dates = $start_date[2]."-".$start_date[0]."-".$start_date[1]; 
+		$date_start = date('Y-m-d 00:00:00', strtotime($start_dates));
+		$date_end = date('Y-m-d 23:59:59', strtotime($start_dates));
+
+		$criteria->addBetweenCondition('report_date', $date_start, $date_end, 'AND');
+
+		}
 		$criteria->compare('report_type',$this->report_type,true);
 		$criteria->compare('report_title',$this->report_title,true);
 		$criteria->compare('report_detail',$this->report_detail,true);
 		$criteria->compare('report_pic',$this->report_pic,true);
 		$criteria->compare('status',$this->status,true);
-		$criteria->compare('accept_report_date',$this->accept_report_date,true);
-		$criteria->compare('report_date',$this->report_date,true);
+		$criteria->compare('accept_report_date',$this->accept_report_date,true);	
+		$criteria->compare('answer',$this->answer,true);
+		$criteria->compare('report_course',$this->report_course,true);
+
+		$poviderArray = array('criteria'=>$criteria);
+		// Page
+		if(isset($this->news_per_page))
+		{
+			$poviderArray['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
+		}
+
+		return new CActiveDataProvider($this, $poviderArray);
+	}
+
+	public function searchPrint()
+	{
+		// @todo Please modify the following code to remove attributes that should not be searched.
+
+		$criteria=new CDbCriteria;
+        
+        $criteria->with = array('usa');
+		$criteria->compare('id',$this->id);
+		$criteria->compare('firstname',$this->firstname,true);
+		$criteria->compare('lastname',$this->lastname,true);
+		$criteria->compare('email',$this->email,true);
+		$criteria->compare('tel',$this->tel,true);
+		$criteria->compare('report_date',$this->report_date,true);		
+		$criteria->compare('report_type',$this->report_type,true);
+		$criteria->compare('report_title',$this->report_title,true);
+		$criteria->compare('report_detail',$this->report_detail,true);
+		$criteria->compare('report_pic',$this->report_pic,true);
+		$criteria->compare('status',$this->status,true);
+		$criteria->compare('accept_report_date',$this->accept_report_date,true);	
 		$criteria->compare('answer',$this->answer,true);
 		$criteria->compare('report_course',$this->report_course,true);
 
@@ -148,4 +191,14 @@ class ReportProblem extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+		 public function getSendList()
+    {
+        $getregisstatusList = array(
+            'success'=>'ตอบกลับแล้ว ',
+            'eject'=>'ยกเลิก ',
+            'wait'=>'ยังไม่ได้ตอบ'
+        );
+        return $getregisstatusList;
+    }
 }

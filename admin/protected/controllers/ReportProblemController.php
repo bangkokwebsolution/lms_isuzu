@@ -50,7 +50,7 @@ class ReportProblemController extends Controller
 		// $model=new ReportProblem('search');
 		// $model->unsetAttributes();  // clear any default values
 
-		$model = new Contactus('search');
+		$model = new ReportProblem('searchPrint');
 		$model->unsetAttributes();  // clear any default values
 		// if(Yii::app()->user->getState('ReportProblem'))
 		// {
@@ -65,7 +65,9 @@ class ReportProblemController extends Controller
 		{
 			$production = 'grid';
 		}
-
+    	// var_dump($model);
+     // var_export($production);
+     // exit();
 		$this->render('report', array('model' => $model, 'production' => $production));
 	}
 
@@ -257,7 +259,6 @@ class ReportProblemController extends Controller
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['ReportProblem']))
 			$model->attributes=$_GET['ReportProblem'];
-		
 		$this->render('index',array(
 			'model'=>$model,
 			));

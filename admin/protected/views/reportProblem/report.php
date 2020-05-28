@@ -81,80 +81,90 @@ $columns=array(
     //         'width'=>'220',
     //     ),
     // ),
-        array(
-                        'name'=>'create_date',
+         array(
+                        'header'=>'วันที่ส่งปัญหา',
                         'type'=>'html',
                         // 'value'=>'UHtml::markSearch($data,"report_date")'
                         'value'=>function($data){
-                            return Helpers::changeFormatDate($data->create_date,'datetime');
+                            return Helpers::changeFormatDate($data->report_date,'datetime');
                         },
                     ),      
                     array(
                         'header'=>'ชื่อ - สกุล',
                         'value'=>function($data){
-                            return $data->contac_by_name.' '.$data->contac_by_surname;
+                            return $data->firstname.' '.$data->lastname;
                         }
                     ),
                     
                     array(
                         'header'=>'อีเมล์',
                         'value'=>function($data){
-                            $user = User::model()->findByAttributes(array(
-                                'email' => $data->contac_by_email,
-                            ));
-                            // var_dump($user);
-                            if($user){
-                                if($user->bookkeeper_id){
-                                    return $user->bookkeeper_id;
-                                } else {
-                                    return $user->username;
-                                }
-                            } else {
-                                $user = Profile::model()->findByAttributes(array(
-                                    'firstname' => $data->contac_by_name,
-                                ));
-                                if($user){
-                                    if($user->user->bookkeeper_id){
-                                        return $user->user->bookkeeper_id;
-                                    } else {
-                                        return $user->user->username;
-                                    }
-                                } else {
-                                    return 'ไม่มีในระบบ';
-                                }
-                            }
+                            return $data->email;
+                            // $user = User::model()->findByAttributes(array(
+                            //  'email' => $data->email,
+                            // ));
+                        
+                            // if($user){
+                            //  if($user->bookkeeper_id){
+                            //      return $user->bookkeeper_id;
+                            //  } else {
+                            //      return $user->username;
+                            //  }
+                            // } else {
+                            //  $user = Profile::model()->findByAttributes(array(
+                            //      'firstname' => $data->firstname,
+                            //  ));
+                            //  if($user){
+                            //      if($user->user->bookkeeper_id){
+                            //          return $user->user->bookkeeper_id;
+                            //      } else {
+                            //          return $user->user->username;
+                            //      }
+                            //  } else {
+                            //      return 'ไม่มีในระบบ';
+                            //  }
+                            // }
                             
-                        },
-                    ),
+                         },
+                     ),
                     array(
-                        'name'=>'contac_by_tel',
+                        'name'=>'tel',
                         'type'=>'html',
-                        'value'=>'UHtml::markSearch($data,"contac_by_tel")'
+                        'value'=>'UHtml::markSearch($data,"tel")'
                     ),
                     
                     array(
-                        'name'=>'contac_type',
-                        'type'=>'html',
-                        'value'=>'UHtml::markSearch($data,"contac_type")'
+                        'name'=>'report_type',
+                        'filter'=>Usability::getUsabilityListNew(),
+                        'value'=>'UHtml::markSearch($data->usa,"usa_title")'
+                        // 'value'=>function($data){
+                        //     $Usability = Usability::model()->findByAttributes(array(
+                        //         'usa_id' => $data->report_type,
+                        //     ));
+                        //    return $Usability->usa_title;
+                        // },
                     ),
                     
                     array(
-                        'name'=>'contac_detail',
+                        'name'=>'report_detail',
                         'type'=>'html',
                         // 'value'=>'UHtml::markSearch($data,"accept_report_date")'
                         'value'=>function($data){
-                            $output = UHtml::markSearch($data,"contac_detail");
+                            $output = UHtml::markSearch($data,"report_detail");
                                 return $output;
                         },
                     ),
                     array(
-                        'name'=>'contac_answer',
+                        'header'=>'คำตอบ',
                         'type'=>'html',
                         'value'=>function($data){
-                            if($data->contac_answer == 'y'){
-                                $output = 'ตอบแกลับล้ว';
+                            if($data->status == 'success'){
+                                $output = 'ตอบกลับแล้ว';
                                 $color = 'green';
-                            } else {
+                            } else if($data->status == 'eject'){
+                                $color = 'red';
+                                $output = 'ยกเลิก';
+                            }else if($data->status == 'wait'){
                                 $color = 'red';
                                 $output = 'ยังไม่ได้ตอบ';
                             }
@@ -196,7 +206,7 @@ $columns=array(
 );
 ?>
 <?php $this->widget('application.components.widgets.tlbExcelView', array(
-    'id'                   => 'Passcours-grid',
+    'id'                   => 'ReportProblem-grid',
     'dataProvider'         => $model->search(),
     'grid_mode'            => $production, // Same usage as EExcelView v0.33
     //'template'           => "{summary}\n{items}\n{exportbuttons}\n{pager}",
