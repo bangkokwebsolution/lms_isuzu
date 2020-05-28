@@ -60,14 +60,14 @@
 
 				<div class="row">
 					<?php echo $form->labelEx($model,'start_date'); ?>
-					<?php echo $form->textField($model,'start_date'); ?>
+					<?php echo $form->textField($model,'start_date', array('autocomplete' => 'off' )); ?>
 			        <?php echo $this->NotEmpty();?>
 					<?php echo $form->error($model,'start_date'); ?>
 				</div>
 				
 				<div class="row">
 					<?php echo $form->labelEx($model,'end_date'); ?>
-					<?php echo $form->textField($model,'end_date'); ?>
+					<?php echo $form->textField($model,'end_date', array('autocomplete' => 'off' )); ?>
 			        <?php echo $this->NotEmpty();?>
 					<?php echo $form->error($model,'end_date'); ?>
 				</div>
@@ -78,7 +78,18 @@
 					<?php echo $this->NotEmpty();?>
 					<?php echo $form->error($model,'link'); ?>
 				</div>
-
+				<div class="row">
+				<?php
+				if (!$model->isNewRecord) {
+                $criteriapopup = new CDbCriteria;
+                $criteriapopup->addCondition('id ='.$model->id);
+                $popup = Popup::model()->findAll($criteriapopup);
+                 foreach ($popup as $key => $value) {
+                 	?>
+                      <img src="<?= Yii::app()->request->baseUrl; ?>/../uploads/popup/<?= $value->id; ?>/thumb/<?= $value->pic_file; ?>">                                  
+                 <?php } 
+              }?>
+              </div>
 				<div class="row">
 					<?php echo $form->labelEx($model,'pic_file'); ?>
 					<div class="fileupload fileupload-new" data-provides="fileupload">

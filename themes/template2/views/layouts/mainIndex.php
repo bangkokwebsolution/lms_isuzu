@@ -115,10 +115,8 @@ $criteriapopup->params = array(':time' => $time);
 $criteriapopup->addCondition('lang_id ='.Yii::app()->session['lang']);
 $criteriapopup->order = 'sortOrder  ASC';
 $popup = Popup::model()->findAll($criteriapopup);
-
 //$popup = null;
 ?>
-
 <?php if (!empty($popup)) { ?>
     <div class="modal fade" id="modal-news">
         <div class="modal-dialog modal-lg">
@@ -146,7 +144,6 @@ $popup = Popup::model()->findAll($criteriapopup);
                         <?php //$imgpopup = 'holder.js/900x500/auto/#666:#6a6a6a/text:First slide" alt="First slide" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5MDAiIGhlaWdodD0iNTAwIj48cmVjdCB3aWR0aD0iOTAwIiBoZWlnaHQ9IjUwMCIgZmlsbD0iIzY2NiI+PC9yZWN0Pjx0ZXh0IHRleHQtYW5jaG9yPSJtaWRkbGUiIHg9IjQ1MCIgeT0iMjUwIiBzdHlsZT0iZmlsbDojNmE2YTZhO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjU2cHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCI+U2Vjb25kIHNsaWRlPC90ZXh0Pjwvc3ZnPg=='; ?>
                         <div class="carousel-inner">
 
-
                             <?php foreach ($popup as $key => $value) { ?>
                             <div class="item <?php if($key==0) echo 'active';?>">
                                     <h3 align="center"><?= $value->name; ?></h3>
@@ -157,7 +154,7 @@ $popup = Popup::model()->findAll($criteriapopup);
                                         </div>
                                         <p align="center">
                                             <a class="btn btn-lg btn-primary" href="<?= $value->link; ?>" role="button">
-                                                Go to Link
+                                               <?= Yii::app()->session['lang'] == 1?' Go to Link':'ไปที่ลิงก์'; ?>
                                             </a>
                                         </p>
                                 </div>

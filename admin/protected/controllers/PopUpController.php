@@ -242,15 +242,37 @@ class PopupController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		//$this->loadModel($id)->delete();
+		$this->loadModel($id)->delete();
 		$model = $this->loadModel($id);
-		$model->active = 'n';
+		//$model->active = 'n';
+		$model = Popup::model()->findByPk($id);
+             $modelChildren = Popup::model()->findAll(array(
+            'condition'=>'parent_id=:parent_id',
+            'params' => array(':parent_id' => $model->id)
+              ));
+            foreach ($modelChildren as $key => $value) {
+            	$value->delete();
+                // if($value->active == 'y'){
+                //     $value->active = 'n';
+                //     $value->save(false);
+                // } else {
+                //     $value->active = 'y';
+                //     $value->save(false);
+                // }
+            }
+    	// if($model->active == 'y'){
+    	// 	$model->active = 'n';
+    	// 	$model->save(false);
+    	// } else {
+    	// 	$model->active = 'y';
+    	// 	$model->save(false);
+    	// }
 
 		if($model->pic_file != '')
 			Yii::app()->getDeleteImageYush('Popup',$model->id,$model->pic_file);
 
-		$model->pic_file = null;
-		$model->save(false);
+		// $model->pic_file = null;
+		// $model->save(false);
 
 		if(Yii::app()->user->id){
 			Helpers::lib()->getControllerActionId();
@@ -350,13 +372,41 @@ class PopupController extends Controller
 			// Get all current target items to retrieve available sortOrders
 			$cur_items = Popup::model()->findAllByPk($_POST['items'], array('order'=>'sortOrder'));
 			// Check 1 by 1 and update if neccessary
-			for ($i = 0; $i < count($_POST['items']); $i++) {
-				$item = Popup::model()->findByPk($_POST['items'][$i]);
-				if ($item->sortOrder != $cur_items[$i]->sortOrder) {
-					$item->sortOrder = $cur_items[$i]->sortOrder ;
-					$item->save(false);
-				}
-			}
+			// for ($i = 0; $i < count($_POST['items']); $i++) {
+			// 	$item = Popup::model()->findByPk($_POST['items'][$i]);
+			// 	if ($item->sortOrder != $cur_items[$i]->sortOrder) {
+			// 		$item->sortOrder = $cur_items[$i]->sortOrder ;
+			// 		$item->save(false);
+			// 	}
+			// }
+			foreach ($cur_items as $keys => $values) {
+
+            for ($i = 0; $i < count($_POST['items']); $i++) {
+                $item = Popup::model()->findByPk($_POST['items'][$i]);
+
+                if ($item->sortOrder != $cur_items[$i]->sortOrder) {
+                    $item->sortOrder = $cur_items[$i]->sortOrder ;
+                    $item->save(false);
+                } 
+
+                $modellang2 = Popup::model()->findByAttributes(array('parent_id'=>$_POST['items'][$i])); 
+                  //var_dump($modellang2->sortOrder);exit();
+                
+                if ($modellang2->sortOrder != $cur_items[$i]->sortOrder) {
+                    if ($modellang2->parent_id == '') {
+                        $items = Popup::model()->findByPk($_POST['items'][$i]);
+                        $items->sortOrder = $cur_items[$i]->sortOrder ;
+                        $items->save(false);
+                        
+                    }
+                    if ($modellang2->parent_id != null) {
+                        $modellang2->sortOrder = $cur_items[$i]->sortOrder ;
+                        $modellang2->save(false);   
+                    }
+                    
+                } 
+            }
+        } 
 		}
 	}
 }
