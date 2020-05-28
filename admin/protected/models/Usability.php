@@ -214,8 +214,10 @@ class Usability extends AActiveRecord
 	}
 
 	public function getUsabilityListNew(){
+
 		$model = Usability::model()->findAll('active = "y"');
 		$list = CHtml::listData($model,'id','usa_title');
 		return $list;
+		
 	}
 }

@@ -45,28 +45,25 @@ class ReportProblemController extends Controller
 			);
 	}
 
-	public function actionReport()
-	{
-		// $model=new ReportProblem('search');
-		// $model->unsetAttributes();  // clear any default values
+	// public function actionReport()
+	// {
+	// 	// $model=new ReportProblem('search');
+	// 	// $model->unsetAttributes();  // clear any default values
 
-		$model = new ReportProblem('searchPrint');
-		$model->unsetAttributes();  // clear any default values
-		// if(Yii::app()->user->getState('ReportProblem'))
-		// {
-		// 	$model = Yii::app()->user->getState('ReportProblem');
-		// }
+	// 	$model = new ReportProblem('searchPrint');
+	// 	$model->unsetAttributes();  // clear any default values
+	
 
-		if (isset($_GET['export'])) 
-		{
-			$production = 'export';
-		} 
-		else 
-		{
-			$production = 'grid';
-		}
-		$this->render('report', array('model' => $model, 'production' => $production));
-	}
+	// 	if (isset($_GET['export'])) 
+	// 	{
+	// 		$production = 'export';
+	// 	} 
+	// 	else 
+	// 	{
+	// 		$production = 'grid';
+	// 	}
+	// 	$this->render('report', array('model' => $model, 'production' => $production));
+	// }
 
 	/**
 	 * Displays a particular model.
