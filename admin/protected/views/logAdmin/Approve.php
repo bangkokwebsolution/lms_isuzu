@@ -81,7 +81,7 @@ EOD
             <div class="overflow-table">
                 <?php $this->widget('AGridView', array(
                     'id'=>$formNameModel.'-grid',
-                    'dataProvider'=>$model->searchapprove(),
+                    'dataProvider'=>$model->search(),
                     'filter'=>$model,
                     'selectableRows' => 2,
                     'rowCssClassExpression'=>'"items[]_{$data->id}"',
@@ -125,7 +125,6 @@ EOD
         ),
         array(
             'header' => 'ตำแหน่ง',
-           // 'name'=>'search_name',
             'type'=>'raw',
             'value'=>function($data){
                 return $data->position->position_title;
@@ -141,16 +140,16 @@ EOD
         ),
         array(
             'header' => 'วันที่กดยืนยันการสมัคร',
-           // 'name'=>'search_name',
             'type'=>'raw',
             'value'=>function($data){
                 return Helpers::changeFormatDate($data->confirm_date,'datetime');
             }
         ),
         array(
-            'header' => 'ผู้ที่กดยืนยัน',
-           // 'name'=>'search_name',
-            'type'=>'raw',
+           // 'header' => 'ผู้ที่กดยืนยัน',
+            'name'=>'confirm_user',
+            'filter'=>LogApprove::getNameAdmin(),
+            // 'type'=>'raw',
             'value'=>function($data){
                  $criteria = new CDbCriteria;
                  $criteria->addCondition('user_id ="'.$data->confirm_user.'"');

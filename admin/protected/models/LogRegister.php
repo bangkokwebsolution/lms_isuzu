@@ -75,7 +75,7 @@ class LogRegister extends CActiveRecord
 			'register_date' => 'วันที่เข้าสมัคร',
 			'position_id' => 'ตำแหน่ง',
 			'confirm_date' => 'วันที่กดยืนยันการสมัคร',
-			'confirm_user' => 'Confirm User',
+			'confirm_user' => 'ผู้ที่กดยืนยัน',
 			'create_date' => 'Create Date',
 			'create_by' => 'Create By',
 			'update_date' => 'Update Date',
@@ -144,8 +144,8 @@ class LogRegister extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->with = array('user','position','profile');
-		// $criteria->compare('profile.firstname',$this->firstname,true);
-		// $criteria->compare('lastname',$this->lastname,true);
+		$criteria->compare('firstname',$this->firstname,true);
+		$criteria->compare('lastname',$this->lastname,true);
 		//$criteria->compare('register_date',$this->register_date,true);
 		$criteria->compare('t.position_id',$this->position_id);
 		//$criteria->compare('confirm_date',$this->confirm_date,true);
@@ -156,15 +156,9 @@ class LogRegister extends CActiveRecord
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
 		//$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('concat(Profile.firstname," ",Profile.lastname)',$this->search_name,true);
+		$criteria->compare('concat(t.firstname," ",t.lastname)',$this->search_name,true);
 		$criteria->compare('user.id',$this->search_admin,true);
-		// $name = $this->search_name;
-		// if (empty($name)) {
-  //        $criteria->compare('firstname',$this->firstname,true); 
-  //        $criteria->compare('lastname',$this->lastname,true);   
-		// }else{
-
-		// }
+	
 		$regis_date = $this->register_date;
 		if(!empty($regis_date)) {
 	       $start_dates = $this->register_date;
@@ -221,5 +215,22 @@ class LogRegister extends CActiveRecord
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
+	}
+
+	public function getNameAdmin()
+	{
+		$criteria = new CDbCriteria();
+        $criteria->addCondition("superuser=:superuser AND del_status=:del_status");
+        $criteria->params = array(':superuser' => 1,':del_status' => 0);
+        $User = Users::model()->findAll($criteria);
+        $User_id = [];
+                  foreach ($User as $key => $value) {
+                   $User_id[] = $value->id;
+               }
+        $criteria_Profile = new CDbCriteria();
+        $criteria_Profile->addInCondition('user_id', $User_id);
+        $model = Profile::model()->findAll($criteria_Profile);
+		$list = CHtml::listData($model,'user_id','firstname');
+		return $list;
 	}
 }

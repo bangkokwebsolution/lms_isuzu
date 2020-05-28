@@ -32,7 +32,7 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	    var val = eval("$."+varName);
 	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
 	}
-	$.appendFilter("LogAdmin[news_per_page]", "news_per_page");
+	$.appendFilter("LogRegister[news_per_page]", "news_per_page");
 EOD
     , CClientScript::POS_READY);
 Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
@@ -88,20 +88,8 @@ EOD
                         'style'=> "margin-top: -1px;",
                     ),
                     'afterAjaxUpdate'=>'function(id, data){
-                        $.appendFilter("CourseOnline[news_per_page]");
+                        $.appendFilter("LogRegister[news_per_page]");
                         InitialSortTable(); 
-                        jQuery("#course_date").datepicker({
-                            "dateFormat": "dd/mm/yy",
-                            "showAnim" : "slideDown",
-                            "showOtherMonths": true,
-                            "selectOtherMonths": true,
-                            "yearRange" : "-5+10", 
-                            "changeMonth": true,
-                            "changeYear": true,
-                            "dayNamesMin" : ["อา.","จ.","อ.","พ.","พฤ.","ศ.","ส."],
-                            "monthNamesShort" : ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.",
-                                "ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."],
-                       })
                     }',
                     'columns'=>array(
                         array(
@@ -147,9 +135,8 @@ EOD
             }
         ),
         array(
-            'header' => 'ผู้กดยืนยันการสมัคร',
-           // 'name'=>'search_name',
-            'type'=>'raw',
+            'name'=>'confirm_user',
+            'filter'=>LogRegister::getNameAdmin(),
             'value'=>function($data){
                  $criteria = new CDbCriteria;
                  $criteria->addCondition('user_id ="'.$data->confirm_user.'"');
