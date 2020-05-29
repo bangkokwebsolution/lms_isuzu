@@ -15,6 +15,10 @@
         background-color: #E25F39;
         color: white;
     }
+     .chosen-with-drop .chosen-drop{
+    z-index:1000!important;
+    position:static!important;
+}
 </style>
 <?php
 $titleName = 'รายงายการเรียนรายวิชา';

@@ -42,6 +42,12 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 EOD
 , CClientScript::POS_READY);
 ?>
+<style type="text/css">
+	 .chosen-with-drop .chosen-drop{
+    z-index:1000!important;
+    position:static!important;
+}
+</style>
 <script type="text/javascript">
 	$( document ).ready(function() {
 		//init

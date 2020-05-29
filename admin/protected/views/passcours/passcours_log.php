@@ -32,6 +32,12 @@ EOD
 , CClientScript::POS_READY);
 
 ?>
+<style type="text/css">
+	 .chosen-with-drop .chosen-drop{
+    z-index:1000!important;
+    position:static!important;
+}
+</style>
 <div class="innerLR">
 	<?php 
 

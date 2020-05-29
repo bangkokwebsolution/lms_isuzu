@@ -57,6 +57,11 @@
         font-family: 'fontawesome';
     }
 
+    .chosen-with-drop .chosen-drop{
+    z-index:1000!important;
+    position:static!important;
+}
+
 </style>
 <?php
 $titleName = 'รายงานการเรียนรายวิชา';
