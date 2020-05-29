@@ -55,11 +55,8 @@ class VirtualClassroomController extends Controller
 			$model->user_learn = $json_UserLearn;
 			}
 
-//  var_dump($model->validate());
-//  var_dump($model->getErrors());
-// exit();  
-			$model->save();
 
+			$model->save();
 			if($model->save() == true){
 
 			$model_log = new Vroomlogmail;
@@ -98,9 +95,9 @@ class VirtualClassroomController extends Controller
 						// }
 
             }
-              //$this->redirect(array('index'));      
+              $this->redirect(array('index'));      
             }
-			//$this->redirect(array('index'));
+			$this->redirect(array('index'));
 		}
 
 		$this->render('create',array(

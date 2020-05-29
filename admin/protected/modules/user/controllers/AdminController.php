@@ -196,7 +196,7 @@ echo ($data);
 
 	public function actionAccess ()
 	{
-		$model = new User('searchaccess');
+		$model = new User('search');
         $model->unsetAttributes();  // clear any default values
         $model->register_status = array(1);
         $model->repass_status = array(1);
