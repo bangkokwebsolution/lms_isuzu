@@ -504,7 +504,7 @@ class VirtualClassroomController extends Controller
     {
         $webroot = Yii::app()->getUploadPath('vc');
         $targetFolder = $webroot; // Relative to the root and should match the upload folder in the uploader script
-
+  
         if (file_exists($targetFolder . $_POST['filename'])) {
             echo 1;
         } else {
@@ -515,9 +515,16 @@ class VirtualClassroomController extends Controller
     public function actionUploadifive()
     {
         // Set the uplaod directory
-        $webroot = Yii::app()->getUploadPath('vc');
-        $uploadDir = $webroot;
+       
+        $uploadDirs = Yii::app()->getUploadPath(null);
+		$path1 = "vc";
 
+	    if (!is_dir($uploadDirs."../".$path1."/")) {
+		    mkdir($uploadDirs."../".$path1."/", 0777, true);
+			}
+
+		$webroot = Yii::app()->getUploadPath("vc");
+        $uploadDir = $webroot;
         // Set the allowed file extensions
         $fileTypes = array('jpg','pdf','ppt','pptx','doc'); // Allowed file extensions
 

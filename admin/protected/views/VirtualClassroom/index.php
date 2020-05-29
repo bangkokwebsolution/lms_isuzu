@@ -149,6 +149,11 @@ EOD
 						                    "checkScript"      : "'.Yii::app()->createUrl("VirtualClassroom/checkExists").'",
 						                    "queueID"          : "queue'.$data->id.'",
 						                    "uploadScript"     : "'.Yii::app()->createUrl("VirtualClassroom/uploadifive").'",
+						                    "onQueueComplete" : function(data) {
+						                    	if(data){
+						                    		location.reload();
+						                    	}
+						                    	},
 						                });
 						            });
 					        	</script>
