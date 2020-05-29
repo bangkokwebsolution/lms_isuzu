@@ -84,7 +84,7 @@ Yii::app()->user->returnUrl = $http->getUrl();
     <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/script.js"></script>
     <?php
-    include_once("analyticstracking.php");
+    //include_once("analyticstracking.php");
     ?>
   </body>
 

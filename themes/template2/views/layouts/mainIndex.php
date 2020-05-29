@@ -117,7 +117,16 @@ $criteriapopup->order = 'sortOrder  ASC';
 $popup = Popup::model()->findAll($criteriapopup);
 //$popup = null;
 ?>
-<?php if (!empty($popup)) { ?>
+<?php if (!empty($popup)) { 
+         if (Yii::app()->user->id) {
+              $criteria = new CDbCriteria;
+              $criteria->addCondition('user_id ='.Yii::app()->user->id);
+              $User = User::model()->findAll($criteria);
+              foreach ($User as $key => $value) {
+                 $date_last  = $value->lastvisit_at;
+              }
+           if ($date_last ==='0000-00-00 00:00:00') {
+    ?>
     <div class="modal fade" id="modal-news">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -171,7 +180,10 @@ $popup = Popup::model()->findAll($criteriapopup);
             </div>
         </div>
     </div>
-<?php } ?>
+<?php 
+        }
+    }
+} ?>
 <?php
    // $rrrr = include_once("analyticstracking.php");
     ?>
