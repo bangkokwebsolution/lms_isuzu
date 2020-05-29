@@ -182,7 +182,8 @@
                                 <a href="#modal-ckeck-key<?=$meetingId[0]?>"
                                    class="padding-none overlay overlay-full icon-block bg-default bigblue-link" data-toggle="modal">
                                     <span class="v-center" style="margin-top:50px; height: 45px;">
-                                        <?php echo CHtml::image(Yii::app()->theme->baseUrl.'/images/e-room.jpg', 'No Image', array('width'=>'350px','height'=>'300px' )); ?>
+                                        <?php echo CHtml::image(Yii::app()->theme->baseUrl.'/../../uploads/vroom/'.$room->id.'/thumb/'.$room->pic_vroom.'', 'No Image', array('width'=>'358px','height'=>'300px' )); 
+                                        ?>
                                     </span>
                                 </a>
 
@@ -191,7 +192,7 @@
                                 <a href="<?php echo $this->createUrl('virtualclassroom/joinid',array('id'=>$meetingId[0])); ?>"
                                    class="padding-none overlay overlay-full icon-block bg-default bigblue-link">
                                         <span class="v-center" style="margin-top:50px; height: 45px;">
-                                        <?php echo CHtml::image(Yii::app()->theme->baseUrl.'/images/e-room.jpg', 'No Image',array('width'=>'350px','height'=>'300px' )); ?>
+                                        <?php echo CHtml::image(Yii::app()->theme->baseUrl.'/../../uploads/vroom/'.$room->id.'/thumb/'.$room->pic_vroom.'', 'No Image', array('width'=>'358px','height'=>'300px' )); ?>
                                     </span>
                                 </a>
                              
@@ -218,6 +219,17 @@
 
                         <?php } ?>
                             </h4>
+                        </div>
+                        <div class="panel-body">
+                         <?php 
+                          $start_date = Helpers::lib()->changeFormatDate($room->start_learn_room,'datetime');
+                          $end_date = Helpers::lib()->changeFormatDate($room->end_learn_room,'datetime');
+                          if ($start_date && $end_date) {
+                              echo $start_date;
+                              echo " - ";
+                              echo $end_date;
+                          }
+                         ?>
                         </div>
                     </div>
                 </div>

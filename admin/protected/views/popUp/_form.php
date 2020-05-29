@@ -85,9 +85,12 @@
                 $criteriapopup->addCondition('id ='.$model->id);
                 $popup = Popup::model()->findAll($criteriapopup);
                  foreach ($popup as $key => $value) {
+                 	if ($value->pic_file) {
+                 	
                  	?>
                       <img src="<?= Yii::app()->request->baseUrl; ?>/../uploads/popup/<?= $value->id; ?>/thumb/<?= $value->pic_file; ?>">                                  
                  <?php } 
+                  }
               }?>
               </div>
 				<div class="row">

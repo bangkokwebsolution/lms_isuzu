@@ -206,7 +206,20 @@ $('#remove-chosen').on( 'click', function () {
 
 
   } );
-
+function upload()
+{
+   var alert_message ="ข้อความแจ้งเตือน!"; 
+  if ($('#VRoom_name').val() == "" ) {
+            var picture = "กรุณากรอกชื่อ TH";
+            swal(alert_message,picture)
+            return false; 
+            }
+  if ($('#VRoom_name_em_').val() == "" ) {
+            var picture = "กรุณากรอกชื่อ EN";
+            swal(alert_message,picture)
+            return false; 
+            }
+}
 
 
 //-------------------------------------------ผู้บังคับบัญชา & ผอ -------------------------------------------------//
@@ -239,14 +252,14 @@ $('#remove-chosen').on( 'click', function () {
 
        <div class="row">
          <?php echo $form->labelEx($model,'name'); ?>
-         <?php echo $form->textField($model,'name',array('span8'));?>
+         <?php echo $form->textField($model,'name',array('span8','class'=>'name_thai'));?><font color="red">*</font>
          <?php echo $this->NotEmpty();?>
          <?php echo $form->error($model,'name'); ?>
        </div>
         
        <div class="row">
          <?php echo $form->labelEx($model,'name_EN'); ?>
-         <?php echo $form->textField($model,'name_EN',array('span8'));?>
+         <?php echo $form->textField($model,'name_EN',array('span8','class'=>'name_eng'));?><font color="red">*</font>
          <?php echo $this->NotEmpty();?>
          <?php echo $form->error($model,'name_EN'); ?>
        </div>
@@ -279,7 +292,38 @@ $('#remove-chosen').on( 'click', function () {
         <?php echo $form->textField($model,'number_learn',array('class'=>'number')); ?>  คน
         <?php echo $form->error($model,'number_learn'); ?>
       </div>
-
+      <div class="row">
+        <?php
+        if (!$model->isNewRecord) {
+                $criteria = new CDbCriteria;
+                $criteria->addCondition('id ='.$model->id);
+                $VRoom = VRoom::model()->findAll($criteria);
+                 foreach ($VRoom as $key => $value) {
+                     if ($value->pic_vroom) {
+                  ?>
+                      <img src="<?= Yii::app()->request->baseUrl; ?>/../uploads/vroom/<?= $value->id; ?>/thumb/<?= $value->pic_vroom; ?>" width="400" height="400">                                  
+                 <?php } 
+               }
+              }?>
+      </div>
+      <div class="row">
+          <?php echo $form->labelEx($model,'pic_vroom'); ?>
+          <div class="fileupload fileupload-new" data-provides="fileupload">
+              <div class="input-append">
+                <div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span></div><span class="btn btn-default btn-file"><span class="fileupload-new">Select file</span><span class="fileupload-exists">Change</span><?php echo $form->fileField($model, 
+                'pic_vroom'); ?></span><a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
+              </div>
+          </div>
+          <?php echo $form->error($model,'pic_vroom'); ?>
+          <div class="row">
+            <font color="#990000">
+              <?php echo $this->NotEmpty();?> รูปภาพควรมีขนาด 358X300
+            </font>
+          </div>
+          <?php if ($notsave == 1) { ?>
+            <p class="note"><font color="red">*ขนาดของรูปภาพไม่ถูกต้อง </font></p>
+             <?php }else{} ?> 
+        </div>
       <div class="row">
         <?php //echo $form->labelEx($model,'status_key'); ?>
         <!-- <div class="toggle-button" data-toggleButton-style-enabled="success"> -->
@@ -360,7 +404,7 @@ $('#remove-chosen').on( 'click', function () {
         </div>
         <br>
         <div class="row buttons">
-         <?php echo CHtml::tag('button',array('class' => 'btn btn-primary btn-icon glyphicons ok_2'),'<i></i>บันทึกข้อมูล');?>
+         <?php echo CHtml::tag('button',array('class' => 'btn btn-primary btn-icon glyphicons ok_2','onclick'=>"return upload();"),'<i></i>บันทึกข้อมูล');?>
        </div>
        <?php $this->endWidget(); ?>
        <?php if (!$model->isNewRecord) { ?>

@@ -38,7 +38,7 @@ class VRoom extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, attendeePw, moderatorPw', 'length', 'max'=>255),
+			array('name, attendeePw, moderatorPw, pic_vroom, pic_vroom', 'length', 'max'=>255),
 			array('welcomeMsg', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.

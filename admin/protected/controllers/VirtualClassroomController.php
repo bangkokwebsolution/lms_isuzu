@@ -39,10 +39,7 @@ class VirtualClassroomController extends Controller
 			$model->user_learn = 'all';
 			}
 
-
-
 			if($_POST['optradio'] == 2){
-
 
 			$User_learn_arr = array();
 			foreach (json_decode($_POST['datasetdirector']) as $key => $value) {
@@ -55,8 +52,44 @@ class VirtualClassroomController extends Controller
 			$model->user_learn = $json_UserLearn;
 			}
 
-
 			$model->save();
+			$time = date("dmYHis");
+			$pic_vroom = CUploadedFile::getInstance($model, 'pic_vroom');
+        
+			if(!empty($pic_vroom)){
+				$fileNamePicture = $time."_Picture.".$pic_vroom->getExtensionName();
+				$model->pic_vroom = $fileNamePicture;
+			}
+
+			if(isset($pic_vroom))
+					{
+						/////////// SAVE IMAGE //////////
+						Yush::init($model);
+
+						$originalPath = Yush::getPath($model, Yush::SIZE_ORIGINAL, $model->pic_vroom);
+						$thumbPath = Yush::getPath($model, Yush::SIZE_THUMB, $model->pic_vroom);
+						$smallPath = Yush::getPath($model, Yush::SIZE_SMALL, $model->pic_vroom);
+			           // Save the original resource to disk
+						$pic_vroom->saveAs($originalPath);
+						$size = getimagesize($originalPath);
+						if (isset($size)) {
+			             	// Create a small image
+							$smallImage = Yii::app()->phpThumb->create($originalPath);
+							$smallImage->resize(358,300);
+							$smallImage->save($smallPath);
+
+			            // Create a thumbnail
+							$thumbImage = Yii::app()->phpThumb->create($originalPath);
+							$thumbImage->resize(900);
+							$thumbImage->save($thumbPath);
+						} else {
+							unlink($originalPath);
+							$model->delete();
+							$notsave = 1;
+							$this->render('create',array(
+								'model'=>$model,'notsave'=>$notsave));
+						}
+					}
 			if($model->save() == true){
 
 			$model_log = new Vroomlogmail;
@@ -122,7 +155,7 @@ class VirtualClassroomController extends Controller
 			$gen_key = $this->RandomPassword();
 			$model->show_key = $gen_key;
 			$model->ckeck_key = UserModule::encrypting($gen_key);
-			}
+			} 
 
 			if($_POST['optradio'] == 1){
 			$model->user_learn = 'all';
@@ -140,6 +173,45 @@ class VirtualClassroomController extends Controller
 			$model->user_learn = $json_UserLearn;
 			}
 			$model->save();
+
+			$time = date("dmYHis");
+			$pic_vroom = CUploadedFile::getInstance($model, 'pic_vroom');
+        
+			if(!empty($pic_vroom)){
+				$fileNamePicture = $time."_Picture.".$pic_vroom->getExtensionName();
+				$model->pic_vroom = $fileNamePicture;
+			}
+
+			if(isset($pic_vroom))
+					{
+						/////////// SAVE IMAGE //////////
+						Yush::init($model);
+
+						$originalPath = Yush::getPath($model, Yush::SIZE_ORIGINAL, $model->pic_vroom);
+						$thumbPath = Yush::getPath($model, Yush::SIZE_THUMB, $model->pic_vroom);
+						$smallPath = Yush::getPath($model, Yush::SIZE_SMALL, $model->pic_vroom);
+			           // Save the original resource to disk
+						$pic_vroom->saveAs($originalPath);
+						$size = getimagesize($originalPath);
+						if (isset($size)) {
+			             	// Create a small image
+							$smallImage = Yii::app()->phpThumb->create($originalPath);
+							$smallImage->resize(358,300);
+							$smallImage->save($smallPath);
+
+			            // Create a thumbnail
+							$thumbImage = Yii::app()->phpThumb->create($originalPath);
+							$thumbImage->resize(900);
+							$thumbImage->save($thumbPath);
+						} 
+						// else {
+						// 	unlink($originalPath);
+						// 	$model->delete();
+						// 	$notsave = 1;
+						// 	$this->render('update',array(
+						// 		'model'=>$model,'notsave'=>$notsave));
+						// }
+					}
 
 			if($model->save() == true){
 			$model_log = Vroomlogmail::model()->findByAttributes(array('vroom__id'=>$model->id));
