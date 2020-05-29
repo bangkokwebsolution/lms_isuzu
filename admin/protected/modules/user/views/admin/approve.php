@@ -70,7 +70,7 @@ EOD
 					<?php echo Rights::t('core', 'ที่นี่คุณสามารถอนุมัติการเข้าใช้งานระบบให้กับผู้ใช้แต่ละราย'); ?>
 				</div>
 				<div class="coolContainer">
-					<h4 class="name_pos"></h4><h4 class="num"> จำนวนผู้สมัคร <?= $model->searchmembership()->getItemCount(); ?> คน  จาก <?= $model->searchmembership()->getTotalItemCount(); ?> คน</h4>	
+					<h4 class="name_pos"></h4><h4 class="num"> จำนวนผู้สมัคร <?= $model->searchapprove()->getItemCount(); ?> คน  จาก <?= $model->searchapprove()->getTotalItemCount(); ?> คน</h4>	
 				</div>
 			 <div class="separator bottom form-inline small">
 					<span class="pull-right">
