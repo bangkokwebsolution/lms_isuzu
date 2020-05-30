@@ -68,6 +68,31 @@ EOD
 							'id'=>'chk',
 						),
 						array(
+							'name'=>'sortOrder',
+							'filter'=>false,
+							'type'=>'html',
+							'value'=>'UHtml::markSearch($data,"sortOrder")',
+							'htmlOptions' => array(
+			                   'style' => 'width:50px',
+			                ),  
+						),
+						array(
+							'header'=>'บุคคลากร',
+							'value'=>'$data->dep->emp->type_employee_name',
+							'filter'=>false,
+			                'htmlOptions' => array(
+			                   'style' => 'width:150px',
+			                ),  
+						),
+						array(
+							'name'=>'department_id',
+							'value'=>'$data->dep->dep_title',
+							'filter'=>false,
+			                'htmlOptions' => array(
+			                   'style' => 'width:150px',
+			                ),  
+						),
+						array(
 							'name'=>'position_title',
 							'type'=>'html',
 							'value'=>'UHtml::markSearch($data,"position_title")'
@@ -95,6 +120,13 @@ EOD
       //               'type'=>'raw',
       //               'htmlOptions'=>array('style'=>'text-align: center','width'=>$this->getWidthColumnLang().'px;'),
       //           		),
+						array(
+							'type'=>'raw',
+							'value'=>'CHtml::link("<i></i>","", array("class"=>"glyphicons move btn-action btn-inverse"))',
+							'htmlOptions'=>array('style'=>'text-align: center; width:50px;', 'class'=>'row_move'),
+							'header' => 'ย้าย',
+							'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
+						),
 						array(            
 							'class'=>'AButtonColumn',
 							'visible'=>Controller::PButton( 

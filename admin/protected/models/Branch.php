@@ -38,7 +38,7 @@ class Branch extends CActiveRecord
 			array('branch_name, position_id ', 'required'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, branch_name, create_date, create_by, update_date, update_by, lang_id, parent_id, active, position_id', 'safe', 'on'=>'search'),
+			array('id, branch_name, create_date, create_by, update_date, update_by, lang_id, parent_id, active, position_id, sortOrder', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -78,6 +78,7 @@ class Branch extends CActiveRecord
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
 			'position_id' => 'ตำแหน่ง',
+			'sortOrder' => 'ลำดับ',
 		);
 	}
 
@@ -105,10 +106,11 @@ class Branch extends CActiveRecord
 		$criteria->compare('create_by',$this->create_by,true);
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by,true);
+		$criteria->compare('sortOrder',$this->sortOrder,true);
 		$criteria->compare('position_id',$this->position_id);
 		$criteria->compare('parent_id',0);
 	    $criteria->compare('active',y);
-		$criteria->order = 'id DESC';
+		$criteria->order = 'sortOrder ASC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

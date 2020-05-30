@@ -35,7 +35,7 @@ class Position extends CActiveRecord
 			array('position_title, department_id ', 'required'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, department_id, position_title, create_date, active,lang_id,parent_id', 'safe', 'on'=>'search'),
+			array('id, department_id, position_title, create_date, active,lang_id,parent_id, sortOrder', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -47,7 +47,7 @@ class Position extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'company' => array(self::BELONGS_TO, 'Company', 'department_id'),
+			'dep' => array(self::BELONGS_TO, 'Department', 'department_id'),
 		);
 	}
 
@@ -72,6 +72,7 @@ class Position extends CActiveRecord
 			'active' => 'Active',
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
+			'sortOrder' => 'ลำดับ',
 		);
 	}
 
@@ -97,9 +98,10 @@ class Position extends CActiveRecord
 		$criteria->compare('department_id',$this->department_id);
 		$criteria->compare('position_title',$this->position_title,true);
 		$criteria->compare('create_date',$this->create_date,true);
+		$criteria->compare('sortOrder',$this->sortOrder,true);
 		$criteria->compare('active',y);
 		$criteria->compare('parent_id',0);
-		$criteria->order = 'id DESC';
+		$criteria->order = 'sortOrder ASC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
