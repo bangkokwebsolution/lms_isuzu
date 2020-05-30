@@ -34,7 +34,7 @@ class Department extends CActiveRecord
 			array('dep_title, type_employee_id', 'required'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, division_id, dep_title, create_date, active,lang_id,parent_id, type_employee_id', 'safe', 'on'=>'search'),
+			array('id, division_id, dep_title, create_date, active,lang_id,parent_id, type_employee_id, sortOrder', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,6 +46,7 @@ class Department extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'emp' => array(self::BELONGS_TO, 'TypeEmployee', 'type_employee_id'),
 		);
 	}
 
@@ -67,6 +68,7 @@ class Department extends CActiveRecord
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
 			'type_employee_id' => 'บุคลากร',
+			'sortOrder' => 'ลำดับ',
 		);
 	}
 
@@ -92,10 +94,11 @@ class Department extends CActiveRecord
 		$criteria->compare('division_id',$this->division_id);
 		$criteria->compare('dep_title',$this->dep_title,true);
 		$criteria->compare('create_date',$this->create_date,true);
+		$criteria->compare('sortOrder',$this->sortOrder,true);
 		$criteria->compare('parent_id',0);
 		$criteria->compare('active',y);
 		$criteria->compare('type_employee_id',$this->type_employee_id);
-		$criteria->order = 'id DESC';
+		$criteria->order = 'sortOrder ASC';
 		
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

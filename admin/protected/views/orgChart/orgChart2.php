@@ -80,6 +80,7 @@ var node_to_edit;
       <?php
       $criteria = new CDbCriteria;
       $criteria->compare('active','y');
+      $criteria->order = 'sortOrder  ASC';
       $categories=OrgChart::model()->findAll($criteria);
       if($categories){
         foreach($categories as $n=>$category)

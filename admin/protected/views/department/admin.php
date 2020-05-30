@@ -68,6 +68,23 @@ EOD
 							'id'=>'chk',
 						),
 						array(
+							'name'=>'sortOrder',
+							'filter'=>false,
+							'type'=>'html',
+							'value'=>'UHtml::markSearch($data,"sortOrder")',
+							'htmlOptions' => array(
+			                   'style' => 'width:50px',
+			                ),  
+						),
+						array(
+							'name'=>'type_employee_id',
+							'value'=>'$data->emp->type_employee_name',
+							'filter'=>false,
+			                'htmlOptions' => array(
+			                   'style' => 'width:150px',
+			                ),  
+						),
+						array(
 							'name'=>'dep_title',
 							'type'=>'html',
 							'value'=>'UHtml::markSearch($data,"dep_title")'
@@ -94,6 +111,13 @@ EOD
       //               'type'=>'raw',
       //               'htmlOptions'=>array('style'=>'text-align: center','width'=>$this->getWidthColumnLang().'px;'),
       //           ),
+						array(
+							'type'=>'raw',
+							'value'=>'CHtml::link("<i></i>","", array("class"=>"glyphicons move btn-action btn-inverse"))',
+							'htmlOptions'=>array('style'=>'text-align: center; width:50px;', 'class'=>'row_move'),
+							'header' => 'ย้าย',
+							'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
+						),
 						array(            
 							'class'=>'AButtonColumn',
 							'visible'=>Controller::PButton( 

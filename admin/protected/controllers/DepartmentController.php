@@ -117,8 +117,24 @@ class DepartmentController extends Controller
 				$newOrgChart->level = 4;
 				$newOrgChart->active = 'y';
 				$newOrgChart->save();
+				$newOrgChart->sortOrder = $newOrgChart->id;
+				$newOrgChart->save();
+
+
+				$sortOrder_model = Department::model()->find(array(
+					'condition' => 'active=:active',
+					'params' => array(':active' => 'y'),
+					'order' => 'sortOrder DESC'
+				));
+
+				if($sortOrder_model != ""){
+					$n_sortOrder = ($sortOrder_model->sortOrder)+1;
+				}else{
+					$n_sortOrder = 1;
+				}
 
 				$model->attributes=$_POST['Department'];
+				$model->sortOrder = $n_sortOrder;
 				if($model->save()){
 					$newOrgChart->department_id = $model->id;
 					$newOrgChart->save();
@@ -196,6 +212,18 @@ class DepartmentController extends Controller
 		$model = $this->loadModel($id);
 		$model->active = 'n';
 		$model->save(false);
+
+		$mmodell = Department::model()->findAll(array(
+			'condition' => 'active=:active',
+			'params' => array(':active'=>'y'),
+			'order' => 'sortOrder ASC',
+		));
+		foreach ($mmodell as $key => $value) {
+			$model_edit = Department::model()->findByPk($value->id);
+			$model_edit->sortOrder = $key+1;
+			$model_edit->save(false);
+		}
+
 		if(Yii::app()->user->id){
 			Helpers::lib()->getControllerActionId();
 		}
@@ -241,6 +269,40 @@ class DepartmentController extends Controller
 		$this->render('admin',array(
 			'model'=>$model,
 		));
+	}
+
+	public function actionSequence() {
+		if (isset($_POST['items']) && is_array($_POST['items'])) {
+			// Get all current target items to retrieve available sortOrders
+			$cur_items = Department::model()->findAllByPk($_POST['items'], array('order'=>'sortOrder'));
+			// Check 1 by 1 and update if neccessary
+			var_dump($_POST['items']);
+			for ($i = 0; $i < count($_POST['items']); $i++) {
+				$item = Department::model()->findByPk($_POST['items'][$i]);
+//				echo $item->sortOrder." = ".$cur_items[$i]->sortOrder."<br>";
+				if ($item->sortOrder != $cur_items[$i]->sortOrder) {
+					$item->sortOrder = $cur_items[$i]->sortOrder ;
+					$item->save();
+
+					$org_1 = OrgChart::model()->find(array(
+					'condition' => 'active=:active AND department_id=:department_id AND position_id IS NULL AND branch_id IS NULL',
+					'params' => array(':active' => 'y', ':department_id'=>$item->id),
+				));
+
+					$org_2 = OrgChart::model()->find(array(
+					'condition' => 'active=:active AND department_id=:department_id AND position_id IS NULL AND branch_id IS NULL',
+					'params' => array(':active' => 'y', ':department_id'=>$cur_items[$i]->id),
+				));
+
+					$org_1->sortOrder = $org_2->id;
+					var_dump($org_2->sortOrder);
+					// $org_2->sortOrder = $org_1->sortOrder;
+					$org_1->save();
+					// $org_2->save();
+
+				}
+			}
+		}
 	}
 
 	/**
