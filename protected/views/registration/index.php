@@ -2091,7 +2091,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
            
                 $criteria= new CDbCriteria;
                 $criteria->compare('active','y');
-                $criteria->order = 'dep_title ASC';
+                $criteria->order = 'sortOrder ASC';
                 $departmentModel = Department::model()->findAll($criteria);
                 $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
                 $departmentOption = array('class' => 'form-control department', 'empty' => $label->label_placeholder_company);
@@ -2110,7 +2110,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
            
                 $criteria= new CDbCriteria;
                 $criteria->compare('active','y');
-                $criteria->order = 'position_title ASC';
+                $criteria->order = 'sortOrder ASC';
                 $positionModel = Position::model()->findAll($criteria);
                 $positionList = CHtml::listData($positionModel, 'id', 'position_title');
                 $positiontOption = array('class' => 'form-control position', 'empty' => $label->label_placeholder_position);
@@ -2132,7 +2132,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
                 // ));
                 $criteria= new CDbCriteria;
                 $criteria->compare('active','y');
-                $criteria->order = 'branch_name ASC';
+                $criteria->order = 'sortOrder ASC';
                 $BranchModel = Branch::model()->findAll($criteria);
                 $BranchList = CHtml::listData($BranchModel, 'id', 'branch_name');
                 $BranchOption = array('class' => 'form-control Branch', 'empty' => $label->label_placeholder_branch );
