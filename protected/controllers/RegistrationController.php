@@ -1997,10 +1997,18 @@ echo ($data);
 
 public function actionCalculateBirthday(){
    $birthdays = $_POST['item'];
+   $Current = date('d-m-Y');
    $birthdays = explode("-", $birthdays);
+   $Current = explode("-", $Current);
+
+   if ($birthdays[2] < $Current[2]) {    
    $date_now = date("Y");
    $data = $date_now - $birthdays[2];
    echo ($data);
+   }else{
+    echo (0);
+   }
+   
 }
 
 }

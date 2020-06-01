@@ -198,7 +198,31 @@ function isEngchar(str,obj){
             obj.value=str.replace(RegExp(s, "g"),'');
         }           
     }); 
-    return isEng; // ถ้าเป็น true แสดงว่าเป็นภาษาไทยทั้งหมด*/
+    return isEng; 
+}
+function isNumberchar(str,obj){
+    var isNumber=true;
+    var orgi_text="0123456789";
+    var chk_text=str.split("");
+    chk_text.filter(function(s){        
+        if(orgi_text.indexOf(s)==-1){
+            isNumber=false;
+            obj.value=str.replace(RegExp(s, "g"),'');
+        }           
+    }); 
+    return isNumber; 
+}
+function isNumbercharSalary(str,obj){
+    var isNumberSalary=true;
+    var orgi_text="0123456789,";
+    var chk_text=str.split("");
+    chk_text.filter(function(s){        
+        if(orgi_text.indexOf(s)==-1){
+            isNumberSalary=false;
+            obj.value=str.replace(RegExp(s, "g"),'');
+        }           
+    }); 
+    return isNumberSalary; 
 }
 function checkID(id) {
     if (id.length != 13) return false;
@@ -559,7 +583,7 @@ function numberWithCommas() {
             ?>
             <?php
             
-            $working = array('class' => ' form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => Yii::app()->session['lang'] == 1?'Able to start working on':'พร้อมที่จะเริ่มงานเมื่อ');
+            $working = array('class' => ' form-control default_datetimepicker start_working', 'autocomplete' => 'off', 'placeholder' => Yii::app()->session['lang'] == 1?'Able to start working on':'พร้อมที่จะเริ่มงานเมื่อ');
             $attTime = array('class' => ' form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_date_of_expiry);
             $date_issueds = array('class' => ' form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => Yii::app()->session['lang'] == 1?'Card issuance date ':'วันที่ออกบัตร');
             $birthday = array('class' => 'form-control default_datetimepicker birth', 'autocomplete' => 'off', 'placeholder' => $label->label_birthday, 'type' => "text");
@@ -710,13 +734,13 @@ function numberWithCommas() {
                         <div class="col-md-4 col-sm-6 col-xs-12" >
                             <div class="form-group" id="identification_card">
                                 <label> <?php echo $label->label_identification;?><font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'identification', array('class' => 'form-control idcard', 'name' => 'idcard', 'maxlength' => '13', 'onKeyPress' => 'return check_number();', 'placeholder' => $label->label_identification)); ?>
+                                <?php echo $form->textField($profile, 'identification', array('class' => 'form-control idcard', 'name' => 'idcard', 'maxlength' => '13', 'onKeyPress' => 'return check_number();', 'placeholder' => $label->label_identification )); ?>
                                 <?php echo $form->error($profile, 'identification', array('class' => 'error2')); ?>
                             </div>
 
                             <div class="form-group" id="passport_card">
                                 <label><?php echo $label->label_passport;?><font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'passport', array('class' => 'form-control passport', 'name' => 'passport', 'placeholder' => $label->label_passport)); ?>
+                                <?php echo $form->textField($profile, 'passport', array('class' => 'form-control passport', 'name' => 'passport', 'placeholder' => $label->label_passport,'onkeyup'=>"isNumberchar(this.value,this)")); ?>
                                 <?php echo $form->error($profile, 'passport', array('class' => 'error2')); ?>
                             </div>
                         </div>
@@ -736,7 +760,7 @@ function numberWithCommas() {
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="form-group">
                                 <label><?= Yii::app()->session['lang'] == 1?'Card issuing location ':'สถานที่ออกบัตร'; ?></label>
-                                <?php echo $form->textField($profile, 'place_issued',array('class' => 'form-control', 'placeholder' =>'สถานที่ออกบัตร' )); ?>
+                                <?php echo $form->textField($profile, 'place_issued',array('class' => 'form-control', 'placeholder' =>Yii::app()->session['lang'] == 1?'Card issuing location ':'สถานที่ออกบัตร' )); ?>
                                 <?php echo $form->error($profile, 'place_issued', array('class' => 'error2')); ?>
                             </div>
                         </div>
@@ -756,7 +780,7 @@ function numberWithCommas() {
                         <div class="col-md-4 col-sm-6 col-xs-12" >
                             <div class="form-group">
                                 <label><?= Yii::app()->session['lang'] == 1?'Crew identification number ':'เลขหนังสือประจำลูกเรือ'; ?></label>
-                                <?php echo $form->textField($profile, 'seamanbook', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Crew identification number ':'เลขหนังสือประจำลูกเรือ')); ?>
+                                <?php echo $form->textField($profile, 'seamanbook', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Crew identification number ':'เลขหนังสือประจำลูกเรือ','onkeyup'=>"isNumberchar(this.value,this)")); ?>
                                 <?php echo $form->error($profile, 'seamanbook', array('class' => 'error2')); ?>
                             </div>
                         </div>
@@ -816,7 +840,7 @@ function numberWithCommas() {
                         <div class="form-group">
 
                             <label><?= Yii::app()->session['lang'] == 1?'Height ':'ส่วนสูง'; ?></label>
-                            <?php echo $form->textField($profile, 'hight', array('class' => 'form-control', 'placeholder' =>Yii::app()->session['lang'] == 1?'Height ':'ส่วนสูง')); ?>
+                            <?php echo $form->textField($profile, 'hight', array('class' => 'form-control', 'placeholder' =>Yii::app()->session['lang'] == 1?'Height ':'ส่วนสูง','onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '3')); ?>
                             <?php echo $form->error($profile, 'hight', array('class' => 'error2')); ?>
                         </div>
                     </div>
@@ -825,7 +849,7 @@ function numberWithCommas() {
                         <div class="form-group">
 
                             <label><?= Yii::app()->session['lang'] == 1?'Weight ':'น้ำหนัก'; ?></label>
-                            <?php echo $form->textField($profile, 'weight', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Weight ':'น้ำหนัก')); ?>
+                            <?php echo $form->textField($profile, 'weight', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Weight ':'น้ำหนัก','onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '3')); ?>
                             <?php echo $form->error($profile, 'weight', array('class' => 'error2')); ?>
                         </div>
                     </div>
@@ -907,7 +931,7 @@ function numberWithCommas() {
                         <div class="form-group">
 
                             <label><?= Yii::app()->session['lang'] == 1?'S.S. Card No ':'บัตรประกันสังคมเลขที่'; ?></label>
-                            <?php echo $form->textField($profile, 'ss_card', array('class' => 'form-control', 'placeholder' =>Yii::app()->session['lang'] == 1?'S.S. Card No Card No ':'บัตรประกันสังคมเลขที่')); ?>
+                            <?php echo $form->textField($profile, 'ss_card', array('class' => 'form-control', 'placeholder' =>Yii::app()->session['lang'] == 1?'S.S. Card No Card No ':'บัตรประกันสังคมเลขที่','onkeyup'=>"isNumberchar(this.value,this)")); ?>
                             <?php echo $form->error($profile, 'ss_card', array('class' => 'error2')); ?>
                         </div>
                     </div> 
@@ -916,7 +940,7 @@ function numberWithCommas() {
                         <div class="form-group">
 
                             <label><?= Yii::app()->session['lang'] == 1?'Tax payer no':'เลขที่บัตรประจำตัวผู้เสียภาษีอากร'; ?></label>
-                            <?php echo $form->textField($profile, 'tax_payer', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Tax payer no':'เลขที่บัตรประจำตัวผู้เสียภาษีอากร')); ?>
+                            <?php echo $form->textField($profile, 'tax_payer', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Tax payer no':'เลขที่บัตรประจำตัวผู้เสียภาษีอากร','onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '13')); ?>
                             <?php echo $form->error($profile, 'tax_payer', array('class' => 'error2')); ?>
                         </div>
                     </div>
@@ -942,7 +966,7 @@ function numberWithCommas() {
                     </div>
                     <div class="col-md-3 col-sm-12 col-xs-12">
                         <div class="form-group">
-                            <?php echo $form->textField($profile, 'number_of_children', array('class' => 'form-control children', 'placeholder' => Yii::app()->session['lang'] == 1?'Number of children ':'จำนวนบุตร')); ?>
+                            <?php echo $form->textField($profile, 'number_of_children', array('class' => 'form-control children', 'placeholder' => Yii::app()->session['lang'] == 1?'Number of children ':'จำนวนบุตร', 'maxlength' => '2')); ?>
                             <?php echo $form->error($profile, 'number_of_children', array('class' => 'error2')); ?>
 
                         </div>
@@ -950,7 +974,7 @@ function numberWithCommas() {
 
                     <div class="clearfix"></div>
                 </div>
-                <div class="row justify-content-center form_name">
+                <div class="row justify-content-center Spouse">
                    <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="form-group">
 
@@ -1101,7 +1125,7 @@ function numberWithCommas() {
                             <!-- <label for="">เบอร์โทรศัพท์</label>
                                 <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์"> -->
                                 <label><?= Yii::app()->session['lang'] == 1?'Landline phone':'โทรศัพท์บ้าน'; ?></label>
-                                <?php echo $form->textField($profile, 'phone', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Landline phone':'โทรศัพท์บ้าน')); ?>
+                                <?php echo $form->textField($profile, 'phone', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Landline phone':'โทรศัพท์บ้าน','onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '10')); ?>
                                 <?php echo $form->error($profile, 'phone', array('class' => 'error2')); ?>
 
                             </div>
@@ -1111,7 +1135,7 @@ function numberWithCommas() {
                             <!-- <label for="">เบอร์โทรศัพท์</label>
                                 <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์"> -->
                                 <label><?php echo $label->label_phone; ?></label>
-                                <?php echo $form->textField($profile, 'tel', array('class' => 'form-control', 'placeholder' => $label->label_phone)); ?>
+                                <?php echo $form->textField($profile, 'tel', array('class' => 'form-control', 'placeholder' => $label->label_phone,'onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '10')); ?>
                                 <?php echo $form->error($profile, 'tel', array('class' => 'error2')); ?>
 
                             </div>
@@ -2164,7 +2188,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
                $criteria= new CDbCriteria;
                $criteria->compare('active','y');
                $criteria->addInCondition('department_id', $dep_id);
-               $criteria->order = 'position_title ASC';
+               $criteria->order = 'sortOrder ASC';
                $position_ship = Position::model()->findAll($criteria);
                ?> 
                <?php
@@ -2183,7 +2207,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="form-group">
             <label><?= Yii::app()->session['lang'] == 1?'Expected salary':'เงินเดือนที่คาดหวัง'; ?></label>
-            <?php echo $form->textField($profile, 'expected_salary', array('class' => 'form-control salary','onchange'=>'numberWithCommas();', 'placeholder' => Yii::app()->session['lang'] == 1?'Expected salary':'เงินเดือนที่คาดหวัง')); ?>
+            <?php echo $form->textField($profile, 'expected_salary', array('class' => 'form-control salary','onchange'=>'numberWithCommas();','onkeyup'=>"isNumbercharSalary(this.value,this)", 'placeholder' => Yii::app()->session['lang'] == 1?'Expected salary':'เงินเดือนที่คาดหวัง')); ?>
             <?php echo $form->error($profile, 'expected_salary', array('class' => 'error2')); ?>
 
         </div>
@@ -2254,7 +2278,7 @@ if (!$users->isNewRecord && $profile->type_employee) {
                                             <label for=""><?php echo $label->label_phone1; ?></label>
                                            <!--  <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้"> 
                                                <label><?php echo $label->label_phone; ?></label>-->
-                                               <?php echo $form->textField($profile, 'phone1', array('class' => 'form-control', 'placeholder' => $label->label_phone1)); ?>
+                                               <?php echo $form->textField($profile, 'phone1', array('class' => 'form-control', 'placeholder' => $label->label_phone1 ,'onkeyup'=>"isNumberchar(this.value,this)",'maxlength' => '13')); ?>
                                                <?php echo $form->error($profile, 'phone1', array('class' => 'error2')); ?>
                                            </div>
                                        </div>
@@ -2395,10 +2419,6 @@ $(add_form_language).click(function(e) {
     if (l < max_fields_language) {
         l++;
         numItems_language++;
-        // var num = 100;
-        // for (var i = 0; i < num; i++) {
-        //     console.log('eee');
-        // }
     
          var language_name = '<?php echo Yii::app()->session['lang'] == 1?'language ':'ภาษา' ?>';
          var del_language = '<?php echo Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?>';
@@ -2595,18 +2615,34 @@ $("#card-3").change(function(event) {
   var sick = $("input[name='status_sm']:checked").val();
   if (sick == 's') {
       $('.children').hide();
+      $('.Spouse').hide();
   }else{
     $('.children').show();
+    $('.Spouse').show();
   }
   });
 $("#card-4").change(function(event) {    
   var child = $("input[name='status_sm']:checked").val();
   if (child == 'm') {
       $('.children').show();
+      $('.Spouse').show();
   }else{
     $('.children').hide();
+    $('.Spouse').hide();
   }
   });
+
+// $(".start_working").change(function() {
+//     var first = new Date($(this).val());
+//     var current = new Date();
+//     if(first.getTime()<current.getTime()){
+//       var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+//       var msg ="<?php echo Yii::app()->session['lang'] == 1?'Cannot adjust the end time more than the beginning date! ':'ไม่สามารถปรับเวลาสิ้นสุดมากกว่าวันเริ่มตั้นได้!'; ?>"; 
+//           swal(alert_message,msg);
+//      $(this).val("");
+//    }
+//  });
+
 $(".email").change(function() {
                     var text_mail = $(".email").val();
                     if (text_mail != "") {
@@ -2647,17 +2683,19 @@ $(".idcard").change(function() {
                                     var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
                                     var msg ="<?php echo Yii::app()->session['lang'] == 1?'This identification number already has a database! ':'เลขประจำตัวประชาชนนี้มีฐานข้อมูลแล้ว!'; ?>"; 
                                     swal(alert_message,msg);
-                                   
+                                    $(".idcard").val(null);
                                 }else if(data == "no"){
                                     $(".idcard").empty();
                                     var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
                                     var msg ="<?php echo Yii::app()->session['lang'] == 1?'This ID card number is not correct as per the calculation of the civil registration database! ':'เลขบัตรประชาชนนี้ไม่ถูกต้อง ตามการคำนวณของระบบฐานข้อมูลทะเบียนราษฎร์!'; ?>"; 
                                     swal(alert_message,msg);
+                                    $(".idcard").val(null);
                                 }else if(data == 'little'){
                                     $(".idcard").empty();
                                     var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
                                     var msg ="<?php echo Yii::app()->session['lang'] == 1?'Incomplete 13 digit ID card number! ':'เลขบัตรประชาชนไม่ครบจำนวน13หลัก!'; ?>"; 
                                     swal(alert_message,msg);
+                                    $(".idcard").val(null);
                                 }
                                 
                             }
@@ -2758,6 +2796,7 @@ $(".idcard").change(function() {
                             $("#office-section_gen").hide();
                             $('.form_sickness').hide();
                             $('.children').hide();
+                            $('.Spouse').hide();
                         }              
                     }else if(new_forms === 0 || typeof  new_forms === 'undefined' || new_forms === false){
                   
@@ -2794,8 +2833,10 @@ $(".idcard").change(function() {
                                 var child = $("input[name='status_sm']:checked").val();
                                 if (child == 'm') {
                                    $('.children').show();
+                                   $('.Spouse').show();
                                 }else{
                                    $('.children').hide();
+                                   $('.Spouse').hide();
                                 }
                                 $('#passport_card').hide();
                                 $('#identification_card').show();
@@ -2831,8 +2872,10 @@ $(".idcard").change(function() {
                                 var child = $("input[name='status_sm']:checked").val();
                                 if (child == 'm') {
                                    $('.children').show();
+                                   $('.Spouse').show();
                                 }else{
                                    $('.children').hide();
+                                   $('.Spouse').hide();
                                 }
                                 $('#passport_card').show();
                                 $('#identification_card').hide();
@@ -2857,8 +2900,10 @@ $(".idcard").change(function() {
                                 var child = $("input[name='status_sm']:checked").val();
                                 if (child == 'm') {
                                    $('.children').show();
+                                   $('.Spouse').show();
                                 }else{
                                    $('.children').hide();
+                                   $('.Spouse').hide();
                                 }
                                 $('#passport_card').hide();
                                 $('#identification_card').show();
@@ -2881,8 +2926,10 @@ $(".idcard").change(function() {
                                 var child = $("input[name='status_sm']:checked").val();
                                 if (child == 'm') {
                                    $('.children').show();
+                                   $('.Spouse').show();
                                 }else{
                                    $('.children').hide();
+                                   $('.Spouse').hide();
                                 }
                                 $('#passport_card').show();
                                 $('#identification_card').hide();
@@ -2966,8 +3013,16 @@ $(".idcard").change(function() {
                             item: item
                         },
                         success: function(data) {
+                            if (data == 0) {
+                                var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+                                var msg ="<?php echo Yii::app()->session['lang'] == 1?'The date of birth is greater than or equal to the current time! ':'วันเดือนปีเกิดมากกว่าหรือเท่ากับเวลาปัจจุบัน!'; ?>"; 
+                                swal(alert_message,msg);
+                                $(".birth").val(null);
+                                $('.ages').val(null);
+                            }else{
                             $('.ages').val(data);
                             $('.ages').append(data);
+                           }
                         }
                     });
                 });
