@@ -214,7 +214,7 @@ function upload()
             swal(alert_message,picture)
             return false; 
             }
-  if ($('#VRoom_name_em_').val() == "" ) {
+  if ($('#VRoom_name_EN').val() == "" ) {
             var picture = "กรุณากรอกชื่อ EN";
             swal(alert_message,picture)
             return false; 
