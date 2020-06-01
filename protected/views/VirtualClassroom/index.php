@@ -182,17 +182,29 @@
                                 <a href="#modal-ckeck-key<?=$meetingId[0]?>"
                                    class="padding-none overlay overlay-full icon-block bg-default bigblue-link" data-toggle="modal">
                                     <span class="v-center" style="margin-top:50px; height: 45px;">
-                                        <?php echo CHtml::image(Yii::app()->theme->baseUrl.'/../../uploads/vroom/'.$room->id.'/thumb/'.$room->pic_vroom.'', 'No Image', array('width'=>'358px','height'=>'300px' )); 
+                            <?php
+                                if ($room->pic_vroom != null) {?>
+                                 <?php echo CHtml::image(Yii::app()->theme->baseUrl.'/../../uploads/vroom/'.$room->id.'/thumb/'.$room->pic_vroom.'', 'No Image', array('width'=>'358px','height'=>'300px' )); 
                                         ?>
+                               <?php }else{?>
+                                  <?php echo CHtml::image(Yii::app()->theme->baseUrl.'/images/e-room.jpg', 'No Image', array('width'=>'350px','height'=>'300px' )); ?>
+                              <?php }
+                            ?>                                            
                                     </span>
                                 </a>
-
 
                         <?php }else{?>
                                 <a href="<?php echo $this->createUrl('virtualclassroom/joinid',array('id'=>$meetingId[0])); ?>"
                                    class="padding-none overlay overlay-full icon-block bg-default bigblue-link">
                                         <span class="v-center" style="margin-top:50px; height: 45px;">
-                                        <?php echo CHtml::image(Yii::app()->theme->baseUrl.'/../../uploads/vroom/'.$room->id.'/thumb/'.$room->pic_vroom.'', 'No Image', array('width'=>'358px','height'=>'300px' )); ?>
+                                       <?php
+                                if ($room->pic_vroom != null) {?>
+                                 <?php echo CHtml::image(Yii::app()->theme->baseUrl.'/../../uploads/vroom/'.$room->id.'/thumb/'.$room->pic_vroom.'', 'No Image', array('width'=>'358px','height'=>'300px' )); 
+                                        ?>
+                               <?php }else{?>
+                                  <?php echo CHtml::image(Yii::app()->theme->baseUrl.'/images/e-room.jpg', 'No Image', array('width'=>'350px','height'=>'300px' )); ?>
+                              <?php }
+                            ?>            
                                     </span>
                                 </a>
                              
