@@ -21,21 +21,42 @@ function DateThai($strDate)
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-main">
-            <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/news/index'); ?>">ข่าวประชาสัมพันธ์</a></li>
+            <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/news/index'); ?>"><?php echo Yii::app()->session['lang'] == 1?'News':'ข่าวประชาสัมพันธ์'; ?> </a></li>
             <li class="breadcrumb-item active" aria-current="page"><?php echo $news_data->cms_title ?></li>
         </ol>
     </nav>
 </div>
-
+<?php
+           
+        ?>
 <section class="content" id="banner-news-detail">
     <div class="container">
         <div class="well">
             <div class="news-detail-img">
+                <?php
+                if (Yii::app()->session['lang'] == 1) {
+                          
+                ?>
                 <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/news/' . $news_data->cms_id . '/thumb/' . $news_data->cms_picture)) { ?>
                     <img src="<?php echo Yii::app()->homeUrl; ?>uploads/news/<?php echo $news_data->cms_id ?>/thumb/<?php echo $news_data->cms_picture ?>" class="img-responsive center-block img-rounded" alt="">
                 <?php } else { ?>
                     <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/news-detail.jpg" class="img-responsive center-block img-rounded" alt="">
-                <?php } ?>
+                <?php } 
+                 }else{
+                      $criteria= new CDbCriteria;
+                $criteria->condition='active=:active AND parent_id=:parent_id';
+                $criteria->params=array(':active'=>'y',':parent_id'=>$news_data->cms_id);
+                $New = News::model()->findAll($criteria);
+
+                
+                foreach ($New as $key => $value) {
+                   $detail = $value->cms_title;
+                    ?>
+                     <img src="<?php echo Yii::app()->homeUrl; ?>uploads/news/<?php echo $value->cms_id ?>/thumb/<?php echo $value->cms_picture ?>" class="img-responsive center-block img-rounded" alt="">
+               <?php }
+
+                 }
+                ?>
             </div>
         </div>
         <div class="news-detail-content">
@@ -43,7 +64,13 @@ function DateThai($strDate)
                 <div class="pull-left">
                     <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/text-lines.png" alt="">
                 </div>
-                <h2><?php echo $news_data->cms_title; ?></h2>
+                <h2><?php 
+                if (Yii::app()->session['lang'] == 1) {
+                 echo $news_data->cms_title; 
+                 }else{
+                  echo $detail;
+                 }
+                 ?></h2>
                 <ul class="list-inline">
                     <!-- <li><small><i class="fa fa-calendar"></i> <?php echo DateThai($news_data->update_date) ?></small></li> -->
                     <li><small><i class="fa fa-calendar"></i> <?php echo Helpers::lib()->DateLang($news_data->update_date, Yii::app()->session['lang']); ?></small></li>
@@ -51,8 +78,14 @@ function DateThai($strDate)
                     <?php
                     $id = $news_data->create_by;
                     $create = Profile::model()->findbyPk($id);
-                    ?>
+
+                    if (Yii::app()->session['lang'] == 1) {?>
+                    <li><small><i class="fa fa-user"></i> <?= $create->firstname_en; ?></small></li> 
+                  <?php  }else{?>
                     <li><small><i class="fa fa-user"></i> <?= $create->firstname; ?></small></li>
+                   <?php }
+                    ?>
+                    
                 </ul>
             </div>
             <div class="content-detail">
@@ -66,7 +99,7 @@ function DateThai($strDate)
                 $new_tab = ($arr[1] == '0') ? '' : 'target="_blank"';
             ?>
                 <div class="content-detail">
-                    <a href="<?php echo $link; ?>" <?= $new_tab ?>>ลิงค์เพิ่มเติม</a>
+                    <a href="<?php echo $link; ?>" <?= $new_tab ?>><?php echo Yii::app()->session['lang'] == 1?'More links':'ลิงค์เพิ่มเติม'; ?></a>
                 </div>
             <?php
             }
