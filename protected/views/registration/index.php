@@ -245,7 +245,7 @@ function upload()
 
         //tinymce.triggerSave();
         //tinyMCE.triggerSave(); 
-        
+
          var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
 
          var up_new = <?php echo $users->isNewRecord; ?>;
@@ -1779,59 +1779,6 @@ if ($ProfilesLanguage->isNewRecord === null) {
         </div>
     </div>
 </div>
-
-
-    <?php if ($ProfilesTraining->isNewRecord === null) { 
-      if (empty($ProfilesTraining)) {
-       $ProfilesTraining = new ProfilesTraining;
-       ?>
-       <div class="row form_name pt-20 ">
-       <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
-        
-            <div class="col-md-7 col-sm-6 col-xs-12 ">
-               <div class="form-group">
-             <?php echo $form->textField($ProfilesTraining, '[0]message', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Training name. ':'ชื่อการอบรม')); ?>
-               </div>
-            </div>
-        </div>
- <div class="add-train"></div>
-<?php } else { ?>
-  <div class="add-train">
-    <?php foreach ($ProfilesTraining as $keytn => $valtn) {
-        ?>
-    <div class="row del_training">
-       <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
-        
-            <div class="col-md-7 col-sm-6 col-xs-12 ">
-                <div class="form-group">
-                 <?php echo $form->textField($valtn, '['.$keytn.']message', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Training name. ':'ชื่อการอบรม')); ?>
-                </div>
-            </div>
-          <span class="delete_training btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?></span>
-        </div>
-
-
-        <?php } ?>
-    </div>
-<?php }} else { ?>
-  <div class="row form_name pt-20 ">
-    <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
-        <div class="col-md-7 col-sm-6 col-xs-12 ">
-            <div class="form-group">
-                 <?php echo $form->textField($ProfilesTraining, '[0]message', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Training name. ':'ชื่อการอบรม')); ?>
-            </div>
-        </div>
-   </div>
-<?php } ?>
-
-<div class="add-train"></div>
-<div class="row justify-content-center form_name">
-    <div class="col-md-3 col-sm-12  col-xs-12 text-center">
-        <button class="btn btn-info btn-add add_form_training" type="button" id="moreFieldsTraining">
-            <span class="glyphicon glyphicon-plus"> </span> <?= Yii::app()->session['lang'] == 1?'Add training history ':'เพิ่มประวัติการฝึกอบรม'; ?>
-        </button>
-    </div>
-</div>
 <div class="row">
    <div class="col-md-offset-3 col-md-4">
     <?php
@@ -1884,6 +1831,57 @@ if ($ProfilesLanguage->isNewRecord === null) {
 
 </div>
 
+    <?php if ($ProfilesTraining->isNewRecord === null) { 
+      if (empty($ProfilesTraining)) {
+       $ProfilesTraining = new ProfilesTraining;
+       ?>
+       <div class="row form_name pt-20 ">
+       <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
+        
+            <div class="col-md-7 col-sm-6 col-xs-12 ">
+               <div class="form-group">
+             <?php echo $form->textField($ProfilesTraining, '[0]message', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Training name. ':'ชื่อการอบรม')); ?>
+               </div>
+            </div>
+        </div>
+ <div class="add-train"></div>
+<?php } else { ?>
+  <div class="add-train">
+    <?php foreach ($ProfilesTraining as $keytn => $valtn) {
+        ?>
+    <div class="row del_training">
+       <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
+        
+            <div class="col-md-7 col-sm-6 col-xs-12 ">
+                <div class="form-group">
+                 <?php echo $form->textField($valtn, '['.$keytn.']message', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Training name. ':'ชื่อการอบรม')); ?>
+                </div>
+            </div>
+          <span class="delete_training btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?></span>
+        </div>
+
+
+        <?php } ?>
+    </div>
+<?php }} else { ?>
+  <div class="row form_name pt-20 ">
+    <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
+        <div class="col-md-7 col-sm-6 col-xs-12 ">
+            <div class="form-group">
+                 <?php echo $form->textField($ProfilesTraining, '[0]message', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Training name. ':'ชื่อการอบรม')); ?>
+            </div>
+        </div>
+   </div>
+<?php } ?>
+
+<div class="add-train"></div>
+<div class="row justify-content-center form_name">
+    <div class="col-md-3 col-sm-12  col-xs-12 text-center">
+        <button class="btn btn-info btn-add add_form_training" type="button" id="moreFieldsTraining">
+            <span class="glyphicon glyphicon-plus"> </span> <?= Yii::app()->session['lang'] == 1?'Add training history ':'เพิ่มประวัติการฝึกอบรม'; ?>
+        </button>
+    </div>
+</div>
 <div id="office-section2" class="form_name">
     <div class="row  mt-20 mb-1">
 
