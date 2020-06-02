@@ -1537,6 +1537,13 @@ public function actionDetail($id) {
         $CoursePassedModel = Passcours::model()->find(array(
             'condition' => 'passcours_user = ' . $UserId . ' AND passcours_cours = ' . $PassCoursId .' AND gen_id='.$gen_id
         ));
+
+        $num_pass = PasscourseNumber::model()->find(array(
+            'condition' => 'course_id=:course_id AND gen_id=:gen_id AND user_id=:user_id',
+            'params' => array(':course_id'=>$PassCoursId, ':gen_id'=>$gen_id, ':user_id'=>$UserId,),
+            'order' => 'id DESC',
+        ));
+        $num_pass = $num_pass->code_number;
         
 
         // if ($CoursePassedModel) {
@@ -1647,7 +1654,7 @@ public function actionDetail($id) {
 
         $lastPasscourse = Helpers::lib()->PeriodDate($CourseDatePass, true);
 
-        
+        $year_pass = date("y", strtotime($CourseDatePass));
         if ($model) {
             $fulltitle = $currentUser->profile->ProfilesTitle->prof_title ."". $currentUser->profile->firstname . " " . $currentUser->profile->lastname;
             $identification = $currentUser->profile->identification ;
@@ -1662,6 +1669,7 @@ public function actionDetail($id) {
                 'cert_text' => $certDetail->certificate->cert_text,
                 'userAccountCode' => $userAccountCode,
                 'courseTitle_en' => (isset($model->CourseOnlines)) ? $model->CourseOnlines->course_title : $model->course_title,
+                'coursenumber' => $model->CourseOnlines->course_number,
                 'lastPasscourse' => $lastPasscourse,                
                 'courseCode' => (isset($courseCode)) ? 'รหัสหลักสูตร ' . $courseCode : null,
                 'courseAccountHour' => (isset($courseAccountHour)) ? $courseAccountHour : null,
@@ -1673,14 +1681,15 @@ public function actionDetail($id) {
 
                 'endLearnDate' => (isset($model->passcours_date)) ? $model->passcours_date : $model->create_date,
                 'courseDatePassOver60Percent' => $CourseDatePass,
-
+                'year_pass' => $year_pass,
+                'num_pass' => $num_pass,
                 'renderSign' => $renderSign,
                 'nameSign' => $nameSign,
                 'positionSign' => $positionSign,
 
                 'renderSign2' => $renderSign2,
-                // 'nameSign2' => $nameSign2,
-                // 'positionSign2' => $positionSign2,
+                'nameSign2' => $nameSign2,
+                'positionSign2' => $positionSign2,
 
                 'positionUser' => $position_title,
                 'companyUser' => $company_title,
@@ -1701,9 +1710,15 @@ public function actionDetail($id) {
 
             //encode html for UTF-8 before write to html
             // $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('cerfile/' . $renderFile, array('model' => $setCertificateData), true), 'UTF-8', 'UTF-8'));
+            if($certDetail->certificate->cert_display == '1'){
+            $pageFormat = 'P';
+        } else {
+            $pageFormat = 'L';
+        }
+
 
             require_once __DIR__ . '/../../admin/protected/vendors/mpdf7/autoload.php';
-            $mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
+            $mPDF = new \Mpdf\Mpdf(['orientation' => $pageFormat]);
             $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('cerfile/' . $renderFile, array('model'=>$setCertificateData), true), 'UTF-8', 'UTF-8'));
 
             //output

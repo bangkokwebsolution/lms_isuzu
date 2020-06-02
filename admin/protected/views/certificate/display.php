@@ -15,6 +15,7 @@
         <?php } ?>
     }
     .b {}
+    .size10 { font-size: 10px; }
     .size12 { font-size: 12px; }
     .size16 { font-size: 16px; }
     .size18 { font-size: 18px; }
@@ -36,16 +37,20 @@
 
 <?php if($model['pageSide']=='1'){  // แนวตั้ง
     ?>
-    <div class="b size36" style="position:absolute; top: 93mm;">
+    <!-- padding-left:610px; -->
+    <div class="size10" style="padding-top:-39px; padding-left:589px;">
+    NNNN0004/<?php echo date("y", strtotime(date("Y-m-d"))); ?>
+    </div>
+    <div class="b size36" style="position:absolute; top: 87mm;">
         Mr.Tester  Tester
     </div>
-    <div style="position:absolute; top: 120mm;">
+    <div style="position:absolute; top: 117mm;">
        <div class="b size40 red">COURSE TITLE</div>
    </div>
-   <div style="position:absolute; top: 150mm; left:30mm;">
-       <div class="size16">10th December 2020</div>
+   <div style="position:absolute; top: 138.5mm; left:30mm;">
+       <div class="size18">10th December 2020</div>
    </div> 
-   <div style="position:absolute; top: 177mm;">
+   <div style="position:absolute; top: 170mm;">
      <div class="size12">
         <?php echo $model['cert_text']; ?>
         <!-- This course is intended to provide with understanding of IMO 2020 Global Sulphur regulation and the ship implementation plan in accorddance with the regulation 14.1.3 of MARPOL Annex VI. -->
@@ -53,21 +58,36 @@
 </div> 
 
 <?php if ($model['renderSign']) {?>
-    <div style="position:absolute; top: 190mm; left: -170px;" >
+    <div style="position:absolute; top: 172mm; left: -150px;" >
        <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign']; ?>" >
        <!-- <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/sign_border.png"; ?>" > -->
    </div>
+   <div class="size12" style="position:absolute; top: 208mm; left: -150px;">
+    <?php echo $model['nameSign']; ?>
+    </div>
+    <div class="size12" style="position:absolute; top: 213mm; left: -150px;">
+    <?php echo $model['positionSign']; ?>
+    </div>
 <?php } ?>
 <?php if ($model['renderSign2']) {?>
-    <div style="position:absolute; top: 190mm; right: -170px;" >
+    <div style="position:absolute; top: 172mm; right: -190px;" >
         <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign2']; ?>" >
         <!-- <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/sign_border.png"; ?>" > -->
+    </div>
+     <div class="size12" style="position:absolute; top: 208mm; right: -190px;">
+    <?php echo $model['nameSign']; ?>
+    </div>
+    <div class="size12" style="position:absolute; top: 213mm; right: -190px;">
+    <?php echo $model['positionSign']; ?>
     </div>
 <?php } ?>
 <?php
 } else {
     ?>
-
+<!-- padding-left:610px; -->
+    <div class="size12" style="padding-top:-24px; padding-left:900px;">
+    NNNN0004/20
+    </div>
     <div style="position:absolute; top: 70mm;">
      <div class="b size40 red">COURSE TITLE</div>
  </div>
@@ -84,18 +104,30 @@
 </div> 
 
 <?php if ($model['renderSign']) {?>
-    <div style="position:absolute; top: 138mm;left: -130px;" >
+    <div style="position:absolute; top: 133mm;left: -130px;" >
         <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign']; ?>" >
+    </div>
+     <div class="size12" style="position:absolute; top: 169mm; left: -130px;">
+    <?php echo $model['nameSign']; ?>
+    </div>
+    <div class="size12" style="position:absolute; top: 174mm; left: -130px;">
+    <?php echo $model['positionSign']; ?>
     </div>
 <?php } ?>
 <?php if ($model['renderSign2']) {?>
-    <div style="position:absolute; top: 138mm; right: -130px;" >
+    <div style="position:absolute; top: 133mm; right: -130px;" >
         <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign2']; ?>" >
         <!-- <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/sign_border.png"; ?>" > -->
     </div>
+    <div class="size12" style="position:absolute; top: 169mm; right: -130px;">
+    <?php echo $model['nameSign2']; ?>
+    </div>
+    <div class="size12" style="position:absolute; top: 174mm; right: -130px;">
+    <?php echo $model['positionSign2']; ?>
+    </div>
 <?php } ?>
 
-<div style="position:absolute; top: 177mm; left: 280px ">
+<div style="position:absolute; top: 180mm; right: -130px ">
  <div class="size18">10 Dec 2020</div>
 </div>
 

@@ -22,6 +22,35 @@ class Passcours extends AActiveRecord
 		return '{{passcours}}';
 	}
 
+	public function beforeSave()
+	{
+		if($this->isNewRecord){
+			$start = date("Y")."-01-01 00:00:00";
+			$last = date("Y")."-12-31 23:59:59";
+			$model_find = PasscourseNumber::model()->find(array(
+				'condition' => 'course_id=:course_id AND created_date IS NOT NULL AND (created_date<=:last) AND (created_date>=:start)',
+				'params' => array(':course_id'=>$this->passcours_cours, ':start'=>$start, ':last'=>$last,),
+				'order' => 'created_date DESC',
+			));
+			if($model_find != ""){
+				$run_number = sprintf('%04d', $model_find+1);
+			}else{
+				$run_number = sprintf('%04d',"1");
+			}
+
+			$model_number = new PasscourseNumber;
+			$model_number->passcourse_id = $this->passcours_id;
+			$model_number->course_id = $this->passcours_cours;
+			$model_number->gen_id = $this->gen_id;
+			$model_number->user_id = $this->passcours_user;
+			$model_number->code_number = $run_number;
+			$model_number->save();
+		}
+
+		return parent::beforeSave();
+	}
+
+
 	public function rules()
 	{
 		return array(

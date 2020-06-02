@@ -31,18 +31,18 @@ $formNameModel = 'Signature';
                         <?php echo $form->textField($model,'sign_title',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
                         <?php echo $form->error($model,'sign_title'); ?>
                     </div>
-                    <!-- <div class="row">
+                    <div class="row">
                         <?php echo $form->labelEx($model,'sign_position'); ?>
                         <?php echo $form->textField($model,'sign_position',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
                         <?php echo $form->error($model,'sign_position'); ?>
-                    </div> -->
+                    </div> 
                    
                     <br>
 
                     <div class="row">
                         <?php echo $form->labelEx($model,'sign_path'); ?>
                         <div class="col-sm-5 col-offset-sm-4">(กว้าง 125 x ยาว 125 )
-                            <div class="slim" data-will-remove="imageRemoved" data-min-size="145,20" style="width: 145px;">
+                            <div class="slim" data-will-remove="imageRemoved" data-min-size="125,125" style="width: 145px;">
                                 <input type="file" name="sign_path" />
                                 <?php
                                 if ($model->sign_path!=""){

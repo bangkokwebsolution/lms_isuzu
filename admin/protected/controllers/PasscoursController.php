@@ -183,7 +183,15 @@ class PasscoursController extends Controller
         //Pass Course Date
         $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId.' AND gen_id="'.$gen_id.'"'));
         $CourseDatePass = $CourseDatePassModel->passcours_date;
-        
+
+
+        $num_pass = PasscourseNumber::model()->find(array(
+        	'condition' => 'course_id=:course_id AND gen_id=:gen_id AND user_id=:user_id',
+        	'params' => array(':course_id'=>$CourseDatePassModel->passcours_cours, ':gen_id'=>$CourseDatePassModel->gen_id, ':user_id'=>$CourseDatePassModel->passcours_user,),
+        	'order' => 'id DESC',
+        ));
+        $num_pass = $num_pass->code_number;
+
         $identification= null;
         $identification = Profiles::model()->find(array(
             'condition' => 'user_id = ' . $UserId,
@@ -222,7 +230,15 @@ class PasscoursController extends Controller
 
         $modelSign = Certificate::model()->find(array('condition' => 'cert_id= '.$certId));
         $modelSign2 = $modelSign->sign_id2;
-       
+
+        if($modelSign->cert_display == '1'){
+			$pageFormat = 'P';
+		} else {
+			$pageFormat = 'L';
+		}
+
+		$pageSide = $modelSign->cert_display;
+
         $model2 = Signature::model()->find(array('condition' => 'sign_id = '.$modelSign2)); 
          // var_dump($model2);exit();
         // $modelSign2 = signature::model()->find(array('condition' => 'sign_id = '.$model->sign_id2));       
@@ -273,6 +289,7 @@ class PasscoursController extends Controller
 		}
 		$model->CourseOnlines->course_date_end =  Helpers::lib()->PeriodDate($model->CourseOnlines->course_date_end,true);
 		$lastPasscourse = Helpers::lib()->PeriodDate($CourseDatePass, true);
+		$year_pass = date("y", strtotime($CourseDatePass));
 	    if($model) {
 			// $fulltitle = $model->Profiles->ProfilesTitle->prof_title . $model->Profiles->firstname . " " . $model->Profiles->lastname;
 			$fulltitle =  $model->Profiles->firstname . " " . $model->Profiles->lastname;
@@ -283,6 +300,7 @@ class PasscoursController extends Controller
 				'cert_text' => $modelSign->cert_text,
 	    		'userAccountCode' => $userAccountCode,
 	    		'courseTitle_en' => $model->CourseOnlines->course_title,
+	    		'coursenumber' => $model->CourseOnlines->course_number,
 	    		'courseCode' => (isset($courseCode))?'รหัสหลักสูตร '.$courseCode:null,
 	    		'courseAccountHour' => (isset($courseAccountHour))?$courseAccountHour:null,
 	    		'courseEtcHour' => (isset($courseEtcHour))?$courseEtcHour:null,
@@ -303,7 +321,10 @@ class PasscoursController extends Controller
 	    		'identification' => $identification['identification'],
 	    		'positionUser' => $positionUser,
 	    		'lastPasscourse' => $lastPasscourse,
-	    		'companyUser' => $companyUser
+	    		'year_pass' => $year_pass,
+	    		'num_pass' => $num_pass,
+	    		'companyUser' => $companyUser,
+	    		'pageSide' => $pageSide,
 	    		);
 	    	// // var_dump($model->identification);exit();
 	    	// //Print
@@ -317,7 +338,7 @@ class PasscoursController extends Controller
 			// $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('cerfile/' . $renderFile, array('model'=>$setCertificateData), true), 'UTF-8', 'UTF-8'));
 			
 			require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
-			$mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
+			$mPDF = new \Mpdf\Mpdf(['orientation' => $pageFormat]);
 			$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('cerfile/' . $renderFile, array('model'=>$setCertificateData), true), 'UTF-8', 'UTF-8'));
 
 	        //save log private function saveCertificateLog()

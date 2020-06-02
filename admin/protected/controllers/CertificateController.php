@@ -164,6 +164,7 @@ class CertificateController extends Controller
 			// $fullName = $user->profile->ProfilesTitle->prof_title ." ". $user->profile->firstname . " " . $user->profile->lastname;
 			$course = CourseOnline::model()->findByPk($course_id);
 			$courseTitle = $course->course_title;
+			$courseNumber = $course->course_number;
 
 			$CoursePassedModel = Passcours::model()->find(array(
 				'condition' => 'passcours_user=:user_id AND passcours_cours=:course_id',
@@ -194,6 +195,7 @@ class CertificateController extends Controller
 		$nameSign2 = $model2->sign_title;
 		$positionSign2 = $model2->sign_position;
 
+
 		if($model) {
 			$setCertificateData = array(
 				'fulltitle' => $fullName,
@@ -202,14 +204,15 @@ class CertificateController extends Controller
 				'lastPasscourse' => $lastPasscourse,
 				// 'positionUser' => $position_title,
 				// 'companyUser' => $company_title,
+				'courseNumber'=>$courseNumber,
 
 				'renderSign' => $renderSign,
 				'nameSign' => $nameSign,
-				// 'positionSign' => $positionSign,
+				'positionSign' => $positionSign,
 
 				'renderSign2' => $renderSign2,
 				'nameSign2' => $nameSign2,
-				// 'positionSign2' => $positionSign2,
+				'positionSign2' => $positionSign2,
 
 				'pageFormat' => $pageFormat,
 				'pageSide' => $model->cert_display,

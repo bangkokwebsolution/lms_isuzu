@@ -448,7 +448,7 @@ class CourseOnlineController extends Controller
 					'course_date_start'=>$model->course_date_start,
 					'course_date_end'=>$model->course_date_end,
 					'course_day_learn'=>$model->course_day_learn,
-					// 'course_number'=>$model->course_number,
+					'course_number'=>$model->course_number,
 					'percen_test'=>$model->percen_test,
 					'cate_amount'=>$model->cate_amount,
 					'time_test'=>$model->time_test,

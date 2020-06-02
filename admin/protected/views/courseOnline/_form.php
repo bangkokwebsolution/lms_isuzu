@@ -230,14 +230,14 @@
 	}
 	?>
 
-	<!-- <div class="row">
-		<div class="col-md-12"> -->
-		<!-- <?php echo $form->labelEx($model,'course_number'); ?>
+	 <div class="row">
+		<div class="col-md-12">
+		 <?php echo $form->labelEx($model,'course_number'); ?>
 		<?php echo $form->textField($model,'course_number',$attCateAmount); ?>
 		<?php echo $this->NotEmpty();?>
-		<?php echo $form->error($model,'course_number'); ?> -->
-		<!-- </div>
-	</div> -->
+		<?php echo $form->error($model,'course_number'); ?>
+		 </div>
+	</div> 
 
 	<?php if($state){
 		$model = $modelChildren; 
