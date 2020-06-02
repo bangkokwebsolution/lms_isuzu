@@ -137,7 +137,7 @@ EOD
 								if($data->cate_show == 0){
 									return CHtml::link("ปิด",array("/Category/active","id"=>$data->id), array("class"=>"btn btn-danger"));
 								} else {
-									return CHtml::link("เปิด",array("/Category/active","id"=>$data->id), array("class"=>"btn btn-danger"));
+									return CHtml::link("เปิด",array("/Category/active","id"=>$data->id), array("class"=>"btn btn-success"));
 								}
 							},
 							'header' => 'เปิด/ปิด การแสดงผล',
