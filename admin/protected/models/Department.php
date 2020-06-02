@@ -100,9 +100,15 @@ class Department extends CActiveRecord
 		$criteria->compare('type_employee_id',$this->type_employee_id);
 		$criteria->order = 'sortOrder ASC';
 		
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+		// return new CActiveDataProvider($this, array(
+		// 	'criteria'=>$criteria,
+		// ));
+
+		$poviderArray = array('criteria'=>$criteria);
+		if(isset($_GET['Department']['news_per_page'])) {
+			$poviderArray['pagination'] = array( 'pageSize'=> intval($_GET['Department']['news_per_page']) );
+		}		
+		return new CActiveDataProvider($this, $poviderArray);
 	}
 
 	/**

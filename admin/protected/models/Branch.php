@@ -112,9 +112,14 @@ class Branch extends CActiveRecord
 	    $criteria->compare('active',y);
 		$criteria->order = 'sortOrder ASC';
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+		// return new CActiveDataProvider($this, array(
+		// 	'criteria'=>$criteria,
+		// ));
+		$poviderArray = array('criteria'=>$criteria);
+		if(isset($_GET['Branch']['news_per_page'])) {
+			$poviderArray['pagination'] = array( 'pageSize'=> intval($_GET['Branch']['news_per_page']) );
+		}		
+		return new CActiveDataProvider($this, $poviderArray);
 	}
 
 	/**
