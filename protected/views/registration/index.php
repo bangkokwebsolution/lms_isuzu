@@ -245,6 +245,7 @@ function upload()
 
         //tinymce.triggerSave();
         //tinyMCE.triggerSave(); 
+        
          var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
 
          var up_new = <?php echo $users->isNewRecord; ?>;

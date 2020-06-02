@@ -357,8 +357,9 @@ class RegistrationController extends Controller {
 
             // $users->password = $_POST['User'][password];
             // $passwordshow = $_POST['Users'][password];
+    $type_card = $_POST['type_card'];
 
-    $genpass = ($type_card == 'p')?substr($profile->passport, 0):substr($profile->identification, -6);
+    $genpass = ($type_card == 'p')?substr($profile->passport, -6):substr($profile->identification, -6);
     $users->password = $genpass;
     $users->verifyPassword = $genpass;
 
