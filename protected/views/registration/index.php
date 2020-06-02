@@ -780,7 +780,7 @@ function numberWithCommas() {
                         <div class="col-md-4 col-sm-6 col-xs-12" >
                             <div class="form-group">
                                 <label><?= Yii::app()->session['lang'] == 1?'Crew identification number ':'เลขหนังสือประจำลูกเรือ'; ?></label>
-                                <?php echo $form->textField($profile, 'seamanbook', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Crew identification number ':'เลขหนังสือประจำลูกเรือ','onkeyup'=>"isNumberchar(this.value,this)")); ?>
+                                <?php echo $form->textField($profile, 'seamanbook', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Crew identification number ':'เลขหนังสือประจำลูกเรือ')); ?>
                                 <?php echo $form->error($profile, 'seamanbook', array('class' => 'error2')); ?>
                             </div>
                         </div>
