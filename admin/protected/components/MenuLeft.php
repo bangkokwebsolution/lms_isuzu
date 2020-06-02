@@ -529,7 +529,7 @@ Class MenuLeft extends Controller
 							'Grouptesting.*',
 							'Grouptesting.Create'
 						)),
-						'label'=>'เพิ่มข้อสอบ',
+						'label'=>'เพิ่มชุดข้อสอบ',
 						'url'=>array('//Grouptesting/create')
 					),
 					array(
@@ -538,7 +538,7 @@ Class MenuLeft extends Controller
 							'Grouptesting.*',
 							'Grouptesting.Index'
 						)),
-						'label'=>'จัดการข้อสอบ',
+						'label'=>'จัดการชุดข้อสอบ',
 						'url'=>array('//Grouptesting/index')
 					),
 					array(
@@ -547,7 +547,7 @@ Class MenuLeft extends Controller
 							'Coursegrouptesting.*',
 							'Coursegrouptesting.Create'
 						)),
-						'label'=>'เพิ่มข้อสอบหลักสูตร',
+						'label'=>'เพิ่มชุดข้อสอบหลักสูตร',
 						'url'=>array('//Coursegrouptesting/create')
 					),
 					array(
@@ -556,7 +556,7 @@ Class MenuLeft extends Controller
 							'Coursegrouptesting.*',
 							'Coursegrouptesting.Index'
 						)),
-						'label'=>'จัดการข้อสอบหลักสูตร',
+						'label'=>'จัดการชุดข้อสอบหลักสูตร',
 						'url'=>array('//Coursegrouptesting/index')
 					),
 				)
