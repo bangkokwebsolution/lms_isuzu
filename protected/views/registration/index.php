@@ -740,7 +740,7 @@ function numberWithCommas() {
 
                             <div class="form-group" id="passport_card">
                                 <label><?php echo $label->label_passport;?><font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'passport', array('class' => 'form-control passport', 'name' => 'passport', 'placeholder' => $label->label_passport,'onkeyup'=>"isNumberchar(this.value,this)")); ?>
+                                <?php echo $form->textField($profile, 'passport', array('class' => 'form-control passport', 'name' => 'passport', 'placeholder' => $label->label_passport)); ?>
                                 <?php echo $form->error($profile, 'passport', array('class' => 'error2')); ?>
                             </div>
                         </div>
@@ -2635,6 +2635,7 @@ $("#card-4").change(function(event) {
 // $(".start_working").change(function() {
 //     var first = new Date($(this).val());
 //     var current = new Date();
+//     console.log(first.getTime);
 //     if(first.getTime()<current.getTime()){
 //       var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
 //       var msg ="<?php echo Yii::app()->session['lang'] == 1?'Cannot adjust the end time more than the beginning date! ':'ไม่สามารถปรับเวลาสิ้นสุดมากกว่าวันเริ่มตั้นได้!'; ?>"; 
