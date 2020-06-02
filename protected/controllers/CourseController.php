@@ -1655,6 +1655,11 @@ public function actionDetail($id) {
         $lastPasscourse = Helpers::lib()->PeriodDate($CourseDatePass, true);
 
         $year_pass = date("y", strtotime($CourseDatePass));
+
+        $format_date_pass = date('jS F Y', strtotime($CourseDatePass));
+        $format_date_pass2 = date('d M Y', strtotime($CourseDatePass));
+
+
         if ($model) {
             $fulltitle = $currentUser->profile->ProfilesTitle->prof_title ."". $currentUser->profile->firstname . " " . $currentUser->profile->lastname;
             $identification = $currentUser->profile->identification ;
@@ -1670,7 +1675,8 @@ public function actionDetail($id) {
                 'userAccountCode' => $userAccountCode,
                 'courseTitle_en' => (isset($model->CourseOnlines)) ? $model->CourseOnlines->course_title : $model->course_title,
                 'coursenumber' => $model->CourseOnlines->course_number,
-                'lastPasscourse' => $lastPasscourse,                
+                'format_date_pass' => $format_date_pass,                
+                'format_date_pass2' => $format_date_pass2,                
                 'courseCode' => (isset($courseCode)) ? 'รหัสหลักสูตร ' . $courseCode : null,
                 'courseAccountHour' => (isset($courseAccountHour)) ? $courseAccountHour : null,
                 'courseEtcHour' => (isset($courseEtcHour)) ? $courseEtcHour : null,

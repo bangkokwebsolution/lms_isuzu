@@ -195,6 +195,10 @@ class CertificateController extends Controller
 		$nameSign2 = $model2->sign_title;
 		$positionSign2 = $model2->sign_position;
 
+		// วันที่เรียนจบ
+		$CoursePassedModel->passcours_date = "2020-12-10";
+		$format_date_pass = date('jS F Y', strtotime($CoursePassedModel->passcours_date));
+		$format_date_pass2 = date('d M Y', strtotime($CoursePassedModel->passcours_date));
 
 		if($model) {
 			$setCertificateData = array(
@@ -217,7 +221,8 @@ class CertificateController extends Controller
 				'pageFormat' => $pageFormat,
 				'pageSide' => $model->cert_display,
 				'bgPath' => $model->cert_background,
-				'courseDatePass' => $CourseDatePass,
+				'courseDatePass' => $format_date_pass,
+				'format_date_pass2' => $format_date_pass2,
 			);
 
 			require_once __DIR__ . '/../vendors/mpdf7/autoload.php';

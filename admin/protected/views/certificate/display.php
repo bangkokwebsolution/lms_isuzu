@@ -48,7 +48,7 @@
        <div class="b size40 red">COURSE TITLE</div>
    </div>
    <div style="position:absolute; top: 138.5mm; left:30mm;">
-       <div class="size18">10th December 2020</div>
+       <div class="size18"><?php echo $model['courseDatePass']; ?></div>
    </div> 
    <div style="position:absolute; top: 170mm;">
      <div class="size12">
@@ -128,7 +128,7 @@
 <?php } ?>
 
 <div style="position:absolute; top: 180mm; right: -130px ">
- <div class="size18">10 Dec 2020</div>
+ <div class="size18"><?php echo $model['format_date_pass2']; ?></div>
 </div>
 
 <?php

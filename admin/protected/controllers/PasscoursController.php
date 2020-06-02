@@ -290,6 +290,11 @@ class PasscoursController extends Controller
 		$model->CourseOnlines->course_date_end =  Helpers::lib()->PeriodDate($model->CourseOnlines->course_date_end,true);
 		$lastPasscourse = Helpers::lib()->PeriodDate($CourseDatePass, true);
 		$year_pass = date("y", strtotime($CourseDatePass));
+
+
+		$format_date_pass = date('jS F Y', strtotime($lastPasscourse));
+		$format_date_pass2 = date('d M Y', strtotime($lastPasscourse));
+
 	    if($model) {
 			// $fulltitle = $model->Profiles->ProfilesTitle->prof_title . $model->Profiles->firstname . " " . $model->Profiles->lastname;
 			$fulltitle =  $model->Profiles->firstname . " " . $model->Profiles->lastname;
@@ -320,7 +325,8 @@ class PasscoursController extends Controller
 	    		'bgPath' => $modelSign->cert_background,
 	    		'identification' => $identification['identification'],
 	    		'positionUser' => $positionUser,
-	    		'lastPasscourse' => $lastPasscourse,
+	    		'format_date_pass' => $format_date_pass,
+	    		'format_date_pass2' => $format_date_pass2,
 	    		'year_pass' => $year_pass,
 	    		'num_pass' => $num_pass,
 	    		'companyUser' => $companyUser,
