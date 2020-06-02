@@ -652,6 +652,89 @@ function numberWithCommas() {
 
                         <div class="clearfix"></div>
                     </div>
+                    <div id="office-section">
+    <div class="row  mb-1 " id="employee_type" >
+        <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Employee section ':'ส่วนของพนักงาน'; ?></strong></div>
+        <div class="col-sm-12 col-xs-12 col-md-8">
+            <div class="form-group">
+
+                <span></span>
+                <div class="radio radio-danger radio-inline emp">
+                    <input type="radio" name="type_employee" id="card-7" value="2" <?php if ($profile->type_employee == 2) : ?> checked="checked" <?php endif ?>>
+
+                    <label for="card-7" class="bg-success text-black"> <?php echo $label->label_office ?> </label>
+                </div>
+                <div class="radio radio-danger radio-inline">
+                    <input type="radio" name="type_employee" id="card-8" value="1" <?php if ($profile->type_employee == 1) : ?> checked="checked" <?php endif ?>>
+
+                    <label for="card-8" class="bg-danger text-black"><?php echo $label->label_ship ?> </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center mb-1 pb-20" id="employee_detail">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label><?php echo $label->label_company; ?></label>
+                <?php
+           
+                $criteria= new CDbCriteria;
+                $criteria->compare('active','y');
+                $criteria->order = 'sortOrder ASC';
+                $departmentModel = Department::model()->findAll($criteria);
+                $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
+                $departmentOption = array('class' => 'form-control department', 'empty' => $label->label_placeholder_company);
+                ?>
+                <?php
+                echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption);
+                ?>
+                <?php echo $form->error($users, 'department_id', array('class' => 'error2')); ?>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="label_position"><?php echo $label->label_position; ?></label>
+                <?php
+           
+                $criteria= new CDbCriteria;
+                $criteria->compare('active','y');
+                $criteria->order = 'sortOrder ASC';
+                $positionModel = Position::model()->findAll($criteria);
+                $positionList = CHtml::listData($positionModel, 'id', 'position_title');
+                $positiontOption = array('class' => 'form-control position', 'empty' => $label->label_placeholder_position);
+                ?>
+                <?php
+                echo $form->dropDownList($users, 'position_id', $positionList, $positiontOption); ?>
+                <?php //echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
+
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="form-group">
+                <label class="label_branch"><?php echo $label->label_branch; ?> </label>
+                <?php
+                // $BranchModel = Branch::model()->findAll(array(
+                //     "condition" => " active = 'y'"
+
+                // ));
+                $criteria= new CDbCriteria;
+                $criteria->compare('active','y');
+                $criteria->order = 'sortOrder ASC';
+                $BranchModel = Branch::model()->findAll($criteria);
+                $BranchList = CHtml::listData($BranchModel, 'id', 'branch_name');
+                $BranchOption = array('class' => 'form-control Branch', 'empty' => $label->label_placeholder_branch );
+                ?>
+                <?php
+                echo $form->dropDownList($users, 'branch_id', $BranchList, $BranchOption);
+                ?>
+                <?php echo $form->error($users, 'branch_id', array('class' => 'error2')); ?>
+            </div>
+        </div>
+    </div>
+</div>
 
                     <h4 class="topic-register form_name"><i class="fas fa-user-edit"></i> <?= Yii::app()->session['lang'] == 1?'Basic information ':'ข้อมูลพื้นฐาน'; ?></h4>
 
@@ -926,7 +1009,7 @@ function numberWithCommas() {
 
                         <div class="clearfix"></div>
                     </div>
-                    <div class="row justify-content-center form_name">
+                  <!--   <div class="row justify-content-center form_name">
                        <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="form-group">
 
@@ -947,7 +1030,7 @@ function numberWithCommas() {
 
                     <div class="clearfix"></div>
                 </div>
-
+ -->
                 <div class="row  mt-1 mb-1 form_name">
                     <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_marital_status; ?></strong></div>
                     <div class="col-md-4">
@@ -2086,89 +2169,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
     </div>
 </div>
 </div>
-<div id="office-section">
-    <div class="row  mb-1 " id="employee_type" >
-        <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Employee section ':'ส่วนของพนักงาน'; ?></strong></div>
-        <div class="col-sm-12 col-xs-12 col-md-8">
-            <div class="form-group">
 
-                <span></span>
-                <div class="radio radio-danger radio-inline emp">
-                    <input type="radio" name="type_employee" id="card-7" value="2" <?php if ($profile->type_employee == 2) : ?> checked="checked" <?php endif ?>>
-
-                    <label for="card-7" class="bg-success text-black"> <?php echo $label->label_office ?> </label>
-                </div>
-                <div class="radio radio-danger radio-inline">
-                    <input type="radio" name="type_employee" id="card-8" value="1" <?php if ($profile->type_employee == 1) : ?> checked="checked" <?php endif ?>>
-
-                    <label for="card-8" class="bg-danger text-black"><?php echo $label->label_ship ?> </label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row justify-content-center mb-1 pb-20" id="employee_detail">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label><?php echo $label->label_company; ?></label>
-                <?php
-           
-                $criteria= new CDbCriteria;
-                $criteria->compare('active','y');
-                $criteria->order = 'sortOrder ASC';
-                $departmentModel = Department::model()->findAll($criteria);
-                $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
-                $departmentOption = array('class' => 'form-control department', 'empty' => $label->label_placeholder_company);
-                ?>
-                <?php
-                echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption);
-                ?>
-                <?php echo $form->error($users, 'department_id', array('class' => 'error2')); ?>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="label_position"><?php echo $label->label_position; ?></label>
-                <?php
-           
-                $criteria= new CDbCriteria;
-                $criteria->compare('active','y');
-                $criteria->order = 'sortOrder ASC';
-                $positionModel = Position::model()->findAll($criteria);
-                $positionList = CHtml::listData($positionModel, 'id', 'position_title');
-                $positiontOption = array('class' => 'form-control position', 'empty' => $label->label_placeholder_position);
-                ?>
-                <?php
-                echo $form->dropDownList($users, 'position_id', $positionList, $positiontOption); ?>
-                <?php //echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
-
-            </div>
-        </div>
-
-        <div class="col-md-8">
-            <div class="form-group">
-                <label class="label_branch"><?php echo $label->label_branch; ?> </label>
-                <?php
-                // $BranchModel = Branch::model()->findAll(array(
-                //     "condition" => " active = 'y'"
-
-                // ));
-                $criteria= new CDbCriteria;
-                $criteria->compare('active','y');
-                $criteria->order = 'sortOrder ASC';
-                $BranchModel = Branch::model()->findAll($criteria);
-                $BranchList = CHtml::listData($BranchModel, 'id', 'branch_name');
-                $BranchOption = array('class' => 'form-control Branch', 'empty' => $label->label_placeholder_branch );
-                ?>
-                <?php
-                echo $form->dropDownList($users, 'branch_id', $BranchList, $BranchOption);
-                ?>
-                <?php echo $form->error($users, 'branch_id', array('class' => 'error2')); ?>
-            </div>
-        </div>
-    </div>
-</div>
 <div id="office-section_gen">
     <div class="row  mb-1 " id="employee_type" >
         <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'The boat position you are interested in applying for ':'ตำแหน่งเรือที่ท่านสนใจสมัคร'; ?></strong><font color="red">*</font></div>
