@@ -74,10 +74,10 @@
         <!-- <img src="<?php echo Yii::app()->basePath."/../uploads/signature/sign_border.png"; ?>" > -->
     </div>
     <div class="size12" style="position:absolute; top: 208mm; right: -190px;">
-    <?php echo $model['nameSign']; ?>
+    <?php echo $model['nameSign2']; ?>
     </div>
     <div class="size12" style="position:absolute; top: 213mm; right: -190px;">
-    <?php echo $model['positionSign']; ?>
+    <?php echo $model['positionSign2']; ?>
     </div>
 <?php } ?>
 <?php
