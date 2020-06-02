@@ -103,9 +103,16 @@ class Position extends CActiveRecord
 		$criteria->compare('parent_id',0);
 		$criteria->order = 'sortOrder ASC';
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+		// return new CActiveDataProvider($this, array(
+		// 	'criteria'=>$criteria,
+		// ));
+
+
+		$poviderArray = array('criteria'=>$criteria);
+		if(isset($_GET['Position']['news_per_page'])) {
+			$poviderArray['pagination'] = array( 'pageSize'=> intval($_GET['Position']['news_per_page']) );
+		}		
+		return new CActiveDataProvider($this, $poviderArray);
 	}
 
 	/**

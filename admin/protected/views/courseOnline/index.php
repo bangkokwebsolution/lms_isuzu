@@ -94,6 +94,14 @@ EOD
 							'value'=> 'Controller::ImageShowIndex($data,$data->course_picture)',
 							'htmlOptions'=>array('width'=>'110')
 						),
+						array(
+							'name'=>'cate_id',
+							'value'=>'$data->cates->cate_title',
+							'filter'=>CHtml::activeTextField($model,'cates_search'),
+			                'htmlOptions' => array(
+			                   'style' => 'width:130px',
+			                ),  
+						),
 						'course_title',
 						// array(
 						// 	'name'=>'course_title',
@@ -107,15 +115,7 @@ EOD
 						// 		}
 						// 		return UHtml::markSearch($data,"course_title").$str;
 						// 	},
-						// ),
-						array(
-							'name'=>'cate_id',
-							'value'=>'$data->cates->cate_title',
-							'filter'=>CHtml::activeTextField($model,'cates_search'),
-			                'htmlOptions' => array(
-			                   'style' => 'width:130px',
-			                ),  
-						),
+						// ),						
 						array(
 							'header'=>'รุ่น',
 							'value'=>'CHtml::link("จัดการรุ่น (".$data->getCountGen().")", array(
