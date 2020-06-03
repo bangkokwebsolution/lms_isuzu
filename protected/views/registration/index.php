@@ -257,27 +257,27 @@ function upload()
             return false; 
         }
     }
-    var type_cards = $("input[name='type_card']:checked").val();
-    if (type_cards === 'l') {
+//     var type_cards = $("input[name='type_card']:checked").val();
+//     if (type_cards === 'l') {
 
-       if ($('.idcard').val() == "" ) {
-        var idcard = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your ID number! ':'กรุณากรอกเลขบัตรประชาชน!'; ?>";
-        swal(alert_message,idcard)
-        return false; 
-    }
-}else if (type_cards === 'p'){
+//        if ($('.idcard').val() == "" ) {
+//         var idcard = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your ID number! ':'กรุณากรอกเลขบัตรประชาชน!'; ?>";
+//         swal(alert_message,idcard)
+//         return false; 
+//     }
+// }else if (type_cards === 'p'){
 
-   if ($('.passport').val() == "" ) {
-    var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
-    swal(alert_message,passport)
-    return false; 
-}
-}else if(typeof  type_cards === 'undefined' || typeof  type_cards === null){
+//    if ($('.passport').val() == "" ) {
+//     var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
+//     swal(alert_message,passport)
+//     return false; 
+// }
+// }else if(typeof  type_cards === 'undefined' || typeof  type_cards === null){
 
-    var card = "<?php echo Yii::app()->session['lang'] == 1?'Please choose to check your ID card or passport! ':'กรุณาเลือกเช็คบัตรประชาชนหรือพาสปอร์ต!'; ?>";
-    swal(alert_message,card)
-    return false;
-}
+//     var card = "<?php echo Yii::app()->session['lang'] == 1?'Please choose to check your ID card or passport! ':'กรุณาเลือกเช็คบัตรประชาชนหรือพาสปอร์ต!'; ?>";
+//     swal(alert_message,card)
+//     return false;
+// }
 var type_users = $("input[name='type_user']:checked").val();
 
 if (type_users === '1') {
