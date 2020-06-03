@@ -214,6 +214,21 @@ class RegistrationController extends Controller {
 //             'model'=>$model,
 //         ));
 //     }
+    private function RandomPassword(){
+
+            $number="abcdefghijklmnopqrstuvwxyz0123456789";
+            $i = '';
+            $result = '';
+        for($i==1;$i<6;$i++){ // จำนวนหลักที่ต้องการสามารถเปลี่ยนได้ตามใจชอบนะครับ จาก 5 เป็น 3 หรือ 6 หรือ 10 เป็นต้น
+            $random=rand(0,strlen($number)-1); //สุ่มตัวเลข
+            $cut_txt=substr($number,$random,1); //ตัดตัวเลข หรือ ตัวอักษรจากตำแหน่งที่สุ่มได้มา 1 ตัว
+            $result.=substr($number,$random,1); // เก็บค่าที่ตัดมาแล้วใส่ตัวแปร
+            $number=str_replace($cut_txt,'',$number); // ลบ หรือ แทนที่ตัวอักษร หรือ ตัวเลขนั้นด้วยค่า ว่าง
+        }
+
+        return $result;
+
+    }
 
     public function actionShowForm(){
 
@@ -359,14 +374,16 @@ class RegistrationController extends Controller {
             // $passwordshow = $_POST['Users'][password];
     $type_card = $_POST['type_card'];
 
-    $genpass = ($type_card == 'p')?substr($profile->passport, -6):substr($profile->identification, -6);
+   // $genpass = ($type_card == 'p')?substr($profile->passport, -6):substr($profile->identification, -6);
+    $genpass = $this->RandomPassword();
     $users->password = $genpass;
     $users->verifyPassword = $genpass;
 
            // $users->orgchart_lv2 = $Neworg;
-    $users->activkey = ($type_card == 'p')?UserModule::encrypting(microtime() . $profile->identification):UserModule::encrypting(microtime() . $profile->passport);
+   // $users->activkey = ($type_card == 'p')?UserModule::encrypting(microtime() . $profile->identification):UserModule::encrypting(microtime() . $profile->passport);
+   $users->activkey = UserModule::encrypting(microtime() .$genpass);
 
-    $users->password = ($type_card == 'p')?UserModule::encrypting(microtime() . $profile->identification):UserModule::encrypting(microtime() . $profile->passport);
+    //$users->password = ($type_card == 'p')?UserModule::encrypting(microtime() . $profile->identification):UserModule::encrypting(microtime() . $profile->passport);
 //$users->verifyPassword = ($type_card == 'p')?UserModule::encrypting(microtime() . $profile->identification):UserModule::encrypting(microtime() . $profile->passport);
 // var_dump($users->activkey);exit();
 //     $users->password = $_POST['idcard']; 
@@ -389,6 +406,13 @@ class RegistrationController extends Controller {
 
         // var_dump($users->station_id);exit();
         // $users->company_id = $_POST['User'][company_id];
+    $profile->address_parent = $_POST['address_parent'];
+    if ($profile->address_parent == 'y') {
+      $profile->address_parent = 'y';
+    }else{
+       $profile->address_parent = 'n'; 
+    }
+
     $profile->type_user = $_POST['type_user']; 
     $profile->history_of_illness = $_POST['history_of_illness'];
     $profile->status_sm = $_POST['status_sm'];
@@ -436,7 +460,7 @@ class RegistrationController extends Controller {
     $profile->father_lastname = $_POST['Profile'][father_lastname];
     $profile->mother_firstname = $_POST['Profile'][mother_firstname];
     $profile->mother_lastname = $_POST['Profile'][mother_lastname];
-    $profile->military = $_POST['Profile'][military];
+    $profile->military = $_POST['military'];
     $profile->sickness = $_POST['Profile'][sickness];
     $profile->expected_salary = $_POST['Profile'][expected_salary];
     $profile->start_working = $_POST['Profile'][start_working];
@@ -1021,7 +1045,7 @@ public function actionUpdate() {
     $profile->father_lastname = $_POST['Profile'][father_lastname];
     $profile->mother_firstname = $_POST['Profile'][mother_firstname];
     $profile->mother_lastname = $_POST['Profile'][mother_lastname];
-    $profile->military = $_POST['Profile'][military];
+    $profile->military = $_POST['military'];
     $profile->sickness = $_POST['Profile'][sickness];
     $profile->expected_salary = $_POST['Profile'][expected_salary];
     $profile->start_working = $_POST['Profile'][start_working];
@@ -1999,17 +2023,33 @@ echo ($data);
 public function actionCalculateBirthday(){
    $birthdays = $_POST['item'];
    $Current = date('d-m-Y');
-   $birthdays = explode("-", $birthdays);
-   $Current = explode("-", $Current);
+    //$Current = date('Y-m-d');
 
-   if ($birthdays[2] < $Current[2]) {    
-   $date_now = date("Y");
-   $data = $date_now - $birthdays[2];
-   echo ($data);
-   }else{
+    $Current = explode("-", $Current);
+
+    if ($birthdays[2] < $Current[2]) {    
+   // $date_now = date("Y");
+   // $data = $date_now - $birthdays[2];
+   // echo ($data);
+   // }else{
+   //  echo (0);
+   // }  
+    $birthdayn = explode("-", $birthdays);
+    $birthday = $birthdayn[2].'-'.$birthdayn[1].'-'.$birthdayn[0];
+    $dob = new DateTime($birthday);
+    $now = new DateTime();
+ 
+    $difference = $now->diff($dob);
+ 
+    $age = $difference->y;
+    $mouth = $difference->m;
+    $day = $difference->d;
+
+    $data = $difference->y.'-'.$difference->m.'-'.$difference->d;
+    echo $data;
+    }else{
     echo (0);
-   }
-   
+    }
 }
 
 }

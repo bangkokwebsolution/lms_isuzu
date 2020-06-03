@@ -246,132 +246,132 @@ function upload()
         //tinymce.triggerSave();
         //tinyMCE.triggerSave(); 
 
-         var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+//         var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
 
-         var up_new = <?php echo $users->isNewRecord; ?>;
+//         var up_new = <?php echo $users->isNewRecord; ?>;
 
-         if (up_new) {  
-         if ($('.picture_pic').val() == "" ) {
-            var picture = "<?php echo Yii::app()->session['lang'] == 1?'Please add a picture! ':'กรุณาเพิ่มรูปภาพ!'; ?>";
-            swal(alert_message,picture)
-            return false; 
-             }
-         }
-         var type_cards = $("input[name='type_card']:checked").val();
-         if (type_cards === 'l') {
+//         if (up_new) {  
+//            if ($('.picture_pic').val() == "" ) {
+//             var picture = "<?php echo Yii::app()->session['lang'] == 1?'Please add a picture! ':'กรุณาเพิ่มรูปภาพ!'; ?>";
+//             swal(alert_message,picture)
+//             return false; 
+//         }
+//     }
+//     var type_cards = $("input[name='type_card']:checked").val();
+//     if (type_cards === 'l') {
 
-             if ($('.idcard').val() == "" ) {
-            var idcard = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your ID number! ':'กรุณากรอกเลขบัตรประชาชน!'; ?>";
-            swal(alert_message,idcard)
-            return false; 
-             }
-         }else if (type_cards === 'p'){
+//        if ($('.idcard').val() == "" ) {
+//         var idcard = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your ID number! ':'กรุณากรอกเลขบัตรประชาชน!'; ?>";
+//         swal(alert_message,idcard)
+//         return false; 
+//     }
+// }else if (type_cards === 'p'){
 
-             if ($('.passport').val() == "" ) {
-            var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
-            swal(alert_message,passport)
-            return false; 
-             }
-         }else if(typeof  type_cards === 'undefined' || typeof  type_cards === null){
+//    if ($('.passport').val() == "" ) {
+//     var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
+//     swal(alert_message,passport)
+//     return false; 
+// }
+// }else if(typeof  type_cards === 'undefined' || typeof  type_cards === null){
 
-            var card = "<?php echo Yii::app()->session['lang'] == 1?'Please choose to check your ID card or passport! ':'กรุณาเลือกเช็คบัตรประชาชนหรือพาสปอร์ต!'; ?>";
-            swal(alert_message,card)
-            return false;
-         }
-         var type_users = $("input[name='type_user']:checked").val();
+//     var card = "<?php echo Yii::app()->session['lang'] == 1?'Please choose to check your ID card or passport! ':'กรุณาเลือกเช็คบัตรประชาชนหรือพาสปอร์ต!'; ?>";
+//     swal(alert_message,card)
+//     return false;
+// }
+// var type_users = $("input[name='type_user']:checked").val();
 
-            if (type_users === '1') {
-                  if ($('.position_gen').val() == "" ) {
-            var position_gen = "<?php echo Yii::app()->session['lang'] == 1?'Please choose the position you want to apply! ':'กรุณาเลือกตำแหน่งที่ต้องการสมัคร!'; ?>";
-            swal(alert_message,position_gen)
-            return false; 
-             }else if(type_users === '3'){
-            var type_employees = $("input[name='type_employee']:checked").val(); 
-             if (typeof  type_employees === 'undefined' || typeof  type_employees === null) {
-            var employees = "<?php echo Yii::app()->session['lang'] == 1?'Please select a check. Select a department and position! ':'กรุณาเลือกเช็คเลือกแผนกและตำแหน่ง!'; ?>";
-            swal(alert_message,employees)
-            return false;
-         } 
-             }
-           
-         }     
-         
+// if (type_users === '1') {
+//   if ($('.position_gen').val() == "" ) {
+//     var position_gen = "<?php echo Yii::app()->session['lang'] == 1?'Please choose the position you want to apply! ':'กรุณาเลือกตำแหน่งที่ต้องการสมัคร!'; ?>";
+//     swal(alert_message,position_gen)
+//     return false; 
+// }else if(type_users === '3'){
+//     var type_employees = $("input[name='type_employee']:checked").val(); 
+//     if (typeof  type_employees === 'undefined' || typeof  type_employees === null) {
+//         var employees = "<?php echo Yii::app()->session['lang'] == 1?'Please select a check. Select a department and position! ':'กรุณาเลือกเช็คเลือกแผนกและตำแหน่ง!'; ?>";
+//         swal(alert_message,employees)
+//         return false;
+//     } 
+// }
 
-              if ($('.firstname').val() == "") {
-                 var firstname = "<?php echo Yii::app()->session['lang'] == 1?'Please enter name! ':'กรุณากรอกชื่อ!'; ?>";
-                 swal(alert_message,firstname)
-                 return false;
-              }
-
-              if ($('.lastname').val() == "") {
-                var lastname = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your surname! ':'กรุณากรอกนามสกุล!'; ?>";
-                swal(alert_message,lastname)
-                return false;
-              }
-              if ($('.prefix').val() == "") {
-                var prefix = "<?php echo Yii::app()->session['lang'] == 1?'Please choose a name prefix! ':'กรุณาเลือกคำนำหน้าชื่อ!'; ?>";
-                swal(alert_message,prefix)
-                return false;
-              }
-              if ($('.firstname_en').val() == "") {
-                var firstname_en = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your name in English! ':'กรุณากรอกชื่อเป็นภาษาอังกฤษ!'; ?>";
-                swal(alert_message,firstname_en)
-                return false;
-              }
-              if ($('.lastname_en').val() == "") {
-                var firstname_en = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your surname in English! ':'กรุณากรอกนามสกุลเป็นภาษาอังกฤษ!'; ?>";
-                swal(alert_message,firstname_en)
-                return false;
-              } 
-              if ($('.prefix_en').val() == "") {
-                var prefix_en = "<?php echo Yii::app()->session['lang'] == 1?'Please choose an English name prefix! ':'กรุณาเลือกคำนำหน้าชื่อภาษาอังกฤษ!'; ?>";
-                swal(alert_message,prefix_en)
-                return false;
-              }
-              if ($('.email').val() == "") {
-                var email = "<?php echo Yii::app()->session['lang'] == 1?'Please enter email! ':'กรุณากรอกอีเมล!'; ?>";
-                swal(alert_message,email)
-                return false;
-              }  
+// }     
 
 
+// if ($('.firstname').val() == "") {
+//    var firstname = "<?php echo Yii::app()->session['lang'] == 1?'Please enter name! ':'กรุณากรอกชื่อ!'; ?>";
+//    swal(alert_message,firstname)
+//    return false;
+// }
 
-         var file = $('#queue').val();
-         var file2 = $('#docqueue').val();
-         var exts = ['jpg','pdf','png','jpeg'];
-         if ( file || file2) {
-            var get_ext = file.split('.');
-            get_ext = get_ext.reverse();
+// if ($('.lastname').val() == "") {
+//     var lastname = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your surname! ':'กรุณากรอกนามสกุล!'; ?>";
+//     swal(alert_message,lastname)
+//     return false;
+// }
+// if ($('.prefix').val() == "") {
+//     var prefix = "<?php echo Yii::app()->session['lang'] == 1?'Please choose a name prefix! ':'กรุณาเลือกคำนำหน้าชื่อ!'; ?>";
+//     swal(alert_message,prefix)
+//     return false;
+// }
+// if ($('.firstname_en').val() == "") {
+//     var firstname_en = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your name in English! ':'กรุณากรอกชื่อเป็นภาษาอังกฤษ!'; ?>";
+//     swal(alert_message,firstname_en)
+//     return false;
+// }
+// if ($('.lastname_en').val() == "") {
+//     var firstname_en = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your surname in English! ':'กรุณากรอกนามสกุลเป็นภาษาอังกฤษ!'; ?>";
+//     swal(alert_message,firstname_en)
+//     return false;
+// } 
+// if ($('.prefix_en').val() == "") {
+//     var prefix_en = "<?php echo Yii::app()->session['lang'] == 1?'Please choose an English name prefix! ':'กรุณาเลือกคำนำหน้าชื่อภาษาอังกฤษ!'; ?>";
+//     swal(alert_message,prefix_en)
+//     return false;
+// }
+// if ($('.email').val() == "") {
+//     var email = "<?php echo Yii::app()->session['lang'] == 1?'Please enter email! ':'กรุณากรอกอีเมล!'; ?>";
+//     swal(alert_message,email)
+//     return false;
+// }  
 
-            if ( $.inArray ( get_ext[0].toLowerCase(), exts ) > -1 ){
 
-                if($('#queue .uploadifive-queue-item').length == 0 && $('#docqueue .uploadifive-queue-item').length == 0){
-                    return true;
-                }else{
-                    if($('#queue .uploadifive-queue-item').length > 0 ) {
-                        $('#Training').uploadifive('upload');
-                        return false;
-                    }else if($('#docqueue .uploadifive-queue-item').length > 0){
-                        $('#doc').uploadifive('upload');
-                        return false;
-                    }
-                } 
-            }
-        }else{
-           if($('#queue .uploadifive-queue-item').length == 0 && $('#docqueue .uploadifive-queue-item').length == 0 ){
+
+var file = $('#queue').val();
+var file2 = $('#docqueue').val();
+var exts = ['jpg','pdf','png','jpeg'];
+if ( file || file2) {
+    var get_ext = file.split('.');
+    get_ext = get_ext.reverse();
+
+    if ( $.inArray ( get_ext[0].toLowerCase(), exts ) > -1 ){
+
+        if($('#queue .uploadifive-queue-item').length == 0 && $('#docqueue .uploadifive-queue-item').length == 0){
             return true;
         }else{
-         if($('#docqueue .uploadifive-queue-item').length > 0){
-            $('#doc').uploadifive('upload');
-            return false;
-        }else if($('#queue .uploadifive-queue-item').length > 0){
-            $('#Training').uploadifive('upload');
-            return false;
-
-        }
-
-
+            if($('#queue .uploadifive-queue-item').length > 0 ) {
+                $('#Training').uploadifive('upload');
+                return false;
+            }else if($('#docqueue .uploadifive-queue-item').length > 0){
+                $('#doc').uploadifive('upload');
+                return false;
+            }
+        } 
     }
+}else{
+ if($('#queue .uploadifive-queue-item').length == 0 && $('#docqueue .uploadifive-queue-item').length == 0 ){
+    return true;
+}else{
+   if($('#docqueue .uploadifive-queue-item').length > 0){
+    $('#doc').uploadifive('upload');
+    return false;
+}else if($('#queue .uploadifive-queue-item').length > 0){
+    $('#Training').uploadifive('upload');
+    return false;
+
+}
+
+
+}
 }
 }
 
@@ -431,14 +431,14 @@ function editNameTrain(filedoc_id){
 
 }
 function deleteFilepassport(file_id){
- console.log(file_id);
- $.get("<?php echo $this->createUrl('Registration/deleteFilePassport'); ?>",{id:file_id},function(data){
+   console.log(file_id);
+   $.get("<?php echo $this->createUrl('Registration/deleteFilePassport'); ?>",{id:file_id},function(data){
     if($.trim(data)==1){
-     var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
-     swal(success_file);
-     location.reload();
-     $('#'+filedoc_id).parent().hide('fast');
- }else{
+       var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
+       swal(success_file);
+       location.reload();
+       $('#'+filedoc_id).parent().hide('fast');
+   }else{
     var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
     swal(Unable_file);
 }
@@ -458,11 +458,11 @@ function editNamepassport(filedoc_id){
 function deleteFilecrew_identification(file_id){
     $.get("<?php echo $this->createUrl('Registration/deleteFilePassport'); ?>",{id:file_id},function(data){
         if($.trim(data)==1){
-         var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
-         swal(success_file);
-         location.reload();
-         $('#'+filedoc_id).parent().hide('fast');
-     }else{
+           var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
+           swal(success_file);
+           location.reload();
+           $('#'+filedoc_id).parent().hide('fast');
+       }else{
         var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
         swal(Unable_file);
     }
@@ -482,11 +482,11 @@ function editNamecrew_identification(filedoc_id){
 function deleteFileidentification(file_id){
     $.get("<?php echo $this->createUrl('Registration/deleteFilePassport'); ?>",{id:file_id},function(data){
         if($.trim(data)==1){
-         var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
-         swal(success_file);
-         location.reload();
-         $('#'+filedoc_id).parent().hide('fast');
-     }else{
+           var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
+           swal(success_file);
+           location.reload();
+           $('#'+filedoc_id).parent().hide('fast');
+       }else{
         var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
         swal(Unable_file);
     }
@@ -506,11 +506,11 @@ function editNameidentification(filedoc_id){
 function deleteFilehouse_registration(file_id){
     $.get("<?php echo $this->createUrl('Registration/deleteFilePassport'); ?>",{id:file_id},function(data){
         if($.trim(data)==1){
-         var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
-         swal(success_file);
-         location.reload();
-         $('#'+filedoc_id).parent().hide('fast');
-     }else{
+           var success_file = '<?php echo Yii::app()->session['lang'] == 1?'File deletion successful ':'ลบไฟล์สำเร็จ'; ?>';
+           swal(success_file);
+           location.reload();
+           $('#'+filedoc_id).parent().hide('fast');
+       }else{
         var Unable_file = '<?php echo Yii::app()->session['lang'] == 1?'Unable to delete file ':'ไม่สามารถลบไฟล์ได้'; ?>';
         swal(Unable_file);
     }
@@ -541,12 +541,12 @@ function editNamehouse_registration(filedoc_id){
             }
         }
 
-function numberWithCommas() {
-    var x = document.getElementById("Profile_expected_salary").value;
-    var c = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        function numberWithCommas() {
+            var x = document.getElementById("Profile_expected_salary").value;
+            var c = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-    $(".salary").val(c);
-}
+            $(".salary").val(c);
+        }
     </script>
 
     <!-- Header -->
@@ -584,9 +584,9 @@ function numberWithCommas() {
             ?>
             <?php
             
-            $working = array('class' => ' form-control default_datetimepicker start_working', 'autocomplete' => 'off', 'placeholder' => Yii::app()->session['lang'] == 1?'Able to start working on':'พร้อมที่จะเริ่มงานเมื่อ');
+            $working = array('class' => ' form-control default_datetimepicker start_working', 'autocomplete' => 'off', 'placeholder' => $label->label_start_working);
             $attTime = array('class' => ' form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_date_of_expiry);
-            $date_issueds = array('class' => ' form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => Yii::app()->session['lang'] == 1?'Card issuance date ':'วันที่ออกบัตร');
+            $date_issueds = array('class' => ' form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_date_issued);
             $birthday = array('class' => 'form-control default_datetimepicker birth', 'autocomplete' => 'off', 'placeholder' => $label->label_birthday, 'type' => "text");
             $ships_up_date = array('class' => ' form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_ship_up_date);
             $ships_down_date = array('class' => 'form-control default_datetimepicker', 'autocomplete' => 'off', 'placeholder' => $label->label_ship_down_date);
@@ -621,325 +621,341 @@ function numberWithCommas() {
                                     <span class="btn btn-info btn-file"><span class="fileinput-new"><?= Yii::app()->session['lang'] == 1?'Choose image ':'เลือกรูปภาพ'; ?></span>
                                     <?php echo $form->fileField($users, 'pic_user', array('id' => 'wizard-picture','class'=>'picture_pic')); ?>
                                     <a href="#" class=" btn-info fileinput-exists" data-dismiss="fileinput"><?= Yii::app()->session['lang'] == 1?'Change picture ':'เปลี่ยนรูปภาพ'; ?></a>
-                                </div>
-                            </div>
-                        </div>
+                                </div> 
+                                <div class="row">
+                                 <font color="#990000">
+                                   *รูปภาพควรมีขนาด 2X2
+                               </font>
+                           </div>
+                       </div>
+                   </div>
+               </div> 
+               
+           </div>
+           
+           <div class="row justify-content-center select-profile mg-0">
+            <div class="form-group">
+                <div class="radio radio-danger radio-inline">
+                    <input type="radio" name="type_user" id="accept" value="1" <?php if ($profile->type_user == 1) : ?> checked="checked" <?php endif ?>>
+                    <label for="accept" class="bg-success text-black">
+                        <?php echo $label->label_general_public; ?> </label>
+                    </div>
+                    <div class="radio radio-danger radio-inline">
+                        <input type="radio" name="type_user" id="reject" value="3" <?php if ($profile->type_user == 3) : ?> checked="checked" <?php endif ?>>
+                        <label for="reject" class="bg-danger text-black"><?php echo $label->label_personnel; ?> </label>
                     </div>
                 </div>
-                <div class="row justify-content-center select-profile mg-0">
-                    <div class="form-group">
-                        <div class="radio radio-danger radio-inline">
-                            <input type="radio" name="type_user" id="accept" value="1" <?php if ($profile->type_user == 1) : ?> checked="checked" <?php endif ?>>
-                            <label for="accept" class="bg-success text-black">
-                                <?php echo $label->label_general_public; ?> </label>
+            </div>
+
+            <div class="row justify-content-center mt-1 id_employee" >
+                <div class="col-sm-4">
+                    <div class="form-group" >
+                        <!-- <label for=""><?php echo $form->labelEx($users, 'username'); ?></label> -->
+                        <label for=""><?php echo $label->label_employee_id ; ?></label>
+                        <?php echo $form->textField($users, 'username', array('class' => 'form-control user_ID', 'placeholder' => $label->label_employee_id,'maxlength'=>'13', 'autocomplete' => 'off')); ?>
+                        <?php echo $form->error($users, 'username', array('class' => 'error2')); ?>
+                        <!-- <input type="text" class="form-control" id="" placeholder="ID พนักงาน"> -->
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+            <div id="office-section">
+                <div class="row  mb-1 " id="employee_type" >
+                    <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Employee section ':'ส่วนของพนักงาน'; ?></strong></div>
+                    <div class="col-sm-12 col-xs-12 col-md-8">
+                        <div class="form-group">
+
+                            <span></span>
+                            <div class="radio radio-danger radio-inline emp">
+                                <input type="radio" name="type_employee" id="card-7" value="2" <?php if ($profile->type_employee == 2) : ?> checked="checked" <?php endif ?>>
+
+                                <label for="card-7" class="bg-success text-black"> <?php echo $label->label_office ?> </label>
                             </div>
                             <div class="radio radio-danger radio-inline">
-                                <input type="radio" name="type_user" id="reject" value="3" <?php if ($profile->type_user == 3) : ?> checked="checked" <?php endif ?>>
-                                <label for="reject" class="bg-danger text-black"><?php echo $label->label_personnel; ?> </label>
+                                <input type="radio" name="type_employee" id="card-8" value="1" <?php if ($profile->type_employee == 1) : ?> checked="checked" <?php endif ?>>
+
+                                <label for="card-8" class="bg-danger text-black"><?php echo $label->label_ship ?> </label>
                             </div>
                         </div>
                     </div>
+                </div>
 
-                    <div class="row justify-content-center mt-1 id_employee" >
-                        <div class="col-sm-4">
-                            <div class="form-group" >
-                                <!-- <label for=""><?php echo $form->labelEx($users, 'username'); ?></label> -->
-                                <label for=""><?php echo $label->label_employee_id ; ?></label>
-                                <?php echo $form->textField($users, 'username', array('class' => 'form-control user_ID', 'placeholder' => $label->label_employee_id,'maxlength'=>'13', 'autocomplete' => 'off')); ?>
-                                <?php echo $form->error($users, 'username', array('class' => 'error2')); ?>
-                                <!-- <input type="text" class="form-control" id="" placeholder="ID พนักงาน"> -->
-                            </div>
+                <div class="row justify-content-center mb-1 pb-20" id="employee_detail">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label><?php echo $label->label_company; ?></label>
+                            <?php
+                            
+                            $criteria= new CDbCriteria;
+                            $criteria->compare('active','y');
+                            $criteria->order = 'sortOrder ASC';
+                            $departmentModel = Department::model()->findAll($criteria);
+                            $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
+                            $departmentOption = array('class' => 'form-control department', 'empty' => $label->label_placeholder_company);
+                            ?>
+                            <?php
+                            echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption);
+                            ?>
+                            <?php echo $form->error($users, 'department_id', array('class' => 'error2')); ?>
                         </div>
-
-                        <div class="clearfix"></div>
                     </div>
-                    <div id="office-section">
-    <div class="row  mb-1 " id="employee_type" >
-        <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Employee section ':'ส่วนของพนักงาน'; ?></strong></div>
-        <div class="col-sm-12 col-xs-12 col-md-8">
-            <div class="form-group">
 
-                <span></span>
-                <div class="radio radio-danger radio-inline emp">
-                    <input type="radio" name="type_employee" id="card-7" value="2" <?php if ($profile->type_employee == 2) : ?> checked="checked" <?php endif ?>>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label class="label_position"><?php echo $label->label_position; ?></label>
+                            <?php
+                            
+                            $criteria= new CDbCriteria;
+                            $criteria->compare('active','y');
+                            $criteria->order = 'sortOrder ASC';
+                            $positionModel = Position::model()->findAll($criteria);
+                            $positionList = CHtml::listData($positionModel, 'id', 'position_title');
+                            $positiontOption = array('class' => 'form-control position', 'empty' => $label->label_placeholder_position);
+                            ?>
+                            <?php
+                            echo $form->dropDownList($users, 'position_id', $positionList, $positiontOption); ?>
+                            <?php //echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
 
-                    <label for="card-7" class="bg-success text-black"> <?php echo $label->label_office ?> </label>
-                </div>
-                <div class="radio radio-danger radio-inline">
-                    <input type="radio" name="type_employee" id="card-8" value="1" <?php if ($profile->type_employee == 1) : ?> checked="checked" <?php endif ?>>
+                        </div>
+                    </div>
 
-                    <label for="card-8" class="bg-danger text-black"><?php echo $label->label_ship ?> </label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row justify-content-center mb-1 pb-20" id="employee_detail">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label><?php echo $label->label_company; ?></label>
-                <?php
-           
-                $criteria= new CDbCriteria;
-                $criteria->compare('active','y');
-                $criteria->order = 'sortOrder ASC';
-                $departmentModel = Department::model()->findAll($criteria);
-                $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
-                $departmentOption = array('class' => 'form-control department', 'empty' => $label->label_placeholder_company);
-                ?>
-                <?php
-                echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption);
-                ?>
-                <?php echo $form->error($users, 'department_id', array('class' => 'error2')); ?>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="label_position"><?php echo $label->label_position; ?></label>
-                <?php
-           
-                $criteria= new CDbCriteria;
-                $criteria->compare('active','y');
-                $criteria->order = 'sortOrder ASC';
-                $positionModel = Position::model()->findAll($criteria);
-                $positionList = CHtml::listData($positionModel, 'id', 'position_title');
-                $positiontOption = array('class' => 'form-control position', 'empty' => $label->label_placeholder_position);
-                ?>
-                <?php
-                echo $form->dropDownList($users, 'position_id', $positionList, $positiontOption); ?>
-                <?php //echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
-
-            </div>
-        </div>
-
-        <div class="col-md-8">
-            <div class="form-group">
-                <label class="label_branch"><?php echo $label->label_branch; ?> </label>
-                <?php
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label class="label_branch"><?php echo $label->label_branch; ?> </label>
+                            <?php
                 // $BranchModel = Branch::model()->findAll(array(
                 //     "condition" => " active = 'y'"
 
                 // ));
-                $criteria= new CDbCriteria;
-                $criteria->compare('active','y');
-                $criteria->order = 'sortOrder ASC';
-                $BranchModel = Branch::model()->findAll($criteria);
-                $BranchList = CHtml::listData($BranchModel, 'id', 'branch_name');
-                $BranchOption = array('class' => 'form-control Branch', 'empty' => $label->label_placeholder_branch );
-                ?>
-                <?php
-                echo $form->dropDownList($users, 'branch_id', $BranchList, $BranchOption);
-                ?>
-                <?php echo $form->error($users, 'branch_id', array('class' => 'error2')); ?>
+                            $criteria= new CDbCriteria;
+                            $criteria->compare('active','y');
+                            $criteria->order = 'sortOrder ASC';
+                            $BranchModel = Branch::model()->findAll($criteria);
+                            $BranchList = CHtml::listData($BranchModel, 'id', 'branch_name');
+                            $BranchOption = array('class' => 'form-control Branch', 'empty' => $label->label_placeholder_branch );
+                            ?>
+                            <?php
+                            echo $form->dropDownList($users, 'branch_id', $BranchList, $BranchOption);
+                            ?>
+                            <?php echo $form->error($users, 'branch_id', array('class' => 'error2')); ?>
+                        </div>
+                    </div>
+                </div>
             </div>
+
+            <h4 class="topic-register form_name"><i class="fas fa-user-edit"></i> <?= Yii::app()->session['lang'] == 1?'Basic information ':'ข้อมูลพื้นฐาน'; ?></h4>
+
+            <div class="row justify-content-center form_name">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for=""><?php echo $label->label_title; ?>(TH)<font color="red">*</font></label>
+                        <?php  $country = array('1' => 'นาย', '2' => 'นางสาว', '3' => 'นาง');?>
+                        <?php
+                        $htmlOptions = array('class' => 'form-control prefix', 'empty' => 'คำนำหน้า');
+                        echo $form->dropDownList($profile, 'title_id', $country, $htmlOptions);
+                        ?>
+                    </div>
+                </div>
+                <div class="col-md-3 col-lg-3 col-xs-12">
+                    <div class="form-group">
+                        <label for=""><?php echo $label->label_firstname; ?>(TH)<font color="red">*</font></label>
+                        <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control firstname', 'placeholder' => $label->label_firstname,'onkeyup'=>"isThaichar(this.value,this)")); ?>
+                        <?php echo $form->error($profile, 'firstname', array('class' => 'error2')); ?>
+                    </div>
+                </div>
+                <div class="col-md-3 col-lg-3 col-xs-12">
+                    <div class="form-group">
+                        <label for=""><?php echo $label->label_lastname; ?>(TH)<font color="red">*</font></label>
+                        <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control lastname', 'placeholder' => $label->label_lastname,'onkeyup'=>"isThaichar(this.value,this)")); ?>
+                        <?php echo $form->error($profile, 'lastname', array('class' => 'error2')); ?>
+                        <!--<input type="text" class="form-control" id="">-->
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="row justify-content-center form_name">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for=""><?php echo $label->label_title; ?>(EN)<font color="red">*</font></label>
+                        <?php  $country2 = array('1' => 'Mr.', '2' => 'Miss.', '3' => 'Mrs.'); ?>
+                        <?php
+                        $htmlOptions = array('class' => 'form-control prefix_en', 'empty' => 'Prefix');
+                        echo $form->dropDownList($profile, 'title_id', $country2, $htmlOptions);
+                        ?>
+                    </div>
+                </div>
+                <div class="col-md-3 col-lg-3 col-xs-12">
+                    <div class="form-group">
+                        <label for=""><?php echo $label->label_firstname; ?>(EN)<font color="red">*</font></label>
+                        <?php echo $form->textField($profile, 'firstname_en', array('class' => 'form-control firstname_en', 'placeholder' => $label->label_firstname,'onkeyup'=>"isEngchar(this.value,this)")); ?>
+                        <?php echo $form->error($profile, 'firstname_en', array('class' => 'error2')); ?>
+                    </div>
+                </div>
+                <div class="col-md-3 col-lg-3 col-xs-12">
+                    <div class="form-group">
+                        <label for=""><?php echo $label->label_lastname; ?>(EN)<font color="red">*</font></label>
+                        <?php echo $form->textField($profile, 'lastname_en', array('class' => 'form-control lastname_en', 'placeholder' => $label->label_lastname,'onkeyup'=>"isEngchar(this.value,this)")); ?>
+                        <?php echo $form->error($profile, 'lastname_en', array('class' => 'error2')); ?>
+                        <!--<input type="text" class="form-control" id="">-->
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+
+            <div class="row justify-content-center mt-1 mb-1 form_number_id">
+                <div class="form-group">
+                    <div class="radio radio-danger radio-inline">
+                        <input type="radio" name="type_card" id="card-1" value="l" <?php if ($profile->type_card == "l") : ?> checked="checked" <?php endif ?>>
+                        <label for="card-1" class="bg-success text-black"><?php echo $label->label_identification; ?> </label>
+                    </div>
+
+                    <div class="radio radio-danger radio-inline">
+                        <input type="radio" name="type_card" id="card-2" value="p" <?php if ($profile->type_card == "p") : ?> checked="checked" <?php endif ?>>
+                        <label for="card-2" class="bg-danger text-black"><?php echo $label->label_passport; ?> </label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row justify-content-center form_number_id">
+                <div class="col-md-4 col-sm-6 col-xs-12" >
+                    <div class="form-group" id="identification_card">
+                        <label> <?php echo $label->label_identification;?><font color="red">*</font></label>
+                        <?php echo $form->textField($profile, 'identification', array('class' => 'form-control idcard', 'name' => 'idcard', 'maxlength' => '13', 'onKeyPress' => 'return check_number();', 'placeholder' => $label->label_identification )); ?>
+                        <?php echo $form->error($profile, 'identification', array('class' => 'error2')); ?>
+                    </div>
+
+                    <div class="form-group" id="passport_card">
+                        <label><?php echo $label->label_passport;?><font color="red">*</font></label>
+                        <?php echo $form->textField($profile, 'passport', array('class' => 'form-control passport', 'name' => 'passport', 'placeholder' => $label->label_passport)); ?>
+                        <?php echo $form->error($profile, 'passport', array('class' => 'error2')); ?>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group birthday-icon">
+                        <label> <?php echo $label->label_date_of_expiry;?></label>
+                        <?php echo $form->textField($profile, 'date_of_expiry', $attTime); ?>
+                        <?php echo $form->error($profile, 'date_of_expiry', array('class' => 'error2')); ?>
+                        <i class="far fa-calendar-alt"></i>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="row justify-content-center bb-1 pb-20 form_number_id">
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label><?php echo $label->label_place_issued;?></label>
+                        <?php echo $form->textField($profile, 'place_issued',array('class' => 'form-control', 'placeholder' =>$label->label_place_issued )); ?>
+                        <?php echo $form->error($profile, 'place_issued', array('class' => 'error2')); ?>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group birthday-icon">
+                        <i class="far fa-calendar-alt"></i>
+                        <label><?php echo $label->label_date_issued;?></label>
+                        <?php echo $form->textField($profile, 'date_issued',$date_issueds); ?>
+                        <?php echo $form->error($profile, 'date_issued', array('class' => 'error2')); ?>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="row justify-content-center mt-20 form_name">
+                <div class="col-md-4 col-sm-6 col-xs-12" >
+                    <div class="form-group">
+                        <label><?php echo $label->label_seamanbook;?></label>
+                        <?php echo $form->textField($profile, 'seamanbook', array('class' => 'form-control', 'placeholder' => $label->label_seamanbook)); ?>
+                        <?php echo $form->error($profile, 'seamanbook', array('class' => 'error2')); ?>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group birthday-icon">
+                        <i class="far fa-calendar-alt"></i>
+                        <label><?php echo $label->label_date_of_expiry;?></label>
+                        <?php echo $form->textField($profile, 'seaman_expire', $attTime); ?>
+                        <?php echo $form->error($profile, 'seaman_expire', array('class' => 'error2')); ?>
+                    </div>
+                </div>                    
+
+                <div class="clearfix"></div>
+            </div>
+            
+            <div class="row justify-content-center mt-20 form_name">
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group birthday-icon">
+                        <i class="far fa-calendar-alt"></i>
+                        <label><?php echo $label->label_birthday; ?></label>
+                        <?php echo $form->textField($profile, 'birthday', $birthday); ?>
+                        <?php echo $form->error($profile, 'birthday', array('class' => 'error2')); ?>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label><?php echo $label->label_age; ?></label>
+                        <?php echo $form->textField($profile, 'age', array('class' => 'form-control ages', 'placeholder' => $label->label_age,'readonly'=>true )); ?>
+                        <?php echo $form->error($profile, 'age', array('class' => 'error2')); ?>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label><?= Yii::app()->session['lang'] == 1?'Month':'เดือน'; ?></label>
+                        <?php echo $form->textField($profile, 'mouth_birth', array('class' => 'form-control mouth', 'placeholder' => Yii::app()->session['lang'] == 1?'Month':'เดือน','readonly'=>true )); ?>
+                        <?php echo $form->error($profile, 'mouth_birth', array('class' => 'error2')); ?>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="row justify-content-center form_name">
+             <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group">
+
+                    <label><?php echo $label->label_place_of_birth; ?></label>
+                    <?php echo $form->textField($profile, 'place_of_birth', array('class' => 'form-control', 'placeholder' =>$label->label_place_of_birth)); ?>
+                    <?php echo $form->error($profile, 'place_of_birth', array('class' => 'error2')); ?>
+                </div>
+            </div> 
+
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group">
+
+                    <label><?= Yii::app()->session['lang'] == 1?'Blood type ':'กรุ๊ปเลือด'; ?></label>
+                    <?php echo $form->textField($profile, 'blood', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Blood type ':'กรุ๊ปเลือด')); ?>
+                    <?php echo $form->error($profile, 'blood', array('class' => 'error2')); ?>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
         </div>
-    </div>
-</div>
+        <div class="row justify-content-center form_name">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group">
 
-                    <h4 class="topic-register form_name"><i class="fas fa-user-edit"></i> <?= Yii::app()->session['lang'] == 1?'Basic information ':'ข้อมูลพื้นฐาน'; ?></h4>
-
-                    <div class="row justify-content-center form_name">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for=""><?php echo $label->label_title; ?>(TH)<font color="red">*</font></label>
-                                <?php  $country = array('1' => 'นาย', '2' => 'นางสาว', '3' => 'นาง');?>
-                                <?php
-                                $htmlOptions = array('class' => 'form-control prefix', 'empty' => 'คำนำหน้า');
-                                echo $form->dropDownList($profile, 'title_id', $country, $htmlOptions);
-                                ?>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-lg-3 col-xs-12">
-                            <div class="form-group">
-                                <label for=""><?php echo $label->label_firstname; ?>(TH)<font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control firstname', 'placeholder' => $label->label_firstname,'onkeyup'=>"isThaichar(this.value,this)")); ?>
-                                <?php echo $form->error($profile, 'firstname', array('class' => 'error2')); ?>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-lg-3 col-xs-12">
-                            <div class="form-group">
-                                <label for=""><?php echo $label->label_lastname; ?>(TH)<font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control lastname', 'placeholder' => $label->label_lastname,'onkeyup'=>"isThaichar(this.value,this)")); ?>
-                                <?php echo $form->error($profile, 'lastname', array('class' => 'error2')); ?>
-                                <!--<input type="text" class="form-control" id="">-->
-                            </div>
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="row justify-content-center form_name">
-                        <div class="col-md-2">
-                            <div class="form-group">
-                                <label for=""><?php echo $label->label_title; ?>(EN)<font color="red">*</font></label>
-                                <?php  $country2 = array('1' => 'Mr.', '2' => 'Miss.', '3' => 'Mrs.'); ?>
-                                <?php
-                                $htmlOptions = array('class' => 'form-control prefix_en', 'empty' => 'Prefix');
-                                echo $form->dropDownList($profile, 'title_id', $country2, $htmlOptions);
-                                ?>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-lg-3 col-xs-12">
-                            <div class="form-group">
-                                <label for=""><?php echo $label->label_firstname; ?>(EN)<font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'firstname_en', array('class' => 'form-control firstname_en', 'placeholder' => $label->label_firstname,'onkeyup'=>"isEngchar(this.value,this)")); ?>
-                                <?php echo $form->error($profile, 'firstname_en', array('class' => 'error2')); ?>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-lg-3 col-xs-12">
-                            <div class="form-group">
-                                <label for=""><?php echo $label->label_lastname; ?>(EN)<font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'lastname_en', array('class' => 'form-control lastname_en', 'placeholder' => $label->label_lastname,'onkeyup'=>"isEngchar(this.value,this)")); ?>
-                                <?php echo $form->error($profile, 'lastname_en', array('class' => 'error2')); ?>
-                                <!--<input type="text" class="form-control" id="">-->
-                            </div>
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </div>
-
-
-                    <div class="row justify-content-center mt-1 mb-1 form_number_id">
-                        <div class="form-group">
-                            <div class="radio radio-danger radio-inline">
-                                <input type="radio" name="type_card" id="card-1" value="l" <?php if ($profile->type_card == "l") : ?> checked="checked" <?php endif ?>>
-                                <label for="card-1" class="bg-success text-black"><?php echo $label->label_identification; ?> </label>
-                            </div>
-
-                            <div class="radio radio-danger radio-inline">
-                                <input type="radio" name="type_card" id="card-2" value="p" <?php if ($profile->type_card == "p") : ?> checked="checked" <?php endif ?>>
-                                <label for="card-2" class="bg-danger text-black"><?php echo $label->label_passport; ?> </label>
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <div class="row justify-content-center form_number_id">
-                        <div class="col-md-4 col-sm-6 col-xs-12" >
-                            <div class="form-group" id="identification_card">
-                                <label> <?php echo $label->label_identification;?><font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'identification', array('class' => 'form-control idcard', 'name' => 'idcard', 'maxlength' => '13', 'onKeyPress' => 'return check_number();', 'placeholder' => $label->label_identification )); ?>
-                                <?php echo $form->error($profile, 'identification', array('class' => 'error2')); ?>
-                            </div>
-
-                            <div class="form-group" id="passport_card">
-                                <label><?php echo $label->label_passport;?><font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'passport', array('class' => 'form-control passport', 'name' => 'passport', 'placeholder' => $label->label_passport)); ?>
-                                <?php echo $form->error($profile, 'passport', array('class' => 'error2')); ?>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="form-group birthday-icon">
-                                <label> <?php echo $label->label_date_of_expiry;?></label>
-                                <?php echo $form->textField($profile, 'date_of_expiry', $attTime); ?>
-                                <?php echo $form->error($profile, 'date_of_expiry', array('class' => 'error2')); ?>
-                                <i class="far fa-calendar-alt"></i>
-                            </div>
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="row justify-content-center bb-1 pb-20 form_number_id">
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="form-group">
-                                <label><?= Yii::app()->session['lang'] == 1?'Card issuing location ':'สถานที่ออกบัตร'; ?></label>
-                                <?php echo $form->textField($profile, 'place_issued',array('class' => 'form-control', 'placeholder' =>Yii::app()->session['lang'] == 1?'Card issuing location ':'สถานที่ออกบัตร' )); ?>
-                                <?php echo $form->error($profile, 'place_issued', array('class' => 'error2')); ?>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="form-group birthday-icon">
-                                <i class="far fa-calendar-alt"></i>
-                                <label><?= Yii::app()->session['lang'] == 1?'Card issuance date ':'วันที่ออกบัตร'; ?></label>
-                                <?php echo $form->textField($profile, 'date_issued',$date_issueds); ?>
-                                <?php echo $form->error($profile, 'date_issued', array('class' => 'error2')); ?>
-                            </div>
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </div>
-
-                    <div class="row justify-content-center mt-20 form_name">
-                        <div class="col-md-4 col-sm-6 col-xs-12" >
-                            <div class="form-group">
-                                <label><?= Yii::app()->session['lang'] == 1?'Crew identification number ':'เลขหนังสือประจำลูกเรือ'; ?></label>
-                                <?php echo $form->textField($profile, 'seamanbook', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Crew identification number ':'เลขหนังสือประจำลูกเรือ')); ?>
-                                <?php echo $form->error($profile, 'seamanbook', array('class' => 'error2')); ?>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="form-group birthday-icon">
-                                <i class="far fa-calendar-alt"></i>
-                                <label><?= Yii::app()->session['lang'] == 1?'Date Expired ':'วันหมดอายุ'; ?></label>
-                                <?php echo $form->textField($profile, 'seaman_expire', $attTime); ?>
-                                <?php echo $form->error($profile, 'seaman_expire', array('class' => 'error2')); ?>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6 col-xs-12">
-                            <div class="form-group birthday-icon">
-                                <i class="far fa-calendar-alt"></i>
-                                <label><?php echo $label->label_birthday; ?></label>
-                                <?php echo $form->textField($profile, 'birthday', $birthday); ?>
-                                <?php echo $form->error($profile, 'birthday', array('class' => 'error2')); ?>
-                            </div>
-                        </div>
-
-                        <div class="col-md-2 col-sm-6 col-xs-12 form_name">
-                            <div class="form-group">
-                                <label><?php echo $label->label_age; ?></label>
-                                <?php echo $form->textField($profile, 'age', array('class' => 'form-control ages', 'placeholder' => $label->label_age,'readonly'=>true )); ?>
-                                <?php echo $form->error($profile, 'age', array('class' => 'error2')); ?>
-                            </div>
-                        </div>
-
-                        <div class="clearfix"></div>
-                    </div>
-
-                    <div class="row justify-content-center form_name">
-                       <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="form-group">
-
-                            <label><?= Yii::app()->session['lang'] == 1?'Place of birth ':'สถานที่เกิด'; ?></label>
-                            <?php echo $form->textField($profile, 'place_of_birth', array('class' => 'form-control', 'placeholder' =>Yii::app()->session['lang'] == 1?'Place of birth ':'สถานที่เกิด')); ?>
-                            <?php echo $form->error($profile, 'place_of_birth', array('class' => 'error2')); ?>
-                        </div>
-                    </div> 
-
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="form-group">
-
-                            <label><?= Yii::app()->session['lang'] == 1?'Blood type ':'กรุ๊ปเลือด'; ?></label>
-                            <?php echo $form->textField($profile, 'blood', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Blood type ':'กรุ๊ปเลือด')); ?>
-                            <?php echo $form->error($profile, 'blood', array('class' => 'error2')); ?>
-                        </div>
-                    </div>
-
-                    <div class="clearfix"></div>
+                    <label><?= Yii::app()->session['lang'] == 1?'Height ':'ส่วนสูง'; ?></label>
+                    <?php echo $form->textField($profile, 'hight', array('class' => 'form-control', 'placeholder' =>Yii::app()->session['lang'] == 1?'Height ':'ส่วนสูง','onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '3')); ?>
+                    <?php echo $form->error($profile, 'hight', array('class' => 'error2')); ?>
                 </div>
-                <div class="row justify-content-center form_name">
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="form-group">
+            </div>
 
-                            <label><?= Yii::app()->session['lang'] == 1?'Height ':'ส่วนสูง'; ?></label>
-                            <?php echo $form->textField($profile, 'hight', array('class' => 'form-control', 'placeholder' =>Yii::app()->session['lang'] == 1?'Height ':'ส่วนสูง','onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '3')); ?>
-                            <?php echo $form->error($profile, 'hight', array('class' => 'error2')); ?>
-                        </div>
-                    </div>
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="form-group">
 
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="form-group">
-
-                            <label><?= Yii::app()->session['lang'] == 1?'Weight ':'น้ำหนัก'; ?></label>
-                            <?php echo $form->textField($profile, 'weight', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Weight ':'น้ำหนัก','onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '3')); ?>
-                            <?php echo $form->error($profile, 'weight', array('class' => 'error2')); ?>
-                        </div>
-                    </div>
-
-                    <div class="clearfix"></div>
+                    <label><?= Yii::app()->session['lang'] == 1?'Weight ':'น้ำหนัก'; ?></label>
+                    <?php echo $form->textField($profile, 'weight', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Weight ':'น้ำหนัก','onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '3')); ?>
+                    <?php echo $form->error($profile, 'weight', array('class' => 'error2')); ?>
                 </div>
+            </div>
+
+            <div class="clearfix"></div>
+        </div>
                 <!--     <div class="row justify-content-center form_name">
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="form-group">
@@ -961,31 +977,31 @@ function numberWithCommas() {
 
                         <div class="clearfix"></div>
                     </div> -->
-             
-                <div class="row justify-content-center form_name">
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="form-group">
+                    
+                    <div class="row justify-content-center form_name">
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="form-group">
 
-                            <label><?php echo $label->label_race; ?></label>
-                            <?php echo $form->textField($profile, 'race', array('class' => 'form-control', 'placeholder' => $label->label_race)); ?>
-                            <?php echo $form->error($profile, 'race', array('class' => 'error2')); ?>
+                                <label><?php echo $label->label_race; ?></label>
+                                <?php echo $form->textField($profile, 'race', array('class' => 'form-control', 'placeholder' => $label->label_race)); ?>
+                                <?php echo $form->error($profile, 'race', array('class' => 'error2')); ?>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="form-group">
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="form-group">
 
-                            <label><?php echo $label->label_nationality; ?></label>
-                            <?php echo $form->textField($profile, 'nationality', array('class' => 'form-control', 'placeholder' => $label->label_nationality)); ?>
-                            <?php echo $form->error($profile, 'nationality', array('class' => 'error2')); ?>
+                                <label><?php echo $label->label_nationality; ?></label>
+                                <?php echo $form->textField($profile, 'nationality', array('class' => 'form-control', 'placeholder' => $label->label_nationality)); ?>
+                                <?php echo $form->error($profile, 'nationality', array('class' => 'error2')); ?>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="clearfix"></div>
-                </div>
-                <div class="row justify-content-center form_name">
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="form-group">
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="row justify-content-center form_name">
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <div class="form-group">
                             <!-- <label for="">ศาสนา</label>
                                 <input type="text" class="form-control" id="" placeholder="เชื้อชาติ"> -->
                                 <label><?php echo $label->label_religion; ?></label>
@@ -1014,8 +1030,8 @@ function numberWithCommas() {
                        <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="form-group">
 
-                            <label><?= Yii::app()->session['lang'] == 1?'S.S. Card No ':'บัตรประกันสังคมเลขที่'; ?></label>
-                            <?php echo $form->textField($profile, 'ss_card', array('class' => 'form-control', 'placeholder' =>Yii::app()->session['lang'] == 1?'S.S. Card No Card No ':'บัตรประกันสังคมเลขที่','onkeyup'=>"isNumberchar(this.value,this)")); ?>
+                            <label><?php echo $label->label_ss_card; ?></label>
+                            <?php echo $form->textField($profile, 'ss_card', array('class' => 'form-control', 'placeholder' =>$label->label_ss_card,'onkeyup'=>"isNumberchar(this.value,this)")); ?>
                             <?php echo $form->error($profile, 'ss_card', array('class' => 'error2')); ?>
                         </div>
                     </div> 
@@ -1023,213 +1039,217 @@ function numberWithCommas() {
                     <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="form-group">
 
-                            <label><?= Yii::app()->session['lang'] == 1?'Tax payer no':'เลขที่บัตรประจำตัวผู้เสียภาษีอากร'; ?></label>
-                            <?php echo $form->textField($profile, 'tax_payer', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Tax payer no':'เลขที่บัตรประจำตัวผู้เสียภาษีอากร','onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '13')); ?>
+                            <label><?php echo $label->label_tax_payer; ?></label>
+                            <?php echo $form->textField($profile, 'tax_payer', array('class' => 'form-control', 'placeholder' => $label->label_tax_payer,'onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '13')); ?>
                             <?php echo $form->error($profile, 'tax_payer', array('class' => 'error2')); ?>
                         </div>
                     </div>
 
                     <div class="clearfix"></div>
                 </div>
- -->
-                <div class="row  mt-1 mb-1 form_name">
-                    <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_marital_status; ?></strong></div>
-                    <div class="col-md-4">
-                        <div class="form-group">
+            -->
+            <div class="row  mt-1 mb-1 form_name">
+                <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_marital_status; ?></strong></div>
+                <div class="col-md-4">
+                    <div class="form-group">
 
-                            <span></span>
-                            <div class="radio radio-danger radio-inline">
-                                <input type="radio" name="status_sm" id="card-3" value="s" <?php if ($profile->status_sm == "s") : ?> checked="checked" <?php endif ?>>
-                                <label for="card-3" class="bg-success text-black"> <?php echo $label->label_single; ?> </label>
-                            </div>
-                            <div class="radio radio-danger radio-inline">
-                                <input type="radio" name="status_sm" id="card-4" value="m" <?php if ($profile->status_sm == "m") : ?> checked="checked" <?php endif ?>>
-                                <label for="card-4" class="bg-danger text-black"><?php echo $label->label_marry; ?> </label>
-                            </div>
+                        <span></span>
+                        <div class="radio radio-danger radio-inline">
+                            <input type="radio" name="status_sm" id="card-3" value="s" <?php if ($profile->status_sm == "s") : ?> checked="checked" <?php endif ?>>
+                            <label for="card-3" class="bg-success text-black"> <?php echo $label->label_single; ?> </label>
+                        </div>
+                        <div class="radio radio-danger radio-inline">
+                            <input type="radio" name="status_sm" id="card-4" value="m" <?php if ($profile->status_sm == "m") : ?> checked="checked" <?php endif ?>>
+                            <label for="card-4" class="bg-danger text-black"><?php echo $label->label_marry; ?> </label>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-12 col-xs-12">
-                        <div class="form-group">
-                            <?php echo $form->textField($profile, 'number_of_children', array('class' => 'form-control children', 'placeholder' => Yii::app()->session['lang'] == 1?'Number of children ':'จำนวนบุตร', 'maxlength' => '2')); ?>
-                            <?php echo $form->error($profile, 'number_of_children', array('class' => 'error2')); ?>
-
-                        </div>
-                    </div>
-
-                    <div class="clearfix"></div>
                 </div>
-                <div class="row justify-content-center Spouse">
-                   <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="col-md-3 col-sm-12 col-xs-12">
                     <div class="form-group">
+                        <?php echo $form->textField($profile, 'number_of_children', array('class' => 'form-control children', 'placeholder' => $label->label_number_of_children, 'maxlength' => '2')); ?>
+                        <?php echo $form->error($profile, 'number_of_children', array('class' => 'error2')); ?>
 
-                        <label><?= Yii::app()->session['lang'] == 1?'Name of Spouse ':'ชื่อคู่สมรส'; ?></label>
-                        <?php echo $form->textField($profile, 'spouse_firstname', array('class' => 'form-control', 'placeholder' =>Yii::app()->session['lang'] == 1?'Name of Spouse ':'ชื่อคู่สมรส')); ?>
-                        <?php echo $form->error($profile, 'spouse_firstname', array('class' => 'error2')); ?>
-                    </div>
-                </div> 
-
-                <div class="col-md-3 col-sm-6 col-xs-12">
-                    <div class="form-group">
-
-                        <label><?= Yii::app()->session['lang'] == 1?'Lastname of Spouse ':'นามสกุลคู่สมรส'; ?></label>
-                        <?php echo $form->textField($profile, 'spouse_lastname', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Lastname of Spouse ':'นามสกุลคู่สมรส')); ?>
-                        <?php echo $form->error($profile, 'spouse_lastname', array('class' => 'error2')); ?>
-                    </div>
-                </div>
-                <div class="col-md-2 col-sm-6 col-xs-12">
-                    <div class="form-group">
-
-                        <label><?= Yii::app()->session['lang'] == 1?'Occupation ':'อาชีพ'; ?></label>
-                        <?php echo $form->textField($profile, 'occupation_spouse', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Occupation ':'อาชีพ')); ?>
-                        <?php echo $form->error($profile, 'occupation_spouse', array('class' => 'error2')); ?>
                     </div>
                 </div>
 
                 <div class="clearfix"></div>
             </div>
-            <div class="row justify-content-center form_name">
-               <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="row justify-content-center Spouse">
+             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="form-group">
 
-                    <label><?= Yii::app()->session['lang'] == 1?"Father's name ":'ชื่อบิดา'; ?></label>
-                    <?php echo $form->textField($profile, 'father_firstname', array('class' => 'form-control', 'placeholder' =>Yii::app()->session['lang'] == 1?"Father's name ":'ชื่อบิดา')); ?>
-                    <?php echo $form->error($profile, 'father_firstname', array('class' => 'error2')); ?>
+                    <label><?php echo $label->label_spouse_firstname; ?></label>
+                    <?php echo $form->textField($profile, 'spouse_firstname', array('class' => 'form-control', 'placeholder' =>$label->label_spouse_firstname)); ?>
+                    <?php echo $form->error($profile, 'spouse_firstname', array('class' => 'error2')); ?>
                 </div>
             </div> 
 
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="form-group">
 
-                    <label><?= Yii::app()->session['lang'] == 1?"Father's Lastname ":'นามสกุลบิดา'; ?></label>
-                    <?php echo $form->textField($profile, 'father_lastname', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?"Father's Lastname ":'นามสกุลบิดา')); ?>
-                    <?php echo $form->error($profile, 'father_lastname', array('class' => 'error2')); ?>
+                    <label><?php echo $label->label_spouse_lastname; ?></label>
+                    <?php echo $form->textField($profile, 'spouse_lastname', array('class' => 'form-control', 'placeholder' => $label->label_spouse_lastname)); ?>
+                    <?php echo $form->error($profile, 'spouse_lastname', array('class' => 'error2')); ?>
                 </div>
             </div>
-
             <div class="col-md-2 col-sm-6 col-xs-12">
                 <div class="form-group">
 
-                    <label><?= Yii::app()->session['lang'] == 1?'Occupation ':'อาชีพ'; ?></label>
-                    <?php echo $form->textField($profile, 'occupation_father', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Occupation ':'อาชีพ')); ?>
-                    <?php echo $form->error($profile, 'occupation_father', array('class' => 'error2')); ?>
+                    <label><?php echo $label->label_occupation; ?></label>
+                    <?php echo $form->textField($profile, 'occupation_spouse', array('class' => 'form-control', 'placeholder' => $label->label_occupation)); ?>
+                    <?php echo $form->error($profile, 'occupation_spouse', array('class' => 'error2')); ?>
                 </div>
             </div>
+
             <div class="clearfix"></div>
         </div>
         <div class="row justify-content-center form_name">
-           <div class="col-md-3 col-sm-6 col-xs-12">
+         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="form-group">
 
-                <label><?= Yii::app()->session['lang'] == 1?"Mother's name ":'ชื่อมารดา'; ?></label>
-                <?php echo $form->textField($profile, 'mother_firstname', array('class' => 'form-control', 'placeholder' =>Yii::app()->session['lang'] == 1?"Mother's name ":'ชื่อมารดา')); ?>
-                <?php echo $form->error($profile, 'mother_firstname', array('class' => 'error2')); ?>
+                <label><?php echo $label->label_father_firstname; ?></label>
+                <?php echo $form->textField($profile, 'father_firstname', array('class' => 'form-control', 'placeholder' =>$label->label_father_firstname)); ?>
+                <?php echo $form->error($profile, 'father_firstname', array('class' => 'error2')); ?>
             </div>
         </div> 
 
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="form-group">
 
-                <label><?= Yii::app()->session['lang'] == 1?"Mother's Lastname ":'นามสกุลมารดา'; ?></label>
-                <?php echo $form->textField($profile, 'mother_lastname', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?"Mother's Lastname ":'นามสกุลมารดา')); ?>
-                <?php echo $form->error($profile, 'mother_lastname', array('class' => 'error2')); ?>
+                <label><?php echo $label->label_father_lastname; ?></label>
+                <?php echo $form->textField($profile, 'father_lastname', array('class' => 'form-control', 'placeholder' => $label->label_father_lastname)); ?>
+                <?php echo $form->error($profile, 'father_lastname', array('class' => 'error2')); ?>
             </div>
         </div>
 
         <div class="col-md-2 col-sm-6 col-xs-12">
             <div class="form-group">
 
-                <label><?= Yii::app()->session['lang'] == 1?'Occupation ':'อาชีพ'; ?></label>
-                <?php echo $form->textField($profile, 'occupation_mother', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Occupation ':'อาชีพ')); ?>
-                <?php echo $form->error($profile, 'occupation_mother', array('class' => 'error2')); ?>
+                <label><?php echo $label->label_occupation; ?></label>
+                <?php echo $form->textField($profile, 'occupation_father', array('class' => 'form-control', 'placeholder' => $label->label_occupation)); ?>
+                <?php echo $form->error($profile, 'occupation_father', array('class' => 'error2')); ?>
             </div>
         </div>
         <div class="clearfix"></div>
     </div>
+    <div class="row justify-content-center form_name">
+     <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="form-group">
 
-    <div class="row  mt-1 mb-1 form_name">
-        <div class="col-md-3 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Residence':'บ้าน'; ?></strong></div>
-        <div class="col-md-6 col-xs-12">
-            <div class="form-group">
+            <label><?php echo $label->label_mother_firstname; ?></label>
+            <?php echo $form->textField($profile, 'mother_firstname', array('class' => 'form-control', 'placeholder' =>$label->label_mother_firstname)); ?>
+            <?php echo $form->error($profile, 'mother_firstname', array('class' => 'error2')); ?>
+        </div>
+    </div> 
 
-                <span></span>
-                <div class="radio radio-danger radio-inline">
-                    <input type="radio" name="accommodation" id="accommodation_1" value="own house" <?php if ($profile->accommodation == "own house") : ?> checked="checked" <?php endif ?>>
-                    <label for="accommodation_1" class="bg-success text-black"><?= Yii::app()->session['lang'] == 1?'Own house':'ของตนเอง'; ?> </label>
-                </div>
-                <div class="radio radio-danger radio-inline">
-                    <input type="radio" name="accommodation" id="accommodation_2" value="rent house" <?php if ($profile->accommodation == "rent house") : ?> checked="checked" <?php endif ?>>
-                    <label for="accommodation_2" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'Rent house':'บ้านเช่า'; ?> </label>
-                </div>
-                <div class="radio radio-danger radio-inline">
-                    <input type="radio" name="accommodation" id="accommodation_3" value="with parents" <?php if ($profile->accommodation == "with parents") : ?> checked="checked" <?php endif ?>>
-                    <label for="accommodation_3" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'Live with parents':'อาศัยอยู่กับบิดามารดา'; ?> </label>
-                </div>
-                <div class="radio radio-danger radio-inline">
-                    <input type="radio" name="accommodation" id="accommodation_4" value="apartment" <?php if ($profile->accommodation == "apartment") : ?> checked="checked" <?php endif ?>>
-                    <label for="accommodation_4" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'Rent apartment':'อพาร์ทเม้นท์'; ?> </label>
-                </div>
-                <div class="radio radio-danger radio-inline">
-                    <input type="radio" name="accommodation" id="accommodation_5" value="with relative" <?php if ($profile->accommodation == "with relative") : ?> checked="checked" <?php endif ?>>
-                    <label for="accommodation_5" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'Live with relatives / friends':'อยู่กับญาติ/เพื่อน'; ?> </label>
-                </div>
-            </div>
+    <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="form-group">
+
+            <label><?php echo $label->label_mother_lastname; ?></label>
+            <?php echo $form->textField($profile, 'mother_lastname', array('class' => 'form-control', 'placeholder' => $label->label_mother_lastname)); ?>
+            <?php echo $form->error($profile, 'mother_lastname', array('class' => 'error2')); ?>
         </div>
     </div>
 
-    <div class="row justify-content-center form_name">
-        <div class="col-md-8 col-sm-12 col-xs-12">
-            <div class="form-group">
+    <div class="col-md-2 col-sm-6 col-xs-12">
+        <div class="form-group">
 
-                <label><?php echo $label->label_address; ?></label>
-                <?php echo $form->textArea($profile, 'address', array('class' => 'form-control', 'cols' => "30", 'rows' => "3", 'placeholder' => $label->label_address)); ?>
-                <?php echo $form->error($profile, 'address', array('class' => 'error2')); ?>
+            <label><?php echo $label->label_occupation; ?></label>
+            <?php echo $form->textField($profile, 'occupation_mother', array('class' => 'form-control', 'placeholder' => $label->label_occupation)); ?>
+            <?php echo $form->error($profile, 'occupation_mother', array('class' => 'error2')); ?>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
 
+<div class="row  mt-1 mb-1 form_name">
+    <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_accommodation; ?></strong></div>
+    <div class="col-md-6 col-xs-12">
+        <div class="form-group">
+
+            <span></span>
+            <div class="radio radio-danger radio-inline">
+                <input type="radio" name="accommodation" id="accommodation_1" value="own house" <?php if ($profile->accommodation == "own house") : ?> checked="checked" <?php endif ?>>
+                <label for="accommodation_1" class="bg-success text-black"><?= Yii::app()->session['lang'] == 1?'Own house':'ของตนเอง'; ?> </label>
+            </div>
+            <div class="radio radio-danger radio-inline">
+                <input type="radio" name="accommodation" id="accommodation_2" value="rent house" <?php if ($profile->accommodation == "rent house") : ?> checked="checked" <?php endif ?>>
+                <label for="accommodation_2" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'Rent house':'บ้านเช่า'; ?> </label>
+            </div>
+            <div class="radio radio-danger radio-inline">
+                <input type="radio" name="accommodation" id="accommodation_3" value="with parents" <?php if ($profile->accommodation == "with parents") : ?> checked="checked" <?php endif ?>>
+                <label for="accommodation_3" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'Live with parents':'อาศัยอยู่กับบิดามารดา'; ?> </label>
+            </div>
+            <div class="radio radio-danger radio-inline">
+                <input type="radio" name="accommodation" id="accommodation_4" value="apartment" <?php if ($profile->accommodation == "apartment") : ?> checked="checked" <?php endif ?>>
+                <label for="accommodation_4" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'Rent apartment':'อพาร์ทเม้นท์'; ?> </label>
+            </div>
+            <div class="radio radio-danger radio-inline">
+                <input type="radio" name="accommodation" id="accommodation_5" value="with relative" <?php if ($profile->accommodation == "with relative") : ?> checked="checked" <?php endif ?>>
+                <label for="accommodation_5" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'Live with relatives / friends':'อยู่กับญาติ/เพื่อน'; ?> </label>
             </div>
         </div>
-
-        <div class="clearfix"></div>
     </div>
-    <div class="row justify-content-center form_name">
-        <div class="col-md-8 col-sm-12 col-xs-12">
-            <div class="form-group">
+</div>
+<div class="row justify-content-center form_name">
+    <div class="col-md-8 col-sm-12 col-xs-12">
+        <div class="form-group">
 
-                <label><?= Yii::app()->session['lang'] == 1?'Domicile address':'ที่อยู่ตามภูมิลำเนา'; ?></label>
-                <?php echo $form->textArea($profile, 'domicile_address', array('class' => 'form-control', 'cols' => "30", 'rows' => "3", 'placeholder' => Yii::app()->session['lang'] == 1?'Domicile address':'ที่อยู่ตามภูมิลำเนา')); ?>
-                <?php echo $form->error($profile, 'domicile_address', array('class' => 'error2')); ?>
+            <label><?php echo $label->label_domicile_address; ?></label>
+            <?php echo $form->textArea($profile, 'domicile_address', array('class' => 'form-control', 'cols' => "30", 'rows' => "3", 'placeholder' => $label->label_domicile_address)); ?>
+            <?php echo $form->error($profile, 'domicile_address', array('class' => 'error2')); ?>
 
-            </div>
         </div>
-
-        <div class="clearfix"></div>
     </div>
 
-    <div class="row justify-content-center form_name">
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="form-group">
-                            <!-- <label for="">เบอร์โทรศัพท์</label>
-                                <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์"> -->
-                                <label><?= Yii::app()->session['lang'] == 1?'Landline phone':'โทรศัพท์บ้าน'; ?></label>
-                                <?php echo $form->textField($profile, 'phone', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Landline phone':'โทรศัพท์บ้าน','onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '10')); ?>
-                                <?php echo $form->error($profile, 'phone', array('class' => 'error2')); ?>
+    <div class="clearfix"></div>
+</div>
+<div class="row justify-content-center form_name">
+    <div class="col-md-8 col-sm-12 col-xs-12">
+        <div class="checkbox checkbox-danger checkbox-inline">
+            <input type="checkbox" name="address_parent" id="address_parent" value="y" <?php if ($profile->address_parent == "y") : ?> checked="checked" <?php endif ?>>
+            <label for="address_parent" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'
+            Use the address as an ID card':'ใช้ที่อยู่ตามบัตรประชาชน'; ?> </label>
+        </div>
+    </div>
+</div>
+<div class="row justify-content-center form_name">
+    <div class="col-md-8 col-sm-12 col-xs-12">
+        <div class="form-group">
 
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="form-group">
-                            <!-- <label for="">เบอร์โทรศัพท์</label>
-                                <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์"> -->
-                                <label><?php echo $label->label_phone; ?></label>
-                                <?php echo $form->textField($profile, 'tel', array('class' => 'form-control', 'placeholder' => $label->label_phone,'onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '10')); ?>
-                                <?php echo $form->error($profile, 'tel', array('class' => 'error2')); ?>
+            <label><?php echo $label->label_address; ?></label>
+            <?php echo $form->textArea($profile, 'address', array('class' => 'form-control', 'cols' => "30", 'rows' => "3", 'placeholder' => $label->label_address)); ?>
+            <?php echo $form->error($profile, 'address', array('class' => 'error2')); ?>
 
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="row justify-content-center form_name">
+        </div>
+    </div>
 
-                        <div class="col-md-4 col-sm-6 col-xs-12">
-                            <div class="form-group">
+    <div class="clearfix"></div>
+</div>
+
+<div class="row justify-content-center form_name">
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label><?php echo $label->label_phone; ?></label>
+            <?php echo $form->textField($profile, 'tel', array('class' => 'form-control', 'placeholder' => $label->label_phone,'onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '10')); ?>
+            <?php echo $form->error($profile, 'tel', array('class' => 'error2')); ?>
+
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="form-group">
+            <label><?php echo $label->label_tel; ?></label>
+            <?php echo $form->textField($profile, 'phone', array('class' => 'form-control', 'placeholder' => $label->label_tel,'onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '10')); ?>
+            <?php echo $form->error($profile, 'phone', array('class' => 'error2')); ?>
+
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div class="row justify-content-center form_name">
+
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="form-group">
                             <!-- <label for="">Email</label>
                                 <input type="text" class="form-control" id="" placeholder="Email"> -->
                                 <label><?php echo $label->label_email; ?><font color="red">*</font></label>
@@ -1246,470 +1266,480 @@ function numberWithCommas() {
                         </div>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="row justify-content-center form_name">
-
-                        <div class="col-md-8 col-sm-12 col-xs-12">
-                            <div class="form-group">
-                                <label><?= Yii::app()->session['lang'] == 1?'Military service status':'สถานะการรับใช้ชาติ'; ?></label>
-                                <?php echo $form->textField($profile, 'military', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Military service status':'สถานะการรับใช้ชาติ')); ?>
-                                <?php echo $form->error($profile, 'military', array('class' => 'error2')); ?>
-                            </div>
-                        </div>
-                        <div class="clearfix"></div>
-                    </div>
-
                     <div class="row  mt-1 mb-1 form_name">
-                        <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_history_of_severe_illness;  ?></strong></div>
-                        <div class="col-md-4 col-xs-12">
-                            <div class="form-group">
+                       <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_military; ?></strong></div>
+                       <div class="col-md-6 col-xs-12">
+                          <div class="form-group">
 
-                                <span></span>
-                                <div class="radio radio-danger radio-inline">
-                                    <input type="radio" name="history_of_illness" id="card-5" value="n" <?php if ($profile->history_of_illness == "n") : ?> checked="checked" <?php endif ?>>
-                                    <label for="card-5" class="bg-success text-black"><?php echo $label->label_never;  ?> </label>
-                                </div>
-                                <div class="radio radio-danger radio-inline">
-                                    <input type="radio" name="history_of_illness" id="card-6" value="y" <?php if ($profile->history_of_illness == "y") : ?> checked="checked" <?php endif ?>>
-                                    <label for="card-6" class="bg-danger text-black"><?php echo $label->label_ever;  ?> </label>
-                                </div>
+                            <span></span>
+                            <div class="radio radio-danger radio-inline">
+                                <input type="radio" name="military" id="military_1" value="enlisted" <?php if ($profile->military == "own house") : ?> checked="checked" <?php endif ?>>
+                                <label for="military_1" class="bg-success text-black"><?= Yii::app()->session['lang'] == 1?'Enlisted':'เกณฑ์แล้ว'; ?> </label>
+                            </div>
+                            <div class="radio radio-danger radio-inline">
+                                <input type="radio" name="military" id="military_2" value="not enlisted" <?php if ($profile->military == "rent house") : ?> checked="checked" <?php endif ?>>
+                                <label for="military_2" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'Not yet enlisted':'ยังไม่ได้เกณฑ์'; ?> </label>
+                            </div>
+                            <div class="radio radio-danger radio-inline">
+                                <input type="radio" name="military" id="military_3" value="exempt" <?php if ($profile->military == "with parents") : ?> checked="checked" <?php endif ?>>
+                                <label for="military_3" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'Exempt':'ได้รับการยกเว้น'; ?> </label>
                             </div>
                         </div>
                     </div>
-                    <div class="row justify-content-center form_sickness">
+                </div>
+                
+                <div class="row  mt-1 mb-1 form_name">
+                    <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_history_of_severe_illness;  ?></strong></div>
+                    <div class="col-md-4 col-xs-12">
+                        <div class="form-group">
 
-                        <div class="col-md-8 col-sm-12 col-xs-12">
-                            <div class="form-group">
-                                <label><?= Yii::app()->session['lang'] == 1?'What kind of sickness?':'โรคที่เคยป่วย'; ?></label>
-                                <?php echo $form->textField($profile, 'sickness', array('class' => 'form-control Sickness', 'placeholder' => Yii::app()->session['lang'] == 1?'What kind of sickness?':'โรคที่เคยป่วย')); ?>
-                                <?php echo $form->error($profile, 'sickness', array('class' => 'error2')); ?>
+                            <span></span>
+                            <div class="radio radio-danger radio-inline">
+                                <input type="radio" name="history_of_illness" id="card-5" value="n" <?php if ($profile->history_of_illness == "n") : ?> checked="checked" <?php endif ?>>
+                                <label for="card-5" class="bg-success text-black"><?php echo $label->label_never;  ?> </label>
+                            </div>
+                            <div class="radio radio-danger radio-inline">
+                                <input type="radio" name="history_of_illness" id="card-6" value="y" <?php if ($profile->history_of_illness == "y") : ?> checked="checked" <?php endif ?>>
+                                <label for="card-6" class="bg-danger text-black"><?php echo $label->label_ever;  ?> </label>
                             </div>
                         </div>
-                        <div class="clearfix"></div>
                     </div>
+                </div>
+                <div class="row justify-content-center form_sickness">
+
+                    <div class="col-md-8 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label><?php echo $label->label_sickness;  ?></label>
+                            <?php echo $form->textField($profile, 'sickness', array('class' => 'form-control Sickness', 'placeholder' => $label->label_sickness)); ?>
+                            <?php echo $form->error($profile, 'sickness', array('class' => 'error2')); ?>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
 
 
 
+                <?php
+                if (!$ProfilesEdu->isNewRecord || $ProfilesEdu->isNewRecord == NULL) {
+                    echo "";
+                } else { ?>
+                    <!-- <div class="col-sm-3 text-right"> <strong>ประวัติการศึกษา :</strong></div> -->
                     <?php
-                    if (!$ProfilesEdu->isNewRecord || $ProfilesEdu->isNewRecord == NULL) {
-                        echo "";
-                    } else { ?>
-                        <!-- <div class="col-sm-3 text-right"> <strong>ประวัติการศึกษา :</strong></div> -->
-                        <?php
-                    }
-                    $modelList = Education::model()->findAll(array("condition" => " active = 'y'"));
-                    if (Yii::app()->session['lang'] == 1) {
-                      $list = CHtml::listData($modelList, 'edu_id', 'edu_name_EN');
-                  }else{
-                      $list = CHtml::listData($modelList, 'edu_id', 'edu_name');
-                  }
-
-                  $att_Education = array('class' => 'form-control', 'empty' => $label->label_education_level);
-
-                  $starting_year  = 2500;
-                  $ending_year = 543 + date('Y');
-                  if ($ending_year) {
-
-                    for($starting_year; $starting_year <= $ending_year; $starting_year++) {
-                        $edu_lest[]  =  $starting_year;
-
-                    }                 
                 }
-                $graduation = array('class' => 'form-control', 'autocomplete' => 'off', 'empty' => $label->label_graduation_year);   
-                if (!$ProfilesEdu->isNewRecord) { 
-                   if (empty($ProfilesEdu)) {
-                      $ProfilesEdu = new ProfilesEdu;
-                      ?>
-                      <div class="row form_name">
-                        <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?php echo $label->label_educational;  ?></strong></div>
-                        <div class="col-md-2 col-sm-6 col-xs-12 ">
-                            <div class="form-group">
-                                <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]edu_id', $list, $att_Education); ?>
-                            </div>
-                        </div>
+                $modelList = Education::model()->findAll(array("condition" => " active = 'y'"));
+                if (Yii::app()->session['lang'] == 1) {
+                  $list = CHtml::listData($modelList, 'edu_id', 'edu_name_EN');
+              }else{
+                  $list = CHtml::listData($modelList, 'edu_id', 'edu_name');
+              }
 
-                        <div class="col-md-3 col-sm-6 col-xs-12 ">
-                            <div class="form-group">
-                                <?php echo $form->textField($ProfilesEdu, '[0]institution', array('class' => 'form-control', 'placeholder' => $label->label_academy)); ?>
-                            </div>
-                        </div>
+              $att_Education = array('class' => 'form-control', 'empty' => $label->label_education_level);
 
-                        <div class="col-md-2 col-sm-6 col-xs-12 ">
-                            <div class="form-group">
-                                <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]date_graduation',$edu_lest ,$graduation); ?>
-                            </div>
-                        </div>
-                    </div>
+              $starting_year  = 2500;
+              $ending_year = 543 + date('Y');
+              if ($ending_year) {
 
+                for($starting_year; $starting_year <= $ending_year; $starting_year++) {
+                    $edu_lest[]  =  $starting_year;
 
-                    <div class="add-study"></div>
-                <?php  }else{
-                    ?>
-                    <div class="add-study">
-
-                     <?php foreach ($ProfilesEdu as $kedu => $valedu) {?>
-
-                        <div class="row del_edu">
-                            <div class="col-md-3 col-sm-12 text-right-md"> <strong><?php echo $label->label_educational;  ?></strong></div>
-                            <div class="col-md-2 col-sm-6 col-xs-12">
-                                <div class="form-group">
-                                    <?php echo CHtml::activeDropDownList($valedu, '[' . $kedu . ']edu_id', $list, $att_Education); ?>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-3 col-sm-6 col-xs-12">
-                                <div class="form-group">
-
-                                    <?php echo $form->textField($valedu, '[' . $kedu . ']institution', array('class' => 'form-control', 'placeholder' => $label->label_academy)); ?>
-                                </div>
-                            </div>
-
-                            <div class="col-md-2 col-sm-6 col-xs-12">
-                                <div class="form-group">
-                                    <?php echo CHtml::activeDropDownList($valedu, '[' . $kedu . ']date_graduation',$edu_lest, $graduation); ?>
-                                </div>
-                            </div>
-                            <span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?> </span>
-
-                        </div>
-
-                    <?php } ?>
-                </div>    
-            <?php }} else {  ?>
-
-                <div class="row form_name">
-                    <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?php echo $label->label_educational;  ?></strong></div>
-                    <div class="col-md-2 col-sm-6 col-xs-12 ">
-                        <div class="form-group">
-                            <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]edu_id', $list, $att_Education); ?>
-                        </div>
-                    </div>
-
-                    <div class="col-md-3 col-sm-6 col-xs-12 ">
-                        <div class="form-group">
-                            <?php echo $form->textField($ProfilesEdu, '[0]institution', array('class' => 'form-control', 'placeholder' => $label->label_academy)); ?>
-                        </div>
-                    </div>
-
-                    <div class="col-md-2 col-sm-6 col-xs-12 ">
-                        <div class="form-group">
-                            <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]date_graduation',$edu_lest ,$graduation); ?>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="add-study"></div>
-
-                <?php
+                }                 
             }
+            $graduation = array('class' => 'form-control', 'autocomplete' => 'off', 'empty' => $label->label_graduation_year);   
+            if (!$ProfilesEdu->isNewRecord) { 
+             if (empty($ProfilesEdu)) {
+              $ProfilesEdu = new ProfilesEdu;
+              ?>
+              <div class="row form_name">
+                <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?php echo $label->label_educational;  ?></strong></div>
+                <div class="col-md-2 col-sm-6 col-xs-12 ">
+                    <div class="form-group">
+                        <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]edu_id', $list, $att_Education); ?>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12 ">
+                    <div class="form-group">
+                        <?php echo $form->textField($ProfilesEdu, '[0]institution', array('class' => 'form-control', 'placeholder' => $label->label_academy)); ?>
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-sm-6 col-xs-12 ">
+                    <div class="form-group">
+                        <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]date_graduation',$edu_lest ,$graduation); ?>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="add-study"></div>
+        <?php  }else{
             ?>
+            <div class="add-study">
 
-            <div class="row justify-content-center bb-1 pb-20 mt-20 form_name">
-                <div class="col-md-3 col-sm-12  col-xs-12 text-center">
-                    <button class="btn btn-info btn-add add_form_field" type="button" id="moreFields">
-                        <span class="glyphicon glyphicon-plus"> </span> <?= Yii::app()->session['lang'] == 1?'Add education history ':'เพิ่มประวัติการศึกษา'; ?>
-                    </button>
+               <?php foreach ($ProfilesEdu as $kedu => $valedu) {?>
+
+                <div class="row del_edu">
+                    <div class="col-md-3 col-sm-12 text-right-md"> <strong><?php echo $label->label_educational;  ?></strong></div>
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <?php echo CHtml::activeDropDownList($valedu, '[' . $kedu . ']edu_id', $list, $att_Education); ?>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="form-group">
+
+                            <?php echo $form->textField($valedu, '[' . $kedu . ']institution', array('class' => 'form-control', 'placeholder' => $label->label_academy)); ?>
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-sm-6 col-xs-12">
+                        <div class="form-group">
+                            <?php echo CHtml::activeDropDownList($valedu, '[' . $kedu . ']date_graduation',$edu_lest, $graduation); ?>
+                        </div>
+                    </div>
+                    <span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?> </span>
+
+                </div>
+
+            <?php } ?>
+        </div>    
+    <?php }} else {  ?>
+
+        <div class="row form_name">
+            <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?php echo $label->label_educational;  ?></strong></div>
+            <div class="col-md-2 col-sm-6 col-xs-12 ">
+                <div class="form-group">
+                    <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]edu_id', $list, $att_Education); ?>
                 </div>
             </div>
-            <?php if ($ProfilesWorkHistory->isNewRecord === null) { 
-              if (empty($ProfilesWorkHistory)) {
-               $ProfilesWorkHistory = new ProfilesWorkHistory;
-               ?>
-               <div class="row form_name pt-20 ">
-                <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?></strong></div>
-                <div class="col-md-4 col-sm-6 col-xs-12 ">
-                    <div class="form-group">
-                        <?php echo $form->textField($ProfilesWorkHistory, '[0]company_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Company ':'บริษัท')); ?>
-                    </div>
-                </div>
 
-                <div class="col-md-4 col-sm-6 col-xs-12 ">
-                    <div class="form-group">
-                        <?php echo $form->textField($ProfilesWorkHistory, '[0]position_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Position ':'ตำแหน่ง')); ?>
-                    </div>
-                </div>
-                <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"></div>
-                <div class="col-md-4 col-sm-6 col-xs-12 ">
-                    <div class="form-group since-icon">
-                        <i class="far fa-calendar-alt"></i>
-                        <?php echo $form->textField($ProfilesWorkHistory, '[0]since_date', $Since); ?>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12 ">
-                    <div class="form-group">
-                        <?php echo $form->textField($ProfilesWorkHistory, '[0]reason_leaving', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Reason for leaving ':'สาเหตุที่ออก')); ?>
-                    </div>
+            <div class="col-md-3 col-sm-6 col-xs-12 ">
+                <div class="form-group">
+                    <?php echo $form->textField($ProfilesEdu, '[0]institution', array('class' => 'form-control', 'placeholder' => $label->label_academy)); ?>
                 </div>
             </div>
-            <div class="add-Work"></div>
-        <?php }else{ ?>
-            <div class="add-Work">
-                <?php
-                foreach ($ProfilesWorkHistory as $keywh => $valwh) {
 
-                    ?>
-                    <div class="row del_work">
-                        <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?></strong></div>
-                        <div class="col-md-4 col-sm-6 col-xs-12 ">
-                            <div class="form-group">
-                                <?php echo $form->textField($valwh, '['.$keywh.']company_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Company ':'บริษัท')); ?>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4 col-sm-6 col-xs-12 ">
-                            <div class="form-group">
-                                <?php echo $form->textField($valwh, '['.$keywh.']position_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Position ':'ตำแหน่ง')); ?>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"></div>
-                        <div class="col-md-4 col-sm-6 col-xs-12 ">
-                            <div class="form-group since-icon">
-                                <i class="far fa-calendar-alt"></i>
-                                <?php echo $form->textField($valwh, '['.$keywh.']since_date', $Since); ?>
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6 col-xs-12 ">
-                            <div class="form-group">
-                                <?php echo $form->textField($valwh, '['.$keywh.']reason_leaving', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Reason for leaving ':'สาเหตุที่ออก')); ?>
-                            </div>
-                        </div>
-                        <span class="delete_work btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?> </span>
-                    </div>
-
-                <?php } ?>
-            </div>
-        <?php }} else {?>
-            <div class="row form_name pt-20" style="padding-top: 20px;">
-                <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?></strong></div>
-                <div class="col-md-4 col-sm-6 col-xs-12 ">
-                    <div class="form-group">
-                        <?php echo $form->textField($ProfilesWorkHistory, '[0]company_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Company ':'บริษัท')); ?>
-                    </div>
+            <div class="col-md-2 col-sm-6 col-xs-12 ">
+                <div class="form-group">
+                    <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]date_graduation',$edu_lest ,$graduation); ?>
                 </div>
-
-                <div class="col-md-4 col-sm-6 col-xs-12 ">
-                    <div class="form-group">
-                        <?php echo $form->textField($ProfilesWorkHistory, '[0]position_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Position ':'ตำแหน่ง')); ?>
-                    </div>
-                </div>
-                <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"></div>
-                <div class="col-md-4 col-sm-6 col-xs-12 ">
-                    <div class="form-group since-icon">
-                        <i class="far fa-calendar-alt"></i>
-                        <?php echo $form->textField($ProfilesWorkHistory, '[0]since_date', $Since); ?>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 col-xs-12 ">
-                    <div class="form-group">
-                        <?php echo $form->textField($ProfilesWorkHistory, '[0]reason_leaving', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Reason for leaving ':'สาเหตุที่ออก')); ?>
-                    </div>
-                </div>
-            </div>
-            <div class="add-Work"></div>
-        <?php } ?>
-        <div class="row justify-content-center bb-1 pb-20 mt-20 form_name">
-            <div class="col-md-3 col-sm-12  col-xs-12 text-center">
-                <button class="btn btn-info btn-add add_form_work" type="button" id="moreFieldsWork">
-                    <span class="glyphicon glyphicon-plus"> </span> <?= Yii::app()->session['lang'] == 1?'Add Work history ':'เพิ่มประวัติการทำงาน'; ?>
-                </button>
             </div>
         </div>
 
-        <div class="row lang-box bb-1 pb-20 mt-20 form_language">
-            <div class="table-responsive w-100 t-regis-language">
-              <table class="table">
-                 <thead>
-                     <tr>
-                        <th colspan="2"><?= Yii::app()->session['lang'] == 1?'Language ':'ภาษา'; ?></th>
-                        <th><?= Yii::app()->session['lang'] == 1?'Excellent ':'ดีมาก'; ?></th> 
-                        <th><?= Yii::app()->session['lang'] == 1?'Good ':'ดี'; ?></th>
-                        <th><?= Yii::app()->session['lang'] == 1?'Fair ':'พอใช้ได้'; ?></th>
-                        <th><?= Yii::app()->session['lang'] == 1?'Poor ':'ใช้ไม่ได้'; ?></th>
-                    </tr>
-                </thead>
-<?php 
-if ($ProfilesLanguage->isNewRecord === null) { 
-    $i = 1;
-   foreach ($ProfilesLanguage as $keylg => $vallg) {
-   $i++;
-   $p = 1;
-   $m = 1;
-    ?> 
-    <tbody class="group-language">
-            <tr>
-             <td rowspan="2"><?php echo $form->textField($vallg,'['.$keylg.']language_name' , array('class' => 'form-control' ,'style'=>' width:100px;line-height:28px;padding: 20px 10px;','readonly'=>true)); ?></td>
-             <td><?= Yii::app()->session['lang'] == 1?'Written ':'เขียน'; ?></td>
-             <td>
-                <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo$p++; ?>" value="1"<?php if ($vallg["write"] == "1") : ?> checked="checked" <?php endif ?>>
-                    <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
+
+        <div class="add-study"></div>
+
+        <?php
+    }
+    ?>
+
+    <div class="row justify-content-center bb-1 pb-20 mt-20 form_name">
+        <div class="col-md-3 col-sm-12  col-xs-12 text-center">
+            <button class="btn btn-info btn-add add_form_field" type="button" id="moreFields">
+                <span class="glyphicon glyphicon-plus"> </span> <?= Yii::app()->session['lang'] == 1?'Add education history ':'เพิ่มประวัติการศึกษา'; ?>
+            </button>
+        </div>
+    </div>
+    <?php if ($ProfilesWorkHistory->isNewRecord === null) { 
+      if (empty($ProfilesWorkHistory)) {
+         $ProfilesWorkHistory = new ProfilesWorkHistory;
+         ?>
+         <div class="row form_name pt-20 ">
+            <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?></strong></div>
+            <div class="col-md-4 col-sm-6 col-xs-12 ">
+                <div class="form-group">
+                    <?php echo $form->textField($ProfilesWorkHistory, '[0]company_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Company ':'บริษัท')); ?>
                 </div>
-            </td>
-            <td>
-                <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["write"] == "2") : ?> checked="checked" <?php endif ?>>
-                    <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
+            </div>
+
+            <div class="col-md-4 col-sm-6 col-xs-12 ">
+                <div class="form-group">
+                    <?php echo $form->textField($ProfilesWorkHistory, '[0]position_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Position ':'ตำแหน่ง')); ?>
                 </div>
-            </td>
-            <td>
-                <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="3"<?php if ($vallg["write"] == "3") : ?> checked="checked" <?php endif ?>>
-                    <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
+            </div>
+            <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"></div>
+            <div class="col-md-4 col-sm-6 col-xs-12 ">
+                <div class="form-group since-icon">
+                    <i class="far fa-calendar-alt"></i>
+                    <?php echo $form->textField($ProfilesWorkHistory, '[0]since_date', $Since); ?>
                 </div>
-            </td>
-            <td>
-                <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="4"<?php if ($vallg["write"] == "4") : ?> checked="checked" <?php endif ?>>
-                    <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
+            </div>
+            <div class="col-md-4 col-sm-6 col-xs-12 ">
+                <div class="form-group">
+                    <?php echo $form->textField($ProfilesWorkHistory, '[0]reason_leaving', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Reason for leaving ':'สาเหตุที่ออก')); ?>
                 </div>
-            </td>
-        </tr>
-        <tr>
-         <td><?= Yii::app()->session['lang'] == 1?'Spoken ':'พูด'; ?></td>
-         <td>
-            <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="1"<?php if ($vallg["spoken"] == "1") : ?> checked="checked" <?php endif ?>>
-                <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
             </div>
-        </td>
-        <td>
-            <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["spoken"] == "2") : ?> checked="checked" <?php endif ?>>
-                <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
+        </div>
+        <div class="add-Work"></div>
+    <?php }else{ ?>
+        <div class="add-Work">
+            <?php
+            foreach ($ProfilesWorkHistory as $keywh => $valwh) {
+
+                ?>
+                <div class="row del_work">
+                    <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?></strong></div>
+                    <div class="col-md-4 col-sm-6 col-xs-12 ">
+                        <div class="form-group">
+                            <?php echo $form->textField($valwh, '['.$keywh.']company_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Company ':'บริษัท')); ?>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-sm-6 col-xs-12 ">
+                        <div class="form-group">
+                            <?php echo $form->textField($valwh, '['.$keywh.']position_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Position ':'ตำแหน่ง')); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"></div>
+                    <div class="col-md-4 col-sm-6 col-xs-12 ">
+                        <div class="form-group since-icon">
+                            <i class="far fa-calendar-alt"></i>
+                            <?php echo $form->textField($valwh, '['.$keywh.']since_date', $Since); ?>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-6 col-xs-12 ">
+                        <div class="form-group">
+                            <?php echo $form->textField($valwh, '['.$keywh.']reason_leaving', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Reason for leaving ':'สาเหตุที่ออก')); ?>
+                        </div>
+                    </div>
+                    <span class="delete_work btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?> </span>
+                </div>
+
+            <?php } ?>
+        </div>
+    <?php }} else {?>
+        <div class="row form_name pt-20" style="padding-top: 20px;">
+            <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Work history ':'ประวัติการทำงาน'; ?></strong></div>
+            <div class="col-md-4 col-sm-6 col-xs-12 ">
+                <div class="form-group">
+                    <?php echo $form->textField($ProfilesWorkHistory, '[0]company_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Company ':'บริษัท')); ?>
+                </div>
             </div>
-        </td>
-        <td>
-            <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="3"<?php if ($vallg["spoken"] == "3") : ?> checked="checked" <?php endif ?>>
-                <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
+
+            <div class="col-md-4 col-sm-6 col-xs-12 ">
+                <div class="form-group">
+                    <?php echo $form->textField($ProfilesWorkHistory, '[0]position_name', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Position ':'ตำแหน่ง')); ?>
+                </div>
             </div>
-        </td>
-        <td>
-            <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="4"<?php if ($vallg["spoken"] == "4") : ?> checked="checked" <?php endif ?>>
-                <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
+            <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"></div>
+            <div class="col-md-4 col-sm-6 col-xs-12 ">
+                <div class="form-group since-icon">
+                    <i class="far fa-calendar-alt"></i>
+                    <?php echo $form->textField($ProfilesWorkHistory, '[0]since_date', $Since); ?>
+                </div>
             </div>
-        </td>
-    </tr>
-</tbody>
-<?php   }
-}else{
-?>
-<tbody class="group-language">
-                    <tr>
-                     <td rowspan="2" ><?php echo $form->textField($ProfilesLanguage, '[1]language_name', array('class' => 'form-control','value'=>'Thai' ,'style'=>'width:100px;line-height:28px;padding: 20px 10px;','readonly'=>true,'placeholder'=> Yii::app()->session['lang'] == 1?'Thai ':'ไทย')); ?></td>
-                     <td><?= Yii::app()->session['lang'] == 1?'Written ':'เขียน'; ?></td>
-                     <td>
-                        <div class="radio radio-danger ">
-                            <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-1" value="1"<?php if ($ProfilesLanguage->write == "1") : ?> checked="checked" <?php endif ?>>
-                            <label for="lang_w_th-1"></label>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="radio radio-danger ">
-                            <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-2" value="2"<?php if ($ProfilesLanguage->write == "2") : ?> checked="checked" <?php endif ?>>
-                            <label for="lang_w_th-2"></label>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="radio radio-danger ">
-                            <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-3" value="3"<?php if ($ProfilesLanguage->write == "3") : ?> checked="checked" <?php endif ?>>
-                            <label for="lang_w_th-3"></label>
-                        </div>
-                    </td>
-                    <td>
-                        <div class="radio radio-danger ">
-                            <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-4" value="4"<?php if ($ProfilesLanguage->write == "4") : ?> checked="checked" <?php endif ?>>
-                            <label for="lang_w_th-4"></label>
-                        </div>
-                    </td>
-                </tr>
+            <div class="col-md-4 col-sm-6 col-xs-12 ">
+                <div class="form-group">
+                    <?php echo $form->textField($ProfilesWorkHistory, '[0]reason_leaving', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Reason for leaving ':'สาเหตุที่ออก')); ?>
+                </div>
+            </div>
+        </div>
+        <div class="add-Work"></div>
+    <?php } ?>
+    <div class="row justify-content-center bb-1 pb-20 mt-20 form_name">
+        <div class="col-md-3 col-sm-12  col-xs-12 text-center">
+            <button class="btn btn-info btn-add add_form_work" type="button" id="moreFieldsWork">
+                <span class="glyphicon glyphicon-plus"> </span> <?= Yii::app()->session['lang'] == 1?'Add Work history ':'เพิ่มประวัติการทำงาน'; ?>
+            </button>
+        </div>
+    </div>
+
+    <div class="row lang-box bb-1 pb-20 mt-20 form_language">
+        <div class="table-responsive w-100 t-regis-language">
+          <table class="table">
+           <thead>
+               <tr>
+                <th colspan="2"><?= Yii::app()->session['lang'] == 1?'Language ':'ภาษา'; ?></th>
+                <th><?= Yii::app()->session['lang'] == 1?'Excellent ':'ดีมาก'; ?></th> 
+                <th><?= Yii::app()->session['lang'] == 1?'Good ':'ดี'; ?></th>
+                <th><?= Yii::app()->session['lang'] == 1?'Fair ':'พอใช้ได้'; ?></th>
+                <th><?= Yii::app()->session['lang'] == 1?'Poor ':'ใช้ไม่ได้'; ?></th>
+            </tr>
+        </thead>
+        <?php 
+        if ($ProfilesLanguage->isNewRecord === null) { 
+            $i = 1;
+            foreach ($ProfilesLanguage as $keylg => $vallg) {
+             $i++;
+             $p = 1;
+             $m = 1;
+             ?> 
+             <tbody class="group-language">
                 <tr>
-                 <td><?= Yii::app()->session['lang'] == 1?'Spoken ':'พูด'; ?></td>
-                 <td>
+                   <td rowspan="2"><?php echo $form->textField($vallg,'['.$keylg.']language_name' , array('class' => 'form-control' ,'style'=>' width:100px;line-height:28px;padding: 20px 10px;','readonly'=>true)); ?></td>
+                   <td><?= Yii::app()->session['lang'] == 1?'Written ':'เขียน'; ?></td>
+                   <td>
                     <div class="radio radio-danger ">
-                        <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-1" value="1"<?php if ($ProfilesLanguage->spoken == "1") : ?> checked="checked" <?php endif ?>>
-                        <label for="lang_s_th-1"></label>
+                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo$p++; ?>" value="1"<?php if ($vallg["write"] == "1") : ?> checked="checked" <?php endif ?>>
+                        <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
                     </div>
                 </td>
                 <td>
                     <div class="radio radio-danger ">
-                        <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-2" value="2"<?php if ($ProfilesLanguage->spoken == "2") : ?> checked="checked" <?php endif ?>>
-                        <label for="lang_s_th-2"></label>
+                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["write"] == "2") : ?> checked="checked" <?php endif ?>>
+                        <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
                     </div>
                 </td>
                 <td>
                     <div class="radio radio-danger ">
-                        <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-3" value="3"<?php if ($ProfilesLanguage->spoken == "3") : ?> checked="checked" <?php endif ?>>
-                        <label for="lang_s_th-3"></label>
+                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="3"<?php if ($vallg["write"] == "3") : ?> checked="checked" <?php endif ?>>
+                        <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
                     </div>
                 </td>
                 <td>
                     <div class="radio radio-danger ">
-                        <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-4" value="4"<?php if ($ProfilesLanguage->spoken == "4") : ?> checked="checked" <?php endif ?>>
-                        <label for="lang_s_th-4"></label>
+                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="4"<?php if ($vallg["write"] == "4") : ?> checked="checked" <?php endif ?>>
+                        <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
                     </div>
                 </td>
             </tr>
-        </tbody>
-
-        <tbody class="group-language">
             <tr>
-             <td rowspan="2"><?php echo $form->textField($ProfilesLanguage, '[2]language_name', array('class' => 'form-control','value'=>'English' ,'style'=>' width:100px;line-height:28px;padding: 20px 10px;','readonly'=>true,'placeholder'=> Yii::app()->session['lang'] == 1?'English ':'อังกฤษ')); ?></td>
-             <td><?= Yii::app()->session['lang'] == 1?'Written ':'เขียน'; ?></td>
-             <td>
+               <td><?= Yii::app()->session['lang'] == 1?'Spoken ':'พูด'; ?></td>
+               <td>
                 <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-1" value="1"<?php if ($ProfilesLanguage->write == "1") : ?> checked="checked" <?php endif ?>>
-                    <label for="lang_w_en-1"></label>
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="1"<?php if ($vallg["spoken"] == "1") : ?> checked="checked" <?php endif ?>>
+                    <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
                 </div>
             </td>
             <td>
                 <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-2" value="2"<?php if ($ProfilesLanguage->write == "2") : ?> checked="checked" <?php endif ?>>
-                    <label for="lang_w_en-2"></label>
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["spoken"] == "2") : ?> checked="checked" <?php endif ?>>
+                    <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
                 </div>
             </td>
             <td>
                 <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-3" value="3"<?php if ($ProfilesLanguage->write == "3") : ?> checked="checked" <?php endif ?>>
-                    <label for="lang_w_en-3"></label>
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="3"<?php if ($vallg["spoken"] == "3") : ?> checked="checked" <?php endif ?>>
+                    <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
                 </div>
             </td>
             <td>
                 <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-4" value="4"<?php if ($ProfilesLanguage->write == "4") : ?> checked="checked" <?php endif ?>>
-                    <label for="lang_w_en-4"></label>
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="4"<?php if ($vallg["spoken"] == "4") : ?> checked="checked" <?php endif ?>>
+                    <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
                 </div>
             </td>
         </tr>
+    </tbody>
+<?php   }
+}else{
+    ?>
+    <tbody class="group-language">
         <tr>
-         <td><?= Yii::app()->session['lang'] == 1?'Spoken ':'พูด'; ?></td>
-         <td>
+           <td rowspan="2" ><?php echo $form->textField($ProfilesLanguage, '[1]language_name', array('class' => 'form-control','value'=>'Thai' ,'style'=>'width:100px;line-height:28px;padding: 20px 10px;','readonly'=>true,'placeholder'=> Yii::app()->session['lang'] == 1?'Thai ':'ไทย')); ?></td>
+           <td><?= Yii::app()->session['lang'] == 1?'Written ':'เขียน'; ?></td>
+           <td>
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-5" value="1"<?php if ($ProfilesLanguage->spoken == "1") : ?> checked="checked" <?php endif ?>>
-                <label for="lang_s_en-5"></label>
+                <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-1" value="1"<?php if ($ProfilesLanguage->write == "1") : ?> checked="checked" <?php endif ?>>
+                <label for="lang_w_th-1"></label>
             </div>
         </td>
         <td>
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-6" value="2"<?php if ($ProfilesLanguage->spoken == "2") : ?> checked="checked" <?php endif ?>>
-                <label for="lang_s_en-6"></label>
+                <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-2" value="2"<?php if ($ProfilesLanguage->write == "2") : ?> checked="checked" <?php endif ?>>
+                <label for="lang_w_th-2"></label>
             </div>
         </td>
         <td>
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-7" value="3"<?php if ($ProfilesLanguage->spoken == "3") : ?> checked="checked" <?php endif ?>>
-                <label for="lang_s_en-7"></label>
+                <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-3" value="3"<?php if ($ProfilesLanguage->write == "3") : ?> checked="checked" <?php endif ?>>
+                <label for="lang_w_th-3"></label>
             </div>
         </td>
         <td>
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-8" value="4"<?php if ($ProfilesLanguage->spoken == "4") : ?> checked="checked" <?php endif ?>>
-                <label for="lang_s_en-8"></label>
+                <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-4" value="4"<?php if ($ProfilesLanguage->write == "4") : ?> checked="checked" <?php endif ?>>
+                <label for="lang_w_th-4"></label>
             </div>
         </td>
     </tr>
+    <tr>
+       <td><?= Yii::app()->session['lang'] == 1?'Spoken ':'พูด'; ?></td>
+       <td>
+        <div class="radio radio-danger ">
+            <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-1" value="1"<?php if ($ProfilesLanguage->spoken == "1") : ?> checked="checked" <?php endif ?>>
+            <label for="lang_s_th-1"></label>
+        </div>
+    </td>
+    <td>
+        <div class="radio radio-danger ">
+            <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-2" value="2"<?php if ($ProfilesLanguage->spoken == "2") : ?> checked="checked" <?php endif ?>>
+            <label for="lang_s_th-2"></label>
+        </div>
+    </td>
+    <td>
+        <div class="radio radio-danger ">
+            <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-3" value="3"<?php if ($ProfilesLanguage->spoken == "3") : ?> checked="checked" <?php endif ?>>
+            <label for="lang_s_th-3"></label>
+        </div>
+    </td>
+    <td>
+        <div class="radio radio-danger ">
+            <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-4" value="4"<?php if ($ProfilesLanguage->spoken == "4") : ?> checked="checked" <?php endif ?>>
+            <label for="lang_s_th-4"></label>
+        </div>
+    </td>
+</tr>
+</tbody>
+
+<tbody class="group-language">
+    <tr>
+       <td rowspan="2"><?php echo $form->textField($ProfilesLanguage, '[2]language_name', array('class' => 'form-control','value'=>'English' ,'style'=>' width:100px;line-height:28px;padding: 20px 10px;','readonly'=>true,'placeholder'=> Yii::app()->session['lang'] == 1?'English ':'อังกฤษ')); ?></td>
+       <td><?= Yii::app()->session['lang'] == 1?'Written ':'เขียน'; ?></td>
+       <td>
+        <div class="radio radio-danger ">
+            <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-1" value="1"<?php if ($ProfilesLanguage->write == "1") : ?> checked="checked" <?php endif ?>>
+            <label for="lang_w_en-1"></label>
+        </div>
+    </td>
+    <td>
+        <div class="radio radio-danger ">
+            <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-2" value="2"<?php if ($ProfilesLanguage->write == "2") : ?> checked="checked" <?php endif ?>>
+            <label for="lang_w_en-2"></label>
+        </div>
+    </td>
+    <td>
+        <div class="radio radio-danger ">
+            <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-3" value="3"<?php if ($ProfilesLanguage->write == "3") : ?> checked="checked" <?php endif ?>>
+            <label for="lang_w_en-3"></label>
+        </div>
+    </td>
+    <td>
+        <div class="radio radio-danger ">
+            <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-4" value="4"<?php if ($ProfilesLanguage->write == "4") : ?> checked="checked" <?php endif ?>>
+            <label for="lang_w_en-4"></label>
+        </div>
+    </td>
+</tr>
+<tr>
+   <td><?= Yii::app()->session['lang'] == 1?'Spoken ':'พูด'; ?></td>
+   <td>
+    <div class="radio radio-danger ">
+        <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-5" value="1"<?php if ($ProfilesLanguage->spoken == "1") : ?> checked="checked" <?php endif ?>>
+        <label for="lang_s_en-5"></label>
+    </div>
+</td>
+<td>
+    <div class="radio radio-danger ">
+        <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-6" value="2"<?php if ($ProfilesLanguage->spoken == "2") : ?> checked="checked" <?php endif ?>>
+        <label for="lang_s_en-6"></label>
+    </div>
+</td>
+<td>
+    <div class="radio radio-danger ">
+        <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-7" value="3"<?php if ($ProfilesLanguage->spoken == "3") : ?> checked="checked" <?php endif ?>>
+        <label for="lang_s_en-7"></label>
+    </div>
+</td>
+<td>
+    <div class="radio radio-danger ">
+        <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-8" value="4"<?php if ($ProfilesLanguage->spoken == "4") : ?> checked="checked" <?php endif ?>>
+        <label for="lang_s_en-8"></label>
+    </div>
+</td>
+</tr>
 </tbody>
 <?php } ?>
 <tbody class="group-language add-language" id="del_languages"></tbody>
@@ -1780,7 +1810,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
     </div>
 </div>
 <div class="row">
-   <div class="col-md-offset-3 col-md-4">
+ <div class="col-md-offset-3 col-md-4">
     <?php
     $idx = 1;
     $uploadFolder = Yii::app()->getUploadUrl('edufile');
@@ -1790,8 +1820,8 @@ if ($ProfilesLanguage->isNewRecord === null) {
     $FileEdu = FileEdu::model()->findAll($criteria);
 
     if(isset($FileEdu)){
-     $confirm_del  = Yii::app()->session['lang'] == 1?'Do you want to delete the file ?\nWhen you agree, the system will permanently delete the file from the system. ':'คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร';
-     foreach($FileEdu as $fileDatas){
+       $confirm_del  = Yii::app()->session['lang'] == 1?'Do you want to delete the file ?\nWhen you agree, the system will permanently delete the file from the system. ':'คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร';
+       foreach($FileEdu as $fileDatas){
         ?>
 
         <div id="filenamedoc<?php echo $idx; ?>">
@@ -1807,13 +1837,13 @@ if ($ProfilesLanguage->isNewRecord === null) {
                 onblur="editName('.$fileDatas->id.');">'; ?>
 
                 <?php echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
-                   'id'=>'btnEditName'.$fileDatas->id,
-                   'class'=>'btn-action glyphicons pencil btn-danger',
-                   'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                   'onclick'=>'$("#filenamedoctext'.$fileDatas->id.'").hide();
-                   $("#filenamedoc'.$fileDatas->id.'").show(); 
-                   $("#filenamedoc'.$fileDatas->id.'").focus(); 
-                   $("#btnEditName'.$fileDatas->id.'").hide(); ')); ?>
+                 'id'=>'btnEditName'.$fileDatas->id,
+                 'class'=>'btn-action glyphicons pencil btn-danger',
+                 'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                 'onclick'=>'$("#filenamedoctext'.$fileDatas->id.'").hide();
+                 $("#filenamedoc'.$fileDatas->id.'").show(); 
+                 $("#filenamedoc'.$fileDatas->id.'").focus(); 
+                 $("#btnEditName'.$fileDatas->id.'").hide(); ')); ?>
 
                 <?php echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
                     'id'=>'btnSaveName'.$fileDatas->id,
@@ -1831,47 +1861,47 @@ if ($ProfilesLanguage->isNewRecord === null) {
 
 </div>
 
-    <?php if ($ProfilesTraining->isNewRecord === null) { 
-      if (empty($ProfilesTraining)) {
-       $ProfilesTraining = new ProfilesTraining;
-       ?>
-       <div class="row form_name pt-20 ">
-       <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
-        
-            <div class="col-md-7 col-sm-6 col-xs-12 ">
-               <div class="form-group">
-             <?php echo $form->textField($ProfilesTraining, '[0]message', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Training name. ':'ชื่อการอบรม')); ?>
-               </div>
-            </div>
-        </div>
- <div class="add-train"></div>
+<?php if ($ProfilesTraining->isNewRecord === null) { 
+  if (empty($ProfilesTraining)) {
+     $ProfilesTraining = new ProfilesTraining;
+     ?>
+     <div class="row form_name pt-20 ">
+         <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
+         
+         <div class="col-md-7 col-sm-6 col-xs-12 ">
+             <div class="form-group">
+               <?php echo $form->textField($ProfilesTraining, '[0]message', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Training name. ':'ชื่อการอบรม')); ?>
+           </div>
+       </div>
+   </div>
+   <div class="add-train"></div>
 <?php } else { ?>
   <div class="add-train">
     <?php foreach ($ProfilesTraining as $keytn => $valtn) {
         ?>
-    <div class="row del_training">
-       <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
-        
-            <div class="col-md-7 col-sm-6 col-xs-12 ">
-                <div class="form-group">
-                 <?php echo $form->textField($valtn, '['.$keytn.']message', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Training name. ':'ชื่อการอบรม')); ?>
-                </div>
-            </div>
-          <span class="delete_training btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?></span>
-        </div>
+        <div class="row del_training">
+         <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
+         
+         <div class="col-md-7 col-sm-6 col-xs-12 ">
+            <div class="form-group">
+               <?php echo $form->textField($valtn, '['.$keytn.']message', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Training name. ':'ชื่อการอบรม')); ?>
+           </div>
+       </div>
+       <span class="delete_training btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?></span>
+   </div>
 
 
-        <?php } ?>
-    </div>
+<?php } ?>
+</div>
 <?php }} else { ?>
   <div class="row form_name pt-20 ">
     <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
-        <div class="col-md-7 col-sm-6 col-xs-12 ">
-            <div class="form-group">
-                 <?php echo $form->textField($ProfilesTraining, '[0]message', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Training name. ':'ชื่อการอบรม')); ?>
-            </div>
-        </div>
+    <div class="col-md-7 col-sm-6 col-xs-12 ">
+        <div class="form-group">
+           <?php echo $form->textField($ProfilesTraining, '[0]message', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Training name. ':'ชื่อการอบรม')); ?>
+       </div>
    </div>
+</div>
 <?php } ?>
 
 <div class="add-train"></div>
@@ -1950,7 +1980,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
 
                 ?>
                 <div id="filenameTrain<?php echo $idx; ?>">
-                   <!--  <a href="<?php echo $this->createUrl('Trainingfile',array('id' => $fileData->id)); ?>" target="_blank"> -->
+                 <!--  <a href="<?php echo $this->createUrl('Trainingfile',array('id' => $fileData->id)); ?>" target="_blank"> -->
                     <?php
                     echo '<strong id="filenametraintext'.$fileData->id.'">'.$fileData->file_name.'</strong>';
                     ?>
@@ -2036,12 +2066,12 @@ if ($ProfilesLanguage->isNewRecord === null) {
     </div>
 </div>
 
- <div class="row  mt-1 mb-1 form_language">
+<div class="row  mt-1 mb-1 form_language">
     <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?' File attachment Crew identification':'ไฟล์หนังสือประจำตัวลูกเรือ'; ?></strong></div>
     <div class="col-md-4">
         <div class="form-group">
 
-         <div class="input-append">
+           <div class="input-append">
             <div class="">
                 <?php echo $form->fileField($AttachName, 'attach_crew_identification', array('id' => 'wizard-picture')); ?>
             </div>
@@ -2084,7 +2114,7 @@ if ($ProfilesLanguage->isNewRecord === null) {
     <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'File attachment identification':'ไฟล์สำเนาบัตรประชาชน'; ?></strong></div>
     <div class="col-md-4">
         <div class="form-group">
-           <div class="input-append">
+         <div class="input-append">
             <div class="">
                 <?php echo $form->fileField($AttachName, 'attach_identification', array('id'=>"wizard-picture")); ?> 
             </div>
@@ -2182,32 +2212,32 @@ if ($ProfilesLanguage->isNewRecord === null) {
 
                   $dep_id = [];
                   foreach ($Department_ship as $keydepart => $valuedepart) {
-                   $dep_id[] = $valuedepart->id;
-               }
-               
-               $criteria= new CDbCriteria;
-               $criteria->compare('active','y');
-               $criteria->addInCondition('department_id', $dep_id);
-               $criteria->order = 'sortOrder ASC';
-               $position_ship = Position::model()->findAll($criteria);
-               ?> 
-               <?php
-               $positionLists = CHtml::listData($position_ship, 'id', 'position_title');
+                     $dep_id[] = $valuedepart->id;
+                 }
+                 
+                 $criteria= new CDbCriteria;
+                 $criteria->compare('active','y');
+                 $criteria->addInCondition('department_id', $dep_id);
+                 $criteria->order = 'sortOrder ASC';
+                 $position_ship = Position::model()->findAll($criteria);
+                 ?> 
+                 <?php
+                 $positionLists = CHtml::listData($position_ship, 'id', 'position_title');
 
-               $positiontOption = array('class' => 'form-control position_gen ', 'empty' => $label->label_placeholder_position, 'name' => 'position_gen');
-               ?>
-               <?php echo $form->dropDownList($users, 'position_id', $positionLists, $positiontOption); ?>
-               <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
+                 $positiontOption = array('class' => 'form-control position_gen ', 'empty' => $label->label_placeholder_position, 'name' => 'position_gen');
+                 ?>
+                 <?php echo $form->dropDownList($users, 'position_id', $positionLists, $positiontOption); ?>
+                 <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
 
-           </div>
-       </div>
-   </div>
-</div>
-<div class="row justify-content-center form_name">
+             </div>
+         </div>
+     </div>
+ </div>
+ <div class="row justify-content-center form_name">
     <div class="col-md-3 col-sm-6 col-xs-12">
         <div class="form-group">
-            <label><?= Yii::app()->session['lang'] == 1?'Expected salary':'เงินเดือนที่คาดหวัง'; ?></label>
-            <?php echo $form->textField($profile, 'expected_salary', array('class' => 'form-control salary','onchange'=>'numberWithCommas();','onkeyup'=>"isNumbercharSalary(this.value,this)", 'placeholder' => Yii::app()->session['lang'] == 1?'Expected salary':'เงินเดือนที่คาดหวัง')); ?>
+            <label><?php echo $label->label_expected_salary; ?></label>
+            <?php echo $form->textField($profile, 'expected_salary', array('class' => 'form-control salary','onchange'=>'numberWithCommas();','onkeyup'=>"isNumbercharSalary(this.value,this)", 'placeholder' => $label->label_expected_salary)); ?>
             <?php echo $form->error($profile, 'expected_salary', array('class' => 'error2')); ?>
 
         </div>
@@ -2215,19 +2245,19 @@ if ($ProfilesLanguage->isNewRecord === null) {
     </div> 
     <div class="col-md-1 col-sm-6 col-xs-12">
         <div class="form-group baht">
-       <label><?= Yii::app()->session['lang'] == 1?'Baht':'บาท'; ?></label>
-        </div>
-    </div>    
-    <div class="col-md-4 col-sm-6 col-xs-12">
-        <div class="form-group birthday-icon">
-            <i class="far fa-calendar-alt"></i>
-            <label><?= Yii::app()->session['lang'] == 1?'Able to start working on':'พร้อมที่จะเริ่มงานเมื่อ'; ?></label>
-            <?php echo $form->textField($profile, 'start_working',$working); ?>
-            <?php echo $form->error($profile, 'start_working', array('class' => 'error2')); ?>
+         <label><?= Yii::app()->session['lang'] == 1?'Baht':'บาท'; ?></label>
+     </div>
+ </div>    
+ <div class="col-md-4 col-sm-6 col-xs-12">
+    <div class="form-group birthday-icon">
+        <i class="far fa-calendar-alt"></i>
+        <label><?php echo $label->label_start_working; ?></label>
+        <?php echo $form->textField($profile, 'start_working',$working); ?>
+        <?php echo $form->error($profile, 'start_working', array('class' => 'error2')); ?>
 
-        </div>
     </div>
-    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
 </div>
 </div>
 
@@ -2236,8 +2266,8 @@ if ($ProfilesLanguage->isNewRecord === null) {
 
 if (!$users->isNewRecord && $profile->type_employee) {
 
- ?>
-<div class="well form_ship">
+   ?>
+   <div class="well form_ship">
     <div id="report-staff">
         <h3 class="text-center"><?php echo $label->label_boat_person_report; ?></h3>
         <div class="row justify-content-center">
@@ -2277,12 +2307,12 @@ if (!$users->isNewRecord && $profile->type_employee) {
                                         <div class="form-group">
                                             <label for=""><?php echo $label->label_phone1; ?></label>
                                            <!--  <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้"> 
-                                               <label><?php echo $label->label_phone; ?></label>-->
-                                               <?php echo $form->textField($profile, 'phone1', array('class' => 'form-control', 'placeholder' => $label->label_phone1 ,'onkeyup'=>"isNumberchar(this.value,this)",'maxlength' => '13')); ?>
-                                               <?php echo $form->error($profile, 'phone1', array('class' => 'error2')); ?>
-                                           </div>
-                                       </div>
-                                       <div class="col-md-4">
+                                             <label><?php echo $label->label_phone; ?></label>-->
+                                             <?php echo $form->textField($profile, 'phone1', array('class' => 'form-control', 'placeholder' => $label->label_phone1 ,'onkeyup'=>"isNumberchar(this.value,this)",'maxlength' => '13')); ?>
+                                             <?php echo $form->error($profile, 'phone1', array('class' => 'error2')); ?>
+                                         </div>
+                                     </div>
+                                     <div class="col-md-4">
                                         <div class="form-group birthday-icon">
                                             <i class="far fa-calendar-alt"></i>
                                             <label><?php echo $label->label_ship_down_date; ?></label>
@@ -2317,40 +2347,40 @@ if (!$users->isNewRecord && $profile->type_employee) {
                                 </div>
                             </div>
                             <?php
-}
-                            ?>
-
-
-                            <div class="text-center submit-register">
-
-                                <?php 
-                                $branch_js = $users->branch_id;
-                                if ($branch_js === null ) {
-                                   $branch_js = 0;
-                               }else{
-                                   $branch_js = 1;
-                               }
-
-                               $new_form = $users->isNewRecord;
-                               if ($new_form) {
-                                 $new_form = true;
-                             }else{
-                                $new_form = 0;
-                            }
-
-                            if (Yii::app()->user->getId() == null) { ?>
-                                <?php echo CHtml::submitButton($label->label_regis, array('class' => 'btn btn-default bg-greenlight btn-lg center-block ok_2','onclick'=>"return upload();")); ?>
-                            <?php } else {
-                                echo CHtml::submitButton($label->label_save, array('class' => 'btn btn-default bg-greenlight btn-lg center-block ok_2','onclick'=>"return upload();"));
-                            } ?>
-                        </div>
-
-                        <?php $this->endWidget();
+                        }
                         ?>
 
-                    </div>
-                    <script type="text/javascript">
-                        $(document).ready(function() {
+
+                        <div class="text-center submit-register">
+
+                            <?php 
+                            $branch_js = $users->branch_id;
+                            if ($branch_js === null ) {
+                             $branch_js = 0;
+                         }else{
+                             $branch_js = 1;
+                         }
+
+                         $new_form = $users->isNewRecord;
+                         if ($new_form) {
+                           $new_form = true;
+                       }else{
+                        $new_form = 0;
+                    }
+
+                    if (Yii::app()->user->getId() == null) { ?>
+                        <?php echo CHtml::submitButton($label->label_regis, array('class' => 'btn btn-default bg-greenlight btn-lg center-block ok_2','onclick'=>"return upload();")); ?>
+                    <?php } else {
+                        echo CHtml::submitButton($label->label_save, array('class' => 'btn btn-default bg-greenlight btn-lg center-block ok_2','onclick'=>"return upload();"));
+                    } ?>
+                </div>
+
+                <?php $this->endWidget();
+                ?>
+
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function() {
     ////////////////////////////////////////// ประวัติการศึกษา /////////////////////////////////////////////////////////////////////////
     var max_fields = 10;
     var wrapper = $(".add-study");
@@ -2419,15 +2449,15 @@ $(add_form_language).click(function(e) {
     if (l < max_fields_language) {
         l++;
         numItems_language++;
-    
-         var language_name = '<?php echo Yii::app()->session['lang'] == 1?'language ':'ภาษา' ?>';
-         var del_language = '<?php echo Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?>';
-         var language_Written = '<?php echo Yii::app()->session['lang'] == 1?'Written ':'เขียน' ?>';
-         var language_Spoken = '<?php echo Yii::app()->session['lang'] == 1?'Spoken ':'พูด' ?>'; 
-         <?php 
-         $h = 10; 
-         $v = 10;
-         ?>
+        
+        var language_name = '<?php echo Yii::app()->session['lang'] == 1?'language ':'ภาษา' ?>';
+        var del_language = '<?php echo Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?>';
+        var language_Written = '<?php echo Yii::app()->session['lang'] == 1?'Written ':'เขียน' ?>';
+        var language_Spoken = '<?php echo Yii::app()->session['lang'] == 1?'Spoken ':'พูด' ?>'; 
+        <?php 
+        $h = 10; 
+        $v = 10;
+        ?>
         $(wrapper_language).append('<tr><td rowspan="2">'
             +'<input type="text" class="form-control" placeholder="' + language_name + '" name="ProfilesLanguage[' + numItems_language + '][language_name]" style="width:100px;line-height:28px;padding: 20px 10px;">'
             +'</td>'
@@ -2455,7 +2485,7 @@ $(add_form_language).click(function(e) {
 // $(wrapper_language).on("click", ".delete_language", function(e) {
 //     e.preventDefault();
 // $(this).parent('#del_languages').remove();
-  
+
 //     l--;
 // });
 ////////////////////////////////////////// ประวัติการทำงาน /////////////////////////////////////////////////////////////////////////
@@ -2523,16 +2553,16 @@ $("#card-7").change(function(event) {
         },
         success: function(data) {
            // console.log(data);
-            $('.department').empty();
-            $('.department').append(data);
-            var Branch ='<option value =""><?php echo Yii::app()->session['lang'] == 1?'Select Level ':'เลือกระดับ'; ?> </option>';
-            var Position ='<option value =""><?php echo Yii::app()->session['lang'] == 1?'Select Position ':'เลือกตำแหน่ง'; ?> </option>';
-            $('.position').empty();
-            $('.Branch').empty();
-            $('.position').append(Position);
-            $('.Branch').append(Branch);
-        }
-    });
+           $('.department').empty();
+           $('.department').append(data);
+           var Branch ='<option value =""><?php echo Yii::app()->session['lang'] == 1?'Select Level ':'เลือกระดับ'; ?> </option>';
+           var Position ='<option value =""><?php echo Yii::app()->session['lang'] == 1?'Select Position ':'เลือกตำแหน่ง'; ?> </option>';
+           $('.position').empty();
+           $('.Branch').empty();
+           $('.position').append(Position);
+           $('.Branch').append(Branch);
+       }
+   });
 });
 
 $("#card-8").change(function(event) {
@@ -2556,13 +2586,6 @@ $("#card-8").change(function(event) {
     });
 });
 
-// $('.salary').change(function(event){
-//     var num = $(this).val();
-   
-//     console.log(Number(num));
-// });
-
-
 });
 $('.default_datetimepicker').datetimepicker({
                // format: 'Y-m-d',
@@ -2580,58 +2603,93 @@ $(function() {
                     if (max.length < vals.length) { 
                         var setval = '' + $(this).val();
                         while (setval.length < max.length) {
-                         setval = '0' + setval;
-                     }
+                           setval = '0' + setval;
+                       }
 
-                     $(this).val(setval);
+                       $(this).val(setval);
 
-                 }else{
+                   }else{
                     var setval = '' + $(this).val();
                     while (setval.length < max) {
-                     setval = '0' + setval;
-                 }
+                       setval = '0' + setval;
+                   }
 
-                 $(this).val(setval);
-             }
-         });
-$("#card-5").change(function(event) {    
-  var sick = $("input[name='history_of_illness']:checked").val();
-  if (sick == 'n') {
-      $('.form_sickness').hide();
-  }else{
-    $('.form_sickness').show();
-  }
-  });
-$("#card-6").change(function(event) {    
-  var sick = $("input[name='history_of_illness']:checked").val();
-  if (sick == 'y') {
-      $('.form_sickness').show();
-  }else{
-    $('.form_sickness').hide();
-  }
-  });
+                   $(this).val(setval);
+               }
+           });
+    $("#card-5").change(function(event) {    
+      var sick = $("input[name='history_of_illness']:checked").val();
+      if (sick == 'n') {
+          $('.form_sickness').hide();
+      }else{
+        $('.form_sickness').show();
+    }
+});
+    $("#card-6").change(function(event) {    
+      var sick = $("input[name='history_of_illness']:checked").val();
+      if (sick == 'y') {
+          $('.form_sickness').show();
+      }else{
+        $('.form_sickness').hide();
+    }
+});
 
-$("#card-3").change(function(event) {    
-  var sick = $("input[name='status_sm']:checked").val();
-  if (sick == 's') {
-      $('.children').hide();
-      $('.Spouse').hide();
-  }else{
-    $('.children').show();
-    $('.Spouse').show();
-  }
-  });
-$("#card-4").change(function(event) {    
-  var child = $("input[name='status_sm']:checked").val();
-  if (child == 'm') {
-      $('.children').show();
-      $('.Spouse').show();
-  }else{
-    $('.children').hide();
-    $('.Spouse').hide();
-  }
-  });
+    $("#card-3").change(function(event) {    
+      var sick = $("input[name='status_sm']:checked").val();
+      if (sick == 's') {
+          $('.children').hide();
+          $('.Spouse').hide();
+      }else{
+        $('.children').show();
+        $('.Spouse').show();
+    }
+});
+    $("#card-4").change(function(event) {    
+      var child = $("input[name='status_sm']:checked").val();
+      if (child == 'm') {
+          $('.children').show();
+          $('.Spouse').show();
+      }else{
+        $('.children').hide();
+        $('.Spouse').hide();
+    }
+});
 
+    $("#address_parent").change(function(event) {  
+       var address_parent = $("input[name='address_parent']:checked").val();
+       console.log(address_parent);
+       if (address_parent == 'y') {
+        var Profile_domicile_address = $("#Profile_domicile_address").val();
+        if (Profile_domicile_address != '') {
+         var Profile_address = $("#Profile_address").val();
+         if (Profile_address == '') {
+           $('#Profile_address').empty();
+           $('#Profile_address').append(Profile_domicile_address);
+           $('#Profile_address').val(Profile_domicile_address);
+       }else{
+         
+           $("#Profile_address").val("");
+           if (Profile_address =='') {
+               $('#Profile_address').empty();
+               $('#Profile_address').append(Profile_domicile_address);
+               $('#Profile_address').val(Profile_domicile_address);
+           }else{
+            $('#Profile_address').empty();
+            $('#Profile_address').append(Profile_domicile_address);
+            $('#Profile_address').val(Profile_domicile_address);
+            
+        }                
+    }
+}else{
+    var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+    var msg ="<?php echo Yii::app()->session['lang'] == 1?'Please enter the address on the ID card! ':'กรุณากรอกที่อยู่ตามบัตรประชาชน!'; ?>"; 
+    swal(alert_message,msg);
+    document.getElementById("address_parent").checked = false;
+}
+}else{
+    $("#Profile_address").val("");
+}
+});
 // $(".start_working").change(function() {
 //     var first = new Date($(this).val());
 //     var current = new Date();
@@ -2645,66 +2703,66 @@ $("#card-4").change(function(event) {
 //  });
 
 $(".email").change(function() {
-                    var text_mail = $(".email").val();
-                    if (text_mail != "") {
-                    $.ajax({
-                        type: 'POST',
-                        url: "<?= Yii::app()->createUrl('Registration/CheckMail'); ?>",
-                        data: {
-                            text_mail: text_mail
-                        },
-                        success: function(data) {
-        
-                                if (data != true) {
-                                     $(".email").empty();
-                                    var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
-                                    var msg ="<?php echo Yii::app()->session['lang'] == 1?'The email name already exists in the database! ':'อีเมลนี้มีผู้ใช้งานแล้ว!'; ?>"; 
-                                    swal(alert_message,msg);
-                                   
-                                }
-                                
-                            }
-                        });
-                     }
-                });
+    var text_mail = $(".email").val();
+    if (text_mail != "") {
+        $.ajax({
+            type: 'POST',
+            url: "<?= Yii::app()->createUrl('Registration/CheckMail'); ?>",
+            data: {
+                text_mail: text_mail
+            },
+            success: function(data) {
+                
+                if (data != true) {
+                   $(".email").empty();
+                   var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+                   var msg ="<?php echo Yii::app()->session['lang'] == 1?'The email name already exists in the database! ':'อีเมลนี้มีผู้ใช้งานแล้ว!'; ?>"; 
+                   swal(alert_message,msg);
+                   
+               }
+               
+           }
+       });
+    }
+});
 
 $(".idcard").change(function() {
-                    var idcard = $(".idcard").val();
-                    if (idcard != "") {
-                    $.ajax({
-                        type: 'POST',
-                        url: "<?= Yii::app()->createUrl('Registration/CheckIdcard'); ?>",
-                        data: {
-                            idcard: idcard
-                        },
-                        success: function(data) {
-                   
-                                if (data == 'yes') {
-                                     $(".idcard").empty();
-                                    var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
-                                    var msg ="<?php echo Yii::app()->session['lang'] == 1?'This identification number already has a database! ':'เลขประจำตัวประชาชนนี้มีฐานข้อมูลแล้ว!'; ?>"; 
-                                    swal(alert_message,msg);
-                                    $(".idcard").val(null);
-                                }else if(data == "no"){
-                                    $(".idcard").empty();
-                                    var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
-                                    var msg ="<?php echo Yii::app()->session['lang'] == 1?'This ID card number is not correct as per the calculation of the civil registration database! ':'เลขบัตรประชาชนนี้ไม่ถูกต้อง ตามการคำนวณของระบบฐานข้อมูลทะเบียนราษฎร์!'; ?>"; 
-                                    swal(alert_message,msg);
-                                    $(".idcard").val(null);
-                                }else if(data == 'little'){
-                                    $(".idcard").empty();
-                                    var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
-                                    var msg ="<?php echo Yii::app()->session['lang'] == 1?'Incomplete 13 digit ID card number! ':'เลขบัตรประชาชนไม่ครบจำนวน13หลัก!'; ?>"; 
-                                    swal(alert_message,msg);
-                                    $(".idcard").val(null);
-                                }
-                                
-                            }
-                        });
-                     }
-                });
+    var idcard = $(".idcard").val();
+    if (idcard != "") {
+        $.ajax({
+            type: 'POST',
+            url: "<?= Yii::app()->createUrl('Registration/CheckIdcard'); ?>",
+            data: {
+                idcard: idcard
+            },
+            success: function(data) {
+             
+                if (data == 'yes') {
+                   $(".idcard").empty();
+                   var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+                   var msg ="<?php echo Yii::app()->session['lang'] == 1?'This identification number already has a database! ':'เลขประจำตัวประชาชนนี้มีฐานข้อมูลแล้ว!'; ?>"; 
+                   swal(alert_message,msg);
+                   $(".idcard").val(null);
+               }else if(data == "no"){
+                $(".idcard").empty();
+                var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+                var msg ="<?php echo Yii::app()->session['lang'] == 1?'This ID card number is not correct as per the calculation of the civil registration database! ':'เลขบัตรประชาชนนี้ไม่ถูกต้อง ตามการคำนวณของระบบฐานข้อมูลทะเบียนราษฎร์!'; ?>"; 
+                swal(alert_message,msg);
+                $(".idcard").val(null);
+            }else if(data == 'little'){
+                $(".idcard").empty();
+                var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+                var msg ="<?php echo Yii::app()->session['lang'] == 1?'Incomplete 13 digit ID card number! ':'เลขบัตรประชาชนไม่ครบจำนวน13หลัก!'; ?>"; 
+                swal(alert_message,msg);
+                $(".idcard").val(null);
+            }
+            
+        }
+    });
+    }
+});
 
-    var new_forms = <?php echo $new_form; ?>;
+var new_forms = <?php echo $new_form; ?>;
                     //console.log(new_forms);
                     if (new_forms === 1 || new_forms === true) {   
 
@@ -2735,87 +2793,88 @@ $(".idcard").change(function() {
                                 $(".form_language").hide();
                                 $("#office-section_gen").hide();
                                // $('.form_ship').hide();
-                            }else if(type_cards === '' || typeof  type_cards === 'undefined' || typeof  type_cards === null){
+                           }else if(type_cards === '' || typeof  type_cards === 'undefined' || typeof  type_cards === null){
 
-                                $('#passport_card').hide();
-                                $('#identification_card').show();
-                                $(".id_employee").show();
-                                $('.form_name').show();
-                                $('.form_number_id').show();
-                                $("#office-section").show();
-                                $(".form_language").hide();
-                                $("#office-section_gen").hide();
-                              //  $('.form_ship').hide();
-                            }
-                        }else if (type_users === '1'){
-
-                            var type_cards = $("input[name='type_card']:checked").val();
-                            if (type_cards === 'l') {
-
-                                $('#passport_card').hide();
-                                $('#identification_card').show();
-                                $(".id_employee").hide();
-                                $('.form_name').show();
-                                $('.form_number_id').show();
-                                $("#office-section").hide();
-                                $(".form_language").show();
-                                $("#office-section_gen").show();
-                             //   $('.form_ship').hide();
-                            }else if(type_cards === 'p'){
-
-                                $('#passport_card').show();
-                                $('#identification_card').hide();
-                                $(".id_employee").hide();
-                                $('.form_name').show();
-                                $('.form_number_id').show();
-                                $("#office-section").hide();
-                                $(".form_language").show();
-                                $("#office-section_gen").show();
-                             //   $('.form_ship').hide();
-                            }else if(type_cards === '' || typeof  type_cards === 'undefined' || typeof  type_cards === null){
-
-                                $('#passport_card').hide();
-                                $('#identification_card').show();
-                                $(".id_employee").hide();
-                                $('.form_name').show();
-                                $('.form_number_id').show();
-                                $("#office-section").hide();
-                                $(".form_language").show();
-                                $("#office-section_gen").show();
-                              //  $('.form_ship').hide();
-                            }
-                        }else if (typeof  type_users === 'undefined' ){
-                            $('.Branch').hide();
-                            $('.label_branch').hide();
-                            $(".id_employee").hide();
                             $('#passport_card').hide();
-                            $("#office-section").hide();
-                            $('.form_name').hide();
-                            $('.form_number_id').hide();
-                          //  $('.form_ship').hide();
-                            $(".form_language").hide(); 
+                            $('#identification_card').show();
+                            $(".id_employee").show();
+                            $('.form_name').show();
+                            $('.form_number_id').show();
+                            $("#office-section").show();
+                            $(".form_language").hide();
                             $("#office-section_gen").hide();
-                            $('.form_sickness').hide();
-                            $('.children').hide();
-                            $('.Spouse').hide();
-                        }              
-                    }else if(new_forms === 0 || typeof  new_forms === 'undefined' || new_forms === false){
-                  
-                     var type_users = $("input[name='type_user']:checked").val();
-
-                     if (type_users === '3') {
+                              //  $('.form_ship').hide();
+                          }
+                      }else if (type_users === '1'){
 
                         var type_cards = $("input[name='type_card']:checked").val();
                         if (type_cards === 'l') {
-                            var branch = <?php echo $branch_js; ?>;
-                
-                                if (branch === 1) {
-                                    $('.Branch').show();
-                                    $('.label_branch').show();
-                                }else if(branch === 0){
-                                    $('.Branch').hide();
-                                    $('.label_branch').hide();
-                                }
+
+                            $('#passport_card').hide();
+                            $('#identification_card').show();
+                            $(".id_employee").hide();
+                            $('.form_name').show();
+                            $('.form_number_id').show();
+                            $("#office-section").hide();
+                            $(".form_language").show();
+                            $("#office-section_gen").show();
+                             //   $('.form_ship').hide();
+                         }else if(type_cards === 'p'){
+
+                            $('#passport_card').show();
+                            $('#identification_card').hide();
+                            $(".id_employee").hide();
+                            $('.form_name').show();
+                            $('.form_number_id').show();
+                            $("#office-section").hide();
+                            $(".form_language").show();
+                            $("#office-section_gen").show();
+                             //   $('.form_ship').hide();
+                         }else if(type_cards === '' || typeof  type_cards === 'undefined' || typeof  type_cards === null){
+
+                            $('#passport_card').hide();
+                            $('#identification_card').show();
+                            $(".id_employee").hide();
+                            $('.form_name').show();
+                            $('.form_number_id').show();
+                            $("#office-section").hide();
+                            $(".form_language").show();
+                            $("#office-section_gen").show();
+                              //  $('.form_ship').hide();
+                          }
+                      }else if (typeof  type_users === 'undefined' ){
+                        $('.Branch').hide();
+                        $('.label_branch').hide();
+                        $(".id_employee").hide();
+                        $('#passport_card').hide();
+                        $("#office-section").hide();
+                        $('.form_name').hide();
+                        $('.form_number_id').hide();
+                          //  $('.form_ship').hide();
+                          $('.form_sickness').hide();
+                          $(".form_language").hide(); 
+                          $("#office-section_gen").hide();
+                          $('.form_sickness').hide();
+                          $('.children').hide();
+                          $('.Spouse').hide();
+                      }              
+                  }else if(new_forms === 0 || typeof  new_forms === 'undefined' || new_forms === false){
+                      
+                   var type_users = $("input[name='type_user']:checked").val();
+
+                   if (type_users === '3') {
+
+                    var type_cards = $("input[name='type_card']:checked").val();
+                    if (type_cards === 'l') {
+                        var branch = <?php echo $branch_js; ?>;
+                        
+                        if (branch === 1) {
+                            $('.Branch').show();
+                            $('.label_branch').show();
+                        }else if(branch === 0){
+                            $('.Branch').hide();
+                            $('.label_branch').hide();
+                        }
                                 // var type_employee = $("input[name='type_employee']:checked").val();
 
                                 // if (type_employee === '1') {
@@ -2825,7 +2884,7 @@ $(".idcard").change(function() {
 
                                 //     $('.form_ship').hide();
                                 // }
-                                 var sick = $("input[name='history_of_illness']:checked").val();
+                                var sick = $("input[name='history_of_illness']:checked").val();
                                 if (sick === 'y') {
                                     $('.form_sickness').show();
                                 }else{
@@ -2833,23 +2892,23 @@ $(".idcard").change(function() {
                                 }
                                 var child = $("input[name='status_sm']:checked").val();
                                 if (child == 'm') {
-                                   $('.children').show();
-                                   $('.Spouse').show();
-                                }else{
-                                   $('.children').hide();
-                                   $('.Spouse').hide();
-                                }
-                                $('#passport_card').hide();
-                                $('#identification_card').show();
-                                $(".id_employee").show();
-                                $('.form_name').show();
-                                $('.form_number_id').show();
-                                $("#office-section").show();
-                                $(".form_language").hide();
-                                $("#office-section_gen").hide();
+                                 $('.children').show();
+                                 $('.Spouse').show();
+                             }else{
+                                 $('.children').hide();
+                                 $('.Spouse').hide();
+                             }
+                             $('#passport_card').hide();
+                             $('#identification_card').show();
+                             $(".id_employee").show();
+                             $('.form_name').show();
+                             $('.form_number_id').show();
+                             $("#office-section").show();
+                             $(".form_language").hide();
+                             $("#office-section_gen").hide();
 
-                            }else if(type_cards === 'p'){
-                                var branch = <?php echo $branch_js; ?>;
+                         }else if(type_cards === 'p'){
+                            var branch = <?php echo $branch_js; ?>;
                                 //console.log(branch);
                                 if (branch === 1) {
                                     $('.Branch').show();
@@ -2864,34 +2923,6 @@ $(".idcard").change(function() {
                                 // }else{
                                 //     $('.form_ship').hide();
                                 // }
-                                 var sick = $("input[name='history_of_illness']:checked").val();
-                                if (sick === 'y') {
-                                    $('.form_sickness').show();
-                                }else{
-                                    $('.form_sickness').hide();
-                                }
-                                var child = $("input[name='status_sm']:checked").val();
-                                if (child == 'm') {
-                                   $('.children').show();
-                                   $('.Spouse').show();
-                                }else{
-                                   $('.children').hide();
-                                   $('.Spouse').hide();
-                                }
-                                $('#passport_card').show();
-                                $('#identification_card').hide();
-                                $(".id_employee").show();
-                                $('.form_name').show();
-                                $('.form_number_id').show();
-                                $("#office-section").show();
-                                $(".form_language").hide();
-                                $("#office-section_gen").hide();
-
-                            }
-                        }else if (type_users === '1'){
-
-                            var type_cards = $("input[name='type_card']:checked").val();
-                            if (type_cards === 'l') {
                                 var sick = $("input[name='history_of_illness']:checked").val();
                                 if (sick === 'y') {
                                     $('.form_sickness').show();
@@ -2900,20 +2931,48 @@ $(".idcard").change(function() {
                                 }
                                 var child = $("input[name='status_sm']:checked").val();
                                 if (child == 'm') {
-                                   $('.children').show();
-                                   $('.Spouse').show();
-                                }else{
-                                   $('.children').hide();
-                                   $('.Spouse').hide();
-                                }
-                                $('#passport_card').hide();
-                                $('#identification_card').show();
-                                $(".id_employee").hide();
-                                $('.form_name').show();
-                                $('.form_number_id').show();
-                                $("#office-section").hide();
-                                $(".form_language").show();
-                                $("#office-section_gen").show();
+                                 $('.children').show();
+                                 $('.Spouse').show();
+                             }else{
+                                 $('.children').hide();
+                                 $('.Spouse').hide();
+                             }
+                             $('#passport_card').show();
+                             $('#identification_card').hide();
+                             $(".id_employee").show();
+                             $('.form_name').show();
+                             $('.form_number_id').show();
+                             $("#office-section").show();
+                             $(".form_language").hide();
+                             $("#office-section_gen").hide();
+
+                         }
+                     }else if (type_users === '1'){
+
+                        var type_cards = $("input[name='type_card']:checked").val();
+                        if (type_cards === 'l') {
+                            var sick = $("input[name='history_of_illness']:checked").val();
+                            if (sick === 'y') {
+                                $('.form_sickness').show();
+                            }else{
+                                $('.form_sickness').hide();
+                            }
+                            var child = $("input[name='status_sm']:checked").val();
+                            if (child == 'm') {
+                             $('.children').show();
+                             $('.Spouse').show();
+                         }else{
+                             $('.children').hide();
+                             $('.Spouse').hide();
+                         }
+                         $('#passport_card').hide();
+                         $('#identification_card').show();
+                         $(".id_employee").hide();
+                         $('.form_name').show();
+                         $('.form_number_id').show();
+                         $("#office-section").hide();
+                         $(".form_language").show();
+                         $("#office-section_gen").show();
                                 //$('.form_ship').hide();
 
                             }else if(type_cards === 'p'){
@@ -2926,24 +2985,24 @@ $(".idcard").change(function() {
                                 }
                                 var child = $("input[name='status_sm']:checked").val();
                                 if (child == 'm') {
-                                   $('.children').show();
-                                   $('.Spouse').show();
-                                }else{
-                                   $('.children').hide();
-                                   $('.Spouse').hide();
-                                }
-                                $('#passport_card').show();
-                                $('#identification_card').hide();
-                                $(".id_employee").hide();
-                                $('.form_name').show();
-                                $('.form_number_id').show();
-                                $("#office-section").hide();
-                                $(".form_language").show();
-                                $("#office-section_gen").show();
+                                 $('.children').show();
+                                 $('.Spouse').show();
+                             }else{
+                                 $('.children').hide();
+                                 $('.Spouse').hide();
+                             }
+                             $('#passport_card').show();
+                             $('#identification_card').hide();
+                             $(".id_employee").hide();
+                             $('.form_name').show();
+                             $('.form_number_id').show();
+                             $("#office-section").hide();
+                             $(".form_language").show();
+                             $("#office-section_gen").show();
                                // $('.form_ship').hide();
-                            }
-                        }  
-                    }  
+                           }
+                       }  
+                   }  
                  // $("input[name='type_employee']").prop("checked", true);
 
 
@@ -2973,10 +3032,10 @@ $(".idcard").change(function() {
                             // $('.Branch').hide();
                             // $('.label_branch').hide();
                             // }else{
-                            $('.position').empty();
-                            $('.position').append(data);
-                            $('.Branch').hide();
-                            $('.label_branch').hide();
+                                $('.position').empty();
+                                $('.position').append(data);
+                                $('.Branch').hide();
+                                $('.label_branch').hide();
                             // }
                         }
                     });
@@ -2990,19 +3049,19 @@ $(".idcard").change(function() {
                             id: id
                         },
                         success: function(data) {
-                                console.log(data);
-                                if (data === '<option value ="">Select Level </option>' || data === '<option value ="">เลือกระดับ</option>') {
-                                    $('.Branch').hide();
-                                    $('.label_branch').hide();
-                                }else{
+                            console.log(data);
+                            if (data === '<option value ="">Select Level </option>' || data === '<option value ="">เลือกระดับ</option>') {
+                                $('.Branch').hide();
+                                $('.label_branch').hide();
+                            }else{
 
-                                    $('.Branch').show();
-                                    $('.label_branch').show();
-                                    $('.Branch').empty();
-                                    $('.Branch').append(data);
-                                }
+                                $('.Branch').show();
+                                $('.label_branch').show();
+                                $('.Branch').empty();
+                                $('.Branch').append(data);
                             }
-                        });
+                        }
+                    });
                 });
 
                  $(".birth").change(function() {
@@ -3014,18 +3073,23 @@ $(".idcard").change(function() {
                             item: item
                         },
                         success: function(data) {
-                            if (data == 0) {
-                                var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
-                                var msg ="<?php echo Yii::app()->session['lang'] == 1?'The date of birth is greater than or equal to the current time! ':'วันเดือนปีเกิดมากกว่าหรือเท่ากับเวลาปัจจุบัน!'; ?>"; 
-                                swal(alert_message,msg);
-                                $(".birth").val(null);
-                                $('.ages').val(null);
-                            }else{
-                            $('.ages').val(data);
-                            $('.ages').append(data);
-                           }
-                        }
-                    });
+                            
+                         if (data == 0) {
+                           
+                            var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+                            var msg ="<?php echo Yii::app()->session['lang'] == 1?'The date of birth is greater than or equal to the current time! ':'วันเดือนปีเกิดมากกว่าหรือเท่ากับเวลาปัจจุบัน!'; ?>"; 
+                            swal(alert_message,msg);
+                            $(".birth").val(null);
+                            $('.ages').val(null);
+                        }else{
+                           var datas = data.split("-");
+                           $('.ages').val(datas[0]);
+                           $('.ages').append(datas[0]);
+                           $('.mouth').val(datas[1]);
+                           $('.mouth').append(datas[1]);
+                       }
+                   }
+               });
                 });
              });
          </script>

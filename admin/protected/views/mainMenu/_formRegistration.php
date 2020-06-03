@@ -379,6 +379,150 @@
                     <?php echo $this->NotEmpty(); ?>
                     <?php echo $form->error($label, 'label_phone3'); ?>
                 </div>
+              <!--   <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_seaman_expire'); ?>
+                    <?php echo $form->textField($label, 'label_seaman_expire', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_seaman_expire'); ?>
+                </div> -->
+                 <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_seamanbook'); ?>
+                    <?php echo $form->textField($label, 'label_seamanbook', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_seamanbook'); ?>
+                </div>
+                <!-- <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_pass_expire'); ?>
+                    <?php echo $form->textField($label, 'label_pass_expire', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_pass_expire'); ?>
+                </div>
+                <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_passport_place_issued'); ?>
+                    <?php echo $form->textField($label, 'label_passport_place_issued', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_passport_place_issued'); ?>
+                </div>
+                 <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_passport_date_issued'); ?>
+                    <?php echo $form->textField($label, 'label_passport_date_issued', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_passport_date_issued'); ?>
+                </div> -->
+                <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_spouse_firstname'); ?>
+                    <?php echo $form->textField($label, 'label_spouse_firstname', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_spouse_firstname'); ?>
+                </div>
+                 <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_spouse_lastname'); ?>
+                    <?php echo $form->textField($label, 'label_spouse_lastname', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_spouse_lastname'); ?>
+                </div>
+                <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_father_firstname'); ?>
+                    <?php echo $form->textField($label, 'label_father_firstname', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_father_firstname'); ?>
+                </div>
+                 <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_father_lastname'); ?>
+                    <?php echo $form->textField($label, 'label_father_lastname', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_father_lastname'); ?>
+                </div>
+                <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_mother_firstname'); ?>
+                    <?php echo $form->textField($label, 'label_mother_firstname', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_mother_firstname'); ?>
+                </div>
+                 <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_mother_lastname'); ?>
+                    <?php echo $form->textField($label, 'label_mother_lastname', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_mother_lastname'); ?>
+                </div>
+                <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_military'); ?>
+                    <?php echo $form->textField($label, 'label_military', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_military'); ?>
+                </div>
+                 <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_sickness'); ?>
+                    <?php echo $form->textField($label, 'label_sickness', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_sickness'); ?>
+                </div>
+                <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_expected_salary'); ?>
+                    <?php echo $form->textField($label, 'label_expected_salary', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_expected_salary'); ?>
+                </div>
+                 <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_start_working'); ?>
+                    <?php echo $form->textField($label, 'label_start_working', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_start_working'); ?>
+                </div>
+                <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_accommodation'); ?>
+                    <?php echo $form->textField($label, 'label_accommodation', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_accommodation'); ?>
+                </div>
+                 <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_domicile_address'); ?>
+                    <?php echo $form->textField($label, 'label_domicile_address', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_domicile_address'); ?>
+                </div>
+                <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_occupation'); ?>
+                    <?php echo $form->textField($label, 'label_occupation', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_occupation'); ?>
+                </div>
+                 <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_ss_card'); ?>
+                    <?php echo $form->textField($label, 'label_ss_card', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_ss_card'); ?>
+                </div>
+                <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_number_of_children'); ?>
+                    <?php echo $form->textField($label, 'label_number_of_children', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_number_of_children'); ?>
+                </div>
+                 <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_place_of_birth'); ?>
+                    <?php echo $form->textField($label, 'label_place_of_birth', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_place_of_birth'); ?>
+                </div>
+                <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_place_issued'); ?>
+                    <?php echo $form->textField($label, 'label_place_issued', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_place_issued'); ?>
+                </div>
+                 <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_date_issued'); ?>
+                    <?php echo $form->textField($label, 'label_date_issued', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_date_issued'); ?>
+                </div>
+                <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_tel'); ?>
+                    <?php echo $form->textField($label, 'label_tel', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_tel'); ?>
+                </div>
             </div>
 
                 <h4 class="labelCourse"><i class="fa fa-window-maximize" aria-hidden="true"></i>&nbsp; แจ้งเตือน (Alert ต่างๆ)<h4>
