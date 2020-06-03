@@ -427,6 +427,7 @@ class RegistrationController extends Controller {
     $profile->tel = $_POST['Profile'][tel];
     $profile->birthday = $_POST['Profile'][birthday];
     $profile->age = $_POST['Profile'][age];
+    $profile->mouth_birth = $_POST['Profile'][mouth_birth];
     $profile->address = $_POST['Profile'][address];
     $profile->date_of_expiry = $_POST['Profile'][date_of_expiry];
     $profile->seamanbook = $_POST['Profile'][seamanbook];
@@ -469,6 +470,9 @@ class RegistrationController extends Controller {
     $profile->occupation_spouse = $_POST['Profile'][occupation_spouse];
     $profile->occupation_father = $_POST['Profile'][occupation_father];
     $profile->occupation_mother = $_POST['Profile'][occupation_mother];
+    $profile->pass_expire = $_POST['Profile'][pass_expire];
+    $profile->passport_place_issued = $_POST['Profile'][passport_place_issued];
+    $profile->passport_date_issued = $_POST['Profile'][passport_date_issued];
 
     // if(!$chk_status_email){
     //     $users->status = 1;
@@ -986,7 +990,7 @@ public function actionUpdate() {
         //    $users->department_id = $_POST['User'][department_id];
         //    $users->station_id = $_POST['User'][station_id];
         // }
-        $genpass = ($type_card == 'p')?substr($profile->passport, 0):substr($profile->identification, -6);
+        $genpass = $this->RandomPassword();
         $users->verifyPassword = $genpass;
             // $users->password = $_POST['Users'][password];
             // $users->verifyPassword = $_POST['Users'][verifyPassword];
@@ -1054,6 +1058,16 @@ public function actionUpdate() {
     $profile->occupation_spouse = $_POST['Profile'][occupation_spouse];
     $profile->occupation_father = $_POST['Profile'][occupation_father];
     $profile->occupation_mother = $_POST['Profile'][occupation_mother];
+    $profile->mouth_birth = $_POST['Profile'][mouth_birth];
+    $profile->pass_expire = $_POST['Profile'][pass_expire];
+    $profile->passport_place_issued = $_POST['Profile'][passport_place_issued];
+    $profile->passport_date_issued = $_POST['Profile'][passport_date_issued];
+    $profile->address_parent = $_POST['address_parent'];
+    if ($profile->address_parent == 'y') {
+      $profile->address_parent = 'y';
+    }else{
+       $profile->address_parent = 'n'; 
+    }
         // var_dump($users);
         // echo "ddddddddddd";
         // var_dump($Profile);

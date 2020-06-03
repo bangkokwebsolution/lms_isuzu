@@ -630,9 +630,9 @@ function editNamehouse_registration(filedoc_id){
                        </div>
                    </div>
                </div> 
-               
+
            </div>
-           
+
            <div class="row justify-content-center select-profile mg-0">
             <div class="form-group">
                 <div class="radio radio-danger radio-inline">
@@ -686,7 +686,7 @@ function editNamehouse_registration(filedoc_id){
                         <div class="form-group">
                             <label><?php echo $label->label_company; ?></label>
                             <?php
-                            
+
                             $criteria= new CDbCriteria;
                             $criteria->compare('active','y');
                             $criteria->order = 'sortOrder ASC';
@@ -705,7 +705,7 @@ function editNamehouse_registration(filedoc_id){
                         <div class="form-group">
                             <label class="label_position"><?php echo $label->label_position; ?></label>
                             <?php
-                            
+
                             $criteria= new CDbCriteria;
                             $criteria->compare('active','y');
                             $criteria->order = 'sortOrder ASC';
@@ -775,7 +775,7 @@ function editNamehouse_registration(filedoc_id){
 
                 <div class="clearfix"></div>
             </div>
-            <div class="row justify-content-center form_name">
+            <div class="row justify-content-center bb-1 pb-20 mt-20 form_name">
                 <div class="col-md-2">
                     <div class="form-group">
                         <label for=""><?php echo $label->label_title; ?>(EN)<font color="red">*</font></label>
@@ -806,7 +806,7 @@ function editNamehouse_registration(filedoc_id){
             </div>
 
 
-            <div class="row justify-content-center mt-1 mb-1 form_number_id">
+       <!--      <div class="row justify-content-center mt-1 mb-1 form_number_id">
                 <div class="form-group">
                     <div class="radio radio-danger radio-inline">
                         <input type="radio" name="type_card" id="card-1" value="l" <?php if ($profile->type_card == "l") : ?> checked="checked" <?php endif ?>>
@@ -818,21 +818,15 @@ function editNamehouse_registration(filedoc_id){
                         <label for="card-2" class="bg-danger text-black"><?php echo $label->label_passport; ?> </label>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
             <div class="row justify-content-center form_number_id">
                 <div class="col-md-4 col-sm-6 col-xs-12" >
                     <div class="form-group" id="identification_card">
-                        <label> <?php echo $label->label_identification;?><font color="red">*</font></label>
+                        <label> <?php echo $label->label_identification;?></label>
                         <?php echo $form->textField($profile, 'identification', array('class' => 'form-control idcard', 'name' => 'idcard', 'maxlength' => '13', 'onKeyPress' => 'return check_number();', 'placeholder' => $label->label_identification )); ?>
                         <?php echo $form->error($profile, 'identification', array('class' => 'error2')); ?>
-                    </div>
-
-                    <div class="form-group" id="passport_card">
-                        <label><?php echo $label->label_passport;?><font color="red">*</font></label>
-                        <?php echo $form->textField($profile, 'passport', array('class' => 'form-control passport', 'name' => 'passport', 'placeholder' => $label->label_passport)); ?>
-                        <?php echo $form->error($profile, 'passport', array('class' => 'error2')); ?>
                     </div>
                 </div>
 
@@ -847,7 +841,7 @@ function editNamehouse_registration(filedoc_id){
 
                 <div class="clearfix"></div>
             </div>
-            <div class="row justify-content-center bb-1 pb-20 form_number_id">
+            <div class="row justify-content-center form_number_id">
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="form-group">
                         <label><?php echo $label->label_place_issued;?></label>
@@ -866,8 +860,135 @@ function editNamehouse_registration(filedoc_id){
 
                 <div class="clearfix"></div>
             </div>
+            <div class="row  mt-1 mb-1 form_name">
+    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'File attachment identification':'ไฟล์สำเนาบัตรประชาชน'; ?></strong></div>
+    <div class="col-md-4">
+        <div class="form-group">
+         <div class="input-append">
+            <div class="">
+                <?php echo $form->fileField($AttachName, 'attach_identification', array('id'=>"wizard-picture")); ?> 
+            </div>
+        </div>
+        <?php echo $form->error($AttachName, 'attach_identification'); ?>
+        <?php 
+        $identification = Yii::app()->getUploadUrl('attach');
+        $criteria = new CDbCriteria;
+        $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
+        $criteria->addCondition("active ='y'");
+        $criteria->addCondition("file_data ='3'");
+        $Attach_identification_File = AttachFile::model()->find($criteria);
+        if (isset($Attach_identification_File)) {
+            echo '<strong id="file_identificationtext'.$Attach_identification_File->id.'">'.$Attach_identification_File->filename.'</strong>';
+            echo '<input id="filename_attach_identification'.$Attach_identification_File->id.'" 
+            class="form-control"
+            type="text" value="'.$Attach_identification_File->filename.'" 
+            style="display:none;" 
+            onblur="editNameidentification('.$Attach_identification_File->id.');">'; 
+            echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
+                'id'=>'btnEditName_attach_identification'.$Attach_identification_File->id,
+                'class'=>'btn-action glyphicons pencil btn-danger',
+                'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                'onclick'=>'$("#file_identificationtext'.$Attach_identification_File->id.'").hide(); 
+                $("#filename_attach_identification'.$Attach_identification_File->id.'").show(); 
+                $("#filename_attach_identification'.$Attach_identification_File->id.'").focus(); 
+                $("#btnEditName_attach_identification'.$Attach_identification_File->id.'").hide(); ')); 
 
-            <div class="row justify-content-center mt-20 form_name">
+            echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
+                'id'=>'btnSaveName_attach_identification'.$Attach_identification_File->id,
+                'class'=>'btn-action glyphicons btn-danger remove_2',
+                'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFileidentification("'.$Attach_identification_File->id.'"); }'));
+
+        }
+        ?>
+    </div>
+</div>
+</div>
+            <div class="row justify-content-center form_number_id">
+                <div class="col-md-4 col-sm-6 col-xs-12" >
+                    <div class="form-group">
+                        <label><?php echo $label->label_passport;?><font color="red">*</font></label>
+                        <?php echo $form->textField($profile, 'passport', array('class' => 'form-control passport', 'name' => 'passport', 'placeholder' => $label->label_passport)); ?>
+                        <?php echo $form->error($profile, 'passport', array('class' => 'error2')); ?>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group birthday-icon">
+                        <label> <?php echo $label->label_date_of_expiry;?></label>
+                        <?php echo $form->textField($profile, 'pass_expire', $attTime); ?>
+                        <?php echo $form->error($profile, 'pass_expire', array('class' => 'error2')); ?>
+                        <i class="far fa-calendar-alt"></i>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="row justify-content-center form_number_id">
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group">
+                        <label><?php echo $label->label_place_issued;?></label>
+                        <?php echo $form->textField($profile, 'passport_place_issued',array('class' => 'form-control', 'placeholder' =>$label->label_place_issued )); ?>
+                        <?php echo $form->error($profile, 'passport_place_issued', array('class' => 'error2')); ?>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="form-group birthday-icon">
+                        <i class="far fa-calendar-alt"></i>
+                        <label><?php echo $label->label_date_issued;?></label>
+                        <?php echo $form->textField($profile, 'passport_date_issued',$date_issueds); ?>
+                        <?php echo $form->error($profile, 'passport_date_issued', array('class' => 'error2')); ?>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+            <div class="row  mt-1 mb-1 form_name">
+    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'File attachment passport':'ไฟล์พาสปอร์ต'; ?></strong></div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <div class="input-append">
+
+                <div class="">
+                    <?php echo $form->fileField($AttachName, 'attach_passport', array('id' => 'wizard-picture')); ?>
+                </div>
+            </div>
+        </div>
+        <?php echo $form->error($AttachName, 'attach_passport'); ?>
+        <?php 
+        $passport = Yii::app()->getUploadUrl('attach');
+        $criteria = new CDbCriteria;
+        $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
+        $criteria->addCondition("active ='y'");
+        $criteria->addCondition("file_data ='1'");
+        $Attach_passport_File = AttachFile::model()->find($criteria);
+        if (isset($Attach_passport_File)) {
+            echo '<strong id="file_attach_passporttext'.$Attach_passport_File->id.'">'.$Attach_passport_File->filename.'</strong>';
+            echo '<input id="filename_attach_passport'.$Attach_passport_File->id.'" 
+            class="form-control"
+            type="text" value="'.$Attach_passport_File->filename.'" 
+            style="display:none;" 
+            onblur="editNamepassport('.$Attach_passport_File->id.');">'; 
+            echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
+                'id'=>'btnEditName_attach_passport'.$Attach_passport_File->id,
+                'class'=>'btn-action glyphicons pencil btn-danger',
+                'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                'onclick'=>'$("#file_attach_passporttext'.$Attach_passport_File->id.'").hide(); 
+                $("#filename_attach_passport'.$Attach_passport_File->id.'").show(); 
+                $("#filename_attach_passport'.$Attach_passport_File->id.'").focus(); 
+                $("#btnEditName_attach_passport'.$Attach_passport_File->id.'").hide(); ')); 
+
+            echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
+                'id'=>'btnSaveName_attach_passport'.$Attach_passport_File->id,
+                'class'=>'btn-action glyphicons btn-danger remove_2',
+                'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFilepassport("'.$Attach_passport_File->id.'"); }'));
+        }
+        ?>
+    </div>
+</div>
+
+            <div class="row justify-content-center form_name">
                 <div class="col-md-4 col-sm-6 col-xs-12" >
                     <div class="form-group">
                         <label><?php echo $label->label_seamanbook;?></label>
@@ -887,7 +1008,96 @@ function editNamehouse_registration(filedoc_id){
 
                 <div class="clearfix"></div>
             </div>
-            
+            <div class="row  mt-1 mb-1 form_language">
+    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?' File attachment Crew identification':'ไฟล์หนังสือประจำตัวลูกเรือ'; ?></strong></div>
+    <div class="col-md-4">
+        <div class="form-group">
+
+           <div class="input-append">
+            <div class="">
+                <?php echo $form->fileField($AttachName, 'attach_crew_identification', array('id' => 'wizard-picture')); ?>
+            </div>
+        </div>
+        <?php echo $form->error($AttachName, 'attach_crew_identification'); ?>
+        <?php 
+        $crew_identification = Yii::app()->getUploadUrl('attach');
+        $criteria = new CDbCriteria;
+        $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
+        $criteria->addCondition("active ='y'");
+        $criteria->addCondition("file_data ='2'");
+        $Attach_crew_identification_File = AttachFile::model()->find($criteria);
+        if (isset($Attach_crew_identification_File)) {
+            echo '<strong id="file_crew_identificationtext'.$Attach_crew_identification_File->id.'">'.$Attach_crew_identification_File->filename.'</strong>';
+            echo '<input id="filename_attach_crew_identification'.$Attach_crew_identification_File->id.'" 
+            class="form-control"
+            type="text" value="'.$Attach_crew_identification_File->filename.'" 
+            style="display:none;" 
+            onblur="editNamecrew_identification('.$Attach_crew_identification_File->id.');">'; 
+            echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
+                'id'=>'btnEditName_attach_crew_identification'.$Attach_crew_identification_File->id,
+                'class'=>'btn-action glyphicons pencil btn-danger',
+                'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                'onclick'=>'$("#file_crew_identificationtext'.$Attach_crew_identification_File->id.'").hide(); 
+                $("#filename_attach_crew_identification'.$Attach_crew_identification_File->id.'").show(); 
+                $("#filename_attach_crew_identification'.$Attach_crew_identification_File->id.'").focus(); 
+                $("#btnEditName_attach_crew_identification'.$Attach_crew_identification_File->id.'").hide(); ')); 
+
+            echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
+                'id'=>'btnSaveName_attach_crew_identification'.$Attach_crew_identification_File->id,
+                'class'=>'btn-action glyphicons btn-danger remove_2',
+                'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFilecrew_identification("'.$Attach_crew_identification_File->id.'"); }'));
+        }
+        ?>
+    </div>
+</div>
+</div> 
+<div class="row  mt-1 mb-1 bb-1 pb-20 mt-20 form_name">
+    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'File attachment House registration':'ไฟล์สำเนาทะเบียนบ้าน'; ?></strong></div>
+    <div class="col-md-4">
+        <div class="form-group">
+
+          <div class="input-append">
+            <div class="">
+                <?php echo $form->fileField($AttachName, 'attach_house_registration', array('id'=>"wizard-picture")); ?>
+            </div>
+        </div>
+        <?php echo $form->error($AttachName, 'attach_house_registration'); ?>
+        <?php 
+        $house_registration = Yii::app()->getUploadUrl('attach');
+        $criteria = new CDbCriteria;
+        $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
+        $criteria->addCondition("active ='y'");
+        $criteria->addCondition("file_data ='4'");
+        $Attach_house_registration_File = AttachFile::model()->find($criteria);
+        if (isset($Attach_house_registration_File)) {
+            echo '<strong id="file_house_registrationtext'.$Attach_house_registration_File->id.'">'.$Attach_house_registration_File->filename.'</strong>';
+            echo '<input id="filename_attach_house_registration'.$Attach_house_registration_File->id.'" 
+            class="form-control"
+            type="text" value="'.$Attach_house_registration_File->filename.'" 
+            style="display:none;" 
+            onblur="editNamehouse_registration('.$Attach_house_registration_File->id.');">'; 
+            echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
+                'id'=>'btnEditName_attach_house_registration'.$Attach_house_registration_File->id,
+                'class'=>'btn-action glyphicons pencil btn-danger',
+                'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                'onclick'=>'$("#file_house_registrationtext'.$Attach_house_registration_File->id.'").hide(); 
+                $("#filename_attach_house_registration'.$Attach_house_registration_File->id.'").show(); 
+                $("#filename_attach_house_registration'.$Attach_house_registration_File->id.'").focus(); 
+                $("#btnEditName_attach_house_registration'.$Attach_house_registration_File->id.'").hide(); ')); 
+
+            echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
+                'id'=>'btnSaveName_attach_house_registration'.$Attach_house_registration_File->id,
+                'class'=>'btn-action glyphicons btn-danger remove_2',
+                'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
+                'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFilehouse_registration("'.$Attach_house_registration_File->id.'"); }'));
+        }
+        ?>
+    </div>
+</div>
+</div>
+
+
             <div class="row justify-content-center mt-20 form_name">
                 <div class="col-md-4 col-sm-6 col-xs-12">
                     <div class="form-group birthday-icon">
@@ -977,7 +1187,7 @@ function editNamehouse_registration(filedoc_id){
 
                         <div class="clearfix"></div>
                     </div> -->
-                    
+
                     <div class="row justify-content-center form_name">
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <div class="form-group">
@@ -1287,7 +1497,7 @@ function editNamehouse_registration(filedoc_id){
                         </div>
                     </div>
                 </div>
-                
+
                 <div class="row  mt-1 mb-1 form_name">
                     <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_history_of_severe_illness;  ?></strong></div>
                     <div class="col-md-4 col-xs-12">
@@ -1572,13 +1782,7 @@ function editNamehouse_registration(filedoc_id){
                    <td><?= Yii::app()->session['lang'] == 1?'Written ':'เขียน'; ?></td>
                    <td>
                     <div class="radio radio-danger ">
-                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo$p++; ?>" value="1"<?php if ($vallg["write"] == "1") : ?> checked="checked" <?php endif ?>>
-                        <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
-                    </div>
-                </td>
-                <td>
-                    <div class="radio radio-danger ">
-                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["write"] == "2") : ?> checked="checked" <?php endif ?>>
+                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo$p++; ?>" value="4"<?php if ($vallg["write"] == "4") : ?> checked="checked" <?php endif ?>>
                         <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
                     </div>
                 </td>
@@ -1590,7 +1794,13 @@ function editNamehouse_registration(filedoc_id){
                 </td>
                 <td>
                     <div class="radio radio-danger ">
-                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="4"<?php if ($vallg["write"] == "4") : ?> checked="checked" <?php endif ?>>
+                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["write"] == "2") : ?> checked="checked" <?php endif ?>>
+                        <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
+                    </div>
+                </td>
+                <td>
+                    <div class="radio radio-danger ">
+                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="1"<?php if ($vallg["write"] == "1") : ?> checked="checked" <?php endif ?>>
                         <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
                     </div>
                 </td>
@@ -1599,13 +1809,7 @@ function editNamehouse_registration(filedoc_id){
                <td><?= Yii::app()->session['lang'] == 1?'Spoken ':'พูด'; ?></td>
                <td>
                 <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="1"<?php if ($vallg["spoken"] == "1") : ?> checked="checked" <?php endif ?>>
-                    <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
-                </div>
-            </td>
-            <td>
-                <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["spoken"] == "2") : ?> checked="checked" <?php endif ?>>
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="4"<?php if ($vallg["spoken"] == "4") : ?> checked="checked" <?php endif ?>>
                     <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
                 </div>
             </td>
@@ -1617,7 +1821,13 @@ function editNamehouse_registration(filedoc_id){
             </td>
             <td>
                 <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="4"<?php if ($vallg["spoken"] == "4") : ?> checked="checked" <?php endif ?>>
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["spoken"] == "2") : ?> checked="checked" <?php endif ?>>
+                    <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
+                </div>
+            </td>
+            <td>
+                <div class="radio radio-danger ">
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="1"<?php if ($vallg["spoken"] == "1") : ?> checked="checked" <?php endif ?>>
                     <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
                 </div>
             </td>
@@ -1632,25 +1842,25 @@ function editNamehouse_registration(filedoc_id){
            <td><?= Yii::app()->session['lang'] == 1?'Written ':'เขียน'; ?></td>
            <td>
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-1" value="1"<?php if ($ProfilesLanguage->write == "1") : ?> checked="checked" <?php endif ?>>
+                <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-1" value="4"<?php if ($ProfilesLanguage->write == "4") : ?> checked="checked" <?php endif ?>>
                 <label for="lang_w_th-1"></label>
             </div>
         </td>
         <td>
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-2" value="2"<?php if ($ProfilesLanguage->write == "2") : ?> checked="checked" <?php endif ?>>
+                <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-2" value="3"<?php if ($ProfilesLanguage->write == "3") : ?> checked="checked" <?php endif ?>>
                 <label for="lang_w_th-2"></label>
             </div>
         </td>
         <td>
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-3" value="3"<?php if ($ProfilesLanguage->write == "3") : ?> checked="checked" <?php endif ?>>
+                <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-3" value="2"<?php if ($ProfilesLanguage->write == "2") : ?> checked="checked" <?php endif ?>>
                 <label for="lang_w_th-3"></label>
             </div>
         </td>
         <td>
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-4" value="4"<?php if ($ProfilesLanguage->write == "4") : ?> checked="checked" <?php endif ?>>
+                <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-4" value="1"<?php if ($ProfilesLanguage->write == "1") : ?> checked="checked" <?php endif ?>>
                 <label for="lang_w_th-4"></label>
             </div>
         </td>
@@ -1659,25 +1869,25 @@ function editNamehouse_registration(filedoc_id){
        <td><?= Yii::app()->session['lang'] == 1?'Spoken ':'พูด'; ?></td>
        <td>
         <div class="radio radio-danger ">
-            <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-1" value="1"<?php if ($ProfilesLanguage->spoken == "1") : ?> checked="checked" <?php endif ?>>
+            <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-1" value="4"<?php if ($ProfilesLanguage->spoken == "4") : ?> checked="checked" <?php endif ?>>
             <label for="lang_s_th-1"></label>
         </div>
     </td>
     <td>
         <div class="radio radio-danger ">
-            <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-2" value="2"<?php if ($ProfilesLanguage->spoken == "2") : ?> checked="checked" <?php endif ?>>
+            <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-2" value="3"<?php if ($ProfilesLanguage->spoken == "3") : ?> checked="checked" <?php endif ?>>
             <label for="lang_s_th-2"></label>
         </div>
     </td>
     <td>
         <div class="radio radio-danger ">
-            <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-3" value="3"<?php if ($ProfilesLanguage->spoken == "3") : ?> checked="checked" <?php endif ?>>
+            <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-3" value="2"<?php if ($ProfilesLanguage->spoken == "2") : ?> checked="checked" <?php endif ?>>
             <label for="lang_s_th-3"></label>
         </div>
     </td>
     <td>
         <div class="radio radio-danger ">
-            <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-4" value="4"<?php if ($ProfilesLanguage->spoken == "4") : ?> checked="checked" <?php endif ?>>
+            <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-4" value="1"<?php if ($ProfilesLanguage->spoken == "1") : ?> checked="checked" <?php endif ?>>
             <label for="lang_s_th-4"></label>
         </div>
     </td>
@@ -1690,25 +1900,25 @@ function editNamehouse_registration(filedoc_id){
        <td><?= Yii::app()->session['lang'] == 1?'Written ':'เขียน'; ?></td>
        <td>
         <div class="radio radio-danger ">
-            <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-1" value="1"<?php if ($ProfilesLanguage->write == "1") : ?> checked="checked" <?php endif ?>>
+            <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-1" value="4"<?php if ($ProfilesLanguage->write == "4") : ?> checked="checked" <?php endif ?>>
             <label for="lang_w_en-1"></label>
         </div>
     </td>
     <td>
         <div class="radio radio-danger ">
-            <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-2" value="2"<?php if ($ProfilesLanguage->write == "2") : ?> checked="checked" <?php endif ?>>
+            <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-2" value="3"<?php if ($ProfilesLanguage->write == "3") : ?> checked="checked" <?php endif ?>>
             <label for="lang_w_en-2"></label>
         </div>
     </td>
     <td>
         <div class="radio radio-danger ">
-            <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-3" value="3"<?php if ($ProfilesLanguage->write == "3") : ?> checked="checked" <?php endif ?>>
+            <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-3" value="2"<?php if ($ProfilesLanguage->write == "2") : ?> checked="checked" <?php endif ?>>
             <label for="lang_w_en-3"></label>
         </div>
     </td>
     <td>
         <div class="radio radio-danger ">
-            <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-4" value="4"<?php if ($ProfilesLanguage->write == "4") : ?> checked="checked" <?php endif ?>>
+            <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-4" value="1"<?php if ($ProfilesLanguage->write == "1") : ?> checked="checked" <?php endif ?>>
             <label for="lang_w_en-4"></label>
         </div>
     </td>
@@ -1717,25 +1927,25 @@ function editNamehouse_registration(filedoc_id){
    <td><?= Yii::app()->session['lang'] == 1?'Spoken ':'พูด'; ?></td>
    <td>
     <div class="radio radio-danger ">
-        <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-5" value="1"<?php if ($ProfilesLanguage->spoken == "1") : ?> checked="checked" <?php endif ?>>
+        <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-5" value="4"<?php if ($ProfilesLanguage->spoken == "4") : ?> checked="checked" <?php endif ?>>
         <label for="lang_s_en-5"></label>
     </div>
 </td>
 <td>
     <div class="radio radio-danger ">
-        <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-6" value="2"<?php if ($ProfilesLanguage->spoken == "2") : ?> checked="checked" <?php endif ?>>
+        <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-6" value="3"<?php if ($ProfilesLanguage->spoken == "3") : ?> checked="checked" <?php endif ?>>
         <label for="lang_s_en-6"></label>
     </div>
 </td>
 <td>
     <div class="radio radio-danger ">
-        <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-7" value="3"<?php if ($ProfilesLanguage->spoken == "3") : ?> checked="checked" <?php endif ?>>
+        <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-7" value="2"<?php if ($ProfilesLanguage->spoken == "2") : ?> checked="checked" <?php endif ?>>
         <label for="lang_s_en-7"></label>
     </div>
 </td>
 <td>
     <div class="radio radio-danger ">
-        <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-8" value="4"<?php if ($ProfilesLanguage->spoken == "4") : ?> checked="checked" <?php endif ?>>
+        <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-8" value="1"<?php if ($ProfilesLanguage->spoken == "1") : ?> checked="checked" <?php endif ?>>
         <label for="lang_s_en-8"></label>
     </div>
 </td>
@@ -1867,7 +2077,7 @@ function editNamehouse_registration(filedoc_id){
      ?>
      <div class="row form_name pt-20 ">
          <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
-         
+
          <div class="col-md-7 col-sm-6 col-xs-12 ">
              <div class="form-group">
                <?php echo $form->textField($ProfilesTraining, '[0]message', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Training name. ':'ชื่อการอบรม')); ?>
@@ -1881,7 +2091,7 @@ function editNamehouse_registration(filedoc_id){
         ?>
         <div class="row del_training">
          <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
-         
+
          <div class="col-md-7 col-sm-6 col-xs-12 ">
             <div class="form-group">
                <?php echo $form->textField($valtn, '['.$keytn.']message', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Training name. ':'ชื่อการอบรม')); ?>
@@ -2018,186 +2228,9 @@ function editNamehouse_registration(filedoc_id){
         </div>  
     </div>
 </div>
-<div class="row  mt-1 mb-1 form_name">
+<!-- <div class="row  mt-1 mb-1 form_name">
     <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'File attachment':'เอกสารแนบไฟล์'; ?><small class="text-danger d-block">(pdf,png,jpg,jpeg)</small></strong></div>
-</div>
-<div class="row  mt-1 mb-1 form_name">
-    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'File attachment passport':'ไฟล์พาสปอร์ต'; ?></strong></div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <div class="input-append">
-
-                <div class="">
-                    <?php echo $form->fileField($AttachName, 'attach_passport', array('id' => 'wizard-picture')); ?>
-                </div>
-            </div>
-        </div>
-        <?php echo $form->error($AttachName, 'attach_passport'); ?>
-        <?php 
-        $passport = Yii::app()->getUploadUrl('attach');
-        $criteria = new CDbCriteria;
-        $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
-        $criteria->addCondition("active ='y'");
-        $criteria->addCondition("file_data ='1'");
-        $Attach_passport_File = AttachFile::model()->find($criteria);
-        if (isset($Attach_passport_File)) {
-            echo '<strong id="file_attach_passporttext'.$Attach_passport_File->id.'">'.$Attach_passport_File->filename.'</strong>';
-            echo '<input id="filename_attach_passport'.$Attach_passport_File->id.'" 
-            class="form-control"
-            type="text" value="'.$Attach_passport_File->filename.'" 
-            style="display:none;" 
-            onblur="editNamepassport('.$Attach_passport_File->id.');">'; 
-            echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
-                'id'=>'btnEditName_attach_passport'.$Attach_passport_File->id,
-                'class'=>'btn-action glyphicons pencil btn-danger',
-                'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                'onclick'=>'$("#file_attach_passporttext'.$Attach_passport_File->id.'").hide(); 
-                $("#filename_attach_passport'.$Attach_passport_File->id.'").show(); 
-                $("#filename_attach_passport'.$Attach_passport_File->id.'").focus(); 
-                $("#btnEditName_attach_passport'.$Attach_passport_File->id.'").hide(); ')); 
-
-            echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
-                'id'=>'btnSaveName_attach_passport'.$Attach_passport_File->id,
-                'class'=>'btn-action glyphicons btn-danger remove_2',
-                'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFilepassport("'.$Attach_passport_File->id.'"); }'));
-        }
-        ?>
-    </div>
-</div>
-
-<div class="row  mt-1 mb-1 form_language">
-    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?' File attachment Crew identification':'ไฟล์หนังสือประจำตัวลูกเรือ'; ?></strong></div>
-    <div class="col-md-4">
-        <div class="form-group">
-
-           <div class="input-append">
-            <div class="">
-                <?php echo $form->fileField($AttachName, 'attach_crew_identification', array('id' => 'wizard-picture')); ?>
-            </div>
-        </div>
-        <?php echo $form->error($AttachName, 'attach_crew_identification'); ?>
-        <?php 
-        $crew_identification = Yii::app()->getUploadUrl('attach');
-        $criteria = new CDbCriteria;
-        $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
-        $criteria->addCondition("active ='y'");
-        $criteria->addCondition("file_data ='2'");
-        $Attach_crew_identification_File = AttachFile::model()->find($criteria);
-        if (isset($Attach_crew_identification_File)) {
-            echo '<strong id="file_crew_identificationtext'.$Attach_crew_identification_File->id.'">'.$Attach_crew_identification_File->filename.'</strong>';
-            echo '<input id="filename_attach_crew_identification'.$Attach_crew_identification_File->id.'" 
-            class="form-control"
-            type="text" value="'.$Attach_crew_identification_File->filename.'" 
-            style="display:none;" 
-            onblur="editNamecrew_identification('.$Attach_crew_identification_File->id.');">'; 
-            echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
-                'id'=>'btnEditName_attach_crew_identification'.$Attach_crew_identification_File->id,
-                'class'=>'btn-action glyphicons pencil btn-danger',
-                'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                'onclick'=>'$("#file_crew_identificationtext'.$Attach_crew_identification_File->id.'").hide(); 
-                $("#filename_attach_crew_identification'.$Attach_crew_identification_File->id.'").show(); 
-                $("#filename_attach_crew_identification'.$Attach_crew_identification_File->id.'").focus(); 
-                $("#btnEditName_attach_crew_identification'.$Attach_crew_identification_File->id.'").hide(); ')); 
-
-            echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
-                'id'=>'btnSaveName_attach_crew_identification'.$Attach_crew_identification_File->id,
-                'class'=>'btn-action glyphicons btn-danger remove_2',
-                'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFilecrew_identification("'.$Attach_crew_identification_File->id.'"); }'));
-        }
-        ?>
-    </div>
-</div>
-</div> 
-<div class="row  mt-1 mb-1 form_name">
-    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'File attachment identification':'ไฟล์สำเนาบัตรประชาชน'; ?></strong></div>
-    <div class="col-md-4">
-        <div class="form-group">
-         <div class="input-append">
-            <div class="">
-                <?php echo $form->fileField($AttachName, 'attach_identification', array('id'=>"wizard-picture")); ?> 
-            </div>
-        </div>
-        <?php echo $form->error($AttachName, 'attach_identification'); ?>
-        <?php 
-        $identification = Yii::app()->getUploadUrl('attach');
-        $criteria = new CDbCriteria;
-        $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
-        $criteria->addCondition("active ='y'");
-        $criteria->addCondition("file_data ='3'");
-        $Attach_identification_File = AttachFile::model()->find($criteria);
-        if (isset($Attach_identification_File)) {
-            echo '<strong id="file_identificationtext'.$Attach_identification_File->id.'">'.$Attach_identification_File->filename.'</strong>';
-            echo '<input id="filename_attach_identification'.$Attach_identification_File->id.'" 
-            class="form-control"
-            type="text" value="'.$Attach_identification_File->filename.'" 
-            style="display:none;" 
-            onblur="editNameidentification('.$Attach_identification_File->id.');">'; 
-            echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
-                'id'=>'btnEditName_attach_identification'.$Attach_identification_File->id,
-                'class'=>'btn-action glyphicons pencil btn-danger',
-                'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                'onclick'=>'$("#file_identificationtext'.$Attach_identification_File->id.'").hide(); 
-                $("#filename_attach_identification'.$Attach_identification_File->id.'").show(); 
-                $("#filename_attach_identification'.$Attach_identification_File->id.'").focus(); 
-                $("#btnEditName_attach_identification'.$Attach_identification_File->id.'").hide(); ')); 
-
-            echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
-                'id'=>'btnSaveName_attach_identification'.$Attach_identification_File->id,
-                'class'=>'btn-action glyphicons btn-danger remove_2',
-                'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFileidentification("'.$Attach_identification_File->id.'"); }'));
-
-        }
-        ?>
-    </div>
-</div>
-</div>
-<div class="row  mt-1 mb-1 form_name">
-    <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'File attachment House registration':'ไฟล์สำเนาทะเบียนบ้าน'; ?></strong></div>
-    <div class="col-md-4">
-        <div class="form-group">
-
-          <div class="input-append">
-            <div class="">
-                <?php echo $form->fileField($AttachName, 'attach_house_registration', array('id'=>"wizard-picture")); ?>
-            </div>
-        </div>
-        <?php echo $form->error($AttachName, 'attach_house_registration'); ?>
-        <?php 
-        $house_registration = Yii::app()->getUploadUrl('attach');
-        $criteria = new CDbCriteria;
-        $criteria->addCondition('user_id ="'.Yii::app()->user->id.'"');
-        $criteria->addCondition("active ='y'");
-        $criteria->addCondition("file_data ='4'");
-        $Attach_house_registration_File = AttachFile::model()->find($criteria);
-        if (isset($Attach_house_registration_File)) {
-            echo '<strong id="file_house_registrationtext'.$Attach_house_registration_File->id.'">'.$Attach_house_registration_File->filename.'</strong>';
-            echo '<input id="filename_attach_house_registration'.$Attach_house_registration_File->id.'" 
-            class="form-control"
-            type="text" value="'.$Attach_house_registration_File->filename.'" 
-            style="display:none;" 
-            onblur="editNamehouse_registration('.$Attach_house_registration_File->id.');">'; 
-            echo CHtml::link('<span class="btn-uploadfile btn-warning"><i class="fa fa-edit"></i></span>','', array('title'=>'แก้ไขชื่อ',
-                'id'=>'btnEditName_attach_house_registration'.$Attach_house_registration_File->id,
-                'class'=>'btn-action glyphicons pencil btn-danger',
-                'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                'onclick'=>'$("#file_house_registrationtext'.$Attach_house_registration_File->id.'").hide(); 
-                $("#filename_attach_house_registration'.$Attach_house_registration_File->id.'").show(); 
-                $("#filename_attach_house_registration'.$Attach_house_registration_File->id.'").focus(); 
-                $("#btnEditName_attach_house_registration'.$Attach_house_registration_File->id.'").hide(); ')); 
-
-            echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
-                'id'=>'btnSaveName_attach_house_registration'.$Attach_house_registration_File->id,
-                'class'=>'btn-action glyphicons btn-danger remove_2',
-                'style'=>'z-index:1; background-color:transparent; cursor:pointer;',
-                'onclick'=>'if(confirm("'.$confirm_del.'")){ deleteFilehouse_registration("'.$Attach_house_registration_File->id.'"); }'));
-        }
-        ?>
-    </div>
-</div>
-</div>
+</div> -->
 
 <div id="office-section_gen">
     <div class="row  mb-1 " id="employee_type" >
@@ -2214,7 +2247,7 @@ function editNamehouse_registration(filedoc_id){
                   foreach ($Department_ship as $keydepart => $valuedepart) {
                      $dep_id[] = $valuedepart->id;
                  }
-                 
+
                  $criteria= new CDbCriteria;
                  $criteria->compare('active','y');
                  $criteria->addInCondition('department_id', $dep_id);
@@ -2449,7 +2482,7 @@ $(add_form_language).click(function(e) {
     if (l < max_fields_language) {
         l++;
         numItems_language++;
-        
+
         var language_name = '<?php echo Yii::app()->session['lang'] == 1?'language ':'ภาษา' ?>';
         var del_language = '<?php echo Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?>';
         var language_Written = '<?php echo Yii::app()->session['lang'] == 1?'Written ':'เขียน' ?>';
@@ -2462,15 +2495,15 @@ $(add_form_language).click(function(e) {
             +'<input type="text" class="form-control" placeholder="' + language_name + '" name="ProfilesLanguage[' + numItems_language + '][language_name]" style="width:100px;line-height:28px;padding: 20px 10px;">'
             +'</td>'
             +'<td>'+language_Written+'</td>'
-            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="1"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
-            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="2"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="4"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
             +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="3"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
-            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="4"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td></tr>'
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="2"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="1"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td></tr>'
             +'<tr><td>'+language_Spoken+'</td>'
-            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="1"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
-            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="2"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="4"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
             +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="3"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
-            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="4"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td></tr>'); //add input box
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="2"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="1"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td></tr>'); //add input box
 
     } else {
         alert('You Reached the limits');
@@ -2667,7 +2700,7 @@ $(function() {
            $('#Profile_address').append(Profile_domicile_address);
            $('#Profile_address').val(Profile_domicile_address);
        }else{
-         
+
            $("#Profile_address").val("");
            if (Profile_address =='') {
                $('#Profile_address').empty();
@@ -2677,7 +2710,7 @@ $(function() {
             $('#Profile_address').empty();
             $('#Profile_address').append(Profile_domicile_address);
             $('#Profile_address').val(Profile_domicile_address);
-            
+
         }                
     }
 }else{
@@ -2712,15 +2745,15 @@ $(".email").change(function() {
                 text_mail: text_mail
             },
             success: function(data) {
-                
+
                 if (data != true) {
                    $(".email").empty();
                    var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
                    var msg ="<?php echo Yii::app()->session['lang'] == 1?'The email name already exists in the database! ':'อีเมลนี้มีผู้ใช้งานแล้ว!'; ?>"; 
                    swal(alert_message,msg);
-                   
+
                }
-               
+
            }
        });
     }
@@ -2736,7 +2769,7 @@ $(".idcard").change(function() {
                 idcard: idcard
             },
             success: function(data) {
-             
+
                 if (data == 'yes') {
                    $(".idcard").empty();
                    var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
@@ -2756,7 +2789,7 @@ $(".idcard").change(function() {
                 swal(alert_message,msg);
                 $(".idcard").val(null);
             }
-            
+
         }
     });
     }
@@ -2859,7 +2892,7 @@ var new_forms = <?php echo $new_form; ?>;
                           $('.Spouse').hide();
                       }              
                   }else if(new_forms === 0 || typeof  new_forms === 'undefined' || new_forms === false){
-                      
+
                    var type_users = $("input[name='type_user']:checked").val();
 
                    if (type_users === '3') {
@@ -2867,7 +2900,7 @@ var new_forms = <?php echo $new_form; ?>;
                     var type_cards = $("input[name='type_card']:checked").val();
                     if (type_cards === 'l') {
                         var branch = <?php echo $branch_js; ?>;
-                        
+
                         if (branch === 1) {
                             $('.Branch').show();
                             $('.label_branch').show();
@@ -3073,9 +3106,9 @@ var new_forms = <?php echo $new_form; ?>;
                             item: item
                         },
                         success: function(data) {
-                            
+
                          if (data == 0) {
-                           
+
                             var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
                             var msg ="<?php echo Yii::app()->session['lang'] == 1?'The date of birth is greater than or equal to the current time! ':'วันเดือนปีเกิดมากกว่าหรือเท่ากับเวลาปัจจุบัน!'; ?>"; 
                             swal(alert_message,msg);

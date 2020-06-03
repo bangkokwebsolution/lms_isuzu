@@ -865,13 +865,7 @@ table .t-edu {
              <td style="text-align:center;">เขียน</td>
              <td style="text-align:center;">
                 <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo$p++; ?>" value="1"<?php if ($vallg["write"] == "1") : ?> checked="checked" <?php endif ?>>
-                    <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
-                </div>
-            </td>
-            <td style="text-align:center;">
-                <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["write"] == "2") : ?> checked="checked" <?php endif ?>>
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo$p++; ?>" value="4"<?php if ($vallg["write"] == "4") : ?> checked="checked" <?php endif ?>>
                     <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
                 </div>
             </td>
@@ -883,7 +877,13 @@ table .t-edu {
             </td>
             <td style="text-align:center;">
                 <div class="radio radio-danger ">
-                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="4"<?php if ($vallg["write"] == "4") : ?> checked="checked" <?php endif ?>>
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["write"] == "2") : ?> checked="checked" <?php endif ?>>
+                    <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
+                </div>
+            </td>
+            <td style="text-align:center;">
+                <div class="radio radio-danger ">
+                    <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="1"<?php if ($vallg["write"] == "1") : ?> checked="checked" <?php endif ?>>
                     <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
                 </div>
             </td>
@@ -893,13 +893,7 @@ table .t-edu {
          <td style="text-align:center;">พูด</td>
          <td style="text-align:center;">
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="1"<?php if ($vallg["spoken"] == "1") : ?> checked="checked" <?php endif ?>>
-                <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
-            </div>
-        </td>
-        <td style="text-align:center;">
-            <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["spoken"] == "2") : ?> checked="checked" <?php endif ?>>
+                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="4"<?php if ($vallg["spoken"] == "4") : ?> checked="checked" <?php endif ?>>
                 <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
             </div>
         </td>
@@ -911,7 +905,13 @@ table .t-edu {
         </td>
         <td style="text-align:center;">
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="4"<?php if ($vallg["spoken"] == "4") : ?> checked="checked" <?php endif ?>>
+                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["spoken"] == "2") : ?> checked="checked" <?php endif ?>>
+                <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
+            </div>
+        </td>
+        <td style="text-align:center;">
+            <div class="radio radio-danger ">
+                <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][spoken]" id="lang_s-<?php echo $i;echo $p++; ?>" value="1"<?php if ($vallg["spoken"] == "1") : ?> checked="checked" <?php endif ?>>
                 <label for="lang_s-<?php echo $i;echo $m++; ?>"></label>
             </div>
         </td>
