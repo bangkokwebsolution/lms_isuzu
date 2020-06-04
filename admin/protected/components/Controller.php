@@ -56,7 +56,32 @@ class Controller extends RController
         //         Yii::app()->end();
         //     }
         // }
+
+        if(Yii::app()->user->id != null){
+        	// var_dump(Yii::app()->request->cookies['token_login']); exit();
+				$this->checkToken(Yii::app()->request->cookies['token_login']->value);
+			}
     }
+
+    private function checkToken($token){
+		$logoutid = User::model()->findByPk(Yii::app()->user->id);
+		if($logoutid->avatar != $token){
+			$this->gotoLogout();
+		}
+	}
+
+	private function gotoLogout()
+	{
+		if(Yii::app()->user->id){
+			Helpers::lib()->getControllerActionId();
+		}
+		$logoutid = Users::model()->findByPk(Yii::app()->user->id);
+		$logoutid->lastvisit_at = date("Y-m-d H:i:s",time()) ;
+		$logoutid->online_status = '0';
+		$logoutid->save(false);
+		Yii::app()->user->logout();
+		$this->redirect(array('site/index'));
+	}
 
     // public static function PButton( $menu = array() )
     // {

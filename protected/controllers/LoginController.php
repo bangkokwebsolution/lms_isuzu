@@ -57,7 +57,7 @@ class LoginController extends Controller
                         $this->redirect(array('registration/Repassword'));
                     }
             $this->lastViset();
-            // $this->saveToken();
+            $this->saveToken();
             // Yii::app()->user->setReturnUrl(Yii::app()->request->urlReferrer);
             if(Yii::app()->user->id){
               Helpers::lib()->getControllerActionId();

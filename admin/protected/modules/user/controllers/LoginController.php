@@ -22,7 +22,6 @@ class LoginController extends Controller
 		if (Yii::app()->user->isGuest) {
 			$model=new UserLogin;
 			// collect user input data
-
 			if(isset($_POST['UserLogin']))
 			{
 				$model->attributes=$_POST['UserLogin'];
@@ -30,6 +29,7 @@ class LoginController extends Controller
 				if($model->validate()) {
 
 					$this->lastViset();
+					$this->saveToken();
 					$this->redirect(array('/site/index'));
 					// if (Yii::app()->user->returnUrl=='/index.php'){
 					// 	$this->redirect(Yii::app()->controller->module->returnUrl);
@@ -44,6 +44,18 @@ class LoginController extends Controller
 		} else
 		$this->redirect(Yii::app()->controller->module->returnUrl);
 	}
+
+	private function saveToken() {
+        $lastVisit = Users::model()->findByPk(Yii::app()->user->id);
+        $token = UserModule::encrypting(time());
+        $lastVisit->avatar = $token;
+        //Set cookie token for login
+        $time = time()+3600; //1 hr.
+        $cookie = new CHttpCookie('token_login', $token); //set value
+        $cookie->expire = $time; 
+        Yii::app()->request->cookies['token_login'] = $cookie;
+        $lastVisit->save(false);
+      }
 
 	// private function ldapTms($email){
 	// 	$ldap_host = '172.30.110.111';

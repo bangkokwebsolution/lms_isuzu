@@ -16,10 +16,12 @@ class LogoutController extends Controller
 	public function actionLogout()
 	{
 		$logoutid = User::model()->notsafe()->findByPk(Yii::app()->user->id);
-        $logoutid->lastvisit_at = date("Y-m-d H:i:s",time()) ;
-        $logoutid->online_status = '0';
-        $logoutid->save(false);
-		Yii::app()->user->logout();
+		if($logoutid != ""){
+			$logoutid->lastvisit_at = date("Y-m-d H:i:s",time()) ;
+			$logoutid->online_status = '0';
+			$logoutid->save(false);
+			Yii::app()->user->logout();
+		}
 		$this->redirect(Yii::app()->controller->module->returnLogoutUrl);
 	}
 
