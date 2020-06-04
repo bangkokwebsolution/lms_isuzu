@@ -52,10 +52,10 @@ class CourseGeneration extends CActiveRecord
 			array('course_id, gen_person, create_by, update_by, gen_title', 'numerical', 'integerOnly'=>true),
 			// array('gen_title', 'length', 'max'=>255),
 			array('status, active', 'length', 'max'=>1),
-			array('gen_period_start, gen_period_end, create_date, update_date, gen_detail', 'safe'),
+			array('gen_period_start, gen_period_end, create_date, update_date, gen_detail, gen_detail_en', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('gen_id, course_id, gen_period_start, gen_period_end, gen_title, gen_person, status, active, create_date, create_by, update_date, update_by, gen_detail', 'safe', 'on'=>'search'),
+			array('gen_id, course_id, gen_period_start, gen_period_end, gen_title, gen_person, status, active, create_date, create_by, update_date, update_by, gen_detail, gen_detail_en', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -91,7 +91,8 @@ class CourseGeneration extends CActiveRecord
 			'active' => 'active',
 			'status' => 'สถานะ',
 			'gen_person' => 'จำนวนคน',
-			'gen_detail' => 'รายละเอียด',
+			'gen_detail' => 'รายละเอียด (ภาษาไทย)',
+			'gen_detail_en' => 'รายละเอียด (ภาษาอังกฤษ)',
 
 		);
 	}
@@ -126,7 +127,8 @@ class CourseGeneration extends CActiveRecord
 		$criteria->compare('create_by',$this->create_by);
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by);
-		$criteria->compare('gen_detail',$this->gen_detail);
+		$criteria->compare('gen_detail',$this->gen_detail,true);
+		$criteria->compare('gen_detail_en',$this->gen_detail_en,true);
 
 		$poviderArray = array('criteria'=>$criteria);
 

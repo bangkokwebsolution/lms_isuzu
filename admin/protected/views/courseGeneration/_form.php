@@ -37,9 +37,13 @@
 				</div>
 				<div class="row">
 					<?php echo $form->labelEx($model,'gen_detail'); ?>
-					<?php //echo $form->labelEx($model,'gen_title'); ?>
 					<?php echo $form->textField($model,'gen_detail',array('size'=>60, 'class'=>'span8')); ?>
 					<?php echo $form->error($model,'gen_detail'); ?>
+				</div>
+				<div class="row">
+					<?php echo $form->labelEx($model,'gen_detail_en'); ?>
+					<?php echo $form->textField($model,'gen_detail_en',array('size'=>60, 'class'=>'span8')); ?>
+					<?php echo $form->error($model,'gen_detail_en'); ?>
 				</div>
 
 				<div class="row">

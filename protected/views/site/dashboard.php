@@ -181,7 +181,7 @@ function CourseShowStatus($flag, $langId, $value, $gen_id){
     }    
     ?>
     <tr>
-        <td class="text-left" style="text-align: left;"><span class="text23"><?= $value->course_title ?> <?php if($gen_id != "0"){ if($langId != 1){echo "รุ่น "; }else{ echo "gen "; } echo $CourseGeneration->gen_title; } ?></span></td>
+        <td class="text-left" style="text-align: left;"><span class="text23"><?= $value->course_title ?> <?php if($gen_id != "0"){ if($langId != 1){echo "รุ่น "; }else{ echo "gen "; } echo $CourseGeneration->gen_title; if($langId != 1){echo " ".$CourseGeneration->gen_detail; }else{ echo " ".$CourseGeneration->gen_detail_en; } } ?></span></td>
         <td width="50%" style="border-right: none;">
 
          <div class="progress">
@@ -313,7 +313,7 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
                         <div class="panel-heading" role="tab" id="headingTwo">
                             <h4 class="text1">
                                 <a <?php echo $text_cursor_context_menu; ?> role="button" <?= (!$checkStatus)? 'data-toggle="collapse"':'' ?>  data-parent="#accordion2" href="<?= $herf; ?>" aria-expanded="true" aria-controls="collapseOne" class="">
-                                <span class="head_titledash"><?= $status_button ?> <i class="fa fa-book"></i>  <?=  $label->label_course ?> <?= $value->course_title ?> <?php if($gen_id != "0"){ if($langId != 1){echo "รุ่น "; }else{ echo "gen "; } echo $CourseGeneration->gen_title; } echo " ".$text_status_study; ?></span> <span class="pull-right"><i class="fa fa-angle-down" style="margin-top: 7px;"></i></span> <div class="pull-right" style="margin-right: 15px">
+                                <span class="head_titledash"><?= $status_button ?> <i class="fa fa-book"></i>  <?=  $label->label_course ?> <?= $value->course_title ?> <?php if($gen_id != "0"){ if($langId != 1){echo "รุ่น "; }else{ echo "gen "; } echo $CourseGeneration->gen_title; if($langId != 1){echo " ".$CourseGeneration->gen_detail; }else{ echo " ".$CourseGeneration->gen_detail_en; } } echo " ".$text_status_study; ?></span> <span class="pull-right"><i class="fa fa-angle-down" style="margin-top: 7px;"></i></span> <div class="pull-right" style="margin-right: 15px">
                                     <?php if(empty($data->CourseOnlines->Schedules) && $passCourse != null){
                                         // var_dump($passCourse); exit();
                                      ?>

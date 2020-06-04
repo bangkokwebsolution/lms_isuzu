@@ -147,9 +147,9 @@ class CourseOnline extends CActiveRecord implements IECartPosition
 		if(!empty($model)){
 			foreach ($model as $key => $value) {				
 				if(Yii::app()->session['lang'] != 1){
-					$text_gen = " รุ่น ".$value->gen_title;
+					$text_gen = " รุ่น ".$value->gen_title." ".$CourseGeneration->gen_detail;
 				}else{
-					$text_gen = " gen ".$value->gen_title;
+					$text_gen = " gen ".$value->gen_title." ".$CourseGeneration->gen_detail_en;
 				}
 				break;
 			}
