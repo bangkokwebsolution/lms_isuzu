@@ -81,6 +81,7 @@ EOD
 							}
 						),
 						'gen_title',
+						'gen_detail',
 						// array(
 						// 	'type'=>'raw',
 						// 	'value'=>function($data){

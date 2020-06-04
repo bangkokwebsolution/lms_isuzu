@@ -68,6 +68,7 @@ class CourseGenerationController extends Controller
 			if(isset($_POST['CourseGeneration']))
 			{
 				$model->attributes=$_POST['CourseGeneration'];
+				
 				if($_POST['CourseGeneration']['gen_period_start'] == ""){
 					$model->gen_period_start = null;
 				}
@@ -115,7 +116,9 @@ class CourseGenerationController extends Controller
 
 		if(isset($_POST['CourseGeneration']))
 			{
-				$model->attributes=$_POST['CourseGeneration'];
+				$model->attributes = $_POST['CourseGeneration'];
+				$model->gen_detail = $_POST['CourseGeneration']['gen_detail'];
+
 				if($_POST['CourseGeneration']['gen_period_start'] == ""){
 					$model->gen_period_start = null;
 				}
