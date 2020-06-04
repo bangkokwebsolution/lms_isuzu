@@ -457,7 +457,7 @@ $cancel_msg = UserModule::t('Cancel');
                                       foreach ($arr_file_list as $keyy => $valuee) {
                                         ?>
                                         <div id="table_note_<?php echo $keyy; ?>" style="display: none;"> 
-                                            <h4 class="title-note" onclick="show_note(<?php echo $keyy; ?>);"><i class="fas fa-file-video"></i><?php echo $valuee; ?></h4>
+                                            <h4 class="title-note" onclick="show_note(<?php echo $keyy; ?>);" style="cursor: pointer;"><i class="fas fa-file-video"></i><?php echo $valuee; ?></h4>
                                             <table class="table table-hover table-note" id="id_tablenote_<?php echo $keyy; ?>" status-show="2">
                                               <thead>
                                                 <tr>
