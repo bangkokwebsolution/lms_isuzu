@@ -182,6 +182,20 @@ class CourseOnline extends CActiveRecord implements IECartPosition
 		return $text_gen;
 	}
 
+	public function getNumGen($gen_id){
+
+		$text_gen = 0;		
+		$today = date("Y-m-d H:i:s");
+
+		$model = CourseGeneration::Model()->findByPk($gen_id);
+
+		if($model != ""){
+			$text_gen = $model->gen_person;
+		}
+
+		return $text_gen;
+	}
+
     public function getCountLesson()
     {
 		$count = Lesson::Model()->count("course_id=:course_id AND active=:active", array(

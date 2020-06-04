@@ -1196,6 +1196,21 @@ public function actionDetail($id) {
                     'params' => array(':course_id' => $id, ':user_id' => Yii::app()->user->id , ':active' => 'y', ':gen_id'=>$gen_id)
                 ));
 
+                /// เช็ค จำนวน คนสมัคร หลักสูตร
+                $log_startcourse = LogStartcourse::model()->findAll(array(
+                    'condition'=>'course_id=:course_id AND active=:active AND gen_id=:gen_id',
+                    'params' => array(':course_id' => $course_model->course_id, ':active' => 'y', ':gen_id'=>$gen_id)
+                ));
+                $num_regis = 0;
+
+                if(!empty($log_startcourse)){
+                    $num_regis = count($log_startcourse); // จำนวน ที่สมัครไปแล้ว
+                }
+                if($gen_id != 0){
+                    $gen_person = $course_model->getNumGen($gen_id); // จำนวน สมัครได้ทั้งหมด
+                }                
+                ///////////////////////////////////////////////
+
     // $Endlearncourse = helpers::lib()->getEndlearncourse($course->course_day_learn);
 
                 if (empty($logtime)) {
@@ -1203,30 +1218,47 @@ public function actionDetail($id) {
         // if($course->Schedules){ //Check LMS or TMS
         //     $course->course_date_end = $course->Schedules->training_date_end;
         // }
+                    if($gen_person > $num_regis ||  $gen_id == 0){
+                        $now = date('Y-m-d H:i:s');
+                        $Endlearncourse = strtotime("+".$course->course_day_learn." day", strtotime($now));                    
+                        $Endlearncourse = date("Y-m-d", $Endlearncourse);
 
-                    $now = date('Y-m-d H:i:s');
-                    $Endlearncourse = strtotime("+".$course->course_day_learn." day", strtotime($now));                    
-                    $Endlearncourse = date("Y-m-d", $Endlearncourse);
-
-                    $logtime = new LogStartcourse;
-                    $logtime->user_id = Yii::app()->user->id;
-                    $logtime->course_id = $id;
+                        $logtime = new LogStartcourse;
+                        $logtime->user_id = Yii::app()->user->id;
+                        $logtime->course_id = $id;
             // $logtime->start_date = new CDbExpression('NOW()');
-                    $logtime->start_date = $now;
-                    $logtime->end_date = $Endlearncourse;
-                    $logtime->course_day = $course->course_day_learn;
-                    $logtime->gen_id = $gen_id;
-                    $logtime->save();
+                        $logtime->start_date = $now;
+                        $logtime->end_date = $Endlearncourse;
+                        $logtime->course_day = $course->course_day_learn;
+                        $logtime->gen_id = $gen_id;
+                        $logtime->save();
+                    }else{
+                        Yii::app()->user->setFlash('msg', 'หลักสูตรเต็มแล้ว');
+                        $this->redirect(array('course/index'));
+                    }
 
-                }else if($logtime->course_day != $course->course_day_learn) {
+                    
 
-                    $Endlearncourse = strtotime("+".$course->course_day_learn." day", strtotime($logtime->start_date));
-                    $Endlearncourse = date("Y-m-d", $Endlearncourse);
+                }else if(!empty($logtime)){
+                    if($logtime->course_day != $course->course_day_learn) {
 
-                    $logtime->end_date = $Endlearncourse;
-                    $logtime->course_day = $course->course_day_learn;
-                    $logtime->save();
+                        $Endlearncourse = strtotime("+".$course->course_day_learn." day", strtotime($logtime->start_date));
+                        $Endlearncourse = date("Y-m-d", $Endlearncourse);
+
+                        $logtime->end_date = $Endlearncourse;
+                        $logtime->course_day = $course->course_day_learn;
+                        $logtime->save();
+                    }
                 }
+                // else if($logtime->course_day != $course->course_day_learn) {
+
+                //     $Endlearncourse = strtotime("+".$course->course_day_learn." day", strtotime($logtime->start_date));
+                //     $Endlearncourse = date("Y-m-d", $Endlearncourse);
+
+                //     $logtime->end_date = $Endlearncourse;
+                //     $logtime->course_day = $course->course_day_learn;
+                //     $logtime->save();
+                // }
 
             }
 

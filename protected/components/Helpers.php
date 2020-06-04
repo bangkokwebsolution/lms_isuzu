@@ -2978,7 +2978,22 @@ public function sendApiLms($scheduleMain,$scheduleId)
             'params' => array(':passcours_cours' => $course_id, ':passcours_user' => $user_id, ':gen_id'=>$gen_id)
         ));
 
-        if (empty($logtime) ) {
+
+        $log_startcourse = LogStartcourse::model()->findAll(array(
+            'condition'=>'course_id=:course_id AND active=:active AND gen_id=:gen_id',
+            'params' => array(':course_id' => $course_id, ':active' => 'y', ':gen_id'=>$gen_id)
+        ));
+        $num_regis = 0;
+
+        if(!empty($log_startcourse)){
+            $num_regis = count($log_startcourse); // จำนวน ที่สมัครไปแล้ว
+        }
+
+        if($gen_id != 0){
+            $gen_person = $course_model->getNumGen($gen_id); // จำนวน สมัครได้ทั้งหมด
+        }
+
+        if (empty($logtime) && ( ($gen_person > $num_regis) || $gen_id == 0) ) {
             $logtime = new LogStartcourse;
             $logtime->user_id = Yii::app()->user->id;
             $logtime->course_id = $course_id;
