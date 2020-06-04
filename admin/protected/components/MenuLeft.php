@@ -667,7 +667,7 @@ Class MenuLeft extends Controller
                    'VirtualClassroom.*',
                    'VirtualClassroom.Index',
                 )),
-                'label'=>'<i></i><span>Virtual Classroom</span>',
+                'label'=>'<i></i><span>mess-room</span>',
                                 'url'=>'#VirtualClassroom',
                 'linkOptions' => array('data-toggle' => 'collapse'),
                 'itemOptions' => array('class' => 'hasSubmenu glyphicons eye_open'),

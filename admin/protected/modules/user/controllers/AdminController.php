@@ -97,6 +97,22 @@ class AdminController extends Controller
  //            echo "<option value=''> เลือกตำแหน่ง</option>";
  //        }
  //    }
+   private function RandomPassword(){
+
+            $number="abcdefghijklmnopqrstuvwxyz0123456789";
+            $i = '';
+            $result = '';
+        for($i==1;$i<6;$i++){ // จำนวนหลักที่ต้องการสามารถเปลี่ยนได้ตามใจชอบนะครับ จาก 5 เป็น 3 หรือ 6 หรือ 10 เป็นต้น
+            $random=rand(0,strlen($number)-1); //สุ่มตัวเลข
+            $cut_txt=substr($number,$random,1); //ตัดตัวเลข หรือ ตัวอักษรจากตำแหน่งที่สุ่มได้มา 1 ตัว
+            $result.=substr($number,$random,1); // เก็บค่าที่ตัดมาแล้วใส่ตัวแปร
+            $number=str_replace($cut_txt,'',$number); // ลบ หรือ แทนที่ตัวอักษร หรือ ตัวเลขนั้นด้วยค่า ว่าง
+        }
+
+        return $result;
+
+    }
+
 public function actionListPosition(){
 
      $model=Position::model()->findAll('department_id=:department_id',
@@ -345,7 +361,9 @@ echo ($data);
 		} else {
 			$model->register_status = 0;
 		}
-		$genpass = substr($model->identification, -6);
+        $genpass = $this->RandomPassword();
+		$model->verifyPassword = $genpass;
+		$model->password = UserModule::encrypting($genpass);
 		$model->username = $model->identification;
 		$model->save(false);
 		if(Yii::app()->user->id){
@@ -761,18 +779,18 @@ echo ($data);
 		));//*/
 	}
 
-	private function RandomPassword(){
-		$number="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		$i = '';
-		$result = '';
-		for($i==1;$i<8;$i++){ // จำนวนหลักที่ต้องการสามารถเปลี่ยนได้ตามใจชอบนะครับ จาก 5 เป็น 3 หรือ 6 หรือ 10 เป็นต้น
-			$random=rand(0,strlen($number)-1); //สุ่มตัวเลข
-			$cut_txt=substr($number,$random,1); //ตัดตัวเลข หรือ ตัวอักษรจากตำแหน่งที่สุ่มได้มา 1 ตัว
-			$result.=substr($number,$random,1); // เก็บค่าที่ตัดมาแล้วใส่ตัวแปร
-			$number=str_replace($cut_txt,'',$number); // ลบ หรือ แทนที่ตัวอักษร หรือ ตัวเลขนั้นด้วยค่า ว่าง
-		}
-		return $result;
-	}
+	// private function RandomPassword(){
+	// 	$number="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	// 	$i = '';
+	// 	$result = '';
+	// 	for($i==1;$i<8;$i++){ // จำนวนหลักที่ต้องการสามารถเปลี่ยนได้ตามใจชอบนะครับ จาก 5 เป็น 3 หรือ 6 หรือ 10 เป็นต้น
+	// 		$random=rand(0,strlen($number)-1); //สุ่มตัวเลข
+	// 		$cut_txt=substr($number,$random,1); //ตัดตัวเลข หรือ ตัวอักษรจากตำแหน่งที่สุ่มได้มา 1 ตัว
+	// 		$result.=substr($number,$random,1); // เก็บค่าที่ตัดมาแล้วใส่ตัวแปร
+	// 		$number=str_replace($cut_txt,'',$number); // ลบ หรือ แทนที่ตัวอักษร หรือ ตัวเลขนั้นด้วยค่า ว่าง
+	// 	}
+	// 	return $result;
+	// }
 
 
 	public function actionExcelOld()
