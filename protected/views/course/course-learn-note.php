@@ -53,6 +53,8 @@ $cancel_msg = UserModule::t('Cancel');
     init_knob();
         // $('audio').audioPlayer();
   show_collapse("<?php echo $_GET['file']; ?>"); // เปิดแถบวิดีโอ ตาม file ที่คลิ๊ก
+  $("#id_tablenote_"+"<?php echo $_GET['file']; ?>").attr("status-show", 1);
+  $("#id_tablenote_"+"<?php echo $_GET['file']; ?>").show();
       });
   function show_div_note(file_id){
     $("#table_note_"+file_id).show();
@@ -455,8 +457,8 @@ $cancel_msg = UserModule::t('Cancel');
                                       foreach ($arr_file_list as $keyy => $valuee) {
                                         ?>
                                         <div id="table_note_<?php echo $keyy; ?>" style="display: none;"> 
-                                            <h4 class="title-note"><i class="fas fa-file-video"></i><?php echo $valuee; ?></h4>
-                                            <table class="table table-hover table-note">
+                                            <h4 class="title-note" onclick="show_note(<?php echo $keyy; ?>);"><i class="fas fa-file-video"></i><?php echo $valuee; ?></h4>
+                                            <table class="table table-hover table-note" id="id_tablenote_<?php echo $keyy; ?>" status-show="2">
                                               <thead>
                                                 <tr>
                                                   <th scope="col" width="20%" class="text-center"><i class="far fa-clock"></i> เวลา</th>
@@ -3583,6 +3585,16 @@ function time_test_start(time_down){
                       }
                     });
 
+                  }
+
+                  function show_note(file_id){
+                    if($("#id_tablenote_"+file_id).attr("status-show") == 2){
+                      $("#id_tablenote_"+file_id).attr("status-show", 1);
+                      $("#id_tablenote_"+file_id).show();
+                    }else{
+                      $("#id_tablenote_"+file_id).attr("status-show", 2);
+                      $("#id_tablenote_"+file_id).hide();
+                    }
                   }
 
 
