@@ -339,7 +339,7 @@ class CourseOnline extends AActiveRecord
 		$criteria->compare('courseonline.lang_id',$this->lang_id,true);
 		$criteria->compare('courseonline.parent_id',0);
 		
-		$criteria->order = 'courseonline.create_date DESC';
+		$criteria->order = 'sortOrder ASC';
 
 		if (!empty($this->searchCourse))
 		{

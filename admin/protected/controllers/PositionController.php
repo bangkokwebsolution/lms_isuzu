@@ -71,26 +71,15 @@ class PositionController extends Controller
 				$newOrgChart->save();
 
 				$model->attributes=$_POST['Position'];
-
-				$sortOrder_model = Department::model()->find(array(
-					'condition' => 'active=:active',
-					'params' => array(':active' => 'y'),
-					'order' => 'sortOrder DESC'
-				));
-
-				if($sortOrder_model != ""){
-					$n_sortOrder = ($sortOrder_model->sortOrder)+1;
-				}else{
-					$n_sortOrder = 1;
-				}
-				$model->sortOrder = $n_sortOrder;
-
 				if($model->validate())
 				{
 				if($model->save()){
 					$newOrgChart->position_id = $model->id;
 					$newOrgChart->department_id = $department_id;
 					$newOrgChart->save();
+
+					$model->sortOrder = $model->id;
+					$model->save();
 
 
 					if(Yii::app()->user->id){
@@ -242,31 +231,27 @@ class PositionController extends Controller
 
 	public function actionSequence() {
 		if (isset($_POST['items']) && is_array($_POST['items'])) {
-			// Get all current target items to retrieve available sortOrders
+
 			$cur_items = Position::model()->findAllByPk($_POST['items'], array('order'=>'sortOrder'));
-			// Check 1 by 1 and update if neccessary
+
 			for ($i = 0; $i < count($_POST['items']); $i++) {
 				$item = Position::model()->findByPk($_POST['items'][$i]);
 				if ($item->sortOrder != $cur_items[$i]->sortOrder) {
 					$item->sortOrder = $cur_items[$i]->sortOrder ;
 					$item->save();
 
-
 					$org_1 = OrgChart::model()->find(array(
-					'condition' => 'active=:active AND department_id=:department_id AND position_id IS NULL AND branch_id IS NULL',
-					'params' => array(':active' => 'y', ':department_id'=>$item->id),
+					'condition' => 'active=:active AND position_id=:position_id AND branch_id IS NULL',
+					'params' => array(':active' => 'y', ':position_id'=>$item->id),
 				));
 
 					$org_2 = OrgChart::model()->find(array(
-					'condition' => 'active=:active AND department_id=:department_id AND position_id IS NULL AND branch_id IS NULL',
-					'params' => array(':active' => 'y', ':department_id'=>$cur_items[$i]->id),
+					'condition' => 'active=:active AND position_id=:position_id AND branch_id IS NULL',
+					'params' => array(':active' => 'y', ':position_id'=>$cur_items[$i]->id),
 				));
 
 					$org_1->sortOrder = $org_2->id;
-					var_dump($org_2->sortOrder);
-					// $org_2->sortOrder = $org_1->sortOrder;
 					$org_1->save();
-					// $org_2->save();
 				}
 			}
 		}
