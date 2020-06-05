@@ -1736,6 +1736,9 @@ public function actionDetail($id) {
                 'bgPath' => $certDetail->certificate->cert_background,
                 'pageFormat' => $pageFormat,
                 'pageSide' => $certDetail->certificate->cert_display,
+                'user' => $UserId,
+                'course' => $course_model->course_id,
+                'gen' => $gen_id
             );
 
 

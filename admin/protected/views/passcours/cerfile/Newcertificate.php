@@ -80,6 +80,9 @@
     <?php echo $model['positionSign2']; ?>
     </div>
 <?php } ?>
+<div style="position:absolute; top: 231mm; right: -285px;">
+    <img width="120px" src="<?php echo Yii::app()->basePath."/../uploads/qrcode_cer/".$model['user']."_".$model['course']."_".$model['gen'].".png" ?>" >
+</div>
 <?php
     } else { // แนวนอน
         ?>
@@ -123,7 +126,9 @@
     <?php echo $model['positionSign2']; ?>
     </div>
 <?php } ?>
-
+<div style="position:absolute; top: 163mm; right: -375px;">
+    <img width="120px" src="<?php echo Yii::app()->basePath."/../uploads/qrcode_cer/".$model['user']."_".$model['course']."_".$model['gen'].".png" ?>" >
+</div>
 <div style="position:absolute; top: 180mm; right: -130px ">
     <div class="size18"><?php echo $model['format_date_pass2']; ?></div>
 </div>

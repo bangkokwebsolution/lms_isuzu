@@ -331,6 +331,9 @@ class PasscoursController extends Controller
 	    		'num_pass' => $num_pass,
 	    		'companyUser' => $companyUser,
 	    		'pageSide' => $pageSide,
+	    		'user' => $UserId,
+                'course' => $PassCoursId,
+                'gen' => $gen_id
 	    		);
 	    	// // var_dump($model->identification);exit();
 	    	// //Print
