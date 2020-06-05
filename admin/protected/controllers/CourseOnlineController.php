@@ -365,6 +365,18 @@ class CourseOnlineController extends Controller
     public function actionUpdate($id)
     {
     	$model = $this->loadModel($id);
+    	////////////////// group id 7 และเป็นคนสร้าง ถึงจะเห็น
+            $check_user = User::model()->findByPk(Yii::app()->user->id);
+            $group = $check_user->group;
+            $group_arr = json_decode($group);
+            $see_all = 2;
+            if(in_array("1", $group_arr) || in_array("7", $group_arr)){
+                $see_all = 1;
+            }
+            //////////////////
+            if($see_all == 1 || $model->create_by == Yii::app()->user->id){
+
+    	
     	$model->course_rector_date = ClassFunction::UpdateDate($model->course_rector_date);
     	$model->course_book_date = ClassFunction::UpdateDate($model->course_book_date);
     	$model->course_date_start = date_format(date_create($model->course_date_start), "Y-m-d H:i");
@@ -465,12 +477,26 @@ class CourseOnlineController extends Controller
 			'model'=>$model,
 			'imageShow'=>$imageShow
 		));
+		}
+        $this->redirect(array('index'));
 	}
 
 	public function actionDelete($id)
 	{
-		//$this->loadModel($id)->delete();
 		$model = $this->loadModel($id);
+		////////////////// group id 7 และเป็นคนสร้าง ถึงจะเห็น
+            $check_user = User::model()->findByPk(Yii::app()->user->id);
+            $group = $check_user->group;
+            $group_arr = json_decode($group);
+            $see_all = 2;
+            if(in_array("1", $group_arr) || in_array("7", $group_arr)){
+                $see_all = 1;
+            }
+            //////////////////
+            if($see_all == 1 || $model->create_by == Yii::app()->user->id){
+
+		//$this->loadModel($id)->delete();
+		
 
 		$parent_id = $model->course_id;
         $modelChildren = CourseOnline::model()->findAll(array(
@@ -502,6 +528,9 @@ class CourseOnlineController extends Controller
 
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+
+		}
+        $this->redirect(array('index'));
 	}
 
 	public function actionMultiDelete()
@@ -510,6 +539,7 @@ class CourseOnlineController extends Controller
 		if(isset($_POST['chk'])) {
 			foreach($_POST['chk'] as $val) {
 				$this->actionDelete($val);
+			
 			}
 		}
 	}

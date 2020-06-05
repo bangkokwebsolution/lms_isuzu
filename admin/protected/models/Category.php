@@ -86,12 +86,32 @@ class Category extends AActiveRecord
 		$criteria->compare('cate_detail',$this->cate_detail,true);
 		$criteria->compare('cate_show',$this->cate_show,true);
 		$criteria->compare('create_date',$this->create_date,true);
-		$criteria->compare('create_by',$this->create_by);
+
+		////////////////// group id 7 และเป็นคนสร้าง ถึงจะเห็น
+		$check_user = User::model()->findByPk(Yii::app()->user->id);
+		$group = $check_user->group;
+		$group_arr = json_decode($group);
+		$see_all = 2;
+		if(in_array("1", $group_arr) || in_array("7", $group_arr)){
+			$see_all = 1;
+		}
+            //////////////////
+		if($see_all != 1){
+			$criteria->compare('create_by',Yii::app()->user->id);
+		}else{
+			$criteria->compare('create_by',$this->create_by);
+		}
+		
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('parent_id',0);
 		$poviderArray = array('criteria'=>$criteria);
+
+
+		
+
+
 
 		// Page
 		if(isset($this->news_per_page))

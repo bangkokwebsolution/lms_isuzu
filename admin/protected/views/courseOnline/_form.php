@@ -109,9 +109,24 @@
 						$attTime = array('class' => 'default_datetimepicker','autocomplete'=>'off');
 						$dis =  'onclick="return true;"';
 						$attOnlyTime = array('class' => 'default_datetimepicker_time');
-						$modelList = Category::model()->findAll(array(
-							"condition"=>" active = 'y' and lang_id = 1"));
+						////////////////// group id 7 และเป็นคนสร้าง ถึงจะเห็น
+						$check_user = User::model()->findByPk(Yii::app()->user->id);
+						$group = $check_user->group;
+						$group_arr = json_decode($group);
+						$see_all = 2;
+						if(in_array("1", $group_arr) || in_array("7", $group_arr)){
+							$see_all = 1;
+						}
+            //////////////////
+						if($see_all != 1){
+							$modelList = Category::model()->findAll(array(
+								"condition"=>" active = 'y' and lang_id = 1 and create_by='".Yii::app()->user->id."'"));
+						}else{
+							$modelList = Category::model()->findAll(array(
+								"condition"=>" active = 'y' and lang_id = 1"));
+						}
 						$attSearch = array("class"=>"form-control span8",'disable_search' => false);
+					
                     }else{ //Insert Multi lang
                     	$state = true;
                     	$modelChildren = $model;

@@ -30,18 +30,45 @@ EOD
 ?>
 
 <div class="innerLR">
-	<?php $this->widget('AdvanceSearchForm', array(
+	<?php 
+	////////////////// group id 7 และเป็นคนสร้าง ถึงจะเห็น
+	$check_user = User::model()->findByPk(Yii::app()->user->id);
+	$group = $check_user->group;
+	$group_arr = json_decode($group);
+	$see_all = 2;
+	if(in_array("1", $group_arr) || in_array("7", $group_arr)){
+		$see_all = 1;
+	}
+                        //////////////////
+	if($see_all != 1){
+	$this->widget('AdvanceSearchForm', array(
 		'data'=>$model,
 		'route' => $this->route,
 		'attributes'=>array(
 			array(
 				'type'=>'list',
-				'name'=>'course_id',
-				'query'=>CHtml::listData(CourseOnline::model()->findAll(),'course_id', 'course_title')
+				'name'=>'course_id',				
+				'query'=>CHtml::listData(CourseOnline::model()->findAll("active='y' and create_by='".Yii::app()->user->id."'"),'course_id', 'course_title')
 			),
 			array('name'=>'title','type'=>'text'),
 		),
-	));?>
+	));
+}else{
+	$this->widget('AdvanceSearchForm', array(
+		'data'=>$model,
+		'route' => $this->route,
+		'attributes'=>array(
+			array(
+				'type'=>'list',
+				'name'=>'course_id',				
+				'query'=>CHtml::listData(CourseOnline::model()->findAll("active='y'"),'course_id', 'course_title')
+			),
+			array('name'=>'title','type'=>'text'),
+		),
+	));
+}
+
+	?>
 
 	<div class="widget" style="margin-top: -1px;">
 		<div class="widget-head">

@@ -72,7 +72,19 @@ class GrouptestingController extends Controller
 
     public function actionUpdate($id)
     {
-    	$model=$this->loadModel($id);
+        $model=$this->loadModel($id);
+
+        ////////////////// group id 7 และเป็นคนสร้าง ถึงจะเห็น
+            $check_user = User::model()->findByPk(Yii::app()->user->id);
+            $group = $check_user->group;
+            $group_arr = json_decode($group);
+            $see_all = 2;
+            if(in_array("1", $group_arr) || in_array("7", $group_arr)){
+                $see_all = 1;
+            }
+            //////////////////
+            if($see_all == 1 || $model->create_by == Yii::app()->user->id){
+    	
 
     	if(isset($_POST['Grouptesting']))
     	{
@@ -89,12 +101,25 @@ class GrouptestingController extends Controller
     	$this->render('update',array(
     		'model'=>$model,
     	));
+        }
+        $this->redirect(array('index'));
     }
 
     public function actionDelete($id)
     {
+        $model = $this->loadModel($id);
+        ////////////////// group id 7 และเป็นคนสร้าง ถึงจะเห็น
+            $check_user = User::model()->findByPk(Yii::app()->user->id);
+            $group = $check_user->group;
+            $group_arr = json_decode($group);
+            $see_all = 2;
+            if(in_array("1", $group_arr) || in_array("7", $group_arr)){
+                $see_all = 1;
+            }
+            //////////////////
+            if($see_all == 1 || $model->create_by == Yii::app()->user->id){
 		//$this->loadModel($id)->delete();
-    	$model = $this->loadModel($id);
+    	
     	$model->active = 'n';
     	$model->save();
 
@@ -110,6 +135,9 @@ class GrouptestingController extends Controller
     	}
     	if(!isset($_GET['ajax']))
     		$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+
+        }
+        $this->redirect(array('index'));
     }
 
     public function actionMultiDelete()
@@ -120,6 +148,7 @@ class GrouptestingController extends Controller
     		foreach($_POST['chk'] as $val) 
     		{
     			$this->actionDelete($val);
+            
     		}
     	}
     }

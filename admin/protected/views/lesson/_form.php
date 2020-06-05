@@ -251,7 +251,22 @@ body {
                         $parent_id = isset($_GET['parent_id']) ? $_GET['parent_id'] : 0 ;
                         $modelLang = Language::model()->findByPk($lang_id);
 
-                        $courseAll = CHtml::listData(CourseOnline::model()->findAll('active="y" and lang_id = '.$lang_id), 'course_id', 'CoursetitleConcat');
+                        // $courseAll = CHtml::listData(CourseOnline::model()->findAll('active="y" and lang_id = '.$lang_id), 'course_id', 'CoursetitleConcat');
+
+                        ////////////////// group id 7 และเป็นคนสร้าง ถึงจะเห็น
+                        $check_user = User::model()->findByPk(Yii::app()->user->id);
+                        $group = $check_user->group;
+                        $group_arr = json_decode($group);
+                        $see_all = 2;
+                        if(in_array("1", $group_arr) || in_array("7", $group_arr)){
+                            $see_all = 1;
+                        }
+                        //////////////////
+                        if($see_all != 1){
+                            $courseAll = CHtml::listData(CourseOnline::model()->findAll('active="y" and lang_id = '.$lang_id.' and create_by="'.Yii::app()->user->id.'"'), 'course_id', 'CoursetitleConcat');
+                        }else{
+                            $courseAll = CHtml::listData(CourseOnline::model()->findAll('active="y" and lang_id = '.$lang_id), 'course_id', 'CoursetitleConcat');
+                        }
 
                         ?>
 

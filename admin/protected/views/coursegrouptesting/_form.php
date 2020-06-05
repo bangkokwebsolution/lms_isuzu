@@ -31,9 +31,28 @@
 	                    <?php echo $form->error($model, 'lang_id'); ?> -->
                 	<!-- </div> -->
                 	<?php 
+                	////////////////// group id 7 และเป็นคนสร้าง ถึงจะเห็น
+            $check_user = User::model()->findByPk(Yii::app()->user->id);
+            $group = $check_user->group;
+            $group_arr = json_decode($group);
+            $see_all = 2;
+            if(in_array("1", $group_arr) || in_array("7", $group_arr)){
+                $see_all = 1;
+            }
+            //////////////////
+            if($see_all != 1){
+            	$list = CHtml::listData(CourseOnline::model()->findAll( 
+								array('condition' => "active='y' and lang_id = 1 and create_by='".Yii::app()->user->id."'",'order'=>'course_id DESC')),
+								'course_id', 'course_title');
+                	}else{
                 		$list = CHtml::listData(CourseOnline::model()->findAll( 
 								array('condition' => "active='y' and lang_id = 1",'order'=>'course_id DESC')),
 								'course_id', 'course_title');
+
+                	}
+
+
+
                 		$attSearch = array("class"=>"span8",'disable_search' => false,'empty' => "--- กรุณาเลือกหลักสูตร ---");
 					 ?>
 

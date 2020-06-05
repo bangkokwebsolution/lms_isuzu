@@ -287,6 +287,21 @@ public function search()
     $criteria->compare('lesson.lang_id',1);
     $criteria->compare('courseonline.active','y');
 
+    ////////////////// group id 7 และเป็นคนสร้าง ถึงจะเห็น
+    $check_user = User::model()->findByPk(Yii::app()->user->id);
+    $group = $check_user->group;
+    $group_arr = json_decode($group);
+    $see_all = 2;
+    if(in_array("1", $group_arr) || in_array("7", $group_arr)){
+        $see_all = 1;
+    }
+    //////////////////
+    if($see_all != 1){
+        $criteria->compare('lesson.create_by',Yii::app()->user->id);
+    }else{
+        $criteria->compare('lesson.create_by',$this->create_by);
+    }
+
         // $criteria->order = 'id';
     $criteria->order = 'lesson.create_date DESC';
     $poviderArray = array('criteria'=>$criteria);
