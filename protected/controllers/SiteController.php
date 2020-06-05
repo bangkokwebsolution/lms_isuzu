@@ -31,6 +31,217 @@ class SiteController extends Controller
 	 * when an action is not explicitly requested by users.
 	 */
 
+	// public function actionQRCode() {		
+ //        Yii::import('ext.qrcode.QRCode');
+ //        $code=new QRCode("thorconn.com/site/ShowCer?user=&course=&gen=");
+ //        // $code->create();
+ //        $code->create('uploads/qrcode_cer/file.png');
+ //    }
+
+    public function actionShowCer() {		
+        $user_id = base64_decode($_GET['user']);
+        $UserId = $user_id;
+
+        $course_id = base64_decode($_GET['course']);
+        $PassCoursId = $course_id;
+
+        $gen_id = base64_decode($_GET['gen']);
+
+        if($user_id != "" && $course_id != "" && $gen_id != ""){
+
+        	$certDetail = CertificateNameRelations::model()->find(array('condition'=>'course_id='.$course_id));
+        	$CourseModel = CourseOnline::model()->findByAttributes(array(
+                'course_id' => $course_id,
+                'active' => 'y'
+            ));
+            $CertificateType = ($CourseModel->CategoryTitle->special_category == 'y') ? 'cpd' : null;
+            if ($CertificateType) {
+            $model = Passcours::model()->find(array(
+                'condition' => 'passcours_cours = "' . $PassCoursId . '" AND passcours_user = "' . $UserId . '" AND gen_id="'.$gen_id.'"',
+            )
+        );
+            if ($model == null) {
+                $model = Coursescore::model()->find(array(
+                    'condition' => 'course_id= " ' . $PassCoursId . '" AND user_id= "' . $UserId . '" AND gen_id="'.$gen_id.'"'
+                ));
+            }
+        } else {
+            $model = Passcours::model()->find(array(
+                'condition' => 'passcours_cours = "' . $PassCoursId . '" AND passcours_user = "' . $UserId . '" AND gen_id="'.$gen_id.'"',
+            )
+        );
+            if ($model == null) {
+                $model = $CourseModel;
+            }
+        }
+        $CourseDatePass = null;
+        //Pass Course Date
+        $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId.' AND gen_id='.$gen_id));
+        $CourseDatePass = $CourseDatePassModel->passcours_date;
+        $CoursePassedModel = Passcours::model()->find(array(
+            'condition' => 'passcours_user = ' . $UserId . ' AND passcours_cours = ' . $PassCoursId .' AND gen_id='.$gen_id
+        ));
+
+        $num_pass = PasscourseNumber::model()->find(array(
+            'condition' => 'course_id=:course_id AND gen_id=:gen_id AND user_id=:user_id',
+            'params' => array(':course_id'=>$PassCoursId, ':gen_id'=>$gen_id, ':user_id'=>$UserId,),
+            'order' => 'id DESC',
+        ));
+        $num_pass = $num_pass->code_number;
+        $renderFile = 'Newcertificate';
+        $renderSign = $certDetail->certificate->signature->sign_path;
+        $nameSign = $certDetail->certificate->signature->sign_title;
+        $positionSign = $certDetail->certificate->signature->sign_position;
+        $sign_id2 = $certDetail->certificate->sign_id2;
+        $model2 = Signature::model()->find(array('condition' => 'sign_id = '.$sign_id2));
+        $renderSign2 = $model2->sign_path;
+         $company_id = $currentUser->company_id;
+
+         $nameSign2 = $model2->sign_title;
+         $positionSign2 = $model2->sign_position;
+
+        if(!empty($company_id)){
+            $company = Company::model()->find(array('condition' => 'company_id = '.$company_id));
+            $company_title = $company->company_title;
+        }else{
+            $company_title =$currentUser->profile->department;
+        }
+
+        if($certDetail->certificate->cert_display == '1'){
+            $pageFormat = 'P';
+        } else {
+            $pageFormat = 'L';
+        }
+
+        $course_model = CourseOnline::model()->findByPk($PassCoursId);
+        $gen_id = $course_model->getGenID($course_model->course_id);
+
+        $logStartTime = LogStartcourse::model()->findByAttributes(array('user_id' => $UserId,'course_id'=> $PassCoursId, 'gen_id'=>$gen_id));
+        if(!$logStartTime){
+
+            $logStartTime->start_date =  date('Y-m-d');
+            $logStartTime->end_date = date('Y-m-d');
+
+            if($logStartTime->start_date == $logStartTime->end_date){
+                $period = Helpers::lib()->PeriodDate($logStartTime->end_date,true);
+            }
+        }else{
+            $startLogDate = Helpers::lib()->PeriodDate($logStartTime->start_date,false);
+            $endLogDate = Helpers::lib()->PeriodDate($logStartTime->end_date,true);
+
+            $ckMonthStart = explode(' ', $startLogDate);
+            $ckMonthEnd = explode(' ', $endLogDate);
+
+
+            if($ckMonthStart[1] == $ckMonthEnd[1]){
+                $period = $ckMonthStart[0]." - ".$ckMonthEnd[0]." ".$ckMonthStart[1]." ".$ckMonthEnd[2];
+            }else{
+                $period = $startLogDate." - ".$endLogDate;
+            }
+
+        }
+
+        $course_model = CourseOnline::model()->findByAttributes(array(
+            'course_id' => $PassCoursId,
+            'active' => 'y'
+        ));
+        if(!empty($course_model->course_date_end)){ //LMS
+            $course_model->course_date_end =  Helpers::lib()->PeriodDate($course_model->course_date_end,true);
+        }else{ //TMS
+            $course_model->course_date_end = Helpers::lib()->PeriodDate($course_model->Schedules->training_date_end,true);
+        }
+
+        $lastPasscourse = Helpers::lib()->PeriodDate($CourseDatePass, true);
+
+        $year_pass = date("y", strtotime($CourseDatePass));
+
+        $format_date_pass = date('jS F Y', strtotime($CourseDatePass));
+        $format_date_pass2 = date('d M Y', strtotime($CourseDatePass));
+
+        if ($model) {
+            $fulltitle = $currentUser->profile->ProfilesTitle->prof_title ."". $currentUser->profile->firstname . " " . $currentUser->profile->lastname;
+            $identification = $currentUser->profile->identification ;
+
+            if (isset($model->Profiles)) {
+                $fulltitle = $model->Profiles->firstname . " " . $model->Profiles->lastname;
+                $fulltitle_en =  $model->Profiles->firstname_en . " " . $model->Profiles->lastname_en;
+            }
+            $setCertificateData = array(
+                'fulltitle' => $fulltitle,
+                'fulltitle_en' => $fulltitle_en,
+                'cert_text' => $certDetail->certificate->cert_text,
+                'courseTitle_en' => (isset($model->CourseOnlines)) ? $model->CourseOnlines->course_title : $model->course_title,
+                'coursenumber' => $model->CourseOnlines->course_number,
+                'format_date_pass' => $format_date_pass,                
+                'format_date_pass2' => $format_date_pass2,                
+                'courseCode' => (isset($courseCode)) ? 'รหัสหลักสูตร ' . $courseCode : null,
+                'courseAccountHour' => (isset($courseAccountHour)) ? $courseAccountHour : null,
+                'courseEtcHour' => (isset($courseEtcHour)) ? $courseEtcHour : null,
+                'startLearnDate' => $startDate,
+                
+                'period' => $period,
+                'endDateCourse' => $course_model->course_date_end,
+
+                'endLearnDate' => (isset($model->passcours_date)) ? $model->passcours_date : $model->create_date,
+                'courseDatePassOver60Percent' => $CourseDatePass,
+                'year_pass' => $year_pass,
+                'num_pass' => $num_pass,
+                'renderSign' => $renderSign,
+                'nameSign' => $nameSign,
+                'positionSign' => $positionSign,
+
+                'renderSign2' => $renderSign2,
+                'nameSign2' => $nameSign2,
+                'positionSign2' => $positionSign2,
+
+                'positionUser' => $position_title,
+                'companyUser' => $company_title,
+
+                'identification' => $identification,
+                'bgPath' => $certDetail->certificate->cert_background,
+                'pageFormat' => $pageFormat,
+                'pageSide' => $certDetail->certificate->cert_display,
+            );
+            if($certDetail->certificate->cert_display == '1'){
+            $pageFormat = 'P';
+        } else {
+            $pageFormat = 'L';
+        }
+
+
+            require_once __DIR__ . '/../../admin/protected/vendors/mpdf7/autoload.php';
+            $mPDF = new \Mpdf\Mpdf(['orientation' => $pageFormat]);
+            $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('../course/cerfile/' . $renderFile, array('model'=>$setCertificateData), true), 'UTF-8', 'UTF-8'));
+
+            //output
+            if (isset($model->passcours_id) OR isset($model->score_id)) {
+                if (isset($model->passcours_id)) {
+                    $target = $model->passcours_id;
+                } else if (isset($model->score_id)) {
+                    $target = $model->score_id;
+                }
+            } else {
+                $target = $model->course_id;
+            }
+            // if ($dl != null && $dl == 'dl') {
+                // self::savePassCourseLog('Download', $target);
+                // $mPDF->Output($fulltitle . '.pdf', 'D');
+            // } else {
+                // self::savePassCourseLog('Print', $target);
+                $mPDF->Output();
+            // }
+        }
+
+
+
+
+
+
+
+
+        }
+    }	
+
 	public function actionApiSendSchedule(){
 		$date_now = date('Y-m-d',strtotime("-1 days"));
 		$criteria = new CDbCriteria;

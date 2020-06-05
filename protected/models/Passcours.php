@@ -45,6 +45,15 @@ class Passcours extends AActiveRecord
 			$model_number->user_id = $this->passcours_user;
 			$model_number->code_number = $run_number;
 			$model_number->save();
+
+			$user_id = base64_encode($this->passcours_user);
+			$course_id = base64_encode($this->passcours_cours);
+			$gen_id = base64_encode($this->gen_id);
+			$name = $this->passcours_user."_".$this->passcours_cours."_".$this->gen_id;
+			Yii::import('ext.qrcode.QRCode');
+			$code=new QRCode("thorconn.com/site/ShowCer?user=".$user_id."&course=".$course_id."&gen=".$gen_id);
+			// $code->create();
+			$code->create('uploads/qrcode_cer/'.$name.'.png');
 		}
 
 		return parent::beforeSave();

@@ -1620,8 +1620,8 @@ public function actionDetail($id) {
         $model2 = Signature::model()->find(array('condition' => 'sign_id = '.$sign_id2)); //model PK = sign_id2
 
         $renderSign2 = $model2->sign_path;
-        // $nameSign2 = $model2->sign_title;
-        // $positionSign2 = $model2->sign_position;
+        $nameSign2 = $model2->sign_title;
+        $positionSign2 = $model2->sign_position;
 
         //position
         // $position_id = $currentUser->position_id;
