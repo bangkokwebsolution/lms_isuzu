@@ -216,9 +216,9 @@ class RegistrationController extends Controller {
 //     }
     private function RandomPassword(){
 
-            $number="abcdefghijklmnopqrstuvwxyz0123456789";
-            $i = '';
-            $result = '';
+        $number="abcdefghijklmnopqrstuvwxyz0123456789";
+        $i = '';
+        $result = '';
         for($i==1;$i<6;$i++){ // จำนวนหลักที่ต้องการสามารถเปลี่ยนได้ตามใจชอบนะครับ จาก 5 เป็น 3 หรือ 6 หรือ 10 เป็นต้น
             $random=rand(0,strlen($number)-1); //สุ่มตัวเลข
             $cut_txt=substr($number,$random,1); //ตัดตัวเลข หรือ ตัวอักษรจากตำแหน่งที่สุ่มได้มา 1 ตัว
@@ -267,14 +267,14 @@ class RegistrationController extends Controller {
 
             // $model = Conditions::model()->findbyPk(1);
             if(!empty($_POST)){
-               Yii::app()->user->setFlash('CheckQues','กรุณายืนยัน');
-               Yii::app()->user->setFlash('checkClass', "warning");
-           } 
-           $this->render('Con_regis',array('model'=>$model,'label'=>$label));
+             Yii::app()->user->setFlash('CheckQues','กรุณายืนยัน');
+             Yii::app()->user->setFlash('checkClass', "warning");
+         } 
+         $this->render('Con_regis',array('model'=>$model,'label'=>$label));
 
-       }
-   }
-   public function actionIndex() { 
+     }
+ }
+ public function actionIndex() { 
 
 
    //  $gen = Generation::model()->find('active=1');
@@ -366,6 +366,7 @@ class RegistrationController extends Controller {
     $profile->passport = $_POST['passport'];
 
     $users->username = $_POST['User'][username];
+
     $users->email = $_POST['User'][email];
     $users->department_id = $_POST['User'][department_id];
     $users->branch_id = $_POST['User'][branch_id];
@@ -381,7 +382,7 @@ class RegistrationController extends Controller {
 
            // $users->orgchart_lv2 = $Neworg;
    // $users->activkey = ($type_card == 'p')?UserModule::encrypting(microtime() . $profile->identification):UserModule::encrypting(microtime() . $profile->passport);
-   $users->activkey = UserModule::encrypting(microtime() .$genpass);
+    $users->activkey = UserModule::encrypting(microtime() .$genpass);
 
     //$users->password = ($type_card == 'p')?UserModule::encrypting(microtime() . $profile->identification):UserModule::encrypting(microtime() . $profile->passport);
 //$users->verifyPassword = ($type_card == 'p')?UserModule::encrypting(microtime() . $profile->identification):UserModule::encrypting(microtime() . $profile->passport);
@@ -409,80 +410,88 @@ class RegistrationController extends Controller {
     $profile->address_parent = $_POST['address_parent'];
     if ($profile->address_parent == 'y') {
       $profile->address_parent = 'y';
-    }else{
-       $profile->address_parent = 'n'; 
-    }
+  }else{
+     $profile->address_parent = 'n'; 
+ }
 
-    $profile->type_user = $_POST['type_user']; 
-    $profile->history_of_illness = $_POST['history_of_illness'];
-    $profile->status_sm = $_POST['status_sm'];
-    $profile->type_employee = $_POST['type_employee'];
-    $profile->type_card = $_POST['type_card'];
-    $profile->title_id = $_POST['Profile'][title_id]; 
-    $profile->sex = ($profile->title_id == 1)? "Male":"Female";
-    $profile->firstname = $_POST['Profile'][firstname];
-    $profile->lastname = $_POST['Profile'][lastname];
-    $profile->firstname_en = $_POST['Profile'][firstname_en];
-    $profile->lastname_en = $_POST['Profile'][lastname_en];
-    $profile->tel = $_POST['Profile'][tel];
-    $profile->birthday = $_POST['Profile'][birthday];
-    $profile->age = $_POST['Profile'][age];
-    $profile->mouth_birth = $_POST['Profile'][mouth_birth];
-    $profile->address = $_POST['Profile'][address];
-    $profile->date_of_expiry = $_POST['Profile'][date_of_expiry];
-    $profile->seamanbook = $_POST['Profile'][seamanbook];
-    $profile->seaman_expire = $_POST['Profile'][seaman_expire];
-    $profile->race = $_POST['Profile'][race];
-    $profile->nationality = $_POST['Profile'][nationality];
-    $profile->religion = $_POST['Profile'][religion];
-    $profile->line_id = $_POST['Profile'][line_id];
-    $profile->ship_name = $_POST['Profile'][ship_name];
-    $profile->address2 = $_POST['Profile'][address2];
-    $profile->ship_up_date = $_POST['Profile'][ship_up_date];
-    $profile->ship_down_date = $_POST['Profile'][ship_down_date];
-    $profile->phone1 = $_POST['Profile'][phone1];
-    $profile->phone2 = $_POST['Profile'][phone2];
-    $profile->phone3 = $_POST['Profile'][phone3];
-    
-    $profile->ss_card = $_POST['Profile'][ss_card];
-    $profile->tax_payer = $_POST['Profile'][tax_payer];
-    $profile->number_of_children = $_POST['Profile'][number_of_children];
-    $profile->place_of_birth = $_POST['Profile'][place_of_birth];
-    $profile->hight = $_POST['Profile'][hight];
-    $profile->weight = $_POST['Profile'][weight];
-    $profile->hair_color = $_POST['Profile'][hair_color];
-    $profile->eye_color = $_POST['Profile'][eye_color];
-    $profile->place_issued = $_POST['Profile'][place_issued];
-    $profile->date_issued = $_POST['Profile'][date_issued];
-    $profile->blood = $_POST['Profile'][blood];
-    $profile->spouse_firstname = $_POST['Profile'][spouse_firstname];
-    $profile->spouse_lastname = $_POST['Profile'][spouse_lastname];
-    $profile->father_firstname = $_POST['Profile'][father_firstname];
-    $profile->father_lastname = $_POST['Profile'][father_lastname];
-    $profile->mother_firstname = $_POST['Profile'][mother_firstname];
-    $profile->mother_lastname = $_POST['Profile'][mother_lastname];
-    $profile->military = $_POST['military'];
-    $profile->sickness = $_POST['Profile'][sickness];
-    $profile->expected_salary = $_POST['Profile'][expected_salary];
-    $profile->start_working = $_POST['Profile'][start_working];
-    $profile->accommodation = $_POST['accommodation'];
-    $profile->domicile_address = $_POST['Profile'][domicile_address];
-    $profile->occupation_spouse = $_POST['Profile'][occupation_spouse];
-    $profile->occupation_father = $_POST['Profile'][occupation_father];
-    $profile->occupation_mother = $_POST['Profile'][occupation_mother];
-    $profile->pass_expire = $_POST['Profile'][pass_expire];
-    $profile->passport_place_issued = $_POST['Profile'][passport_place_issued];
-    $profile->passport_date_issued = $_POST['Profile'][passport_date_issued];
+ $profile->occupation = $_POST['Profile'][occupation];
+ $profile->type_user = $_POST['type_user']; 
+ $profile->history_of_illness = $_POST['history_of_illness'];
+ $profile->status_sm = $_POST['status_sm'];
+ $profile->type_employee = $_POST['type_employee'];
+ $profile->type_card = $_POST['type_card'];
+ $profile->title_id = $_POST['Profile'][title_id]; 
+ $profile->sex = ($profile->title_id == 1)? "Male":"Female";
+ $profile->firstname = $_POST['Profile'][firstname];
+ $profile->lastname = $_POST['Profile'][lastname];
+ $profile->firstname_en = $_POST['Profile'][firstname_en];
+ $profile->lastname_en = $_POST['Profile'][lastname_en];
+ $profile->tel = $_POST['Profile'][tel];
+ $profile->birthday = $_POST['Profile'][birthday];
+ $profile->age = $_POST['Profile'][age];
+ $profile->mouth_birth = $_POST['Profile'][mouth_birth];
+ $profile->address = $_POST['Profile'][address];
+ $profile->date_of_expiry = $_POST['Profile'][date_of_expiry];
+ $profile->seamanbook = $_POST['Profile'][seamanbook];
+ $profile->seaman_expire = $_POST['Profile'][seaman_expire];
+ $profile->race = $_POST['Profile'][race];
+ $profile->nationality = $_POST['Profile'][nationality];
+ $profile->religion = $_POST['Profile'][religion];
+ $profile->line_id = $_POST['Profile'][line_id];
+ $profile->ship_name = $_POST['Profile'][ship_name];
+ $profile->address2 = $_POST['Profile'][address2];
+ $profile->ship_up_date = $_POST['Profile'][ship_up_date];
+ $profile->ship_down_date = $_POST['Profile'][ship_down_date];
+ $profile->phone1 = $_POST['Profile'][phone1];
+ $profile->phone2 = $_POST['Profile'][phone2];
+ $profile->phone3 = $_POST['Profile'][phone3];
+ $profile->phone = $_POST['Profile'][phone];
+
+ $profile->ss_card = $_POST['Profile'][ss_card];
+ $profile->tax_payer = $_POST['Profile'][tax_payer];
+ $profile->number_of_children = $_POST['Profile'][number_of_children];
+ $profile->place_of_birth = $_POST['Profile'][place_of_birth];
+ $profile->hight = $_POST['Profile'][hight];
+ $profile->weight = $_POST['Profile'][weight];
+ $profile->hair_color = $_POST['Profile'][hair_color];
+ $profile->eye_color = $_POST['Profile'][eye_color];
+ $profile->place_issued = $_POST['Profile'][place_issued];
+ $profile->date_issued = $_POST['Profile'][date_issued];
+ $profile->blood = $_POST['Profile'][blood];
+ $profile->spouse_firstname = $_POST['Profile'][spouse_firstname];
+ $profile->spouse_lastname = $_POST['Profile'][spouse_lastname];
+ $profile->father_firstname = $_POST['Profile'][father_firstname];
+ $profile->father_lastname = $_POST['Profile'][father_lastname];
+ $profile->mother_firstname = $_POST['Profile'][mother_firstname];
+ $profile->mother_lastname = $_POST['Profile'][mother_lastname];
+ $profile->military = $_POST['military'];
+ $profile->sickness = $_POST['Profile'][sickness];
+ $profile->expected_salary = $_POST['Profile'][expected_salary];
+ $profile->start_working = $_POST['Profile'][start_working];
+ $profile->accommodation = $_POST['accommodation'];
+ $profile->domicile_address = $_POST['Profile'][domicile_address];
+ $profile->occupation_spouse = $_POST['Profile'][occupation_spouse];
+ $profile->occupation_father = $_POST['Profile'][occupation_father];
+ $profile->occupation_mother = $_POST['Profile'][occupation_mother];
+ $profile->pass_expire = $_POST['Profile'][pass_expire];
+ $profile->passport_place_issued = $_POST['Profile'][passport_place_issued];
+ $profile->passport_date_issued = $_POST['Profile'][passport_date_issued];
+ $profile->name_emergency = $_POST['Profile'][name_emergency];
+ $profile->relationship_emergency = $_POST['Profile'][relationship_emergency];
 
     // if(!$chk_status_email){
     //     $users->status = 1;
     // } else {
     //     $users->status = 0;
     // }
-if ($profile->type_user == 1) {
+ if ($profile->type_user == 1) {
     $users->status = 0;
     $users->register_status = 0;
     $users->position_id = $_POST['position_gen'];
+}else if($profile->type_user == 5){
+    $users->username = $_POST['idcard'];
+    $users->status = 0;
+    $users->register_status = 0;
 }else{
     $users->register_status = 1;
     $users->status = 1;
@@ -534,7 +543,8 @@ if ($profile->type_user == 1) {
     // var_dump(CUploadedFile::getInstance($AttachName, 'attach_crew_identification'));
     // var_dump(CUploadedFile::getInstance($AttachName, 'attach_identification'));
     // var_dump(CUploadedFile::getInstance($AttachName, 'attach_house_registration'));
-
+//     var_dump($profile);
+// exit();
     if ($profile->validate() && $users->validate()) {
 //                    เข้ารหัสpassword
                     //$users->password = UserModule::encrypting($users->password);
@@ -558,270 +568,320 @@ if ($profile->type_user == 1) {
     }
     if ($users->save()) {
                         // $findid = User::model()->notsafe()->findbyattributes(array('email'=>$_POST['User'][email]));
-                
+
         $profile->user_id = $users->id;
         if (isset($_POST['ProfilesEdu'])){
             foreach ($_POST['ProfilesEdu'] as $action_index=>$action_value){
-             if (!in_array("", $action_value)) {
-             $Edu = new ProfilesEdu;
-             $Edu->user_id = $users->id;
-             $Edu->created_date = date("Y-m-d H:i:s");
-             $Edu->created_by = $users->id;
-             $Edu->attributes = $action_value;
-             $Edu->save();
-            }
-         }
-     }
+               if (!in_array("", $action_value)) {
+                   $Edu = new ProfilesEdu;
+                   $Edu->user_id = $users->id;
+                   $Edu->created_date = date("Y-m-d H:i:s");
+                   $Edu->created_by = $users->id;
+                   $Edu->attributes = $action_value;
+                   $Edu->save();
+               }
+           }
+       }
 
        if (isset($_POST['ProfilesWorkHistory'])){
-            foreach ($_POST['ProfilesWorkHistory'] as $action_work=>$action_value_work){
-             if (!in_array("", $action_value_work)) {
-             $WorkHistory = new ProfilesWorkHistory;
-             $WorkHistory->user_id = $users->id;
-             $WorkHistory->created_date = date("Y-m-d H:i:s");
-             $WorkHistory->created_by = $users->id;
-             $WorkHistory->attributes = $action_value_work;
-             $WorkHistory->save();
-            }
-         }
-     }
+        foreach ($_POST['ProfilesWorkHistory'] as $action_work=>$action_value_work){
+           if (!in_array("", $action_value_work)) {
+               $WorkHistory = new ProfilesWorkHistory;
+               $WorkHistory->user_id = $users->id;
+               $WorkHistory->created_date = date("Y-m-d H:i:s");
+               $WorkHistory->created_by = $users->id;
+               $WorkHistory->attributes = $action_value_work;
+               $WorkHistory->save();
+           }
+       }
+   }
 
-         if (isset($_POST['ProfilesTraining'])){
-            foreach ($_POST['ProfilesTraining'] as $action_Training=>$action_value_Training){
-             if (!in_array("", $action_value_Training)) {
-             $ProfilesTraining = new ProfilesTraining;
-             $ProfilesTraining->user_id = $users->id;
-             $ProfilesTraining->create_date = date("Y-m-d");
-             $ProfilesTraining->create_by = $users->id;
-             $ProfilesTraining->attributes = $action_value_Training;
-             $ProfilesTraining->save();
-            }
-         }
-     }
-    if (isset($_POST['ProfilesLanguage'])){   
-            foreach ($_POST['ProfilesLanguage'] as $action_Language=>$action_value_Language){
-             if (!in_array("", $action_value_Language)) {
-             $ProfilesLanguage = new ProfilesLanguage;
-             $ProfilesLanguage->user_id = $users->id;
-             $ProfilesLanguage->create_date = date("Y-m-d");
-             $ProfilesLanguage->create_by = $users->id;
-             $ProfilesLanguage->attributes = $action_value_Language;
-             $ProfilesLanguage->save(false);       
-            }
-        }
-     }
+   if (isset($_POST['ProfilesTraining'])){
+    foreach ($_POST['ProfilesTraining'] as $action_Training=>$action_value_Training){
+       if (!in_array("", $action_value_Training)) {
+           $ProfilesTraining = new ProfilesTraining;
+           $ProfilesTraining->user_id = $users->id;
+           $ProfilesTraining->create_date = date("Y-m-d");
+           $ProfilesTraining->create_by = $users->id;
+           $ProfilesTraining->attributes = $action_value_Training;
+           $ProfilesTraining->save();
+       }
+   }
+}
+if (isset($_POST['ProfilesLanguage'])){   
+    foreach ($_POST['ProfilesLanguage'] as $action_Language=>$action_value_Language){
+       if (!in_array("", $action_value_Language)) {
+           $ProfilesLanguage = new ProfilesLanguage;
+           $ProfilesLanguage->user_id = $users->id;
+           $ProfilesLanguage->create_date = date("Y-m-d");
+           $ProfilesLanguage->create_by = $users->id;
+           $ProfilesLanguage->attributes = $action_value_Language;
+           $ProfilesLanguage->save(false);       
+       }
+   }
+}
 
-     if(isset($uploadFile))
-     {
-        Yush::init($users);
-        $originalPath = Yush::getPath($users, Yush::SIZE_ORIGINAL, $users->pic_user);
-        $thumbPath = Yush::getPath($users, Yush::SIZE_THUMB, $users->pic_user);
-        $smallPath = Yush::getPath($users, Yush::SIZE_SMALL, $users->pic_user);
-                                // Save the original resource to disk
-        $uploadFile->saveAs($originalPath);
-        $size = getimagesize($originalPath);
-                            /////////// SAVE IMAGE //////////
-        Yush::init($users);
-        $originalPath = Yush::getPath($users, Yush::SIZE_ORIGINAL, $users->pic_user);
-        $thumbPath = Yush::getPath($users, Yush::SIZE_THUMB, $users->pic_user);
-        $smallPath = Yush::getPath($users, Yush::SIZE_SMALL, $users->pic_user);
-                            // Save the original resource to disk
-        $uploadFile->saveAs($originalPath);
-        $size = getimagesize($originalPath);
+if (isset($_POST['FileTraining'])){ 
+    $uploadDir = Yii::app()->getUploadPath(null);
+    $path1 = $users->id;
+    if ($path1) {
+        mkdir($uploadDir."../Trainingfile/".$path1."/", 0777, true);
+    } 
+    $i=0 ;          
+    foreach ($_POST['FileTraining'] as $key => $value) {
+       $tmpFilePath = $_FILES['FileTraining']['tmp_name'][$i];
+       if ($tmpFilePath != ""){
+         $name_file = $_FILES['FileTraining']['name'][$i];
+         $newFilePath = Yii::app()->basePath.'/../uploads/Trainingfile/'.$path1.'/'. $name_file['filename'];
+         if(move_uploaded_file($tmpFilePath['filename'], $newFilePath)) {
 
-                                // Create a small image
-        $smallImage = Yii::app()->phpThumb->create($originalPath);
-        $smallImage->resize(385, 220);
-        $smallImage->save($smallPath);
-                                // Create a thumbnail
-        $thumbImage = Yii::app()->phpThumb->create($originalPath);
-        $thumbImage->resize(200, 200);
-        $thumbImage->save($thumbPath);
-    }
-
-    $attach_passport  = CUploadedFile::getInstance($AttachName, 'attach_passport');
-    if (isset($attach_passport)) {
-        $uglyName = strtolower($attach_passport->name); 
-         $uploadDir = $webroot;
-         $rnd = rand(0,9999999999);
-         $fileName = trim($rnd). "." . $attach_passport->extensionName;
-         $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
-         if(!empty($attach_passport))  
-                        {
-                            $attach_passport->saveAs($webroot);
-                        }
-         $AttachName->attach_passport = 1;
-         $AttachFile = new AttachFile;
-         $AttachFile->user_id = $users->id;
-         $AttachFile->file_data = $AttachName->attach_passport;
-         $AttachFile->file_name = $fileName;
-         $AttachFile->filename = $uglyName;
-         $AttachFile->create_date = date("Y-m-d");
-         $AttachFile->create_by = $users->id;
-         $AttachName->user_id = $users->id;
-         $AttachName->create_date = date("Y-m-d");
-         $AttachName->create_by = $users->id;
-         $AttachFile->save(false);
-         $AttachName->save(false);
-    }
-    $attach_crew_identification  = CUploadedFile::getInstance($AttachName, 'attach_crew_identification');
-    if (isset($attach_crew_identification)) {
-        $uglyName = strtolower($attach_crew_identification->name); 
-         $uploadDir = $webroot;
-         $rnd = rand(0,9999999999);
-         $fileName = trim($rnd). "." . $attach_crew_identification->extensionName;
-         $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
-         if(!empty($attach_crew_identification))  
-                        {
-                            $attach_crew_identification->saveAs($webroot);
-                        }
-         $AttachName->attach_crew_identification = 2;
-         $AttachFile = new AttachFile;
-         $AttachFile->user_id = $users->id;
-         $AttachFile->file_data = $AttachName->attach_crew_identification;
-         $AttachFile->file_name = $fileName;
-         $AttachFile->filename = $uglyName;
-         $AttachFile->create_date = date("Y-m-d");
-         $AttachFile->create_by = $users->id;
-         $AttachName->user_id = $users->id;
-         $AttachName->create_date = date("Y-m-d");
-         $AttachName->create_by = $users->id;
-         $AttachFile->save(false);
-         $AttachName->save(false);
-    }
-    $attach_identification  = CUploadedFile::getInstance($AttachName, 'attach_identification');
-    if (isset($attach_identification)) {
-        $uglyName = strtolower($attach_identification->name); 
-         $uploadDir = $webroot;
-         $rnd = rand(0,9999999999);
-         $fileName = trim($rnd). "." . $attach_identification->extensionName;
-         $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
-         if(!empty($attach_identification))  
-                        {
-                            $attach_identification->saveAs($webroot);
-                        }
-         $AttachName->attach_identification = 3;
-         $AttachFile = new AttachFile;
-         $AttachFile->user_id = $users->id;
-         $AttachFile->file_data = $AttachName->attach_identification;
-         $AttachFile->file_name = $fileName;
-         $AttachFile->filename = $uglyName;
-         $AttachFile->create_date = date("Y-m-d");
-         $AttachFile->create_by = $users->id;
-         $AttachName->user_id = $users->id;
-         $AttachName->create_date = date("Y-m-d");
-         $AttachName->create_by = $users->id;
-         $AttachFile->save(false);
-         $AttachName->save(false);
-    }
-    $attach_house_registration  = CUploadedFile::getInstance($AttachName, 'attach_house_registration');
-    if (isset($attach_house_registration)) {
-        $uglyName = strtolower($attach_house_registration->name); 
-         $uploadDir = $webroot;
-         $rnd = rand(0,9999999999);
-         $fileName = trim($rnd). "." . $attach_house_registration->extensionName;
-         $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
-         if(!empty($attach_house_registration))  
-                        {
-                            $attach_house_registration->saveAs($webroot);
-                        }
-         $AttachName->attach_house_registration = 4;
-         $AttachFile = new AttachFile;
-         $AttachFile->user_id = $users->id;
-         $AttachFile->file_data = $AttachName->attach_house_registration;
-         $AttachFile->file_name = $fileName;
-         $AttachFile->filename = $uglyName;
-         $AttachFile->create_date = date("Y-m-d");
-         $AttachFile->create_by = $users->id;
-         $AttachName->user_id = $users->id;
-         $AttachName->create_date = date("Y-m-d");
-         $AttachName->create_by = $users->id;
-         $AttachFile->save(false);
-         $AttachName->save(false);
-    }
-    if(isset($session['filenameComDoc']) || count($session['filenameComDoc'])!=0)
-    {
-        foreach ($session['filenameComDoc'] as $filenameComKey => $filenameComValue)
-        {
-            $filenameCheck = explode('.', $filenameComValue);
-                            // if($filenameCheck[1] == 'pdf' or $filenameCheck[1] == 'docx' or $filenameCheck[1] == 'pptx')
-                            // {
-            $file = new FileEdu;
-            $file->user_id = $users->id;
-            $file->create_date = date("Y-m-d ");
-            $file->create_by = $users->id;
-            $file->filename = $filenameComValue;
-            $file->file_name = $session['filenameOriComDoc'][$filenameComKey];
-            $file->length = "2.00";
-            $file->save(false);
-                            // }
-        }
-    }
-    if(isset($session['filenameComTrain']) || count($session['filenameComTrain'])!=0)
-    {
-        foreach ($session['filenameComTrain'] as $filenameComKey => $filenameComValue)
-        {
-            $filenameCheck = explode('.', $filenameComValue);
-                            // if($filenameCheck[1] == 'pdf' or $filenameCheck[1] == 'docx' or $filenameCheck[1] == 'pptx')
-                            // {
             $fileTrain = new FileTraining;
             $fileTrain->user_id = $users->id;
             $fileTrain->create_date = date("Y-m-d ");
             $fileTrain->create_by = $users->id;
-            $fileTrain->filename = $filenameComValue;
-            $fileTrain->file_name = $session['filenameOriComTrain'][$filenameComKey];
+            $fileTrain->filename = $name_file['filename'];
+            $fileTrain->file_name = $value['file_name'];
             $fileTrain->length = "2.00";
-            $fileTrain->save(false);
-                            // }
-        }
+            $fileTrain->expire_date = $value['expire_date'];
+            $fileTrain->save(false);         
+
+        }else{
+            echo "Fill upload";
+        }   
+
+        $i++;
+    }    
+
+}
+}
+
+if(isset($uploadFile))
+{
+    Yush::init($users);
+    $originalPath = Yush::getPath($users, Yush::SIZE_ORIGINAL, $users->pic_user);
+    $thumbPath = Yush::getPath($users, Yush::SIZE_THUMB, $users->pic_user);
+    $smallPath = Yush::getPath($users, Yush::SIZE_SMALL, $users->pic_user);
+                                // Save the original resource to disk
+    $uploadFile->saveAs($originalPath);
+    $size = getimagesize($originalPath);
+                            /////////// SAVE IMAGE //////////
+    Yush::init($users);
+    $originalPath = Yush::getPath($users, Yush::SIZE_ORIGINAL, $users->pic_user);
+    $thumbPath = Yush::getPath($users, Yush::SIZE_THUMB, $users->pic_user);
+    $smallPath = Yush::getPath($users, Yush::SIZE_SMALL, $users->pic_user);
+                            // Save the original resource to disk
+    $uploadFile->saveAs($originalPath);
+    $size = getimagesize($originalPath);
+
+                                // Create a small image
+    $smallImage = Yii::app()->phpThumb->create($originalPath);
+    $smallImage->resize(385, 220);
+    $smallImage->save($smallPath);
+                                // Create a thumbnail
+    $thumbImage = Yii::app()->phpThumb->create($originalPath);
+    $thumbImage->resize(200, 200);
+    $thumbImage->save($thumbPath);
+}
+
+$attach_passport  = CUploadedFile::getInstance($AttachName, 'attach_passport');
+if (isset($attach_passport)) {
+    $uglyName = strtolower($attach_passport->name); 
+    $uploadDir = $webroot;
+    $rnd = rand(0,9999999999);
+    $fileName = trim($rnd). "." . $attach_passport->extensionName;
+    $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
+    if(!empty($attach_passport))  
+    {
+        $attach_passport->saveAs($webroot);
     }
-    if ($profile->save()) {
+    $AttachName->attach_passport = 1;
+    $AttachFile = new AttachFile;
+    $AttachFile->user_id = $users->id;
+    $AttachFile->file_data = $AttachName->attach_passport;
+    $AttachFile->file_name = $fileName;
+    $AttachFile->filename = $uglyName;
+    $AttachFile->create_date = date("Y-m-d");
+    $AttachFile->create_by = $users->id;
+    $AttachName->user_id = $users->id;
+    $AttachName->create_date = date("Y-m-d");
+    $AttachName->create_by = $users->id;
+    $AttachFile->save(false);
+    $AttachName->save(false);
+}
+$attach_crew_identification  = CUploadedFile::getInstance($AttachName, 'attach_crew_identification');
+if (isset($attach_crew_identification)) {
+    $uglyName = strtolower($attach_crew_identification->name); 
+    $uploadDir = $webroot;
+    $rnd = rand(0,9999999999);
+    $fileName = trim($rnd). "." . $attach_crew_identification->extensionName;
+    $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
+    if(!empty($attach_crew_identification))  
+    {
+        $attach_crew_identification->saveAs($webroot);
+    }
+    $AttachName->attach_crew_identification = 2;
+    $AttachFile = new AttachFile;
+    $AttachFile->user_id = $users->id;
+    $AttachFile->file_data = $AttachName->attach_crew_identification;
+    $AttachFile->file_name = $fileName;
+    $AttachFile->filename = $uglyName;
+    $AttachFile->create_date = date("Y-m-d");
+    $AttachFile->create_by = $users->id;
+    $AttachName->user_id = $users->id;
+    $AttachName->create_date = date("Y-m-d");
+    $AttachName->create_by = $users->id;
+    $AttachFile->save(false);
+    $AttachName->save(false);
+}
+$attach_identification  = CUploadedFile::getInstance($AttachName, 'attach_identification');
+if (isset($attach_identification)) {
+    $uglyName = strtolower($attach_identification->name); 
+    $uploadDir = $webroot;
+    $rnd = rand(0,9999999999);
+    $fileName = trim($rnd). "." . $attach_identification->extensionName;
+    $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
+    if(!empty($attach_identification))  
+    {
+        $attach_identification->saveAs($webroot);
+    }
+    $AttachName->attach_identification = 3;
+    $AttachFile = new AttachFile;
+    $AttachFile->user_id = $users->id;
+    $AttachFile->file_data = $AttachName->attach_identification;
+    $AttachFile->file_name = $fileName;
+    $AttachFile->filename = $uglyName;
+    $AttachFile->create_date = date("Y-m-d");
+    $AttachFile->create_by = $users->id;
+    $AttachName->user_id = $users->id;
+    $AttachName->create_date = date("Y-m-d");
+    $AttachName->create_by = $users->id;
+    $AttachFile->save(false);
+    $AttachName->save(false);
+}
+$attach_house_registration  = CUploadedFile::getInstance($AttachName, 'attach_house_registration');
+if (isset($attach_house_registration)) {
+    $uglyName = strtolower($attach_house_registration->name); 
+    $uploadDir = $webroot;
+    $rnd = rand(0,9999999999);
+    $fileName = trim($rnd). "." . $attach_house_registration->extensionName;
+    $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
+    if(!empty($attach_house_registration))  
+    {
+        $attach_house_registration->saveAs($webroot);
+    }
+    $AttachName->attach_house_registration = 4;
+    $AttachFile = new AttachFile;
+    $AttachFile->user_id = $users->id;
+    $AttachFile->file_data = $AttachName->attach_house_registration;
+    $AttachFile->file_name = $fileName;
+    $AttachFile->filename = $uglyName;
+    $AttachFile->create_date = date("Y-m-d");
+    $AttachFile->create_by = $users->id;
+    $AttachName->user_id = $users->id;
+    $AttachName->create_date = date("Y-m-d");
+    $AttachName->create_by = $users->id;
+    $AttachFile->save(false);
+    $AttachName->save(false);
+}
+if(isset($session['filenameComDoc']) || count($session['filenameComDoc'])!=0)
+{
+    foreach ($session['filenameComDoc'] as $filenameComKey => $filenameComValue)
+    {
+        $filenameCheck = explode('.', $filenameComValue);
+                            // if($filenameCheck[1] == 'pdf' or $filenameCheck[1] == 'docx' or $filenameCheck[1] == 'pptx')
+                            // {
+        $file = new FileEdu;
+        $file->user_id = $users->id;
+        $file->create_date = date("Y-m-d ");
+        $file->create_by = $users->id;
+        $file->filename = $filenameComValue;
+        $file->file_name = $session['filenameOriComDoc'][$filenameComKey];
+        $file->length = "2.00";
+        $file->save(false);
+                            // }
+    }
+}
+    // if(isset($session['filenameComTrain']) || count($session['filenameComTrain'])!=0)
+    // {
+    //     foreach ($session['filenameComTrain'] as $filenameComKey => $filenameComValue)
+    //     {
+    //         $filenameCheck = explode('.', $filenameComValue);
+
+    //         $fileTrain = new FileTraining;
+    //         $fileTrain->user_id = $users->id;
+    //         $fileTrain->create_date = date("Y-m-d ");
+    //         $fileTrain->create_by = $users->id;
+    //         $fileTrain->filename = $filenameComValue;
+    //         $fileTrain->file_name = $session['filenameOriComTrain'][$filenameComKey];
+    //         $fileTrain->length = "2.00";
+    //         $fileTrain->save(false);
+    //                         // }
+    //     }
+    // }
+if ($profile->save()) {
 
         // if($chk_status_email){
                                 //////////// send mail /////////
-        if ($profile->type_user == 3) {
+    if ($profile->type_user == 3) {
 
             //$activation_url = $this->createAbsoluteUrl('/user/activation/activation', array("activkey" => $users->activkey, "email" => $users->email));
-            
-            $to = array(
-               'email'=>$users->email,
-               'firstname'=>$profile->firstname,
-               'lastname'=>$profile->lastname,
-           );
-            $firstname = $profile->firstname;
-            $lastname = $profile->lastname;
-            $username = $users->username;
+
+        $to = array(
+         'email'=>$users->email,
+         'firstname'=>$profile->firstname,
+         'lastname'=>$profile->lastname,
+     );
+        $firstname = $profile->firstname;
+        $lastname = $profile->lastname;
+        $username = $users->username;
             //$message = $this->renderPartial('Form_mail',array('emailshow'=>$users->email,'passwordshow'=>$genpass,'nameshow'=>$profile->firstname,'activation_url'=>$activation_url),true);
-            $message = $this->renderPartial('Form_mail',array('email'=>$users->email,'genpass'=>$genpass,'username'=>$username,'firstname'=>$firstname,'lastname'=>$lastname),true);
-            $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
-            Yii::app()->user->setFlash('profile',$profile->identification);
-            Yii::app()->user->setFlash('msg', $users->email);
-            Yii::app()->user->setFlash('icon', "success");
-            $this->redirect(array('site/index'));
-
-        }else if ($profile->type_user == 1){
-
-        // $activation_url = $this->createAbsoluteUrl('/user/activation/activation', array("activkey" => $users->activkey, "email" => $users->email));
-
-         $to = array(
-           'email'=>$users->email,
-           'firstname'=>$profile->firstname,
-           'lastname'=>$profile->lastname,
-       );
-         $firstname = $profile->firstname;
-         $lastname = $profile->lastname;
-         $message = $this->renderPartial('Form_mail_General',array('firstname'=>$firstname,'lastname'=>$lastname),true);
-         $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
-         Yii::app()->user->setFlash('msg',"ท่านสมัครสมาชิกเรียบร้อยแล้ว รอการอนุมัติจากผู้ดูแลระบบผ่านทางอีเมล");
-         Yii::app()->user->setFlash('icon', "success");
-         $this->redirect(array('site/index'));
-     }else{
-        $login = '1';
+        $message = $this->renderPartial('Form_mail',array('email'=>$users->email,'genpass'=>$genpass,'username'=>$username,'firstname'=>$firstname,'lastname'=>$lastname),true);
+        $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
         Yii::app()->user->setFlash('profile',$profile->identification);
         Yii::app()->user->setFlash('msg', $users->email);
         Yii::app()->user->setFlash('icon', "success");
         $this->redirect(array('site/index'));
-    }
+
+    }else if ($profile->type_user == 1){
+
+        // $activation_url = $this->createAbsoluteUrl('/user/activation/activation', array("activkey" => $users->activkey, "email" => $users->email));
+
+       $to = array(
+         'email'=>$users->email,
+         'firstname'=>$profile->firstname,
+         'lastname'=>$profile->lastname,
+     );
+       $firstname = $profile->firstname;
+       $lastname = $profile->lastname;
+       $message = $this->renderPartial('Form_mail_General',array('firstname'=>$firstname,'lastname'=>$lastname),true);
+       $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
+       Yii::app()->user->setFlash('msg',"ท่านสมัครสมาชิกเรียบร้อยแล้ว รอการอนุมัติจากผู้ดูแลระบบผ่านทางอีเมล");
+       Yii::app()->user->setFlash('icon', "success");
+       $this->redirect(array('site/index'));
+   }if ($profile->type_user == 5) {
+
+            //$activation_url = $this->createAbsoluteUrl('/user/activation/activation', array("activkey" => $users->activkey, "email" => $users->email));
+
+       $to = array(
+         'email'=>$users->email,
+         'firstname'=>$profile->firstname,
+         'lastname'=>$profile->lastname,
+     );
+       $firstname = $profile->firstname;
+       $lastname = $profile->lastname;
+       $message = $this->renderPartial('Form_mail_General',array('firstname'=>$firstname,'lastname'=>$lastname),true);
+       $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
+       Yii::app()->user->setFlash('msg',"ท่านสมัครสมาชิกเรียบร้อยแล้ว รอการอนุมัติจากผู้ดูแลระบบผ่านทางอีเมล");
+       Yii::app()->user->setFlash('icon', "success");
+       $this->redirect(array('site/index'));
+
+    }else{
+    $login = '1';
+    Yii::app()->user->setFlash('profile',$profile->identification);
+    Yii::app()->user->setFlash('msg', $users->email);
+    Yii::app()->user->setFlash('icon', "success");
+    $this->redirect(array('site/index'));
+}
         // }else{
 
         //     $login = '1';
@@ -940,12 +1000,18 @@ public function actionUpdate() {
     $criterias->addCondition('user_id ="'.Yii::app()->user->id.'"');
     $criterias->addCondition("active ='y'");
     $ProfilesLanguage = ProfilesLanguage::model()->findAll($criterias);
+
+    $criterias = new CDbCriteria;
+    $criterias->addCondition('user_id ="'.Yii::app()->user->id.'"');
+    $criterias->addCondition("active ='y'");
+    $FileTraining = FileTraining::model()->findAll($criterias);
     //var_dump($ProfilesWorkHistory);exit();
 
     $this->performAjaxValidation($ProfilesEdu);
     $this->performAjaxValidation($ProfilesWorkHistory);
     $this->performAjaxValidation($ProfilesTraining);
-    $this->performAjaxValidation($ProfilesLanguage);  
+    $this->performAjaxValidation($ProfilesLanguage); 
+    $this->performAjaxValidation($FileTraining); 
 
     // $type_user = (!empty($_POST['type_user']))? $_POST['type_user']:3;
     // $history_of_illness = (!empty($_POST['history_of_illness']))? $_POST['history_of_illness']:'n';
@@ -996,7 +1062,8 @@ public function actionUpdate() {
             // $users->verifyPassword = $_POST['Users'][verifyPassword];
         $users->identification = $_POST['idcard'];
         $profile->identification = $_POST['idcard'];
-        $profile->passport = $_POST['Profile'][passport];
+        $profile->passport = $_POST['passport'];
+        var_dump($_POST['Profile']);exit();
         $users->email = $_POST['User'][email];
         $profile->title_id = $_POST['Profile'][title_id];
         $profile->firstname = $_POST['Profile'][firstname];
@@ -1012,10 +1079,10 @@ public function actionUpdate() {
         $profile->birthday = $_POST['Profile'][birthday];
         $profile->age = $_POST['Profile'][age];
             // $profile->education = $_POST['Profile'][education];
-            // $profile->occupation = $_POST['Profile'][occupation];
+        $profile->occupation = $_POST['Profile'][occupation];
             // $profile->position = $_POST['Profile'][position];
             // $profile->tel = $_POST['Profile'][tel];
-            // $profile->phone = $_POST['Profile'][phone];
+        $profile->phone = $_POST['Profile'][phone];
             // $profile->fax = $_POST['Profile'][fax];
         $profile->address = $_POST['Profile'][address];
         $profile->date_of_expiry = $_POST['Profile'][date_of_expiry];
@@ -1033,41 +1100,43 @@ public function actionUpdate() {
         $profile->seaman_expire = $_POST['Profile'][seaman_expire];
 
         $profile->ss_card = $_POST['Profile'][ss_card];
-    $profile->tax_payer = $_POST['Profile'][tax_payer];
-    $profile->number_of_children = $_POST['Profile'][number_of_children];
-    $profile->place_of_birth = $_POST['Profile'][place_of_birth];
-    $profile->hight = $_POST['Profile'][hight];
-    $profile->weight = $_POST['Profile'][weight];
-    $profile->hair_color = $_POST['Profile'][hair_color];
-    $profile->eye_color = $_POST['Profile'][eye_color];
-    $profile->place_issued = $_POST['Profile'][place_issued];
-    $profile->date_issued = $_POST['Profile'][date_issued];
-    $profile->blood = $_POST['Profile'][blood];
-    $profile->spouse_firstname = $_POST['Profile'][spouse_firstname];
-    $profile->spouse_lastname = $_POST['Profile'][spouse_lastname];
-    $profile->father_firstname = $_POST['Profile'][father_firstname];
-    $profile->father_lastname = $_POST['Profile'][father_lastname];
-    $profile->mother_firstname = $_POST['Profile'][mother_firstname];
-    $profile->mother_lastname = $_POST['Profile'][mother_lastname];
-    $profile->military = $_POST['military'];
-    $profile->sickness = $_POST['Profile'][sickness];
-    $profile->expected_salary = $_POST['Profile'][expected_salary];
-    $profile->start_working = $_POST['Profile'][start_working];
-    $profile->accommodation = $_POST['accommodation'];
-    $profile->domicile_address = $_POST['Profile'][domicile_address];
-    $profile->occupation_spouse = $_POST['Profile'][occupation_spouse];
-    $profile->occupation_father = $_POST['Profile'][occupation_father];
-    $profile->occupation_mother = $_POST['Profile'][occupation_mother];
-    $profile->mouth_birth = $_POST['Profile'][mouth_birth];
-    $profile->pass_expire = $_POST['Profile'][pass_expire];
-    $profile->passport_place_issued = $_POST['Profile'][passport_place_issued];
-    $profile->passport_date_issued = $_POST['Profile'][passport_date_issued];
-    $profile->address_parent = $_POST['address_parent'];
-    if ($profile->address_parent == 'y') {
-      $profile->address_parent = 'y';
-    }else{
-       $profile->address_parent = 'n'; 
-    }
+        $profile->tax_payer = $_POST['Profile'][tax_payer];
+        $profile->number_of_children = $_POST['Profile'][number_of_children];
+        $profile->place_of_birth = $_POST['Profile'][place_of_birth];
+        $profile->hight = $_POST['Profile'][hight];
+        $profile->weight = $_POST['Profile'][weight];
+        $profile->hair_color = $_POST['Profile'][hair_color];
+        $profile->eye_color = $_POST['Profile'][eye_color];
+        $profile->place_issued = $_POST['Profile'][place_issued];
+        $profile->date_issued = $_POST['Profile'][date_issued];
+        $profile->blood = $_POST['Profile'][blood];
+        $profile->spouse_firstname = $_POST['Profile'][spouse_firstname];
+        $profile->spouse_lastname = $_POST['Profile'][spouse_lastname];
+        $profile->father_firstname = $_POST['Profile'][father_firstname];
+        $profile->father_lastname = $_POST['Profile'][father_lastname];
+        $profile->mother_firstname = $_POST['Profile'][mother_firstname];
+        $profile->mother_lastname = $_POST['Profile'][mother_lastname];
+        $profile->military = $_POST['military'];
+        $profile->sickness = $_POST['Profile'][sickness];
+        $profile->expected_salary = $_POST['Profile'][expected_salary];
+        $profile->start_working = $_POST['Profile'][start_working];
+        $profile->accommodation = $_POST['accommodation'];
+        $profile->domicile_address = $_POST['Profile'][domicile_address];
+        $profile->occupation_spouse = $_POST['Profile'][occupation_spouse];
+        $profile->occupation_father = $_POST['Profile'][occupation_father];
+        $profile->occupation_mother = $_POST['Profile'][occupation_mother];
+        $profile->mouth_birth = $_POST['Profile'][mouth_birth];
+        $profile->pass_expire = $_POST['Profile'][pass_expire];
+        $profile->passport_place_issued = $_POST['Profile'][passport_place_issued];
+        $profile->passport_date_issued = $_POST['Profile'][passport_date_issued];
+        $profile->name_emergency = $_POST['Profile'][name_emergency];
+        $profile->relationship_emergency = $_POST['Profile'][relationship_emergency];
+        $profile->address_parent = $_POST['address_parent'];
+        if ($profile->address_parent == 'y') {
+          $profile->address_parent = 'y';
+      }else{
+         $profile->address_parent = 'n'; 
+     }
         // var_dump($users);
         // echo "ddddddddddd";
         // var_dump($Profile);
@@ -1095,8 +1164,10 @@ public function actionUpdate() {
            // var_dump($profile->validate());
            // var_dump($users->validate());
             // var_dump($_POST['ProfilesLanguage']->getErrors());
- // exit();
-        if ($profile->validate() && $users->validate()) {
+
+    
+//exit();
+     if ($profile->validate() && $users->validate()) {
 
 //                    เข้ารหัสpassword
                     // $users->password = UserModule::encrypting($users->password);
@@ -1110,402 +1181,471 @@ public function actionUpdate() {
                     //     $users->pic_user = $beautifulName;
                     // }
 //                บันทึกข้อมูล
-       $uploadFile = CUploadedFile::getInstance($users, 'pic_user');
-       if (isset($uploadFile)) {
-        $uglyName = strtolower($uploadFile->name);
-        $mediocreName = preg_replace('/[^a-zA-Z0-9]+/', '_', $uglyName);
-        $beautifulName = trim($mediocreName, '_') . "." . $uploadFile->extensionName;
-        $users->pic_user = $beautifulName;
+         $uploadFile = CUploadedFile::getInstance($users, 'pic_user');
+         if (isset($uploadFile)) {
+            $uglyName = strtolower($uploadFile->name);
+            $mediocreName = preg_replace('/[^a-zA-Z0-9]+/', '_', $uglyName);
+            $beautifulName = trim($mediocreName, '_') . "." . $uploadFile->extensionName;
+            $users->pic_user = $beautifulName;
         }
-            if ($users->save() && $profile->save()) { 
-                if ($_POST['ProfilesEdu']){
-                    foreach ($_POST['ProfilesEdu'] as $action_index=>$action_value){
-                      $new_action[] = $action_value['edu_id'];
-                      $model_ss = ProfilesEdu::model()->find('edu_id="'.$action_value['edu_id'].'" AND user_id='.Yii::app()->user->id);
+        if ($users->save() && $profile->save()) { 
+            if ($_POST['ProfilesEdu']){
+                foreach ($_POST['ProfilesEdu'] as $action_index=>$action_value){
+                  $new_action[] = $action_value['edu_id'];
+                  $model_ss = ProfilesEdu::model()->find('edu_id="'.$action_value['edu_id'].'" AND user_id='.Yii::app()->user->id);
 
-                      if ($model_ss){
-                        $model_ss->attributes = $action_value;
-                        $model_ss->user_id = $users->id;
-                        $model_ss->update_date = date("Y-m-d H:i:s");
-                        $model_ss->update_by = $users->id;
-                        $model_ss->save(false);
+                  if ($model_ss){
+                    $model_ss->attributes = $action_value;
+                    $model_ss->user_id = $users->id;
+                    $model_ss->update_date = date("Y-m-d H:i:s");
+                    $model_ss->update_by = $users->id;
+                    $model_ss->save(false);
                            // echo "a";
-                    }else{
-                     $Edu = new ProfilesEdu;
-                     $Edu->user_id = $users->id;
-                     $Edu->created_date = date("Y-m-d H:i:s");
-                     $Edu->created_by = $users->id;
-                     $Edu->attributes = $action_value;
-                     $Edu->save(false);
+                }else{
+                   $Edu = new ProfilesEdu;
+                   $Edu->user_id = $users->id;
+                   $Edu->created_date = date("Y-m-d H:i:s");
+                   $Edu->created_by = $users->id;
+                   $Edu->attributes = $action_value;
+                   $Edu->save(false);
                            //echo "b";
-                 } 
+               } 
 
-             } 
-             $model_del = ProfilesEdu::model()->findAll(["select"=>"edu_id",'condition'=>'user_id='.Yii::app()->user->id]);
+           } 
+           $model_del = ProfilesEdu::model()->findAll(["select"=>"edu_id",'condition'=>'user_id='.Yii::app()->user->id]);
 
-             if($model_del){
-                foreach($model_del as $key => $val){
-                    if(isset($new_action)){
-                        if(!in_array($val->edu_id,$new_action)){
-                            $model_del_action = ProfilesEdu::model()->find('edu_id="'.$val->edu_id.'" AND user_id='.Yii::app()->user->id); 
+           if($model_del){
+            foreach($model_del as $key => $val){
+                if(isset($new_action)){
+                    if(!in_array($val->edu_id,$new_action)){
+                        $model_del_action = ProfilesEdu::model()->find('edu_id="'.$val->edu_id.'" AND user_id='.Yii::app()->user->id); 
                            // $model_del_action->active = 'n';
                             //$model_del_action->save(false);
-                                        $model_del_action->delete(false);
+                        $model_del_action->delete(false);
                                          //echo "c";
-                        }
                     }
                 }
             }
+        }
                         /////// end ลบแอคชั่น
          } //exit();
           //   บันทึกภาพ
 
-        if ($_POST['ProfilesWorkHistory']){
-          
-                    foreach ($_POST['ProfilesWorkHistory'] as $action_indexw=>$action_valuew){
+         if ($_POST['ProfilesWorkHistory']){
+
+            foreach ($_POST['ProfilesWorkHistory'] as $action_indexw=>$action_valuew){
                         //var_dump($action_valuew['id']);
-                      $new_actions[] = $action_valuew['company_name'];
-                      $ProfilesWorkHistory_old = ProfilesWorkHistory::model()->find('company_name="'.$action_valuew['company_name'].'" AND user_id='.Yii::app()->user->id);
-                          
-                      if ($ProfilesWorkHistory_old){
-                        $ProfilesWorkHistory_old->attributes = $action_valuew;
-                        $ProfilesWorkHistory_old->user_id = $users->id;
-                        $ProfilesWorkHistory_old->update_date = date("Y-m-d H:i:s");
-                        $ProfilesWorkHistory_old->update_by = $users->id;
-                        $ProfilesWorkHistory_old->save(false);
+              $new_actions[] = $action_valuew['company_name'];
+              $ProfilesWorkHistory_old = ProfilesWorkHistory::model()->find('company_name="'.$action_valuew['company_name'].'" AND user_id='.Yii::app()->user->id);
+
+              if ($ProfilesWorkHistory_old){
+                $ProfilesWorkHistory_old->attributes = $action_valuew;
+                $ProfilesWorkHistory_old->user_id = $users->id;
+                $ProfilesWorkHistory_old->update_date = date("Y-m-d H:i:s");
+                $ProfilesWorkHistory_old->update_by = $users->id;
+                $ProfilesWorkHistory_old->save(false);
                            // echo "a";
-                    }else{
-                     $ProfilesWorkHistory_new = new ProfilesWorkHistory;
-                     $ProfilesWorkHistory_new->user_id = $users->id;
-                     $ProfilesWorkHistory_new->created_date = date("Y-m-d H:i:s");
-                     $ProfilesWorkHistory_new->created_by = $users->id;
-                     $ProfilesWorkHistory_new->attributes = $action_valuew;
-                     $ProfilesWorkHistory_new->save(false);
+            }else{
+               $ProfilesWorkHistory_new = new ProfilesWorkHistory;
+               $ProfilesWorkHistory_new->user_id = $users->id;
+               $ProfilesWorkHistory_new->created_date = date("Y-m-d H:i:s");
+               $ProfilesWorkHistory_new->created_by = $users->id;
+               $ProfilesWorkHistory_new->attributes = $action_valuew;
+               $ProfilesWorkHistory_new->save(false);
                           // echo "b";
 
-                 } 
+           } 
 
-             } 
-             $model_del_work = ProfilesWorkHistory::model()->findAll(["select"=>"company_name",'condition'=>'user_id='.Yii::app()->user->id]);
+       } 
+       $model_del_work = ProfilesWorkHistory::model()->findAll(["select"=>"company_name",'condition'=>'user_id='.Yii::app()->user->id]);
        
-             if($model_del_work){
-                foreach($model_del_work as $keyw => $valw){
-                    var_dump($valw->company_name);
-                    if(isset($new_actions)){
-                        if(!in_array($valw->company_name,$new_actions)){
+       if($model_del_work){
+        foreach($model_del_work as $keyw => $valw){
+            if(isset($new_actions)){
+                if(!in_array($valw->company_name,$new_actions)){
                             //var_dump($new_action);
-                            $ProfilesWorkHistory_del = ProfilesWorkHistory::model()->find('company_name="'.$valw->company_name.'" AND user_id='.Yii::app()->user->id); 
+                    $ProfilesWorkHistory_del = ProfilesWorkHistory::model()->find('company_name="'.$valw->company_name.'" AND user_id='.Yii::app()->user->id); 
                            // $model_del_action->active = 'n';
                             //$model_del_action->save(false);
-                                        $ProfilesWorkHistory_del->delete(false);
+                    $ProfilesWorkHistory_del->delete(false);
                                       //   echo "c";
-                        }
-                    }
                 }
             }
+        }
+    }
                         /////// end ลบแอคชั่น
-          } 
-
-          if ($_POST['ProfilesTraining']){
+} 
+if (isset($_POST['FileTraining'])){ 
+    $uploadDir = Yii::app()->getUploadPath(null);
+    $path1 = $users->id;
+    if ($path1) {
+        mkdir($uploadDir."../Trainingfile/".$path1."/", 0777, true);
+    } 
+    $i=0;
+     
+    foreach ($_POST['FileTraining'] as $key => $value) {
+       $new_actions[] = $value['file_name'];
+       $FileTraining_old = FileTraining::model()->find('file_name="'.$value['file_name'].'" AND user_id='.Yii::app()->user->id); 
           
-                    foreach ($_POST['ProfilesTraining'] as $action_indexTn=>$action_valuTn){
-                        //var_dump($action_valuTn['id']);
-                      $new_actionsTn[] = $action_valuTn['message'];
-                      $ProfilesTraining_old = ProfilesTraining::model()->find('message="'.$action_valuTn['message'].'" AND user_id='.Yii::app()->user->id);
-                          
-                      if ($ProfilesTraining_old){
-                        $ProfilesTraining_old->attributes = $action_valuTn;
-                        $ProfilesTraining_old->user_id = $users->id;
-                        $ProfilesTraining_old->update_date = date("Y-m-d");
-                        $ProfilesTraining_old->update_by = $users->id;
-                        $ProfilesTraining_old->save(false);
-                           // echo "a";
-                    }else{
-                     $ProfilesTraining_new = new ProfilesTraining;
-                     $ProfilesTraining_new->user_id = $users->id;
-                     $ProfilesTraining_new->create_date = date("Y-m-d");
-                     $ProfilesTraining_new->create_by = $users->id;
-                     $ProfilesTraining_new->attributes = $action_valuTn;
-                     $ProfilesTraining_new->save(false);
-                          // echo "b";
+        $name_file = $_FILES['FileTraining']['name'][$i]; 
+        $tmpFilePath = $_FILES['FileTraining']['tmp_name'][$i];   
 
-                 } 
+        $newFilePath = Yii::app()->basePath.'/../uploads/Trainingfile/'.$path1.'/'. $name_file['filename']; 
+    if ($FileTraining_old) {    
 
-             } 
-             $model_del_Training = ProfilesTraining::model()->findAll(["select"=>"message",'condition'=>'user_id='.Yii::app()->user->id]);
-       
-             if($model_del_Training){
-                foreach($model_del_Training as $keyTn => $valTn){
-                    if(isset($new_actionsTn)){
-                        if(!in_array($valTn->message,$new_actionsTn)){
-                            //var_dump($new_action);
-                            $ProfilesTraining_del = ProfilesTraining::model()->find('message="'.$valTn->message.'" AND user_id='.Yii::app()->user->id); 
-                           // $model_del_action->active = 'n';
-                            //$model_del_action->save(false);
-                                        $ProfilesTraining_del->delete(false);
-                                      //   echo "c";
-                        }
-                    }
-                }
-            }
-                        /////// end ลบแอคชั่น
-          } 
-       if ($_POST['ProfilesLanguage']){
-         
-                    foreach ($_POST['ProfilesLanguage'] as $action_indLg=>$action_valuLg){
-                      $new_actionsLg[] = $action_valuLg['language_name'];
-                      $ProfilesLanguage_old = ProfilesLanguage::model()->find('language_name="'.$action_valuLg['language_name'].'" AND user_id='.Yii::app()->user->id);
-        
-                      if ($ProfilesLanguage_old){
-                        $ProfilesLanguage_old->attributes = $action_valuLg;
-                        $ProfilesLanguage_old->user_id = $users->id;
-                        $ProfilesLanguage_old->update_date = date("Y-m-d");
-                        $ProfilesLanguage_old->update_by = $users->id;
-                        $ProfilesLanguage_old->save(false);
+       if ($tmpFilePath){    
+           
+         if(move_uploaded_file($tmpFilePath['filename'], $newFilePath)) {
 
-                    }else{
-                     $ProfilesLanguage_new = new ProfilesLanguage;
-                     $ProfilesLanguage_new->user_id = $users->id;
-                     $ProfilesLanguage_new->create_date = date("Y-m-d");
-                     $ProfilesLanguage_new->create_by = $users->id;
-                     $ProfilesLanguage_new->attributes = $action_valuLg;
-                     if ($ProfilesLanguage_new->language_name != NULL) {
-                        $ProfilesLanguage_new->save(false);
-                     }
-                     
-                 } 
-
-             } 
-             $model_del_Language = ProfilesLanguage::model()->findAll(["select"=>"language_name",'condition'=>'user_id='.Yii::app()->user->id]);
-       
-             if($model_del_Language){
-                foreach($model_del_Language as $keyLg => $valLg){
-                    if(isset($new_actionsLg)){
-                        if(!in_array($valLg->language_name,$new_actionsLg)){
-                        
-                            $ProfilesLanguage_del = ProfilesLanguage::model()->find('language_name="'.$valLg->language_name.'" AND user_id='.Yii::app()->user->id); 
-                                        $ProfilesLanguage_del->delete(false);
+            $FileTraining_old->user_id = $users->id;
+            $FileTraining_old->update_date = date("Y-m-d ");
+            $FileTraining_old->update_by = $users->id;
+            $FileTraining_old->filename = $name_file['filename'];
+            $FileTraining_old->file_name = $value['file_name'];
+            $FileTraining_old->length = "2.00";
+            $FileTraining_old->expire_date = $value['expire_date'];
+            $FileTraining_old->save(false);  
+            echo 1;       
+           
+        }else{
+            echo "upload Failed";
             
-                        }
-                    }
+        }         
+    }
+  }else{
+   
+         if(move_uploaded_file($tmpFilePath['filename'], $newFilePath)) {
+
+            $FileTraining_new = new FileTraining;
+            $FileTraining_new->user_id = $users->id;
+            $FileTraining_new->create_date = date("Y-m-d ");
+            $FileTraining_new->create_by = $users->id;
+            $FileTraining_new->filename = $name_file['filename'];
+            $FileTraining_new->file_name = $value['file_name'];
+            $FileTraining_new->length = "2.00";
+            $FileTraining_new->expire_date = $value['expire_date'];
+            $FileTraining_new->save(false); 
+            echo 2;
+        }else{
+            echo "upload Failed";
+            echo 5;
+        }
+   }   $i++;
+} 
+$model_del_Training = FileTraining::model()->findAll(["select"=>"file_name",'condition'=>'user_id='.Yii::app()->user->id]);
+       
+       if($model_del_Training){
+        foreach($model_del_Training as $keyw => $valw){
+            if(isset($new_actions)){
+                if(!in_array($valw->file_name,$new_actions)){
+                    $FileTraining_del = FileTraining::model()->find('file_name="'.$valw->file_name.'" AND user_id='.Yii::app()->user->id); 
+                    $FileTraining_del->delete(false);
+                    echo 3;
                 }
             }
+        }
+    }
+}
+// if ($_POST['ProfilesTraining']){
+
+//     foreach ($_POST['ProfilesTraining'] as $action_indexTn=>$action_valuTn){
+//                         //var_dump($action_valuTn['id']);
+//       $new_actionsTn[] = $action_valuTn['message'];
+//       $ProfilesTraining_old = ProfilesTraining::model()->find('message="'.$action_valuTn['message'].'" AND user_id='.Yii::app()->user->id);
+
+//       if ($ProfilesTraining_old){
+//         $ProfilesTraining_old->attributes = $action_valuTn;
+//         $ProfilesTraining_old->user_id = $users->id;
+//         $ProfilesTraining_old->update_date = date("Y-m-d");
+//         $ProfilesTraining_old->update_by = $users->id;
+//         $ProfilesTraining_old->save(false);
+//                            // echo "a";
+//     }else{
+//        $ProfilesTraining_new = new ProfilesTraining;
+//        $ProfilesTraining_new->user_id = $users->id;
+//        $ProfilesTraining_new->create_date = date("Y-m-d");
+//        $ProfilesTraining_new->create_by = $users->id;
+//        $ProfilesTraining_new->attributes = $action_valuTn;
+//        $ProfilesTraining_new->save(false);
+//                           // echo "b";
+
+//    } 
+
+// } 
+// $model_del_Training = ProfilesTraining::model()->findAll(["select"=>"message",'condition'=>'user_id='.Yii::app()->user->id]);
+
+// if($model_del_Training){
+//     foreach($model_del_Training as $keyTn => $valTn){
+//         if(isset($new_actionsTn)){
+//             if(!in_array($valTn->message,$new_actionsTn)){
+//                             //var_dump($new_action);
+//                 $ProfilesTraining_del = ProfilesTraining::model()->find('message="'.$valTn->message.'" AND user_id='.Yii::app()->user->id); 
+//                            // $model_del_action->active = 'n';
+//                             //$model_del_action->save(false);
+//                 $ProfilesTraining_del->delete(false);
+//                                       //   echo "c";
+//             }
+//         }
+//     }
+// }
                         /////// end ลบแอคชั่น
-          } 
-               
-         if (isset($uploadFile)) {
+//} 
+if ($_POST['ProfilesLanguage']){
+
+    foreach ($_POST['ProfilesLanguage'] as $action_indLg=>$action_valuLg){
+      $new_actionsLg[] = $action_valuLg['language_name'];
+      $ProfilesLanguage_old = ProfilesLanguage::model()->find('language_name="'.$action_valuLg['language_name'].'" AND user_id='.Yii::app()->user->id);
+
+      if ($ProfilesLanguage_old){
+        $ProfilesLanguage_old->attributes = $action_valuLg;
+        $ProfilesLanguage_old->user_id = $users->id;
+        $ProfilesLanguage_old->update_date = date("Y-m-d");
+        $ProfilesLanguage_old->update_by = $users->id;
+        $ProfilesLanguage_old->save(false);
+
+    }else{
+       $ProfilesLanguage_new = new ProfilesLanguage;
+       $ProfilesLanguage_new->user_id = $users->id;
+       $ProfilesLanguage_new->create_date = date("Y-m-d");
+       $ProfilesLanguage_new->create_by = $users->id;
+       $ProfilesLanguage_new->attributes = $action_valuLg;
+       if ($ProfilesLanguage_new->language_name != NULL) {
+        $ProfilesLanguage_new->save(false);
+    }
+
+} 
+
+} 
+$model_del_Language = ProfilesLanguage::model()->findAll(["select"=>"language_name",'condition'=>'user_id='.Yii::app()->user->id]);
+
+if($model_del_Language){
+    foreach($model_del_Language as $keyLg => $valLg){
+        if(isset($new_actionsLg)){
+            if(!in_array($valLg->language_name,$new_actionsLg)){
+
+                $ProfilesLanguage_del = ProfilesLanguage::model()->find('language_name="'.$valLg->language_name.'" AND user_id='.Yii::app()->user->id); 
+                $ProfilesLanguage_del->delete(false);
+
+            }
+        }
+    }
+}
+                        /////// end ลบแอคชั่น
+} 
+
+if (isset($uploadFile)) {
                             /////////// SAVE IMAGE //////////
-            Yush::init($users);
-            $originalPath = Yush::getPath($users, Yush::SIZE_ORIGINAL, $users->pic_user);
-            $thumbPath = Yush::getPath($users, Yush::SIZE_THUMB, $users->pic_user);
-            $smallPath = Yush::getPath($users, Yush::SIZE_SMALL, $users->pic_user);
+    Yush::init($users);
+    $originalPath = Yush::getPath($users, Yush::SIZE_ORIGINAL, $users->pic_user);
+    $thumbPath = Yush::getPath($users, Yush::SIZE_THUMB, $users->pic_user);
+    $smallPath = Yush::getPath($users, Yush::SIZE_SMALL, $users->pic_user);
                             // Save the original resource to disk
-            $uploadFile->saveAs($originalPath);
+    $uploadFile->saveAs($originalPath);
 
                             // Create a small image
-            $smallImage = Yii::app()->phpThumb->create($originalPath);
-            $smallImage->resize(385, 220);
-            $smallImage->save($smallPath);
+    $smallImage = Yii::app()->phpThumb->create($originalPath);
+    $smallImage->resize(385, 220);
+    $smallImage->save($smallPath);
 //
                             // Create a thumbnail
-            $thumbImage = Yii::app()->phpThumb->create($originalPath);
-            $thumbImage->resize(350, 200);
-            $thumbImage->save($thumbPath);
-        }
-        $attach_passport  = CUploadedFile::getInstance($AttachName, 'attach_passport');
-    if (isset($attach_passport)) {
-        $uglyName = strtolower($attach_passport->name); 
-         $uploadDir = $webroot;
-         $rnd = rand(0,9999999999);
-         $fileName = trim($rnd). "." . $attach_passport->extensionName;
-         $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
-         if(!empty($attach_passport))  
-                        {
-                            $attach_passport->saveAs($webroot);
-                        }
-         $AttachName = AttachName::model()->find('active="y" AND user_id='.Yii::app()->user->id);
-         $AttachFile = AttachFile::model()->find('file_data="1" AND active="y" AND user_id='.Yii::app()->user->id);
-         if (isset($AttachName)) {
-         $AttachName->attach_passport = 1;
-         $AttachFile->user_id = $users->id;
-         $AttachFile->file_data = $AttachName->attach_passport;
-         $AttachFile->file_name = $fileName;
-         $AttachFile->filename = $uglyName;
-         $AttachFile->update_date = date("Y-m-d");
-         $AttachFile->update_by = $users->id;
-         $AttachName->user_id = $users->id;
-         $AttachName->update_date = date("Y-m-d");
-         $AttachName->update_by = $users->id;
-         $AttachFile->save(false);
-         $AttachName->save(false);
-         }else{
-         $AttachName->attach_passport = 1;
-         $AttachFile = new AttachFile;
-         $AttachFile->user_id = $users->id;
-         $AttachFile->file_data = $AttachName->attach_passport;
-         $AttachFile->file_name = $fileName;
-         $AttachFile->filename = $uglyName;
-         $AttachFile->create_date = date("Y-m-d");
-         $AttachFile->create_by = $users->id;
-         $AttachName->user_id = $users->id;
-         $AttachName->create_date = date("Y-m-d");
-         $AttachName->create_by = $users->id;
-         $AttachFile->save(false);
-         $AttachName->save(false);
-     }
+    $thumbImage = Yii::app()->phpThumb->create($originalPath);
+    $thumbImage->resize(350, 200);
+    $thumbImage->save($thumbPath);
+}
+$attach_passport  = CUploadedFile::getInstance($AttachName, 'attach_passport');
+if (isset($attach_passport)) {
+    $uglyName = strtolower($attach_passport->name); 
+    $uploadDir = $webroot;
+    $rnd = rand(0,9999999999);
+    $fileName = trim($rnd). "." . $attach_passport->extensionName;
+    $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
+    if(!empty($attach_passport))  
+    {
+        $attach_passport->saveAs($webroot);
     }
-    $attach_crew_identification  = CUploadedFile::getInstance($AttachName, 'attach_crew_identification');
-    if (isset($attach_crew_identification)) {
-        $uglyName = strtolower($attach_crew_identification->name); 
-         $uploadDir = $webroot;
-         $rnd = rand(0,9999999999);
-         $fileName = trim($rnd). "." . $attach_crew_identification->extensionName;
-         $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
-         if(!empty($attach_crew_identification))  
-                        {
-                            $attach_crew_identification->saveAs($webroot);
-                        }
-         $AttachName = AttachName::model()->find('active="y" AND user_id='.Yii::app()->user->id);
-         $AttachFile = AttachFile::model()->find('file_data="2" AND active="y" AND user_id='.Yii::app()->user->id); 
-         if (isset($AttachName)) {
-         $AttachName->attach_crew_identification = 2;
-         $AttachFile->user_id = $users->id;
-         $AttachFile->file_data = $AttachName->attach_crew_identification;
-         $AttachFile->file_name = $fileName;
-         $AttachFile->filename = $uglyName;
-         $AttachFile->update_date = date("Y-m-d");
-         $AttachFile->update_by = $users->id;
-         $AttachName->user_id = $users->id;
-         $AttachName->update_date = date("Y-m-d");
-         $AttachName->update_by = $users->id;
-         $AttachFile->save(false);
-         $AttachName->save(false);
-         }else{
-         $AttachName->attach_crew_identification = 2;
-         $AttachFile = new AttachFile;
-         $AttachFile->user_id = $users->id;
-         $AttachFile->file_data = $AttachName->attach_crew_identification;
-         $AttachFile->file_name = $fileName;
-         $AttachFile->filename = $uglyName;
-         $AttachFile->create_date = date("Y-m-d");
-         $AttachFile->create_by = $users->id;
-         $AttachName->user_id = $users->id;
-         $AttachName->create_date = date("Y-m-d");
-         $AttachName->create_by = $users->id;
-         $AttachFile->save(false);
-         $AttachName->save(false);
-         }
-         
+    $AttachName = AttachName::model()->find('active="y" AND user_id='.Yii::app()->user->id);
+    $AttachFile = AttachFile::model()->find('file_data="1" AND active="y" AND user_id='.Yii::app()->user->id);
+    if (isset($AttachName)) {
+       $AttachName->attach_passport = 1;
+       $AttachFile->user_id = $users->id;
+       $AttachFile->file_data = $AttachName->attach_passport;
+       $AttachFile->file_name = $fileName;
+       $AttachFile->filename = $uglyName;
+       $AttachFile->update_date = date("Y-m-d");
+       $AttachFile->update_by = $users->id;
+       $AttachName->user_id = $users->id;
+       $AttachName->update_date = date("Y-m-d");
+       $AttachName->update_by = $users->id;
+       $AttachFile->save(false);
+       $AttachName->save(false);
+   }else{
+       $AttachName->attach_passport = 1;
+       $AttachFile = new AttachFile;
+       $AttachFile->user_id = $users->id;
+       $AttachFile->file_data = $AttachName->attach_passport;
+       $AttachFile->file_name = $fileName;
+       $AttachFile->filename = $uglyName;
+       $AttachFile->create_date = date("Y-m-d");
+       $AttachFile->create_by = $users->id;
+       $AttachName->user_id = $users->id;
+       $AttachName->create_date = date("Y-m-d");
+       $AttachName->create_by = $users->id;
+       $AttachFile->save(false);
+       $AttachName->save(false);
+   }
+}
+$attach_crew_identification  = CUploadedFile::getInstance($AttachName, 'attach_crew_identification');
+if (isset($attach_crew_identification)) {
+    $uglyName = strtolower($attach_crew_identification->name); 
+    $uploadDir = $webroot;
+    $rnd = rand(0,9999999999);
+    $fileName = trim($rnd). "." . $attach_crew_identification->extensionName;
+    $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
+    if(!empty($attach_crew_identification))  
+    {
+        $attach_crew_identification->saveAs($webroot);
     }
-    $attach_identification  = CUploadedFile::getInstance($AttachName, 'attach_identification');
-    if (isset($attach_identification)) {
-        $uglyName = strtolower($attach_identification->name); 
-         $uploadDir = $webroot;
-         $rnd = rand(0,9999999999);
-         $fileName = trim($rnd). "." . $attach_identification->extensionName;
-         $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
-         if(!empty($attach_identification))  
-                        {
-                            $attach_identification->saveAs($webroot);
-                        }
-         $AttachName = AttachName::model()->find('active="y" AND user_id='.Yii::app()->user->id);
-         $AttachFile = AttachFile::model()->find('file_data="3" AND active="y" AND user_id='.Yii::app()->user->id);
-         if (isset($AttachName)) {
-         $AttachName->attach_identification = 3;
-         $AttachFile->user_id = $users->id;
-         $AttachFile->file_data = $AttachName->attach_identification;
-         $AttachFile->file_name = $fileName;
-         $AttachFile->filename = $uglyName;
-         $AttachFile->update_date = date("Y-m-d");
-         $AttachFile->update_by = $users->id;
-         $AttachName->user_id = $users->id;
-         $AttachName->update_date = date("Y-m-d");
-         $AttachName->update_by = $users->id;
-         $AttachFile->save(false);
-         $AttachName->save(false);
-         }else{
-         $AttachName->attach_identification = 3;
-         $AttachFile = new AttachFile;
-         $AttachFile->user_id = $users->id;
-         $AttachFile->file_data = $AttachName->attach_identification;
-         $AttachFile->file_name = $fileName;
-         $AttachFile->filename = $uglyName;
-         $AttachFile->create_date = date("Y-m-d");
-         $AttachFile->create_by = $users->id;
-         $AttachName->user_id = $users->id;
-         $AttachName->create_date = date("Y-m-d");
-         $AttachName->create_by = $users->id;
-         $AttachFile->save(false);
-         $AttachName->save(false);
-    }   
-         
-         
-    }
-    $attach_house_registration  = CUploadedFile::getInstance($AttachName, 'attach_house_registration');
-    if (isset($attach_house_registration)) {
-        $uglyName = strtolower($attach_house_registration->name); 
-         $uploadDir = $webroot;
-         $rnd = rand(0,9999999999);
-         $fileName = trim($rnd). "." . $attach_house_registration->extensionName;
-         $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
-         if(!empty($attach_house_registration))  
-                        {
-                            $attach_house_registration->saveAs($webroot);
-                        }
-         $AttachName = AttachName::model()->find('active="y" AND user_id='.Yii::app()->user->id);
-         $AttachFile = AttachFile::model()->find('file_data="4" AND active="y" AND user_id='.Yii::app()->user->id);
-         if (isset($AttachName)) {
-         $AttachName->attach_house_registration = 4;
-         $AttachFile->user_id = $users->id;
-         $AttachFile->file_data = $AttachName->attach_house_registration;
-         $AttachFile->file_name = $fileName;
-         $AttachFile->filename = $uglyName;
-         $AttachFile->update_date = date("Y-m-d");
-         $AttachFile->update_by = $users->id;
-         $AttachName->user_id = $users->id;
-         $AttachName->update_date = date("Y-m-d");
-         $AttachName->update_by = $users->id;
-         $AttachFile->save(false);
-         $AttachName->save(false); 
-         }else{
-         $AttachName->attach_house_registration = 4;
-         $AttachFile = new AttachFile;
-         $AttachFile->user_id = $users->id;
-         $AttachFile->file_data = $AttachName->attach_house_registration;
-         $AttachFile->file_name = $fileName;
-         $AttachFile->filename = $uglyName;
-         $AttachFile->create_date = date("Y-m-d");
-         $AttachFile->create_by = $users->id;
-         $AttachName->user_id = $users->id;
-         $AttachName->create_date = date("Y-m-d");
-         $AttachName->create_by = $users->id;
-         $AttachFile->save(false);
-         $AttachName->save(false);   
-         }
-         
-    }
+    $AttachName = AttachName::model()->find('active="y" AND user_id='.Yii::app()->user->id);
+    $AttachFile = AttachFile::model()->find('file_data="2" AND active="y" AND user_id='.Yii::app()->user->id); 
+    if (isset($AttachName)) {
+       $AttachName->attach_crew_identification = 2;
+       $AttachFile->user_id = $users->id;
+       $AttachFile->file_data = $AttachName->attach_crew_identification;
+       $AttachFile->file_name = $fileName;
+       $AttachFile->filename = $uglyName;
+       $AttachFile->update_date = date("Y-m-d");
+       $AttachFile->update_by = $users->id;
+       $AttachName->user_id = $users->id;
+       $AttachName->update_date = date("Y-m-d");
+       $AttachName->update_by = $users->id;
+       $AttachFile->save(false);
+       $AttachName->save(false);
+   }else{
+       $AttachName->attach_crew_identification = 2;
+       $AttachFile = new AttachFile;
+       $AttachFile->user_id = $users->id;
+       $AttachFile->file_data = $AttachName->attach_crew_identification;
+       $AttachFile->file_name = $fileName;
+       $AttachFile->filename = $uglyName;
+       $AttachFile->create_date = date("Y-m-d");
+       $AttachFile->create_by = $users->id;
+       $AttachName->user_id = $users->id;
+       $AttachName->create_date = date("Y-m-d");
+       $AttachName->create_by = $users->id;
+       $AttachFile->save(false);
+       $AttachName->save(false);
+   }
 
-        if(isset($session['filenameComDoc']) || count($session['filenameComDoc'])!=0)
-        { 
-            foreach ($session['filenameComDoc'] as $filenameComKey => $filenameComValue)
-            {
+}
+$attach_identification  = CUploadedFile::getInstance($AttachName, 'attach_identification');
+if (isset($attach_identification)) {
+    $uglyName = strtolower($attach_identification->name); 
+    $uploadDir = $webroot;
+    $rnd = rand(0,9999999999);
+    $fileName = trim($rnd). "." . $attach_identification->extensionName;
+    $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
+    if(!empty($attach_identification))  
+    {
+        $attach_identification->saveAs($webroot);
+    }
+    $AttachName = AttachName::model()->find('active="y" AND user_id='.Yii::app()->user->id);
+    $AttachFile = AttachFile::model()->find('file_data="3" AND active="y" AND user_id='.Yii::app()->user->id);
+    if (isset($AttachName)) {
+       $AttachName->attach_identification = 3;
+       $AttachFile->user_id = $users->id;
+       $AttachFile->file_data = $AttachName->attach_identification;
+       $AttachFile->file_name = $fileName;
+       $AttachFile->filename = $uglyName;
+       $AttachFile->update_date = date("Y-m-d");
+       $AttachFile->update_by = $users->id;
+       $AttachName->user_id = $users->id;
+       $AttachName->update_date = date("Y-m-d");
+       $AttachName->update_by = $users->id;
+       $AttachFile->save(false);
+       $AttachName->save(false);
+   }else{
+       $AttachName->attach_identification = 3;
+       $AttachFile = new AttachFile;
+       $AttachFile->user_id = $users->id;
+       $AttachFile->file_data = $AttachName->attach_identification;
+       $AttachFile->file_name = $fileName;
+       $AttachFile->filename = $uglyName;
+       $AttachFile->create_date = date("Y-m-d");
+       $AttachFile->create_by = $users->id;
+       $AttachName->user_id = $users->id;
+       $AttachName->create_date = date("Y-m-d");
+       $AttachName->create_by = $users->id;
+       $AttachFile->save(false);
+       $AttachName->save(false);
+   }   
 
-                $filenameCheck = explode('.', $filenameComValue);
+
+}
+$attach_house_registration  = CUploadedFile::getInstance($AttachName, 'attach_house_registration');
+if (isset($attach_house_registration)) {
+    $uglyName = strtolower($attach_house_registration->name); 
+    $uploadDir = $webroot;
+    $rnd = rand(0,9999999999);
+    $fileName = trim($rnd). "." . $attach_house_registration->extensionName;
+    $webroot = Yii::app()->basePath.'/../uploads/attach/'.$fileName;
+    if(!empty($attach_house_registration))  
+    {
+        $attach_house_registration->saveAs($webroot);
+    }
+    $AttachName = AttachName::model()->find('active="y" AND user_id='.Yii::app()->user->id);
+    $AttachFile = AttachFile::model()->find('file_data="4" AND active="y" AND user_id='.Yii::app()->user->id);
+    if (isset($AttachName)) {
+       $AttachName->attach_house_registration = 4;
+       $AttachFile->user_id = $users->id;
+       $AttachFile->file_data = $AttachName->attach_house_registration;
+       $AttachFile->file_name = $fileName;
+       $AttachFile->filename = $uglyName;
+       $AttachFile->update_date = date("Y-m-d");
+       $AttachFile->update_by = $users->id;
+       $AttachName->user_id = $users->id;
+       $AttachName->update_date = date("Y-m-d");
+       $AttachName->update_by = $users->id;
+       $AttachFile->save(false);
+       $AttachName->save(false); 
+   }else{
+       $AttachName->attach_house_registration = 4;
+       $AttachFile = new AttachFile;
+       $AttachFile->user_id = $users->id;
+       $AttachFile->file_data = $AttachName->attach_house_registration;
+       $AttachFile->file_name = $fileName;
+       $AttachFile->filename = $uglyName;
+       $AttachFile->create_date = date("Y-m-d");
+       $AttachFile->create_by = $users->id;
+       $AttachName->user_id = $users->id;
+       $AttachName->create_date = date("Y-m-d");
+       $AttachName->create_by = $users->id;
+       $AttachFile->save(false);
+       $AttachName->save(false);   
+   }
+
+}
+
+if(isset($session['filenameComDoc']) || count($session['filenameComDoc'])!=0)
+{ 
+    foreach ($session['filenameComDoc'] as $filenameComKey => $filenameComValue)
+    {
+
+        $filenameCheck = explode('.', $filenameComValue);
                             // if($filenameCheck[1] == 'pdf' or $filenameCheck[1] == 'docx' or $filenameCheck[1] == 'pptx')
                             // {
-                $file = new FileEdu;
-                $file->user_id = $users->id;
-                $file->create_date = date("Y-m-d ");
-                $file->create_by = $users->id;
-                $file->filename = $filenameComValue;
-                $file->file_name = $session['filenameOriComDoc'][$filenameComKey];
-                $file->length = "2.00";
-                $file->save(false);
+        $file = new FileEdu;
+        $file->user_id = $users->id;
+        $file->create_date = date("Y-m-d ");
+        $file->create_by = $users->id;
+        $file->filename = $filenameComValue;
+        $file->file_name = $session['filenameOriComDoc'][$filenameComKey];
+        $file->length = "2.00";
+        $file->save(false);
                // var_dump("ok");
-              } 
+    } 
 // }
     }//var_dump(count($session['filenameComTrain']));exit();
-                   
+
             //exit();
     if(isset($session['filenameComTrain']) || count($session['filenameComTrain'])!=0)
     {
@@ -1553,7 +1693,7 @@ unset($session['filenameComTrain']);
 unset($session['filenameOriComTrain']);
 $users->position_name = isset($_POST['User']['position_name']) ? $_POST['User']['position_name'] : $users->position->position_title;
 $this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining, 'ProfilesWorkHistory' => $ProfilesWorkHistory, 'AttachFile' => $AttachFile,'AttachName'=> $AttachName, 'ProfilesLanguage'=>$ProfilesLanguage,
-'ProfilesTraining'=>$ProfilesTraining));
+    'ProfilesTraining'=>$ProfilesTraining, 'FileTraining'=>$FileTraining));
 }
 
 //
@@ -1642,7 +1782,6 @@ public function actionUploadifiveEdu() {
             $session['idxDoc'] += 1;
             //$uploadDir  = $_SERVER['DOCUMENT_ROOT'] . $uploadDir;
             $targetFile = $uploadDir . $fileName;
-            // var_dump($targetFile);exit();
             // Validate the filetype
             $fileParts = pathinfo($_FILES['Filedata']['name']);
             if (in_array(strtolower($fileParts['extension']), $fileTypes)) {
@@ -1914,26 +2053,26 @@ public function actionDeleteFilePassport($id)
             $this->redirect(array('site/index'));
         }
     }
-public function actionCheckMail(){
-   
- $criteria= new CDbCriteria;
- $criteria->condition='email=:email';
- $criteria->params=array(':email'=>$_POST['text_mail']);
- $model = Users::model()->findAll($criteria);
- if ($model != null) {
-    $data = false;
-    echo ($data);
-  }else{ 
-   $data = true; 
-   echo ($data);
-  }
+    public function actionCheckMail(){
+
+       $criteria= new CDbCriteria;
+       $criteria->condition='email=:email';
+       $criteria->params=array(':email'=>$_POST['text_mail']);
+       $model = Users::model()->findAll($criteria);
+       if ($model != null) {
+        $data = false;
+        echo ($data);
+    }else{ 
+     $data = true; 
+     echo ($data);
+ }
 
 }
 
 public function actionCheckIdcard(){
-   $str = $_POST['idcard'];
-   $chk = strlen($str);
-        if($chk == "13"){
+ $str = $_POST['idcard'];
+ $chk = strlen($str);
+ if($chk == "13"){
             $id = str_split(str_replace('-', '', $_POST['idcard'])); //ตัดรูปแบบและเอา ตัวอักษร ไปแยกเป็น array $id
             $sum = 0;
             $total = 0;
@@ -1948,23 +2087,23 @@ public function actionCheckIdcard(){
                 $data = 'no';
                 echo ($data);
             }else{
-                 $criteria= new CDbCriteria;
-                 $criteria->condition='user.identification=:identification';
-                 $criteria->params=array(':identification'=>$str);
-                 $model = Users::model()->findAll($criteria);
-                 if ($model) {
-                       $data = 'yes';
-                       echo ($data);
-                 }else{ 
-                      $data = 'bool'; 
-                      echo ($data);
-                 }
-            }
-        }else{
-            $data = 'little';
-            echo ($data);
-        }
- 
+               $criteria= new CDbCriteria;
+               $criteria->condition='user.identification=:identification';
+               $criteria->params=array(':identification'=>$str);
+               $model = Users::model()->findAll($criteria);
+               if ($model) {
+                 $data = 'yes';
+                 echo ($data);
+             }else{ 
+              $data = 'bool'; 
+              echo ($data);
+          }
+      }
+  }else{
+    $data = 'little';
+    echo ($data);
+}
+
 }
 
     // public function actionLdap(){
@@ -1975,24 +2114,24 @@ public function actionListPosition(){
 
      // $model=Position::model()->findAll('department_id=:department_id',
      //    array(':department_id'=>$_POST['id']));
- $criteria= new CDbCriteria;
- $criteria->condition='department_id=:department_id AND active=:active';
- $criteria->params=array(':department_id'=>$_POST['id'],':active'=>'y');
- $criteria->order = 'position_title ASC';
- $model = Position::model()->findAll($criteria);
+   $criteria= new CDbCriteria;
+   $criteria->condition='department_id=:department_id AND active=:active';
+   $criteria->params=array(':department_id'=>$_POST['id'],':active'=>'y');
+   $criteria->order = 'position_title ASC';
+   $model = Position::model()->findAll($criteria);
 
-     $data=CHtml::listData($model,'id','position_title',array('empty' => 'ตำแหน่ง'));
-     if ($data) {
-     $sub_list = Yii::app()->session['lang'] == 1?'Select Pocition ':'เลือกตำแหน่ง';
-     $data = '<option value ="">'.$sub_list.'</option>';
-     foreach ($model as $key => $value) {
+   $data=CHtml::listData($model,'id','position_title',array('empty' => 'ตำแหน่ง'));
+   if ($data) {
+       $sub_list = Yii::app()->session['lang'] == 1?'Select Pocition ':'เลือกตำแหน่ง';
+       $data = '<option value ="">'.$sub_list.'</option>';
+       foreach ($model as $key => $value) {
         $data .= '<option value = "'.$value->id.'"'.'>'.$value->position_title.'</option>';
     }
     echo ($data);
-    }else{
+}else{
     echo '<option value = "">ไม่พบข้อมูล</option>';
-        
-     }
+
+}
 
 }
 
@@ -2000,16 +2139,16 @@ public function actionListBranch(){
 
  // $model=Branch::model()->findAll('position_id=:position_id',
  //    array(':position_id'=>$_POST['id']));
- $criteria= new CDbCriteria;
- $criteria->condition='position_id=:position_id AND active=:active';
- $criteria->params=array(':position_id'=>$_POST['id'],':active'=>'y');
- $criteria->order = 'branch_name ASC';
- $model = Branch::model()->findAll($criteria);
+   $criteria= new CDbCriteria;
+   $criteria->condition='position_id=:position_id AND active=:active';
+   $criteria->params=array(':position_id'=>$_POST['id'],':active'=>'y');
+   $criteria->order = 'branch_name ASC';
+   $model = Branch::model()->findAll($criteria);
 
- $data=CHtml::listData($model,'id','branch_name',array('empty' => 'สาขา'));
- $sub_list = Yii::app()->session['lang'] == 1?'Select Level ':'เลือกระดับ';
- $data = '<option value ="">'.$sub_list.'</option>';
- foreach ($model as $key => $value) {
+   $data=CHtml::listData($model,'id','branch_name',array('empty' => 'สาขา'));
+   $sub_list = Yii::app()->session['lang'] == 1?'Select Level ':'เลือกระดับ';
+   $data = '<option value ="">'.$sub_list.'</option>';
+   foreach ($model as $key => $value) {
     $data .= '<option value = "'.$value->id.'"'.'>'.$value->branch_name.'</option>';
 }
 echo ($data);
@@ -2018,16 +2157,16 @@ echo ($data);
 
 public function actionListDepartment(){
 
- $criteria= new CDbCriteria;
- $criteria->condition='type_employee_id=:type_employee_id AND active=:active';
- $criteria->params=array(':type_employee_id'=>$_POST['id'],':active'=>'y');
- $criteria->order = 'dep_title ASC';
- $model = Department::model()->findAll($criteria);
+   $criteria= new CDbCriteria;
+   $criteria->condition='type_employee_id=:type_employee_id AND active=:active';
+   $criteria->params=array(':type_employee_id'=>$_POST['id'],':active'=>'y');
+   $criteria->order = 'dep_title ASC';
+   $model = Department::model()->findAll($criteria);
 
- $data=CHtml::listData($model,'id','dep_title',array('empty' => 'แผนก'));
- $sub_list = Yii::app()->session['lang'] == 1?'Select Department ':'เลือกแผนก';
- $data = '<option value ="">'.$sub_list.'</option>';
- foreach ($model as $key => $value) {
+   $data=CHtml::listData($model,'id','dep_title',array('empty' => 'แผนก'));
+   $sub_list = Yii::app()->session['lang'] == 1?'Select Department ':'เลือกแผนก';
+   $data = '<option value ="">'.$sub_list.'</option>';
+   foreach ($model as $key => $value) {
     $data .= '<option value = "'.$value->id.'"'.'>'.$value->dep_title.'</option>';
 }
 echo ($data);
@@ -2035,35 +2174,28 @@ echo ($data);
 }
 
 public function actionCalculateBirthday(){
-   $birthdays = $_POST['item'];
-   $Current = date('d-m-Y');
-    //$Current = date('Y-m-d');
+ $birthdays = $_POST['item'];
+ $Current = date('d-m-Y');
+ $birthdayn = explode("-", $birthdays);
+ $Current = explode("-", $Current);
 
-    $Current = explode("-", $Current);
+ if ($birthdayn[2] < $Current[2]) {    
 
-    if ($birthdays[2] < $Current[2]) {    
-   // $date_now = date("Y");
-   // $data = $date_now - $birthdays[2];
-   // echo ($data);
-   // }else{
-   //  echo (0);
-   // }  
-    $birthdayn = explode("-", $birthdays);
     $birthday = $birthdayn[2].'-'.$birthdayn[1].'-'.$birthdayn[0];
     $dob = new DateTime($birthday);
     $now = new DateTime();
- 
+
     $difference = $now->diff($dob);
- 
+
     $age = $difference->y;
     $mouth = $difference->m;
     $day = $difference->d;
 
     $data = $difference->y.'-'.$difference->m.'-'.$difference->d;
     echo $data;
-    }else{
+}else{
     echo (0);
-    }
+}
 }
 
 }

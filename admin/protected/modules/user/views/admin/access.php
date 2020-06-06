@@ -258,7 +258,7 @@ Yii::app()->clientScript->registerScript('search', "
 									showLoaderOnConfirm: true
 								},
 								function(isConfirm) {
-							
+							          if (isConfirm) {
 										$.ajax({
 											url: "<?= $this->createUrl('admin/Delete_employee'); ?>", 
 											type: "POST",
@@ -277,7 +277,10 @@ Yii::app()->clientScript->registerScript('search', "
 													location.reload();
 												}	
 											}
-										}); 
+										});
+										}else{
+									    	location.reload();
+									    } 
 									}
 								
 								);

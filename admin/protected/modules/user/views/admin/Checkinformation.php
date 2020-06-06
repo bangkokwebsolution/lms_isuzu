@@ -98,7 +98,8 @@
 						echo "Miss";
 					}?>&nbsp;&nbsp;<?php echo $profile['firstname_en'] ?>&nbsp;&nbsp;<?php echo $profile['lastname_en'] ?></span></h5></div>
 					<div class="col-md-6"><h5><b>วันเดือนปีเกิด:</b><span><?php if($profile['birthday'] != ""){$birthday = Helpers::lib()->changeFormatDateNew($profile['birthday']); echo $birthday;}else{echo "-";}  ?></span> </h5></div>
-					<div class="col-md-6"><h5><b>อายุ:</b><span><?php if($profile['age'] != ""){ echo $profile['age'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-3"><h5><b>อายุ:</b><span><?php if($profile['age'] != ""){ echo $profile['age'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-3"><h5><b>เดือน:</b><span><?php if($profile['mouth_birth'] != ""){ echo $profile['mouth_birth'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>สถานที่เกิด:</b><span><?php if($profile['place_of_birth'] != ""){ echo $profile['place_of_birth'];}else{echo "-";}  ?></span> </h5></div>
 					<div class="col-md-6"><h5><b>กรุ๊ปเลือด:</b><span><?php if($profile['blood'] != ""){ echo $profile['blood'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>ส่วนสูง:</b><span><?php if($profile['hight'] != ""){ echo $profile['hight'];}else{echo "-";} ?></span></h5></div>
@@ -109,10 +110,12 @@
 					<div class="col-md-6"><h5><b>วันที่ออกบัตร:</b><span><?php if($profile['date_issued'] != ""){$date_issued = Helpers::lib()->changeFormatDateNew($profile['date_issued']); echo $date_issued;}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>หนังสือเดินทาง:</b><span><?php if($profile['passport'] != ""){ echo $profile['passport'];}else{echo "-";} ?></span> </h5></div>
 					<div class="col-md-6"><h5><b>วันที่บัตรหมดอายุ:</b><span><?php if($profile['pass_expire'] != ""){$pass_expire = Helpers::lib()->changeFormatDateNew($profile['pass_expire']); echo $pass_expire;}else{echo "-";}  ?></span></h5></div>
+					<div class="col-md-6"><h5><b>สถานที่ออกบัตร:</b><span><?php if($profile['passport_place_issued'] != ""){ echo $profile['passport_place_issued'];}else{echo "-";} ?></span> </h5></div>
+					<div class="col-md-6"><h5><b>วันที่ออกบัตร:</b><span><?php if($profile['passport_date_issued'] != ""){$passport_date_issued = Helpers::lib()->changeFormatDateNew($profile['passport_date_issued']); echo $passport_date_issued;}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>หนังสือประจำตัวลูกเรือ:</b><span><?php if($profile['seamanbook'] != ""){ echo $profile['seamanbook'];}else{echo "-";} ?></span> </h5></div>
 					<div class="col-md-6"><h5><b>วันที่บัตรหมดอายุ:</b><span><?php if($profile['seaman_expire'] != ""){$seaman_expire = Helpers::lib()->changeFormatDateNew($profile['seaman_expire']); echo $seaman_expire;}else{echo "-";}  ?></span></h5></div>
-					<div class="col-md-6"><h5><b>บัตรประกันสังคมเลขที่:</b><span><?php if($profile['ss_card'] != ""){ echo $profile['ss_card'];}else{echo "-";} ?></span> </h5></div>
-					<div class="col-md-6"><h5><b>เลขที่บัตรประจำตัวผู้เสียภาษีอากร:</b><span><?php if($profile['tax_payer'] != ""){ echo $profile['tax_payer'];}else{echo "-";}  ?></span></h5></div>
+					<!-- <div class="col-md-6"><h5><b>บัตรประกันสังคมเลขที่:</b><span><?php if($profile['ss_card'] != ""){ echo $profile['ss_card'];}else{echo "-";} ?></span> </h5></div>
+					<div class="col-md-6"><h5><b>เลขที่บัตรประจำตัวผู้เสียภาษีอากร:</b><span><?php if($profile['tax_payer'] != ""){ echo $profile['tax_payer'];}else{echo "-";}  ?></span></h5></div> -->
 					<div class="col-md-6"><h5><b>เชื้อชาติ:</b><span><?php if($profile['race'] != ""){ echo $profile['race'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>สัญชาติ:</b><span><?php if($profile['nationality'] != ""){ echo $profile['nationality'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>ศาสนา:</b><span><?php if($profile['religion'] != ""){ echo $profile['religion'];}else{echo "-";} ?></span></h5></div>
@@ -162,8 +165,10 @@
 					}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-12"><h5><b>ที่อยู่:</b><span><?php if($profile['address'] != ""){ echo $profile['address'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-12"><h5><b>ที่อยู่ตามภูมิลำเนา:</b><span><?php if($profile['domicile_address'] != ""){ echo $profile['domicile_address'];}else{echo "-";} ?></span></h5></div>
-					<div class="col-md-6"><h5><b>เบอร์โทรศัพท์บ้าน:</b><span><?php if($profile['phone'] != ""){ echo $profile['phone'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>เบอร์โทรศัพท์:</b><span><?php if($profile['tel'] != ""){ echo $profile['tel'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-6"><h5><b>เบอร์โทรศัพท์ผู้ที่ติดต่อฉุกเฉิน:</b><span><?php if($profile['phone'] != ""){ echo $profile['phone'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-6"><h5><b>ชือผู้ที่ติดต่อฉุกเฉิน:</b><span><?php if($profile['name_emergency'] != ""){ echo $profile['name_emergency'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-6"><h5><b>ความสัมพันธ์:</b><span><?php if($profile['relationship_emergency'] != ""){ echo $profile['relationship_emergency'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>อีเมล:</b><span><?php if($profile['email'] != ""){ echo $user['email'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>ไอดีไลน์:</b><span><?php  if($profile['line_id'] != ""){ echo $profile['line_id'];}else{echo "-";} ?></span></h5></div>
 					<div class="col-md-6"><h5><b>ประวัติการเจ็บป่วยรุนแรง:</b><span><?php 
@@ -176,7 +181,15 @@
 						;}else{echo "-";} 
 						?></span></h5></div>
 					<div class="col-md-6"><h5><b>โรคที่เคยป่วย:</b><span><?php  if($profile['sickness'] != ""){ echo $profile['sickness'];}else{echo "-";} ?></span></h5></div>
-					<div class="col-md-6"><h5><b>สถานะการรับใช้ชาติ:</b><span><?php  if($profile['military'] != ""){ echo $profile['military'];}else{echo "-";} ?></span></h5></div>
+					<div class="col-md-6"><h5><b>สถานะการรับใช้ชาติ:</b><span><?php  if($profile['military'] != ""){ 
+						if ($profile['military'] == 'enlisted') {
+							echo 'เกณฑ์แล้ว';
+						}else if ($profile['military'] == 'not enlisted') {
+							echo 'ยังไม่ได้เกณฑ์';
+						}else if ($profile['military'] == 'exempt') {
+							echo 'ได้รับการยกเว้น';
+						}
+						}else{echo "-";} ?></span></h5></div>
 						<div class="col-md-12">
 							<h5><b>ประวัติการศึกษา:</b>
 								<ul><?php
@@ -267,7 +280,7 @@
 							</ul>
 						</h5>
 					</div> -->
-					<div class="col-md-12">
+					<!-- <div class="col-md-12">
 							<h5><b>ประวัติการฝึกอบรม:</b>
 						     <table border="1">
 									<thead>
@@ -308,6 +321,49 @@
 									</tbody>
 								</table>
 						</h5>
+					</div> -->
+					<div class="col-md-12">
+							<h5><b>ประวัติการฝึกอบรม:</b>
+						     <table border="1">
+									<thead>
+										<tr style="background-color:#66CCFF	;">
+											<td width="1%">ลำดับ</td>
+											<td width="17%">การฝึกอบรม</td>
+											<td width="17%">วันหมดอายุ</td>
+										</tr>
+									</thead>
+									<tbody><?php 
+								$user_id = $user['id'];
+                             $criteria= new CDbCriteria;
+                             $criteria->addCondition('user_id ="'.$user_id.'"');
+                             $FileTraining = FileTraining::model()->findAll($criteria);
+          
+								if(!empty($FileTraining)){ 
+									$i = 1;
+									foreach ($FileTraining as $key => $value) {																
+											?>
+										<tr>
+											<td><?php echo $i++; ?></td>
+											<td><?php echo $value['file_name']; ?></td>
+		                                    <td><?php $expire_date = Helpers::lib()->changeFormatDateNew($value['expire_date']);
+		                                     echo $expire_date; ?></td>
+										</tr>
+										<?php
+									}
+                                    }else{
+                                    	?>
+                                    	<tr>
+											<td><?php echo "-"; ?></td>
+											<td><?php echo "-"; ?></td>
+											<td><?php echo "-"; ?></td>
+										</tr>
+										
+                                   <?php 
+                                       }
+                                   ?>
+									</tbody>
+								</table>
+						</h5>
 					</div>
 				<div class="col-md-12">
 					<h5><b>เอกสารแนบไฟล์ฝึกอบรม:</b>
@@ -325,7 +381,7 @@
 
 								foreach($FileTraining as $fileDatas){?>
 									<li>
-										<a href="<?php echo Yii::app()->baseUrl . '/../uploads/Trainingfile/' . $fileDatas->filename; ?>"><span><?php echo $fileDatas->file_name;?></span></a>
+										<a href="<?php echo Yii::app()->baseUrl . '/../uploads/Trainingfile/'.$user_id.'/' . $fileDatas->filename; ?>"><span><?php echo $fileDatas->file_name;?></span></a>
 									</li>
 									<?php
 								}

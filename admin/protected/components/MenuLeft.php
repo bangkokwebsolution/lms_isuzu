@@ -1132,8 +1132,17 @@ Class MenuLeft extends Controller
 	        				'admin.*',
 	        				'admin.Membership'
 	        			)),
-	        			'label'=>'อนุมัติการตรวจสอบการสมัครสมาชิก',
+	        			'label'=>'อนุมัติการตรวจสอบการสมัครสมาชิกสำหรับคนประจำเรือ',
 	        			'url'=>array('//user/admin/membership')
+	        		),
+	        		array(
+	        			/*====== Check Permissions Sup-User (1) ======*/
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'admin.*',
+	        				'admin.membership_personal'
+	        			)),
+	        			'label'=>'อนุมัติการตรวจสอบการสมัครสำหรับบุคคลทั่วไป',
+	        			'url'=>array('//user/admin/membership_personal')
 	        		),
 	        		array(
 	        			/*====== Check Permissions Sup-User (1) ======*/

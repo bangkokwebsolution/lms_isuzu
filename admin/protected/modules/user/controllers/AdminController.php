@@ -200,6 +200,21 @@ echo ($data);
         ));
 	}
 
+	public function actionMembership_personal ()
+	{
+		$model = new User('search');
+        $model->unsetAttributes();  // clear any default values
+        $model->register_status = array(0,2);
+        $model->supper_user_status = true;
+      
+        if(isset($_GET['User'])){
+        	$model->attributes=$_GET['User'];
+        }
+        $this->render('Membership_personal',array(
+        	'model'=>$model,
+        ));
+	}
+
 	public function loadDepartment($department_id){
 		$data=OrgChart::model()->findAll('id=:id',
 			array(':id'=>$department_id)
@@ -379,6 +394,35 @@ echo ($data);
 		$this->redirect(array('/user/admin/Membership'));
 	}
 
+	public function actionConfirm_personal()
+	{
+		
+		$id = $_POST['id'];
+		$model = User::model()->findByPk($id);
+		if($model->register_status == 0){
+			$model->register_status = 1;
+			$model->status = 1;
+		} else {
+			$model->register_status = 0;
+		}
+        $genpass = $this->RandomPassword();
+		$model->verifyPassword = $genpass;
+		$model->password = UserModule::encrypting($genpass);
+		$model->username = $model->identification;
+		$model->save(false);
+		// if(Yii::app()->user->id){
+		// 				Helpers::lib()->getLogregister($model);
+		// 			}
+		$to['email'] = $model->email;
+		$to['firstname'] = $model->profile->firstname;
+		$to['lastname'] = $model->profile->lastname;
+		$message = $this->renderPartial('_mail_message',array('model' => $model,'genpass' => $genpass),true);
+		if($message){
+			 $send = Helpers::lib()->SendMail($to,'อนุมัติการสมัครสมาชิก',$message);
+		}
+		$this->redirect(array('/user/admin/Membership_personal'));
+	}
+
     public function actionNotapproved()
     {
   
@@ -402,6 +446,31 @@ echo ($data);
 		}
 		$this->redirect(array('/user/admin/Membership'));
     }
+
+    public function actionNotapproved_personal()
+    {
+  
+    	$id = $_POST['id'];
+    	$passage = $_POST['passInput'];
+		$model = User::model()->findByPk($id);
+		if($model->register_status == 0){
+			$model->register_status = 2;
+		} else {
+			$model->register_status = 1;
+		}
+		$model->note = $passage;
+		$model->save(false);
+		$to['email'] = $model->email;
+		$to['firstname'] = $model->profile->firstname;
+		$to['lastname'] = $model->profile->lastname;
+
+		$message = $this->renderPartial('_mail_Notapproved',array('model' => $model,'passage' => $passage),true);
+		if($message){
+			 $send = Helpers::lib()->SendMail($to,'ไม่อนุมัติการสมัครสมาชิก',$message);
+		}
+		$this->redirect(array('/user/admin/Membership_personal'));
+    }
+    
     public function actionNotPassed()
     {
   
@@ -469,6 +538,16 @@ echo ($data);
 
 	
        $this->renderPartial('Checkinformation',array('user' => $user,'profile' => $profile));
+	}
+
+	public function actionCheckinformation_personal()
+	{
+		$id = $_POST['id'];
+		$user = User::model()->findByPk($id);
+		$profile = Profile::model()->findByPk($id);
+
+	
+       $this->renderPartial('Checkinformation_personal',array('user' => $user,'profile' => $profile));
 	}
 
 	public function actionAttach_load()
@@ -578,11 +657,11 @@ echo ($data);
 			}	
 	     }
 	     foreach ($Training_file as $keytn => $valuetn) {
-	     	$Training_all  = glob(Yii::app()->getUploadPath('Trainingfile').$valuetn->filename);
+	     	$Training_all  = glob(Yii::app()->getUploadPath(null)."..\\Trainingfile\\".$user_id."\\*");
 	    	if(!empty($Training_all)){
-				$path_zip_training[] = "../uploads/Trainingfile/".basename($Training_all[0]);	
+				$path_zip_training[] = "../uploads/Trainingfile/".$user_id."/".basename($Training_all[0]);	
 				$name_file_training[] = basename($Training_all[0]);	
-				$nameold_file_training[] = $valuetn->file_name;	
+				$nameold_file_training[] = $valuetn->filename;	
 			}
 	     }
 	         $Register_all  = glob(Yii::app()->getUploadPath(null)."..\\pdf_regis\\".$user_id."\\*");
