@@ -1063,7 +1063,6 @@ public function actionUpdate() {
         $users->identification = $_POST['idcard'];
         $profile->identification = $_POST['idcard'];
         $profile->passport = $_POST['passport'];
-        var_dump($_POST['Profile']);exit();
         $users->email = $_POST['User'][email];
         $profile->title_id = $_POST['Profile'][title_id];
         $profile->firstname = $_POST['Profile'][firstname];
