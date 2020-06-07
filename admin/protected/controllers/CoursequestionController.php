@@ -19,7 +19,7 @@ class CoursequestionController extends Controller
     {
     	return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-            	'actions' => array('index', 'view'),
+            	'actions' => array('index', 'view', 'export'),
             	'users' => array('*'),
             	),
             array('allow',
@@ -642,6 +642,19 @@ class CoursequestionController extends Controller
 		{
 			throw new CHttpException(404,'The requested page does not exist.');
 		}
+	}
+
+	public function actionExport($id)
+	{		
+		$grouptesting = Coursegrouptesting::model()->findByPk($id);
+		$question = Coursequestion::model()->findAll([
+			'condition'=>'active=:active AND group_id=:group_id',
+			'params' => array(':group_id' => $id, ':active'=>'y')
+		]);
+		
+		$this->renderPartial('export_excel', array(
+		'grouptesting'=>$grouptesting, 
+		'question'=>$question ));
 	}
 
 	public function loadModel($id)

@@ -1568,4 +1568,34 @@ public  function actionReport_list(){
       ));
     }
 
+
+    public function actionLogReset()
+    {
+        if(isset($_GET['Report'])){
+
+            $this->render('logReset', array());
+        }   
+        $this->render('logReset');     
+    }
+
+    public function actionLoadgen()
+    {
+        if(isset($_POST['course_id']) && $_POST['course_id'] != ""){
+            $criteria = new CDbCriteria;
+            $criteria->compare('course_id',$_POST['course_id']);
+            $criteria->compare('active','y');
+            $criteria->order = 'gen_title ASC';
+            $gen = CourseGeneration::model()->findAll($criteria);
+
+            if(!empty($gen)){
+                echo "<option value=''>กรุณา เลือกรุ่น</option>";
+                foreach ($gen as $key => $value) {
+                echo "<option value='".$value->gen_id."'>".$value->gen_title."</option>";                    
+                }
+            }else{
+                echo "<option value='0'>ไม่มีรุุ่น</option>";
+            }
+        }
+    }
+
 }

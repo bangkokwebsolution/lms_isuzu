@@ -19,7 +19,7 @@ class QuestionController extends Controller
     {
     	return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-            	'actions' => array('index', 'view','MultiDelete'),
+            	'actions' => array('index', 'view','MultiDelete, Export'),
             	'users' => array('*'),
             	),
             array('allow',
@@ -609,6 +609,24 @@ class QuestionController extends Controller
 		{
 			throw new CHttpException(404,'The requested page does not exist.');
 		}
+	}
+
+	public function actionExport($id)
+	{		
+		$grouptesting = Grouptesting::model()->findByPk($id);
+		$question = Question::model()->findAll([
+			'condition'=>'active=:active AND group_id=:group_id',
+			'params' => array(':group_id' => $id, ':active'=>'y')
+		]);
+
+		// $this->render('export_excel',array(
+		// 	'grouptesting'=>$grouptesting,
+		// 	'question'=>$question,
+		// ));
+
+		$this->renderPartial('export_excel', array(
+		'grouptesting'=>$grouptesting, 
+		'question'=>$question ));
 	}
 
 	public function loadModel($id)

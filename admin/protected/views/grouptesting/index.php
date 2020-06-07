@@ -116,6 +116,11 @@ EOD
                             'type'=>'raw',
                             'htmlOptions'=>array('width'=>'120px'),
                         ),
+                        array(
+					      'value'=>'CHtml::link("Export Excel", array("question/export", "id"=>$data->group_id) , array("class" => "btn btn-warning btn-icon", "target"=>"blank_"))',
+					      'type'=>'raw',
+					      'htmlOptions'=>array('width'=>'100px'),
+					    ),
            //              array(
            //              'header'=>'ภาษา',
            //              'value' => function($val) {

@@ -1784,6 +1784,14 @@ Class MenuLeft extends Controller
 	        			'label'=>'6.) รายงานแบบสอบถามสำหรับใช้ภายนอก',
 	        			'url'=>array('//Questionnaire/Report_list')
 	        		),
+	        		array(
+	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'Report.*',
+	        			)),
+	        			'label'=>'7.) รายงานการรีเซตหลักสูตร',
+	        			'url'=>array('//Report/logReset')
+	        		),
 	        	)
 	        ),
             array(

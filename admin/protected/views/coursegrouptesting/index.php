@@ -108,6 +108,11 @@ EOD
                             'type'=>'raw',
                             'htmlOptions'=>array('width'=>'120px'),
                         ),
+                        array(
+					      'value'=>'CHtml::link("Export Excel", array("coursequestion/export", "id"=>$data->group_id) , array("class" => "btn btn-warning btn-icon", "target"=>"blank_"))',
+					      'type'=>'raw',
+					      'htmlOptions'=>array('width'=>'100px'),
+					    ),
 					    array(
 					      'value'=>'CHtml::link("เพิ่มข้อสอบ", array("coursequestion/create", "id"=>$data->group_id) , array("class" => "btn btn-primary btn-icon"))',
 					      'type'=>'raw',
