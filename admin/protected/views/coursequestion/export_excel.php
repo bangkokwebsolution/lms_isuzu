@@ -42,8 +42,12 @@ header("Content-Disposition: inline; filename=\"$strExcelFileName\"");
 						$text = "หลายคำตอบ";
 					}elseif($value_q->ques_type == 2){
 						$text = "คำตอบเดียว";
+					}elseif($value_q->ques_type == 3){
+						$text = "บรรยาย";
 					}elseif($value_q->ques_type == 4){
 						$text = "จับคู่";
+					}elseif($value_q->ques_type == 6){
+						$text = "จัดเรียง";
 					}else{
 						$text = $value_q->ques_type;
 					}

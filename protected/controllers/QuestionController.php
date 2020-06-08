@@ -306,10 +306,24 @@ class QuestionController extends Controller
                                     $choice = array_merge($choice,$choiceA);
                                 }
 
-                                array_rand($choice); //Random choice
+                                // array_rand($choice); //Random choice
                                 // var_dump($choice);exit();
+                                $criteria=new CDbCriteria;
+                                $criteria->addInCondition('choice_id',$choice);
+                                $criteria->order = 'RAND() ';
+                                $rand_choice =  Choice::model()->findAll($criteria);
+                                $choice_array = [];
+                                foreach ($rand_choice as $key => $val_choice) {
+                                    $choice_array[] = $val_choice->choice_id;
+                                }
 
-                                $temp_test->question = json_encode($choice);
+                                // var_dump($choice_array); exit();
+
+                                $temp_test->question = json_encode($choice_array);
+
+
+
+                                // $temp_test->question = json_encode($choice);
                                 $temp_test->number = $key2+1;
                                 $temp_test->status = 0;
                                 if($key2==0){

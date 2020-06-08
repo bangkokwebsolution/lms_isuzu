@@ -64,15 +64,20 @@ $this->breadcrumbs=array(
 							'class'=>'btn btn-icon btn-success',
 							'id'=>'add-checkbox-question'
 						));?>
-						<!-- <?php
+						<?php
 						echo CHtml::link('<i class="icon-book"></i> เพิ่มข้อสอบบรรยาย', '', array(
 							'class'=>'btn btn-icon btn-success',
 							'id'=>'add-textarea-question'
-						));?> -->
+						));?>
 						<?php
 						echo CHtml::link('<i class="icon-book"></i> เพิ่มข้อสอบจับคู่', '', array(
 							'class'=>'btn btn-icon btn-success',
 							'id'=>'add-dropdown-question'
+						));?>
+						<?php
+						echo CHtml::link('<i class="icon-book"></i> เพิ่มข้อสอบจัดเรียง', '', array(
+							'class'=>'btn btn-icon btn-success',
+							'id'=>'add-sort-question'
 						));?>
 					</div>
 					<div class="pull-left" style="margin:4px 15px;">

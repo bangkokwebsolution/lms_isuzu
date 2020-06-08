@@ -65,7 +65,7 @@ label.error { display: none; }
 					<div class="question-group" data-index="<?php echo $modelQues->ques_id; ?>">
 						<div class="row question">
 							<?php
-							$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown');
+							$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown', 6 => 'hidden');
 							?>
 							<label><h3>โจทย์ <input type="hidden" name="Question_type[<?php echo $modelQues->ques_id; ?>]" value="<?php echo $questionTypeArray[$modelQues->ques_type]; ?>"> <!--ข้อที่ <span class="question-numbers" style="color:green; font-size: 20px;">'+question_total+'</span>--></h3>
 								</label>
@@ -76,12 +76,12 @@ label.error { display: none; }
                         <div class="row question">
                             <label><h3>อธิบายคำตอบ</h3></label>
                             <div class="span12">
-                                <textarea name="Explain[<?php echo $modelQues->ques_id; ?>]" class="question-title tinymce" id="question-<?php echo $modelQues->ques_id; ?>-explain" cols="30" rows="10"><?php echo $modelQues->ques_explain; ?></textarea>
+                                <textarea name="Explain[<?php echo $modelQues->ques_id; ?>]" class="question-explain" id="question-<?php echo $modelQues->ques_id; ?>-explain" cols="30" rows="10"><?php echo $modelQues->ques_explain; ?></textarea>
                             </div>
                         </div>
 						<?php if(($modelQues->ques_type != 3) && ($modelQues->ques_type != 4)){ ?>
 							<div class="row choice-list" style="margin-top:20px;">
-							<label><h3>ตัวเลือก <a class="btn btn-icon btn-success add-chocie" data-question-id="<?php echo $modelQues->ques_id; ?>">
+							<label><h3>ตัวเลือก <a class="btn btn-icon btn-success add-chocie<?php if($modelQues->ques_type == 6){ echo "-sort"; } ?>" data-question-id="<?php echo $modelQues->ques_id; ?>">
 										<i class="icon-book"></i> เพิ่มตัวเลือก</a></h3></label>
 							<?php
 							$modelChoice = $modelQues->choices;

@@ -60,7 +60,7 @@ class CoursequestionController extends Controller
 //			var_dump($_POST);
 //			exit();
 			foreach($_POST['Question'] as $key => $question) {
-				$questionTypeArray = array('checkbox' => 1, 'radio' => 2, 'textarea' => 3, 'dropdown' => 4);
+				$questionTypeArray = array('checkbox' => 1, 'radio' => 2, 'textarea' => 3, 'dropdown' => 4, 'hidden'=> 6);
 				$questionTitle = $question;
 				$questionType = $_POST['Question_type'][$key];
 				$questionModel = new Coursequestion();
@@ -357,7 +357,7 @@ class CoursequestionController extends Controller
 //			if($modelQues->save())
 			foreach($_POST['Question'] as $key => $question) {
 
-				$questionTypeArray = array('checkbox' => 1, 'radio' => 2, 'textarea' => 3, 'dropdown' => 4);
+				$questionTypeArray = array('checkbox' => 1, 'radio' => 2, 'textarea' => 3, 'dropdown' => 4, 'hidden'=> 6);
 				$questionTitle = $question;
 				$questionType = $_POST['Question_type'][$key];
 				$questionModel = $modelQues;
