@@ -640,9 +640,10 @@ if (isset($_POST['FileTraining'])){
             $fileTrain->create_date = date("Y-m-d ");
             $fileTrain->create_by = $users->id;
             $fileTrain->filename = $name_file['filename'];
-            $fileTrain->file_name = $value['file_name'];
+            $fileTrain->file_name = $value['name_training'];
             $fileTrain->length = "2.00";
             $fileTrain->expire_date = $value['expire_date'];
+            $fileTrain->name_training = $value['name_training'];
             $fileTrain->save(false);         
 
         }else{
@@ -1164,7 +1165,6 @@ public function actionUpdate() {
            // var_dump($users->validate());
             // var_dump($_POST['ProfilesLanguage']->getErrors());
 
-// 
      if ($profile->validate() && $users->validate()) {
 
 //                    เข้ารหัสpassword
@@ -1280,10 +1280,11 @@ if (isset($_POST['FileTraining'])){
         mkdir($uploadDir."../Trainingfile/".$path1."/", 0777, true);
     } 
     $i=0;
-    
+
     foreach ($_POST['FileTraining'] as $key => $value) {
-       $new_actions[] = $value['file_name'];
-       $FileTraining_old = FileTraining::model()->find('file_name="'.$value['file_name'].'" AND user_id='.Yii::app()->user->id); 
+       $new_actionstran[] = $value['name_training'];
+
+       $FileTraining_old = FileTraining::model()->find('name_training="'.$value['name_training'].'" AND user_id='.Yii::app()->user->id); 
           
         $name_file = $_FILES['FileTraining']['name'][$i]; 
         $tmpFilePath = $_FILES['FileTraining']['tmp_name'][$i];   
@@ -1294,57 +1295,80 @@ if (isset($_POST['FileTraining'])){
        if ($tmpFilePath){    
            
          if(move_uploaded_file($tmpFilePath['filename'], $newFilePath)) {
-
             $FileTraining_old->user_id = $users->id;
             $FileTraining_old->update_date = date("Y-m-d ");
             $FileTraining_old->update_by = $users->id;
             $FileTraining_old->filename = $name_file['filename'];
-            $FileTraining_old->file_name = $value['file_name'];
-            $FileTraining_old->length = "2.00";
+            $FileTraining_old->file_name = $value['name_training'];
+           // $FileTraining_old->length = "2.00";
             $FileTraining_old->expire_date = $value['expire_date'];
+            $FileTraining_old->name_training = $value['name_training'];
+            $FileTraining_old->save(false); 
+          //  echo "upload success";
+          //  echo 1; 
+         }else{
+            echo "upload Failed";
+           // echo 4;
+        }    
+       }
+            $FileTraining_old->user_id = $users->id;
+            $FileTraining_old->update_date = date("Y-m-d ");
+            $FileTraining_old->update_by = $users->id;
+            //$FileTraining_old->filename = $name_file['filename'];
+            $FileTraining_old->file_name = $value['name_training'];
+            //$FileTraining_old->length = "2.00";
+            $FileTraining_old->expire_date = $value['expire_date'];
+            $FileTraining_old->name_training = $value['name_training'];
             $FileTraining_old->save(false);  
-            echo 1;       
+             //echo 7;
            
-        }else{
-            //echo "upload Failed";
-            echo 4;
-        }         
-    }
+             
+    
   }else{
    
-         if(move_uploaded_file($tmpFilePath['filename'], $newFilePath)) {
-
+         if(move_uploaded_file($tmpFilePath['filename'], $newFilePath)) {  
             $FileTraining_new = new FileTraining;
             $FileTraining_new->user_id = $users->id;
             $FileTraining_new->create_date = date("Y-m-d ");
             $FileTraining_new->create_by = $users->id;
             $FileTraining_new->filename = $name_file['filename'];
-            $FileTraining_new->file_name = $value['file_name'];
+            $FileTraining_new->file_name = $value['name_training'];
             $FileTraining_new->length = "2.00";
             $FileTraining_new->expire_date = $value['expire_date'];
+            $FileTraining_new->name_training = $value['name_training'];
             $FileTraining_new->save(false); 
-            echo 2;
+            //echo "upload success";
+            // echo 2;
         }else{
-            //echo "upload Failed";
-            echo 5;
+            echo "upload Failed";
+           // echo 5;
         }
+        
    }   $i++;
 } 
-$model_del_Training = FileTraining::model()->findAll(["select"=>"file_name",'condition'=>'user_id='.Yii::app()->user->id]);
+$model_del_Training = FileTraining::model()->findAll(["select"=>"name_training",'condition'=>'user_id='.Yii::app()->user->id]);
        
        if($model_del_Training){
         foreach($model_del_Training as $keyw => $valw){
-            if(isset($new_actions)){
-                if(!in_array($valw->file_name,$new_actions)){
-                     $FileTraining_del = FileTraining::model()->find('file_name="'.$valw->file_name.'" AND user_id='.Yii::app()->user->id); 
-                    // var_dump($FileTraining_del);
-                     $FileTraining_del->delete();
-                    echo 3;
+            if(isset($new_actionstran)){     
+                if(!in_array($valw->name_training,$new_actionstran)){
+                     $FileTraining_del = FileTraining::model()->find('name_training="'.$valw->name_training.'" AND user_id='.Yii::app()->user->id); 
+                     if ($FileTraining_del != null) {
+                            $FileTraining_del->delete();
+                         //   echo 3;
+                     }
+
+          $webroot = Yii::app()->basePath."/../uploads/Trainingfile/".Yii::app()->user->id."/";
+          if(is_file($webroot.$FileTraining_del->filename)){
+            unlink($webroot.$FileTraining_del->filename);
+          }  
                 }
             }
+          
         }
     }
 }
+
 // if ($_POST['ProfilesTraining']){
 
 //     foreach ($_POST['ProfilesTraining'] as $action_indexTn=>$action_valuTn){
@@ -1940,21 +1964,22 @@ public function actionEditNameTrain()
 public function actionDeleteFileTrain($id)
 {
     $FileTraining = FileTraining::model()->findByPk($id);
-
+    
     if($FileTraining->count()>0){
 
-        $webroot = Yii::app()->basePath."/../uploads/Trainingfile/";
+        $webroot = Yii::app()->basePath."/../uploads/Trainingfile/".$FileTraining->user_id."/";
 
         if(is_file($webroot.$FileTraining->filename)){
             unlink($webroot.$FileTraining->filename);
         }
-
-        if($FileTraining->delete($id)){
-            echo 1;
-        }else{
-            echo 0;
-        }
-    }
+        
+        $FileTraining->filename = null;
+        $FileTraining->file_name = $FileTraining->file_name;
+        $FileTraining->update_date = date("Y-m-d");
+        $FileTraining->update_by = Yii::app()->user->id;
+        var_dump($FileTraining);
+        $FileTraining->save();
+     }
 }
 public function actionEditNamePassport()
 {
@@ -2116,7 +2141,7 @@ public function actionListPosition(){
    $criteria= new CDbCriteria;
    $criteria->condition='department_id=:department_id AND active=:active';
    $criteria->params=array(':department_id'=>$_POST['id'],':active'=>'y');
-   $criteria->order = 'position_title ASC';
+   $criteria->order = 'sortOrder ASC';
    $model = Position::model()->findAll($criteria);
 
    $data=CHtml::listData($model,'id','position_title',array('empty' => 'ตำแหน่ง'));
@@ -2141,7 +2166,7 @@ public function actionListBranch(){
    $criteria= new CDbCriteria;
    $criteria->condition='position_id=:position_id AND active=:active';
    $criteria->params=array(':position_id'=>$_POST['id'],':active'=>'y');
-   $criteria->order = 'branch_name ASC';
+   $criteria->order = 'sortOrder ASC';
    $model = Branch::model()->findAll($criteria);
 
    $data=CHtml::listData($model,'id','branch_name',array('empty' => 'สาขา'));
@@ -2159,7 +2184,7 @@ public function actionListDepartment(){
    $criteria= new CDbCriteria;
    $criteria->condition='type_employee_id=:type_employee_id AND active=:active';
    $criteria->params=array(':type_employee_id'=>$_POST['id'],':active'=>'y');
-   $criteria->order = 'dep_title ASC';
+   $criteria->order = 'sortOrder ASC';
    $model = Department::model()->findAll($criteria);
 
    $data=CHtml::listData($model,'id','dep_title',array('empty' => 'แผนก'));
