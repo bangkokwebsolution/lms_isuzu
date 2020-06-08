@@ -1063,7 +1063,6 @@ public function actionUpdate() {
         $users->identification = $_POST['idcard'];
         $profile->identification = $_POST['idcard'];
         $profile->passport = $_POST['passport'];
-        var_dump($_POST['Profile']);exit();
         $users->email = $_POST['User'][email];
         $profile->title_id = $_POST['Profile'][title_id];
         $profile->firstname = $_POST['Profile'][firstname];
@@ -1165,8 +1164,7 @@ public function actionUpdate() {
            // var_dump($users->validate());
             // var_dump($_POST['ProfilesLanguage']->getErrors());
 
-    
-//exit();
+// 
      if ($profile->validate() && $users->validate()) {
 
 //                    เข้ารหัสpassword
@@ -1220,7 +1218,7 @@ public function actionUpdate() {
                     if(!in_array($val->edu_id,$new_action)){
                         $model_del_action = ProfilesEdu::model()->find('edu_id="'.$val->edu_id.'" AND user_id='.Yii::app()->user->id); 
                            // $model_del_action->active = 'n';
-                            //$model_del_action->save(false);
+                           //  $model_del_action->save(false);
                         $model_del_action->delete(false);
                                          //echo "c";
                     }
@@ -1282,7 +1280,7 @@ if (isset($_POST['FileTraining'])){
         mkdir($uploadDir."../Trainingfile/".$path1."/", 0777, true);
     } 
     $i=0;
-     
+    
     foreach ($_POST['FileTraining'] as $key => $value) {
        $new_actions[] = $value['file_name'];
        $FileTraining_old = FileTraining::model()->find('file_name="'.$value['file_name'].'" AND user_id='.Yii::app()->user->id); 
@@ -1308,8 +1306,8 @@ if (isset($_POST['FileTraining'])){
             echo 1;       
            
         }else{
-            echo "upload Failed";
-            
+            //echo "upload Failed";
+            echo 4;
         }         
     }
   }else{
@@ -1327,7 +1325,7 @@ if (isset($_POST['FileTraining'])){
             $FileTraining_new->save(false); 
             echo 2;
         }else{
-            echo "upload Failed";
+            //echo "upload Failed";
             echo 5;
         }
    }   $i++;
@@ -1338,8 +1336,9 @@ $model_del_Training = FileTraining::model()->findAll(["select"=>"file_name",'con
         foreach($model_del_Training as $keyw => $valw){
             if(isset($new_actions)){
                 if(!in_array($valw->file_name,$new_actions)){
-                    $FileTraining_del = FileTraining::model()->find('file_name="'.$valw->file_name.'" AND user_id='.Yii::app()->user->id); 
-                    $FileTraining_del->delete(false);
+                     $FileTraining_del = FileTraining::model()->find('file_name="'.$valw->file_name.'" AND user_id='.Yii::app()->user->id); 
+                    // var_dump($FileTraining_del);
+                     $FileTraining_del->delete();
                     echo 3;
                 }
             }

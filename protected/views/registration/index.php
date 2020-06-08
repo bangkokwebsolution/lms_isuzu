@@ -1754,7 +1754,7 @@ function editNamehouse_registration(filedoc_id){
                             </div>
                         </div>
                         <div class="col-md-4 col-sm-6 col-xs-12 form_phone_5">
-                            <div class="form-group form_phone_5">
+                            <div class="form-group ">
                                 <label><?php echo $label->label_phone; ?><font color="red">*</font></label>
                                 <?php echo $form->textField($profile, 'phone2', array('class' => 'form-control tel_5', 'placeholder' => $label->label_phone,'onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '10')); ?>
                                 <?php echo $form->error($profile, 'phone2', array('class' => 'error2')); ?>
@@ -2672,6 +2672,7 @@ function editNamehouse_registration(filedoc_id){
 </div>
 <?php if ($FileTraining->isNewRecord === null) { 
   if (empty($FileTraining)) {
+    $count_tn = 1;
    $FileTraining = new FileTraining;
    ?>
    <div class="row form_Training pt-20" style="padding-top: 20px;">
@@ -2703,7 +2704,9 @@ function editNamehouse_registration(filedoc_id){
     <!--   <div class="add-train"> -->
         <?php 
         $idx = 1;
-        foreach ($FileTraining as $keytn => $valtn) {
+        $count_tn = 0;
+        foreach ($FileTraining as $keytn => $valtn) {  
+          $count_tn =  $idx++;
             ?>
             <div class="row del_trainings">
                <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?></strong></div>
@@ -2756,12 +2759,14 @@ function editNamehouse_registration(filedoc_id){
                 </div>
             </div>
 
-            <!--  <span class="delete_training btn-danger" name="mytexttran[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?></span> -->
+            <!-- <span class="delete_training btn-danger" name="mytexttran[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?></span>  -->
         </div>
 
     <?php } ?>
     <!-- </div> -->
-<?php }} else { ?>
+<?php }} else {
+$count_tn = 1;
+ ?>
    <div class="row form_Training pt-20" style="padding-top: 20px;">
     <div class="col-md-3 col-xs-12  col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Training history ':'ประวัติการฝึกอบรม'; ?><small class="text-danger d-block"><?= Yii::app()->session['lang'] == 1?'Add more than 1 ':'เพิ่มได้มากกว่า 1'; ?></small></strong></div>
     <div class="col-md-8 col-sm-6 col-xs-12 ">
@@ -3157,7 +3162,7 @@ if (!$users->isNewRecord && $profile->type_employee) {
     var max_fields = 10;
     var wrapper = $(".add-study");
     var add_button = $(".add_form_field");
-    var numItems = 0;
+    var numItems = 10;
     var x = 1;
 
     $(add_button).click(function(e) {
@@ -3175,7 +3180,9 @@ if (!$users->isNewRecord && $profile->type_employee) {
                 +'<div class="col-md-3 col-sm-6"><div class="form-group"><input type="text" class="form-control" placeholder="' + academy + '" name="ProfilesEdu[' + numItems + '][institution]"></div></div>'
                             +'<div class="col-md-2 col-sm-6"><div class="form-group"><select class="form-control" autocomplete="off" id="ProfilesEdu_' + numItems + '_date_graduation" name="ProfilesEdu[' + numItems + '][date_graduation]">' + graduation_year + '<?php foreach ($edu_lest as $keys => $values): ?><option value="<?php echo $keys ?>"><?php echo $values ?></option><?php endforeach ?></select></div></div><span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> ' + del + '</span></div>'); //add input box
         } else {
-            alert('You Reached the limits')
+        var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+        var msg ="<?php echo Yii::app()->session['lang'] == 1?'You Reached the limits! ':'คุณเพิ่มถึงจำนวนจำกัด!'; ?>"; 
+        swal(alert_message,msg);
         }
     });
     $(wrapper).on("click", ".delete", function(e) {
@@ -3184,10 +3191,16 @@ if (!$users->isNewRecord && $profile->type_employee) {
         x--;
     });
 ////////////////////////////////////////// ประวัติการฝึกอบรม /////////////////////////////////////////////////////////////////////////
-var max_fields_training = 10;
+var max_fields_training = 30;
 var wrapper_train = $(".add-train");
 var add_button_training = $(".add_form_training");
-var numItems_training = 0;
+//var new_form = <?php echo $users->isNewRecord; ?>;
+var new_form = <?php echo $count_tn; ?>;
+if (new_form == 1) {
+ var numItems_training = 0;
+}else{
+  var numItems_training = <?php echo $count_tn; ?> - 1; 
+}
 var t = 1;
 
 $(add_button_training).click(function(e) {
@@ -3232,7 +3245,9 @@ $(add_button_training).click(function(e) {
         });
            $('.xdsoft_timepicker').hide();
        } else {
-        alert('You Reached the limits')
+        var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+        var msg ="<?php echo Yii::app()->session['lang'] == 1?'You Reached the limits! ':'คุณเพิ่มถึงจำนวนจำกัด!'; ?>"; 
+        swal(alert_message,msg);
     }
 });
 $(wrapper_train).on("click", ".delete_training", function(e) {
@@ -3277,7 +3292,9 @@ $(add_form_language).click(function(e) {
             +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="1"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td></tr>'); //add input box
 
     } else {
-        alert('You Reached the limits');
+        var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+        var msg ="<?php echo Yii::app()->session['lang'] == 1?'You Reached the limits! ':'คุณเพิ่มถึงจำนวนจำกัด!'; ?>"; 
+        swal(alert_message,msg);
     }
 });
 
@@ -3296,7 +3313,7 @@ $(add_form_language).click(function(e) {
 var max_fields_work = 10;
 var wrapper_work = $(".add-Work");
 var add_button_work = $(".add_form_work");
-var numItems_work = 0;
+var numItems_work = 10;
 var i = 1;
 
 $(add_button_work).click(function(e) {
@@ -3320,7 +3337,10 @@ $(add_button_work).click(function(e) {
         $('.xdsoft_timepicker').hide();
 
     } else {
-        alert('You Reached the limits')
+        var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+        var msg ="<?php echo Yii::app()->session['lang'] == 1?'You Reached the limits! ':'คุณเพิ่มถึงจำนวนจำกัด!'; ?>"; 
+        swal(alert_message,msg);
+       // alert('You Reached the limits')
     }
 });
 $(wrapper_work).on("click", ".delete_work", function(e) {
@@ -3718,7 +3738,7 @@ var new_forms = <?php echo $new_form; ?>;
                     if (new_forms === 1 || new_forms === true) {   
 
                         var type_users = $("input[name='type_user']:checked").val();
-                        console.log(type_users);
+                       
                         if (type_users === '3') {
                             $(".id_employee").hide();
                             $(".uploads_image").show();
