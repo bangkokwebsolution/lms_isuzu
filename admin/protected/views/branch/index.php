@@ -83,15 +83,15 @@ EOD
 							'class'=>'CCheckBoxColumn',
 							'id'=>'chk',
 						),
-						array(
-							'name'=>'sortOrder',
-							'filter'=>false,
-							'type'=>'html',
-							'value'=>'UHtml::markSearch($data,"sortOrder")',
-							'htmlOptions' => array(
-			                   'style' => 'width:50px',
-			                ),  
-						),
+						// array(
+						// 	'name'=>'sortOrder',
+						// 	'filter'=>false,
+						// 	'type'=>'html',
+						// 	'value'=>'UHtml::markSearch($data,"sortOrder")',
+						// 	'htmlOptions' => array(
+			   //                 'style' => 'width:50px',
+			   //              ),  
+						// ),
 						array(
 							'header'=>'บุคคลากร',
 							'value'=>'$data->position->dep->emp->type_employee_name',

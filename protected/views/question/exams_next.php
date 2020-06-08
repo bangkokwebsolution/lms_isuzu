@@ -37,8 +37,8 @@
 			<div class="form-group">
 				<?php
 				$strTotal = 0;
-				$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown');
-				$questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'เลือกได้คำตอบเดียว', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่' );
+				$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown', 6 => 'hidden');
+				$questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'เลือกได้คำตอบเดียว', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่', 6 => 'คำตอบแบบจัดเรียง');
 				?>
 				<label for=""><?= $currentQuiz->number; ?>. ข้อสอบแบบ <?= $questionTypeArrayStr[$model->ques_type]?> </label>
 				<br>
@@ -47,10 +47,27 @@
 					<?php 
 					$ansData = json_decode($currentQuiz->ans_id);
 					$choiceData = json_decode($currentQuiz->question);
+
+					if($model->ques_type == 6 ){ 
+						?>
+						<ul id='sortable' style='cursor: pointer;'>
+							<?php
+							if( !empty( json_decode($currentQuiz->ans_id) ) ) {
+								$choiceData = json_decode($currentQuiz->ans_id);
+							}
+
+						}
+
 					$Type4Question = array();
 					$arrType4Answer = array();
 					$Type4Answer = array();
 
+if($model->ques_type == 3) {
+												echo '										
+												<textarea class="examsta" rows="4" cols="50" name="lecture" >'.$currentQuiz->ans_id.'</textarea>
+												';
+
+											}else{
 					$countchoice = 1; // นับตัวเลือกข้อสอบแบบจับคู่
 
 					foreach ($choiceData as $key => $val_choice) {
@@ -66,7 +83,12 @@
 							'.CHtml::decode($choice->choice_detail).'
 							</label>
 							</div>';
-						} else if($model->ques_type == 2) {
+						}else if ($model->ques_type == 6) {
+							?>
+							<li class="li-cute" id='<?php echo $choice->choice_id; ?>'><?php echo CHtml::decode($choice->choice_detail); ?>
+						</li>
+						<?php
+					} else if($model->ques_type == 2) {
 							if(in_array($choice->choice_id, $ansData)){
 								$checked = 'checked';
 							}
@@ -90,7 +112,9 @@
 								$Type4Question[$val_choice] = $key;
 							}
 						}
-					}
+					} //foreach
+
+				}
 
 					if($model->ques_type == 4) {
 						echo '<label> ส่วนที่ 1 </label> <br>';
@@ -132,9 +156,39 @@
 					
 					
 					?>
+					<?php if($model->ques_type == 6 ){ 
+						echo "</ul>"; 
+
+						?>
+						<script type="text/javascript">
+							$(function() {
+								$('#sortable').sortable({
+									start: function(event, ui) {
+										var start_pos = ui.item.index();
+										ui.item.data('start_pos', start_pos);
+									},
+									change: function(event, ui) {
+										var start_pos = ui.item.data('start_pos');
+										var index = ui.placeholder.index();        
+									},
+									update: function(event, ui) {
+										var start_pos = ui.item.data('start_pos');
+										var index = ui.placeholder.index();
+										get_li();
+									}
+								});
+							});
+						</script>
+						<?php
+					} ?>
 				</div>
 			</div>
 			<!-- <button type="submit" class="btn btn-warning center-block">ส่งคำตอบ</button> -->
+			<?php if($model->ques_type == 6 ){ 
+				?>
+				<input type="hidden" id="answer_sort" name="answer_sort" value="<?php echo implode(",", $choiceData); ?>">
+				<?php
+			} ?>
 			<?php 
 			echo CHtml::hiddenField("Question_type[" . $model->ques_id . "]", $questionTypeArray[$model->ques_type]);
 			echo CHtml::hiddenField("last_ques");

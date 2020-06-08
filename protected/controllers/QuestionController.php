@@ -371,6 +371,18 @@ class QuestionController extends Controller
                             }
                         }
 
+                        if(isset($_POST["answer_sort"])){
+                            $_POST["answer_sort"] = explode(",", $_POST["answer_sort"]);
+                             foreach ($_POST['Question_type'] as $question_id => $value) {
+                                $update_temp = TempQuiz::model()->find(array(
+                                    'condition' => "user_id=".Yii::app()->user->id." and lesson=".$lesson->id." and ques_id=".$question_id." and type='".$testType."' AND gen_id='".$gen_id."'"
+                                ));
+                                $update_temp->status = 1;
+                                $update_temp->ans_id = json_encode($_POST["answer_sort"]);
+                                if(!$update_temp->update()) var_dump($update_temp->getErrors());
+                            }
+                        }
+
                         if(isset($_POST['dropdownVal'])){                           
 
                             foreach ($_POST['Question_type'] as $question_id => $value) {
@@ -382,6 +394,22 @@ class QuestionController extends Controller
 
                                 if(!$update_temp->update()) var_dump($update_temp->getErrors());
                             }
+                        }
+
+                        if(isset($_POST['lecture'])){
+                            // var_dump($_POST['Question_type']);exit();
+
+                            foreach ($_POST['Question_type'] as $question_id => $value) {
+
+                                $update_temp = TempQuiz::model()->find(array(
+                                    'condition' => "user_id=".Yii::app()->user->id." and lesson=".$lesson->id." and ques_id=".$question_id." and type='".$testType."' AND gen_id='".$gen_id."'"
+                                ));
+                                $update_temp->status = 1;
+                                $update_temp->ans_id = $_POST['lecture'];
+
+                                if(!$update_temp->update()) var_dump($update_temp->getErrors());
+                            }
+
                         }
 
 
@@ -442,6 +470,61 @@ class QuestionController extends Controller
                                             $modelCourselogchoice->ques_type = $coursequestion->ques_type;
                                             $modelCourselogchoice->is_valid_choice = $choice->choice_answer == "1" ? '1' : '0';
                                             $modelCourselogchoice->logchoice_answer = (in_array($choice->choice_id, $choiceUserAnswerArray)) ? 1 : 0;
+                                            // Save Courselogchoice
+                                            $modelCourselogchoice->save();
+                                        }
+
+                                        // Save Logques
+                                        $modelCourselogques = new Logques;
+                                        $modelCourselogques->lesson_id = $id; // $_POST ID
+                                        $modelCourselogques->gen_id = $gen_id;
+                                        $modelCourselogques->score_id = $modelCoursescore->score_id;
+                                        $modelCourselogques->ques_id = $value->ques_id;
+                                        $modelCourselogques->user_id = Yii::app()->user->id;
+                                        $modelCourselogques->test_type = $testType;
+                                        $modelCourselogques->ques_type = $coursequestion->ques_type;
+                                        $modelCourselogques->result = $result;
+                                        $modelCourselogques->save();
+                                }else if($value->quest->ques_type==6){
+                                    $countAllCoursequestion += 1;
+
+                                    $coursequestion = Question::model()->with('chioce')->find("question.ques_id=:id", array(
+                                        "id" => $value->ques_id,
+                                    ));
+                                    $choiceUserAnswerArray = array();
+                                    if (isset($value->ans_id)) {
+                                        // $choiceUserAnswerArray = json_decode($value->ans_id);
+                                        $choiceUserAnswerArray = $value->ans_id;
+                                    } 
+
+                                    $choiceCorrect = $coursequestion->chioce(array(
+                                        'condition' => 'choice_answer=1'
+                                    ));
+
+                                    $choiceCorrectArray = array();
+                                    foreach ($choiceCorrect as $choiceCorrectItem) {
+                                        $choiceCorrectArray[] = $choiceCorrectItem->choice_id;
+                                    }
+                                    // sort($choiceUserAnswerArray);
+                                    $choiceCorrectArray = json_encode($choiceCorrectArray);
+                                    if ($choiceUserAnswerArray === $choiceCorrectArray) {
+                                        $scoreSum++;
+                                        $result = 1;
+                                    }
+                                    
+                                    foreach ($coursequestion->chioce as $keyChoice => $choice) {
+                                            // Save Logchoice
+                                        $modelCourselogchoice = new Logchoice;
+                                            $modelCourselogchoice->lesson_id = $id; // $_POST ID
+                                            $modelCourselogchoice->logchoice_select = 1;
+                                            $modelCourselogchoice->gen_id = $gen_id;
+                                            $modelCourselogchoice->score_id = $modelCoursescore->score_id;
+                                            $modelCourselogchoice->choice_id = $choice->choice_id;
+                                            $modelCourselogchoice->ques_id = $coursequestion->ques_id;
+                                            $modelCourselogchoice->user_id = Yii::app()->user->id;
+                                            $modelCourselogchoice->ques_type = $coursequestion->ques_type;
+                                            $modelCourselogchoice->is_valid_choice = $choice->choice_answer == "1" ? '1' : '0';
+                                            $modelCourselogchoice->logchoice_answer = ($choiceUserAnswerArray === $choiceCorrectArray) ? 1 : 0;
                                             // Save Courselogchoice
                                             $modelCourselogchoice->save();
                                         }
