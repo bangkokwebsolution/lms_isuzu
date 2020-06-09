@@ -520,8 +520,8 @@ Class MenuLeft extends Controller
 				'url'=>'#Grouptesting',
 				'linkOptions' => array('data-toggle' => 'collapse'),
 				'itemOptions' => array('class' => 'hasSubmenu glyphicons posterous_spaces'),
-				'submenuOptions' => array('class' => self::SetSubMenu( array('Grouptesting') ), 'id' => 'Grouptesting'),
-				'active' => self::SetSubMenu( array('Grouptesting') ,false),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('Grouptesting', 'Coursegrouptesting') ), 'id' => 'Grouptesting'),
+				'active' => self::SetSubMenu( array('Grouptesting', 'Coursegrouptesting') ,false),
 				'items'=>array(
 					array(
 						/*====== Check Permissions Sup-Grouptesting (1) ======*/

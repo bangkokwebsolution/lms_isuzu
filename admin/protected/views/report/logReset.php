@@ -25,7 +25,7 @@ $this->breadcrumbs = array($title);
             </div> 
 
             <div id="form-search" style="margin-top: 20px;">
-                <form action="logReset" method="GET">
+                <form action="logReset" method="POST">
                     <div class="row">
                         <div class="col-md-1 text-right">
                             <p>หลักสูตร <font color="red">*</font>: </p>
@@ -43,7 +43,7 @@ $this->breadcrumbs = array($title);
                                 $course_model = CourseOnline::model()->findAll($criteria);
                                 foreach ($course_model as $key => $value) {
                                     ?>
-                                    <option <?php if(isset($_GET['Report']['course']) && $_GET['Report']['course'] == $value->course_id){ echo "selected"; } ?> value="<?= $value->course_id ?>"><?= $value->course_title ?></option>
+                                    <option <?php if(isset($_POST['Report']['course']) && $_POST['Report']['course'] == $value->course_id){ echo "selected"; } ?> value="<?= $value->course_id ?>"><?= $value->course_title ?></option>
                                     <?php
                                 }
                                  ?>
@@ -57,9 +57,9 @@ $this->breadcrumbs = array($title);
                         </div>
                         <div class="col-md-6">
                             <select name="Report[gen]" id="report_gen" class="form-control">                                
-                                <?php if(isset($_GET['Report']['course']) && $_GET['Report']['course'] != ""){
+                                <?php if(isset($_POST['Report']['course']) && $_POST['Report']['course'] != ""){
                                     $criteria = new CDbCriteria;
-                                    $criteria->compare('course_id',$_GET['Report']['course']);
+                                    $criteria->compare('course_id',$_POST['Report']['course']);
                                     $criteria->compare('active','y');
                                     $criteria->order = 'gen_title ASC';
                                     $gen = CourseGeneration::model()->findAll($criteria);
@@ -68,7 +68,7 @@ $this->breadcrumbs = array($title);
                                         echo "<option value=''>กรุณา เลือกรุ่น</option>";
                                         foreach ($gen as $key => $value) {
                                             ?>
-                                            <option <?php if($_GET['Report']['gen'] == $value->gen_id){ echo "selected"; } ?> value='<?= $value->gen_id ?>'><?= $value->gen_title ?></option>
+                                            <option <?php if($_POST['Report']['gen'] == $value->gen_id){ echo "selected"; } ?> value='<?= $value->gen_id ?>'><?= $value->gen_title ?></option>
                                             <?php
                                         }
                                     }else{
@@ -93,7 +93,7 @@ $this->breadcrumbs = array($title);
             </div>
 
             <?php 
-            if(!empty($_GET['Report']['course']) && !empty($_GET['Report']['gen'])){ ?>
+            if(!empty($_POST['Report']['course']) && !empty($_POST['Report']['gen'])){ ?>
             <!-- <div class="widget-body" style=" overflow-x: scroll;"> -->
                 <table class="table">
                     <thead>
@@ -101,14 +101,15 @@ $this->breadcrumbs = array($title);
                             <th>ลำดับ</th>
                             <th>ชื่อ - นามสกุล</th>
                             <th>รายการ</th>
+                            <th>รายละเอียด</th>
                             <th>วันที่ทำรายการ</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php 
                         $criteria = new CDbCriteria;
-                        $criteria->compare('course_id', $_GET['Report']['course']);
-                        $criteria->compare('gen_id', $_GET['Report']['gen']);
+                        $criteria->compare('course_id', $_POST['Report']['course']);
+                        $criteria->compare('gen_id', $_POST['Report']['gen']);
                         $criteria->order = 'reset_date DESC';
                         $model_reset = LogReset::model()->findAll($criteria);
                         // var_dump($model_reset); exit();
@@ -119,7 +120,20 @@ $this->breadcrumbs = array($title);
                             
                             <tr>
                                 <td><?php echo $no; $no++; ?></td>
-                                <td><?= $value->user_id ?></td>
+                                <td><?= $value->user->profile->firstname ?> <?= $value->user->profile->lastname ?></td>
+                                <td>
+                                    <?php 
+                                    if($value->reset_type == 0){
+                                        echo "บทเรียน";
+                                    }elseif($value->reset_type == 1){
+                                        echo "สอบหลักสูตร";
+                                    }elseif($value->reset_type == 2){
+                                        echo "สอบก่อนเรียน";
+                                    }elseif($value->reset_type == 3){
+                                        echo "สอบหลังเรียน";
+                                    }
+                                     ?>
+                                </td>
                                 <td><?= $value->reset_description ?></td>
                                 <td><?= $value->reset_date ?></td>
                             </tr>
