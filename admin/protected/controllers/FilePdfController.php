@@ -78,6 +78,8 @@ class FilePdfController extends Controller
     		$model->attributes = $_POST['FilePdf'];
     		$model->filename = $_POST['FilePdf']['file_name'];
     		$model->save(false);
+
+    		$this->redirect(array('index','id'=>$model->lesson_id));
     	}
 
     	$this->render('update',array(
