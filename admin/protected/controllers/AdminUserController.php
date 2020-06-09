@@ -209,7 +209,7 @@ echo ($data);
        // var_dump($errors);
        // exit();
         
-			if($model->validate()&&$profile->validate()) {
+			if($model->validate()) {	//&&$profile->validate()
 				$model->password=UserModule::encrypting($model->password);
 				$model->verifyPassword=UserModule::encrypting($model->verifyPassword);
 
@@ -262,7 +262,7 @@ echo ($data);
 							}
 					$profile->generation = $gen->id_gen;
 					$profile->user_id=$model->id;
-					$profile->save();
+					$profile->save(false);
 				}
 				$this->redirect(array('view','id'=>$model->id));
 			} else {
@@ -427,7 +427,7 @@ echo ($data);
 		        }
 				$profile->attributes=$_POST['Profile'];
 				// $model->verifyPassword = $model->password;
-				if($model->validate()&&$profile->validate()) {
+				if($model->validate()) { // &&$profile->validate()
 					if(!empty($_POST['User']['newpassword'])){
 						$model->password=UserModule::encrypting($model->password);
 						$model->verifyPassword=UserModule::encrypting($model->verifyPassword);
@@ -480,7 +480,7 @@ echo ($data);
 						echo 'Model not save';
 						exit();
 					}
-					if(!$profile->save()){
+					if(!$profile->save(false)){
 						echo 'profile not save';
 						exit();
 					}
