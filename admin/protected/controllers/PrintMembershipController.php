@@ -152,7 +152,7 @@ class PrintMembershipController extends Controller
 
     protected function performAjaxValidation($model)
         {
-            if(isset($_POST['ajax']) && $_POST['ajax']==='PrintMembership-form')
+            if(isset($_POST['ajax']) && $_POST['ajax']==='user-form')
             {
                 echo CActiveForm::validate($model);
                 Yii::app()->end();

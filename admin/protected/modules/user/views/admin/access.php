@@ -44,6 +44,7 @@ Yii::app()->clientScript->registerScript('search', "
 				});
 				return false;
 				});
+				$('.collapse-toggle').click();
 				");
 	?>
 	<div id="user" class="innerLR">
@@ -56,7 +57,7 @@ Yii::app()->clientScript->registerScript('search', "
 //            array('name'=>'company_id','type'=>'list','query'=>Company::getCompanyList()),
 				//array('name'=>'register_status','type'=>'list','query'=>User::getregisstatusList()),
 				array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
-            //array('name'=>'nameSearch','type'=>'text'),
+                array('name'=>'month','type'=>'list','query'=>Month::getMonth()),
 //            array('name'=>'course','type'=>'list','query'=>$model->courseList),
 				//array('name'=>'lastvisit_at','type'=>'text'),
 
@@ -71,7 +72,8 @@ Yii::app()->clientScript->registerScript('search', "
 			</div>
 			<div class="widget-body">
 				<div>
-					<?php echo Rights::t('core', 'ที่นี่คุณสามารถตรวจสอบข้อมูลผู้ที่ไม่ได้เข้ามาใช้งานในระบบตั้งแต่ 6 เดือน'); ?>
+					<?php echo Rights::t('core', 'ที่นี่คุณสามารถตรวจสอบข้อมูลผู้ที่ไม่ได้เข้ามาใช้งานในระบบนานสูงสุด 12 เดือน'); ?>
+					<h3>กรุณาป้อนข้อมูลให้ถูกต้อง แล้วกด ปุ่มค้นหา</h3>
 				</div>
 				<div class="separator bottom form-inline small">
 					<span class="pull-right">
