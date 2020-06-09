@@ -2370,17 +2370,18 @@ public function actionCourseLearnNoteSave(){
 
             $learn_note->note_text = $note_text;
             if($learn_note->save()){
-                if($learn_file_model->learn_file_status != 's'){
-                    if($learn_file_model->learn_file_status != 'l'){
-                        if($learn_file_model->learn_file_status < $note_time){
+                if($learn_file_model != ""){
+                    if($learn_file_model->learn_file_status != 's'){
+                        if($learn_file_model->learn_file_status != 'l'){
+                            if($learn_file_model->learn_file_status < $note_time){
+                                $learn_file_model->learn_file_status = $note_time;
+                            }
+                        }else{
                             $learn_file_model->learn_file_status = $note_time;
                         }
-                    }else{
-                        $learn_file_model->learn_file_status = $note_time;
                     }
+                    $learn_file_model->save();
                 }
-                $learn_file_model->save();
-
 
                 $file = File::model()->findByPk($note_file_id);
 

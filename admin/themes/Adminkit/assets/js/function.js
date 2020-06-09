@@ -268,6 +268,39 @@ $(document).ready(function(){
 
     });
 
+        $('#question-list').on('click', '.add-chocie-sort', function () {
+        var em_index = $(this).index('.add-chocie-sort');
+        var question_id = $(this).attr('data-question-id');
+        var value_index_choice = $('.choice-list-sort').eq(em_index).children().last().find('.choice-' + question_id + '-input');
+
+        var type = $('.question-group').eq(em_index).find("input[name^='Question_type']");
+        if (type.length) {
+            type = type.val();
+        } else {
+            type = 'text';
+        }
+
+        var new_index = 0;
+        if (value_index_choice.length) {
+            new_index = parseInt(value_index_choice.val()) + 1;
+        }
+
+        var choice = "";
+        choice += '<div class="row choice" style="margin-top:20px;">';
+        choice += '<div class="span1">';
+        choice += '<input type="' + type + '" name="Choice[' + question_id + '][]" class="choice-' + question_id + '-input pull-right" value="' + new_index + '">';
+        choice += '</div>';
+        choice += '<div class="span8">';
+        choice += '<textarea name="ChoiceTitle[' + question_id + '][' + new_index + ']" class="choice-tilte-input" id="choice-' + question_id + '-' + new_index + '-tilte-input" cols="30" rows="10"></textarea>';
+        choice += '<a class="btn btn-icon btn-danger circle_ok choice-remove" data-question="' + question_id + '"><i class="icon-remove"></i> ลบตัวเลือก</a>';
+        choice += '</div>';
+        choice += '</div>';
+
+        $('.choice-list-sort').eq(em_index).append(choice);
+        initTinyChoice(question_id, new_index);
+
+    });
+
 
     $('#question-list').on('click','.add-chocie-part1',function(){
         var em_index = $(this).index('.add-chocie-part1');
@@ -421,6 +454,83 @@ $(document).ready(function(){
         $('.choice-list2').eq(em_index).append(choice);
         initTinyChoice(question_id,new_index);
 
+    });
+
+    $('.form').on('click', '#add-sort-question', function () {
+        var value_index_question = $('#question-list').children('.question-group').last();
+        var em_question_total = $('#question-list').children('.question-group');
+        var question_index = 0;
+        var question_total = 0;
+        if (value_index_question.length) {
+            question_index = parseInt(value_index_question.attr('data-index')) + 1;
+        }
+        if (em_question_total.length) {
+            question_total = parseInt(em_question_total.length);
+        }
+        question_total += 1;
+        $('#CountNumAll').text(question_total);
+        var question_radio = "";
+
+        question_radio += '<div class="question-group" data-index="' + question_index + '">';
+        question_radio += '<hr class="soften" />';
+        question_radio += '<div class="row question">';
+        question_radio += '<label><h3>โจทย์ (จัดเรียง) <input type="hidden" name="Question_type[' + question_index + ']" value="hidden"> <!--ข้อที่ <span class="question-numbers" style="color:green; font-size: 20px;">' + question_total + '</span>--> ';
+        question_radio += '<a class="btn btn-icon btn-danger circle_ok question-remove" data-index="' + question_index + '"><i class="icon-remove"></i> ลบโจทย์</a></h3>';
+        question_radio += '</label>';
+        question_radio += '<div class="span12">';
+        question_radio += '<textarea name="Question[' + question_index + ']" class="question-title" id="question-' + question_index + '-title" cols="30" rows="10"></textarea>';
+        question_radio += '</div>';
+        question_radio += '</div>';
+        question_radio += '<div class="row question">';
+        question_radio += '<label><h3>อธิบายคำตอบ</h3>';
+        question_radio += '</label>';
+        question_radio += '<div class="span12">';
+        question_radio += '<textarea name="Explain[' + question_index + ']" class="question-explain" id="question-' + question_index + '-explain" cols="30" rows="10"></textarea>';
+        question_radio += '</div>';
+        question_radio += '</div>';
+        question_radio += '<div class="row choice-list-sort" style="margin-top:20px;">';
+        question_radio += '<label><h3>ตัวเลือก <a class="btn btn-icon btn-success add-chocie-sort" data-question-id="' + question_index + '"><i class="icon-book"></i> เพิ่มตัวเลือก</a></h3></label>';
+        question_radio += '<div class="row choice" style="margin-top:20px;">';
+        question_radio += '<div class="span1">';
+        question_radio += '<input type="hidden" name="Choice[' + question_index + '][]" class="choice-' + question_index + '-input pull-right" value="0">';
+        question_radio += '</div>';
+        question_radio += '<div class="span8">';
+        question_radio += '<textarea name="ChoiceTitle[' + question_index + '][0]" class="choice-tilte-input" id="choice-' + question_index + '-0-tilte-input" cols="30" rows="10"></textarea>';
+        question_radio += '<a class="btn btn-icon btn-danger circle_ok choice-remove" data-question="' + question_index + '"><i class="icon-remove"></i> ลบตัวเลือก</a>';
+        question_radio += '</div>';
+        question_radio += '</div>';
+        question_radio += '<div class="row choice" style="margin-top:20px;">';
+        question_radio += '<div class="span1">';
+        question_radio += '<input type="hidden" name="Choice[' + question_index + '][]" class="choice-' + question_index + '-input pull-right" value="1">';
+        question_radio += '</div>';
+        question_radio += '<div class="span8">';
+        question_radio += '<textarea name="ChoiceTitle[' + question_index + '][1]" class="choice-tilte-input" id="choice-' + question_index + '-1-tilte-input" cols="30" rows="10"></textarea>';
+        question_radio += '<a class="btn btn-icon btn-danger circle_ok choice-remove" data-question="' + question_index + '"><i class="icon-remove"></i> ลบตัวเลือก</a>';
+        question_radio += '</div>';
+        question_radio += '</div>';
+        question_radio += '<div class="row choice" style="margin-top:20px;">';
+        question_radio += '<div class="span1">';
+        question_radio += '<input type="hidden" name="Choice[' + question_index + '][]" class="choice-' + question_index + '-input pull-right" value="2">';
+        question_radio += '</div>';
+        question_radio += '<div class="span8">';
+        question_radio += '<textarea name="ChoiceTitle[' + question_index + '][2]" class="choice-tilte-input" id="choice-' + question_index + '-2-tilte-input" cols="30" rows="10"></textarea>';
+        question_radio += '<a class="btn btn-icon btn-danger circle_ok choice-remove" data-question="' + question_index + '"><i class="icon-remove"></i> ลบตัวเลือก</a>';
+        question_radio += '</div>';
+        question_radio += '</div>';
+        question_radio += '<div class="row choice" style="margin-top:20px;">';
+        question_radio += '<div class="span1">';
+        question_radio += '<input type="hidden" name="Choice[' + question_index + '][]" class="choice-' + question_index + '-input pull-right" value="3">';
+        question_radio += '</div>';
+        question_radio += '<div class="span8">';
+        question_radio += '<textarea name="ChoiceTitle[' + question_index + '][3]" class="choice-tilte-input" id="choice-' + question_index + '-3-tilte-input" cols="30" rows="10"></textarea>';
+        question_radio += '<a class="btn btn-icon btn-danger circle_ok choice-remove" data-question="' + question_index + '"><i class="icon-remove"></i> ลบตัวเลือก</a>';
+        question_radio += '</div>';
+        question_radio += '</div>';
+        question_radio += '</div>';
+        question_radio += '</div>';
+
+        $('#question-list').append(question_radio);
+        initTinyQuestion(question_index);
     });
 
     $('.form').on('click','#add-radio-question',function(){
