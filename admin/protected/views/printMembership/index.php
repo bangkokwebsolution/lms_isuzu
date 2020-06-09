@@ -8,10 +8,8 @@
 
 
 <?php
-$this->breadcrumbs=array(
-	UserModule::t('Users')=>array('admin'),
-	UserModule::t('Manage'),
-);
+$titleName = 'พิมพ์ใบสมัครสำหรับคนประจำเรือ';
+$formNameModel = 'PrintMembership';
 //
 // $this->menu=array(
 //     array('label'=>UserModule::t('Create User'), 'url'=>array('create')),
@@ -62,11 +60,11 @@ EOD
 			'attributes'=>array(
 //            array('name'=>'company_id','type'=>'list','query'=>Company::getCompanyList()),
 				//array('name'=>'register_status','type'=>'list','query'=>$register_status),
-				array('name'=>'register_status','type'=>'list','query'=>User::getregisstatusList()),
+				//array('name'=>'register_status','type'=>'list','query'=>User::getregisstatusList()),
 				array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
             //array('name'=>'nameSearch','type'=>'text'),
 //            array('name'=>'course','type'=>'list','query'=>$model->courseList),
-				array('name'=>'create_at','type'=>'text'),
+				//array('name'=>'create_at','type'=>'text'),
 
             //array('name'=>'course_point','type'=>'text'),
 			),
@@ -83,15 +81,15 @@ EOD
 
 		<div class="widget" style="margin-top: -1px;">
 			<div class="widget-head">
-				<h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Confirm Registration"); ?></h4>
+				<h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php //echo $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Confirm Registration"); ?>พิมพ์ใบสมัครสำหรับคนประจำเรือ</h4>
 			</div>
 			<div class="widget-body">
 				<div>
-					<?php echo Rights::t('core', 'ที่นี่คุณสามารถอนุมัติการสมัครสมาชิกให้กับผู้ใช้แต่ละราย'); ?>
+					<?php //echo Rights::t('core', 'ที่นี่คุณสามารถอนุมัติการสมัครสมาชิกให้กับผู้ใช้แต่ละราย'); ?>
 				</div>
-				<div class="coolContainer">
+				<!-- <div class="coolContainer">
 					<h4 class="name_pos"></h4><h4 class="num"> จำนวนผู้สมัคร <?= $model->searchmembership()->getItemCount(); ?> คน  จาก <?= $model->searchmembership()->getTotalItemCount(); ?> คน</h4>	
-				</div>
+				</div> -->
 				<div class="separator bottom form-inline small">
 					<span class="pull-right">
 						<label class="strong">แสดงแถว:</label>
@@ -148,25 +146,19 @@ EOD
 										return $data->position->position_title;
 									}
 								),
-								array(
-									'header' => 'สถานะ',
-									'type'=>'html',
-									'value'=>function($data){
-
-										if($data->register_status == 0){
-											//echo CHtml::button("ปิด",array("class"=>"btn btn-danger ","data-id" => $data->id));
-											echo "รอการตรวจสอบ";
-										} else if($data->register_status == 2){
-											echo "ไม่อนุมัติ";
-										}
-									}
-								),
 								// array(
-								// 	'name'=>'email',
-								// 	'type'=>'raw',
-								// 	'value'=>'CHtml::link(UHtml::markSearch($data,"email"), "mailto:".$data->email)',
+								// 	'header' => 'สถานะ',
+								// 	'type'=>'html',
+								// 	'value'=>function($data){
+
+								// 		if($data->register_status == 0){
+								// 			//echo CHtml::button("ปิด",array("class"=>"btn btn-danger ","data-id" => $data->id));
+								// 			echo "รอการตรวจสอบ";
+								// 		} else if($data->register_status == 2){
+								// 			echo "ไม่อนุมัติ";
+								// 		}
+								// 	}
 								// ),
-		// 'create_at',
 								array(
 									'header' => 'วันที่ลงทะเบียน',
 									'type'=>'html',
@@ -176,85 +168,58 @@ EOD
 										return Helpers::changeFormatDate($data->create_at,'datetime');
 									},
 								),
-			// 					array(
-			// 						'name'=>'careersearch',
-			// 						'type'=>'raw',
-			// 						'filter'=>User::getListCareer(),
-			// 						'value' => '$data->profile->Career->career',
-			// //'value' => 'CHtml::link(UHtml::markSearch($data, ),array("admin/view","id"=>$data->id))',
-			// 					),
+		
 								// array(
-								// 	'name'=>'orgchart_lv2',
 								// 	'type'=>'raw',
-								// 	'filter' => User::getListOrgCourse(),
 								// 	'value'=>function($data){
-								// 		$orgCoruse = json_decode($data->orgchart_lv2);
-								// 		$criteria=new CDbCriteria;
-								// 		$criteria->addInCondition('id', $orgCoruse);
-								// 		$org = OrgChart::model()->findAll($criteria);
-								// 		foreach ($org as $key => $value) {
-								// 			$courseName .= ($key+1).'. '.$value->title.'<br>';
-								// 		}
-								// 		return $courseName;
-								// 	},
-								// ),
-		// 'lastvisit_at',
-								// array(
-								// 	'name'=>'superuser',
-								// 	'value'=>'User::itemAlias("AdminStatus",$data->superuser)',
-								// 	'filter'=>User::itemAlias("AdminStatus"),
-								// ),
-								array(
-									'type'=>'raw',
-									'value'=>function($data){
-										 if($data->register_status == 0) {
-										 	return  CHtml::button("รอการตรวจสอบ",array('onclick'=>'sendMsg('.$data->id.')','class' => 'btn btn-info changeStatus','data-id' =>$data->id));
+								// 		 if($data->register_status == 0) {
+								// 		 	return  CHtml::button("รอการตรวจสอบ",array('onclick'=>'sendMsg('.$data->id.')','class' => 'btn btn-info changeStatus','data-id' =>$data->id));
 										
-									} else if($data->register_status == 2){
-											echo CHtml::button("ไม่อนุมัติ",array('onclick'=>'',"class"=>"btn btn btn-secondary","data-id" => $data->id));
-										}
-									},
-									'header' => 'อนุมัติสมัครสมาชิก',
-									'htmlOptions'=>array('style'=>'text-align: center;'),
-									'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
-								),
-								array(
-									'type'=>'raw',
-									'value'=>function($data){	
-										echo CHtml::button("ตรวจสอบ",array('onclick'=>'sendMsgCheck('.$data->id.')',"class"=>"btn btn-success Check_information","data-id" => $data->id));
-									},
-									'header' => 'ตรวจสอบข้อมูลการสมัคร',
-									'htmlOptions'=>array('style'=>'text-align: center;'),
-									'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
-								),
+								// 	} else if($data->register_status == 2){
+								// 			echo CHtml::button("ไม่อนุมัติ",array('onclick'=>'',"class"=>"btn btn btn-secondary","data-id" => $data->id));
+								// 		}
+								// 	},
+								// 	'header' => 'อนุมัติสมัครสมาชิก',
+								// 	'htmlOptions'=>array('style'=>'text-align: center;'),
+								// 	'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
+								// ),
 								// array(
-								// 	'header' => 'พิมพ์ใบสมัคร',
-								// 	'type' => 'raw',
-								// 	'value' => function($data) {
-        //                                        //var_dump($data->id);
-        //                                         //return CHtml::button("พิมพ์",array('class' => 'btn btn btn-success print_pdf','data-id' => $data->id));
-								// 		return CHtml::button('พิมพ์ใบสมัคร', array('submit' => array('admin/Printpdf', 'id'=> $data->id),'class' => 'btn btn btn-success'));
-								// 	},'htmlOptions' => array(
-								// 		'style'=> "text-align: center;",
-								// 	),
+								// 	'type'=>'raw',
+								// 	'value'=>function($data){	
+								// 		echo CHtml::button("ตรวจสอบ",array('onclick'=>'sendMsgCheck('.$data->id.')',"class"=>"btn btn-success Check_information","data-id" => $data->id));
+								// 	},
+								// 	'header' => 'ตรวจสอบข้อมูลการสมัคร',
+								// 	'htmlOptions'=>array('style'=>'text-align: center;'),
+								// 	'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
 								// ),
 								array(
-									'header' => 'ดาวน์โหลดเอกสารแนบ',
+									'header' => 'พิมพ์ใบสมัคร',
 									'type' => 'raw',
 									'value' => function($data) {
-
-										return CHtml::button('ดาวน์โหลดเอกสารแนบ', array('submit' => array('admin/Attach_load', 'id'=> $data->id),'class' => 'btn btn btn-success'));
+                                               //var_dump($data->id);
+                                                //return CHtml::button("พิมพ์",array('class' => 'btn btn btn-success print_pdf','data-id' => $data->id));
+										return CHtml::button('พิมพ์ใบสมัคร', array('submit' => array('PrintMembership/Printpdf', 'id'=> $data->id),'class' => 'btn btn btn-success'));
 									},'htmlOptions' => array(
 										'style'=> "text-align: center;",
 									),
 								),
-								array(
-									'header' => 'หมายเหตุ',
-									'type'=>'html',
-									'value'=>function($data){
-										return $data->note;
-									}
-								),
+								// array(
+								// 	'header' => 'ดาวน์โหลดเอกสารแนบ',
+								// 	'type' => 'raw',
+								// 	'value' => function($data) {
+
+								// 		return CHtml::button('ดาวน์โหลดเอกสารแนบ', array('submit' => array('admin/Attach_load', 'id'=> $data->id),'class' => 'btn btn btn-success'));
+								// 	},'htmlOptions' => array(
+								// 		'style'=> "text-align: center;",
+								// 	),
+								// ),
+								// array(
+								// 	'header' => 'หมายเหตุ',
+								// 	'type'=>'html',
+								// 	'value'=>function($data){
+								// 		return $data->note;
+								// 	}
+								// ),
 								// array(
 								// 	'class'=>'AButtonColumn',
 								// 	'visible'=>Controller::PButton(
@@ -460,23 +425,23 @@ EOD
 								});
 							}
 							//});
-           $(document).ready(function() {      
-           var e = document.getElementById("User_position_id");
-           var strUser = e.options[e.selectedIndex].text;
-           if (strUser === "ทั้งหมด") {
-            $('.name_pos').hide();
-           }else{
-                var format =  "ตำแหน่ง"+" "+strUser;
-             $('.name_pos').text(format);
-           }
-               var tex = $('.empty').text();
-            if (tex) {
-            	$('.name_pos').hide();
-            	$('.num').text("จำนวนผู้สมัคร 0 คน จาก 0 คน")
-            }else{
-            	$('.num').show()            
-            }
-           	});
+           // $(document).ready(function() {      
+           // var e = document.getElementById("User_position_id");
+           // var strUser = e.options[e.selectedIndex].text;
+           // if (strUser === "ทั้งหมด") {
+           //  $('.name_pos').hide();
+           // }else{
+           //      var format =  "ตำแหน่ง"+" "+strUser;
+           //   $('.name_pos').text(format);
+           // }
+           //     var tex = $('.empty').text();
+           //  if (tex) {
+           //  	$('.name_pos').hide();
+           //  	$('.num').text("จำนวนผู้สมัคร 0 คน จาก 0 คน")
+           //  }else{
+           //  	$('.num').show()            
+           //  }
+           // 	});
 
 						</script>
 					</div>

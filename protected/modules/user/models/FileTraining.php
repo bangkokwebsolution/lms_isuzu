@@ -34,14 +34,14 @@ class FileTraining extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('user_id, create_by, update_by', 'numerical', 'integerOnly'=>true),
-			array('file_name, filename, length', 'length', 'max'=>255),
+			array('file_name, filename, length, expire_date, name_training', 'length', 'max'=>255),
 			array('file_name, filename', 'file', 'types'=>'pdf,jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
 			array('file_name, filename', 'file', 'types'=>'pdf,jpg, png, gif','allowEmpty' => true, 'on'=>'update'),
 			array('active', 'length', 'max'=>1),
 			array('create_date, update_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_id, file_name, filename, length, create_date, create_by, update_date, update_by, active', 'safe', 'on'=>'search'),
+			array('id, user_id, file_name, filename, length, create_date, create_by, update_date, update_by, active, expire_date, name_training', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,6 +72,8 @@ class FileTraining extends CActiveRecord
 			'update_date' => 'Update Date',
 			'update_by' => 'Update By',
 			'active' => 'Active',
+			'expire_date' => 'expire_date',
+			'name_training'=>'name_training',
 		);
 	}
 
@@ -103,6 +105,8 @@ class FileTraining extends CActiveRecord
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
+		$criteria->compare('expire_date',$this->expire_date,true);
+		$criteria->compare('name_training',$this->name_training,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

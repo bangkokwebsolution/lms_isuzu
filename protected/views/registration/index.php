@@ -3014,8 +3014,8 @@ $count_tn = 1;
                // $criteria->addInCondition('department_id', $dep_id);
                // $criteria->order = 'sortOrder ASC';
                $criteria= new CDbCriteria;
-                                    $criteria->compare('active','y');
-                                    $criteria->order = 'sortOrder ASC';
+               $criteria->compare('active','y');
+               $criteria->order = 'sortOrder ASC';
                                     //$positionModel = Position::model()->findAll($criteria);
                $position_ship = Position::model()->findAll($criteria);
                ?> 

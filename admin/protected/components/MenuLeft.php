@@ -1112,6 +1112,50 @@ Class MenuLeft extends Controller
 	        		),
 	        	)
 	        ),
+
+	        array(
+	        	//////// print ////////
+	        	'visible'=>self::PermissionsMenu(array(
+	        		'printMembership.*',
+	        		'printMembership.Index',
+	        		'printMembership.personal'
+	        	)),
+	        	'label'=>'<span class="label label-primary"></span> <i></i><span>พิมพ์ใบสมัคร</span>',
+	        	'url'=>'#printMembership',
+	        	'linkOptions' => array('data-toggle' => 'collapse'),
+	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_open'),
+	        	'submenuOptions' => array('class' => self::SetSubMenu( array('printMembership') ), 'id' => 'printMembership'),
+	        	'active' => self::SetSubMenu( array('printMembership') ,false),
+	        	'items'=>array(
+	        		// array(
+	        		// 	/*====== Check Permissions Sup-Category (1) ======*/
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'printMembership.*',
+	        		// 		'printMembership.Create'
+	        		// 	)),
+	        		// 	'label'=>'เพิ่มวีดีโอ'." (ภาษา ".$mainLang." )",
+	        		// 	'url'=>array('//printMembership/create')
+	        		// ),
+	        		array(
+	        			/*====== Check Permissions Sup-Category (2) ======*/
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'printMembership.*',
+	        				'printMembership.Index'
+	        			)),
+	        			'label'=>'สมัครสมาชิกสำหรับคนประจำเรือ',
+	        			'url'=>array('//printMembership/index')
+	        		),
+	        		array(
+	        			/*====== Check Permissions Sup-Category (2) ======*/
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'printMembership.*',
+	        				'printMembership.personal'
+	        			)),
+	        			'label'=>'สมัครสำหรับบุคคลทั่วไป',
+	        			'url'=>array('//printMembership/personal')
+	        		),
+	        	)
+	        ),
 	         array(
 	        	/*====== Check Permissions User (2) ======*/
 	        	'visible'=>self::PermissionsMenu(array(
