@@ -82,8 +82,8 @@ label.error { display: none; }
                         </div>
 						<?php if(($modelQues->ques_type != 3) && ($modelQues->ques_type != 4)){ ?>
 
-							<div class="row choice-list" style="margin-top:20px;">
-							<label><h3>ตัวเลือก <a class="btn btn-icon btn-success add-chocie <?php if($modelQues->ques_type == 6){ echo "-sort"; } ?>" data-question-id="<?php echo $modelQues->ques_id; ?>">
+							<div class="row choice-list<?php if($modelQues->ques_type == 6){ echo "-sort"; } ?>" style="margin-top:20px;">
+							<label><h3>ตัวเลือก <a class="btn btn-icon btn-success add-chocie<?php if($modelQues->ques_type == 6){ echo "-sort"; } ?>" data-question-id="<?php echo $modelQues->ques_id; ?>">
 										<i class="icon-book"></i> เพิ่มตัวเลือก</a></h3></label>
 							<?php
 							$modelChoice = $modelQues->choices;

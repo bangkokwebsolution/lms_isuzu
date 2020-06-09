@@ -6,7 +6,7 @@
 </style>
 <style type="text/css">
 	.exams p{
-		display: block !important;
+		display: inline !important;
 		margin-top: -3px !important;
 	}
 	.exams label{
@@ -20,6 +20,15 @@
 	}
 	.exams label:before{ 
 		margin-top: -4px !important;
+	}
+	.li-cute{
+		border: solid 1px black; 
+		background: white; 
+		padding-top: 10px; 
+		padding-bottom: 10px; 
+		margin-bottom: 10px; 
+		padding-left: 10px; 
+		padding-right: 10px;
 	}
 </style>
 <!-- Header page -->
@@ -64,8 +73,8 @@
 											<div class="form-group">
 												<?php
 												$strTotal = 0;
-												$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown');
-												$questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'เลือกได้คำตอบเดียว', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่');									
+												$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown', 6 => 'hidden');
+												$questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'เลือกได้คำตอบเดียว', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่', 6 => 'คำตอบแบบจัดเรียง');									
 												?>
 												<label for=""><?= $currentQuiz->number; ?>. ข้อสอบแบบ <?= $questionTypeArrayStr[$model->ques_type]?> </label>
 												<p><?= $model->ques_title; ?></p>
@@ -75,6 +84,22 @@
 													$choiceData = json_decode($currentQuiz->question);
 													$arrType4Answer = array();
 
+													if($model->ques_type == 6 ){ 
+														?>
+														<ul id='sortable' style='cursor: pointer;'>
+															<?php
+															if( !empty( json_decode($currentQuiz->ans_id) ) ) {
+																$choiceData = json_decode($currentQuiz->ans_id);
+															}
+														}
+
+
+														if($model->ques_type == 3) {
+															echo '										
+															<textarea class="examsta" rows="4" cols="50" name="lecture" >'.$currentQuiz->ans_id.'</textarea>
+															';
+
+														}else{
 											$countchoice = 1; // นับตัวเลือกข้อสอบแบบจับคู่
 											foreach ($choiceData as $key => $val_choice) {
 												$choice = Coursechoice::model()->findByPk($val_choice);
@@ -89,6 +114,17 @@
 													'.CHtml::decode($choice->choice_detail).'
 													</label>
 													</div>';
+												}else if ($model->ques_type == 6) {
+													?>
+
+													<li class="li-cute" id='<?php echo $choice->choice_id; ?>'><?php echo CHtml::decode($choice->choice_detail); ?>
+														
+													</li>
+
+													<?php
+
+
+
 												} else if($model->ques_type == 2) {
 													if(in_array($choice->choice_id, $ansData)){
 														$checked = 'checked';
@@ -114,6 +150,7 @@
 													}
 												}
 											}
+										}
 
 											if($model->ques_type == 4) {
 												echo '<label> ส่วนที่ 1 </label> <br>';
@@ -153,9 +190,15 @@
 											}
 
 											?>
+											<?php if($model->ques_type == 6 ){ echo "</ul>"; } ?>
 										</div>
 									</div>
 									<!-- <button type="submit" class="btn btn-warning center-block">ส่งคำตอบ</button> -->
+									<?php if($model->ques_type == 6 ){ 
+										?>
+										<input type="hidden" id="answer_sort" name="answer_sort" value="<?php echo implode(",", $choiceData); ?>">
+										<?php
+									} ?>
 									<?php 
 									echo CHtml::hiddenField("Question_type[" . $model->ques_id . "]", $questionTypeArray[$model->ques_type]);
 									echo CHtml::hiddenField("last_ques");
@@ -227,6 +270,22 @@
 <script>
 	var interval;
 	$(function(){ 
+		$('#sortable').sortable({
+        start: function(event, ui) {
+            var start_pos = ui.item.index();
+            ui.item.data('start_pos', start_pos);
+        },
+        change: function(event, ui) {
+            var start_pos = ui.item.data('start_pos');
+            var index = ui.placeholder.index();        
+        },
+        update: function(event, ui) {
+			var start_pos = ui.item.data('start_pos');
+            var index = ui.placeholder.index();
+            get_li();
+        }
+    });
+
 		time_test_start('<?= $time_up; ?>');
 
 		$(".dropdown_value").each(function () {
@@ -255,6 +314,17 @@
 	    });
 
 	});
+
+	var arr_li_answer = Array();
+	function get_li(){
+		arr_li_answer = [];
+		$(".li-cute").each(function( index ) {
+			arr_li_answer.push($( this ).attr("id"));
+		});
+
+		$("#answer_sort").val(arr_li_answer.join())
+		// console.log(arr_li_answer.join());
+	}
 
 	function save_ans(evnt) {
 		$("#actionEvnt").val(evnt);
