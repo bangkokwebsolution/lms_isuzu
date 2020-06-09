@@ -1118,7 +1118,7 @@ Class MenuLeft extends Controller
 	        	'visible'=>self::PermissionsMenu(array(
 	        		'printMembership.*',
 	        		'printMembership.Index',
-	        		'printMembership.personal'
+	        		'printMembership.Approve'
 	        	)),
 	        	'label'=>'<span class="label label-primary"></span> <i></i><span>พิมพ์ใบสมัคร</span>',
 	        	'url'=>'#printMembership',
@@ -1142,17 +1142,17 @@ Class MenuLeft extends Controller
 	        				'printMembership.*',
 	        				'printMembership.Index'
 	        			)),
-	        			'label'=>'สมัครสมาชิกสำหรับคนประจำเรือ',
+	        			'label'=>'สมัครอนุมัติการตรวจสอบ',
 	        			'url'=>array('//printMembership/index')
 	        		),
 	        		array(
 	        			/*====== Check Permissions Sup-Category (2) ======*/
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'printMembership.*',
-	        				'printMembership.personal'
+	        				'printMembership.approve'
 	        			)),
-	        			'label'=>'สมัครสำหรับบุคคลทั่วไป',
-	        			'url'=>array('//printMembership/personal')
+	        			'label'=>'อนุมัติการยืนยัน',
+	        			'url'=>array('//printMembership/approve')
 	        		),
 	        	)
 	        ),
@@ -1174,19 +1174,19 @@ Class MenuLeft extends Controller
 	        			/*====== Check Permissions Sup-User (1) ======*/
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'admin.*',
-	        				'admin.Membership'
+	        				'admin.membership_personal'
 	        			)),
-	        			'label'=>'อนุมัติการตรวจสอบการสมัครสมาชิกสำหรับคนประจำเรือ',
-	        			'url'=>array('//user/admin/membership')
+	        			'label'=>'อนุมัติการตรวจสอบการสมัครสำหรับบุคคลทั่วไป',
+	        			'url'=>array('//user/admin/membership_personal')
 	        		),
 	        		array(
 	        			/*====== Check Permissions Sup-User (1) ======*/
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'admin.*',
-	        				'admin.membership_personal'
+	        				'admin.Membership'
 	        			)),
-	        			'label'=>'อนุมัติการตรวจสอบการสมัครสำหรับบุคคลทั่วไป',
-	        			'url'=>array('//user/admin/membership_personal')
+	        			'label'=>'อนุมัติการตรวจสอบการสมัครสมาชิกสำหรับคนประจำเรือ',
+	        			'url'=>array('//user/admin/membership')
 	        		),
 	        		array(
 	        			/*====== Check Permissions Sup-User (1) ======*/
@@ -1197,6 +1197,7 @@ Class MenuLeft extends Controller
 	        			'label'=>'อนุมัติยืนยันการสมัคร',
 	        			'url'=>array('//user/admin/approve')
 	        		),
+
 	        		array(
 	        			/*====== Check Permissions Sup-User (1) ======*/
 	        			'visible'=>self::PermissionsMenu(array(

@@ -1015,7 +1015,7 @@ table .t-edu {
 <div class="license-block">
   <div style="padding-left:0;padding-top: 50px;">
     <p class="f-14" >รับ : ............................................................</p>
-    <p class="f-14" style="padding-left:90px; padding-bottom: -27px;" > <?php 
+    <p class="f-14" style="padding-left:70px; padding-bottom: -27px;" > <?php 
     $criteria= new CDbCriteria;
     $criteria->compare('user_id',$LogRegister->confirm_user);
     $Profile_admin = Profile::model()->findAll($criteria);
@@ -1035,7 +1035,22 @@ table .t-edu {
  </div>
   <div  style="padding-left:350px;padding-top: -105px;">
     <p class="f-14">ผู้อนุมัติ : ..........................................................</p>
+     <p class="f-14" style="padding-left:70px; padding-bottom: -27px;" > <?php 
+    $criteria= new CDbCriteria;
+    $criteria->compare('user_id',$LogApprove->confirm_user);
+    $Profile_super = Profile::model()->findAll($criteria);
+    foreach ($Profile_super as $key => $value) {
+       $firstname_super = $value["firstname"]; 
+       $lastname_super = $value["lastname"];
+    }
+     echo $firstname_super; ?>&nbsp;&nbsp;&nbsp;<?php echo $lastname_super; ?> </p>
     <p class="f-14">(....................................................................)</p>
+    <p class="f-14" style="padding-left:90px; padding-bottom: -27px;" >
+      <?php if($LogApprove['confirm_date'] != ""){
+        $check = Helpers::lib()->changeFormatDate($LogApprove['confirm_date'],'datetime');
+        $newformat = substr($check,0,-10);
+        echo $newformat;    
+           }else{ echo "-"; } ?></p>
      <p class="f-14">วันที่ : ..............................................................</p>
   </div>
 </div>

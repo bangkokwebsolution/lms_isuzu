@@ -344,6 +344,7 @@ echo ($data);
 		if($model->status == 1 && $model->register_status == 1){
 			// $model->status = 0;
 			// $model->status = 1;
+			$model->register_status = 4;
 			$profile->type_user = 3;
 			$profile->save(false);
 		} else {

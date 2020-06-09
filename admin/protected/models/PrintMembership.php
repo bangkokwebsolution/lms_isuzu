@@ -201,9 +201,6 @@ class PrintMembership extends CActiveRecord
  		$criteria->compare('pic_cardid2',$this->pic_cardid2);
  		$criteria->compare('register_status',$this->register_status);
  		$criteria->compare('profile.type_user',$this->typeuser);
- 		// $criteria->compare('passport',$this->passport);
-
- 		// $criteria->compare('profile.identification',$this->idensearch,true);
 
         return new CActiveDataProvider(get_class($this), array(
             'criteria'=>$criteria,
@@ -214,7 +211,7 @@ class PrintMembership extends CActiveRecord
     }
 
     public function searchmembership()
-{
+  {
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
 	$criteria=new CDbCriteria;
@@ -229,32 +226,17 @@ class PrintMembership extends CActiveRecord
 	$criteria->compare('position_id',$this->position_id);
 	$criteria->compare('email',$this->email,true);
 	$criteria->compare('activkey',$this->activkey);
-	//$criteria->compare('create_at',$this->create_at);
 	$criteria->compare('lastvisit_at',$this->lastvisit_at);
 	$criteria->compare('lastactivity',$this->lastactivity);
 	$criteria->compare('superuser',$this->superuser);
-	$criteria->compare('note',$this->note);
-	$criteria->compare('status',0);
-	$criteria->compare('del_status',0);
-	$criteria->compare('online_status',$this->online_status);
-	$criteria->compare('online_user',$this->online_user);
-	//$criteria->compare('register_status',$this->register_status);		
-	if (isset($this->register_status)) {
-		if($this->register_status == null){
-        $criteria->addIncondition('register_status',array(0,2));
-		}else if($this->register_status == 2){
-		    $criteria->compare('register_status', 2);
-        }else if($this->register_status == 1){
-        	$criteria->compare('register_status',0);
-        }
-        $criteria->addIncondition('register_status',array(0,2));
-	}else{
-         $criteria->addIncondition('register_status',array(0,2));
-	}
-	$criteria->compare('group',$this->group);
-	$criteria->compare('profile.identification',$this->idensearch,true);
-	$criteria->compare('profile.type_user',1);
+	$criteria->compare('not_passed',$this->not_passed);
+	$criteria->compare('status',$this->status);
+	$criteria->compare('del_status',0); 
+	$criteria->compare('register_status',array(1));
+	$criteria->compare('profile.type_user',array(1,2));
 	$criteria->order = 't.id DESC';
+	//$criteria->compare('profile.type_user',array(1));
+	//$criteria->compare('register_status',$this->register_status);
 	if(empty($this->create_at)) {
 		$criteria->compare('create_at',$this->create_at,true);
 	}else {
@@ -266,7 +248,65 @@ class PrintMembership extends CActiveRecord
 			
 		$criteria->addBetweenCondition('create_at', $date_start, $date_end, 'AND');
 	}
-	//var_dump($_REQUEST);exit();
+	
+	$criteria->compare('online_status',$this->online_status);
+	$criteria->compare('online_user',$this->online_user);
+	$criteria->compare('group',$this->group);
+	$criteria->compare('profile.identification',$this->idensearch,true);
+
+	$dataProvider = new CActiveDataProvider(get_class($this), array(
+		'criteria'=>$criteria,
+		'pagination'=>array(
+			'pageSize'=>Yii::app()->getModule('user')->user_page_size,
+		),
+	));
+	return $dataProvider;
+}
+
+public function searchapprove()
+  {
+        // Warning: Please modify the following code to remove attributes that
+        // should not be searched.
+	$criteria=new CDbCriteria;
+
+	//$criteria->with = array('profile');
+	$criteria->with = array('profile','position');
+	$criteria->compare('id',$this->id);
+	$criteria->compare('username',$this->username,true);
+	$criteria->compare('password',$this->password);
+	$criteria->compare('pic_user',$this->pic_user);
+	$criteria->compare('department_id',$this->department_id);
+	$criteria->compare('position_id',$this->position_id);
+	$criteria->compare('email',$this->email,true);
+	$criteria->compare('activkey',$this->activkey);
+	$criteria->compare('lastvisit_at',$this->lastvisit_at);
+	$criteria->compare('lastactivity',$this->lastactivity);
+	$criteria->compare('superuser',$this->superuser);
+	$criteria->compare('not_passed',$this->not_passed);
+	$criteria->compare('status',$this->status);
+	$criteria->compare('del_status',0); 
+	$criteria->compare('register_status',array(4));
+	$criteria->compare('profile.type_user',array(3));
+	$criteria->order = 't.id DESC';
+	//$criteria->compare('profile.type_user',array(1));
+	//$criteria->compare('register_status',$this->register_status);
+	if(empty($this->create_at)) {
+		$criteria->compare('create_at',$this->create_at,true);
+	}else {
+		$start_date = substr($this->create_at,0,11);
+		$end_date = substr($this->create_at,13);
+	
+		$date_start = date('Y-m-d 00:00:00', strtotime($start_date));
+		$date_end = date('Y-m-d 23:59:59', strtotime($end_date));
+			
+		$criteria->addBetweenCondition('create_at', $date_start, $date_end, 'AND');
+	}
+	
+	$criteria->compare('online_status',$this->online_status);
+	$criteria->compare('online_user',$this->online_user);
+	$criteria->compare('group',$this->group);
+	$criteria->compare('profile.identification',$this->idensearch,true);
+     
 	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
 	//$criteria->compare('orgchart_lv2',$org,true);
 	$dataProvider = new CActiveDataProvider(get_class($this), array(
@@ -275,7 +315,7 @@ class PrintMembership extends CActiveRecord
 			'pageSize'=>Yii::app()->getModule('user')->user_page_size,
 		),
 	));
-	return  $dataProvider;
+	return $dataProvider;
 }
 	/**
 	 * Returns the static model of the specified AR class.

@@ -9,7 +9,8 @@
 
 <?php
 $titleName = 'พิมพ์ใบสมัครสำหรับคนประจำเรือ';
-$formNameModel = 'PrintMembership';
+$formNameModel = 'approve';
+
 Yii::app()->clientScript->registerScript('search', "
 	$('.search-button').click(function(){
 		$('.search-form').toggle();
@@ -22,20 +23,6 @@ Yii::app()->clientScript->registerScript('search', "
 				return false;
 				});
 				");
-Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
-	$.updateGridView = function(gridID, name, value) {
-	    $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
-	    $.fn.yiiGridView.update(gridID, {data: $.param(
-	        $("#"+gridID+" input, #"+gridID+" .filters select")
-	    )});
-	}
-	$.appendFilter = function(name, varName) {
-	    var val = eval("$."+varName);
-	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
-	}
-	$.appendFilter("PrintMembership[news_per_page]", "news_per_page");
-EOD
-, CClientScript::POS_READY);
 
 // Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 // 	$('#User_create_at').attr('readonly','readonly');
@@ -47,15 +34,14 @@ EOD
 
 	?>
 	<div id="user" class="innerLR">
-<!-- 		<?php
+		<!-- <?php
 		$this->widget('AdvanceSearchForm', array(
 			'data'=>$model,
 			'route' => $this->route,
-            'id'=>'SearchFormAjax',
+        //'id'=>'SearchFormAjax',
 			'attributes'=>array(
-        
 				array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
-                //array('name'=>'nameSearch','type'=>'text'),
+            //array('name'=>'nameSearch','type'=>'text'),
 				//array('name'=>'create_at','type'=>'text'),
 			),
 		));?> -->
@@ -78,7 +64,7 @@ EOD
 					<?php //echo Rights::t('core', 'ที่นี่คุณสามารถอนุมัติการสมัครสมาชิกให้กับผู้ใช้แต่ละราย'); ?>
 				</div>
 				<!-- <div class="coolContainer">
-					<h4 class="name_pos"></h4><h4 class="num"> จำนวนผู้สมัคร <?= $model->searchmembership()->getItemCount(); ?> คน  จาก <?= $model->searchmembership()->getTotalItemCount(); ?> คน</h4>	
+					<h4 class="name_pos"></h4><h4 class="num"> จำนวนผู้สมัคร <?= $model->searchapprove()->getItemCount(); ?> คน  จาก <?= $model->searchapprove()->getTotalItemCount(); ?> คน</h4>	
 				</div> -->
 				<div class="separator bottom form-inline small">
 					<span class="pull-right">
@@ -98,11 +84,11 @@ EOD
 						</div> --><!-- search-form -->					  
 						<?php
 						$this->widget('AGridView', array(
-							'id'=>$formNameModel.'-grid',
-							'dataProvider'=>$model->searchmembership(),
+							'id'=>'user-grid',
+							'dataProvider'=>$model->searchapprove(),
 							'filter'=>$model,
 							'afterAjaxUpdate'=>'function(id, data){
-								$.appendFilter("PrintMembership[news_per_page]");	
+								$.appendFilter("[news_per_page]");	
 								InitialSortTable();
 							}',
 							'columns'=>array(
@@ -138,7 +124,7 @@ EOD
 									'value' => function($data) {
                                                //var_dump($data->id);
                                                 //return CHtml::button("พิมพ์",array('class' => 'btn btn btn-success print_pdf','data-id' => $data->id));
-										return CHtml::button('พิมพ์ใบสมัคร', array('submit' => array('PrintMembership/Printpdf', 'id'=> $data->id),'class' => 'btn btn btn-success'));
+										return CHtml::button('พิมพ์ใบสมัคร', array('submit' => array('PrintMembership/Printpdf_approve', 'id'=> $data->id),'class' => 'btn btn btn-success'));
 									},'htmlOptions' => array(
 										'style'=> "text-align: center;",
 									),
