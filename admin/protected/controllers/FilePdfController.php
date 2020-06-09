@@ -74,10 +74,10 @@ class FilePdfController extends Controller
     			$imageSlide->update();
     		}
     	}
-    	if(isset($_POST['FilePdf'])){
+    	if(isset($_POST['FilePdf'])){    		
     		$model->attributes = $_POST['FilePdf'];
     		$model->filename = $_POST['FilePdf']['file_name'];
-    		$model->save();
+    		$model->save(false);
     	}
 
     	$this->render('update',array(
