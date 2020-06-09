@@ -442,7 +442,7 @@ $cancel_msg = UserModule::t('Cancel');
                         </div>
                     </div>
 
-                    <button class="h-course-title" type="button" data-toggle="collapse" data-target="#course-note" aria-expanded="false" aria-controls="course-note">
+                    <button <?php if($model->type !='vdo'){ echo "style='display: none;'"; } ?> class="h-course-title" type="button" data-toggle="collapse" data-target="#course-note" aria-expanded="false" aria-controls="course-note">
                         <i class="fas fa-edit"></i> จดบันทึก 
                         <span class="pull-right"><i class="fas fa-angle-up"></i></span>
                     </button>
