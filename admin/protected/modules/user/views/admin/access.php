@@ -33,19 +33,19 @@ $this->breadcrumbs=array(
 // 		return false;
 // 	});
 // 	");$('#User_create_at').daterangepicker();
-Yii::app()->clientScript->registerScript('search', "
-	$('.search-button').click(function(){
-		$('.search-form').toggle();
-		return false;
-		});
-		$('.search-form form').submit(function(){
-			$.fn.yiiGridView.update('user-grid', {
-				data: $(this).serialize()
-				});
-				return false;
-				});
-				$('.collapse-toggle').click();
-				");
+ Yii::app()->clientScript->registerScript('search', "
+// 	$('.search-button').click(function(){
+// 		$('.search-form').toggle();
+// 		return false;
+// 		});
+// 		$('.search-form form').submit(function(){
+// 			$.fn.yiiGridView.update('user-grid', {
+// 				data: $(this).serialize()
+// 				});
+// 				return false;
+// 				});
+ 		$('.collapse-toggle').click();
+ 				");
 	?>
 	<div id="user" class="innerLR">
 		<?php
