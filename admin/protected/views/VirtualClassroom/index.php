@@ -103,7 +103,6 @@ EOD
 									'password' => $data->moderatorPw,
 									'moderatorCount' => 100		
 								);
-                    
 								try {$result = $bbb->getMeetingInfoWithXmlResponseArray($infoParams);}
 									catch (Exception $e) {
 										//echo 'Caught exception: ', $e->getMessage(), "\n";
@@ -118,7 +117,7 @@ EOD
 									if($returncode[0] == 'FAILED'){
 										return "0 คน";											
 									}else if($returncode[0] == 'SUCCESS'){
-										//return $result['participantCount']." คน";
+										return $result['participantCount']." คน";
 									}
 								}
 

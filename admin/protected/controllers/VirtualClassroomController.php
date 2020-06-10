@@ -61,7 +61,7 @@ class VirtualClassroomController extends Controller
 				$model->pic_vroom = $fileNamePicture;
 			}
 
-			if(isset($pic_vroom))
+			if(!empty($pic_vroom))
 					{
 						/////////// SAVE IMAGE //////////
 						Yush::init($model);
@@ -171,19 +171,28 @@ class VirtualClassroomController extends Controller
 			}
 			$json_UserLearn = json_encode($User_learn_arr);
 			$model->user_learn = $json_UserLearn;
-			}
-			$model->save();
-
+			}	
+ 
 			$time = date("dmYHis");
 			$pic_vroom = CUploadedFile::getInstance($model, 'pic_vroom');
-        
-			if(!empty($pic_vroom)){
+  
+			if(!empty($pic_vroom) || $pic_vroom != null){
 				$fileNamePicture = $time."_Picture.".$pic_vroom->getExtensionName();
-				$model->pic_vroom = $fileNamePicture;
+				if ($fileNamePicture) {
+					$model->pic_vroom = $fileNamePicture;
+				}
+				
 			}
-
-			if(isset($pic_vroom))
+			else{
+				$vroom = VRoom::model()->findByPk($model->id);
+				$model->pic_vroom = $vroom->pic_vroom;
+			}
+			if(!empty($pic_vroom))
 					{
+						
+						if (is_file($webroot.$model->id)) {
+							 unlink($webroot.$model->id);
+						}						
 						/////////// SAVE IMAGE //////////
 						Yush::init($model);
 
@@ -212,7 +221,7 @@ class VirtualClassroomController extends Controller
 						// 		'model'=>$model,'notsave'=>$notsave));
 						// }
 					}
-
+			$model->save();
 			if($model->save() == true){
 			$model_log = Vroomlogmail::model()->findByAttributes(array('vroom__id'=>$model->id));
 			if ($model_log != NULL) {
@@ -357,7 +366,7 @@ class VirtualClassroomController extends Controller
 			//	'logoutUrl' => 'http://thorconn.com/index.php/VirtualClassroom/logoutroom/?vroom_id='.$room->id.''
 				'logoutUrl' => 'http://thorconn.com/index.php/VirtualClassroom/index/?vroom_id='.$room->id.''
 				, 	 					// ''= use default. Change to customize.
-	/*			'dialNumber' => '', 					// The main number to call into. Optional.
+				/*'dialNumber' => '', 					// The main number to call into. Optional.
 				'voiceBridge' => '12345', 				// 5 digit PIN to join voice conference.  Required.
 				'webVoice' => '', 						// Alphanumeric to join voice. Optional.
 				'logoutUrl' => '', 						// Default in bigbluebutton.properties. Optional.
@@ -368,22 +377,21 @@ class VirtualClassroomController extends Controller
 				'record' => 'true'
 			);
 
-			// preupload doc
+			// preupload doc 
 			if(count($room->docs) > 0){
 				
-				$xml = "<?xml version='1.0' encoding='UTF-8'?> <modules><module name='presentation'> ";
+				$xml = "<?xml version='1.0' encoding ='UTF-8'?> <modules><module name='presentation'> ";
 				foreach ($room->docs as $key => $doc) {
 
 					$xml .= "<document url='".str_replace("/admin/../", "/", Yii::app()->getUploadUrl('vc')).$doc->name."' />";
+
 				}
 
 				$xml .= " </module></modules>";
 			}else{
 				$xml = '';
 			}
-			// var_dump($xml);
-			
-			// exit;
+			//echo htmlspecialchars($xml);
 			// Create the meeting and get back a response:
 			$itsAllGood = true;
 			try {$result = $bbb->createMeetingWithXmlResponseArray($creationParams,$xml);}

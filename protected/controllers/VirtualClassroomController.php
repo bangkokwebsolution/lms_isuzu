@@ -34,9 +34,12 @@ class VirtualClassroomController extends Controller
 		$room = Vroom::model()->findByPk($ids);
 		if($room && !Yii::app()->user->isGuest){
 			$userObject = Yii::app()->getModule('user')->user();
+			$Profile = Profile::model()->find($ids);
+			$name_show = $Profile->firstname." ".$Profile->lastname;
 			$joinParams = array(
 				'meetingId' => $room->id, 				// REQUIRED - We have to know which meeting to join.
-				'username' => $userObject->username,		// REQUIRED - The user display name that will show in the BBB meeting.
+				//'username' => $userObject->username,		// REQUIRED - The user display name that will show in the BBB meeting.
+				'username' => $name_show,		// REQUIRED - The user display name that will show in the BBB meeting.
 				'password' => $room->attendeePw,					// REQUIRED - Must match either attendee or moderator pass for meeting.
 				// 'createTime' => '',					// OPTIONAL - string
 				'userId' => $userObject->id,						// OPTIONAL - string
@@ -124,9 +127,12 @@ class VirtualClassroomController extends Controller
 		$room = Vroom::model()->findByPk($ids);
 		if($room && !Yii::app()->user->isGuest){
 			$userObject = Yii::app()->getModule('user')->user();
+			$Profile = Profile::model()->find($ids);
+			$name_show = $Profile->firstname." ".$Profile->lastname;
 			$joinParams = array(
 				'meetingId' => $room->id, 				// REQUIRED - We have to know which meeting to join.
-				'username' => $userObject->username,		// REQUIRED - The user display name that will show in the BBB meeting.
+				//'username' => $userObject->username,		// REQUIRED - The user display name that will show in the BBB meeting.
+				'username' => $name_show,		// REQUIRED - The user display name that will show in the BBB meeting.
 				'password' => $room->attendeePw,					// REQUIRED - Must match either attendee or moderator pass for meeting.
 				// 'createTime' => '',					// OPTIONAL - string
 				'userId' => $userObject->id,						// OPTIONAL - string
