@@ -170,10 +170,16 @@ class QuestionController extends Controller
 
 				$headingsArray = $objWorksheet->rangeToArray('A1:'.$highestColumn.'1',null, true, true, true);
 				$headingsArray = $headingsArray[1];
+				$row = 2;
+				if($headingsArray["A"] == null){
+					$headingsArray = $objWorksheet->rangeToArray('A2:'.$highestColumn.'2',null, true, true, true);
+				$headingsArray = $headingsArray[2];
+				$row = 3;
+				}
 
 				$r = -1;
 				$namedDataArray = array();
-				for ($row = 2; $row <= $highestRow; ++$row) {
+				for ($row = $row; $row <= $highestRow; ++$row) {
 					$dataRow = $objWorksheet->rangeToArray('A'.$row.':'.$highestColumn.$row,null, true, true, true);
 					if ((isset($dataRow[$row]['A'])) && ($dataRow[$row]['A'] > '')) {
 						++$r;
@@ -192,7 +198,12 @@ class QuestionController extends Controller
 
 					$questionModel = new Question();
 					$questionModel->group_id = $id;
-					$questionModel->ques_type = 2;
+					// $questionModel->ques_type = 2;
+
+					$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown', 6=>'hidden');
+					$key = array_search($type, $questionTypeArray);
+					$questionModel->ques_type = $key;
+
 					$questionModel->ques_title = $result["คำถาม"];
 					if($questionModel->save()){
 						

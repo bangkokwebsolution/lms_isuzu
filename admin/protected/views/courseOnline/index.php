@@ -82,9 +82,7 @@ EOD
 					}',
 					'columns'=>array(
 						array(
-							'visible'=>Controller::DeleteAll(
-								array("CourseOnline.*", "CourseOnline.Delete", "CourseOnline.MultiDelete")
-							),
+							'visible'=>Controller::PButton(array($formNameModel.".MultiDelete")),
 							'class'=>'CCheckBoxColumn',
 							'id'=>'chk',
 						),
@@ -274,7 +272,9 @@ EOD
 		</div>
 	</div>
 
-	<?php if( Controller::DeleteAll(array("CourseOnline.*", "CourseOnline.Delete", "CourseOnline.MultiDelete")) ) : ?>
+	<?php //if( Controller::DeleteAll(array("CourseOnline.*", "CourseOnline.Delete", "CourseOnline.MultiDelete")) ) : ?>	
+		<?php 		
+		if(Controller::PButton(array($formNameModel.".MultiDelete"))) : ?>
 		<!-- Options -->
 		<div class="separator top form-inline small">
 			<!-- With selected actions -->

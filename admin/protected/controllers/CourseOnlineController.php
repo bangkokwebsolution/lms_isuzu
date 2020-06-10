@@ -41,7 +41,7 @@ class CourseOnlineController extends Controller
     {
     	return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-            	'actions' => array('index', 'view','edit_teacher','MultiDelete','save_categories','update','delete','create'),
+            	'actions' => array('index', 'view','edit_teacher','MultiDelete','save_categories','update','delete','create', 'Formcourse'),
             	'users' => array('*'),
             ),
             array('allow',
@@ -530,7 +530,7 @@ class CourseOnlineController extends Controller
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
 
 		}
-        $this->redirect(array('index'));
+        // $this->redirect(array('index'));
 	}
 
 	public function actionMultiDelete()
