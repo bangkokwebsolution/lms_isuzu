@@ -128,7 +128,7 @@ table .t-edu {
               </tr>
 
            <tr>
-              <td  style="  padding-left:90px; padding-bottom:-28px;">
+              <td  style="  padding-left:60px; padding-bottom:-28px;">
                 <p class="f-14">
                   <?php if($profiles['sex'] != ""){if ($profiles['sex'] == 'Male') {
                     echo "ชาย";
@@ -140,15 +140,21 @@ table .t-edu {
             </tr>
 
             <tr>
-              <td style="  padding-left:290px;padding-bottom:-28px;">
+              <td style="  padding-left:180px;padding-bottom:-28px;">
                 <p class="f-14">
                     <?php if($profiles['age'] != ""){ echo $profiles['age']; }else{ echo "-"; } ?>
                   </p>
               </td>
             </tr>
-
             <tr>
-              <td style="text-align:left;  padding-left:500px; padding-bottom:-19px;">
+              <td style="  padding-left:310px;padding-bottom:-28px;">
+                <p class="f-14">
+                    <?php if($profiles['mouth_birth'] != ""){ echo $profiles['mouth_birth']; }else{ echo "-"; } ?>
+                  </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:left;  padding-left:480px; padding-bottom:-19px;">
                 <p class="f-14">
                   <?php if($profiles['birthday'] != ""){
                    $birthday = Helpers::lib()->changeFormatDateNew($profiles['birthday']);
@@ -160,7 +166,7 @@ table .t-edu {
             <tr width="100%">
               <td width="100%">
                 <p class="f-14">
-                  เพศ : ..................................... อายุ : ......................................  วันเดือนปีเกิด : ...........................................
+                  เพศ : .................... อายุ : .................... เดือน : ....................  วันเดือนปีเกิด : ...........................................
                 </p>
               </td>
             </tr>
@@ -244,7 +250,7 @@ table .t-edu {
               </td>
             </tr>
             <tr>
-              <td style="text-align:left;  padding-left:190px; padding-bottom:-24px;">
+              <td style="text-align:left;  padding-left:140px; padding-bottom:-24px;">
                 <p class="f-14"><?php if($profiles['date_issued'] != ""){
                   $date_issued = Helpers::lib()->changeFormatDateNew($profiles['date_issued']);
                  echo $date_issued; }else{ echo "-"; } ?></p>
@@ -272,7 +278,7 @@ table .t-edu {
               </td>
             </tr>
             <tr>
-              <td style="text-align:left;  padding-left:490px; padding-bottom:-24px;">
+              <td style="text-align:left;  padding-left:490px; padding-bottom:-20px;">
                 <p class="f-14"><?php if($profiles['passport_place_issued'] != ""){ echo $profiles['passport_place_issued']; }else{ echo "-"; } ?></p>
               </td>
             </tr>
@@ -282,14 +288,14 @@ table .t-edu {
               </td>
             </tr>
             <tr>
-              <td style="text-align:left;  padding-left:190px; padding-bottom:-22px;">
+              <td style="text-align:left;  padding-left:140px; padding-bottom:-23px;">
                 <p class="f-14"><?php if($profiles['passport_date_issued'] != ""){
                  $pass_expire = Helpers::lib()->changeFormatDateNew($profiles['passport_date_issued']);
                  echo $pass_expire; }else{ echo "-"; } ?></p>
               </td>
             </tr>
             <tr>
-              <td style="text-align:left;  padding-left:460px; padding-bottom:-22px;">
+              <td style="text-align:left;  padding-left:460px; padding-bottom:-20px;">
                 <p class="f-14"><?php if($profiles['pass_expire'] != ""){
                  $pass_expire = Helpers::lib()->changeFormatDateNew($profiles['pass_expire']);
                  echo $pass_expire; }else{ echo "-"; } ?></p>
@@ -306,7 +312,7 @@ table .t-edu {
               </td>
             </tr>
             <tr>
-              <td style="text-align:left;  padding-left:460px; padding-bottom:-22px;">
+              <td style="text-align:left;  padding-left:460px; padding-bottom:-20px;">
                 <p class="f-14"><?php if($profiles['seaman_expire'] != ""){ 
                   $seaman_expire = Helpers::lib()->changeFormatDateNew($profiles['seaman_expire']);
                   echo $seaman_expire; }else{ echo "-"; } ?></p>
@@ -362,7 +368,7 @@ table .t-edu {
                 </td>
               </tr>
             <tr>
-              <td style="text-align:left;  padding-left:500px; padding-bottom:-19px;">
+              <td style="text-align:left;  padding-left:470px; padding-bottom:-19px;">
                 <p class="f-14"><?php if($profiles['occupation_spouse'] != ""){ echo $profiles['occupation_spouse']; }else{ echo "-"; } ?></p>
               </td>
             </tr>
@@ -381,7 +387,7 @@ table .t-edu {
                 </td>
               </tr>
             <tr>
-              <td style="text-align:left;  padding-left:500px; padding-bottom:-19px;">
+              <td style="text-align:left;  padding-left:470px; padding-bottom:-19px;">
                 <p class="f-14"><?php if($profiles['occupation_father'] != ""){ echo $profiles['occupation_father']; }else{ echo "-"; } ?></p>
               </td>
             </tr>
@@ -400,7 +406,7 @@ table .t-edu {
                 </td>
               </tr>
             <tr>
-              <td style="text-align:left;  padding-left:500px; padding-bottom:-19px;">
+              <td style="text-align:left;  padding-left:470px; padding-bottom:-19px;">
                 <p class="f-14"><?php if($profiles['occupation_mother'] != ""){ echo $profiles['occupation_mother']; }else{ echo "-"; } ?></p>
               </td>
             </tr>
@@ -433,7 +439,7 @@ table .t-edu {
               </td>
             </tr>
             <tr>
-              <td style="text-align:left;  padding-left:45px; padding-bottom:-22px;">
+              <td style="text-align:left;  padding-left:85px; padding-bottom:-22px;">
                 <p class="f-14"><?php if($profiles['accommodation'] != ""){ 
                   if ($profiles['accommodation'] == 'own house') {
                     echo "ของตนเอง";
@@ -452,7 +458,7 @@ table .t-edu {
               </td>
             </tr>
             <tr>
-              <td style="text-align:left;  padding-left:480px; padding-bottom:-22px;">
+              <td style="text-align:left;  padding-left:440px; padding-bottom:-22px;">
                 <p class="f-14"><?php if($profiles['military'] != ""){
                   if ($profiles['military'] == 'enlisted') {
                     echo 'เกณฑ์แล้ว'; 
@@ -475,7 +481,7 @@ table .t-edu {
               </td>
             </tr>
               <tr>
-              <td style="text-align:left;  padding-left:290px; padding-bottom:-23px;">
+              <td style="text-align:left;  padding-left:470px; padding-bottom:-20px;">
                 <p class="f-14"><?php if($profiles['phone'] != ""){ echo $profiles['phone']; }else{ echo "-"; } ?></p>
               </td>
             </tr>
@@ -500,7 +506,7 @@ table .t-edu {
               </td>
             </tr>
                <tr>
-              <td style="text-align:left;  padding-left:58px; padding-bottom:-24px;">
+              <td style="text-align:left;  padding-left:88px; padding-bottom:-24px;">
                 <p class="f-14"><?php if($profiles['line_id'] != ""){ echo $profiles['line_id']; }else{ echo "-"; } ?></p>
               </td>
             </tr>
@@ -573,7 +579,7 @@ table .t-edu {
               </td>
             </tr>
             <tr>
-              <td style="text-align:left;  padding-left:460px; padding-bottom:-22px;">
+              <td style="text-align:left;  padding-left:460px; padding-bottom:-20px;">
                 <p class="f-14"><?php if($profiles['start_working'] != ""){
                  $start_working = Helpers::lib()->changeFormatDateNew($profiles['start_working']);
                  echo $start_working; }else{ echo "-"; } ?></p>
@@ -765,7 +771,7 @@ table .t-edu {
   </tbody>      
 </table>  
 
-<table border="1" style="border-collapse:collapse; overflow: wrap; width: 100%;" class="mt-1">
+<!-- <table border="1" style="border-collapse:collapse; overflow: wrap; width: 100%;" class="mt-1">
   <thead >
     <tr style="background-color:#D3D3D3;">
       <td colspan="4" style="text-align:left;  font-weight: bold; padding:10px;">
@@ -811,6 +817,67 @@ table .t-edu {
         
         <td style="text-align:center;  font-style:italic;">-</td>
         <td style="text-align:center;  font-style:italic;">-</td>         
+      </tr> 
+      <?php
+    }
+    ?>
+  </tbody>   -->    
+</table>
+<table border="1" style="border-collapse:collapse; overflow: wrap; width: 100%;" class="mt-1">
+  <thead >
+    <tr style="background-color:#D3D3D3;">
+      <td colspan="3" style="text-align:left;  font-weight: bold; padding:10px;">
+        <p class="f-14">ประวัติการฝึกอบรม</p>
+      </td>
+    </tr>
+    <tr>
+      <td width="10%" style="padding-bottom:-2px; text-align:center;  font-weight: bold;padding:10px;">
+        <p class="f-14">ลำดับ</p>
+      </td>
+      <td width="60%" style="padding-bottom:-2px; text-align:center;  font-weight: bold;padding:10px;">
+        <p class="f-14">ชื่อการฝึกอบรม</p>
+      </td>
+      <td width="30%" style="padding-bottom:-2px; text-align:center;  font-weight: bold;padding:10px;">
+        <p class="f-14">วันหมดอายุ</p>
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <?php 
+      $user_id = $user['id'];
+      $FileTraining = FileTraining::model()->findAll(array(
+        'condition' => 'user_id=:user_id AND active=:active',
+        'params' => array(':user_id'=>$user_id, ':active'=>'y')));
+    $i = 1;
+      if(!empty($FileTraining)){ 
+      foreach ($FileTraining as $key => $value) {          
+
+        $FileTraining_data = $FileTraining[$key]->attributes;
+        $expire_date = $FileTraining_data['expire_date'];
+        $expire_date_convert = Helpers::lib()->changeFormatDateNew($expire_date);
+        $name_training = $FileTraining_data['name_training'];
+
+        ?>
+        <tr>
+          <td style="text-align:center; " valign="top">
+            <p class="f-14"><?php echo $i++; ?></p>
+          </td>
+          <td style="text-align:center; " valign="top">
+            <p class="f-14"><?php if($name_training != ""){ echo $name_training; }else{ echo "-"; } ?></p>
+          </td> 
+          <td style="text-align:center; " valign="top">
+            <p class="f-14"><?php if($expire_date != ""){ echo $expire_date_convert; }else{ echo "-"; } ?></p>
+          </td>        
+        </tr>  
+        <?php
+      }
+    }else{
+      ?>
+      <tr>
+        
+        <td style="text-align:center;  font-style:italic;">-</td>
+        <td style="text-align:center;  font-style:italic;">-</td>    
+        <td style="text-align:center;  font-style:italic;">-</td>      
       </tr> 
       <?php
     }
