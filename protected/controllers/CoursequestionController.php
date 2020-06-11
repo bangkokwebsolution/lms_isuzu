@@ -25,8 +25,15 @@ class CoursequestionController extends Controller
         $isPreTest = Helpers::isPretestState($id);
         $course = CourseOnline::model()->findByPk($id);
         $gen_id = $course->getGenID($course->course_id);
-        $Coursemanage = Coursemanage::Model()->find("id=:id AND active=:active", 
-            array("id" => $id,"active" => "y"));
+
+        $que_type = "course";
+        if(isset($_GET['type'])){
+        $que_type = $_GET['type']; // pre
+        }
+
+        $Coursemanage = Coursemanage::Model()->find("id=:id AND active=:active AND type=:type", 
+            array("id" => $id,"active" => "y", ":type"=>$que_type));
+
 
         $Question = Coursequestion::model()->with('choices')->findAll("ques.group_id=:group_id AND choices.choice_answer=:choice_answer", array(
             "group_id" => $Coursemanage->group_id,
@@ -87,6 +94,7 @@ class CoursequestionController extends Controller
             ));
         } else {
             $this->render('pre_exams',array(
+                'type'=>$que_type,
                 'course' => $course,
                 'manage' => $Coursemanage,
                 'total_score' => $total_score,
@@ -101,6 +109,13 @@ class CoursequestionController extends Controller
         if(Yii::app()->user->id){
             Helpers::lib()->getControllerActionId();
         }
+
+        $que_type = "course";
+        if(isset($_GET['type'])){
+            $que_type = $_GET['type']; // pre
+        }
+
+
         $id = isset($_POST['course_id']) ? $_POST['course_id'] : $id;
         if(Yii::app()->user->id){
             $course = CourseOnline::model()->findByPk($id);
@@ -152,6 +167,7 @@ class CoursequestionController extends Controller
                 $countCoursemanage = Coursemanage::Model()->count("id=:id AND active=:active", array(
                     "id" => $id,
                     "active" => "y",
+                    "type"=>$que_type,
                 ));
 
                 // Not found and redirect
@@ -364,9 +380,15 @@ class CoursequestionController extends Controller
 
 
                             if($_POST['actionEvnt']=="save" || $_POST['actionEvnt']=="timeup"){
+                                if(isset($_GET['type'])){
+                                    $type = $_GET['type'];
+                                }else{
+                                    $type = "post";
+                                }
                                 $modelCoursescore = new Coursescore;
                                 $modelCoursescore->course_id = $id;
                                 $modelCoursescore->gen_id = $gen_id;
+                                $modelCoursescore->type = $type;
                                 $modelCoursescore->user_id = Yii::app()->user->id;
                                 $modelCoursescore->save();
 
@@ -483,7 +505,38 @@ class CoursequestionController extends Controller
                                         $modelCourselogques->ques_type = $coursequestion->ques_type;
                                         $modelCourselogques->result = $result;
                                         $modelCourselogques->save();
-                                    } else if($value->quest->ques_type==2){
+                                    }else if($value->quest->ques_type==3){   //textarea
+                                        $countAllCoursequestion += $value->quest->max_score;
+                                        $coursequestion = CourseQuestion::model()->findByPk($value->ques_id);
+                                        
+                                        $result = 0;
+                                            // Save Logchoice
+                                        $modelCourselogchoice = new Courselogchoice;
+                                            $modelCourselogchoice->course_id = $id; // $_GET ID
+                                            $modelCourselogchoice->logchoice_select = 1;
+                                            $modelCourselogchoice->score_id = $modelCoursescore->score_id;
+                                            $modelCourselogchoice->choice_id =  '0';
+                                            $modelCourselogchoice->ques_id = $coursequestion->ques_id;
+                                            $modelCourselogchoice->user_id = Yii::app()->user->id;
+                                            $modelCourselogchoice->ques_type = $coursequestion->ques_type;
+                                            $modelCourselogchoice->is_valid_choice = '0';
+                                            $modelCourselogchoice->logchoice_answer = '0';
+                                            // Save Courselogchoice
+                                            $modelCourselogchoice->save();
+
+                                        // Save Logques
+
+                                            $modelCourselogques = new Courselogques;
+                                        $modelCourselogques->course_id = $id; // $_GET ID
+                                        $modelCourselogques->score_id = $modelCoursescore->score_id;
+                                        $modelCourselogques->ques_id = $value->ques_id;
+                                        $modelCourselogques->user_id = Yii::app()->user->id;
+                                        $modelCourselogques->test_type = $testType;
+                                        $modelCourselogques->ques_type = $coursequestion->ques_type;
+                                        $modelCourselogques->result = $result;
+                                        $modelCourselogques->logques_text = $value->ans_id;
+                                        $modelCourselogques->save();
+                                    }else if($value->quest->ques_type==2){
                                         $countAllCoursequestion += 1;
                                         $coursequestion = Coursequestion::model()->with('choices')->find("ques.ques_id=:id", array(
                                             "id" => $value->ques_id,

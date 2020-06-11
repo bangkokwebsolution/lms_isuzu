@@ -485,6 +485,36 @@ class QuestionController extends Controller
                                         $modelCourselogques->ques_type = $coursequestion->ques_type;
                                         $modelCourselogques->result = $result;
                                         $modelCourselogques->save();
+                                }else if($value->quest->ques_type==3){
+                                    $countAllCoursequestion += $value->quest->max_score;
+                                    $scoreTotal += $value->quest->max_score;
+                                    $coursequestion = Question::model()->findByPk($value->ques_id);
+
+                                    $result = 0;
+                                            // Save Logchoice
+                                    $modelCourselogchoice = new Logchoice;
+                                            $modelCourselogchoice->lesson_id = $id; // $_POST ID
+                                            $modelCourselogchoice->logchoice_select = 1;
+                                            $modelCourselogchoice->score_id = $modelCoursescore->score_id;
+                                            $modelCourselogchoice->choice_id = '0';
+                                            $modelCourselogchoice->ques_id = $coursequestion->ques_id;
+                                            $modelCourselogchoice->user_id = Yii::app()->user->id;
+                                            $modelCourselogchoice->ques_type = $coursequestion->ques_type;
+                                            $modelCourselogchoice->is_valid_choice = '0';
+                                            $modelCourselogchoice->logchoice_answer = '0';
+                                            // Save Courselogchoice
+                                            $modelCourselogchoice->save();
+                                        // Save Logques
+                                            $modelCourselogques = new Logques;
+                                        $modelCourselogques->lesson_id = $id; // $_POST ID
+                                        $modelCourselogques->score_id = $modelCoursescore->score_id;
+                                        $modelCourselogques->ques_id = $value->ques_id;
+                                        $modelCourselogques->user_id = Yii::app()->user->id;
+                                        $modelCourselogques->test_type = $testType;
+                                        $modelCourselogques->ques_type = $coursequestion->ques_type;
+                                        $modelCourselogques->result = $result;
+                                        $modelCourselogques->logques_text = $value->ans_id;
+                                        $modelCourselogques->save();
                                 }else if($value->quest->ques_type==6){
                                     $countAllCoursequestion += 1;
 
