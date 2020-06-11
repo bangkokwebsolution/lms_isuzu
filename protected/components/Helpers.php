@@ -4198,6 +4198,18 @@ public function checkStepLesson($lesson){
                             $step_pass++;
                         }
                     }
+                }elseif($lessonListValue->type == 'pdf'){
+                    foreach ($lessonListValue->filePdf as $les) { // วนไฟล์ pdf
+                        $num_step++;
+                        $learnModel = Learn::model()->find(array(
+                            'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active=:status AND gen_id=:gen_id',
+                            'params'=>array(':lesson_id'=>$lessonListValue->id,':user_id'=>Yii::app()->user->id,':status'=>'y', ':gen_id'=>$gen_id)
+                        ));
+                        $learnFiles = self::lib()->checkLessonFile($les,$learnModel->learn_id, $gen_id);
+                        if($learnFiles == 'pass'){
+                            $step_pass++;
+                        }
+                    }
                 }
             }
             $checkHaveCourseTest = Helpers::lib()->checkHaveCourseTestInManage($course->course_id);
