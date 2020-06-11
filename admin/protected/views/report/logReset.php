@@ -93,7 +93,10 @@ $this->breadcrumbs = array($title);
             </div>
 
             <?php 
-            if(!empty($_POST['Report']['course']) && !empty($_POST['Report']['gen'])){ ?>
+            // var_dump($_POST['Report']['course']);
+            //             var_dump($_POST['Report']['gen']);
+            //             exit();
+            if(isset($_POST['Report']['course']) && isset($_POST['Report']['gen']) && $_POST['Report']['course'] != "" && $_POST['Report']['gen'] != ""){ ?>
             <!-- <div class="widget-body" style=" overflow-x: scroll;"> -->
                 <table class="table">
                     <thead>

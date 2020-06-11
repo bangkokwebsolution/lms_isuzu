@@ -165,9 +165,9 @@ $this->breadcrumbs=array(
                 $dataProvider = OrgCourse::getChilds(0);
             }
         ?>
-        <?php if($_GET['id'] != 2){ ?>
+        <?php //if($_GET['id'] != 2){ ?>
         <a href="<?= $url; ?>"><button type="button" class="btn btn-info pull-right">COURSE MANAGE</button></a>
-        <?php } ?>
+        <?php //} ?>
     </menu>
 </div>
 
