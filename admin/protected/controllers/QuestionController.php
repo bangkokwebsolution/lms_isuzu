@@ -195,13 +195,13 @@ class QuestionController extends Controller
 				$index = 0;
 
 				foreach($namedDataArray as $result){
-
+					
 					$questionModel = new Question();
 					$questionModel->group_id = $id;
 					// $questionModel->ques_type = 2;
 
 					$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown', 6=>'hidden');
-					$key = array_search($type, $questionTypeArray);
+					$key = array_search($result["ประเภท"], $questionTypeArray);
 					$questionModel->ques_type = $key;
 
 					$questionModel->ques_title = $result["คำถาม"];
