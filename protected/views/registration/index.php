@@ -595,7 +595,7 @@ if ($('.email').val() == "") {
             return false; 
         }else if($('.department').val() != ""){
             if ($('.position').val() == "" ) {
-                var position = "<?php echo Yii::app()->session['lang'] == 1?'กรุณาเเลือกตำแหน่ง! ':'กรุณาเเลือกตำแหน่ง!'; ?>";
+                var position = "<?php echo Yii::app()->session['lang'] == 1?'กรุณาเลือกตำแหน่ง! ':'กรุณาเลือกตำแหน่ง!'; ?>";
                 swal(alert_message,position)
                 return false; 
             }
@@ -795,24 +795,37 @@ if ($('.email').val() == "") {
          return false;
      }
 
-     if ($('.position_gen').val() == "" ) {
-        var position_gen = "<?php echo Yii::app()->session['lang'] == 1?'Please choose the position you want to apply! ':'กรุณาเลือกตำแหน่งที่ต้องการสมัคร!'; ?>";
-        swal(alert_message,position_gen)
-        return false; 
-    }
 }else if(type_users === '5'){  
 
-    if ($('.idcard').val() == "" ) {
-        var idcard = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your ID number! ':'กรุณากรอกเลขบัตรประชาชน!'; ?>";
-        swal(alert_message,idcard)
-        return false; 
-    }
+    var type_card = $("input[name='type_card']:checked").val(); 
+        if (typeof  type_card === 'undefined' || typeof  type_card === null) {
+            var type_card_choose = "<?php echo Yii::app()->session['lang'] == 1?'Please choose a check. Choose your ID number or passport! ':'กรุณาเลือกเช็คเลือกเลขบัตรประชาชนหรือหนังสือเดินทาง!'; ?>";
+            swal(alert_message,type_card_choose)
+        }else if(type_card === 'l'){
 
-    if ($('#Profile_date_of_expiry').val() == "" ) {
-        var Profile_date_of_expiry = "<?php echo Yii::app()->session['lang'] == 1?'Please select an expiration date, ID number! ':'กรุณาเลือกวันหมดอายุเลขบัตรประจำตัวประชาชน!'; ?>";
-        swal(alert_message,Profile_date_of_expiry)
-        return false; 
-    }      
+                if ($('.idcard').val() == "" ) {
+                var idcard = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your ID number! ':'กรุณากรอกเลขบัตรประชาชน!'; ?>";
+                swal(alert_message,idcard)
+                return false; 
+            }
+
+                if ($('#Profile_date_of_expiry').val() == "" ) {
+                var Profile_date_of_expiry = "<?php echo Yii::app()->session['lang'] == 1?'Please select an expiration date, ID number! ':'กรุณาเลือกวันหมดอายุเลขบัตรประจำตัวประชาชน!'; ?>";
+                swal(alert_message,Profile_date_of_expiry)
+                return false; 
+            }      
+        }else if(type_card === 'p'){
+                if ($('.passport').val() == "" ) {
+                var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
+                swal(alert_message,passport)
+                return false; 
+            } 
+                if ($('#Profile_pass_expire').val() == "" ) {
+                var Profile_pass_expire = "<?php echo Yii::app()->session['lang'] == 1?'Please select a passport expiration date! ':'กรุณาเลือกวันหมดอายุหนังสือเดินทาง!'; ?>";
+                swal(alert_message,Profile_pass_expire)
+                return false; 
+            }
+    }
 
     if ($('.sex_5').val() == "" ) {
         var sex_5 = "<?php echo Yii::app()->session['lang'] == 1?'Please select gender! ':'กรุณาเลือกเพศ!'; ?>";
@@ -844,11 +857,11 @@ if ($('.email').val() == "") {
         return false; 
     }
 
-    if ($('#Profile_line_id').val() == "" ) {
-        var Profile_line_id = "<?php echo Yii::app()->session['lang'] == 1?'Please enter ID Line! ':'กรุณากรอก ID Line!'; ?>";
-        swal(alert_message,Profile_line_id)
-        return false; 
-    }
+    // if ($('#Profile_line_id').val() == "" ) {
+    //     var Profile_line_id = "<?php echo Yii::app()->session['lang'] == 1?'Please enter ID Line! ':'กรุณากรอก ID Line!'; ?>";
+    //     swal(alert_message,Profile_line_id)
+    //     return false; 
+    // }
 
     if ($('#Profile_birthday').val() == "" ) {
         var Profile_birthday = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your date of birth! ':'กรุณากรอกวันเดือนปีเกิด!'; ?>";
@@ -1361,7 +1374,7 @@ function editNamehouse_registration(filedoc_id){
                     </div>
 
 
-       <!--      <div class="row justify-content-center mt-1 mb-1 form_number_id">
+            <div class="row justify-content-center mt-1 mb-1 form_number_id">
                 <div class="form-group">
                     <div class="radio radio-danger radio-inline">
                         <input type="radio" name="type_card" id="card-1" value="l" <?php if ($profile->type_card == "l") : ?> checked="checked" <?php endif ?>>
@@ -1373,7 +1386,7 @@ function editNamehouse_registration(filedoc_id){
                         <label for="card-2" class="bg-danger text-black"><?php echo $label->label_passport; ?> </label>
                     </div>
                 </div>
-            </div> -->
+            </div> 
 
 
             <div class="row justify-content-center form_identification">
@@ -1763,7 +1776,7 @@ function editNamehouse_registration(filedoc_id){
                         <div class="col-md-4 col-sm-6 col-xs-12 form_phone_5">
                             <div class="form-group ">
                                 <label><?php echo $label->label_phone; ?><font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'phone2', array('class' => 'form-control tel_5', 'placeholder' => $label->label_phone,'onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '10')); ?>
+                                <?php echo $form->textField($profile, 'phone2', array('class' => 'form-control tel_5', 'placeholder' => $label->label_phone,'onkeyup'=>"isNumberchar(this.value,this)")); ?>
                                 <?php echo $form->error($profile, 'phone2', array('class' => 'error2')); ?>
 
                             </div>
@@ -2004,7 +2017,7 @@ function editNamehouse_registration(filedoc_id){
     <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="form-group">
             <label><?php echo $label->label_phone; ?><font color="red">*</font></label>
-            <?php echo $form->textField($profile, 'tel', array('class' => 'form-control', 'placeholder' => $label->label_phone,'onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '10')); ?>
+            <?php echo $form->textField($profile, 'tel', array('class' => 'form-control', 'placeholder' => $label->label_phone,'onkeyup'=>"isNumberchar(this.value,this)")); ?>
             <?php echo $form->error($profile, 'tel', array('class' => 'error2')); ?>
 
         </div>
@@ -2012,7 +2025,7 @@ function editNamehouse_registration(filedoc_id){
     <div class="col-md-4 col-sm-6 col-xs-12 ">
         <div class="form-group">
             <label><?php echo $label->label_tel; ?><font color="red">*</font></label>
-            <?php echo $form->textField($profile, 'phone', array('class' => 'form-control', 'placeholder' => $label->label_tel,'onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '10')); ?>
+            <?php echo $form->textField($profile, 'phone', array('class' => 'form-control', 'placeholder' => $label->label_tel,'onkeyup'=>"isNumberchar(this.value,this)")); ?>
             <?php echo $form->error($profile, 'phone', array('class' => 'error2')); ?>
 
         </div>
@@ -3106,7 +3119,7 @@ if (!$users->isNewRecord && $profile->type_employee) {
                                             <label for=""><?php echo $label->label_phone1; ?></label>
                                            <!--  <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้"> 
                                                <label><?php echo $label->label_phone; ?></label>-->
-                                               <?php echo $form->textField($profile, 'phone1', array('class' => 'form-control', 'placeholder' => $label->label_phone1 ,'onkeyup'=>"isNumberchar(this.value,this)",'maxlength' => '13')); ?>
+                                               <?php echo $form->textField($profile, 'phone1', array('class' => 'form-control', 'placeholder' => $label->label_phone1 ,'onkeyup'=>"isNumberchar(this.value,this)")); ?>
                                                <?php echo $form->error($profile, 'phone1', array('class' => 'error2')); ?>
                                            </div>
                                        </div>
@@ -3376,7 +3389,7 @@ $('#accept').change(function(event) {
     $(".uploads_image").show();
     $('.form_name').show();
     $('.form_name_eng').show();
-   // $('.form_number_id').show();
+    $('.form_number_id').hide();
    $("#office-section").hide();
    $(".form_language").show();
    $("#office-section_gen").show();
@@ -3430,7 +3443,7 @@ $("#reject").change(function(event) {
     $(".uploads_image").show();
     $('.form_name').show();
     $('.form_name_eng').show();
-   // $('.form_number_id').show();
+    $('.form_number_id').hide();
    $("#office-section").show();
    $(".form_language").hide();
    $("#office-section_gen").hide();
@@ -3487,7 +3500,7 @@ $("#general").change(function(event) {
     $("#office-section").hide();
     $('.form_name').show();
     $('.form_name_eng').show();
-    $('.form_number_id').hide();
+    $('.form_number_id').show();
     $('.form_identification').show();
     $('.form_identification_5').hide();
     $('.form_passport').show();
@@ -3527,7 +3540,7 @@ $("#general").change(function(event) {
    $(".form_Qualification ").hide();
    $(".form_Training").hide();
 
-   $(".required_idline").show();
+   $(".required_idline").hide();
    $(".required_identification").show();
    $(".required_date_of_expiry").show();
 });
@@ -3765,7 +3778,7 @@ var new_forms = <?php echo $new_form; ?>;
                             $(".uploads_image").show();
                             $('.form_name').show();
                             $('.form_name_eng').show();
-                       // $('.form_number_id').show();
+                        $('.form_number_id').hide();
                        $("#office-section").hide();
                        $(".form_language").show();
                        $("#office-section_gen").show();
@@ -3819,7 +3832,7 @@ var new_forms = <?php echo $new_form; ?>;
                    $(".uploads_image").show();
                    $('.form_name').show();
                    $('.form_name_eng').show();
-                       // $('.form_number_id').show();
+                        $('.form_number_id').hide();
                        $("#office-section").show();
                        $("#office-section_gen").hide();
 
@@ -3875,7 +3888,8 @@ var new_forms = <?php echo $new_form; ?>;
                                             $("#office-section").hide();
                                             $('.form_name').show();
                                             $('.form_name_eng').show();
-                                            $('.form_number_id').hide();
+                                            $('.form_number_id').show();
+                                            
                                             $('.form_identification').show();
                                             $('.form_identification_5').hide();
                                             $('.form_passport').show();
@@ -3915,7 +3929,7 @@ var new_forms = <?php echo $new_form; ?>;
                                           $(".form_Qualification ").hide();
                                           $(".form_Training").hide();
 
-                                          $(".required_idline").show();
+                                          $(".required_idline").hide();
                                           $(".required_identification").show();
                                           $(".required_date_of_expiry").show();
 
@@ -4003,7 +4017,7 @@ var new_forms = <?php echo $new_form; ?>;
                        $(".uploads_image").show();
                        $('.form_name').show();
                        $('.form_name_eng').show();
-                           // $('.form_number_id').show();
+                           $('.form_number_id').hide();
                            $("#office-section").show();
                            $(".form_language").hide();
                            $("#office-section_gen").hide();
@@ -4068,7 +4082,7 @@ var new_forms = <?php echo $new_form; ?>;
                            $(".uploads_image").show();
                            $('.form_name').show();
                            $('.form_name_eng').show();
-                               // $('.form_number_id').show();
+                               $('.form_number_id').hide();
                                $("#office-section").hide();
                                $(".form_language").show();
                                $("#office-section_gen").show();
@@ -4114,6 +4128,14 @@ var new_forms = <?php echo $new_form; ?>;
                               $(".required_identification").hide();
                               $(".required_date_of_expiry").hide();
                           }else if(type_users === '5'){
+                            var type_card = $("input[name='type_card']:checked").val();
+                                if (type_card === 'l') {
+                                    $('.form_identification').show();
+                                    $('.form_passport').hide();
+                                }else if (type_card === 'p') {
+                                    $('.form_identification').hide();
+                                    $('.form_passport').show();
+                                }
                             $('.Branch').hide();
                             $(".uploads_image").hide();
                             $('.label_branch').hide();
@@ -4121,10 +4143,11 @@ var new_forms = <?php echo $new_form; ?>;
                             $("#office-section").hide();
                             $('.form_name').show();
                             $('.form_name_eng').show();
-                            $('.form_number_id').hide();
-                            $('.form_identification').show();
+                            $('.form_number_id').show();
+                            
+                            // $('.form_identification').show();
                             $('.form_identification_5').hide();
-                            $('.form_passport').show();
+                            // $('.form_passport').show();
                             $('.form_passport_5').hide();
                             $(".form_language").hide(); 
                             $("#office-section_gen").hide();
@@ -4161,7 +4184,7 @@ var new_forms = <?php echo $new_form; ?>;
                             $(".form_Qualification ").hide();
                             $(".form_Training").hide();
 
-                            $(".required_idline").show();
+                            $(".required_idline").hide();
                             $(".required_identification").show();
                             $(".required_date_of_expiry").show();
 
@@ -4170,15 +4193,15 @@ var new_forms = <?php echo $new_form; ?>;
                  // $("input[name='type_employee']").prop("checked", true);
 
 
-                //  $('#card-1').change(function(event) {
-                //     $('#passport_card').hide();
-                //     $('#identification_card').show();
-                // });
+                 $('#card-1').change(function(event) {
+                    $('.form_passport').hide();
+                    $('.form_identification').show();
+                });
 
-                //  $('#card-2').change(function(event) {
-                //     $('#passport_card').show();
-                //     $('#identification_card').hide();
-                // });
+                 $('#card-2').change(function(event) {
+                    $('.form_passport').show();
+                    $('.form_identification').hide();
+                });
 
                 $(".department").change(function() {
                     var id = $(".department").val();
