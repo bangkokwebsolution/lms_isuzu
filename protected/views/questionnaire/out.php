@@ -57,18 +57,17 @@
     }
 </style> -->
 
-<div class="header-page parallax-window">
+<!-- <div class="header-page parallax-window">
   <div class="container">
     <h1>
     <small class="pull-right">
     <ul class="list-inline list-unstyled">
-      <!-- <li><a href="<?php echo $this->createUrl('/site/index'); ?>"></a></li><strong style="font-weight: 700"> </strong> -->
       <li><span class="text-bc"></span></li>
     </ul>
     </small>
     </h1>
   </div>
-</div>
+</div> -->
 <div class="container">
 
     <div class="text-center bg-transparent margin-none">
@@ -185,9 +184,9 @@
 ?>
                         <div class="col-md-12 mtb-10">
                             <div class="mt-2-5">
-                            <table class="table table-bordered span10" border="1">
+                            <table class="table table-bordered span10 topic-question" border="1">
                                     <tr>
-                                        <th><strong><?php echo $questionValue->question_name; ?></strong></th>
+                                        <th class="question-left"><strong><?php echo $questionValue->question_name; ?></strong></th>
                                         <?php
                                         if($questionValue->question_range == "" || $questionValue->question_range == "5"){
                                             $range = "5";
@@ -208,11 +207,11 @@
                                 foreach ($questionValue->choices as $choiceKey => $choiceValue) {
                             ?>
                                     <tr>
-                                        <td <?php echo ($choiceKey%2==0)?'style="background-color:#d8d8d8"':''; ?>><?php echo $choiceValue->option_choice_name; ?><label for="choice[contentment][<?php echo $choiceValue->option_choice_id; ?>]" class="error"></label></td>
+                                        <td class="question-left" <?php echo ($choiceKey%2==0)?'style="background-color:#ececec"':''; ?>><?php echo $choiceValue->option_choice_name; ?><label for="choice[contentment][<?php echo $choiceValue->option_choice_id; ?>]" class="error"></label></td>
                                         <?php
                                         for($i=$range;$i>=1;$i--){
                                         ?>
-                                        <td class="text-center" <?php echo ($choiceKey%2==0)?'style="background-color:#d8d8d8"':''; ?> ><input style="margin:0px;" type="radio" name="choice[contentment][<?php echo $choiceValue->option_choice_id; ?>]" value="<?php echo $i; ?>" data-rule-required="true" data-msg-required="กรุณาเลือกคำตอบ"></td>
+                                        <td class="text-center" <?php echo ($choiceKey%2==0)?'style="background-color:#ececec"':''; ?> ><input style="margin:0px;" type="radio" name="choice[contentment][<?php echo $choiceValue->option_choice_id; ?>]" value="<?php echo $i; ?>" data-rule-required="true" data-msg-required="กรุณาเลือกคำตอบ"></td>
                                         <?php
                                         }
                                         ?>

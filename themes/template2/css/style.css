@@ -1006,6 +1006,9 @@ h4.text22 {
   min-height: 500px;
 }
 
+#content{
+  padding-bottom: 60px;
+}
 .modal {
   z-index: 9999999;
 }
@@ -4136,6 +4139,10 @@ ol.stat-alert li::before {
   right: 0;
   top: 0;
   z-index: 99;
+}
+
+.question-left{
+  text-align: left !important;
 }
 
 @keyframes smoothScroll {
