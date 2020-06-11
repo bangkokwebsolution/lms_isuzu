@@ -17,7 +17,7 @@ class AccessControl extends CApplicationComponent
         }
         if(Yii::app()->user->id)
         {
-            $return = false;
+            // $return = false;
             $model = User::model()->findByPk(Yii::app()->user->id);
 
             if(!empty($model)){
