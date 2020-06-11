@@ -181,16 +181,19 @@ class ImgslideController extends Controller
 		$model = $this->loadModel($id);
 		$model->active = 'n';
 
-        // if($model->imgslide_picture != '')
-        // 	Yii::app()->getDeleteImageYush('Imgslide',$model->id,$model->imgslide_picture);
-
-        // $model->imgslide_picture = null;
+          $parent = Imgslide::model()->find(array(
+                    'condition' => 'lang_id=:lang_id AND parent_id=:parent_id',
+                    'params' => array(':lang_id' => 2,':parent_id'=>$id)
+                    ));
+          $parent->active = 'n';
+         
 		$model->save();
+		$parent->save();
 		if(Yii::app()->user->id){
 			Helpers::lib()->getControllerActionId();
 		}
 		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+		 	$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
 	}
 
 	public function actionMultiDelete()

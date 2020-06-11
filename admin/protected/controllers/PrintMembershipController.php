@@ -18,7 +18,7 @@ class PrintMembershipController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index'),
+                'actions' => array('index','approve'),
                 'users' => array('*'),
             ),
             array('allow',
