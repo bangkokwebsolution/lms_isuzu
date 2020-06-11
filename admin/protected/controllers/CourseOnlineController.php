@@ -414,9 +414,9 @@ class CourseOnlineController extends Controller
 			$model->course_date_end = date_format(date_create($model->course_date_end), "Y-m-d H:i");*/
 
 			//day Count
-			$diff = strtotime($_POST['CourseOnline']['course_date_end']) - strtotime($_POST['CourseOnline']['course_date_start']);
-			$days = $diff / 60 / 60 / 24;
-			$model->course_day_learn = $days;
+			// $diff = strtotime($_POST['CourseOnline']['course_date_end']) - strtotime($_POST['CourseOnline']['course_date_start']);
+			// $days = $diff / 60 / 60 / 24;
+			// $model->course_day_learn = $days;
 
 			if($model->update())
 			{
