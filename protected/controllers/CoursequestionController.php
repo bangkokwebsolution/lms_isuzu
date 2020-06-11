@@ -508,12 +508,13 @@ class CoursequestionController extends Controller
                                     }else if($value->quest->ques_type==3){   //textarea
                                         $countAllCoursequestion += $value->quest->max_score;
                                         $coursequestion = CourseQuestion::model()->findByPk($value->ques_id);
-                                        
+
                                         $result = 0;
                                             // Save Logchoice
                                         $modelCourselogchoice = new Courselogchoice;
                                             $modelCourselogchoice->course_id = $id; // $_GET ID
                                             $modelCourselogchoice->logchoice_select = 1;
+                                            $modelCourselogchoice->gen_id = $gen_id;
                                             $modelCourselogchoice->score_id = $modelCoursescore->score_id;
                                             $modelCourselogchoice->choice_id =  '0';
                                             $modelCourselogchoice->ques_id = $coursequestion->ques_id;
@@ -530,6 +531,7 @@ class CoursequestionController extends Controller
                                         $modelCourselogques->course_id = $id; // $_GET ID
                                         $modelCourselogques->score_id = $modelCoursescore->score_id;
                                         $modelCourselogques->ques_id = $value->ques_id;
+                                        $modelCourselogques->gen_id = $gen_id;
                                         $modelCourselogques->user_id = Yii::app()->user->id;
                                         $modelCourselogques->test_type = $testType;
                                         $modelCourselogques->ques_type = $coursequestion->ques_type;

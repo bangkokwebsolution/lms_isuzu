@@ -495,6 +495,7 @@ class QuestionController extends Controller
                                     $modelCourselogchoice = new Logchoice;
                                             $modelCourselogchoice->lesson_id = $id; // $_POST ID
                                             $modelCourselogchoice->logchoice_select = 1;
+                                            $modelCourselogchoice->gen_id = $gen_id;
                                             $modelCourselogchoice->score_id = $modelCoursescore->score_id;
                                             $modelCourselogchoice->choice_id = '0';
                                             $modelCourselogchoice->ques_id = $coursequestion->ques_id;
@@ -507,6 +508,7 @@ class QuestionController extends Controller
                                         // Save Logques
                                             $modelCourselogques = new Logques;
                                         $modelCourselogques->lesson_id = $id; // $_POST ID
+                                        $modelCourselogques->gen_id = $gen_id;
                                         $modelCourselogques->score_id = $modelCoursescore->score_id;
                                         $modelCourselogques->ques_id = $value->ques_id;
                                         $modelCourselogques->user_id = Yii::app()->user->id;
