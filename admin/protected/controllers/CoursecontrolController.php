@@ -124,7 +124,9 @@ class CoursecontrolController extends Controller
 		$chk_orgcourse = array();
 		if($OrgCourse){
 			foreach ($OrgCourse as $key => $value) {
-				$chk_orgcourse[] = $value->course_id;
+				if(!in_array($value->course_id, $chk_orgcourse)){
+					$chk_orgcourse[] = $value->course_id;
+				}
 			}
 
 		}

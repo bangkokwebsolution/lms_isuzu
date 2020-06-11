@@ -62,13 +62,18 @@ class OrgCourse extends CActiveRecord
 
 	public static function getChilds($parent) {
 		$data = array();
+		$course_id_arr = array();
 
 		$OrgCourse = OrgCourse::model()->findAll('parent_id = '.$parent.' AND orgchart_id ='.$_GET['id']);
+
 		foreach($OrgCourse as $model) {
-			$row['text'] = $model->courses->course_title;
-			$row['data'] = $model->id;
-			$row['children'] = OrgCourse::getChilds($model->id);
-			$data[] = $row;
+			if(!in_array($model->course_id, $course_id_arr)){
+				$row['text'] = $model->courses->course_title;
+				$row['data'] = $model->id;
+				$row['children'] = OrgCourse::getChilds($model->id);
+				$data[] = $row;
+				$course_id_arr[] = $model->course_id;
+			}
 		}
 		return $data;
 	}
