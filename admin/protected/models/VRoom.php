@@ -39,7 +39,7 @@ class VRoom extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('name, attendeePw, moderatorPw, name_EN, pic_vroom', 'length', 'max'=>255),
-			array('name_EN', 'match', 'pattern' => '/^[A-Za-z_0-9]+$/u','message' => UserModule::t("Variable name may consist of A-z, 0-9, underscores, begin with a letter.")),
+			//array('name_EN', 'match', 'pattern' => '/^[A-Za-z_0-9]+$/u','message' => UserModule::t("Variable name may consist of A-z, 0-9, underscores, begin with a letter.")),
 			array('name, welcomeMsg , start_learn_room , end_learn_room, status_key,name_EN', 'safe'),
 			array('number_learn', 'numerical', 'integerOnly'=>true),
 			// array('name,start_learn_room , end_learn_room', 'required'),

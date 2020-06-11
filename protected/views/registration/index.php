@@ -268,20 +268,20 @@ function upload()
 //     if (type_cards === 'l') {
 
 //        if ($('.idcard').val() == "" ) {
-//         var idcard = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your ID number! ':'กรุณากรอกเลขบัตรประชาชน!'; ?>";
+//         var idcard = "<?php //echo Yii::app()->session['lang'] == 1?'Please enter your ID number! ':'กรุณากรอกเลขบัตรประชาชน!'; ?>";
 //         swal(alert_message,idcard)
 //         return false; 
 //     }
 // }else if (type_cards === 'p'){
 
 //    if ($('.passport').val() == "" ) {
-//     var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
+//     var passport = "<?php //echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
 //     swal(alert_message,passport)
 //     return false; 
 // }
 // }else if(typeof  type_cards === 'undefined' || typeof  type_cards === null){
 
-//     var card = "<?php echo Yii::app()->session['lang'] == 1?'Please choose to check your ID card or passport! ':'กรุณาเลือกเช็คบัตรประชาชนหรือพาสปอร์ต!'; ?>";
+//     var card = "<?php //echo Yii::app()->session['lang'] == 1?'Please choose to check your ID card or passport! ':'กรุณาเลือกเช็คบัตรประชาชนหรือพาสปอร์ต!'; ?>";
 //     swal(alert_message,card)
 //     return false;
 // }
@@ -334,11 +334,7 @@ if ($('.email').val() == "") {
     //         return false; 
     // }
 
-    if ($('.passport').val() == "" ) {
-        var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
-        swal(alert_message,passport)
-        return false; 
-    } 
+
 
     var type_users = $("input[name='type_user']:checked").val();
 
@@ -355,6 +351,11 @@ if ($('.email').val() == "") {
         //     swal(alert_message,Profile_date_of_expiry)
         //     return false; 
         // }
+        if ($('.passport').val() == "" ) {
+            var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
+            swal(alert_message,passport)
+            return false; 
+        } 
 
         if ($('#Profile_pass_expire').val() == "" ) {
             var Profile_pass_expire = "<?php echo Yii::app()->session['lang'] == 1?'Please select a passport expiration date! ':'กรุณาเลือกวันหมดอายุหนังสือเดินทาง!'; ?>";
@@ -614,6 +615,11 @@ if ($('.email').val() == "") {
         //     swal(alert_message,Profile_date_of_expiry)
         //     return false; 
         // }
+        if ($('.passport').val() == "" ) {
+            var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
+            swal(alert_message,passport)
+            return false; 
+        } 
 
         if ($('#Profile_pass_expire').val() == "" ) {
             var Profile_pass_expire = "<?php echo Yii::app()->session['lang'] == 1?'Please select a passport expiration date! ':'กรุณาเลือกวันหมดอายุหนังสือเดินทาง!'; ?>";
@@ -801,6 +807,7 @@ if ($('.email').val() == "") {
         if (typeof  type_card === 'undefined' || typeof  type_card === null) {
             var type_card_choose = "<?php echo Yii::app()->session['lang'] == 1?'Please choose a check. Choose your ID number or passport! ':'กรุณาเลือกเช็คเลือกเลขบัตรประชาชนหรือหนังสือเดินทาง!'; ?>";
             swal(alert_message,type_card_choose)
+            return false; 
         }else if(type_card === 'l'){
 
                 if ($('.idcard').val() == "" ) {
