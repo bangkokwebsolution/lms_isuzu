@@ -190,7 +190,7 @@ $path_theme = Yii::app()->theme->baseUrl . '/';
                                                             <div class="form-group">
                                                                 <div class="panel panel-default">
                                                                     <div class="panel-body question-box">
-                                                                        <span> <?php echo "5 = มากที่สุด, 4 = มาก, 3 = ปานกลาง, 2 = น้อย, 1 =  น้อยที่สุด"; ?></span>
+                                                                        <span> <?php //echo "5 = มากที่สุด, 4 = มาก, 3 = ปานกลาง, 2 = น้อย, 1 =  น้อยที่สุด"; ?></span>
 
                                                                         <!-- <div class="table-responsive"> -->
                                                                             <table style="background-color:white" class="table table-bordered question-table" >

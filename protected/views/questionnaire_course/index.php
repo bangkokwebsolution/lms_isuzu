@@ -46,7 +46,7 @@ if (isset($questionnaire->q_header)) {
                         <!-- Classic Heading -->
                         <h4 class="classic-title"><span><?php echo $header->survey_name; ?></span></h4>
                         <?php echo CHtml::decode($header->instructions); ?>
-                        <?php echo "5 = มากที่สุด, 4 = มาก, 3 = ปานกลาง, 2 = น้อย, 1 =  น้อยที่สุด"; ?>
+                        <?php //echo "5 = มากที่สุด, 4 = มาก, 3 = ปานกลาง, 2 = น้อย, 1 =  น้อยที่สุด"; ?>
 
                         <hr>
 

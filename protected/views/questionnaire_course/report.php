@@ -133,7 +133,7 @@
                                                 <?php
                                                     echo CHtml::decode($header->instructions);
                                                 ?>
-                                                <span style="margin-left:90px;"><?php echo "5 = มากที่สุด, 4 = มาก, 3 = ปานกลาง, 2 = น้อย, 1 =  น้อยที่สุด"; ?></span>
+                                                <span style="margin-left:90px;"><?php //echo "5 = มากที่สุด, 4 = มาก, 3 = ปานกลาง, 2 = น้อย, 1 =  น้อยที่สุด"; ?></span>
                                             </div>
                                         </div>
                                     </div>
