@@ -229,7 +229,6 @@ Class MenuLeft extends Controller
 				/*====== Check Permissions About (2) ======*/
 				'visible'=>self::PermissionsMenu(array(
 					'About.*',
-					'About.Create',
 					'About.index'
 				)),
 				'label'=>'<i></i><span>เกี่ยวกับเรา</span>',
@@ -721,7 +720,7 @@ Class MenuLeft extends Controller
 						
 						'visible'=>self::PermissionsMenu(array(
 							'CheckLecture.*',
-							// 'CheckLecture.update'
+							'CheckLecture.index'
 						)),
 						'label'=>'ตรวจข้อสอบบรรยายบทเรียน',
 						'url'=>array('//CheckLecture/index')
@@ -755,7 +754,7 @@ Class MenuLeft extends Controller
 	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Certificate.*',
-	        				'Certificate.update'
+	        				'Certificate.index'
 	        			)),
 	        			'label'=>'จัดการประกาศนียบัตร',
 	        			'url'=>array('//Certificate/index')
@@ -764,7 +763,7 @@ Class MenuLeft extends Controller
 	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Signature.*',
-	        				'Signature.update'
+	        				'Signature.index'
 	        			)),
 	        			'label'=>'จัดการลายเซนต์',
 	        			'url'=>array('//Signature/index')
@@ -956,7 +955,7 @@ Class MenuLeft extends Controller
 	        			/*====== Check Permissions FAQ (1) ======*/
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Faq.*',
-	        				'Faq.Create'
+	        				'Faq.index'
 	        			)),
 	        			'label'=>'คำถามที่พบบ่อย',
 	        			'url'=>array('//Faq/index')

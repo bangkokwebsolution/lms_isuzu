@@ -371,7 +371,7 @@ $cancel_msg = UserModule::t('Cancel');
 
                   <div class="box-note">
                     <button class="h-course-title-main" type="button" data-toggle="collapse" data-target="#course-video" aria-expanded="false" aria-controls="course-video">
-                        <i class="fas fa-list"></i>รายการวิดีโอ 
+                        <i class="fas fa-list"></i>รายการ
                         <span class="pull-right"><i class="fas fa-angle-up"></i></span>
                     </button>
                     <div class="collapse" id="course-video">
@@ -391,6 +391,9 @@ $cancel_msg = UserModule::t('Cancel');
                                   'params'=>array(':lesson_id'=>$lessonListValue->id,':user_id'=>Yii::app()->user->id,':status'=>'y', ':gen_id'=>$gen_id)
                                 ));
                                 if($lessonListValue->type == 'vdo'){ 
+                                  ?>
+                                  <script type="text/javascript">$(function () { openNav(); });</script>
+                                  <?php
                                   foreach ($lessonListValue->files as $les) {
                                    if($learnModel->lesson_status == 'pass'){
                                     $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
