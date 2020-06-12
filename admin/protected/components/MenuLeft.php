@@ -705,7 +705,7 @@ Class MenuLeft extends Controller
                )
             ),
             array(
-				/*====== Check Permissions Passcours (1) ======*/
+				
 				'visible'=>self::PermissionsMenu(array(
 					'CheckLecture.*',
 					// 'CheckLecture.update',
@@ -718,7 +718,7 @@ Class MenuLeft extends Controller
 				'active' => self::SetSubMenu( array('CheckLecture') ,false),
 				'items'=>array(
 					array(
-						/*====== Check Permissions Sup-Passcours (1) ======*/
+						
 						'visible'=>self::PermissionsMenu(array(
 							'CheckLecture.*',
 							// 'CheckLecture.update'
@@ -727,7 +727,7 @@ Class MenuLeft extends Controller
 						'url'=>array('//CheckLecture/index')
 					),
 					array(
-						/*====== Check Permissions Sup-Passcours (1) ======*/
+						
 						'visible'=>self::PermissionsMenu(array(
 							'Signature.*',
 							'Signature.update'
@@ -739,7 +739,7 @@ Class MenuLeft extends Controller
 				)
 			),
              array(
-	        	/*====== Check Permissions Passcours (1) ======*/
+	        	
 	        	'visible'=>self::PermissionsMenu(array(
 	        		'Certificate.*',
 	        		'Certificate.update',
@@ -752,7 +752,7 @@ Class MenuLeft extends Controller
 	        	'active' => self::SetSubMenu( array('Certificate', 'Signature') ,false),
 	        	'items'=>array(
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Certificate.*',
 	        				'Certificate.update'
@@ -761,7 +761,7 @@ Class MenuLeft extends Controller
 	        			'url'=>array('//Certificate/index')
 	        		),
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Signature.*',
 	        				'Signature.update'
@@ -772,7 +772,7 @@ Class MenuLeft extends Controller
 	        	)
 	        ),
 			 array(
-	        	/*====== Check Permissions Passcours (1) ======*/
+	        	
 	        	'visible'=>self::PermissionsMenu(array(
 	        		'Captcha.*',
 	        	)),
@@ -785,7 +785,7 @@ Class MenuLeft extends Controller
 	        	'items'=>array(
 					//set new menu
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Captcha.*',
 	        			)),
@@ -1244,7 +1244,7 @@ Class MenuLeft extends Controller
 	        			'url'=>array('//user/admin/access')
 	        		),
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'admin.*',
 	        				'admin.Status',
@@ -1678,10 +1678,9 @@ Class MenuLeft extends Controller
 	        	)
 	        ),
 	         array(
-	        	/*====== Check Permissions Passcours (1) ======*/
+	        	
 	        	'visible'=>self::PermissionsMenu(array(
 	        		'Passcours.*',
-	        		'Passcours.update',
 	        	)),
 	        	'label'=>'<i></i><span>ระบบพิมพ์ใบประกาศนียบัตร</span>',
 	        	'url'=>'#Passcours',
@@ -1691,17 +1690,19 @@ Class MenuLeft extends Controller
 	        	'active' => self::SetSubMenu( array('Passcours') ,false),
 	        	'items'=>array(
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Passcours.*',
+	        				'Passcours.index',
 	        			)),
 	        			'label'=>'รายงานผู้ผ่านการเรียน',
 	        			'url'=>array('//Passcours/index')
 	        		),
 	        	    array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Passcours.*',
+	        				'Passcours.PasscoursLog',
 	        			)),
 	        			'label'=>'รายงานสถิติจำนวนผู้พิมพ์ใบประกาศฯ',
 	        			'url'=>array('//Passcours/PasscoursLog')
@@ -1711,7 +1712,7 @@ Class MenuLeft extends Controller
 	        ),
             //====== END Menu FormSurveyGroup ======//
 	        array(
-	        	/*====== Check Permissions Passcours (1) ======*/
+	        	
 	        	'visible'=>self::PermissionsMenu(array(
 	        		'Report.*',
 	        	)),
@@ -1723,7 +1724,7 @@ Class MenuLeft extends Controller
 	        	'active' => self::SetSubMenu( array('ReportFollow') ,false),
 	        	'items'=>array(
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Report.*',
 	        			)),
@@ -1731,7 +1732,7 @@ Class MenuLeft extends Controller
 	        			'url'=>array('//Report/Status')
 	        		),
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Report.*',
 	        			)),
@@ -1739,7 +1740,7 @@ Class MenuLeft extends Controller
 	        			'url'=>array('//Report/ByCourse')
 	        		),
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Report.*',
 	        			)),
@@ -1747,7 +1748,7 @@ Class MenuLeft extends Controller
 	        			'url'=>array('//Report/ByLesson')
 	        		),
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Report.*',
 	        			)),
@@ -1755,7 +1756,7 @@ Class MenuLeft extends Controller
 	        			'url'=>array('//Report/ByUser')
 	        		),
 	        		// array(
-	        		// 	/*====== Check Permissions Sup-Passcours (1) ======*/
+	        		// 	
 	        		// 	'visible'=>self::PermissionsMenu(array(
 	        		// 		'Report.*',
 	        		// 	)),
@@ -1766,10 +1767,9 @@ Class MenuLeft extends Controller
 
 	        	)
 	        ),
-			//====== END Menu Passcours ======//
 
 	        array(
-	        	/*====== Check Permissions Passcours (1) ======*/
+	        	
 	        	'visible'=>self::PermissionsMenu(array(
 	        		'Report.*'
 	        	)),
@@ -1782,7 +1782,7 @@ Class MenuLeft extends Controller
 	        	'items'=>array(
 					//set new menu
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Report.*',
 	        			)),
@@ -1790,7 +1790,7 @@ Class MenuLeft extends Controller
 	        			'url'=>array('//Report/AttendPrint')
 	        		),
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'admin.*',
 	        			)),
@@ -1798,7 +1798,7 @@ Class MenuLeft extends Controller
 						//'url'=>array('//PassCpd/index')
 	        			'url'=>array('//user/admin/Status')
 	        		),array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Report.*',
 	        			)),
@@ -1806,7 +1806,7 @@ Class MenuLeft extends Controller
 	        			'url'=>array('//Report/BeforAndAfter')
 	        		),
 	        		// array(
-	        		// 	/*====== Check Permissions Sup-Passcours (1) ======*/
+	        		// 	
 	        		// 	'visible'=>self::PermissionsMenu(array(
 	        		// 		'Passcours.*',
 	        		// 	)),
@@ -1814,7 +1814,7 @@ Class MenuLeft extends Controller
 	        		// 	'url'=>array('//Passcours/index')
 	        		// ),
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Passcours.*',
 	        			)),
@@ -1822,7 +1822,7 @@ Class MenuLeft extends Controller
 	        			'url'=>array('//Passcours/PasscoursLog')
 	        		),
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Questionnaire.*',
 	        			)),
@@ -1830,7 +1830,7 @@ Class MenuLeft extends Controller
 	        			'url'=>array('//Questionnaire/Report_list')
 	        		),
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Report.*',
 	        			)),
@@ -1855,7 +1855,7 @@ Class MenuLeft extends Controller
 	       
 
 	        // array(
-	        // 	/*====== Check Permissions Passcours (1) ======*/
+	        // 	
 	        // 	'visible'=>self::PermissionsMenu(array(
 	        // 		'Captcha.*',
 	        // 		'Captcha.update',
@@ -1868,7 +1868,7 @@ Class MenuLeft extends Controller
 	        // 	'active' => self::SetSubMenu( array('Captcha') ,false),
 	        // 	'items'=>array(
 	        // 		array(
-	        // 			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        // 			
 	        // 			'visible'=>self::PermissionsMenu(array(
 	        // 				'Captcha.*',
 	        // 				'Captcha.update'
@@ -1997,7 +1997,7 @@ Class MenuLeft extends Controller
 	        ),
 
 	        array(
-	        	/*====== Check Permissions Passcours (1) ======*/
+	        	
 	        	'visible'=>self::PermissionsMenu(array(
 	        		'LogAdmin.*',
 	        		// 'LogAdmin.update',
@@ -2010,7 +2010,7 @@ Class MenuLeft extends Controller
 	        	'active' => self::SetSubMenu( array('LogAdmin') ,false),
 	        	'items'=>array(
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'LogAdmin.*',
 	        				'LogAdmin.users'
@@ -2019,7 +2019,7 @@ Class MenuLeft extends Controller
 	        			'url'=>array('//logAdmin/users')
 	        		),
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'LogAdmin.*',
 	        				'LogAdmin.index'
@@ -2028,7 +2028,7 @@ Class MenuLeft extends Controller
 	        			'url'=>array('//logAdmin/index')
 	        		),
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'LogAdmin.*',
 	        				'LogAdmin.approve'
@@ -2037,7 +2037,7 @@ Class MenuLeft extends Controller
 	        			'url'=>array('//logAdmin/approve')
 	        		),
 	        		array(
-	        			/*====== Check Permissions Sup-Passcours (1) ======*/
+	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'LogAdmin.*',
 	        				'LogAdmin.register'
@@ -2046,7 +2046,7 @@ Class MenuLeft extends Controller
 	        			'url'=>array('//logAdmin/register')
 	        		),
 	        		// array(
-	        		// 	/*====== Check Permissions Sup-Passcours (1) ======*/
+	        		// 	
 	        		// 	'visible'=>self::PermissionsMenu(array(
 	        		// 		'LogAdmin.*',
 	        		// 		'LogAdmin.api'
