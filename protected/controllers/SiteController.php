@@ -71,7 +71,7 @@ class SiteController extends Controller
         }
         $CourseDatePass = null;
         //Pass Course Date
-        $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId.' AND gen_id='.$gen_id));
+        $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId.' AND gen_id='.$gen_id."passcours_cours='".$PassCoursId."'"));
         $CourseDatePass = $CourseDatePassModel->passcours_date;
         $CoursePassedModel = Passcours::model()->find(array(
             'condition' => 'passcours_user = ' . $UserId . ' AND passcours_cours = ' . $PassCoursId .' AND gen_id='.$gen_id

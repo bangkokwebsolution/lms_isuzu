@@ -181,7 +181,7 @@ class PasscoursController extends Controller
             'order' => 'create_date ASC'
         ));
         //Pass Course Date
-        $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId.' AND gen_id="'.$gen_id.'"'));
+        $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId.' AND gen_id="'.$gen_id.'" AND passcours_cours="'.$PassCoursId.'"'));
         $CourseDatePass = $CourseDatePassModel->passcours_date;
 
 

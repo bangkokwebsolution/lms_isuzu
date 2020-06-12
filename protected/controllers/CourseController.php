@@ -1559,7 +1559,7 @@ public function actionDetail($id) {
         //get date passed final test **future change
         $CourseDatePass = null;
         //Pass Course Date
-        $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId.' AND gen_id='.$gen_id));
+        $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId.' AND gen_id='.$gen_id." AND passcours_cours='".$PassCoursId."'"));
         $CourseDatePass = $CourseDatePassModel->passcours_date;
 
         // $CoursePassedModel = Coursescore::model()->find(array(
