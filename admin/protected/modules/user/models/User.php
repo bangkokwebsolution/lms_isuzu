@@ -70,7 +70,7 @@ class User extends CActiveRecord
 		return ((get_class(Yii::app())=='CConsoleApplication' || (get_class(Yii::app())!='CConsoleApplication' && Yii::app()->getModule('user')->isAdmin()))?array(
 			// array('username', 'length', 'max'=>13, 'min' => 13,'message' => 'กรอกเลข E-mail เท่านั้น'),
 			array('password', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
-			array('email', 'email'),
+			// array('email', 'email'),
 			//array('email', 'email','on' => 'test'),
 			array('auditor_id', 'length', 'max'=>5, 'min' => 5,'message' => 'กรุณาป้อนเลขผู้สอบ 5 หลัก'),
 			// array('username', 'unique', 'message' => UserModule::t("This user's name already exists.")),
@@ -82,7 +82,7 @@ class User extends CActiveRecord
             array('lastvisit_at', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
 			// array('username, email, superuser, status,password,company_id,division_id,department_id,position_id,position_name', 'required'),
 			// array('username, email, superuser, status,password', 'required'),
-			array(' email, superuser, status', 'required'),
+			array('superuser, status', 'required'),
 			// array('identification', 'required','on' => 'general'),
 			
 			array('password', 'required', 'on' => 'reset_password'),
@@ -96,11 +96,11 @@ class User extends CActiveRecord
 			array('username','checkEmail'),
 		):((Yii::app()->user->id==$this->id)?array(
 			// array('username, email,password,verifyPassword,company_id,division_id,department_id,position_id,position_name', 'required'),
-			array('username, email,password', 'required'),
+			array('username,password', 'required'),
 			array('username,note,not_passed', 'length', 'max'=>255),
 			array('superuser, status, online_status,online_user,register_status', 'numerical', 'integerOnly'=>true),
 			// array('username', 'length', 'max'=>13, 'min' => 13,'message' => 'กรอกเลขบัตรประชาชน 13 หลักเท่านั้น'),
-			array('email', 'email'),
+			// array('email', 'email'),
 			// array('email', 'email','on' => 'test'),
 			array('auditor_id', 'length', 'max'=>5, 'min' => 5,'message' => 'กรุณาป้อนเลขผู้สอบ 5 หลัก'),
 			// array('username', 'unique', 'message' => UserModule::t("This user's name already exists.")),

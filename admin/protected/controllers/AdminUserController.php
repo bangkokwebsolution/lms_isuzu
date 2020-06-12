@@ -403,9 +403,9 @@ echo ($data);
 	            $model->department_id = $_POST['User']['department_id'];
 	            $model->group = $PGoup;
 
-				// $model->username = $_POST['User']['username'];
+				$model->username = $_POST['User']['username'];
 	            $model->email = $_POST['User']['email']; //**
-	           	$model->username = $model->email;
+	           	// $model->username = $model->email;
 	            $model->identification = $_POST['Profile']['identification'];
 	            $profile->identification = $_POST['Profile']['identification']; //**
 
@@ -415,12 +415,12 @@ echo ($data);
 
 	            // $member['count']  = 1;
 	            // $member[0]['samaccountname'][0] = 'taaonprem03';
-	            if($member['count'] > 0){
-	            	$model->username = $member[0]['samaccountname'][0];
-	            }else{ //บุคคลภายนอก
-	            	 $model->username = $model->email;
-	            	 $model->scenario = 'general';
-	            }
+	            // if($member['count'] > 0){
+	            // 	$model->username = $member[0]['samaccountname'][0];
+	            // }else{ //บุคคลภายนอก
+	            // 	 $model->username = $model->email;
+	            // 	 $model->scenario = 'general';
+	            // }
 	            if(!empty($_POST['User']['newpassword'])){
 		            $model->password = $_POST['User']['newpassword'];
 		            $model->verifyPassword = $_POST['User']['confirmpass'];

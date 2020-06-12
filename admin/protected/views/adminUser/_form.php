@@ -193,13 +193,17 @@ date_default_timezone_set("Asia/Bangkok");
                                         <?php echo $form->error($model, 'username'); ?>
                                     </div>
                                      <div class="form-group">
-                                        <label><?php echo $form->labelEx($model, 'email'); ?></label>
+                                        <label>
+                                            <label><label for="User_email" class="required">อีเมล</label></label>
+                                        </label>
                                         <?php echo $form->textField($model, 'email', array('class' => 'form-control', 'placeholder' => 'อีเมลล์')); ?>
                                         <?php echo $form->error($model, 'email'); ?>
                                     </div>
 
                                     <div class="form-group">
-                                        <label><?php echo $form->labelEx($profile, 'identification'); ?></label>
+                                        <label>
+                                            <label><label for="Profile_identification" class="required">รหัสบัตรประชาชน</label></label>
+                                        </label>
                                         <?php echo $form->textField($profile, 'identification', array('class' => 'form-control','placeholder' => 'รหัสบัตรประชาชน','oninput' => 'fillfield(this.value)')); ?>
                                         <?php echo $form->error($profile, 'identification'); ?>
                                     </div>
