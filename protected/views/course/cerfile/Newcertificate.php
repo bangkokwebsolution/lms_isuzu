@@ -46,7 +46,7 @@
     <div style="position:absolute; top: 117mm;">
        <div class="b size40 red"><?= $model['courseTitle_en'] ?></div>
    </div>
-   <div style="position:absolute; top:  138.5mm; left:30mm;">
+   <div style="position:absolute; top: 138.5mm; left:30mm;">
        <div class="size16"><?php echo $model['format_date_pass']; ?></div>
    </div> 
    <div style="position:absolute; top: 170mm;">

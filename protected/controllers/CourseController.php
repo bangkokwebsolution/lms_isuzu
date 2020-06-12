@@ -1688,8 +1688,8 @@ public function actionDetail($id) {
 
         $year_pass = date("y", strtotime($CourseDatePass));
 
-        $format_date_pass = date('jS F Y', strtotime($CourseDatePass));
-        $format_date_pass2 = date('d M Y', strtotime($CourseDatePass));
+        $format_date_pass = date('jS F Y', strtotime($lastPasscourse));
+        $format_date_pass2 = date('d M Y', strtotime($lastPasscourse));
 
 
         if ($model) {
