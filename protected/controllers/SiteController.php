@@ -31,12 +31,7 @@ class SiteController extends Controller
 	 * when an action is not explicitly requested by users.
 	 */
 
-	// public function actionQRCode() {		
- //        Yii::import('ext.qrcode.QRCode');
- //        $code=new QRCode("thorconn.com/site/ShowCer?user=&course=&gen=");
- //        // $code->create();
- //        $code->create('uploads/qrcode_cer/file.png');
- //    }
+
 
     public function actionShowCer() {		
         $user_id = base64_decode($_GET['user']);
@@ -155,8 +150,8 @@ class SiteController extends Controller
 
         $year_pass = date("y", strtotime($CourseDatePass));
 
-        $format_date_pass = date('jS F Y', strtotime($CourseDatePass));
-        $format_date_pass2 = date('d M Y', strtotime($CourseDatePass));
+        $format_date_pass = date('jS F Y', strtotime($lastPasscourse));
+        $format_date_pass2 = date('d M Y', strtotime($lastPasscourse));
 
         if ($model) {
             $fulltitle = $currentUser->profile->ProfilesTitle->prof_title ."". $currentUser->profile->firstname . " " . $currentUser->profile->lastname;
