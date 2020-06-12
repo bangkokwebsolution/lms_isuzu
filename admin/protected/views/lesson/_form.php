@@ -506,7 +506,8 @@ body {
 
             <div class="audio_upload">
                     <div class="row">
-                        <?php echo $form->labelEx($fileAudio,'filename'); ?>
+                        <label>ไฟล์ประกอบบทเรียน (mp3)</label>
+                        <?php //echo $form->labelEx($fileAudio,'filename'); ?>
                         <div id="audioqueue"></div>
                         <?php echo $form->fileField($fileAudio,'filename',array('id'=>'audio','multiple'=>'true')); ?>
                         <!-- <input id="file_upload" name="file_upload" type="file" multiple="true" > -->
@@ -602,7 +603,8 @@ body {
 
             <div class="pdf_upload">
                 <div class="row">
-                    <?php echo $form->labelEx($filePdf,'pdf'); ?>
+                    <?php //echo $form->labelEx($filePdf,'pdf'); ?>
+                    <label>ไฟล์ประกอบบทเรียน (pdf)</label>
                     <div id="pdfqueue"></div>
                     <?php echo $form->fileField($filePdf,'pdf',array('id'=>'pdf','multiple'=>'true')); ?>
                     <!-- <input id="file_upload" name="file_upload" type="file" multiple="true" > -->
