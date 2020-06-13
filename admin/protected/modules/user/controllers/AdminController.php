@@ -1307,56 +1307,61 @@ echo ($data);
     //             $position->create_date = date("Y-m-d H:i:s");
 				// if(!empty($_POST['User']['department_id']) && !empty($_POST['User']['position_name']))$position->save();
     //         }
-            $model->type_register = 2;
-            
+            $model->type_register = 1;
+          
 			// $model->position_name = $_POST['User']['position_name'];
             // $model->position_id = $position->id;
 			// $model->division_id = $_POST['User']['division_id'];
 			// $model->company_id = $_POST['User']['company_id'];
 			$model->username = $_POST['User']['username'];
-			
+			$model->create_at = date('Y-m-d H:i:s');
 			// $model->identification = $_POST['User']['identification'];
 			// $model->passport = $_POST['User']['passport'];
 			// $model->password = $_POST['User']['password'];
 			// $model->verifyPassword = $_POST['User']['verifyPassword'];
 
-			$member = Helpers::lib()->ldapTms($model->email);
+			//$member = Helpers::lib()->ldapTms($model->email);
 
 			////Test
 			// $member['count'] = 0;
-			if($member['count'] > 0){ //TMS
-				$model->type_register = 3;
-				Helpers::lib()->_insertLdap($member);
-				$modelStation = Station::model()->findByAttributes(array('station_title'=>$member[0]['st'][0]));
-				$modelDepartment = Department::model()->findByAttributes(array('dep_title'=>$member[0]['department'][0]));
-				$modelDivision = Division::model()->findByAttributes(array('div_title'=>$member[0]['division'][0]));
+			//if($member['count'] > 0){ //TMS
+				//$model->type_register = 3;
+				// Helpers::lib()->_insertLdap($member);
+				// $modelStation = Station::model()->findByAttributes(array('station_title'=>$member[0]['st'][0]));
+				// $modelDepartment = Department::model()->findByAttributes(array('dep_title'=>$member[0]['department'][0]));
+				// $modelDivision = Division::model()->findByAttributes(array('div_title'=>$member[0]['division'][0]));
 
-				$model->division_id = $modelDivision->id;
-				$model->station_id = $modelStation->station_id;
-				$model->department_id = $modelDepartment->id;
-				$model->password = md5($model->email);
-				$model->verifyPassword = $model->password;
-				$model->confirmpass = $model->password;
+				// $model->division_id = $modelDivision->id;
+				// $model->station_id = $modelStation->station_id;
+				// $model->department_id = $modelDepartment->id;
+				// $model->password = md5($model->email);
+				// $model->verifyPassword = $model->password;
+				// $model->confirmpass = $model->password;
 
-				$model->status = 1;
-				$model->email = $member[0]['mail'][0];
-			} else { //LMS
-				$model->email = $_POST['User']['username'];
+				// $model->status = 1;
+				//$model->email = $member[0]['mail'][0];
+			//} else { //LMS
+				$model->email = $_POST['User']['email'];
 				// $model->password = $_POST['User']['identification'];
 				$model->password = $_POST['User']['username'];
+				 $genpass = $this->RandomPassword();
+    			 $model->password = $genpass;
+    		     $model->verifyPassword = $genpass;
 
 				$model->verifyPassword = $model->password;
 				$model->confirmpass = $model->password;
 				// $model->department_id = 1;
 				$model->department_id = $_POST['User']['department_id'];
-				$model->station_id = $_POST['User']['station_id'];
-				$model->division_id = $_POST['User']['division_id'];
+				$model->position_id = $_POST['User']['position_id'];
+				$model->branch_id = $_POST['User']['branch_id'];
+				// $model->station_id = $_POST['User']['station_id'];
+				// $model->division_id = $_POST['User']['division_id'];
 				$model->repass_status= 0;
 				// $model->newpassword = $_POST['User']['identification'];
 				$model->status = 1;
 				// $model->status = 0;
 				$model->scenario = 'general';
-			}
+			//}
 			// $model->department_id = $_POST['User']['department_id'];
 
 			$model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
@@ -1372,10 +1377,10 @@ echo ($data);
 
 			if($model->validate() && $profile->validate()) {
 
-
-				$model->password=Yii::app()->controller->module->encrypting($model->email);
+ 
+				$model->password=Yii::app()->controller->module->encrypting($genpass);
 				// $model->verifyPassword= UserModule::encrypting($model->password);
-				$model->confirmpass=Yii::app()->controller->module->encrypting($model->email);
+				$model->verifyPassword=Yii::app()->controller->module->encrypting($genpass);
 
 
 				$uploadFile = CUploadedFile::getInstance($model,'pic_user');
@@ -1412,34 +1417,35 @@ echo ($data);
 					// 				$thumbImage->resize(350, 200);
 					// 				$thumbImage->save($thumbPath);
 					// }
-					if($profile->contactfrom){
+					// if($profile->contactfrom){
 
-						$contacts = $profile->contactfrom;
-						foreach ($contacts as $key => $contact) {
-									// var_dump($contact);
-									// exit();
-							if($contact != end($contacts)){
-								$value .= $contact.',';
-							} else {
-								$value .= $contact;
-							}
+					// 	$contacts = $profile->contactfrom;
+					// 	foreach ($contacts as $key => $contact) {
+					// 				// var_dump($contact);
+					// 				// exit();
+					// 		if($contact != end($contacts)){
+					// 			$value .= $contact.',';
+					// 		} else {
+					// 			$value .= $contact;
+					// 		}
 
-						}
-						$profile->contactfrom = $value;
-					}
+					// 	}
+					// 	$profile->contactfrom = $value;
+					// }
 					// $profile->generation = $gen->id_gen;
 					$profile->user_id=$model->id;
+					$profile->type_user = 3;
 					$profile->save();
 
-					if($model->type_register != 3 && $model->status != 0){
+					//if($model->type_register != 3 && $model->status != 0){
 						$to['email'] = $model->email;
 						$to['firstname'] = $profile->firstname;
 						$to['lastname'] = $profile->lastname;
-						$message = $this->renderPartial('_mail_message',array('model' => $model),true);
+						$message = $this->renderPartial('_mail_message',array('model' => $model,'genpass'=>$genpass),true);
 						if($message){
-							$send = Helpers::lib()->SendMailNotification($to,'อนุมัติการสมัครสมาชิก',$message);
+							$send = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
 						}
-					}
+					//}
 					
 				}
 				$this->redirect(array('view','id'=>$model->id));
@@ -1533,8 +1539,10 @@ echo ($data);
 					// $model->department_id = 1;
 					$model->confirmpass = $model->password;
 					$model->department_id = $_POST['User']['department_id'];
-					$model->station_id = $_POST['User']['station_id'];
-					$model->division_id = $_POST['User']['division_id'];
+					$model->position_id = $_POST['User']['position_id'];
+					$model->branch_id = $_POST['User']['branch_id'];
+					// $model->station_id = $_POST['User']['station_id'];
+					// $model->division_id = $_POST['User']['division_id'];
 					if($_POST['User']['newpassword'] != null ){
 					$model->password=Yii::app()->controller->module->encrypting($_POST['User']['newpassword']);
 					// $model->verifyPassword=UserModule::encrypting($model->password);
@@ -1574,20 +1582,20 @@ echo ($data);
 				// // $model->pic_user = $fileName;
 				// }
 
-				if($profile->contactfrom){
-					$contacts = $profile->contactfrom;
-					foreach ($contacts as $key => $contact) {
-									// var_dump($contact);
-									// exit();
-						if($contact != end($contacts)){
-							$value .= $contact.',';
-						} else {
-							$value .= $contact;
-						}
+				// if($profile->contactfrom){
+				// 	$contacts = $profile->contactfrom;
+				// 	foreach ($contacts as $key => $contact) {
+				// 					// var_dump($contact);
+				// 					// exit();
+				// 		if($contact != end($contacts)){
+				// 			$value .= $contact.',';
+				// 		} else {
+				// 			$value .= $contact;
+				// 		}
 
-					}
-					$profile->contactfrom = $value;
-				}
+				// 	}
+				// 	$profile->contactfrom = $value;
+				// }
 
 				$model->save();
 				$profile->save();
@@ -1622,7 +1630,7 @@ echo ($data);
 			// var_dump($profile->getErrors());
 			// exit();
 		}
-		$model->position_name = isset($_POST['User']['position_name']) ? $_POST['User']['position_name'] : $model->position->position_title;
+		//$model->position_name = isset($_POST['User']['position_name']) ? $_POST['User']['position_name'] : $model->position->position_title;
 		$this->render('update',array(
 			'model'=>$model,
 			'profile'=>$profile,

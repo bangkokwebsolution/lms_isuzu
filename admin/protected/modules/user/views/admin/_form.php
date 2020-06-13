@@ -165,11 +165,18 @@ date_default_timezone_set("Asia/Bangkok");
                                         <?php echo $form->textField($model, 'username', array('class' => 'form-control', 'placeholder' => 'ชื่อผู้ใช้ (Email)')); ?>
                                         <?php echo $form->error($model, 'username'); ?>
                                     </div>
+                                  
                                       <div class="form-group">
                                         <label><?php echo $form->labelEx($profile, 'identification'); ?></label>
                                         <?php echo $form->textField($profile, 'identification', array('maxlength'=>13,'class' => 'form-control','placeholder' => 'รหัสบัตรประชาชน','oninput' => 'fillfield(this.value)')); ?>
                                         <?php echo $form->error($profile, 'identification'); ?>
-                                    </div>  
+                                    </div>
+                                    <div class="form-group">
+                                        <label><?php echo $form->labelEx($profile, 'passport'); ?></label>
+                                        <?php echo $form->textField($profile, 'passport', array('maxlength'=>13,'class' => 'form-control','placeholder' => 'หนังสือเดินทาง')); ?>
+                                        <?php echo $form->error($profile, 'passport'); ?>
+                                    </div>
+                                    
                                     
                                     <div class="row">
                                     <?php if($model->isNewRecord) { ?>
@@ -225,13 +232,37 @@ date_default_timezone_set("Asia/Bangkok");
                                             </div>
                                         </div>
                                     </div>
+                                   <!--  <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($profile, 'firstname_en'); ?></label>
+                                                <?php echo $form->textField($profile, 'firstname_en', array('class' => 'form-control', 'placeholder' => 'ชื่อจริง(EN)')); ?>
+                                                <?php echo $form->error($profile, 'firstname_en'); ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($profile, 'lastname_en'); ?></label>
+                                                <?php echo $form->textField($profile, 'lastname_en', array('class' => 'form-control', 'placeholder' => 'นามสกุล(EN)')); ?>
+                                                <?php echo $form->error($profile, 'lastname_en'); ?>
+                                            </div>
+                                        </div>
+                                    </div> -->
                                             
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-6">
                                             <div class="form-group">
                                                 <label><?php echo $form->labelEx($profile, 'tel'); ?></label>
                                                 <?php echo $form->textField($profile, 'tel', array('class' => 'form-control', 'placeholder' => 'เบอร์โทรศัพท์')); ?>
                                                 <?php echo $form->error($profile, 'tel'); ?>
+                                            </div>
+                                        </div>  
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($model, 'email'); ?></label>
+                                                <?php echo $form->textField($model, 'email', array('class' => 'form-control', 'placeholder' => 'อีเมล')); ?>
+                                                <?php echo $form->error($model, 'email'); ?>
                                             </div>
                                         </div>  
                                     </div>
