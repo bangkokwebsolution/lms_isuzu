@@ -57,7 +57,7 @@ $this->breadcrumbs=array(
 //            array('name'=>'company_id','type'=>'list','query'=>Company::getCompanyList()),
 				//array('name'=>'register_status','type'=>'list','query'=>User::getregisstatusList()),
 				array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
-               // array('name'=>'month','type'=>'list','query'=>Month::getMonth()),
+                //array('name'=>'month','type'=>'list','query'=>Month::getMonth()),
 //            array('name'=>'course','type'=>'list','query'=>$model->courseList),
 				//array('name'=>'lastvisit_at','type'=>'text'),
 
@@ -68,12 +68,12 @@ $this->breadcrumbs=array(
 
 		<div class="widget" style="margin-top: -1px;">
 			<div class="widget-head">
-				<h4 class="heading glyphicons show_thumbnails_with_lines"><i></i>ระบบบริหารจัดการ E learning - ตรวจสอบและจัดการการเข้าใช้งานคนประจำเรือ <?php //echo $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Confirm Registration"); ?></h4>
+				<h4 class="heading glyphicons show_thumbnails_with_lines"><i></i>ระบบบริหารจัดการ E learning - ตรวจสอบและจัดการการเข้าใช้งานบุคคลทั่วไป <?php //echo $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Confirm Registration"); ?></h4>
 			</div>
 			<div class="widget-body">
 				<div>
-					<?php echo Rights::t('core', 'ที่นี่คุณสามารถตรวจสอบและจัดการการเข้าใช้งานคนประจำเรือ'); ?>
-		
+					<?php echo Rights::t('core', 'ที่นี่คุณสามารถตรวจสอบและจัดการการเข้าใช้งานบุคคลทั่วไป'); ?>
+					<h3>กรุณาป้อนข้อมูลให้ถูกต้อง แล้วกด ปุ่มค้นหา</h3>
 				</div>
 				<div class="separator bottom form-inline small">
 					<span class="pull-right">
@@ -94,7 +94,7 @@ $this->breadcrumbs=array(
 						<?php 
 						$this->widget('AGridView', array(
 							'id'=>'user-grid',
-							'dataProvider'=>$model->searchaccess(),
+							'dataProvider'=>$model->searchaccessPersonal(),
 							'filter'=>$model,
 							'afterAjaxUpdate'=>'function(id, data){
 								$.appendFilter("[news_per_page]");	

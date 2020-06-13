@@ -1,41 +1,33 @@
-<!-- Include Required Prerequisites -->
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/moment.min.js"></script>
-<!--Include Date Range Picker--> 
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker.js"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker-bs2.css" />
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/highcharts.js"></script>
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/modules/exporting.js"></script>
-
 
 <?php
 $titleName = 'พิมพ์ใบสมัครสำหรับคนประจำเรือ';
 $formNameModel = 'PrintMembership';
-Yii::app()->clientScript->registerScript('search', "
-	$('.search-button').click(function(){
-		$('.search-form').toggle();
-		return false;
-		});
-		$('.search-form form').submit(function(){
-			$.fn.yiiGridView.update('user-grid', {
-				data: $(this).serialize()
-				});
-				return false;
-				});
-				");
-Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
-	$.updateGridView = function(gridID, name, value) {
-	    $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
-	    $.fn.yiiGridView.update(gridID, {data: $.param(
-	        $("#"+gridID+" input, #"+gridID+" .filters select")
-	    )});
-	}
-	$.appendFilter = function(name, varName) {
-	    var val = eval("$."+varName);
-	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
-	}
-	$.appendFilter("PrintMembership[news_per_page]", "news_per_page");
-EOD
-, CClientScript::POS_READY);
+// Yii::app()->clientScript->registerScript('search', "
+// 	$('.search-button').click(function(){
+// 		$('.search-form').toggle();
+// 		return false;
+// 		});
+// 		$('.search-form form').submit(function(){
+// 			$.fn.yiiGridView.update('user-grid', {
+// 				data: $(this).serialize()
+// 				});
+// 				return false;
+// 				});
+// 				");
+// Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
+// 	$.updateGridView = function(gridID, name, value) {
+// 	    $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
+// 	    $.fn.yiiGridView.update(gridID, {data: $.param(
+// 	        $("#"+gridID+" input, #"+gridID+" .filters select")
+// 	    )});
+// 	}
+// 	$.appendFilter = function(name, varName) {
+// 	    var val = eval("$."+varName);
+// 	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
+// 	}
+// 	$.appendFilter("PrintMembership[news_per_page]", "news_per_page");
+// EOD
+// , CClientScript::POS_READY);
 
 // Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 // 	$('#User_create_at').attr('readonly','readonly');
@@ -47,7 +39,7 @@ EOD
 
 	?>
 	<div id="user" class="innerLR">
-<!-- 		<?php
+		<?php
 		$this->widget('AdvanceSearchForm', array(
 			'data'=>$model,
 			'route' => $this->route,
@@ -58,7 +50,7 @@ EOD
                 //array('name'=>'nameSearch','type'=>'text'),
 				//array('name'=>'create_at','type'=>'text'),
 			),
-		));?> -->
+		));?> 
 <style type="text/css">
 .coolContainer h4:first-of-type {
     float: left;
@@ -98,7 +90,7 @@ EOD
 						</div> --><!-- search-form -->					  
 						<?php
 						$this->widget('AGridView', array(
-							'id'=>$formNameModel.'-grid',
+							'id'=>'user-grid',
 							'dataProvider'=>$model->searchmembership(),
 							'filter'=>$model,
 							'afterAjaxUpdate'=>'function(id, data){

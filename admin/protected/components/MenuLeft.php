@@ -1233,15 +1233,15 @@ Class MenuLeft extends Controller
 	        			'label'=>'รายชื่อสมาชิก(สมาชิกทั่วไป)',
 	        			'url'=>array('//user/admin/General')
 	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-User (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'admin.*',
-	        				'admin.Access'
-	        			)),
-	        			'label'=>'ระบบตรวจสอบการเข้าใช้งาน',
-	        			'url'=>array('//user/admin/access')
-	        		),
+	        		// array(
+	        		// 	/*====== Check Permissions Sup-User (2) ======*/
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'admin.*',
+	        		// 		'admin.Access'
+	        		// 	)),
+	        		// 	'label'=>'ระบบตรวจสอบการเข้าใช้งาน',
+	        		// 	'url'=>array('//user/admin/access')
+	        		// ),
 	        		array(
 	        			
 	        			'visible'=>self::PermissionsMenu(array(
@@ -1250,6 +1250,59 @@ Class MenuLeft extends Controller
 	        			)),
 	        			'label'=>'รายงานสถานะของสมาชิก',
 	        			'url'=>array('//user/admin/Status')
+	        		),
+	        	)
+	        ),
+
+	         array(
+	        	//////// print ////////
+	        	'visible'=>self::PermissionsMenu(array(
+	        		'monthCheck.*',
+	        		'monthCheck.admin',
+	        		'monthCheck.Approve'
+	        	)),
+	        	'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบตรวจสอบการใช้งาน</span>',
+	        	'url'=>'#monthCheck',
+	        	'linkOptions' => array('data-toggle' => 'collapse'),
+	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_open'),
+	        	'submenuOptions' => array('class' => self::SetSubMenu( array('monthCheck') ), 'id' => 'monthCheck'),
+	        	'active' => self::SetSubMenu( array('monthCheck') ,false),
+	        	'items'=>array(
+	        		array(
+	        			/*====== Check Permissions Sup-Category (2) ======*/
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'monthCheck.*',
+	        				'monthCheck.Index'
+	        			)),
+	        			'label'=>'กำหนดระยะเวลาในการเข้าใช้งานคนประจำเรือ',
+	        			'url'=>array('//monthCheck/admin')
+	        		),
+	        		array(
+	        			/*====== Check Permissions Sup-Category (2) ======*/
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'monthCheck.*',
+	        				'monthCheck.approve'
+	        			)),
+	        			'label'=>'กำหนดระยะเวลาในการเข้าใช้งานบุคคลทั่วไป',
+	        			'url'=>array('//monthCheck/personal')
+	        		),
+	        		array(
+	        			/*====== Check Permissions Sup-User (2) ======*/
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'admin.*',
+	        				'admin.Access'
+	        			)),
+	        			'label'=>'ระบบตรวจสอบการเข้าใช้งานคนประจำเรือ',
+	        			'url'=>array('//user/admin/access')
+	        		),
+	        		array(
+	        			/*====== Check Permissions Sup-User (2) ======*/
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'admin.*',
+	        				'admin.AccessPersonal'
+	        			)),
+	        			'label'=>'ระบบตรวจสอบการเข้าใช้งานคนบุคคลทั่วไป',
+	        			'url'=>array('//user/admin/accessPersonal')
 	        		),
 	        	)
 	        ),
