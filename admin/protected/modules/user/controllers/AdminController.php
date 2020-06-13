@@ -546,6 +546,25 @@ echo ($data);
 		$this->redirect(array('/user/admin/access'));
    }
 
+   public function actionChangePasswordUser()
+   {
+        $id = $_POST['id'];
+        $password = $_POST['password'];
+        $verifyPassword = $_POST['verifyPassword'];
+		 $model = Users::model()->findbyattributes(array('id'=>$id));
+
+                $model->password = $password;
+                $model->verifyPassword = $verifyPassword;
+                 if ($model->validate()) {
+
+                    $model->password = UserModule::encrypting($model->password);
+                    $model->verifyPassword = UserModule::encrypting($model->verifyPassword);
+                    $model->save(false);
+                }
+
+		//$this->redirect(array('/user/admin/index'));
+   }
+
 
 	public function actionCheckinformation()
 	{
@@ -565,6 +584,14 @@ echo ($data);
 
 	
        $this->renderPartial('Checkinformation_personal',array('user' => $user,'profile' => $profile));
+	}
+
+	public function actionChangePassword()
+	{
+		$id = $_POST['id'];
+		$user = User::model()->findByPk($id);
+
+       $this->renderPartial('ChangePassword',array('user' => $user));
 	}
 
 	public function actionAttach_load()
