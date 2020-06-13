@@ -27,7 +27,7 @@ class CaptchaController extends Controller
     {
     	return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-            	'actions' => array('index', 'view'),
+            	'actions' => array('index', 'view','savecoursemodal','CourseModal'),
             	'users' => array('*'),
             ),
             array('allow',
@@ -90,6 +90,74 @@ class CaptchaController extends Controller
     	echo $respon;
     }
 
+    public function actionSaveCourseModal() {
+		$capid = $_POST['capid'];
+		$saveCourseApplied = json_decode($_POST['checkedList']);
+		$model = ConfigCaptchaCourseRelation::model()->deleteAll(array(
+			'condition'=>'captid = "'.$capid.'"'
+		));
+		if($saveCourseApplied) {
+			foreach ($saveCourseApplied as $course) {
+				$model = ConfigCaptchaCourseRelation::model()->deleteAll(array(
+					'condition'=>'captid = "'.$course.'"'
+				));
+				$model = new ConfigCaptchaCourseRelation;
+				$model->cnid = $course;
+				$model->captid = $capid;
+				$model->save();
+			}
+		} 
+		echo true;
+	}
+	
+	public function actionCourseModal() {
+		$respon = '';
+		$capid = $_POST['capid'];
+		if($capid != null) {
+			// $getAllCourse = CourseOnline::model()->findAll();
+			$getAllCourse = CourseOnline::model()->findAll(array(
+				'condition'=>'lang_id = 1'
+			));
+			$model = ConfigCaptchaCourseRelation::model()->findAll(array(
+				'condition'=>'captid = "'.$capid.'"'
+			));
+			$mtId = array();
+			foreach ($model as $key => $value) {
+				$mtId[$key] = $value->course_id;
+			}
+			if($getAllCourse) {
+				$respon .= '<table class="table table-striped">';
+				$respon .= '<input type="hidden" name="capid" value="' . $capid . '">';
+				$respon .= '<tr>';
+				$respon .= '<th style="width:90px;"><input type="checkbox" id="checkAll" /> ทั้งหมด</th>';
+				$respon .= '<th>ชื่อหลักสูตร</th>';
+				$respon .= '</tr>';
+				foreach ($getAllCourse as $course) {
+					$checked = '';
+					if(in_array($course['course_id'], $mtId)){
+						$checked = 'checked';
+					}
+					$respon .= '<tr>';
+					$respon .= '<td>';
+					$respon .= '<input class="courseCheckList" type="checkbox" ' . $checked . ' value="' . $course['course_id'] . '"> ';
+					$respon .= '</td>';
+					$respon .= '<td>';
+					$respon .= $course['course_title'];
+					$respon .= '</td>';
+					$respon .= '</tr>';
+				}
+				$respon .= '</table>';
+			}
+			$respon .= "<script>
+			$('#checkAll').change(function () {
+				$('input:checkbox').prop('checked', $(this).prop('checked'));
+			});
+			</script>";
+		}
+		echo $respon;	
+	}
+
+
     public function actionCreate()
     {
     	$model = new ConfigCaptcha;
@@ -101,7 +169,7 @@ class CaptchaController extends Controller
     	$model->attributes=$_POST['ConfigCaptcha'];
 
     	$cap->attributes=$_POST['ConfigCaptchaCourseRelation'];
-    	$cap->cnid=$_POST['cnid'];
+    	$cap->cnid=json_encode($_POST['cnid']);
     	$model->created_by = Yii::app()->user->id;
     	$model->created_date = date("Y-m-d H:i:s");
     	$model->capt_active = 'y';
@@ -173,7 +241,7 @@ class CaptchaController extends Controller
 			$model->type = json_encode($_POST['type']);
 			$model->attributes = $_POST['ConfigCaptcha'];
 			$cap->attributes = $_POST['ConfigCaptchaCourseRelation'];
-			$cap->cnid=$_POST['cnid'];
+			$cap->cnid=json_encode($_POST['cnid']);
 			if($model->validate() && $cap->validate()){
 				$cap1 = ConfigCaptchaCourseRelation::model()->deleteAll(array(
 					'condition'=>'captid = "'.$id.'"'

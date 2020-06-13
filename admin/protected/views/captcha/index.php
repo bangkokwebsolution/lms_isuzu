@@ -54,32 +54,38 @@ $this->breadcrumbs=array($title);
             			),
             		),
 
-            	/*array(
+            	array(
             		'header'=>'ชื่อหลักสูตร',
             		'value'=>function($data){
-            			$model = CertificateNameRelations::model()->findAll(array(
-            				'condition'=>'capid = "'.$data->capid.'"'
+            			$model = ConfigCaptchaCourseRelation::model()->findAll(array(
+            				'condition'=>'captid = "'.$data->capid.'"'
             				));
             			$coursename = '';
+                  if ($model) {
             			$arrayKeys = array_keys($model);
             			$lastArrayKey = array_pop($arrayKeys);
             			foreach ($model as $key => $value) {
-            				$coursename .= $value->course_name;
+            				$coursename .= ($key+1).'. '.$value->courseOnline->course_title;
             				if($key != $lastArrayKey) {
-            					$coursename .= ', ';
+            					//$coursename .= ', ';
+                      $coursename .= '<br>';
             				}
             			}
             			return $coursename;
+                }else{
+                  $coursename = 'ยังไม่ได้เลือกหลักสูตร';
+                  return $coursename;
+                }
             		},
-            		),*/
-            	/*array(
+            		),
+            	array(
             		'header'=>'เลือกหลักสูตร',
             		'type'=>'raw',
             		'value'=>function($data){
             				// return '<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">เลือกหมวดหลักสูตร</button>';
             			return CHtml::link( '<i class="fa fa-fw fa-folder-open-o"></i> เลือกหลักสูตร', 'javascript:void(0)', array( 'class' => 'btn btn-info', 'onclick' => 'selectCourse(' . $data->capid . ')'));
             		},
-            		),*/
+            		),
 
 
             		array(
@@ -200,7 +206,7 @@ $this->breadcrumbs=array($title);
 
 
                           function saveModal() {
-                                var certificateId = $('input[name="capid"]').val();
+                                var capid = $('input[name="capid"]').val();
                                 var courseCheckList = $('.courseCheckList');
                                 var checkedList = [];
 
@@ -213,7 +219,7 @@ $this->breadcrumbs=array($title);
 								console.log(checkedList);
 							});
                                      if(checkedList!=null) {
-                                          $.post("<?= $this->createUrl('certificate/savecoursemodal') ?>", { checkedList: JSON.stringify(checkedList), certificateId: certificateId }, function(respon) {
+                                          $.post("<?= $this->createUrl('captcha/savecoursemodal') ?>", { checkedList: JSON.stringify(checkedList), capid: capid }, function(respon) {
                                                if(respon) {
                                                     $('#selectApplyCourseToCertificate').modal('hide');
                         					// $('#MtCourseType-grid').load(document.URL + ' #MtCourseType-grid');
@@ -243,9 +249,9 @@ $this->breadcrumbs=array($title);
                             });
                          } 
                    }
-                   function selectCourse(certificateId=null) {
-                    if(certificateId != undefined && certificateId!=null) {
-                         $.post("<?= $this->createUrl('certificate/coursemodal') ?>", { certificateId: certificateId }, function(respon) {
+                   function selectCourse(capid=null) {
+                    if(capid != undefined && capid!=null) {
+                         $.post("<?= $this->createUrl('captcha/coursemodal') ?>", { capid: capid }, function(respon) {
                               if(respon) {
                                    $('#selectApplyCourseToCertificate .modal-body').html(respon);
                                    setTimeout(function() {

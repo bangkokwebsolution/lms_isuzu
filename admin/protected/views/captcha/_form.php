@@ -1,6 +1,5 @@
 <!-- innerLR -->
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
 <div class="innerLR">
 	<div class="widget widget-tabs border-bottom-none">
 		<div class="widget-head">
@@ -66,7 +65,7 @@
 					});'
 				);
 				?>
-				<div class="row">
+				<!-- <div class="row">
 					
 					<div class="col-md-12">
 						<?php echo $form->labelEx($cap,'cnid'); ?>
@@ -74,7 +73,7 @@
 						<?php echo $this->NotEmpty();?>
 						<?php echo $form->error($cap,'cnid'); ?>
 					</div>
-				</div>
+				</div> -->
 
 				<div class="row">
 					
