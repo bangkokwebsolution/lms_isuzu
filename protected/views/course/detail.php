@@ -33,6 +33,8 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
     $Click = "Click";
     $final = "Final";
     $clickFinal = "Final test";
+    $click_precourse = "Pre test";
+    $pre_course = "Pre Test Course";
 }else{  
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -45,6 +47,8 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
     $Questionnaire = "แบบสอบถาม ";
     $Click = "คลิก";
     $final = "การสอบวัดผล";
+    $pre_course = "การสอบก่อนเรียนหลักสูตร";
+    $click_precourse = "เข้าสู่การสอบ";
     $clickFinal = "เข้าสู่การสอบ";
     $courseChildren = CourseOnline::model()->find(array('condition' => 'parent_id = ' . $course->course_id));
     if($courseChildren){
@@ -300,6 +304,7 @@ if($model){
                 $category = Category::model()->findByPk($course->cate_id);
                 $checkCourseTest = Helpers::lib()->checkCoursePass($course->course_id);
                 $checkHaveCourseTest = Helpers::lib()->checkHaveCourseTestInManage($course->course_id);
+                $checkHaveCoursePreTest = Helpers::lib()->checkHaveCoursePreTestInManage($course->course_id);
                 $criteria = new CDbCriteria;
                 $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y"'." AND gen_id='".$gen_id."'";
                 $criteria->order = 'create_date ASC';
@@ -405,6 +410,64 @@ if($model){
                 <div role="tabpanel" class="tab-pane active " id="course-unit">
                     <ol class="course-ol">
                         <div class="panel panel-default">
+                            <?php 
+                            $can_next_step = 1; //เรียนได้
+                            if($checkHaveCoursePreTest){ // เช็คมีข้อสอบ สอบก่อนเรียน ของหลักสูตร
+                                ?>
+                                <div class="panel-heading headcourse final-test">
+                                    <a role="button" data-toggle="collapse" data-target="#collapsePreCourse" data-parent="#accordion" aria-expanded="true">
+                                       <li>
+                                        <span class="stepcourse"> <?= $checkHaveCoursePreTest ? $pre_course : ''; ?> <?= $course->course_title ?> <?= $course->getGen($course->course_id); ?></span>
+                                        <span class="pull-right"><i class="fa fa-angle-down"></i></span>
+                                    </li>
+                                </a>
+                            </div>
+
+
+<?php 
+$checkHaveScoreCoursePreTest = Helpers::lib()->checkHaveScoreCoursePreTest($course->course_id, $gen_id);
+if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มีคะแนน
+    $can_next_step = 2; //ห้ามเรียน ห้ามสอบ ห้ามทุกอย่าง
+    $pathCourseTest = $this->createUrl('coursequestion/preexams', array('id' => $course->course_id, 'type'=>'pre'));
+    ?>
+    <div id="collapsePreCourse" class="collapse in">
+     <li class="list-group-item ">
+        <a href="<?= $pathCourseTest ?>" <?= $alertCourseTest ?> >
+            <span class="list__course"><?php echo $label->label_testPre; ?></span>
+            <span class="btn btn-warning detailmore pull-right"><?php echo $label->label_DoTest; ?>
+            <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></a>
+        </li>
+    </div>
+    <?php
+}else{ //มีคะแนนสอบ
+    $ScoreCoursePreTest = Helpers::lib()->ScoreCoursePreTest($course->course_id, $gen_id);
+?>
+<div id="collapsePreCourse" class="collapse" style="height: 0px;">
+    <li class="list-group-item ">
+       <a href="">
+        <span class="list__course"><?php echo $label->label_testPre; ?></span>
+        <span class="pull-right  text-danger prepost">
+            <?= $ScoreCoursePreTest; ?>
+            <?= $label->label_point; ?></span>
+    </a> 
+    </li>
+</div>
+<?php
+} //if($checkHaveScoreCoursePreTest)
+} //if($checkHaveCoursePreTest) 
+?>
+
+
+
+
+
+
+
+
+
+
+
+
                             <?php                                         
                             foreach ($lessonList as $key => $lessonListValue) {
                              if(!$flag){
@@ -498,7 +561,7 @@ if($model){
                                                         </a>
                                                     </div>
                                                     
-                                                    <div class="panel-collapse collapse <?= ($lessonListValue->id == $stopId)? 'in':'' ?>" id="collapse-<?= $lessonListValue->id ?>" role="tabpanel" aria-labelledby="headingOne">
+                                                    <div class="panel-collapse collapse <?= ($lessonListValue->id == $stopId && $can_next_step != 2)? 'in':'' ?>" id="collapse-<?= $lessonListValue->id ?>" role="tabpanel" aria-labelledby="headingOne">
                                                         <?php if ($checkPreTest) { ?>
                                                             <div class="stepcoursediv">
                                                                <div> <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?> </span><?php echo $label->label_testPre; ?></div></div>
@@ -507,7 +570,7 @@ if($model){
 
                                                                 $isPreTest = Helpers::isPretestState($lessonListValue->id);
 
-                                                                if($isChecklesson){
+                                                                if($isChecklesson && $can_next_step  != 2){
                                                                     $ckLinkTest = $this->createUrl('/question/preexams', array('id' => $lessonListValue->id,'type'=>'pre'));
                                                                     $ckLinkTest_onClick = '';
                                                                 }else{
@@ -553,7 +616,7 @@ if($model){
                                                                 <?php 
                                                                 $pre_test_again = 2; // ไม่ให้โชว์ สอบ pre อีก
                                                                 // $lessonListValue->cate_amount = 1;
-                                                                if($pre_test_again == 1 && count($scoreAll) < 1 && !$flagPreTestPass && count($scoreAll) != 0){ 
+                                                                if($pre_test_again == 1 && count($scoreAll) < 1 && !$flagPreTestPass && count($scoreAll) != 0 && $can_next_step  != 2){ 
                                                                     ?>
                                                                     <li class="list-group-item">
                                                                         <?php if($step == 1){ ?>
@@ -622,9 +685,12 @@ if($model){
                                                                                 if(!$flagCheckPre){
                                                                                     $learnlink = 'javascript:void(0);';
                                                                                     $learnalert = 'alertswalpretest();';    
-                                                                                }else{
+                                                                                }elseif ($can_next_step  != 2){
                                                                                     $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
                                                                                     $learnalert = '';    
+                                                                                }else{
+                                                                                    $learnlink = 'javascript:void(0);';
+                                                                                    $learnalert = 'alertswalpretest();';   
                                                                                 }
                                                                             }
                                                                         }else{
@@ -675,9 +741,12 @@ if($model){
                                                                             if(!$prelearn){
                                                                                 $learnlink = 'javascript:void(0);';
                                                                                 $learnalert = 'alertswalpretest();';
-                                                                            } else{
+                                                                            } elseif ($can_next_step != 2){
                                                                                 $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
                                                                                 $learnalert = '';    
+                                                                            }else{
+                                                                                $learnlink = 'javascript:void(0);';
+                                                                                $learnalert = 'alertswalpretest();';
                                                                             }
                                                                             $learnFiles = Helpers::lib()->checkLessonFile($les,$learnModel->learn_id);
                                                                             if ($learnFiles == "notLearn") {
@@ -735,9 +804,12 @@ if($model){
                                                                                         if(!$flagCheckPre){
                                                                                             $learnlink = 'javascript:void(0);';
                                                                                             $learnalert = 'alertswalpretest();';    
-                                                                                        }else{
+                                                                                        }elseif ($can_next_step != 2){
                                                                                             $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
                                                                                             $learnalert = '';    
+                                                                                        }else{
+                                                                                            $learnlink = 'javascript:void(0);';
+                                                                                            $learnalert = 'alertswalpretest();'; 
                                                                                         }
                                                                                     }
                                                                                     $learnFiles = Helpers::lib()->checkLessonFile($les,$learnModel->learn_id);
@@ -775,9 +847,12 @@ if($model){
                                                                                                 if(!$prelearn){
                                                                                                     $learnlink = 'javascript:void(0);';
                                                                                                     $learnalert = 'alertswalpretest();';
-                                                                                                } else{
+                                                                                                } elseif ($can_next_step != 2){
                                                                                                     $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
                                                                                                     $learnalert = '';    
+                                                                                                }else{
+                                                                                                    $learnlink = 'javascript:void(0);';
+                                                                                                    $learnalert = 'alertswalpretest();';
                                                                                                 }
                                                                                             }else{
                                                                                              $learnlink = 'javascript:void(0);';
@@ -823,9 +898,12 @@ if($model){
                                                                                             if ($lessonStatus != 'pass') {
                                                                                                 $link = 'javascript:void(0);';
                                                                                                 $alert = 'alertswal();';
-                                                                                            } else {
+                                                                                            } elseif ($can_next_step != 2){
                                                                                                 $link = $this->createUrl('question/preexams', array('id' => $lessonListValue->id));
                                                                                                 $alert = '';
+                                                                                            }else{
+                                                                                               $link = 'javascript:void(0);';
+                                                                                                $alert = 'alertswal();'; 
                                                                                             }
                                                                                             ?>
                                                                         <div class="stepcoursediv">
@@ -863,7 +941,7 @@ if($model){
                                                                                                 <?php
                                                                                                 }//end foreach
                                                                                                 ?>
-                                                                                                <?php if(count($scoreAll) < $lessonListValue->cate_amount && !$flagPostTestPass && count($scoreAll) != 0){
+                                                                                                <?php if(count($scoreAll) < $lessonListValue->cate_amount && !$flagPostTestPass && count($scoreAll) != 0 && $can_next_step != 2){
                                                                                                     $link = $this->createUrl('question/preexams', array('id' => $lessonListValue->id));
                                                                                                     $alert = '';
                                                                                                     ?>
@@ -889,18 +967,24 @@ if($model){
                     if ($isPostTest) {//ถ้ายังไม่ทำข้อสอบ
                         $link_questionnair = 'javascript:void(0);';
                         $alert_questionnair = 'alertswal_test();';
-                    } else {//ถ้าทำข้อสอบแล้ว
+                    } elseif ($can_next_step != 2){//ถ้าทำข้อสอบแล้ว
                         $link_questionnair = $this->createUrl('questionnaire/index', array('id' => $lessonListValue->id));
                         $alert_questionnair = '';
+                    }else{
+                        $link_questionnair = 'javascript:void(0);';
+                        $alert_questionnair = 'alertswal_test();';
                     }
                 } else {//ถ้าไม่มีสอบหลังเรียน
                     $isLearnPass = Helpers::checkLessonPass($lessonListValue);
                     if ($isLearnPass != 'pass') { //ถ้าเรียนยังไม่ผ่าน
                         $link_questionnair = 'javascript:void(0);';
                         $alert_questionnair = 'alertswal();';
-                    } else {//ถ้าเรียนผ่านแล้ว
+                    } elseif ($can_next_step != 2) {//ถ้าเรียนผ่านแล้ว
                         $link_questionnair = $this->createUrl('questionnaire/index', array('id' => $lessonListValue->id));
                         $alert_questionnair = '';
+                    }else{
+                        $link_questionnair = 'javascript:void(0);';
+                        $alert_questionnair = 'alertswal();';
                     }
                 }
                 $lessonQuestionAns = Helpers::lib()->checkLessonQuestion($lessonListValue);
@@ -1052,7 +1136,7 @@ if($model){
                             <div class="stepcoursediv">
                                 <div> <span class="stepcourse"><?php echo $label->label_DocsDowload; ?>  </span></div></div>
                                 <?php foreach ($lessonListValue->fileDocs as $filesDoc => $doc) {
-                                    if ($isChecklesson) {
+                                    if ($isChecklesson && $can_next_step != 2) {
                                         $linkDownload =  $this->createUrl('/course/download', array('id' => $doc->id));
                                         $onClickDownload =  '';
                                     }else{
@@ -1093,7 +1177,7 @@ if($model){
         ?>
         <?php 
         if($checkHaveCourseTest){
-            if($checkCourseTest == 'pass' && count($BestFinalTestScore) < $course->cate_amount && $ckPassAll){ //มีสิทธิสอบและยังสามารถสอบได้อีก
+            if($checkCourseTest == 'pass' && count($BestFinalTestScore) < $course->cate_amount && $ckPassAll && $can_next_step != 2){ //มีสิทธิสอบและยังสามารถสอบได้อีก
                 $pathCourseTest = $this->createUrl('coursequestion/preexams', array('id' => $course->course_id));
                 $alertCourseTest = '';
             }else{

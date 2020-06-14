@@ -27,7 +27,7 @@
 							<li><?= UserModule::t('totoal') ?> <span class="pull-right"><?= $total_score; ?> <?= $labelCourse->label_point ?></span></li>
 						</ul>
 						<div class="text-center">
-							<a class="btn btn-warning" href="<?php echo $this->createUrl('/coursequestion/index',array('id' => $course->course_id)); ?>" role="button"><?= $labelCourse->label_DoTest ?></a>
+							<a class="btn btn-warning" href="<?php echo $this->createUrl('/coursequestion/index',array('id' => $course->course_id, 'type'=>$type)); ?>" role="button"><?= $labelCourse->label_DoTest ?></a>
 						</div>
 					</div>
 				</div>

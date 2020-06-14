@@ -336,12 +336,12 @@
 			$(".submit").attr('disabled','disabled');
 		} 
 		$.ajax({
-			url: "<?php echo Yii::app()->createUrl("coursequestion/index"); ?>",
+			url: "<?php echo Yii::app()->createUrl("coursequestion/index")."?type=".$_GET['type']; ?>",
 			type: "POST",
 			data: $("#question-form").serialize(),
 			success: function (data) {
 				if ($('#last_ques').val() == 1) {
-					var url = '<?php echo Yii::app()->createUrl('coursequestion/exams_finish', array('id' => $course->course_id)); ?>';
+					var url = '<?php echo Yii::app()->createUrl('coursequestion/exams_finish', array('id' => $course->course_id, 'type'=>$_GET['type'])); ?>';
 					if(evnt=='save'){
 						// var strMsg = 'คุณทำข้อสอบสำเร็จ';
 						var strMsg = '';
@@ -388,7 +388,7 @@
 			timeStr = hours+':'+minutes+':'+seconds;
 			if(seconds==0){
 				$.ajax({
-					url: "<?php echo Yii::app()->createUrl("coursequestion/SaveTimeExam"); ?>",
+					url: "<?php echo Yii::app()->createUrl("coursequestion/SaveTimeExam")."?type=".$_GET['type']; ?>",
 					type: "POST",
 					data: {course_id:<?= $course->course_id ?>,time:count},
 					success:function(data){

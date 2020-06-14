@@ -793,6 +793,11 @@ $(document).ready(function(){
         question_textarea += '<label><h3>โจทย์ (คำตอบบรรยาย) <input type="hidden" name="Question_type['+question_index+']" value="textarea"> <!--ข้อที่ <span class="question-numbers" style="color:green; font-size: 20px;">'+question_total+'</span>--> ';
         question_textarea += '<a class="btn btn-icon btn-danger circle_ok question-remove" data-index="'+question_index+'"><i class="icon-remove"></i> ลบโจทย์</a></h3>';
         question_textarea += '</label>';
+        question_textarea += '<div class="span11">';
+        question_textarea += '<label><h3> คะแนนเต็ม</h3>';
+        question_textarea += '<input type="number" name="Question_score['+question_index+']" min=0 pattern="[0-9]">';
+        question_textarea += '</label>';
+        question_textarea += '</div>';
         question_textarea += '<div class="span12">';
         question_textarea += '<textarea name="Question['+question_index+']" class="question-title" id="question-'+question_index+'-title" cols="30" rows="10"></textarea>';
         question_textarea += '</div>';

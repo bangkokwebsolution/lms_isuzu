@@ -945,7 +945,7 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
     }
 
     public static function checkHaveCourseTestInManage($course_id)
-    {
+    { // เช็ค ข้อสอบ final หลักสูตร
         $isExamAddToCourseForTest = Coursemanage::model()->with('group')->findAll("id = '" . $course_id . "' AND type = 'course' AND manage.active='y' AND group.active ='y'");
         if (!$isExamAddToCourseForTest) {
             return false;
@@ -953,6 +953,53 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
             return true;
         }
     }
+
+    public static function checkHaveCoursePreTestInManage($course_id)
+    { // เช็ค ข้อสอบ ก่อนเรียน หลักสูตร
+        $isExamAddToCourseForTest = Coursemanage::model()->with('group')->findAll("id = '" . $course_id . "' AND type = 'pre' AND manage.active='y' AND group.active ='y'");
+        if (!$isExamAddToCourseForTest) {
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+     public static function checkHaveScoreCoursePreTest($course_id, $gen_id=null){ 
+     // // เช็คว่าสอบไปยัง      ข้อสอบ ก่อนเรียน หลักสูตร
+        if($gen_id == null){
+            $lesson_model = Lesson::model()->findByPk($lesson->id);
+            $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+        }
+
+        $Course_Score = Coursescore::model()->find(array(
+            'condition' => 'course_id=:course_id AND gen_id=:gen_id AND user_id=:user_id AND type=:type AND active=:active',
+            'params' => array(':type'=>'pre', ':course_id'=>$course_id, ':gen_id'=>$gen_id, ':user_id'=>Yii::app()->user->id, ':active'=>'y')
+        ));
+
+        if($Course_Score == ""){ // ไม่มีคะแนนสอบ
+            return true; //ยังไม่สอบ
+        }else{
+            return false;
+        }
+    }
+
+    public static function ScoreCoursePreTest($course_id, $gen_id=null){ 
+     // คะแนน ข้อสอบ ก่อนเรียน
+        if($gen_id == null){
+            $lesson_model = Lesson::model()->findByPk($lesson->id);
+            $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+        }
+
+        $Course_Score = Coursescore::model()->find(array(
+            'condition' => 'course_id=:course_id AND gen_id=:gen_id AND user_id=:user_id AND type=:type AND active=:active',
+            'params' => array(':type'=>'pre', ':course_id'=>$course_id, ':gen_id'=>$gen_id, ':user_id'=>Yii::app()->user->id, ':active'=>'y')
+        ));
+
+        $text = $Course_Score->score_number."/".$Course_Score->score_total;
+        return $text;
+    }
+
+
 
     public function checkLessonPassPostest($lesson)
     {

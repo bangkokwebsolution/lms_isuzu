@@ -49,10 +49,10 @@ class Coursemanage extends AActiveRecord
 			array('id, group_id, manage_row, create_by, update_by', 'numerical', 'integerOnly'=>true, 'message' => Controller::MessageError("int")),
 			array('active', 'length', 'max'=>1),
 			array('id,group_id,manage_row', 'required', 'message' => Controller::messageError("") ),
-			array('create_date, update_date,group_search, stepShow, titleShow, TitleGroup, news_per_page', 'safe'),
+			array('create_date, update_date,group_search, stepShow, titleShow, TitleGroup, news_per_page, type', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('manage_id, id, TitleGroup,group_search, titleShow, stepShow, group_id, manage_row, create_date, create_by, update_date, update_by, active', 'safe', 'on'=>'search'),
+			array('manage_id, id, TitleGroup,group_search, titleShow, stepShow, group_id, manage_row, create_date, create_by, update_date, update_by, active, type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -118,6 +118,7 @@ class Coursemanage extends AActiveRecord
 			'update_date' => 'วันที่แก้ไขข้อมูล',
 			'update_by' => 'ผู้แก้ไขข้อมูล',
 			'active' => 'สถานะ',
+			'type' => 'type',
 		);
 	}
 

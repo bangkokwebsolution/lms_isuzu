@@ -138,7 +138,19 @@ EOD
 							'htmlOptions'=>array('style'=>'text-align: center','width'=>'100px'),
 						),
 						array(
-							'header'=>'แบบทดสอบ',
+							'header'=>'ก่อนเรียน',
+							'value'=>'CHtml::link("เลือกข้อสอบ (".$data->getCountTest("pre").")", array(
+					      		"CourseOnline/Formcourse",
+					      		"id"=>$data->course_id,
+					      		"type"=>"pre"
+					      		), array(
+								"class"=>"btn btn-primary btn-icon"
+						    )); ',
+							'type'=>'raw',
+							'htmlOptions'=>array('style'=>'text-align: center','width'=>'100px'),
+						),
+						array(
+							'header'=>'หลังเรียน',
 							//'value'=>'CHtml::button("เลือกข้อสอบ (".$data->getCountTest("post").")",  array("class" => "btn btn-primary btn-icon" ,"submit" => Yii::app()->createUrl("Lesson/FormLesson", array("id"=>$data->id,"type"=>"post"))))',
 							'value'=>'CHtml::link("เลือกข้อสอบ (".$data->getCountTest("course").")", array(
 					      		"CourseOnline/Formcourse",

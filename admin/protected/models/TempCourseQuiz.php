@@ -36,10 +36,10 @@ class TempCourseQuiz extends CActiveRecord
 		return array(
 			array('user_id, course_id, group_id, ques_id, number, status', 'numerical', 'integerOnly'=>true),
 			array('question, time_up,ans_id', 'length', 'max'=>255),
-			array('time_start', 'safe'),
+			array('time_start, type', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_id, course_id, group_id, ques_id, number, ans_id, status, time_start, question, time_up', 'safe', 'on'=>'search'),
+			array('id, user_id, course_id, group_id, ques_id, number, ans_id, status, time_start, question, time_up, type', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,6 +72,7 @@ class TempCourseQuiz extends CActiveRecord
 			'time_start' => 'Time Start',
 			'question' => 'Question',
 			'time_up' => 'Time Up',
+			'type' => 'type',
 		);
 	}
 
@@ -103,6 +104,7 @@ class TempCourseQuiz extends CActiveRecord
 		$criteria->compare('status',$this->status);
 		$criteria->compare('time_start',$this->time_start,true);
 		$criteria->compare('question',$this->question,true);
+		$criteria->compare('type',$this->type,true);
 		$criteria->compare('time_up',$this->time_up,true);
 
 		return new CActiveDataProvider($this, array(

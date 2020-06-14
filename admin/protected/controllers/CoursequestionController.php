@@ -68,6 +68,11 @@ class CoursequestionController extends Controller
 				$questionModel->ques_type = $questionTypeArray[$questionType];
 				$questionModel->ques_title = $questionTitle;
         		$questionModel->ques_explain = $_POST['Explain'][$key];
+
+        		if($questionModel->ques_type == 3){
+        		$questionModel->max_score = $_POST['Question_score'][$key]; //Max score
+        	}
+        	
 				if ($questionModel->save()) {
 					if(($questionType != 'textarea') && ($questionType != 'dropdown'))  {
 						$answerValidCheckArray = $_POST['Choice'][$key];
