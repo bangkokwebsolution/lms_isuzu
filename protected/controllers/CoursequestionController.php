@@ -187,6 +187,10 @@ class CoursequestionController extends Controller
                         "//course/detail/$id",
                     ));
                 }
+
+                if($que_type == "course"){
+                    $que_type = "post";
+                }
                 $countCoursescore = Coursescore::Model()->count("course_id=:course_id AND user_id=:user_id and active = 'y' AND gen_id=:gen_id AND type=:type", array(
                     "course_id" => $id,
                     "user_id" => Yii::app()->user->id, ':gen_id'=>$gen_id, ':type'=>$que_type
@@ -844,6 +848,10 @@ class CoursequestionController extends Controller
         if(Yii::app()->user->id){
             Helpers::lib()->getControllerActionId();
         }
+
+        if($que_type == "course"){
+                    $que_type = "post";
+                }
         $course_model = CourseOnline::model()->findByPk($id);
         $gen_id = $course_model->getGenID($course_model->course_id);
         $model = Coursescore::model()->findAll(array(
