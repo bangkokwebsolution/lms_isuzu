@@ -165,7 +165,7 @@ class CoursequestionController extends Controller
                 }
             }
 
-            if ($courseStatus == "notPass" && $status_precorse == false) { 
+            if ($courseStatus == "notPass" && $status_precorse == true) { 
                 Yii::app()->user->setFlash('CheckQues', $label->label_alert_noPermisTest);
                 Yii::app()->user->setFlash('class', "error");
                 $this->redirect(array(
@@ -197,6 +197,8 @@ class CoursequestionController extends Controller
 
                 ));
 
+                
+
                 if ($countCoursescore == $course->cate_amount) //สอบครบจำนวนครั้งที่กำหนดไว้
                 {
                     $countCoursescorePast = Coursescore::model()->findAll(array(
@@ -226,7 +228,6 @@ class CoursequestionController extends Controller
                         "score_past" => "y", ':gen_id'=>$gen_id, ':type'=>$que_type
                     ));
 
-
                     if (!empty($countCoursescorePast)) {
 
                         Yii::app()->user->setFlash('CheckQues', $label->label_alert_testPass);
@@ -236,6 +237,9 @@ class CoursequestionController extends Controller
                     } else {
                         // Config default pass score 60 percent
                         $scorePercent = $course->percen_test;
+                        if($que_type == "post"){
+                            $que_type = "course";
+                        }
                         $manage = new CActiveDataProvider('Coursemanage', array(
                             'criteria' => array(
                                 'condition' => ' id = "' . $id . '" AND active = "y" AND type="'.$que_type.'"'
@@ -244,6 +248,7 @@ class CoursequestionController extends Controller
                         $temp_all = TempCourseQuiz::model()->findAll(array(
                             'condition' => "user_id=".Yii::app()->user->id." and course_id=".$id." AND gen_id='".$gen_id."' AND type='".$que_type."'"
                         ));
+
 
                         // $model = array();
                         if(!$temp_all){     
@@ -396,6 +401,10 @@ class CoursequestionController extends Controller
                                 if(isset($_GET['type'])){
                                     $type = $_GET['type'];
                                 }else{
+                                    $type = "post";
+                                }
+
+                                if($type == "course"){
                                     $type = "post";
                                 }
                                 $modelCoursescore = new Coursescore;
