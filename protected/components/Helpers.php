@@ -1483,11 +1483,11 @@ public function checkLessonPass_Percent($lesson,$format=null, $gen_id=null)
 
             $criteria = new CDbCriteria;
             // $criteria->select = '*';
-            $criteria->condition = ' course_id="' . $course->id . '" AND user_id="' . Yii::app()->user->id . '" AND gen_id="'.$gen_id.'"';
+            $criteria->condition = ' course_id="' . $course->id . '" AND user_id="' . Yii::app()->user->id . '" AND gen_id="'.$gen_id.'" AND type="post"';
             $criteria->order = 'score_number DESC';
 
             $criteria2 = new CDbCriteria;
-            $criteria2->condition = ' course_id="' . $course->id . '" AND score_past="y" AND user_id="' . Yii::app()->user->id . '" AND gen_id="'.$gen_id.'"';
+            $criteria2->condition = ' course_id="' . $course->id . '" AND score_past="y" AND user_id="' . Yii::app()->user->id . '" AND gen_id="'.$gen_id.'" AND type="post"';
             $criteria2->order = 'score_number ASC';
             $score = Coursescore::model()->find($criteria);
             $score_past = Coursescore::model()->find($criteria2);
@@ -2587,7 +2587,7 @@ public function checkProgressStep($course) {
             $logStart = LogStartcourse::model()->findByPk(array('user_id' => $value->user->id,'course_id'=> $value->course_id, 'gen_id'=>$gen_id));
             $member[$key]['date'] = $logStart->end_date;
             if($this->checkHaveCourseTestInManage($value->course_id)){
-                $courseScore = Coursescore::model()->findByAttributes(array('user_id' => $value->user->id,'course_id'=> $value->course_id,'score_past' => 'y','active'=>'y', 'gen_id'=>$gen_id));
+                $courseScore = Coursescore::model()->findByAttributes(array('user_id' => $value->user->id,'course_id'=> $value->course_id,'score_past' => 'y','active'=>'y', 'gen_id'=>$gen_id, 'type'=>"post"));
                 $member[$key]['score'] = $courseScore->score_total;
             }
         }else if($learnStatus == "notPass"){
@@ -2817,7 +2817,7 @@ if($learnfiles){
                 $member[$key]['date'] = $logStart->end_date;
                 
                 if($this->checkHaveCourseTestInManage($value->course_id)){
-                    $courseScore = Coursescore::model()->findByAttributes(array('user_id' => $value->user_id,'course_id'=> $value->course_id,'score_past' => 'y','active'=>'y', 'gen_id'=>$gen_id));
+                    $courseScore = Coursescore::model()->findByAttributes(array('user_id' => $value->user_id,'course_id'=> $value->course_id,'score_past' => 'y','active'=>'y', 'gen_id'=>$gen_id, 'type'=>"post"));
                     
                     if($courseScore){
                         $member[$key]['status'] = "P";
@@ -2900,7 +2900,7 @@ public function sendApiLms($scheduleMain,$scheduleId)
 
                 if($this->checkHaveCourseTestInManage($value->course_id)){
 
-                    $courseScore = Coursescore::model()->findByAttributes(array('user_id' => $value->user_id,'course_id'=> $value->course_id,'score_past' => 'y','active'=>'y', 'gen_id'=>$gen_id));
+                    $courseScore = Coursescore::model()->findByAttributes(array('user_id' => $value->user_id,'course_id'=> $value->course_id,'score_past' => 'y','active'=>'y', 'gen_id'=>$gen_id, 'type'=>"post"));
 
                     if($courseScore){
                         $member[$key]['status'] = "P";
@@ -4263,13 +4263,36 @@ public function checkStepLesson($lesson){
             if ($checkHaveCourseTest) { // สอบ final
                 $num_step++; 
                 $score_final = Coursescore::model()->find(array( // หลังเรียน ต้องผ่าน
-                    'condition' => 'course_id=:course_id AND gen_id=:gen_id AND user_id=:user_id AND score_past=:score_past AND active=:active',
-                    'params' => array(':course_id'=>$course->course_id, ':gen_id'=>$gen_id, ':user_id'=>Yii::app()->user->id, ':score_past'=>'y', ':active'=>'y'),
+                    'condition' => 'course_id=:course_id AND gen_id=:gen_id AND user_id=:user_id AND score_past=:score_past AND active=:active AND type=:type',
+                    'params' => array(':course_id'=>$course->course_id, ':gen_id'=>$gen_id, ':user_id'=>Yii::app()->user->id, ':score_past'=>'y', ':active'=>'y', ':type'=>"post"),
                 ));
                 if($score_final != ""){
                     $step_pass++;
                 }
             } 
+
+             $checkHaveCoursePreTest = Helpers::lib()->checkHaveCoursePreTestInManage($course->course_id);
+            if($checkHaveCoursePreTest){ // สอบ ก่อนเรียน course
+                 $num_step++; 
+                 $checkHaveScoreCoursePreTest = Helpers::lib()->checkHaveScoreCoursePreTest($course->course_id, $gen_id);
+                 if(!$checkHaveScoreCoursePreTest){
+                    $step_pass++;
+                 }
+            }
+
+            $CourseSurvey = CourseTeacher::model()->findAllByAttributes(array('course_id'=>$course->course_id));
+            if($CourseSurvey){ // มี แบบสอบถาม
+                foreach ($CourseSurvey as $key => $value) {
+                     $num_step++; 
+                     $passQuest = QQuestAns_course::model()->find(array(
+                        'condition' => 'user_id = "' . Yii::app()->user->id . '" AND course_id ="' . $course->course_id . '"'." AND gen_id='".$gen_id."'",
+                    ));
+                     if ($passQuest) { //ตอบแบบสอบถามแล้ว
+                        $step_pass++;
+                     }
+                 }
+             }
+
 
             if($num_step != 0){
                 $percent_average = 100/$num_step; // % แต่ละ step

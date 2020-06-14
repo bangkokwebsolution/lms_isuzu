@@ -46,7 +46,7 @@ EOD
     <div class="innerLR">
         <?php
         $CourseOnline = CourseOnline::model()->findAll(array(
-            'condition' => 'active = "y"',
+            'condition' => 'active = "y" AND lang_id=1',
             'order' => 'cate_id ASC, cate_course ASC, course_id ASC'
         ));
         $listCourse = CHtml::listData($CourseOnline,'course_id','course_title');

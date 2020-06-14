@@ -147,7 +147,7 @@ if($model){
         $stopId = $_GET['lid'];
     }
     $criteria = new CDbCriteria;
-    $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y" AND score_past = "y"'." AND gen_id='".$gen_id."'";
+    $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y" AND score_past = "y"'." AND gen_id='".$gen_id."'".' AND type="post"';
     $criteria->order = 'create_date ASC';
     $FinalScore = Coursescore::model()->findAll($criteria);
     ?>
@@ -306,7 +306,7 @@ if($model){
                 $checkHaveCourseTest = Helpers::lib()->checkHaveCourseTestInManage($course->course_id);
                 $checkHaveCoursePreTest = Helpers::lib()->checkHaveCoursePreTestInManage($course->course_id);
                 $criteria = new CDbCriteria;
-                $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y"'." AND gen_id='".$gen_id."'";
+                $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y"'." AND gen_id='".$gen_id."'".' AND type="post"';
                 $criteria->order = 'create_date ASC';
                 $BestFinalTestScore = Coursescore::model()->findAll($criteria);
 
@@ -332,7 +332,25 @@ if($model){
             $pathPassed_Onclick = '';
             $statePrintCert = false;
             $disBtn = '';
-            if($allPassed){
+
+            $can_print_cer = 2;
+            $CourseSurvey = CourseTeacher::model()->findAllByAttributes(array('course_id'=>$course->course_id));
+            if($CourseSurvey){ // มี แบบสอบถาม
+                foreach ($CourseSurvey as $key => $value) {
+                     $num_step++; 
+                     $passQuest = QQuestAns_course::model()->find(array(
+                        'condition' => 'user_id = "' . Yii::app()->user->id . '" AND course_id ="' . $course->course_id . '"'." AND gen_id='".$gen_id."'",
+                    ));
+                     if ($passQuest) { //ตอบแบบสอบถามแล้ว
+                        $can_print_cer = 1;
+                     }
+                 }
+             }else{
+                        $can_print_cer = 1;                
+             }
+
+
+            if($allPassed && $can_print_cer == 1){
                $certDetail = CertificateNameRelations::model()->find(array('condition'=>'course_id='.$course->course_id));
                if(empty($certDetail)){
                    $pathPassed = 'javascript:void(0);';
@@ -523,6 +541,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                                                         $criteria->compare('user_id',Yii::app()->user->id);
                                                         $criteria->compare('course_id',$course->course_id);
                                                         $criteria->compare('gen_id',$gen_id);
+                                                        $criteria->compare('type','post');
                                                         $scoreCourse = Coursescore::model()->findAll($criteria);
                                                         $status_courseTest = array();
                                                         foreach ($scoreCourse as $key => $value) {
@@ -1167,7 +1186,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                 }
 
                 $criteria = new CDbCriteria;
-                $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y"'." AND gen_id='".$gen_id."'";
+                $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y"'." AND gen_id='".$gen_id."'".' AND type="post"';
                 $criteria->order = 'create_date ASC';
                 $BestFinalTestScore = Coursescore::model()->findAll($criteria);
 
@@ -1264,6 +1283,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
              $criteria = new CDbCriteria;
              $criteria->compare('course_id',$course->course_id);
              $criteria->compare('gen_id',$gen_id);
+             $criteria->compare('type',"post");
              $criteria->compare('user_id',Yii::app()->user->id);
              $criteria->compare('score_past','y');
              $criteria->compare('active','y');
