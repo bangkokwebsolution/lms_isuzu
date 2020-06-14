@@ -1197,7 +1197,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
         <?php 
         if($checkHaveCourseTest){
             if($checkCourseTest == 'pass' && count($BestFinalTestScore) < $course->cate_amount && $ckPassAll && $can_next_step != 2){ //มีสิทธิสอบและยังสามารถสอบได้อีก
-                $pathCourseTest = $this->createUrl('coursequestion/preexams', array('id' => $course->course_id));
+                $pathCourseTest = $this->createUrl('coursequestion/preexams', array('id' => $course->course_id, 'type'=>'course'));
                 $alertCourseTest = '';
             }else{
                 $pathCourseTest = 'javascript:void(0);';
