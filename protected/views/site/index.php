@@ -330,7 +330,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         <div class="item item-course-index">
                             <div class="cours-card">
                                 <div class="card">
-                                  <a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)); ?>"
+                                  <a href="<?= $url ?>" <?= $evnt ?>
                                     class="course_site">
                                     <?php $idCourse_img = (!$flag)? $modelChildren->course_id: $value->course_id; ?>
                                     <?php if ($value->course_picture != null) { ?>
@@ -340,7 +340,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                 <?php } ?>
 
                                 <div class="card-body">
-                                    <a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)); ?>">
+                                    <a href="<?= $url ?>" <?= $evnt ?>>
                                         <h5 class="card-title"><?= $value->course_title; ?></h5>
                                     </a>
                                     <?php 
@@ -491,7 +491,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <a class="btn btn-success" href="<?php echo Yii::app()->createUrl('course/detail/', array('id' => $value->course_id)) ?>"><?= UserModule::t("Ok") ?></a>
+                            <a class="btn btn-success" href="<?= $url ?>" <?= $evnt ?>><?= UserModule::t("Ok") ?></a>
                             <a class="btn btn-warning" href="#" class="close" data-dismiss="modal" aria-hidden="true"><?= UserModule::t("Cancel") ?></a>
                         </div>
                     </div>
