@@ -967,8 +967,8 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
      public static function checkHaveScoreCoursePreTest($course_id, $gen_id=null){ 
      // // เช็คว่าสอบไปยัง      ข้อสอบ ก่อนเรียน หลักสูตร
         if($gen_id == null){
-            $lesson_model = Lesson::model()->findByPk($lesson->id);
-            $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+             $course_model = CourseOnline::model()->findByPk($course_id);
+            $gen_id = $course_model->getGenID($course_model->course_id);
         }
 
         $Course_Score = Coursescore::model()->find(array(
@@ -986,8 +986,8 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
     public static function ScoreCoursePreTest($course_id, $gen_id=null){ 
      // คะแนน ข้อสอบ ก่อนเรียน
         if($gen_id == null){
-            $lesson_model = Lesson::model()->findByPk($lesson->id);
-            $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+             $course_model = CourseOnline::model()->findByPk($course_id);
+            $gen_id = $course_model->getGenID($course_model->course_id);
         }
 
         $Course_Score = Coursescore::model()->find(array(

@@ -1259,7 +1259,6 @@ Class MenuLeft extends Controller
 	        	'visible'=>self::PermissionsMenu(array(
 	        		'monthCheck.*',
 	        		'monthCheck.admin',
-	        		'monthCheck.Approve'
 	        	)),
 	        	'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบตรวจสอบการใช้งาน</span>',
 	        	'url'=>'#monthCheck',
@@ -1272,7 +1271,7 @@ Class MenuLeft extends Controller
 	        			/*====== Check Permissions Sup-Category (2) ======*/
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'monthCheck.*',
-	        				'monthCheck.Index'
+	        				'monthCheck.admin'
 	        			)),
 	        			'label'=>'กำหนดระยะเวลาในการเข้าใช้งานคนประจำเรือ',
 	        			'url'=>array('//monthCheck/admin')
