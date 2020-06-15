@@ -224,6 +224,7 @@ $this->breadcrumbs=array($title);
                                                     $('#selectApplyCourseToCertificate').modal('hide');
                         					// $('#MtCourseType-grid').load(document.URL + ' #MtCourseType-grid');
                         					$.fn.yiiGridView.update('Certificate-grid');
+                                  location.reload();
                         				} else {
                         					alert('error');
                         				}

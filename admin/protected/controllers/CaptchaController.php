@@ -169,7 +169,7 @@ class CaptchaController extends Controller
     	$model->attributes=$_POST['ConfigCaptcha'];
 
     	$cap->attributes=$_POST['ConfigCaptchaCourseRelation'];
-    	$cap->cnid=$_POST['cnid'];
+    	//$cap->cnid=$_POST['cnid'];
     	$model->created_by = Yii::app()->user->id;
     	$model->created_date = date("Y-m-d H:i:s");
     	$model->capt_active = 'y';
@@ -241,7 +241,7 @@ class CaptchaController extends Controller
 			$model->type = json_encode($_POST['type']);
 			$model->attributes = $_POST['ConfigCaptcha'];
 			$cap->attributes = $_POST['ConfigCaptchaCourseRelation'];
-			$cap->cnid=$_POST['cnid'];
+			//$cap->cnid=$_POST['cnid'];
 			if($model->validate() && $cap->validate()){
 				$cap1 = ConfigCaptchaCourseRelation::model()->deleteAll(array(
 					'condition'=>'captid = "'.$id.'"'
