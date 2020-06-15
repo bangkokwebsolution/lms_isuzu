@@ -30,7 +30,58 @@ class SiteController extends Controller
 	 * This is the default 'index' action that is invoked
 	 * when an action is not explicitly requested by users.
 	 */
+    public function actionAutoCheck()
+    {
+    	$keys = $_GET['key'];
+        if($keys != '90b80dfe-3717-49af-9beb-b62e726c74af'){
+            $this->redirect(array('site/index'));
+        }
+        $MonthCheck = MonthCheck::model()->findAll('active="y" AND month_status="y" AND type_user=3');
+		if ($MonthCheck) {
+			foreach ($MonthCheck as $key => $valuem) {
+		        $type_user =  $valuem['type_user'];
+		         if ($valuem) {
+			         	$start_date = date("Y-m-d h:i:s", strtotime('-99 month'));
+						$end_date = date("Y-m-d h:i:s", strtotime('-'.$valuem['month'].' month'));
+						$model =  Yii::app()->db->createCommand()
+							    ->select('*')
+							    ->from('tbl_users u')
+							    ->join('tbl_profiles p', 'u.id=p.user_id')
+							    ->where('del_status=:del_status AND status=:status AND superuser=:superuser AND p.type_user=:type_user', array(':del_status'=>0,':status'=>1,':superuser'=>0,':type_user'=>$valuem['type_user']))
+							    ->andWhere('lastvisit_at > :start AND lastvisit_at < :end', array(':start' => $start_date ,':end' => $end_date))
+							    ->queryAll();
+							    foreach ($model as $key => $value) {
+							    $update = Yii::app()->db->createCommand()
+							    		->update('tbl_users', array('del_status'=>1,), 'id=:id', array(':id'=>$value['id']));
+							    } 
 
+		        }
+			}
+		}
+
+		$MonthCheck_personal = MonthCheck::model()->findAll('active="y" AND month_status="y" AND type_user=5');
+		if ($MonthCheck_personal) {
+			foreach ($MonthCheck_personal as $key => $valuem) {
+		        $type_user =  $valuem['type_user'];
+		         if ($valuem) {
+			         	$start_date_personal = date("Y-m-d h:i:s", strtotime('-99 month'));
+						$end_date_personal = date("Y-m-d h:i:s", strtotime('-'.$valuem['month'].' month'));
+						$model_personal =  Yii::app()->db->createCommand()
+							    ->select('*')
+							    ->from('tbl_users u')
+							    ->join('tbl_profiles p', 'u.id=p.user_id')
+							    ->where('del_status=:del_status AND status=:status AND superuser=:superuser AND p.type_user=:type_user', array(':del_status'=>0,':status'=>1,':superuser'=>0,':type_user'=>$valuem['type_user']))
+							    ->andWhere('lastvisit_at > :start AND lastvisit_at < :end', array(':start' => $start_date_personal ,':end' => $end_date_personal))
+							    ->queryAll();
+							    foreach ($model_personal as $key => $value) {
+							    $update = Yii::app()->db->createCommand()
+							    		->update('tbl_users', array('del_status'=>1,), 'id=:id', array(':id'=>$value['id']));
+							    } 
+
+		        }
+			}
+		}
+    }
 
 
     public function actionShowCer() {		
