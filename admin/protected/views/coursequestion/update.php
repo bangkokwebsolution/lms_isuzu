@@ -69,6 +69,13 @@ label.error { display: none; }
 							?>
 							<label><h3>โจทย์ <input type="hidden" name="Question_type[<?php echo $modelQues->ques_id; ?>]" value="<?php echo $questionTypeArray[$modelQues->ques_type]; ?>"> <!--ข้อที่ <span class="question-numbers" style="color:green; font-size: 20px;">'+question_total+'</span>--></h3>
 								</label>
+								<?php if($modelQues->ques_type == 3){ ?>
+								<div class="span11">
+									<label><h3> คะแนนเต็ม</h3>
+										<input type="number" name="Question_score[<?php echo $modelQues->ques_id; ?>]" min=0 pattern="[0-9]" value="<?php echo $modelQues->max_score; ?>">
+									</label>
+								</div>
+							<?php } ?>
 							<div class="span12">
 								<textarea name="Question[<?php echo $modelQues->ques_id; ?>]" class="question-title tinymce" id="question-<?php echo $modelQues->ques_id; ?>-title" cols="30" rows="10"><?php echo $modelQues->ques_title; ?></textarea>
 								</div>
