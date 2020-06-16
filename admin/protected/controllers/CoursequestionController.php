@@ -383,6 +383,10 @@ class CoursequestionController extends Controller
 				$questionModel->ques_type = $questionTypeArray[$questionType];
 				$questionModel->ques_title = $questionTitle;
 
+				if($questionModel->ques_type == 3){
+        			$questionModel->max_score = $_POST['Question_score'][$key]; //Max score
+        		}
+
 				/*
 				//Logic By Nutt.
 				$old = array(1, 3, 4);

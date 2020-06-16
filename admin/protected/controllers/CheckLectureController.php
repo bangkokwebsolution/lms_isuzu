@@ -223,7 +223,7 @@ public function actionGet_dialog_exam_course(){
   $courseId = $_POST['course_id'];
 
   $model = Courselogques::model()->with('Coursescore')->findAll(array(
-     'condition' => 't.user_id=:user_id AND t.course_id=:course_id AND t.active="y" AND Coursescore.active="y" AND t.confirm = 0',
+     'condition' => 't.user_id=:user_id AND t.course_id=:course_id AND t.active="y" AND Coursescore.active="y" AND t.confirm = 0 AND t.ques_type=3',
      'params' => array(':user_id'=> $userid,':course_id' => $courseId)));
 		// var_dump($model);exit();
   $msg = $this->renderPartial('_modal_exam_course',array('model'=>$model));
