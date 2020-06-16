@@ -123,7 +123,7 @@ class CaptchaController extends Controller
 			));
 			$mtId = array();
 			foreach ($model as $key => $value) {
-				$mtId[$key] = $value->course_id;
+				$mtId[$key] = $value->cnid;
 			}
 			if($getAllCourse) {
 				$respon .= '<table class="table table-striped">';

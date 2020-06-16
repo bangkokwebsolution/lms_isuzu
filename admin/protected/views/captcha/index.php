@@ -223,8 +223,7 @@ $this->breadcrumbs=array($title);
                                                if(respon) {
                                                     $('#selectApplyCourseToCertificate').modal('hide');
                         					// $('#MtCourseType-grid').load(document.URL + ' #MtCourseType-grid');
-                        					$.fn.yiiGridView.update('Certificate-grid');
-                                  location.reload();
+                        					$.fn.yiiGridView.update('Captcha-grid');
                         				} else {
                         					alert('error');
                         				}
