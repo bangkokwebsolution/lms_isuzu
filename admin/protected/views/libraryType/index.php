@@ -95,7 +95,7 @@ EOD
 							'id'=>'chk',
 						),
 						'library_type_name',
-						'library_type',						
+						// 'library_type',						
 				        array(
 							'type'=>'raw',
 							'value'=>'CHtml::link("<i></i>","", array("class"=>"glyphicons move btn-action btn-inverse"))',

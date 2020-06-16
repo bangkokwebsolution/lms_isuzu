@@ -17,7 +17,7 @@ $this->breadcrumbs=array(
 		// 'sortOrder',
 		'library_type_name',
 		'library_type_name_en',
-		'library_type',
+		// 'library_type',
 		array(
 			'name'=>'created_date',
 			'value'=> ClassFunction::datethaiTime($model->created_date)

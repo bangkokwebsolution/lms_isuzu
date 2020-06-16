@@ -28,7 +28,7 @@ class LibraryTypeController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view', 'sequence'),
 				'users'=>array('*'),
 			),
 			// array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -74,8 +74,8 @@ class LibraryTypeController extends Controller
 		{
 			$model->attributes=$_POST['LibraryType'];
 
-			$model->library_type = str_replace(' ', '', $model->library_type);
-			$model->library_type = strtolower($model->library_type);
+			// $model->library_type = str_replace(' ', '', $model->library_type);
+			// $model->library_type = strtolower($model->library_type);
 
 
 			if($model->save()){
@@ -107,8 +107,8 @@ class LibraryTypeController extends Controller
 		{
 			$model->attributes=$_POST['LibraryType'];
 
-			$model->library_type = str_replace(' ', '', $model->library_type);
-			$model->library_type = strtolower($model->library_type);
+			// $model->library_type = str_replace(' ', '', $model->library_type);
+			// $model->library_type = strtolower($model->library_type);
 
 
 			if($model->save()){
@@ -179,6 +179,19 @@ class LibraryTypeController extends Controller
 		$this->render('admin',array(
 			'model'=>$model,
 		));
+	}
+
+	public function actionSequence() {
+		if (isset($_POST['items']) && is_array($_POST['items'])) {
+			$cur_items = LibraryType::model()->findAllByPk($_POST['items'], array('order'=>'sortOrder'));
+			for ($i = 0; $i < count($_POST['items']); $i++) {
+				$item = LibraryType::model()->findByPk($_POST['items'][$i]);
+				if ($item->sortOrder != $cur_items[$i]->sortOrder) {
+					$item->sortOrder = $cur_items[$i]->sortOrder ;
+					$item->save();
+				}
+			}
+		}
 	}
 
 	/**
