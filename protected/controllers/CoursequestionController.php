@@ -165,7 +165,7 @@ class CoursequestionController extends Controller
                 }
             }
 
-            if ($courseStatus == "notPass" && $status_precorse == true) { 
+            if ($courseStatus == "notPass" && $status_precorse == false) { 
                 Yii::app()->user->setFlash('CheckQues', $label->label_alert_noPermisTest);
                 Yii::app()->user->setFlash('class', "error");
                 $this->redirect(array(
