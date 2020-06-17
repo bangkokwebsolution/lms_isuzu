@@ -40,7 +40,7 @@ body {
   position: relative;
   font-size: 16px;
   margin: 0;
-  /* padding-bottom: 6rem; */
+   padding-bottom: 6rem; 
   min-height: 100%;
 }
 
@@ -4554,6 +4554,61 @@ ol.stat-alert li::before {
 
 .course-detail .tab-content{
   margin-top: 1em;
+}
+
+.library-main img{
+  border-radius: 4px;
+}
+
+.video-library{
+
+}
+
+
+.other-library{
+    background-image: url(../images/other-bar.png);
+    background-repeat: no-repeat;
+    background-position: center top;
+    margin-top: 2em;
+}
+
+.library-detail{
+  padding: .5em
+}
+
+.other-file{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 5px;
+}
+
+.other-file .word{
+  color: #2B569A;
+}
+
+.other-file .excel{
+  color: #207244;
+}
+
+.other-file .powerpoint{
+  color: #D24625;
+}
+
+.other-file .audio{
+  color:#010c65;
+}
+
+
+.other-file .pdf{
+  color:#010c65;
+}
+
+.library-main .owl-dots .owl-dot.active span,.library-main .owl-dots .owl-dot:hover span{
+  background: #010c65 !important;
 }
 
 section#faq{

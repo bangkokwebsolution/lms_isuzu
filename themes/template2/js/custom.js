@@ -36,3 +36,24 @@ responsive: {
     }
 }
 });
+
+
+$('.library-main').owlCarousel({
+items: 4,
+animateOut: 'fadeOut',
+loop: false,
+margin: 20,
+nav: false,
+responsiveClass: true,
+responsive: {
+    0: {
+        items: 1,
+    },
+    600: {
+        items: 3,
+    },
+    1000: {
+        items: 4,
+    }
+}
+});
