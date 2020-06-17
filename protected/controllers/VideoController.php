@@ -67,6 +67,13 @@ class VideoController extends Controller{
 			'name'=>$name,
 		));
 	}
+
+    public function actionLibrary()
+    {
+
+        
+        $this->render('library');
+    }
     
     protected function performAjaxValidation($model)
 	{
