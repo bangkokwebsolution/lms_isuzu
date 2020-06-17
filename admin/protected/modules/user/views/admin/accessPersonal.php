@@ -73,7 +73,7 @@ $this->breadcrumbs=array(
 			<div class="widget-body">
 				<div>
 					<?php echo Rights::t('core', 'ที่นี่คุณสามารถตรวจสอบและจัดการการเข้าใช้งานบุคคลทั่วไป'); ?>
-					<h3>กรุณาป้อนข้อมูลให้ถูกต้อง แล้วกด ปุ่มค้นหา</h3>
+<!-- 					<h3>กรุณาป้อนข้อมูลให้ถูกต้อง แล้วกด ปุ่มค้นหา</h3> -->
 				</div>
 				<div class="separator bottom form-inline small">
 					<span class="pull-right">

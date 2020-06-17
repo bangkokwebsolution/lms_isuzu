@@ -143,7 +143,7 @@ $this->breadcrumbs=array(
 										$now = new DateTime();
                                         $input = new DateTime($data->lastvisit_at);
                                         $diff = $input->diff($now); 
-                                       echo $diff->format('%a วัน');
+                                       echo $diff->format('%d วัน');
 									},
 								),
 			// 					array(
@@ -269,7 +269,7 @@ $this->breadcrumbs=array(
 
 												if (result) {
 													setTimeout(function () {
-														swal("ลบสำเร็จ!", "ระบบได้ทำการเปิดการใช้งานผู้ใช้งานเรียบร้อยแล้ว", "success");
+														swal("สำเร็จ!", "ระบบได้ทำการเปิดการใช้งานผู้ใช้งานเรียบร้อยแล้ว", "success");
 													}, 1000);
 													location.reload();
 												}else{

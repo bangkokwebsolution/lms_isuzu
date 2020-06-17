@@ -67,6 +67,10 @@ class PControllerController extends Controller
         if (isset($_POST['PController']) && isset($_POST['PAction'])) {
             $model_c->attributes = $_POST['PController'];
             if ($model_c->save()){
+                if ($model_c->priority == null) {
+                   $model_c->priority = $model_c->id;   
+                   $model_c->save();
+                }
                 if ($_POST['PAction']){
                     foreach ($_POST['PAction'] as $action_index=>$action_value){
                         $model_s = new PAction;
