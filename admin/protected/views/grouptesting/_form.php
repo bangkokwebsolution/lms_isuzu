@@ -32,7 +32,7 @@
                 	<!-- </div> -->
 					<?php 
 						$list = CHtml::listData(Lesson::model()->lessoncheck()->findAll(array(
-							"condition"=>" active = 'y' and lang_id = 1",'order'=>'id DESC')),'id', 'concatcourselesson'); 
+							"condition"=>" active = 'y' and lang_id = 1",'order'=>'course_id ASC, title ASC')),'id', 'concatcourselesson'); 
 						$attSearch = array("class"=>"form-control span8",'disable_search' => false,'empty' => "--- กรุณาเลือกบทเรียน ---");
 					?>
 					<!-- <div class="row"> -->

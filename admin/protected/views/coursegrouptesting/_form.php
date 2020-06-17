@@ -42,11 +42,11 @@
             //////////////////
             if($see_all != 1){
             	$list = CHtml::listData(CourseOnline::model()->findAll( 
-								array('condition' => "active='y' and lang_id = 1 and create_by='".Yii::app()->user->id."'",'order'=>'course_id DESC')),
+								array('condition' => "active='y' and lang_id = 1 and create_by='".Yii::app()->user->id."'",'order'=>'course_title ASC')),
 								'course_id', 'course_title');
                 	}else{
                 		$list = CHtml::listData(CourseOnline::model()->findAll( 
-								array('condition' => "active='y' and lang_id = 1",'order'=>'course_id DESC')),
+								array('condition' => "active='y' and lang_id = 1",'order'=>'course_title ASC')),
 								'course_id', 'course_title');
 
                 	}
