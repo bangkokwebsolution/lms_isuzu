@@ -1068,6 +1068,8 @@ public function actionUpdate() {
         $profile->title_id = $_POST['Profile'][title_id];
         $profile->firstname = $_POST['Profile'][firstname];
         $profile->lastname = $_POST['Profile'][lastname];
+        $profile->firstname_en = $_POST['Profile'][firstname_en];
+        $profile->lastname_en = $_POST['Profile'][lastname_en];
         $profile->type_user = $_POST['type_user']; 
         $profile->history_of_illness = $_POST['history_of_illness'];;
         $profile->status_sm = $_POST['status_sm'];

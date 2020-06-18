@@ -143,7 +143,7 @@ $this->breadcrumbs=array(
 										$now = new DateTime();
                                         $input = new DateTime($data->lastvisit_at);
                                         $diff = $input->diff($now); 
-                                       echo $diff->format('%d วัน');
+                                       echo $diff->format('%a วัน');
 									},
 								),
 			// 					array(
