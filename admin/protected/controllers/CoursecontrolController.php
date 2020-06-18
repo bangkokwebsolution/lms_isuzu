@@ -305,7 +305,8 @@ class CoursecontrolController extends Controller
 							$orgc = new OrgCourse;
 							$orgc->orgchart_id = $val->id;
 							$orgc->course_id = $value['id'];
-							$orgc->parent_id = $_POST['org_id'];
+							$orgc->parent_id = 0;
+							// $orgc->parent_id = $_POST['org_id'];
 							$orgc->active = 'y';
 							$orgc->save();
 						}
@@ -325,7 +326,8 @@ class CoursecontrolController extends Controller
 										$orgc = new OrgCourse;
 										$orgc->orgchart_id = $value4->id;
 										$orgc->course_id = $value['id'];
-										$orgc->parent_id = $val->id;
+										$orgc->parent_id = 0;
+										// $orgc->parent_id = $val->id;
 										$orgc->active = 'y';
 										$orgc->save();
 									}
@@ -345,7 +347,8 @@ class CoursecontrolController extends Controller
 												$orgc = new OrgCourse;
 												$orgc->orgchart_id = $value5->id;
 												$orgc->course_id = $value['id'];
-												$orgc->parent_id = $value4->id;
+												$orgc->parent_id = 0;
+												// $orgc->parent_id = $value4->id;
 												$orgc->active = 'y';
 												$orgc->save();
 											}
@@ -366,7 +369,8 @@ class CoursecontrolController extends Controller
 														$orgc = new OrgCourse;
 														$orgc->orgchart_id = $value6->id;
 														$orgc->course_id = $value['id'];
-														$orgc->parent_id = $value5->id;
+														$orgc->parent_id = 0;
+														// $orgc->parent_id = $value5->id;
 														$orgc->active = 'y';
 														$orgc->save();
 													}
