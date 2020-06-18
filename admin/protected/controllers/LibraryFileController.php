@@ -28,7 +28,7 @@ class LibraryFileController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'sequence'),
+				'actions'=>array('index','view', 'sequence', 'download', 'accept', 'reject'),
 				'users'=>array('*'),
 			),
 			// array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -199,6 +199,35 @@ class LibraryFileController extends Controller
 			}
 		}
 	}
+
+	public function actionDownload() {
+		$model=new LibraryRequest('search');
+		$model->unsetAttributes();  // clear any default values
+		$model->active = 'y';
+
+		if(isset($_GET['LibraryRequest'])){
+			$model->attributes=$_GET['LibraryRequest'];
+		}
+
+		$this->render('download',array(
+			'model'=>$model,
+		));
+	}
+
+	public function actionAccept($id) {
+		$model=LibraryRequest::model()->findByPk($id);
+		$model->req_status = 2;
+		$model->save();
+		$this->redirect('../download');
+	}
+
+	public function actionReject($id) {
+		$model=LibraryRequest::model()->findByPk($id);
+		$model->req_status = 3;
+		$model->save();
+		$this->redirect('../download');		
+	}
+
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

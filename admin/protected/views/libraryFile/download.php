@@ -1,0 +1,214 @@
+<?php
+$titleName = 'การอนุมัติการดาวน์โหลด';
+$formNameModel = 'LibraryRequest';
+
+$this->breadcrumbs=array($titleName);
+Yii::app()->clientScript->registerScript('search', "
+	$('#SearchFormAjax').submit(function(){
+	    $.fn.yiiGridView.update('$formNameModel-grid', {
+	        data: $(this).serialize()
+	    });
+	    return false;
+	});
+");
+
+Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
+	$.updateGridView = function(gridID, name, value) {
+	    $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
+	    $.fn.yiiGridView.update(gridID, {data: $.param(
+	        $("#"+gridID+" input, #"+gridID+" .filters select")
+	    )});
+	}
+	$.appendFilter = function(name, varName) {
+	    var val = eval("$."+varName);
+	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
+	}
+	$.appendFilter("LibraryRequest[news_per_page]", "news_per_page");
+EOD
+, CClientScript::POS_READY);
+?>
+<?php 
+
+	?>
+<div class="innerLR">
+	
+	<div class="widget" style="margin-top: -1px;">
+		<div class="widget-head">
+			<h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $titleName;?></h4>
+		</div>
+		<div class="widget-body">
+			<div class="separator bottom form-inline small">
+				<form action="download" method="GET">
+					<div class="row">
+						<div class="col-md-1 text-right">
+							<h5>สถานะ :</h5>
+						</div>
+						<div class="col-md-8">
+							<select class="form-control" name="LibraryRequest[req_status]">
+								<option >ทั้งหมด</option>
+								<option value="1" <?php if(isset($_GET['LibraryRequest']['req_status']) && $_GET['LibraryRequest']['req_status'] == 1){ echo "selected"; } ?>>รอการอนุมัติ</option>
+								<option value="2" <?php if(isset($_GET['LibraryRequest']['req_status']) && $_GET['LibraryRequest']['req_status'] == 2){ echo "selected"; } ?>>อนุมัติ</option>
+								<option value="3" <?php if(isset($_GET['LibraryRequest']['req_status']) && $_GET['LibraryRequest']['req_status'] == 3){ echo "selected"; } ?>>ปฏิเสธ</option>
+							</select>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-1"></div>
+						<div class="col-md-8">
+							<button type="submit">ค้นหา</button>
+						</div>
+					</div>
+				</form>
+				<hr>
+
+				<span class="pull-right">
+					<label class="strong">แสดงแถว:</label>
+					<?php echo $this->listPageShow($formNameModel);?>
+				</span>	
+			</div>
+			<div class="clear-div"></div>
+			<div class="overflow-table">
+				<?php $this->widget('AGridView', array(
+					'id'=>$formNameModel.'-grid',
+					'dataProvider'=>$model->search(),
+					'filter'=>$model,
+					'selectableRows' => 2,
+					'rowCssClassExpression'=>'"items[]_{$data->req_id}"',
+					'htmlOptions' => array(
+						'style'=> "margin-top: -1px;",
+					),
+					'afterAjaxUpdate'=>'function(id, data){
+						$.appendFilter("LibraryRequest[news_per_page]");
+						InitialSortTable();	
+				        jQuery("#course_date").datepicker({
+						   	"dateFormat": "dd/mm/yy",
+						   	"showAnim" : "slideDown",
+					        "showOtherMonths": true,
+					        "selectOtherMonths": true,
+				            "yearRange" : "-5+10", 
+					        "changeMonth": true,
+					        "changeYear": true,
+				            "dayNamesMin" : ["อา.","จ.","อ.","พ.","พฤ.","ศ.","ส."],
+				            "monthNamesShort" : ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.",
+				                "ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."],
+					   })
+					}',
+					'columns'=>array(
+						// array(
+						// 	'visible'=>Controller::PButton(array($formNameModel.".MultiDelete")),
+						// 	'class'=>'CCheckBoxColumn',
+						// 	'id'=>'chk',
+						// ),
+						array(
+							'name'=>'user_id',
+							// 'value'=>'$data->usercreate->profile->firstname',
+							'filter'=>false,
+			                'htmlOptions' => array(
+			                   'style' => 'width:130px',
+			                ),  
+			                'value'=> function ($data){
+			                	return $data->usercreate->profile->firstname." ".$data->usercreate->profile->lastname;
+			                }
+						),
+						array(
+							'name'=>'library_id',
+							'value'=>'$data->file->library_name',
+							'filter'=>false,
+			                'htmlOptions' => array(
+			                   'style' => 'width:130px',
+			                ),  
+						),
+						array(
+							'name'=>'req_status',
+							// 'value'=>'$data->req_status',
+							'filter'=>false,
+			                'htmlOptions' => array(
+			                   'style' => 'width:130px',
+			                ),  
+			                'value'=> function ($data){
+			                	if($data->req_status == 1){
+			                		return "รอการอนุมัติ";
+			                	}elseif($data->req_status == 2){
+			                		return "อนุมัติ";
+
+			                	}elseif($data->req_status == 3){
+			                		return "ปฏิเสธ";
+			                	}
+			                }
+						),
+						array(
+							'name'=>'created_date',
+							'value'=>'$data->created_date',
+							'filter'=>false,
+			                'htmlOptions' => array(
+			                   'style' => 'width:130px',
+			                ),  
+			                // 'value'=> function ($data){
+
+			                // }
+						),
+						array(
+							'header'=>'จัดการ',							
+							'type'=>'raw',
+							'htmlOptions'=>array('style'=>'text-align: center','width'=>'100px'),
+							'value'=> function ($data){
+								if($data->req_status == 1){
+	return CHtml::link("อนุมัติ", array(
+		"LibraryFile/accept",
+		"id"=>$data->req_id,
+	), array( "class"=>"btn btn-success btn-icon" ))." ".CHtml::link("ปฏิเสธ", array(
+		"LibraryFile/reject",
+		"id"=>$data->req_id,
+	), array( "class"=>"btn btn-danger btn-icon" ));
+								}elseif($data->req_status == 2){
+	return CHtml::link("ปฏิเสธ", array(
+		"LibraryFile/reject",
+		"id"=>$data->req_id,
+	), array( "class"=>"btn btn-danger btn-icon" ));
+
+								}elseif($data->req_status == 3){
+	return CHtml::link("อนุมัติ", array(
+		"LibraryFile/accept",
+		"id"=>$data->req_id,
+	), array( "class"=>"btn btn-success btn-icon" ));
+								}
+							}
+							// 'value'=>'CHtml::link("เลือกข้อสอบ (".$data->getCountTest("course").")", array(
+					  //     		"CourseOnline/Formcourse",
+					  //     		"id"=>$data->course_id,
+					  //     		"type"=>"course"
+					  //     		), array(
+							// 	"class"=>"btn btn-primary btn-icon"
+						 //    )); ',
+						),
+
+				  //       array(
+						// 	'type'=>'raw',
+						// 	'value'=>'CHtml::link("<i></i>","", array("class"=>"glyphicons move btn-action btn-inverse"))',
+						// 	'htmlOptions'=>array('style'=>'text-align: center; width:50px;', 'class'=>'row_move'),
+						// 	'header' => 'ย้าย',
+						// 	'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
+						// ),						
+						// array(            
+						// 	'class'=>'AButtonColumn',
+						// 	'visible'=>Controller::PButton( 
+						// 		array("LibraryRequest.*", "LibraryRequest.View", "LibraryRequest.Update", "LibraryRequest.Delete") 
+						// 	),
+						// 	'buttons' => array(
+						// 		'view'=> array( 
+						// 			'visible'=>'Controller::PButton( array("LibraryRequest.*", "LibraryRequest.View") )' 
+						// 		),
+						// 		'update'=> array( 
+						// 			'visible'=>'Controller::PButton( array("LibraryRequest.*", "LibraryRequest.Update") )' 
+						// 		),
+						// 		'delete'=> array( 
+						// 			'visible'=>'Controller::PButton( array("LibraryRequest.*", "LibraryRequest.Delete") )' 
+						// 		),
+						// 	),
+						// ),
+					),
+				)); ?>
+			</div>
+		</div>
+	</div>	
+</div>
