@@ -168,7 +168,7 @@ EOD
 								return $btnUpload.$docList;
 							}
 						),
-				/*		array(
+						array(
 							'header'=>'ดูบันทึก',
 							'type'=>'raw',
 							'value'=>function ($data){
@@ -186,7 +186,7 @@ EOD
 									$itsAllGood = false;
 								}
 
-								if ($itsAllGood == true) {
+								if ($itsAllGood == true) { 
 									// If it's all good, then we've interfaced with our BBB php api OK:
 									if ($result == null) {
 										// If we get a null response, then we're not getting any XML back from BBB.
@@ -200,7 +200,7 @@ EOD
 											unset($result['returncode']);
 											unset($result['messageKey']);
 											unset($result['message']);
-											foreach ($result as $key => $record) {
+											foreach ($result as $key => $record) {//var_dump($record);
 												echo "<a href='".$record['playbackFormatUrl'][0]."' target='_blank'>".($key+1).". วีดีโอ</a>";
 												echo "<br>";
 											}
@@ -212,7 +212,59 @@ EOD
 									}
 								}	
 							}
-						),*/
+						),
+						array(
+							'header'=>'ดาวน์โหลด',
+							'type'=>'raw',
+							'value'=>function ($data){
+								$bbb = new BigBlueButton();
+
+								$recordingsParams = array(
+									//'meetingId' => $data->id, 			// OPTIONAL - comma separate if multiples
+									'recordId' => '12f0de3dc76e067d21ed85125716e02e9f1e69f0-1592368803153', 			
+									'publish' => 'true',
+								);
+								
+								// Get the URL to join meeting:
+								$itsAllGood = true;
+								try {$result = $bbb->getRecordingsWithXmlResponseArray($recordingsParams);}
+								catch (Exception $e) {
+									echo 'Caught exception: ', $e->getMessage(), "\n";
+									$itsAllGood = false;
+								}
+
+								if ($itsAllGood == true) { 
+									// If it's all good, then we've interfaced with our BBB php api OK:
+									if ($result == null) {
+										// If we get a null response, then we're not getting any XML back from BBB.
+										echo "Failed to get any response. Maybe we can't contact the BBB server.";
+									}	
+									else { 
+									// We got an XML response, so let's see what it says:
+									
+										if ($result['returncode'] == 'SUCCESS') {
+											//print_r($result);
+											// Then do stuff ...
+											// unset($result['returncode']);
+											// unset($result['messageKey']);
+											// unset($result['message']);//var_dump($result);
+											foreach ($result as $key => $record) {
+
+												 //header('Content-Disposition: attachment; filename="'.$record['playbackFormatUrl'][0].'.mp4"');
+
+
+												echo "<a href='".$record['playbackFormatUrl'][0]."' target='_blank'>".($key+1).". วีดีโอ</a>";
+												echo "<br>";
+											} 
+											//echo "<p>Meeting info was found on the server.</p>";
+										}
+										else {
+											echo "<p>Failed to get meeting info.</p>";
+										}
+									}
+								}	
+							}
+						),
 					   array(
 							'header'=>'รหัสในการเข้าห้องเรียน',
 							'type'=>'raw',

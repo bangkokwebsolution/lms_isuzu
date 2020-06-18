@@ -37,7 +37,7 @@ try {$result = $bbb->getRecordingsWithXmlResponseArray($recordingsParams);}
 		}	
 		else { 
 		// We got an XML response, so let's see what it says:
-		var_dump($result);
+
 			if ($result['returncode'] == 'SUCCESS') {
 				// Then do stuff ...
 				echo "<p>Meeting info was found on the server.</p>";

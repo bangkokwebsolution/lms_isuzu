@@ -1100,6 +1100,7 @@ echo ($data);
 		$data = array();
         // if(isset($_FILES['excel_import_student']))
         $model->excel_file = CUploadedFile::getInstance($model,'excel_file');
+
         if(!empty($model->excel_file))
         {      
             $phpExcelPath = Yii::getPathOfAlias('ext.phpexcel.Classes');
@@ -1143,54 +1144,69 @@ echo ($data);
 				$index = 0;
 				
 				foreach($namedDataArray as $key => $result){
-					
+	
 					$model = new User;
 					$profile=new Profile;
-					$model->email = $result["email"];
-					$model->username = $model->email;
-					// $model->identification = $result["รหัสบัตรประชาชน"];
+					$model->email = $result[" email"];
+					$model->username = $result["username"];
+				    $model->identification = $result["รหัสบัตรประชาชน (13หลัก)"];
 
 					$model->type_register = 2;
 					$model->superuser = 0;
-
-					$data[$key]['fullname'] = $result["ชื่อ"].' '.$result["นามสกุล"];
-					$data[$key]['email'] = $result["email"];
-					$data[$key]['phone'] =  $result["โทรศัพท์"];
+					$profile->type_user = 3;
+					$profile->identification = $result["รหัสบัตรประชาชน (13หลัก)"];
+                    $profile->firstname = $result["ชื่อ-นามสกุล"];
+					$profile->lastname = $result["นามสกุล"];
+					$profile->tel =  $result["โทรศัพท์"];   
+					$profile->address =  $result["ที่อยู่"]; 
+					$model->create_at = date('Y-m-d H:i:s');
+					$model->status = 1;
+					$model->department_id = $result["รหัสแผนก"];
+					$model->position_id = $result["ตำแหน่ง"];
+					$model->branch_id = $result["Lavel"];
+					// $data[$key]['fullname'] = $result["ชื่อ"].' '.$result["นามสกุล"];
+					// $data[$key]['email'] = $result["email"];
+					// $data[$key]['phone'] =  $result["โทรศัพท์"];
 					// $data[$key]['identification'] =  $result["รหัสบัตรประชาชน"];
-					$member = Helpers::lib()->ldapTms($model->email);
+					//$member = Helpers::lib()->ldapTms($model->email);
 					// $member['count'] = 0;
-					if($member['count'] > 0){ //TMS
-						$model->type_register = 3;
-						Helpers::lib()->_insertLdap($member);
-						$modelStation = Station::model()->findByAttributes(array('station_title'=>$member[0]['st'][0]));
-						$modelDepartment = Department::model()->findByAttributes(array('dep_title'=>$member[0]['department'][0]));
-						$modelDivision = Division::model()->findByAttributes(array('div_title'=>$member[0]['division'][0]));
+					// if($member['count'] > 0){ //TMS
+					// 	$model->type_register = 3;
+					// 	Helpers::lib()->_insertLdap($member);
+					// 	$modelStation = Station::model()->findByAttributes(array('station_title'=>$member[0]['st'][0]));
+					// 	$modelDepartment = Department::model()->findByAttributes(array('dep_title'=>$member[0]['department'][0]));
+					// 	$modelDivision = Division::model()->findByAttributes(array('div_title'=>$member[0]['division'][0]));
 
-						$model->division_id = $modelDivision->id;
-						$model->station_id = $modelStation->station_id;
-						$model->department_id = $modelDepartment->id;
-						$model->password = md5($model->email);
-						$model->verifyPassword = $model->password;
-						$model->status = 1; //bypass not confirm
-					}else{ //LMS
-						$model->password = md5($model->email); // Random password
-						$model->verifyPassword = $model->password;
-						$model->department_id = 2;
-						$model->status = 0;
-					}
-
+					// 	$model->division_id = $modelDivision->id;
+					// 	$model->station_id = $modelStation->station_id;
+					// 	$model->department_id = $modelDepartment->id;
+					// 	$model->password = md5($model->email);
+					// 	$model->verifyPassword = $model->password;
+					// 	$model->status = 1; //bypass not confirm
+					// }else{ //LMS
+					// 	$model->password = md5($model->email); // Random password
+					// 	$model->verifyPassword = $model->password;
+					// 	$model->department_id = 2;
+					// 	$model->status = 0;
+					// }
+					$genpass = $this->RandomPassword();
+					$model->verifyPassword = $genpass;
+					$model->password = UserModule::encrypting($genpass);
 					$model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
+				//var_dump($profile);exit();
 					if ($model->validate()) {
 						$model->save();
-						$data[$key]['msg'] = 'pass';
+						//$data[$key]['msg'] = 'pass';
 						
-						$modelProfile = new Profile;
-						$modelProfile->user_id = $model->id;
+						 $modelProfile = new Profile;
+						 $modelProfile->user_id = $model->id;
+						 $modelProfile->type_user = 3;
 						$modelProfile->title_id = $result["คำนำหน้าชื่อ"];
-						$modelProfile->firstname = $result["ชื่อ"];
+						$modelProfile->firstname = $result["ชื่อ-นามสกุล"];
 						$modelProfile->lastname = $result["นามสกุล"];
-						// $modelProfile->identification = $result["รหัสบัตรประชาชน"];
 						$modelProfile->tel = $result["โทรศัพท์"];
+						$modelProfile->address =  $result["ที่อยู่"]; 
+						$modelProfile->identification = $result["รหัสบัตรประชาชน (13หลัก)"];
 
 						if($modelProfile->validate()){
 							$modelProfile->save();
@@ -1201,16 +1217,18 @@ echo ($data);
 							$message = '
 							<strong>สวัสดี คุณ' . $modelProfile->firstname . ' ' . $modelProfile->lastname . '</strong><br /><br />
 
+							<h4>ระบบได้ทำการอนุมัติสมาชิกเข้าใช้งาน e-Learning Thoresen เรียบร้อยแล้ว โดยมี ชื่อผู้ใช้งานและรหัสผ่านดังนี้ </h4>
+	    					<h4>- User : '. $model->username.'</h4>
+							<h4>- Password : '.$genpass.'</h4>
+
 							โปรดคลิกลิงค์ต่อไปนี้ เพื่อดำเนินการเข้าสู่ระบบ<br />
 							<a href="' . str_replace("/admin","",Yii::app()->getBaseUrl(true)) . '">' . str_replace("/admin","",Yii::app()->getBaseUrl(true)) . '</a><br />
 							<strong>Email</strong> : ' . $model->email . '<br />
 
-							ยินดีตอนรับเข้าสู่ระบบ Air Asia e-Learning<br /><br />
-
-							ทีมงาน Air Asia
+							ยินดีต้อนรับเข้าสู่ระบบ e-Learning Thoresen<br /><br />
 
 							';
-							$subject = 'ยินดีต้อนรับเข้าสู่ระบบ Air Asia e-Learning';
+							$subject = 'ยินดีต้อนรับเข้าสู่ระบบ e-Learning Thoresen';
 							$to['email'] = $model->email;
 							$to['firstname'] = $modelProfile->firstname;
 							$to['lastname'] = $modelProfile->lastname;

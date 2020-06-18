@@ -183,7 +183,7 @@ HTM;
                         ));
                         ?>
                     </div> -->
-                    <!-- <div class="span12" style="margin-top:16px;">
+            <!-- <div class="span12" style="margin-top:16px;">
                         <h5><?= $idx++; ?>. ฝ่าย</h5>
                             <?php
                             $dataProvider = new CActiveDataProvider('Company', array(
@@ -205,8 +205,8 @@ HTM;
                                 ),
                             ));
                             ?>
-                    </div> -->
-                <?php $idx = 1; ?>
+                    </div>-->
+              <!--   <?php $idx = 1; ?>
                     <div class="span12" style="margin-top:16px;">
                         <h5><?= $idx++; ?>. กอง</h5>
                             <?php
@@ -228,9 +228,9 @@ HTM;
                                     ),
                                 ),
                             ));
-                            ?>
-                    </div>
-
+                            ?> 
+                    </div>-->
+                    <?php $idx = 1; ?>
                     <div class="span12" style="margin-top:16px;">
                         <h5><?= $idx++; ?>. แผนก</h5>
                             <?php
@@ -255,29 +255,6 @@ HTM;
                             ?>
                     </div>
                      <div class="span12" style="margin-top:16px;">
-                        <h5><?= $idx++; ?>. สถานี</h5>
-                            <?php
-                            $dataProvider = new CActiveDataProvider('Station', array(
-                            'criteria'=>$criteria,
-                                'pagination' => array(
-                                    'pageSize' => 10,
-                                )));
-                            $this->widget('zii.widgets.grid.CGridView', array(
-                                'dataProvider' => $dataProvider,
-                                'columns' => array(
-                                    array(            // display 'author.username' using an expression
-                                        'header' => 'รหัสสถานี',
-                                        'value' => '$data->station_id',
-                                    ),
-                                    array(            // display 'author.username' using an expression
-                                        'header' => 'ชื่อสถานี',
-                                        'value' => '$data->station_title',
-                                    ),
-                                ),
-                            ));
-                            ?>
-                    </div>
-                    <!-- <div class="span12" style="margin-top:16px;">
                         <h5><?= $idx++; ?>. ตำแหน่ง</h5>
                             <?php
                             $dataProvider = new CActiveDataProvider('Position', array(
@@ -299,7 +276,30 @@ HTM;
                                 ),
                             ));
                             ?>
-                    </div> -->
+                    </div>
+                     <div class="span12" style="margin-top:16px;">
+                        <h5><?= $idx++; ?>. Lavel</h5>
+                            <?php
+                            $dataProvider = new CActiveDataProvider('Branch', array(
+                            'criteria'=>$criteria,
+                                'pagination' => array(
+                                    'pageSize' => 10,
+                                )));
+                            $this->widget('zii.widgets.grid.CGridView', array(
+                                'dataProvider' => $dataProvider,
+                                'columns' => array(
+                                    array(            // display 'author.username' using an expression
+                                        'header' => 'รหัส Lavel',
+                                        'value' => '$data->id',
+                                    ),
+                                    array(            // display 'author.username' using an expression
+                                        'header' => 'Lavel',
+                                        'value' => '$data->branch_name',
+                                    ),
+                                ),
+                            ));
+                            ?>
+                    </div>
             </div>
         </div>
     </div>
