@@ -1941,9 +1941,10 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
       </div>
     </div>
     <?php 
+    $idx++;
   endforeach;
 }
-$idx++;
+
 }  else if(count($model->filePdf) && $model->type =='pdf'){
                         //$modelPdf = ControlVdo::getChilds($_GET['id'],0,$lessonCurrent->type);
   if($model->filePdf) {

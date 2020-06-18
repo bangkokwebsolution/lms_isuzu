@@ -116,9 +116,19 @@ class LibraryType extends CActiveRecord
 		$criteria->compare('updated_date',$this->updated_date,true);
 		$criteria->compare('active',$this->active,true);
 
-		return new CActiveDataProvider($this, array(
-			'criteria'=>$criteria,
-		));
+		$poviderArray = array('criteria'=>$criteria);
+
+		// Page
+		if(isset($_GET['LibraryType']['news_per_page']))
+		{
+			$poviderArray['pagination'] = array( 'pageSize'=> intval($_GET['LibraryType']['news_per_page']) );
+		}
+		
+		return new CActiveDataProvider($this, $poviderArray);
+
+		// return new CActiveDataProvider($this, array(
+		// 	'criteria'=>$criteria,
+		// ));
 	}
 
 	/**
