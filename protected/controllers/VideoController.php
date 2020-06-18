@@ -70,10 +70,67 @@ class VideoController extends Controller{
 
     public function actionLibrary()
     {
-
-        
-        $this->render('library');
+        if(Yii::app()->user->id){
+            $library_type = LibraryType::model()->findAll(array(
+                'condition' => 'active=:active',
+                'params' => array(':active' => 'y'),
+                'order' => 'sortOrder ASC'
+            ));
+            $this->render('library',array(
+                'library_type'=>$library_type,
+            ));
+        }else{
+            $this->redirect(array('site/index'));
+        }
     }
+
+    public function actionDownloadFile(){
+        if(Yii::app()->user->id && isset($_POST['library'])){
+            $library_model = LibraryFile::model()->findByPk($_POST['library']);
+            if($library_model != ""){
+                echo $this->createUrl('/uploads/LibraryFile/'.$library_model->library_filename);
+                exit();
+            }
+            // var_dump($_POST['library']); exit();
+        }
+        echo "error";
+    }
+    public function actionDownloadRequest(){
+        if(Yii::app()->user->id && isset($_POST['library'])){
+            // var_dump($_POST['library']); exit();
+            $LibraryRequest = LibraryRequest::model()->find(array(
+                'condition' => 'active=:active AND user_id=:user_id AND library_id=:library_id',
+                'params' => array(':active' => 'y', ':library_id'=>$_POST['library'], ':user_id'=>Yii::app()->user->id),
+            ));
+            if($LibraryRequest != ""){
+                if($LibraryRequest->req_status == 1){ //รออนุมัติ -> ยกเลิกขอ
+                    $LibraryRequest->active = 'n';
+                    echo "cancel";
+                }elseif($LibraryRequest->req_status == 2){ //ดาวโหลด
+                    $library_model = LibraryFile::model()->findByPk($_POST['library']);                    
+                    echo $this->createUrl('/uploads/LibraryFile/'.$library_model->library_filename);
+                    exit();
+                }elseif($LibraryRequest->req_status == 3){ //ปฏิเสธ -> ขอใหม่
+                    $LibraryRequest->req_status = 1;
+                    echo "request";
+                }
+            }else{
+                $LibraryRequest = new LibraryRequest;
+                $LibraryRequest->library_id = $_POST['library'];
+                $LibraryRequest->user_id = Yii::app()->user->id;  
+                echo "request";             
+            }
+            $LibraryRequest->save();
+            exit(); 
+        }
+        echo "error";        
+    }
+
+
+
+
+
+
     
     protected function performAjaxValidation($model)
 	{
