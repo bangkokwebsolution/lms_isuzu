@@ -191,7 +191,7 @@ class Courselogques extends CActiveRecord
         if($this->email != null){
             $criteria->compare('email',$this->email,true);
         }
-        if($this->dateRang != null){
+        if($this->dateRang != null && $this->dateRang != ""){
             
             $criteria->addCondition('t.create_date >= "'.$this->period_start.'" ');
             $criteria->addCondition('t.create_date <= "'.$this->period_end.'" ');

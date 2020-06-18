@@ -114,10 +114,10 @@ EOD
                                 return $fullname;
                             },
                         ), 
-                        
-                       array(
-                            'header'=>'ตรวจข้อสอบ',
+                        array(
+                            'header'=>'ก่อนเรียน',
                             'value'=> function($val) {   
+                                $type = "pre";
                                 // if($val->check == 0){
 
                                 //    return CHtml::button("ตรวจ",  array("class" => "btn btn-primary btn-icon","onclick" => "getExam('".$val->user_id."','".$val->course_id."')"));
@@ -125,8 +125,45 @@ EOD
                                 //     return CHtml::button("ดูคำตอบ",  array("class" => "btn btn-primary btn-icon","onclick" => "getExamResult('".$val->user_id."','".$val->course_id."')"));
                                 // }
                             $logques = Courselogques::model()->with('Coursescore')->find(array(
-                                'condition' => 't.user_id=:user_id and t.active = "y" and Coursescore.active = "y" and t.ques_type = 3 and t.course_id=:course_id and t.confirm = 0','order'=>'t.user_id',
-                                'params' => array(':user_id' => $val->user_id,':course_id' => $val->course_id)));
+                                'condition' => 't.user_id=:user_id and t.active = "y" and Coursescore.active = "y" and t.ques_type = 3 and t.course_id=:course_id and t.confirm = 0 and t.test_type=:test_type','order'=>'t.user_id',
+                                'params' => array(':user_id' => $val->user_id,':course_id' => $val->course_id, ':test_type'=>$type)));
+                            $score = $logques->Coursescore->score_number;
+                            $scoreTotal = $logques->Coursescore->score_total;
+                            if($logques->check == '0'){
+                            $score = '-';
+                             return '<div class="row">'.$score.' / '.$scoreTotal.'</div>'.CHtml::button("ตรวจ",  array("class" => "btn btn-primary btn-icon","onclick" => "getExam('".$val->user_id."','".$val->course_id."')"));
+                             } else if ($logques->confirm == '0'){
+                                return 
+                                '<div class="row">'.$score.' / '.$scoreTotal.'</div>'.
+                                '<div class="btn-group" role="group" aria-label="Basic example">'.
+                                CHtml::button("แก้ไข",  array("class" => "btn btn-primary btn-icon","onclick" => "getExam('".$val->user_id."','".$val->course_id."')")).
+                                CHtml::button("ยืนยัน",  array("class" => "btn btn-primary btn-icon","onclick" => "getExamConfirm('".$val->user_id."','".$val->course_id."','".$type."')")).
+                                '</div>';
+                            } else if ($logques->confirm == '1') {
+                                return '<div class="row">'.$score.' / '.$scoreTotal.'</div>'.CHtml::button("ตรวจแล้ว",  array("class" => "btn disabled btn-icon"));
+                            } else {
+                                return CHtml::button("ไม่มีข้อสอบ",  array("class" => "btn disabled btn-icon"));
+                            }  
+                               
+                            },
+                          
+                            'type'=>'raw',
+                            'htmlOptions'=>array('style'=>'text-align: center','width'=>'auto'),
+                        ),
+                       array(
+                            'header'=>'หลังเรียน',
+                            'value'=> function($val) {   
+                                $type = "post";
+
+                                // if($val->check == 0){
+
+                                //    return CHtml::button("ตรวจ",  array("class" => "btn btn-primary btn-icon","onclick" => "getExam('".$val->user_id."','".$val->course_id."')"));
+                                // }else if($val->check == 1){
+                                //     return CHtml::button("ดูคำตอบ",  array("class" => "btn btn-primary btn-icon","onclick" => "getExamResult('".$val->user_id."','".$val->course_id."')"));
+                                // }
+                            $logques = Courselogques::model()->with('Coursescore')->find(array(
+                                'condition' => 't.user_id=:user_id and t.active = "y" and Coursescore.active = "y" and t.ques_type = 3 and t.course_id=:course_id and t.confirm = 0 and t.test_type=:test_type','order'=>'t.user_id',
+                                'params' => array(':user_id' => $val->user_id,':course_id' => $val->course_id, ':test_type'=>$type)));
                             $score = $logques->Coursescore->score_number;
                             $scoreTotal = $logques->Coursescore->score_total;
                             if($logques->check == '0'){

@@ -94,7 +94,6 @@ class CheckLectureController extends Controller
   }
 
 
-
   $this->render('index',array(
     'model'=>$model,
     'user'=>$user,
@@ -306,10 +305,12 @@ public function actionSaveExam(){
 
    public function actionGetLessonData(){
     $course_id = $_POST['course_id'];
-      $list = Logques::getLessonList($course_id);
+      // $list = Logques::getLessonList($course_id);
+    $list = Lesson::model()->findAll("course_id='".$course_id."' AND active='y' AND lang_id=1");
+// var_dump($list); exit();
       $lesson = '<option value="">ทั้งหมด</option>';
       foreach ($list as $key => $value) {
-      $lesson .= '<option value = "'.$key.'">'.$value.'</option>';
+      $lesson .= '<option value = "'.$value->id.'">'.$value->title.'</option>';
     }
     echo $lesson;
    }

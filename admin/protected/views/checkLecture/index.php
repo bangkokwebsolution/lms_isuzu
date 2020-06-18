@@ -80,7 +80,14 @@ EOD
   $listCourse = CHtml::listData($CourseOnline,'course_id','course_title');
   $list = array();
   if(!empty($_GET['Logques']['lesson_id'])){
-    $list = Logques::getLessonList($_GET['Logques']['course_id']);
+    // var_dump($_GET['Logques']['lesson_id']); exit();
+$list_ = Lesson::model()->findAll("course_id='".$_GET['Logques']['course_id']."' AND active='y' AND lang_id=1");
+    foreach ($list_ as $key => $value) {
+        $list[$value->id] = $value->title;
+    }
+    // $list = Logques::getLessonData($_GET['Logques']['course_id']);
+
+    // var_dump($list); exit();
   }
   $this->widget('AdvanceSearchForm', array(
     'data'=>$model,
@@ -95,7 +102,7 @@ EOD
 ));
 ?>
 <?php if ( !empty($_GET) ) {
-
+// var_dump($model); exit();
 
   ?>
   <div class="widget" style="margin-top: -1px;">

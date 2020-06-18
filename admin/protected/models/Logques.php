@@ -188,12 +188,17 @@ class Logques extends CActiveRecord
 			$criteria->compare('t.user_id',$this->user_id);
 		}else{
 			$criteriaOrg = new CDbCriteria;
-			$criteriaOrg->compare('parent_id',$modelUser->department_id);
+			$criteriaOrg->compare('department_id',$modelUser->department_id);
 			$criteriaOrg->compare('active','y');
 			$orgModal = OrgChart::model()->findAll($criteriaOrg);
+
+			// var_dump($orgModal); 
+			// var_dump($modelUser->department_id); 
+			// exit();
+
 			$groupPosition = array();
 			foreach ($orgModal as $key => $value) {
-				$groupPosition[] = $value->id;
+				$groupPosition[] = $value->position_id;
 			}
 			$criteria->addIncondition('user.position_id',$groupPosition);
 		}
