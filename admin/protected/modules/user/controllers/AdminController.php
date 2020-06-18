@@ -332,6 +332,7 @@ echo ($data);
 		$model=new User('search');
         $model->unsetAttributes();  // clear any default values
         $model->typeuser = array(2,3);
+        $model->type_employee = array(2);
         $model->supper_user_status = true;
         if(isset($_GET['User']))
         	$model->attributes=$_GET['User'];
@@ -339,6 +340,21 @@ echo ($data);
         	'model'=>$model,
         ));
 	}
+
+	public function actionEmployeeShip()
+	{
+		$model=new User('search');
+        $model->unsetAttributes();  // clear any default values
+        $model->typeuser = array(2,3);
+        $model->type_employee = array(1);
+        $model->supper_user_status = true;
+        if(isset($_GET['User']))
+        	$model->attributes=$_GET['User'];
+        $this->render('index',array(
+        	'model'=>$model,
+        ));
+	}
+
 	public function actionGeneral()
 	{
 		$model=new User('search');
@@ -1148,17 +1164,13 @@ echo ($data);
 					$model = new User;
 					$profile=new Profile;
 					$model->email = $result[" email"];
-					$model->username = $result["username"];
+					$model->username = $result["username(รหัสพนักงาน)"];
 				    $model->identification = $result["รหัสบัตรประชาชน (13หลัก)"];
 
 					$model->type_register = 2;
 					$model->superuser = 0;
-					$profile->type_user = 3;
-					$profile->identification = $result["รหัสบัตรประชาชน (13หลัก)"];
-                    $profile->firstname = $result["ชื่อ-นามสกุล"];
-					$profile->lastname = $result["นามสกุล"];
-					$profile->tel =  $result["โทรศัพท์"];   
-					$profile->address =  $result["ที่อยู่"]; 
+					$model->repass_status = 0;
+					
 					$model->create_at = date('Y-m-d H:i:s');
 					$model->status = 1;
 					$model->department_id = $result["รหัสแผนก"];
@@ -1189,11 +1201,13 @@ echo ($data);
 					// 	$model->department_id = 2;
 					// 	$model->status = 0;
 					// }
+
+
 					$genpass = $this->RandomPassword();
 					$model->verifyPassword = $genpass;
 					$model->password = UserModule::encrypting($genpass);
 					$model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
-				//var_dump($profile);exit();
+				
 					if ($model->validate()) {
 						$model->save();
 						//$data[$key]['msg'] = 'pass';
@@ -1201,12 +1215,55 @@ echo ($data);
 						 $modelProfile = new Profile;
 						 $modelProfile->user_id = $model->id;
 						 $modelProfile->type_user = 3;
-						$modelProfile->title_id = $result["คำนำหน้าชื่อ"];
-						$modelProfile->firstname = $result["ชื่อ-นามสกุล"];
-						$modelProfile->lastname = $result["นามสกุล"];
-						$modelProfile->tel = $result["โทรศัพท์"];
-						$modelProfile->address =  $result["ที่อยู่"]; 
-						$modelProfile->identification = $result["รหัสบัตรประชาชน (13หลัก)"];
+						 $modelProfile->type_employee = 1;
+						 $modelProfile->title_id = $result["คำนำหน้าชื่อ "];
+						 $modelProfile->firstname = $result["ชื่อ"];
+						 $modelProfile->lastname = $result["นามสกุล"];
+						 $modelProfile->firstname_en = $result["ชื่อ-สกุล(EN)"];
+						 $modelProfile->lastname_en = $result["นามสกุล(EN)"];
+						 $modelProfile->sex = $result["เพศ"];
+						 $modelProfile->date_of_expiry = $result["วันหมดอายุบัตรประชาชน"];
+						 $modelProfile->place_issued = $result["สถานที่ออกบัตร"];
+						 $modelProfile->date_issued = $result["วันที่ออกบัตรประชาชน"];
+						 $modelProfile->passport = $result["เลขหนังสือเดินทาง"];
+						 $modelProfile->passport_place_issued = $result["สถานที่ออกหนังสือเดินทาง"];
+						 $modelProfile->passport_date_issued = $result["วันที่ออกหนังสือเดินทาง"];
+						 $modelProfile->pass_expire = $result["วันหมดอายุหนังสือเดินทาง"];
+						 $modelProfile->seamanbook = $result["เลขหนังสือเดินเรือ"];
+						 $modelProfile->seaman_expire = $result["วันหมดอายุเลขหนังสือเดินเรือ"];
+						 $modelProfile->tel = $result["โทรศัพท์"];
+						 $modelProfile->domicile_address =  $result["ที่อยู่ตามบัตรประชาชน"]; 
+						 $modelProfile->address =  $result["ที่อยู่"]; 
+						 $modelProfile->identification = $result["รหัสบัตรประชาชน (13หลัก)"];
+						 $modelProfile->birthday =  $result["วันเดือนปีเกิด"]; 
+						 $modelProfile->age = $result["อายุ"];
+						 $modelProfile->mouth_birth = $result["เดือน"];
+						 $modelProfile->place_of_birth = $result["สถานที่เกิด"];
+						 $modelProfile->blood = $result["กรุ๊ปเลือด"];
+						 $modelProfile->hight = $result["ความสูง"];
+						 $modelProfile->weight = $result["น้ำหนัก"];
+						 $modelProfile->nationality = $result["สัญชาติ"];
+						 $modelProfile->race = $result["เชื้อชาติ"];
+						 $modelProfile->religion = $result["ศาสนา"];
+						 $modelProfile->status_sm = $result["สถานะภาพทางการสมรส"];
+						 $modelProfile->number_of_children = $result["จำนวนบุตร"];
+						 $modelProfile->spouse_firstname = $result["ชื่อคู่สมรส"];
+						 $modelProfile->spouse_lastname = $result["นามสกุลคู่สมรส"];
+						 $modelProfile->occupation_spouse = $result["อาชีพคู่สมรส"];
+						 $modelProfile->father_firstname = $result["ชื่อบิดา"];
+						 $modelProfile->father_lastname = $result["นามสกุลบิดา"];
+ 						 $modelProfile->occupation_father = $result["อาชีพบิดา"];
+						 $modelProfile->mother_firstname = $result["ชื่อมารดา"];
+						 $modelProfile->mother_lastname = $result["นามสกุลมารดา"];
+						 $modelProfile->occupation_mother = $result["อาชีพมารดา"];
+						 $modelProfile->phone = $result["โทรศัพท์ที่ติดต่อฉุกเฉิน"];
+						 $modelProfile->name_emergency = $result["ชื่อผู้ที่ติดต่อฉุกเฉิน"];
+						 $modelProfile->relationship_emergency = $result["ความสัมพันธ์"];
+						 $modelProfile->line_id = $result["ไอดีไลน์"];
+						 $modelProfile->military = $result["สถานะการรับใช้ชาติ"];
+						 $modelProfile->history_of_illness = $result["ประวัติการเจ็บป่วยรุนแรง"];
+						 $modelProfile->sickness = $result["โรคที่เคยป่วย"];
+						 $modelProfile->accommodation = $result["ที่พัก"];
 
 						if($modelProfile->validate()){
 							$modelProfile->save();
@@ -1238,6 +1295,7 @@ echo ($data);
 
 							$HisImportErrorArr[] = $HisImportArr[$key];
 							$msgAllArr = array();
+
 							$attrAllArr = array();
 							foreach($modelProfile->getErrors() as $field => $msgArr){
 								$attrAllArr[] = $field;

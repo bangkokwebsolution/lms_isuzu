@@ -3786,7 +3786,7 @@ var new_forms = <?php echo $new_form; ?>;
                             $('.form_name').show();
                             $('.form_name_eng').show();
                         $('.form_number_id').hide();
-                       $("#office-section").hide();
+                       $("#office-section").show();
                        $(".form_language").show();
                        $("#office-section_gen").show();
 

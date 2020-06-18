@@ -1224,8 +1224,14 @@ Class MenuLeft extends Controller
 	        		array(
 	        			/*====== Check Permissions Sup-User (2) ======*/
 	        			'visible'=>true,
-	        			'label'=>'รายชื่อสมาชิก(พนักงาน)',
+	        			'label'=>'รายชื่อสมาชิก(พนักงานออฟฟิต)',
 	        			'url'=>array('//user/admin/employee')
+	        		),
+	        		array(
+	        			/*====== Check Permissions Sup-User (2) ======*/
+	        			'visible'=>true,
+	        			'label'=>'รายชื่อสมาชิก(พนักงานประจำเรือ)',
+	        			'url'=>array('//user/admin/employeeShip')
 	        		),
 	        		array(
 	        			/*====== Check Permissions Sup-User (2) ======*/

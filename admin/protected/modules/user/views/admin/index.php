@@ -108,6 +108,20 @@ Yii::app()->clientScript->registerScript('search', "
 											}
 										),
 										array(
+											'header' => 'แผนก',
+											'type'=>'html',
+											'value'=>function($data){
+												return $data->department->dep_title;
+											}
+										),
+										array(
+											'header' => 'ตำแหน่ง',
+											'type'=>'html',
+											'value'=>function($data){
+												return $data->position->position_title;
+											}
+										),
+										array(
 											'name'=>'email',
 											'type'=>'raw',
 											'value'=>'CHtml::link(UHtml::markSearch($data,"email"), "mailto:".$data->email)',

@@ -110,7 +110,7 @@ $this->breadcrumbs = array('ระบบรายชื่อสมาชิก'
                                         <th>email (ชื่อผู้ใช้)</th>
                                         <th>ชื่อ-นามสกุล</th>
                                         <th>เบอร์โทรศัพท์</th>
-                                        <th>สภานะ</th>
+                                        <th>สถานะ</th>
                                     </tr>
                                 </thead>
                                 <!-- Table body -->
@@ -270,6 +270,10 @@ HTM;
                                         'value' => '$data->id',
                                     ),
                                     array(            // display 'author.username' using an expression
+                                        'header' => 'รหัสแผนก',
+                                        'value' => '$data->department_id',
+                                    ),
+                                    array(            // display 'author.username' using an expression
                                         'header' => 'ชื่อตำแหน่ง',
                                         'value' => '$data->position_title',
                                     ),
@@ -291,6 +295,10 @@ HTM;
                                     array(            // display 'author.username' using an expression
                                         'header' => 'รหัส Lavel',
                                         'value' => '$data->id',
+                                    ),
+                                    array(            // display 'author.username' using an expression
+                                        'header' => 'รหัสตำแหน่ง',
+                                        'value' => '$data->position_id',
                                     ),
                                     array(            // display 'author.username' using an expression
                                         'header' => 'Lavel',
