@@ -1790,13 +1790,13 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                          });
 
                           $("#audio-player"+<?php echo $idx;?>).on('ended', function () {
-                            swal({
-                             title: "<?= $pass_msg ?>",
-                             text: "Waiting",
-                             type: "success",
-                             showConfirmButton: false,
-                             showCancelButton: false,
-                           });
+                           //  swal({
+                           //   title: "<?= $pass_msg ?>",
+                           //   text: "Waiting",
+                           //   type: "success",
+                           //   showConfirmButton: false,
+                           //   showCancelButton: false,
+                           // });
                             $.post('<?php echo $this->createUrl("//course/LearnAudio"); ?>', {
                               id: <?php echo $file->id; ?>,
                               learn_id: <?php echo $learn_id; ?>,
