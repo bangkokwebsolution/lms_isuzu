@@ -219,6 +219,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         <?php
         $criteriavdo = new CDbCriteria;
         $criteriavdo->compare('active', 'y');
+        $criteriavdo->compare('lang_id', Yii::app()->session['lang']);
         $criteriavdo->order = 'vdo_id  DESC';
         $vdoshow = vdo::model()->find($criteriavdo);
         ?>
