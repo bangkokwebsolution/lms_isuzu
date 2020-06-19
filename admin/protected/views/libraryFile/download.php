@@ -153,24 +153,11 @@ EOD
 							'htmlOptions'=>array('style'=>'text-align: center','width'=>'100px'),
 							'value'=> function ($data){
 								if($data->req_status == 1){
-	return CHtml::link("อนุมัติ", array(
-		"LibraryFile/accept",
-		"id"=>$data->req_id,
-	), array( "class"=>"btn btn-success btn-icon" ))." ".CHtml::link("ปฏิเสธ", array(
-		"LibraryFile/reject",
-		"id"=>$data->req_id,
-	), array( "class"=>"btn btn-danger btn-icon" ));
+	return CHtml::button("อนุมัติ", array("class"=>"btn btn-success btn-icon", "onclick"=>"acceptF(".$data->req_id.")"))." ".CHtml::button("ปฏิเสธ", array("class"=>"btn btn-danger btn-icon", "onclick"=>'rejectF('.$data->req_id.')'));
 								}elseif($data->req_status == 2){
-	return CHtml::link("ปฏิเสธ", array(
-		"LibraryFile/reject",
-		"id"=>$data->req_id,
-	), array( "class"=>"btn btn-danger btn-icon" ));
-
+	return CHtml::button("ปฏิเสธ", array("class"=>"btn btn-danger btn-icon", 'onclick' => 'rejectF('.$data->req_id.')'));
 								}elseif($data->req_status == 3){
-	return CHtml::link("อนุมัติ", array(
-		"LibraryFile/accept",
-		"id"=>$data->req_id,
-	), array( "class"=>"btn btn-success btn-icon" ));
+	return CHtml::button("อนุมัติ", array("class"=>"btn btn-success btn-icon", 'onclick' => 'acceptF('.$data->req_id.')'));
 								}
 							}
 							// 'value'=>'CHtml::link("เลือกข้อสอบ (".$data->getCountTest("course").")", array(
@@ -212,3 +199,68 @@ EOD
 		</div>
 	</div>	
 </div>
+<script type="text/javascript">
+	function acceptF(library){
+		swal({
+			title: 'ยืนยันใช่ไหม',
+			text: "ที่จะอนุมัติการดาวน์โหลด",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'ยืนยัน',
+			cancelButtonText: 'ยกเลิก'
+		}, function(isConfirm) {
+			if (isConfirm) {
+				$.ajax({
+					url : 'accept',
+					data : {
+						id:library,
+					},
+					type : 'GET',
+					success : function(data){
+						if(data != "error"){
+							window.location.reload();
+						}else{
+							alert("ทำรายการใหม่");
+						}                 
+					},              
+				});
+			}
+		});
+	}
+
+	function rejectF(library){
+		swal({
+			title: 'ยืนยันใช่ไหม',
+			text: "ที่จะปฏิเสธการดาวน์โหลด",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'ยืนยัน',
+			cancelButtonText: 'ยกเลิก'
+		}, function(isConfirm) {
+			if (isConfirm) {
+				$.ajax({
+					url : 'reject',
+					data : {
+						id:library,
+					},
+					type : 'GET',
+					success : function(data){
+						if(data != "error"){
+							window.location.reload();							
+						}else{
+							alert("ทำรายการใหม่");
+						}                 
+					},              
+				});
+			}
+		});
+		
+	}
+
+
+
+</script>

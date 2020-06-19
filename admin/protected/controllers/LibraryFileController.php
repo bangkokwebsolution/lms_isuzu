@@ -217,15 +217,25 @@ class LibraryFileController extends Controller
 	public function actionAccept($id) {
 		$model=LibraryRequest::model()->findByPk($id);
 		$model->req_status = 2;
-		$model->save();
-		$this->redirect('../download');
+		// $model->save();
+		if($model->save()){
+			echo "success";
+		}else{
+			echo "error";
+		}
+		// $this->redirect('../LibraryFile/download');
 	}
 
 	public function actionReject($id) {
 		$model=LibraryRequest::model()->findByPk($id);
 		$model->req_status = 3;
-		$model->save();
-		$this->redirect('../download');		
+		// $model->save();
+		if($model->save()){
+			echo "success";
+		}else{
+			echo "error";
+		}
+		// $this->redirect('../LibraryFile/download');		
 	}
 
 
