@@ -102,7 +102,7 @@
                                 </video>
                                   <div class="library-detail">
                                     <span><?= $libra_file ?></span>
-                                    <button class="<?= $text_class ?>" style="display: block; font-size: 12px;" onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                                    <button class="<?= $text_class ?>" style="display: block;" onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
                                       <i class="fa fa-download"></i> <?= $text_status ?>
                                     </button>
                                   </div>
@@ -125,7 +125,7 @@
                                 <!-- <img src="<?php //echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="img-fluid "> -->
                                 <div class="library-detail">
                                   <span><?= $libra_file ?></span>
-                                  <button class="<?= $text_class ?>" style="display: block; font-size: 12px;" onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                                  <button class="<?= $text_class ?>" style="display: block;" onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
                                       <i class="fa fa-download"></i> <?= $text_status ?>
                                     </button>
                                 </div>
