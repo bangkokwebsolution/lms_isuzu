@@ -1272,7 +1272,7 @@ function editNamehouse_registration(filedoc_id){
                                     <?php
                                     echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption);
                                     ?>
-                                    <?php echo $form->error($users, 'department_id', array('class' => 'error2')); ?>
+                                    <?php //echo $form->error($users, 'department_id', array('class' => 'error2')); ?>
                                 </div>
                             </div>
 
@@ -3009,7 +3009,7 @@ $count_tn = 1;
                     $criteria->order = 'sortOrder ASC';
                     $departmentModel = Department::model()->findAll($criteria);
                     $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
-                    $departmentOption = array('class' => 'form-control department_gen', 'empty' => $label->label_placeholder_company);
+                    $departmentOption = array('class' => 'form-control department_gen', 'empty' => $label->label_placeholder_company, 'name' => 'department_gen');
                     ?>
                     <?php
                     echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption);
