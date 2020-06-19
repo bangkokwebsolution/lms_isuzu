@@ -3983,12 +3983,14 @@ ol.stat-alert li::before {
 
 .cours-card .course-boximg{
   background-repeat: no-repeat;
-  background-position: top center;
+  background-position: center center;
   background-size: contain;
+  background-color:#f6f6f6;
   height: 200px;
   width: 100%;
   transition: all .25s ease;
   overflow: hidden;
+  border-bottom: 1px solid #ddd;
 }
 
 .course-main .cours-card .course-boximg:hover{

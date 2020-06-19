@@ -196,7 +196,7 @@ $path_theme = Yii::app()->theme->baseUrl . '/';
                                                                             <table style="background-color:white" class="table table-bordered question-table" >
                                                                                 <thead class="head-question">
                                                                                     <tr>
-                                                                                        <th>
+                                                                                        <th width="30%" class="text-left">
                                                                                             <strong><?php echo $questionValue->question_name; ?></strong>
                                                                                         </th>
                                                                                         <?php
@@ -242,7 +242,7 @@ $path_theme = Yii::app()->theme->baseUrl . '/';
                                                                                         foreach ($questionValue->choices as $choiceKey => $choiceValue) {
                                                                                             ?>
                                                                                             <tr>
-                                                                                                <td <?php echo ($choiceKey % 2 == 0) ? 'style="background-color:#FFFFFF"' : ''; ?>><?php echo $choiceValue->option_choice_name; ?>
+                                                                                                <td class="text-left" <?php echo ($choiceKey % 2 == 0) ? 'style="background-color:#FFFFFF"' : ''; ?>><?php echo $choiceValue->option_choice_name; ?>
                                                                                                 <label
                                                                                                 for="choice[contentment][<?php echo $choiceValue->option_choice_id; ?>]"
                                                                                                 class="error"></label></td>
