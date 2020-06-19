@@ -322,7 +322,7 @@
            if(Yii::app()->user->id){
             ?>
             <li class="">
-                <a href="<?= $this->createUrl("video/library") ?>" style="font-size: 10px; padding-right: 5px; padding-left: 5px">
+                <a href="<?= $this->createUrl("video/library") ?>">
                     <?php 
                     if(Yii::app()->session['lang'] == 1){
                         echo "Library";
