@@ -119,6 +119,8 @@ class LibraryFile extends CActiveRecord
 		$criteria->compare('updated_by',$this->updated_by);
 		$criteria->compare('updated_date',$this->updated_date,true);
 		$criteria->compare('active',$this->active,true);
+		$criteria->order = 'sortOrder ASC';
+		
 
 
 		$poviderArray = array('criteria'=>$criteria);

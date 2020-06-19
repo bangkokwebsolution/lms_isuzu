@@ -113,6 +113,7 @@ class LibraryRequest extends CActiveRecord
 		$criteria->compare('created_date',$this->created_date,true);
 		$criteria->compare('updated_by',$this->updated_by);
 		$criteria->compare('updated_date',$this->updated_date,true);
+		$criteria->order = 'created_date DESC';
 
 		$poviderArray = array('criteria'=>$criteria);
 
