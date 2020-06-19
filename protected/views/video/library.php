@@ -95,9 +95,9 @@
                       if(in_array($extension, $arr_type_video)){
 
                         $check_file = glob(Yii::app()->getUploadPath(null)."../LibraryFile/*");
-
-                        foreach ($check_file as $key => $value) {
-                          if(basename($value) == $value->library_filename){
+                        // var_dump($check_file); exit();
+                        foreach ($check_file as $keyy => $valuee) {
+                          if(basename($valuee) == $value->library_filename){
                             ?>
                             <div class="library-item">
                               <div class="item item-library-index">
@@ -123,8 +123,8 @@
                       }elseif($extension == "mp3"){
                         $check_file = glob(Yii::app()->getUploadPath(null)."../LibraryFile/*");
 
-                        foreach ($check_file as $key => $value) {
-                          if(basename($value) == $value->library_filename){
+                        foreach ($check_file as $keyy => $valuee) {
+                          if(basename($valuee) == $value->library_filename){
                             ?>
                             <div class="library-item">
                               <div class="item item-library-index">
