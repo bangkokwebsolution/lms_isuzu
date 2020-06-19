@@ -44,7 +44,7 @@ EOD
 							<h5>สถานะ :</h5>
 						</div>
 						<div class="col-md-8">
-							<select class="form-control" name="LibraryRequest[req_status]">
+							<select class="form-control" name="LibraryRequest[req_status]" style="width: 200px;">
 								<option >ทั้งหมด</option>
 								<option value="1" <?php if(isset($_GET['LibraryRequest']['req_status']) && $_GET['LibraryRequest']['req_status'] == 1){ echo "selected"; } ?>>รอการอนุมัติ</option>
 								<option value="2" <?php if(isset($_GET['LibraryRequest']['req_status']) && $_GET['LibraryRequest']['req_status'] == 2){ echo "selected"; } ?>>อนุมัติ</option>
@@ -52,10 +52,10 @@ EOD
 							</select>
 						</div>
 					</div>
-					<div class="row">
+					<div class="row" style="padding-top: 20px;">
 						<div class="col-md-1"></div>
 						<div class="col-md-8">
-							<button type="submit">ค้นหา</button>
+							<button class="btn btn-primary" type="submit">ค้นหา</button>
 						</div>
 					</div>
 				</form>
