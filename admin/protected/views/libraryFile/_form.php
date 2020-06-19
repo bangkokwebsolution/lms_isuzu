@@ -79,7 +79,7 @@
                 <div class="row">
                 	<div class="col-md-8">
                     <?php echo $form->labelEx($model, 'library_filename'); ?>
-                    <?php echo $form->fileField($model, 'library_filename', array('class' => 'form-control')); ?>
+                    <?php echo $form->fileField($model, 'library_filename', array('class' => 'form-control', 'onchange'=>"checkExt(this)")); ?>
                     <?php echo $form->error($model, 'library_filename'); ?>
                     </div>
                 </div>
@@ -121,5 +121,30 @@
     $(function () {
         init_tinymce();
     });
+
+
+    function checkExt(input){
+        var id = input.getAttribute("id");
+        var input_file = document.getElementById(id);
+        if(input_file != ""){
+            var file = input_file.files[0];
+            var filename = file.name;
+             var extension = filename.split(".");
+             var count_extension = extension.length;
+             extension = (extension[count_extension-1]).toLowerCase();
+
+             if(extension !== 'mp4' && extension !== 'mkv' && extension !== 'mp3' && extension !== 'pdf' && extension !== 'doc' && extension !== 'docx' && extension !== 'xls' && extension !== 'xlsx' && extension !== 'ppt' && extension !== 'pptx'){
+                swal({
+                    title: "ไม่สามารถทำรายการได้",
+                    text: 'กรุณาเลือกไฟล์นามสกุล mp4, mkv, mp3, pdf, doc, docx, xls, xlsx, ppt, pptx ค่ะ',
+                    type: "error",
+                    successMode: true,
+                });
+                input_file.value = "";
+            }
+
+
+        }
+    }
 </script>
 
