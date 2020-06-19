@@ -136,13 +136,13 @@ body {
 						</div>
 					</div>
 
-					<div class="row">
+					<!-- <div class="row">
 						<div class="col-md-12">
-						<?php echo $form->labelEx($model,'cate_detail'); ?>
-						<?php echo $form->textArea($model,'cate_detail',array('rows'=>6, 'cols'=>50, 'class'=>'span8 tinymce')); ?>
-						<?php echo $form->error($model,'cate_detail'); ?>
+						<?php //echo $form->labelEx($model,'cate_detail'); ?>
+						<?php //echo $form->textArea($model,'cate_detail',array('rows'=>6, 'cols'=>50, 'class'=>'span8 tinymce')); ?>
+						<?php //echo $form->error($model,'cate_detail'); ?>
 						</div>
-					</div>
+					</div> -->
 
 					<br>
 
