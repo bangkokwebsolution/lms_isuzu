@@ -230,7 +230,7 @@
   function downloadFile(val){
     var library = val.getAttribute("library-id");
     if(library != ""){
-      $.ajax({
+          $.ajax({
             url : 'downloadFile',
             data : {
               library:library,
@@ -248,14 +248,33 @@
                 alert("ทำรายการใหม่");
               }                 
             },              
-        });
+          });
     }
   }
 
   function downloadRequest(val){
     var library = val.getAttribute("library-id");
+    var class_btn = val.getAttribute("class");
+
+    if(class_btn == "btn btn-warning"){
+      var text_text = "ที่จะยกเลิกการขอดาวน์โหลด"
+    }else{
+      var text_text = "ที่จะขอดาวน์โหลด";
+    }
+
     if(library != ""){
-      $.ajax({
+      swal({
+        title: 'ยืนยันใช่ไหม',
+        text: text_text,
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'ยืนยัน',
+        cancelButtonText: 'ยกเลิก'
+      }, function(isConfirm) {
+        if (isConfirm) {
+          $.ajax({
             url : 'downloadRequest',
             data : {
               library:library,
@@ -272,6 +291,18 @@
                 }else{
                   val.innerHTML = '<i class="fa fa-download"></i> รอการอนุมัติ'; 
                 }
+
+                swal({
+                  title: 'รอการอนุมัติ',
+                  text: "จากผู้ดูแลระบบ",
+                  type: 'info',
+                  showCancelButton: false,
+                  confirmButtonColor: '#3085d6',
+                  // cancelButtonColor: '#d33',
+                  confirmButtonText: 'ตกลง',
+                  // cancelButtonText: 'ยกเลิก'
+                });
+
               }else if(data == "cancel"){
                 val.removeAttribute("class");
                 val.setAttribute("class", "btn btn-info");
@@ -288,7 +319,10 @@
                 link.click();
               }                  
             },
-        });
+          });
+        }
+      });
+
     }
   }
 
