@@ -5,7 +5,30 @@ $title = 'จัดการ Captcha';
 
 $this->breadcrumbs=array($title);
 // $this->headerText = $title;
+$formNameModel = 'Captcha';
+Yii::app()->clientScript->registerScript('search', "
+  $('#SearchFormAjax').submit(function(){
+      $.fn.yiiGridView.update('$formNameModel-grid', {
+          data: $(this).serialize()
+      });
+      return false;
+  });
+");
 
+Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
+  $.updateGridView = function(gridID, name, value) {
+      $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
+      $.fn.yiiGridView.update(gridID, {data: $.param(
+          $("#"+gridID+" input, #"+gridID+" .filters select")
+      )});
+  }
+  $.appendFilter = function(name, varName) {
+      var val = eval("$."+varName);
+      $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
+  }
+  $.appendFilter("Captcha[news_per_page]", "news_per_page");
+EOD
+, CClientScript::POS_READY);
 ?>
 <div class="innerLR">
 <div class="separator bottom form-inline small">
@@ -22,10 +45,14 @@ $this->breadcrumbs=array($title);
     }
 </style>
 <?php $this->widget('AGridView',array(
-    'id'=>'Captcha-grid',
+    'id'=>$formNameModel.'-grid',
     'dataProvider' => $dataProvider,
     'selectableRows' => 2,
     'rowCssClassExpression' => '"items[]_{$data->capid}"',
+    'afterAjaxUpdate'=>'function(id, data){
+            $.appendFilter("Captcha[news_per_page]");
+            InitialSortTable(); 
+          }',
     'htmlOptions' => array(
          'style' => "margin-top: -1px;",
          ),
@@ -35,6 +62,13 @@ $this->breadcrumbs=array($title);
 					// 	'class' => 'CCheckBoxColumn',
     	// 				'id' => 'chk',
 					// ),
+              array(
+              'visible'=>Controller::DeleteAll(
+                array("Captcha.*", "Captcha.Delete", "Captcha.MultiDelete")
+              ),
+              'class'=>'CCheckBoxColumn',
+              'id'=>'chk',
+            ),
             	array(
             		'header' => 'ลำดับ',
 						// 'name' => 'capid',
@@ -67,8 +101,8 @@ $this->breadcrumbs=array($title);
             			foreach ($model as $key => $value) {
             				$coursename .= ($key+1).'. '.$value->courseOnline->course_title;
             				if($key != $lastArrayKey) {
-            					//$coursename .= ', ';
-                      $coursename .= '<br>';
+            					$coursename .= ', ';
+                      //$coursename .= '<br>';
             				}
             			}
             			return $coursename;
@@ -158,6 +192,7 @@ $this->breadcrumbs=array($title);
             				)
                                  ),*/
                                  ),
+
                                  )); ?>
 </div>
                                  <div class="modal fade" id="selectApplyCourseToCertificate" role="dialog">
@@ -180,7 +215,24 @@ $this->breadcrumbs=array($title);
 
                                     </div>
                               </div>
-
+    
+  <?php if( Controller::DeleteAll(array("Captcha.*", "Captcha.Delete", "Captcha.MultiDelete")) ) : ?>
+    <!-- Options -->
+    <div class="separator top form-inline small">
+      <!-- With selected actions -->
+      <div class="buttons pull-left">
+        <?php 
+        echo CHtml::link("<i></i> ลบข้อมูลทั้งหมด",
+          "#",
+          array("class"=>"btn btn-primary btn-icon glyphicons circle_minus",
+            "onclick"=>"return multipleDeleteNews('".$this->createUrl('//'.$formNameModel.'/MultiDelete')."','$formNameModel-grid');")); 
+        ?>
+      </div>
+      <!-- // With selected actions END -->
+      <div class="clearfix"></div>
+    </div>
+    <!-- // Options END -->
+  <?php endif; ?>
 
                               <div class="modal fade" tabindex="-1" role="dialog" id="">
                                  <div class="modal-dialog" role="document">

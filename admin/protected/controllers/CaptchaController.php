@@ -27,7 +27,7 @@ class CaptchaController extends Controller
     {
     	return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-            	'actions' => array('index', 'view','savecoursemodal','CourseModal'),
+            	'actions' => array('index', 'view','multidelete','savecoursemodal','CourseModal'),
             	'users' => array('*'),
             ),
             array('allow',
@@ -277,6 +277,19 @@ class CaptchaController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
+	public function actionMultiDelete()
+	{
+		header('Content-type: application/json');
+		if(isset($_POST['chk']))
+		{
+			foreach($_POST['chk'] as $val)
+			{
+				$this->actionDelete($val);
+			}
+		}
+	}
+
+	
 	public function actionDelete($id)
 	{
 		$this->loadModel($id)->delete();
