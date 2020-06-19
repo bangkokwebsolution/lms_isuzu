@@ -265,10 +265,21 @@ class DepartmentController extends Controller
 		if (isset($_POST['items']) && is_array($_POST['items'])) {
 
 			$cur_items = Department::model()->findAllByPk($_POST['items'], array('order'=>'sortOrder'));
+
+			$org_2 = array();
+			foreach ($cur_items as $key => $value) {
+				$org_2[] = OrgChart::model()->find(array(
+					'condition' => 'active=:active AND department_id=:department_id AND position_id IS NULL AND branch_id IS NULL',
+					'params' => array(':active' => 'y', ':department_id'=>$value->id),
+					'order'=>'sortOrder'
+				));
+			}
 			
 			for ($i = 0; $i < count($_POST['items']); $i++) {
 				$item = Department::model()->findByPk($_POST['items'][$i]);
 				if ($item->sortOrder != $cur_items[$i]->sortOrder) {
+
+					echo $item->sortOrder." ".$cur_items[$i]->sortOrder." || ";
 					$item->sortOrder = $cur_items[$i]->sortOrder ;
 					$item->save();
 
@@ -276,13 +287,9 @@ class DepartmentController extends Controller
 					'condition' => 'active=:active AND department_id=:department_id AND position_id IS NULL AND branch_id IS NULL',
 					'params' => array(':active' => 'y', ':department_id'=>$item->id),
 				));
-
-					$org_2 = OrgChart::model()->find(array(
-					'condition' => 'active=:active AND department_id=:department_id AND position_id IS NULL AND branch_id IS NULL',
-					'params' => array(':active' => 'y', ':department_id'=>$cur_items[$i]->id),
-				));
-
-					$org_1->sortOrder = $org_2->id;
+					
+					echo $org_1->sortOrder." ".$org_2[$i]->sortOrder." || ";
+					$org_1->sortOrder = $org_2[$i]->sortOrder;
 					$org_1->save();
 				}
 			}

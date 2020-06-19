@@ -218,23 +218,36 @@ class BranchController extends Controller
 			
 			$cur_items = Branch::model()->findAllByPk($_POST['items'], array('order'=>'sortOrder'));
 
+			$org_2 = array();
+			foreach ($cur_items as $key => $value) {
+				$org_2[] = OrgChart::model()->find(array(
+					'condition' => 'active=:active AND branch_id=:branch_id',
+					'params' => array(':active' => 'y', ':branch_id'=>$value->id),
+					'order'=>'sortOrder'
+				));
+			}
+
 			for ($i = 0; $i < count($_POST['items']); $i++) {
 				$item = Branch::model()->findByPk($_POST['items'][$i]);
 				if ($item->sortOrder != $cur_items[$i]->sortOrder) {
+					
+					echo $item->sortOrder." ".$cur_items[$i]->sortOrder." || ";
 					$item->sortOrder = $cur_items[$i]->sortOrder ;
 					$item->save();
+					
 
 					$org_1 = OrgChart::model()->find(array(
 					'condition' => 'active=:active AND branch_id=:branch_id',
 					'params' => array(':active' => 'y', ':branch_id'=>$item->id),
 				));
 
-					$org_2 = OrgChart::model()->find(array(
-					'condition' => 'active=:active AND branch_id=:branch_id',
-					'params' => array(':active' => 'y', ':branch_id'=>$cur_items[$i]->id),
-				));
+				// 	$org_2 = OrgChart::model()->find(array(
+				// 	'condition' => 'active=:active AND branch_id=:branch_id',
+				// 	'params' => array(':active' => 'y', ':branch_id'=>$cur_items[$i]->id),
+				// ));
 
-					$org_1->sortOrder = $org_2->id;
+					echo $org_1->sortOrder." ".$org_2[$i]->sortOrder." || ";
+					$org_1->sortOrder = $org_2[$i]->sortOrder;
 					$org_1->save();
 				}
 			}

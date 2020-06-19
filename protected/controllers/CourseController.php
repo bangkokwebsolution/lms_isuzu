@@ -633,7 +633,7 @@ public function actionCateIndex($id) {
                         }
                     }
                     if($courseStats == "pass"){
-                        $this->SendMailLearn($lesson->course_id);
+                        // $this->SendMailLearn($lesson->course_id);
                     }
                 }
                 // end update lesson status pass
@@ -767,7 +767,7 @@ public function actionCateIndex($id) {
                             }
                         }
                         if($courseStats == "pass"){
-                            $this->SendMailLearn($lesson->course_id);
+                            // $this->SendMailLearn($lesson->course_id);
                         }
                     }
 
@@ -895,7 +895,7 @@ public function actionCateIndex($id) {
                             }
                         }
                         if($courseStats == "pass"){
-                            $this->SendMailLearn($lesson->course_id);
+                            // $this->SendMailLearn($lesson->course_id);
                         }
                     }
 
@@ -1009,7 +1009,7 @@ public function actionCateIndex($id) {
                     }
                 }
                 if($courseStats == "pass"){
-                    $this->SendMailLearn($lesson->course_id);
+                    // $this->SendMailLearn($lesson->course_id);
                 }
             }
         }

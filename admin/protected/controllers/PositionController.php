@@ -234,9 +234,20 @@ class PositionController extends Controller
 
 			$cur_items = Position::model()->findAllByPk($_POST['items'], array('order'=>'sortOrder'));
 
+			$org_2 = array();
+			foreach ($cur_items as $key => $value) {
+				$org_2[] = OrgChart::model()->find(array(
+					'condition' => 'active=:active AND position_id=:position_id AND branch_id IS NULL',
+					'params' => array(':active' => 'y', ':position_id'=>$value->id),
+					'order'=>'sortOrder'
+				));
+			}			
+
 			for ($i = 0; $i < count($_POST['items']); $i++) {
 				$item = Position::model()->findByPk($_POST['items'][$i]);
 				if ($item->sortOrder != $cur_items[$i]->sortOrder) {
+					
+					echo $item->sortOrder." ".$cur_items[$i]->sortOrder." || ";
 					$item->sortOrder = $cur_items[$i]->sortOrder ;
 					$item->save();
 
@@ -245,12 +256,13 @@ class PositionController extends Controller
 					'params' => array(':active' => 'y', ':position_id'=>$item->id),
 				));
 
-					$org_2 = OrgChart::model()->find(array(
-					'condition' => 'active=:active AND position_id=:position_id AND branch_id IS NULL',
-					'params' => array(':active' => 'y', ':position_id'=>$cur_items[$i]->id),
-				));
+				// 	$org_2 = OrgChart::model()->find(array(
+				// 	'condition' => 'active=:active AND position_id=:position_id AND branch_id IS NULL',
+				// 	'params' => array(':active' => 'y', ':position_id'=>$cur_items[$i]->id),
+				// ));
 
-					$org_1->sortOrder = $org_2->id;
+					echo $org_1->sortOrder." ".$org_2[$i]->sortOrder." || ";
+					$org_1->sortOrder = $org_2[$i]->sortOrder;
 					$org_1->save();
 				}
 			}

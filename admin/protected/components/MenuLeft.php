@@ -741,7 +741,6 @@ Class MenuLeft extends Controller
 	        	
 	        	'visible'=>self::PermissionsMenu(array(
 	        		'Certificate.*',
-	        		'Certificate.update',
 	        	)),
 	        	'label'=>'<i></i><span>ระบบใบประกาศนียบัตร</span>',
 	        	'url'=>'#Certificate',
