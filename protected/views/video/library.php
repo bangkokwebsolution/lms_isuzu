@@ -93,47 +93,65 @@
                       $extension = $type_ex[count($type_ex)-1];
 
                       if(in_array($extension, $arr_type_video)){
-                        ?>
-                        <div class="library-item">
-                          <div class="item item-library-index">
-                            <div class="library-card">
-                              <video class="video-js" poster="" controls preload="auto" style="width: 100%; height: 176px;">
-                                <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='video/mp4'>
-                                </video>
-                                  <div class="library-detail">
-                                    <span><?= $libra_file ?></span>
-                                    <button class="<?= $text_class ?>" style="display: block;" onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
-                                      <i class="fa fa-download"></i> <?= $text_status ?>
-                                    </button>
+
+                        $check_file = glob(Yii::app()->getUploadPath(null)."../LibraryFile/*");
+
+                        foreach ($check_file as $key => $value) {
+                          if(basename($value) == $value->library_filename){
+                            ?>
+                            <div class="library-item">
+                              <div class="item item-library-index">
+                                <div class="library-card">
+
+                                  <video class="video-js" poster="" controls controlsList="nodownload" preload="auto" style="width: 100%; height: 176px;">
+                                    <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='video/mp4'>
+                                    </video>
+                                    
+                                    <div class="library-detail">
+                                      <span><?= $libra_file ?></span>
+                                      <button class="<?= $text_class ?>" style="display: block;" onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                                        <i class="fa fa-download"></i> <?= $text_status ?>
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                        <?php
+                              <?php
+                            }
+                          }
+
                       }elseif($extension == "mp3"){
-                        ?>
-                        <div class="library-item">
-                          <div class="item item-library-index">
-                            <div class="library-card">
-                              <video class="video-js" poster="" controls preload="auto" style="width: 100%; height: 176px;">
-                                <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='video/mp3'>
-                                </video>
-                              <!-- <a href="" class=""> -->
-                                <!-- <span class="other-file"> -->
-                                  <!-- <i class="fas fa-file-audio audio"></i>&nbsp;<small>Audio</small> -->
-                                <!-- </span> -->
-                                <!-- <img src="<?php //echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="img-fluid "> -->
-                                <div class="library-detail">
-                                  <span><?= $libra_file ?></span>
-                                  <button class="<?= $text_class ?>" style="display: block;" onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
-                                      <i class="fa fa-download"></i> <?= $text_status ?>
-                                    </button>
-                                </div>
-                              <!-- </a> -->
-                            </div>
-                          </div>
-                        </div>
-                        <?php
+                        $check_file = glob(Yii::app()->getUploadPath(null)."../LibraryFile/*");
+
+                        foreach ($check_file as $key => $value) {
+                          if(basename($value) == $value->library_filename){
+                            ?>
+                            <div class="library-item">
+                              <div class="item item-library-index">
+                                <div class="library-card">
+                                  
+                                  <video class="video-js" poster="" controls controlsList="nodownload" preload="auto" style="width: 100%; height: 176px;">
+                                    <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='video/mp3'>
+                                    </video>
+                                    
+                                    <!-- <a href="" class=""> -->
+                                      <!-- <span class="other-file"> -->
+                                        <!-- <i class="fas fa-file-audio audio"></i>&nbsp;<small>Audio</small> -->
+                                        <!-- </span> -->
+                                        <!-- <img src="<?php //echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="img-fluid "> -->
+                                        <div class="library-detail">
+                                          <span><?= $libra_file ?></span>
+                                          <button class="<?= $text_class ?>" style="display: block;" onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                                            <i class="fa fa-download"></i> <?= $text_status ?>
+                                          </button>
+                                        </div>
+                                        <!-- </a> -->
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <?php
+                                }
+                              }
                       }elseif($extension == "doc" || $extension == "docx"){
                         ?>
                         <div class="library-item">
