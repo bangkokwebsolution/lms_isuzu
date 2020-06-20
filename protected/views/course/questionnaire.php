@@ -411,7 +411,7 @@ $getLessonAll = Lesson::model()->findAll(array(
                     </div>
                     <div class="btn-learn hidden-xs">
                         <!-- href="<?php echo $this->createUrl('/course/detail', array('id' => $course->course_id)); ?>" -->
-                        <a class="btn btn-warning btn-lg" role="button" href="javascript:history.back()" ><?= $Completed ?></a>
+                        <a id="btn_completed" class="btn btn-warning btn-lg" role="button" ><?= $Completed ?></a>
                     </div>
                 </div>
 
@@ -443,6 +443,23 @@ $getLessonAll = Lesson::model()->findAll(array(
             }
 
             $(function () {
+                // console.log((document.URL).split("/")[6]);
+                console.log(document.URL);
+                console.log(document.referrer);
+                if(document.URL == document.referrer){
+                    var urll = "<?= $this->createUrl("course/detail") ?>"+"/"+(document.URL).split("/")[6];
+                    // console.log(urll);
+                    $("#btn_completed").attr("href", urll);
+                }else{
+                    if(document.referrer == ""){
+                        var urll = "<?= $this->createUrl("course/detail") ?>"+"/"+(document.URL).split("/")[6];
+                    // console.log(urll);
+                    $("#btn_completed").attr("href", urll);
+                    }else{
+                        $("#btn_completed").attr("href", document.referrer);
+                    }
+                }
+
                 $('.checkRequirement').click(function(e) {
                     e.preventDefault();
                     var currentUrl = $(this).attr('href');
