@@ -443,10 +443,10 @@ $getLessonAll = Lesson::model()->findAll(array(
             }
 
             $(function () {
-                // console.log((document.URL).split("/")[6]);
-                console.log(document.URL);
-                console.log(document.referrer);
-                if(document.URL == document.referrer){
+                // console.log((document.referrer).split("/")[4]);
+                // console.log(document.URL);
+                // console.log(document.referrer);
+                if((document.referrer).split("/")[4] == "questionnaire_course"){
                     var urll = "<?= $this->createUrl("course/detail") ?>"+"/"+(document.URL).split("/")[6];
                     // console.log(urll);
                     $("#btn_completed").attr("href", urll);

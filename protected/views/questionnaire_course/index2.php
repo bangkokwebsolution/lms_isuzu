@@ -254,7 +254,7 @@ $path_theme = Yii::app()->theme->baseUrl . '/';
                                                                                                         <td class="text-center" <?php echo ($choiceKey % 2 == 0) ? 'style="background-color:#FFFFFF"' : ''; ?> >
                                                                                                             <div class="radio radio-success">
 
-                                                                                                                <input type="radio"
+                                                                                                                <input type="radio" required="required"
                                                                                                                 id="choicecontentment<?php echo $choiceValue->option_choice_id.$j; ?>"
                                                                                                                 name="choice[contentment][<?php echo $choiceValue->option_choice_id; ?>]"
                                                                                                                 value="<?php echo $j; ?>" required >
