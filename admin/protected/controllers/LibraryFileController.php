@@ -69,20 +69,23 @@ class LibraryFileController extends Controller
 	public function actionCreate()
 	{
 		$model=new LibraryFile;
+		$model->scenario = 'validateCheckk';
 
 		if(isset($_POST['LibraryFile']))
 		{
 			$model->attributes=$_POST['LibraryFile'];
-			$course_picture = CUploadedFile::getInstance($model, 'library_filename');
-			if(!empty($course_picture)){
-				$time = date("YmdHis");
-				$fileNamePicture = $time."_.".$course_picture->getExtensionName();
-				$model->library_filename = $fileNamePicture;
-				$path = Yii::app()->getUploadPath(null).$model->library_filename;
-				$course_picture->saveAs($path);
-			}
 
-			if($model->save()){
+			if($model->validate() && $model->save()){
+				$course_picture = CUploadedFile::getInstance($model, 'library_filename');
+				if(!empty($course_picture)){
+					$time = date("YmdHis");
+					// $fileNamePicture = $time."_.".$course_picture->getExtensionName();
+					$fileNamePicture = $model->library_name_en.".".$course_picture->getExtensionName();
+					$model->library_filename = $fileNamePicture;
+					$path = Yii::app()->getUploadPath(null).$model->library_filename;		
+					$course_picture->saveAs($path);		
+				}
+				
 				$model->sortOrder = $model->library_id;
 				$model->save();
 				$this->redirect(array('view','id'=>$model->library_id));
@@ -108,17 +111,19 @@ class LibraryFileController extends Controller
 		if(isset($_POST['LibraryFile']))
 		{
 			$model->attributes=$_POST['LibraryFile'];
-			$course_picture = CUploadedFile::getInstance($model, 'library_filename');
-			if(!empty($course_picture)){
-				$time = date("YmdHis");
-				$fileNamePicture = $time."_.".$course_picture->getExtensionName();
-				$path = Yii::app()->getUploadPath(null).$model->library_filename;
-				$course_picture->saveAs($path);
-			}
-			$model->library_filename = $fileNamePicture;
+			$model->scenario = 'validateCheckk';
 
 			
-			if($model->save()){
+			if($model->validate() && $model->save()){
+				$course_picture = CUploadedFile::getInstance($model, 'library_filename');
+				if(!empty($course_picture)){
+					$time = date("YmdHis");					
+					$fileNamePicture = $model->library_name_en.".".$course_picture->getExtensionName();
+					// $fileNamePicture = $time."_.".$course_picture->getExtensionName();
+					$path = Yii::app()->getUploadPath(null).$model->library_filename;
+					$course_picture->saveAs($path);
+				}
+
 				$this->redirect(array('view','id'=>$model->library_id));
 			}
 		}

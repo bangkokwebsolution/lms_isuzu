@@ -45,8 +45,10 @@ class LibraryFile extends CActiveRecord
 	{
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
-		return array(
-			array('library_type_id, library_name, library_name_en, library_filename', 'required'),			
+		return array(			
+			// nameFunction on scenario
+			array('library_name_en', 'validateCheckk', 'on' => 'validateCheckk'),
+			array('library_type_id, library_name, library_name_en', 'required'),			
 			array('sortOrder, library_type_id, created_by, updated_by', 'numerical', 'integerOnly'=>true),
 			array('library_name, library_name_en, library_filename', 'length', 'max'=>255),
 			array('created_date, updated_date, active', 'safe'),
@@ -55,7 +57,6 @@ class LibraryFile extends CActiveRecord
 			array('library_id, sortOrder, library_type_id, library_name, library_name_en, library_filename, created_by, created_date, updated_by, updated_date, active', 'safe', 'on'=>'search'),
 		);
 	}
-
 	/**
 	 * @return array relational rules.
 	 */
@@ -80,7 +81,7 @@ class LibraryFile extends CActiveRecord
 			'sortOrder' => 'Sort Order',
 			'library_type_id' => 'ประเภท',
 			'library_name' => 'ชื่อไฟล์ (TH)',
-			'library_name_en' => 'ชื่อไฟล์ (EN)',
+			'library_name_en' => 'ชื่อไฟล์ (EN) ห้ามมีสัญลักษณ์พิเศษ',
 			'library_filename' => 'ไฟล์',
 			'created_by' => 'ผู้สร้าง',
 			'created_date' => 'วันที่สร้าง',
@@ -136,6 +137,25 @@ class LibraryFile extends CActiveRecord
 		// return new CActiveDataProvider($this, array(
 		// 	'criteria'=>$criteria,
 		// ));
+	}
+
+	public function validateCheckk(){
+		
+		if($this->library_id != null){
+			$model = LibraryFile::model()->findAll("active='y' AND library_name_en='".$this->library_name_en."' AND library_id!='".$this->library_id."'");
+			if(!empty($model)){
+				$this->addError('library_name_en', 'ชื่อไฟล์ (EN) ซ้ำ');
+				return  false;
+			}
+		}else{
+			$model = LibraryFile::model()->findAll("active='y' AND library_name_en='".$this->library_name_en."'");
+			if(!empty($model)){
+				var_dump("false");
+				$this->addError('library_name_en', 'ชื่อไฟล์ (EN) ซ้ำ');
+				return false;	
+			}
+		}
+		return true;
 	}
 
 	/**
