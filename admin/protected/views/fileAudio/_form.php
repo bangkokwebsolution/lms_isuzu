@@ -86,7 +86,9 @@
                 $AudioSlide = AudioSlide::model()->findAll('file_id=:file_id', array(':file_id'=>$model->id));
                 if(!empty($AudioSlide)){
                     ?>
-
+                    <div class="row">
+                        <button type="button" class="btn btn-danger" onclick="del_slide(<?php echo $model->id; ?>)">ลบ Slide</button>
+                    </div>
                     <div class="row">
                         <div class="span7">
                             <?php
@@ -158,3 +160,34 @@
 
 
 
+<script type="text/javascript">
+    function del_slide(id){
+        swal({
+            title: 'แจ้งเตือน!',
+            text: "ยืนยันที่จะลบ Slide",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'ยืนยัน',
+            cancelButtonText: 'ยกเลิก'
+        }, function(isConfirm) {
+            if (isConfirm) {
+                $.ajax({
+                    url : '../delslide',
+                    data : {
+                        id:id,
+                    },
+                    type : 'GET',
+                    success : function(data){
+                        if(data == "success"){
+                            window.location.reload();                           
+                        }else{
+                            alert("ทำรายการใหม่");
+                        }                 
+                    },              
+                });
+            }
+        });
+    }
+</script>

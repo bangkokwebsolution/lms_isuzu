@@ -19,7 +19,7 @@ class FileController extends Controller
     {
         return array(
         	array('allow',  // allow all users to perform 'index' and 'view' actions
-            	'actions' => array('index', 'view','Update','Sequence'),
+            	'actions' => array('index', 'view','Update','Sequence', 'DelSlide'),
             	'users' => array('*'),
             ),
             array('allow',
@@ -32,6 +32,13 @@ class FileController extends Controller
                 'users' => array('*'),
                 ),
             );
+    }
+
+    public function actionDelSlide($id)
+    {
+    	ImageSlide::model()->deleteAll("file_id='".$id."'");
+    	echo "success";
+
     }
 
 	public function actionUpdate($id)
