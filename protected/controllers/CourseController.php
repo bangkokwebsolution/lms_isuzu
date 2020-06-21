@@ -1640,6 +1640,8 @@ public function actionDetail($id) {
 
         if($certDetail->certificate->cert_display == '1'){
             $pageFormat = 'P';
+        }elseif($certDetail->certificate->cert_display == '3'){
+            $pageFormat = 'P';
         } else {
             $pageFormat = 'L';
         }
@@ -1753,13 +1755,16 @@ public function actionDetail($id) {
             // $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('cerfile/' . $renderFile, array('model' => $setCertificateData), true), 'UTF-8', 'UTF-8'));
             if($certDetail->certificate->cert_display == '1'){
             $pageFormat = 'P';
-        } else {
+        }elseif($certDetail->certificate->cert_display == '3'){
+            $pageFormat = 'P';
+        }  else {
             $pageFormat = 'L';
         }
 
 
             require_once __DIR__ . '/../../admin/protected/vendors/mpdf7/autoload.php';
-            $mPDF = new \Mpdf\Mpdf(['orientation' => $pageFormat]);
+            $mPDF = new \Mpdf\Mpdf(['format' => 'A4-'.$pageFormat]);
+            // $mPDF = new \Mpdf\Mpdf(['orientation' => $pageFormat]);
             $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('cerfile/' . $renderFile, array('model'=>$setCertificateData), true), 'UTF-8', 'UTF-8'));
 
             //output
@@ -1926,6 +1931,8 @@ public function actionDetail($id) {
 
         if($certDetail->certificate->cert_display == '1'){
             $pageFormat = 'P';
+        }elseif($certDetail->certificate->cert_display == '3'){
+            $pageFormat = 'P';
         } else {
             $pageFormat = 'L';
         }
@@ -2014,7 +2021,8 @@ public function actionDetail($id) {
                 'pageSide' => $certDetail->certificate->cert_display,
             );
             require_once __DIR__ . '/../../admin/protected/vendors/mpdf7/autoload.php';
-            $mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
+            // $mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
+            $mPDF = new \Mpdf\Mpdf(['format' => 'A4-'.$pageFormat]);
             $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('cerfile/' . $renderFile, array('model'=>$setCertificateData), true), 'UTF-8', 'UTF-8'));
 
             //Save file
