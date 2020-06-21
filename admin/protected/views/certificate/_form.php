@@ -68,7 +68,8 @@ $formNameModel = 'Certificate';
                         <?php echo $form->error($model,'sign_id'); ?>
                     </div>
                     <?php 
-                    $display[1] = 'รูปแบบแนวตั้ง';
+                    $display[1] = 'รูปแบบแนวตั้ง แบบที่1';
+                    $display[3] = 'รูปแบบแนวตั้ง แบบที่2';
                     $display[2] = 'รูปแบบแนวนอน';
                     ?>
                     <div class="row">
@@ -77,11 +78,11 @@ $formNameModel = 'Certificate';
                         <?php echo $form->error($model,'cert_display'); ?>
                     </div>
 
-                    <div class="row">
+                    <!-- <div class="row">
                         <?php echo $form->labelEx($model,'cert_number'); ?>
                         <?php echo $form->textField($model,'cert_number',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
                         <?php echo $form->error($model,'cert_number'); ?>
-                    </div>
+                    </div> -->
 
                     <div class="row buttons">
                         <?php echo CHtml::tag('button',array('class' => 'btn btn-primary btn-icon glyphicons ok_2'),'<i></i>บันทึกข้อมูล');?>

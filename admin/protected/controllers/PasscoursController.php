@@ -233,6 +233,8 @@ class PasscoursController extends Controller
 
         if($modelSign->cert_display == '1'){
 			$pageFormat = 'P';
+		}else if($modelSign->cert_display == '3'){
+			$pageFormat = 'P';
 		} else {
 			$pageFormat = 'L';
 		}
@@ -347,7 +349,8 @@ class PasscoursController extends Controller
 			// $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('cerfile/' . $renderFile, array('model'=>$setCertificateData), true), 'UTF-8', 'UTF-8'));
 			
 			require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
-			$mPDF = new \Mpdf\Mpdf(['orientation' => $pageFormat]);
+			$mPDF = new \Mpdf\Mpdf(['format' => 'A4-'.$pageFormat]);
+			// $mPDF = new \Mpdf\Mpdf(['orientation' => $pageFormat]);
 			$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('cerfile/' . $renderFile, array('model'=>$setCertificateData), true), 'UTF-8', 'UTF-8'));
 
 	        //save log private function saveCertificateLog()

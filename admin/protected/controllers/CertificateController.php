@@ -183,6 +183,8 @@ class CertificateController extends Controller
 
 		if($model->cert_display == '1'){
 			$pageFormat = 'P';
+		}elseif($model->cert_display == '3'){
+			$pageFormat = 'P';
 		} else {
 			$pageFormat = 'L';
 		}
@@ -226,7 +228,8 @@ class CertificateController extends Controller
 			);
 
 			require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
-			$mPDF = new \Mpdf\Mpdf(['orientation' => $pageFormat]);
+			// $mPDF = new \Mpdf\Mpdf(['orientation' => $pageFormat]);
+			$mPDF = new \Mpdf\Mpdf(['format' => 'A4-'.$pageFormat]);
 			$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('display', array('model'=>$setCertificateData), true), 'UTF-8', 'UTF-8'));
 			// $mPDF->Output();
 			// exit();
