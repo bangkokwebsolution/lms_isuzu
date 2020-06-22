@@ -59,7 +59,7 @@ EOD
                               // var_dump($model->gallerygroupcheck()->search());
 							$this->widget('AGridView', array(
 								'id'=>$formNameModel.'-grid',
-								'dataProvider'=>$model->search(),
+								'dataProvider'=>$model->gallerygroupcheck()->search(),
 							    //'filter'=>$model,
 								// 'selectableRows' => 2,	
 								// 'htmlOptions' => array(
