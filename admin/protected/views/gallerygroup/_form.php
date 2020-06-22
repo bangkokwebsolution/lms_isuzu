@@ -49,7 +49,7 @@
 
 function deletes(filedoc_id,file_id){
 	// console.log(file_id);
-    $.get("<?php echo $this->createUrl('Gallery/DeleteFile'); ?>",{id:file_id},function(data){
+    $.get("<?php echo $this->createUrl('GalleryGroup/DeleteFile'); ?>",{id:file_id},function(data){
     	console.log(data);
         if($.trim(data)==1){
            var success_file = 'ลบไฟล์สำเร็จ';
