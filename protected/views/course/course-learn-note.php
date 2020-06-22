@@ -1655,7 +1655,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                    </div>
                                    <div class="col-md-12 <?php echo empty($imageSlide) ? 12 : 6; ?>"
                                      style="padding: 0;">
-                                     <audio id="audio-player<?= $idx; ?>" src="<?php echo $uploadFolder . $file->filename;?>" preload="auto" />
+                                     <audio id="audio-player<?= $idx; ?>" src="<?php echo $uploadFolder . $file->filename;?>" preload="auto" fileId="<?php echo $file->id; ?>" lesson_id="<?php echo $file->lesson_id; ?>" />
                                      </div>
                                      <?php if (!empty($imageSlide)) { ?>
                                        <div class="col-md-12 showslidethumb" id="showslidethumb<?php echo $idx; ?>" style="overflow-x: auto; overflow-y: auto;">
@@ -1769,7 +1769,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                    // console.log("++++++++++++++++++++++++++++++++++++++++++++++");
                                    save_time_video(Math.floor(timePlayed<?php echo $idx;?>), <?php echo $idx;?>);
                                  }
-                           
+
 
                            var percenttimePlayed<?php echo $idx;?> = (myPlayer<?php echo $idx;?>.duration / 60);
                            percenttimePlayed<?php echo $idx;?> = (100 / percenttimePlayed<?php echo $idx;?>);
@@ -3628,7 +3628,15 @@ function time_test_start(time_down){
                   var save_time_file, save_time_time;
                   function save_time_video(time, idx){
                     var time = time;
+                    var lesson = $("#"+'example_video_'+idx+'_html5_api').attr("lesson_id");
                     var file = $("#"+'example_video_'+idx+'_html5_api').attr("fileid");
+
+                    if(typeof(lesson) === "undefined"){
+
+                      var lesson = $("#"+'audio-player'+idx).attr("lesson_id");
+                    var file = $("#"+'audio-player'+idx).attr("fileid");
+                    }
+
                     var gen_iddd = "<?php echo $gen_id; ?>";
 
                     if(save_time_file != file || save_time_time != time){
@@ -3646,6 +3654,7 @@ function time_test_start(time_down){
                         time: time,
                         file: file,
                         gen_id: gen_iddd,
+                        lesson: lesson,
                       }),
                       success: function(data) {
                         if(data != "error" ){
