@@ -266,7 +266,7 @@ class CertificateController extends Controller
 		if($certificateId != null) {
 			// $getAllCourse = CourseOnline::model()->findAll();
 			$getAllCourse = CourseOnline::model()->findAll(array(
-				'condition'=>'lang_id = 1'
+				'condition'=>'lang_id = 1 AND active = "y"'
 			));
 			$model = CertificateNameRelations::model()->findAll(array(
 				'condition'=>'cert_id = "'.$certificateId.'"'
