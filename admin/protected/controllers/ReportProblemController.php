@@ -265,16 +265,24 @@ class ReportProblemController extends Controller
 		$model->status = 'success';
 		$model->accept_report_date = date("Y-m-d H:i:s");
 		$model->answer = $msg;
-		$model->save(false);
+		if ($model->save(false)) {
 		$Usability = Usability::model()->findByPk($model->report_type);
 		$to = array();
        	$to['email'] = $model->email;
       	$to['firstname'] = $model->firstname;
        	$to['lastname'] = $model->lastname;
-       	$subject = 'ตอบคำถาม เรื่อง  : ' . $Usability->usa_title;
+       	if ($Usability) {
+    	$subject = 'ตอบคำถาม เรื่อง  : ' . $Usability->usa_title;
+       	}else{
+       	$subject = 'ตอบคำถามที่ท่านส่งมา';
+       	}      
        	$message = $msg;
         $mail = Helpers::lib()->SendMail($to, $subject, $message);
-}
+        echo 'y';
+    }else{
+    	echo 'n';
+    }
+ }
 
 	/**
 	 * Manages all models.

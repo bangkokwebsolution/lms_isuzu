@@ -222,20 +222,39 @@ EOD
                    $.ajax({
                     type: "POST",
                     url: '<?php echo $this->createUrl('reportProblem/sendMailMessage'); ?>',
-                    data: {inputValue: inputValue,'id': id},
+                    data: {
+                        inputValue: inputValue,
+                        id: id
+                    },
                     success: function (data) {
+
+                    if (data === 'y') {
                       swal({
                         type: "success",
                         title: "ระบบ",
-                      text: "ทำรายการสำเร็จ",
-                      timer: 500,
-                    },
+                        text: "ทำรายการสำเร็จ",
+                        timer: 500,
+                         },
                     function() {
                       setTimeout(function(){
                         location.reload();
                       },500);
-                    });
-
+                    }
+                    );
+                    }else{
+                        swal({
+                        type: "error",
+                        title: "ระบบ",
+                        text: "ทำรายการตอบปัญหาไม่สำเร็จ",
+                        timer: 500,
+                         },
+                             function() {
+                      setTimeout(function(){
+                        location.reload();
+                      },500);
+                    }
+                    );
+                    }
                     },
                   });
                  }
