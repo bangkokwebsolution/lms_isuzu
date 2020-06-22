@@ -179,7 +179,7 @@ function deletes(filedoc_id,file_id){
                         if (isset($Gallery)) {
                         	 $confirm_del  = 'คุณต้องการลบรูปภาพใช่หรือไม่';
                         foreach ($Gallery as $key ) {
-                           echo CHtml::image(Yii::app()->baseUrl.'/../uploads/gallery/'.$key->image,array('width'=>'100px','height'=>'100px'));
+                           echo CHtml::image(Yii::app()->baseUrl.'/../uploads/gallery/'.$key->image, 'No Image',array('width'=>'400px','height'=>'400px'));
                            echo CHtml::link('<span class="btn-uploadfile btn-danger"><i class="fa fa-trash"></i></span>','', array('title'=>'ลบไฟล์',
                         'id'=>'btnSaveNametrain'.$key->id,
                         'class'=>'btn-action glyphicons btn-danger remove_2',
