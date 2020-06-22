@@ -2448,6 +2448,30 @@ public function actionCourseLearnNoteRemove(){
     }
 }
 
+public function actionCourseLearnSaveTimeVideo(){
+    if(isset($_POST["time"]) && isset($_POST["file"])){
+        $user_id = Yii::app()->user->id;
+        $file_id = $_POST["file"];
+        $gen_id = $_POST["gen_id"];
+        $time = $_POST["time"];
+
+        $model = LearnFile::model()->find(array(
+            'condition'=>'file_id=:file_id AND user_id_file=:user_id AND gen_id=:gen_id AND learn_file_status!="s"',
+            'params'=>array(':file_id'=>$file_id,':user_id'=>$user_id, ':gen_id'=>$gen_id),
+        ));
+        
+        if( $model->learn_file_status == "l" || (is_numeric($model->learn_file_status) && (int)$model->learn_file_status < (int)$time) ){
+            $model->learn_file_status = $time;
+            $model->save();
+            echo "success";
+        }else{
+            echo (int)$model->learn_file_status." < ".(int)$time;
+        }
+
+        
+    }
+}
+
 
 
 public function actionLessonShow() {

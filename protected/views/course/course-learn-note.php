@@ -1258,6 +1258,17 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                  setInterval(function() {
                                   var timePlayed<?php echo $idx;?> = currentTime<?php echo $idx;?>;
 
+
+                                  if(Math.floor(timePlayed<?php echo $idx;?>)%6 == 0 && Math.floor(timePlayed<?php echo $idx;?>) > 0){
+                                   // console.log("mod ----- "+Math.floor(timePlayed<?php echo $idx;?>)%6);
+                                   // console.log("time ----- "+Math.floor(timePlayed<?php echo $idx;?>));
+                                   // console.log("idx ----- "+<?php echo $idx;?>);
+                                   // console.log("++++++++++++++++++++++++++++++++++++++++++++++");
+                                   save_time_video(Math.floor(timePlayed<?php echo $idx;?>), <?php echo $idx;?>);
+                                 }
+
+                                 
+
                                   var percenttimePlayed<?php echo $idx;?> = (myPlayer<?php echo $idx;?>.duration() / 60);
                                   percenttimePlayed<?php echo $idx;?> = (100 / percenttimePlayed<?php echo $idx;?>);
                                   percenttimePlayed<?php echo $idx;?> = (timePlayed<?php echo $idx;?>/60) * percenttimePlayed<?php echo $idx;?>;
@@ -1750,6 +1761,15 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
 
                           setInterval(function() {
                            var timePlayed<?php echo $idx;?> = currentTime<?php echo $idx;?>;
+
+                           if(Math.floor(timePlayed<?php echo $idx;?>)%6 == 0 && Math.floor(timePlayed<?php echo $idx;?>) > 0){
+                                   // console.log("mod ----- "+Math.floor(timePlayed<?php echo $idx;?>)%6);
+                                   // console.log("time ----- "+Math.floor(timePlayed<?php echo $idx;?>));
+                                   // console.log("idx ----- "+<?php echo $idx;?>);
+                                   // console.log("++++++++++++++++++++++++++++++++++++++++++++++");
+                                   save_time_video(Math.floor(timePlayed<?php echo $idx;?>), <?php echo $idx;?>);
+                                 }
+                           
 
                            var percenttimePlayed<?php echo $idx;?> = (myPlayer<?php echo $idx;?>.duration / 60);
                            percenttimePlayed<?php echo $idx;?> = (100 / percenttimePlayed<?php echo $idx;?>);
@@ -3605,4 +3625,35 @@ function time_test_start(time_down){
                   }
 
 
+                  var save_time_file, save_time_time;
+                  function save_time_video(time, idx){
+                    var time = time;
+                    var file = $("#"+'example_video_'+idx+'_html5_api').attr("fileid");
+                    var gen_iddd = "<?php echo $gen_id; ?>";
+
+                    if(save_time_file != file || save_time_time != time){
+                      save_time_file = file;
+                      save_time_time = time;                     
+
+                    // console.log(time);
+                    // console.log(idx);
+                    // console.log($("#"+'example_video_'+idx+'_html5_api').attr("fileid"));
+
+                    $.ajax({
+                      type: 'POST',
+                      url: '<?php echo Yii::app()->createAbsoluteUrl("/Course/CourseLearnSaveTimeVideo"); ?>',
+                      data: ({
+                        time: time,
+                        file: file,
+                        gen_id: gen_iddd,
+                      }),
+                      success: function(data) {
+                        if(data != "error" ){
+                          console.log(data);
+                        }
+                      }
+                    });
+                  }
+
+                  }
                 </script>
