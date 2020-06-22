@@ -138,7 +138,10 @@ EOD
                     array(
                         'name'=>'report_type',
                         'filter'=>ReportProblem::getUsabilityListNew(),
-                        'value'=>'UHtml::markSearch($data->usa,"usa_title")'
+                        'value'=>function($data){
+                           return $data->usa->usa_title;
+                        }
+                        //'value'=>'UHtml::markSearch($data->usa,"usa_title")'
                         // 'value'=>function($data){
                         //     $Usability = Usability::model()->findByAttributes(array(
                         //         'usa_id' => $data->report_type,
