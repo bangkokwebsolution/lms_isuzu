@@ -35,6 +35,9 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
     $clickFinal = "Final test";
     $click_precourse = "Pre test";
     $pre_course = "Pre Test Course";
+    $pre_course_wait = "Wait for inspection...";
+
+
 }else{  
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -50,6 +53,10 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
     $pre_course = "การสอบก่อนเรียนหลักสูตร";
     $click_precourse = "เข้าสู่การสอบ";
     $clickFinal = "เข้าสู่การสอบ";
+    $pre_course_wait = "รอตรวจสอบ...";
+
+
+    
     $courseChildren = CourseOnline::model()->find(array('condition' => 'parent_id = ' . $course->course_id));
     if($courseChildren){
         $course->course_title = $courseChildren->course_title;
@@ -459,16 +466,36 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
     <?php
 }else{ //มีคะแนนสอบ
     $ScoreCoursePreTest = Helpers::lib()->ScoreCoursePreTest($course->course_id, $gen_id);
+    $CheckPreTestAnsTextAreaCourse = Helpers::lib()->CheckPreTestAnsTextAreaCourse($course->course_id, "pre");
 ?>
 <div id="collapsePreCourse" class="collapse" style="height: 0px;">
-    <li class="list-group-item ">
-       <a href="">
-        <span class="list__course"><?php echo $label->label_testPre; ?></span>
-        <span class="pull-right  text-danger prepost">
-            <?= $ScoreCoursePreTest; ?>
-            <?= $label->label_point; ?></span>
-    </a> 
+    <?php 
+    if($CheckPreTestAnsTextAreaCourse){
+        ?>
+        <li class="list-group-item ">
+         <a href="">
+            <span class="list__course"><?php echo $label->label_testPre; ?></span>
+            <span class="pull-right  text-danger prepost">
+                <?= $ScoreCoursePreTest; ?>
+                <?= $label->label_point; ?></span>
+            </a> 
+        </li>
+        <?php
+    }else{
+        ?>
+        <li class="list-group-item ">
+         <a href="">
+            <span class="list__course"><?php echo $label->label_testPre; ?></span>
+            <span class="pull-right  text-danger prepost"><?= $pre_course_wait; ?></span>
+        </a> 
     </li>
+    <?php
+}
+
+     ?>
+
+
+    
 </div>
 <?php
 } //if($checkHaveScoreCoursePreTest)
@@ -625,10 +652,23 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                                                                             $colorText = 'text-danger';
                                                                         }
                                                                         $preStatus = Helpers::lib()->CheckTestAll($lessonListValue, "pre",$score_ck);
-                                                                        ?>
-                                                                        <li class="list-group-item">
-                                                                            <?php echo $label->label_resultTestPre; ?> <?= $keyx+1; ?><span class="pull-right <?= $colorText; ?> prepost"> <?= $preStatus->value['score']; ?>/<?= $preStatus->value['total']; ?> <?php echo $label->label_point; ?></span> </li>
-                                                                            <?php
+
+
+                                                                        $CheckPreTestAnsTextAreaLesson = Helpers::lib()->CheckPreTestAnsTextAreaLesson($lessonListValue, "pre");
+
+                                                                        if($CheckPreTestAnsTextAreaLesson){
+
+                                                                            ?>
+                                                                            <li class="list-group-item">
+                                                                                <?php echo $label->label_resultTestPre; ?> <?= $keyx+1; ?><span class="pull-right <?= $colorText; ?> prepost"> <?= $preStatus->value['score']; ?>/<?= $preStatus->value['total']; ?> <?php echo $label->label_point; ?></span> </li>
+                                                                                <?php
+                                                                        }else{
+                                                                        //ข้อสอบ ก่อนเรียน ของบทเรียน
+                                                                            ?>
+                                                                            <li class="list-group-item">
+                                                                                <?php echo $label->label_resultTestPre; ?> <?= $keyx+1; ?><span class="pull-right <?= $colorText; ?> prepost"> <?= $pre_course_wait ?> </span> </li>
+                                                                                <?php
+                                                                            }                                                                        
                                                                     } //end foreach
                                                                 }
                                                                 ?>
@@ -954,13 +994,26 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                                                                                                     $colorText = 'text-danger';
                                                                                                 }
                                                                                                 $postStatus = Helpers::lib()->CheckTestAll($lessonListValue, "post",$scorePost);
-                                                                                                ?>
+
+
+
+                                                                                                $CheckPreTestAnsTextAreaLessonPost = Helpers::lib()->CheckPreTestAnsTextAreaLesson($lessonListValue, "post");
+
+                                                                                                if($CheckPreTestAnsTextAreaLessonPost){
+                                                                                                    ?>
 
                                                                                                 <li class="list-group-item"><?php echo $label->label_resultTestPost; ?> <?= $keys+1 ?><span class="pull-right <?= $colorText ?> prepost"><?= $postStatus->value['score']; ?>/<?= $postStatus->value['total']; ?> <?php echo $label->label_point; ?></span></li>
                                                                                                 <?php
+                                                                                                }else{
+                                                                                                    ?>
+
+                                                                                                <li class="list-group-item"><?php echo $label->label_resultTestPost; ?> <?= $keys+1 ?><span class="pull-right <?= $colorText ?> prepost"><?= $pre_course_wait ?></span></li>
+                                                                                                <?php
+                                                                                                }
+                                                                                                
                                                                                                 }//end foreach
                                                                                                 ?>
-                                                                                                <?php if(count($scoreAll) < $lessonListValue->cate_amount && !$flagPostTestPass && count($scoreAll) != 0 && $can_next_step != 2){
+                                                                                                <?php if(count($scoreAll) < $lessonListValue->cate_amount && !$flagPostTestPass && count($scoreAll) != 0 && $can_next_step != 2 && $CheckPreTestAnsTextAreaLessonPost == true){
                                                                                                     $link = $this->createUrl('question/preexams', array('id' => $lessonListValue->id));
                                                                                                     $alert = '';
                                                                                                     ?>
