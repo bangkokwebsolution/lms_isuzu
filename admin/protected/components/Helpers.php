@@ -312,8 +312,8 @@ Class Helpers
         
         // $adminEmail = 'mailerbws@gmail.com';
         // $adminEmailPass = 'bangkokweb0192';
-        $adminEmail = 'thorcdpt@gmail.com';
-        $adminEmailPass = 'thoresendigital';
+        $adminEmail = 'thorconn.ios.app@gmail.com';
+        $adminEmailPass = 'thorconn2019';
 
         $mail =  new PHPMailer(true);
         $mail->SMTPOptions = array(
@@ -2045,8 +2045,8 @@ public function changeLink($link)
 
         // $adminEmail = 'mailerbws@gmail.com';
         // $adminEmailPass = 'bangkokweb0192';
-         $adminEmail = 'thorcdpt@gmail.com';
-        $adminEmailPass = 'thoresendigital';
+         $adminEmail = 'thorconn.ios.app@gmail.com';
+        $adminEmailPass = 'thorconn2019';
         $mail =  new PHPMailer(true);
         $mail->SMTPOptions = array(
             'ssl' => array(
@@ -2095,8 +2095,8 @@ public function changeLink($link)
 
                 // $adminEmail = 'mailerbws@gmail.com';
                 // $adminEmailPass = 'bangkokweb0192';
-                 $adminEmail = 'thorcdpt@gmail.com';
-                 $adminEmailPass = 'thoresendigital';
+                 $adminEmail = 'thorconn.ios.app@gmail.com';
+        $adminEmailPass = 'thorconn2019';
                 $mail =  new PHPMailer(true);
                 $mail->ClearAddresses();
                 $mail->CharSet = 'utf-8';
