@@ -123,7 +123,7 @@
                 <div class="row">
                 <div class="col-md-4">
                     <?php echo $form->labelEx($label, 'label_startLearn'); ?>
-                    <?php echo $form->textField($label, 'label_startLearn', array('size' => 60, 'maxlength' => 250, 'class' => 'width600')); ?>
+                    <?php echo $form->textField($label, 'label_startLearn', array('size' => 60, 'maxlength' => 155, 'class' => 'width600')); ?>
                     <?php echo $this->NotEmpty(); ?>
                     <?php echo $form->error($label, 'label_startLearn'); ?>
                 </div>
@@ -348,6 +348,13 @@
                     <?php echo $form->textField($label, 'label_notInLearn', array('size' => 60, 'maxlength' => 250, 'class' => 'width600')); ?>
                     <?php echo $this->NotEmpty(); ?>
                     <?php echo $form->error($label, 'label_notInLearn'); ?>
+                </div>
+
+                <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_course_wait'); ?>
+                    <?php echo $form->textField($label, 'label_course_wait', array('size' => 60, 'maxlength' => 100, 'class' => 'width600')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_course_wait'); ?>
                 </div>
 
                 <div class="col-md-4">

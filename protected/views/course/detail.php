@@ -486,7 +486,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
         <li class="list-group-item ">
          <a href="">
             <span class="list__course"><?php echo $label->label_testPre; ?></span>
-            <span class="pull-right  text-danger prepost"><?= $pre_course_wait; ?></span>
+            <span class="pull-right  text-danger prepost"><?= $label->label_course_wait; ?></span>
         </a> 
     </li>
     <?php
@@ -666,7 +666,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                                                                         //ข้อสอบ ก่อนเรียน ของบทเรียน
                                                                             ?>
                                                                             <li class="list-group-item">
-                                                                                <?php echo $label->label_resultTestPre; ?> <?= $keyx+1; ?><span class="pull-right <?= $colorText; ?> prepost"> <?= $pre_course_wait ?> </span> </li>
+                                                                                <?php echo $label->label_resultTestPre; ?> <?= $keyx+1; ?><span class="pull-right <?= $colorText; ?> prepost"> <?= $label->label_course_wait ?> </span> </li>
                                                                                 <?php
                                                                             }                                                                        
                                                                     } //end foreach
@@ -1007,7 +1007,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                                                                                                 }else{
                                                                                                     ?>
 
-                                                                                                <li class="list-group-item"><?php echo $label->label_resultTestPost; ?> <?= $keys+1 ?><span class="pull-right <?= $colorText ?> prepost"><?= $pre_course_wait ?></span></li>
+                                                                                                <li class="list-group-item"><?php echo $label->label_resultTestPost; ?> <?= $keys+1 ?><span class="pull-right <?= $colorText ?> prepost"><?= $label->label_course_wait ?></span></li>
                                                                                                 <?php
                                                                                                 }
                                                                                                 
@@ -1292,7 +1292,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                         ?>
                         <li class="list-group-item ">
                     <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
-                        <span class="pull-right  text-danger prepost"> <?= $pre_course_wait; ?> </span></a> 
+                        <span class="pull-right  text-danger prepost"> <?= $label->label_course_wait; ?> </span></a> 
                     </li>
 
                         <?php
@@ -1312,7 +1312,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                         ?>  
                          <li class="list-group-item ">
                         <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
-                            <span class="pull-right  text-success prepost"> <?= $pre_course_wait; ?></span></a> 
+                            <span class="pull-right  text-success prepost"> <?= $label->label_course_wait; ?></span></a> 
                         </li>
                         <?php
                     }
@@ -1331,7 +1331,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                         ?>
                         <li class="list-group-item ">
                         <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
-                            <span class="pull-right  text-success prepost"> <?= $pre_course_wait; ?></span></a> 
+                            <span class="pull-right  text-success prepost"> <?= $label->label_course_wait; ?></span></a> 
                         </li>
                         <?php
                     }

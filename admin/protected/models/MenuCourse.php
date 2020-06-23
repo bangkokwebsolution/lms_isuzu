@@ -91,7 +91,7 @@ class MenuCourse extends CActiveRecord
 		return array(
 			array('label_notInLearn', 'required'),
 			array('lang_id, parent_id', 'numerical', 'integerOnly'=>true),
-			array('label_course, label_homepage, label_search, label_cate, label_startLearn, label_DocsDowload, label_step, label_Content, label_gotoLesson, label_detail, label_courseName, label_statuslearn, label_testPre, label_testPost, label_point, label_DoTest, label_resultTestPre, label_survey, label_questionnaire, label_Doquestionnaire, label_resultTestPost, label_detailSurvey, label_surveyName, label_headerSurvey, label_SatisfactionLv, label_download, label_courseRec, label_notLearn, label_lessonPass, label_learning, label_learnPass, label_courseAll, label_courseViewAll, label_notInLearn, label_notTestPre, label_notTestPost, label_trainPass, label_trainFail, label_AssessSatisfaction, label_testCourse,label_doNotQuestionnaire, label_printCert, label_cantPrintCert, label_resultFinal, label_testFinalTimes,label_testFinalTimes,label_permisToTestFinal,label_NoPermisToTestFinal, label_surveyCourse, label_noSurveyCourse,label_doNotSurveyCourse, label_AnsweredQuestions, label_dontAnsweredQuestions, label_startDoSurvey, label_cantDoSurvey, label_swal_checkLearn, label_swal_warning, label_swal_plsLearnPass, label_swal_plsTestPost, label_congratulations, label_thank, label_backToSurvey, label_noPermis, label_error,label_alert_msg_StartLearn,
+			array('label_course, label_homepage, label_search, label_cate, label_DocsDowload, label_step, label_Content, label_gotoLesson, label_detail, label_courseName, label_statuslearn, label_testPre, label_testPost, label_point, label_DoTest, label_resultTestPre, label_survey, label_questionnaire, label_Doquestionnaire, label_resultTestPost, label_detailSurvey, label_surveyName, label_headerSurvey, label_SatisfactionLv, label_download, label_courseRec, label_notLearn, label_lessonPass, label_learning, label_learnPass, label_courseAll, label_courseViewAll, label_notInLearn, label_notTestPre, label_notTestPost, label_trainPass, label_trainFail, label_AssessSatisfaction, label_testCourse,label_doNotQuestionnaire, label_printCert, label_cantPrintCert, label_resultFinal, label_testFinalTimes,label_testFinalTimes,label_permisToTestFinal,label_NoPermisToTestFinal, label_surveyCourse, label_noSurveyCourse,label_doNotSurveyCourse, label_AnsweredQuestions, label_dontAnsweredQuestions, label_startDoSurvey, label_cantDoSurvey, label_swal_checkLearn, label_swal_warning, label_swal_plsLearnPass, label_swal_plsTestPost, label_congratulations, label_thank, label_backToSurvey, label_noPermis, label_error,label_alert_msg_StartLearn,
 				label_alert_msg_welcome,
 				label_alert_msg_notFound,
 				label_alert_msg_expired,
@@ -110,10 +110,11 @@ class MenuCourse extends CActiveRecord
 				label_dateTest,
 				label_doSurveyCourse,
 			label_mess_notPass', 'length', 'max'=>255),
-			array('label_back, label_Fail, label_Pass, label_save', 'length', 'max'=>100),
+			array('label_back, label_Fail, label_Pass, label_save, label_course_wait', 'length', 'max'=>100),
+			array('label_startLearn', 'length', 'max'=>155),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, label_course, label_homepage, label_back, label_search, label_cate, label_startLearn, label_DocsDowload, label_step, label_Content, label_gotoLesson, label_detail, label_courseName, label_statuslearn, label_testPre, label_testPost, label_point, label_DoTest, label_resultTestPre, label_survey, label_questionnaire, label_Doquestionnaire, label_resultTestPost, label_detailSurvey, label_surveyName, label_headerSurvey, label_SatisfactionLv, label_download, label_courseRec, label_notLearn, label_lessonPass, label_learning, label_learnPass, label_courseAll, label_courseViewAll, label_notInLearn, label_notTestPre, label_notTestPost, label_trainPass, label_trainFail, label_AssessSatisfaction, label_testCourse,label_doNotQuestionnaire, label_printCert, label_cantPrintCert, label_resultFinal, label_Fail, label_Pass, label_testFinalTimes,label_testFinalTimes,label_permisToTestFinal,label_NoPermisToTestFinal,label_save, label_surveyCourse, label_noSurveyCourse,label_doNotSurveyCourse, label_AnsweredQuestions, label_dontAnsweredQuestions, label_startDoSurvey, label_cantDoSurvey, label_swal_checkLearn, label_swal_warning, label_swal_plsLearnPass, label_swal_plsTestPost, label_congratulations, label_thank, label_backToSurvey, label_noPermis, label_error,label_alert_msg_StartLearn,
+			array('id, label_course, label_homepage, label_back, label_search, label_cate, label_startLearn, label_course_wait, label_DocsDowload, label_step, label_Content, label_gotoLesson, label_detail, label_courseName, label_statuslearn, label_testPre, label_testPost, label_point, label_DoTest, label_resultTestPre, label_survey, label_questionnaire, label_Doquestionnaire, label_resultTestPost, label_detailSurvey, label_surveyName, label_headerSurvey, label_SatisfactionLv, label_download, label_courseRec, label_notLearn, label_lessonPass, label_learning, label_learnPass, label_courseAll, label_courseViewAll, label_notInLearn, label_notTestPre, label_notTestPost, label_trainPass, label_trainFail, label_AssessSatisfaction, label_testCourse,label_doNotQuestionnaire, label_printCert, label_cantPrintCert, label_resultFinal, label_Fail, label_Pass, label_testFinalTimes,label_testFinalTimes,label_permisToTestFinal,label_NoPermisToTestFinal,label_save, label_surveyCourse, label_noSurveyCourse,label_doNotSurveyCourse, label_AnsweredQuestions, label_dontAnsweredQuestions, label_startDoSurvey, label_cantDoSurvey, label_swal_checkLearn, label_swal_warning, label_swal_plsLearnPass, label_swal_plsTestPost, label_congratulations, label_thank, label_backToSurvey, label_noPermis, label_error,label_alert_msg_StartLearn,
 				label_alert_msg_welcome,
 				label_alert_msg_notFound,
 				label_alert_msg_expired,
@@ -158,6 +159,7 @@ class MenuCourse extends CActiveRecord
 			'label_cate' => 'หมวดหมู่หลักสูตร',
 			'label_search' => 'ใส่ข้อความที่ต้องการค้นหา...',
 			'label_startLearn' => 'เริ่มเรียน',
+			'label_course_wait' => 'สถานะรอการตรวจข้อสอบบรรยาย',
 			'label_DocsDowload' => 'เอกสารดาวน์โหลด',
 			'label_step' => 'ขั้นตอนที่... ',
 			'label_Content' => 'เนื้อหาของคอร์สนี้',
@@ -270,6 +272,7 @@ class MenuCourse extends CActiveRecord
 		$criteria->compare('label_search',$this->label_search,true);
 		$criteria->compare('label_cate',$this->label_cate,true);
 		$criteria->compare('label_startLearn',$this->label_startLearn,true);
+		$criteria->compare('label_course_wait',$this->label_course_wait,true);
 		$criteria->compare('label_DocsDowload',$this->label_DocsDowload,true);
 		$criteria->compare('label_step',$this->label_step,true);
 		$criteria->compare('label_Content',$this->label_Content,true);
