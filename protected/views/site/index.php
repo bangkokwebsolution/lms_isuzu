@@ -178,12 +178,12 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         $criteriaType->compare('gallery_type_id', $value->gallery_type_id);
                         $galleryType = Gallery::model()->findAll($criteriaType);
                         ?>
-
                         <div class="item <?php if ($key == 0) echo 'active'; ?>">
                         <?php 
                         if($value->imgslide_link == "" && $value->gallery_type_id != null) {
-                            foreach ($galleryType as $data) { ?>
-                            <a href="<?php echo Yii::app()->request->baseUrl; ?>/uploads/gallery/images/<?= $data->image; ?>" class="liquid-lp-read-more zoom fresco" data-fresco-group="ld-pf-1[<?= $value->id ?>]" >
+                            foreach ($galleryType as $data) {    
+                             ?>
+                            <a href="<?php echo Yii::app()->baseUrl; ?>/uploads/gallery/<?= $data->image; ?>" class="liquid-lp-read-more zoom fresco" data-fresco-group="ld-pf-1[<?= $value->id ?>]" >
                             <?php } ?>
                         <?php }else if($value->imgslide_link != "" && $value->gallery_type_id == null){ ?>
                             <a href="<?=$value->imgslide_link;  ?>" target="_blank">
@@ -192,7 +192,6 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
                         </a>
                     </div>
-
 
                 <?php } ?>
                 <!-- <?php 
@@ -220,7 +219,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         $criteriavdo = new CDbCriteria;
         $criteriavdo->compare('active', 'y');
         $criteriavdo->compare('lang_id', Yii::app()->session['lang']);
-        $criteriavdo->order = 'vdo_id  DESC';
+        $criteriavdo->order = 'sortOrder  ASC';
         $vdoshow = vdo::model()->find($criteriavdo);
         ?>
         <div class="col-lg-4 col-xs-12 col-sm-4">
