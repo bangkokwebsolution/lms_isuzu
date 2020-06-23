@@ -44,7 +44,7 @@ if($modelScore->type=='post' && !$state){
 ?>
 <script>
 	$(function(){
-		if("<?= $testType?>" != "pre"){
+		if("<?= $testType?>" != "pre" && $quesType_ == 2){
 		$('<?= $link ?>').modal('show');
 	}
 	});
@@ -76,7 +76,7 @@ if($modelScore->type=='post' && !$state){
 		<div class="row">
 			<div class="col-sm-8">
 				<div class="well bg-greendark">
-					<?php if($testType != "pre"){ ?>
+					<?php if($testType != "pre" && $quesType_ == 2){ ?>
 					<div class="well text-center result">
 						<h1 class="<?= $classH1; ?>"><span><i class="<?= $class; ?>" aria-hidden="true"></i></span><?= $strMsg; ?></h1>
 					</div>

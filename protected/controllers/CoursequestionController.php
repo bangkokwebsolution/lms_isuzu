@@ -113,7 +113,7 @@ class CoursequestionController extends Controller
         if(isset($_GET['type'])){
             $que_type = $_GET['type']; // pre
         }
-
+        $quesType_ = 2; // เช็คว่ามี ข้อสอบ 3 บรรยาย ไหม
 
         $id = isset($_POST['course_id']) ? $_POST['course_id'] : $id;
         if(Yii::app()->user->id){
@@ -475,6 +475,11 @@ class CoursequestionController extends Controller
                                         $modelCourselogques->ques_type = $coursequestion->ques_type;
                                         $modelCourselogques->result = $result;
                                         $modelCourselogques->save();
+
+                                        if($coursequestion->ques_type == 3){
+                                                $quesType_ = 1;
+                                            }
+
                                     }if($value->quest->ques_type==6){
                                         $countAllCoursequestion += 1;
                                         $coursequestion = Coursequestion::model()->with('choices')->find("ques.ques_id=:id", array(
@@ -529,6 +534,11 @@ class CoursequestionController extends Controller
                                         $modelCourselogques->ques_type = $coursequestion->ques_type;
                                         $modelCourselogques->result = $result;
                                         $modelCourselogques->save();
+
+                                         if($coursequestion->ques_type == 3){
+                                                $quesType_ = 1;
+                                            }
+
                                     }else if($value->quest->ques_type==3){   //textarea
                                         $countAllCoursequestion += $value->quest->max_score;
                                         $coursequestion = CourseQuestion::model()->findByPk($value->ques_id);
@@ -563,6 +573,11 @@ class CoursequestionController extends Controller
                                         $modelCourselogques->result = $result;
                                         $modelCourselogques->logques_text = $value->ans_id;
                                         $modelCourselogques->save();
+
+                                         if($coursequestion->ques_type == 3){
+                                                $quesType_ = 1;
+                                            }
+
                                     }else if($value->quest->ques_type==2){
                                         $countAllCoursequestion += 1;
                                         $coursequestion = Coursequestion::model()->with('choices')->find("ques.ques_id=:id", array(
@@ -615,6 +630,11 @@ class CoursequestionController extends Controller
                                         $modelCourselogques->ques_type = $coursequestion->ques_type;
                                         $modelCourselogques->result = $result;
                                         $modelCourselogques->save();
+
+                                         if($coursequestion->ques_type == 3){
+                                                $quesType_ = 1;
+                                            }
+                                            
                                     } else if($value->quest->ques_type==4){ 
 
                                         $coursequestion = Coursequestion::model()->with('choices')->find("ques.ques_id=:id", array(
@@ -709,6 +729,10 @@ class CoursequestionController extends Controller
                                             $modelCourselogques->ques_type = $coursequestion->ques_type;
                                             $modelCourselogques->result = $quest_score;
                                             $modelCourselogques->save();
+
+                                            if($coursequestion->ques_type == 3){
+                                                $quesType_ = 1;
+                                            }
                                         }
                                     }
                                     $sumPoint = $scoreSum * 100 / $countAllCoursequestion;
@@ -740,6 +764,8 @@ class CoursequestionController extends Controller
                                     $this->SendMailLearn($course->course_id);
                                     $this->renderPartial('exams_finish', array(
                                         'model' => $model,
+                                        'testType' => $type,
+                                        'quesType' => $quesType_,
                                         'course' => $course,
                                         'temp_all' => $temp_all,
                                         'modelScore' => $modelScore,

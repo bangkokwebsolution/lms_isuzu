@@ -142,6 +142,9 @@ class QuestionController extends Controller
             ));
         }
 
+        $quesType_ = 2; // เช็คว่ามี ข้อสอบ 3 บรรยาย ไหม
+
+
         $id = isset($_POST['lesson_id']) ? $_POST['lesson_id'] : $id;
         $user_lesson = User::model()->findByPk(Yii::app()->user->id);
         $to['email'] = $user_lesson->email;
@@ -485,6 +488,11 @@ class QuestionController extends Controller
                                         $modelCourselogques->ques_type = $coursequestion->ques_type;
                                         $modelCourselogques->result = $result;
                                         $modelCourselogques->save();
+
+                                        if($coursequestion->ques_type == 3){
+                                                $quesType_ = 1;
+                                            }
+
                                 }else if($value->quest->ques_type==3){
                                     $countAllCoursequestion += $value->quest->max_score;
                                     $scoreTotal += $value->quest->max_score;
@@ -517,6 +525,11 @@ class QuestionController extends Controller
                                         $modelCourselogques->result = $result;
                                         $modelCourselogques->logques_text = $value->ans_id;
                                         $modelCourselogques->save();
+
+                                        if($coursequestion->ques_type == 3){
+                                                $quesType_ = 1;
+                                            }
+
                                 }else if($value->quest->ques_type==6){
                                     $countAllCoursequestion += 1;
 
@@ -572,6 +585,11 @@ class QuestionController extends Controller
                                         $modelCourselogques->ques_type = $coursequestion->ques_type;
                                         $modelCourselogques->result = $result;
                                         $modelCourselogques->save();
+
+                                        if($coursequestion->ques_type == 3){
+                                                $quesType_ = 1;
+                                            }
+
                                 } else if($value->quest->ques_type==2){
                                         $countAllCoursequestion += 1;
                                         $coursequestion = Question::model()->with('chioce')->find("question.ques_id=:id", array(
@@ -623,6 +641,11 @@ class QuestionController extends Controller
                                         $modelCourselogques->ques_type = $coursequestion->ques_type;
                                         $modelCourselogques->result = $result;
                                         $modelCourselogques->save();
+
+                                        if($coursequestion->ques_type == 3){
+                                                $quesType_ = 1;
+                                            }
+
                                 } else if($value->quest->ques_type==4){
                                     $coursequestion = Question::model()->with('chioce')->find("question.ques_id=:id", array(
                                         "id" => $value->ques_id,
@@ -714,6 +737,11 @@ class QuestionController extends Controller
                                         $modelCourselogques->ques_type = $coursequestion->ques_type;
                                         $modelCourselogques->result = $quest_score;
                                         $modelCourselogques->save();
+
+                                        if($coursequestion->ques_type == 3){
+                                                $quesType_ = 1;
+                                            }
+                                            
                                 }
                             }
                                     // exit();
@@ -748,6 +776,7 @@ class QuestionController extends Controller
                                     'model' => $model,
                                     'lesson' => $lesson,
                                     'temp_all' => $temp_all,
+                                    'quesType' => $quesType_,
                                     'testType' => $testType,
                                     'modelScore' => $modelScore,
                                     'label'=>$label,

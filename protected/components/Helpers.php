@@ -255,8 +255,8 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
     // $adminEmail = 'mailerbws@gmail.com';
     //     // $adminEmail = 'noreply_elearning@airasia.com';
     // $adminEmailPass = 'bangkokweb0192';
-     $adminEmail = 'thorcdpt@gmail.com';
-     $adminEmailPass = 'thoresendigital';
+     $adminEmail = 'thorconn.ios.app@gmail.com';
+     $adminEmailPass = 'thorconn2019';
 
 
         /*$mail =  new PHPMailer(true);
@@ -359,8 +359,8 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
 
         // $adminEmail = 'mailerbws@gmail.com';
         // $adminEmailPass = 'bangkokweb0192';
-        $adminEmail = 'thorcdpt@gmail.com';
-        $adminEmailPass = 'thoresendigital';
+        $adminEmail = 'thorconn.ios.app@gmail.com';
+        $adminEmailPass = 'thorconn2019';
 
         $mail =  new PHPMailer(true);
         $mail =  new PHPMailer(true);
@@ -407,8 +407,8 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
 
         // $adminEmail = 'mailerbws@gmail.com';
         // $adminEmailPass = 'bangkokweb0192';
-        $adminEmail = 'thorcdpt@gmail.com';
-        $adminEmailPass = 'thoresendigital';
+        $adminEmail = 'thorconn.ios.app@gmail.com';
+        $adminEmailPass = 'thorconn2019';
         $mail =  new PHPMailer(true);
         $mail->ClearAddresses();
         $mail->CharSet = 'utf-8';
@@ -452,8 +452,8 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
 
         // $adminEmail = 'mailerbws@gmail.com';
         // $adminEmailPass = 'bangkokweb0192';
-        $adminEmail = 'thorcdpt@gmail.com';
-        $adminEmailPass = 'thoresendigital';
+        $adminEmail = 'thorconn.ios.app@gmail.com';
+        $adminEmailPass = 'thorconn2019';
 
         $mail =  new PHPMailer(true);
 
@@ -514,8 +514,8 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
 
             // $adminEmail = 'mailerbws@gmail.com';
             // $adminEmailPass = 'bangkokweb0192';
-            $adminEmail = 'thorcdpt@gmail.com';
-            $adminEmailPass = 'thoresendigital';
+            $adminEmail = 'thorconn.ios.app@gmail.com';
+            $adminEmailPass = 'thorconn2019';
             $mail =  new PHPMailer(true);
             $mail->SMTPOptions = array(
                 'ssl' => array(
@@ -570,8 +570,8 @@ public function SendMailNotificationByUser($subject,$message,$user_id){
 
         // $adminEmail = 'mailerbws@gmail.com';
         // $adminEmailPass = 'bangkokweb0192';
-        $adminEmail = 'thorcdpt@gmail.com';
-        $adminEmailPass = 'thoresendigital';
+        $adminEmail = 'thorconn.ios.app@gmail.com';
+        $adminEmailPass = 'thorconn2019';
             // $mail =  new PHPMailer(true);
         $mail = Yii::app()->mailer;
         $mail->ClearAddresses();

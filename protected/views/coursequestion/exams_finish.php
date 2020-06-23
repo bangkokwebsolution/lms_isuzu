@@ -40,7 +40,9 @@ if($course->cate_id != 1){ //LMS
 ?>
 <script>
 	$(function(){
-		$('<?= $link ?>').modal('show');
+		if("<?= $testType?>" != "pre" && $quesType_ == 2){
+			$('<?= $link ?>').modal('show');
+		}
 	});
 </script>
 <style type="text/css">
@@ -81,9 +83,11 @@ if($course->cate_id != 1){ //LMS
 		<div class="row">
 			<div class="col-sm-8">
 				<div class="well bg-greendark">
+					<?php if($testType != "pre" && $quesType_ == 2){ ?>
 					<div class="well text-center result">
 						<h1 class="<?= $classH1; ?>"><span><i class="<?= $class; ?>" aria-hidden="true"></i></span><?= $strMsg; ?></h1>
 					</div>
+				<?php } ?>
 					<div class="well detail">
 						<ul class="list-unstyled">
 							<li><?= $labelCourse->label_totalTest ?> <span class="pull-right"><?= count($temp_all) ?> <?= $labelCourse->label_list ?></span></li>
@@ -100,6 +104,7 @@ if($course->cate_id != 1){ //LMS
 					<a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $course->course_id)); ?>" type="button" class="btn btn-warning btn-lg"><?=UserModule::t('complete_btn');?></a>
 				</div>
 			</div>
+			<?php if($testType != "pre"){ ?>
 			<div class="col-sm-4">
 				<aside>
 					<h4 class="title text-success"><span class="pull-right"><?= $modelScore->score_number; ?></span><?=UserModule::t('scoreAll');?></h4>
@@ -124,6 +129,7 @@ if($course->cate_id != 1){ //LMS
 					</ul>
 				</aside>
 			</div>
+		<?php } ?>
 		</div>
 	</div>
 </section>
