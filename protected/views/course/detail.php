@@ -1276,24 +1276,68 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
 <!-- Check count test -->
 <div id="collapseFinal<?=$key?>">
     <?php if($BestFinalTestScore){ ?>
-        <?php foreach ($BestFinalTestScore as $key => $course_score) {?>
+        <?php foreach ($BestFinalTestScore as $key => $course_score) { ?>
+            <?php $CheckPreTestAnsTextAreaCoursePost = Helpers::lib()->CheckPreTestAnsTextAreaCourse($course->course_id, "post"); ?>
             <?php if(count($BestFinalTestScore) < $course->cate_amount){ ?>
                 <?php if($course_score->score_past == 'n'){ ?>
-                 <li class="list-group-item ">
+                    <?php 
+                    if($CheckPreTestAnsTextAreaCoursePost){
+                        ?>
+                        <li class="list-group-item ">
                     <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
                         <span class="pull-right  text-danger prepost"> <?= $course_score->score_number ?>/<?= $course_score->score_total ?> <?= $label->label_point; ?></span></a> 
                     </li>
-                <?php }else{ ?>
-                    <li class="list-group-item ">
+                    <?php
+                    }else{
+                        ?>
+                        <li class="list-group-item ">
+                    <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
+                        <span class="pull-right  text-danger prepost"> <?= $pre_course_wait; ?> </span></a> 
+                    </li>
+
+                        <?php
+                    }
+                     ?>
+                 <?php }else{ ?>
+                    <?php 
+
+                    if($CheckPreTestAnsTextAreaCoursePost){
+                        ?>
+                        <li class="list-group-item ">
                         <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
                             <span class="pull-right  text-success prepost"> <?= $course_score->score_number ?>/<?= $course_score->score_total ?> <?= $label->label_point; ?></span></a> 
                         </li>
+                        <?php
+                    }else{
+                        ?>  
+                         <li class="list-group-item ">
+                        <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
+                            <span class="pull-right  text-success prepost"> <?= $pre_course_wait; ?></span></a> 
+                        </li>
+                        <?php
+                    }
+                     ?>                    
                     <?php } ?>
-                <?php }else{ ?>
-                    <li class="list-group-item ">
+                <?php }else{
+                    if($CheckPreTestAnsTextAreaCoursePost){
+                        ?>
+
+                        <li class="list-group-item ">
                         <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
                             <span class="pull-right  text-success prepost"> <?= $course_score->score_number ?>/<?= $course_score->score_total ?> <?= $label->label_point; ?></span></a> 
                         </li>
+                        <?php
+                    }else{
+                        ?>
+                        <li class="list-group-item ">
+                        <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
+                            <span class="pull-right  text-success prepost"> <?= $pre_course_wait; ?></span></a> 
+                        </li>
+                        <?php
+                    }
+                 ?>
+
+                    
                     <?php } ?>
                 <?php }?>
                 <?php if($step == 4){ ?>
@@ -1305,7 +1349,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></a>
                     </li>
                 <?php } ?>
-            <?php }else if($checkHaveCourseTest){ ?>
+            <?php }else if($checkHaveCourseTest && $CheckPreTestAnsTextAreaCoursePost == true){ ?>
                <li class="list-group-item ">
                 <?php if($step == 4){ ?>
                     <!-- <div class="pt-now"> You are here</div> -->

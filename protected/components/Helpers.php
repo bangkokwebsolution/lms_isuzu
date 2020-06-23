@@ -4314,6 +4314,65 @@ public function checkStepLesson($lesson){
             return false;
         }
 
+        public function CheckPreTestAnsTextAreaLesson($lesson,$type){
+
+
+            $lesson_id = $lesson->id;
+            $lesson_model = Lesson::model()->findByPk($lesson_id);
+            $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+           
+            $user_id = Yii::app()->user->id;
+            $test_type = $type;
+            $ques_type = "3"; // 3=textarea
+
+            $model = Logques::model()->findAll(array( 
+                    'condition' => 'gen_id=:gen_id AND lesson_id=:lesson_id AND user_id=:user_id AND test_type=:test_type AND ques_type=:ques_type AND active=:active AND confirm=:confirm',
+                    'params' => array(':gen_id'=>$gen_id, ':lesson_id'=>$lesson_id, ':user_id'=>$user_id, ':test_type'=>$test_type, ':active'=>'y', ':ques_type'=>$ques_type, ':confirm'=>0),
+                ));
+
+            // var_dump("<pre>");
+            if(!empty($model)){
+                   return false; 
+               
+            }else{
+                return true;
+            }
+
+            // var_dump($model); exit();
+
+        }
+
+
+        public function CheckPreTestAnsTextAreaCourse($course,$type){
+
+
+            $course_id = $course;
+          $course_model = CourseOnline::model()->findByPk($course_id);
+            $gen_id = $course_model->getGenID($course_model->course_id);
+           
+            $user_id = Yii::app()->user->id;
+            $test_type = $type;
+            $ques_type = "3"; // 3=textarea
+
+            $model = Courselogques::model()->findAll(array( 
+                    'condition' => 'gen_id=:gen_id AND course_id=:course_id AND user_id=:user_id AND test_type=:test_type AND ques_type=:ques_type AND active=:active AND confirm=:confirm',
+                    'params' => array(':gen_id'=>$gen_id, ':course_id'=>$course_id, ':user_id'=>$user_id, ':test_type'=>$test_type, ':active'=>'y', ':ques_type'=>$ques_type, ':confirm'=>0),
+                ));
+
+            // var_dump("<pre>");
+            // var_dump($gen_id);
+            // var_dump($model); exit();
+            if(!empty($model)){
+                   return false; 
+               
+            }else{
+                return true;
+            }
+
+            
+
+        }
+
 
 
     }
