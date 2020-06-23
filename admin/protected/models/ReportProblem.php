@@ -204,7 +204,7 @@ class ReportProblem extends CActiveRecord
 
     public function getUsabilityListNew(){
 
-		$model = Usability::model()->findAll('active = "y"');
+		$model = Usability::model()->findAll('active = "y" AND lang_id =1');
 		$list = CHtml::listData($model,'id','usa_title');
 		return $list;
 		
@@ -212,7 +212,7 @@ class ReportProblem extends CActiveRecord
 
 	public function getCourseOnlineListNew(){
 
-		$model = CourseOnline::model()->findAll('active = "y"');
+		$model = CourseOnline::model()->findAll('active = "y" AND lang_id =1');
 		$list = CHtml::listData($model,'id','course_title');
 		return $list;
 		

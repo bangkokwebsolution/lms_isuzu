@@ -48,7 +48,7 @@
                             <?php 
                             $criteria = new CDbCriteria;
                             $criteria->addCondition('active ="y"');
-                            $criteria->addCondition('lang_id ='.Yii::app()->session['lang']);
+                            $criteria->addCondition('lang_id = 1');
                             $Usability = Usability::model()->findAll($criteria);
                             foreach ($Usability as $key => $value) {
             
@@ -66,7 +66,7 @@
                             <?php 
                             $criteria = new CDbCriteria;
                             $criteria->addCondition('active ="y"');
-                            $criteria->addCondition('lang_id ='.Yii::app()->session['lang']);
+                            $criteria->addCondition('lang_id = 1');
                             $CourseOnline = CourseOnline::model()->findAll($criteria);
                             foreach ($CourseOnline as $key => $value) {
             
@@ -128,7 +128,7 @@
                             <?php 
                             $criteria = new CDbCriteria;
                             $criteria->addCondition('active ="y"');
-                            $criteria->addCondition('lang_id ='.Yii::app()->session['lang']);
+                            $criteria->addCondition('lang_id =1');
                             $Usability = Usability::model()->findAll($criteria);
                             foreach ($Usability as $key => $value) {
             
@@ -146,7 +146,7 @@
                             <?php 
                             $criteria = new CDbCriteria;
                             $criteria->addCondition('active ="y"');
-                            $criteria->addCondition('lang_id ='.Yii::app()->session['lang']);
+                            $criteria->addCondition('lang_id =1');
                             $CourseOnline = CourseOnline::model()->findAll($criteria);
                             foreach ($CourseOnline as $key => $value) {
             
