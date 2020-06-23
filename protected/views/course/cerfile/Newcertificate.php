@@ -44,16 +44,16 @@
     <div class="size12" style="width:100%; text-align: right; padding-top: -41px; padding-right: -35px;"> 
     Certificate No.: <?php echo $model['coursenumber']; ?><?php echo $model['num_pass']; ?>/<?php echo $model['year_pass']; ?>
     </div>
-    <div class="b size42" style="position:absolute; top: 87mm; font-family: 'arnoprocaptionsemibold';">
+    <div class="b size42" style="position:absolute; top: 91mm; line-height:35px; font-family: 'arnoprocaptionsemibold';">
         <i><?= $model['fulltitle_en'] ?></i>
     </div>
-    <div style="position:absolute; top: 112mm; font-family: 'arnoprocaptionsemibold';">
+    <div style="position:absolute; top: 118mm; line-height:40px; font-family: 'arnoprocaptionsemibold';">
        <div class="b size42 red"><?= $model['courseTitle_en'] ?></div>
    </div>
-   <div style="position:absolute; top: 138.5mm;">
+   <div style="position:absolute; top: 142mm;">
        <div class="size20"><b>On date <?php echo $model['format_date_pass']; ?></b></div>
    </div> 
-   <div style="position:absolute; top: 170mm;">
+   <div style="position:absolute; top: 173mm;">
      <div class="size14">
         <?php echo $model['cert_text']; ?>
         <!-- This course is intended to provide with understanding of IMO 2020 Global Sulphur regulation and the ship implementation plan in accorddance with the regulation 14.1.3 of MARPOL Annex VI. -->
@@ -61,24 +61,24 @@
 </div> 
 
 <?php if ($model['renderSign']) {?>
-    <div style="position:absolute; top: 172mm; left: -150px;" >
+    <div style="position:absolute; top: 184.5mm; left: -150px;" >
        <img src="<?php echo Yii::app()->basePath."/../uploads/signature/".$model['renderSign']; ?>" >
    </div>
-   <div class="size14" style="position:absolute; top: 208mm; left: -150px;">
+   <div class="size14" style="position:absolute; top: 221mm; left: -150px;">
     <b><?php echo $model['nameSign']; ?></b>
     </div>
-    <div class="size14" style="position:absolute; top: 213mm; left: -150px;">
+    <div class="size14" style="position:absolute; top: 227mm; left: -150px;">
     <b><?php echo $model['positionSign']; ?></b>
     </div>
 <?php } ?>
 <?php if ($model['renderSign2']) {?>
-    <div style="position:absolute; top: 172mm; right: -190px;" >
+    <div style="position:absolute; top: 184.5mm; right: -190px;" >
         <img src="<?php echo Yii::app()->basePath."/../uploads/signature/".$model['renderSign2']; ?>" >
     </div>
-    <div class="size14" style="position:absolute; top: 208mm; right: -190px;">
+    <div class="size14" style="position:absolute; top: 221mm; right: -190px;">
     <b><?php echo $model['nameSign2']; ?></b>
     </div>
-    <div class="size14" style="position:absolute; top: 213mm; right: -190px;">
+    <div class="size14" style="position:absolute; top: 227mm; right: -190px;">
     <b><?php echo $model['positionSign2']; ?></b>
     </div>
 <?php } ?>
@@ -105,40 +105,40 @@
     <div class="size12" style="width:100%; text-align: right; padding-top: -41px; padding-right: -35px;"> 
     Certificate No.: <?php echo $model['coursenumber']; ?><?php echo $model['num_pass']; ?>/<?php echo $model['year_pass']; ?>
     </div>
-    <div class="b size42" style="position:absolute; top: 89mm; font-family: 'arnoprocaptionsemibold';">
+    <div class="b size42" style="position:absolute; top: 89mm; line-height:35px; font-family: 'arnoprocaptionsemibold';">
         <i><?= $model['fulltitle_en'] ?></i>
     </div>
-    <div style="position:absolute; top: 113mm; font-family: 'arnoprocaptionsemibold';">
+    <div style="position:absolute; top: 112mm; line-height:40px; font-family: 'arnoprocaptionsemibold';">
        <div class="b size42 red"><?= $model['courseTitle_en'] ?></div>
    </div>
-   <div style="position:absolute; top: 159.5mm;">
+   <div style="position:absolute; top: 155mm;">
        <div class="size20"><b>On date <?php echo $model['format_date_pass']; ?></b></div>
    </div> 
-   <div style="position:absolute; top: 190mm;">
+   <div style="position:absolute; top: 185mm;">
      <div class="size14">
         <?php echo $model['cert_text']; ?>
         <!-- This course is intended to provide with understanding of IMO 2020 Global Sulphur regulation and the ship implementation plan in accorddance with the regulation 14.1.3 of MARPOL Annex VI. -->
     </div>
 </div> 
 <?php if ($model['renderSign']) {?>
-    <div style="position:absolute; top: 186.5mm; left: -150px;" >
+    <div style="position:absolute; top: 184.5mm; left: -150px;" >
        <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign']; ?>" >
    </div>
-   <div class="size14" style="position:absolute; top: 223mm; left: -150px;">
+   <div class="size14" style="position:absolute; top: 221mm; left: -150px;">
     <b><?php echo $model['nameSign']; ?></b>
     </div>
-    <div class="size14" style="position:absolute; top: 228mm; left: -150px;">
+    <div class="size14" style="position:absolute; top: 227mm; left: -150px;">
     <b><?php echo $model['positionSign']; ?></b>
     </div>
 <?php } ?>
 <?php if ($model['renderSign2']) {?>
-    <div style="position:absolute; top: 186.5mm; right: -190px;" >
+    <div style="position:absolute; top: 184.5mm; right: -190px;" >
         <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign2']; ?>" >
     </div>
-     <div class="size14" style="position:absolute; top: 223mm; right: -190px;">
+     <div class="size14" style="position:absolute; top: 221mm; right: -190px;">
     <b><?php echo $model['nameSign2']; ?></b>
     </div>
-    <div class="size14" style="position:absolute; top: 228mm; right: -190px;">
+    <div class="size14" style="position:absolute; top: 227mm; right: -190px;">
     <b><?php echo $model['positionSign2']; ?></b>
     </div>
 <?php } ?>
