@@ -56,6 +56,7 @@ class LoginController extends Controller
             if (User::model()->findbyPk(Yii::app()->user->id)->repass_status=='0'){
                         $this->redirect(array('registration/Repassword'));
                     }
+            Yii::app()->session['popup'] = 1;
             $this->lastViset();
             $this->saveToken();
             // Yii::app()->user->setReturnUrl(Yii::app()->request->urlReferrer);

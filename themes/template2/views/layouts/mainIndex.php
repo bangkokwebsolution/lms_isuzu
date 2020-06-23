@@ -116,16 +116,20 @@ $criteriapopup->addCondition('lang_id ='.Yii::app()->session['lang']);
 $criteriapopup->order = 'sortOrder  ASC';
 $popup = Popup::model()->findAll($criteriapopup);
 //$popup = null;
+
 ?>
-<?php if (!empty($popup)) { 
+<?php 
+if (isset(Yii::app()->session['popup']) && Yii::app()->session['popup'] == 1) {
+   Yii::app()->session['popup'] = 2;
+if (!empty($popup)) { 
          if (Yii::app()->user->id) {
-              $criteria = new CDbCriteria;
-              $criteria->addCondition('user_id ='.Yii::app()->user->id);
-              $User = User::model()->findAll($criteria);
-              foreach ($User as $key => $value) {
-                 $date_last  = $value->lastvisit_at;
-              }
-           if ($date_last ==='0000-00-00 00:00:00') {
+              // $criteria = new CDbCriteria;
+              // $criteria->addCondition('user_id ='.Yii::app()->user->id);
+              // $User = User::model()->findAll($criteria);
+              // foreach ($User as $key => $value) {
+              //    $date_last  = $value->lastvisit_at;
+              // }
+           //if ($date_last === '0000-00-00 00:00:00') {
     ?>
     <div class="modal fade" id="modal-news">
         <div class="modal-dialog modal-lg">
@@ -181,7 +185,8 @@ $popup = Popup::model()->findAll($criteriapopup);
         </div>
     </div>
 <?php 
-        }
+}
+     //   }
     }
 } ?>
 <?php
