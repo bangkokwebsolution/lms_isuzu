@@ -149,6 +149,21 @@ EOD
                         //    return $Usability->usa_title;
                         // },
                     ),
+                    array(
+                        'name'=>'report_course',
+                        //'type'=>'html',
+                        'filter'=>ReportProblem::getCourseOnlineListNew(),
+                        'value'=>function($data){
+                           return $data->course->course_title;
+                        }
+                        //'value'=>'UHtml::markSearch($data->usa,"usa_title")'
+                        // 'value'=>function($data){
+                        //     $Usability = Usability::model()->findByAttributes(array(
+                        //         'usa_id' => $data->report_type,
+                        //     ));
+                        //    return $Usability->usa_title;
+                        // },
+                    ),
                     
                     array(
                         'name'=>'report_detail',

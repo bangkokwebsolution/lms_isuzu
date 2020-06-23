@@ -55,6 +55,7 @@ class ReportProblem extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'usa' => array(self::BELONGS_TO, 'Usability', 'report_type'),
+			'course' => array(self::BELONGS_TO, 'CourseOnline', 'report_course'),
 		);
 	}
 
@@ -76,7 +77,7 @@ class ReportProblem extends CActiveRecord
 			'answer' => 'คำตอบ',
 			'report_date'=>'วันที่ส่งปัญหา',
 			'accept_report_date' => 'วันที่ตอบกลับ',
-			'report_course'=> 'คอร์ส',
+			'report_course'=> 'ประเภทคอร์ส',
 		);
 	}
 
@@ -112,7 +113,7 @@ class ReportProblem extends CActiveRecord
 
 		$criteria=new CDbCriteria;
         
-        $criteria->with = array('usa');
+        $criteria->with = array('usa','course');
 		$criteria->compare('id',$this->id);
 		$criteria->compare('firstname',$this->firstname,true);
 		$criteria->compare('lastname',$this->lastname,true);
@@ -205,6 +206,14 @@ class ReportProblem extends CActiveRecord
 
 		$model = Usability::model()->findAll('active = "y"');
 		$list = CHtml::listData($model,'id','usa_title');
+		return $list;
+		
+	}
+
+	public function getCourseOnlineListNew(){
+
+		$model = CourseOnline::model()->findAll('active = "y"');
+		$list = CHtml::listData($model,'id','course_title');
 		return $list;
 		
 	}
