@@ -26,7 +26,6 @@ class VirtualClassroomController extends Controller
 
 		$key = $_POST['check_key'];
 		$en_key = UserModule::encrypting($key);
-
 		// renders the view file 'protected/views/site/index.php'
 		// using the default layout 'protected/views/layouts/main.php'
 		require_once Yii::app()->basePath . '/extensions/virtualclassroomapi/includes/bbb-api.php';
@@ -34,8 +33,9 @@ class VirtualClassroomController extends Controller
 		$room = Vroom::model()->findByPk($ids);
 		if($room && !Yii::app()->user->isGuest){
 			$userObject = Yii::app()->getModule('user')->user();
-			$Profile = Profile::model()->find($ids);
+			$Profile = Profile::model()->findByPk(Yii::app()->user->id);
 			$name_show = $Profile->firstname." ".$Profile->lastname;
+
 			$joinParams = array(
 				'meetingId' => $room->id, 				// REQUIRED - We have to know which meeting to join.
 				//'username' => $userObject->username,		// REQUIRED - The user display name that will show in the BBB meeting.
@@ -127,7 +127,7 @@ class VirtualClassroomController extends Controller
 		$room = Vroom::model()->findByPk($ids);
 		if($room && !Yii::app()->user->isGuest){
 			$userObject = Yii::app()->getModule('user')->user();
-			$Profile = Profile::model()->find($ids);
+			$Profile = Profile::model()->findByPk(Yii::app()->user->id);
 			$name_show = $Profile->firstname." ".$Profile->lastname;
 			$joinParams = array(
 				'meetingId' => $room->id, 				// REQUIRED - We have to know which meeting to join.
