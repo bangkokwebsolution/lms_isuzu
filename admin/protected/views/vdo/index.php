@@ -55,6 +55,7 @@ EOD
 					'id'=>$formNameModel.'-grid',
 					'dataProvider'=>$model->vdocheck()->search(),
 					'filter'=>$model,
+					'rowCssClassExpression'=>'"items[]_{$data->vdo_id}"',
 					'selectableRows' => 2,	
 					'htmlOptions' => array(
 						'style'=> "margin-top: -1px;",
@@ -80,6 +81,13 @@ EOD
 							'name'=>'vdo_path',
 							'type'=>'html',
 							'value'=>'UHtml::markSearch($data,"vdo_path")'
+						),
+						array(
+							'type'=>'html',
+							'value'=>'CHtml::link("<i></i>","", array("class"=>"glyphicons move btn-action btn-inverse"))',
+							'htmlOptions'=>array('style'=>'text-align: center; width:50px;', 'class'=>'row_move'),
+							'header' => 'ย้าย',
+							'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
 						),
 						array(
                         'header'=>'ภาษา',

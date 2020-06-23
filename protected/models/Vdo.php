@@ -41,13 +41,13 @@ class Vdo extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('create_by, update_by', 'numerical', 'integerOnly'=>true),
+			array('create_by, update_by, sortOrder', 'numerical', 'integerOnly'=>true),
 			array('vdo_title, vdo_path', 'length', 'max'=>255),
 			array('active', 'length', 'max'=>1),
-			array('create_date, update_date', 'safe'),
+			array('create_date, update_date, news_per_page, parent_id, lang_id', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('vdo_id, vdo_title, vdo_path, create_date, create_by, update_date, update_by, active', 'safe', 'on'=>'search'),
+			array('vdo_id, vdo_title, vdo_path, create_date, create_by, update_date, update_by, active, parent_id,lang_id, sortOrder', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -73,10 +73,11 @@ class Vdo extends CActiveRecord
 	public function defaultScope()
 	{
 	    return array(
-	    	'order' => 'vdo_id desc',
+	    	'order' => 'vdo_id ASC',
 	    	'condition' => ' active = "y" ',
 	    );
 	}
+	
 
 	/**
 	 * @return array customized attribute labels (name=>label)
@@ -92,6 +93,7 @@ class Vdo extends CActiveRecord
 			'update_date' => 'Update Date',
 			'update_by' => 'Update By',
 			'active' => 'Active',
+			'sortOrder'=> 'ย้ายตำแหน่ง',
 		);
 	}
 
@@ -114,6 +116,9 @@ class Vdo extends CActiveRecord
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
+		$criteria->compare('parent_id',0);
+
+		$criteria->order = 'sortOrder ASC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
