@@ -701,7 +701,7 @@ public function actionReset_university()
         $test = '';
         $criteria = new CDbCriteria();
         $criteria->condition = "user_id = $user_id AND lesson_active = 'y' AND courseonline.active = 'y'";
-        $criteria->group = "t.gen_id";
+        $criteria->group = "t.course_id ,t.gen_id";
         $course = learn::model()->with('course')->findAll($criteria);
   //var_dump($course);exit();
         $respon = '';
@@ -715,8 +715,9 @@ public function actionReset_university()
         $test = '';
         $criteria = new CDbCriteria();
         $criteria->condition = "t.user_id = $user_id AND t.active='y' AND t.type='pre' AND courseonline.active = 'y'";
-        $criteria->group = "t.gen_id";
+        $criteria->group = "t.course_id , t.gen_id";
         $course = Score::model()->with('course')->findAll($criteria);
+
 
         $respon = '';
         $respon = $this->renderPartial('_modal_pre',array('course' => $course,'user_id' => $user_id,'type' => $type));
@@ -729,7 +730,7 @@ public function actionReset_university()
         $test = '';
         $criteria = new CDbCriteria();
         $criteria->condition = "t.user_id = $user_id AND t.active='y' AND t.type='post' AND courseonline.active = 'y'";
-        $criteria->group = "t.gen_id";
+        $criteria->group = "t.course_id ,t.gen_id";
         $course = Score::model()->with('course')->findAll($criteria);
 
         $respon = '';
@@ -862,7 +863,7 @@ public function actionReset_university()
      $test = '';
      $criteria = new CDbCriteria();
      $criteria->condition = "user_id = $user_id AND courseonline.active = 'y'";
-     $criteria->group = "t.gen_id";
+     $criteria->group = "t.course_id ,t.gen_id";
      $course = Coursescore::model()->with('course')->findAll($criteria);
 
      $respon = '';
