@@ -4,7 +4,7 @@
         background-position: 0 0;
         background-image-resize: 4;
         background-repeat: no-repeat;
-        font-family: 'coco';
+        font-family: 'tahoma';
     }
     div {
         text-align: center;
@@ -45,7 +45,7 @@
     Certificate No.: <?php echo $model['coursenumber']; ?><?php echo $model['num_pass']; ?>/<?php echo $model['year_pass']; ?>
     </div>
     <div class="b size42" style="position:absolute; top: 91mm; line-height:35px; font-family: 'arnoprocaptionsemibold';">
-        <i><?= $model['fulltitle_en'] ?></i>
+        <?= $model['fulltitle_en'] ?>
     </div>
     <div style="position:absolute; top: 118mm; line-height:40px; font-family: 'arnoprocaptionsemibold';">
        <div class="b size42 red"><?= $model['courseTitle_en'] ?></div>
@@ -106,7 +106,7 @@
     Certificate No.: <?php echo $model['coursenumber']; ?><?php echo $model['num_pass']; ?>/<?php echo $model['year_pass']; ?>
     </div>
     <div class="b size42" style="position:absolute; top: 89mm; line-height:35px; font-family: 'arnoprocaptionsemibold';">
-        <i><?= $model['fulltitle_en'] ?></i>
+        <?= $model['fulltitle_en'] ?>
     </div>
     <div style="position:absolute; top: 112mm; line-height:40px; font-family: 'arnoprocaptionsemibold';">
        <div class="b size42 red"><?= $model['courseTitle_en'] ?></div>
