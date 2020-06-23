@@ -55,7 +55,9 @@ Yii::app()->user->returnUrl = $http->getUrl();
 
 <div class="backtotop"><span><i class="fas fa-arrow-up"></i> <small>top</small></span></div>
 <a class="contact-admin" data-toggle="modal" href="#user-report">
+  <?php if(Yii::app()->user->id){ ?>
     <div id="mascot-contact"></div>
+ 
     <!-- <div id="contact-mobile">
       < ?php
       if (Yii::app()->session['lang'] == 1) {
@@ -83,7 +85,7 @@ if (Yii::app()->session['lang'] == 1) {
         path: '<?php echo $mascot_path; ?>'
     });
 </script>
-
+ <?php } ?>
 <?php include("themes/template2/include/header.php"); ?>
 
 <?php echo $content; ?>
