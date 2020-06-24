@@ -301,10 +301,22 @@ class CoursequestionController extends Controller
                                     $criteria->order = 'RAND() ';
                                     $rand_choice =  Coursechoice::model()->findAll($criteria);
                                     $choice_array = [];
+                                    $num_checkk = 1;
+                                    $num_check_2 = 0;
                                     foreach ($rand_choice as $key => $val_choice) {
-                                        $choice_array[] = $val_choice->choice_id;
+                                        // $choice_array[] = $val_choice->choice_id;
+
+                                        if($val_choice->choice_answer == 1 && $val_choice->choice_type == 'dropdown'){
+                                            $choice_array[count($rand_choice)-$num_checkk] = $val_choice->choice_id;
+                                            $num_checkk++;
+                                        }else{
+                                            $choice_array[$num_check_2] = $val_choice->choice_id;
+                                            $num_check_2++;
+                                        }
+
                                     }
 
+                                    ksort($choice_array);
                                     $temp_test->question = json_encode($choice_array);
                                     $temp_test->number = $key2+1;
                                     $temp_test->status = 0;
@@ -647,9 +659,22 @@ class CoursequestionController extends Controller
                                         } 
 
                                         $choiceUserQuestionArray = array();
-                                        $choiceUserQuestionArray = $coursequestion->choices(array(
-                                            'condition' => 'choice_answer=1'
-                                        ));
+                                        // $choiceUserQuestionArray = $coursequestion->choices(array(
+                                        //     'condition' => 'choice_answer=1'
+                                        // ));
+
+                                        $key_atart = count(json_decode($value->question))-count($choiceUserAnswerArray);
+
+
+
+
+                                        foreach (json_decode($value->question) as $key_q => $value_q) {
+                                        if($key_atart <= $key_q){
+                                            var_dump($value_q);
+                                            $choiceUserQuestionArray[] = Coursechoice::model()->findByPk($value_q);
+                                        }
+                                     }
+
 
                                         $choiceCorrectIDs = array();
                                         $choiceIsQuest = array();

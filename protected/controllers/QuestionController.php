@@ -73,8 +73,25 @@ class QuestionController extends Controller
             }
 
 
+        $arr_id_ques = array();
         foreach ($manage as $key => $value) {   
                 $total_score += $value->manage_row;
+                $check_ques = Question::model()->findAll("active='y' AND ques_type=4 AND group_id='".$value->group_id."'");
+                if (!empty($check_ques)) {
+                    foreach ($check_ques as $keyy => $valuee) {
+                        $arr_id_ques[] = $valuee->ques_id;
+                    }
+                }
+            }
+
+            $num_choice = 0;
+            if(!empty($arr_id_ques)){
+                foreach ($arr_id_ques as $key => $value) {
+                $check_choice = Choice::model()->findAll("active='y' AND choice_answer=1 AND choice_type='dropdown' AND ques_id='".$value."'");
+                     if (!empty($check_choice)) {
+                        $num_choice = $num_choice+count($check_choice);
+                     }
+                }
             }
             
         $currentQuiz = TempQuiz::model()->find(array(
@@ -101,6 +118,7 @@ class QuestionController extends Controller
             $this->render('pre_exams',array(
                 'lesson' => $lesson,
                 //'manage' => $manage,
+                'num_choice'=>$num_choice,
                 'total_score' => $total_score,
                 'label'=>$label,
                 'labelCourse' => $labelCourse,
@@ -295,9 +313,7 @@ class QuestionController extends Controller
                                             $choice[] = $val_choice->choice_id;
                                         }
                                     }
-                                }
-
-                               
+                                }                               
                                
                                
                                 if($arrType4Answer){
@@ -309,22 +325,25 @@ class QuestionController extends Controller
                                     $choice = array_merge($choice,$choiceA);
                                 }
 
-                                // array_rand($choice); //Random choice
-                                // var_dump($choice);exit();
                                 $criteria=new CDbCriteria;
                                 $criteria->addInCondition('choice_id',$choice);
                                 $criteria->order = 'RAND() ';
                                 $rand_choice =  Choice::model()->findAll($criteria);
                                 $choice_array = [];
+                                $num_checkk = 1;
+                                $num_check_2 = 0;
                                 foreach ($rand_choice as $key => $val_choice) {
-                                    $choice_array[] = $val_choice->choice_id;
+                                    if($val_choice->choice_answer == 1 && $val_choice->choice_type == 'dropdown'){
+                                        $choice_array[count($rand_choice)-$num_checkk] = $val_choice->choice_id;
+                                        $num_checkk++;
+                                    }else{
+                                        $choice_array[$num_check_2] = $val_choice->choice_id;
+                                        $num_check_2++;
+                                    }
                                 }
 
-                                // var_dump($choice_array); exit();
-
+                                ksort($choice_array);
                                 $temp_test->question = json_encode($choice_array);
-
-
 
                                 // $temp_test->question = json_encode($choice);
                                 $temp_test->number = $key2+1;
@@ -657,12 +676,41 @@ class QuestionController extends Controller
                                     } 
 
                                     $choiceUserQuestionArray = array();
-                                    $choiceUserQuestionArray = $coursequestion->chioce(array(
-                                            'condition' => 'choice_answer=1'
-                                        ));
+                                    // $choiceUserQuestionArray = $coursequestion->chioce(array(
+                                        //     'condition' => 'choice_answer=1'
+                                        // ));
+                                    // var_dump(count($choiceUserAnswerArray));
+                                     // var_dump(json_decode($value->question)); 
+                                     // var_dump(count(json_decode($value->question))); 
+
+                                     $key_atart = count(json_decode($value->question))-count($choiceUserAnswerArray);
+
+                                     // var_dump(count(json_decode($value->question)));
+                                     // var_dump(count($choiceUserAnswerArray));
+                                     // var_dump($key_atart);
+                                     foreach (json_decode($value->question) as $key_q => $value_q) {
+                                        // var_dump($key_q);
+                                        // var_dump($key_atart." <= ".$key_q);
+                                        if($key_atart <= $key_q){
+                                            $choiceUserQuestionArray[] = Choice::model()->findByPk($value_q);
+                                        }
+                                     }
+
+                                     // var_dump($choiceUserQuestionArray);
+
+                                     // exit();
+
+
+
 
                                     $choiceCorrectIDs = array();
                                     $choiceIsQuest = array();
+                                    // var_dump("<pre>");
+
+                                    // var_dump($choiceUserQuestionArray); // ช้อย ข้อถูก
+                                    // var_dump($choiceUserAnswerArray); //ช้อย คำตอบ
+
+
 
                                     foreach ($choiceUserQuestionArray as $key => $value) {
                                         $countAllCoursequestion += 1;
@@ -675,6 +723,8 @@ class QuestionController extends Controller
                                                             ' AND reference IS NOT NULL '
                                         ));
 
+                                        // var_dump($AnsChoice);
+                                        // var_dump($AnsChoice[0]->reference." == ".$value->choice_id);
                                         if($AnsChoice){                                           
                                             if($AnsChoice[0]->reference == $value->choice_id){
                                                 $checkValue = 1;
@@ -709,6 +759,12 @@ class QuestionController extends Controller
                                             if($checkChoice_quest!=0){  
                                                                                             
                                                 $logchoice_answer = $choiceCorrectIDs[$checkChoice_quest]['Anschoice_id'];
+                                                // var_dump("choice_id");
+                                                // var_dump($choice->choice_id);                                                
+                                                // var_dump($logchoice_answer);
+                                                // var_dump("logchoice_answer");
+                                                // var_dump("<br>");
+                                                var_dump($choiceCorrectIDs[$checkChoice_quest]['checkVal']);
                                                 if($choiceCorrectIDs[$checkChoice_quest]['checkVal'] == 1){
                                                     $is_valid_choice = 1;
                                                     $quest_score ++;

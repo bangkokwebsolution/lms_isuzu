@@ -54,8 +54,9 @@ Yii::app()->user->returnUrl = $http->getUrl();
 </a> -->
 
 <div class="backtotop"><span><i class="fas fa-arrow-up"></i> <small>top</small></span></div>
+<?php if(Yii::app()->user->id){ ?>
 <a class="contact-admin" data-toggle="modal" href="#user-report">
-  <?php if(Yii::app()->user->id){ ?>
+  
     <div id="mascot-contact"></div>
  
     <!-- <div id="contact-mobile">
