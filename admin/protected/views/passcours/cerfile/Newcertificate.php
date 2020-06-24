@@ -85,7 +85,7 @@
     <b><?php echo $model['positionSign2']; ?></b>
     </div>
 <?php } ?>
-<div style="position:absolute; top: 227mm; right: -285px;">
+<div style="position:absolute; top: 250mm; right: -285px;">
     <img width="120px" src="<?php echo Yii::app()->basePath."/../../uploads/qrcode_cer/".$model['user']."_".$model['course']."_".$model['gen'].".png" ?>" >
 </div>
 
@@ -143,7 +143,7 @@
     <b><?php echo $model['positionSign2']; ?></b>
     </div>
 <?php } ?>
-<div style="position:absolute; top: 227mm; right: -285px;">
+<div style="position:absolute; top: 248mm; right: -285px;">
     <img width="120px" src="<?php echo Yii::app()->basePath."/../../uploads/qrcode_cer/".$model['user']."_".$model['course']."_".$model['gen'].".png" ?>" >
 </div>
 

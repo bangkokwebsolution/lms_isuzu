@@ -82,7 +82,7 @@
     <b><?php echo $model['positionSign2']; ?></b>
     </div>
 <?php } ?>
-<div style="position:absolute; top: 231mm; right: -285px;">
+<div style="position:absolute; top: 250mm; right: -285px;">
     <img width="120px" src="<?php echo Yii::app()->basePath."/../uploads/qrcode_cer/".$model['user']."_".$model['course']."_".$model['gen'].".png" ?>" >
 </div>
 
@@ -122,7 +122,7 @@
 </div> 
 <?php if ($model['renderSign']) {?>
     <div style="position:absolute; top: 184.5mm; left: -150px;" >
-       <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign']; ?>" >
+       <img src="<?php echo Yii::app()->basePath."/../uploads/signature/".$model['renderSign']; ?>" >
    </div>
    <div class="size14" style="position:absolute; top: 221mm; left: -150px;">
     <b><?php echo $model['nameSign']; ?></b>
@@ -133,7 +133,7 @@
 <?php } ?>
 <?php if ($model['renderSign2']) {?>
     <div style="position:absolute; top: 184.5mm; right: -190px;" >
-        <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign2']; ?>" >
+        <img src="<?php echo Yii::app()->basePath."/../uploads/signature/".$model['renderSign2']; ?>" >
     </div>
      <div class="size14" style="position:absolute; top: 221mm; right: -190px;">
     <b><?php echo $model['nameSign2']; ?></b>
@@ -142,8 +142,8 @@
     <b><?php echo $model['positionSign2']; ?></b>
     </div>
 <?php } ?>
-<div style="position:absolute; top: 231mm; right: -285px;">
-    <img width="120px" src="<?php echo Yii::app()->basePath."/../../uploads/qrcode_cer/".$model['user']."_".$model['course']."_".$model['gen'].".png" ?>" >
+<div style="position:absolute; top: 248mm; right: -285px;">
+    <img width="120px" src="<?php echo Yii::app()->basePath."/../uploads/qrcode_cer/".$model['user']."_".$model['course']."_".$model['gen'].".png" ?>" >
 </div>
 
 
