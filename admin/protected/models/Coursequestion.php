@@ -185,9 +185,10 @@ class Coursequestion extends AActiveRecord
 		$poviderArray = array('criteria'=>$criteria);
 
 		// Page
-		if(isset($this->news_per_page))
+		
+		if(isset($_GET['Question']['news_per_page']))
 		{
-			$poviderArray['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
+			$poviderArray['pagination'] = array( 'pageSize'=> intval($_GET['Question']['news_per_page']) );
 		}
 
 		return new CActiveDataProvider($this, $poviderArray);
