@@ -54,9 +54,17 @@ class GalleryTypeController extends Controller
 
 		if(isset($_POST['GalleryType']))
 		{
+
 			$model->attributes=$_POST['GalleryType'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+        	if ($model->save()) {
+        	$GalleryGroup = new GalleryGroup;
+			$GalleryGroup->gallery_type_id = $model->id;
+			$GalleryGroup->create_date = date("Y-m-d H:i:s");
+        	$GalleryGroup->create_by = Yii::app()->user->id;
+        	$GalleryGroup->save();
+				$this->redirect(array('view','id'=>$model->id));  	
+			}
+			
 		}
 
 		$this->render('create',array(
@@ -92,10 +100,20 @@ class GalleryTypeController extends Controller
 	{
 		//$this->loadModel($id)->delete();
 		$model = $this->loadModel($id);
-
+		
 		$model->active = 'n';
-
-		$model->save();
+		if ($model->save()) {
+		$criteria = new CDbCriteria;
+        $criteria->addCondition('gallery_type_id ="'.$id.'"');
+		$GalleryGroup = GalleryGroup::model()->find($criteria);
+		if ($GalleryGroup) {
+			$GalleryGroup->active = 'n';
+			$GalleryGroup->save();
+		}
+		
+		}
+		
+		
 
 		if(Yii::app()->user->id){
 			Helpers::lib()->getControllerActionId();
