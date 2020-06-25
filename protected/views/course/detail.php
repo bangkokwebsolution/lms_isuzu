@@ -1272,12 +1272,12 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
         </a>
     </div>
 <?php } ?>
-
+<?php $CheckPreTestAnsTextAreaCoursePost = Helpers::lib()->CheckPreTestAnsTextAreaCourse($_GET['id'], "post"); ?>
 <!-- Check count test -->
 <div id="collapseFinal<?=$key?>">
     <?php if($BestFinalTestScore){ ?>
         <?php foreach ($BestFinalTestScore as $key => $course_score) { ?>
-            <?php $CheckPreTestAnsTextAreaCoursePost = Helpers::lib()->CheckPreTestAnsTextAreaCourse($course->course_id, "post"); ?>
+            <?php //$CheckPreTestAnsTextAreaCoursePost = Helpers::lib()->CheckPreTestAnsTextAreaCourse($course->course_id, "post"); ?>
             <?php if(count($BestFinalTestScore) < $course->cate_amount){ ?>
                 <?php if($course_score->score_past == 'n'){ ?>
                     <?php 
