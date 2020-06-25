@@ -90,6 +90,7 @@ class CoursequestionController extends Controller
             $this->redirect(array('coursequestion/index',
                 'id' => $course->course_id,
                 'labelCourse' => $labelCourse,
+                'type' => $que_type,
             ));
         } else {
             $this->render('pre_exams',array(
