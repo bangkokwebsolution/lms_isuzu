@@ -1465,14 +1465,14 @@ Class MenuLeft extends Controller
 	        	'active' => self::SetSubMenu( array('GalleryGroup') ,false),
 	        	'items'=>array(
 
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'GalleryGroup.*',
-	        				'GalleryGroup.create'
-	        			)),
-	        			'label'=>'เพิ่มแกลลอรี่',
-	        			'url'=>array('//GalleryGroup/create')
-	        		),
+	        		// array(
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'GalleryGroup.*',
+	        		// 		'GalleryGroup.create'
+	        		// 	)),
+	        		// 	'label'=>'เพิ่มแกลลอรี่',
+	        		// 	'url'=>array('//GalleryGroup/create')
+	        		// ),
 	        		array(
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'GalleryGroup.*',

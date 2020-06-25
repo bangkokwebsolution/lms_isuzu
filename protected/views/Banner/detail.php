@@ -27,6 +27,21 @@ function DateThai($strDate)
  return "$strDay $strMonthThai $strYear, $strHour:$strMinute";
 }
 ?>
+<style type="text/css">
+  div.content-image  img {
+ border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 5px;
+  width:377px;
+  height:50px;
+}
+    p {
+  color: navy;
+  text-indent: 30px;
+/*  text-transform: uppercase;*/
+
+}
+</style>
 <html lang="th">
 
 <!-- Head -->
@@ -39,7 +54,11 @@ function DateThai($strDate)
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb breadcrumb-main">
-                <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/banner/index'); ?>">ป้ายประชาสัมพันธ์</a></li>
+                <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/banner/index'); ?>"><?php if (Yii::app()->session['lang'] == 1) {
+                    echo "Advertising boards";
+                }else{
+                    echo "ป้ายประชาสัมพันธ์";
+                } ?></a></li>
                 <li class="breadcrumb-item active" aria-current="page"><?php echo $img_data->imgslide_title; ?></li>
             </ol>
         </nav>
@@ -65,8 +84,8 @@ function DateThai($strDate)
                     </div>
                     <h2><?php echo $img_data->imgslide_title; ?></h2>
                     <?php
-                    $id = $img_data->create_by;
-                    $create = profile::model()->findbyPk($id);
+                    // $id = $img_data->create_by;
+                    // $create = profile::model()->findbyPk($id);
                     ?>
                     <ul class="list-inline">
                        <?php if($img_data->update_date != null) {?>
@@ -79,6 +98,35 @@ function DateThai($strDate)
          </div>
          <div class="content-detail">
             <?php echo $img_data->imgslide_detail; ?>
+        </div><br>
+        <div class="content-image">
+             <?php
+              if ($img_data->imgslide_link == "" && $img_data->gallery_type_id != null) {
+                    $criteriaType = new CDbCriteria;
+                        $criteriaType->compare('active', y);
+                        $criteriaType->compare('gallery_type_id', $img_data->gallery_type_id);
+                        $galleryType = Gallery::model()->findAll($criteriaType);
+
+                        foreach ($galleryType as $key) {     
+                        ?>
+                              <a href="<?php echo Yii::app()->baseUrl; ?>/uploads/gallery/<?= $key->image; ?>"class="liquid-lp-read-more zoom fresco" data-fresco-group="ld-pf-1[<?= $img_data->id ?>]">
+                                  <img src="<?php echo Yii::app()->baseUrl; ?>/uploads/gallery/<?= $key->image; ?>" class="slide-main-thor" alt="" >
+                              </a>
+            <?php 
+             }
+             }else if($img_data->imgslide_link != "" && $img_data->gallery_type_id == null) {
+                ?>
+
+                <a href="<?=$img_data->imgslide_link;  ?>" target="_blank">
+                    <p ><?php if (Yii::app()->session['lang'] == 1) {
+                    echo "See more details ....";
+                }else{
+                    echo "ดูรายละเอียดเพิ่มเติ่ม....";
+                } ?></p>
+                </a>
+             <?php }
+
+        ?> 
         </div>
     </div>
 </div>

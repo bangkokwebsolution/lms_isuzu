@@ -21,7 +21,7 @@ class Imgslide extends AActiveRecord
 			array('active', 'length', 'max'=>1),
 			array('news_per_page, create_date, update_date, parent_id, lang_id', 'safe'),
 			array('imgslide_picture ,imgslide_title','required', 'on'=>'insert'),
-			array('imgslide_picture', 'file','types' => 'jpg, gif, png', 'allowEmpty'=>true),
+			array('imgslide_picture', 'file','types' => 'jpg, gif, png', 'allowEmpty'=>true, 'safe' => false),
 			array('imgslide_id , imgslide_link,imgslide_detail,imgslide_title, parent_id, lang_id, gallery_type_id', 'safe', 'on'=>'search'),
 		);
 	}
