@@ -75,13 +75,17 @@ $formtext = "Import excel ข้อสอบ";
 							<td>checkbox</td>
 							<td>ข้อสอบหลายคำตอบ</td>
 						</tr>
-            			<!-- <tr>
-							<td>textbox</td>
+            			<tr>
+							<td>textarea</td>
 							<td>ข้อสอบบรรยาย</td>
-						</tr> -->
+						</tr>
 						<tr>
 							<td>dropdown</td>
 							<td>ข้อสอบจับคู่</td>
+						</tr>
+						<tr>
+							<td>hidden</td>
+							<td>จัดเรียง</td>
 						</tr>
 						<tr>
 							<td colspan="2">การใส่สัญลักษณ์ <span style="color: #fc0031">*หน้าตัวเลือก</span> หมายความว่า ตัวเลือกนั้นคือคำตอบที่ถูกต้อง</td>
