@@ -263,15 +263,16 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
         }
         $status_button .= '" '.$text_cursor_context_menu.'><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_notLearn.'</span>';
         foreach ($lesson as $key => $lessonList) {
-            // if($lessonList->lang_id == 1){
+            if($lessonList->lang_id == 1){
             $checkLearn = Learn::model()->findByAttributes(array(
                 'user_id' => Yii::app()->user->id,
                 'lesson_id' => $lessonList->id,
                 'gen_id' => $gen_id,
             ));                     
             if ($checkLearn) {
+                // var_dump($checkLearn->lesson_status); 
                 if ($checkStatus) {
-                    if ($checkLearn->lesson_status == 'pass') {
+                    if ($checkLearn->lesson_status == 'pass' && Helpers::lib()->percent_CourseGen($lessonList->course_id, $gen_id) == 100) {
                         $status = $label->label_learned;
                         $checkStatus = true;
                         $herf = '#collapse-'.i;
@@ -282,7 +283,8 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
                             $status_button .= $text_status_study_class_id;
                         }
                         $status_button .= '" '.$text_cursor_context_menu.'"><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_learned.'</span>';
-                    }elseif($checkLearn->lesson_status == 'learning'){
+                    // }elseif($checkLearn->lesson_status == 'learning'){
+                    }else{
                         $status = $label->label_learning;
                         $checkStatus = false;
                         $herf = '#collapse-'.i;
@@ -301,9 +303,21 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
                     //     $status_button = '<span class="badge" id="badgetwo" style="cursor: context-menu;"><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_notLearn.'</span>';
                     // }
                 }
+            }else{
+                $status = $label->label_learning;
+                        $checkStatus = false;
+                        $herf = '#collapse-'.i;
+                        $status_button = '<span class="badge" id="';
+                        if($text_status_study_class_id == ""){
+                            $status_button .= "badgetwo";
+                        }else{
+                            $status_button .= $text_status_study_class_id;
+                        }
+                        $status_button .= '" '.$text_cursor_context_menu.'><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_learning.'</span>';
             }
-        // } //lang 1
+        } //lang 1
         }
+
 
         // var_dump($status_button); 
         // exit();    
@@ -318,7 +332,7 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
                             <h4 class="text1">
                                 <a <?php echo $text_cursor_context_menu; ?> role="button" <?= (!$checkStatus)? 'data-toggle="collapse"':'' ?>  data-parent="#accordion2" href="<?= $herf; ?>" aria-expanded="true" aria-controls="collapseOne" class="">
                                 <span class="head_titledash"><?= $status_button ?> <i class="fa fa-book"></i>  <?=  $label->label_course ?> <?= $value->course_title ?> <?php if($gen_id != "0"){ if($langId != 1){echo "รุ่น "; }else{ echo "gen "; } echo $CourseGeneration->gen_title; if($langId != 1){echo " ".$CourseGeneration->gen_detail; }else{ echo " ".$CourseGeneration->gen_detail_en; } } echo " ".$text_status_study; ?></span> <span class="pull-right"><i class="fa fa-angle-down" style="margin-top: 7px;"></i></span> <div class="pull-right" style="margin-right: 15px">
-                                    <?php if(empty($data->CourseOnlines->Schedules) && $passCourse != null){
+                                    <?php if(empty($data->CourseOnlines->Schedules) && $passCourse != null && Helpers::lib()->percent_CourseGen($value->course_id, $gen_id) == 100){
                                         // var_dump($passCourse); exit();
                                      ?>
                                         <!-- ../course/certificate/<?php echo $value->course_id; ?> -->
@@ -480,7 +494,7 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
                                                     if($allFinalTest){ //&& $PaQuest
 
                                                         $printCer = '';
-                                                        echo $allFinalTest->score_number.'/////'.$allFinalTest->score_total;
+                                                        echo $allFinalTest->score_number.'/'.$allFinalTest->score_total;
                                                     } else {
                                                         $printCer = 'disabled';
                                                         echo $label->label_haveNotTest;

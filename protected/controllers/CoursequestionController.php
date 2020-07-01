@@ -762,12 +762,21 @@ class CoursequestionController extends Controller
                                         }
                                     }
                                     $sumPoint = $scoreSum * 100 / $countAllCoursequestion;
+                                    if($quesType_ == 1){
+                                    Coursescore::model()->updateByPk($modelCoursescore->score_id, array(
+                                        'score_number' => $scoreSum,
+                                        'update_date' => date('Y-m-d H:i:s'),
+                                        'score_total' => $countAllCoursequestion,
+                                        'score_past' => 'n',
+                                    ));
+                                }else{
                                     Coursescore::model()->updateByPk($modelCoursescore->score_id, array(
                                         'score_number' => $scoreSum,
                                         'update_date' => date('Y-m-d H:i:s'),
                                         'score_total' => $countAllCoursequestion,
                                         'score_past' => ($sumPoint >= $scorePercent) ? 'y' : 'n',
                                     ));
+                                }
                                     $modelScore = Coursescore::model()->findByPk($modelCoursescore->score_id);
                                     if ($sumPoint >= $scorePercent && $modelCoursescore->type != "pre") { // สอบ post ถึงจะผ่าน
                                         $passCoursModel = Passcours::model()->findByAttributes(array(

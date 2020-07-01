@@ -358,7 +358,7 @@ if($model){
              }
 
 
-            if($allPassed && $can_print_cer == 1 && $course_wait_cer == 1){
+            if($allPassed && $can_print_cer == 1 && $course_wait_cer == 1 && Helpers::lib()->percent_CourseGen($course->course_id, $gen_id) == 100){
                $certDetail = CertificateNameRelations::model()->find(array('condition'=>'course_id='.$course->course_id));
                if(empty($certDetail)){
                    $pathPassed = 'javascript:void(0);';

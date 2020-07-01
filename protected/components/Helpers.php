@@ -1274,6 +1274,7 @@ public function checkLessonPass_Percent($lesson,$format=null, $gen_id=null)
             $lesson_model = Lesson::model()->findByPk($lesson->id);
             $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
         }
+        $lesson = Lesson::model()->findByPk($lesson->id);
         
         $learnLesson = $user->learns(
             array(
@@ -4326,7 +4327,7 @@ public function checkStepLesson($lesson){
             $ques_type = "3"; // 3=textarea
 
             $model = Logques::model()->findAll(array( 
-                    'condition' => 'gen_id=:gen_id AND lesson_id=:lesson_id AND user_id=:user_id AND test_type=:test_type AND ques_type=:ques_type AND active=:active AND confirm=:confirm',
+                    'condition' => 'gen_id=:gen_id AND lesson_id=:lesson_id AND user_id=:user_id AND test_type=:test_type AND ques_type=:ques_type AND active=:active AND logque.check=:confirm',
                     'params' => array(':gen_id'=>$gen_id, ':lesson_id'=>$lesson_id, ':user_id'=>$user_id, ':test_type'=>$test_type, ':active'=>'y', ':ques_type'=>$ques_type, ':confirm'=>0),
                 ));
 
@@ -4355,7 +4356,7 @@ public function checkStepLesson($lesson){
             $ques_type = "3"; // 3=textarea
 
             $model = Courselogques::model()->findAll(array( 
-                    'condition' => 'gen_id=:gen_id AND course_id=:course_id AND user_id=:user_id AND test_type=:test_type AND ques_type=:ques_type AND active=:active AND confirm=:confirm',
+                    'condition' => 'gen_id=:gen_id AND course_id=:course_id AND user_id=:user_id AND test_type=:test_type AND ques_type=:ques_type AND active=:active AND t.check=:confirm',
                     'params' => array(':gen_id'=>$gen_id, ':course_id'=>$course_id, ':user_id'=>$user_id, ':test_type'=>$test_type, ':active'=>'y', ':ques_type'=>$ques_type, ':confirm'=>0),
                 ));
 
