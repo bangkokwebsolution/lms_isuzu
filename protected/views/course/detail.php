@@ -18,6 +18,7 @@
 </style>
 
 <?php 
+$course_wait_cer = 1; // สถานะ 1=พิมใบ cer ได้    2=มีข้อสอบบรรยายรอตรวจ พิมไม่ได้
 $themeBaseUrl = Yii::app()->theme->baseUrl;
 $uploadFolder = Yii::app()->getUploadUrl("lesson");
 if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
@@ -357,7 +358,7 @@ if($model){
              }
 
 
-            if($allPassed && $can_print_cer == 1){
+            if($allPassed && $can_print_cer == 1 && $course_wait_cer == 1){
                $certDetail = CertificateNameRelations::model()->find(array('condition'=>'course_id='.$course->course_id));
                if(empty($certDetail)){
                    $pathPassed = 'javascript:void(0);';
@@ -482,6 +483,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
         </li>
         <?php
     }else{
+        $course_wait_cer = 2;
         ?>
         <li class="list-group-item ">
          <a href="">
@@ -664,6 +666,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                                                                                 <?php
                                                                         }else{
                                                                         //ข้อสอบ ก่อนเรียน ของบทเรียน
+                                                                            $course_wait_cer = 2;
                                                                             ?>
                                                                             <li class="list-group-item">
                                                                                 <?php echo $label->label_resultTestPre; ?> <?= $keyx+1; ?><span class="pull-right <?= $colorText; ?> prepost"> <?= $label->label_course_wait ?> </span> </li>
@@ -1005,6 +1008,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                                                                                                 <li class="list-group-item"><?php echo $label->label_resultTestPost; ?> <?= $keys+1 ?><span class="pull-right <?= $colorText ?> prepost"><?= $postStatus->value['score']; ?>/<?= $postStatus->value['total']; ?> <?php echo $label->label_point; ?></span></li>
                                                                                                 <?php
                                                                                                 }else{
+                                                                                                    $course_wait_cer = 2;
                                                                                                     ?>
 
                                                                                                 <li class="list-group-item"><?php echo $label->label_resultTestPost; ?> <?= $keys+1 ?><span class="pull-right <?= $colorText ?> prepost"><?= $label->label_course_wait ?></span></li>
@@ -1289,6 +1293,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                     </li>
                     <?php
                     }else{
+                        $course_wait_cer = 2;
                         ?>
                         <li class="list-group-item ">
                     <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
@@ -1309,6 +1314,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                         </li>
                         <?php
                     }else{
+                        $course_wait_cer = 2;
                         ?>  
                          <li class="list-group-item ">
                         <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
@@ -1328,6 +1334,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                         </li>
                         <?php
                     }else{
+                        $course_wait_cer = 2;
                         ?>
                         <li class="list-group-item ">
                         <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>

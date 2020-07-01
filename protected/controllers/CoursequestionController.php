@@ -671,7 +671,7 @@ class CoursequestionController extends Controller
 
                                         foreach (json_decode($value->question) as $key_q => $value_q) {
                                         if($key_atart <= $key_q){
-                                            var_dump($value_q);
+                                            // var_dump($value_q);
                                             $choiceUserQuestionArray[] = Coursechoice::model()->findByPk($value_q);
                                         }
                                      }
@@ -769,7 +769,7 @@ class CoursequestionController extends Controller
                                         'score_past' => ($sumPoint >= $scorePercent) ? 'y' : 'n',
                                     ));
                                     $modelScore = Coursescore::model()->findByPk($modelCoursescore->score_id);
-                                    if ($sumPoint >= $scorePercent) {
+                                    if ($sumPoint >= $scorePercent && $modelCoursescore->type != "pre") { // สอบ post ถึงจะผ่าน
                                         $passCoursModel = Passcours::model()->findByAttributes(array(
                                             'passcours_cates' => $course->cate_id,
                                             'passcours_user' => Yii::app()->user->id,

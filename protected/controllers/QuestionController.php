@@ -764,7 +764,7 @@ class QuestionController extends Controller
                                                 // var_dump($logchoice_answer);
                                                 // var_dump("logchoice_answer");
                                                 // var_dump("<br>");
-                                                var_dump($choiceCorrectIDs[$checkChoice_quest]['checkVal']);
+                                                // var_dump($choiceCorrectIDs[$checkChoice_quest]['checkVal']);
                                                 if($choiceCorrectIDs[$checkChoice_quest]['checkVal'] == 1){
                                                     $is_valid_choice = 1;
                                                     $quest_score ++;

@@ -861,9 +861,9 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                     }
                 }
 
-                public static function isPretestState($lesson_id, $gen_id=null)
-                {
-                    $lesson = Lesson::model()->findByPk($lesson_id);
+    public static function isPretestState($lesson_id, $gen_id=null)
+    {
+        $lesson = Lesson::model()->findByPk($lesson_id);
 
         if (!$lesson) { // ไม่พบบทเรียน
             return false;

@@ -262,8 +262,8 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
             $status_button .= $text_status_study_class_id;
         }
         $status_button .= '" '.$text_cursor_context_menu.'><i class="fa fa-graduation-cap"></i>&nbsp;'.$label->label_notLearn.'</span>';
-
         foreach ($lesson as $key => $lessonList) {
+            // if($lessonList->lang_id == 1){
             $checkLearn = Learn::model()->findByAttributes(array(
                 'user_id' => Yii::app()->user->id,
                 'lesson_id' => $lessonList->id,
@@ -273,7 +273,7 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
                 if ($checkStatus) {
                     if ($checkLearn->lesson_status == 'pass') {
                         $status = $label->label_learned;
-                        $checkStatus = false;
+                        $checkStatus = true;
                         $herf = '#collapse-'.i;
                         $status_button = '<span class="badge" id="';
                         if($text_status_study_class_id == ""){
@@ -302,7 +302,11 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
                     // }
                 }
             }
-        }    
+        // } //lang 1
+        }
+
+        // var_dump($status_button); 
+        // exit();    
         ?>
         <!-- 1 -->
     <div class="row">
@@ -454,7 +458,7 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
                                             if($y == 1){
                                                     echo '<td rowspan="'.count($lesson).'">';
                                                     $criteria = new CDbCriteria;
-                                                    $criteria->condition = ' course_id="' . $data->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND gen_id="'.$gen_id.'" AND active="y"';
+                                                    $criteria->condition = ' course_id="' . $data->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND gen_id="'.$gen_id.'" AND active="y" AND type="post"';
                                                     $criteria->order = 'create_date DESC';
                                                     $allFinalTest = Coursescore::model()->find($criteria);
 
@@ -476,7 +480,7 @@ function CourseShowHistory($i, $value, $gen_id, $getcourse, $getyear, $label, $l
                                                     if($allFinalTest){ //&& $PaQuest
 
                                                         $printCer = '';
-                                                        echo $allFinalTest->score_number.'/'.$allFinalTest->score_total;
+                                                        echo $allFinalTest->score_number.'/////'.$allFinalTest->score_total;
                                                     } else {
                                                         $printCer = 'disabled';
                                                         echo $label->label_haveNotTest;
