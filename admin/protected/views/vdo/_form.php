@@ -78,6 +78,11 @@ function typeVdo(val){
 					<?php echo $form->textField($model,'vdo_title',array('size'=>60,'maxlength'=>255,'class'=>'span7')); ?>
 					<?php echo $form->error($model,'vdo_title'); ?>
 				</div>
+                <div class="row">
+                    <?php echo $form->labelEx($model,'vdo_credit'); ?>
+                    <?php echo $form->textField($model,'vdo_credit',array('size'=>60,'maxlength'=>255,'class'=>'span7')); ?>
+                    <?php echo $form->error($model,'vdo_credit'); ?>
+                </div>
 				<div class="row">
                     <label><?php echo $form->labelEx($model, 'vdo_type'); ?></label>
                     <?php

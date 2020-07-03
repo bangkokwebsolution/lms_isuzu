@@ -17,14 +17,14 @@ class Vdo extends AActiveRecord
 	{
 		return array(
 			array('vdo_id, create_by, update_by,sortOrder', 'numerical', 'integerOnly'=>true),
-			array('vdo_title, vdo_path , vdo_thumbnail', 'length', 'max'=>255),
+			array('vdo_title, vdo_path , vdo_thumbnail, vdo_credit', 'length', 'max'=>255),
 			//array('vdo_path', 'file', 'types' => ('mp4', 'avi', 'mpge'), 'maxSize' => 1024 * 1024 * 2),
 			array('vdo_path', 'file', 'types' => 'mp4,avi,mpge', 'maxSize'=>100000000 ,'message'=>'ไฟล์จะต้องมีขนาดไม่เกิน 100 Mb กรุณาเลือกไฟล์ใหม่','on'=>'file'),
 			array('active', 'length', 'max'=>1),
 			array('create_date, update_date, news_per_page,vdo_type,link_vdo,lang_id,parent_id,sortOrder', 'safe'),
 			array('vdo_title', 'required' ),
 
-			array('vdo_id, vdo_title, vdo_path,vdo_thumbnail, create_date, create_by, update_date, update_by, active,lang_id,parent_id,sortOrder', 'safe', 'on'=>'search'),
+			array('vdo_id, vdo_title, vdo_path,vdo_thumbnail, create_date, create_by, update_date, update_by, active,lang_id,parent_id,sortOrder,vdo_credit', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,6 +57,7 @@ class Vdo extends AActiveRecord
 			'lang_id' => 'ภาษา',
 			'paren_id' =>'paren',
 			'sortOrder'=> 'ย้ายตำแหน่ง',
+			'vdo_credit'=>'เครดิต'.$label_lang,
 		);
 	}
 
@@ -74,6 +75,7 @@ class Vdo extends AActiveRecord
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('lang_id',$this->lang_id,true);
+		$criteria->compare('vdo_credit',$this->vdo_credit,true);
 		$criteria->compare('parent_id',0);
 		$criteria->order = 'sortOrder ASC';
 		$poviderArray = array('criteria'=>$criteria);
