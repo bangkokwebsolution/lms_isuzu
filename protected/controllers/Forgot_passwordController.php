@@ -51,28 +51,29 @@ class Forgot_passwordController extends Controller
             $subject = 'ลืมรหัสผ่าน';
             $message = 'ระบบลืมรหัสผ่าน <br> สวัสดีคุณ '.$finduserbymail->profile->firstname.' '.$finduserbymail->profile->lastname.'<br><a href="'.$href.'">คลิกลิงค์เพื่อตั้งรหัสผ่านใหม่</a>';
 
-            // $send = Helpers::lib()->SendMail($to, $subject, $message);
-            $send = Helpers::lib()->SendMailToUser($to, $subject, $message);
+             $send = Helpers::lib()->SendMail($to, $subject, $message);
+           // $send = Helpers::lib()->SendMailToUser($to, $subject, $message);
 
             // echo "<script>alert('ตรวจสอบ กล่องข้อความ');</script>"; 
-            $member = Helpers::lib()->ldapTms($finduserbymail->email);
-            if($member['count'] > 0){
-                if($langId == 1){
-                    $msg = 'Please Check Your Email';
-                }else{
-                    $msg = 'กรุณาตรวจสอบกล่องจดหมายในอีเมลล์ของท่าน';
-                }   
-                Yii::app()->user->setFlash('msg',$msg);
-                Yii::app()->user->setFlash('icon','success');
-            }else{
-                if($langId == 1){
-                    $msg = 'Please Check Your Email (Junk Mail)';
-                }else{
-                    $msg = 'กรุณาตรวจสอบกล่องจดหมายในอีเมลล์ของท่าน(จดหมายขยะ)';
-                } 
-                Yii::app()->user->setFlash('msg',$msg);
-                Yii::app()->user->setFlash('icon','warning');
-            }
+
+            // $member = Helpers::lib()->ldapTms($finduserbymail->email);
+            // if($member['count'] > 0){
+            //     if($langId == 1){
+            //         $msg = 'Please Check Your Email';
+            //     }else{
+            //         $msg = 'กรุณาตรวจสอบกล่องจดหมายในอีเมลล์ของท่าน';
+            //     }   
+            //     Yii::app()->user->setFlash('msg',$msg);
+            //     Yii::app()->user->setFlash('icon','success');
+            // }else{
+            //     if($langId == 1){
+            //         $msg = 'Please Check Your Email (Junk Mail)';
+            //     }else{
+            //         $msg = 'กรุณาตรวจสอบกล่องจดหมายในอีเมลล์ของท่าน(จดหมายขยะ)';
+            //     } 
+            //     Yii::app()->user->setFlash('msg',$msg);
+            //     Yii::app()->user->setFlash('icon','warning');
+            // }
             
           $this->redirect(array('site/index'));
             }else{
