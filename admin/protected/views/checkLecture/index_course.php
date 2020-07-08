@@ -291,18 +291,28 @@ EOD
      function saveModal() {
 
                   var dataForm = $('#form-course').serialize();
-                  console.log(dataForm);
-              $.ajax({
-                    type: 'POST',
-                    url: "<?=Yii::app()->createUrl('CheckLecture/saveExamCourse');?>",
-                    data: dataForm,
-                    success: function(data) {
-                        location.reload();
+                  // console.log(dataForm);
+
+                  var check_status = 1;
+                  $('input[type="number"]').each(function( index ) {
+                    if(parseInt(this.value) > parseInt(this.getAttribute("max"))){
+                        console.log(this.value+" > "+this.getAttribute("max"));
+                        check_status = 2;                        
                     }
-                })
-                
+                });
 
-
+                  if(check_status == 1){
+                      $.ajax({
+                        type: 'POST',
+                        url: "<?=Yii::app()->createUrl('CheckLecture/saveExamCourse');?>",
+                        data: dataForm,
+                        success: function(data) {
+                            location.reload();
+                        }
+                    });
+                  }else{
+                    alert("ไม่สามารถให้คะแนนมากกว่าคะแนนเต็มได้");
+                }
             }
    
 </script>

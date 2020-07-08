@@ -352,14 +352,29 @@ $list_ = Lesson::model()->findAll("course_id='".$_GET['Logques']['course_id']."'
                   // console.log(nationality);
                   var dataForm = $('#form-lesson').serialize();
                   // console.log(dataForm);
-                  $.ajax({
-                    type: 'POST',
-                    url: "<?=Yii::app()->createUrl('CheckLecture/saveExam');?>",
-                    data: dataForm,
-                    success: function(data) {
-                        location.reload();
+
+                  var check_status = 1;
+                  $('input[type="number"]').each(function( index ) {
+                    // console.log(this);
+                    // console.log(this.value+" == "+this.getAttribute("max"));
+                    if(parseInt(this.value) > parseInt(this.getAttribute("max"))){
+                        console.log(this.value+" > "+this.getAttribute("max"));
+                        check_status = 2;                        
                     }
-                })
+                  });
+
+                if(check_status == 1){
+                      $.ajax({
+                        type: 'POST',
+                        url: "<?=Yii::app()->createUrl('CheckLecture/saveExam');?>",
+                        data: dataForm,
+                        success: function(data) {
+                            location.reload();
+                        }
+                    })
+                }else{
+                    alert("ไม่สามารถให้คะแนนมากกว่าคะแนนเต็มได้");
+                }
               }
 
               $("#Logques_course_id").change(function(event) {
