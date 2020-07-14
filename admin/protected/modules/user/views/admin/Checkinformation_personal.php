@@ -133,7 +133,7 @@
 												}else{ echo "-"; }
 												?></span>
 												<span><?php if($institution != ""){ echo $institution;}else{ echo "-"; } ?></span>
-												<span><?php if($date_graduation != ""){ echo 25; echo $date_graduation;}else{ echo "-"; } ?></span>
+												<span><?php if($date_graduation != ""){echo $date_graduation;}else{ echo "-"; } ?></span>
 											</li>
 											<?php
 										}
