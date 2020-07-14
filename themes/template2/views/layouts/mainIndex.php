@@ -71,11 +71,13 @@ Yii::app()->user->returnUrl = $http->getUrl();
 </a>
 
  <?php
+if (Yii::app()->user->id) {
 if (Yii::app()->session['lang'] == 1) {
     $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact-en/mascot-contact-en.json');//อังกฤษ
     }else{
     $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact/mascot-contact.json');//ไทย
     }
+  }
 ?>
 <script>
     var animation = bodymovin.loadAnimation({
