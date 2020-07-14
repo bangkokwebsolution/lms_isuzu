@@ -2153,16 +2153,25 @@ function editNamehouse_registration(filedoc_id){
                 <div class="clearfix"></div>
             </div>
 
-
-
             <?php
-            if (!$ProfilesEdu->isNewRecord || $ProfilesEdu->isNewRecord == NULL) {
+
+            $starting_year  = 2500;
+            $ending_year = 543 + date('Y');
+            if ($ending_year) {
+
+                    for($starting_year; $starting_year <= $ending_year; $starting_year++) {
+                        // $year_edu[] = '<option value="'. $starting_year.'">'. $starting_year.'</option>';
+                        $year_edu[] = $starting_year;
+                 }                 
+            }
+                  if (!$ProfilesEdu->isNewRecord || $ProfilesEdu->isNewRecord == NULL) {
                 echo "";
             } else { ?>
                 <!-- <div class="col-sm-3 text-right"> <strong>ประวัติการศึกษา :</strong></div> -->
                 <?php
             }
             $modelList = Education::model()->findAll(array("condition" => " active = 'y'"));
+
             if (Yii::app()->session['lang'] == 1) {
               $list = CHtml::listData($modelList, 'edu_id', 'edu_name_EN');
           }else{
@@ -2171,15 +2180,13 @@ function editNamehouse_registration(filedoc_id){
 
           $att_Education = array('class' => 'form-control', 'empty' => $label->label_education_level);
 
-          $starting_year  = 2500;
-          $ending_year = 543 + date('Y');
-          if ($ending_year) {
+          
+        //   if ($ending_year) {
 
-            for($starting_year; $starting_year <= $ending_year; $starting_year++) {
-                $edu_lest[]  =  $starting_year;
-
-            }                 
-        }
+        //     for($starting_year; $starting_year <= $ending_year; $starting_year++) {
+        //         $edu_lest  = "<option value=" echo $starting_year ">"echo $starting_year"</option>";
+        //     }                 
+        // }
         $graduation = array('class' => 'form-control', 'autocomplete' => 'off', 'empty' => $label->label_graduation_year);   
         if (!$ProfilesEdu->isNewRecord) { 
            if (empty($ProfilesEdu)) {
@@ -2201,7 +2208,20 @@ function editNamehouse_registration(filedoc_id){
 
                 <div class="col-md-2 col-sm-6 col-xs-12 ">
                     <div class="form-group">
-                        <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]date_graduation',$edu_lest ,$graduation); ?>
+                        <select class="form-control" autocomplete="off" id="ProfilesEdu_0_date_graduation" name="ProfilesEdu[0][date_graduation]">
+                        <option value=""><?php echo $label->label_graduation_year; ?></option>
+                       <?php
+                        $starting_year  = 2500;
+                        $ending_year = 543 + date('Y');
+                      if ($ending_year) {
+
+                       for($starting_year; $starting_year <= $ending_year; $starting_year++) {?>
+                             <option value="<?php echo $starting_year; ?>"><?php echo $starting_year; ?></option>
+                      <?php   }                 
+                     }
+                       ?>
+                    </select>
+                        <?php //echo CHtml::activeDropDownList($ProfilesEdu, '[0]date_graduation',$edu_lest ,$graduation); ?>
                     </div>
                 </div>
             </div>
@@ -2212,7 +2232,9 @@ function editNamehouse_registration(filedoc_id){
             ?>
             <div class="add-study">
 
-             <?php foreach ($ProfilesEdu as $kedu => $valedu) {?>
+             <?php foreach ($ProfilesEdu as $kedu => $valedu) {
+               
+                ?>
 
                 <div class="row del_edu">
                     <div class="col-md-3 col-sm-12 text-right-md"> <strong><?php echo $label->label_educational;  ?></strong></div>
@@ -2232,7 +2254,23 @@ function editNamehouse_registration(filedoc_id){
 
                     <div class="col-md-2 col-sm-6 col-xs-12">
                         <div class="form-group">
-                            <?php echo CHtml::activeDropDownList($valedu, '[' . $kedu . ']date_graduation',$edu_lest, $graduation); ?>
+                             <select class="form-control" autocomplete="off" id="ProfilesEdu_<?php echo $kedu ?>_date_graduation" name="ProfilesEdu[<?php echo $kedu ?>][date_graduation]">
+                        <option value=""><?php echo $label->label_graduation_year; ?></option>
+                       <?php
+                        $starting_year  = 2500;
+                        $ending_year = 543 + date('Y');
+                        $year_gradution = $valedu['date_graduation'];
+                       if ($ending_year) {
+                       for($starting_year; $starting_year <= $ending_year; $starting_year++) {
+                           
+                        ?>
+                             <option value="<?php echo $starting_year;?>"<?php echo $starting_year == $year_gradution ? ' selected="selected"' : '' ?>><?php echo $starting_year; ?></option>
+                       <?php   
+                            } 
+                        }               
+                       ?>
+                    </select>
+                            <?php //echo CHtml::activeDropDownList($valedu, '[' . $kedu . ']date_graduation',$edu_lest, $graduation); ?>
                         </div>
                     </div>
                     <span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?> </span>
@@ -2259,7 +2297,21 @@ function editNamehouse_registration(filedoc_id){
 
             <div class="col-md-2 col-sm-6 col-xs-12 ">
                 <div class="form-group">
-                    <?php echo CHtml::activeDropDownList($ProfilesEdu, '[0]date_graduation',$edu_lest ,$graduation); ?>
+                    <select class="form-control" autocomplete="off" id="ProfilesEdu_0_date_graduation" name="ProfilesEdu[0][date_graduation]">
+                        <option value=""><?php echo $label->label_graduation_year; ?></option>
+                       <?php
+                        $starting_year  = 2500;
+                        $ending_year = 543 + date('Y');
+                      if ($ending_year) {
+
+                       for($starting_year; $starting_year <= $ending_year; $starting_year++) {?>
+                             <option value="<?php echo $starting_year; ?>"><?php echo $starting_year; ?></option>
+                      <?php   }                 
+                     }
+                       ?>
+                    </select>
+                    <?php //echo CHtml::activeDropDownList($ProfilesEdu, '[0]date_graduation',$edu_lest ,$graduation); ?>
+
                 </div>
             </div>
         </div>
@@ -3215,11 +3267,12 @@ if (!$users->isNewRecord && $profile->type_employee) {
             var level = '<option value=""><?php echo $label->label_education_level; ?></option>';
             var academy = '<?php echo $label->label_academy; ?>';
             var graduation_year = '<option value=""><?php echo $label->label_graduation_year; ?></option>';
-            var del = '<?php echo Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?>';
+            var del = '<?php echo Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?>'; 
             $(wrapper).append('<div class="row del_edu"><div class="col-md-3 col-sm-12 text-right-md "><strong><?php echo $label->label_educational; ?></strong></div>'
                 +'<div class="col-md-2 col-sm-6"><div class="form-group"><select class ="form-control" name="ProfilesEdu[' + numItems + '][edu_id]">' + level + '<?php foreach ($list as $key => $value) : ?><option value=<?php echo $key ?>><?php echo $value ?></option><?php endforeach ?></select></div></div>'
                 +'<div class="col-md-3 col-sm-6"><div class="form-group"><input type="text" class="form-control" placeholder="' + academy + '" name="ProfilesEdu[' + numItems + '][institution]"></div></div>'
-                            +'<div class="col-md-2 col-sm-6"><div class="form-group"><select class="form-control" autocomplete="off" id="ProfilesEdu_' + numItems + '_date_graduation" name="ProfilesEdu[' + numItems + '][date_graduation]">' + graduation_year + '<?php foreach ($edu_lest as $keys => $values): ?><option value="<?php echo $keys ?>"><?php echo $values ?></option><?php endforeach ?></select></div></div><span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> ' + del + '</span></div>'); //add input box
+                +'<div class="col-md-2 col-sm-6"><div class="form-group"><select class="form-control" autocomplete="off" id="ProfilesEdu_' + numItems + '_date_graduation" name="ProfilesEdu[' + numItems + '][date_graduation]">' + graduation_year + '<?php foreach ($year_edu as $keys => $values): ?><option value=<?php echo $values ?>><?php echo $values ?></option><?php endforeach ?></select></div></div>'
+                +'<span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle" ></i> ' + del + '</span></div>'); //add input box
         } else {
         var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
         var msg ="<?php echo Yii::app()->session['lang'] == 1?'You Reached the limits! ':'คุณเพิ่มถึงจำนวนจำกัด!'; ?>"; 

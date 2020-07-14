@@ -172,7 +172,7 @@ public function defaultScope()
 					$scopes = array(
 						'monthCheck'=>array(
 							'alias' => 'monthCheck',
-							'condition' => ' monthCheck.createby = "'.Yii::app()->user->id.'" AND monthCheck.active = "y" ',
+							'condition' => ' monthCheck.create_by = "'.Yii::app()->user->id.'" AND monthCheck.active = "y" ',
 							'order' => ' monthCheck.id DESC ',
 						),
 					);
