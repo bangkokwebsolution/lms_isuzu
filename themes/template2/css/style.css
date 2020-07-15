@@ -4720,3 +4720,55 @@ section#faq{
     height: 120px;
   }
 }
+
+
+.contact-well{
+  background-color: #4c5492;
+  padding: 0;
+}
+
+.contact-well:hover .card-img img{
+  transform: scale(1.1);
+}
+.card-img img{
+  transition: all .25s ease;
+}
+
+.contact-well .card-body{
+  padding: 0 10px 10px;
+  color: #fff;
+}
+
+.contact-well .card-text{
+  font-size: 14px;
+}
+.contact-well .card-text span{
+  font-weight: 500;
+}
+.contacts-well{
+  background-color: #e50000;
+  padding: 0;
+}
+
+.contacts-well:hover .card-img img{
+  transform: scale(1.1);
+}
+.card-img img{
+  transition: all .25s ease;
+}
+
+.contacts-well .card-body{
+  padding: 0 10px 10px;
+  color: #fff;
+}
+
+.contacts-well .card-text{
+  font-size: 14px;
+}
+.contacts-well .card-text span{
+  font-weight: 500;
+}
+.card-img{
+  overflow: hidden;
+  height: 240px;
+}

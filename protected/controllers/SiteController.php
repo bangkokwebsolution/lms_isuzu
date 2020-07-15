@@ -730,6 +730,20 @@ class SiteController extends Controller
 	// $this->render('fileupload');
 	// }
 
+    public function actionTestSendmail()
+    {
+       $email =  $_GET['mail'];
+       if($email){
+       $to['email'] = $email;
+       $to['firstname'] ='ทดสอบ';
+       $to['lastname'] = 'ส่งเมล';
+        $subject = 'the subject';
+        $message = 'hello';
+    
+        $send = Helpers::lib()->SendMail($to,$subject,$message);
+        }
+    }
+
 	public function actionIndex($login = null)
 	{
 		$dateNow  = date("d-m-Y");

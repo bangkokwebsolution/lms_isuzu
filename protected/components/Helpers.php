@@ -283,13 +283,16 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         $mail->Body = $message;
         $mail->IsHTML(true);*/
         $mail =  new PHPMailer(true);
-        $mail->SMTPOptions = array(
-            'ssl' => array(
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-                'allow_self_signed' => true
-            )
-        );
+        // $mail->SMTPOptions = array(
+        //     'ssl' => array(
+        //         'verify_peer' => false,
+        //         'verify_peer_name' => false,
+        //         'allow_self_signed' => true
+        //     )
+        // );
+
+
+        
         // $mail->ClearAddresses();
         // $mail->CharSet = 'utf-8';
         // // $mail->IsSMTP();

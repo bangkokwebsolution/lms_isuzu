@@ -48,12 +48,145 @@ if(!empty($msg)){
 <!-- Content -->
 <section class="content" id="contact-us">
     <div class="container">
-<div class="contact-map">
+        <div class="panel panel-default" style="padding: inherit ;background: whitesmoke;padding-top: 20px;">
+        <h1 class="text-center" style="color:#010C65;font-size: 36px;" ><?= Yii::app()->session['lang'] == 1?'Thoresen & Co.,(Bangkok) Ltd. (TCB)':'บริษัท โทรีเซน (กรุงเทพ) จำกัด'; ?></h1>
+            <div class="card-text" style="padding: 20px 20px 30px 20px;text-align: center;">
+                <h4 style="font-size: 18px;"><?= Yii::app()->session['lang'] == 1?'Address : 26/32-34 Orakarn Building 10th Floor, Soi Chidlom, Lumpinee, Pathumwan Bangkok 10330, Thailand':' ที่ตั้งสำนักงาน : 26/32-34 อาคารอรกานต์ ชั้น 10 ซอยชิดลม ถนนเพลินจิต แขวงลุมพินี เขตปทุมวัน กรุงเทพฯ 10330 ประเทศไทย'; ?>
+                
+            </h4>
+        </div>
+
+    </div>
+ 
+<!-- <div class="contact-map">
             <div class="well">
                 <div class="mapouter"><div class="gmap_canvas"><iframe width="1300" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Thoresen%20Thai%20Agencies%20&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.embedgooglemap.net">embed custom google maps</a></div><style>.mapouter{position:relative;text-align:right;height:500px;width:1300px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:1300px;}</style></div> 
             </div>
             <h4 class="text-center"><?= Yii::app()->session['lang'] == 1?'Map : THORESEN THAI AGENCIES PUBLIC COMPANY LIMITED (TTA)':'แผนที่ : บริษัท โทรีเซนไทย เอเยนต์ซีส์ จำกัด (มหาชน)'; ?></h4>
+        </div> -->
+
+        <h1 class="text-center" style="padding-top: 20px;padding-bottom: 20px;color:#010C65;font-size: 36px; " ><i class="fa fa-users" aria-hidden="true"style="padding-right: 20px;"></i><?= Yii::app()->session['lang'] == 1?'Administrator':'ผู้ดูแลระบบ'; ?></h1>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="well contact-well" style="border: 0px;">
+                    <div class="card-img">
+                        <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
+                    </div>
+                    <div class="card-body">
+                      <h4 class="card-title" >
+                            <?php if (Yii::app()->session['lang'] == 1 || Yii::app()->session['lang'] == Null) {
+                                echo 'Firstname Lastname';
+                            }else{
+                                echo 'ชื่อ  นามสกุล ';
+                            } ?>
+                        </h4>
+                        <div class="card-text">
+                        <span><?= Yii::app()->session['lang'] == 1?'Position :':'ตำแหน่ง :'; ?></span>
+                            lorem
+                        </div>
+                        <div class="card-text">
+                        <span><?= Yii::app()->session['lang'] == 1?'Telephone :':'เบอร์โทรติดต่อ :'; ?></span>
+                            lorem
+                         </div>
+                         <div class="card-text">
+                        <span><?= Yii::app()->session['lang'] == 1?'Email :':'อีเมล :'; ?></span>
+                        lorem
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="well contacts-well"style="border: 0px;">
+                    <div class="card-img">
+                        <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
+                    </div>
+                    <div class="card-body">
+                      <h4 class="card-title" >
+                            <?php if (Yii::app()->session['lang'] == 1 || Yii::app()->session['lang'] == Null) {
+                                echo 'Firstname Lastname';
+                            }else{
+                                echo 'ชื่อ  นามสกุล ';
+                            } ?>
+                        </h4>
+                        <div class="card-text">
+                        <span><?= Yii::app()->session['lang'] == 1?'Position :':'ตำแหน่ง :'; ?></span>
+                            lorem
+                        </div>
+                        <div class="card-text">
+                        <span><?= Yii::app()->session['lang'] == 1?'Telephone :':'เบอร์โทรติดต่อ :'; ?></span>
+                            lorem
+                        </div>
+                        <div class="card-text">
+                        <span><?= Yii::app()->session['lang'] == 1?'Email :':'อีเมล :'; ?></span>
+                        lorem
+                        </div>
+                        
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="well contact-well"style="border: 0px;">
+                    <div class="card-img">
+                        <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
+                    </div>
+                    <div class="card-body">
+                      <h4 class="card-title" >
+                            <?php if (Yii::app()->session['lang'] == 1 || Yii::app()->session['lang'] == Null) {
+                                echo 'Firstname Lastname';
+                            }else{
+                                echo 'ชื่อ  นามสกุล ';
+                            } ?>
+                        </h4>
+                        <div class="card-text">
+                        <span><?= Yii::app()->session['lang'] == 1?'Position :':'ตำแหน่ง :'; ?></span>
+                            lorem
+                        </div>
+                        <div class="card-text">
+                        <span><?= Yii::app()->session['lang'] == 1?'Telephone :':'เบอร์โทรติดต่อ :'; ?></span>
+                            lorem
+                        </div>
+                        <div class="card-text">
+                        <span><?= Yii::app()->session['lang'] == 1?'Email :':'อีเมล :'; ?></span>
+                        lorem
+                        </div>
+                        
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="well contacts-well"style="border: 0px;">
+                    <div class="card-img">
+                        <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%">
+                    </div>
+                    <div class="card-body">
+                      <h4 class="card-title" >
+                            <?php if (Yii::app()->session['lang'] == 1 || Yii::app()->session['lang'] == Null) {
+                                echo 'Firstname Lastname';
+                            }else{
+                                echo 'ชื่อ  นามสกุล ';
+                            } ?>
+                        </h4>
+                        <div class="card-text">
+                        <span><?= Yii::app()->session['lang'] == 1?'Position :':'ตำแหน่ง :'; ?></span>
+                            lorem
+                        </div>
+                        <div class="card-text">
+                        <span><?= Yii::app()->session['lang'] == 1?'Telephone :':'เบอร์โทรติดต่อ :'; ?></span>
+                            lorem
+                        </div>
+                        <div class="card-text">
+                        <span><?= Yii::app()->session['lang'] == 1?'Email :':'อีเมล :'; ?></span>
+                        lorem
+                        </div>
+
+                    </div>
+                </div>
+            </div>
         </div>
+</div>
         <?php
         $form = $this->beginWidget('CActiveForm');
         ?>
