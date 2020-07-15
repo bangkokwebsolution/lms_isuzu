@@ -251,12 +251,8 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
     $adminEmail = $SettingAll['USER_EMAIL'];
     $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-
-    // $adminEmail = 'mailerbws@gmail.com';
-    //     // $adminEmail = 'noreply_elearning@airasia.com';
-    // $adminEmailPass = 'bangkokweb0192';
-     $adminEmail = 'E-Learning@thoresen.com';
-     $adminEmailPass = 'lms@2020';
+    $adminEmail = 'thoresen.elearning@gmail.com';
+    $adminEmailPass = 'lms@2020';
 
 
         /*$mail =  new PHPMailer(true);
@@ -357,10 +353,8 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         // $adminEmail = $SettingAll['USER_EMAIL'];
         // $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-        // $adminEmail = 'mailerbws@gmail.com';
-        // $adminEmailPass = 'bangkokweb0192';
-        $adminEmail = 'E-Learning@thoresen.com';
-     $adminEmailPass = 'lms@2020';
+        $adminEmail = 'thoresen.elearning@gmail.com';
+        $adminEmailPass = 'lms@2020';
 
         $mail =  new PHPMailer(true);
         $mail =  new PHPMailer(true);
@@ -405,10 +399,9 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         $adminEmail = $SettingAll['USER_EMAIL'];
         $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-        // $adminEmail = 'mailerbws@gmail.com';
-        // $adminEmailPass = 'bangkokweb0192';
-        $adminEmail = 'E-Learning@thoresen.com';
-     $adminEmailPass = 'lms@2020';
+        $adminEmail = 'thoresen.elearning@gmail.com';
+        $adminEmailPass = 'lms@2020';
+
         $mail =  new PHPMailer(true);
         $mail->ClearAddresses();
         $mail->CharSet = 'utf-8';
@@ -450,10 +443,8 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
 
-        // $adminEmail = 'mailerbws@gmail.com';
-        // $adminEmailPass = 'bangkokweb0192';
-        $adminEmail = 'E-Learning@thoresen.com';
-     $adminEmailPass = 'lms@2020';
+        $adminEmail = 'thoresen.elearning@gmail.com';
+        $adminEmailPass = 'lms@2020';
 
         $mail =  new PHPMailer(true);
 
@@ -512,10 +503,9 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
             $adminEmail = $SettingAll['USER_EMAIL'];
             $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-            // $adminEmail = 'mailerbws@gmail.com';
-            // $adminEmailPass = 'bangkokweb0192';
-            $adminEmail = 'E-Learning@thoresen.com';
-     $adminEmailPass = 'lms@2020';
+            $adminEmail = 'thoresen.elearning@gmail.com';
+            $adminEmailPass = 'lms@2020';
+
             $mail =  new PHPMailer(true);
             $mail->SMTPOptions = array(
                 'ssl' => array(
@@ -568,10 +558,9 @@ public function SendMailNotificationByUser($subject,$message,$user_id){
         $adminEmail = $SettingAll['USER_EMAIL'];
         $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-        // $adminEmail = 'mailerbws@gmail.com';
-        // $adminEmailPass = 'bangkokweb0192';
-        $adminEmail = 'E-Learning@thoresen.com';
-     $adminEmailPass = 'lms@2020';
+        $adminEmail = 'thoresen.elearning@gmail.com';
+        $adminEmailPass = 'lms@2020';
+        
             // $mail =  new PHPMailer(true);
         $mail = Yii::app()->mailer;
         $mail->ClearAddresses();

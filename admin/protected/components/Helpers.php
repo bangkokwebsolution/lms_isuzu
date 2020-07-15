@@ -309,11 +309,9 @@ Class Helpers
         $SettingAll = Helpers::lib()->SetUpSetting();
         $adminEmail = $SettingAll['USER_EMAIL'];
         $adminEmailPass = $SettingAll['PASS_EMAIL'];
-        
-        // $adminEmail = 'mailerbws@gmail.com';
-        // $adminEmailPass = 'bangkokweb0192';
-        $adminEmail = 'E-Learning@thoresen.com';
-     $adminEmailPass = 'lms@2020';
+
+        $adminEmail = 'thoresen.elearning@gmail.com';
+        $adminEmailPass = 'lms@2020';
 
         $mail =  new PHPMailer(true);
         $mail->SMTPOptions = array(
@@ -323,11 +321,7 @@ Class Helpers
                 'allow_self_signed' => true
                 )
             );
-        // $adminEmail = 'mailerbws@gmail.com';
-        // $adminEmailPass = 'bangkokweb0192';
-        // $adminEmail = 'noreply_elearning@airasia.com';
-        // $adminEmailPass = '';
-       
+
         // $mail =  new PHPMailer(true);
         // $mail->ClearAddresses();
         // $mail->CharSet = 'utf-8';
@@ -2043,10 +2037,9 @@ public function changeLink($link)
         $adminEmail = $SettingAll['USER_EMAIL'];
         $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-        // $adminEmail = 'mailerbws@gmail.com';
-        // $adminEmailPass = 'bangkokweb0192';
-         $adminEmail = 'E-Learning@thoresen.com';
-     $adminEmailPass = 'lms@2020';
+        $adminEmail = 'thoresen.elearning@gmail.com';
+        $adminEmailPass = 'lms@2020';
+
         $mail =  new PHPMailer(true);
         $mail->SMTPOptions = array(
             'ssl' => array(
@@ -2093,15 +2086,18 @@ public function changeLink($link)
                 $adminEmail = $SettingAll['USER_EMAIL'];
                 $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-                // $adminEmail = 'mailerbws@gmail.com';
-                // $adminEmailPass = 'bangkokweb0192';
-                 $adminEmail = 'E-Learning@thoresen.com';
-     $adminEmailPass = 'lms@2020';
+                $adminEmail = 'thoresen.elearning@gmail.com';
+                $adminEmailPass = 'lms@2020';
+
                 $mail =  new PHPMailer(true);
                 $mail->ClearAddresses();
                 $mail->CharSet = 'utf-8';
-            $mail->Host = '172.30.110.16'; // gmail server
-            $mail->Port = 25; // port number
+                
+                $mail->Host = 'smtp.gmail.com';
+                $mail->Port = '587'; // port number
+
+            // $mail->Host = '172.30.110.16'; // gmail server
+            // $mail->Port = 25; // port number
             $mail->SMTPKeepAlive = true;
             $mail->Mailer = "smtp";
             // $mail->SMTPDebug  = 1;
