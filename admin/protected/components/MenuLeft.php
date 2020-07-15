@@ -357,6 +357,39 @@ Class MenuLeft extends Controller
 			// 		),
 			// 	)
 			// ),
+				array(
+				/*====== Check Permissions Contactus (2) ======*/
+				'visible'=>self::PermissionsMenu(array(
+					'ContactusNew.*',
+					'ContactusNew.Index'
+				)),
+				'label'=>'<i></i><span>ติดต่อเรา</span>',
+				'url'=>'#ContactusNew',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons adress_book'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('Contactus') ), 'id' => 'ContactusNew'),
+				'active' => self::SetSubMenu( array('ContactusNew') ,false),
+				'items'=>array(
+					array(
+						/*====== Check Permissions Sup-PopUp (1) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'ContactusNew.*',
+							'ContactusNew.Create'
+						)),
+						'label'=>'เพิ่มผู้ติดต่อ',
+						'url'=>array('//ContactusNew/create')
+					),
+					array(
+						/*====== Check Permissions Sup-Contactus (2) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'ContactusNew.*',
+							'ContactusNew.Index'
+						)),
+						'label'=>'จัดการติดต่อเรา',
+						'url'=>array('//ContactusNew/admin')
+					),
+				)
+			),
 			//====== END Menu Contactus ======//
 
 

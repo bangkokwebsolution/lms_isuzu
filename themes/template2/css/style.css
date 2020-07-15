@@ -4721,21 +4721,25 @@ section#faq{
   }
 }
 
-
 .contact-well{
-  background-color: #4c5492;
   padding: 0;
 }
+
+.contact-well{
+  border-radius: 4px;
+}
+
 
 .contact-well:hover .card-img img{
   transform: scale(1.1);
 }
 .card-img img{
   transition: all .25s ease;
+  width: 100%;
 }
 
 .contact-well .card-body{
-  padding: 0 10px 10px;
+  padding: 0 10px 15px;
   color: #fff;
 }
 
@@ -4744,10 +4748,6 @@ section#faq{
 }
 .contact-well .card-text span{
   font-weight: 500;
-}
-.contacts-well{
-  background-color: #e50000;
-  padding: 0;
 }
 
 .contacts-well:hover .card-img img{
@@ -4770,5 +4770,6 @@ section#faq{
 }
 .card-img{
   overflow: hidden;
-  height: 240px;
+  max-height: 180px;
+  border-radius: 4px 4px 0 0;
 }
