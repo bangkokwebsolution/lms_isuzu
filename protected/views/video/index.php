@@ -49,7 +49,7 @@
                                 <?= $vdo->vdo_title ?>
                             </div>
                         </a>
-                        <div>
+                        <div class="detail-p">
                             <?php
                             $head_credit = "";
                             if (Yii::app()->session['lang'] == 1) {
