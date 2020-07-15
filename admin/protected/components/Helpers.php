@@ -299,7 +299,7 @@ Class Helpers
               // return ldap_get_entries($ldap, $search);
     }
 
-    public function SendMail($to, $subject, $message, $fromText = 'E-Learning System Thorsen')
+    public function SendMail($to, $subject, $message, $fromText = 'E-Learning System Thoresen')
     {
 
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/Exception.php";
@@ -333,7 +333,7 @@ Class Helpers
         // $mail->From =  $adminEmail;
         // $mail->Username = $adminEmail;
         // $mail->Password = $adminEmailPass;
-        // $fromText = 'E-Learning System Thorsen';
+        // $fromText = 'E-Learning System Thoresen';
         // $mail->SetFrom( $adminEmail, $fromText);
             
         // $mail->AddAddress($adminEmail, 'คุณ' . $to['firstname'] . ' ' . $to['lastname']);
@@ -372,7 +372,7 @@ Class Helpers
     }
 
 
-    public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System Thorsen'){
+    public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System Thoresen'){
         $path = '../uploads/filemail/';
         $SettingAll = Helpers::lib()->SetUpSetting();
         $adminEmail = $SettingAll['USER_EMAIL'];
@@ -391,7 +391,7 @@ Class Helpers
         $mail->SMTPDebug = false;
         $mail->Username = $adminEmail;
         $mail->Password = $adminEmailPass;
-        $fromText = 'E-Learning System Thorsen';
+        $fromText = 'E-Learning System Thoresen';
         $mail->SetFrom($adminEmail, $fromText);
 
         $address = Mailuser::model()->findAll(array(
@@ -2028,7 +2028,7 @@ public function changeLink($link)
 
     }
 
-    public function SendMailNotification($to, $subject, $message, $fromText = 'E-Learning System Thorsen'){
+    public function SendMailNotification($to, $subject, $message, $fromText = 'E-Learning System Thoresen'){
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/Exception.php";
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/PHPMailer.php";
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/SMTP.php";
@@ -2062,7 +2062,7 @@ public function changeLink($link)
         $mail->From = 'mailerbws@gmail.com';
         $mail->Username = $adminEmail;
         $mail->Password = $adminEmailPass;
-        $fromText = 'E-Learning System Thorsen';
+        $fromText = 'E-Learning System Thoresen';
         $mail->SetFrom($adminEmail, $fromText);
         $mail->AddAddress($to['email'],'คุณ' . $to['firstname'] . ' ' . $to['lastname']);
         $mail->Subject = $subject;
@@ -2104,7 +2104,7 @@ public function changeLink($link)
             $mail->From = 'mailerbws@gmail.com';
             $mail->Username = $adminEmail;
             $mail->Password = $adminEmailPass;
-            $fromText = 'E-Learning System Thorsen';
+            $fromText = 'E-Learning System Thoresen';
             $mail->SetFrom($adminEmail, $fromText);
 
             foreach($address as $data_email){

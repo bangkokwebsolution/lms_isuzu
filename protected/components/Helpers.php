@@ -240,7 +240,7 @@ public function PlusDate($givendate, $day = 0, $mth = 0, $yr = 0)
     return $newdate;
 }
 
-public function SendMail($to, $subject, $message, $fromText = 'E-Learning System Thorsen')
+public function SendMail($to, $subject, $message, $fromText = 'E-Learning System Thoresen')
 {
 
     require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/Exception.php";
@@ -344,7 +344,7 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         return $mail->Send();
     }
 
-    public function SendMailLearnPass($to, $subject, $message, $fromText = 'E-Learning System Thorsen'){
+    public function SendMailLearnPass($to, $subject, $message, $fromText = 'E-Learning System Thoresen'){
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/Exception.php";
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/PHPMailer.php";
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/SMTP.php";
@@ -380,7 +380,7 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         // $mail->From = 'mailerbws@gmail.com';
         $mail->Username = $adminEmail;
         $mail->Password = $adminEmailPass;
-        $fromText = 'E-Learning System Thorsen';
+        $fromText = 'E-Learning System Thoresen';
         $mail->SetFrom($adminEmail, $fromText);
         $mail->AddAddress($to['email'],'คุณ' . $to['firstname'] . ' ' . $to['lastname']);
         $mail->Subject = $subject;
@@ -390,7 +390,7 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         $mail->Send();
     }
 
-    public function SendMailToUser($to, $subject, $message, $fromText = 'E-Learning System Thorsen'){
+    public function SendMailToUser($to, $subject, $message, $fromText = 'E-Learning System Thoresen'){
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/Exception.php";
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/PHPMailer.php";
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/SMTP.php";
@@ -416,7 +416,7 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         $mail->From = 'mailerbws@gmail.com';
         $mail->Username = $adminEmail;
         $mail->Password = $adminEmailPass;
-        $fromText = 'E-Learning System Thorsen';
+        $fromText = 'E-Learning System Thoresen';
         $mail->SetFrom($adminEmail, $fromText);
         $mail->AddAddress($to['email'],'คุณ' . $to['firstname'] . ' ' . $to['lastname']);
         $mail->Subject = $subject;
@@ -529,7 +529,7 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         $mail->From = 'mailerbws@gmail.com';
         $mail->Username = $adminEmail;
         $mail->Password = $adminEmailPass;
-        $fromText = 'E-Learning System Thorsen';
+        $fromText = 'E-Learning System Thoresen';
         $mail->SetFrom($adminEmail, $fromText);
 
         foreach($address as $data_email){
@@ -576,7 +576,7 @@ public function SendMailNotificationByUser($subject,$message,$user_id){
         $mail->From = 'mailerbws@gmail.com';
         $mail->Username = $adminEmail;
         $mail->Password = $adminEmailPass;
-        $fromText = 'E-Learning System Thorsen';
+        $fromText = 'E-Learning System Thoresen';
         $mail->SetFrom($adminEmail, $fromText);
 
         $mail->AddAddress($address->email,'คุณ' . $address->profile->firstname . ' ' . $address->profile->lastname);
@@ -590,7 +590,7 @@ public function SendMailNotificationByUser($subject,$message,$user_id){
 
 }
 
-public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System Thorsen'){
+public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System Thoresen'){
     $path = '../uploads/filemail/';
     $SettingAll = Helpers::lib()->SetUpSetting();
     $adminEmail = $SettingAll['USER_EMAIL'];
