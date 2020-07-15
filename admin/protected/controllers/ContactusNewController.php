@@ -157,16 +157,16 @@ class ContactusNewController extends Controller
 
 			if($model->validate())
 			{
-				if (!isset($con_image)) {
-					$model->con_image = $imageShow;
-				}
+				// if (!isset($con_image)) {
+				// 	$model->con_image = $imageShow;
+				// }
 
 				if($model->save(false))
 				{
 
-					if(isset($imageShow) && isset($con_image))
+					if(isset($con_image))
 					{
-						Yii::app()->getDeleteImageYush('ContactusNew',$model->id,$imageShow);
+						Yii::app()->getDeleteImageYush('ContactusNew',$model->id);
 					}
 
 					if(isset($con_image))
@@ -221,14 +221,14 @@ class ContactusNewController extends Controller
 	{
 		$this->loadModel($id)->delete();
 		$model = $this->loadModel($id);
-		//$model->active = 'n';
-		$model = ContactusNew::model()->findByPk($id);
-             $modelChildren = Popup::model()->findAll(array(
-            'condition'=>'parent_id=:parent_id',
-            'params' => array(':parent_id' => $model->id)
-              ));
-            foreach ($modelChildren as $key => $value) {
-            	$value->delete();
+		$model->active = 'n';
+		// $model = ContactusNew::model()->findByPk($id);
+  //            $modelChildren = Popup::model()->findAll(array(
+  //           'condition'=>'parent_id=:parent_id',
+  //           'params' => array(':parent_id' => $model->id)
+  //             ));
+  //           foreach ($modelChildren as $key => $value) {
+  //           	$value->delete();
                 // if($value->active == 'y'){
                 //     $value->active = 'n';
                 //     $value->save(false);
@@ -236,7 +236,7 @@ class ContactusNewController extends Controller
                 //     $value->active = 'y';
                 //     $value->save(false);
                 // }
-            }
+           // }
     	// if($model->active == 'y'){
     	// 	$model->active = 'n';
     	// 	$model->save(false);
@@ -245,15 +245,15 @@ class ContactusNewController extends Controller
     	// 	$model->save(false);
     	// }
 
-		if($model->pic_file != '')
-			Yii::app()->getDeleteImageYush('Popup',$model->id,$model->pic_file);
+		// if($model->pic_file != '')
+		// 	Yii::app()->getDeleteImageYush('ContactusNew',$model->id,$model->pic_file);
 
 		// $model->pic_file = null;
-		// $model->save(false);
+		 $model->save(false);
 
-		if(Yii::app()->user->id){
-			Helpers::lib()->getControllerActionId();
-		}
+		// if(Yii::app()->user->id){
+		// 	Helpers::lib()->getControllerActionId();
+		// }
 
 
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
@@ -318,41 +318,49 @@ class ContactusNewController extends Controller
 			// Get all current target items to retrieve available sortOrders
 			$cur_items = ContactusNew::model()->findAllByPk($_POST['items'], array('order'=>'sortOrder'));
 			// Check 1 by 1 and update if neccessary
-			// for ($i = 0; $i < count($_POST['items']); $i++) {
-			// 	$item = ContactusNew::model()->findByPk($_POST['items'][$i]);
-			// 	if ($item->sortOrder != $cur_items[$i]->sortOrder) {
-			// 		$item->sortOrder = $cur_items[$i]->sortOrder ;
-			// 		$item->save(false);
-			// 	}
-			// }
-			foreach ($cur_items as $keys => $values) {
+			for ($i = 0; $i < count($_POST['items']); $i++) {
+				$item = ContactusNew::model()->findByPk($_POST['items'][$i]);
 
-            for ($i = 0; $i < count($_POST['items']); $i++) {
-                $item = ContactusNew::model()->findByPk($_POST['items'][$i]);
-
-                if ($item->sortOrder != $cur_items[$i]->sortOrder) {
-                    $item->sortOrder = $cur_items[$i]->sortOrder ;
-                    $item->save(false);
+				if ($item->sortOrder != $cur_items[$i]->sortOrder) {
+					$item->sortOrder = $cur_items[$i]->sortOrder ;
+					$item->save(false);
+					echo "ok";
+                }else{
+                	echo "no";
                 } 
+			}
 
-                // $modellang2 = ContactusNew::model()->findByAttributes(array('parent_id'=>$_POST['items'][$i])); 
-                //   //var_dump($modellang2->sortOrder);exit();
+// 			foreach ($cur_items as $keys => $values) {
+
+//             for ($i = 0; $i < count($_POST['items']); $i++) {
+//                 $item = ContactusNew::model()->findByPk($_POST['items'][$i]);
+
+//                 if ($item->sortOrder != $cur_items[$i]->sortOrder) {
+//                     $item->sortOrder = $cur_items[$i]->sortOrder ;
+//                     $item->save(false);
+//                     echo "ok";
+//                 }else{
+//                 	echo "no";
+//                 } 
+// exit();
+//                 // $modellang2 = ContactusNew::model()->findByAttributes(array('parent_id'=>$_POST['items'][$i])); 
+//                 //   //var_dump($modellang2->sortOrder);exit();
                 
-                // if ($modellang2->sortOrder != $cur_items[$i]->sortOrder) {
-                //     if ($modellang2->parent_id == '') {
-                //         $items = ContactusNew::model()->findByPk($_POST['items'][$i]);
-                //         $items->sortOrder = $cur_items[$i]->sortOrder ;
-                //         $items->save(false);
+//                 // if ($modellang2->sortOrder != $cur_items[$i]->sortOrder) {
+//                 //     if ($modellang2->parent_id == '') {
+//                 //         $items = ContactusNew::model()->findByPk($_POST['items'][$i]);
+//                 //         $items->sortOrder = $cur_items[$i]->sortOrder ;
+//                 //         $items->save(false);
                         
-                //     }
-                //     if ($modellang2->parent_id != null) {
-                //         $modellang2->sortOrder = $cur_items[$i]->sortOrder ;
-                //         $modellang2->save(false);   
-                //     }
+//                 //     }
+//                 //     if ($modellang2->parent_id != null) {
+//                 //         $modellang2->sortOrder = $cur_items[$i]->sortOrder ;
+//                 //         $modellang2->save(false);   
+//                 //     }
                     
-                // } 
-            }
-        } 
+//                 // } 
+//             }
+//         } 
 		}
 	}
 }

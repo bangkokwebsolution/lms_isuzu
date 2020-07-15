@@ -88,7 +88,27 @@ $formNameModel = 'ContactusNew';
 						'type'=>'html',
 						'value'=>'UHtml::markSearch($data,"con_firstname")'
 					),
-					// array(
+					array(
+						'name'=>'con_lastname',
+						'type'=>'html',
+						'value'=>'UHtml::markSearch($data,"con_lastname")'
+					),
+					array(
+						'name'=>'con_position',
+						'type'=>'html',
+						'value'=>'UHtml::markSearch($data,"con_position")'
+					),
+					array(
+						'name'=>'con_tel',
+						'type'=>'html',
+						'value'=>'UHtml::markSearch($data,"con_tel")'
+					),
+					array(
+						'name'=>'con_email',
+						'type'=>'html',
+						'value'=>'UHtml::markSearch($data,"con_email")'
+					),
+								// array(
 					// 	'name'=>'detail',
 					// 	'type'=>'html',
 					// 	'value'=>'UHtml::markSearch($data,"detail")'
