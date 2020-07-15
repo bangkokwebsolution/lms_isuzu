@@ -604,6 +604,37 @@ if ($('.email').val() == "") {
 
     } 
 
+    var type_card = $("input[name='type_card']:checked").val(); 
+        if (typeof  type_card === 'undefined' || typeof  type_card === null) {
+            var type_card_choose = "<?php echo Yii::app()->session['lang'] == 1?'Please choose a check. Choose your ID number or passport! ':'กรุณาเลือกเช็คเลือกเลขบัตรประชาชนหรือหนังสือเดินทาง!'; ?>";
+            swal(alert_message,type_card_choose)
+            return false; 
+        }else if(type_card === 'l'){
+
+                if ($('.idcard').val() == "" ) {
+                var idcard = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your ID number! ':'กรุณากรอกเลขบัตรประชาชน!'; ?>";
+                swal(alert_message,idcard)
+                return false; 
+            }
+
+                if ($('#Profile_date_of_expiry').val() == "" ) {
+                var Profile_date_of_expiry = "<?php echo Yii::app()->session['lang'] == 1?'Please select an expiration date, ID number! ':'กรุณาเลือกวันหมดอายุเลขบัตรประจำตัวประชาชน!'; ?>";
+                swal(alert_message,Profile_date_of_expiry)
+                return false; 
+            }      
+        }else if(type_card === 'p'){
+                if ($('.passport').val() == "" ) {
+                var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
+                swal(alert_message,passport)
+                return false; 
+            } 
+                if ($('#Profile_pass_expire').val() == "" ) {
+                var Profile_pass_expire = "<?php echo Yii::app()->session['lang'] == 1?'Please select a passport expiration date! ':'กรุณาเลือกวันหมดอายุหนังสือเดินทาง!'; ?>";
+                swal(alert_message,Profile_pass_expire)
+                return false; 
+            }
+    }
+
     if ($('.picture_pic').val() == "" ) {
         var picture = "<?php echo Yii::app()->session['lang'] == 1?'Please add a picture! ':'กรุณาเพิ่มรูปภาพ!'; ?>";
         swal(alert_message,picture)
@@ -615,17 +646,17 @@ if ($('.email').val() == "") {
         //     swal(alert_message,Profile_date_of_expiry)
         //     return false; 
         // }
-        if ($('.passport').val() == "" ) {
-            var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
-            swal(alert_message,passport)
-            return false; 
-        } 
+        // if ($('.passport').val() == "" ) {
+        //     var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
+        //     swal(alert_message,passport)
+        //     return false; 
+        // } 
 
-        if ($('#Profile_pass_expire').val() == "" ) {
-            var Profile_pass_expire = "<?php echo Yii::app()->session['lang'] == 1?'Please select a passport expiration date! ':'กรุณาเลือกวันหมดอายุหนังสือเดินทาง!'; ?>";
-            swal(alert_message,Profile_pass_expire)
-            return false; 
-        }
+        // if ($('#Profile_pass_expire').val() == "" ) {
+        //     var Profile_pass_expire = "<?php echo Yii::app()->session['lang'] == 1?'Please select a passport expiration date! ':'กรุณาเลือกวันหมดอายุหนังสือเดินทาง!'; ?>";
+        //     swal(alert_message,Profile_pass_expire)
+        //     return false; 
+        // }
 
         // if ($('#Profile_seamanbook').val() == "" ) {
         //     var Profile_seamanbook = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the shipping number! ':'กรุณากรอกเลขหนังสือเดินเรือ!'; ?>";
@@ -3503,7 +3534,7 @@ $("#reject").change(function(event) {
     $(".uploads_image").show();
     $('.form_name').show();
     $('.form_name_eng').show();
-    $('.form_number_id').hide();
+    $('.form_number_id').show();
    $("#office-section").show();
    $(".form_language").hide();
    $("#office-section_gen").hide();
@@ -3512,15 +3543,15 @@ $("#reject").change(function(event) {
    $('.label_branch').hide();
    $('.form_identification').show();
    $('.form_identification_5').show();
-   $('.form_passport').show();
-   $('.form_passport_5').show();
+   $('.form_passport').hide();
+   $('.form_passport_5').hide();
    $('.form_sickness').hide();
    $(".form_language").hide(); 
    $('.children').hide();
    $('.Spouse').hide();
    $(".form_seamanbook").hide();
    $(".form_attach_identification").show();
-   $(".form_attach_passport").show();
+   $(".form_attach_passport").hide();
    $(".form_attach_crew_identification").hide();
    $(".form_attach_house_registration").show();
    $(".form_birthday").show();
@@ -3549,8 +3580,8 @@ $("#reject").change(function(event) {
    $(".form_Training").show();
 
    $(".required_idline").hide();
-   $(".required_identification").hide();
-   $(".required_date_of_expiry").hide();
+   $(".required_identification").show();
+   $(".required_date_of_expiry").show();
 });
 $("#general").change(function(event) {
     $('.Branch').hide();
@@ -3721,7 +3752,7 @@ $(function() {
 
     $("#address_parent").change(function(event) {  
      var address_parent = $("input[name='address_parent']:checked").val();
-     console.log(address_parent);
+
      if (address_parent == 'y') {
         var Profile_domicile_address = $("#Profile_domicile_address").val();
         if (Profile_domicile_address != '') {
@@ -3760,7 +3791,7 @@ $(function() {
 //     console.log(first.getTime);
 //     if(first.getTime()<current.getTime()){
 //       var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
-//       var msg ="<?php echo Yii::app()->session['lang'] == 1?'Cannot adjust the end time more than the beginning date! ':'ไม่สามารถปรับเวลาสิ้นสุดมากกว่าวันเริ่มตั้นได้!'; ?>"; 
+//       var msg ="<?php echo Yii::app()->session['lang'] == 1?'Cannot adjust the end time more than the beginning date! ':'ไม่สามารถปรับเวลาสิ้นสุดมากกว่าวันเริ่มต้นได้!'; ?>"; 
 //           swal(alert_message,msg);
 //      $(this).val("");
 //    }
@@ -3892,7 +3923,7 @@ var new_forms = <?php echo $new_form; ?>;
                    $(".uploads_image").show();
                    $('.form_name').show();
                    $('.form_name_eng').show();
-                        $('.form_number_id').hide();
+                        $('.form_number_id').show();
                        $("#office-section").show();
                        $("#office-section_gen").hide();
 
@@ -3937,8 +3968,8 @@ var new_forms = <?php echo $new_form; ?>;
                        $(".form_Training").show();
 
                        $(".required_idline").hide();
-                       $(".required_identification").hide();
-                       $(".required_date_of_expiry").hide();
+                       $(".required_identification").show();
+                       $(".required_date_of_expiry").show();
                                              // }
                                          }else if (type_users === '5'){
                                             $('.Branch').hide();
@@ -4124,6 +4155,22 @@ var new_forms = <?php echo $new_form; ?>;
 
                         //var type_cards = $("input[name='type_card']:checked").val();
                         // if (type_cards === 'l') {
+                            var type_card = $("input[name='type_card']:checked").val();
+                                if (type_card === 'l') {
+                                    $('.form_identification').show();
+                                    $('.form_passport').hide();
+                                    $('.form_identification_5').show();
+                                    $('.form_passport_5').hide();
+                                    $(".form_attach_identification").show();
+                                    $(".form_attach_passport").hide();
+                                }else if (type_card === 'p') {
+                                    $('.form_identification').hide();
+                                    $('.form_passport').show();
+                                    $('.form_identification_5').hide();
+                                    $('.form_passport_5').show();
+                                    $(".form_attach_identification").hide();
+                                    $(".form_attach_passport").show();
+                                }
                             var sick = $("input[name='history_of_illness']:checked").val();
                             if (sick === 'y') {
                                 $('.form_sickness').show();
@@ -4149,14 +4196,14 @@ var new_forms = <?php echo $new_form; ?>;
 
                                $('.Branch').hide();
                                $('.label_branch').hide();
-                               $('.form_identification').show();
-                               $('.form_identification_5').show();
-                               $('.form_passport').show();
-                               $('.form_passport_5').show();
+                               // $('.form_identification').show();
+                               // $('.form_identification_5').show();
+                               // $('.form_passport').show();
+                               // $('.form_passport_5').show();
                                $(".form_language").show(); 
                                $(".form_seamanbook").show();
-                               $(".form_attach_identification").show();
-                               $(".form_attach_passport").show();
+                               // $(".form_attach_identification").show();
+                               // $(".form_attach_passport").show();
                                $(".form_attach_crew_identification").show();
                                $(".form_attach_house_registration").show();
                                $(".form_birthday").show();
@@ -4185,8 +4232,8 @@ var new_forms = <?php echo $new_form; ?>;
                               $(".form_Training").show();
 
                               $(".required_idline").hide();
-                              $(".required_identification").hide();
-                              $(".required_date_of_expiry").hide();
+                              $(".required_identification").show();
+                              $(".required_date_of_expiry").show();
                           }else if(type_users === '5'){
                             var type_card = $("input[name='type_card']:checked").val();
                                 if (type_card === 'l') {
@@ -4254,13 +4301,45 @@ var new_forms = <?php echo $new_form; ?>;
 
 
                  $('#card-1').change(function(event) {
-                    $('.form_passport').hide();
-                    $('.form_identification').show();
+                    var type_users = $("input[name='type_user']:checked").val();
+                                if (type_users === '3') {
+                                     $('.form_passport').hide();
+                                     $('.form_identification').show();
+                                     $('.form_identification_5').show();
+                                     $('.form_passport_5').hide();
+                                     $(".form_attach_identification").show();
+                                     $(".form_attach_passport").hide();
+                                }else if (type_users === '5') {
+                                     $('.form_passport').hide();
+                                     $('.form_identification').show();
+                                     $('.form_identification_5').hide();
+                                     $('.form_passport_5').hide();
+                                     $(".form_attach_identification").hide();
+                                     $(".form_attach_passport").hide();
+                                }
                 });
 
                  $('#card-2').change(function(event) {
-                    $('.form_passport').show();
-                    $('.form_identification').hide();
+                        var type_users = $("input[name='type_user']:checked").val();
+                                if (type_users === '3') {
+                                     $('.form_passport').show();
+                                     $('.form_identification').hide();
+                                     $('.form_identification_5').hide();
+                                     $('.form_passport_5').show();
+                                     $(".form_attach_identification").hide();
+                                     $(".form_attach_passport").show();
+                                 }else if (type_users === '5') {
+                                     $('.form_passport').show();
+                                     $('.form_identification').hide();
+                                     $('.form_identification_5').hide();
+                                     $('.form_passport_5').hide();
+                                     $(".form_attach_identification").hide();
+                                     $(".form_attach_passport").hide();
+                                 }
+                    // $('.form_passport').show();
+                    // $('.form_identification').hide();
+                    // $('.form_identification_5').hide();
+                    // $('.form_passport_5').show();
                 });
 
                 $(".department").change(function() {
