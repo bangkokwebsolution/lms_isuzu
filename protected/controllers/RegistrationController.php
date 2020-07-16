@@ -485,6 +485,7 @@ class RegistrationController extends Controller {
     //     $users->status = 0;
     // }
 if ($profile->type_user == 1) {
+    $profile->type_employee = 1;
     $users->status = 0;
     $users->register_status = 0;
     $users->position_id = $_POST['position_gen'];
@@ -493,7 +494,7 @@ if ($profile->type_user == 1) {
     $users->status = 0;
     $users->register_status = 0;
 }else{
-    $profile->type_employee = 1;
+    $profile->type_employee = 2;
     $users->register_status = 1;
     $users->status = 1;
     $users->position_id = $_POST['User'][position_id];
