@@ -589,7 +589,8 @@ if ($('.email').val() == "") {
         var employees = "<?php echo Yii::app()->session['lang'] == 1?'Please select a check. Select a department and position! ':'กรุณาเลือกเช็คเลือกแผนกและตำแหน่ง!'; ?>";
         swal(alert_message,employees)
         return false;
-    }else if(type_employees != ""){
+   }else if(type_employees != ""){
+       if(type_employees === '1'){
         if ($('.department').val() == "" ) {
             var department = "<?php echo Yii::app()->session['lang'] == 1?'Please select department! ':'กรุณาเลือกแผนก!'; ?>";
             swal(alert_message,department)
@@ -601,8 +602,6 @@ if ($('.email').val() == "") {
                 return false; 
             }
         }
-
-    }else if(type_employees === '1'){
         var type_card = $("input[name='type_card']:checked").val(); 
         if (typeof  type_card === 'undefined' || typeof  type_card === null) {
             var type_card_choose = "<?php echo Yii::app()->session['lang'] == 1?'Please choose a check. Choose your ID number or passport! ':'กรุณาเลือกเช็คเลือกเลขบัตรประชาชนหรือหนังสือเดินทาง!'; ?>";
@@ -639,35 +638,6 @@ if ($('.email').val() == "") {
         swal(alert_message,picture)
         return false; 
     }
-
-        // if ($('#Profile_date_of_expiry').val() == "" ) {
-        //     var Profile_date_of_expiry = "<?php echo Yii::app()->session['lang'] == 1?'Please select an expiration date, ID number! ':'กรุณาเลือกวันหมดอายุเลขบัตรประจำตัวประชาชน!'; ?>";
-        //     swal(alert_message,Profile_date_of_expiry)
-        //     return false; 
-        // }
-        // if ($('.passport').val() == "" ) {
-        //     var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
-        //     swal(alert_message,passport)
-        //     return false; 
-        // } 
-
-        // if ($('#Profile_pass_expire').val() == "" ) {
-        //     var Profile_pass_expire = "<?php echo Yii::app()->session['lang'] == 1?'Please select a passport expiration date! ':'กรุณาเลือกวันหมดอายุหนังสือเดินทาง!'; ?>";
-        //     swal(alert_message,Profile_pass_expire)
-        //     return false; 
-        // }
-
-        // if ($('#Profile_seamanbook').val() == "" ) {
-        //     var Profile_seamanbook = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the shipping number! ':'กรุณากรอกเลขหนังสือเดินเรือ!'; ?>";
-        //     swal(alert_message,Profile_seamanbook)
-        //     return false; 
-        // }
-
-        // if ($('#Profile_seaman_expire').val() == "" ) {
-        //     var Profile_seaman_expire = "<?php echo Yii::app()->session['lang'] == 1?'Please select an expiration date for shipping documents! ':'กรุณาเลือกวันหมดอายุหนังสือเดินเรือ!'; ?>";
-        //     swal(alert_message,Profile_seaman_expire)
-        //     return false; 
-        // }
 
         if ($('#Profile_birthday').val() == "" ) {
             var Profile_birthday = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your date of birth! ':'กรุณากรอกวันเดือนปีเกิด!'; ?>";
@@ -832,6 +802,17 @@ if ($('.email').val() == "") {
      }
 
  }else if(type_employees === '2'){
+    if ($('.department').val() == "" ) {
+            var department = "<?php echo Yii::app()->session['lang'] == 1?'Please select department! ':'กรุณาเลือกแผนก!'; ?>";
+            swal(alert_message,department)
+            return false; 
+        }else if($('.department').val() != ""){
+            if ($('.position').val() == "" ) {
+                var position = "<?php echo Yii::app()->session['lang'] == 1?'กรุณาเลือกตำแหน่ง! ':'กรุณาเลือกตำแหน่ง!'; ?>";
+                swal(alert_message,position)
+                return false; 
+            }
+        }
     var type_card = $("input[name='type_card']:checked").val(); 
         if (typeof  type_card === 'undefined' || typeof  type_card === null) {
             var type_card_choose = "<?php echo Yii::app()->session['lang'] == 1?'Please choose a check. Choose your ID number or passport! ':'กรุณาเลือกเช็คเลือกเลขบัตรประชาชนหรือหนังสือเดินทาง!'; ?>";
@@ -923,6 +904,8 @@ if ($('.email').val() == "") {
             swal(alert_message,Profile_tel)
             return false; 
         }
+
+    }
 
  } 
 
@@ -4250,6 +4233,55 @@ var new_forms = <?php echo $new_form; ?>;
                            $('.children').hide();
                            $('.Spouse').hide();
                        }
+
+                       var type_employee = $("input[name='type_employee']:checked").val();
+                       if (type_employee == '1') {
+                          $(".required_Blood").hide();
+                           $(".required_Height").hide();
+                           $(".required_Weight").hide();
+                           $(".required_race").hide();
+                           $(".required_nationality").hide();
+                           $(".required_sex").hide();
+                           $(".required_father_firstname").hide();
+                           $(".required_father_lastname").hide();
+                           $(".required_mother_firstname").hide();
+                           $(".required_mother_lastname").hide();
+                           $(".required_nationality").hide();
+                           $(".required_Emergency").hide();
+                           $(".required_name_emergency").hide();
+                           $(".required_relationship_emergency").hide();
+                           $(".required_military").hide();
+                           $(".required_history_of_severe_illness").hide();
+                           $(".required_educational").hide();
+                           $(".required_Attachments_educational").hide();
+
+                           $(".form_attach_identification").hide();
+                           $(".form_attach_house_registration").hide();
+                           $(".form_Qualification ").hide();
+                       }else if (type_employee == '2') {
+                               $(".required_Blood").show();
+                           $(".required_Height").show();
+                           $(".required_Weight").show();
+                           $(".required_race").show();
+                           $(".required_nationality").show();
+                           $(".required_sex").show();
+                           $(".required_father_firstname").show();
+                           $(".required_father_lastname").show();
+                           $(".required_mother_firstname").show();
+                           $(".required_mother_lastname").show();
+                           $(".required_nationality").show();
+                           $(".required_Emergency").show();
+                           $(".required_name_emergency").show();
+                           $(".required_relationship_emergency").show();
+                           $(".required_military").show();
+                           $(".required_history_of_severe_illness").show();
+                           $(".required_educational").show();
+                           $(".required_Attachments_educational").show();
+
+                           $(".form_attach_identification").show();
+                           $(".form_attach_house_registration").show();
+                           $(".form_Qualification ").show();
+                       }
                        $(".id_employee").show();
                        $(".uploads_image").show();
                        $('.form_name').show();
@@ -4497,7 +4529,7 @@ var new_forms = <?php echo $new_form; ?>;
                             id: id
                         },
                         success: function(data) {
-                            console.log(data);
+                           // console.log(data);
                             // if (data === '<option value ="">Select Pocition </option>' || data === '<option value ="">เลือกตำแหน่ง</option>') {
                             // $('.position').hide();
                             // $('.label_position').hide();
@@ -4521,7 +4553,7 @@ var new_forms = <?php echo $new_form; ?>;
                             id: id
                         },
                         success: function(data) {
-                            console.log(data);
+                           // console.log(data);
 
                             $('.position_gen').empty();
                             $('.position_gen').append(data);
@@ -4537,7 +4569,7 @@ var new_forms = <?php echo $new_form; ?>;
                             id: id
                         },
                         success: function(data) {
-                            console.log(data);
+                           // console.log(data);
                             if (data === '<option value ="">Select Level </option>' || data === '<option value ="">เลือกระดับ</option>') {
                                 $('.Branch').hide();
                                 $('.label_branch').hide();
