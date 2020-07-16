@@ -219,7 +219,7 @@ class ContactusNewController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		//$this->loadModel($id)->delete();
 		$model = $this->loadModel($id);
 		$model->active = 'n';
 		// $model = ContactusNew::model()->findByPk($id);

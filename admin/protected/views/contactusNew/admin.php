@@ -9,7 +9,7 @@ $formNameModel = 'ContactusNew';
 // 	return false;
 // });
 // $('.search-form form').submit(function(){
-// 	$('#popup-grid').yiiGridView('update', {
+// 	$('#ContactusNew-grid').yiiGridView('update', {
 // 		data: $(this).serialize()
 // 	});
 // 	return false;
@@ -37,8 +37,6 @@ $formNameModel = 'ContactusNew';
 	'route' => $this->route,
 	'attributes'=>array(
 		array('name'=>'con_firstname','type'=>'text'),
-		//array('name'=>'update_date','type'=>'date'),
-		// array('name'=>'detail','type'=>'textArea'),
 	),
 	));?>
 
@@ -57,7 +55,7 @@ $formNameModel = 'ContactusNew';
 			<div class="overflow-table" style="overflow:visible !important;">
 			<?php $this->widget('AGridView', array(
 				'id'=>'ContactusNew-grid',
-				'dataProvider'=>$model->search(),
+				'dataProvider'=>$model->ContactusNewcheck()->search(),
 				'filter'=>$model,
 				'rowCssClassExpression'=>'"items[]_{$data->id}"',
 				// 'afterAjaxUpdate'=>'function(id, data){
@@ -167,18 +165,18 @@ $formNameModel = 'ContactusNew';
 					*/
 					array(            
 						'class'=>'AButtonColumn',
-						// 'visible'=>Controller::PButton( 
-						// 	array("Popup.*", "Popup.View", "Popup.Update", "Popup.Delete") 
-						// ),
+						'visible'=>Controller::PButton( 
+							array("ContactusNew.*", "ContactusNew.View", "ContactusNew.Update", "ContactusNew.Delete") 
+						),
 						'buttons' => array(
 							'view'=> array( 
-								// 'visible'=>'Controller::PButton( array("Popup.*", "Popup.View") )' 
+								// 'visible'=>'Controller::PButton( array("ContactusNew.*", "ContactusNew.View") )' 
 							),
 							'update'=> array( 
-								'visible'=>'Controller::PButton( array("PopUp.*", "PopUp.Update") )' 
+								'visible'=>'Controller::PButton( array("ContactusNew.*", "ContactusNew.Update") )' 
 							),
 							'delete'=> array( 
-								'visible'=>'Controller::PButton( array("PopUp.*", "PopUp.Delete") )' 
+								'visible'=>'Controller::PButton( array("ContactusNew.*", "ContactusNew.Delete") )' 
 							),
 						),
 					),

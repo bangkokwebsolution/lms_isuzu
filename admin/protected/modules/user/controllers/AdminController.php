@@ -562,6 +562,18 @@ echo ($data);
 		$this->redirect(array('/user/admin/access'));
    }
 
+      public function actionDelete_employee()
+   {
+        $id = $_POST['id'];
+		$model = User::model()->findByPk($id);
+		if ($model != '') {
+			$model->del_status = 1;
+		}
+		$model->save(false);
+
+		$this->redirect(array('/user/admin/Membership_personal'));
+   }
+
    public function actionChangePasswordUser()
    {
         $id = $_POST['id'];
