@@ -11,13 +11,14 @@
                 <tbody>
 
                     <input type='hidden' name='reset_type' value="<?= $type; ?>">
+                    <input type='hidden' name='type_test' value="<?= $type_test; ?>">
                     <input type='hidden' name='user_id' value="<?= $user_id ?>">                    
                     <!-- <input type='checkbox' id='checkAll' /> เลือกทั้งหมด -->
                     <?php
                     foreach ($course as $key => $value) {
                         $courseScore = Coursescore::model()->find(array(
-                            'condition' => 'course_id=:course_id AND user_id=:user_id AND active="y" AND gen_id=:gen_id',
-                            'params' => array(':course_id' => $value->course_id, ':user_id' => $user_id, ':gen_id'=>$value->gen_id)
+                            'condition' => 'course_id=:course_id AND user_id=:user_id AND active="y" AND gen_id=:gen_id AND type=:type_test',
+                            'params' => array(':course_id' => $value->course_id, ':user_id' => $user_id, ':gen_id'=>$value->gen_id, ':type_test' => $type_test)
                         ));
                         ?>
                         <?php
