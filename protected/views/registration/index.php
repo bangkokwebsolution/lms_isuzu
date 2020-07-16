@@ -346,11 +346,6 @@ if ($('.email').val() == "") {
             return false; 
         }
 
-        // if ($('#Profile_date_of_expiry').val() == "" ) {
-        //     var Profile_date_of_expiry = "<?php echo Yii::app()->session['lang'] == 1?'Please select an expiration date, ID number! ':'กรุณาเลือกวันหมดอายุเลขบัตรประจำตัวประชาชน!'; ?>";
-        //     swal(alert_message,Profile_date_of_expiry)
-        //     return false; 
-        // }
         if ($('.passport').val() == "" ) {
             var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
             swal(alert_message,passport)
@@ -584,235 +579,243 @@ if ($('.email').val() == "") {
     }
 }else if(type_users === '3'){
 
-    var type_employees = $("input[name='type_employee']:checked").val(); 
-    if (typeof  type_employees === 'undefined' || typeof  type_employees === null) {
-        var employees = "<?php echo Yii::app()->session['lang'] == 1?'Please select a check. Select a department and position! ':'กรุณาเลือกเช็คเลือกแผนกและตำแหน่ง!'; ?>";
-        swal(alert_message,employees)
-        return false;
-   }else if(type_employees != ""){
-       if(type_employees === '1'){
-        if ($('.department').val() == "" ) {
-            var department = "<?php echo Yii::app()->session['lang'] == 1?'Please select department! ':'กรุณาเลือกแผนก!'; ?>";
-            swal(alert_message,department)
-            return false; 
-        }else if($('.department').val() != ""){
-            if ($('.position').val() == "" ) {
-                var position = "<?php echo Yii::app()->session['lang'] == 1?'กรุณาเลือกตำแหน่ง! ':'กรุณาเลือกตำแหน่ง!'; ?>";
-                swal(alert_message,position)
-                return false; 
-            }
-        }
-        var type_card = $("input[name='type_card']:checked").val(); 
-        if (typeof  type_card === 'undefined' || typeof  type_card === null) {
-            var type_card_choose = "<?php echo Yii::app()->session['lang'] == 1?'Please choose a check. Choose your ID number or passport! ':'กรุณาเลือกเช็คเลือกเลขบัตรประชาชนหรือหนังสือเดินทาง!'; ?>";
-            swal(alert_message,type_card_choose)
-            return false; 
-        }else if(type_card === 'l'){
+   //  var type_employees = $("input[name='type_employee']:checked").val(); 
+   //  if (typeof  type_employees === 'undefined' || typeof  type_employees === null) {
+   //      var employees = "<?php echo Yii::app()->session['lang'] == 1?'Please select a check. Select a department and position! ':'กรุณาเลือกเช็คเลือกแผนกและตำแหน่ง!'; ?>";
+   //      swal(alert_message,employees)
+   //      return false;
+   // }else if(type_employees != ""){
+   //     if(type_employees === '1'){
+   //      if ($('.department').val() == "" ) {
+   //          var department = "<?php echo Yii::app()->session['lang'] == 1?'Please select department! ':'กรุณาเลือกแผนก!'; ?>";
+   //          swal(alert_message,department)
+   //          return false; 
+   //      }
+   //      // else if($('.department').val() != ""){
+   //      //     if ($('.position').val() == "" ) {
+   //      //         var position = "<?php echo Yii::app()->session['lang'] == 1?'กรุณาเลือกตำแหน่ง! ':'กรุณาเลือกตำแหน่ง!'; ?>";
+   //      //         swal(alert_message,position)
+   //      //         return false; 
+   //      //     }
+   //      // }
+   //      var type_card = $("input[name='type_card']:checked").val(); 
+   //      if (typeof  type_card === 'undefined' || typeof  type_card === null) {
+   //          var type_card_choose = "<?php echo Yii::app()->session['lang'] == 1?'Please choose a check. Choose your ID number or passport! ':'กรุณาเลือกเช็คเลือกเลขบัตรประชาชนหรือหนังสือเดินทาง!'; ?>";
+   //          swal(alert_message,type_card_choose)
+   //          return false; 
+   //      }else if(type_card === 'l'){
 
-                if ($('.idcard').val() == "" ) {
-                var idcard = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your ID number! ':'กรุณากรอกเลขบัตรประชาชน!'; ?>";
-                swal(alert_message,idcard)
-                return false; 
-            }
+   //              if ($('.idcard').val() == "" ) {
+   //              var idcard = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your ID number! ':'กรุณากรอกเลขบัตรประชาชน!'; ?>";
+   //              swal(alert_message,idcard)
+   //              return false; 
+   //          }
 
-                if ($('#Profile_date_of_expiry').val() == "" ) {
-                var Profile_date_of_expiry = "<?php echo Yii::app()->session['lang'] == 1?'Please select an expiration date, ID number! ':'กรุณาเลือกวันหมดอายุเลขบัตรประจำตัวประชาชน!'; ?>";
-                swal(alert_message,Profile_date_of_expiry)
-                return false; 
-            }      
-        }else if(type_card === 'p'){
-                if ($('.passport').val() == "" ) {
-                var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
-                swal(alert_message,passport)
-                return false; 
-            } 
-                if ($('#Profile_pass_expire').val() == "" ) {
-                var Profile_pass_expire = "<?php echo Yii::app()->session['lang'] == 1?'Please select a passport expiration date! ':'กรุณาเลือกวันหมดอายุหนังสือเดินทาง!'; ?>";
-                swal(alert_message,Profile_pass_expire)
-                return false; 
-            }
-    }
+   //              if ($('#Profile_date_of_expiry').val() == "" ) {
+   //              var Profile_date_of_expiry = "<?php echo Yii::app()->session['lang'] == 1?'Please select an expiration date, ID number! ':'กรุณาเลือกวันหมดอายุเลขบัตรประจำตัวประชาชน!'; ?>";
+   //              swal(alert_message,Profile_date_of_expiry)
+   //              return false; 
+   //          }      
+   //      }else if(type_card === 'p'){
+   //              if ($('.passport').val() == "" ) {
+   //              var passport = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your passport number! ':'กรุณากรอกเลขพาสปอร์ต!'; ?>";
+   //              swal(alert_message,passport)
+   //              return false; 
+   //          } 
+   //              if ($('#Profile_pass_expire').val() == "" ) {
+   //              var Profile_pass_expire = "<?php echo Yii::app()->session['lang'] == 1?'Please select a passport expiration date! ':'กรุณาเลือกวันหมดอายุหนังสือเดินทาง!'; ?>";
+   //              swal(alert_message,Profile_pass_expire)
+   //              return false; 
+   //          }
+   //  }
 
-    if ($('.picture_pic').val() == "" ) {
-        var picture = "<?php echo Yii::app()->session['lang'] == 1?'Please add a picture! ':'กรุณาเพิ่มรูปภาพ!'; ?>";
-        swal(alert_message,picture)
-        return false; 
-    }
+   //  if ($('.picture_pic').val() == "" ) {
+   //      var picture = "<?php echo Yii::app()->session['lang'] == 1?'Please add a picture! ':'กรุณาเพิ่มรูปภาพ!'; ?>";
+   //      swal(alert_message,picture)
+   //      return false; 
+   //  }
 
-        if ($('#Profile_birthday').val() == "" ) {
-            var Profile_birthday = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your date of birth! ':'กรุณากรอกวันเดือนปีเกิด!'; ?>";
-            swal(alert_message,Profile_birthday)
-            return false; 
-        }
+   //      if ($('#Profile_birthday').val() == "" ) {
+   //          var Profile_birthday = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your date of birth! ':'กรุณากรอกวันเดือนปีเกิด!'; ?>";
+   //          swal(alert_message,Profile_birthday)
+   //          return false; 
+   //      }
 
-        if ($('#Profile_blood').val() == "" ) {
-            var Profile_blood = "<?php echo Yii::app()->session['lang'] == 1?'Please enter blood type! ':'กรุณากรอกกรุ๊ปเลือด!'; ?>";
-            swal(alert_message,Profile_blood)
-            return false; 
-        }
+   //      if ($('#Profile_blood').val() == "" ) {
+   //          var Profile_blood = "<?php echo Yii::app()->session['lang'] == 1?'Please enter blood type! ':'กรุณากรอกกรุ๊ปเลือด!'; ?>";
+   //          swal(alert_message,Profile_blood)
+   //          return false; 
+   //      }
 
-        if ($('#Profile_hight').val() == "" ) {
-            var Profile_hight = "<?php echo Yii::app()->session['lang'] == 1?'Please enter a height! ':'กรุณากรอกความสูง!'; ?>";
-            swal(alert_message,Profile_hight)
-            return false; 
-        }
+   //      if ($('#Profile_hight').val() == "" ) {
+   //          var Profile_hight = "<?php echo Yii::app()->session['lang'] == 1?'Please enter a height! ':'กรุณากรอกความสูง!'; ?>";
+   //          swal(alert_message,Profile_hight)
+   //          return false; 
+   //      }
 
-        if ($('#Profile_weight').val() == "" ) {
-            var Profile_weight = "<?php echo Yii::app()->session['lang'] == 1?'Please enter a weight! ':'กรุณากรอกน้ำหนัก!'; ?>";
-            swal(alert_message,Profile_weight)
-            return false; 
-        }
+   //      if ($('#Profile_weight').val() == "" ) {
+   //          var Profile_weight = "<?php echo Yii::app()->session['lang'] == 1?'Please enter a weight! ':'กรุณากรอกน้ำหนัก!'; ?>";
+   //          swal(alert_message,Profile_weight)
+   //          return false; 
+   //      }
 
-        if ($('#Profile_race').val() == "" ) {
-            var Profile_race = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your ethnicity! ':'กรุณากรอกเชื้อชาติ!'; ?>";
-            swal(alert_message,Profile_race)
-            return false; 
-        }
+   //      if ($('#Profile_race').val() == "" ) {
+   //          var Profile_race = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your ethnicity! ':'กรุณากรอกเชื้อชาติ!'; ?>";
+   //          swal(alert_message,Profile_race)
+   //          return false; 
+   //      }
 
-        if ($('#Profile_nationality').val() == "" ) {
-            var Profile_nationality = "<?php echo Yii::app()->session['lang'] == 1?'Please enter nationality! ':'กรุณากรอกสัญชาติ!'; ?>";
-            swal(alert_message,Profile_nationality)
-            return false; 
-        }
+   //      if ($('#Profile_nationality').val() == "" ) {
+   //          var Profile_nationality = "<?php echo Yii::app()->session['lang'] == 1?'Please enter nationality! ':'กรุณากรอกสัญชาติ!'; ?>";
+   //          swal(alert_message,Profile_nationality)
+   //          return false; 
+   //      }
 
-        if ($('#Profile_sex').val() == "" ) {
-            var Profile_sex = "<?php echo Yii::app()->session['lang'] == 1?'Please select gender! ':'กรุณาเลือกเพศ!'; ?>";
-            swal(alert_message,Profile_sex)
-            return false; 
-        }
+   //      if ($('#Profile_sex').val() == "" ) {
+   //          var Profile_sex = "<?php echo Yii::app()->session['lang'] == 1?'Please select gender! ':'กรุณาเลือกเพศ!'; ?>";
+   //          swal(alert_message,Profile_sex)
+   //          return false; 
+   //      }
 
-        var status_sm = $("input[name='status_sm']:checked").val(); 
-        if (typeof  status_sm === 'undefined' || typeof  status_sm === null) {
-            var status_message = "<?php echo Yii::app()->session['lang'] == 1?'Please select a status check! ':'กรุณาเลือกเช็คสถานภาพ!'; ?>";
-            swal(alert_message,status_message)
-            return false;
-        }else if(status_sm === 'm'){
-            if ($('#Profile_number_of_children').val() == "" ) {
-                var Profile_number_of_children = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the number of children! ':'กรุณากรอกจำนวนบุตร!'; ?>";
-                swal(alert_message,Profile_number_of_children)
-                return false; 
-            }
+   //      var status_sm = $("input[name='status_sm']:checked").val(); 
+   //      if (typeof  status_sm === 'undefined' || typeof  status_sm === null) {
+   //          var status_message = "<?php echo Yii::app()->session['lang'] == 1?'Please select a status check! ':'กรุณาเลือกเช็คสถานภาพ!'; ?>";
+   //          swal(alert_message,status_message)
+   //          return false;
+   //      }else if(status_sm === 'm'){
+   //          if ($('#Profile_number_of_children').val() == "" ) {
+   //              var Profile_number_of_children = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the number of children! ':'กรุณากรอกจำนวนบุตร!'; ?>";
+   //              swal(alert_message,Profile_number_of_children)
+   //              return false; 
+   //          }
 
-            if ($('#Profile_spouse_firstname').val() == "" ) {
-                var Profile_spouse_firstname = "<?php echo Yii::app()->session['lang'] == 1?'Please enter spouse name! ':'กรุณากรอกชื่อคู่สมรส!'; ?>";
-                swal(alert_message,Profile_spouse_firstname)
-                return false; 
-            }
+   //          if ($('#Profile_spouse_firstname').val() == "" ) {
+   //              var Profile_spouse_firstname = "<?php echo Yii::app()->session['lang'] == 1?'Please enter spouse name! ':'กรุณากรอกชื่อคู่สมรส!'; ?>";
+   //              swal(alert_message,Profile_spouse_firstname)
+   //              return false; 
+   //          }
 
-            if ($('#Profile_spouse_lastname').val() == "" ) {
-                var Profile_spouse_lastname = "<?php echo Yii::app()->session['lang'] == 1?'Please enter spouse surname! ':'กรุณากรอกนามสกุลคู่สมรส!'; ?>";
-                swal(alert_message,Profile_spouse_lastname)
-                return false; 
-            }
+   //          if ($('#Profile_spouse_lastname').val() == "" ) {
+   //              var Profile_spouse_lastname = "<?php echo Yii::app()->session['lang'] == 1?'Please enter spouse surname! ':'กรุณากรอกนามสกุลคู่สมรส!'; ?>";
+   //              swal(alert_message,Profile_spouse_lastname)
+   //              return false; 
+   //          }
 
-        }
+   //      }
 
-        var accommodation = $("input[name='accommodation']:checked").val(); 
-        if (typeof  accommodation === 'undefined' || typeof  accommodation === null) {
-            var accommodation_message = "<?php echo Yii::app()->session['lang'] == 1?'Please select a residence check! ':'กรุณาเลือกเช็คที่อยู่อาศัย!'; ?>";
-            swal(alert_message,accommodation_message)
-            return false;
-        } 
+   //      var accommodation = $("input[name='accommodation']:checked").val(); 
+   //      if (typeof  accommodation === 'undefined' || typeof  accommodation === null) {
+   //          var accommodation_message = "<?php echo Yii::app()->session['lang'] == 1?'Please select a residence check! ':'กรุณาเลือกเช็คที่อยู่อาศัย!'; ?>";
+   //          swal(alert_message,accommodation_message)
+   //          return false;
+   //      } 
 
-        if ($('#Profile_domicile_address').val() == "" ) {
-            var Profile_domicile_address = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the address on the ID card! ':'กรุณากรอกที่อยู่ตามบัตรประชาชน!'; ?>";
-            swal(alert_message,Profile_domicile_address)
-            return false; 
-        }
+   //      if ($('#Profile_domicile_address').val() == "" ) {
+   //          var Profile_domicile_address = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the address on the ID card! ':'กรุณากรอกที่อยู่ตามบัตรประชาชน!'; ?>";
+   //          swal(alert_message,Profile_domicile_address)
+   //          return false; 
+   //      }
 
-        if ($('#Profile_address').val() == "" ) {
-            var Profile_address = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the address! ':'กรุณากรอกที่อยู่!'; ?>";
-            swal(alert_message,Profile_address)
-            return false; 
-        }
+   //      if ($('#Profile_address').val() == "" ) {
+   //          var Profile_address = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the address! ':'กรุณากรอกที่อยู่!'; ?>";
+   //          swal(alert_message,Profile_address)
+   //          return false; 
+   //      }
 
-        if ($('#Profile_tel').val() == "" ) {
-            var Profile_tel = "<?php echo Yii::app()->session['lang'] == 1?'Please enter phone number! ':'กรุณากรอกเบอร์โทร!'; ?>";
-            swal(alert_message,Profile_tel)
-            return false; 
-        }
+   //      if ($('#Profile_tel').val() == "" ) {
+   //          var Profile_tel = "<?php echo Yii::app()->session['lang'] == 1?'Please enter phone number! ':'กรุณากรอกเบอร์โทร!'; ?>";
+   //          swal(alert_message,Profile_tel)
+   //          return false; 
+   //      }
 
-        if ($('#Profile_phone').val() == "" ) {
-            var Profile_phone = "<?php echo Yii::app()->session['lang'] == 1?'Please enter an emergency contact telephone! ':'กรุณากรอกโทรศัพท์ที่ติดต่อฉุกเฉิน!'; ?>";
-            swal(alert_message,Profile_phone)
-            return false; 
-        }
+   //      if ($('#Profile_phone').val() == "" ) {
+   //          var Profile_phone = "<?php echo Yii::app()->session['lang'] == 1?'Please enter an emergency contact telephone! ':'กรุณากรอกโทรศัพท์ที่ติดต่อฉุกเฉิน!'; ?>";
+   //          swal(alert_message,Profile_phone)
+   //          return false; 
+   //      }
 
-        if ($('#Profile_name_emergency').val() == "" ) {
-            var Profile_name_emergency = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the name of the emergency contact! ':'กรุณากรอกชื่อผู้ที่ติดต่อฉุกเฉิน!'; ?>";
-            swal(alert_message,Profile_name_emergency)
-            return false; 
-        }
+   //      if ($('#Profile_name_emergency').val() == "" ) {
+   //          var Profile_name_emergency = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the name of the emergency contact! ':'กรุณากรอกชื่อผู้ที่ติดต่อฉุกเฉิน!'; ?>";
+   //          swal(alert_message,Profile_name_emergency)
+   //          return false; 
+   //      }
 
-        if ($('#Profile_relationship_emergency').val() == "" ) {
-            var Profile_relationship_emergency = "<?php echo Yii::app()->session['lang'] == 1?'Please fill relationship! ':'กรุณากรอกความสัมพันธ์!'; ?>";
-            swal(alert_message,Profile_relationship_emergency)
-            return false; 
-        }
+   //      if ($('#Profile_relationship_emergency').val() == "" ) {
+   //          var Profile_relationship_emergency = "<?php echo Yii::app()->session['lang'] == 1?'Please fill relationship! ':'กรุณากรอกความสัมพันธ์!'; ?>";
+   //          swal(alert_message,Profile_relationship_emergency)
+   //          return false; 
+   //      }
 
-        var military = $("input[name='military']:checked").val(); 
-        if (typeof  military === 'undefined' || typeof  military === null) {
-            var military_message = "<?php echo Yii::app()->session['lang'] == 1?'Please select a national service status! ':'กรุณาเลือกเช็คสถานะการรับใช้ชาติ!'; ?>";
-            swal(alert_message,military_message)
-            return false;
-        } 
+   //      var military = $("input[name='military']:checked").val(); 
+   //      if (typeof  military === 'undefined' || typeof  military === null) {
+   //          var military_message = "<?php echo Yii::app()->session['lang'] == 1?'Please select a national service status! ':'กรุณาเลือกเช็คสถานะการรับใช้ชาติ!'; ?>";
+   //          swal(alert_message,military_message)
+   //          return false;
+   //      } 
 
-        var history_of_illness = $("input[name='history_of_illness']:checked").val(); 
-        if (typeof  history_of_illness === 'undefined' || typeof  history_of_illness === null) {
-            var history_of_illness_message = "<?php echo Yii::app()->session['lang'] == 1?'Please choose to check the history of severe illness! ':'กรุณาเลือกเช็คประวัติการเจ็บป่วยรุนแรง!'; ?>";
-            swal(alert_message,history_of_illness_message)
-            return false;
-        }else if (history_of_illness === 'y') {
-            if ($('#Profile_sickness').val() == "" ) {
-                var Profile_sickness = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the disease that was previously sick! ':'กรุณากรอกโรคที่เคยป่วย!'; ?>";
-                swal(alert_message,Profile_sickness)
-                return false; 
-            }            
-        }
+   //      var history_of_illness = $("input[name='history_of_illness']:checked").val(); 
+   //      if (typeof  history_of_illness === 'undefined' || typeof  history_of_illness === null) {
+   //          var history_of_illness_message = "<?php echo Yii::app()->session['lang'] == 1?'Please choose to check the history of severe illness! ':'กรุณาเลือกเช็คประวัติการเจ็บป่วยรุนแรง!'; ?>";
+   //          swal(alert_message,history_of_illness_message)
+   //          return false;
+   //      }else if (history_of_illness === 'y') {
+   //          if ($('#Profile_sickness').val() == "" ) {
+   //              var Profile_sickness = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the disease that was previously sick! ':'กรุณากรอกโรคที่เคยป่วย!'; ?>";
+   //              swal(alert_message,Profile_sickness)
+   //              return false; 
+   //          }            
+   //      }
 
-        if ($('#ProfilesEdu_0_edu_id').val() == "" && $('#ProfilesEdu_0_institution').val() == "" && $('#ProfilesEdu_0_date_graduation').val() == "" ) {
-            var ProfilesEdu = "<?php echo Yii::app()->session['lang'] == 1?'Please fill out your education! ':'กรุณากรอกประวัติศึกษา!'; ?>";
-            swal(alert_message,ProfilesEdu)
-            return false; 
+   //      if ($('#ProfilesEdu_0_edu_id').val() == "" && $('#ProfilesEdu_0_institution').val() == "" && $('#ProfilesEdu_0_date_graduation').val() == "" ) {
+   //          var ProfilesEdu = "<?php echo Yii::app()->session['lang'] == 1?'Please fill out your education! ':'กรุณากรอกประวัติศึกษา!'; ?>";
+   //          swal(alert_message,ProfilesEdu)
+   //          return false; 
             
-        }else{
-            if ($('#ProfilesEdu_0_edu_id').val() == "" ) {
-                var ProfilesEdu_0_edu_id = "<?php echo Yii::app()->session['lang'] == 1?'Please select study level! ':'กรุณาเลือกระดับการศึกษา!'; ?>";
-                swal(alert_message,ProfilesEdu_0_edu_id)
-                return false; 
-            }
+   //      }else{
+   //          if ($('#ProfilesEdu_0_edu_id').val() == "" ) {
+   //              var ProfilesEdu_0_edu_id = "<?php echo Yii::app()->session['lang'] == 1?'Please select study level! ':'กรุณาเลือกระดับการศึกษา!'; ?>";
+   //              swal(alert_message,ProfilesEdu_0_edu_id)
+   //              return false; 
+   //          }
 
-            if ($('#ProfilesEdu_0_institution').val() == "" ) {
-                var ProfilesEdu_0_institution = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the name of the school! ':'กรุณากรอกชื่อสถานศึกษา!'; ?>";
-                swal(alert_message,ProfilesEdu_0_institution)
-                return false; 
-            }
+   //          if ($('#ProfilesEdu_0_institution').val() == "" ) {
+   //              var ProfilesEdu_0_institution = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the name of the school! ':'กรุณากรอกชื่อสถานศึกษา!'; ?>";
+   //              swal(alert_message,ProfilesEdu_0_institution)
+   //              return false; 
+   //          }
 
-            if ($('#ProfilesEdu_0_date_graduation').val() == "" ) {
-                var ProfilesEdu_0_date_graduation = "<?php echo Yii::app()->session['lang'] == 1?'Please year of graduation! ':'กรุณาปีจบการศึกษา!'; ?>";
-                swal(alert_message,ProfilesEdu_0_date_graduation)
-                return false; 
-            }
-        } 
+   //          if ($('#ProfilesEdu_0_date_graduation').val() == "" ) {
+   //              var ProfilesEdu_0_date_graduation = "<?php echo Yii::app()->session['lang'] == 1?'Please year of graduation! ':'กรุณาปีจบการศึกษา!'; ?>";
+   //              swal(alert_message,ProfilesEdu_0_date_graduation)
+   //              return false; 
+   //          }
+   //      } 
 
-        if ($('#docqueue').text() == "") {
-         var docqueue = "<?php echo Yii::app()->session['lang'] == 1?'Please add attachments educational! ':'กรุณาเพิ่มไฟล์แนบวุฒิการศึกษา!'; ?>";
-         swal(alert_message,docqueue)
-         return false;
-     }
+   //      if ($('#docqueue').text() == "") {
+   //       var docqueue = "<?php echo Yii::app()->session['lang'] == 1?'Please add attachments educational! ':'กรุณาเพิ่มไฟล์แนบวุฒิการศึกษา!'; ?>";
+   //       swal(alert_message,docqueue)
+   //       return false;
+   //   }
 
- }else if(type_employees === '2'){
+ //}else 
+ //if(type_employees === '2'){
+      if ($('#User_username').val() == "" ) {
+            var User_username = "<?php echo Yii::app()->session['lang'] == 1?'Please enter your Employee ID! ':'กรุณากรอกรหัสพนักงาน!'; ?>";
+            swal(alert_message,User_username)
+            return false; 
+        }
     if ($('.department').val() == "" ) {
             var department = "<?php echo Yii::app()->session['lang'] == 1?'Please select department! ':'กรุณาเลือกแผนก!'; ?>";
             swal(alert_message,department)
             return false; 
-        }else if($('.department').val() != ""){
-            if ($('.position').val() == "" ) {
-                var position = "<?php echo Yii::app()->session['lang'] == 1?'กรุณาเลือกตำแหน่ง! ':'กรุณาเลือกตำแหน่ง!'; ?>";
-                swal(alert_message,position)
-                return false; 
-            }
         }
+        // else if($('.department').val() != ""){
+        //     if ($('.position').val() == "" ) {
+        //         var position = "<?php echo Yii::app()->session['lang'] == 1?'กรุณาเลือกตำแหน่ง! ':'กรุณาเลือกตำแหน่ง!'; ?>";
+        //         swal(alert_message,position)
+        //         return false; 
+        //     }
+        // }
     var type_card = $("input[name='type_card']:checked").val(); 
         if (typeof  type_card === 'undefined' || typeof  type_card === null) {
             var type_card_choose = "<?php echo Yii::app()->session['lang'] == 1?'Please choose a check. Choose your ID number or passport! ':'กรุณาเลือกเช็คเลือกเลขบัตรประชาชนหรือหนังสือเดินทาง!'; ?>";
@@ -905,9 +908,9 @@ if ($('.email').val() == "") {
             return false; 
         }
 
-    }
+   // }
 
- } 
+// } 
 
     
 }else if(type_users === '5'){  
@@ -1345,7 +1348,7 @@ function editNamehouse_registration(filedoc_id){
                         <div class="clearfix"></div>
                     </div>
                     <div id="office-section">
-                        <div class="row  mb-1 " id="employee_type" >
+                   <!--      <div class="row  mb-1 " id="employee_type_1" >
                             <div class="col-md-3 col-sm-12 text-right-md"> <strong><?= Yii::app()->session['lang'] == 1?'Employee section ':'ส่วนของพนักงาน'; ?><font color="red">*</font></strong></div>
                             <div class="col-sm-12 col-xs-12 col-md-8">
                                 <div class="form-group">
@@ -1363,7 +1366,7 @@ function editNamehouse_registration(filedoc_id){
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="row justify-content-center mb-1 pb-20" id="employee_detail">
                             <div class="col-md-4">
@@ -1372,6 +1375,7 @@ function editNamehouse_registration(filedoc_id){
                                     <?php
 
                                     $criteria= new CDbCriteria;
+                                    $criteria->compare('type_employee_id','2');
                                     $criteria->compare('active','y');
                                     $criteria->order = 'sortOrder ASC';
                                     $departmentModel = Department::model()->findAll($criteria);
@@ -1387,7 +1391,7 @@ function editNamehouse_registration(filedoc_id){
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label class="label_position"><?php echo $label->label_position; ?><font color="red">*</font></label>
+                                    <label class="label_position"><?php echo $label->label_position; ?></label>
                                     <?php
 
                                     $criteria= new CDbCriteria;
@@ -3617,6 +3621,7 @@ $("#reject").change(function(event) {
    $("#office-section").show();
    $(".form_language").hide();
    $("#office-section_gen").hide();
+   $("#employee_type_1").hide();
 
    $('.Branch').hide();
    $('.label_branch').hide();
@@ -3629,10 +3634,10 @@ $("#reject").change(function(event) {
    $('.children').hide();
    $('.Spouse').hide();
    $(".form_seamanbook").hide();
-   $(".form_attach_identification").show();
+   $(".form_attach_identification").hide();
    $(".form_attach_passport").hide();
    $(".form_attach_crew_identification").hide();
-   $(".form_attach_house_registration").show();
+   $(".form_attach_house_registration").hide();
    $(".form_birthday").show();
    $(".form_place_of_birth").show();
    $(".form_body").show();
@@ -3655,13 +3660,36 @@ $("#reject").change(function(event) {
    $(".form_history_of_severe_illness").show();
    $(".form_Edu").show();
    $(".form_WorkHistory").show();
-   $(".form_Qualification ").show();
+   $(".form_Qualification ").hide();
    $(".form_Training").show();
    $(".form_salary").hide();
 
    $(".required_idline").hide();
-   $(".required_identification").show();
-   $(".required_date_of_expiry").show();
+   // $(".required_identification").show();
+   // $(".required_date_of_expiry").show();
+              $(".required_Blood").hide();
+           $(".required_Height").hide();
+           $(".required_Weight").hide();
+           $(".required_race").hide();
+           $(".required_nationality").hide();
+           $(".required_sex").hide();
+           $(".required_father_firstname").hide();
+           $(".required_father_lastname").hide();
+           $(".required_mother_firstname").hide();
+           $(".required_mother_lastname").hide();
+           $(".required_nationality").hide();
+           $(".required_Emergency").hide();
+           $(".required_name_emergency").hide();
+           $(".required_relationship_emergency").hide();
+           $(".required_military").hide();
+           $(".required_history_of_severe_illness").hide();
+           $(".required_educational").hide();
+           $(".required_Attachments_educational").hide();
+
+           $(".form_attach_identification").hide();
+           $(".form_attach_house_registration").hide();
+           $(".form_Qualification ").hide();
+
 });
 $("#general").change(function(event) {
     $('.Branch').hide();
@@ -4000,6 +4028,7 @@ var new_forms = <?php echo $new_form; ?>;
                        $("#office-section").show();
                       // $(".form_language").show();
                        $("#office-section_gen").show();
+                        $("#employee_type_1").hide();
 
                        $('.Branch').hide();
                        $('.label_branch').hide();
@@ -4012,10 +4041,10 @@ var new_forms = <?php echo $new_form; ?>;
                        $('.children').hide();
                        $('.Spouse').hide();
                        $(".form_seamanbook").show();
-                       $(".form_attach_identification").show();
-                       $(".form_attach_passport").show();
-                       $(".form_attach_crew_identification").show();
-                       $(".form_attach_house_registration").show();
+                       $(".form_attach_identification").hide();
+                       $(".form_attach_passport").hide();
+                       $(".form_attach_crew_identification").hide();
+                       $(".form_attach_house_registration").hide();
                        $(".form_birthday").show();
                        $(".form_place_of_birth").show();
                        $(".form_body").show();
@@ -4038,13 +4067,37 @@ var new_forms = <?php echo $new_form; ?>;
                      $(".form_history_of_severe_illness").show();
                      $(".form_Edu").show();
                      $(".form_WorkHistory").show();
-                     $(".form_Qualification ").show();
+                     $(".form_Qualification ").hide();
                      $(".form_Training").show();
                      $(".form_salary").hide();
 
                      $(".required_idline").hide();
-                     $(".required_identification").hide();
-                     $(".required_date_of_expiry").hide();
+                     // $(".required_identification").hide();
+                     // $(".required_date_of_expiry").hide();
+
+                                $(".required_Blood").hide();
+           $(".required_Height").hide();
+           $(".required_Weight").hide();
+           $(".required_race").hide();
+           $(".required_nationality").hide();
+           $(".required_sex").hide();
+           $(".required_father_firstname").hide();
+           $(".required_father_lastname").hide();
+           $(".required_mother_firstname").hide();
+           $(".required_mother_lastname").hide();
+           $(".required_nationality").hide();
+           $(".required_Emergency").hide();
+           $(".required_name_emergency").hide();
+           $(".required_relationship_emergency").hide();
+           $(".required_military").hide();
+           $(".required_history_of_severe_illness").hide();
+           $(".required_educational").hide();
+           $(".required_Attachments_educational").hide();
+
+           $(".form_attach_identification").hide();
+           $(".form_attach_house_registration").hide();
+           $(".form_Qualification ").hide();
+
                  }else if (type_users === '1'){
 
                    $(".id_employee").hide();
@@ -4234,8 +4287,8 @@ var new_forms = <?php echo $new_form; ?>;
                            $('.Spouse').hide();
                        }
 
-                       var type_employee = $("input[name='type_employee']:checked").val();
-                       if (type_employee == '1') {
+                       // var type_employee = $("input[name='type_employee']:checked").val();
+                       // if (type_employee == '1') {
                           $(".required_Blood").hide();
                            $(".required_Height").hide();
                            $(".required_Weight").hide();
@@ -4258,30 +4311,30 @@ var new_forms = <?php echo $new_form; ?>;
                            $(".form_attach_identification").hide();
                            $(".form_attach_house_registration").hide();
                            $(".form_Qualification ").hide();
-                       }else if (type_employee == '2') {
-                               $(".required_Blood").show();
-                           $(".required_Height").show();
-                           $(".required_Weight").show();
-                           $(".required_race").show();
-                           $(".required_nationality").show();
-                           $(".required_sex").show();
-                           $(".required_father_firstname").show();
-                           $(".required_father_lastname").show();
-                           $(".required_mother_firstname").show();
-                           $(".required_mother_lastname").show();
-                           $(".required_nationality").show();
-                           $(".required_Emergency").show();
-                           $(".required_name_emergency").show();
-                           $(".required_relationship_emergency").show();
-                           $(".required_military").show();
-                           $(".required_history_of_severe_illness").show();
-                           $(".required_educational").show();
-                           $(".required_Attachments_educational").show();
+                       // }else if (type_employee == '2') {
+                       //         $(".required_Blood").show();
+                       //     $(".required_Height").show();
+                       //     $(".required_Weight").show();
+                       //     $(".required_race").show();
+                       //     $(".required_nationality").show();
+                       //     $(".required_sex").show();
+                       //     $(".required_father_firstname").show();
+                       //     $(".required_father_lastname").show();
+                       //     $(".required_mother_firstname").show();
+                       //     $(".required_mother_lastname").show();
+                       //     $(".required_nationality").show();
+                       //     $(".required_Emergency").show();
+                       //     $(".required_name_emergency").show();
+                       //     $(".required_relationship_emergency").show();
+                       //     $(".required_military").show();
+                       //     $(".required_history_of_severe_illness").show();
+                       //     $(".required_educational").show();
+                       //     $(".required_Attachments_educational").show();
 
-                           $(".form_attach_identification").show();
-                           $(".form_attach_house_registration").show();
-                           $(".form_Qualification ").show();
-                       }
+                       //     $(".form_attach_identification").show();
+                       //     $(".form_attach_house_registration").show();
+                       //     $(".form_Qualification ").show();
+                       // }
                        $(".id_employee").show();
                        $(".uploads_image").show();
                        $('.form_name').show();
@@ -4290,6 +4343,7 @@ var new_forms = <?php echo $new_form; ?>;
                            $("#office-section").show();
                            //$(".form_language").hide();
                            $("#office-section_gen").hide();
+                            $("#employee_type_1").hide();
 
                            $('.form_identification').show();
                            $('.form_identification_5').show();
@@ -4297,10 +4351,10 @@ var new_forms = <?php echo $new_form; ?>;
                            $('.form_passport_5').show();
                            $(".form_language").hide(); 
                            $(".form_seamanbook").hide();
-                           $(".form_attach_identification").show();
-                           $(".form_attach_passport").show();
+                           $(".form_attach_identification").hide();
+                           $(".form_attach_passport").hide();
                            $(".form_attach_crew_identification").hide();
-                           $(".form_attach_house_registration").show();
+                           $(".form_attach_house_registration").hide();
                            $(".form_birthday").show();
                            $(".form_place_of_birth").show();
                            $(".form_body").show();
@@ -4323,12 +4377,12 @@ var new_forms = <?php echo $new_form; ?>;
                            $(".form_history_of_severe_illness").show();
                            $(".form_Edu").show();
                            $(".form_WorkHistory").show();
-                           $(".form_Qualification ").show();
+                           $(".form_Qualification ").hide();
                            $(".form_Training").show();
 
                            $(".required_idline").hide();
-                           $(".required_identification").hide();
-                           $(".required_date_of_expiry").hide();
+                           // $(".required_identification").hide();
+                           // $(".required_date_of_expiry").hide();
                        }else if (type_users === '1'){
 
                         //var type_cards = $("input[name='type_card']:checked").val();
@@ -4485,7 +4539,7 @@ var new_forms = <?php echo $new_form; ?>;
                                      $('.form_identification').show();
                                      $('.form_identification_5').show();
                                      $('.form_passport_5').hide();
-                                     $(".form_attach_identification").show();
+                                     $(".form_attach_identification").hide();
                                      $(".form_attach_passport").hide();
                                 }else if (type_users === '5') {
                                      $('.form_passport').hide();
@@ -4505,7 +4559,7 @@ var new_forms = <?php echo $new_form; ?>;
                                      $('.form_identification_5').hide();
                                      $('.form_passport_5').show();
                                      $(".form_attach_identification").hide();
-                                     $(".form_attach_passport").show();
+                                     $(".form_attach_passport").hide();
                                  }else if (type_users === '5') {
                                      $('.form_passport').show();
                                      $('.form_identification').hide();
