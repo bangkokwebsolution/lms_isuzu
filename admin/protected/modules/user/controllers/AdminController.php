@@ -345,6 +345,7 @@ echo ($data);
 	{
 		$model=new User('search');
         $model->unsetAttributes();  // clear any default values
+
         $model->typeuser = array(2,3);
         $model->type_employee = array(1);
         $model->supper_user_status = true;
@@ -403,6 +404,7 @@ echo ($data);
 		
 		$id = $_POST['id'];
 		$model = User::model()->findByPk($id);
+		$Profile = Profile::model()->findByPk($id);
 		if($model->register_status == 0){
 			$model->register_status = 1;
 			$model->status = 1;
@@ -412,7 +414,7 @@ echo ($data);
         $genpass = $this->RandomPassword();
 		$model->verifyPassword = $genpass;
 		$model->password = UserModule::encrypting($genpass);
-		$model->username = $model->identification;
+		$model->username = $Profile->seamanbook;
 		$model->save(false);
 		if(Yii::app()->user->id){
 						Helpers::lib()->getLogregister($model);
@@ -441,7 +443,7 @@ echo ($data);
         $genpass = $this->RandomPassword();
 		$model->verifyPassword = $genpass;
 		$model->password = UserModule::encrypting($genpass);
-		$model->username = $model->identification;
+		$model->username = $model->email;
 		$model->save(false);
 		// if(Yii::app()->user->id){
 		// 				Helpers::lib()->getLogregister($model);
