@@ -64,7 +64,7 @@
 
 if($model->ques_type == 3) {
 												echo '										
-												<textarea class="examsta" rows="4" cols="50" name="lecture" >'.$currentQuiz->ans_id.'</textarea>
+												<textarea class="examsta form-control" rows="4" cols="50" name="lecture" >'.$currentQuiz->ans_id.'</textarea>
 												';
 
 											}else{

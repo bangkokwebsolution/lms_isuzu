@@ -428,11 +428,11 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 $link = $this->createUrl('news/detail/', array('id' => $value->cms_id));
             }
             ?>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="well">
                     <a href="<?php echo $link; ?>" <?= $new_tab ?>>
                         <div class="row">
-                            <div class="col-md-5 col-sm-5">
+                            <div class="col-md-5 col-sm-5 col-xs-5">
 
                                 <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/news/' . $value->cms_id . '/thumb/' . $value->cms_picture)) { ?>
 
@@ -448,7 +448,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
 
                             </div>
-                            <div class="col-md-7 col-sm-7">
+                            <div class="col-md-7 col-sm-7  col-xs-6">
                                 <h4 class="text22"><?php echo $value->cms_title ?></h4>
                                 <p class="p2"><?php echo $value->cms_short_title ?></p>
                                 <div class="news-date">
@@ -573,7 +573,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
             <div class="col-md-3 col-sm-6 col-xs-12 mb-1">
                 <a href="<?php echo $this->createUrl('/document/index'); ?>" class="btn btn-elearning bg-download">
                     <div class="row center-align">
-                        <div class="col-md-3 col-sm-3 col-xs-3">
+                        <div class="col-md-3 col-sm-3 col-xs-2">
                             <i class="fas fa-file-download"></i>
                         </div>
                         <div class="col-md-9 col-sm-9 col-xs-9">
@@ -586,7 +586,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
             <div class="col-md-3 col-sm-6 col-xs-12 mb-1">
                 <a href="<?php echo $this->createUrl('/usability/index'); ?>" class="btn btn-elearning bg-usability">
                     <div class="row center-align">
-                        <div class="col-md-3 col-sm-3 col-xs-3 ">
+                        <div class="col-md-3 col-sm-3 col-xs-2">
                             <i class="fas fa-list-ol"></i>
                         </div>
                         <div class="col-md-9 col-sm-9 col-xs-9">
@@ -599,7 +599,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
             <div class="col-md-3 col-sm-6 col-xs-12 mb-1">
                 <a href="<?php echo $this->createUrl('/faq/index'); ?>" class="btn btn-elearning bg-faq">
                     <div class="row center-align">
-                        <div class="col-md-3 col-sm-3" col-xs-3>
+                        <div class="col-md-3 col-sm-3 col-xs-2" >
                             <i class="fas fa-question-circle"></i>
                         </div>
                         <div class="col-md-9 col-sm-9 col-xs-9">
@@ -612,7 +612,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
             <div class="col-md-3 col-sm-6 col-xs-12 mb-1">
                 <a href="#" class="btn btn-elearning bg-user">
                     <div class="row center-align">
-                        <div class="col-md-3 col-sm-3 col-xs-3">
+                        <div class="col-md-3 col-sm-3 col-xs-2">
                             <i class="fas fa-users"></i>
                         </div>
                         <div class="col-md-9 col-sm-9 col-xs-9 text-center">

@@ -24,18 +24,6 @@ function DateThai($strDate)
 //  $strDate = "2008-08-14 13:42:44";
 //  echo "ThaiCreate.Com Time now : ".DateThai($strDate);
 ?>
-<!-- <div class="header-page parallax-window">
-    <div class="container">
-        <h1><?php echo $label->label_course; ?>
-            <small class="pull-right">
-                <ul class="list-inline list-unstyled">
-                    <li><a href="<?php echo $this->createUrl('/site/index'); ?>"><?php echo $label->label_homepage; ?></a></li> /
-                    <li><span class="text-bc"><?php echo $label->label_course; ?></span></li>
-                </ul>
-            </small>
-        </h1>
-    </div>
-</div> -->
 
 <div class="container">
     <nav aria-label="breadcrumb">
@@ -49,7 +37,7 @@ function DateThai($strDate)
 <section class="content" id="course">
     <div class="container">
         <div class="row">
-            <div class="col-sm-4 col-md-3">
+            <div class="col-sm-4 col-md-3 col-xs-12">
                 <!-- Search -->
                 <!-- <form id="searchForm" action="<?php echo $this->createUrl('course/Search') ?>" method="post">
                     <div class="input-group">
@@ -102,7 +90,7 @@ function DateThai($strDate)
                 <?php } ?>
             </div>
         </div>
-        <div class="col-sm-8 col-md-9">
+        <div class="col-sm-8 col-md-9 col-xs-12 course-mb">
             <div class="row">
                 <?php
                 if ($model_cate_tms) {
@@ -110,7 +98,7 @@ function DateThai($strDate)
                         $model_cate_tms->cate_id = $model_cate_tms->parent_id;
                     }
                     ?>
-                    <div class="gallery_product col-sm-6 col-md-4 filter cate-all">
+                    <div class="gallery_product col-sm-6 col-md-4 col-xs-12 filter cate-all">
                         <div class="well text-center">
                             <button class="btn btn-default filter-button btn-lg" data-filter="<?= $model_cate_tms->cate_id ?>" style="border:0;background-color: transparent;width: 100%;box-shadow: none;">
 
@@ -143,7 +131,7 @@ function DateThai($strDate)
 
                     ?>
 
-                    <div class="gallery_product col-sm-6 col-md-4 filter cate-all">
+                    <div class="gallery_product col-sm-6 col-md-4 col-xs-12 filter cate-all">
                         <div class="well text-center">
                             <!--                            <a href="course-detail.php-->
 
@@ -211,7 +199,7 @@ function DateThai($strDate)
                         }
                         ?>
 
-                        <div class="gallery_product col-sm-6 col-md-4 filter <?= $model->cate_id ?>" style="display: none;">
+                        <div class="gallery_product col-sm-6 col-xs-12 col-md-4 filter <?= $model->cate_id ?>" style="display: none;">
                             <div class="well text-center">
                                 <!--                            <a href="course-detail.php-->
                                     <a href="<?= $url; ?>" <?= $evnt ?>>
@@ -337,7 +325,7 @@ function DateThai($strDate)
                             //     }
                             // }
                             ?>
-                            <div class="gallery_product col-sm-6 col-md-4 filter <?= $model->cate_id ?>" style="display: none;">
+                            <div class="gallery_product col-sm-6 col-md-4 col-xs-12 filter <?= $model->cate_id ?>" style="display: none;">
                                 <div class="well text-center">
                                     <!--                            <a href="course-detail.php-->
                                         <a href="<?= $url; ?>" <?= $evnt ?>>

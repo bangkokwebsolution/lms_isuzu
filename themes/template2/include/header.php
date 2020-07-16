@@ -590,7 +590,7 @@ if (!empty($msg)) { ?>
                 </div>
                 <div class="modal-body">
                     <div class="row">
-                        <div class="col-sm-8 col-sm-offset-2">
+                        <div class="col-sm-8 col-sm-offset-2 col-xs-12">
                             <?php
                             if (!empty($_GET['error'])) {
                                 if (!empty($_GET['error']['status'])) {

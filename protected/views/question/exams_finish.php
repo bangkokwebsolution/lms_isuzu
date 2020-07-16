@@ -74,7 +74,7 @@ if($modelScore->type=='post' && !$state){
 <section class="content" id="exams-finish">
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-8">
+			<div class="col-sm-8 col-xs-12">
 				<div class="well bg-greendark">
 					<?php if($testType != "pre" && $quesType_ == 2){ ?>
 					<div class="well text-center result">

@@ -55,9 +55,9 @@ $arr = json_decode($real);
 				<div class="well">
 					<div class="exams">
 						<div class="row">
-							<div id="ques-show" class="col-md-12">
+							<div id="ques-show" class="col-md-12 col-sm-12 col-xs-12">
 								<form id="question-form" action="#" method="POST" role="form" onSubmit="return false">
-									<div class="col-md-8">
+									<div class="col-md-8 col-sm-12 col-xs-12">
 										<div class="form-group">
 											<?php
 											$strTotal = 0;
@@ -90,7 +90,7 @@ $arr = json_decode($real);
 												
 												 if($model->ques_type == 3) {
 												echo '										
-												<textarea class="examsta" rows="4" cols="50" name="lecture" >'.$currentQuiz->ans_id.'</textarea>
+												<textarea class="examsta form-control" rows="4" cols="50" name="lecture" >'.$currentQuiz->ans_id.'</textarea>
 												';
 
 											}else{

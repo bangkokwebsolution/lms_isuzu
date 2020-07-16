@@ -1079,7 +1079,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                             </div>
 
                             <div class="col-xs-6 visible-xs pl-0">
-                              <a class="pull-left back back-home" href="course-detail.php"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+                              <a class="pull-left back back-home" href="<?= Yii::app()->createUrl('course/detail/', array('id' => $model->course_id)); ?>"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
                             </div>
 
                             <div class="col-xs-6 col-sm-4 pr-0">

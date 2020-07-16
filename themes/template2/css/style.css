@@ -805,7 +805,7 @@ div.course-detail2 h4.text11 {
 
 .news .well .news-img {
   height: 120px;
-  width: 120px;
+  width: 100%;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -1530,7 +1530,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 1;
+  z-index: 100;
   top: 0;
   right: 0;
   overflow-x: hidden;
@@ -3974,7 +3974,9 @@ ol.stat-alert li::before {
 .mt-40 {
   margin-top: 40px;
 }
-
+.mt-2{
+  margin-top: 2em;
+}
 .mt-3 {
   margin-top: 3em;
 }
@@ -4154,6 +4156,34 @@ ol.stat-alert li::before {
   overflow: hidden;
 }
 
+@media screen and (max-width:600px){
+  .main-slide .item{
+    max-height: 400px;
+    min-height: auto;
+    overflow: inherit;
+  }
+  .slide-video .video-js{
+    height: 300px;
+  }
+  #course .well .course-img{
+        height: 250px;
+  }
+  .course-mb{
+    margin-top: 2em;
+  }
+  .card-img{
+    max-height: inherit  !important;
+  }
+}
+
+@media screen and (min-width:992px){
+  .navbar-collapse.collapse{
+    display: block!important;
+    height: auto!important;
+    padding-bottom: 0;
+    overflow: visible!important;
+  }
+}
 
 .fixed-header {
   transition: all 0.5s ease;
@@ -4724,6 +4754,12 @@ section#faq{
 .contact-well{
   padding: 0;
 }
+.contact-well-primary{
+  background-color: #010c65;
+}
+.contact-well-second{
+  background-color: #d40c1c;
+}
 
 .contact-well{
   border-radius: 4px;
@@ -4741,6 +4777,7 @@ section#faq{
 .contact-well .card-body{
   padding: 0 10px 15px;
   color: #fff;
+  height: 120px;
 }
 
 .contact-well .card-text{
@@ -4770,6 +4807,6 @@ section#faq{
 }
 .card-img{
   overflow: hidden;
-  max-height: 180px;
+  max-height: 260px;
   border-radius: 4px 4px 0 0;
 }

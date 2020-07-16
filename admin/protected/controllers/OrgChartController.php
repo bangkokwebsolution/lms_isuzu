@@ -297,7 +297,7 @@ class OrgChartController extends Controller
 	 		// 					'params' => array(':course_id'=>$course_id)
 	 		// 				)
 	 		// 			);
-
+	 	if($orgRoot->branch_id != null || $orgRoot->position_id != null || $orgRoot->department_id != null ){
 	 	$criteria = new CDbCriteria; 
 	 	$criteria->compare('course_id',$course_id);
 
@@ -309,13 +309,17 @@ class OrgChartController extends Controller
 		 		$criteria->compare('department_id',$orgRoot->department_id);
 		 	}
 
+		 	// var_dump($orgRoot->branch_id);
+		 	// var_dump($orgRoot->position_id);
+		 	// var_dump($orgRoot->department_id);
+
 	 	 $modelUsers_old = ChkUsercourse::model()->findAll($criteria);
+	 	}
 	 	 	 // array(
 	  			// 		'condition' => 'course_id=:course_id AND department_id=:department_id AND position_id=:position_id',
 	 				// 			'params' => array(':course_id'=>$course_id,':department_id'=>$orgRoot->department_id , ':position_id'=>$orgRoot->position_id )
 	  			// 	)
-
-
+		 	
 
 	 	$criteria = new CDbCriteria; 
 	 	$criteria->with = array('chk_usercourse');
@@ -347,6 +351,7 @@ class OrgChartController extends Controller
 		 	}
 		 }
 
+		 // var_dump(expression)
 		 if($modelUsers_old){
 		 	$criteria->compare('chk_usercourse.org_user_status',1);
 		 	$criteria->compare('chk_usercourse.course_id',$course_id);
@@ -386,7 +391,11 @@ class OrgChartController extends Controller
 		 	}elseif($orgRoot->department_id != ""){ // dept
 		 		$criteria->compare('t.department_id',$orgRoot->department_id);
 		 	}
-		 }
+		 }	
+		 // var_dump($orgRoot->department_id);
+		 // var_dump($orgRoot->position_id);
+		 // var_dump($orgRoot->branch_id);
+
 
 
 		 $usersall_chk = Users::model()->with('profiles')->findAll($criteria);

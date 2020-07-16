@@ -74,20 +74,24 @@ if(!empty($msg)){
 if ($ContactusNew_data) {
 foreach ($ContactusNew_data as $key => $value) {
 ?>
-            <div class="col-md-3 odd-even-contact">
-                <div class="well contact-well" style="border: 0px;">
+            <div class="col-md-3 col-sm-4 col-xs-12 odd-even-contact">
+                <?php 
+                if ($key%2==0) {
+                    echo '<div class="well contact-well contact-well-primary" style="border: 0px;">';
+                }else{
+                    echo '<div class="well contact-well contact-well-second" style="border: 0px;">';
+                } ?>
                     <div class="card-img">
                          <?php
-                                        if ($value['con_image'] == null) {
+                            if ($value['con_image'] == null) {
 
-                                            $img  = Yii::app()->theme->baseUrl . "/images/thumbnail-profile.png";
-                                        } else {
-                                        
-                                            $img = Yii::app()->baseUrl . '/uploads/contactusnew/' . $value['id'] . '/thumb/' . $value['con_image'];
-                                        }
-                                        ?>
+                                $img  = Yii::app()->theme->baseUrl . "/images/thumbnail-profile.png";
+                            } else {
+                            
+                                $img = Yii::app()->baseUrl . '/uploads/contactusnew/' . $value['id'] . '/thumb/' . $value['con_image'];
+                            }
+                          ?>
                         <img class="card-img-top" src="<?= $img ?>" alt="">
-                      <!--   <img class="card-img-top" src="https://www.w3schools.com/bootstrap4/img_avatar1.png" alt="Card image" style="width:100%"> -->
                     </div>
                     <div class="card-body">
                       <h4 class="card-title" >
@@ -133,22 +137,4 @@ foreach ($ContactusNew_data as $key => $value) {
       
     </div>
 </section>
-
-<script>
-  $(document).ready(function(){ 
-
-    var n = $(".odd-even-contact");
-    var odd = ".odd-even-contact:nth-of-type(odd)";
-    var even = ".odd-even-contact:nth-of-type(even)";
-
-    if (n = odd) {
-        $( ".contact-well").css("background-color","#d61b2a");
-    } 
-    if (n = even) {
-        $( ".contact-well").css("background-color","#010c65");
-    }
-
-});
-</script>
-
 

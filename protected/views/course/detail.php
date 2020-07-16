@@ -241,7 +241,7 @@ if($model){
     //));
 ?> -->
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4 col-sm-4 col-xs-12">
      <div class="course-active" id="sticker">
        <div class="card">
            <div class="card-body" align="center">
@@ -403,7 +403,7 @@ if($model){
 </div>
 
 
-<div class="col-sm-8 col-md-8 ">
+<div class="col-sm-8 col-md-8 col-xs-12">
 
     <div class="topic-course">
         <h3><?= $course->course_title ?> <?= $course->getGen($course->course_id); ?></h3>
