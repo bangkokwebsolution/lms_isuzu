@@ -1348,13 +1348,13 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                     <?php } ?>
                 <?php }?>
                 <?php if($step == 4){ ?>
-                   <li class="list-group-item ">
+                   <!-- <li class="list-group-item "> -->
                     <!-- <div class="pt-now"> You are here</div> -->
-                    <a href="<?= $pathCourseTest ?>" <?= $alertCourseTest ?> >
+                    <!-- <a href="<?= $pathCourseTest ?>" <?= $alertCourseTest ?> >
                         <span class="list__course"><?= $label->label_testFinalTimes; ?> <?= $key+2; ?></span>
                         <span class="btn btn-warning detailmore pull-right"><?= $label->label_gotoLesson ?>
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></a>
-                    </li>
+                    </li> -->
                 <?php } ?>
             <?php }else if($checkHaveCourseTest && $CheckPreTestAnsTextAreaCoursePost == true){ ?>
                <li class="list-group-item ">
