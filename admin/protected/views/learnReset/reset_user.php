@@ -62,7 +62,27 @@ Yii::app()->clientScript->registerScript('search', "
                                                 return $strName;
                                             },
                                         ),
-                                        
+                                        array(
+                                            'header' => 'Reset การสอบวัดผล ก่อนเรียน',
+                                            'type' => 'raw',
+                                            'value' => function($val) {
+                                                $examData = Coursescore::model()->find(array(
+                                                    'condition' => 'user_id=:user_id AND type="pre" AND active="y"',
+                                                    'params' => array(':user_id' => $val->user_id)));
+                                                if($examData){
+                                                    $evntExam = 'reset_exam';
+                                                    $btnClassExam = 'btn-danger';
+                                                } else {
+                                                    $evntExam = '';
+                                                    $btnClassExam = '';
+                                                }
+                                                return CHtml::button("Reset",array('class' => 'btn '.$evntExam.' '.$btnClassExam.'','data-id' => $val->user_id, 'type'=>'pre', 'style'=>'width: 66px;'));
+                                            },'htmlOptions' => array(
+                                                'style'=> "text-align: center;",
+                                            ),
+                                        ),
+
+
                                         array(
                                             'header' => 'Reset สอบก่อนเรียน',
                                             'type' => 'raw',
@@ -159,13 +179,13 @@ Yii::app()->clientScript->registerScript('search', "
                                             },'htmlOptions' => array(
                                                 'style'=> "text-align: center;",
                                             ),
-                                        ),
+                                        ),                                        
                                         array(
-                                            'header' => 'Reset การสอบวัดผล',
+                                            'header' => 'Reset การสอบวัดผล หลังเรียน',
                                             'type' => 'raw',
                                             'value' => function($val) {
                                                 $examData = Coursescore::model()->find(array(
-                                                    'condition' => 'user_id=:user_id AND active="y"',
+                                                    'condition' => 'user_id=:user_id AND type="post" AND active="y"',
                                                     'params' => array(':user_id' => $val->user_id)));
                                                 if($examData){
                                                     $evntExam = 'reset_exam';
@@ -174,7 +194,7 @@ Yii::app()->clientScript->registerScript('search', "
                                                     $evntExam = '';
                                                     $btnClassExam = '';
                                                 }
-                                                return CHtml::button("Reset",array('class' => 'btn '.$evntExam.' '.$btnClassExam.'','data-id' => $val->user_id));
+                                                return CHtml::button("Reset",array('class' => 'btn '.$evntExam.' '.$btnClassExam.'','data-id' => $val->user_id, 'type'=>'post', 'style'=>'width: 66px;'));
                                             },'htmlOptions' => array(
                                                 'style'=> "text-align: center;",
                                             ),
@@ -291,10 +311,11 @@ function InitialResetLearn() {
 
  $('.reset_exam').on('click',function(){
     var id = this.getAttribute('data-id');
+    var type = this.getAttribute('type');
     $.ajax({
         type: 'POST',
         url: "<?=Yii::app()->createUrl('LearnReset/get_dialog_exam');?>",
-        data:{ user_id:id },
+        data:{ user_id:id, type:type },
         success: function(data) {
             $('.modal-title').html('Reset การสอบ');
             $('.modal-body').html(data);
@@ -435,6 +456,7 @@ function saveModal() {
                         });
                         var id = $('input[name="user_id"]').val();
                         var type = $('input[name="reset_type"]').val();
+                        var type_test = $('input[name="type_test"]').val();
                         var checkLessonList = [];
                         var url = '';
                         if(type=='learn'){
@@ -466,7 +488,7 @@ function saveModal() {
                             $.ajax({
                                 type : 'POST',
                                 url : url,
-                                data: { checkedList:JSON.stringify(checkLessonList), id:id,reset_type:type,description:inputValue }
+                                data: { checkedList:JSON.stringify(checkLessonList), id:id,reset_type:type, type_test:type_test,description:inputValue }
                                 ,success:function(data){
                                     console.log(data);
                                     if(data=='learn'){

@@ -860,14 +860,15 @@ public function actionReset_university()
 
      $type = 'exam';
      $user_id = $_POST['user_id'];
+     $type_test = $_POST['type'];
      $test = '';
      $criteria = new CDbCriteria();
-     $criteria->condition = "user_id = $user_id AND courseonline.active = 'y'";
+     $criteria->condition = "user_id = $user_id AND courseonline.active = 'y' AND t.type= '".$type_test."'";
      $criteria->group = "t.course_id ,t.gen_id";
      $course = Coursescore::model()->with('course')->findAll($criteria);
 
      $respon = '';
-     $respon = $this->renderPartial('_modal_exam',array('course' => $course,'user_id' => $user_id,'type' => $type));
+     $respon = $this->renderPartial('_modal_exam',array('course' => $course,'user_id' => $user_id,'type' => $type,'type_test' => $type_test));
 
 
      exit();
@@ -875,6 +876,7 @@ public function actionReset_university()
 
  public function actionSaveResetExam()
  {
+    $type_test = $_POST['type_test'];
     $user_id = $_POST['id'];
     $courseData = json_decode($_POST['checkedList']);
     $reset_type = $_POST['reset_type'];
@@ -895,12 +897,67 @@ public function actionReset_university()
         $logReset->reset_type = 1;
         $logReset->reset_by = Yii::app()->user->id;
         if($logReset->save()){
+
+            if($type_test == 'pre'){
+                $score = Score::model()->findAllByAttributes(array(
+                    'user_id' => $user_id,
+                    'course_id' => $value,
+                    'gen_id' => $gen_id,
+                    'active' => 'y'
+                ));
+                foreach ($score as $key1 => $sc) {
+                    $sc->active = 'n';
+                    $sc->save(false);
+
+                    Logques::model()->deleteAll(array(
+                        'condition' => 'user_id=:user_id AND lesson_id=:lesson_id AND score_id=:score_id AND gen_id=:gen_id',
+                        'params' => array(':user_id' => $user_id,':lesson_id' => $sc->lesson_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
+
+                    Logchoice::model()->deleteAll(array(
+                        'condition' => 'lesson_id=:lesson_id AND user_id=:user_id AND score_id=:score_id AND gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $sc->lesson_id,':user_id' => $user_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
+
+                } // foreach ($score
+
+
+                $learn = Learn::model()->findAllByAttributes(array(
+                    'user_id' => $user_id,
+                    'course_id' => $value,
+                    'gen_id' => $gen_id,
+                    'lesson_active' => 'y'
+                ));
+
+                foreach ($learn as $key => $data) {
+                    $learnFile = LearnFile::model()->deleteAll('user_id_file="' . $user_id . '" AND learn_id="' . $data->learn_id . '" AND gen_id="'.$gen_id.'"');
+                    $LearnNote = LearnNote::model()->findAll('user_id="' . $user_id . '" AND gen_id="'.$gen_id.'"');
+                    foreach ($LearnNote as $key => $value_note) {
+                        $value_note->active = 'n';
+                        $value_note->save(false);
+                    }
+
+                    $data->lesson_status = null;
+                    $data->lesson_active = 'n';
+                    $data->save(false);
+
+                } // foreach ($learn
+
+                $sql_text_type_post = "";
+                $sql_text2 = "";
+                $sql_text_type_course = "";
+            }else{ // $type_test == 'pre'
+
+                $sql_text_type_post = " AND type='post'";
+                $sql_text_type_course = " AND type='course'";
+                $sql_text2 = " AND test_type='post'";
+            }
+
             $courseScore = Coursescore::model()->findAll(array(
-                'condition' => 'course_id=:course_id AND user_id=:user_id AND active = "y" AND gen_id=:gen_id',
+                'condition' => 'course_id=:course_id AND user_id=:user_id AND active = "y" AND gen_id=:gen_id'.$sql_text_type_post,
                 'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$gen_id)));
+            
 
             TempCourseQuiz::model()->deleteAll(array(
-                'condition' => 'course_id=:course_id AND user_id=:user_id AND gen_id=:gen_id',
+                'condition' => 'course_id=:course_id AND user_id=:user_id AND gen_id=:gen_id'.$sql_text_type_course,
                 'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$gen_id)));
 
             foreach ($courseScore as $valScore) {
@@ -909,13 +966,16 @@ public function actionReset_university()
          }
      }
 
+     if($type_test == 'course'){
+        $type_test == 'post';
+    }
 
      Courselogques::model()->deleteAll(array(
-        'condition' => 'course_id=:course_id AND user_id=:user_id AND gen_id=:gen_id',
+        'condition' => 'course_id=:course_id AND user_id=:user_id AND gen_id=:gen_id'.$sql_text2,
         'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$gen_id)));
 
      Courselogchoice::model()->deleteAll(array(
-        'condition' => 'course_id=:course_id AND user_id=:user_id AND gen_id=:gen_id',
+        'condition' => 'course_id=:course_id AND user_id=:user_id AND gen_id=:gen_id'.$sql_text2,
         'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$gen_id)));
 
      Passcours::model()->deleteAll(array(
@@ -925,7 +985,7 @@ public function actionReset_university()
         $courseName = CourseOnline::model()->findByPk($value);
         $courseMsg .= ($key+1)." หลักสูตร : ".$courseName->course_title.'<br>';
 
- }
+ } // foreach coursedata
 
  if(Yii::app()->user->id){
     Helpers::lib()->getControllerActionId();
@@ -944,6 +1004,7 @@ $message .= $courseMsg."</div>";
 $send = Helpers::lib()->SendMail($to,$subject,$message);
 
 echo $reset_type;
+
 }
 
 public function actionSaveResetPre()
