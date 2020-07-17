@@ -414,7 +414,7 @@ echo ($data);
         $genpass = $this->RandomPassword();
 		$model->verifyPassword = $genpass;
 		$model->password = UserModule::encrypting($genpass);
-		$model->username = $Profile->seamanbook;
+		$model->username = $Profile->passport;
 		$model->save(false);
 		if(Yii::app()->user->id){
 						Helpers::lib()->getLogregister($model);
