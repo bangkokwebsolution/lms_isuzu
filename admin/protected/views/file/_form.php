@@ -37,12 +37,14 @@
                     <?php echo $form->error($model,'file_name'); ?>
                 </div>
 
+                <?php if($model->lesson->type != "youtube"){ ?>
                 <div class="row">
                     <?php echo $form->labelEx($model,'pp_file'); ?>
                     <?php echo $form->fileField($model,'pp_file'); ?>
                     <?php echo $this->NotEmpty();?>
                     <?php echo $form->error($model,'pp_file'); ?>
                 </div>
+            <?php } ?>
 
                 <?php
 

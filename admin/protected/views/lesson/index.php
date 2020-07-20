@@ -185,6 +185,10 @@ EOD
 					        		$str = 'ไฟล์ Audio';
 					        		$count = count($data->fileAudio);
 					        		$path = 'FileAudio/index';
+					        	} else if($data->type == 'youtube') {
+					        		$str = 'จัดการ VDO';
+					        		$count = count($data->files);
+					        		$path = 'File/index';
 					        	}
 					        	return CHtml::link($str." (".$count.")", array(
 					      		$path,

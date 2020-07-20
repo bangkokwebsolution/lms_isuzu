@@ -401,7 +401,7 @@ body {
                 <div class="row">
                     <!-- <div class="col-md-12"> -->
                     <?php echo $form->labelEx($lesson,'type'); ?>
-                    <?php echo $form->dropDownList($lesson, 'type', array('vdo'=>'VDO','pdf'=>'PDF','scorm'=>'SCORM','audio'=>'AUDIO')) ?>
+                    <?php echo $form->dropDownList($lesson, 'type', array('vdo'=>'VDO','pdf'=>'PDF','scorm'=>'SCORM','audio'=>'AUDIO', 'youtube'=>'Youtube')) ?>
                     <?php echo $form->error($lesson,'type'); ?>
                     <!-- </div> -->
                 </div>
@@ -725,10 +725,96 @@ body {
                     <?php echo $form->error($fileScorm,'filename'); ?>
                 </div>
                 </div>
-                <br>
-            <br>
 
-            <div class="row">
+
+                <div class="youtube_vdo">
+                    <div class="row">
+                        <p>Link Youtube (link เต็ม ไม่ใช่รูปย่อ)</p>
+                    </div>
+                    <?php if($lesson->isNewRecord){ ?>
+                    <div id="div_youtube_0">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" name="link_youtube[0]" onkeypress="check_key(this)" onblur="check_blur(this)">
+                            </div>
+                            <div class="col-md-1">
+                                <button class="btn btn-danger" onclick="del_youtube(0)"> ลบ</button>
+                            </div>
+                        </div>
+                    </div>
+                     <?php
+                    }else{
+                        foreach ($lesson->files as $key => $value) {
+                            ?>
+                            <div id="div_youtube_<?= $value->id ?>">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <input class="form-control" type="text" name="link_youtube_old[<?= $value->id ?>]" onkeypress="check_key(this)" onblur="check_blur(this)" value="<?= $value->filename ?>">
+                                    </div>
+                                    <div class="col-md-1">
+                                        <button type="button" class="btn btn-danger" onclick="del_youtube(<?= $value->id ?>)"> ลบ</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    }
+                     ?>
+                    <div class="row" id="btn_add">
+                        <button type="button" class="btn btn-primary" onclick="add_youtube()" style="background: #1676ec; border: 1px solid #2265ca;"> เพิ่ม Youtube</button>
+                    </div>
+                    <script type="text/javascript">
+                        var run_num = 1;
+
+                        function del_youtube(num){
+                            $("#div_youtube_"+num).remove();
+                        }
+                        
+                        function add_youtube(){
+                            var text_append = '<div id="div_youtube_'+run_num+'">';
+                            text_append += '<div class="row">';
+                            text_append += '<div class="col-md-6">';
+                            text_append += '<input class="form-control" type="text" name="link_youtube['+run_num+']">';
+                            text_append += '</div>';
+                            text_append += '<div class="col-md-1">';
+                            text_append += '<button class="btn btn-danger" onclick="del_youtube('+run_num+')"> ลบ</button>';
+                            text_append += '</div>';
+                            text_append += '</div>';
+                            text_append += '</div>';
+                            $(text_append).insertBefore($('#btn_add'));
+                            run_num++;
+                        }
+
+                        function check_key(val){
+                            var input_val = $(val).val();
+                            var check = input_val.search("v=");
+                            if(check < 0 && input_val != ""){
+                                alert("Link Youtube ไม่ถูกต้อง");
+                                $(val).val("");
+                            }
+                        }
+
+                        function check_blur(val){
+                            var input_val = $(val).val();
+                            var check = input_val.search("v=");
+                            if(check < 0 && input_val != ""){
+                                alert("Link Youtube ไม่ถูกต้อง");
+                                $(val).val("");
+                            }
+                        }
+
+
+                    </script>
+                </div>
+
+
+
+
+
+                <br>
+                <br>
+
+            <div class="row" id="file_doc">
                 <?php echo $form->labelEx($fileDoc,'doc'); ?>
                 <div id="docqueue"></div>
                 <?php echo $form->fileField($fileDoc,'doc',array('id'=>'doc','multiple'=>'true')); ?>
@@ -883,6 +969,7 @@ body {
             $('.pdf_upload').hide();
             $('.audio_upload').hide();
             $('.scorm_upload').hide();
+        $('.youtube_vdo').hide();
             <?php
         } else {
             if($lesson->type == 'vdo'){
@@ -890,24 +977,37 @@ body {
                 $('.pdf_upload').hide();
                 $('.scorm_upload').hide();
                 $('.audio_upload').hide();
+        $('.youtube_vdo').hide();
                 <?php
             } else if($lesson->type == 'pdf'){
                 ?>
                 $('.scorm_upload').hide();
                 $('.vdo_upload').hide();
                 $('.audio_upload').hide();
+        $('.youtube_vdo').hide();
                 <?php
             } else if($lesson->type == 'scorm'){
                 ?>
                 $('.pdf_upload').hide();
                 $('.vdo_upload').hide();
                 $('.audio_upload').hide();
+        $('.youtube_vdo').hide();
                 <?php
             } else if($lesson->type == 'audio'){
                 ?>
                 $('.pdf_upload').hide();
                 $('.vdo_upload').hide();
                 $('.scorm_upload').hide();
+        $('.youtube_vdo').hide();
+                <?php
+            }   else if($lesson->type == 'youtube'){
+                ?>
+                $('.pdf_upload').hide();
+                $('.vdo_upload').hide();
+                $('.scorm_upload').hide();
+                $('.audio_upload').hide();
+                $('#file_doc').hide();
+        $('.youtube_vdo').show();
                 <?php
             }   
         }
@@ -919,22 +1019,33 @@ body {
         $('.scorm_upload').hide();
         $('.audio_upload').hide();
         $('.vdo_upload').show();
+        $('.youtube_vdo').hide();
     } else if(this.value == 'pdf'){
         $('.vdo_upload').hide();
         $('.scorm_upload').hide();
         $('.audio_upload').hide();
         $('.pdf_upload').show();
+        $('.youtube_vdo').hide();
     } else if(this.value == 'scorm'){
         $('.pdf_upload').hide();
         $('.vdo_upload').hide();
         $('.audio_upload').hide();
         $('.scorm_upload').show();
+        $('.youtube_vdo').hide();
     } else if(this.value == 'audio'){
         $('.pdf_upload').hide();
         $('.vdo_upload').hide();
         $('.scorm_upload').hide();
         $('.audio_upload').show();
-    }
+        $('.youtube_vdo').hide();
+    } else if(this.value == 'youtube'){
+        $('.pdf_upload').hide();
+        $('.vdo_upload').hide();
+        $('.scorm_upload').hide();
+        $('.audio_upload').hide();
+        $('#file_doc').hide();
+        $('.youtube_vdo').show();
+    } 
 })
 </script>
 <script type="text/javascript">

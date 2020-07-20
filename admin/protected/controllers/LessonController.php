@@ -182,6 +182,8 @@ public function actionCreate()
     {
         $time = date("dmYHis");
         $lesson->attributes=$_POST['Lesson'];
+
+        
         // $lesson->course_id = $_POST['course_id'];
         $lesson->lang_id = isset($_GET['lang_id']) ? $_GET['lang_id'] : 1 ;
         $lesson->parent_id = isset($_GET['parent_id']) ? $_GET['parent_id'] : 0 ;
@@ -224,6 +226,22 @@ public function actionCreate()
                     $thumbImage->resize(175);
                     $thumbImage->save($thumbPath);
                 }
+
+                
+
+                if($lesson->type == "youtube"){
+                    if(isset($_POST["link_youtube"])){
+                        // var_dump($_POST["link_youtube"]);
+                        foreach ($_POST["link_youtube"] as $key => $youtube) {
+                            $file = new File;
+                            $file->lesson_id = $lesson->id;
+                            $file->filename = $youtube;
+                            $file->length = "2.00";
+                            $file->save(false);
+                        }
+                    }   
+                }
+
 
                 if(isset($session['filenameCom']) || count($session['filenameCom'])!=0)
                 {
@@ -554,6 +572,33 @@ public function actionFormLesson($id,$type)
                         $thumbImage->resize(175);
                         $thumbImage->save($thumbPath);
                     }
+
+                    if($lesson->type == "youtube"){
+                        if(isset($_POST["link_youtube"])){
+                            foreach ($_POST["link_youtube"] as $key => $youtube) {
+                                $file = new File;
+                                $file->lesson_id = $lesson->id;
+                                $file->filename = $youtube;
+                                $file->length = "2.00";
+                                $file->save(false);
+                            }
+                        }
+
+                        if(isset($_POST["link_youtube_old"])){
+                            $model_files_old = File::model()->findAll("active='y' AND lesson_id='".$lesson->id."' ");
+                            foreach ($model_files_old as $key => $value) {
+                                $model_old = File::model()->findByPk($value->id);
+                                if(isset($_POST["link_youtube_old"][$value->id])){
+                                    $model_old->filename = $_POST["link_youtube_old"][$value->id];
+                                    $model_old->save(false);
+                                }else{                                    
+                                    $model_old->active = 'n';
+                                    $model_old->save(false);
+                                }
+                            }
+                        }
+                    }
+
 
                     if (isset($session['filenameCom']) || count($session['filenameCom'])!=0)
                     {
