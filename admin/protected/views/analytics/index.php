@@ -83,7 +83,8 @@ function initializeAnalytics()
 function getReport($analytics,$expression=null,$dateStart=null,$endDate=null,$alias=null) {
 
   // Replace with your view ID, for example XXXX.
-  $VIEW_ID = "219498559";
+  // $VIEW_ID = "219498559";
+  $VIEW_ID = "224206542";
 
   // Create the DateRange object.
   $dateRange = new Google_Service_AnalyticsReporting_DateRange();
@@ -379,13 +380,21 @@ $this->pageTitle=Yii::app()->name;
                       </tr>
                     </thead>
                     <tbody>
-                      <tr>
+                              <tr>
                         <td class="bg-mute">E-mail</td>
-                        <td>thorcdpt@gmail.com</td>
+                        <td>thoresen.elearning@gmail.com</td>
                       </tr>
 <!--                      <tr>
                         <td class="bg-mute">Password</td>
-                        <td>KPIElearning</td>
+                        <td>lms@2020</td>
+                      </tr>-->
+                     <!--  <tr>
+                        <td class="bg-mute">E-mail</td>
+                        <td>thorcdpt@gmail.com</td>
+                      </tr> -->
+<!--                      <tr>
+                        <td class="bg-mute">Password</td>
+                        <td>thoresendigital</td>
                       </tr>-->
                       <tr>
                         <td class="bg-mute">ไปที่</td>
