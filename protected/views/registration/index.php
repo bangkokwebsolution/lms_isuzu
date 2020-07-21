@@ -4255,11 +4255,9 @@ var new_forms = <?php echo $new_form; ?>;
 
                                      }              
                                  }else if(new_forms === 0 || typeof  new_forms === 'undefined' || new_forms === false){
-
                                      var type_users = $("input[name='type_user']:checked").val();
 
                                      if (type_users === '3') {
-
                     // var type_cards = $("input[name='type_card']:checked").val();
                     // if (type_cards === 'l') {
                         var branch = <?php echo $branch_js; ?>;
@@ -4335,20 +4333,32 @@ var new_forms = <?php echo $new_form; ?>;
                        //     $(".form_attach_house_registration").show();
                        //     $(".form_Qualification ").show();
                        // }
-                       $(".id_employee").show();
-                       $(".uploads_image").show();
-                       $('.form_name').show();
-                       $('.form_name_eng').show();
-                           $('.form_number_id').hide();
+                        var type_card = $("input[name='type_card']:checked").val();
+        
+                                if (type_card === 'l') {
+                                    $('.form_identification').show();
+                                    $('.form_passport').hide();
+                                    $('.form_identification_5').show();
+                                    $('.form_passport_5').hide();
+                                    // $(".form_attach_identification").show();
+                                    // $(".form_attach_passport").hide();
+                                }else if (type_card === 'p') {
+                                    $('.form_identification').hide();
+                                    $('.form_passport').show();
+                                    $('.form_identification_5').hide();
+                                    $('.form_passport_5').show();
+                                    // $(".form_attach_identification").hide();
+                                    // $(".form_attach_passport").show();
+                                }
+                           $(".id_employee").show();
+                           $(".uploads_image").show();
+                           $('.form_name').show();
+                           $('.form_name_eng').show();
+                           $('.form_number_id').show();
                            $("#office-section").show();
                            //$(".form_language").hide();
                            $("#office-section_gen").hide();
-                            $("#employee_type_1").hide();
-
-                           $('.form_identification').show();
-                           $('.form_identification_5').show();
-                           $('.form_passport').show();
-                           $('.form_passport_5').show();
+                           $("#employee_type_1").hide();
                            $(".form_language").hide(); 
                            $(".form_seamanbook").hide();
                            $(".form_attach_identification").hide();
@@ -4385,42 +4395,40 @@ var new_forms = <?php echo $new_form; ?>;
                            // $(".required_date_of_expiry").hide();
                        }else if (type_users === '1'){
 
-                        //var type_cards = $("input[name='type_card']:checked").val();
-                        // if (type_cards === 'l') {
-                            var type_card = $("input[name='type_card']:checked").val();
-                                if (type_card === 'l') {
-                                    $('.form_identification').show();
-                                    $('.form_passport').hide();
-                                    $('.form_identification_5').show();
-                                    $('.form_passport_5').hide();
-                                    $(".form_attach_identification").show();
-                                    $(".form_attach_passport").hide();
-                                }else if (type_card === 'p') {
-                                    $('.form_identification').hide();
-                                    $('.form_passport').show();
-                                    $('.form_identification_5').hide();
-                                    $('.form_passport_5').show();
-                                    $(".form_attach_identification").hide();
-                                    $(".form_attach_passport").show();
+                            // var type_card = $("input[name='type_card']:checked").val();
+                            //     // if (type_card === 'l') {
+                            //     //     $('.form_identification').show();
+                            //     //     $('.form_passport').hide();
+                            //     //     $('.form_identification_5').show();
+                            //     //     $('.form_passport_5').hide();
+                            //     //     $(".form_attach_identification").show();
+                            //     //     $(".form_attach_passport").hide();
+                            //     // }else if (type_card === 'p') {
+                            //     //     $('.form_identification').hide();
+                            //     //     $('.form_passport').show();
+                            //     //     $('.form_identification_5').hide();
+                            //     //     $('.form_passport_5').show();
+                            //     //     $(".form_attach_identification").hide();
+                            //     //     $(".form_attach_passport").show();
+                            //     // }
+                                var sick = $("input[name='history_of_illness']:checked").val();
+                                if (sick === 'y') {
+                                    $('.form_sickness').show();
+                                }else{
+                                    $('.form_sickness').hide();
                                 }
-                            var sick = $("input[name='history_of_illness']:checked").val();
-                            if (sick === 'y') {
-                                $('.form_sickness').show();
-                            }else{
-                                $('.form_sickness').hide();
-                            }
-                            var child = $("input[name='status_sm']:checked").val();
-                            if (child == 'm') {
-                               $('.children').show();
-                               $('.Spouse').show();
-                           }else{
-                               $('.children').hide();
-                               $('.Spouse').hide();
-                           }
-                           $(".id_employee").hide();
-                           $(".uploads_image").show();
-                           $('.form_name').show();
-                           $('.form_name_eng').show();
+                                var child = $("input[name='status_sm']:checked").val();
+                                if (child == 'm') {
+                                   $('.children').show();
+                                   $('.Spouse').show();
+                               }else{
+                                   $('.children').hide();
+                                   $('.Spouse').hide();
+                               }
+                               $(".id_employee").hide();
+                               $(".uploads_image").show();
+                               $('.form_name').show();
+                               $('.form_name_eng').show();
                                $('.form_number_id').hide();
                                $("#office-section").hide();
                                $(".form_language").show();
@@ -4428,14 +4436,14 @@ var new_forms = <?php echo $new_form; ?>;
 
                                $('.Branch').hide();
                                $('.label_branch').hide();
-                               // $('.form_identification').show();
-                               // $('.form_identification_5').show();
-                               // $('.form_passport').show();
-                               // $('.form_passport_5').show();
-                               //$(".form_language").show(); 
+                               $('.form_identification').show();
+                               $('.form_identification_5').show();
+                               $('.form_passport').show();
+                               $('.form_passport_5').show();
+        
                                $(".form_seamanbook").show();
-                               // $(".form_attach_identification").show();
-                               // $(".form_attach_passport").show();
+                               $(".form_attach_identification").show();
+                               $(".form_attach_passport").show();
                                $(".form_attach_crew_identification").show();
                                $(".form_attach_house_registration").show();
                                $(".form_birthday").show();
