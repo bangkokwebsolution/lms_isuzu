@@ -4237,7 +4237,7 @@ public function checkStepLesson($lesson){
                         $step_pass++;
                     }
                 }
-                if($lessonListValue->type == 'vdo'){
+                if($lessonListValue->type == 'vdo' || $lessonListValue->type == 'youtube'){
                     foreach ($lessonListValue->files as $les) { // วนไฟล์ วิดีโอ
                         $num_step++;
                         $learnModel = Learn::model()->find(array(
