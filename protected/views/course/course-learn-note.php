@@ -65,7 +65,10 @@ $cancel_msg = UserModule::t('Cancel');
       body {
        padding-bottom: 0;
      }
-
+      .youtube-iframe{
+        height: 80vh !important;
+      }
+     
      .video-js {
        max-width: 100%;
        width: 100%;
@@ -2057,10 +2060,10 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
               // console.log(id_you);
               // console.log(event.target.getDuration());
               arr_Duration[id_you] = event.target.getDuration();
-              arr_status[id_you] = 2;
+              // arr_status[id_you] = 2;
               // id_you = id_you[1];
               // console.log(player_+id_you.getCurrentTime());
-
+              console.log(arr_status);
               // console.log($("#"+$(event.target.l).attr("id")).getCurrentTime());
               // event.target.playVideo(); // เล่นวิดีโอ
               // console.log(player.getCurrentTime());
@@ -2255,8 +2258,8 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
       function onYouTubeIframeAPIReady() {
         <?php foreach ($model->files as $file){ ?>
         player_<?= $file->id ?> = new YT.Player('youtube_<?= $file->id ?>', {
-          height: '390',
-          width: '640',
+          height: 'auto',
+          width: '100%',
           videoId: link_video_<?= $file->id ?>,
           host: 'https://www.youtube.com',
           events: {
@@ -2282,15 +2285,26 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
 
 
               $learnFiles = Helpers::lib()->checkLessonFile($file,$learn_id);
+              ?>
+                <script type="text/javascript">
+                  arr_status[<?= $file->id ?>] = 2;
+                </script>
+                <?php
+
               if ($learnFiles == "notLearn") {
                 $statusValue = '<input type="text" class="knob" value="0" data-skin="tron" data-thickness="0.2" data-width="25" data-height="25" data-displayInput="false" data-fgColor="#F00" data-readonly="true"> ';
               } else if ($learnFiles == "learning") {
                 $statusValue = '<input type="text" class="knob" value="50" data-skin="tron" data-thickness="0.2" data-width="25" data-height="25" data-displayInput="false" data-fgColor="#ff8000" data-readonly="true"> ';
               } else if ($learnFiles == "pass") {
                 $statusValue = '<input type="text" class="knob" value="100" data-skin="tron" data-thickness="0.2" data-width="25" data-height="25" data-displayInput="false" data-fgColor="#0C9C14" data-readonly="true"> ';
+                ?>
+                <script type="text/javascript">
+                  arr_status[<?= $file->id ?>] = 1;
+                </script>
+                <?php
               }
 
-                                  
+
               ?>
               <div class="panel-group" id="accordion<?= $file->id;?>" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
