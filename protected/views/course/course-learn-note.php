@@ -2063,7 +2063,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
               // arr_status[id_you] = 2;
               // id_you = id_you[1];
               // console.log(player_+id_you.getCurrentTime());
-              console.log(arr_status);
+              // console.log(arr_status);
               // console.log($("#"+$(event.target.l).attr("id")).getCurrentTime());
               // event.target.playVideo(); // เล่นวิดีโอ
               // console.log(player.getCurrentTime());
@@ -2129,7 +2129,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
           arr_status[id_you] = 1;
           updateStatus(id_you);
           clearInterval(mysetInterval);
-          console.log("end");
+          // console.log("end");
         }       
         
 
@@ -2177,7 +2177,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
 
               // }else{
                 // console.log(event_playing);
-                console.log(event_playing.target.getCurrentTime());
+                // console.log(event_playing.target.getCurrentTime());
               // }
 
 
