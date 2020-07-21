@@ -20,7 +20,7 @@ class AboutController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions' => array('view','index','MultiDelete'),
+                'actions' => array('view','index','MultiDelete', 'update'),
                 'users' => array('*'),
                 ),
             array('allow',
