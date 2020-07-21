@@ -84,8 +84,10 @@ class AboutController extends Controller
 		if(isset($_POST['About']))
 		{
 			$model->attributes=$_POST['About'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->about_id));
+			if($model->save()){
+				$this->redirect(array('index'));
+				// $this->redirect(array('view','id'=>$model->about_id));
+			}
 		}
 
 		$this->render('update',array(
