@@ -1142,7 +1142,18 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                         'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                     )
                 );
+            } else if($lesson->type == 'youtube'){
+                $countFile = $lesson->fileCount;
+                $countLearnCompareTrueVdos = $user->countLearnCompareTrueVdos(
+                    array(
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
+                    )
+                );
+
+
             }
+
             if ($learnLesson && $learnLesson[0]->lesson_status == 'pass') {
                 return "pass";
             } else {
@@ -1277,7 +1288,7 @@ public function checkLessonPass_Percent($lesson,$format=null, $gen_id=null)
 
         $countFile = 0;
         $countLearnCompareTrueVdos = 0;
-        if($lesson->type == 'vdo'){
+        if($lesson->type == 'vdo' || $lesson->type == 'youtube'){
             $countFile = $lesson->fileCount;
             $countLearnCompareTrueVdos = $user->countLearnCompareTrueVdos(
                 array(

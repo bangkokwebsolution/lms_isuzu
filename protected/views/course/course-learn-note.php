@@ -1965,7 +1965,370 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
   endforeach;
 }
 
-}  else if(count($model->filePdf) && $model->type =='pdf'){
+}else if($model->type == 'youtube'){
+          ?>
+          <script type="text/javascript">
+            var youyube_playing;
+            $(document).ready(function() {
+
+              var $win = $(window); // or $box parent container
+              var $box = $(".youtube-iframe");
+              $win.on("click.Bst", function(event){      
+                if ( $box.has(event.target).length == 0  &&!$box.is(event.target) ){
+                  // console.log("ifffff");
+
+                  <?php foreach ($model->files as $file){ ?>
+                    player_<?= $file->id ?>.pauseVideo();
+                  <?php } ?>
+
+                }else{
+                  console.log("elseeeeee");
+                } 
+              });
+
+              // $(document).mousedown(function(e) {
+              //   if (e.which === 1 || e.which === 3) {
+              //    console.log("click");
+              //   }
+              // });
+ // <?php //foreach ($model->files as $file){ ?>
+ //  console.log($("#youtube_<?= $file->id ?>"));
+ //                $("#youtube_<?= $file->id ?>").blur(function() {
+ //                  console.log("blur <?= $file->id ?>");
+
+                 
+ //                    // player_<?= $file->id ?>.pauseVideo();
+ //                    // player_<?= $file->id ?>.pauseVideo();
+
+                 
+                });
+ // <?php //} ?>
+            });
+            // var toggle_check = 2;
+            // window.onblur = function() { 
+ // $(document).mousedown(function(e) {
+              // if (e.which === 1 || e.which === 3) {
+              // console.log("onblur");
+              // pauseVideoYoutube();
+
+              // console.log(youyube_playing);
+              // console.log(youyube_playing !== undefined);
+
+              // if(youyube_playing !== undefined){
+              //   toggle_check = 1;
+              //   // youyube_playing.target.pauseVideo();
+              //   console.log("!== undefined");
+              // }
+            // }
+          // });
+            //   <?php foreach ($model->files as $file){ ?>
+            //     player_<?= $file->id ?>.pauseVideo();
+            //   <?php } ?>
+
+             // }
+
+             function pauseVideoYoutube(){
+              // console.log("pauseVideoYoutube");
+
+              <?php //foreach ($model->files as $file){ ?>
+              // console.log("player_<?= $file->id ?> => pause");
+
+                // player_<?= $file->id ?>.pauseVideo();            
+              <?php //} ?>
+            }
+
+
+            var tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+
+            var arr_Duration = new Array();
+            var arr_status = new Array();
+
+            function onPlayerReady(event) {
+              // console.log(event);
+              // console.log(event.target);
+              // console.log(event.target.f);
+              // console.log($(event.target.l).attr("id")); // tag div id
+              var id_you = $(event.target.l).attr("id").split("_");
+              id_you = id_you[1];
+              // console.log(id_you);
+              // console.log(event.target.getDuration());
+              arr_Duration[id_you] = event.target.getDuration();
+              arr_status[id_you] = 2;
+              // id_you = id_you[1];
+              // console.log(player_+id_you.getCurrentTime());
+
+              // console.log($("#"+$(event.target.l).attr("id")).getCurrentTime());
+              // event.target.playVideo(); // เล่นวิดีโอ
+              // console.log(player.getCurrentTime());
+            }
+
+      function onPlayerPlaybackRateChange(event) {
+        // console.log('onPlayerPlaybackRateChange '+player.getCurrentTime());
+      }
+
+      function onPlayerError(event) {
+        // 2 – The request contains an invalid parameter value. For example, this error occurs if you specify a video ID that does not have 11 characters, or if the video ID contains invalid characters, such as exclamation points or asterisks.
+        // 5 – The requested content cannot be played in an HTML5 player or another error related to the HTML5 player has occurred.
+        // 100 – The video requested was not found. This error occurs when a video has been removed (for any reason) or has been marked as private.
+        // 101 – The owner of the requested video does not allow it to be played in embedded players.
+        // 150 – This error is the same as 101. It's just a 101 error in disguise!
+
+
+      }
+
+      // var done = false;
+      function onPlayerStateChange(event) {
+        // console.log(event);
+        if(event.data == 1){ //play
+          youyube_playing = event;
+
+          var id_you = $(event.target.l).attr("id").split("_");
+          id_you = id_you[1];
+
+          <?php foreach ($model->files as $file){ ?>
+            if(id_you != <?= $file->id ?>){
+              // player_<?= $file->id ?>.stopVideo();
+              player_<?= $file->id ?>.pauseVideo();
+            }
+          <?php } ?>
+
+          // if(toggle_check == 1){
+          //   youyube_playing.target.pauseVideo();
+          //       console.log("pauseVideo");
+          //       toggle_check = 2;
+          // }
+          // followVDOyoutube(event);
+          mysetInterval = setInterval(followVDOyoutube,1000);
+          event_playing = event;
+          $(window).focus();
+        }else if(event.data == 2){ //paused
+          event.target.pauseVideo();
+              // player_<?= $file->id ?>.pauseVideo();
+
+          // console.log(event.target.getCurrentTime());
+          // console.log(event.target.getDuration());
+          // console.log(arr_Duration);
+          // unset(event_playing);
+          // event_playing = event;
+          // console.log(event_playing);
+          clearInterval(mysetInterval);
+          $(window).focus();
+        }else if(event.data == 3){ // รี
+
+        }else if(event.data == 0){ // จบ
+          var id_you = $(event_playing.target.l).attr("id").split("_");
+            id_you = id_you[1];
+          event_playing = event;
+          arr_status[id_you] = 1;
+          updateStatus(id_you);
+          clearInterval(mysetInterval);
+          console.log("end");
+        }       
+        
+
+
+        //-1 (unstarted)
+        // 0 (ended)
+        // 1 (playing)
+        // 2 (paused)
+        // 3 (buffering)
+        // 5 (video cued).
+
+
+
+        // console.log("onPlayerStateChange "+player.getCurrentTime());
+        // if (event.data == YT.PlayerState.PLAYING && !done) {
+        //   // setTimeout(stopVideo, 6000);
+        
+
+        //   done = true;
+        // }
+      }
+
+
+
+      var mysetInterval, event_playing;
+
+        // function followVDOyoutube(event){ // เช็ค วิดีโอ
+        
+
+        //   mysetInterval = setInterval(myTimer,1000);
+        // }
+
+        function followVDOyoutube() {  // ติดตามเวลา vdo
+
+            var id_you = $(event_playing.target.l).attr("id").split("_");
+            id_you = id_you[1];
+
+            // console.log(event_playing.data);
+            if(event_playing.data == 1 && arr_status[id_you] == 2){
+              // console.log(arr_Duration[id_you] +" <= "+ Math.ceil(event_playing.target.getCurrentTime()));
+              // if(arr_Duration[id_you] <= Math.ceil(event_playing.target.getCurrentTime())){
+              //   arr_status[id_you] = 1;
+              //   console.log(arr_status[id_you]);
+                // clearInterval(mysetInterval);
+
+              // }else{
+                // console.log(event_playing);
+                console.log(event_playing.target.getCurrentTime());
+              // }
+
+
+              $.post('<?php echo $this->createUrl("//course/LearnVdo"); ?>', {
+               id: id_you,
+               learn_id: <?php echo $learn_id; ?>
+             }, function (data) {
+               data = JSON.parse(data);
+              //อัพเดต ให้ไอคอนบอกว่า กำลังเรียน
+               $('#imageCheck' + data.no).html(data.image);
+               $('#status_block_' + data.no).removeClass();
+               $('#status_block_' + data.no).addClass("label label-warning");
+               $('#status_block_' + data.no).html("<?php echo $msg_learning; ?>");
+               // console.log("imageCheck 1");
+               $('#imageCheckBar' + data.no).removeClass();
+               $('#imageCheckBar' + data.no).addClass(data.imageBar);
+               init_knob();
+             });
+
+
+            }
+
+        }
+
+        function updateStatus(file_id){
+
+          $.post('<?php echo $this->createUrl("//course/LearnVdo"); ?>', {
+           id: file_id,
+           learn_id: <?php echo $learn_id; ?>,
+           status: "success"
+         }, function (data) {
+           data = JSON.parse(data);
+           $('#imageCheck' + data.no).html(data.image);
+           $('#status_block_' + data.no).removeClass();
+           $('#status_block_' + data.no).addClass("label label-success");
+           $('#status_block_' + data.no).html("<?php echo $msg_learn_pass; ?>");
+           // console.log("imageCheck 2");
+           $('#imageCheckBar' + data.no).removeClass();
+           $('#imageCheckBar' + data.no).addClass(data.imageBar);
+           init_knob();
+           if(data.imageBar == 'success'){ // แถบสถานะ เรียบจบ
+            swal({
+             title: "<?= $pass_msg ?>",
+             text: "<?= $next_step_msg ?>",
+             type: "success",
+             confirmButtonText: "<?= $ok_msg ?>",
+             cancelButtonText: "<?= $cancel_msg ?>",
+             showCancelButton: true,
+             closeOnConfirm: true,
+             closeOnCancel: true
+           },
+           function(isConfirm) {
+             if (isConfirm) {
+              window.location.href = "<?php echo $this->createUrl('course/detail'); ?>"+"/"+<?= $model->course_id; ?>;
+            }
+          }
+          );
+          }
+           });
+
+        }
+
+
+
+
+
+
+
+      function stopVideo() {
+        player.stopVideo();
+        // console.log(player.getCurrentTime());
+
+      }
+
+      <?php foreach ($model->files as $file){ ?>
+        var player_<?= $file->id ?>;
+      <?php } ?>
+      function onYouTubeIframeAPIReady() {
+        <?php foreach ($model->files as $file){ ?>
+        player_<?= $file->id ?> = new YT.Player('youtube_<?= $file->id ?>', {
+          height: '390',
+          width: '640',
+          videoId: link_video_<?= $file->id ?>,
+          host: 'https://www.youtube.com',
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange,
+            'onError': onPlayerError,
+            'onPlaybackRateChange' : onPlayerPlaybackRateChange
+          }
+        });
+      <?php } ?>
+      }
+
+          </script>
+
+
+          <?php
+            foreach ($model->files as $file){
+              $youtube_id = $file->filename;
+              $youtube_id = explode("v=", $youtube_id);
+              $youtube_id = $youtube_id[1];
+              $youtube_id = explode("&", $youtube_id);
+              $youtube_id = $youtube_id[0];
+
+
+              $learnFiles = Helpers::lib()->checkLessonFile($file,$learn_id);
+              if ($learnFiles == "notLearn") {
+                $statusValue = '<input type="text" class="knob" value="0" data-skin="tron" data-thickness="0.2" data-width="25" data-height="25" data-displayInput="false" data-fgColor="#F00" data-readonly="true"> ';
+              } else if ($learnFiles == "learning") {
+                $statusValue = '<input type="text" class="knob" value="50" data-skin="tron" data-thickness="0.2" data-width="25" data-height="25" data-displayInput="false" data-fgColor="#ff8000" data-readonly="true"> ';
+              } else if ($learnFiles == "pass") {
+                $statusValue = '<input type="text" class="knob" value="100" data-skin="tron" data-thickness="0.2" data-width="25" data-height="25" data-displayInput="false" data-fgColor="#0C9C14" data-readonly="true"> ';
+              }
+
+                                  
+              ?>
+              <div class="panel-group" id="accordion<?= $file->id;?>" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                  <div class="panel-heading" role="tab" id="heading<?php echo $file->id; ?>">
+                    <h4 class="panel-title">
+                      <a id="a_slide<?php echo $file->id; ?>" data-toggle="collapse"
+                        data-parent="#myGroup"
+                        href="#collapse<?= $file->id;?>"
+                        aria-expanded="true"
+                        aria-controls="collapse<?php echo $file->id; ?>">
+                        <?php echo '<div style="float: left; margin-right:10px;" id="imageCheck' . $file->id . '" >' . $statusValue . '</div> <label class="clname">' . $file->getRefileName() . '</label>'; ?></a>
+                      </h4>
+                    </div>
+                    <span style="color:red; font-weight: bold; font-size: 20px; " id="timeTest1"></span>
+                    <div id="collapse<?php echo $file->id; ?>" class="panel-collapse collapse<?php echo ($idx == 1) ? " in" : ""; ?>" role="tabpanel" aria-labelledby="heading<?php echo $file->id; ?>">
+                      <div class="panel-body" style="background-color: #ddd; padding: 4px;">                        
+                        <div class="split-me" id="split-me<?php echo $idx; ?>">
+                          <div class="col-md-<?php echo empty($imageSlide) ? 12 : 6; ?>"
+                            style="padding: 0;">
+                            <div class="youtube-iframe" id="youtube_<?= $file->id ?>"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              <script type="text/javascript">
+                var youtube_<?= $file->id ?>;
+                var link_video_<?= $file->id ?> = "<?= $youtube_id ?>";
+                // console.log(link_video_<?= $file->id ?>);
+              </script>
+              <?php
+              $idx++;
+            }
+
+
+        }  else if(count($model->filePdf) && $model->type =='pdf'){
                         //$modelPdf = ControlVdo::getChilds($_GET['id'],0,$lessonCurrent->type);
   if($model->filePdf) {
    foreach ($model->filePdf as $key => $file) {
@@ -2132,10 +2495,13 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                   </div>
                                   <script>
                                     $('#myCarousel<?= $file->id; ?>').on('slid.bs.carousel', '', function() {
+            console.log("เลื่อน slide");
+                                      
                                       <?php if($modelLearnFilePdf->learn_file_status!='s') { ?>
                                         $("#nextPageTag<?= $file->id; ?>").css("display", "none");
                                         var $this = $(this);
                                         $this.children('.left.carousel-control').show();
+
                                         if($('#carouselInner<?= $file->id; ?> .item:first').hasClass('active')){
                                           $("#myCarousel<?= $file->id; ?>").children("#prePageTag<?= $file->id; ?>").hide();
                                         }

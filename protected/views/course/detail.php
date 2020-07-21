@@ -798,6 +798,85 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                                                                             </script> 
                                                                             <?php 
                                                                         } 
+                                                                    } else if($lessonListValue->type == 'youtube'){
+                                                                    ?>
+                                                                    <div class="stepcoursediv">
+                                                                        <div>
+                                                                            <span class="stepcourse"><?php echo $label->label_step; ?> <?= $idx++; ?>
+                                                                            </span><?php echo $label->label_gotoLesson; ?>
+                                                                        </div>
+                                                                    </div>
+                                                                    <?php
+                                                                    foreach ($lessonListValue->files as $les) {
+                                                                        if ($isChecklesson) {
+                                                                            if(!$prelearn){
+                                                                                $learnlink = 'javascript:void(0);';
+                                                                                $learnalert = 'alertswalpretest();';
+                                                                            } else{
+                                                                                $criteriaPre = new CDbCriteria;
+                                                                                $criteriaPre->compare('lesson_id',$lessonListValue->id);
+                                                                                $criteriaPre->compare('user_id',Yii::app()->user->id);
+                                                                                $criteriaPre->compare('type','pre');
+                                                                                $criteriaPre->compare('gen_id', $gen_id);
+                                                                                $criteriaPre->compare('active','y');
+                                                                                $modelPreScore = Score::model()->findAll($criteriaPre);
+                                                                                $flagCheckPre = true;
+                                                                                if($modelPreScore){
+                                                                                    $checkPrePass = array();
+                                                                                    foreach ($modelPreScore as $key => $scorePre) {
+                                                                                        $checkPrePass[] = $scorePre->score_past;
+                                                                                    }
+                                                                                    if(!in_array("y", $checkPrePass)){
+                                                                                        if(count($modelPreScore) < 1){
+                                                                                            $flagCheckPre = false;
+                                                                                        }
+                                                                                    }
+                                                                                } 
+                                                                                if(!$flagCheckPre){
+                                                                                    $learnlink = 'javascript:void(0);';
+                                                                                    $learnalert = 'alertswalpretest();';    
+                                                                                }elseif ($can_next_step  != 2){
+                                                                                    $learnlink = $this->createUrl('/course/courselearn', array('id' => $lessonListValue->id, 'file' => $les->id));
+                                                                                    $learnalert = '';    
+                                                                                }else{
+                                                                                    $learnlink = 'javascript:void(0);';
+                                                                                    $learnalert = 'alertswalpretest();';   
+                                                                                }
+                                                                            }
+                                                                        }else{
+                                                                            $learnlink = 'javascript:void(0);';
+                                                                            $learnalert = 'alertSequence();';
+                                                                        }
+                                                                        $learnFiles = Helpers::lib()->checkLessonFile($les,$learnModel->learn_id);
+                                                                        if ($learnFiles == "notLearn") {
+                                                                            $statusValue = '<span class="label label-default" >'.$label->label_notLearn.' </span>';
+                                                                        } else if ($learnFiles == "learning") {
+                                                                            $statusValue = '<span class="label label-warning" >'. $label->label_learning.'</span>';
+                                                                        } else if ($learnFiles == "pass") {
+                                                                            $statusValue = '<span class="label label-success" >'.$label->label_learnPass.'</span>';
+                                                                        }
+                                                                        ?>
+                                                                            <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
+                                                                                <li class="list-group-item ">
+                                                                                <span class="pull-right">
+                                                                                    <span id="lblduration-<?=$les->id?>"></span>  <span class="btn btn-warning detailmore"><?php echo $label->label_gotoLesson; ?> <i class="fa fa-play-circle"></i> </span></span>
+                                                                                    <span class="vdocourse list__course"><?= $les->getRefileName() ?> </span>&nbsp;<?=$statusValue?>
+                                                                                    <div class="hidden">
+                                                                                        <video  id="video_player<?=$les->id?>" width="320" height="240" controls>
+                                                                                            <source src="<?php echo $les->filename;?>" type="video/mp4">
+                                                                                            </video>
+                                                                                            <div id="meta"></div>   
+                                                                                        </div>
+                                                                                    </li>
+                                                                                </a> 
+                                                                                <script type="text/javascript">
+                                                                                   var vid = document.getElementById("video_player"+<?=$les->id?>);
+                                                                                   vid.onloadedmetadata = function() {
+                                                                                    getDuration(<?=$les->id?>);
+                                                                                };
+                                                                            </script> 
+                                                                            <?php 
+                                                                        } 
                                                                     } else if($lessonListValue->type == 'scorm') {
                                                                         foreach ($lessonListValue->fileScorm as $les) {
                                                                             if(!$prelearn){

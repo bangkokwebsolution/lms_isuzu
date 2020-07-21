@@ -121,12 +121,7 @@ class CoursequestionController extends Controller
             $course = CourseOnline::model()->findByPk($id);
             $gen_id = $course->getGenID($course->course_id);
             $courseStatus = Helpers::lib()->checkCoursePass($id);
-
-            /*if($course) {
-                $courseStatus = "pass";
-            }*/
-            //$courseStatus = "pass";
-            //$lesson = Lesson::model()->findByPk($id);
+            
             if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
                 $langId = Yii::app()->session['lang'] = 1;
                 Yii::app()->language = 'en';
