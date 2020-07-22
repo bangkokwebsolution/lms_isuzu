@@ -857,12 +857,13 @@ if ($('.email').val() == "") {
             swal(alert_message,Profile_birthday)
             return false; 
         }
-        var status_sm = $("input[name='status_sm']:checked").val(); 
-        if (typeof  status_sm === 'undefined' || typeof  status_sm === null) {
-            var status_message = "<?php echo Yii::app()->session['lang'] == 1?'Please select a status check! ':'กรุณาเลือกเช็คสถานภาพ!'; ?>";
-            swal(alert_message,status_message)
-            return false;
-        }else if(status_sm === 'm'){
+        // var status_sm = $("input[name='status_sm']:checked").val(); 
+        // if (typeof  status_sm === 'undefined' || typeof  status_sm === null) {
+        //     var status_message = "<?php echo Yii::app()->session['lang'] == 1?'Please select a status check! ':'กรุณาเลือกเช็คสถานภาพ!'; ?>";
+        //     swal(alert_message,status_message)
+        //     return false;
+        // }else
+         if(status_sm === 'm'){
             if ($('#Profile_number_of_children').val() == "" ) {
                 var Profile_number_of_children = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the number of children! ':'กรุณากรอกจำนวนบุตร!'; ?>";
                 swal(alert_message,Profile_number_of_children)
@@ -883,24 +884,24 @@ if ($('.email').val() == "") {
 
         }
 
-        var accommodation = $("input[name='accommodation']:checked").val(); 
-        if (typeof  accommodation === 'undefined' || typeof  accommodation === null) {
-            var accommodation_message = "<?php echo Yii::app()->session['lang'] == 1?'Please select a residence check! ':'กรุณาเลือกเช็คที่อยู่อาศัย!'; ?>";
-            swal(alert_message,accommodation_message)
-            return false;
-        } 
+        // var accommodation = $("input[name='accommodation']:checked").val(); 
+        // if (typeof  accommodation === 'undefined' || typeof  accommodation === null) {
+        //     var accommodation_message = "<?php echo Yii::app()->session['lang'] == 1?'Please select a residence check! ':'กรุณาเลือกเช็คที่อยู่อาศัย!'; ?>";
+        //     swal(alert_message,accommodation_message)
+        //     return false;
+        // } 
 
-        if ($('#Profile_domicile_address').val() == "" ) {
-            var Profile_domicile_address = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the address on the ID card! ':'กรุณากรอกที่อยู่ตามบัตรประชาชน!'; ?>";
-            swal(alert_message,Profile_domicile_address)
-            return false; 
-        }
+        // if ($('#Profile_domicile_address').val() == "" ) {
+        //     var Profile_domicile_address = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the address on the ID card! ':'กรุณากรอกที่อยู่ตามบัตรประชาชน!'; ?>";
+        //     swal(alert_message,Profile_domicile_address)
+        //     return false; 
+        // }
 
-        if ($('#Profile_address').val() == "" ) {
-            var Profile_address = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the address! ':'กรุณากรอกที่อยู่!'; ?>";
-            swal(alert_message,Profile_address)
-            return false; 
-        }
+        // if ($('#Profile_address').val() == "" ) {
+        //     var Profile_address = "<?php echo Yii::app()->session['lang'] == 1?'Please enter the address! ':'กรุณากรอกที่อยู่!'; ?>";
+        //     swal(alert_message,Profile_address)
+        //     return false; 
+        // }
 
         if ($('#Profile_tel').val() == "" ) {
             var Profile_tel = "<?php echo Yii::app()->session['lang'] == 1?'Please enter phone number! ':'กรุณากรอกเบอร์โทร!'; ?>";
@@ -1327,10 +1328,20 @@ function editNamehouse_registration(filedoc_id){
                             <label for="accept" class="bg-success text-black">
                                 <?php echo $label->label_ship_public; ?> </label>
                             </div>
+                            <?php
+                             // if (Yii::app()->user->id == null) {
+                    $chk_status_reg = $SettingAll = Helpers::lib()->SetUpSetting();
+                    $chk_status_reg = $SettingAll['ACTIVE_OFFICE'];
+                    if ($chk_status_reg) {
+                            ?>
                             <div class="radio radio-danger radio-inline">
                                 <input type="radio" name="type_user" id="reject" value="3" <?php if ($profile->type_user == 3) : ?> checked="checked" <?php endif ?>>
                                 <label for="reject" class="bg-danger text-black"><?php echo $label->label_personnel; ?> </label>
                             </div>
+                            <?php
+                        }
+                    //}
+                            ?>
                         </div>
                     </div>
 
@@ -1954,7 +1965,7 @@ function editNamehouse_registration(filedoc_id){
                 </div>
             -->
             <div class="row  mt-1 mb-1 form_marital_status">
-                <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_marital_status; ?><font color="red">*</font></strong></div>
+                <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_marital_status; ?><font class="required_marital_status" color="red">*</font></strong></div>
                 <div class="col-md-4">
                     <div class="form-group">
 
@@ -2068,7 +2079,7 @@ function editNamehouse_registration(filedoc_id){
 </div>
 
 <div class="row  mt-1 mb-1 form_accommodation">
-    <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_accommodation; ?><font color="red">*</font></strong></div>
+    <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_accommodation; ?><font class="required_accommodation" color="red">*</font></strong></div>
     <div class="col-md-6 col-xs-12">
         <div class="form-group">
 
@@ -2100,7 +2111,7 @@ function editNamehouse_registration(filedoc_id){
     <div class="col-md-8 col-sm-12 col-xs-12">
         <div class="form-group">
 
-            <label><?php echo $label->label_domicile_address; ?><font color="red">*</font></label>
+            <label><?php echo $label->label_domicile_address; ?><font class="required_domicile_address" color="red">*</font></label>
             <?php echo $form->textArea($profile, 'domicile_address', array('class' => 'form-control', 'cols' => "30", 'rows' => "3", 'placeholder' => $label->label_domicile_address)); ?>
             <?php echo $form->error($profile, 'domicile_address', array('class' => 'error2')); ?>
 
@@ -2118,7 +2129,7 @@ function editNamehouse_registration(filedoc_id){
     <div class="col-md-8 col-sm-12 col-xs-12">
         <div class="form-group">
 
-            <label><?php echo $label->label_address; ?><font color="red">*</font></label>&nbsp;&nbsp;&nbsp;&nbsp;
+            <label><?php echo $label->label_address; ?><font class="required_address" color="red">*</font></label>&nbsp;&nbsp;&nbsp;&nbsp;
             <div class="checkbox checkbox-danger checkbox-inline">
                 <input type="checkbox" name="address_parent" id="address_parent" value="y" <?php if ($profile->address_parent == "y") : ?> checked="checked" <?php endif ?>>
                 <label for="address_parent" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'
@@ -3685,6 +3696,10 @@ $("#reject").change(function(event) {
            $(".required_history_of_severe_illness").hide();
            $(".required_educational").hide();
            $(".required_Attachments_educational").hide();
+           $(".required_marital_status").hide();
+           $(".required_accommodation").hide();
+           $(".required_domicile_address").hide();
+           $(".required_address").hide();
 
            $(".form_attach_identification").hide();
            $(".form_attach_house_registration").hide();
@@ -3764,6 +3779,10 @@ $("#card-7").change(function(event) {
            $(".required_history_of_severe_illness").hide();
            $(".required_educational").hide();
            $(".required_Attachments_educational").hide();
+           $(".required_marital_status").hide();
+           $(".required_accommodation").hide();
+           $(".required_domicile_address").hide();
+           $(".required_address").hide();
 
            $(".form_attach_identification").hide();
            $(".form_attach_house_registration").hide();
@@ -3810,6 +3829,10 @@ $("#card-8").change(function(event) {
            $(".required_history_of_severe_illness").show();
            $(".required_educational").show();
            $(".required_Attachments_educational").show();
+           $(".required_marital_status").show();
+           $(".required_accommodation").show();
+           $(".required_domicile_address").show();
+           $(".required_address").show();
 
            $(".form_attach_identification").show();
            $(".form_attach_house_registration").show();
@@ -4093,6 +4116,10 @@ var new_forms = <?php echo $new_form; ?>;
            $(".required_history_of_severe_illness").hide();
            $(".required_educational").hide();
            $(".required_Attachments_educational").hide();
+           $(".required_marital_status").hide();
+           $(".required_accommodation").hide();
+           $(".required_domicile_address").hide();
+           $(".required_address").hide();
 
            $(".form_attach_identification").hide();
            $(".form_attach_house_registration").hide();
@@ -4305,6 +4332,10 @@ var new_forms = <?php echo $new_form; ?>;
                            $(".required_history_of_severe_illness").hide();
                            $(".required_educational").hide();
                            $(".required_Attachments_educational").hide();
+                           $(".required_marital_status").hide();
+                           $(".required_accommodation").hide();
+                           $(".required_domicile_address").hide();
+                           $(".required_address").hide();
 
                            $(".form_attach_identification").hide();
                            $(".form_attach_house_registration").hide();

@@ -430,6 +430,7 @@ Class Helpers
         $SetUpSetting['SITE_TEL'] = $Setting->settings_tel;
         $SetUpSetting['SITE_LINE'] = $Setting->settings_line;
         $SetUpSetting['SITE_EMAIL'] = $Setting->settings_email;
+        $SetUpSetting['ACTIVE_OFFICE'] = $Setting->settings_register_office;
 
         return $SetUpSetting;
     }

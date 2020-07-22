@@ -489,6 +489,7 @@ if ($profile->type_user == 1) {
     $users->status = 0;
     $users->register_status = 0;
     $users->position_id = $_POST['position_gen'];
+    $users->department_id = $_POST['department_gen'];
 }else if($profile->type_user == 5){
     $users->username = $_POST['idcard'];
     $users->status = 0;
@@ -498,6 +499,7 @@ if ($profile->type_user == 1) {
     $users->register_status = 1;
     $users->status = 1;
     $users->position_id = $_POST['User'][position_id];
+    $users->department_id = $_POST['User'][department_id];
 }
 
     // $profile->generation = $gen->id_gen;
@@ -1141,6 +1143,14 @@ public function actionUpdate() {
       }else{
          $profile->address_parent = 'n'; 
      }
+
+     if ($profile->type_user == 1) {
+    $users->position_id = $_POST['position_gen'];
+    $users->department_id = $_POST['department_gen'];
+    }else if($profile->type_user == 3){
+      $users->position_id = $_POST['User'][position_id];
+      $users->department_id = $_POST['User'][department_id];
+    }
         // var_dump($users);
         // echo "ddddddddddd";
         // var_dump($Profile);
