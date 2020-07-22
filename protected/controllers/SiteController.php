@@ -84,7 +84,11 @@ class SiteController extends Controller
     }
 
 
-    public function actionShowCer() {		
+    public function actionShowCer() {	
+        // http://thorconn.com/site/ShowCer?user=NDgyOA==&course=MzA1&gen=MA==
+     //    $_GET['user'] = "NDgyOA==";
+     //    $_GET['course'] = "MzA1";
+    	// $_GET['gen'] = "MA==";
         $user_id = base64_decode($_GET['user']);
         $UserId = $user_id;
 
@@ -92,6 +96,11 @@ class SiteController extends Controller
         $PassCoursId = $course_id;
 
         $gen_id = base64_decode($_GET['gen']);
+
+        //  var_dump($UserId);
+        // var_dump($course_id);
+        // var_dump($gen_id);
+        // exit();
 
         if($user_id != "" && $course_id != "" && $gen_id != ""){
 
@@ -122,7 +131,7 @@ class SiteController extends Controller
         }
         $CourseDatePass = null;
         //Pass Course Date
-        $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId.' AND gen_id='.$gen_id."passcours_cours='".$PassCoursId."'"));
+        $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId.' AND gen_id='.$gen_id." AND passcours_cours='".$PassCoursId."'"));
         $CourseDatePass = $CourseDatePassModel->passcours_date;
         $CoursePassedModel = Passcours::model()->find(array(
             'condition' => 'passcours_user = ' . $UserId . ' AND passcours_cours = ' . $PassCoursId .' AND gen_id='.$gen_id
