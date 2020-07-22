@@ -23,17 +23,23 @@ $this->breadcrumbs=array($titleName);
             <th>Email</th>
             <th>Phone</th>
             <?php if($state == "personnel_office") { ?>
-                <th>Department</th>
-                <th>Position</th>
+                <th>แผนก</th>
+                <!-- <th>Department</th> -->
+                <th>ตำแหน่ง</th>
+                <!-- <th>Position</th> -->
                 <th>Level</th>
             <?php }elseif ($state == "master_captain") { ?>
-                <th>Department</th>
-                <th>Position</th>
+                <!-- <th>Department</th> -->
+                <th>แผนก</th>
+                <th>ตำแหน่ง</th>
+                <!-- <th>Position</th> -->
             <?php }elseif ($state == "state_dep_office") { ?>
-                <th>Position</th>
+                <th>ตำแหน่ง</th>
+                <!-- <th>Position</th> -->
                 <th>Level</th>
             <?php }elseif ($state == "state_dep_captain") { ?>
-                 <th>Position</th>
+                <th>ตำแหน่ง</th>
+                 <!-- <th>Position</th> -->
             <?php }elseif ($state == "state_posi_office") { ?>
                 <th>Level</th>
            <?php } ?>
@@ -113,17 +119,23 @@ $this->breadcrumbs=array($titleName);
             <th>Email</th>
             <th>Phone</th>
             <?php if($state == "personnel_office") { ?>
-                <th>Department</th>
-                <th>Position</th>
+                <!-- <th>Department</th> -->
+                <th>แผนก</th>
+                <!-- <th>Position</th> -->
+                <th>ตำแหน่ง</th>
                 <th>Level</th>
             <?php }elseif ($state == "master_captain") { ?>
-                <th>Department</th>
-                <th>Position</th>
+                <th>แผนก</th>
+                <!-- <th>Department</th> -->
+                <th>ตำแหน่ง</th>
+                <!-- <th>Position</th> -->
             <?php }elseif ($state == "state_dep_office") { ?>
-                <th>Position</th>
+                <th>ตำแหน่ง</th>
+                <!-- <th>Position</th> -->
                 <th>Level</th>
             <?php }elseif ($state == "state_dep_captain") { ?>
-                 <th>Position</th>
+                <th>ตำแหน่ง</th>
+                 <!-- <th>Position</th> -->
             <?php }elseif ($state == "state_posi_office") { ?>
                 <th>Level</th>
            <?php } ?>
