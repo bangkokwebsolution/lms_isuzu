@@ -1,4 +1,4 @@
-<?php 
+ิ<?php 
 $timeTest = Helpers::lib()->getTimeTest($lesson->time_test,$temp_all[0]->time_up);
 $percent = $modelScore->score_number > 0 ? number_format(($modelScore->score_number * 100) / $modelScore->score_total,2) : 0;
 if($modelScore->score_past == 'y'){
@@ -76,7 +76,7 @@ if($modelScore->type=='post' && !$state){
 		<div class="row">
 			<div class="col-sm-8 col-xs-12">
 				<div class="well bg-greendark">
-					<?php if($testType != "pre" && $quesType_ == 2){ ?>
+					<?php if($testType == "post" && $quesType_ != 3){ ?>
 					<div class="well text-center result">
 						<h1 class="<?= $classH1; ?>"><span><i class="<?= $class; ?>" aria-hidden="true"></i></span><?= $strMsg; ?></h1>
 					</div>
@@ -98,7 +98,7 @@ if($modelScore->type=='post' && !$state){
 					<a href="<?= $linkNextStep; ?>" type="button" class="btn btn-warning btn-lg"><?=UserModule::t('complete_btn');?></a>
 				</div>
 			</div>
-			<?php if($testType != "pre"){ ?>
+			<?php if($testType == "post" && $quesType_ != 3){ ?>
 			<div class="col-sm-4">
 				<aside>
 					<h4 class="title text-success"><span class="pull-right"><?= $modelScore->score_number; ?></span><?=UserModule::t('scoreAll');?></h4>
