@@ -523,13 +523,13 @@
 								<tr >
 									<td style="background-color:#F5F5F5;"><?php echo $value['language_name']; ?></td>
 									<td><?php 
-                                      if ($value['write'] == 4) {
+                                      if ($value['writes'] == 4) {
                                         echo "ดีมาก";
-                                      }else if($value['write'] == 3){
+                                      }else if($value['writes'] == 3){
                                       	echo "ดี";
-                                      }else if($value['write'] == 2){
+                                      }else if($value['writes'] == 2){
                                       	echo "พอใช้ได้";
-                                      }else if($value['write'] == 1){
+                                      }else if($value['writes'] == 1){
                                       	echo "ใช้ไม่ได้";
                                       }
 									 ?></td>

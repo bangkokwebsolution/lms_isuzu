@@ -526,10 +526,10 @@ if ($('.email').val() == "") {
             }
         }
 
-        var ProfilesLanguage_write = $("input[name='ProfilesLanguage[1][write]']:checked").val(); 
-        if (typeof  ProfilesLanguage_write === 'undefined' || typeof  ProfilesLanguage_write === null) {
-            var ProfilesLanguage_write_message = "<?php echo Yii::app()->session['lang'] == 1?'Please choose to check the Thai writing ability level! ':'กรุณาเลือกเช็คระดับความสามารถการเขียนด้านภาษาไทย!'; ?>";
-            swal(alert_message,ProfilesLanguage_write_message)
+        var ProfilesLanguage_writes = $("input[name='ProfilesLanguage[1][writes]']:checked").val(); 
+        if (typeof  ProfilesLanguage_writes === 'undefined' || typeof  ProfilesLanguage_writes === null) {
+            var ProfilesLanguage_writes_message = "<?php echo Yii::app()->session['lang'] == 1?'Please choose to check the Thai writing ability level! ':'กรุณาเลือกเช็คระดับความสามารถการเขียนด้านภาษาไทย!'; ?>";
+            swal(alert_message,ProfilesLanguage_writes_message)
             return false;
         }
 
@@ -540,10 +540,10 @@ if ($('.email').val() == "") {
             return false;
         }
 
-        var ProfilesLanguage_write2 = $("input[name='ProfilesLanguage[2][write]']:checked").val(); 
-        if (typeof  ProfilesLanguage_write2 === 'undefined' || typeof  ProfilesLanguage_write2 === null) {
-            var ProfilesLanguage_write2_message = "<?php echo Yii::app()->session['lang'] == 1?'Please select a level of English proficiency! ':'กรุณาเลือกเช็คระดับความสามารถการเขียนด้านภาษาอังกฤษ!'; ?>";
-            swal(alert_message,ProfilesLanguage_write2_message)
+        var ProfilesLanguage_writes2 = $("input[name='ProfilesLanguage[2][writes]']:checked").val(); 
+        if (typeof  ProfilesLanguage_writes2 === 'undefined' || typeof  ProfilesLanguage_writes2 === null) {
+            var ProfilesLanguage_writes2_message = "<?php echo Yii::app()->session['lang'] == 1?'Please select a level of English proficiency! ':'กรุณาเลือกเช็คระดับความสามารถการเขียนด้านภาษาอังกฤษ!'; ?>";
+            swal(alert_message,ProfilesLanguage_writes2_message)
             return false;
         } 
 
@@ -2584,25 +2584,25 @@ function editNamehouse_registration(filedoc_id){
                  <td><?= Yii::app()->session['lang'] == 1?'Written ':'เขียน'; ?></td>
                  <td>
                     <div class="radio radio-danger ">
-                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo$p++; ?>" value="4"<?php if ($vallg["write"] == "4") : ?> checked="checked" <?php endif ?>>
+                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][writes]" id="lang_w-<?php echo $i;echo$p++; ?>" value="4"<?php if ($vallg["writes"] == "4") : ?> checked="checked" <?php endif ?>>
                         <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
                     </div>
                 </td>
                 <td>
                     <div class="radio radio-danger ">
-                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="3"<?php if ($vallg["write"] == "3") : ?> checked="checked" <?php endif ?>>
+                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][writes]" id="lang_w-<?php echo $i;echo $p++; ?>" value="3"<?php if ($vallg["writes"] == "3") : ?> checked="checked" <?php endif ?>>
                         <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
                     </div>
                 </td>
                 <td>
                     <div class="radio radio-danger ">
-                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["write"] == "2") : ?> checked="checked" <?php endif ?>>
+                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][writes]" id="lang_w-<?php echo $i;echo $p++; ?>" value="2"<?php if ($vallg["writes"] == "2") : ?> checked="checked" <?php endif ?>>
                         <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
                     </div>
                 </td>
                 <td>
                     <div class="radio radio-danger ">
-                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][write]" id="lang_w-<?php echo $i;echo $p++; ?>" value="1"<?php if ($vallg["write"] == "1") : ?> checked="checked" <?php endif ?>>
+                        <input type="radio" name="ProfilesLanguage[<?php echo $i; ?>][writes]" id="lang_w-<?php echo $i;echo $p++; ?>" value="1"<?php if ($vallg["writes"] == "1") : ?> checked="checked" <?php endif ?>>
                         <label for="lang_w-<?php echo $i;echo $m++; ?>"></label>
                     </div>
                 </td>
@@ -2644,25 +2644,25 @@ function editNamehouse_registration(filedoc_id){
          <td><?= Yii::app()->session['lang'] == 1?'Written ':'เขียน'; ?></td>
          <td>
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-1" value="4"<?php if ($ProfilesLanguage->write == "4") : ?> checked="checked" <?php endif ?>>
+                <input type="radio" name="ProfilesLanguage[1][writes]" id="lang_w_th-1" value="4"<?php if ($ProfilesLanguage->writes == "4") : ?> checked="checked" <?php endif ?>>
                 <label for="lang_w_th-1"></label>
             </div>
         </td>
         <td>
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-2" value="3"<?php if ($ProfilesLanguage->write == "3") : ?> checked="checked" <?php endif ?>>
+                <input type="radio" name="ProfilesLanguage[1][writes]" id="lang_w_th-2" value="3"<?php if ($ProfilesLanguage->writes == "3") : ?> checked="checked" <?php endif ?>>
                 <label for="lang_w_th-2"></label>
             </div>
         </td>
         <td>
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-3" value="2"<?php if ($ProfilesLanguage->write == "2") : ?> checked="checked" <?php endif ?>>
+                <input type="radio" name="ProfilesLanguage[1][writes]" id="lang_w_th-3" value="2"<?php if ($ProfilesLanguage->writes == "2") : ?> checked="checked" <?php endif ?>>
                 <label for="lang_w_th-3"></label>
             </div>
         </td>
         <td>
             <div class="radio radio-danger ">
-                <input type="radio" name="ProfilesLanguage[1][write]" id="lang_w_th-4" value="1"<?php if ($ProfilesLanguage->write == "1") : ?> checked="checked" <?php endif ?>>
+                <input type="radio" name="ProfilesLanguage[1][writes]" id="lang_w_th-4" value="1"<?php if ($ProfilesLanguage->writes == "1") : ?> checked="checked" <?php endif ?>>
                 <label for="lang_w_th-4"></label>
             </div>
         </td>
@@ -2702,25 +2702,25 @@ function editNamehouse_registration(filedoc_id){
      <td><?= Yii::app()->session['lang'] == 1?'Written ':'เขียน'; ?></td>
      <td>
         <div class="radio radio-danger ">
-            <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-1" value="4"<?php if ($ProfilesLanguage->write == "4") : ?> checked="checked" <?php endif ?>>
+            <input type="radio" name="ProfilesLanguage[2][writes]" id="lang_w_en-1" value="4"<?php if ($ProfilesLanguage->writes == "4") : ?> checked="checked" <?php endif ?>>
             <label for="lang_w_en-1"></label>
         </div>
     </td>
     <td>
         <div class="radio radio-danger ">
-            <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-2" value="3"<?php if ($ProfilesLanguage->write == "3") : ?> checked="checked" <?php endif ?>>
+            <input type="radio" name="ProfilesLanguage[2][writes]" id="lang_w_en-2" value="3"<?php if ($ProfilesLanguage->writes == "3") : ?> checked="checked" <?php endif ?>>
             <label for="lang_w_en-2"></label>
         </div>
     </td>
     <td>
         <div class="radio radio-danger ">
-            <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-3" value="2"<?php if ($ProfilesLanguage->write == "2") : ?> checked="checked" <?php endif ?>>
+            <input type="radio" name="ProfilesLanguage[2][writes]" id="lang_w_en-3" value="2"<?php if ($ProfilesLanguage->writes == "2") : ?> checked="checked" <?php endif ?>>
             <label for="lang_w_en-3"></label>
         </div>
     </td>
     <td>
         <div class="radio radio-danger ">
-            <input type="radio" name="ProfilesLanguage[2][write]" id="lang_w_en-4" value="1"<?php if ($ProfilesLanguage->write == "1") : ?> checked="checked" <?php endif ?>>
+            <input type="radio" name="ProfilesLanguage[2][writes]" id="lang_w_en-4" value="1"<?php if ($ProfilesLanguage->writes == "1") : ?> checked="checked" <?php endif ?>>
             <label for="lang_w_en-4"></label>
         </div>
     </td>
@@ -3499,10 +3499,10 @@ $(add_form_language).click(function(e) {
             +'<input type="text" class="form-control" placeholder="' + language_name + '" name="ProfilesLanguage[' + numItems_language + '][language_name]" style="width:100px;line-height:28px;padding: 20px 10px;">'
             +'</td>'
             +'<td>'+language_Written+'</td>'
-            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="4"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
-            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="3"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
-            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="2"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
-            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][write]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="1"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td></tr>'
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][writes]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="4"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][writes]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="3"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][writes]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="2"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][writes]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="1"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td></tr>'
             +'<tr><td>'+language_Spoken+'</td>'
             +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="4"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
             +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="3"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'

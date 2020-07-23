@@ -7,7 +7,7 @@
  * @property integer $id
  * @property integer $user_id
  * @property string $language_name
- * @property string $write
+ * @property string $writes
  * @property string $spoken
  * @property string $create_date
  * @property integer $create_by
@@ -36,11 +36,11 @@ class ProfilesLanguage extends CActiveRecord
 			array('id', 'required'),
 			array('id, user_id, create_by, update_by', 'numerical', 'integerOnly'=>true),
 			array('language_name', 'length', 'max'=>255),
-			array('write, spoken, active', 'length', 'max'=>1),
+			array('writes, spoken, active', 'length', 'max'=>1),
 			array('create_date, update_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_id, language_name, write, spoken, create_date, create_by, update_date, update_by, active', 'safe', 'on'=>'search'),
+			array('id, user_id, language_name, writes, spoken, create_date, create_by, update_date, update_by, active', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,7 +64,7 @@ class ProfilesLanguage extends CActiveRecord
 			'id' => 'ID',
 			'user_id' => 'User',
 			'language_name' => 'Language Name',
-			'write' => 'Write',
+			'writes' => 'Writes',
 			'spoken' => 'Spoken',
 			'create_date' => 'Create Date',
 			'create_by' => 'Create By',
@@ -95,7 +95,7 @@ class ProfilesLanguage extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('language_name',$this->language_name,true);
-		$criteria->compare('write',$this->write,true);
+		$criteria->compare('writes',$this->writes,true);
 		$criteria->compare('spoken',$this->spoken,true);
 		$criteria->compare('create_date',$this->create_date,true);
 		$criteria->compare('create_by',$this->create_by);
