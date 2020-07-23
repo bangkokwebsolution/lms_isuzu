@@ -1205,7 +1205,6 @@ public function actionUpdate() {
                 foreach ($_POST['ProfilesEdu'] as $action_index=>$action_value){
                   $new_action[] = $action_value['edu_id'];
                   $model_ss = ProfilesEdu::model()->find('edu_id="'.$action_value['edu_id'].'" AND user_id='.Yii::app()->user->id);
-
                   if ($model_ss){
                     $model_ss->attributes = $action_value;
                     $model_ss->user_id = $users->id;
@@ -1214,33 +1213,45 @@ public function actionUpdate() {
                     $model_ss->save(false);
                            // echo "a";
                 }else{
+                 if ($action_value['edu_id'] != '' && $action_value['institution'] != '' && $action_value['date_graduation'] != '') {
                    $Edu = new ProfilesEdu;
                    $Edu->user_id = $users->id;
                    $Edu->created_date = date("Y-m-d H:i:s");
                    $Edu->created_by = $users->id;
                    $Edu->attributes = $action_value;
                    $Edu->save(false);
-                           //echo "b";
+                          // echo "b";
+                 }
+                   
                } 
-
            } 
            $model_del = ProfilesEdu::model()->findAll(["select"=>"edu_id",'condition'=>'user_id='.Yii::app()->user->id]);
-
            if($model_del){
             foreach($model_del as $key => $val){
-                if(isset($new_action)){
-                    if(!in_array($val->edu_id,$new_action)){
+                if(isset($new_action)){   
+                    if(!in_array($val->edu_id,$new_action)){  
                         $model_del_action = ProfilesEdu::model()->find('edu_id="'.$val->edu_id.'" AND user_id='.Yii::app()->user->id); 
                            // $model_del_action->active = 'n';
                            //  $model_del_action->save(false);
                         $model_del_action->delete(false);
-                                         //echo "c";
+                                     //   echo "c";
                     }
                 }
             }
         }
                         /////// end ลบแอคชั่น
-         } //exit();
+         }else{
+             $model_ProfilesEdu_del = ProfilesEdu::model()->findAll('user_id='.Yii::app()->user->id);
+             if ($model_ProfilesEdu_del) {
+                foreach ($model_ProfilesEdu_del as $key) {
+                    $key->delete(false);
+                }
+                    
+             }
+             
+         } 
+
+        // exit();
           //   บันทึกภาพ
 
          if ($_POST['ProfilesWorkHistory']){
@@ -1286,7 +1297,15 @@ public function actionUpdate() {
         }
     }
                         /////// end ลบแอคชั่น
-} 
+}else{
+    $model_ProfilesWorkHistory_del = ProfilesWorkHistory::model()->findAll('user_id='.Yii::app()->user->id);
+             if ($model_ProfilesWorkHistory_del) {
+                foreach ($model_ProfilesWorkHistory_del as $key) {
+                    $key->delete(false);
+                }
+                    
+             }
+}
 if (isset($_POST['FileTraining'])){ 
     $uploadDir = Yii::app()->getUploadPath(null);
     $path1 = $users->id;
@@ -1375,12 +1394,25 @@ $model_del_Training = FileTraining::model()->findAll(["select"=>"name_training",
           $webroot = Yii::app()->basePath."/../uploads/Trainingfile/".Yii::app()->user->id."/";
           if(is_file($webroot.$FileTraining_del->filename)){
             unlink($webroot.$FileTraining_del->filename);
-          }  
+                    }  
                 }
             }
           
         }
     }
+}else{
+        $model_FileTraining_del = FileTraining::model()->findAll('user_id='.Yii::app()->user->id);
+             if ($model_FileTraining_del) {
+                foreach ($model_FileTraining_del as $key) {
+                    $key->delete(false);
+
+                     $webroot = Yii::app()->basePath."/../uploads/Trainingfile/".Yii::app()->user->id."/";
+                      if(is_file($webroot.$FileTraining_del->filename)){
+                        unlink($webroot.$FileTraining_del->filename);
+                    } 
+                }
+                    
+             }
 }
 
 // if ($_POST['ProfilesTraining']){
