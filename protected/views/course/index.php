@@ -90,7 +90,7 @@ function DateThai($strDate)
                 <?php } ?>
             </div>
         </div>
-        <div class="col-sm-8 col-md-9 col-xs-12 course-mb">
+        <div class="col-sm-8 col-md-9 col-xs-12 course-mb ">
             <div class="row">
                 <?php
                 if ($model_cate_tms) {
@@ -98,9 +98,9 @@ function DateThai($strDate)
                         $model_cate_tms->cate_id = $model_cate_tms->parent_id;
                     }
                     ?>
-                    <div class="gallery_product col-sm-6 col-md-4 col-xs-12 filter cate-all">
+                    <div class="gallery_product col-sm-6 col-md-4 col-xs-12 filter cate-all course-filter">
                         <div class="well text-center">
-                            <button class="btn btn-default filter-button btn-lg" data-filter="<?= $model_cate_tms->cate_id ?>" style="border:0;background-color: transparent;width: 100%;box-shadow: none;">
+                            <button class="filter-button" data-filter="<?= $model_cate_tms->cate_id ?>" style="border:0;background-color: transparent;width: 100%;box-shadow: none;">
 
                                 <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/category/' . $model_cate_tms->cate_id . '/thumb/' . $model_cate_tms->cate_image)) { ?>
 
@@ -131,11 +131,11 @@ function DateThai($strDate)
 
                     ?>
 
-                    <div class="gallery_product col-sm-6 col-md-4 col-xs-12 filter cate-all">
+                    <div class="gallery_product col-sm-6 col-md-4 col-xs-12 filter cate-all course-filter">
                         <div class="well text-center">
                             <!--                            <a href="course-detail.php-->
 
-                                <button class="btn btn-default filter-button btn-lg" data-filter="<?= $m_c->cate_id ?>" style="border:0;background-color: transparent;width: 100%;box-shadow: none;">
+                                <button class="filter-button" data-filter="<?= $m_c->cate_id ?>" style="border:0;background-color: transparent;width: 100%;box-shadow: none;">
                                     <?php 
 
                                     if (!$flag) {
@@ -325,7 +325,7 @@ function DateThai($strDate)
                             //     }
                             // }
                             ?>
-                            <div class="gallery_product col-sm-6 col-md-4 col-xs-12 filter <?= $model->cate_id ?>" style="display: none;">
+                            <div class="gallery_product col-sm-6 col-md-4 col-xs-12 filter <?= $model->cate_id ?> course-filter" style="display: none;">
                                 <div class="well text-center">
                                     <!--                            <a href="course-detail.php-->
                                         <a href="<?= $url; ?>" <?= $evnt ?>>

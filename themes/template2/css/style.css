@@ -98,6 +98,10 @@ label {
   font-size: 16px;
 }
 
+button:hover,button:focus{
+  outline: 0 !important;
+}
+
 .w-100 {
   width: 100%;
 }
@@ -1048,14 +1052,14 @@ hr {
 }
 
 #course .well .course-img {
-  margin-top: -1em;
-  height: 144px;
+  margin-top: 0.5em;
+  height: 120px;
   width: 100%;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
-  -webkit-box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  background-size: contain;
+  /*-webkit-box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);*/
+  /*box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3);*/
   border-radius: 5px;
   -webkit-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
@@ -1082,11 +1086,6 @@ hr {
   -o-transition: all 0.3s ease;
   transition: all 0.3s ease;
   /*-webkit-box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3); box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.14), 0 1px 18px 0 rgba(0, 0, 0, 0.12), 0 3px 5px -1px rgba(0, 0, 0, 0.3);*/
-}
-
-#course .well:hover .course-img {
-  -webkit-box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
-  box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.3);
 }
 
 .course-recommend {
@@ -3556,6 +3555,13 @@ footer {
   .text-right-md {
     margin-bottom: 10px;
   }
+  .contact-admin{
+    height: 75px !important;
+    width: 230px !important;
+  }
+  .contact-admin:hover {
+    height: 200px  !important;
+  }
 }
 
 @media screen and (min-width:992px) {
@@ -4165,9 +4171,7 @@ ol.stat-alert li::before {
   .slide-video .video-js{
     height: 300px;
   }
-  #course .well .course-img{
-        height: 250px;
-  }
+  
   .course-mb{
     margin-top: 2em;
   }
@@ -4809,4 +4813,12 @@ section#faq{
   overflow: hidden;
   max-height: 260px;
   border-radius: 4px 4px 0 0;
+}
+
+.course-filter .well{
+  padding: 0;
+}
+
+.course-filter .course-detail{
+  padding: 10px 20px 20px;
 }
