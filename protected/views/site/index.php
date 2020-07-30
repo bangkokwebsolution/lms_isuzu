@@ -293,6 +293,33 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
                                         $chk = Helpers::lib()->getLearn($value->course_id);
                                         if ($chk) {
+
+
+
+                        $chk_logtime = LogStartcourse::model()->find(array(
+                            'condition'=>'course_id=:course_id and user_id=:user_id and active=:active and gen_id=:gen_id',
+                            'params' => array(':course_id' => $value->course_id, ':user_id' => Yii::app()->user->id , ':active' => 'y', ':gen_id'=>$value->getGenID($value->course_id))
+                        ));
+                        $course_chk_time = CourseOnline::model()->findByPk($value->course_id);
+
+
+                        if(!empty($chk_logtime)){
+                            if($chk_logtime->course_day != $course_chk_time->course_day_learn)
+                            {
+                             $Endlearncourse = strtotime("+".$course_chk_time->course_day_learn." day", strtotime($chk_logtime->start_date));
+
+                             $Endlearncourse = date("Y-m-d", $Endlearncourse);
+
+                             $chk_logtime->end_date = $Endlearncourse;
+                             $chk_logtime->course_day = $course_chk_time->course_day_learn;
+                             $chk_logtime->save(false);
+                         }
+                     }
+
+
+
+
+
                                          $expireUser = Helpers::lib()->checkUserCourseExpire($value);
                                          if (!$expireUser) {
 
@@ -495,6 +522,30 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
             if($currentDate >= $dateStartStr){
                 $chk = Helpers::lib()->getLearn($value->course_id);
                 if ($chk) {
+
+
+                     $chk_logtime = LogStartcourse::model()->find(array(
+                            'condition'=>'course_id=:course_id and user_id=:user_id and active=:active and gen_id=:gen_id',
+                            'params' => array(':course_id' => $value->course_id, ':user_id' => Yii::app()->user->id , ':active' => 'y', ':gen_id'=>$value->getGenID($value->course_id))
+                        ));
+                        $course_chk_time = CourseOnline::model()->findByPk($value->course_id);
+
+
+                        if(!empty($chk_logtime)){
+                            if($chk_logtime->course_day != $course_chk_time->course_day_learn)
+                            {
+                             $Endlearncourse = strtotime("+".$course_chk_time->course_day_learn." day", strtotime($chk_logtime->start_date));
+
+                             $Endlearncourse = date("Y-m-d", $Endlearncourse);
+
+                             $chk_logtime->end_date = $Endlearncourse;
+                             $chk_logtime->course_day = $course_chk_time->course_day_learn;
+                             $chk_logtime->save(false);
+                         }
+                     }
+
+
+                     
                  $expireUser = Helpers::lib()->checkUserCourseExpire($value);
                      if (!$expireUser) {
                        $evnt = 'onclick="alertMsg(\''.$label->label_swal_youtimeout .'\',\'\',\'error\')"';

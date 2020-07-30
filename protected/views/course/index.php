@@ -246,6 +246,26 @@ function DateThai($strDate)
 
                             // var_dump(expression)
 
+                            $chk_logtime = LogStartcourse::model()->find(array(
+                                'condition'=>'course_id=:course_id and user_id=:user_id and active=:active and gen_id=:gen_id',
+                                'params' => array(':course_id' => $model->course_id, ':user_id' => Yii::app()->user->id , ':active' => 'y', ':gen_id'=>$model->getGenID($model->course_id))
+                            ));
+                            $course_chk_time = CourseOnline::model()->findByPk($model->course_id);
+
+
+                            if(!empty($chk_logtime)){
+                                if($chk_logtime->course_day != $course_chk_time->course_day_learn)
+                                {
+                                   $Endlearncourse = strtotime("+".$course_chk_time->course_day_learn." day", strtotime($chk_logtime->start_date));
+
+                                   $Endlearncourse = date("Y-m-d", $Endlearncourse);
+
+                                   $chk_logtime->end_date = $Endlearncourse;
+                                   $chk_logtime->course_day = $course_chk_time->course_day_learn;
+                                   $chk_logtime->save(false);
+                               }
+                           }
+                           
                             
                             $chklearn = Helpers::lib()->getLearn($model->course_id);
                             $checkUserCourseExpire = Helpers::lib()->checkUserCourseExpire($model); 
