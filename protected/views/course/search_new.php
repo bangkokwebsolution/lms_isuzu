@@ -7,13 +7,32 @@
         margin: 10px 10px 20px 10px;
     }
 </style>
-<div class="header-page">
-    <div class="container">
-        <h1>หลักสูตร 
 
-        </h1>
-    </div>
-   
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-main">
+      <li class="breadcrumb-item">
+        <a href="<?php echo $this->createUrl('/site/index'); ?>">
+          <?php
+          if (Yii::app()->session['lang'] == 1) {
+            echo "Home";
+          } else {
+            echo "หน้าแรก";
+          }
+          ?>
+        </a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <?php
+        if (Yii::app()->session['lang'] == 1) {
+          echo "Search";
+        } else {
+          echo "ค้นหา";
+        }
+        ?>
+      </li>
+    </ol>
+  </nav>
 </div>
 
 <!-- Content -->

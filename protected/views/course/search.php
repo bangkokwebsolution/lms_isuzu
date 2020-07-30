@@ -1,14 +1,30 @@
-
-<div class="header-page parallax-window" data-parallax="scroll" data-image-src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg-header-page.png">
-    <div class="container">
-        <h1>หลักสูตร 
-            
-        </h1>
-    </div>
-    <div class="bottom1"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/kind-bottom.png" class="img-responsive" alt=""></div>
+<div class="container">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-main">
+      <li class="breadcrumb-item">
+        <a href="<?php echo $this->createUrl('/site/index'); ?>">
+          <?php
+          if (Yii::app()->session['lang'] == 1) {
+            echo "Home";
+          } else {
+            echo "หน้าแรก";
+          }
+          ?>
+        </a>
+      </li>
+      <li class="breadcrumb-item active" aria-current="page">
+        <?php
+        if (Yii::app()->session['lang'] == 1) {
+          echo "Search";
+        } else {
+          echo "ค้นหา";
+        }
+        ?>
+      </li>
+    </ol>
+  </nav>
 </div>
 
-<!-- Content -->
 
 <?php $Model = CourseOnline::model()->findAll(array('condition' => 'active="y"', )); ?>    
 
