@@ -361,13 +361,13 @@ Class MenuLeft extends Controller
 				/*====== Check Permissions Contactus (2) ======*/
 				'visible'=>self::PermissionsMenu(array(
 					'ContactusNew.*',
-					'ContactusNew.Index'
+					'ContactusNew.admin'
 				)),
 				'label'=>'<i></i><span>ติดต่อเรา</span>',
 				'url'=>'#ContactusNew',
 				'linkOptions' => array('data-toggle' => 'collapse'),
 				'itemOptions' => array('class' => 'hasSubmenu glyphicons adress_book'),
-				'submenuOptions' => array('class' => self::SetSubMenu( array('Contactus') ), 'id' => 'ContactusNew'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('ContactusNew') ), 'id' => 'ContactusNew'),
 				'active' => self::SetSubMenu( array('ContactusNew') ,false),
 				'items'=>array(
 					array(
@@ -383,7 +383,7 @@ Class MenuLeft extends Controller
 						/*====== Check Permissions Sup-Contactus (2) ======*/
 						'visible'=>self::PermissionsMenu(array(
 							'ContactusNew.*',
-							'ContactusNew.Index'
+							'ContactusNew.admin'
 						)),
 						'label'=>'จัดการติดต่อเรา',
 						'url'=>array('//ContactusNew/admin')

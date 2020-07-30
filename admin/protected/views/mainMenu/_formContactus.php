@@ -99,7 +99,7 @@
                     <?php echo $form->error($label, 'label_homepage'); ?>
                 </div>
 
-                <div class="row">
+               <!--  <div class="row">
                     <?php echo $form->labelEx($label, 'label_firstname'); ?>
                     <?php echo $form->textField($label, 'label_firstname', array('size' => 60, 'maxlength' => 250, 'class' => 'span8')); ?>
                     <?php echo $this->NotEmpty(); ?>
@@ -146,9 +146,9 @@
                     <?php echo $form->textField($label, 'label_button', array('size' => 60, 'maxlength' => 250, 'class' => 'span8')); ?>
                     <?php echo $this->NotEmpty(); ?>
                     <?php echo $form->error($label, 'label_button'); ?>
-                </div>
+                </div> -->
 
-                <h4 class="labelCourse"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp; ข้อความแจ้งเตือนรูปแบบข้อมูลไม่ถูกต้อง<h4>
+            <!--     <h4 class="labelCourse"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp; ข้อความแจ้งเตือนรูปแบบข้อมูลไม่ถูกต้อง<h4>
                     <div class="row">
                         <div class="col-md-6">
                         <?php echo $form->labelEx($label, 'label_error_email'); ?>
@@ -172,7 +172,7 @@
                         </div>
 
                 </div>
-
+ -->
                 <div class="row">
                     <?php echo $form->labelEx($model,'status'); ?>
                     <!-- <div class="toggle-button" data-toggleButton-style-enabled="success"> -->

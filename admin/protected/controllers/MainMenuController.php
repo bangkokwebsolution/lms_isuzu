@@ -329,7 +329,7 @@ class MainMenuController extends Controller
 			    		$label = MenuFaq::model()->find($criteria);
 			    	
 				    break;
-				case "contactus":
+				case "contactusnew":
 				    $modelNew = new MenuContactus();
 				    $form = '_formContactus';
 				    $nameModel = "MenuContactus";
