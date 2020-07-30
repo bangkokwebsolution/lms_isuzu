@@ -1195,10 +1195,10 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #contact-us .contact-map {
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: #010c65;
   padding: 1em;
-  margin: 1em;
+  margin: 2em 1em 1em 1em;
 }
 
 #contact-us .contact-map h4 {
@@ -1206,10 +1206,10 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #contact-us .contact-map .well {
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 0;
   overflow: hidden;
-  margin-top: -3em;
+  margin-top: 0em;
   -webkit-box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);
   box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.3);
 }
