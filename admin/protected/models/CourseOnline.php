@@ -191,7 +191,7 @@ class CourseOnline extends AActiveRecord
 
 	public function getCountGen()
 	{
-		$count = courseGeneration::Model()->count("course_id=:course_id", array(
+		$count = courseGeneration::Model()->count("course_id=:course_id AND active='y'", array(
 			"course_id"=>$this->course_id,
 		));
 		return $count;
