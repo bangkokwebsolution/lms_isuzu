@@ -1609,14 +1609,14 @@
   $( document ).ready(function() {
     <?php if(isset($_GET['cate_1'])){
       ?>
-      $('button[data-filter="cate-all-1"]').click();
+      // $('button[data-filter="cate-all-1"]').click();
       $(".cate-all-1").hide();
       $(".text-h3").html("ค้นหา");
       $(".search-all-1").show();
       <?php
     }elseif(isset($_GET['cate_2'])){
       ?>
-      $('button[data-filter="cate-all-2"]').click();
+      // $('button[data-filter="cate-all-2"]').click();
       $(".cate-all-2").hide();
       $(".text-h3").html("ค้นหา");
       $(".search-all-2").show();
