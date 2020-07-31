@@ -107,6 +107,19 @@ button:focus {
   width: 100%;
 }
 
+.checkbox-main input[type=checkbox]:checked+label:before {
+  background-color: #010c65;
+  border-color: #010c65;
+}
+.checkbox-main.checkbox label:after{
+  color: #fff;
+}
+
+
+.checkbox-main.checkbox label:before,.checkbox-main.checkbox label:after{
+  top: 3px;
+}
+
 .checkbox input[type=checkbox],
 .checkbox-inline input[type=checkbox],
 .radio input[type=radio],
@@ -1298,7 +1311,7 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 .text-success {
-  color: rgb(232, 42, 37);
+  color: #28a745!important;
 }
 
 .text-danger {
@@ -4646,6 +4659,50 @@ ol.stat-alert li::before {
   margin-top: 1em;
 }
 
+.img-report{
+  text-align: center;
+  margin-top: 2em;
+}
+.img-report img{
+  min-height: 140px;
+  max-height: 140px;
+}
+
+.detail-report{
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  margin-top: 15px;
+}
+
+#report-main .tab-content{
+  margin-top: 4em;
+}
+
+ #report-main .nav-tabs{
+   border-bottom:3px solid #010C65;
+ }
+
+ #report-main .nav-tabs>li.active>a, #report-main .nav-tabs>li.active>a:focus, #report-main .nav-tabs>li.active>a:hover{
+   background:#010C65 ;
+   border-top: 3px solid #CC0B21;
+   color: #fff;
+ }
+
+.card-report{
+  padding: 1em;
+  border: 1px solid #ddd;
+  background-color: #F6F6F6;
+  border-radius: 4px;
+  min-height: 300px;
+  transition: all .25s ease;
+}
+
+.card-report:hover,.card-report:focus{
+  transform: scale(1.05);
+  transition: all .25s ease;
+}
+
 .library-main img {
   border-radius: 4px;
 }
@@ -4665,7 +4722,19 @@ ol.stat-alert li::before {
   justify-content: center;
   font-size: 18px;
 }
+#report-main .nav-tabs{
+  font-size: 18px;
+}
 
+.search-collapse .panel-heading{
+  color: #fff;
+  background: #010C65;
+  padding:18px;
+}
+
+.search-collapse .panel-heading a:hover,.search-collapse .panel-heading a:focus{
+  color: #fff;
+}
 
 #library-group .well{
   padding: 0;
@@ -4717,9 +4786,6 @@ ol.stat-alert li::before {
   text-align: center;
   max-height: 120px;
   margin-bottom: 10px;
-}
-.library-detail button{
-  margin-top: 10px;
 }
 .library-detail span{
   display: block;
@@ -4928,3 +4994,76 @@ section#faq {
   padding: 10px 20px 20px;
 }
 
+.day-icon {
+  position: relative;
+}
+
+.day-icon i {
+  position: absolute;
+  right: 16px;
+  top: 37px;
+  z-index: 2;
+  display: block;
+  pointer-events: none;
+}
+
+.btn-reportsearch{
+  margin: 0.8em;
+  font-size: 15px;
+  padding: 10px 20px;
+  background:#010c65 ;
+  color: #fff;
+}
+
+.btn-excel:hover,
+.btn-excel:focus,
+.btn-pdf:hover,
+.btn-pdf:focus{
+  color: #fff;
+}
+
+.btn-excel{
+  margin: 0.2em;
+  font-size: 15px;
+  padding: 10px 20px;
+  background:#207244 ;
+  color: #fff;
+}
+.btn-pdf{
+  margin: 0.2em;
+  font-size: 15px;
+  padding: 10px 20px;
+  background:#DA1E23 ;
+  color: #fff;
+}
+
+
+.btn-reportsearch:hover,.btn-reportsearch:focus{
+  color: #fff;
+}
+.divider {
+    border: 0;
+    height: 1px;
+    margin: 44px auto;
+    background: rgba(0, 0, 0, 0.06);
+    text-align: center;
+    position: relative;
+    clear: both;
+}
+.divider [class*="fa-"], .divider .icons {
+  text-align: center;
+  background: #FFF;
+  border-radius: 50px;
+  color: #a9a9a9;
+  display: inline-block;
+  height: 50px;
+  line-height: 50px;
+  position: absolute;
+  text-align: center;
+  width: 50px;
+  font-size: 20px;
+  margin: 0 auto 0 -25px;
+  top: -25px;
+  left: 50%;
+  z-index: 1;
+}

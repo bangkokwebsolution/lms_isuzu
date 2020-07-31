@@ -29,8 +29,6 @@ Yii::app()->user->returnUrl = $http->getUrl();
       ?>
     <title><?php echo CHtml::encode($this->pageTitle); ?></title>
     <?php include("themes/template2/include/css.php"); ?>
-    <script src="<?php echo Yii::app()->theme->baseUrl; ?>/js/jquery.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   </head>
 
   <body>

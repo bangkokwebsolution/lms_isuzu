@@ -21,6 +21,8 @@
 <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/fontawesome/fontawesome.css" media="screen" />
 <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/sweetalert/sweetalert2.css" crossorigin="anonymous">
 <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/sweetalert/sweetalert2.min.js"></script>
-
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/js/bootstrap-daterangepicker/jquery.datetimepicker.css">
 <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/lottie.js"></script>
  <script src="<?php echo Yii::app()->theme->baseUrl; ?>/js/jquery.js"></script>
+ <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/bootstrap-daterangepicker/jquery.datetimepicker.full.min.js"></script>
+
