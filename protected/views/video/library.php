@@ -76,7 +76,7 @@
           </div>
 
           <div class="col-sm-8 col-md-9 col-xs-12">
-            <h3 class="text-h3">ชื่อกลุ่มของเอกสาร</h3>
+            <h3 class="text-h3"><!-- ชื่อกลุ่มของเอกสาร --></h3>
             <hr class="mt-1 mb-3">
 
             <div class="gallery_product  filter cate-all-2">  
@@ -807,7 +807,7 @@
 
 
             <div class="col-sm-8 col-md-9 col-xs-12">
-            <h3 class="text-h3">ชื่อกลุ่มของมัลติมีเดีย</h3>
+            <h3 class="text-h3"><!-- ชื่อกลุ่มของมัลติมีเดีย --></h3>
             <hr class="mt-1 mb-3">
 
             <div class="gallery_product  filter cate-all-1">  
@@ -1611,12 +1611,14 @@
       ?>
       $('button[data-filter="cate-all-1"]').click();
       $(".cate-all-1").hide();
+      $(".text-h3").html("ค้นหา");
       $(".search-all-1").show();
       <?php
     }elseif(isset($_GET['cate_2'])){
       ?>
       $('button[data-filter="cate-all-2"]').click();
       $(".cate-all-2").hide();
+      $(".text-h3").html("ค้นหา");
       $(".search-all-2").show();
       <?php
     }else{
@@ -1646,7 +1648,7 @@
 
     });
     $(this).addClass("filter-active");
-    $(".text-h3").html($(this).html())
+    $(".text-h3").html($(this).html());
     // console.log($(this).html());
   });
 </script>
