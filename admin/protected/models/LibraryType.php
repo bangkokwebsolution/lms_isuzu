@@ -45,13 +45,13 @@ class LibraryType extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('library_type_name, library_type_name_en', 'required'),
-			array('sortOrder, created_by, updated_by', 'numerical', 'integerOnly'=>true),
+			array('library_type_name, library_type_name_en, library_cate', 'required'),
+			array('sortOrder, created_by, updated_by, library_cate', 'numerical', 'integerOnly'=>true),
 			array('library_type_name, library_type_name_en, library_type', 'length', 'max'=>255),
-			array('created_date, updated_date, active', 'safe'),
+			array('created_date, updated_date, active, library_cate', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('library_type_id, sortOrder, library_type_name, library_type_name_en, library_type, created_by, created_date, updated_by, updated_date, active', 'safe', 'on'=>'search'),
+			array('library_type_id, sortOrder, library_type_name, library_type_name_en, library_type, created_by, created_date, updated_by, updated_date, active, library_cate', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -78,12 +78,14 @@ class LibraryType extends CActiveRecord
 			'sortOrder' => 'Sort Order',
 			'library_type_name' => 'ประเภท (TH)',
 			'library_type_name_en' => 'ประเภท (EN)',
-			'library_type' => 'นามสกุลไฟล์ (คั่นด้วย comma , )',
+			'library_type' => 'นามสกุลไฟล์ (คั่นด้วย comma , ) [ mp4, mkv, mp3, pdf, doc, docx, xls, xlsx, ppt, pptx ]',
 			'created_by' => 'ผู้สร้าง',
 			'created_date' => 'วันที่สร้าง',
 			'updated_by' => 'ผู้แก้ไข',
 			'updated_date' => 'วันที่แก้ไข',
+			'library_cate' => 'หมวดหมู่',
 			'active' => 'active',
+
 		);
 	}
 
@@ -115,6 +117,8 @@ class LibraryType extends CActiveRecord
 		$criteria->compare('updated_by',$this->updated_by);
 		$criteria->compare('updated_date',$this->updated_date,true);
 		$criteria->compare('active',$this->active,true);
+		$criteria->compare('library_cate',$this->library_cate,true);
+
 		$criteria->order = 'sortOrder ASC';
 
 

@@ -33,13 +33,13 @@ class LibraryType extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('sortOrder, created_by, updated_by', 'numerical', 'integerOnly'=>true),
+			array('sortOrder, created_by, updated_by, library_cate', 'numerical', 'integerOnly'=>true),
 			array('library_type_name, library_type_name_en, library_type', 'length', 'max'=>255),
 			array('active', 'length', 'max'=>1),
-			array('created_date, updated_date', 'safe'),
+			array('created_date, updated_date, library_cate', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('library_type_id, sortOrder, library_type_name, library_type_name_en, library_type, active, created_by, created_date, updated_by, updated_date', 'safe', 'on'=>'search'),
+			array('library_type_id, sortOrder, library_type_name, library_type_name_en, library_type, active, created_by, created_date, updated_by, updated_date, library_cate', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -70,6 +70,7 @@ class LibraryType extends CActiveRecord
 			'created_date' => 'Created Date',
 			'updated_by' => 'Updated By',
 			'updated_date' => 'Updated Date',
+			'library_cate' => 'library_cate',
 		);
 	}
 
@@ -101,6 +102,7 @@ class LibraryType extends CActiveRecord
 		$criteria->compare('created_date',$this->created_date,true);
 		$criteria->compare('updated_by',$this->updated_by);
 		$criteria->compare('updated_date',$this->updated_date,true);
+		$criteria->compare('library_cate',$this->library_cate,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

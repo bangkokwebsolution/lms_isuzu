@@ -72,13 +72,31 @@ class VideoController extends Controller{
     public function actionLibrary()
     {
         if(Yii::app()->user->id){
-            $library_type = LibraryType::model()->findAll(array(
-                'condition' => 'active=:active',
+            $library_file_1 = LibraryFile::model()->with('type')->findAll(array(
+                'condition' => 't.active=:active AND type.library_cate=1',
                 'params' => array(':active' => 'y'),
-                'order' => 'sortOrder DESC'
+                'order' => 't.sortOrder ASC'
+            ));
+            $library_file_2 = LibraryFile::model()->with('type')->findAll(array(
+                'condition' => 't.active=:active AND type.library_cate=2',
+                'params' => array(':active' => 'y'),
+                'order' => 't.sortOrder ASC'
+            ));
+            $library_type_1 = LibraryType::model()->findAll(array(
+                'condition' => 'active=:active AND library_cate=1',
+                'params' => array(':active' => 'y'),
+                'order' => 'sortOrder ASC'
+            ));
+             $library_type_2 = LibraryType::model()->findAll(array(
+                'condition' => 'active=:active AND library_cate=2',
+                'params' => array(':active' => 'y'),
+                'order' => 'sortOrder ASC'
             ));
             $this->render('library',array(
-                'library_type'=>$library_type,
+                'library_file_1'=>$library_file_1,
+                'library_file_2'=>$library_file_2,
+                'library_type_1'=>$library_type_1,
+                'library_type_2'=>$library_type_2,
             ));
         }else{
             $this->redirect(array('site/index'));

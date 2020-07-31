@@ -68,13 +68,22 @@
                     </div>
                 </div>
 
-                <!-- <div class="row">
-                	<div class="col-md-8">
-                    <?php //echo $form->labelEx($model, 'library_type'); ?>
-                    <?php //echo $form->textField($model, 'library_type', array('class' => 'form-control')); ?>
-                    <?php //echo $form->error($model, 'library_type'); ?>
+                <div class="row">
+                    <div class="col-md-8">
+                        <?php $arr_cate = array('1'=>'Media', '2'=>'Document'); ?>
+                        <?php echo $form->labelEx($model, 'library_cate'); ?>
+                        <?php echo $form->radioButtonList($model,'library_cate',$arr_cate, array('separator'=>' ', 'labelOptions'=>array('style'=>'display:inline; padding-right: 40px;'))); ?>
+                        <?php echo $form->error($model, 'library_cate'); ?>
                     </div>
-                </div> -->
+                </div>
+
+               <div class="row">
+                	<div class="col-md-8">
+                    <?php echo $form->labelEx($model, 'library_type'); ?>
+                    <?php echo $form->textField($model, 'library_type', array('class' => 'form-control')); ?>
+                    <?php echo $form->error($model, 'library_type'); ?>
+                    </div>
+                </div> 
                 
                 
                 <br>
