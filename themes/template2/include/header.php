@@ -336,6 +336,25 @@
             <?php
             }
                 ?>
+            <?php
+            $key = "DR6564UFP5858BU58448HYYGYCFRVTVYBHCFCGHJ";
+                 if($key){
+            ?>
+            <li class="">
+                <a href="<?= $this->createUrl("dashboard/terms") ?>">
+                    <?php 
+                    if(Yii::app()->session['lang'] == 1){
+                        echo "Terms & Conditions";
+                    }else{
+                        echo "ข้อกำหนด & เงื่อนไข";
+                    }
+                    ?>
+
+                </a>
+            </li>
+            <?php
+            }
+                ?>
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i></a>

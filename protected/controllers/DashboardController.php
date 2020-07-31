@@ -46,4 +46,27 @@ class DashboardController extends Controller
 		$this->render('index2');
 	}
 
+	public function actionTerms()
+	{
+		if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+	        $langId = Yii::app()->session['lang'] = 1;
+	        Yii::app()->language = 'en';
+	    }else{
+	        $langId = Yii::app()->session['lang'];
+	        Yii::app()->language = (Yii::app()->session['lang'] == 1)? 'en':'th';
+	    }
+	    $model = Conditions::model()->find(array(
+	        'condition' => 'lang_id=:lang_id',
+	        'params' => array(':lang_id' => $langId)
+	    ));
+	    if(!$model){
+	        $model = Conditions::model()->find(array(
+	            'condition' => 'lang_id=:lang_id',
+	            'params' => array(':lang_id' => 1)
+	        ));
+	    }
+
+			$this->render('Terms',array('model' => $model));
+	}
+
 }
