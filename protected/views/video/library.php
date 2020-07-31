@@ -29,8 +29,12 @@
 
   <div class="container">
     <ul class="nav nav-tabs">
-      <li class="active"><a data-toggle="tab" href="#lby-doc">ห้องสมุดประเภทเอกสาร</a></li>
-      <li><a data-toggle="tab" href="#lby-multi">ห้องสมุดประเภทมัลติมีเดีย</a></li>
+      <li class="active">
+        <a data-toggle="tab" href="#lby-doc" onclick="tab_cate(this, 2);">ห้องสมุดประเภทเอกสาร</a>
+      </li>
+      <li>
+        <a data-toggle="tab" href="#lby-multi" onclick="tab_cate(this, 1);">ห้องสมุดประเภทมัลติมีเดีย</a>
+      </li>
     </ul>
 
     <div class="tab-content">
@@ -57,7 +61,7 @@
             </form>
 
             <div class="type-menu gallery">
-              <button class="btn btn-default filter-button btn-lg" data-filter="cate-all-2">ทั้งหมด</button>
+              <button class="tab-btn-cate-type btn btn-default filter-button btn-lg" data-filter="cate-all-2">ทั้งหมด</button>
               <?php 
               foreach ($library_type_2 as $key => $value) {
                 if (Yii::app()->session['lang'] == 1) {
@@ -66,13 +70,13 @@
                   $libra_type = $value->library_type_name;
                 }
                 ?>
-                <button style="white-space: normal;" class="btn btn-default filter-button btn-lg filter-active" data-filter="cate_<?= $value->library_type_id ?>"><?= $libra_type ?></button>
+                <button style="white-space: normal;" class="tab-btn-cate-type btn btn-default filter-button btn-lg" data-filter="cate_<?= $value->library_type_id ?>"><?= $libra_type ?></button>
                 <?php } // foreach ($library_type_2 ?>              
             </div>
           </div>
 
           <div class="col-sm-8 col-md-9 col-xs-12">
-            <h3>ชื่อกลุ่มของเอกสาร</h3>
+            <h3 class="text-h3">ชื่อกลุ่มของเอกสาร</h3>
             <hr class="mt-1 mb-3">
 
             <div class="gallery_product  filter cate-all-2">  
@@ -143,9 +147,11 @@
 
                           <div class="library-detail">
                             <span><?= $libra_file ?></span>
-                            <button class="<?= $text_class ?>" style="display: block;" onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
-                              <i class="fa fa-download"></i> <?= $text_status ?>
-                            </button>
+                              <div class="text-center">
+                                  <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                                <i class="fa fa-download"></i> <?= $text_status ?>
+                              </button>
+                              </div>
                           </div>
                         </div>
                       </div>
@@ -179,9 +185,11 @@
                           ?>/images/other-library.png" class="img-fluid "> -->
                           <div class="library-detail">
                             <span><?= $libra_file ?></span>
-                            <button class="<?= $text_class ?>" style="display: block;" onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
-                              <i class="fa fa-download"></i> <?= $text_status ?>
-                            </button>
+                                <div class="text-center">
+                                  <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                                    <i class="fa fa-download"></i> <?= $text_status ?>
+                                  </button>
+                                </div>
                           </div>
                           <!-- </a> -->
                         </div>
@@ -370,9 +378,11 @@
 
                           <div class="library-detail">
                             <span><?= $libra_file ?></span>
-                            <button class="<?= $text_class ?>" style="display: block;" onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
-                              <i class="fa fa-download"></i> <?= $text_status ?>
-                            </button>
+                                <div class="text-center">
+                                  <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                                <i class="fa fa-download"></i> <?= $text_status ?>
+                              </button>
+                                </div>
                           </div>
                         </div>
                       </div>
@@ -406,9 +416,11 @@
                           ?>/images/other-library.png" class="img-fluid "> -->
                           <div class="library-detail">
                             <span><?= $libra_file ?></span>
-                            <button class="<?= $text_class ?>" style="display: block;" onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
-                              <i class="fa fa-download"></i> <?= $text_status ?>
-                            </button>
+                              <div class="text-center">
+                                <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                                  <i class="fa fa-download"></i> <?= $text_status ?>
+                                </button>
+                              </div>
                           </div>
                           <!-- </a> -->
                         </div>
@@ -554,7 +566,7 @@
             </form>
 
             <div class="type-menu gallery">
-              <button class="btn btn-default filter-button btn-lg" data-filter="cate-all-1">ทั้งหมด</button>
+              <button class="tab-btn-cate-type btn btn-default filter-button btn-lg" data-filter="cate-all-1">ทั้งหมด</button>
               <?php 
               foreach ($library_type_1 as $key => $value) {
                 if (Yii::app()->session['lang'] == 1) {
@@ -563,7 +575,7 @@
                   $libra_type = $value->library_type_name;
                 }
                 ?>
-                <button style="white-space: normal;" class="btn btn-default filter-button btn-lg filter-active" data-filter="cate_<?= $value->library_type_id ?>"><?= $libra_type ?></button>
+                <button style="white-space: normal;" class="tab-btn-cate-type btn btn-default filter-button btn-lg" data-filter="cate_<?= $value->library_type_id ?>"><?= $libra_type ?></button>
                 <?php
               } // foreach ($library_type_1
 
@@ -576,7 +588,7 @@
 
 
             <div class="col-sm-8 col-md-9 col-xs-12">
-            <h3>ชื่อกลุ่มของมัลติมีเดีย</h3>
+            <h3 class="text-h3">ชื่อกลุ่มของมัลติมีเดีย</h3>
             <hr class="mt-1 mb-3">
 
             <div class="gallery_product  filter cate-all-1">  
@@ -648,9 +660,11 @@
 
                           <div class="library-detail">
                             <span><?= $libra_file ?></span>
-                            <button class="<?= $text_class ?>" style="display: block;" onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                            <div class="text-center">
+                              <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
                               <i class="fa fa-download"></i> <?= $text_status ?>
                             </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -684,9 +698,11 @@
                           ?>/images/other-library.png" class="img-fluid "> -->
                           <div class="library-detail">
                             <span><?= $libra_file ?></span>
-                            <button class="<?= $text_class ?>" style="display: block;" onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                            <div class="text-center">
+                              <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
                               <i class="fa fa-download"></i> <?= $text_status ?>
                             </button>
+                            </div>
                           </div>
                           <!-- </a> -->
                         </div>
@@ -875,9 +891,11 @@
 
                           <div class="library-detail">
                             <span><?= $libra_file ?></span>
-                            <button class="<?= $text_class ?>" style="display: block;" onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                            <div class="text-center">
+                              <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
                               <i class="fa fa-download"></i> <?= $text_status ?>
                             </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -911,9 +929,11 @@
                           ?>/images/other-library.png" class="img-fluid "> -->
                           <div class="library-detail">
                             <span><?= $libra_file ?></span>
-                            <button class="<?= $text_class ?>" style="display: block;" onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
-                              <i class="fa fa-download"></i> <?= $text_status ?>
-                            </button>
+                              <div class="text-center">
+                                 <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                                <i class="fa fa-download"></i> <?= $text_status ?>
+                              </button>
+                            </div>
                           </div>
                           <!-- </a> -->
                         </div>
@@ -1138,4 +1158,26 @@
 
     }
   }
+
+  $( document ).ready(function() {
+    $('button[data-filter="cate-all-2"]').click();
+  });
+
+  function tab_cate(val, cate_type){
+    if(cate_type == 1){
+      $('button[data-filter="cate-all-1"]').click();
+    }else if(cate_type == 2){
+      $('button[data-filter="cate-all-2"]').click();
+    }
+  }
+
+  $(".tab-btn-cate-type").click(function() {
+    $('.filter-active').each(function(){
+      $(this).removeClass("filter-active");
+
+    });
+    $(this).addClass("filter-active");
+    $(".text-h3").html($(this).html())
+    // console.log($(this).html());
+  });
 </script>

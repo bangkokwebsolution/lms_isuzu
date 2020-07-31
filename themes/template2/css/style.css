@@ -4713,10 +4713,17 @@ ol.stat-alert li::before {
 }
 
 .library-detail {
-  padding: 1em
+  padding: 1em;
+  text-align: center;
+  max-height: 120px;
+  margin-bottom: 10px;
+}
+.library-detail button{
+  margin-top: 10px;
 }
 .library-detail span{
   display: block;
+  min-height: 50px;
 }
 
 .other-file {
@@ -4920,3 +4927,4 @@ section#faq {
 .course-filter .course-detail {
   padding: 10px 20px 20px;
 }
+
