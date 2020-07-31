@@ -29,23 +29,23 @@
 
   <div class="container">
     <ul class="nav nav-tabs">
-      <li class="active">
+      <li <?php if(isset($_GET['cate_2'])){ echo 'class="active"'; }elseif(!isset($_GET['cate_1'])){ echo 'class="active"'; } ?>>
         <a data-toggle="tab" href="#lby-doc" onclick="tab_cate(this, 2);">ห้องสมุดประเภทเอกสาร</a>
       </li>
-      <li>
+      <li <?php if(isset($_GET['cate_1'])){ echo 'class="active"'; } ?>>
         <a data-toggle="tab" href="#lby-multi" onclick="tab_cate(this, 1);">ห้องสมุดประเภทมัลติมีเดีย</a>
       </li>
     </ul>
 
     <div class="tab-content">
 
-      <div id="lby-doc" class="tab-pane fade in active">
+      <div id="lby-doc" class="tab-pane fade <?php if(isset($_GET['cate_2'])){ echo 'in active'; }elseif(!isset($_GET['cate_1'])){ echo 'in active'; } ?>">
         <div class="row">
           <div class="col-sm-4 col-md-3 col-xs-12">
             <h4 class="library-topic"><i class="fas fa-list"></i> รายการห้องสมุดเอกสาร </h4>
-            <form id="searchForm" action="<?php echo $this->createUrl('course/Search') ?>" method="post">
+            <form id="searchForm" action="<?php echo $this->createUrl('video/library'); ?>" method="GET">
               <div class="input-group">
-                <input type="text" class="form-control" name="text" placeholder=' <?php if (Yii::app()->session['lang'] == 1) { echo "Search"; } else { echo "ค้นหา"; } ?>'>
+                <input type="text" class="form-control" name="cate_2" value="<?= $_GET['cate_2'] ?>" placeholder=' <?php if (Yii::app()->session['lang'] == 1) { echo "Search"; } else { echo "ค้นหา"; } ?>'>
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span>
                     <?php
@@ -294,6 +294,225 @@
             </div> <!-- cate-all-2 -->
 
 
+            <!-- search all 2 -->
+            <?php if(isset($_GET['cate_2'])){ ?>
+              <div class="gallery_product  filter search-all-2">  
+                  <?php 
+                  foreach ($library_file_search as $key => $value) {
+                    if (Yii::app()->session['lang'] == 1) {
+                  $libra_file = $value->library_name_en;
+                } else {
+                  $libra_file = $value->library_name;
+                }
+
+                $req_library = LibraryRequest::model()->find(array(
+                  'condition' => 'active=:active AND user_id=:user_id AND library_id=:library_id',
+                  'params' => array(':active' => 'y', ':library_id' => $value->library_id, ':user_id' => Yii::app()->user->id),
+                ));
+                if ($req_library != "") {
+                  if ($req_library->req_status == 1) {
+                    $text_class = "btn btn-warning";
+                    if (Yii::app()->session['lang'] == 1) {
+                      $text_status = "Waiting";
+                    } else {
+                      $text_status = "รอการอนุมัติ";
+                    }
+                  } elseif ($req_library->req_status == 2) {
+                    $text_class = "btn btn-success";
+                    if (Yii::app()->session['lang'] == 1) {
+                      $text_status = "Download";
+                    } else {
+                      $text_status = "ดาวน์โหลด";
+                    }
+                  }
+                  if ($req_library->req_status == 3) {
+                    $text_class = "btn btn-danger";
+                    if (Yii::app()->session['lang'] == 1) {
+                      $text_status = "Reject";
+                    } else {
+                      $text_status = "ไม่อนุมัติ";
+                    }
+                  }
+                } else {
+                  $text_class = "btn btn-info";
+                  if (Yii::app()->session['lang'] == 1) {
+                    $text_status = "Request Download";
+                  } else {
+                    $text_status = "ขอดาวน์โหลด";
+                  }
+                }
+
+                $type_ex = explode(".", $value->library_filename);
+                $extension = $type_ex[count($type_ex) - 1];
+
+                if (in_array($extension, $arr_type_video)) {
+
+                  $check_file = glob(Yii::app()->getUploadPath(null) . "../LibraryFile/*");
+                  // var_dump($check_file); exit();
+                  foreach ($check_file as $keyy => $valuee) {
+                    if (basename($valuee) == $value->library_filename) {
+              ?>
+              <div class="col-sm-6 col-md-4 col-xs-12">
+                <div class="well text-center">
+                  <div class="library-item">
+                    <div class="item item-library-index">
+                      <div class="library-card">
+
+                        <video class="video-js" poster="" controls controlsList="nodownload" preload="auto" style="width: 100%; height: 150px;">
+                          <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='video/mp4'>
+                          </video>
+
+                          <div class="library-detail">
+                            <span><?= $libra_file ?></span>
+                              <div class="text-center">
+                                  <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                                <i class="fa fa-download"></i> <?= $text_status ?>
+                              </button>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                    <?php
+                    }
+                  }
+                } elseif ($extension == "mp3") {
+                  $check_file = glob(Yii::app()->getUploadPath(null) . "../LibraryFile/*");
+
+                  foreach ($check_file as $keyy => $valuee) {
+                    if (basename($valuee) == $value->library_filename) {
+                    ?>
+                  <div class="col-sm-6 col-md-4 col-xs-12">
+                    <div class="well text-center">
+                      <div class="library-item">
+                        <div class="item item-library-index">
+                          <div class="library-card">
+
+                            <video class="video-js" poster="" controls controlsList="nodownload" preload="auto" style="width: 100%; height: 150px;">
+                              <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='video/mp3'>
+                              </video>
+
+                              <!-- <a href="" class=""> -->
+                                <!-- <span class="other-file"> -->
+                                  <!-- <i class="fas fa-file-audio audio"></i>&nbsp;<small>Audio</small> -->
+                                  <!-- </span> -->
+                          <!-- <img src="<?php //echo Yii::app()->theme->baseUrl; 
+                          ?>/images/other-library.png" class="img-fluid "> -->
+                          <div class="library-detail">
+                            <span><?= $libra_file ?></span>
+                                <div class="text-center">
+                                  <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                                    <i class="fa fa-download"></i> <?= $text_status ?>
+                                  </button>
+                                </div>
+                          </div>
+                          <!-- </a> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  <?php
+                    }
+                  }
+                } elseif ($extension == "doc" || $extension == "docx") {
+                  ?>
+                  <div class="col-sm-6 col-md-4 col-xs-12">
+                    <div class="well text-center">
+                      <div class="library-item">
+                        <div class="item item-library-index">
+                          <div class="library-card">
+                            <a href="javascript:void(0)" onclick="downloadFile(this)" class="" library-id="<?= $value->library_id ?>">
+                              <span class="other-file">
+                                <i class="fas fa-file-word word"></i>&nbsp;<small>Word</small>
+                              </span>
+                              <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="w-100">
+                              <div class="library-detail">
+                                <span><?= $libra_file ?></span>
+                              </div>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <?php
+                } elseif ($extension == "xls" || $extension == "xlsx") {
+                ?>
+                <div class="col-sm-6 col-md-4 col-xs-12">
+                  <div class="well text-center">
+                    <div class="library-item">
+                      <div class="item item-library-index">
+                        <div class="library-card">
+                          <a href="javascript:void(0)" onclick="downloadFile(this)" class="" library-id="<?= $value->library_id ?>">
+                            <span class="other-file">
+                              <i class="fas fa-file-excel excel"></i>&nbsp;<small>Excel</small>
+                            </span>
+                            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="w-100">
+                            <div class="library-detail">
+                              <span><?= $libra_file ?></span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <?php
+                } elseif ($extension == "ppt" || $extension == "pptx") {
+                ?>
+                <div class="col-sm-6 col-md-4 col-xs-12">
+                  <div class="well text-center">
+                    <div class="library-item">
+                      <div class="item item-library-index">
+                        <div class="library-card">
+                          <a href="javascript:void(0)" onclick="downloadFile(this)" class="" library-id="<?= $value->library_id ?>">
+                            <span class="other-file">
+                              <i class="fas fa-file-excel powerpoint"></i>&nbsp;<small>PowerPoint</small>
+                            </span>
+                            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="w-100">
+                            <div class="library-detail">
+                              <span><?= $libra_file ?></span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <?php
+                } elseif ($extension == "pdf") {
+                ?>
+                <div class="col-sm-6 col-md-4 col-xs-12">
+                  <div class="well text-center">
+                    <div class="library-item">
+                      <div class="item item-library-index">
+                        <div class="library-card">
+                          <a href="javascript:void(0)" onclick="downloadFile(this)" class="" library-id="<?= $value->library_id ?>">
+                            <span class="other-file">
+                              <i class="fas fa-file-pdf pdf"></i>&nbsp;<small>PDF</small>
+                            </span>
+                            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="w-100">
+                            <div class="library-detail">
+                              <span><?= $libra_file ?></span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <?php
+                }
+              } // foreach ($library_file_2
+                   ?>                
+            </div> <!-- cate-all-2 -->
+            <?php } ?>
+            <!-- search all 2 -->
+
+
             <?php 
             foreach ($library_type_2 as $key_t => $value_t) {
                 if (Yii::app()->session['lang'] == 1) {
@@ -539,7 +758,7 @@
 
       </div> <!-- id="lby-doc" -->
 
-      <div id="lby-multi" class="tab-pane fade">
+      <div id="lby-multi" class="tab-pane fade <?php if(isset($_GET['cate_1'])){ echo 'in active'; } ?>">
         <div class="row">
           <div class="col-sm-4 col-md-3 col-xs-12">
 
@@ -548,9 +767,9 @@
               รายการห้องสมุดมัลติมีเดีย
             </h4>
 
-            <form id="searchForm" action="<?php echo $this->createUrl('course/Search') ?>" method="post">
+            <form id="searchForm" action="<?php echo $this->createUrl('video/library') ?>" method="GET">
               <div class="input-group">
-                <input type="text" class="form-control" name="text" placeholder=' <?php if (Yii::app()->session['lang'] == 1) { echo "Search"; } else { echo "ค้นหา"; } ?>'>
+                <input type="text" class="form-control" name="cate_1" value="<?= $_GET['cate_1'] ?>" placeholder=' <?php if (Yii::app()->session['lang'] == 1) { echo "Search"; } else { echo "ค้นหา"; } ?>'>
                 <span class="input-group-btn">
                   <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span>
                     <?php
@@ -805,6 +1024,234 @@
               } // foreach ($library_file_1
                    ?>                
             </div> <!-- cate-all-1 -->
+
+
+
+            <!-- search cate1 -->
+            <?php if(isset($_GET['cate_1'])){ ?>
+            <div class="gallery_product  filter search-all-1">  
+
+                  <?php 
+                  foreach ($library_file_search as $key => $value) {
+                    if (Yii::app()->session['lang'] == 1) {
+                  $libra_file = $value->library_name_en;
+                } else {
+                  $libra_file = $value->library_name;
+                }
+
+                $req_library = LibraryRequest::model()->find(array(
+                  'condition' => 'active=:active AND user_id=:user_id AND library_id=:library_id',
+                  'params' => array(':active' => 'y', ':library_id' => $value->library_id, ':user_id' => Yii::app()->user->id),
+                ));
+                if ($req_library != "") {
+                  if ($req_library->req_status == 1) {
+                    $text_class = "btn btn-warning";
+                    if (Yii::app()->session['lang'] == 1) {
+                      $text_status = "Waiting";
+                    } else {
+                      $text_status = "รอการอนุมัติ";
+                    }
+                  } elseif ($req_library->req_status == 2) {
+                    $text_class = "btn btn-success";
+                    if (Yii::app()->session['lang'] == 1) {
+                      $text_status = "Download";
+                    } else {
+                      $text_status = "ดาวน์โหลด";
+                    }
+                  }
+                  if ($req_library->req_status == 3) {
+                    $text_class = "btn btn-danger";
+                    if (Yii::app()->session['lang'] == 1) {
+                      $text_status = "Reject";
+                    } else {
+                      $text_status = "ไม่อนุมัติ";
+                    }
+                  }
+                } else {
+                  $text_class = "btn btn-info";
+                  if (Yii::app()->session['lang'] == 1) {
+                    $text_status = "Request Download";
+                  } else {
+                    $text_status = "ขอดาวน์โหลด";
+                  }
+                }
+
+                $type_ex = explode(".", $value->library_filename);
+                $extension = $type_ex[count($type_ex) - 1];
+
+                if (in_array($extension, $arr_type_video)) {
+
+                  $check_file = glob(Yii::app()->getUploadPath(null) . "../LibraryFile/*");
+                  // var_dump($check_file); exit();
+                  foreach ($check_file as $keyy => $valuee) {
+                    if (basename($valuee) == $value->library_filename) {
+              ?>
+              <div class="col-sm-6 col-md-4 col-xs-12">
+                <div class="well text-center">
+                  <div class="library-item">
+                    <div class="item item-library-index">
+                      <div class="library-card">
+
+                        <video class="video-js" poster="" controls controlsList="nodownload" preload="auto" style="width: 100%; height: 150px;">
+                          <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='video/mp4'>
+                          </video>
+
+                          <div class="library-detail">
+                            <span><?= $libra_file ?></span>
+                            <div class="text-center">
+                              <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                              <i class="fa fa-download"></i> <?= $text_status ?>
+                            </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                    <?php
+                    }
+                  }
+                } elseif ($extension == "mp3") {
+                  $check_file = glob(Yii::app()->getUploadPath(null) . "../LibraryFile/*");
+
+                  foreach ($check_file as $keyy => $valuee) {
+                    if (basename($valuee) == $value->library_filename) {
+                    ?>
+                  <div class="col-sm-6 col-md-4 col-xs-12">
+                    <div class="well text-center">
+                      <div class="library-item">
+                        <div class="item item-library-index">
+                          <div class="library-card">
+
+                            <video class="video-js" poster="" controls controlsList="nodownload" preload="auto" style="width: 100%; height: 150px;">
+                              <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='video/mp3'>
+                              </video>
+
+                              <!-- <a href="" class=""> -->
+                                <!-- <span class="other-file"> -->
+                                  <!-- <i class="fas fa-file-audio audio"></i>&nbsp;<small>Audio</small> -->
+                                  <!-- </span> -->
+                          <!-- <img src="<?php //echo Yii::app()->theme->baseUrl; 
+                          ?>/images/other-library.png" class="img-fluid "> -->
+                          <div class="library-detail">
+                            <span><?= $libra_file ?></span>
+                            <div class="text-center">
+                              <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                              <i class="fa fa-download"></i> <?= $text_status ?>
+                            </button>
+                            </div>
+                          </div>
+                          <!-- </a> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                  <?php
+                    }
+                  }
+                } elseif ($extension == "doc" || $extension == "docx") {
+                  ?>
+                  <div class="col-sm-6 col-md-4 col-xs-12">
+                    <div class="well text-center">
+                      <div class="library-item">
+                        <div class="item item-library-index">
+                          <div class="library-card">
+                            <a href="javascript:void(0)" onclick="downloadFile(this)" class="" library-id="<?= $value->library_id ?>">
+                              <span class="other-file">
+                                <i class="fas fa-file-word word"></i>&nbsp;<small>Word</small>
+                              </span>
+                              <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="w-100">
+                              <div class="library-detail">
+                                <span><?= $libra_file ?></span>
+                              </div>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                <?php
+                } elseif ($extension == "xls" || $extension == "xlsx") {
+                ?>
+                <div class="col-sm-6 col-md-4 col-xs-12">
+                  <div class="well text-center">
+                    <div class="library-item">
+                      <div class="item item-library-index">
+                        <div class="library-card">
+                          <a href="javascript:void(0)" onclick="downloadFile(this)" class="" library-id="<?= $value->library_id ?>">
+                            <span class="other-file">
+                              <i class="fas fa-file-excel excel"></i>&nbsp;<small>Excel</small>
+                            </span>
+                            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="w-100">
+                            <div class="library-detail">
+                              <span><?= $libra_file ?></span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <?php
+                } elseif ($extension == "ppt" || $extension == "pptx") {
+                ?>
+                <div class="col-sm-6 col-md-4 col-xs-12">
+                  <div class="well text-center">
+                    <div class="library-item">
+                      <div class="item item-library-index">
+                        <div class="library-card">
+                          <a href="javascript:void(0)" onclick="downloadFile(this)" class="" library-id="<?= $value->library_id ?>">
+                            <span class="other-file">
+                              <i class="fas fa-file-excel powerpoint"></i>&nbsp;<small>PowerPoint</small>
+                            </span>
+                            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="w-100">
+                            <div class="library-detail">
+                              <span><?= $libra_file ?></span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <?php
+                } elseif ($extension == "pdf") {
+                ?>
+                <div class="col-sm-6 col-md-4 col-xs-12">
+                  <div class="well text-center">
+                    <div class="library-item">
+                      <div class="item item-library-index">
+                        <div class="library-card">
+                          <a href="javascript:void(0)" onclick="downloadFile(this)" class="" library-id="<?= $value->library_id ?>">
+                            <span class="other-file">
+                              <i class="fas fa-file-pdf pdf"></i>&nbsp;<small>PDF</small>
+                            </span>
+                            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="w-100">
+                            <div class="library-detail">
+                              <span><?= $libra_file ?></span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <?php
+                }
+              } // foreach ($library_file_1
+                   ?>                
+            </div> <!-- cate-all-1 -->
+          <?php } ?>
+            <!-- search cate1 -->
+
+
+
+
+
+
+
 
 
             <?php 
@@ -1160,10 +1607,29 @@
   }
 
   $( document ).ready(function() {
-    $('button[data-filter="cate-all-2"]').click();
+    <?php if(isset($_GET['cate_1'])){
+      ?>
+      $('button[data-filter="cate-all-1"]').click();
+      $(".cate-all-1").hide();
+      $(".search-all-1").show();
+      <?php
+    }elseif(isset($_GET['cate_2'])){
+      ?>
+      $('button[data-filter="cate-all-2"]').click();
+      $(".cate-all-2").hide();
+      $(".search-all-2").show();
+      <?php
+    }else{
+      ?>
+      $('button[data-filter="cate-all-2"]').click();      
+      <?php
+    }
+    ?>
   });
 
   function tab_cate(val, cate_type){
+    $(".search-all-2").hide();
+    $(".search-all-1").hide();
     if(cate_type == 1){
       $('button[data-filter="cate-all-1"]').click();
     }else if(cate_type == 2){
@@ -1172,6 +1638,9 @@
   }
 
   $(".tab-btn-cate-type").click(function() {
+    $(".search-all-2").hide();
+    $(".search-all-1").hide();
+
     $('.filter-active').each(function(){
       $(this).removeClass("filter-active");
 

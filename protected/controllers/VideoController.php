@@ -72,6 +72,33 @@ class VideoController extends Controller{
     public function actionLibrary()
     {
         if(Yii::app()->user->id){
+
+            if(isset($_GET["cate_1"])){
+                $search_input = $_GET["cate_1"];
+
+                $library_file_search = LibraryFile::model()->with('type')->findAll(array(
+                'condition' => 't.active=:active AND type.library_cate=1 AND 
+                ( (t.library_name LIKE :keyword) || (t.library_name_en LIKE :keyword) )
+                ',
+                'params' => array(':active' => 'y', ':keyword'=>"%$search_input%"),
+                'order' => 't.sortOrder ASC'
+            ));
+            }elseif(isset($_GET["cate_2"])){
+                $search_input = $_GET["cate_2"];
+
+                $library_file_search = LibraryFile::model()->with('type')->findAll(array(
+                'condition' => 't.active=:active AND type.library_cate=2 AND 
+                ( (t.library_name LIKE :keyword) || (t.library_name_en LIKE :keyword) )
+                ',
+                'params' => array(':active' => 'y', ':keyword'=>"%$search_input%"),
+                'order' => 't.sortOrder ASC'
+            ));
+            }else{
+                $library_file_search = "";
+            }
+
+
+
             $library_file_1 = LibraryFile::model()->with('type')->findAll(array(
                 'condition' => 't.active=:active AND type.library_cate=1',
                 'params' => array(':active' => 'y'),
@@ -97,7 +124,9 @@ class VideoController extends Controller{
                 'library_file_2'=>$library_file_2,
                 'library_type_1'=>$library_type_1,
                 'library_type_2'=>$library_type_2,
+                'library_file_search'=>$library_file_search,
             ));
+
         }else{
             $this->redirect(array('site/index'));
         }
