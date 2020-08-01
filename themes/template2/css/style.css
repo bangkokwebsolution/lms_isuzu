@@ -4209,6 +4209,15 @@ ol.stat-alert li::before {
   .card-img {
     max-height: inherit !important;
   }
+
+}
+
+@media screen and (max-width:500px) {
+    .radio.radio-inline{
+      display: block;
+      width: 100%;
+      margin: 8px;
+    }
 }
 
 @media screen and (min-width:992px) {
