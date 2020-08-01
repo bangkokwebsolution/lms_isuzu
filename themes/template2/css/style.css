@@ -5076,3 +5076,13 @@ section#faq {
   left: 50%;
   z-index: 1;
 }
+
+.year-report{
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  padding: 1.5em;
+}
+
+.year-report h4{
+  margin: 0 0 10px;
+}

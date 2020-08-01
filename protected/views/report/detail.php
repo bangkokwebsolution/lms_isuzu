@@ -172,6 +172,93 @@
         <div class="divider">
             <i class="fas fa-chevron-down"></i>
         </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="year-report">
+                    <h4>ปี 2019</h4>
+                    <div style="width:100%">
+                        <canvas id="chart_0"></canvas>
+                    </div>
+                    <script>
+                        var data = {
+                            labels: ["test", "test", "test", "test", "test", "test", "test"],
+                            datasets: [{
+                                label: "Dataset #1",
+                                backgroundColor: "rgba(255,99,132,0.2)",
+                                borderColor: "rgba(255,99,132,1)",
+                                borderWidth: 2,
+                                hoverBackgroundColor: "rgba(255,99,132,0.4)",
+                                hoverBorderColor: "rgba(255,99,132,1)",
+                                data: [65, 59, 20, 81, 56, 55, 40],
+                            }]
+                        };
+
+                        var option = {
+                            scales: {
+                                yAxes: [{
+                                    stacked: true,
+                                    gridLines: {
+                                        display: true,
+                                        color: "rgba(255,99,132,0.2)"
+                                    }
+                                }],
+                                xAxes: [{
+                                    gridLines: {
+                                        display: false
+                                    }
+                                }]
+                            }
+                        };
+
+                        Chart.Bar('chart_0', {
+                            options: option,
+                            data: data
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="year-report">
+                    <h4>ปี 2020</h4>
+                    <div style="width:100%">
+                        <canvas id="oilChart"></canvas>
+                    </div>
+
+                    <script>
+                        var oilCanvas = document.getElementById("oilChart");
+
+                        Chart.defaults.global.defaultFontFamily = "Lato";
+                        Chart.defaults.global.defaultFontSize = 18;
+
+                        var oilData = {
+                            labels: [
+                                "test",
+                                "test",
+                                "test",
+                                "test",
+                                "test"
+                            ],
+                            datasets: [{
+                                data: [133.3, 86.2, 52.2, 51.2, 50.2],
+                                backgroundColor: [
+                                    "#FF6384",
+                                    "#63FF84",
+                                    "#84FF63",
+                                    "#8463FF",
+                                    "#6384FF"
+                                ]
+                            }]
+                        };
+
+                        var pieChart = new Chart(oilCanvas, {
+                            type: 'pie',
+                            data: oilData
+                        });
+                    </script>
+                </div>
+            </div>
+        </div>
         <h2 class="text-center">
             <?php
             if (Yii::app()->session['lang'] == 1) {
@@ -218,6 +305,8 @@
         </div>
 
     </div>
+    </div>
+
 </section>
 
 <script>
