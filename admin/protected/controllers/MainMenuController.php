@@ -185,6 +185,7 @@ class MainMenuController extends Controller
 			$nameModel = $value['nameModel'];
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
+	
 		if(isset($_POST['MainMenu']))
 		{
 			$this->updateModel($nameMenu,$langId,$_POST[$nameModel]);
@@ -200,7 +201,7 @@ class MainMenuController extends Controller
 				$this->redirect(array('admin','id'=>$model->id));
 			}
 		}
-		//var_dump($model);exit();
+
 		$this->render('update',array(
 			'model'=>$model,
 			'label' => $label,
@@ -397,7 +398,7 @@ class MainMenuController extends Controller
 			    	
 				    break;
 
-				case "library":
+				case "video":
 				    $modelNew = new MenuLibrary();
 				    $form = '_formLibrary';
 				    $nameModel = "MainLibrary";
@@ -440,7 +441,7 @@ class MainMenuController extends Controller
 			    	$updateMenu->attributes = $value;
 			    	$ck = $updateMenu->update();
 				    break;
-				case "contactus":
+				case "contactusnew":
 				    $updateMenu = MenuContactus::model()->find(array('condition' => "lang_id=".$lang_id));
 			    	$updateMenu->attributes = $value;
 				    break;
@@ -475,7 +476,7 @@ class MainMenuController extends Controller
 			    	$updateMenu->attributes = $value;
 				    break;
 
-				case "library":
+				case "video":
 				    $updateMenu = MenuLibrary::model()->find(array('condition' => "lang_id=".$lang_id));
 			    	$updateMenu->attributes = $value;
 				    break;
