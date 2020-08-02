@@ -119,12 +119,32 @@ class VideoController extends Controller{
                 'params' => array(':active' => 'y'),
                 'order' => 'sortOrder ASC'
             ));
+           
+            if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+                    $langId = Yii::app()->session['lang'] = 1;
+            }else{
+                    $langId = Yii::app()->session['lang'];
+            }
+            
+            $label = MenuLibrary::model()->find(array(
+                'condition' => 'lang_id=:lang_id',
+                'params' => array(':lang_id' => $langId)
+            ));
+
+            if(!$label){
+                $label = MenuLibrary::model()->find(array(
+                'condition' => 'lang_id=:lang_id',
+                'params' => array(':lang_id' => 1)
+            ));
+            }
+
             $this->render('library',array(
                 'library_file_1'=>$library_file_1,
                 'library_file_2'=>$library_file_2,
                 'library_type_1'=>$library_type_1,
                 'library_type_2'=>$library_type_2,
                 'library_file_search'=>$library_file_search,
+                'label'=>$label,
             ));
 
         }else{

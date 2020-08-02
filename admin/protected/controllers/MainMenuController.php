@@ -200,6 +200,7 @@ class MainMenuController extends Controller
 				$this->redirect(array('admin','id'=>$model->id));
 			}
 		}
+		//var_dump($model);exit();
 		$this->render('update',array(
 			'model'=>$model,
 			'label' => $label,
@@ -394,8 +395,18 @@ class MainMenuController extends Controller
 				
 			    		$label = MenuVroom::model()->find($criteria);
 			    	
+				    break;
+
+				case "library":
+				    $modelNew = new MenuLibrary();
+				    $form = '_formLibrary';
+				    $nameModel = "MainLibrary";
+				
+			    		$label = MenuLibrary::model()->find($criteria);
+			    	
 				    break; 
 			}
+			
 			$value = array('label'=>$label,'formName'=> $form,'nameModel'=> $nameModel,'modelNew'=>$modelNew);
 		return $value;
 	}
@@ -461,6 +472,11 @@ class MainMenuController extends Controller
 
 				case "virtualclassroom":
 				    $updateMenu = MainVroom::model()->find(array('condition' => "lang_id=".$lang_id));
+			    	$updateMenu->attributes = $value;
+				    break;
+
+				case "library":
+				    $updateMenu = MenuLibrary::model()->find(array('condition' => "lang_id=".$lang_id));
 			    	$updateMenu->attributes = $value;
 				    break;
 				    

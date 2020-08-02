@@ -30,10 +30,10 @@
   <div class="container">
     <ul class="nav nav-tabs">
       <li <?php if(isset($_GET['cate_2'])){ echo 'class="active"'; }elseif(!isset($_GET['cate_1'])){ echo 'class="active"'; } ?>>
-        <a data-toggle="tab" href="#lby-doc" onclick="tab_cate(this, 2);">ห้องสมุดประเภทเอกสาร</a>
+        <a data-toggle="tab" href="#lby-doc" onclick="tab_cate(this, 2);"><?php echo $label->label_library_document ?></a>
       </li>
       <li <?php if(isset($_GET['cate_1'])){ echo 'class="active"'; } ?>>
-        <a data-toggle="tab" href="#lby-multi" onclick="tab_cate(this, 1);">ห้องสมุดประเภทมัลติมีเดีย</a>
+        <a data-toggle="tab" href="#lby-multi" onclick="tab_cate(this, 1);"><?php echo $label->label_library_media ?></a>
       </li>
     </ul>
 
@@ -42,7 +42,7 @@
       <div id="lby-doc" class="tab-pane fade <?php if(isset($_GET['cate_2'])){ echo 'in active'; }elseif(!isset($_GET['cate_1'])){ echo 'in active'; } ?>">
         <div class="row">
           <div class="col-sm-4 col-md-3 col-xs-12">
-            <h4 class="library-topic"><i class="fas fa-list"></i> รายการห้องสมุดเอกสาร </h4>
+            <h4 class="library-topic"><i class="fas fa-list"></i><?php echo $label->label_list_docment ?></h4>
             <form id="searchForm" action="<?php echo $this->createUrl('video/library'); ?>" method="GET">
               <div class="input-group">
                 <input type="text" class="form-control" name="cate_2" value="<?= $_GET['cate_2'] ?>" placeholder=' <?php if (Yii::app()->session['lang'] == 1) { echo "Search"; } else { echo "ค้นหา"; } ?>'>
@@ -61,7 +61,7 @@
             </form>
 
             <div class="type-menu gallery">
-              <button class="tab-btn-cate-type btn btn-default filter-button btn-lg" data-filter="cate-all-2">ทั้งหมด</button>
+              <button class="tab-btn-cate-type btn btn-default filter-button btn-lg" data-filter="cate-all-2"><?php echo $label->label_all ?></button>
               <?php 
               foreach ($library_type_2 as $key => $value) {
                 if (Yii::app()->session['lang'] == 1) {
@@ -763,8 +763,7 @@
           <div class="col-sm-4 col-md-3 col-xs-12">
 
             <h4 class="library-topic">
-              <i class="fas fa-list"></i>
-              รายการห้องสมุดมัลติมีเดีย
+              <i class="fas fa-list"></i><?php echo $label->label_list_media ?>
             </h4>
 
             <form id="searchForm" action="<?php echo $this->createUrl('video/library') ?>" method="GET">
@@ -785,7 +784,7 @@
             </form>
 
             <div class="type-menu gallery">
-              <button class="tab-btn-cate-type btn btn-default filter-button btn-lg" data-filter="cate-all-1">ทั้งหมด</button>
+              <button class="tab-btn-cate-type btn btn-default filter-button btn-lg" data-filter="cate-all-1"><?php echo $label->label_all ?></button>
               <?php 
               foreach ($library_type_1 as $key => $value) {
                 if (Yii::app()->session['lang'] == 1) {

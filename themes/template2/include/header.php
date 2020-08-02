@@ -270,7 +270,7 @@
                     $url = !empty($value->parent) ? $value->parent->url : $value->url;
                     $controller = explode('/', $url);
                     $controller[0] = strtolower($controller[0]);
-                    if ($controller[0] != "registration" && $controller[0] != "privatemessage" && $controller[0] != "search" && $controller[0] != "forgot_password" && $controller[0] != "question" && $controller[0] != "virtualclassroom") {
+                    if ($controller[0] != "registration" && $controller[0] != "privatemessage" && $controller[0] != "search" && $controller[0] != "forgot_password" && $controller[0] != "question" && $controller[0] != "virtualclassroom" && $controller[0] != "video") {
                         $clss =  $bar == $controller[0] && $bar_action == "index" ? "active" : '';
                         if ($controller[0] != "webboard") {
                             if ($controller[0] == "course" && Yii::app()->user->id == null) {
@@ -319,22 +319,23 @@
            }
 
 
-           if(Yii::app()->user->id){
-            ?>
-            <li class="">
-                <a href="<?= $this->createUrl("video/library") ?>">
-                    <?php 
-                    if(Yii::app()->session['lang'] == 1){
-                        echo "Library";
-                    }else{
-                        echo "ห้องสมุด";
-                    }
-                    ?>
+           // if(Yii::app()->user->id){
+           //  ?>
+    <!--        //  <li class="">
+           //      <a href="<?= $this->createUrl("video/library") ?>"> -->
+                     <?php 
+           //          if(Yii::app()->session['lang'] == 1){
+           //              echo "Library";
+           //          }else{
+           //              echo "ห้องสมุด";
+           //          }
+           //          ?>
 
-                </a>
-            </li>
-            <?php
-            }
+       <!--     //      </a>
+                 
+           //  </li> -->
+             <?php
+           //  }
                 ?>
             <?php
             $key = "DR6564UFP5858BU58448HYYGYCFRVTVYBHCFCGHJ";
@@ -351,6 +352,18 @@
                     ?>
 
                 </a>
+            </li>
+      <!--       <li class="">
+                <a href="<?= $this->createUrl("report/index") ?>">
+                    <?php 
+                    if(Yii::app()->session['lang'] == 1){
+                        echo "รายงาน";
+                    }else{
+                        echo "รายงาน";
+                    }
+                    ?>
+
+                </a> -->
             </li>
             <?php
             }
