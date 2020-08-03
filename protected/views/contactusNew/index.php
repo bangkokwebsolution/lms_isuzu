@@ -62,7 +62,7 @@ if(!empty($msg)){
  ?>
 <div class="contact-map">
             <div class="well">
-                <div class="mapouter"><div class="gmap_canvas"><iframe width="1300" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Thoresen%20Thai%20Agencies%20&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.embedgooglemap.net">embed custom google maps</a></div><style>.mapouter{position:relative;text-align:right;height:500px;width:1300px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:1300px;}</style></div> 
+                <div class="mapouter"><div class="gmap_canvas"><iframe width="1300" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=10th%20floor%20Orakarn%20Building%2026%2F32-34%20Soi%20Chit%20Lom%20Alley%2C%20Lumphini%2C%20Pathum%20Wan%20District%2C%20Bangkok%2010330&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.embedgooglemap.net"></a></div><style>.mapouter{position:relative;text-align:right;height:500px;width:1300px;}.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:1300px;}</style></div>
             </div>
             <!-- <h4 class="text-center"><?= Yii::app()->session['lang'] == 1?'Map : THORESEN THAI AGENCIES PUBLIC COMPANY LIMITED (TTA)':'แผนที่ : บริษัท โทรีเซนไทย เอเยนต์ซีส์ จำกัด (มหาชน)'; ?></h4> -->
         </div>
