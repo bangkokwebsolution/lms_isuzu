@@ -78,8 +78,8 @@ class User extends CActiveRecord
 			array('username, email, status,password,identification', 'required'), //Jae Fix
 			// array('username, email', 'unique'),
 			array('superuser, status, online_status,online_user,register_status', 'numerical', 'integerOnly'=>true),
-			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
-			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'update'),
+			array('pic_user', 'file', 'types'=>'jpg, png, gif, jpeg','allowEmpty' => true, 'on'=>'insert'),
+			array('pic_user', 'file', 'types'=>'jpg, png, gif, jpeg','allowEmpty' => true, 'on'=>'update'),
 			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,station_id,company_id, division_id,position_id,lastactivity,orgchart_lv2,del_status,avatar,pic_cardid2,employee_id,branch_id,register_status', 'safe', 'on'=>'search'),
 			//array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
 			array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
