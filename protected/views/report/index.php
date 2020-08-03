@@ -49,7 +49,7 @@
 			<div id="first-report" class="tab-pane fade in active">
 				<div class="row d-flex justify-content-center">
 					<div class="col-sm-4 col-md-3">
-						<a href="#">
+						<a href="<?= $this->createUrl("report/report_register") ?>">
 							<div class="card-report">
 								<div class="img-report">
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-1.png" class="img-fluid ">
