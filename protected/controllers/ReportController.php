@@ -30,47 +30,74 @@ class ReportController extends Controller
 		if ($TypeEmployee) {
 				 $start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
 				 $end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
-      
 
-				    $sqlAll = " SELECT * FROM tbl_users INNER JOIN tbl_profiles ON tbl_profiles.user_id = tbl_users.id ";
-				    //if ($Department != "") {
-
-				     	$sqlAll .= " INNER JOIN tbl_department ON tbl_department.id = tbl_users.department_id ";
-				   // } 
-				    			
-				    //if($Position != "") {
-								$sqlAll .= " INNER JOIN tbl_position ON tbl_position.id = tbl_users.position_id";
-					// }
-					  if($Leval != "") {
-								$sqlAll .= " INNER JOIN tbl_Branch ON tbl_Branch.id = tbl_users.branch_id";
-					}
-							$sqlAll .= 	" WHERE tbl_users.del_status = 0 AND tbl_users.superuser = 0 AND tbl_users.status = '". $status ."' ";
-
-							$sqlAll .= " AND tbl_profiles.type_employee = '".$TypeEmployee."'";
-
-					if($Department != "") {
-                            $sqlAll .= " AND tbl_users.department_id = '".$Department."'";
-                    }
-                    		
-                    if($Position != "") {
-                            $sqlAll .= " AND tbl_users.position_id = '".$Position."'";
-                    }
-                    if($Leval != "") {
-                            $sqlAll .= " AND tbl_users.branch_id = '".$Leval."'";
-                    }
-                                        
-                    if($datetime_start != "" && $datetime_end != "") {
-                         //   $sqlAll .= " AND create_at BETWEEN '" . $start . "' AND '".$end."'";
-                    	$sqlAll .= " AND tbl_users.create_at >= '" . $start_date . "' AND tbl_users.create_at <= '".$end_date."'";
-                    }               
-                       // $sqlAll .= " GROUP BY tbl_users.`status`";
-
-                  $allCount = Yii::app()->db->createCommand($sqlAll)->queryAll();
-                  
-                  foreach ($allCount as $key => $value) {
-                 
+                  $criteria = new CDbCriteria;
+                  $criteria->compare('type_employee_id',2);
+                  if($Department){
+                  	$criteria->compare('id',$Department);
                   }
-					if (!empty($allCount)) {
+                  $criteria->compare('active','y');
+                  $dep = Department::model()->findAll($criteria);
+                  $dep_arr = [];
+                  foreach ($dep as $key => $val_dep) {
+                 	$dep_arr[] = $val_dep->id;
+                  }
+
+
+                  $criteria = new CDbCriteria;
+                  $criteria->addIncondition('department_id',$dep_arr);
+                  $criteria->compare('active','y');
+                   if($Position){
+                  $criteria->compare('id',$Position);
+                  }
+                  $pos = Position::model()->findAll($criteria);
+
+                   $pos_arr = [];
+                   $posback_arr = [];
+                  foreach ($pos as $key => $val_pos) {
+                 	$pos_arr[] = $val_pos->id;
+                 	$posback_arr[] = $val_pos->department_id;
+                  }
+
+
+                  $criteria = new CDbCriteria;
+                  $criteria->addIncondition('position_id',$pos_arr);
+                  $criteria->compare('active','y');
+                  if($Leval){
+                  $criteria->compare('id',$Leval);
+                  }
+                  $branch = Branch::model()->findAll($criteria);
+
+
+                  $branch_arr = [];
+                  foreach ($branch as $key => $val_branch) {
+                  	$branch_arr[] = $val_branch->position_id;
+                  }
+                  $result_branch_arr = array_unique( $branch_arr );
+                  $result_pos_arr = array_unique( $posback_arr );
+
+                  $criteria = new CDbCriteria;
+                  $criteria->addIncondition('department_id',$dep_arr);
+                  if($Position){
+                  $criteria->compare('id',$Position);
+                  }
+                  $criteria->addNotInCondition('id',$result_branch_arr);
+                  $criteria->compare('active','y');
+                  $pos_back = Position::model()->findAll($criteria);
+
+
+                  $criteria = new CDbCriteria;
+                  $criteria->compare('type_employee_id',2);
+                  if($Department){
+                  $criteria->compare('id',$Department);
+                  }
+                  $criteria->addNotInCondition('id',$result_pos_arr);
+                  $criteria->compare('active','y');
+                  $dep_back = Department::model()->findAll($criteria);
+
+
+                  if ($status != null) {
+					if (!empty($branch) || !empty($pos_back) || !empty($dep_back) ) {
 						$i = 1;
 							$datatable .= '<div class="report-table">';
 				            $datatable .= '<div class="table-responsive w-100 t-regis-language">';
@@ -88,24 +115,99 @@ class ReportController extends Controller
 				            $datatable .= '</thead>';
 				            $datatable .= '<tbody>';
 				            
-						foreach ($allCount as $key => $value) { 		     
+						foreach ($branch as $key => $value) { 	
+
+							$criteria = new CDbCriteria;
+							$criteria->compare('branch_id',$value->id);
+							$criteria->compare('position_id',$value->Positions->id);
+							$criteria->compare('department_id',$value->Positions->Departments->id);
+							if($status != null){
+							$criteria->compare('status',$status);		
+							}
+							$users = Users::model()->findAll($criteria);
+
+							$cou_use = count($users);
 				           	$datatable .= '<tr>';
 				            $datatable .= '<td>'.$i++.'</td>';
-				            $datatable .= '<td>'.$value['dep_title'].'</td>';
-				            $datatable .= '<td>'.$value['position_title'].'</td>';
-				            $datatable .= '<td>'.$value['branch_name'].'</td>';
-				            $datatable .= '<td></td>';
+				            $datatable .= '<td>'.$value->Positions->Departments->dep_title.'</td>';
+				            $datatable .= '<td>'.$value->Positions->position_title.'</td>';
+				            $datatable .= '<td>'.$value->branch_name.'</td>';
+				            $datatable .= '<td>'.$cou_use.'</td>';
 				            $datatable .= '<td>';
-										    if ($value['status'] == 1) {
+				            if($cou_use > 0){
+										    if ($status == 1) {
 										      $datatable .= '<span class="text-success"><i class="fas fa-check"></i>อนุมัติ</span>';
 										    }else{
 										      $datatable .= '<span class="text-danger"><i class="fas fa-times"></i>ไม่อนุมัติ</span>';
 										    }
+										}
+				            $datatable .= '</td>';
+				            $datatable .= '<td></td>';
+				          	$datatable .= '</tr>';
+						}
+
+						foreach ($pos_back as $keypos_back => $valuepos_back) { 	
+
+							$criteria = new CDbCriteria;
+							$criteria->compare('position_id',$valuepos_back->id);
+							$criteria->compare('department_id',$valuepos_back->Departments->id);
+							if($status != null){
+							$criteria->compare('status',$status);		
+							}
+							$users = Users::model()->findAll($criteria);
+
+							$cou_use = count($users);
+
+				           	$datatable .= '<tr>';
+				            $datatable .= '<td>'.$i++.'</td>';
+				            $datatable .= '<td>'.$valuepos_back->Departments->dep_title.'</td>';
+				            $datatable .= '<td>'.$valuepos_back->position_title.'</td>';
+				            $datatable .= '<td></td>';
+				            $datatable .= '<td>'.$cou_use.'</td>';
+				            $datatable .= '<td>';
+				            if($cou_use > 0){
+				            	if ($status == 1) {
+				            		$datatable .= '<span class="text-success"><i class="fas fa-check"></i>อนุมัติ</span>';
+				            	}else{
+				            		$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>ไม่อนุมัติ</span>';
+				            	}
+				            }
 				            $datatable .= '</td>';
 				            $datatable .= '<td></td>';
 				          	$datatable .= '</tr>';
 				            
-						}   
+						}  
+
+						foreach ($dep_back as $keydep_back => $valuedep_back) { 
+
+							$criteria = new CDbCriteria;
+							$criteria->compare('department_id',$valuedep_back->id);
+							if($status != null){
+								$criteria->compare('status',$status);		
+							}
+							$users = Users::model()->findAll($criteria);
+
+							$cou_use = count($users);
+
+				           	$datatable .= '<tr>';
+				            $datatable .= '<td>'.$i++.'</td>';
+				            $datatable .= '<td>'.$valuedep_back->dep_title.'</td>';
+				            $datatable .= '<td></td>';
+				            $datatable .= '<td></td>';
+				            $datatable .= '<td>'.$cou_use.'</td>';
+				            $datatable .= '<td>';
+				            if($cou_use > 0){
+				            	if ($status == 1) {
+				            		$datatable .= '<span class="text-success"><i class="fas fa-check"></i>อนุมัติ</span>';
+				            	}else{
+				            		$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>ไม่อนุมัติ</span>';
+				            	}
+				            }
+				            $datatable .= '</td>';
+				            $datatable .= '<td></td>';
+				          	$datatable .= '</tr>';
+				            
+						}  
 							
 				            $datatable .= '</tbody>';
 							$datatable .= '</table>';
@@ -115,6 +217,7 @@ class ReportController extends Controller
 					}else{
 						echo "<p>ไม่พบข้อมูล</p>";
 					}
+				}
 
 		}
 	}
