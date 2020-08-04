@@ -1,7 +1,7 @@
 <?php
 
 $this->breadcrumbs=array(
-	'ระบบจัดการป๊อปอัพ'=>array('admin'),
+	'ระบบจัดการติดต่อเรา'=>array('admin'),
 	$model->name,
 );
 ?>

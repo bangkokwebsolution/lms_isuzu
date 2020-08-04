@@ -76,6 +76,12 @@
 					<?php echo $form->error($model,'con_position'); ?>
 				</div>
 				<div class="row">
+					<?php echo $form->labelEx($model,'con_position_en'); ?>
+					<?php echo $form->textField($model,'con_position_en',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
+					<?php echo $this->NotEmpty();?>
+					<?php echo $form->error($model,'con_position_en'); ?>
+				</div>
+				<div class="row">
 					<?php echo $form->labelEx($model,'con_tel'); ?>
 					<?php echo $form->textField($model,'con_tel',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
 					<?php echo $this->NotEmpty();?>

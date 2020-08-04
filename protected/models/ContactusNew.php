@@ -38,13 +38,13 @@ class ContactusNew extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('create_by, update_by, sortOrder', 'numerical', 'integerOnly'=>true),
-			array('con_firstname, con_lastname, con_firstname_en, con_lastname_en, con_position, con_email, con_image', 'length', 'max'=>255),
+			array('con_firstname, con_lastname, con_firstname_en, con_lastname_en, con_position, con_email, con_image, con_position_en', 'length', 'max'=>255),
 			array('con_tel', 'length', 'max'=>50),
 			array('active', 'length', 'max'=>1),
 			array('create_date, update_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('con_id, con_firstname, con_lastname, con_firstname_en, con_lastname_en, con_position, con_tel, con_email, con_image, create_date, create_by, update_date, update_by, active, sortOrder', 'safe', 'on'=>'search'),
+			array('con_id, con_firstname, con_lastname, con_firstname_en, con_lastname_en, con_position, con_tel, con_email, con_image, create_date, create_by, update_date, update_by, active, sortOrder, con_position_en', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,6 +71,7 @@ class ContactusNew extends CActiveRecord
 			'con_firstname_en' => 'Con Firstname En',
 			'con_lastname_en' => 'Con Lastname En',
 			'con_position' => 'Con Position',
+			'con_position_en'=> 'con_position_en',
 			'con_tel' => 'Con Tel',
 			'con_email' => 'Con Email',
 			'con_image' => 'Con Image',
@@ -106,6 +107,7 @@ class ContactusNew extends CActiveRecord
 		$criteria->compare('con_firstname_en',$this->con_firstname_en,true);
 		$criteria->compare('con_lastname_en',$this->con_lastname_en,true);
 		$criteria->compare('con_position',$this->con_position,true);
+		$criteria->compare('con_position_en',$this->con_position_en,true);
 		$criteria->compare('con_tel',$this->con_tel,true);
 		$criteria->compare('con_email',$this->con_email,true);
 		$criteria->compare('con_image',$this->con_image,true);

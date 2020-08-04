@@ -35,7 +35,7 @@ class ContactusNewController extends Controller {
         $criteria = new CDbCriteria;
         $criteria->compare('active','y');
        // $criteriavdo->compare('lang_id',$langId);
-        $criteria->order = 'sortOrder DESC';
+        $criteria->order = 'sortOrder ASC';
         $ContactusNew_data = ContactusNew::model()->findAll($criteria);
             // if($about_data){
             //     $label = MenuAbout::model()->find(array(

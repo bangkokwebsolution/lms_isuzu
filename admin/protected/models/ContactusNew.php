@@ -38,8 +38,8 @@ class ContactusNew extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('create_by, update_by, sortOrder', 'numerical', 'integerOnly'=>true),
-			array('con_firstname, con_lastname, con_firstname_en, con_lastname_en, con_position, con_email, con_tel', 'required'),
-			array('con_firstname, con_lastname, con_firstname_en, con_lastname_en, con_position, con_email, con_image', 'length', 'max'=>255),
+			array('con_firstname, con_lastname, con_firstname_en, con_lastname_en, con_position, con_email, con_tel, con_position_en', 'required'),
+			array('con_firstname, con_lastname, con_firstname_en, con_lastname_en, con_position, con_email, con_image, con_position_en', 'length', 'max'=>255),
 			array('con_tel', 'length', 'max'=>50),
 			array('active', 'length', 'max'=>1),
 			array('create_date, update_date', 'safe'),
@@ -47,7 +47,7 @@ class ContactusNew extends CActiveRecord
 			array('con_image', 'file','types' => 'jpg, gif, png', 'allowEmpty'=>true, 'safe' => false),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('con_id, con_firstname, con_lastname, con_firstname_en, con_lastname_en, con_position, con_tel, con_email, con_image, create_date, create_by, update_date, update_by, active, sortOrder, news_per_page', 'safe', 'on'=>'search'),
+			array('con_id, con_firstname, con_lastname, con_firstname_en, con_lastname_en, con_position, con_tel, con_email, con_position_en, con_image, create_date, create_by, update_date, update_by, active, sortOrder, news_per_page', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,6 +74,7 @@ class ContactusNew extends CActiveRecord
 			'con_firstname_en' => 'ชื่อ(EN)',
 			'con_lastname_en' => 'นามสกุล(EN)',
 			'con_position' => 'ตำแหน่ง',
+			'con_position_en' => 'ตำแหน่ง(EN)',
 			'con_tel' => 'เบอร์โทร',
 			'con_email' => 'E-mail',
 			'con_image' => 'รูปภาพ',
@@ -110,6 +111,7 @@ class ContactusNew extends CActiveRecord
 		$criteria->compare('con_firstname_en',$this->con_firstname_en,true);
 		$criteria->compare('con_lastname_en',$this->con_lastname_en,true);
 		$criteria->compare('con_position',$this->con_position,true);
+		$criteria->compare('con_position_en',$this->con_position_en,true);
 		$criteria->compare('con_tel',$this->con_tel,true);
 		$criteria->compare('con_email',$this->con_email,true);
 		$criteria->compare('con_image',$this->con_image,true);
@@ -120,7 +122,7 @@ class ContactusNew extends CActiveRecord
 		$criteria->compare('active',$this->active,true);
 		//$criteria->compare('sortOrder',$this->sortOrder,true);
 		$criteria->order = 'sortOrder DESC';
-
+    //var_dump($criteria);
 		// return new CActiveDataProvider($this, array(
 		// 	'criteria'=>$criteria,
 		// ));
@@ -129,7 +131,7 @@ class ContactusNew extends CActiveRecord
 			$poviderArray['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
 		}
 			
-		return new CActiveDataProvider($this, $poviderArray);
+		 return new CActiveDataProvider($this, $poviderArray);
 	}
 
 	/**
@@ -149,7 +151,7 @@ class ContactusNew extends CActiveRecord
     	{
 		    $checkScopes =  array(
 		    	'alias' => 'ContactusNews',
-		    	'order' => ' ContactusNews.id DESC ',
+		    	'order' => ' ContactusNews.sortOrder ASC ',
 		    	'condition' => ' ContactusNews.active = "y" ',
 		    );	
     	}
@@ -157,7 +159,7 @@ class ContactusNew extends CActiveRecord
     	{
 		    $checkScopes =  array(
 		    	'alias' => 'ContactusNews',
-		    	'order' => ' ContactusNews.id DESC ',
+		    	'order' => ' ContactusNews.sortOrder ASC ',
 		    );	
     	}
 
@@ -191,7 +193,7 @@ class ContactusNew extends CActiveRecord
 					$scopes = array(
 						'ContactusNewcheck'=>array(
 							'alias' => 'ContactusNews',
-							'order' => ' ContactusNews.id DESC ',
+							'order' => ' ContactusNews.sortOrder ASC ',
 							'condition' => 'ContactusNews.active = "y" ',
 						),
 					);
@@ -199,7 +201,7 @@ class ContactusNew extends CActiveRecord
 					$scopes = array(
 						'ContactusNewcheck'=>array(
 							'alias' => 'ContactusNews',
-							'order' => ' ContactusNews.id DESC ',
+							'order' => ' ContactusNews.sortOrder ASC ',
 							'condition' => ' ContactusNews.create_by = "'.Yii::app()->user->id.'" AND ContactusNews.active = "y" ',
 						),
 					);

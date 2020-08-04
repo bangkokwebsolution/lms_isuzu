@@ -109,7 +109,11 @@ foreach ($ContactusNew_data as $key => $value) {
                         <div class="card-text">
                         <span><?= Yii::app()->session['lang'] == 1?'Position :':'ตำแหน่ง :'; ?></span>
                         <?php
+                        if (Yii::app()->session['lang'] == 1) {
+                        echo $value['con_position_en'];
+                        }else{
                         echo $value['con_position'];
+                        }
                         ?>   
                         </div>
                         <div class="card-text">
