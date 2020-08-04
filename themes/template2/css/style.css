@@ -4230,16 +4230,20 @@ ol.stat-alert li::before {
 }
 
 @media screen and (min-width:992px) and (max-width:1440px){
-    header .navbar-nav li{
-      font-size: 14px !important;
-    }
     header .navbar-nav li a{
-      padding: 20px 10px;
+      padding: 20px 8px;
+       font-size: 12px !important;
     }
     .navbar-brand>img{
-      height: 40px;
+      height: 35px;
     }
 }
+ header .navbar-nav li a{
+       font-size: 14px !important;
+}
+ .navbar-brand>img{
+      height: 50px;
+  }
 
 .fixed-header {
   transition: all 0.5s ease;
@@ -4732,6 +4736,7 @@ ol.stat-alert li::before {
   padding: 20px;
   background: #0a146a;
   color: #fff;
+  font-size: 16px;
 }
 
 .library-topic i {
