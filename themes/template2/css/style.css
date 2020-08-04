@@ -4229,6 +4229,18 @@ ol.stat-alert li::before {
   }
 }
 
+@media screen and (min-width:992px) and (max-width:1440px){
+    header .navbar-nav li{
+      font-size: 14px !important;
+    }
+    header .navbar-nav li a{
+      padding: 20px 10px;
+    }
+    .navbar-brand>img{
+      height: 40px;
+    }
+}
+
 .fixed-header {
   transition: all 0.5s ease;
   animation: smoothScroll .5s forwards;
