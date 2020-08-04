@@ -55,12 +55,12 @@ class DashboardController extends Controller
 	        $langId = Yii::app()->session['lang'];
 	        Yii::app()->language = (Yii::app()->session['lang'] == 1)? 'en':'th';
 	    }
-	    $model = Conditions::model()->find(array(
+	    $model = Terms::model()->find(array(
 	        'condition' => 'lang_id=:lang_id',
 	        'params' => array(':lang_id' => $langId)
 	    ));
 	    if(!$model){
-	        $model = Conditions::model()->find(array(
+	        $model = Terms::model()->find(array(
 	            'condition' => 'lang_id=:lang_id',
 	            'params' => array(':lang_id' => 1)
 	        ));

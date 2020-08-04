@@ -293,6 +293,15 @@ Class MenuLeft extends Controller
 						'label'=>'แก้ไขเงื่อนไขการใช้งาน',
 						'url'=>array('//Conditions/index')
 					),
+					array(
+						/*====== Check Permissions Sup-Conditions (2) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'Terms.*',
+							'Terms.index'
+						)),
+						'label'=>'ข้อกำหนด&เงื่อนไขการใช้งาน',
+						'url'=>array('//Terms/index')
+					),
 				)
 			),
 			array(
