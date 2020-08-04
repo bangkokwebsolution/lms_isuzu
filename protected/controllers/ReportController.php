@@ -109,7 +109,9 @@ class ReportController extends Controller
 				            $datatable .= '<th>แผนก</th>';
 				            $datatable .= '<th>เลเวล</th>';
 				            $datatable .= '<th>จำนวน</th>';
+				            if($TypeEmployee != 2){
 				            $datatable .= '<th>สถานะอนุมัติ</th>';
+				        	}
 				            $datatable .= '<th>คิดเป็นร้อยละ</th>';
 				            $datatable .= '</tr>'; 
 				            $datatable .= '</thead>';
@@ -126,13 +128,33 @@ class ReportController extends Controller
 							}
 							$users = Users::model()->findAll($criteria);
 
+							$criteria = new CDbCriteria;
+							$criteria->select = 'id';
+
+							if($TypeEmployee){
+								$criteria->compare('type_employee',$TypeEmployee);
+							}
+							if($Department){
+							$criteria->compare('department_id',$Department);
+							}
+							if($Position){
+							$criteria->compare('position_id',$Position);
+							}
+							if($Leval){
+							$criteria->compare('branch_id',$Leval);
+							}
+							$usersAll = Users::model()->findAll($criteria);
+
 							$cou_use = count($users);
+							$cou_useAll = count($usersAll);
+							$per_cen = ($cou_use / $cou_useAll) * 100; 
 				           	$datatable .= '<tr>';
 				            $datatable .= '<td>'.$i++.'</td>';
 				            $datatable .= '<td>'.$value->Positions->Departments->dep_title.'</td>';
 				            $datatable .= '<td>'.$value->Positions->position_title.'</td>';
 				            $datatable .= '<td>'.$value->branch_name.'</td>';
 				            $datatable .= '<td>'.$cou_use.'</td>';
+				             if($TypeEmployee != 2){		
 				            $datatable .= '<td>';
 				            if($cou_use > 0){
 										    if ($status == 1) {
@@ -142,7 +164,12 @@ class ReportController extends Controller
 										    }
 										}
 				            $datatable .= '</td>';
-				            $datatable .= '<td></td>';
+				        	}
+				            if($cou_use > 0){
+				            $datatable .= '<td>'.round($per_cen, 2).' %</td>';
+				        	}else{
+				        	$datatable .= '<td></td>';
+				        	}
 				          	$datatable .= '</tr>';
 						}
 
@@ -156,7 +183,26 @@ class ReportController extends Controller
 							}
 							$users = Users::model()->findAll($criteria);
 
+							$criteria = new CDbCriteria;
+							$criteria->select = 'id';
+
+							if($TypeEmployee){
+								$criteria->compare('type_employee',$TypeEmployee);
+							}
+							if($Department){
+							$criteria->compare('department_id',$Department);
+							}
+							if($Position){
+							$criteria->compare('position_id',$Position);
+							}
+							if($Leval){
+							$criteria->compare('branch_id',$Leval);
+							}
+							$usersAll = Users::model()->findAll($criteria);
+
 							$cou_use = count($users);
+							$cou_useAll = count($usersAll);
+							$per_cen = ($cou_use / $cou_useAll) * 100; 
 
 				           	$datatable .= '<tr>';
 				            $datatable .= '<td>'.$i++.'</td>';
@@ -164,6 +210,7 @@ class ReportController extends Controller
 				            $datatable .= '<td>'.$valuepos_back->position_title.'</td>';
 				            $datatable .= '<td></td>';
 				            $datatable .= '<td>'.$cou_use.'</td>';
+				              if($TypeEmployee != 2){
 				            $datatable .= '<td>';
 				            if($cou_use > 0){
 				            	if ($status == 1) {
@@ -173,7 +220,12 @@ class ReportController extends Controller
 				            	}
 				            }
 				            $datatable .= '</td>';
-				            $datatable .= '<td></td>';
+				        	}	
+				            if($cou_use > 0){
+				            $datatable .= '<td>'.round($per_cen, 2).' %</td>';
+				        	}else{
+				        	$datatable .= '<td></td>';
+				        	}
 				          	$datatable .= '</tr>';
 				            
 						}  
@@ -187,7 +239,26 @@ class ReportController extends Controller
 							}
 							$users = Users::model()->findAll($criteria);
 
+							$criteria = new CDbCriteria;
+							$criteria->select = 'id';
+
+							if($TypeEmployee){
+								$criteria->compare('type_employee',$TypeEmployee);
+							}
+							if($Department){
+							$criteria->compare('department_id',$Department);
+							}
+							if($Position){
+							$criteria->compare('position_id',$Position);
+							}
+							if($Leval){
+							$criteria->compare('branch_id',$Leval);
+							}
+							$usersAll = Users::model()->findAll($criteria);
+
 							$cou_use = count($users);
+							$cou_useAll = count($usersAll);
+							$per_cen = ($cou_use / $cou_useAll) * 100; 
 
 				           	$datatable .= '<tr>';
 				            $datatable .= '<td>'.$i++.'</td>';
@@ -195,6 +266,7 @@ class ReportController extends Controller
 				            $datatable .= '<td></td>';
 				            $datatable .= '<td></td>';
 				            $datatable .= '<td>'.$cou_use.'</td>';
+				            if($TypeEmployee != 2){
 				            $datatable .= '<td>';
 				            if($cou_use > 0){
 				            	if ($status == 1) {
@@ -204,7 +276,12 @@ class ReportController extends Controller
 				            	}
 				            }
 				            $datatable .= '</td>';
-				            $datatable .= '<td></td>';
+				        	}
+				            if($cou_use > 0){
+				            $datatable .= '<td>'.round($per_cen, 2).' %</td>';
+				        	}else{
+				        	$datatable .= '<td></td>';
+				        	}
 				          	$datatable .= '</tr>';
 				            
 						}  
