@@ -90,7 +90,9 @@ function deletes(filedoc_id,file_id){
 				<div class="row">
 					<?php echo $form->labelEx($model,'gallery_type_id'); ?>
 
-					<?php echo $form->dropDownList($model, 'gallery_type_id', CHtml::listData(GalleryType::model()->findAll(), 'id', 'name_gallery_type'),array('class'=>'span5')); ?>
+					<?php echo $form->dropDownList($model, 'gallery_type_id', CHtml::listData(GalleryType::model()->findAll(array(
+        'condition' => 'active=:active',
+        'params' => array(':active'=>'y'))), 'id', 'name_gallery_type'),array('class'=>'span5')); ?>
 
 					<?php //echo $form->dropDownList($model,'gallery_type_name',array('size'=>60,'maxlength'=>250, 'class'=>'span8')); ?>
 					<?php echo $form->error($model,'gallery_type_id'); ?>
