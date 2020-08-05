@@ -1,3 +1,4 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-main">
@@ -24,7 +25,6 @@
         </ol>
     </nav>
 </div>
-
 <section id="report-detail">
     <div class="container">
         <div class="search-collapse panel-group">
@@ -40,7 +40,7 @@
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
                                     <label for="">ประเภทพนักงาน</label>
-                                    <select class="form-control TypeEmployee" name="" id="x">
+                                    <select class="form-control TypeEmployee" name="" id="TypeEmployee">
                                         <option value="" selected disabled>เลือกประเภท</option>
                                         <!-- <option value="1">1</option>
                                         <option value="2">2</option> -->
@@ -63,7 +63,7 @@
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
                                     <label for="">ฝ่าย</label>
-                                    <select class="form-control Department" name="" id="x">
+                                    <select class="form-control Department" name="" id="Department">
                                         <option value="" selected disabled>เลือกฝ่าย</option>
                                         <!-- <option value="1">1</option>
                                         <option value="2">2</option> -->
@@ -132,7 +132,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-md-3 col-xs-12">
+                            <div class="col-sm-3 col-md-3 col-xs-12 tag_leval">
                                 <div class="form-group">
                                     <label for="">เลเวล</label>
                                     <select class="form-control Leval" name="" id="x">
@@ -155,7 +155,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-md-3 col-xs-12">
+                            <div class="col-sm-3 col-md-3 col-xs-12 tag_status">
                                 <div class="form-group">
                                     <label for="">สถานะอนุมัติ</label>
                                     <select class="form-control status" name="" id="x">
@@ -236,93 +236,27 @@
             <i class="fas fa-chevron-down"></i>
         </div>
 
-        <div class="row">
+         <div class="row">
             <div class="col-sm-6">
+                <div class="chart"></div>
                 <div class="year-report">
                     <h4>ปี 2019</h4>
                     <div style="width:100%">
-                        <canvas id="chart_0"></canvas>
+                        <div id="chart_div"></div>
                     </div>
-                    <script>
-                        var data = {
-                            labels: ["test", "test", "test", "test", "test", "test", "test"],
-                            datasets: [{
-                                label: "Dataset #1",
-                                backgroundColor: "rgba(255,99,132,0.2)",
-                                borderColor: "rgba(255,99,132,1)",
-                                borderWidth: 2,
-                                hoverBackgroundColor: "rgba(255,99,132,0.4)",
-                                hoverBorderColor: "rgba(255,99,132,1)",
-                                data: [65, 59, 20, 81, 56, 55, 40],
-                            }]
-                        };
-
-                        var option = {
-                            scales: {
-                                yAxes: [{
-                                    stacked: true,
-                                    gridLines: {
-                                        display: true,
-                                        color: "rgba(255,99,132,0.2)"
-                                    }
-                                }],
-                                xAxes: [{
-                                    gridLines: {
-                                        display: false
-                                    }
-                                }]
-                            }
-                        };
-
-                        Chart.Bar('chart_0', {
-                            options: option,
-                            data: data
-                        });
-                    </script>
-                </div>
+                  
+                </div> 
             </div>
             <div class="col-sm-6">
                 <div class="year-report">
                     <h4>ปี 2020</h4>
-                    <div style="width:100%">
-                        <canvas id="oilChart"></canvas>
+                 <div style="width:100%">
+                        <div id="chart_div2"></div>
                     </div>
-
-                    <script>
-                        var oilCanvas = document.getElementById("oilChart");
-
-                        Chart.defaults.global.defaultFontFamily = "Lato";
-                        Chart.defaults.global.defaultFontSize = 18;
-
-                        var oilData = {
-                            labels: [
-                                "test",
-                                "test",
-                                "test",
-                                "test",
-                                "test"
-                            ],
-                            datasets: [{
-                                data: [133.3, 86.2, 52.2, 51.2, 50.2],
-                                backgroundColor: [
-                                    "#FF6384",
-                                    "#63FF84",
-                                    "#84FF63",
-                                    "#8463FF",
-                                    "#6384FF"
-                                ]
-                            }]
-                        };
-
-                        var pieChart = new Chart(oilCanvas, {
-                            type: 'pie',
-                            data: oilData
-                        });
-                    </script>
                 </div>
             </div>
-        </div>
-        <h2 class="text-center">
+        </div> 
+     <!--    <h2 class="text-center">
             <?php
             if (Yii::app()->session['lang'] == 1) {
                 echo "Report";
@@ -330,7 +264,7 @@
                 echo "รายงานภาพ";
             }
             ?>
-        </h2>
+        </h2> -->
         <div class="dataTable"></div>
         <div class="pull-right ">
             <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
@@ -341,7 +275,18 @@
     </div>
 
 </section>
-
+<?php 
+            
+// foreach ($net_regischart as $key => $value) {
+//     if($value !=0) {
+//          $ries = "'".$CourseTitle_chart[$key]."'";
+//          $pass = $net_passchart[$key];
+//         // // $notPass = $lessonAllCount[$key] - $lessonPassCount[$key];
+//         $notPass = $net_regischart[$key] - $net_passchart[$key];
+//         $all = $net_regischart[$key];
+//     }
+// }
+            ?>
 <script>
     $('.datetimepicker').datetimepicker({
         format: 'd-m-Y',
@@ -364,6 +309,19 @@
                          
                             $('.Department').empty();
                             $('.Department').append(data);
+
+                            $('.Position').val("");
+                            $('.Leval').val("");
+
+                            var e = document.getElementById("TypeEmployee");
+                            var strUser = e.options[e.selectedIndex].value;
+                            if (strUser === '1') {
+                                 $('.tag_status').show();
+                                 $('.tag_leval').hide();
+                            }else if (strUser === '2') {
+                                 $('.tag_status').hide();
+                                 $('.tag_leval').show();
+                            }
                         }
         });
     });
@@ -379,6 +337,7 @@
                             
                             $('.Position').empty();
                             $('.Position').append(data);
+                            $('.Leval').val("");
                         }
         });
     });
@@ -464,9 +423,46 @@
                         },
                         success: function(data) {
                            console.log(data);
+                     
                            $(".dataTable").html(data);
+
                         }
         });
     });
 
+
+// google.charts.load("current", {packages:['corechart']});
+//     google.charts.setOnLoadCallback(drawChart);
+//     function drawChart() {
+
+//       var data = google.visualization.arrayToDataTable([
+//         ["Element", "Density", { role: "style" } ],
+//         <?php 
+//         $datatest = ''; 
+//         $datatest .= '["Copper",8.94,"#b87333"],';
+//         $datatest .= '["Silver",10.94,"#000000"]';
+       
+//         echo $datatest;
+
+//         ?>
+//       ]);
+
+//       var view = new google.visualization.DataView(data);
+//       view.setColumns([0, 1,
+//                        { calc: "stringify",
+//                          sourceColumn: 1,
+//                          type: "string",
+//                          role: "annotation" },
+//                        2]);
+
+//       var options = {
+//         title: "Density of Precious Metals, in g/cm^3",
+//         width: 600,
+//         height: 400,
+//         bar: {groupWidth: "95%"},
+//         legend: { position: "none" },
+//       };
+//       var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
+//       chart.draw(view, options);
+//   }
 </script>
