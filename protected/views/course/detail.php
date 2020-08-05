@@ -1448,8 +1448,15 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
 
 
             <?php } // if($BestFinalTestScore 
+
+            $criteria = new CDbCriteria;
+            $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND score_past="y" AND active="y"'." AND gen_id='".$gen_id."'".' AND type="post"';
+            $criteria->order = 'create_date ASC';
+            $BestFinalTestScore_pass = Coursescore::model()->findAll($criteria);
+
+
             
-            if($checkHaveCourseTest && $CheckPreTestAnsTextAreaCoursePost == true){ ?>
+            if($checkHaveCourseTest && $CheckPreTestAnsTextAreaCoursePost == true && empty($BestFinalTestScore_pass) && count($BestFinalTestScore) < $course->cate_amount){ ?>
                <li class="list-group-item ">
                 <?php if($step == 4){ ?>
                     <!-- <div class="pt-now"> You are here</div> -->
