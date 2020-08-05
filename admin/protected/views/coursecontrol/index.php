@@ -165,9 +165,12 @@ $this->breadcrumbs=array(
                 $dataProvider = OrgCourse::getChilds(0);
             }
         ?>
-        <?php //if($_GET['id'] != 2){ ?>
+        <?php if($_GET['id'] > 5){ ?>
+            <!-- 
+                ห้ามเห็น course manage เพราะ org id ตั้งแต่ 1-5  มันไม่ได้มี แผนก ตำแหน่ง เลเวล ผูกอะ ทำให้ tbl_chkuser มัน error มันเก็บค่าไม่ได้ ว่า จะให้ใคร to หรือ ลบออก ค่าพวก แผนก ตำแหน่ง เลเวล ว่าง
+             -->
         <a href="<?= $url; ?>"><button type="button" class="btn btn-info pull-right">COURSE MANAGE</button></a>
-        <?php //} ?>
+        <?php } ?>
     </menu>
 </div>
 
