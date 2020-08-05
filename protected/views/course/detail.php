@@ -1356,19 +1356,27 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
     </div>
 <?php } ?>
 <?php $CheckPreTestAnsTextAreaCoursePost = Helpers::lib()->CheckPreTestAnsTextAreaCourse($_GET['id'], "post"); ?>
+
+
 <!-- Check count test -->
 <div id="collapseFinal<?=$key?>">
     <?php if($BestFinalTestScore){ ?>
         <?php foreach ($BestFinalTestScore as $key => $course_score) { ?>
             <?php //$CheckPreTestAnsTextAreaCoursePost = Helpers::lib()->CheckPreTestAnsTextAreaCourse($course->course_id, "post"); ?>
+
             <?php if(count($BestFinalTestScore) < $course->cate_amount){ ?>
                 <?php if($course_score->score_past == 'n'){ ?>
+
                     <?php 
                     if($CheckPreTestAnsTextAreaCoursePost){
                         ?>
                         <li class="list-group-item ">
                     <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
-                        <span class="pull-right  text-danger prepost"> <?= $course_score->score_number ?>/<?= $course_score->score_total ?> <?= $label->label_point; ?></span></a> 
+                        <span class="pull-right  text-danger prepost"> 
+                            <?= $course_score->score_number ?>/<?= $course_score->score_total ?>
+                            <?= $label->label_point; ?>                                
+                        </span>
+                    </a> 
                     </li>
                     <?php
                     }else{
@@ -1426,6 +1434,8 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                     
                     <?php } ?>
                 <?php }?>
+
+
                 <?php if($step == 4){ ?>
                    <!-- <li class="list-group-item "> -->
                     <!-- <div class="pt-now"> You are here</div> -->
@@ -1435,7 +1445,18 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></a>
                     </li> -->
                 <?php } ?>
-            <?php }else if($checkHaveCourseTest && $CheckPreTestAnsTextAreaCoursePost == true){ ?>
+
+
+            <?php } // if($BestFinalTestScore 
+
+            $criteria = new CDbCriteria;
+            $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND score_past="y" AND active="y"'." AND gen_id='".$gen_id."'".' AND type="post"';
+            $criteria->order = 'create_date ASC';
+            $BestFinalTestScore_pass = Coursescore::model()->findAll($criteria);
+
+
+            
+            if($checkHaveCourseTest && $CheckPreTestAnsTextAreaCoursePost == true && empty($BestFinalTestScore_pass) && count($BestFinalTestScore) < $course->cate_amount){ ?>
                <li class="list-group-item ">
                 <?php if($step == 4){ ?>
                     <!-- <div class="pt-now"> You are here</div> -->
@@ -1446,6 +1467,8 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></a>
                 </li>
             <?php } ?>
+
+
             <!-- end Course question  -->
             <?php 
             $PaQuest = false;

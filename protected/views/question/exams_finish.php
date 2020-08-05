@@ -44,7 +44,7 @@ if($modelScore->type=='post' && !$state){
 ?>
 <script>
 	$(function(){
-		if("<?= $testType?>" != "pre" && $quesType_ == 2){
+		if("<?= $testType?>" != "pre" && $quesType_ != 3){
 		$('<?= $link ?>').modal('show');
 	}
 	});
@@ -76,11 +76,13 @@ if($modelScore->type=='post' && !$state){
 		<div class="row">
 			<div class="col-sm-8 col-xs-12">
 				<div class="well bg-greendark">
-					<?php if($testType == "post" && $quesType_ != 3){ ?>
+
+					<?php if($testType != "pre" && $quesType_ != 3){ ?>
 					<div class="well text-center result">
 						<h1 class="<?= $classH1; ?>"><span><i class="<?= $class; ?>" aria-hidden="true"></i></span><?= $strMsg; ?></h1>
 					</div>
 				<?php } ?>
+
 					<div class="well detail">
 						<ul class="list-unstyled">
 							<li><?= $labelCourse->label_totalTest ?> <span class="pull-right"><?= count($temp_all) ?> <?= $labelCourse->label_list ?></span></li>
@@ -98,7 +100,7 @@ if($modelScore->type=='post' && !$state){
 					<a href="<?= $linkNextStep; ?>" type="button" class="btn btn-warning btn-lg"><?=UserModule::t('complete_btn');?></a>
 				</div>
 			</div>
-			<?php if($testType == "post" && $quesType_ != 3){ ?>
+			<?php if($testType != "pre" && ($quesType_ != 4 || $quesType_ != 6 || $quesType_ != 3)){ ?>
 			<div class="col-sm-4">
 				<aside>
 					<h4 class="title text-success"><span class="pull-right"><?= $modelScore->score_number; ?></span><?=UserModule::t('scoreAll');?></h4>
