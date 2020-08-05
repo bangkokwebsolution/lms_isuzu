@@ -91,7 +91,7 @@
 			<div id="second-report" class="tab-pane fade">
 				<div class="row d-flex justify-content-center">
 					<div class="col-sm-4 col-md-3">
-						<a href="#">
+						<a href="<?php echo $this->createUrl('/report/course'); ?>">
 							<div class="card-report">
 								<div class="img-report">
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-4.png" class="img-fluid ">
@@ -103,7 +103,7 @@
 						</a>
 					</div>
 					<div class="col-sm-4 col-md-3 ">
-						<a href="#">
+						<a href="<?php echo $this->createUrl('/report/courseCaptain'); ?>">
 							<div class="card-report">
 								<div class="img-report">
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-5.png" class="img-fluid ">
@@ -116,7 +116,7 @@
 						</a>
 					</div>
 					<div class="col-sm-4 col-md-3">
-						<a href="#">
+						<a href="<?php echo $this->createUrl('/report/courseOffice'); ?>">
 							<div class="card-report">
 								<div class="img-report">
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-6.png" class="img-fluid ">
