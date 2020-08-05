@@ -3,6 +3,7 @@ $real = '["55","56","54"]';
 $arr = array();
 $arr = json_decode($real);
 ?>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style type="text/css">
 	.exams p {
 		display: inline !important;

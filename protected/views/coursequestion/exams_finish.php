@@ -40,7 +40,7 @@ if($course->cate_id != 1){ //LMS
 ?>
 <script>
 	$(function(){
-		if("<?= $testType?>" != "pre" && $quesType_ == 2){
+		if("<?= $testType?>" != "pre" && $quesType_ != 3){ // 3= บรรยาย pop up
 			$('<?= $link ?>').modal('show');
 		}
 	});
@@ -83,20 +83,42 @@ if($course->cate_id != 1){ //LMS
 		<div class="row">
 			<div class="col-sm-8">
 				<div class="well bg-greendark">
-					<?php if($testType != "pre" && $quesType_ == 2){ ?>
+
+					<?php if($testType != "pre" && $quesType_ != 3){ // 3= บรรยาย   หัว icon ว่าผ่าน ไม่ผ่าน ?>
 					<div class="well text-center result">
-						<h1 class="<?= $classH1; ?>"><span><i class="<?= $class; ?>" aria-hidden="true"></i></span><?= $strMsg; ?></h1>
+						<h1 class="<?= $classH1; ?>">
+							<span><i class="<?= $class; ?>" aria-hidden="true"></i></span>
+							<?= $strMsg; ?>
+						</h1>
 					</div>
-				<?php } ?>
+					<?php } ?>
+
 					<div class="well detail">
 						<ul class="list-unstyled">
-							<li><?= $labelCourse->label_totalTest ?> <span class="pull-right"><?= count($temp_all) ?> <?= $labelCourse->label_list ?></span></li>
-							<li><?=UserModule::t('timeTest');?> <span class="pull-right"><?= $course->time_test; ?> <?=UserModule::t('minute');?></span></li>
-
-							<li><?=UserModule::t('timeToUse');?> <span class="pull-right"><?= $timeTest ?> <?=UserModule::t('minute');?></span></li>
-							<li><?=UserModule::t('totoal');?> <span class="pull-right"><?= $modelScore->score_total; ?> <?= $labelCourse->label_point; ?></span></li>
-							<li><?= $labelCourse->label_haveCorrect; ?> <span class="pull-right"><?= $modelScore->score_number; ?> <?= $labelCourse->label_point; ?></span></li>
-							<li><?= $labelCourse->label_percentage ?> <span class="pull-right"><?= $percent; ?> %</span></li>
+							<li>
+								<?= $labelCourse->label_totalTest ?> 
+								<span class="pull-right"><?= count($temp_all) ?> <?= $labelCourse->label_list ?></span>
+							</li>
+							<li>
+								<?=UserModule::t('timeTest');?> 
+								<span class="pull-right"><?= $course->time_test; ?> <?=UserModule::t('minute');?></span>
+							</li>
+							<li>
+								<?=UserModule::t('timeToUse');?> 
+								<span class="pull-right"><?= $timeTest ?> <?=UserModule::t('minute');?></span>
+							</li>
+							<li>
+								<?=UserModule::t('totoal');?> 
+								<span class="pull-right"><?= $modelScore->score_total; ?> <?= $labelCourse->label_point; ?></span>
+							</li>
+							<li>
+								<?= $labelCourse->label_haveCorrect; ?> 
+								<span class="pull-right"><?= $modelScore->score_number; ?> <?= $labelCourse->label_point; ?></span>
+							</li>
+							<li>
+								<?= $labelCourse->label_percentage ?> 
+								<span class="pull-right"><?= $percent; ?> %</span>
+							</li>
 						</ul>
 					</div>
 				</div>
@@ -104,7 +126,8 @@ if($course->cate_id != 1){ //LMS
 					<a href="<?= Yii::app()->createUrl('course/detail/', array('id' => $course->course_id)); ?>" type="button" class="btn btn-warning btn-lg"><?=UserModule::t('complete_btn');?></a>
 				</div>
 			</div>
-			<?php if($testType != "pre"){ ?>
+
+			<?php if($testType != "pre" && ($quesType_ != 4 || $quesType_ != 6 || $quesType_ != 3)){ // โชว์ว่าข้อไหนถูก ไม่ถูก ?>
 			<div class="col-sm-4">
 				<aside>
 					<h4 class="title text-success"><span class="pull-right"><?= $modelScore->score_number; ?></span><?=UserModule::t('scoreAll');?></h4>
@@ -130,6 +153,7 @@ if($course->cate_id != 1){ //LMS
 				</aside>
 			</div>
 		<?php } ?>
+
 		</div>
 	</div>
 </section>
