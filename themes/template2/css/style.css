@@ -103,6 +103,10 @@ button:focus {
   outline: 0 !important;
 }
 
+#report-detail{
+  padding: 2% 0 4%;
+}
+
 .w-100 {
   width: 100%;
 }
@@ -4671,13 +4675,13 @@ ol.stat-alert li::before {
   z-index: 10000;
   color: #fff;
   cursor: pointer;
-  height: 94px;
-  width: 290px;
+  height: 90px;
+  width: 270px;
   transition: all 0.3s ease 0s;
 }
 
 .contact-admin:hover {
-  height: 264px;
+  height: 240px;
 }
 
 .course-detail .tab-content {

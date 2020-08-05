@@ -96,7 +96,7 @@
                                         <label for="2" class="text-black">Pie Charts </label>
                                     </div>-->
                                     <div class="radio radio-main radio-inline">
-                                        <input type="radio" name="accommodation" id="1" value="Bar Graph">
+                                        <input type="radio" name="accommodation" id="1" value="Bar Graph" checked>
                                         <label for="1" class="text-black">Bar Graph </label>
                                     </div>
                                     <div class="radio radio-main radio-inline">
@@ -235,58 +235,60 @@
         <div class="divider">
             <i class="fas fa-chevron-down"></i>
         </div>
-
          <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-6 Graph_1">
                 <div class="chart"></div>
                 <div class="year-report">
-                    <h4>ปี 2019</h4>
+                    <h4>
+                    <?php
+                    if ($Year_start) {
+                    echo "ปี";
+                    echo $Year_start;
+                    }else{
+                        echo "";
+                    }
+                    ?>
+                    </h4>
                     <div style="width:100%">
                         <div id="chart_div"></div>
                     </div>
                   
                 </div> 
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 Graph_2">
                 <div class="year-report">
-                    <h4>ปี 2020</h4>
+                    <h4> <?php
+                    if ($Year_end) {
+                    echo "ปี";
+                    echo $Year_end;
+                    }else{
+                        echo "";
+                    }
+                    ?></h4>
                  <div style="width:100%">
                         <div id="chart_div2"></div>
                     </div>
                 </div>
             </div>
         </div> 
-     <!--    <h2 class="text-center">
-            <?php
-            if (Yii::app()->session['lang'] == 1) {
-                echo "Report";
-            } else {
-                echo "รายงานภาพ";
-            }
-            ?>
-        </h2> -->
+
         <div class="dataTable"></div>
-        <div class="pull-right ">
+        <div class="pull-left">
             <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
-            <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button>
+            <!-- <button class="btn btn-excel PrintExcel"><i class="fas fa-file-excel"></i> Export Excel</button> -->
+          <?php 
+          $test = '1';
+          // echo CHtml::button('Export Excel', array('submit' => array('report/reportRegisterExcel', 'id'=> $test),'class' => 'btn btn btn-excel')); 
+
+
+          ?>
+            <button class="btn btn btn-excel excelexport"><i class="fas fa-search"></i> Export Excel </button>
         </div>
 
     </div>
     </div>
 
 </section>
-<?php 
-            
-// foreach ($net_regischart as $key => $value) {
-//     if($value !=0) {
-//          $ries = "'".$CourseTitle_chart[$key]."'";
-//          $pass = $net_passchart[$key];
-//         // // $notPass = $lessonAllCount[$key] - $lessonPassCount[$key];
-//         $notPass = $net_regischart[$key] - $net_passchart[$key];
-//         $all = $net_regischart[$key];
-//     }
-// }
-            ?>
 <script>
     $('.datetimepicker').datetimepicker({
         format: 'd-m-Y',
@@ -297,6 +299,8 @@
     });
     $.datetimepicker.setLocale('th');
 
+ $('.Graph_1').hide();
+ $('.Graph_2').hide();
     $(".TypeEmployee").change(function() {
                     var id = $(this).val();
                     $.ajax({
@@ -358,6 +362,42 @@
         });
     });
 
+
+ $(".excelexport").click(function() {
+                    var TypeEmployee = $(".TypeEmployee").val();
+                    var Department = $(".Department").val();
+                    var Position = $(".Position").val();
+                    var Leval = $(".Leval").val(); 
+                    var Chart = $("input[name='accommodation']:checked").val();
+                    var datetime_start = $("#datetime_start").val();
+                    var datetime_end = $("#datetime_end").val();
+                    var Year_start = $(".Year_start").val();
+                    var Year_end = $(".Year_end").val();
+                    var status = $(".status").val();
+
+                    $.ajax({
+                        type: 'POST',
+                        url: "<?= Yii::app()->createUrl('report/reportRegisterExcel'); ?>",
+                        data: {
+                            TypeEmployee: TypeEmployee,
+                            Department: Department,
+                            Position: Position,
+                            Leval: Leval,
+                            Chart: Chart,
+                            datetime_start: datetime_start,
+                            datetime_end: datetime_end,
+                            Year_start: Year_start,
+                            Year_end: Year_end,
+                            status:status,
+
+                        },
+                        success: function(data) {
+                         
+                           
+                        }
+        });
+    });
+
     $(".search").click(function() {
                     var TypeEmployee = $(".TypeEmployee").val();
                     var Department = $(".Department").val();
@@ -406,7 +446,7 @@
                     //       return false; 
                     // }    
                     $.ajax({
-                        type: 'POST',
+                        type: 'GET',
                         url: "<?= Yii::app()->createUrl('report/reportRegisterData'); ?>",
                         data: {
                             TypeEmployee: TypeEmployee,
@@ -422,47 +462,26 @@
 
                         },
                         success: function(data) {
-                           console.log(data);
-                     
+                         
+                            $('.Graph_1').show();
+                            $('.Graph_2').show();
                            $(".dataTable").html(data);
-
+                           
                         }
         });
     });
-
-
-// google.charts.load("current", {packages:['corechart']});
-//     google.charts.setOnLoadCallback(drawChart);
-//     function drawChart() {
-
-//       var data = google.visualization.arrayToDataTable([
-//         ["Element", "Density", { role: "style" } ],
-//         <?php 
-//         $datatest = ''; 
-//         $datatest .= '["Copper",8.94,"#b87333"],';
-//         $datatest .= '["Silver",10.94,"#000000"]';
-       
-//         echo $datatest;
-
-//         ?>
-//       ]);
-
-//       var view = new google.visualization.DataView(data);
-//       view.setColumns([0, 1,
-//                        { calc: "stringify",
-//                          sourceColumn: 1,
-//                          type: "string",
-//                          role: "annotation" },
-//                        2]);
-
-//       var options = {
-//         title: "Density of Precious Metals, in g/cm^3",
-//         width: 600,
-//         height: 400,
-//         bar: {groupWidth: "95%"},
-//         legend: { position: "none" },
-//       };
-//       var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
-//       chart.draw(view, options);
-//   }
+    $(".PrintExcel").click(function() {
+         var TypeEmployee = $(".TypeEmployee").val();
+         $.ajax({
+                        type: 'GET',
+                        url: "<?= Yii::app()->createUrl('report/reportRegisterExcel'); ?>",
+                        data: {
+                            TypeEmployee: TypeEmployee,
+                        },
+                        success: function(data) {
+                        console.log(data);
+                           
+                        }
+        });
+    });
 </script>
