@@ -353,17 +353,17 @@
 
                 </a>
             </li>
-      <!--       <li class="">
+            <li class="">
                 <a href="<?= $this->createUrl("report/index") ?>">
                     <?php 
                     if(Yii::app()->session['lang'] == 1){
-                        echo "รายงาน";
+                        echo "Report";
                     }else{
                         echo "รายงาน";
                     }
                     ?>
 
-                </a> -->
+                </a>
             </li>
             <?php
             }
