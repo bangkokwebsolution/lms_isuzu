@@ -168,7 +168,7 @@ return array(
 	'passport_unique'=>'This user passport No.  already exists.',
 	'timeToUse' => 'Time spent',
 	'totoal' => 'Total score',
-	'timeTest' =>'Total Time',
+	'timeTest' =>'Time allowed',
 	'minute'=>'minutes',
 	'back' => 'Back To Course',
 	'scoreAll'=>'Score',

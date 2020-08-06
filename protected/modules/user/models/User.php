@@ -146,6 +146,10 @@ class User extends CActiveRecord
 			self::BELONGS_TO, 'Position','position_id'
 		);
 
+		$relations['department'] = array(
+			self::BELONGS_TO, 'Department','department_id'
+		);
+
         $relations['orgcourses'] = array(
             self::HAS_MANY,'OrgCourse',array('id'=>'orgchart_id'),'through'=>'orgchart'
         );

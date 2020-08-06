@@ -30,10 +30,10 @@ class Department extends CActiveRecord
 		return array(
 			array('division_id', 'numerical', 'integerOnly'=>true),
 			array('dep_title, active', 'length', 'max'=>255),
-			array('create_date,lang_id,parent_id', 'safe'),
+			array('create_date,lang_id,parent_id, type_employee_id', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, division_id, dep_title, create_date, active,lang_id,parent_id', 'safe', 'on'=>'search'),
+			array('id, division_id, dep_title, create_date, active,lang_id,parent_id, type_employee_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,6 +61,7 @@ class Department extends CActiveRecord
 			'active' => 'Active',
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
+			'type_employee_id' => 'ประเภท',
 		);
 	}
 
@@ -86,6 +87,7 @@ class Department extends CActiveRecord
 		$criteria->compare('division_id',$this->division_id);
 		$criteria->compare('dep_title',$this->dep_title,true);
 		$criteria->compare('create_date',$this->create_date,true);
+		$criteria->compare('type_employee_id',$this->type_employee_id,true);
 		$criteria->compare('active',y);
 
 		return new CActiveDataProvider($this, array(
