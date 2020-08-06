@@ -353,6 +353,10 @@
 
                 </a>
             </li>
+        <?php }
+
+        if(Yii::app()->user->id){ 
+            ?>
             <li class="">
                 <a href="<?= $this->createUrl("report/index") ?>">
                     <?php 
