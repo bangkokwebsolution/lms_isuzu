@@ -79,6 +79,9 @@ class Users extends CActiveRecord {
         $relations['orgchart'] = array(
             self::BELONGS_TO, 'Orgchart', array('id'=>'department_id')
         );
+        $relations['department'] = array(
+            self::BELONGS_TO, 'Department', array('department_id'=>'id')
+        );
 
         $relations['company'] = array(
             self::BELONGS_TO, 'Company', array('company_id'=>'company_id')

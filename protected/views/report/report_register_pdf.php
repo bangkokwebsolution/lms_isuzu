@@ -1,16 +1,4 @@
 <?php
-$strExcelFileName = "รายงานภาพรวมการสมัคร-" . date('Ymd-His') . ".xls";
-header("Content-Type: application/x-msexcel; name=\"" . $strExcelFileName . "\"");
-header("Content-Disposition: inline; filename=\"" . $strExcelFileName . "\"");
-header('Content-Type: text/plain; charset=UTF-8');
-header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("Content-Type: application/force-download");
-header("Content-Type: application/octet-stream");
-header("Content-Type: application/download");
-header("Pragma:no-cache");
-
-  // var_dump($data['TypeEmployee']);
-
 $datetime_start = $data['datetime_start'];
 $datetime_end = $data['datetime_end'];
 $status = $data['status'];
@@ -30,8 +18,8 @@ $Chart = $data['Chart'];
 <body>
 	<div class="row">
 		<div class="col-sm-12">
-			<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint.png"; ?>">
-			<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint1.png"; ?>"> 
+			<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint.png"; ?>" width="500" height="auto">
+			<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint1.png"; ?>" width="500" height="auto"> 
 		</div><br>
 	</div>
 	<?php
@@ -43,8 +31,8 @@ $Chart = $data['Chart'];
 	?>
 	<div class="row">
 		<div class="col-sm-12">
-		<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint3.png"; ?>">
-		<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint4.png"; ?>">
+		<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint3.png"; ?>" width="500" height="auto">
+		<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint4.png"; ?>" width="500" height="auto">
 		</div><br>
 	</div>
 	<?php
@@ -119,7 +107,7 @@ $Chart = $data['Chart'];
 
 	if($_POST['Year_start'] != "" && $_POST['Year_end'] != "" || $data['Department'] != "" || $data['Position'] != ""){
 		if (!empty($branch) || !empty($pos_back) || !empty($dep_back) ) {
-			?>	
+			?>
 			<style type="text/css">
 				tr td,tr th{
 					border:1px solid #d8d8d8;
@@ -144,23 +132,23 @@ $Chart = $data['Chart'];
 			</h2>
 			<?php
 			$i = 1;?>
-		
+			
 			<div class="report-table">
 				<div class="table-responsive w-100 t-regis-language">
-					<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 90%;	">     
+					<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 100%;	">     
 						<thead>
-							<tr style="background: #010C65;color: #fff; border:1px solid #d8d8d8;padding: 8px;">
-								<th style="border:1px solid #d8d8d8; padding: 8px;">ลำดับ</th>
-								<th style="border:1px solid #d8d8d8; padding: 8px;">ฝ่าย</th>
-								<th style="border:1px solid #d8d8d8; padding: 8px;">แผนก</th>
+							<tr>
+								<th>ลำดับ</th>
+								<th>ฝ่าย</th>
+								<th>แผนก</th>
 								<?php if($data['TypeEmployee'] != 1){ ?>
 									<th>เลเวล</th>
 								<?php } ?>
-								<th style="border:1px solid #d8d8d8; padding: 8px;">จำนวน</th>
+								<th>จำนวน</th>
 								<?php if($data['TypeEmployee'] != 2){ ?>
-									<th style="border:1px solid #d8d8d8; padding: 8px;">สถานะอนุมัติ</th>
+									<th>สถานะอนุมัติ</th>
 								<?php } ?>
-								<th style="border:1px solid #d8d8d8; padding: 8px;">คิดเป็นร้อยละ</th>
+								<th>คิดเป็นร้อยละ</th>
 							</tr> 
 						</thead>
 						<tbody>
@@ -203,12 +191,12 @@ $Chart = $data['Chart'];
 
 									$cou_useAll = count($usersAll);
 									$per_cen = ($cou_use / $cou_useAll) * 100; ?>
-									<tr style="border:1px solid #d8d8d8; padding: 8px;">
-										<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $i++;?></td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $value->Positions->Departments->dep_title;?></td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $value->Positions->position_title;?></td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $value->branch_name;?></td>
-										<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $cou_use;?></td>
+									<tr>
+										<td><?php echo $i++;?></td>
+										<td><?php echo $value->Positions->Departments->dep_title;?></td>
+										<td><?php echo $value->Positions->position_title;?></td>
+										<td><?php echo $value->branch_name;?></td>
+										<td class="text-center"><?php echo $cou_use;?></td>
 										<?php if($data['TypeEmployee'] != 2){ ?>		
 											<td class="text-center">
 												<?php	if($cou_use > 0){
@@ -222,9 +210,9 @@ $Chart = $data['Chart'];
 												<?php
 											}
 											if($cou_use > 0){ ?>
-												<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo round($per_cen, 2); ?>%</td>
+												<td class="text-center"><?php echo round($per_cen, 2); ?>%</td>
 											<?php }else{ ?>
-												<td style="border:1px solid #d8d8d8; padding: 8px;"></td>
+												<td></td>
 											<?php } ?>
 										</tr>
 									<?php }
@@ -266,16 +254,16 @@ $Chart = $data['Chart'];
 									$cou_useAll = count($usersAll);
 									$per_cen = ($cou_use / $cou_useAll) * 100; ?>
 
-									<tr style="border:1px solid #d8d8d8; padding: 8px;">
-										<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $i++;?></td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $valuepos_back->Departments->dep_title;?></td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $valuepos_back->position_title;?></td>
+									<tr>
+										<td><?php echo $i++;?></td>
+										<td><?php echo $valuepos_back->Departments->dep_title;?></td>
+										<td><?php echo $valuepos_back->position_title;?></td>
 										<?php if($data['TypeEmployee'] != 1) { ?>
-											<td style="border:1px solid #d8d8d8; padding: 8px;"></td>
+											<td></td>
 										<?php } ?>
-										<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $cou_use; ?></td>
+										<td class="text-center"><?php echo $cou_use; ?></td>
 										<?php if($data['TypeEmployee'] != 2){ ?>
-											<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">
+											<td class="text-center">
 												<?php if($cou_use > 0){
 													if ($status == 1) { ?>
 														<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>
@@ -286,9 +274,9 @@ $Chart = $data['Chart'];
 											</td>
 										<?php }	
 										if($cou_use > 0){ ?>
-											<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo round($per_cen, 2) ?>%</td>
+											<td class="text-center"><?php echo round($per_cen, 2) ?>%</td>
 										<?php }else{ ?>
-											<td style="border:1px solid #d8d8d8; padding: 8px;"></td>
+											<td></td>
 										<?php } ?>
 									</tr>
 
@@ -331,13 +319,13 @@ $Chart = $data['Chart'];
 									$per_cen = ($cou_use / $cou_useAll) * 100; ?>
 
 									<tr>
-										<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $i++;?></td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $valuedep_back->dep_title; ?></td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;"></td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;"></td>
-										<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $cou_use; ?></td>
+										<td><?php echo $i++;?></td>
+										<td><?php echo $valuedep_back->dep_title; ?></td>
+										<td></td>
+										<td></td>
+										<td class="text-center"><?php echo $cou_use; ?></td>
 										<?php if($data['TypeEmployee'] != 2){ ?>
-											<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">
+											<td class="text-center">
 												<?php if($cou_use > 0){
 													if ($status == 1) { ?>
 														<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>
@@ -348,9 +336,9 @@ $Chart = $data['Chart'];
 												</td>
 											<?php }
 											if($cou_use > 0){ ?>
-												<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo round($per_cen, 2);?>%</td>
+												<td class="text-center"><?php echo round($per_cen, 2);?>%</td>
 											<?php }else{ ?>
-												<td style="border:1px solid #d8d8d8; padding: 8px;"></td>
+												<td></td>
 											<?php } ?>
 										</tr>
 
@@ -367,3 +355,5 @@ $Chart = $data['Chart'];
 			} ?>
 		</body>
 		</html>
+
+?>

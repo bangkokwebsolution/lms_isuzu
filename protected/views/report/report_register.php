@@ -42,8 +42,6 @@
                                     <label for="">ประเภทพนักงาน</label>
                                     <select class="form-control TypeEmployee" name="" id="TypeEmployee">
                                         <option value="" selected disabled>เลือกประเภท</option>
-                                        <!-- <option value="1">1</option>
-                                        <option value="2">2</option> -->
                                         <?php
 
                                     $criteria= new CDbCriteria;
@@ -65,8 +63,6 @@
                                     <label for="">ฝ่าย</label>
                                     <select class="form-control Department" name="" id="Department">
                                         <option value="" selected disabled>เลือกฝ่าย</option>
-                                        <!-- <option value="1">1</option>
-                                        <option value="2">2</option> -->
                                 <?php
 
                                     $criteria= new CDbCriteria;
@@ -86,21 +82,15 @@
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group">
-                                  <!--   <div><label>รูปแบบกราฟแสดงผล</label></div>
+                                     <div>
+                                          <label for="">รูปแบบกราฟ</label>
+                                     </div>
                                     <div class="checkbox checkbox-main checkbox-inline">
-                                        <input type="checkbox" name="accommodation" id="1" value="Bar Graph">
+                                        <input class="accommodation" type="checkbox" name="accommodation" id="1" value="Bar_Graph" checked>
                                         <label for="1" class="text-black">Bar Graph </label>
                                     </div>
                                     <div class="checkbox checkbox-main checkbox-inline">
-                                        <input type="checkbox" name="accommodation" id="2" value="Pie Charts">
-                                        <label for="2" class="text-black">Pie Charts </label>
-                                    </div>-->
-                                    <div class="radio radio-main radio-inline">
-                                        <input type="radio" name="accommodation" id="1" value="Bar Graph" checked>
-                                        <label for="1" class="text-black">Bar Graph </label>
-                                    </div>
-                                    <div class="radio radio-main radio-inline">
-                                        <input type="radio" name="accommodation" id="2" value="Pie Charts">
+                                        <input class="accommodation" type="checkbox" name="accommodation" id="2" value="Pie_Charts">
                                         <label for="2" class="text-black">Pie Charts </label>
                                     </div>
                                 </div>
@@ -113,8 +103,6 @@
                                     <label for="">แผนก</label>
                                     <select class="form-control Position" name="" id="x">
                                         <option value="" selected disabled>เลือกแผนก</option>
-                                        <!-- <option value="1">1</option>
-                                        <option value="2">2</option> -->
                                     <?php
 
                                     $criteria= new CDbCriteria;
@@ -137,8 +125,6 @@
                                     <label for="">เลเวล</label>
                                     <select class="form-control Leval" name="" id="x">
                                         <option value="" selected disabled>เลเวล</option>
-                                       <!--  <option value="1">1</option>
-                                        <option value="2">2</option> -->
                                     <?php
                                     $criteria= new CDbCriteria;
                                    // $criteria->compare('type_employee_id','2');
@@ -196,8 +182,6 @@
                                               <?php   }                 
                                              }
                                        ?>
-                                  <!--       <option value="1">1</option>
-                                        <option value="2">2</option> -->
                                     </select>
                                 </div>
                             </div>
@@ -206,8 +190,6 @@
                                     <label for="">ช่วงปีสิ้นสุด</label>
                                     <select class="form-control Year_end" name="" id="x">
                                         <option value="" selected disabled>ช่วงปีสิ้นสุด</option>
-                                        <!-- <option value="1">1</option>
-                                        <option value="2">2</option> -->
                                         <?php
                                         $starting_year  = 2019;
                                         $ending_year = date('Y');
@@ -235,57 +217,43 @@
         <div class="divider">
             <i class="fas fa-chevron-down"></i>
         </div>
-         <div class="row">
-            <div class="col-sm-6 Graph_1">
-                <div class="chart"></div>
-                <div class="year-report">
-                    <h4>
-                    <?php
-                    if ($Year_start) {
-                    echo "ปี";
-                    echo $Year_start;
-                    }else{
-                        echo "";
-                    }
-                    ?>
-                    </h4>
-                    <div style="width:100%">
-                        <div id="chart_div"></div>
+
+
+             <div class="row">
+                    <div class="col-sm-6 col-md-6 Graph_1">
+                        <div class="chart"></div>
+                            <h4></h4>
+                            <div style="width:100%">
+                                <div id="chart_div"></div>
+                            </div>
                     </div>
-                  
-                </div> 
+                    <div class="col-sm-6 col-md-6 Graph_2">
+                        <div class="chart"></div>
+                            <h4></h4>
+                         <div style="width:100%">
+                                <div id="chart_div2"></div>
+                        </div>
+                    </div>
             </div>
-            <div class="col-sm-6 Graph_2">
-                <div class="year-report">
-                    <h4> <?php
-                    if ($Year_end) {
-                    echo "ปี";
-                    echo $Year_end;
-                    }else{
-                        echo "";
-                    }
-                    ?></h4>
-                 <div style="width:100%">
-                        <div id="chart_div2"></div>
+
+           <div class="row mt-2">
+                <div class="col-sm-6 col-md-6 Graph_3">
+                    <div class="chart"></div>
+                        <div style="width:100%">
+                            <div id="chart_div3"></div>
                     </div>
                 </div>
-            </div>
-        </div> 
+                <div class="col-sm-6 col-md-6 Graph_4">
+                    <div class="chart"></div>
+                     <div style="width:100%">
+                            <div id="chart_div4"></div>
+                    </div>
+                </div>
+            </div> 
 
+
+        <hr>
         <div class="dataTable"></div>
-        <div class="pull-left">
-            <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
-            <!-- <button class="btn btn-excel PrintExcel"><i class="fas fa-file-excel"></i> Export Excel</button> -->
-          <?php 
-          $test = '1';
-          // echo CHtml::button('Export Excel', array('submit' => array('report/reportRegisterExcel', 'id'=> $test),'class' => 'btn btn btn-excel')); 
-
-
-          ?>
-            <button class="btn btn btn-excel excelexport"><i class="fas fa-search"></i> Export Excel </button>
-        </div>
-
-    </div>
     </div>
 
 </section>
@@ -299,8 +267,6 @@
     });
     $.datetimepicker.setLocale('th');
 
- $('.Graph_1').hide();
- $('.Graph_2').hide();
     $(".TypeEmployee").change(function() {
                     var id = $(this).val();
                     $.ajax({
@@ -362,60 +328,36 @@
         });
     });
 
-
- $(".excelexport").click(function() {
-                    var TypeEmployee = $(".TypeEmployee").val();
-                    var Department = $(".Department").val();
-                    var Position = $(".Position").val();
-                    var Leval = $(".Leval").val(); 
-                    var Chart = $("input[name='accommodation']:checked").val();
-                    var datetime_start = $("#datetime_start").val();
-                    var datetime_end = $("#datetime_end").val();
-                    var Year_start = $(".Year_start").val();
-                    var Year_end = $(".Year_end").val();
-                    var status = $(".status").val();
-
-                    $.ajax({
-                        type: 'POST',
-                        url: "<?= Yii::app()->createUrl('report/reportRegisterExcel'); ?>",
-                        data: {
-                            TypeEmployee: TypeEmployee,
-                            Department: Department,
-                            Position: Position,
-                            Leval: Leval,
-                            Chart: Chart,
-                            datetime_start: datetime_start,
-                            datetime_end: datetime_end,
-                            Year_start: Year_start,
-                            Year_end: Year_end,
-                            status:status,
-
-                        },
-                        success: function(data) {
-                         
-                           
-                        }
-        });
-    });
-
     $(".search").click(function() {
+
                     var TypeEmployee = $(".TypeEmployee").val();
                     var Department = $(".Department").val();
                     var Position = $(".Position").val();
                     var Leval = $(".Leval").val(); 
-                    var Chart = $("input[name='accommodation']:checked").val();
+                    //var Chart = $("input[name='accommodation']:checked").val();
+                    var Chart = $('input[name="accommodation"]:checked').serialize();                    
                     var datetime_start = $("#datetime_start").val();
                     var datetime_end = $("#datetime_end").val();
                     var Year_start = $(".Year_start").val();
                     var Year_end = $(".Year_end").val();
-                    var status = $(".status").val();
+                    
 
-                    // var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
-                    // if (TypeEmployee == '' || TypeEmployee === null) {
-                    //       var TypeEmployeeAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select staff type! ':'กรุณาเลือกประเภทพนักงาน!'; ?>";
-                    //       swal(alert_message,TypeEmployeeAlert)
-                    //       return false; 
-                    // }else if(Department == '' || Department === null) {
+                    var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+                    if (TypeEmployee == '' || TypeEmployee === null) {
+                          var TypeEmployeeAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select staff type! ':'กรุณาเลือกประเภทพนักงาน!'; ?>";
+                          swal(alert_message,TypeEmployeeAlert)
+                          return false; 
+                    }
+                    if (TypeEmployee === 1 || TypeEmployee === '1') {
+                        var status = $(".status").val();
+                         if(status === '' || status === null) {
+                          var statusAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select an approval status! ':'กรุณาเลือกสถานะอนุมัติ!'; ?>";
+                          swal(alert_message,statusAlert)
+                          return false; 
+                        } 
+
+                    }
+                    //else if(Department == '' || Department === null) {
                     //       var DepartmentAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select department! ':'กรุณาเลือกฝ่าย!'; ?>";
                     //       swal(alert_message,DepartmentAlert)
                     //       return false; 
@@ -440,13 +382,9 @@
                     //       var Year_endAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select an ending year! ':'กรุณาเลือกช่วงปีสิ้นสุด!'; ?>";
                     //       swal(alert_message,Year_endAlert)
                     //       return false; 
-                    // }else if(status == '') {
-                    //       var statusAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select an approval status! ':'กรุณาเลือกสถานะอนุมัติ!'; ?>";
-                    //       swal(alert_message,statusAlert)
-                    //       return false; 
-                    // }    
+                    // }
                     $.ajax({
-                        type: 'GET',
+                        type: 'POST',
                         url: "<?= Yii::app()->createUrl('report/reportRegisterData'); ?>",
                         data: {
                             TypeEmployee: TypeEmployee,
@@ -462,26 +400,22 @@
 
                         },
                         success: function(data) {
-                         
+                            if (Chart === "accommodation=Bar_Graph" || Chart === "accommodation=Pie_Charts") {
                             $('.Graph_1').show();
                             $('.Graph_2').show();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+                            }else if (Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") {
+                            $('.Graph_1').show();
+                            $('.Graph_2').show();
+                            $('.Graph_3').show();
+                            $('.Graph_4').show();
+                            }
+                
                            $(".dataTable").html(data);
                            
                         }
-        });
-    });
-    $(".PrintExcel").click(function() {
-         var TypeEmployee = $(".TypeEmployee").val();
-         $.ajax({
-                        type: 'GET',
-                        url: "<?= Yii::app()->createUrl('report/reportRegisterExcel'); ?>",
-                        data: {
-                            TypeEmployee: TypeEmployee,
-                        },
-                        success: function(data) {
-                        console.log(data);
-                           
-                        }
-        });
+                    });
+
     });
 </script>

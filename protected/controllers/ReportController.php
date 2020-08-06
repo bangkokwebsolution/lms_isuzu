@@ -20,18 +20,19 @@ class ReportController extends Controller
 	public function actionReportRegisterData()
 	{
 
-		$TypeEmployee = $_GET['TypeEmployee'];
-		$Department = $_GET['Department'];
-		$Position = $_GET['Position'];
-		$Leval = $_GET['Leval'];
-		$datetime_start = $_GET['datetime_start'];
-		$datetime_end = $_GET['datetime_end'];
-		$status = $_GET['status'];
-		$Year_start = $_GET['Year_start'] != ""?$_GET['Year_start']:date('Y')-1;
-		$Year_end = $_GET['Year_end']!= ""?$_GET['Year_end']:date('Y');
-		$Chart = $_GET['Chart'];
+		$TypeEmployee = $_POST['TypeEmployee'];
+		$Department = $_POST['Department'];
+		$Position = $_POST['Position'];
+		$Leval = $_POST['Leval'];
+		$datetime_start = $_POST['datetime_start'];
+		$datetime_end = $_POST['datetime_end'];
+		$status = $_POST['status'];
+		$Year_start = $_POST['Year_start'] != ""?$_POST['Year_start']:date('Y')-1;
+		$Year_end = $_POST['Year_end']!= ""?$_POST['Year_end']:date('Y');
 		$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
 		$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
+		$Chart = $_POST['Chart'];
+
 		if ($TypeEmployee) {
 			
 			$criteria = new CDbCriteria;
@@ -101,10 +102,10 @@ class ReportController extends Controller
 
 				if ($Year_start != null) {
 					$datas = '["Element", "Position", { role: "style" } ],';
-				// $colorName = Helpers::lib()->ColorCode();	
-				// foreach ($colorName as $keyColor => $valueColor) {
-				// 	$co = $valueColor;
-				// 	} 
+				$colorName = Helpers::lib()->ColorCode();	
+				foreach ($colorName as $keyColor) {
+					$color[] = $keyColor;
+					} 
 			// $name_title_start = "'แผนภูมิแสดงกราฟเปรียบเทียบการสมัครสมาชิกของแต่ละตำแหน่งในปี'";
 					foreach ($pos_back as $key => $value) {
 
@@ -125,18 +126,17 @@ class ReportController extends Controller
 						$users_count= Users::model()->findAll($criteria);
 						$count_pos = count($users_count);
 
-						$datas .= '["'.$name_pos.'",'.$count_pos.',"'.$co.'"],';
+						$datas .= '["'.$name_pos.'",'.$count_pos.',"'.$color[$key].'"],';
 
 					}
 				}
-				// $Year_end = '2020';
 
 				if ($Year_end != null) {
 					$data_year_end = '["Element", "Position", { role: "style" } ],';
-					// $colorName = Helpers::lib()->ColorCode();	
-					// foreach ($colorName as $keyColor => $valueColor) {
-					// 	$co = $valueColor;
-					// 	} 
+					 $colorName = Helpers::lib()->ColorCode();	
+					foreach ($colorName as $keyColor ) {
+						$color[] = $keyColor;
+						} 
 	                //$name_title_end = "'แผนภูมิแสดงกราฟเปรียบเทียบการสมัครสมาชิกของแต่ละตำแหน่งในปี '";
 					foreach ($pos_back as $key => $value) {
 
@@ -157,16 +157,18 @@ class ReportController extends Controller
 						$users_count= Users::model()->findAll($criteria);
 						$count_pos = count($users_count);
 
-						$data_year_end .= '["'.$name_pos.'",'.$count_pos.',"'.$co.'"],';
+						$data_year_end .= '["'.$name_pos.'",'.$count_pos.',"'.$color[$key].'"],';
 
 					}
 				}
 			}else if($TypeEmployee == '2'){
-				// $Year_start = '2019';
-				// $Year_end = '2020';
 
 				if ($Year_start != null) {
 					$datas = '["Element", "Division", { role: "style" } ],';
+					$colorName = Helpers::lib()->ColorCode();	
+					foreach ($colorName as $keyColor ) {
+						$color[] = $keyColor;
+						} 
 					foreach ($branch as $key => $value) { 	
 						$name_dep[] = $value->Positions->Departments->id;
 						$names_dep[] = $value->Positions->Departments->dep_title;
@@ -203,7 +205,7 @@ class ReportController extends Controller
 						$users_count = Users::model()->findAll($criteria);
 						$count_dep = count($users_count);
 
-						$datas .= '["'.$result_dep_in_name[$key].'",'.$count_dep.',"'.$co.'"],';
+						$datas .= '["'.$result_dep_in_name[$key].'",'.$count_dep.',"'.$color[$key].'"],';
 
 					}
 
@@ -212,6 +214,10 @@ class ReportController extends Controller
 
 
 					$data_year_end = '["Element", "Division", { role: "style" } ],';
+					$colorName = Helpers::lib()->ColorCode();	
+					foreach ($colorName as $keyColor ) {
+						$color[] = $keyColor;
+						} 
 					foreach ($branch as $key => $value) { 	
 						$name_dep[] = $value->Positions->Departments->id;
 						$names_dep[] = $value->Positions->Departments->dep_title;
@@ -248,14 +254,14 @@ class ReportController extends Controller
 						$users_count = Users::model()->findAll($criteria);
 						$count_dep = count($users_count);
 
-						$data_year_end .= '["'.$result_dep_in_name[$key].'",'.$count_dep.',"'.$co.'"],';
+						$data_year_end .= '["'.$result_dep_in_name[$key].'",'.$count_dep.',"'.$color[$key].'"],';
 
 					}
 
 				}
 			}
 
-			if ($Chart == "Bar Graph") {
+			if ($Chart === "accommodation=Bar_Graph") {
 				?>
 				<script>
 					google.charts.load("current", {packages:['corechart']});
@@ -328,8 +334,7 @@ class ReportController extends Controller
 					}
 				</script>
 				<?php
-			}else if ($Chart == "Pie Charts") {
-
+			}else if ($Chart === "accommodation=Pie_Charts") {
 				?>
 				<script>
 					google.charts.load("current", {packages:["corechart"]});
@@ -383,8 +388,131 @@ class ReportController extends Controller
 
 					</script>
 					<?php
-				}
-				if ($_GET['Year_start'] != "" && $_GET['Year_end'] != "") {
+				}else if($Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts"){ ?>
+					<script>
+					google.charts.load("current", {packages:['corechart']});
+					google.charts.setOnLoadCallback(drawChart);
+					function drawChart() {
+						var data = google.visualization.arrayToDataTable([
+
+							<?=$datas?>    
+
+							]);
+
+						var view = new google.visualization.DataView(data);
+						view.setColumns([0, 1,
+							{ calc: "stringify",
+							sourceColumn: 1,
+							type: "string",
+							role: "annotation" },
+							2]);
+
+						var options = {
+							title: <?=$Year_start?>,
+							width: 600,
+							height: 400,
+							bar: {groupWidth: "95%"},
+							legend: { position: "none" },
+						};
+						var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
+						 google.visualization.events.addListener(chart, 'ready', function () {
+                            $.post('<?=$this->createUrl('report/saveChart')?>',{name:'AttendPrint',image_base64:chart.getImageURI()},function(json){
+                                    var jsonObj = $.parseJSON( json );
+                                });
+                            });
+						chart.draw(view, options);
+					}
+
+				</script>
+				<script>
+
+					google.charts.load("current", {packages:['corechart']});
+					google.charts.setOnLoadCallback(drawChart);
+					function drawChart() {
+						var data = google.visualization.arrayToDataTable([
+							<?=$data_year_end?>
+
+
+							]);
+
+						var view = new google.visualization.DataView(data);
+						view.setColumns([0, 1,
+							{ calc: "stringify",
+							sourceColumn: 1,
+							type: "string",
+							role: "annotation" },
+							2]);
+
+						var options = {
+							title: <?=$Year_end?>,
+							width: 600,
+							height: 400,
+							bar: {groupWidth: "95%"},
+							legend: { position: "none" },
+						};
+						var chart = new google.visualization.ColumnChart(document.getElementById("chart_div2"));
+						 google.visualization.events.addListener(chart, 'ready', function () {
+                            $.post('<?=$this->createUrl('report/saveChart')?>',{name:'AttendPrint1',image_base64:chart.getImageURI()},function(json){
+                                    var jsonObj = $.parseJSON( json );
+                                });
+                            });
+						chart.draw(view, options);
+					}
+				</script>
+				<script>
+					google.charts.load("current", {packages:["corechart"]});
+					google.charts.setOnLoadCallback(drawChart);
+					function drawChart() {
+						var data = google.visualization.arrayToDataTable([
+
+							<?=$datas?>
+
+							]);
+						if (data) {}
+							var options = {
+								title: <?=$Year_start?>,
+								sliceVisibilityThreshold:0,
+								pieSliceText:'value',
+								is3D: true,
+							};
+
+							var chart = new google.visualization.PieChart(document.getElementById('chart_div3'));
+							 google.visualization.events.addListener(chart, 'ready', function () {
+                            $.post('<?=$this->createUrl('report/saveChart')?>',{name:'AttendPrint3',image_base64:chart.getImageURI()},function(json){
+                                    var jsonObj = $.parseJSON( json );
+                                });
+                            });
+							chart.draw(data, options);
+						}
+					</script>
+					<script>
+						google.charts.load("current", {packages:["corechart"]});
+						google.charts.setOnLoadCallback(drawChart);
+						function drawChart() {
+							var data = google.visualization.arrayToDataTable([
+								<?=$data_year_end?>
+								]);
+
+							var options = {
+								title: <?=$Year_end?>,
+								sliceVisibilityThreshold:0,
+								pieSliceText:'value',
+								is3D: true,
+							};
+
+							var chart = new google.visualization.PieChart(document.getElementById('chart_div4'));
+							 google.visualization.events.addListener(chart, 'ready', function () {
+                            $.post('<?=$this->createUrl('report/saveChart')?>',{name:'AttendPrint4',image_base64:chart.getImageURI()},function(json){
+                                    var jsonObj = $.parseJSON( json );
+                                });
+                            });
+							chart.draw(data, options);
+						}
+
+					</script>
+
+				<?php }
+				if ($_POST['Year_start'] != "" && $_POST['Year_end'] != "") {
 
 
 					if (!empty($branch) || !empty($pos_back) || !empty($dep_back) ) {
@@ -622,7 +750,7 @@ class ReportController extends Controller
 					}else{
 						echo "<p>ไม่พบข้อมูล</p>";
 					}
-				}else if($_GET['Year_start'] != "" && $_GET['Year_end'] != "" || $Department != "" || $Position != ""){
+				}else if($_POST['Year_start'] != "" && $_POST['Year_end'] != "" || $Department != "" || $Position != ""){
 					if (!empty($branch) || !empty($pos_back) || !empty($dep_back) ) {
 						?>
 						<h2 class="text-center">
@@ -858,8 +986,31 @@ class ReportController extends Controller
 					}else{
 						echo "<p>ไม่พบข้อมูล</p>";
 					}
-				}
-
+				}?>
+				<div class="pull-left ShowGraph">
+            <!-- <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF </button> -->
+         <a href="<?= $this->createUrl('report/reportRegisterPDF',array('reportRegisterData[TypeEmployee]'=>$_POST['TypeEmployee'],
+        'reportRegisterData[Department]'=>$_POST['Department'],
+        'reportRegisterData[Position]'=>$_POST['Position'],
+        'reportRegisterData[Leval]'=>$_POST['Leval'],
+        'reportRegisterData[Chart]'=>$_POST['Chart'],
+        'reportRegisterData[datetime_start]'=>$_POST['datetime_start'],
+        'reportRegisterData[datetime_end]'=>$_POST['datetime_end'],
+        'reportRegisterData[Year_start]'=>$_POST['Year_start'],
+        'reportRegisterData[Year_end]'=>$_POST['Year_end'],
+        'reportRegisterData[status]'=>$_POST['status'])); ?>" target="_blank" class="btn btn btn-pdf"><i class="fas fa-file-pdf"></i>Export PDF</a>
+          <a href="<?= $this->createUrl('report/reportRegisterExcel',array('reportRegisterData[TypeEmployee]'=>$_POST['TypeEmployee'],
+        'reportRegisterData[Department]'=>$_POST['Department'],
+        'reportRegisterData[Position]'=>$_POST['Position'],
+        'reportRegisterData[Leval]'=>$_POST['Leval'],
+        'reportRegisterData[Chart]'=>$_POST['Chart'],
+        'reportRegisterData[datetime_start]'=>$_POST['datetime_start'],
+        'reportRegisterData[datetime_end]'=>$_POST['datetime_end'],
+        'reportRegisterData[Year_start]'=>$_POST['Year_start'],
+        'reportRegisterData[Year_end]'=>$_POST['Year_end'],
+        'reportRegisterData[status]'=>$_POST['status'])); ?>" target="_blank" class="btn btn btn-excel"><i class="fas fa-file-excel"></i>Export Excel</a>
+        </div>
+		<?php
 			}
 		}
 
@@ -873,7 +1024,7 @@ class ReportController extends Controller
 
 			    if(isset($_POST)){
 			    	
-			        $save = file_put_contents(Yii::app()->basePath."/../uploads/".$_POST['name'].".png",base64_to_jpeg($_GET['image_base64']));
+			        $save = file_put_contents(Yii::app()->basePath."/../uploads/".$_POST['name'].".png",base64_to_jpeg($_POST['image_base64']));
 			        $array = array('msg'=>'success');
 			        echo json_encode($array);
 			    }
@@ -881,11 +1032,36 @@ class ReportController extends Controller
 
 		public function actionReportRegisterExcel()
 		{
-			// if ($_GET['id']) {
+			 if ($_GET['reportRegisterData']) {
+ 				   $data = $_GET['reportRegisterData'];
+ 				
+				$this->renderPartial('report_register_excel',array('data' => $data));
+			 }
+		}
 
- 				   $TypeEmployee = $_GET['id'];
-				$this->renderPartial('report_register_excel',array('TypeEmployee' => $TypeEmployee), true);
-			// }
+		public function actionReportRegisterPDF()
+		{
+			if ($_GET['reportRegisterData']) {
+ 				   $data = $_GET['reportRegisterData'];
+ 				
+				//$this->renderPartial('report_register_pdf',array('data' => $data));
+				require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
+			    $mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
+					    	$texttt= '
+		         <style>
+		         body { font-family: "garuda"; }
+		         </style>
+		         ';
+		        $mPDF->WriteHTML($texttt);
+			    $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('report_register_pdf', array('data'=>$data),true),'UTF-8','UTF-8'));
+			    // if($_GET['ReportUser']['course']){
+			    //     $mPDF->Output($course->course_title.".pdf" , 'D');
+
+			    // }else{
+			        $mPDF->Output("รายงานภาพรวมการสมัคร.pdf" , 'I');
+
+			    //}
+			 }
 		}
 
 		public function actionListDepartment()
