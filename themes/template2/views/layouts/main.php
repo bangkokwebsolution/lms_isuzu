@@ -39,6 +39,7 @@ Yii::app()->user->returnUrl = $http->getUrl();
       </div>
     </div> -->
     <div class="backtotop"><span><i class="fas fa-arrow-up"></i> <small>top</small></span></div>
+<?php if(Yii::app()->user->id){ ?>
     <a class="contact-admin" data-toggle="modal" href="#user-report">
         <div id="mascot-contact"></div>
         <!-- <div id="contact-mobile">
@@ -70,6 +71,7 @@ Yii::app()->user->returnUrl = $http->getUrl();
             path: '<?php echo $mascot_path; ?>'
         });
     </script>
+ <?php } ?>
    
     <?php include("themes/template2/include/header.php"); ?>
 
