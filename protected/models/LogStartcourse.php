@@ -72,6 +72,7 @@ class LogStartcourse extends CActiveRecord
 			'pro' => array(self::BELONGS_TO, 'Profile', 'user_id'),
 			'mem' => array(self::BELONGS_TO, 'User', 'user_id','foreignKey' => array('user_id'=>'id')),
 			'course' => array(self::BELONGS_TO, 'CourseOnline', 'course_id'),
+			'gen' => array(self::BELONGS_TO, 'CourseGeneration', 'gen_id'),
 		);
 	}
 
