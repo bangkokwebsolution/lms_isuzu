@@ -22,9 +22,24 @@
 						<h4 class="text-center"><?= $labelCourse->label_courseName ?> : <?= $course->course_title;?></h4>
 						<hr>
 						<ul class="list-unstyled">
-							<li><?= $labelCourse->label_totalTest ?> <span class="pull-right"><?= $manage->manage_row; ?> <?= $labelCourse->label_list ?></span></li>
-							<li><?= UserModule::t('timeTest') ?> <span class="pull-right"><?= $course->time_test; ?> <?= UserModule::t('minute') ?></span></li>
-							<li><?= UserModule::t('totoal') ?> <span class="pull-right"><?= $total_score; ?> <?= $labelCourse->label_point ?></span></li>
+							<li>
+								<?= $labelCourse->label_totalTest ?> 
+								<span class="pull-right">
+									<?= $manage->manage_row; ?> <?= $labelCourse->label_list ?>
+								</span>
+							</li>
+							<li>
+								<?= UserModule::t('timeTest') ?> 
+								<span class="pull-right">
+									<?= $course->time_test; ?> <?= UserModule::t('minute') ?>
+								</span>
+							</li>
+							<li>
+								<?= UserModule::t('totoal') ?> 
+								<span class="pull-right">
+									<?= $total_score; ?> <?= $labelCourse->label_point ?>
+								</span>
+							</li>
 						</ul>
 						<div class="text-center">
 							<a class="btn btn-warning" href="<?php echo $this->createUrl('/coursequestion/index',array('id' => $course->course_id, 'type'=>$type)); ?>" role="button"><?= $labelCourse->label_DoTest ?></a>

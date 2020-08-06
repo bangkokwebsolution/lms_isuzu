@@ -59,7 +59,7 @@
 			<div class="container">
 				<!-- tabtime -->
 				<div class="alert alert-danger stick center shadow">
-					<h4 class="mb-0 text-center">Time : <span id="tabtime">00:00:00</span></h4>
+					<h4 class="mb-0 text-center">Time allowed : <span id="tabtime">00:00:00</span></h4>
 				</div>
 				<!-- Content -->
 
@@ -76,9 +76,9 @@
 												$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown', 6 => 'hidden');
 												$questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'เลือกได้คำตอบเดียว', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่', 6 => 'คำตอบแบบจัดเรียง');									
 												?>
-												<label for=""><?= $currentQuiz->number; ?>. ข้อสอบแบบ <?= $questionTypeArrayStr[$model->ques_type]?> </label>
-												<p><?= $model->ques_title; ?></p>
-												<div class="well answer">
+												<h4>ข้อสอบแบบ <?= $questionTypeArrayStr[$model->ques_type]?> </h4>
+												<p><?= $currentQuiz->number; ?>. <?= $model->ques_title; ?></p>
+												<div class="well answer" style="margin-top: 10px;">
 													<?php 
 													$ansData = json_decode($currentQuiz->ans_id);
 													$choiceData = json_decode($currentQuiz->question);
