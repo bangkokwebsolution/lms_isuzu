@@ -389,23 +389,48 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
                                             // var_dump($lessonListValue);
 
-                                    $checkLessonPass = Helpers::lib()->checkCourseStatus($value->course_id);
+                                    // $checkLessonPass = Helpers::lib()->checkCourseStatus($value->course_id);
+                                    
+                                    // var_dump($value->getGenID($value->course_id)); exit();
+                                    $status_course_gen = Helpers::lib()->StatusCourseGen($value->course_id, $value->getGenID($value->course_id));
 
                                             // var_dump($checkLessonPass);
 
-                                    if ($checkLessonPass->status == "notLearn") {
+                                    // if ($checkLessonPass->status == "notLearn") {
+                                    //     $colorTab = 'listlearn-danger';
+                                    //     $lessonStatusStr = $labelCourse->label_notLearn;
+                                    // } else if ($checkLessonPass->status == "learning") {
+                                    //     $colorTab = 'listlearn-warning';
+                                    //     $lessonStatusStr = $labelCourse->label_learning;
+                                    // } else if ($checkLessonPass->status == "pass") {
+                                    //     $colorTab = 'listlearn-success';
+                                    //     $lessonStatusStr =  $labelCourse->label_learnPass;
+                                    // }
+
+                                    if ($status_course_gen == "notLearn") {
                                         $colorTab = 'listlearn-danger';
                                         $lessonStatusStr = $labelCourse->label_notLearn;
-                                    } else if ($checkLessonPass->status == "learning") {
+                                        $class = "defaultcourse";
+                                        $color = "#fff";
+                                    } else if ($status_course_gen == "learning") {
                                         $colorTab = 'listlearn-warning';
                                         $lessonStatusStr = $labelCourse->label_learning;
-                                    } else if ($checkLessonPass->status == "pass") {
+                                        $class = "warningcourse";
+                                        $color = "#fff";
+                                    } else if ($status_course_gen == "pass") {
                                         $colorTab = 'listlearn-success';
                                         $lessonStatusStr =  $labelCourse->label_learnPass;
+                                        $class = "successcourse";
+                                        $color = "#fff";
                                     }
 
                                     ?>
-                                    <span class="card-text-1"><?=$status?> : <a style="color: <?= $checkLessonPass->color ?>" class="<?= $checkLessonPass->class ?>"><?=$lessonStatusStr?></a> </span>
+                                    <span class="card-text-1">
+                                        <?=$status?> : 
+                                        <a style="color: <?= $color ?>" class="<?= $class ?>">
+                                            <?=$lessonStatusStr?>                                                
+                                        </a>
+                                    </span>
                                     <?php
                                         //}
 
