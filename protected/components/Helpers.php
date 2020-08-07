@@ -4372,8 +4372,8 @@ public function checkStepLesson($lesson){
         }
 
         public function StatusCourseGen($course_id, $gen_id){ // สถานะของหลักสูตร pass learning notLearn
-            $course_id = $course;
-            $course_model = CourseOnline::model()->findByPk($course_id);
+            // $course_id = $course;
+            // $course_model = CourseOnline::model()->findByPk($course_id);
             // $gen_id = $course_model->getGenID($course_model->course_id);
 
             $user_id = Yii::app()->user->id;
@@ -4390,7 +4390,11 @@ public function checkStepLesson($lesson){
                     'condition' => 'gen_id=:gen_id AND course_id=:course_id AND user_id=:user_id AND lesson_active=:active',
                     'params' => array(':gen_id'=>$gen_id, ':course_id'=>$course_id, ':user_id'=>$user_id, ':active'=>'y'),
                 ));
-
+                // var_dump($course_id); 
+                // var_dump($gen_id); 
+                // var_dump($user_id); 
+                // var_dump($Learn); 
+                // exit();
                 if(!empty($Learn)){
                     $status = "learning";
                 }else{
