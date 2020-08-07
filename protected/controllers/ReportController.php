@@ -209,6 +209,23 @@ class ReportController extends Controller
 
 					}
 
+					foreach ($result_dep_not as $key => $value) {		
+						$criteria = new CDbCriteria;
+						$criteria->with = array('department');
+						$criteria->compare('department_id',$value);
+						$criteria->compare('YEAR(create_at)', $Year_start);
+						if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+							$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+						}
+						$criteria->compare('superuser',0);
+
+						$users_count = Users::model()->findAll($criteria);
+						$count_dep = count($users_count);
+
+						$datas .= '["'.$result_dep_in_name[$key].'",'.$count_dep.',"'.$color[$key].'"],';
+
+					}
 				}
 				if($Year_end != null){
 
@@ -241,6 +258,25 @@ class ReportController extends Controller
 					}
 
 					foreach ($result_dep_in as $key => $value) {		
+						$criteria = new CDbCriteria;
+						$criteria->with = array('department');
+						$criteria->compare('department_id',$value);
+						$criteria->compare('YEAR(create_at)', $Year_end);
+						if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+							$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+						}
+						$criteria->compare('superuser',0);
+
+						$users_count = Users::model()->findAll($criteria);
+						$count_dep = count($users_count);
+
+						$data_year_end .= '["'.$result_dep_in_name[$key].'",'.$count_dep.',"'.$color[$key].'"],';
+
+
+					}
+
+					foreach ($result_dep_not as $key => $value) {
 						$criteria = new CDbCriteria;
 						$criteria->with = array('department');
 						$criteria->compare('department_id',$value);

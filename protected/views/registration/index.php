@@ -1350,7 +1350,7 @@ function editNamehouse_registration(filedoc_id){
                             <div class="form-group" >
                                 <!-- <label for=""><?php echo $form->labelEx($users, 'username'); ?></label> -->
                                 <label for=""><?php echo $label->label_employee_id ; ?><font color="red">*</font></label>
-                                <?php echo $form->textField($users, 'username', array('class' => 'form-control user_ID', 'placeholder' => $label->label_employee_id,'maxlength'=>'13', 'autocomplete' => 'off')); ?>
+                                <?php echo $form->textField($users, 'username', array('class' => 'form-control user_ID', 'placeholder' => $label->label_employee_id,'maxlength'=>'5','maxlength'=>'5', 'autocomplete' => 'off')); ?>
                                 <?php echo $form->error($users, 'username', array('class' => 'error2')); ?>
                                 <!-- <input type="text" class="form-control" id="" placeholder="ID พนักงาน"> -->
                             </div>
@@ -3491,12 +3491,14 @@ $(add_form_language).click(function(e) {
         var del_language = '<?php echo Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?>';
         var language_Written = '<?php echo Yii::app()->session['lang'] == 1?'Written ':'เขียน' ?>';
         var language_Spoken = '<?php echo Yii::app()->session['lang'] == 1?'Spoken ':'พูด' ?>'; 
+        var del_language = '<?php echo Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?>';
         <?php 
         $h = 10; 
         $v = 10;
         ?>
         $(wrapper_language).append('<tr><td rowspan="2">'
             +'<input type="text" class="form-control" placeholder="' + language_name + '" name="ProfilesLanguage[' + numItems_language + '][language_name]" style="width:100px;line-height:28px;padding: 20px 10px;">'
+            +'<span class="delete_language btn-danger" name="mytextlg[]"><i class="fas fa-minus-circle" ></i> ' + del_language + '</span></div>'
             +'</td>'
             +'<td>'+language_Written+'</td>'
             +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][writes]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="4"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
@@ -3507,7 +3509,9 @@ $(add_form_language).click(function(e) {
             +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="4"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
             +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="3"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
             +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="2"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
-            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="1"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td></tr>'); //add input box
+            +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][spoken]" id="lang_s-' + numItems_language + '<?php echo $h++ ?>" value="1"><label for="lang_s-' + numItems_language + '<?php echo $v++ ?>"></label></div></td></tr>' //add input box
+            );
+
 
     } else {
         var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
@@ -3524,7 +3528,6 @@ $(add_form_language).click(function(e) {
 // $(wrapper_language).on("click", ".delete_language", function(e) {
 //     e.preventDefault();
 // $(this).parent('#del_languages').remove();
-
 //     l--;
 // });
 ////////////////////////////////////////// ประวัติการทำงาน /////////////////////////////////////////////////////////////////////////
@@ -3870,26 +3873,40 @@ $('.default_datetimepicker').datetimepicker({
 $('.xdsoft_timepicker').hide();
 
 $(function() {
+    ////////////////gen เลข 0 ด้านหน้าให้ครบ 13 หลัก///////////////////////////
+    // $('.user_ID').change(function(event,length){
+    //                 var max = 13;
+    //                 var vals = $(this).val();
+    //                 if (max.length < vals.length) { 
+    //                     var setval = '' + $(this).val();
+    //                     while (setval.length < max.length) {
+    //                      setval = '0' + setval;
+    //                  }
+
+    //                  $(this).val(setval);
+
+    //              }else{
+    //                 var setval = '' + $(this).val();
+    //                 while (setval.length < max) {
+    //                  setval = '0' + setval;
+    //              }
+
+    //              $(this).val(setval);
+    //          }
+    //      });
     $('.user_ID').change(function(event,length){
-                    var max = 13;//$(this).attr('maxlength');
-                    var vals = $(this).val();
-                    if (max.length < vals.length) { 
-                        var setval = '' + $(this).val();
-                        while (setval.length < max.length) {
-                         setval = '0' + setval;
-                     }
-
-                     $(this).val(setval);
-
-                 }else{
-                    var setval = '' + $(this).val();
-                    while (setval.length < max) {
-                     setval = '0' + setval;
-                 }
-
-                 $(this).val(setval);
-             }
-         });
+        var max = 5;
+        var vals = $(this).val();
+        if (max.length > vals.length) {      
+               var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+               var msg ="<?php echo Yii::app()->session['lang'] == 1?'Please fill in your 5-digit employee identification number! ':'กรุณากรอกเลขประจำตัวพนักงานให้ครบ 5 หลัก!'; ?>";   
+               swal(alert_message,msg);       
+        }else{
+             var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+               var msg ="<?php echo Yii::app()->session['lang'] == 1?'Please fill in your 5-digit employee identification number! ':'กรุณากรอกเลขประจำตัวพนักงานให้ครบ 5 หลัก!'; ?>";   
+               swal(alert_message,msg);     
+        }
+    });
     $("#card-5").change(function(event) {    
       var sick = $("input[name='history_of_illness']:checked").val();
       if (sick == 'n') {
