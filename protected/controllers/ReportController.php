@@ -1993,6 +1993,324 @@ class ReportController extends Controller
 			}
 		}
 
+
+
+
+
+
+
+
+
+
+
+
+
+			public function actionCourse(){ // อบรม
+	if (Yii::app()->user->id == null) {   // ต้อง login ถึงจะเห็น
+        $msg = $label->label_alert_msg_plsLogin;
+        Yii::app()->user->setFlash('msg',$msg);
+        Yii::app()->user->setFlash('icon','warning');
+        $this->redirect(array('site/index'));
+        exit();
+    }
+
+
+
+
+
+
+
+
+	$this->render('course', array(
+        // 'model'=>$model,
+    ));
+}
+
+public function actionCourseCaptain(){ // อบรม คนเรือ
+	if (Yii::app()->user->id == null) {   // ต้อง login ถึงจะเห็น
+        $msg = $label->label_alert_msg_plsLogin;
+        Yii::app()->user->setFlash('msg',$msg);
+        Yii::app()->user->setFlash('icon','warning');
+        $this->redirect(array('site/index'));
+        exit();
+    }
+
+    if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+    	$langId = Yii::app()->session['lang'] = 1;
+    }else{
+    	$langId = Yii::app()->session['lang'];
+    }
+
+    //------------------- ค่า form search ------------------------//
+    $model_course = CourseOnline::model()->findAll(array(
+    	'condition' => 'active=:active AND lang_id=:lang_id',
+    	'params' => array(':active'=>'y', ':lang_id'=>$langId, ),
+    	'order' => 'course_title ASC'
+    ));
+
+    $model_department = Department::model()->findAll(array(
+    	'condition' => 'active=:active AND lang_id=:lang_id AND type_employee_id=:type_id',
+    	'params' => array(':active'=>'y', ':lang_id'=>$langId, ':type_id'=>1), //1=เรือ 2=office
+    	'order' => 'dep_title ASC'    	
+    ));
+
+    $year_start = LogStartcourse::model()->find(array(
+    	'condition' => 'active=:active',
+    	'params' => array(':active'=>'y'),
+    	'order' => 'id ASC'
+    ));
+    $year_start = date("Y", strtotime($year_start->start_date));
+
+    $year_end = LogStartcourse::model()->find(array(
+    	'condition' => 'active=:active',
+    	'params' => array(':active'=>'y'),
+    	'order' => 'id DESC'
+    ));
+    $year_end = date("Y", strtotime($year_end->start_date));
+
+    if($year_end <= $year_start){
+    	$year_end = $year_start+1;
+    }
+    //------------------- ค่า form search ------------------------//
+
+    if(isset($_GET["search"])){
+    	// var_dump("<pre>"); 
+    	// var_dump($_GET["search"]); 
+    	// exit();
+
+    	$criteria = new CDbCriteria;
+
+    	if($_GET["search"]["fullname"] != ""){
+    		$ex_fullname = explode(" ", $_GET["search"]["fullname"]);
+
+    		if(isset($ex_fullname[0])){    			
+    			$name = $ex_fullname[0];
+    			$criteria->compare('pro.firstname', $name, true);
+        		$criteria->compare('pro.lastname', $name, true, 'OR');
+        		// $criteria->compare('pro.firstname_en', $name, true, 'OR');
+        		// $criteria->compare('pro.lastname_en', $name, true, 'OR');
+    		}
+
+    		if(isset($ex_fullname[1])){
+    			$name = $ex_fullname[1];
+    			$criteria->compare('pro.lastname',$name,true, 'OR');
+    			// $criteria->compare('pro.lastname_en',$name,true, 'OR');
+    		}
+    	}
+
+    	$criteria->compare('t.active', 'y');
+    	$criteria->compare('course.active', 'y');
+    	$criteria->compare('pro.type_employee', 1); //1=เรือ 2=office
+
+    	$criteria->addCondition('user.id IS NOT NULL');
+    	$criteria->addCondition('t.course_id IS NOT NULL');
+
+    	if($_GET["search"]["course_id"] != ""){
+    		$criteria->compare('t.course_id', $_GET["search"]["course_id"]);
+    	}
+
+    	if($_GET["search"]["gen_id"] != ""){
+    		$criteria->compare('t.gen_id', $_GET["search"]["gen_id"]);
+    	}
+
+    	if($_GET["search"]["department"] != ""){
+    		$criteria->compare('user.department_id', $_GET["search"]["department"]);
+    	}
+
+    	if($_GET["search"]["position"] != ""){
+    		$criteria->compare('user.position_id', $_GET["search"]["position"]);
+    	}
+
+    	$arr_count_course = [];
+    	$arr_course_title = [];
+    	if($_GET["search"]["start_date"] != "" && $_GET["search"]["end_date"] != ""){
+    		if($_GET["search"]["start_date"] != ""){
+    			$criteria->compare('t.start_date', ">=".$_GET["search"]["start_date"]." 00:00:00");
+    		}
+    		if($_GET["search"]["end_date"] != ""){
+    			$criteria->compare('t.start_date', "<=".$_GET["search"]["end_date"]." 23:59:59");
+    		}
+
+    		$criteria->order = 't.id ASC';
+    		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+
+			// $criteria->group = 't.course_id';
+    		$criteria->order = 't.course_id ASC';
+    		$criteria->select ='t.course_id';
+    		$criteria->distinct = true;
+    		$model_graph = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+
+    		
+    		foreach ($model_graph as $key => $value) {
+    			$arr_count_course[$value->course_id] = $arr_count_course[$value->course_id]+1;
+    			$course_model = CourseOnline::model()->findByPk($value->course_id);
+    			$arr_course_title[$value->course_id] = $course_model->course_title;
+    		}
+
+
+    	}elseif($_GET["search"]["start_year"] != "" && $_GET["search"]["end_year"] != ""){
+    		if($_GET["search"]["start_year"] != ""){
+    			$criteria->compare('t.start_date', ">=".$_GET["search"]["start_year"]."-01-01 00:00:00");
+    		}
+    		if($_GET["search"]["end_year"] != ""){
+    			$criteria->compare('t.start_date', "<=".$_GET["search"]["end_year"]."-12-31 23:59:59");
+    		}
+
+    		$criteria->order = 't.id ASC';
+    		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+
+    		$criteria->order = 'yearrrr ASC';
+    		$criteria->select ='t.start_date, t.course_id, YEAR(t.start_date) AS yearrrr';
+    		$criteria->distinct = true;
+    		$model_graph = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+
+    		foreach ($model_graph as $key => $value) {
+    			$arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id] = $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]+1;
+    			$course_model = CourseOnline::model()->findByPk($value->course_id);
+    			$arr_course_title[$value->course_id] = $course_model->course_title;
+    		}
+
+    	}else{
+    		$criteria->order = 't.id ASC';
+    		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+
+			// $criteria->group = 't.course_id';
+    		$criteria->order = 't.course_id ASC';
+    		$criteria->select ='t.course_id';
+    		$criteria->distinct = true;
+    		$model_graph = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+
+    		
+    		foreach ($model_graph as $key => $value) {
+    			$arr_count_course[$value->course_id] = $arr_count_course[$value->course_id]+1;
+    			$course_model = CourseOnline::model()->findByPk($value->course_id);
+    			$arr_course_title[$value->course_id] = $course_model->course_title;
+    		}
+    	}
+    	
+
+		$this->render('course_captain', array(
+	        'model_course'=>$model_course,
+	        'model_department'=>$model_department,
+	        'year_start'=>$year_start,
+	        'year_end'=>$year_end,
+	        'model_search'=>$model_search,
+	        'arr_count_course'=>$arr_count_course,
+	        'arr_course_title'=>$arr_course_title,
+	    ));
+		exit();
+    } // if(isset($_GET["search"]))
+
+	$this->render('course_captain', array(
+        'model_course'=>$model_course,
+        'model_department'=>$model_department,
+        'year_start'=>$year_start,
+        'year_end'=>$year_end,
+    ));
+}
+
+public function actionCourseOffice(){ // อบรม office
+	if (Yii::app()->user->id == null) {   // ต้อง login ถึงจะเห็น
+        $msg = $label->label_alert_msg_plsLogin;
+        Yii::app()->user->setFlash('msg',$msg);
+        Yii::app()->user->setFlash('icon','warning');
+        $this->redirect(array('site/index'));
+        exit();
+    }
+
+
+
+
+
+
+
+
+
+
+
+	$this->render('course_office', array(
+        // 'model'=>$model,
+    ));
+}
+
+	public function actionGetGenid(){
+		if(isset($_POST["course_id"]) && $_POST["course_id"] != ""){
+			$model_gen = CourseGeneration::model()->findAll(array(
+				'condition' => 'active=:active AND course_id=:course_id',
+				'params' => array(':active'=>'y', ':course_id'=>$_POST["course_id"], ),
+				'order' => 'gen_title ASC'
+			));
+
+			if(!empty($model_gen)){
+				?>
+				<option value="" selected>เลือกรุ่นของหลักสูตร</option>
+				<?php
+				foreach ($model_gen as $key => $value) {
+					?>
+					<option value="<?= $value->gen_id ?>"><?= $value->gen_title ?></option>
+					<?php
+				}
+			}else{
+				?>
+				<option value="0" selected>ไม่มีรุ่น</option>
+				<?php
+			}
+		}else{
+			?>
+			<option value="" selected>เลือกรุ่นของหลักสูตร</option>
+			<?php
+		}
+	}
+
+	public function actionGetPosition(){
+		if(isset($_POST["department_id"]) && $_POST["department_id"] != ""){
+			if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+				$langId = Yii::app()->session['lang'] = 1;
+			}else{
+				$langId = Yii::app()->session['lang'];
+			}
+
+			$model_position = Position::model()->findAll(array(
+				'condition' => 'active=:active AND department_id=:department_id AND lang_id=:lang_id',
+				'params' => array(':active'=>'y', ':department_id'=>$_POST["department_id"], ':lang_id'=>$langId),
+				'order' => 'position_title ASC'
+			));
+
+			if(!empty($model_position)){
+				?>
+				<option value="" selected>เลือกตำแหน่ง</option>
+				<?php
+				foreach ($model_position as $key => $value) {
+					if(Yii::app()->session['lang'] != 1){
+						$value->id = $value->parent_id;
+					}
+					?>
+					<option value="<?= $value->id ?>"><?= $value->position_title ?></option>
+					<?php
+				}
+			}else{
+				?>
+				<option value="" selected>ไม่มีตำแหน่ง</option>
+				<?php
+			}
+		}else{
+			?>
+			<option value="" selected>เลือกตำแหน่ง</option>
+			<?php
+		}
+	}
+
+
+
+
+
+
+
+
+
+
+	
+
 	// Uncomment the following methods and override them if needed
 	/*
 	public function filters()
