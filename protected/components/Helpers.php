@@ -4350,33 +4350,57 @@ public function checkStepLesson($lesson){
 
         public function CheckPreTestAnsTextAreaCourse($course,$type){
 
-
             $course_id = $course;
-          $course_model = CourseOnline::model()->findByPk($course_id);
+            $course_model = CourseOnline::model()->findByPk($course_id);
             $gen_id = $course_model->getGenID($course_model->course_id);
-           
+
             $user_id = Yii::app()->user->id;
             $test_type = $type;
             $ques_type = "3"; // 3=textarea
 
             $model = Courselogques::model()->findAll(array( 
-                    'condition' => 'gen_id=:gen_id AND course_id=:course_id AND user_id=:user_id AND test_type=:test_type AND ques_type=:ques_type AND active=:active AND t.check=:confirm',
-                    'params' => array(':gen_id'=>$gen_id, ':course_id'=>$course_id, ':user_id'=>$user_id, ':test_type'=>$test_type, ':active'=>'y', ':ques_type'=>$ques_type, ':confirm'=>0),
-                ));
+                'condition' => 'gen_id=:gen_id AND course_id=:course_id AND user_id=:user_id AND test_type=:test_type AND ques_type=:ques_type AND active=:active AND t.check=:confirm',
+                'params' => array(':gen_id'=>$gen_id, ':course_id'=>$course_id, ':user_id'=>$user_id, ':test_type'=>$test_type, ':active'=>'y', ':ques_type'=>$ques_type, ':confirm'=>0),
+            ));
 
-            // var_dump("<pre>");
-            // var_dump($gen_id);
-            // var_dump($model); exit();
             if(!empty($model)){
-                   return false; 
-               
+                return false; 
             }else{
                 return true;
-            }
-
-            
+            }            
 
         }
+
+        public function StatusCourseGen($course_id, $gen_id){ // สถานะของหลักสูตร pass learning notLearn
+            $course_id = $course;
+            $course_model = CourseOnline::model()->findByPk($course_id);
+            // $gen_id = $course_model->getGenID($course_model->course_id);
+
+            $user_id = Yii::app()->user->id;
+
+            $passcourse = Passcours::model()->findAll(array( 
+                'condition' => 'gen_id=:gen_id AND passcours_cours=:course_id AND passcours_user=:user_id',
+                'params' => array(':gen_id'=>$gen_id, ':course_id'=>$course_id, ':user_id'=>$user_id),
+            ));
+
+            if(!empty($passcourse)){ // สามารถพิมเซอได้
+                $status = "pass";
+            }else{ // if(!empty($passcourse)
+                $Learn = Learn::model()->findAll(array(
+                    'condition' => 'gen_id=:gen_id AND course_id=:course_id AND user_id=:user_id AND lesson_active=:active',
+                    'params' => array(':gen_id'=>$gen_id, ':course_id'=>$course_id, ':user_id'=>$user_id, ':active'=>'y'),
+                ));
+
+                if(!empty($Learn)){
+                    $status = "learning";
+                }else{
+                    $status = "notLearn";
+                }
+            } // if(!empty($passcourse)
+
+            return $status;
+        }
+
 
         public function ColorCode(){
             
