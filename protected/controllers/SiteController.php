@@ -82,7 +82,86 @@ class SiteController extends Controller
 			}
 		}
     }
+    
+    public function actionSendMailCouseNotification()
+    {
+        $keys = $_GET['key'];
 
+        if($keys != '75yf0pu-6852-78re-2314-gde14un23aq1'){
+            $this->redirect(array('site/index'));
+        }
+        $criteria = new CDbCriteria;
+        $criteria->compare('active',1);
+        $course_notifications = CourseNotification::model()->findAll($criteria);
+        if ($course_notifications) {
+            $CourseNotification_idCouse = [];
+            $CourseNotification_day = [];
+            foreach ($course_notifications as $key => $value) {
+
+                $CourseNotification_idCouse[] = $value->course_id; 
+                $CourseNotification_day[] = $value->notification_time; 
+            }
+
+             $criteria = new CDbCriteria;
+            $criteria->compare('course_id',$CourseNotification_idCouse);
+            $criteria->compare('active','y');
+            $course_CourseOnline = CourseOnline::model()->findAll($criteria);
+            
+            $CourseOnline_course_id = [];
+            $CourseOnline_courseName = [];
+            foreach ($course_CourseOnline as $keyCou => $valueCou) {
+                   $course_end = $valueCou->course_date_end;
+                   $date1 = new DateTime(date("Y-m-d h:i:s", strtotime($course_end)));
+                   $date_now = new DateTime(date("Y-m-d h:i:s", strtotime("now")));
+                   $days_diff = $date1->diff($date_now)->days; 
+          
+                 if ((string)$days_diff === $CourseNotification_day[$keyCou]) {
+                     $CourseOnline_course_id[] = $valueCou->course_id;
+                     $CourseOnline_courseName[] = $valueCou->course_title;
+                 }              
+                
+            }
+
+            $Passcours_idCouse = [];
+            $Passcours_user = [];
+
+                $criteria = new CDbCriteria;
+                $criteria->compare('passcours_cours',$CourseOnline_course_id);
+                $Passcours = Passcours::model()->findAll($criteria);
+                foreach ($Passcours as $keyPass => $valuePass) {
+                        $Passcours_idCouse[] = $valuePass->passcours_cours;
+                        $Passcours_user[] = $valuePass->passcours_user;
+            }
+             
+            $criteria = new CDbCriteria;
+            $criteria->compare('course_id',$CourseOnline_course_id);
+            $criteria->addNotInCondition('user_id',$Passcours_user);
+            $criteria->compare('active','y');
+            $course_LogStartcourse = LogStartcourse::model()->findAll($criteria);
+          
+            if ($course_LogStartcourse) {
+               foreach ($course_LogStartcourse as $key => $value) {
+
+                $dayEnd = $CourseNotification_day[$key];
+                $nameCourse = $CourseOnline_courseName[$key];
+                $model = User::model()->findByPk($value->user_id);
+                $profile = Profile::model()->findByPk($value->user_id);
+                $to['email'] = $model->email;
+                $to['firstname'] = $model->profile->firstname;
+                $to['lastname'] = $model->profile->lastname;
+                           
+                $message = $this->renderPartial('_mail_CourseNotification',array('model' => $model, 'nameCourse' => $nameCourse, 'dayEnd' => $dayEnd),true);
+                    if($message){
+                         $send = Helpers::lib()->SendMail($to,'แจ้งเตือนหลักสูตรกำลังจะหมดอายุ',$message);
+                
+                    }
+                 }
+            }
+           
+          
+        }
+              
+    }
 
     public function actionShowCer() {	
         // http://thorconn.com/site/ShowCer?user=NDgyOA==&course=MzA1&gen=MA==
