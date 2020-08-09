@@ -24,6 +24,18 @@ EOD
     </span>
     </div> -->
     <div class="innerLR">
+            <?php $this->widget('AdvanceSearchForm', array(
+            'data'=>$model,
+            'route' => $this->route,
+            'attributes'=>array(
+            
+                array('name'=>'type_employee','type'=>'list','query'=>TypeEmployee::getTypeEmployeeListNew()),
+                array('name'=>'department_id','type'=>'list','query'=>Department::getDepartmentList()),
+                array('name'=>'position_id','type'=>'list','query'=>Position::getPositionList()),
+                array('name'=>'search_name','type'=>'text'),
+                array('name'=>'course_id','type'=>'list','query'=>ReportProblem::getCourseOnlineListNew()),
+            ),
+        ));?>
 <div class="widget" style="margin-top: -1px;">
         <div class="widget-head">
             <h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $titleName;?></h4>
@@ -74,11 +86,42 @@ EOD
             'value'=>'$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
         ),
         array(
+            'header' => 'ประเภทพนักงาน',
+            'name'=>'type_employee',
+            'type'=>'raw',
+            'filter' => false,
+            'value'=>function($data){
+                return $data->user->profile->typeEmployee->type_employee_name;
+            }
+        ),
+        array(
+            'header' => 'แผนก',
+            'name'=>'department_id',
+            'type'=>'raw',
+            'filter' => false,
+            'value'=>function($data){
+                return $data->user->department->dep_title;
+            }
+        ),
+        array(
+            'header' => 'ตำแหน่ง',
+            'name'=>'position_id',
+            'type'=>'raw',
+            'filter' => false,
+            'value'=>function($data){
+                return $data->user->position->position_title;
+            }
+        ),
+        array(
             'header' => 'รหัสบัตรประชาชน - พาสปอร์ต',
-            'name'=>'search_passport',
+            'name'=>'search_name',
             'type'=>'raw',
             'value'=>function($data){
-                return $data->user->profile->identification;
+                if ($data->user->profile->identification  != null) {
+                  return $data->user->profile->identification;
+                }else{
+                  return $data->user->profile->passport;
+                }
             }
         ),
         array(
@@ -108,7 +151,7 @@ EOD
             }
         ),*/
         array(
-            'header' => 'วันและเวลา',
+            'header' => 'วันและเวลาที่ดำเนินการส่งอีเมล์',
             'name'=>'create_date',
             'type'=>'raw',
             'filter' => false,
@@ -122,3 +165,35 @@ EOD
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $("#LogEmail_type_employee").change(function() {
+                    var id = $(this).val();
+                    $.ajax({
+                        type: 'POST',
+                        url: "<?= Yii::app()->createUrl('LogEmail/ListDepartment'); ?>",
+                        data: {
+                            id: id
+                        },
+                        success: function(data) {
+
+                            $('#LogEmail_department_id').empty();
+                            $('#LogEmail_department_id').append(data);
+                        }
+                    });
+                });
+    $("#LogEmail_department_id").change(function() {
+                    var id = $(this).val();
+                    $.ajax({
+                        type: 'POST',
+                        url: "<?= Yii::app()->createUrl('LogEmail/ListPosition'); ?>",
+                        data: {
+                            id: id
+                        },
+                        success: function(data) {
+
+                            $('#LogEmail_position_id').empty();
+                            $('#LogEmail_position_id').append(data);
+                        }
+                    });
+                });
+</script>

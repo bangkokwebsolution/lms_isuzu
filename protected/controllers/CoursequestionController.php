@@ -1015,8 +1015,8 @@ public function SendMailLearn($id){
        $subject = 'ผลการเรียน หลักสูตร  : ' . $modelCourseName->course_title;
 
        if($message){
-        // if(Helpers::lib()->SendMail($to, $subject, $message)){
-        if(Helpers::lib()->SendMailLearnPass($to, $subject, $message)){
+         if(Helpers::lib()->SendMail($to, $subject, $message)){
+        //if(Helpers::lib()->SendMailLearnPass($to, $subject, $message)){
             $model = new LogEmail;
             $model->user_id = $user_id;
             $model->course_id = $id;

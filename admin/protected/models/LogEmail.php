@@ -12,6 +12,10 @@
  */
 class LogEmail extends CActiveRecord
 {
+	public $position_id;
+	public $department_id;
+	public $type_employee;
+	public $search_name;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -32,7 +36,7 @@ class LogEmail extends CActiveRecord
 			array('create_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, course_id, message, user_id, create_date', 'safe', 'on'=>'search'),
+			array('id, course_id, message, user_id, create_date, position_id, department_id, type_employee, search_name', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,6 +50,7 @@ class LogEmail extends CActiveRecord
 		return array(
 			'course' => array(self::BELONGS_TO, 'CourseOnline', 'course_id'),
 			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+		
 		);
 	}
 
@@ -56,10 +61,14 @@ class LogEmail extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'course_id' => 'course_id',
+			'course_id' => 'หลักสูตร',
 			'message' => 'message',
 			'user_id' => 'User',
 			'create_date' => 'Create Date',
+			'position_id' => 'ตำแหน่ง',
+			'department_id' => 'แผนก',
+			'type_employee' => 'ประเภทพนักงาน',
+			'search_name' => 'ชื่อ-สกุล, เลขบัตรประชาชน-พาสปอร์ต',
 		);
 	}
 
@@ -81,11 +90,16 @@ class LogEmail extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
-		$criteria->compare('course_id',$this->course_id,true);
-		$criteria->compare('message',$this->message,true);
-		$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('create_date',$this->create_date,true);
+		$criteria->with = array('user');
+		$criteria->compare('t.id',$this->id);
+		$criteria->compare('t.course_id',$this->course_id,true);
+		$criteria->compare('t.message',$this->message,true);
+		$criteria->compare('t.user_id',$this->user_id);
+		$criteria->compare('position_id',$this->position_id,true);
+		$criteria->compare('department_id',$this->department_id,true);
+		$criteria->compare('type_employee',$this->type_employee,true);
+		$criteria->compare('t.create_date',$this->create_date,true);
+		$criteria->compare('CONCAT(profile.firstname , " " , profile.lastname , " ", " ", username," ",profile.firstname_en , " " , profile.lastname_en ," ", " ", user.identification, " ", profile.passport)',$this->search_name,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

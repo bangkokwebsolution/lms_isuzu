@@ -44,4 +44,41 @@ class LogEmailController extends Controller
             'model'=>$model,
         ));
     }
+
+    public function actionListDepartment()
+    {
+
+         $model=Department::model()->findAll('type_employee_id=:type_employee_id',
+            array(':type_employee_id'=>$_POST['id']));
+
+         $data=CHtml::listData($model,'id','dep_title',array('empty' => 'แผนก'));
+         $sub_list = 'เลือกแผนก';
+         $data = '<option value ="">'.$sub_list.'</option>';
+         foreach ($model as $key => $value) {
+            $data .= '<option value = "'.$value->id.'"'.'>'.$value->dep_title.'</option>';
+        }
+        echo ($data);
+
+    }
+
+    public function actionListPosition()
+    {
+
+         $model=Position::model()->findAll('department_id=:department_id',
+            array(':department_id'=>$_POST['id']));
+         
+         $data=CHtml::listData($model,'id','position_title',array('empty' => 'ตำแหน่ง'));
+          if ($data) {     
+         $sub_list = 'เลือกตำแหน่ง';
+         $data = '<option value ="">'.$sub_list.'</option>';
+         foreach ($model as $key => $value) {
+            $data .= '<option value = "'.$value->id.'"'.'>'.$value->position_title.'</option>';
+        }
+        echo ($data);
+        }else{
+        echo '<option value = "">ไม่พบข้อมูล</option>';
+            
+         }
+
+    }
 }

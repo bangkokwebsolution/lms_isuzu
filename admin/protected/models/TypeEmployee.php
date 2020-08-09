@@ -107,4 +107,10 @@ class TypeEmployee extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+		public function getTypeEmployeeListNew(){
+		$model = TypeEmployee::model()->findAll('active = "y"');
+		$list = CHtml::listData($model,'id','type_employee_name');
+		return $list;
+	}
 }
