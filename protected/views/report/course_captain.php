@@ -228,7 +228,7 @@
         </div>
 
 
-
+        <?php if(isset($_GET["search"])){ ?>
         <?php if($_GET["search"]["start_year"] == "" && $_GET["search"]["end_year"] == ""){ // ไม่ค้นหา ช่วงเวลา ?>
 
         <!-- เริ่ม กราฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟ -->
@@ -520,7 +520,7 @@
         <?php } // !empty($_GET["search"]["graph"]) ?>
 
     <?php } // }else{ // ไม่ค้นหา ช่วงเวลา ?>
-
+<?php } // if(isset($_GET["search"] ?>
 
 
    
