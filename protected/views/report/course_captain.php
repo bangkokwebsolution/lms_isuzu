@@ -511,6 +511,7 @@
              <div id="div_graph" style="display: none;">
                  <div id="chart_graph"></div> 
                  <div id="result_search_graph"></div> 
+                 <div id="result_search"><table><tr><td></td></tr></table></div>
              </div>
 
             <div class="pull-right ">
