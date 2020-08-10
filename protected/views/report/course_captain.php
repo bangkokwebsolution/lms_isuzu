@@ -17,7 +17,8 @@
     var num_chart = 0;
  </script>
  <?php 
-    $path_file = Yii::app()->basePath;
+    // $path_file = Yii::app()->basePath;
+    $path_file = "http:\\\\thorconn.com";
     // $path_file = Yii::app()->baseUrl;
 
     // var_dump(Yii::app()->basePath);
@@ -26,8 +27,8 @@
     // exit();
 
 
-    $path_file = explode("\\", $path_file);
-    $path_file = implode("\\\\", $path_file);
+    // $path_file = explode("\\", $path_file);
+    // $path_file = implode("\\\\", $path_file);
  ?>
 
 <div class="container">
@@ -277,7 +278,8 @@
                         var chart = new google.visualization.ColumnChart(document.getElementById("chart_bar"));
                         google.visualization.events.addListener(chart, 'ready', function () {
                             $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
-                                var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                                // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                                var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
                                 $("#result_search_graph").append("<img src='"+url_chart+"' >");
                             });
                             num_chart = num_chart+1;
@@ -325,7 +327,8 @@
                         // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
 
                         $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
-                            var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                            // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                                var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
                             $("#result_search_graph").append("<img src='"+url_chart+"' >");
                         });
                         num_chart = num_chart+1;
@@ -340,9 +343,7 @@
         ?>
         </div>
         <!-- จบ กราฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟ -->
-        <!-- style="display: none;" -->
-        <div id="div_graph">
-            <!-- <img src="https://i0.wp.com/www.hallyukstar.com/wp-content/uploads/2020/04/Apink_LOOK_TEASER-1.jpg"> -->
+        <div id="div_graph" style="display: none;">
                <div id="chart_graph"></div> 
                <div id="result_search_graph"></div> 
         </div>
@@ -450,7 +451,8 @@
                                         google.visualization.events.addListener(chart, 'ready', function () {
                                             // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
                                             $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
-                                                var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                                                // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                                var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
                                                 $("#result_search_graph").append("<img src='"+url_chart+"' >");
                                             });
                                             num_chart = num_chart+1;
@@ -490,7 +492,8 @@
                                         google.visualization.events.addListener(chart, 'ready', function () {
                                             // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
                                             $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
-                                                var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                                                // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                                var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
                                                 $("#result_search_graph").append("<img src='"+url_chart+"' >");
                                             });
                                             num_chart = num_chart+1;
