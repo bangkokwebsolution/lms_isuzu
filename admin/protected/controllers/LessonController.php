@@ -231,11 +231,11 @@ public function actionCreate()
 
                 if($lesson->type == "youtube"){
                     if(isset($_POST["link_youtube"])){
-                        // var_dump($_POST["link_youtube"]);
                         foreach ($_POST["link_youtube"] as $key => $youtube) {
                             $file = new File;
                             $file->lesson_id = $lesson->id;
                             $file->filename = $youtube;
+                            $file->encredit = $_POST["encredit_youtube"][$key];
                             $file->length = "2.00";
                             $file->save(false);
                         }
@@ -579,6 +579,7 @@ public function actionFormLesson($id,$type)
                                 $file = new File;
                                 $file->lesson_id = $lesson->id;
                                 $file->filename = $youtube;
+                                $file->encredit = $_POST["encredit_youtube"][$key];
                                 $file->length = "2.00";
                                 $file->save(false);
                             }
@@ -590,6 +591,7 @@ public function actionFormLesson($id,$type)
                                 $model_old = File::model()->findByPk($value->id);
                                 if(isset($_POST["link_youtube_old"][$value->id])){
                                     $model_old->filename = $_POST["link_youtube_old"][$value->id];
+                                    $model_old->encredit = $_POST["encredit_youtube_old"][$value->id];
                                     $model_old->save(false);
                                 }else{                                    
                                     $model_old->active = 'n';

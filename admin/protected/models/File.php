@@ -60,9 +60,9 @@ class File extends AActiveRecord
 //			array('file_name', 'length', 'max'=>255),
 			array('length', 'length', 'max'=>20),
 			array('active', 'length', 'max'=>1),
-			array('create_date, update_date, news_per_page', 'safe'),
+			array('create_date, update_date, news_per_page, encredit', 'safe'),
 
-			array('id, lesson_id, filename, file_name, length, file_position, create_date, create_by, update_date, update_by, active', 'safe', 'on'=>'search'),
+			array('id, lesson_id, filename, file_name, length, file_position, create_date, create_by, update_date, update_by, active, encredit', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -80,6 +80,7 @@ class File extends AActiveRecord
 			'lesson_id' => 'Lesson',
 			'filename' => 'ไฟล์บทเรียน (mp3,mp4,mkv)',
 			'file_name' => 'ชื่อวิดีโอ',
+			'encredit' => 'encredit',
 			'pp_file' => 'ไฟล์ PDF (.pdf)',
 			'length' => 'Length',
 			'create_date' => 'Create Date',
@@ -87,6 +88,7 @@ class File extends AActiveRecord
 			'update_date' => 'Update Date',
 			'update_by' => 'Update By',
 			'active' => 'Active',
+
 		);
 	}
 
@@ -112,6 +114,7 @@ class File extends AActiveRecord
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
+		$criteria->compare('encredit',$this->encredit,true);
 
 		$poviderArray = array('criteria'=>$criteria);
 

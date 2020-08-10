@@ -2323,8 +2323,11 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                       <div class="panel-body" style="background-color: #ddd; padding: 4px;">                        
                         <div class="split-me" id="split-me<?php echo $idx; ?>">
                           <div class="col-md-<?php echo empty($imageSlide) ? 12 : 6; ?>"
-                            style="padding: 0;">
+                            style="padding: 0; margin-bottom: 10px;">
                             <div class="youtube-iframe" id="youtube_<?= $file->id ?>"></div>
+                          </div>
+                          <div class="encredit">
+                            <h4>End credits: <?= $file->encredit; ?></h4>
                           </div>
                         </div>
                       </div>

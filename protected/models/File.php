@@ -20,8 +20,8 @@ class File extends CActiveRecord
 			array('filename', 'length', 'max'=>80),
 			array('length', 'length', 'max'=>20),
 			array('active', 'length', 'max'=>1),
-			array('create_date, update_date', 'safe'),
-			array('id, lesson_id, filename, file_name, file_position, length, create_date, create_by, update_date, update_by, active,views', 'safe', 'on'=>'search'),
+			array('create_date, update_date, encredit', 'safe'),
+			array('id, lesson_id, filename, file_name, file_position, length, create_date, create_by, update_date, update_by, active,views, encredit', 'safe', 'on'=>'search'),
 			);
 	}
 
@@ -46,6 +46,8 @@ class File extends CActiveRecord
 			'update_by' => 'Update By',
 			'active' => 'Active',
 			'views' => 'Views',
+			'encredit' => 'encredit',
+
 			);
 	}
 
@@ -62,6 +64,7 @@ class File extends CActiveRecord
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
+		$criteria->compare('encredit',$this->encredit,true);
 		$criteria->compare('views',$this->views);
 
 		return new CActiveDataProvider($this, array(

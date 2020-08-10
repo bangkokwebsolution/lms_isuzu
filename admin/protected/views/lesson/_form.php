@@ -737,6 +737,9 @@ body {
                             <div class="col-md-6">
                                 <input class="form-control" type="text" name="link_youtube[0]" onkeypress="check_key(this)" onblur="check_blur(this)">
                             </div>
+                            <div class="col-md-5">
+                                <input class="form-control" type="text" name="encredit_youtube[0]" placeholder="End credits">
+                            </div>
                             <div class="col-md-1">
                                 <button class="btn btn-danger" onclick="del_youtube(0)"> ลบ</button>
                             </div>
@@ -750,6 +753,9 @@ body {
                                 <div class="row">
                                     <div class="col-md-6">
                                         <input class="form-control" type="text" name="link_youtube_old[<?= $value->id ?>]" onkeypress="check_key(this)" onblur="check_blur(this)" value="<?= $value->filename ?>">
+                                    </div>
+                                    <div class="col-md-5">
+                                        <input class="form-control" type="text" placeholder="End credits" name="encredit_youtube_old[<?= $value->id ?>]" value="<?= $value->encredit ?>">
                                     </div>
                                     <div class="col-md-1">
                                         <button type="button" class="btn btn-danger" onclick="del_youtube(<?= $value->id ?>)"> ลบ</button>
@@ -775,6 +781,9 @@ body {
                             text_append += '<div class="row">';
                             text_append += '<div class="col-md-6">';
                             text_append += '<input class="form-control" type="text" name="link_youtube['+run_num+']">';
+                            text_append += '</div>';
+                            text_append += '<div class="col-md-5">';
+                            text_append += '<input class="form-control" type="text" name="encredit_youtube['+run_num+']" placeholder="End credits">';
                             text_append += '</div>';
                             text_append += '<div class="col-md-1">';
                             text_append += '<button class="btn btn-danger" onclick="del_youtube('+run_num+')"> ลบ</button>';
