@@ -12,10 +12,10 @@ class GalleryGroupController extends Controller
 	public function accessRules()
 	{
 		return array(
-           array('allow',  // allow all users to perform 'index' and 'view' actions
-           	'actions' => array('index', 'view','update','delete' ,'create'),
-           	'users' => array('*'),
-           ),
+           // array('allow',  // allow all users to perform 'index' and 'view' actions
+           // 	'actions' => array('index', 'view','update','delete' ,'create'),
+           // 	'users' => array('*'),
+           // ),
            array('allow',
                 // กำหนดสิทธิ์เข้าใช้งาน actionIndex
            	'actions' => AccessControl::check_action(),
@@ -194,11 +194,8 @@ class GalleryGroupController extends Controller
 		 $model = $this->loadModel($id);
 		 $gallery = new Gallery;
 		 $session = Yii::app()->session;
-		//$gallery = $this->loadGalleryModel($id);
-		// var_dump($model);exit();
-		//$imageShow = $model->image;
 		if(isset($_POST['GalleryGroup'])){
-               // var_dump($_POST['Gallery']);
+                //var_dump($_POST['GalleryGroup']);
                // var_dump($_POST['GalleryGroup']);
                // exit();
            		 $type_id = $_POST['GalleryGroup'][gallery_type_id];

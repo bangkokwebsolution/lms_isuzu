@@ -176,6 +176,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         $criteriaType = new CDbCriteria;
                         $criteriaType->compare('active', y);
                         $criteriaType->compare('gallery_type_id', $value->gallery_type_id);
+                        $criteriaType->order = 'id ASC';
                         $galleryType = Gallery::model()->findAll($criteriaType);
                         ?>
                         <div class="item <?php if ($key == 0) echo 'active'; ?>">
