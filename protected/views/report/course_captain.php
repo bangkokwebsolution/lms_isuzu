@@ -312,8 +312,8 @@
         ?>
         </div>
         <!-- จบ กราฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟ -->
-
-        <div id="div_graph" style="display: none;">
+        <!-- style="display: none;" -->
+        <div id="div_graph">
             <!-- <img src="https://i0.wp.com/www.hallyukstar.com/wp-content/uploads/2020/04/Apink_LOOK_TEASER-1.jpg"> -->
                <div id="chart_graph"></div> 
                <div id="result_search_graph"></div> 
@@ -488,6 +488,14 @@
 </div>
 <?php 
     $path_file = Yii::app()->basePath;
+    // $path_file = Yii::app()->baseUrl;
+
+    // var_dump(Yii::app()->basePath);
+    // var_dump(Yii::app()->baseUrl);
+
+    // exit();
+
+
     $path_file = explode("\\", $path_file);
     $path_file = implode("\\\\", $path_file);
  ?>
@@ -505,6 +513,7 @@
                 $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: src, key : index},function(json){
                     chart.push(json);
                     var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                    // var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
                     $("#result_search_graph").append("<img src='"+url_chart+"' >");
 
                     if(index == count_chart){
@@ -515,7 +524,7 @@
 
                         var check_window_focus = function(){
                            if (document.hasFocus()) {
-                                $("#result_search_graph").html("");
+                                // $("#result_search_graph").html("");
                                 
                                 var time_del = setInterval(function(){
                                     num = num+1;
@@ -523,7 +532,7 @@
                                     if(num >= 20){
                                         clearInterval(window_focus);
                                         clearInterval(time_del);
-                                        $.post('<?=$this->createUrl('report/DelPicChart')?>',{chart: chart},function(json){ });
+                                        // $.post('<?=$this->createUrl('report/DelPicChart')?>',{chart: chart},function(json){ });
                                     }
 
                                 }, 1000);
