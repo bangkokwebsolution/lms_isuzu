@@ -2300,7 +2300,32 @@ public function actionCourseOffice(){ // อบรม office
 		}
 	}
 
+	public function actionSavePicChart(){
 
+		if(isset($_POST['chart']) && $_POST['chart'] != ""){
+			$key = $_POST['key'];
+			$name_chart = date("YmdHis")."_".$key.".png";
+			file_put_contents(Yii::app()->basePath."/../uploads/pic_chart/".$name_chart, base64_decode($_POST['chart']));
+			echo $name_chart;
+			exit();
+		}
+
+	}
+
+	public function actionDelPicChart(){
+
+		if(isset($_POST['chart']) && !empty($_POST['chart'])){
+
+			foreach ($_POST['chart'] as $key => $value) {
+				$files = Yii::app()->basePath."/../uploads/pic_chart/".$value;
+				if(is_file($files)){
+					unlink($files);					
+				}
+			}			
+			exit();
+
+		}
+	}
 
 
 

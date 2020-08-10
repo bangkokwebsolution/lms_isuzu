@@ -212,8 +212,9 @@
         </div>
 
 
+
         <?php if($_GET["search"]["start_year"] == "" && $_GET["search"]["end_year"] == ""){ // ไม่ค้นหา ช่วงเวลา ?>
-        <div id="result_search"> <!-- export excel -->
+
         <!-- เริ่ม กราฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟ -->
         <div class="row">
         <?php 
@@ -226,6 +227,7 @@
                         <div id="chart_bar"></div>
                     </div>
                     <script type="text/javascript">
+
                         google.charts.load("current", {packages:['corechart']});
                         google.charts.setOnLoadCallback(drawChart);
                         function drawChart() {
@@ -254,13 +256,13 @@
                            2]);
 
                           var options = {
-                            // title: "Bar Graph",
-                            // width: 600,
-                            // height: 400,
                             bar: {groupWidth: "95%"},
                             legend: { position: "none" },
                         };
                         var chart = new google.visualization.ColumnChart(document.getElementById("chart_bar"));
+                        google.visualization.events.addListener(chart, 'ready', function () {
+                            $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
+                        });
                         chart.draw(view, options);
                     }
                 </script>
@@ -297,7 +299,9 @@
                       };
 
                       var chart = new google.visualization.PieChart(document.getElementById('chart_pie'));
-
+                      google.visualization.events.addListener(chart, 'ready', function () {
+                        $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
+                    });
                       chart.draw(data, options);
                   }
               </script>
@@ -309,6 +313,12 @@
         </div>
         <!-- จบ กราฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟ -->
 
+        <div id="div_graph" style="display: none;">
+            <!-- <img src="https://i0.wp.com/www.hallyukstar.com/wp-content/uploads/2020/04/Apink_LOOK_TEASER-1.jpg"> -->
+               <div id="chart_graph"></div> 
+               <div id="result_search_graph"></div> 
+        </div>
+        <div id="result_search"> <!-- export excel -->            
         <div class="report-table">
             <div class="table-responsive w-100 t-regis-language">
                 <table class="table" id="table_list">
@@ -365,7 +375,7 @@
     <?php }else{ // ไม่ค้นหา ช่วงเวลา ?>
         <!-- ค้นหาแบบ ช่วงเวลา -->
         <?php if(isset($_GET["search"]["graph"]) && !empty($_GET["search"]["graph"])){ ?>
-            <div id="result_search"> <!-- export excel -->
+
                 <div class="row">
                     <?php 
                     foreach ($arr_count_course as $key_y => $value_y) {                       
@@ -409,12 +419,16 @@
                                             legend: { position: "none" },
                                         };
                                         var chart = new google.visualization.ColumnChart(document.getElementById("chart_bar"));
+                                        google.visualization.events.addListener(chart, 'ready', function () {
+                                            $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
+                                        });
                                         chart.draw(view, options);
                                     }
                                 </script>
                             </div>
                         </div>
                        <?php } // in_array("bar",
+
                         if(isset($_GET["search"]["graph"]) && in_array("pie", $_GET["search"]["graph"])){ ?>
                             <div class="col-sm-6">
                                 <div class="year-report">
@@ -440,7 +454,9 @@
                                         var options = { };
 
                                         var chart = new google.visualization.PieChart(document.getElementById('chart_pie'));
-
+                                        google.visualization.events.addListener(chart, 'ready', function () {
+                                            $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
+                                        });
                                         chart.draw(data, options);
                                     }
                                 </script>
@@ -450,34 +466,137 @@
                     } //foreach ($arr_count_course
                      ?>
                 </div>
-            </div>  <!-- export excel -->
+
+             <div id="div_graph" style="display: none;">
+                 <div id="chart_graph"></div> 
+                 <div id="result_search_graph"></div> 
+             </div>
+
             <div class="pull-right ">
                 <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
-                <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button>
+                <button class="btn btn-excel-year"><i class="fas fa-file-excel"></i> Export Excel</button>
             </div>
         <?php } // !empty($_GET["search"]["graph"]) ?>
 
     <?php } // }else{ // ไม่ค้นหา ช่วงเวลา ?>
 
 
-    </div>
+
    
 
 </section>
 </div>
-
+<?php 
+    $path_file = Yii::app()->basePath;
+    $path_file = explode("\\", $path_file);
+    $path_file = implode("\\\\", $path_file);
+ ?>
 <script type="text/javascript">
     $(document).ready( function () {
-        // $('#table_list').DataTable();
-
 
       
     $('.btn-excel').click(function(e) {
-                                                                            //result_search
-        window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('.report-table').html()+'<br>' ));
-        e.preventDefault();
-      });
-    } );
+        var chart = Array();
+        var count_chart = $("div#chart_graph > img").length-1;
+
+        if($("div#chart_graph > img").length > 0){
+            $("div#chart_graph > img").each(function(index) {
+                var src = $(this).attr("val");
+                $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: src, key : index},function(json){
+                    chart.push(json);
+                    var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                    $("#result_search_graph").append("<img src='"+url_chart+"' >");
+
+                    if(index == count_chart){
+                        window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html() ));
+                        e.preventDefault();
+
+                        var num = 0;
+
+                        var check_window_focus = function(){
+                           if (document.hasFocus()) {
+                                $("#result_search_graph").html("");
+                                
+                                var time_del = setInterval(function(){
+                                    num = num+1;
+                                    console.log(num);
+                                    if(num >= 20){
+                                        clearInterval(window_focus);
+                                        clearInterval(time_del);
+                                        $.post('<?=$this->createUrl('report/DelPicChart')?>',{chart: chart},function(json){ });
+                                    }
+
+                                }, 1000);
+
+                            }else{
+
+                            }
+                        };
+
+                        var window_focus = setInterval(check_window_focus, 1000);
+
+                    }
+
+                });
+            });
+        }else{ // ไม่มี กราฟ
+           window.open('data:application/vnd.ms-excel,' + encodeURIComponent( $('#result_search').html() ));
+           e.preventDefault();
+        }
+    });
+
+    $('.btn-excel-year').click(function(e) {
+        var chart = Array();
+        var count_chart = $("div#chart_graph > img").length-1;
+
+        if($("div#chart_graph > img").length > 0){
+            $("div#chart_graph > img").each(function(index) {
+                var src = $(this).attr("val");
+                $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: src, key : index},function(json){
+                    chart.push(json);
+                    var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                    $("#result_search_graph").append("<img src='"+url_chart+"' >");
+
+                    if(index == count_chart){
+                        window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#result_search_graph').html()));
+                        e.preventDefault();                   
+
+                        var check_window_focus = function(){
+                           if (document.hasFocus()) {
+                                $("#result_search_graph").html("");
+                                $.post('<?=$this->createUrl('report/DelPicChart')?>',{chart: chart},function(json){ });
+                                clearInterval(window_focus);
+                            }else{
+
+                            }
+                        };
+
+                        var window_focus = setInterval(check_window_focus, 1000);
+
+                    }
+
+                });
+            });
+        }
+    });
+    
+
+
+
+
+
+    });
+
+    // function check_window_focus(){
+    //     if (document.hasFocus()) {
+
+    //         clearInterval(window_focus);
+    //     }else{
+
+    //     }
+    // }
+
+
 
     $('.datetimepicker').datetimepicker({
         format: 'Y-m-d',
@@ -496,7 +615,7 @@
     $("#search_end_date").change(function () {
         var first = new Date($("#search_start_date").val());
         var current = new Date($(this).val());
-        console.log(first.getTime() +">"+ current.getTime());
+        // console.log(first.getTime() +">"+ current.getTime());
         if (first.getTime() > current.getTime()) {
             alert("ไม่สามารถเลือกช่วงเวลาสิ้นสุดมากกว่าช่วงเวลาเริ่มต้นได้");
             $(this).val("");
@@ -613,19 +732,14 @@
     }
 
 
-  //   $(".btn-excel").click(function(e) {
-  //     let file = new Blob([$('#report-detail').html()], {type:"application/vnd.ms-excel"});
-  //     let url = URL.createObjectURL(file);
-  //     let a = $("<a />", {
-  //         href: url,
-  //         download: "filename.xls"}).appendTo("body").get(0).click();
-  //     e.preventDefault();
-  // });
 
-    // $('.btn-excel').click(function(e) {
-    //     window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#ttttttttttttttt').html()+'<br>' ));
-    //     e.preventDefault();
-    //   });
+
+
+
+
+
+
+
 
 
 </script>
