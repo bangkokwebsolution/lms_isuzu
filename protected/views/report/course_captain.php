@@ -17,7 +17,7 @@
     var num_chart = 0;
  </script>
  <?php 
-    // $path_file = Yii::app()->basePath;
+    $path_file_2 = Yii::app()->basePath;
     $path_file = "http:\\\\thorconn.com";
     // $path_file = Yii::app()->baseUrl;
 
@@ -27,8 +27,8 @@
     // exit();
 
 
-    // $path_file = explode("\\", $path_file);
-    // $path_file = implode("\\\\", $path_file);
+    $path_file_2 = explode("\\", $path_file_2);
+    $path_file_2 = implode("\\\\", $path_file_2);
  ?>
 
 <div class="container">
@@ -279,8 +279,10 @@
                         google.visualization.events.addListener(chart, 'ready', function () {
                             $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
                                 // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
-                                var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
+                                var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;                                
                                 $("#result_search_graph").append("<img src='"+url_chart+"' >");
+                                var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
+                                $("#chart_graph").append("<img src='"+url_chart_2+"' >");
                             });
                             num_chart = num_chart+1;
 
@@ -328,8 +330,10 @@
 
                         $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
                             // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
-                                var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
+                            var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
                             $("#result_search_graph").append("<img src='"+url_chart+"' >");
+                            var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
+                            $("#chart_graph").append("<img src='"+url_chart_2+"' >");
                         });
                         num_chart = num_chart+1;
                     });
@@ -350,7 +354,7 @@
         <div id="result_search"> <!-- export excel -->            
         <div class="report-table">
             <div class="table-responsive w-100 t-regis-language">
-                <table class="table" id="table_list" width="100%">
+                <table class="table" id="table_list">
                     <thead>
                         <tr>
                             <th>ลำดับ</th>
@@ -454,8 +458,10 @@
                                             // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
                                             $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
                                                 // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
-                                var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
+                                                var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
                                                 $("#result_search_graph").append("<img src='"+url_chart+"' >");
+                                                var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
+                                                $("#chart_graph").append("<img src='"+url_chart_2+"' >");
                                             });
                                             num_chart = num_chart+1;
                                         });
@@ -495,8 +501,10 @@
                                             // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
                                             $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
                                                 // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
-                                var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
+                                                var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
                                                 $("#result_search_graph").append("<img src='"+url_chart+"' >");
+                                                var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
+                                                $("#chart_graph").append("<img src='"+url_chart_2+"' >");
                                             });
                                             num_chart = num_chart+1;
                                         });
@@ -539,130 +547,16 @@
 
 <script type="text/javascript">
     $(document).ready( function () {
-        // var result = $('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html();
-        // var href = $('.btn-pdf').attr("href");
-        // $('.btn-pdf').attr("href", href+"?result="+encodeURIComponent(result));
-
 
         $('.btn-pdf').click(function(e) {
-            $("#text_element1").attr("value", encodeURIComponent($('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html()) );
-            // console.log($("#text_element1").attr("value"));
-            // console.log($("#text_element1").val());
-
-
+            $("#text_element1").attr("value", encodeURIComponent($('#chart_graph').html()+'<br>'+$('#result_search').html()) );
             $("#export_pdf").submit();
-            // var form = document.createElement("form");
-            // var element1 = document.createElement("textarea"); 
-            // element1.value = $('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html();
-            // form.method = "POST";
-            // form.action = "<?=$this->createUrl('report/ExportPDF')?>";
-            // form.target = "blank_";
-            // form.submit();
-
-
-
-
-
-
-
-    //         var result = $('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html();
-    //         window.open("<?=$this->createUrl('report/ExportPDF')?>?result="+result);
-    });
+        });
       
-    $('.btn-excel').click(function(e) {
-        window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html() ));
-        e.preventDefault();
-
-
-        // var chart = Array();
-        // var count_chart = $("div#chart_graph > img").length-1;
-
-        // if($("div#chart_graph > img").length > 0){
-        //     $("div#chart_graph > img").each(function(index) {
-        //         var src = $(this).attr("val");
-        //         $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: src, key : index},function(json){
-        //             chart.push(json);
-        //             var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
-        //             // var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
-        //             $("#result_search_graph").append("<img src='"+url_chart+"' >");
-
-        //             if(index == count_chart){
-        //                 window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html() ));
-        //                 e.preventDefault();
-
-        //                 // var num = 0;
-
-        //                 // var check_window_focus = function(){
-        //                 //    if (document.hasFocus()) {
-        //                 //         // $("#result_search_graph").html("");
-                                
-        //                 //         var time_del = setInterval(function(){
-        //                 //             num = num+1;
-        //                 //             console.log(num);
-        //                 //             if(num >= 20){
-        //                 //                 clearInterval(window_focus);
-        //                 //                 clearInterval(time_del);
-        //                 //                 // $.post('<?=$this->createUrl('report/DelPicChart')?>',{chart: chart},function(json){ });
-        //                 //             }
-
-        //                 //         }, 1000);
-
-        //                 //     }else{
-
-        //                 //     }
-        //                 // };
-
-        //                 // var window_focus = setInterval(check_window_focus, 1000);
-
-        //             }
-
-        //         });
-        //     });
-        // }else{ // ไม่มี กราฟ
-        //    window.open('data:application/vnd.ms-excel,' + encodeURIComponent( $('#result_search').html() ));
-        //    e.preventDefault();
-        // }
-    });
-
-    // $('.btn-excel-year').click(function(e) {
-    //     var chart = Array();
-    //     var count_chart = $("div#chart_graph > img").length-1;
-
-    //     if($("div#chart_graph > img").length > 0){
-    //         $("div#chart_graph > img").each(function(index) {
-    //             var src = $(this).attr("val");
-    //             $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: src, key : index},function(json){
-    //                 chart.push(json);
-    //                 var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
-    //                 $("#result_search_graph").append("<img src='"+url_chart+"' >");
-
-    //                 if(index == count_chart){
-    //                     window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#result_search_graph').html()));
-    //                     e.preventDefault();                   
-
-    //                     var check_window_focus = function(){
-    //                        if (document.hasFocus()) {
-    //                             $("#result_search_graph").html("");
-    //                             $.post('<?=$this->createUrl('report/DelPicChart')?>',{chart: chart},function(json){ });
-    //                             clearInterval(window_focus);
-    //                         }else{
-
-    //                         }
-    //                     };
-
-    //                     var window_focus = setInterval(check_window_focus, 1000);
-
-    //                 }
-
-    //             });
-    //         });
-    //     }
-    // });
-    
-
-
-
-
+        $('.btn-excel').click(function(e) {
+            window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html() ));
+            e.preventDefault();
+        });
 
     });
 
