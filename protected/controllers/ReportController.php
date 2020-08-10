@@ -2301,7 +2301,6 @@ public function actionCourseOffice(){ // อบรม office
 	}
 
 	public function actionSavePicChart(){
-
 		if(isset($_POST['chart']) && $_POST['chart'] != ""){
 			$key = $_POST['key'];
 			$name_chart = date("YmdHis")."_".$key.".png";
@@ -2313,18 +2312,31 @@ public function actionCourseOffice(){ // อบรม office
 	}
 
 	public function actionDelPicChart(){
+		// if(isset($_POST['chart']) && !empty($_POST['chart'])){
 
-		if(isset($_POST['chart']) && !empty($_POST['chart'])){
+		// 	foreach ($_POST['chart'] as $key => $value) {
+		// 		$files = Yii::app()->basePath."/../uploads/pic_chart/".$value;
+		// 		if(is_file($files)){
+		// 			unlink($files);					
+		// 		}
+		// 	}			
+		// 	exit();
 
-			foreach ($_POST['chart'] as $key => $value) {
-				$files = Yii::app()->basePath."/../uploads/pic_chart/".$value;
-				if(is_file($files)){
-					unlink($files);					
-				}
-			}			
-			exit();
+		// }
+	}
 
-		}
+	public function actionExportPDF(){
+
+		require_once __DIR__ . '/../../admin/protected/vendors/mpdf7/autoload.php';
+		$mPDF = new \Mpdf\Mpdf(['format' => 'A4-P']);
+		$result = '<style type="text/css"> body { font-family:"thaisansneue"; font-size:20px; } td{ text-align:center; }</style>';
+		$result .= urldecode($_POST["text_element1"]);
+		$page = mb_convert_encoding($result, 'UTF-8', 'UTF-8');
+		$mPDF->WriteHTML($page);
+		$mPDF->Output();
+		// $mPDF->Output('exportPDF.pdf', 'D');
+
+
 	}
 
 

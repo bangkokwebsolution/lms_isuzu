@@ -350,7 +350,7 @@
         <div id="result_search"> <!-- export excel -->            
         <div class="report-table">
             <div class="table-responsive w-100 t-regis-language">
-                <table class="table" id="table_list">
+                <table class="table" id="table_list" width="100%">
                     <thead>
                         <tr>
                             <th>ลำดับ</th>
@@ -398,7 +398,9 @@
 </div> <!-- export excel -->
 
         <div class="pull-right ">
+            <!-- <a class="btn btn-pdf" href="<?=$this->createUrl('report/ExportPDF')?>" target="blank_"><i class="fas fa-file-pdf"></i> Export PDF</a> -->
             <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
+            
             <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button>
         </div>
     <?php }else{ // ไม่ค้นหา ช่วงเวลา ?>
@@ -529,10 +531,43 @@
 </section>
 </div>
 
+<div style="display: none;">
+    <form id="export_pdf" action="<?=$this->createUrl('report/ExportPDF')?>" target="blank_" method="POST">
+        <input type="text" name="text_element1" id="text_element1" value="">
+    </form>
+</div>
 
 <script type="text/javascript">
     $(document).ready( function () {
+        // var result = $('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html();
+        // var href = $('.btn-pdf').attr("href");
+        // $('.btn-pdf').attr("href", href+"?result="+encodeURIComponent(result));
 
+
+        $('.btn-pdf').click(function(e) {
+            $("#text_element1").attr("value", encodeURIComponent($('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html()) );
+            // console.log($("#text_element1").attr("value"));
+            // console.log($("#text_element1").val());
+
+
+            $("#export_pdf").submit();
+            // var form = document.createElement("form");
+            // var element1 = document.createElement("textarea"); 
+            // element1.value = $('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html();
+            // form.method = "POST";
+            // form.action = "<?=$this->createUrl('report/ExportPDF')?>";
+            // form.target = "blank_";
+            // form.submit();
+
+
+
+
+
+
+
+    //         var result = $('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html();
+    //         window.open("<?=$this->createUrl('report/ExportPDF')?>?result="+result);
+    });
       
     $('.btn-excel').click(function(e) {
         window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html() ));
@@ -630,17 +665,6 @@
 
 
     });
-
-    // function check_window_focus(){
-    //     if (document.hasFocus()) {
-
-    //         clearInterval(window_focus);
-    //     }else{
-
-    //     }
-    // }
-
-
 
     $('.datetimepicker').datetimepicker({
         format: 'Y-m-d',
