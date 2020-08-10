@@ -1462,7 +1462,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                     <!-- <div class="pt-now"> You are here</div> -->
                 <?php } ?>
                 <a href="<?= $pathCourseTest ?>" <?= $alertCourseTest ?> >
-                    <span class="list__course"><?= $label->label_testFinalTimes; ?> 1</span>
+                    <span class="list__course"><?= $label->label_testFinalTimes; ?> <?= $key+2; ?></span>
                     <span class="btn btn-warning detailmore pull-right"><?= $clickFinal ?>
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></a>
                 </li>
