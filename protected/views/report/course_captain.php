@@ -13,7 +13,22 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" type="text/css"> -->
+ <script type="text/javascript">
+    var num_chart = 0;
+ </script>
+ <?php 
+    $path_file = Yii::app()->basePath;
+    // $path_file = Yii::app()->baseUrl;
 
+    // var_dump(Yii::app()->basePath);
+    // var_dump(Yii::app()->baseUrl);
+
+    // exit();
+
+
+    $path_file = explode("\\", $path_file);
+    $path_file = implode("\\\\", $path_file);
+ ?>
 
 <div class="container">
     <nav aria-label="breadcrumb">
@@ -261,7 +276,14 @@
                         };
                         var chart = new google.visualization.ColumnChart(document.getElementById("chart_bar"));
                         google.visualization.events.addListener(chart, 'ready', function () {
-                            $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
+                            $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
+                                var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                                $("#result_search_graph").append("<img src='"+url_chart+"' >");
+                            });
+                            num_chart = num_chart+1;
+
+
+                            // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
                         });
                         chart.draw(view, options);
                     }
@@ -300,7 +322,13 @@
 
                       var chart = new google.visualization.PieChart(document.getElementById('chart_pie'));
                       google.visualization.events.addListener(chart, 'ready', function () {
-                        $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
+                        // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
+
+                        $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
+                            var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                            $("#result_search_graph").append("<img src='"+url_chart+"' >");
+                        });
+                        num_chart = num_chart+1;
                     });
                       chart.draw(data, options);
                   }
@@ -420,7 +448,12 @@
                                         };
                                         var chart = new google.visualization.ColumnChart(document.getElementById("chart_bar"));
                                         google.visualization.events.addListener(chart, 'ready', function () {
-                                            $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
+                                            // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
+                                            $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
+                                                var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                                                $("#result_search_graph").append("<img src='"+url_chart+"' >");
+                                            });
+                                            num_chart = num_chart+1;
                                         });
                                         chart.draw(view, options);
                                     }
@@ -455,7 +488,12 @@
 
                                         var chart = new google.visualization.PieChart(document.getElementById('chart_pie'));
                                         google.visualization.events.addListener(chart, 'ready', function () {
-                                            $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
+                                            // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
+                                            $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
+                                                var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                                                $("#result_search_graph").append("<img src='"+url_chart+"' >");
+                                            });
+                                            num_chart = num_chart+1;
                                         });
                                         chart.draw(data, options);
                                     }
@@ -474,7 +512,7 @@
 
             <div class="pull-right ">
                 <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
-                <button class="btn btn-excel-year"><i class="fas fa-file-excel"></i> Export Excel</button>
+                <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button>
             </div>
         <?php } // !empty($_GET["search"]["graph"]) ?>
 
@@ -486,108 +524,101 @@
 
 </section>
 </div>
-<?php 
-    $path_file = Yii::app()->basePath;
-    // $path_file = Yii::app()->baseUrl;
-
-    // var_dump(Yii::app()->basePath);
-    // var_dump(Yii::app()->baseUrl);
-
-    // exit();
 
 
-    $path_file = explode("\\", $path_file);
-    $path_file = implode("\\\\", $path_file);
- ?>
 <script type="text/javascript">
     $(document).ready( function () {
 
       
     $('.btn-excel').click(function(e) {
-        var chart = Array();
-        var count_chart = $("div#chart_graph > img").length-1;
+        window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html() ));
+        e.preventDefault();
 
-        if($("div#chart_graph > img").length > 0){
-            $("div#chart_graph > img").each(function(index) {
-                var src = $(this).attr("val");
-                $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: src, key : index},function(json){
-                    chart.push(json);
-                    var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
-                    // var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
-                    $("#result_search_graph").append("<img src='"+url_chart+"' >");
 
-                    if(index == count_chart){
-                        window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html() ));
-                        e.preventDefault();
+        // var chart = Array();
+        // var count_chart = $("div#chart_graph > img").length-1;
 
-                        var num = 0;
+        // if($("div#chart_graph > img").length > 0){
+        //     $("div#chart_graph > img").each(function(index) {
+        //         var src = $(this).attr("val");
+        //         $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: src, key : index},function(json){
+        //             chart.push(json);
+        //             var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+        //             // var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
+        //             $("#result_search_graph").append("<img src='"+url_chart+"' >");
 
-                        var check_window_focus = function(){
-                           if (document.hasFocus()) {
-                                // $("#result_search_graph").html("");
+        //             if(index == count_chart){
+        //                 window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html() ));
+        //                 e.preventDefault();
+
+        //                 // var num = 0;
+
+        //                 // var check_window_focus = function(){
+        //                 //    if (document.hasFocus()) {
+        //                 //         // $("#result_search_graph").html("");
                                 
-                                var time_del = setInterval(function(){
-                                    num = num+1;
-                                    console.log(num);
-                                    if(num >= 20){
-                                        clearInterval(window_focus);
-                                        clearInterval(time_del);
-                                        // $.post('<?=$this->createUrl('report/DelPicChart')?>',{chart: chart},function(json){ });
-                                    }
+        //                 //         var time_del = setInterval(function(){
+        //                 //             num = num+1;
+        //                 //             console.log(num);
+        //                 //             if(num >= 20){
+        //                 //                 clearInterval(window_focus);
+        //                 //                 clearInterval(time_del);
+        //                 //                 // $.post('<?=$this->createUrl('report/DelPicChart')?>',{chart: chart},function(json){ });
+        //                 //             }
 
-                                }, 1000);
+        //                 //         }, 1000);
 
-                            }else{
+        //                 //     }else{
 
-                            }
-                        };
+        //                 //     }
+        //                 // };
 
-                        var window_focus = setInterval(check_window_focus, 1000);
+        //                 // var window_focus = setInterval(check_window_focus, 1000);
 
-                    }
+        //             }
 
-                });
-            });
-        }else{ // ไม่มี กราฟ
-           window.open('data:application/vnd.ms-excel,' + encodeURIComponent( $('#result_search').html() ));
-           e.preventDefault();
-        }
+        //         });
+        //     });
+        // }else{ // ไม่มี กราฟ
+        //    window.open('data:application/vnd.ms-excel,' + encodeURIComponent( $('#result_search').html() ));
+        //    e.preventDefault();
+        // }
     });
 
-    $('.btn-excel-year').click(function(e) {
-        var chart = Array();
-        var count_chart = $("div#chart_graph > img").length-1;
+    // $('.btn-excel-year').click(function(e) {
+    //     var chart = Array();
+    //     var count_chart = $("div#chart_graph > img").length-1;
 
-        if($("div#chart_graph > img").length > 0){
-            $("div#chart_graph > img").each(function(index) {
-                var src = $(this).attr("val");
-                $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: src, key : index},function(json){
-                    chart.push(json);
-                    var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
-                    $("#result_search_graph").append("<img src='"+url_chart+"' >");
+    //     if($("div#chart_graph > img").length > 0){
+    //         $("div#chart_graph > img").each(function(index) {
+    //             var src = $(this).attr("val");
+    //             $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: src, key : index},function(json){
+    //                 chart.push(json);
+    //                 var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+    //                 $("#result_search_graph").append("<img src='"+url_chart+"' >");
 
-                    if(index == count_chart){
-                        window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#result_search_graph').html()));
-                        e.preventDefault();                   
+    //                 if(index == count_chart){
+    //                     window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#result_search_graph').html()));
+    //                     e.preventDefault();                   
 
-                        var check_window_focus = function(){
-                           if (document.hasFocus()) {
-                                $("#result_search_graph").html("");
-                                $.post('<?=$this->createUrl('report/DelPicChart')?>',{chart: chart},function(json){ });
-                                clearInterval(window_focus);
-                            }else{
+    //                     var check_window_focus = function(){
+    //                        if (document.hasFocus()) {
+    //                             $("#result_search_graph").html("");
+    //                             $.post('<?=$this->createUrl('report/DelPicChart')?>',{chart: chart},function(json){ });
+    //                             clearInterval(window_focus);
+    //                         }else{
 
-                            }
-                        };
+    //                         }
+    //                     };
 
-                        var window_focus = setInterval(check_window_focus, 1000);
+    //                     var window_focus = setInterval(check_window_focus, 1000);
 
-                    }
+    //                 }
 
-                });
-            });
-        }
-    });
+    //             });
+    //         });
+    //     }
+    // });
     
 
 
