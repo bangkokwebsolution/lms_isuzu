@@ -788,10 +788,13 @@ class CoursequestionController extends Controller
                                             $modelPasscours->passcours_date = new CDbExpression('NOW()');
                                             $modelPasscours->save();
                                         }
+                                        $this->SendMailLearn($course->course_id);  // final ผ่าน ส่ง อีเมล์
+                                    }elseif($modelCoursescore->type != "pre" && ($countCoursescore+1) == $course->cate_amount){
+                                        $this->SendMailLearn($course->course_id); // final สอบครบจำนวน แต่ยังไม่ผ่าน                     
                                     }
                                     $this->actiondeleteTemp($id);
                                     Helpers::lib()->checkDateStartandEnd(Yii::app()->user->id,$course->course_id);
-                                    $this->SendMailLearn($course->course_id);
+                                    // $this->SendMailLearn($course->course_id);
                                     $this->renderPartial('exams_finish', array(
                                         'model' => $model,
                                         'testType' => $type,
