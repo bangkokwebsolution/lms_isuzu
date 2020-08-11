@@ -910,7 +910,9 @@
         }
     }
 
-    $("#search_position option:selected").val() = "<?= $position; ?>";
+    if("<?= $position; ?>" != ""){
+        $("#search_position option:selected").val() = "<?= $position; ?>";
+    }
     function change_level(){        
         var position_id = $("#search_position option:selected").val();
 
