@@ -139,7 +139,7 @@ class User extends CActiveRecord
 		);
 
 		$relations['branch'] = array(
-			self::BELONGS_TO, 'Company', array('branch_id'=>'branch_id')
+			self::BELONGS_TO, 'Branch', 'branch_id'
 		);
 
 		$relations['position'] = array(
@@ -298,7 +298,7 @@ class User extends CActiveRecord
 
     	return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
     		'alias'=>'user',
-    		'select' => 'user.id, user.username, user.pic_user, user.department_id,user.station_id,user.company_id, user.division_id,user.position_id,user.auditor_id,user.bookkeeper_id, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.online_status, user.online_user, user.pic_cardid,lastactivity,user.avatar,user.employee_id,user.repass_status',
+    		'select' => 'user.id, user.username, user.pic_user, user.department_id,user.station_id,user.company_id, user.division_id,user.position_id, user.branch_id,user.auditor_id,user.bookkeeper_id, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.online_status, user.online_user, user.pic_cardid,lastactivity,user.avatar,user.employee_id,user.repass_status',
     	));
     }
 
@@ -360,6 +360,7 @@ class User extends CActiveRecord
         $criteria->compare('password',$this->password);
         $criteria->compare('pic_user',$this->pic_user);
         $criteria->compare('department_id',$this->department_id);
+        $criteria->compare('branch_id',$this->branch_id);
         $criteria->compare('email',$this->email,true);
         $criteria->compare('activkey',$this->activkey);
         $criteria->compare('create_at',$this->create_at);

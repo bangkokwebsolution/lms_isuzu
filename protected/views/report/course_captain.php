@@ -190,9 +190,9 @@
                                         </option>
                                         <?php 
                                         foreach ($model_department as $key => $value) {
-                                            if(Yii::app()->session['lang'] != 1){
-                                                $value->id = $value->parent_id;
-                                            }
+                                            // if(Yii::app()->session['lang'] != 1){
+                                            //     $value->id = $value->parent_id;
+                                            // }
                         ?> <option <?php if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] == $value->id){ echo "selected"; } ?> value="<?= $value->id?>"><?= $value->dep_title ?></option> <?php
                                         }
                                          ?>
