@@ -145,8 +145,8 @@
 		<h2 class="linebottom"><?php echo $title; ?>
 			<small class="pull-right">
 				<ol class="breadcrumb">
-					<li><a href="<?php echo $this->createUrl('/site/index'); ?>">หน้าหลัก</a></li>
-					<li class="active"><a href="">เปลี่ยนรหัสผ่าน</a></li>
+					<li><a href="<?php echo $this->createUrl('/site/index'); ?>"></i><?= Yii::app()->session['lang'] == 1?'Home':'หน้าหลัก'; ?></a></li>
+					<li class="active"><a href=""><?= Yii::app()->session['lang'] == 1?'Change password':'เปลี่ยนรหัสผ่าน'; ?></a></li>
 				</ol>
 			</small>
 		</h2>
@@ -165,11 +165,11 @@
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3">
                     <div class="form-group">
-                        <label for="">รหัสผ่านใหม่</label><br>
+                        <label for=""><?= Yii::app()->session['lang'] == 1?'New password':'รหัสผ่านใหม่'; ?></label><br>
                         <?php echo $form->passwordField($model, 'password', array('class' => 'form-control input-lg' , 'required' => true)); ?>
                         <?php echo $form->error($model, 'password'); ?>
                         <br>
-                         <label for="">ยืนยันรหัสผ่านใหม่</label><br>
+                         <label for=""><?= Yii::app()->session['lang'] == 1?'Confirm new password':'ยืนยันรหัสผ่านใหม่'; ?></label><br>
                         <?php echo $form->passwordField($model, 'verifyPassword', array('class' => 'form-control input-lg' , 'required' => true)); ?>
                         <?php echo $form->error($model, 'verifyPassword'); ?>
 
@@ -179,7 +179,7 @@
             </div>         
             <div class="text-center">
                 <!--<button type="submit" class="btn btn-warning btn-lg">ส่งข้อความ</button>-->
-                <?php echo CHtml::submitButton('ยืนยันสร้างรหัสผ่านใหม่', array('class' => 'btn btn-warning btn-lg')); ?>
+                <?php echo CHtml::submitButton(Yii::app()->session['lang'] == 1?'Confirm create new password':'ยืนยันสร้างรหัสผ่านใหม่', array('class' => 'btn btn-warning btn-lg')); ?>
             </div>
         </div>
         <?php $this->endWidget();
