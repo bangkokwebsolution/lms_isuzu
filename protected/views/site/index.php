@@ -182,16 +182,26 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         <div class="item <?php if ($key == 0) echo 'active'; ?>">
                         <?php 
                         if($value->imgslide_link == "" && $value->gallery_type_id != null) {
-                            foreach ($galleryType as $data) {    
+                            foreach ($galleryType as $key_t => $data) {    
                              ?>
                             <a href="<?php echo Yii::app()->baseUrl; ?>/uploads/gallery/<?= $data->image; ?>" class="liquid-lp-read-more zoom fresco" data-fresco-group="ld-pf-1[<?= $value->id ?>]" >
+                                <?php  if($key_t == 0){
+                                        ?>
+                                        <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
+                                        <?php
+                                }  ?>
+                                </a>
                             <?php } ?>
                         <?php }else if($value->imgslide_link != "" && $value->gallery_type_id == null){ ?>
                             <a href="<?=$value->imgslide_link;  ?>" target="_blank">
-                            <?php } ?>
+                                <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
+                            </a>
+                        <?php }else{ ?>
+                                        <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
+                         <?php } ?>
 
-                            <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
-                        </a>
+                            <!-- <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt=""> -->
+                        <!-- </a> -->
                     </div>
 
                 <?php } ?>
