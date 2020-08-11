@@ -485,7 +485,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 <div class="well">
                     <a href="<?php echo $link; ?>" <?= $new_tab ?>>
                         <div class="row">
-                            <div class="col-md-5 col-sm-5 col-xs-5">
+                            <div class="col-md-6 col-sm-5 col-xs-5">
 
                                 <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/news/' . $value->cms_id . '/thumb/' . $value->cms_picture)) { ?>
 
@@ -501,7 +501,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
 
                             </div>
-                            <div class="col-md-7 col-sm-7  col-xs-6">
+                            <div class="col-md-6 col-sm-7  col-xs-6">
                                 <h4 class="text22"><?php echo $value->cms_title ?></h4>
                                 <p class="p2"><?php echo $value->cms_short_title ?></p>
                                 <div class="news-date">
