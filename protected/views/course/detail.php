@@ -416,24 +416,24 @@ if($model){
         <div role="tabpanel">
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
-                <li role="presentation">
+                <li role="presentation" class="active">
                     <a href="#course-info" aria-controls="course-info" role="tab" data-toggle="tab"><?php echo $label->label_detail; ?></a>
                 </li>
-                <li role="presentation" class="active">
+                <li role="presentation">
                     <a href="#course-unit" aria-controls="course-unit" role="tab" id="change_tab2" data-toggle="tab"><?php echo $label->label_Content; ?></a>
                 </li>
             </ul>
 
             <!-- Tab panes -->
             <div class="tab-content" id="tab-content">
-                <div role="tabpanel" class="tab-pane" id="course-info">
+                <div role="tabpanel" class="tab-pane active" id="course-info">
                     <li class="list-group-item">
 
                         <?php echo htmlspecialchars_decode($course->course_detail); ?>
 
                     </li>
                 </div>
-                <div role="tabpanel" class="tab-pane active " id="course-unit">
+                <div role="tabpanel" class="tab-pane" id="course-unit">
                     <ol class="course-ol">
                         <div class="panel panel-default">
                             <?php 
