@@ -2406,7 +2406,15 @@ public function actionCourseOffice(){ // อบรม office
 
 			if(!empty($model_gen)){
 				?>
-				<option value="" selected>เลือกรุ่นของหลักสูตร</option>
+				<option value="" selected>
+					<?php 
+					if(Yii::app()->session['lang'] != 1){
+						echo "เลือกรุ่นของหลักสูตร";
+					}else{
+						echo "Select Gen";
+					}
+					?>
+				</option>
 				<?php
 				foreach ($model_gen as $key => $value) {
 					?>
@@ -2415,12 +2423,28 @@ public function actionCourseOffice(){ // อบรม office
 				}
 			}else{
 				?>
-				<option value="0" selected>ไม่มีรุ่น</option>
+				<option value="0" selected>
+					<?php 
+					if(Yii::app()->session['lang'] != 1){
+						echo "ไม่มีรุ่น";
+					}else{
+						echo "No Gen";
+					}
+					?>
+				</option>
 				<?php
 			}
 		}else{
 			?>
-			<option value="" selected>เลือกรุ่นของหลักสูตร</option>
+			<option value="" selected>
+				<?php 
+				if(Yii::app()->session['lang'] != 1){
+					echo "เลือกรุ่นของหลักสูตร";
+				}else{
+					echo "Select Gen";
+				}
+				?>
+			</option>
 			<?php
 		}
 	}
@@ -2441,7 +2465,15 @@ public function actionCourseOffice(){ // อบรม office
 
 			if(!empty($model_position)){
 				?>
-				<option value="" selected>เลือกตำแหน่ง</option>
+				<option value="" selected>
+					<?php 
+					if(Yii::app()->session['lang'] != 1){
+						echo "เลือกตำแหน่ง";
+					}else{
+						echo "Select Position";
+					}
+					?>
+				</option>
 				<?php
 				foreach ($model_position as $key => $value) {
 					// if(Yii::app()->session['lang'] != 1){
@@ -2453,18 +2485,34 @@ public function actionCourseOffice(){ // อบรม office
 				}
 			}else{
 				?>
-				<option value="" selected>ไม่มีตำแหน่ง</option>
+				<option value="" selected>
+					<?php 
+					if(Yii::app()->session['lang'] != 1){
+						echo "ไม่มีตำแหน่ง";
+					}else{
+						echo "No Position";
+					}
+					?>
+				</option>
 				<?php
 			}
 		}else{
 			?>
-			<option value="" selected>เลือกตำแหน่ง</option>
+			<option value="" selected>
+				<?php 
+				if(Yii::app()->session['lang'] != 1){
+					echo "เลือกตำแหน่ง";
+				}else{
+					echo "Select Position";
+				}
+				?>
+			</option>
 			<?php
 		}
 	}
 
 	public function actionGetLevel(){
-		
+
 		if(isset($_POST["position_id"]) && $_POST["position_id"] != ""){
 			if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
 				$langId = Yii::app()->session['lang'] = 1;
@@ -2480,7 +2528,15 @@ public function actionCourseOffice(){ // อบรม office
 
 			if(!empty($model_branch)){
 				?>
-				<option value="" selected>เลือกเลเวล</option>
+				<option value="" selected>
+					<?php 
+					if(Yii::app()->session['lang'] != 1){
+						echo "เลือกเลเวล";
+					}else{
+						echo "Select Level";
+					}
+					?>
+				</option>
 				<?php
 				foreach ($model_branch as $key => $value) {
 					// if(Yii::app()->session['lang'] != 1){
@@ -2492,12 +2548,28 @@ public function actionCourseOffice(){ // อบรม office
 				}
 			}else{
 				?>
-				<option value="" selected>ไม่มีเลเวล</option>
+				<option value="" selected>
+					<?php 
+					if(Yii::app()->session['lang'] != 1){
+						echo "ไม่มีเลเวล";
+					}else{
+						echo "No Level";
+					}
+					?>
+				</option>
 				<?php
 			}
 		}else{
 			?>
-			<option value="" selected>เลือกเลเวล</option>
+			<option value="" selected>
+				<?php 
+				if(Yii::app()->session['lang'] != 1){
+					echo "เลือกเลเวล";
+				}else{
+					echo "Select Level";
+				}
+				?>
+			</option>
 			<?php
 		}
 	}

@@ -250,12 +250,12 @@
                                     <select class="form-control" name="search[level]" id="search_level">
                                         <option value="" selected>
                                             <?php 
-                                        if(Yii::app()->session['lang'] != 1){
-                                            echo "เลือกเลเวล";
-                                        }else{
-                                            echo "Select Level";
-                                        }
-                                        ?>
+                                            if(Yii::app()->session['lang'] != 1){
+                                                echo "เลือกเลเวล";
+                                            }else{
+                                                echo "Select Level";
+                                            }
+                                            ?>
                                         </option>
                                         <?php 
                                         $level = "";
@@ -873,8 +873,12 @@
         });
     }
 
+    var status_gen = 1
     function select_gen(){
-        $("#search_gen_id").val("<?= $gen_id ?>");
+        if(status_gen == 1){
+            $("#search_gen_id").val("<?= $gen_id ?>");
+            status_gen = 2;
+        }
     }
 
 
@@ -889,7 +893,8 @@
             success: function(data) {
                 if(data != ""){
                     $("#search_position").html(data);
-                    if("<?= $position ?>" != ""){
+                    $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกเลเวล"; }else{ echo "Select Level"; } ?></option>");
+                    if("<?= $position ?>" != "" && department_id != "" && department_id == "<?= $position ?>"){
                         select_position();
                     }
                 }
@@ -897,13 +902,18 @@
         });
     }
 
+    var status_position = 1
      function select_position(){
-        $("#search_position").val("<?= $position ?>");
+        if(status_position == 1){
+            status_position = 2;
+            $("#search_position").val("<?= $position ?>");
+        }
     }
 
-    function change_level(){
-        var position_id = "<?= $position ?>";
-        
+    $("#search_position option:selected").val() = "<?= $position; ?>";
+    function change_level(){        
+        var position_id = $("#search_position option:selected").val();
+
         $.ajax({
             type: 'POST',
             url: '<?php echo Yii::app()->createAbsoluteUrl("/report/getLevel"); ?>',
@@ -921,8 +931,12 @@
         });
     }
 
+    var status_level = 1
      function select_level(){
-        $("#search_level").val("<?= $level ?>");
+        if(status_level == 1){
+            $("#search_level").val("<?= $level ?>");
+            status_level = 2;
+        }
     }
 
     function chk_form_search(){
