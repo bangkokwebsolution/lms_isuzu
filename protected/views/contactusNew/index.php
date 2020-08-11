@@ -49,7 +49,7 @@ if(!empty($msg)){
 <section class="content" id="contact-us">
     <div class="container">
         <div class="panel panel-default" style="padding: inherit ;background: whitesmoke;padding-top: 20px;">
-        <h1 class="text-center" style="color:#010C65;font-size: 36px;" ><?= Yii::app()->session['lang'] == 1?'Thoresen & Co.,(Bangkok) Ltd. (TCB)':'บริษัท โทรีเซน (กรุงเทพ) จำกัด'; ?></h1>
+        <h1 class="text-center" style="color:#010C65;font-size: 36px;" ><?= Yii::app()->session['lang'] == 1?'Thoresen & Co.,(Bangkok) Ltd.':'บริษัท โทรีเซน (กรุงเทพ) จำกัด'; ?></h1>
             <div class="card-text" style="padding: 20px 20px 30px 20px;text-align: center;">
                 <h4 style="font-size: 18px;"><?= Yii::app()->session['lang'] == 1?'Address : 26/32-34 Orakarn Building 10th Floor, Soi Chidlom, Lumpinee, Pathumwan Bangkok 10330, Thailand':' ที่ตั้งสำนักงาน : 26/32-34 อาคารอรกานต์ ชั้น 10 ซอยชิดลม ถนนเพลินจิต แขวงลุมพินี เขตปทุมวัน กรุงเทพฯ 10330 ประเทศไทย'; ?>
                 
@@ -94,7 +94,18 @@ foreach ($ContactusNew_data as $key => $value) {
                         <img class="card-img-top" src="<?= $img ?>" alt="">
                     </div>
                     <div class="card-body">
-                      <h4 class="card-title" >
+                         <div class="card-text">
+                     <h4 class="card-title" >
+                        <?php
+                        if (Yii::app()->session['lang'] == 1) {
+                        echo $value['con_position_en'];
+                        }else{
+                        echo $value['con_position'];
+                        }
+                        ?>   
+                    </h4>
+                        </div>
+                         <div class="card-text">
                             <?php if (Yii::app()->session['lang'] == 1 || Yii::app()->session['lang'] == Null) {
                                 echo $value['con_firstname_en'];?>&nbsp;&nbsp;
                             <?php
@@ -105,16 +116,7 @@ foreach ($ContactusNew_data as $key => $value) {
                             <?php
                                  echo $value['con_lastname'];
                             } ?>
-                        </h4>
-                        <div class="card-text">
-                        <span><?= Yii::app()->session['lang'] == 1?'Position :':'ตำแหน่ง :'; ?></span>
-                        <?php
-                        if (Yii::app()->session['lang'] == 1) {
-                        echo $value['con_position_en'];
-                        }else{
-                        echo $value['con_position'];
-                        }
-                        ?>   
+                   
                         </div>
                         <div class="card-text">
                         <span><?= Yii::app()->session['lang'] == 1?'Telephone :':'เบอร์โทรติดต่อ :'; ?></span>
