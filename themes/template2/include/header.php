@@ -355,9 +355,9 @@
             </li>
         <?php }
 
-        if(Yii::app()->user->id){ 
+        //if(Yii::app()->user->id){ 
             ?>
-            <li class="">
+           <!--  <li class="">
                 <a href="<?= $this->createUrl("report/index") ?>">
                     <?php 
                     if(Yii::app()->session['lang'] == 1){
@@ -368,9 +368,9 @@
                     ?>
 
                 </a>
-            </li>
+            </li> -->
             <?php
-            }
+          //  }
                 ?>
 
                 <li class="dropdown">

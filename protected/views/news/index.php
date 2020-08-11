@@ -60,7 +60,7 @@ function DateThai($strDate)
                                         <div class="news-img" style="background-image: url('<?php echo Yii::app()->theme->baseUrl; ?>/images/newspaper.png');">
                                         <?php } ?>
                                         <!-- <span class="news-date"><?php echo DateThai($all->update_date) ?></span> -->
-                                        <span class="news-date"><?php echo Helpers::lib()->DateLang($all->update_date, Yii::app()->session['lang']); ?></span>
+                                       <!--  <span class="news-date"><?php echo Helpers::lib()->DateLang($all->update_date, Yii::app()->session['lang']); ?></span> -->
                                         </div>
                                         <div class="p">
                                             <?php echo $all->cms_title ?>

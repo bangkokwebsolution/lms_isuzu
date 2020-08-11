@@ -80,7 +80,7 @@ class News extends AActiveRecord
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('parent_id',0);
-		$criteria->order = 'sortOrder ASC';
+		//$criteria->order = 'sortOrder ASC';
 
 		$poviderArray = array('criteria'=>$criteria);
 
@@ -139,7 +139,7 @@ class News extends AActiveRecord
     	{
 		    $checkScopes =  array(
 		    	'alias' => 'news',
-		    	'order' => ' news.cms_id DESC ',
+		    	'order' => ' news.update_date ASC ',
 		    	'condition' => ' news.active = "y" ',
 		    );
     	}
@@ -147,7 +147,7 @@ class News extends AActiveRecord
     	{
 		    $checkScopes =  array(
 		    	'alias' => 'news',
-		    	'order' => ' news.cms_id DESC ',
+		    	'order' => ' news.update_date ASC ',
 		    );
     	}
 
@@ -182,7 +182,7 @@ class News extends AActiveRecord
 					$scopes = array(
 						'newscheck'=>array(
 							'alias' => 'news',
-							'order' => ' news.cms_id DESC ',
+							'order' => ' news.update_date ASC ',
 							'condition' => ' news.active = "y" ',
 						),
 					);
@@ -190,7 +190,7 @@ class News extends AActiveRecord
 					$scopes = array(
 						'newscheck'=>array(
 							'alias' => 'news',
-							'order' => ' news.cms_id DESC ',
+							'order' => ' news.update_date ASC ',
 							'condition' => ' news.active = "y" ',
 							// 'condition' => ' news.create_by = "'.Yii::app()->user->id.'" AND news.active = "y" ',
 						),
