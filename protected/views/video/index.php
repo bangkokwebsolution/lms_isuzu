@@ -26,8 +26,8 @@
                             <video class="video-js" poster="<?php echo Yii::app()->baseUrl . "/uploads/$vdo->vdo_thumbnail"; ?>" controls preload="auto" style="width: 100%; height: 176px;">
                                 <!-- video show-->
                                 <?php
-                                if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/' . $vdo->vdo_path)) {
-                                    $file_name = Yii::app()->baseUrl . '/uploads/' . $vdo->vdo_path;
+                                if (file_exists(YiiBase::getPathOfAlias('webroot') . '/admin/uploads/' . $vdo->vdo_path)) {
+                                    $file_name = Yii::app()->baseUrl . '/admin/uploads/' . $vdo->vdo_path;
                                 } else {
                                     $file_name = Yii::app()->theme->baseUrl . '/vdo/mov_bbb.mp4';
                                 }
