@@ -839,9 +839,11 @@ if ($profile->save()) {
         $firstname = $profile->firstname;
         $lastname = $profile->lastname;
         $username = $users->username;
+        $firstname_en = $profile->firstname_en;
+        $lastname_en = $profile->lastname_en;
             //$message = $this->renderPartial('Form_mail',array('emailshow'=>$users->email,'passwordshow'=>$genpass,'nameshow'=>$profile->firstname,'activation_url'=>$activation_url),true);
-        $message = $this->renderPartial('Form_mail',array('email'=>$users->email,'genpass'=>$genpass,'username'=>$username,'firstname'=>$firstname,'lastname'=>$lastname),true);
-        $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
+        $message = $this->renderPartial('Form_mail',array('email'=>$users->email,'genpass'=>$genpass,'username'=>$username,'firstname'=>$firstname,'lastname'=>$lastname,'firstname_en'=>$firstname_en,'lastname_en'=>$lastname_en),true);
+        $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ\ Registered successfully',$message);
         Yii::app()->user->setFlash('profile',$profile->identification);
         Yii::app()->user->setFlash('msg', $users->email);
         Yii::app()->user->setFlash('icon', "success");
@@ -858,12 +860,14 @@ if ($profile->save()) {
      );
        $firstname = $profile->firstname;
        $lastname = $profile->lastname;
-       $message = $this->renderPartial('Form_mail_General',array('firstname'=>$firstname,'lastname'=>$lastname),true);
-       $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
+       $firstname_en = $profile->firstname_en;
+       $lastname_en = $profile->lastname_en;
+       $message = $this->renderPartial('Form_mail_Ship',array('firstname'=>$firstname,'lastname'=>$lastname,'firstname_en'=>$firstname_en,'lastname_en'=>$lastname_en),true);
+       $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ\ Registered successfully',$message);
        Yii::app()->user->setFlash('msg',"ท่านสมัครสมาชิกเรียบร้อยแล้ว รอการอนุมัติจากผู้ดูแลระบบผ่านทางอีเมล");
        Yii::app()->user->setFlash('icon', "success");
        $this->redirect(array('site/index'));
-   }if ($profile->type_user == 5) {
+   }else if ($profile->type_user == 5) {
 
             //$activation_url = $this->createAbsoluteUrl('/user/activation/activation', array("activkey" => $users->activkey, "email" => $users->email));
 
@@ -874,8 +878,10 @@ if ($profile->save()) {
      );
        $firstname = $profile->firstname;
        $lastname = $profile->lastname;
-       $message = $this->renderPartial('Form_mail_General',array('firstname'=>$firstname,'lastname'=>$lastname),true);
-       $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
+       $firstname_en = $profile->firstname_en;
+       $lastname_en = $profile->lastname_en;
+       $message = $this->renderPartial('Form_mail_General',array('firstname'=>$firstname,'lastname'=>$lastname,'firstname_en'=>$firstname_en,'lastname_en'=>$lastname_en),true);
+       $mail = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ\ Registered successfully',$message);
        Yii::app()->user->setFlash('msg',"ท่านสมัครสมาชิกเรียบร้อยแล้ว รอการอนุมัติจากผู้ดูแลระบบผ่านทางอีเมล");
        Yii::app()->user->setFlash('icon', "success");
        $this->redirect(array('site/index'));

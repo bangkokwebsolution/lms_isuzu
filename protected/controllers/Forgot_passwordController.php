@@ -48,8 +48,8 @@ class Forgot_passwordController extends Controller
             $to['email'] = $email;
             $to['firstname'] = $finduserbymail->profile->firstname;
             $to['lastname'] = $finduserbymail->profile->lastname;
-            $subject = 'ลืมรหัสผ่าน';
-            $message = 'ระบบลืมรหัสผ่าน <br> สวัสดีคุณ '.$finduserbymail->profile->firstname.' '.$finduserbymail->profile->lastname.'<br><a href="'.$href.'">คลิกลิงค์เพื่อตั้งรหัสผ่านใหม่</a>';
+            $subject = 'ลืมรหัสผ่าน\ Reset Password';
+            $message = 'ระบบรีเซ็ตรหัสผ่าน <br> สวัสดีคุณ '.$finduserbymail->profile->firstname.' '.$finduserbymail->profile->lastname.'<br><a href="'.$href.'">คลิกลิงค์เพื่อตั้งรหัสผ่านใหม่</a><br><br>Reset Password <br> Dear '.$finduserbymail->profile->firstname_en.' '.$finduserbymail->profile->lastname_en.'<br><a href="'.$href.'">Click link to reset your password</a>';
 
              $send = Helpers::lib()->SendMail($to, $subject, $message);
            // $send = Helpers::lib()->SendMailToUser($to, $subject, $message);
