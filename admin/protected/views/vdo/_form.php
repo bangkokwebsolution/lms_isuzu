@@ -154,13 +154,13 @@ function typeVdo(val){
                       $criteria->compare('active','y');
                       $criteria->compare('lang_id',$model->lang_id);
                       $Vdos = Vdo::model()->findAll($criteria);
-                       foreach ($Vdos as $vdo) {
+                       foreach ($Vdos as $vdo) { 
                             ?>
                             <video class="video-js" poster="<?php echo Yii::app()->baseUrl . "/uploads/$vdo->vdo_thumbnail"; ?>" controls preload="auto" style="width: 40%; height: 300px;">
                                 <!-- video show-->
                                 <?php
-                                if (file_exists(YiiBase::getPathOfAlias('webroot') . '/../uploads/' . $vdo->vdo_path)) {
-                                    $file_name = Yii::app()->baseUrl . '/../uploads/' . $vdo->vdo_path;
+                                if (file_exists(YiiBase::getPathOfAlias('webroot') . '/../admin/uploads/' . $vdo->vdo_path)) {
+                                    $file_name = Yii::app()->baseUrl . '/../admin/uploads/' . $vdo->vdo_path;
                              
                                 } 
                                 $show = "<source src=" . $file_name . " type='video/mp4'>";
