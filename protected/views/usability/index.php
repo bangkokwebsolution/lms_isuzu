@@ -54,7 +54,7 @@
 <section class="content" id="manual">
     <div class="container">
         <div class="row">
-           <form id="searchForm" class="col-sm-4 col-md-3" action="<?php echo $this->createUrl('usability/search') ?>" style="margin-bottom: 15px; margin-top: 0;">
+           <form id="searchForm" class=" col-sm-4 col-md-3" action="<?php echo $this->createUrl('usability/search') ?>" style="margin-bottom: 15px; margin-top: 0;">
             <div class="input-group">
                 <input type="text" class="form-control" name="text" placeholder="<?= $labelSite->label_placeholder_search ?>">
                 <span class="input-group-btn">
@@ -86,7 +86,7 @@
     </div>
     <div class="row">
      <?php foreach ($usability_data as $usa) { ?>
-        <div class="col-sm-4 col-md-3">
+        <div class="col-xs-12 col-sm-4 col-md-3">
             <div class="well">
                 <a data-toggle="modal" href='#modal-manual-detail-<?= $usa->usa_id ?>'>
                     <div class="manual-icon">
