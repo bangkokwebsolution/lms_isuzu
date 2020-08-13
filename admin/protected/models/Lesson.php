@@ -63,7 +63,7 @@ class Lesson extends AActiveRecord
             array('course_id, title, cate_amount,cate_percent, view_all', 'required' ),
             array('course_id', 'numerical', 'integerOnly'=>true),
             array('title', 'length', 'max'=>255),
-            array('description', 'length', 'max'=>255),
+            // array('description', 'length', 'max'=>255),
             array('content, create_date, create_by, news_per_page, CountManage, time_test,type,lang_id,parent_id,sequence_id,status', 'safe'),
             array('image', 'file', 'types'=>'jpg, gif, png', 'allowEmpty'=>true),
             array('id, active , course_id, CountManage, title, description, content, time_test,lang_id,parent_id,sequence_id, status', 'safe', 'on'=>'search'),

@@ -336,7 +336,7 @@ body {
                     <div class="row">
                         <!-- <div class="col-md-12"> -->
                         <?php echo $form->labelEx($lesson,'description'); ?>
-                        <?php echo $form->textArea($lesson,'description',array('size'=>60,'maxlength'=>255,'class'=>'span8')); ?>
+                        <?php echo $form->textArea($lesson,'description',array('size'=>60,'class'=>'span8')); ?>
                         <?php echo $this->NotEmpty();?>
                         <?php echo $form->error($lesson,'description'); ?>
                         <!-- </div> -->
