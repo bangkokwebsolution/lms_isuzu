@@ -332,6 +332,7 @@ class CourseOnline extends AActiveRecord
 		$criteria->compare('course_point',$this->course_point,true);
 		$criteria->compare('course_status',$this->course_status,true);
 		$criteria->compare('course_tax',$this->course_tax,true);
+		$criteria->compare('categorys.active','y');
 
 		////////////////// group id 7 และเป็นคนสร้าง ถึงจะเห็น
 		$check_user = User::model()->findByPk(Yii::app()->user->id);

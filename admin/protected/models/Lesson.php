@@ -275,7 +275,8 @@ public static function getChilds($sequence_id)
 public function search()
 {
     $criteria=new CDbCriteria;
-    $criteria->with = 'courseonlines';
+    // $criteria->with = 'courseonlines';
+    $criteria->with=array('courseonlines','courseonlines.cates');
 
         //$criteria->compare('id',$this->id,true);
     $criteria->compare('lesson.course_id',$this->course_id,true);
@@ -286,6 +287,7 @@ public function search()
         // $criteria->compare('parent_id',0);
     $criteria->compare('lesson.lang_id',1);
     $criteria->compare('courseonline.active','y');
+    $criteria->compare('categorys.active','y');
 
     ////////////////// group id 7 และเป็นคนสร้าง ถึงจะเห็น
     $check_user = User::model()->findByPk(Yii::app()->user->id);
