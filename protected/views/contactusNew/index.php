@@ -51,7 +51,7 @@ if(!empty($msg)){
         <div class="panel panel-default" style="padding: inherit ;background: whitesmoke;padding-top: 20px;">
         <h1 class="text-center" style="color:#010C65;font-size: 36px;" ><?= Yii::app()->session['lang'] == 1?'Thoresen & Co.,(Bangkok) Ltd.':'บริษัท โทรีเซน (กรุงเทพ) จำกัด'; ?></h1>
             <div class="card-text" style="padding: 20px 20px 30px 20px;text-align: left;">
-                <h4 style="font-size: 18px;"><?= Yii::app()->session['lang'] == 1?'Address : 26/32-34 Orakarn Building 10th Floor, Soi Chidlom, Lumpinee, Pathumwan Bangkok 10330, Thailand <br> Telephone. +66 (0) 2254 8437, +66 (0) 2250 0569':' ที่ตั้งสำนักงาน : 26/32-34 อาคารอรกานต์ ชั้น 10 ซอยชิดลม ถนนเพลินจิต แขวงลุมพินี เขตปทุมวัน กรุงเทพฯ 10330 ประเทศไทย <br> เบอร์ติดต่อ +66 (0) 2254 8437, +66 (0) 2250 0569'; ?>
+                <h4 style="font-size: 18px;"><?= Yii::app()->session['lang'] == 1?'Address : 26/32-34 Orakarn Building 10th Floor, Soi Chidlom, Lumpinee, Pathumwan Bangkok 10330, Thailand <br> Telephone : +66 (0) 2254 8437, +66 (0) 2250 0569':' ที่ตั้งสำนักงาน : 26/32-34 อาคารอรกานต์ ชั้น 10 ซอยชิดลม ถนนเพลินจิต แขวงลุมพินี เขตปทุมวัน กรุงเทพฯ 10330 ประเทศไทย <br> เบอร์ติดต่อ : +66 (0) 2254 8437, +66 (0) 2250 0569'; ?>
                 
             </h4>
         </div>
