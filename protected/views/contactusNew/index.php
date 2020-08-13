@@ -67,7 +67,9 @@ if(!empty($msg)){
             <!-- <h4 class="text-center"><?= Yii::app()->session['lang'] == 1?'Map : THORESEN THAI AGENCIES PUBLIC COMPANY LIMITED (TTA)':'แผนที่ : บริษัท โทรีเซนไทย เอเยนต์ซีส์ จำกัด (มหาชน)'; ?></h4> -->
         </div>
 
-        <h1 class="text-center" style="padding-top: 20px;padding-bottom: 20px;color:#010C65;font-size: 36px; " ><i class="fa fa-users" aria-hidden="true"style="padding-right: 20px;"></i><?= Yii::app()->session['lang'] == 1?'Administrator':'ผู้ดูแลระบบ'; ?></h1>
+        <h1 class="text-center" style="padding-top: 20px;padding-bottom: 20px;color:#010C65;font-size: 36px; " >
+            <!-- <i class="fa fa-users" aria-hidden="true"style="padding-right: 20px;"></i> -->
+        </h1>
 
         <div class="row">
 <?php
