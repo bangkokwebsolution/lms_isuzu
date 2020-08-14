@@ -98,12 +98,12 @@ return array(
 //          // enable cookie-based authentication
 //          'allowAutoLogin'=>true,
 //      ),
-        // 'session' => array (
-        //  'class' => 'application.components.DbHttpSession',
-        //  'connectionID' => 'db',
-        //  'sessionTableName' => 'session',
-        //  'userTableName' => 'tbl_users'
-        // ),
+        'session' => array (
+         'class' => 'application.components.DbHttpSession',
+         'connectionID' => 'db',
+         'sessionTableName' => 'session',
+         'userTableName' => 'tbl_users'
+        ),
 
         //prevent  XSS
         'session' => array(
