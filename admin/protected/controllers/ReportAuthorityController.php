@@ -28,6 +28,10 @@ class ReportAuthorityController extends Controller
 					$user = User::model()->findByPk($value);
 					$user->report_authority = $report_authority;
 					$user->save(false);
+
+					if(Yii::app()->user->id){
+						Helpers::lib()->getControllerActionId($value);
+					}
 				}
 			}
 
@@ -37,6 +41,11 @@ class ReportAuthorityController extends Controller
 				$user = User::model()->findByPk($_POST['user_id']);
 				$user->report_authority = "";
 				$user->save(false);
+
+				if(Yii::app()->user->id){
+					Helpers::lib()->getControllerActionId($_POST['user_id']);
+				}
+
 				echo "success";
 				exit();
 			}
@@ -67,6 +76,10 @@ class ReportAuthorityController extends Controller
 					$user = User::model()->findByPk($value);
 					$user->report_authority = $report_authority;
 					$user->save(false);
+
+					if(Yii::app()->user->id){
+						Helpers::lib()->getControllerActionId($value);
+					}
 				}
 			}
 
@@ -76,6 +89,11 @@ class ReportAuthorityController extends Controller
 				$user = User::model()->findByPk($_POST['user_id']);
 				$user->report_authority = "";
 				$user->save(false);
+
+				if(Yii::app()->user->id){
+					Helpers::lib()->getControllerActionId($_POST['user_id']);
+				}
+
 				echo "success";
 				exit();
 			}
@@ -106,6 +124,10 @@ class ReportAuthorityController extends Controller
 					$user = User::model()->findByPk($value);
 					$user->report_authority = $report_authority;
 					$user->save(false);
+
+					if(Yii::app()->user->id){
+						Helpers::lib()->getControllerActionId($value);
+					}
 				}
 			}
 
@@ -115,6 +137,11 @@ class ReportAuthorityController extends Controller
 				$user = User::model()->findByPk($_POST['user_id']);
 				$user->report_authority = "";
 				$user->save(false);
+
+				if(Yii::app()->user->id){
+					Helpers::lib()->getControllerActionId($_POST['user_id']);
+				}
+				
 				echo "success";
 				exit();
 			}
