@@ -2028,6 +2028,17 @@ class ReportController extends Controller
 			$user_login = User::model()->findByPk(Yii::app()->user->id);
 			$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
 			$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+
+			if($authority != 1 || $authority != 2 || $authority != 3){
+				$this->redirect(array('report/index'));
+				exit();
+			}
+		}
+
+		if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+			$langId = Yii::app()->session['lang'] = 1;
+		}else{
+			$langId = Yii::app()->session['lang'];
 		}
 
 
@@ -2040,7 +2051,6 @@ class ReportController extends Controller
 		$this->render('course', array(
 			'authority'=>$authority,
 			'type_em'=>$type_em,
-	        // 'model'=>$model,
 	    ));
 	}
 
@@ -2165,7 +2175,6 @@ public function actionCourseCaptain(){ // อบรม คนเรือ
     		$criteria->order = 't.id ASC';
     		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
 
-			// $criteria->group = 't.course_id';
     		$criteria->order = 't.course_id ASC';
     		$criteria->select ='t.course_id';
     		$criteria->distinct = true;
@@ -2205,7 +2214,6 @@ public function actionCourseCaptain(){ // อบรม คนเรือ
     		$criteria->order = 't.id ASC';
     		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
 
-			// $criteria->group = 't.course_id';
     		$criteria->order = 't.course_id ASC';
     		$criteria->select ='t.course_id';
     		$criteria->distinct = true;
@@ -2307,9 +2315,6 @@ public function actionCourseOffice(){ // อบรม office
     //------------------- ค่า form search ------------------------//
 
     if(isset($_GET["search"])){
-    	// var_dump("<pre>"); 
-    	// var_dump($_GET["search"]); 
-    	// exit();
 
     	$criteria = new CDbCriteria;
 
@@ -2320,14 +2325,11 @@ public function actionCourseOffice(){ // อบรม office
     			$name = $ex_fullname[0];
     			$criteria->compare('pro.firstname', $name, true);
         		$criteria->compare('pro.lastname', $name, true, 'OR');
-        		// $criteria->compare('pro.firstname_en', $name, true, 'OR');
-        		// $criteria->compare('pro.lastname_en', $name, true, 'OR');
     		}
 
     		if(isset($ex_fullname[1])){
     			$name = $ex_fullname[1];
     			$criteria->compare('pro.lastname',$name,true, 'OR');
-    			// $criteria->compare('pro.lastname_en',$name,true, 'OR');
     		}
     	}
 
@@ -2377,7 +2379,6 @@ public function actionCourseOffice(){ // อบรม office
     		$criteria->order = 't.id ASC';
     		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
 
-			// $criteria->group = 't.course_id';
     		$criteria->order = 't.course_id ASC';
     		$criteria->select ='t.course_id';
     		$criteria->distinct = true;
@@ -2417,7 +2418,6 @@ public function actionCourseOffice(){ // อบรม office
     		$criteria->order = 't.id ASC';
     		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
 
-			// $criteria->group = 't.course_id';
     		$criteria->order = 't.course_id ASC';
     		$criteria->select ='t.course_id';
     		$criteria->distinct = true;
@@ -2546,10 +2546,7 @@ public function actionCourseOffice(){ // อบรม office
 					?>
 				</option>
 				<?php
-				foreach ($model_position as $key => $value) {
-					// if(Yii::app()->session['lang'] != 1){
-					// 	$value->id = $value->parent_id;
-					// }
+				foreach ($model_position as $key => $value) {					
 					?>
 					<option value="<?= $value->id ?>"><?= $value->position_title ?></option>
 					<?php
@@ -2618,9 +2615,6 @@ public function actionCourseOffice(){ // อบรม office
 				</option>
 				<?php
 				foreach ($model_branch as $key => $value) {
-					// if(Yii::app()->session['lang'] != 1){
-					// 	$value->id = $value->parent_id;
-					// }
 					?>
 					<option value="<?= $value->id ?>"><?= $value->branch_name ?></option>
 					<?php
@@ -2701,30 +2695,5 @@ public function actionCourseOffice(){ // อบรม office
 
 	
 
-	// Uncomment the following methods and override them if needed
-	/*
-	public function filters()
-	{
-		// return the filter configuration for this controller, e.g.:
-		return array(
-			'inlineFilterName',
-			array(
-				'class'=>'path.to.FilterClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
-
-	public function actions()
-	{
-		// return external action classes, e.g.:
-		return array(
-			'action1'=>'path.to.ActionClass',
-			'action2'=>array(
-				'class'=>'path.to.AnotherActionClass',
-				'propertyName'=>'propertyValue',
-			),
-		);
-	}
-	*/
+	
 }
