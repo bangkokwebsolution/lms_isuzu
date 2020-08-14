@@ -90,6 +90,8 @@
 			</div>
 			<div id="second-report" class="tab-pane fade">
 				<div class="row d-flex justify-content-center">
+					<?php if($authority == 1 || $authority == 2 || $authority == 3){ ?>
+
 					<div class="col-sm-4 col-md-3">
 						<a href="<?php echo $this->createUrl('/report/course'); ?>">
 							<div class="card-report">
@@ -102,6 +104,8 @@
 							</div>
 						</a>
 					</div>
+					
+					<?php if($authority == 1 || $type_em == 1){ ?>
 					<div class="col-sm-4 col-md-3 ">
 						<a href="<?php echo $this->createUrl('/report/courseCaptain'); ?>">
 							<div class="card-report">
@@ -115,6 +119,9 @@
 							</div>
 						</a>
 					</div>
+					<?php } ?>
+
+					<?php if($authority == 1 || $type_em == 2){ ?>
 					<div class="col-sm-4 col-md-3">
 						<a href="<?php echo $this->createUrl('/report/courseOffice'); ?>">
 							<div class="card-report">
@@ -128,6 +135,9 @@
 							</div>
 						</a>
 					</div>
+					<?php } ?>
+
+					<?php } // if($authority == 1 || $authority == 2) ?>
 				</div>
 			</div>
 

@@ -80,7 +80,7 @@ class User extends CActiveRecord
 			array('superuser, status, online_status,online_user,register_status', 'numerical', 'integerOnly'=>true),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif, jpeg','allowEmpty' => true, 'on'=>'insert'),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif, jpeg','allowEmpty' => true, 'on'=>'update'),
-			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,station_id,company_id, division_id,position_id,lastactivity,orgchart_lv2,del_status,avatar,pic_cardid2,employee_id,branch_id,register_status', 'safe', 'on'=>'search'),
+			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,station_id,company_id, division_id,position_id,lastactivity,orgchart_lv2,del_status,avatar,pic_cardid2,employee_id,branch_id,register_status, report_authority', 'safe', 'on'=>'search'),
 			//array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
 			array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 			// array('confirmpass', 'compare', 'compareAttribute'=>'newpassword', 'message' => UserModule::t("Retype Password is incorrect.")),
@@ -263,7 +263,8 @@ class User extends CActiveRecord
 			'employee_id' => 'เลขประจำตัวพนักงาน',
 			'repass_status' => 'สถานะการเปลี่ยนรหัสผ่าน',
 			'branch_id' => UserModule::t("สาขา"),
-            'register_status' => 'สถานะการสมัคร'
+            'register_status' => 'สถานะการสมัคร',
+            'report_authority' => 'สิทธิ์ Report',
 			// 'passport' => UserModule::t("passport"),
 		);
 	}
@@ -284,7 +285,7 @@ class User extends CActiveRecord
                 'condition'=>'superuser=1',
             ),
             'notsafe'=>array(
-            	'select' => 'id, username, password, department_id, pic_user, email, activkey, create_at, superuser, status, online_status,online_user,station_id,company_id, division_id,position_id,orgchart_lv2,pic_cardid2,employee_id,repass_status,branch_id',
+            	'select' => 'id, username, password, department_id, pic_user, email, activkey, create_at, superuser, status, report_authority, online_status,online_user,station_id,company_id, division_id,position_id,orgchart_lv2,pic_cardid2,employee_id,repass_status,branch_id',
             ),
         );
     }
@@ -298,7 +299,7 @@ class User extends CActiveRecord
 
     	return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
     		'alias'=>'user',
-    		'select' => 'user.id, user.username, user.pic_user, user.department_id,user.station_id,user.company_id, user.division_id,user.position_id, user.branch_id,user.auditor_id,user.bookkeeper_id, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.online_status, user.online_user, user.pic_cardid,lastactivity,user.avatar,user.employee_id,user.repass_status',
+    		'select' => 'user.id, user.username, user.pic_user, user.department_id,user.station_id,user.company_id, user.division_id,user.position_id, user.branch_id,user.auditor_id,user.bookkeeper_id, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.online_status, user.online_user, user.pic_cardid,lastactivity,user.avatar,user.employee_id,user.repass_status, report_authority',
     	));
     }
 
@@ -361,6 +362,7 @@ class User extends CActiveRecord
         $criteria->compare('pic_user',$this->pic_user);
         $criteria->compare('department_id',$this->department_id);
         $criteria->compare('branch_id',$this->branch_id);
+        $criteria->compare('report_authority',$this->report_authority);
         $criteria->compare('email',$this->email,true);
         $criteria->compare('activkey',$this->activkey);
         $criteria->compare('create_at',$this->create_at);

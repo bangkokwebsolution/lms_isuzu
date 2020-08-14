@@ -11,25 +11,24 @@
     }
 </style>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<!-- <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" type="text/css"> -->
- <script type="text/javascript">
+<script type="text/javascript">
     var num_chart = 0;
- </script>
+</script>
+
  <?php 
     $path_file_2 = Yii::app()->basePath;
     $path_file = "http:\\\\thorconn.com";
-    // $path_file = Yii::app()->baseUrl;
-
-    // var_dump(Yii::app()->basePath);
-    // var_dump(Yii::app()->baseUrl);
-
-    // exit();
-
 
     $path_file_2 = explode("\\", $path_file_2);
     $path_file_2 = implode("\\\\", $path_file_2);
  ?>
+<?php 
+    if($authority == 2){
+        $_GET["search"]["department"] = $user_login->department_id;
+    }elseif($authority == 3){
+        $_GET["search"]["position"] = $user_login->position_id;
+    }
+?>
 
 <div class="container">
     <nav aria-label="breadcrumb">
@@ -57,7 +56,6 @@
         </ol>
     </nav>
 </div>
-
 
 <section id="report-detail">
     <div class="container">
@@ -167,6 +165,7 @@
 
                         </div>
                         <div class="row">
+                            <?php if(!empty($model_department) && $authority == 1){ ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
                                     <label for="search_department">
@@ -188,17 +187,16 @@
                                                 }
                                             ?>
                                         </option>
-                                        <?php 
-                                        foreach ($model_department as $key => $value) {
-                                            // if(Yii::app()->session['lang'] != 1){
-                                            //     $value->id = $value->parent_id;
-                                            // }
-                        ?> <option <?php if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] == $value->id){ echo "selected"; } ?> value="<?= $value->id?>"><?= $value->dep_title ?></option> <?php
-                                        }
-                                         ?>
+                                        <?php foreach ($model_department as $key => $value) { ?>
+<option <?php if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] == $value->id){ echo "selected"; } ?> value="<?= $value->id?>">
+    <?= $value->dep_title ?>
+</option> 
+                                        <?php } ?>
                                     </select>
                                 </div>
                             </div>
+                            <?php } ?>
+                            <?php if($authority == 1 || $authority == 2){ ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
                                     <label for="search_position">
@@ -209,7 +207,7 @@
                                             echo "Position";
                                         }
                                         ?>
-                                    </label>
+                                    </label>                                    
                                     <select class="form-control" name="search[position]" id="search_position">
                                         <option value="" selected>
                                             <?php 
@@ -236,6 +234,7 @@
                                     </select>
                                 </div>
                             </div>
+                        <?php } ?>
                             <div class="col-md-3 col-lg-3 col-xs-12">
                                 <div class="form-group">
                                     <label for="search_fullname">

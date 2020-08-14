@@ -4,7 +4,19 @@ class ReportController extends Controller
 {
 	public function actionIndex()
 	{
-		$this->render('index');
+		if(Yii::app()->user->id != null) {
+			$user_login = User::model()->findByPk(Yii::app()->user->id);
+			$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+			$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+
+			$this->render('index', array(
+				'authority'=>$authority,
+				'type_em'=>$type_em,
+			));
+		}else{
+			$this->redirect(array('site/index'));
+			exit();
+		}
 	}
 
 	public function actionReport_register()
@@ -2005,14 +2017,18 @@ class ReportController extends Controller
 
 
 
-			public function actionCourse(){ // อบรม
-	if (Yii::app()->user->id == null) {   // ต้อง login ถึงจะเห็น
-        $msg = $label->label_alert_msg_plsLogin;
-        Yii::app()->user->setFlash('msg',$msg);
-        Yii::app()->user->setFlash('icon','warning');
-        $this->redirect(array('site/index'));
-        exit();
-    }
+	public function actionCourse(){ // อบรม
+		if (Yii::app()->user->id == null) {   // ต้อง login ถึงจะเห็น
+			$msg = $label->label_alert_msg_plsLogin;
+			Yii::app()->user->setFlash('msg',$msg);
+			Yii::app()->user->setFlash('icon','warning');
+			$this->redirect(array('site/index'));
+			exit();
+		}else{
+			$user_login = User::model()->findByPk(Yii::app()->user->id);
+			$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+			$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+		}
 
 
 
@@ -2021,10 +2037,12 @@ class ReportController extends Controller
 
 
 
-	$this->render('course', array(
-        // 'model'=>$model,
-    ));
-}
+		$this->render('course', array(
+			'authority'=>$authority,
+			'type_em'=>$type_em,
+	        // 'model'=>$model,
+	    ));
+	}
 
 public function actionCourseCaptain(){ // อบรม คนเรือ
 	if (Yii::app()->user->id == null) {   // ต้อง login ถึงจะเห็น
@@ -2033,6 +2051,15 @@ public function actionCourseCaptain(){ // อบรม คนเรือ
         Yii::app()->user->setFlash('icon','warning');
         $this->redirect(array('site/index'));
         exit();
+    }else{
+    	$user_login = User::model()->findByPk(Yii::app()->user->id);
+		$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+		$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+
+		if($authority == "" || ($type_em != 1 && $authority != 1)){
+			$this->redirect(array('report/index'));
+        	exit();
+		}
     }
 
     if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
@@ -2048,11 +2075,15 @@ public function actionCourseCaptain(){ // อบรม คนเรือ
     	'order' => 'course_title ASC'
     ));
 
-    $model_department = Department::model()->findAll(array(
-    	'condition' => 'active=:active AND lang_id=:lang_id AND type_employee_id=:type_id',
-    	'params' => array(':active'=>'y', ':lang_id'=>1, ':type_id'=>1), //1=เรือ 2=office
-    	'order' => 'dep_title ASC'    	
-    ));
+    if($authority == 1){
+    	$model_department = Department::model()->findAll(array(
+    		'condition' => 'active=:active AND lang_id=:lang_id AND type_employee_id=:type_id',
+	    	'params' => array(':active'=>'y', ':lang_id'=>1, ':type_id'=>1), //1=เรือ 2=office
+	    	'order' => 'dep_title ASC'    	
+	    ));
+    }else{
+    	$model_department = [];
+    }    
 
     $year_start = LogStartcourse::model()->find(array(
     	'condition' => 'active=:active',
@@ -2074,9 +2105,6 @@ public function actionCourseCaptain(){ // อบรม คนเรือ
     //------------------- ค่า form search ------------------------//
 
     if(isset($_GET["search"])){
-    	// var_dump("<pre>"); 
-    	// var_dump($_GET["search"]); 
-    	// exit();
 
     	$criteria = new CDbCriteria;
 
@@ -2087,14 +2115,11 @@ public function actionCourseCaptain(){ // อบรม คนเรือ
     			$name = $ex_fullname[0];
     			$criteria->compare('pro.firstname', $name, true);
         		$criteria->compare('pro.lastname', $name, true, 'OR');
-        		// $criteria->compare('pro.firstname_en', $name, true, 'OR');
-        		// $criteria->compare('pro.lastname_en', $name, true, 'OR');
     		}
 
     		if(isset($ex_fullname[1])){
     			$name = $ex_fullname[1];
     			$criteria->compare('pro.lastname',$name,true, 'OR');
-    			// $criteria->compare('pro.lastname_en',$name,true, 'OR');
     		}
     	}
 
@@ -2113,10 +2138,16 @@ public function actionCourseCaptain(){ // อบรม คนเรือ
     		$criteria->compare('t.gen_id', $_GET["search"]["gen_id"]);
     	}
 
+    	if($authority == 2 || $authority == 3){ // ผู้จัดการฝ่าย
+    		$_GET["search"]["department"] = $user_login->department_id;
+    	}
     	if($_GET["search"]["department"] != ""){
     		$criteria->compare('user.department_id', $_GET["search"]["department"]);
     	}
 
+    	if($authority == 3){ // ผู้จัดการแผนก
+    		$_GET["search"]["position"] = $user_login->position_id;
+    	}
     	if($_GET["search"]["position"] != ""){
     		$criteria->compare('user.position_id', $_GET["search"]["position"]);
     	}
@@ -2197,6 +2228,9 @@ public function actionCourseCaptain(){ // อบรม คนเรือ
 	        'model_search'=>$model_search,
 	        'arr_count_course'=>$arr_count_course,
 	        'arr_course_title'=>$arr_course_title,
+	        'authority'=>$authority,
+			'type_em'=>$type_em,
+			'user_login'=>$user_login,
 	    ));
 		exit();
     } // if(isset($_GET["search"]))
@@ -2206,6 +2240,9 @@ public function actionCourseCaptain(){ // อบรม คนเรือ
         'model_department'=>$model_department,
         'year_start'=>$year_start,
         'year_end'=>$year_end,
+        'authority'=>$authority,
+		'type_em'=>$type_em,
+		'user_login'=>$user_login,
     ));
 }
 
@@ -2216,6 +2253,15 @@ public function actionCourseOffice(){ // อบรม office
         Yii::app()->user->setFlash('icon','warning');
         $this->redirect(array('site/index'));
         exit();
+    }else{
+    	$user_login = User::model()->findByPk(Yii::app()->user->id);
+		$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+		$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+
+		if($authority == "" || ($type_em != 2 && $authority != 1)){
+			$this->redirect(array('report/index'));
+			exit();
+		}
     }
 
     if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
@@ -2231,11 +2277,15 @@ public function actionCourseOffice(){ // อบรม office
     	'order' => 'course_title ASC'
     ));
 
-    $model_department = Department::model()->findAll(array(
-    	'condition' => 'active=:active AND lang_id=:lang_id AND type_employee_id=:type_id',
-    	'params' => array(':active'=>'y', ':lang_id'=>1, ':type_id'=>2), //1=เรือ 2=office
-    	'order' => 'dep_title ASC'    	
-    ));
+    if($authority == 1){
+    	$model_department = Department::model()->findAll(array(
+	    	'condition' => 'active=:active AND lang_id=:lang_id AND type_employee_id=:type_id',
+	    	'params' => array(':active'=>'y', ':lang_id'=>1, ':type_id'=>2),
+	    	'order' => 'dep_title ASC'    	
+    	));
+    }else{
+    	$model_department = [];
+    }
 
     $year_start = LogStartcourse::model()->find(array(
     	'condition' => 'active=:active',
@@ -2296,10 +2346,16 @@ public function actionCourseOffice(){ // อบรม office
     		$criteria->compare('t.gen_id', $_GET["search"]["gen_id"]);
     	}
 
+    	if($authority == 2 || $authority == 3){ // ผู้จัดการฝ่าย
+    		$_GET["search"]["department"] = $user_login->department_id;
+    	}
     	if($_GET["search"]["department"] != ""){
     		$criteria->compare('user.department_id', $_GET["search"]["department"]);
     	}
 
+    	if($authority == 3){ // ผู้จัดการแผนก
+    		$_GET["search"]["position"] = $user_login->position_id;
+    	}
     	if($_GET["search"]["position"] != ""){
     		$criteria->compare('user.position_id', $_GET["search"]["position"]);
     	}
@@ -2384,6 +2440,9 @@ public function actionCourseOffice(){ // อบรม office
 	        'model_search'=>$model_search,
 	        'arr_count_course'=>$arr_count_course,
 	        'arr_course_title'=>$arr_course_title,
+	        'authority'=>$authority,
+			'type_em'=>$type_em,
+			'user_login'=>$user_login,
 	    ));
 		exit();
     } // if(isset($_GET["search"]))
@@ -2393,6 +2452,9 @@ public function actionCourseOffice(){ // อบรม office
         'model_department'=>$model_department,
         'year_start'=>$year_start,
         'year_end'=>$year_end,
+        'authority'=>$authority,
+		'type_em'=>$type_em,
+		'user_login'=>$user_login,
     ));
 }
 
@@ -2450,6 +2512,15 @@ public function actionCourseOffice(){ // อบรม office
 	}
 
 	public function actionGetPosition(){
+
+		$user_login = User::model()->findByPk(Yii::app()->user->id);
+		$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+		$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+
+		if($authority == 2){
+			$_POST["department_id"] = $user_login->department_id;
+		}
+
 		if(isset($_POST["department_id"]) && $_POST["department_id"] != ""){
 			if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
 				$langId = Yii::app()->session['lang'] = 1;
@@ -2512,6 +2583,14 @@ public function actionCourseOffice(){ // อบรม office
 	}
 
 	public function actionGetLevel(){
+
+		$user_login = User::model()->findByPk(Yii::app()->user->id);
+		$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+		$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+
+		if($authority == 3){
+			$_POST["position_id"] = $user_login->position_id;
+		}
 
 		if(isset($_POST["position_id"]) && $_POST["position_id"] != ""){
 			if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
