@@ -1,3 +1,4 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-main">
@@ -37,17 +38,36 @@
                 <div id="report-search" class="panel-collapse collapse in">
                     <div class="panel-body">
                         <div class="row">
+                                 <div class="col-sm-3 col-md-3 col-xs-12">
+                                <div class="form-group">
+                                    <label for="">ฝ่าย</label>
+                                    <select class="form-control Department" name="" id="Department">
+                                        <option value="" selected disabled>เลือกฝ่าย</option>
+                                        <?php
+
+                                            $criteria= new CDbCriteria;
+                                            $criteria->compare('type_employee_id','1');
+                                            $criteria->order = 'sortOrder ASC';
+                                            $departmentModel = Department::model()->findAll($criteria);
+                                            foreach ($departmentModel as $key => $val) {
+                                            $department_list = $departmentModel[$key]->attributes;
+                                            ?>
+                                            <option value="<?php echo $department_list['id']; ?>"><?php echo $department_list['dep_title']; ?></option>
+                                        <?php   
+                                        }                       
+                                        ?> 
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
                                     <label for="">แผนก</label>
                                     <select class="form-control Position" name="" id="x">
                                         <option value="" selected disabled>เลือกแผนก</option>
-                                         <!-- <option value="1">1</option>
-                                        <option value="2">2</option> -->
                                     <?php
 
                                         $criteria= new CDbCriteria;
-                                        // $criteria->compare('type_employee_id','2');
+                                       // $criteria->compare('type_employee_id','2');
                                         $criteria->compare('active','y');
                                         $criteria->order = 'sortOrder ASC';
                                         $PositionModel = Position::model()->findAll($criteria);
@@ -62,99 +82,43 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-3 col-md-3 col-xs-12">
-                                <div class="form-group">
-                                    <label for="">ฝ่าย</label>
-                                    <select class="form-control Department" name="" id="Department">
-                                        <option value="" selected disabled>เลือกฝ่าย</option>
-                                         <!-- <option value="1">1</option>
-                                        <option value="2">2</option> -->
-                                        <?php
-
-                                            $criteria= new CDbCriteria;
-                                            // $criteria->compare('type_employee_id','2');
-                                            $criteria->compare('type_employee_id','1');
-                                            $criteria->order = 'sortOrder ASC';
-                                            $departmentModel = Department::model()->findAll($criteria);
-                                            foreach ($departmentModel as $key => $val) {
-                                            $department_list = $departmentModel[$key]->attributes;
-                                            ?>
-                                            <option value="<?php echo $department_list['id']; ?>"><?php echo $department_list['dep_title']; ?></option>
-                                        <?php   
-                                        }                       
-                                        ?> 
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="col-md-3 col-sm-3 col-xs-12">
                                 <div class="form-group">
                                     <div><label>รูปแบบกราฟแสดงผล</label></div>
                                     <div class="checkbox checkbox-main checkbox-inline">
-                                        <input type="checkbox" name="accommodation" id="1" value="Bar Graph">
+                                        <input type="checkbox" name="accommodation" id="1" value="Bar_Graph" checked>
                                         <label for="1" class="text-black">Bar Graph </label>
                                     </div>
                                     <div class="checkbox checkbox-main checkbox-inline">
-                                        <input type="checkbox" name="accommodation" id="2" value="Pie Charts">
+                                        <input type="checkbox" name="accommodation" id="2" value="Pie_Charts">
                                         <label for="2" class="text-black">Pie Charts </label>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="col-sm-3 col-md-3 col-xs-12">
+                            <div><label for="">ช่วงอายุ</label></div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input class="form-control " placeholder="จาก" name="" id="age" type="text" maxlength="50">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <input class="form-control " placeholder="ถึง" name="" id="age2" type="text" maxlength="50">
                                     </div>
                                 </div>
                             </div>
 
                         </div>
-                        <div class="row">
-                            <div class="col-sm-3 col-md-3 col-xs-12">
-                            <div><label for="">ช่วงอายุ</label></div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <input class="form-control " placeholder="" name="" id="age" type="text" maxlength="50">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <input class="form-control " placeholder="" name="" id="age" type="text" maxlength="50">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- <div class="col-sm-3 col-md-3 col-xs-12">
-                                <div class="form-group">
-                                    <label for="">ตำแหน่ง</label>
-                                    <select class="form-control" name="" id="x">
-                                        <option value="" selected disabled>เลือกตำแหน่ง</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-sm-3 col-md-3 col-xs-12">
-                                <div class="form-group">
-                                    <label for="">เลเวล</label>
-                                    <select class="form-control" name="" id="x">
-                                        <option value="" selected disabled>เลเวล</option>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                    </select>
-                                </div>
-                            </div> -->
-                            <!-- <div class="col-sm-3 col-md-3 col-xs-12 age-col">
-                                <div><label for="">ช่วงอายุ</label></div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <input class="form-control " placeholder="" name="" id="" type="text" maxlength="50">
-                                    </div>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="form-group">
-                                        <input class="form-control " placeholder="" name="" id="" type="text" maxlength="50">
-                                    </div>
-                                </div>
-                            </div> -->
+                   <!--      <div class="row">
+                           
                             <div class="col-md-3 col-lg-3 col-xs-12">
                                 <div class="form-group">
                                     <label for="">มหาวิทยาลัย</label>
                                     <input class="form-control " placeholder="มหาวิทยาลัย" name="" id="institution" type="text" maxlength="50">
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row">
                             <div class="col-md-3 col-sm-6 col-xs-12">
                                 <div class="form-group day-icon">
@@ -173,10 +137,8 @@
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
                                     <label for="">ช่วงปีเริ่มต้น</label>
-                                    <select class="form-control year_start" name="" id="x">
+                                    <select class="form-control year_start" name="" id="Year_start">
                                         <option value="" selected disabled>ช่วงปีเริ่มต้น</option>
-                                        <!-- <option value="1">1</option>
-                                        <option value="2">2</option> -->
                                         <?php
                                         $starting_year  = 2019;
                                         $ending_year = date('Y');
@@ -193,10 +155,8 @@
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
                                     <label for="">ช่วงปีสิ้นสุด</label>
-                                    <select class="form-control year_end" name="" id="x">
+                                    <select class="form-control year_end" name="" id="Year_end">
                                         <option value="" selected disabled>ช่วงปีสิ้นสุด</option>
-                                        <!-- <option value="1">1</option>
-                                        <option value="2">2</option> -->
                                         <?php
                                         $starting_year  = 2019;
                                         $ending_year = date('Y');
@@ -228,142 +188,41 @@
         <center><h3><font color="#333333">รายงานภาพคนสมัครสมาชิกคนประจำเรือ</font></h3></center>
         <br>
 
-        <div class="row">
-            <div class="col-sm-6">
-                <div class="chart"></div>
-                <div class="year-report">
-                    <h4>ปี</h4>
-                    <div style="width:100%">
-                    <div id="chart_div"></div>
+         <div class="row">
+                <div class="col-sm-6 col-md-6 Graph_1">
+                        <div class="chart"></div>
+                            <h4></h4>
+                            <div style="width:100%">
+                                <div id="chart_div" style="width: auto; height: 400px;"></div>
+                            </div>
+                </div>
+                <div class="col-sm-6 col-md-6 Graph_2">
+                        <div class="chart"></div>
+                            <h4></h4>
+                         <div style="width:100%">
+                                <div id="chart_div2" style="width: auto; height: 400px;"></div>
+                        </div>
                     </div>
-                    <!-- <script>
-                        var data = {
-                            labels: ["test", "test", "test", "test", "test", "test", "test"],
-                            datasets: [{
-                                label: "Dataset #1",
-                                backgroundColor: "rgba(255,99,132,0.2)",
-                                borderColor: "rgba(255,99,132,1)",
-                                borderWidth: 2,
-                                hoverBackgroundColor: "rgba(255,99,132,0.4)",
-                                hoverBorderColor: "rgba(255,99,132,1)",
-                                data: [65, 59, 20, 81, 56, 55, 40],
-                            }]
-                        };
+ 
+            </div>
 
-                        var option = {
-                            scales: {
-                                yAxes: [{
-                                    stacked: true,
-                                    gridLines: {
-                                        display: true,
-                                        color: "rgba(255,99,132,0.2)"
-                                    }
-                                }],
-                                xAxes: [{
-                                    gridLines: {
-                                        display: false
-                                    }
-                                }]
-                            }
-                        };
-
-                        Chart.Bar('chart_0', {
-                            options: option,
-                            data: data
-                        });
-                    </script> -->
+           <div class="row mt-2">
+                <div class="col-sm-6 col-md-6 Graph_3">
+                    <div class="chart"></div>
+                        <div style="width:100%">
+                            <div id="chart_div3" style="width: auto; height: 400px;"></div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6 Graph_4">
+                    <div class="chart"></div>
+                     <div style="width:100%">
+                            <div id="chart_div4" style="width: auto; height: 400px;"></div>
+                    </div>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="year-report">
-                    <h4>ปี</h4>
-                    <div style="width:100%">
-                    <div id="chart_div2"></div>
-                    </div>
-
-                    <!-- <script>
-                        var oilCanvas = document.getElementById("oilChart");
-
-                        Chart.defaults.global.defaultFontFamily = "Lato";
-                        Chart.defaults.global.defaultFontSize = 18;
-
-                        var oilData = {
-                            labels: [
-                                "test",
-                                "test",
-                                "test",
-                                "test",
-                                "test"
-                            ],
-                            datasets: [{
-                                data: [133.3, 86.2, 52.2, 51.2, 50.2],
-                                backgroundColor: [
-                                    "#FF6384",
-                                    "#63FF84",
-                                    "#84FF63",
-                                    "#8463FF",
-                                    "#6384FF"
-                                ]
-                            }]
-                        };
-
-                        var pieChart = new Chart(oilCanvas, {
-                            type: 'pie',
-                            data: oilData
-                        });
-                    </script> -->
-                </div>
-            </div>
-        </div>
-        <h2 class="text-center">
-            <?php
-            if (Yii::app()->session['lang'] == 1) {
-                echo "Report";
-            } else {
-                echo "รายงานภาพ";
-            }
-            ?>
-        </h2>
-
-        <!-- <div class="report-table">
-            <div class="table-responsive w-100 t-regis-language">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>ลำดับ</th>
-                            <th>ชื่อ - นามสกุล</th>
-                            <th>ฝ่าย</th>
-                            <th>แผนก</th>
-                            <th>อายุ</th>
-                            <th>มหาวิทยาลัย</th>
-                            <th>สถานะอนุมัติ</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr>
-                            <td>
-                            
-                            </td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><span class="text-success"><i class="fas fa-check"></i> อนุมัติ</span> <span class="text-danger"><i class="fas fa-times"></i> อนุมัติ</span></td>
-                        </tr>
-                    </tbody>
-
-                </table>
-            </div>
-        </div> -->
+        <hr>   
         <div class="dataTable"></div>
-        <div class="pull-right ">
-            <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
-            <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button>
-        </div>
 
-    </div>
     </div>
 
 </section>
@@ -377,7 +236,29 @@
         yearOffset: 0
     });
     $.datetimepicker.setLocale('th');
+    $('.Graph_1').hide();
+    $('.Graph_2').hide();
+    $('.Graph_3').hide();
+    $('.Graph_4').hide();
 
+$(document).ready(function(){
+    $('#datetime_start').on('change',function(){
+    $('#Year_start').attr('disabled',true);
+    $('#Year_end').attr('disabled',true);
+    });
+    $('#datetime_end').on('change',function(){
+    $('#Year_start').attr('disabled',true);
+    $('#Year_end').attr('disabled',true);
+    });
+    $('#Year_start').on('change',function(){
+    $('#datetime_start').attr('disabled',true);
+    $('#datetime_end').attr('disabled',true);
+    });
+    $('#Year_end').on('change',function(){
+    $('#datetime_start').attr('disabled',true);
+    $('#datetime_end').attr('disabled',true);
+    });
+});
     $(".Department").change(function() {
                     var id = $(this).val();
                     $.ajax({
@@ -413,14 +294,15 @@
     $(".search").click(function() {
                     var Department = $(".Department").val();
                     var Position = $(".Position").val();
-                    var age = $(".age").val();
-                    var institution = $(".institution").val();
-                    var Chart = $("input[name='accommodation']:checked").val();
+                    var age = $("#age").val();
+                    var age2 = $("#age2").val();
+                    //var institution = $("#institution").val();
+                    var Chart = $('input[name="accommodation"]:checked').serialize();
                     var datetime_start = $("#datetime_start").val();
                     var datetime_end = $("#datetime_end").val();
-                    var Year_start = $(".Year_start").val();
-                    var Year_end = $(".Year_end").val();
-                    
+                    var Year_start = $("#Year_start").val();
+                    var Year_end = $("#Year_end").val();
+
                     $.ajax({
                         type: 'POST',
                         url: "<?= Yii::app()->createUrl('report/registershipData '); ?>",
@@ -428,7 +310,8 @@
                             Department: Department,
                             Position: Position,
                             age: age,
-                            institution: institution,
+                            age2: age2,
+                            //institution: institution,
                             Chart: Chart,
                             datetime_start: datetime_start,
                             datetime_end: datetime_end,
@@ -437,9 +320,54 @@
    
                         },
                         success: function(data) {
-                           console.log(data);
+                       
+                        if (Year_start === 'undefined' || Year_end === 'undefined' || Year_start === null || Year_end === null) {
+          
+                            if (Chart === "accommodation=Bar_Graph") {
+                              
+                            $('.Graph_1').show();
+                            $('.Graph_2').hide();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+
+                            }else if (Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") {
+                            $('.Graph_1').show();
+                            $('.Graph_2').show();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+
+                            }else if (Chart === "accommodation=Pie_Charts") {
+                            $('.Graph_1').hide();
+                            $('.Graph_2').show();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+                      
+                            }
+                             }else{
+
+                            if (Chart === "accommodation=Bar_Graph") {
+                            $('.Graph_1').show();
+                            $('.Graph_2').show();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+                      
+                            }else if (Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") {
+                            $('.Graph_1').show();
+                            $('.Graph_2').show();
+                            $('.Graph_3').show();
+                            $('.Graph_4').show();
+
+                            }else if (Chart === "accommodation=Pie_Charts") {
+                            $('.Graph_1').show();
+                            $('.Graph_2').show();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+                      
+                            }
+                            }
                            $(".dataTable").html(data);
                         }
         });
     });
+
 </script>

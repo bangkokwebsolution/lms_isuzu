@@ -147,7 +147,7 @@ $Chart = $data['Chart'];
 		
 			<div class="report-table">
 				<div class="table-responsive w-100 t-regis-language">
-					<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 90%;	">     
+					<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 90%;">     
 						<thead>
 							<tr style="background: #010C65;color: #fff; border:1px solid #d8d8d8;padding: 8px;">
 								<th style="border:1px solid #d8d8d8; padding: 8px;">ลำดับ</th>

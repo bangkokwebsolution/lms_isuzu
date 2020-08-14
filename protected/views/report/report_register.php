@@ -224,14 +224,14 @@
                         <div class="chart"></div>
                             <h4></h4>
                             <div style="width:100%">
-                                <div id="chart_div"></div>
+                                <div id="chart_div" style="width: auto; height: 400px;"></div>
                             </div>
                     </div>
                     <div class="col-sm-6 col-md-6 Graph_2">
                         <div class="chart"></div>
                             <h4></h4>
                          <div style="width:100%">
-                                <div id="chart_div2"></div>
+                                <div id="chart_div2" style="width: auto; height: 400px;"></div>
                         </div>
                     </div>
             </div>
@@ -240,13 +240,13 @@
                 <div class="col-sm-6 col-md-6 Graph_3">
                     <div class="chart"></div>
                         <div style="width:100%">
-                            <div id="chart_div3"></div>
+                            <div id="chart_div3" style="width: auto; height: 400px;"></div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-6 Graph_4">
                     <div class="chart"></div>
                      <div style="width:100%">
-                            <div id="chart_div4"></div>
+                            <div id="chart_div4" style="width: auto; height: 400px;"></div>
                     </div>
                 </div>
             </div> 
@@ -266,6 +266,31 @@
         yearOffset: 0
     });
     $.datetimepicker.setLocale('th');
+
+    $('.Graph_1').hide();
+    $('.Graph_2').hide();
+    $('.Graph_3').hide();
+    $('.Graph_4').hide();
+
+    
+$(document).ready(function(){
+    $('#datetime_start').on('change',function(){
+    $('#Year_start').attr('disabled',true);
+    $('#Year_end').attr('disabled',true);
+    });
+    $('#datetime_end').on('change',function(){
+    $('#Year_start').attr('disabled',true);
+    $('#Year_end').attr('disabled',true);
+    });
+    $('#Year_start').on('change',function(){
+    $('#datetime_start').attr('disabled',true);
+    $('#datetime_end').attr('disabled',true);
+    });
+    $('#Year_end').on('change',function(){
+    $('#datetime_start').attr('disabled',true);
+    $('#datetime_end').attr('disabled',true);
+    });
+});
 
     $(".TypeEmployee").change(function() {
                     var id = $(this).val();
