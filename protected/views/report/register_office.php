@@ -45,7 +45,6 @@
                                 <?php
 
                                     $criteria= new CDbCriteria;
-                                   // $criteria->compare('type_employee_id','2');
                                     $criteria->compare('type_employee_id','2');
                                     $criteria->order = 'sortOrder ASC';
                                     $departmentModel = Department::model()->findAll($criteria);
@@ -67,7 +66,6 @@
                                     <?php
 
                                     $criteria= new CDbCriteria;
-                                   // $criteria->compare('type_employee_id','2');
                                     $criteria->compare('active','y');
                                     $criteria->order = 'sortOrder ASC';
                                     $PositionModel = Position::model()->findAll($criteria);
@@ -88,7 +86,6 @@
                                         <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Level':'เลือกเลเวล'; ?></option>
                                     <?php
                                     $criteria= new CDbCriteria;
-                                   // $criteria->compare('type_employee_id','2');
                                     $criteria->compare('active','y');
                                     $criteria->order = 'sortOrder ASC';
                                     $BranchModel = Branch::model()->findAll($criteria);
@@ -188,8 +185,7 @@
         <h2 class="text-center">
             <?php
             if (Yii::app()->session['lang'] == 1) {
-                echo "Report office member application
-";
+                echo "Report office member application";
             } else {
                 echo "รายงานภาพการสมัครสมาชิกคน Office";
             }
@@ -228,15 +224,6 @@
                     </div>
                 </div>
             </div> 
-        <!-- <h2 class="text-center">
-            <?php
-            if (Yii::app()->session['lang'] == 1) {
-                echo "Report";
-            } else {
-                echo "รายงานภาพ";
-            }
-            ?>
-        </h2> -->
         <div class="dataTable"></div>
     </div>
 

@@ -33,6 +33,140 @@ class ReportController extends Controller
 		$this->render('registership');
 	}
 
+	public function actionRegisteroffice()
+	{
+		$this->render('register_office');
+	}
+
+	public function actionRegisterofficeData()
+	{
+		$Department = $_POST['Department'];
+		$Position = $_POST['Position'];
+		$Leval = $_POST['Leval'];
+		$datetime_start = $_POST['datetime_start'];
+		$datetime_end = $_POST['datetime_end'];
+		$Year_start = $_POST['Year_start'];
+		$Year_end = $_POST['Year_end'];
+		$Chart = $_POST['Chart'];
+		$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
+		$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
+
+		if ($Department) {
+
+					$criteria = new CDbCriteria;
+					if($Department){
+						$criteria->compare('id',$Department);
+					}
+					$criteria->compare('active','y');
+					$dep = Department::model()->findAll($criteria);
+					$dep_arr = [];
+					foreach ($dep as $key => $val_dep) {
+						$dep_arr[] = $val_dep->id;
+					}
+
+					$criteria = new CDbCriteria;
+					$criteria->addIncondition('department_id',$dep_arr);
+					$criteria->compare('active','y');
+					if($Position){
+						$criteria->compare('id',$Position);
+					}
+					$pos = Position::model()->findAll($criteria);
+
+					$pos_arr = [];
+					$posback_arr = [];
+					foreach ($pos as $key => $val_pos) {
+						$pos_arr[] = $val_pos->id;
+						$posback_arr[] = $val_pos->department_id;
+					}
+
+					$criteria = new CDbCriteria;
+					$criteria->addIncondition('position_id',$pos_arr);
+					$criteria->compare('active','y');
+					if($Leval){
+						$criteria->compare('id',$Leval);
+					}
+					$branch = Branch::model()->findAll($criteria);
+
+					$branch_arr = [];
+					foreach ($branch as $key => $val_branch) {
+						$branch_arr[] = $val_branch->position_id;
+					}
+					$result_branch_arr = array_unique( $branch_arr );
+					$result_pos_arr = array_unique( $posback_arr );
+
+					$criteria = new CDbCriteria;
+					$criteria->with = array('profile');
+					$criteria->compare('department_id',$dep_arr);
+					$criteria->compare('superuser',0);
+					if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+						$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+					}
+					if($Position){
+						$criteria->compare('position_id',$Position);
+					}else{
+						$criteria->compare('position_id',$pos_arr);	
+					}
+					if ($Leval) {
+						$criteria->compare('branch_id',$Leval);
+					}
+
+					$User = User::model()->findAll($criteria);
+
+					if (!empty($User)) {
+									?>
+									<h2 class="text-center">
+										<?php
+										if (Yii::app()->session['lang'] == 1) {
+											echo "Report";
+										} else {
+											echo "รายงานภาพ";
+										}
+										?>
+									</h2>
+									<?php
+    
+									$i = 1;
+									$datatable .= '<div class="report-table">';
+									$datatable .= '<div class="table-responsive w-100 t-regis-language">';
+									$datatable .= '<table class="table">';       
+									$datatable .= '<thead>';
+									$datatable .= '<tr>';
+									$datatable .= '<th>ลำดับ</th>';
+									$datatable .= '<th>ชื่อ - นามสกุล</th>';
+									$datatable .= '<th>ฝ่าย</th>';
+									$datatable .= '<th>แผนก</th>';
+									$datatable .= '</tr>'; 
+									$datatable .= '</thead>';
+									$datatable .= '<tbody>';
+				
+										foreach ($User as $key => $value) { 	
+
+											$datatable .= '<tr>';
+											$datatable .= '<td>'.$i++.'</td>';
+											$datatable .= '<td>'.$value->profile->firstname."  ".$value->profile->lastname.'</td>';
+											$datatable .= '<td>'.$value->department->dep_title.'</td>';
+											$datatable .= '<td>';
+											if ($value->position->position_title != "") {
+												$datatable .= $value->position->position_title;
+											}else{
+												$datatable .="-";
+											}
+											$datatable .= '</td>';										
+											$datatable .= '</tr>';
+										}			 
+
+									$datatable .= '</tbody>';
+									$datatable .= '</table>';
+									$datatable .= '</div>';
+									$datatable .= '</div>';
+
+
+									echo $datatable;
+								}else{
+									echo "<p>ไม่พบข้อมูล</p>";
+								}
+		}
+	}
 	
 	public function actionRegistershipData()
 	{
@@ -1359,8 +1493,7 @@ public function actionReportRegisterData()
 										?>
 									</h2>
 									<?php
-                  //if ($status != null) {
-
+    
 									$i = 1;
 									$datatable .= '<div class="report-table">';
 									$datatable .= '<div class="table-responsive w-100 t-regis-language">';
