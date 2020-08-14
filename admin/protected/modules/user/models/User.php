@@ -90,7 +90,7 @@ class User extends CActiveRecord
 			array('superuser, status, online_status,online_user,register_status', 'numerical', 'integerOnly'=>true),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'update'),
-			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,company_id, division_id,position_id,lastactivity,orgchart_lv2, group,idensearch,identification,station_id,supper_user_status,pic_cardid2,employee_id,typeuser,register_status,dateRang,user_id,nameSearch,note,not_passed, avatar, month,type_employee', 'safe', 'on'=>'search'),
+			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,company_id, division_id,position_id,lastactivity,orgchart_lv2, group,idensearch,identification,station_id,supper_user_status,pic_cardid2,employee_id,typeuser,register_status,dateRang,user_id,nameSearch,note,not_passed, avatar, month,type_employee, report_authority, branch_id', 'safe', 'on'=>'search'),
 			// array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
 			array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 			//array('confirmpass', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
@@ -147,7 +147,11 @@ class User extends CActiveRecord
             self::BELONGS_TO, 'OrgChart', array('id'=>'department_id')
         );
 
-        $relations['department'] = array(
+        $relations['branch'] = array(
+			self::BELONGS_TO, 'Branch', 'branch_id'
+		);
+
+		$relations['department'] = array(
 			self::BELONGS_TO, 'Department', array('department_id'=>'id')
 		);
 
@@ -265,6 +269,8 @@ class User extends CActiveRecord
 			'note' => 'หมายเหตุ',
 			'not_passed' => 'สาเหตุที่ไม่ผ่าน',
 			'month'=>'เดือน',
+			'report_authority'=>'สิทธิ์ Report',
+			'branch_id'=>'เลเวล',
 		);
 	}
 
@@ -284,7 +290,7 @@ class User extends CActiveRecord
                 'condition'=>'superuser=1',
             ),
             'notsafe'=>array(
-            	'select' => 'id, username, password, department_id, pic_user, email, activkey, create_at, superuser, status, online_status,online_user,company_id, division_id,position_id,orgchart_lv2,group,employee_id',
+            	'select' => 'id, username, password, department_idม branch_id, pic_user, email, activkey, create_at, superuser, status, online_status,online_user,company_id, division_id,position_id,orgchart_lv2,group,employee_id',
             ),
         );
     }
@@ -293,7 +299,7 @@ class User extends CActiveRecord
     {
         return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
             'alias'=>'user',
-            'select' => 'user.id, user.username, user.pic_user,user.station_id, user.department_id,user.company_id, user.division_id,user.position_id,user.auditor_id,user.bookkeeper_id, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.online_status, user.online_user, user.pic_cardid,lastactivity,group,user.identification,user.pic_cardid2,user.employee_id,user.avatar,user.register_status,user.note,user.not_passed',
+            'select' => 'user.id, user.username, user.pic_user,user.station_id, user.department_id, user.branch_id,user.company_id, user.division_id,user.position_id,user.auditor_id,user.bookkeeper_id, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.online_status, user.online_user, user.pic_cardid,lastactivity,group,user.identification,user.pic_cardid2,user.employee_id,user.avatar,user.register_status,user.note,user.not_passed',
         ));
     }
 
@@ -376,11 +382,13 @@ public function validateIdCard($attribute,$params){
         $criteria->compare('pic_user',$this->pic_user);
         $criteria->compare('station_id',$this->station_id);
         $criteria->compare('department_id',$this->department_id);
+        $criteria->compare('branch_id',$this->branch_id);
         $criteria->compare('email',$this->email,true);
         $criteria->compare('activkey',$this->activkey);
         $criteria->compare('create_at',$this->create_at);
         $criteria->compare('lastvisit_at',$this->lastvisit_at);
         $criteria->compare('lastactivity',$this->lastactivity);
+        $criteria->compare('report_authority',$this->report_authority);
         // $criteria->compare('superuser',$this->superuser);
         if(empty($this->supper_user_status)){
         	$criteria->compare('superuser',1);
@@ -423,11 +431,13 @@ public function validateIdCard($attribute,$params){
 	$criteria->compare('password',$this->password);
 	$criteria->compare('pic_user',$this->pic_user);
 	$criteria->compare('department_id',$this->department_id);
+	$criteria->compare('branch_id',$this->branch_id);
 	$criteria->compare('position_id',$this->position_id);
 	$criteria->compare('email',$this->email,true);
 	$criteria->compare('activkey',$this->activkey);
 	$criteria->compare('lastvisit_at',$this->lastvisit_at);
 	$criteria->compare('lastactivity',$this->lastactivity);
+	$criteria->compare('report_authority',$this->report_authority);
 	$criteria->compare('superuser',$this->superuser);
 	$criteria->compare('not_passed',$this->not_passed);
 	$criteria->compare('status',$this->status);
@@ -478,12 +488,14 @@ public function searchmembership()
 	$criteria->compare('password',$this->password);
 	$criteria->compare('pic_user',$this->pic_user);
 	$criteria->compare('department_id',$this->department_id);
+	$criteria->compare('branch_id',$this->branch_id);
 	$criteria->compare('position_id',$this->position_id);
 	$criteria->compare('email',$this->email,true);
 	$criteria->compare('activkey',$this->activkey);
 	//$criteria->compare('create_at',$this->create_at);
 	$criteria->compare('lastvisit_at',$this->lastvisit_at);
 	$criteria->compare('lastactivity',$this->lastactivity);
+	$criteria->compare('report_authority',$this->report_authority);
 	$criteria->compare('superuser',$this->superuser);
 	$criteria->compare('note',$this->note);
 	$criteria->compare('status',0);
@@ -543,12 +555,14 @@ public function searchmembership_personal()
 	$criteria->compare('password',$this->password);
 	$criteria->compare('pic_user',$this->pic_user);
 	$criteria->compare('department_id',$this->department_id);
+	$criteria->compare('branch_id',$this->branch_id);
 	$criteria->compare('position_id',$this->position_id);
 	$criteria->compare('email',$this->email,true);
 	$criteria->compare('activkey',$this->activkey);
 	//$criteria->compare('create_at',$this->create_at);
 	$criteria->compare('lastvisit_at',$this->lastvisit_at);
 	$criteria->compare('lastactivity',$this->lastactivity);
+	$criteria->compare('report_authority',$this->report_authority);
 	$criteria->compare('superuser',$this->superuser);
 	$criteria->compare('note',$this->note);
 	$criteria->compare('status',0);
@@ -609,12 +623,14 @@ public function searchmembership_personal()
 	$criteria->compare('password',$this->password);
 	$criteria->compare('pic_user',$this->pic_user);
 	$criteria->compare('department_id',$this->department_id);
+	$criteria->compare('branch_id',$this->branch_id);
 	$criteria->compare('position_id',$this->position_id);
 	$criteria->compare('email',$this->email,true);
 	$criteria->compare('activkey',$this->activkey);
 	$criteria->compare('create_at',$this->create_at,true);
 	$criteria->compare('lastvisit_at',$this->lastvisit_at);
 	$criteria->compare('lastactivity',$this->lastactivity);
+	$criteria->compare('report_authority',$this->report_authority);
 	$criteria->compare('superuser',$this->superuser);
 	$criteria->compare('not_passed',$this->not_passed);
 	$criteria->compare('status',$this->status);
@@ -664,12 +680,14 @@ public function searchaccessPersonal()
 	$criteria->compare('password',$this->password);
 	$criteria->compare('pic_user',$this->pic_user);
 	$criteria->compare('department_id',$this->department_id);
+	$criteria->compare('branch_id',$this->branch_id);
 	$criteria->compare('position_id',$this->position_id);
 	$criteria->compare('create_at',$this->create_at,true);
 	$criteria->compare('email',$this->email,true);
 	$criteria->compare('activkey',$this->activkey);
 	$criteria->compare('lastvisit_at',$this->lastvisit_at);
 	$criteria->compare('lastactivity',$this->lastactivity);
+	$criteria->compare('report_authority',$this->report_authority);
 	$criteria->compare('superuser',$this->superuser);
 	$criteria->compare('not_passed',$this->not_passed);
 	$criteria->compare('status',$this->status);

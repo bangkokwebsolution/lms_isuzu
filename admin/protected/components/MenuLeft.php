@@ -1903,6 +1903,43 @@ Class MenuLeft extends Controller
 	        	)
 	        ),
 
+
+	        array(	        	
+	        	'visible'=>self::PermissionsMenu(array(
+	        		'ReportAuthority.*'
+	        	)),
+	        	'label'=>'<i></i><span>กำหนดสิทธิ์ Report หน้าบ้าน</span>',
+	        	'url'=>'#ReportAuthority',
+	        	'linkOptions' => array('data-toggle' => 'collapse'),
+	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons user_add'),
+	        	'submenuOptions' => array('class' => self::SetSubMenu( array('ReportAuthority', ) ), 'id' => 'ReportAuthority'),
+	        	'active' => self::SetSubMenu( array('ReportAuthority', ) ,false),
+	        	'items'=>array(
+	        		array(	        			
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'ReportAuthority.Board',
+	        			)),
+	        			'label'=>'จัดการ ผู้บริหาร',
+	        			'url'=>array('//ReportAuthority/Board')
+	        		),
+	        		array(	        			
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'ReportAuthority.DivisionManager',
+	        			)),
+	        			'label'=>'จัดการ ผู้จัดการฝ่าย',
+	        			'url'=>array('//ReportAuthority/DivisionManager')
+	        		),
+	        		array(	        			
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'ReportAuthority.DepartmentManager',
+	        			)),
+	        			'label'=>'จัดการ ผู้จัดการแผนก',
+	        			'url'=>array('//ReportAuthority/DepartmentManager')
+	        		),
+	        	)
+	        ),
+
+
 	        array(
 	        	
 	        	'visible'=>self::PermissionsMenu(array(
