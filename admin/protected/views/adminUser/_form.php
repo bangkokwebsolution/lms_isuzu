@@ -192,21 +192,21 @@ date_default_timezone_set("Asia/Bangkok");
                                         <?php echo $form->textField($model, 'username', array('class' => 'form-control', 'placeholder' => 'ชื่อผู้ใช้ (Email)')); ?>
                                         <?php echo $form->error($model, 'username'); ?>
                                     </div>
-                                     <div class="form-group">
+                              <!--        <div class="form-group">
                                         <label>
                                             <label><label for="User_email" class="required">อีเมล</label></label>
                                         </label>
                                         <?php echo $form->textField($model, 'email', array('class' => 'form-control', 'placeholder' => 'อีเมลล์')); ?>
                                         <?php echo $form->error($model, 'email'); ?>
-                                    </div>
-
+                                    </div> -->
+<!-- 
                                     <div class="form-group">
                                         <label>
                                             <label><label for="Profile_identification" class="required">รหัสบัตรประชาชน</label></label>
                                         </label>
                                         <?php echo $form->textField($profile, 'identification', array('class' => 'form-control','placeholder' => 'รหัสบัตรประชาชน','oninput' => 'fillfield(this.value)')); ?>
                                         <?php echo $form->error($profile, 'identification'); ?>
-                                    </div>
+                                    </div> -->
                                     <div class="row">
                                     <?php if($model->isNewRecord) { ?>
                                         <div class="col-md-6">
@@ -261,7 +261,7 @@ date_default_timezone_set("Asia/Bangkok");
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                <!--  <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <label><?php echo $form->labelEx($profile, 'tel'); ?></label>
@@ -269,7 +269,7 @@ date_default_timezone_set("Asia/Bangkok");
                                                 <?php echo $form->error($profile, 'tel'); ?>
                                             </div>
                                         </div>  
-                                    </div>
+                                    </div> -->
                                     
                                     <div class="row">
                                         <!-- <?php
