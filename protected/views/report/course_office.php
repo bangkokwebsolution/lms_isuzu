@@ -186,11 +186,12 @@
                                             ?>
                                         </option>
                                         <?php 
+                                        $department = "";
                                         foreach ($model_department as $key => $value) {
                                             // if(Yii::app()->session['lang'] != 1){
                                             //     $value->id = $value->parent_id;
                                             // }
-                        ?> <option <?php if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] == $value->id){ echo "selected"; } ?> value="<?= $value->id?>"><?= $value->dep_title ?></option> <?php
+                        ?> <option <?php if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] == $value->id){ echo "selected"; $department = $_GET["search"]["department"];} ?> value="<?= $value->id?>"><?= $value->dep_title ?></option> <?php
                                         }
                                          ?>
                                     </select>
@@ -388,7 +389,7 @@
                                         ?>
                                         </option>
                                         <?php 
-                                        for ($i=($year_start+1); $i<=$year_end ; $i++) {
+                                        for ($i=($year_start+1); $i<$year_end ; $i++) {
                                             ?> <option <?php if(isset($_GET["search"]["end_year"]) && $_GET["search"]["end_year"] == $i){ echo "selected"; } ?> value="<?= $i ?>"><?= $i ?></option> <?php
                                         }
                                          ?>
@@ -894,7 +895,7 @@
                 if(data != ""){
                     $("#search_position").html(data);
                     $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกเลเวล"; }else{ echo "Select Level"; } ?></option>");
-                    if("<?= $position ?>" != "" && department_id != "" && department_id == "<?= $position ?>"){
+                    if("<?= $position ?>" != "" && department_id != "" && department_id == "<?= $department ?>"){
                         select_position();
                     }
                 }

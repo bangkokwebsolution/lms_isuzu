@@ -350,7 +350,7 @@
                                         ?>
                                         </option>
                                         <?php 
-                                        for ($i=($year_start+1); $i<=$year_end ; $i++) {
+                                        for ($i=($year_start+1); $i<$year_end ; $i++) {
                                             ?> <option <?php if(isset($_GET["search"]["end_year"]) && $_GET["search"]["end_year"] == $i){ echo "selected"; } ?> value="<?= $i ?>"><?= $i ?></option> <?php
                                         }
                                          ?>
