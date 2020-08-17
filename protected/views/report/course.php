@@ -272,7 +272,7 @@
                                         </option>
                                         <?php 
                                         $position = "";
-                                        if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] != ""){
+                                        if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] != "" || ($authority == 2  && $_GET["search"]["position"] != "")){
                                             $position = $_GET["search"]["position"];
                                             ?>
                                             <script type="text/javascript">
@@ -1037,7 +1037,7 @@
                     $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกเลเวล"; }else{ echo "Select Level"; } ?></option>");
                     
 
-                    if("<?= $position ?>" != "" && department_id != "" && department_id == "<?= $department ?>"){
+                    if("<?= $position ?>" != "" && department_id != "" && department_id == "<?= $department ?>" || ("<?= $authority ?>" == 2 && "<?= $position ?>" != "")){
                         select_position();
                     }
                 }
@@ -1061,7 +1061,7 @@
     }else{  
         var position_id = $("#search_position option:selected").val();
     }
-
+    
         $.ajax({
             type: 'POST',
             url: '<?php echo Yii::app()->createAbsoluteUrl("/report/getLevel"); ?>',
@@ -1071,7 +1071,7 @@
             success: function(data) {
                 if(data != ""){
                     $("#search_level").html(data);
-                    if("<?= $level ?>" != ""){
+                    if("<?= $level ?>" != "" ){
                         select_level();
                     }
                 }

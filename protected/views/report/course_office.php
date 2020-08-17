@@ -222,7 +222,7 @@
                                         </option>
                                         <?php 
                                         $position = "";
-                                        if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] != ""){
+                                        if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] != "" || ($authority == 2  && $_GET["search"]["position"] != "")){
                                             $position = $_GET["search"]["position"];
                                             ?>
                                             <script type="text/javascript">
@@ -895,7 +895,7 @@
                 if(data != ""){
                     $("#search_position").html(data);
                     $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกเลเวล"; }else{ echo "Select Level"; } ?></option>");
-                    if("<?= $position ?>" != "" && department_id != "" && department_id == "<?= $department ?>"){
+                    if("<?= $position ?>" != "" && department_id != "" && department_id == "<?= $department ?>" || ("<?= $authority ?>" == 2 && "<?= $position ?>" != "")){
                         select_position();
                     }
                 }

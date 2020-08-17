@@ -220,7 +220,7 @@
                                         </option>
                                         <?php 
                                         $position = "";
-                                        if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] != ""){
+                                        if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] != "" || ($authority == 2  && $_GET["search"]["position"] != "")){
                                             $position = $_GET["search"]["position"];
                                             ?>
                                             <script type="text/javascript">
