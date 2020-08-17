@@ -355,9 +355,12 @@
             </li>
         <?php }
 
-        //if(Yii::app()->user->id){ 
+        if(Yii::app()->user->id){  
+            $user_login = User::model()->findByPk(Yii::app()->user->id);
+            $authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 
+            if($authority == 1 || $authority == 2 || $authority == 3){
             ?>
-           <!--  <li class="">
+            <li class="">
                 <a href="<?= $this->createUrl("report/index") ?>">
                     <?php 
                     if(Yii::app()->session['lang'] == 1){
@@ -368,10 +371,8 @@
                     ?>
 
                 </a>
-            </li> -->
-            <?php
-          //  }
-                ?>
+            </li>
+            <?php } } ?>
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i></a>
