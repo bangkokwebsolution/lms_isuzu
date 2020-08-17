@@ -2722,6 +2722,16 @@ public function actionCourseCaptain(){ // อบรม คนเรือ
     	$model_department = [];
     }    
 
+    if($authority == 2){
+    	$model_position = Position::model()->findAll(array(
+    		'condition' => 'active=:active AND department_id=:department_id AND lang_id=:lang_id',
+    		'params' => array(':active'=>'y',':department_id'=>$user_login->department_id,':lang_id'=>1),
+    		'order' => 'position_title ASC'
+    	));
+    }else{
+    	$model_position = [];
+    }
+
     $year_start = LogStartcourse::model()->find(array(
     	'condition' => 'active=:active',
     	'params' => array(':active'=>'y'),
@@ -2770,10 +2780,16 @@ public function actionCourseCaptain(){ // อบรม คนเรือ
 
     	if($_GET["search"]["course_id"] != ""){
     		$criteria->compare('t.course_id', $_GET["search"]["course_id"]);
-    	}
 
-    	if($_GET["search"]["gen_id"] != ""){
-    		$criteria->compare('t.gen_id', $_GET["search"]["gen_id"]);
+    		$model_gen = CourseGeneration::model()->findAll(array(
+    			'condition' => 'active=:active AND course_id=:course_id',
+    			'params' => array(':active'=>'y', ':course_id'=>$_GET["search"]["course_id"]),
+    			'order' => 'gen_title ASC'    	
+    		));
+
+    		if($_GET["search"]["gen_id"] != ""){    			
+    			$criteria->compare('t.gen_id', $_GET["search"]["gen_id"]);    			
+    		}
     	}
 
     	if($authority == 2 || $authority == 3){ // ผู้จัดการฝ่าย
@@ -2781,14 +2797,20 @@ public function actionCourseCaptain(){ // อบรม คนเรือ
     	}
     	if($_GET["search"]["department"] != ""){
     		$criteria->compare('user.department_id', $_GET["search"]["department"]);
-    	}
 
-    	if($authority == 3){ // ผู้จัดการแผนก
-    		$_GET["search"]["position"] = $user_login->position_id;
-    	}
-    	if($_GET["search"]["position"] != ""){
-    		$criteria->compare('user.position_id', $_GET["search"]["position"]);
-    	}
+$model_position = Position::model()->findAll(array(
+	'condition' => 'active=:active AND department_id=:department_id AND lang_id=:lang_id',
+	'params' => array(':active'=>'y',':department_id'=>$_GET["search"]["department"],':lang_id'=>1),
+	'order' => 'position_title ASC'
+));
+
+    		if($authority == 3){ // ผู้จัดการแผนก
+    			$_GET["search"]["position"] = $user_login->position_id;
+    		}
+    		if($_GET["search"]["position"] != ""){
+    			$criteria->compare('user.position_id', $_GET["search"]["position"]);
+    		}
+    	}    	
 
     	$arr_count_course = [];
     	$arr_course_title = [];
@@ -2858,7 +2880,9 @@ public function actionCourseCaptain(){ // อบรม คนเรือ
 
 		$this->render('course_captain', array(
 	        'model_course'=>$model_course,
+	        'model_gen'=>$model_gen,	        
 	        'model_department'=>$model_department,
+	        'model_position'=>$model_position,	        
 	        'year_start'=>$year_start,
 	        'year_end'=>$year_end,
 	        'model_search'=>$model_search,
@@ -2874,6 +2898,7 @@ public function actionCourseCaptain(){ // อบรม คนเรือ
 	$this->render('course_captain', array(
         'model_course'=>$model_course,
         'model_department'=>$model_department,
+        'model_position'=>$model_position,
         'year_start'=>$year_start,
         'year_end'=>$year_end,
         'authority'=>$authority,
@@ -2921,6 +2946,26 @@ public function actionCourseOffice(){ // อบรม office
     	));
     }else{
     	$model_department = [];
+    }
+
+    if($authority == 2){
+    	$model_position = Position::model()->findAll(array(
+    		'condition' => 'active=:active AND department_id=:department_id AND lang_id=:lang_id',
+    		'params' => array(':active'=>'y',':department_id'=>$user_login->department_id,':lang_id'=>1),
+    		'order' => 'position_title ASC'
+    	));
+    }else{
+    	$model_position = [];
+    }
+
+    if($authority == 3){
+    	$model_level = Branch::model()->findAll(array(
+    		'condition' => 'active=:active AND position_id=:position_id AND lang_id=:lang_id',
+    		'params' => array(':active'=>'y',':position_id'=>$user_login->position_id,':lang_id'=>1),
+    		'order' => 'branch_name ASC'
+    	));
+    }else{
+    	$model_level = [];
     }
 
     $year_start = LogStartcourse::model()->find(array(
@@ -2971,29 +3016,41 @@ public function actionCourseOffice(){ // อบรม office
 
     	if($_GET["search"]["course_id"] != ""){
     		$criteria->compare('t.course_id', $_GET["search"]["course_id"]);
-    	}
 
-    	if($_GET["search"]["gen_id"] != ""){
-    		$criteria->compare('t.gen_id', $_GET["search"]["gen_id"]);
-    	}
+    		if($_GET["search"]["gen_id"] != ""){
+    			$criteria->compare('t.gen_id', $_GET["search"]["gen_id"]);
+    		}
+    	}    	
 
     	if($authority == 2 || $authority == 3){ // ผู้จัดการฝ่าย
     		$_GET["search"]["department"] = $user_login->department_id;
     	}
     	if($_GET["search"]["department"] != ""){
     		$criteria->compare('user.department_id', $_GET["search"]["department"]);
-    	}
 
-    	if($authority == 3){ // ผู้จัดการแผนก
-    		$_GET["search"]["position"] = $user_login->position_id;
-    	}
-    	if($_GET["search"]["position"] != ""){
-    		$criteria->compare('user.position_id', $_GET["search"]["position"]);
-    	}
+    		$model_position = Position::model()->findAll(array(
+    			'condition' => 'active=:active AND department_id=:department_id AND lang_id=:lang_id',
+    			'params' => array(':active'=>'y',':department_id'=>$_GET["search"]["department"],':lang_id'=>1),
+    			'order' => 'position_title ASC'
+    		));
 
-    	if($_GET["search"]["level"] != ""){
-    		$criteria->compare('user.branch_id', $_GET["search"]["level"]);
-    	}
+    		if($authority == 3){ // ผู้จัดการแผนก
+    			$_GET["search"]["position"] = $user_login->position_id;
+    		}
+    		if($_GET["search"]["position"] != ""){
+    			$criteria->compare('user.position_id', $_GET["search"]["position"]);
+
+$model_level = Branch::model()->findAll(array(
+	'condition' => 'active=:active AND position_id=:position_id AND lang_id=:lang_id',
+	'params' => array(':active'=>'y',':position_id'=>$_GET["search"]["position"],':lang_id'=>1),
+	'order' => 'branch_name ASC'
+));    			
+
+    			if($_GET["search"]["level"] != ""){
+    				$criteria->compare('user.branch_id', $_GET["search"]["level"]);
+    			}
+    		}
+    	} 
 
     	$arr_count_course = [];
     	$arr_course_title = [];
@@ -3059,11 +3116,13 @@ public function actionCourseOffice(){ // อบรม office
     			$arr_course_title[$value->course_id] = $course_model->course_title;
     		}
     	}
-    	
 
 		$this->render('course_office', array(
 	        'model_course'=>$model_course,
+        	'model_gen'=>$model_gen,
 	        'model_department'=>$model_department,
+	        'model_position'=>$model_position,
+        	'model_level'=>$model_level,
 	        'year_start'=>$year_start,
 	        'year_end'=>$year_end,
 	        'model_search'=>$model_search,
@@ -3079,6 +3138,8 @@ public function actionCourseOffice(){ // อบรม office
 	$this->render('course_office', array(
         'model_course'=>$model_course,
         'model_department'=>$model_department,
+        'model_position'=>$model_position,
+        'model_level'=>$model_level,
         'year_start'=>$year_start,
         'year_end'=>$year_end,
         'authority'=>$authority,

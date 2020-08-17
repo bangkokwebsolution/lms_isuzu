@@ -14,7 +14,6 @@
 <script type="text/javascript">
     var num_chart = 0;
 </script>
-
  <?php 
     $path_file_2 = Yii::app()->basePath;
     $path_file = "http:\\\\thorconn.com";
@@ -22,14 +21,6 @@
     $path_file_2 = explode("\\", $path_file_2);
     $path_file_2 = implode("\\\\", $path_file_2);
  ?>
-<?php 
-    if($authority == 2){
-        $_GET["search"]["department"] = $user_login->department_id;
-    }elseif($authority == 3){
-        $_GET["search"]["position"] = $user_login->position_id;
-    }
-?>
-
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-main">
@@ -115,29 +106,35 @@
                                             ?>
                                     </label>
                                     <select class="form-control" name="search[gen_id]" id="search_gen_id">
-                                        <option value="" selected>
+                                        <option value="">
                                             <?php 
-                                                if(Yii::app()->session['lang'] != 1){
-                                                    echo "เลือกรุ่นของหลักสูตร";
-                                                }else{
-                                                    echo "Select Gen";
-                                                    // echo "Select Course Generation";
-                                                }
+                                            if(Yii::app()->session['lang'] != 1){
+                                                echo "เลือกรุ่นของหลักสูตร";
+                                            }else{
+                                                echo "Select Gen";
+                                            }
                                             ?>
                                         </option>
-                                        <?php 
-                                        $gen_id = "";
-                                        if(isset($_GET["search"]["course_id"]) && $_GET["search"]["course_id"] != ""){
-                                            $gen_id = $_GET["search"]["gen_id"];
-                                            ?>
-                                            <script type="text/javascript">
-                                                $( document ).ready(function() {
-                                                    change_gen();
-                                                });                                                
-                                            </script>
-                                            <?php
-                                        } 
-                                        ?>
+<?php 
+if(isset($model_gen) && !empty($model_gen)){
+    ?>
+    <option value="0">
+        <?php 
+        if(Yii::app()->session['lang'] != 1){
+            echo "ไม่มีรุ่น";
+        }else{
+            echo "No Gen";
+        }
+        ?>
+    </option>
+    <?php
+    foreach ($model_gen as $key => $value) {
+        ?>
+        <option value="<?= $value->gen_id ?>" <?php if(isset($_GET["search"]["gen_id"]) && $_GET["search"]["gen_id"] == $value->gen_id){ echo "selected"; } ?> ><?= $value->gen_title ?></option>
+        <?php
+    }
+}
+ ?>
                                     </select>
                                 </div>
                             </div>
@@ -178,7 +175,7 @@
                                         ?>
                                     </label>
                                     <select class="form-control" name="search[department]" id="search_department" onchange="change_position();">
-                                        <option value="" selected>
+                                        <option value="">
                                             <?php 
                                                 if(Yii::app()->session['lang'] != 1){
                                                     echo "เลือกแผนก";
@@ -209,28 +206,24 @@
                                         ?>
                                     </label>                                    
                                     <select class="form-control" name="search[position]" id="search_position">
-                                        <option value="" selected>
+                                        <option value="">
                                             <?php 
-                                        if(Yii::app()->session['lang'] != 1){
-                                            echo "เลือกตำแหน่ง";
-                                        }else{
-                                            echo "Select Position";
-                                        }
-                                        ?>
-                                        </option>
-                                        <?php 
-                                        $position = "";
-                                        if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] != "" || ($authority == 2  && $_GET["search"]["position"] != "")){
-                                            $position = $_GET["search"]["position"];
+                                            if(Yii::app()->session['lang'] != 1){
+                                                echo "เลือกตำแหน่ง";
+                                            }else{
+                                                echo "Select Position";
+                                            }
                                             ?>
-                                            <script type="text/javascript">
-                                                $( document ).ready(function() {
-                                                    change_position();
-                                                });                                                
-                                            </script>
-                                            <?php
-                                        } 
-                                        ?>
+                                        </option>
+<?php 
+if(isset($model_position) && !empty($model_position)){
+    foreach ($model_position as $key => $value) {
+        ?>
+        <option value="<?= $value->id ?>" <?php if(isset($_GET["search"]["position"]) && $_GET["search"]["position"] == $value->id){ echo "selected"; } ?> ><?= $value->position_title ?></option>
+        <?php
+    }
+}
+?>
                                     </select>
                                 </div>
                             </div>
@@ -432,16 +425,12 @@
                         var chart = new google.visualization.ColumnChart(document.getElementById("chart_bar"));
                         google.visualization.events.addListener(chart, 'ready', function () {
                             $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
-                                // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
                                 var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;                                
                                 $("#result_search_graph").append("<img src='"+url_chart+"' >");
                                 var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
                                 $("#chart_graph").append("<img src='"+url_chart_2+"' >");
                             });
                             num_chart = num_chart+1;
-
-
-                            // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
                         });
                         chart.draw(view, options);
                     }
@@ -480,10 +469,8 @@
 
                       var chart = new google.visualization.PieChart(document.getElementById('chart_pie'));
                       google.visualization.events.addListener(chart, 'ready', function () {
-                        // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
 
                         $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
-                            // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
                             var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
                             $("#result_search_graph").append("<img src='"+url_chart+"' >");
                             var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
@@ -607,12 +594,11 @@
 
 </div> <!-- export excel -->
 
-        <div class="pull-right ">
-            <!-- <a class="btn btn-pdf" href="<?=$this->createUrl('report/ExportPDF')?>" target="blank_"><i class="fas fa-file-pdf"></i> Export PDF</a> -->
-            <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
-            
-            <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button>
-        </div>
+<div class="pull-right ">
+    <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
+    <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button>
+</div>
+
     <?php }else{ // ไม่ค้นหา ช่วงเวลา ?>
         <!-- ค้นหาแบบ ช่วงเวลา -->
         <?php if(isset($_GET["search"]["graph"]) && !empty($_GET["search"]["graph"])){ ?>
@@ -661,9 +647,8 @@
                                         };
                                         var chart = new google.visualization.ColumnChart(document.getElementById("chart_bar"));
                                         google.visualization.events.addListener(chart, 'ready', function () {
-                                            // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
                                             $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
-                                                // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                                                
                                                 var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
                                                 $("#result_search_graph").append("<img src='"+url_chart+"' >");
                                                 var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
@@ -704,9 +689,9 @@
 
                                         var chart = new google.visualization.PieChart(document.getElementById('chart_pie'));
                                         google.visualization.events.addListener(chart, 'ready', function () {
-                                            // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
+                                           
                                             $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
-                                                // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                                                
                                                 var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
                                                 $("#result_search_graph").append("<img src='"+url_chart+"' >");
                                                 var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
@@ -738,9 +723,6 @@
 
     <?php } // }else{ // ไม่ค้นหา ช่วงเวลา ?>
 <?php } // if(isset($_GET["search"] ?>
-
-
-   
 
 </section>
 </div>
@@ -783,7 +765,7 @@
     $("#search_end_date").change(function () {
         var first = new Date($("#search_start_date").val());
         var current = new Date($(this).val());
-        // console.log(first.getTime() +">"+ current.getTime());
+
         if (first.getTime() > current.getTime()) {
             alert("ไม่สามารถเลือกช่วงเวลาสิ้นสุดมากกว่าช่วงเวลาเริ่มต้นได้");
             $(this).val("");
@@ -819,18 +801,10 @@
             success: function(data) {
                 if(data != ""){
                     $("#search_gen_id").html(data);
-                    if("<?= $gen_id ?>" != ""){
-                        select_gen();
-                    }
                 }
             }
         });
     }
-
-    function select_gen(){
-        $("#search_gen_id").val("<?= $gen_id ?>");
-    }
-
 
     function change_position(){
         var department_id = $("#search_department option:selected").val();
@@ -843,16 +817,9 @@
             success: function(data) {
                 if(data != ""){
                     $("#search_position").html(data);
-                    if("<?= $position ?>" != ""){
-                        select_position();
-                    }
                 }
             }
         });
-    }
-
-     function select_position(){
-        $("#search_position").val("<?= $position ?>");
     }
 
     function chk_form_search(){
@@ -860,6 +827,7 @@
 
         var start_year = $("#search_start_year").val();
         var end_year = $("#search_end_year").val();
+
         if(end_year != "" && start_year == ""){
             status_pass =2;
             alert("กรุณาเลือกช่วงปีเริ่มต้น");
@@ -875,9 +843,9 @@
             $("#search_end_year").removeClass('form-control-danger');
         }
 
-
         var start_date = $("#search_start_date").val();
         var end_date = $("#search_end_date").val();
+
         if(end_date != "" && start_date == ""){
             status_pass =2;
             alert("กรุณาเลือกช่วงเวลาเริ่มต้น");
@@ -893,21 +861,9 @@
             $("#search_end_date").removeClass('form-control-danger');
         }
 
-
         if(status_pass == 1){
             $("#form_search").submit();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 
 </script>
