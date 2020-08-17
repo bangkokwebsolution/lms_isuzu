@@ -2357,15 +2357,35 @@ public function actionReportRegisterData()
 			'order' => 'course_title ASC'
 		));
 
-		if($authority == 1){
-			$model_department = Department::model()->findAll(array(
-				'condition' => 'active=:active AND lang_id=:lang_id AND type_employee_id=:type_id',
-	    	'params' => array(':active'=>'y', ':lang_id'=>1, ':type_id'=>1), //1=เรือ 2=office
-	    	'order' => 'dep_title ASC'    	
-	    ));
-		}else{
+		// if($authority == 1){
+		// 	$model_department = Department::model()->findAll(array(
+		// 		'condition' => 'active=:active AND lang_id=:lang_id AND type_employee_id=:type_id',
+	 //    	'params' => array(':active'=>'y', ':lang_id'=>1, ':type_id'=>1), //1=เรือ 2=office
+	 //    	'order' => 'dep_title ASC'    	
+	 //    ));
+		// }else{
 			$model_department = [];
-		}    
+		// }
+
+		if($authority == 2){
+			$model_position = Position::model()->findAll(array(
+				'condition' => 'active=:active AND department_id=:department_id AND lang_id=:lang_id',
+				'params' => array(':active'=>'y',':department_id'=>$user_login->department_id,':lang_id'=>1),
+				'order' => 'position_title ASC'
+			));
+		}else{
+			$model_position = [];
+		}
+
+		if($authority == 3){
+			$model_level = Branch::model()->findAll(array(
+				'condition' => 'active=:active AND position_id=:position_id AND lang_id=:lang_id',
+				'params' => array(':active'=>'y',':position_id'=>$user_login->position_id,':lang_id'=>1),
+				'order' => 'branch_name ASC'
+			));
+		}else{
+			$model_level = [];
+		}
 
 		$year_start = LogStartcourse::model()->find(array(
 			'condition' => 'active=:active',
@@ -2390,6 +2410,13 @@ public function actionReportRegisterData()
 
 			if($_GET["search"]["course_id"] != ""){
     			$search_course = CourseOnline::model()->findAll("active='y' AND lang_id=1 AND course_id='".$_GET["search"]["course_id"]."'");
+
+$model_gen = CourseGeneration::model()->findAll(array(
+	'condition' => 'active=:active AND course_id=:course_id',
+	'params' => array(':active'=>'y', ':course_id'=>$_GET["search"]["course_id"]),
+	'order' => 'gen_title ASC'    	
+));
+
     		}else{
     			$search_course = CourseOnline::model()->findAll(array(
     				'condition' => 'active=:active AND lang_id=:lang_id',
@@ -2431,21 +2458,11 @@ if($_GET["search"]["gen_id"] != ""){
 			}
 		}
 	}
-	// $gen_0 = count($gen_all);
-	// $gen_all[$gen_0] = 0;
 
 }
     				// else{
     					if(!empty($gen_all)){
-
-    						// var_dump("<pre>");
-    						// var_dump($gen_all);
-    						// exit();
     						foreach ($gen_all as $key_cg => $value_cg) {
-    							// if($value_cg->active == 'y'){
- //    								var_dump("<pre>");
-	// var_dump($gen_all);
-	// exit();
     								$arr_course_gen[$key_c]["gen"][$key_gen]["gen_id"] = $value_cg;
 
 $criteria = new CDbCriteria;
@@ -2463,6 +2480,13 @@ if($_GET["search"]["employee"] != ""){
 	}else{
 		$criteria->addCondition('pro.type_employee IS NOT NULL');
 	}
+
+$model_department = Department::model()->findAll(array(
+	'condition' => 'active=:active AND lang_id=:lang_id AND type_employee_id=:type_id',
+    'params' => array(':active'=>'y', ':lang_id'=>1, ':type_id'=>$_GET["search"]["employee"]),
+    'order' => 'dep_title ASC'    	
+ ));
+
 }else{
 	$criteria->addCondition('pro.type_employee IS NOT NULL');
 }
@@ -2472,17 +2496,29 @@ if($authority == 2 || $authority == 3){ // ผู้จัดการฝ่า�
 }
 if($_GET["search"]["department"] != ""){
 	$criteria->compare('user.department_id', $_GET["search"]["department"]);
-}
 
-if($authority == 3){ // ผู้จัดการแผนก
-	$_GET["search"]["position"] = $user_login->position_id;
-}
-if($_GET["search"]["position"] != ""){
-	$criteria->compare('user.position_id', $_GET["search"]["position"]);
-}
+	$model_position = Position::model()->findAll(array(
+		'condition' => 'active=:active AND department_id=:department_id AND lang_id=:lang_id',
+		'params' => array(':active'=>'y',':department_id'=>$_GET["search"]["department"],':lang_id'=>1),
+		'order' => 'position_title ASC'
+	));
 
-if($_GET["search"]["level"] != ""){
-	$criteria->compare('user.branch_id', $_GET["search"]["level"]);
+	if($authority == 3){ // ผู้จัดการแผนก
+		$_GET["search"]["position"] = $user_login->position_id;
+	}
+	if($_GET["search"]["position"] != ""){
+		$criteria->compare('user.position_id', $_GET["search"]["position"]);
+
+		$model_level = Branch::model()->findAll(array(
+			'condition' => 'active=:active AND position_id=:position_id AND lang_id=:lang_id',
+			'params' => array(':active'=>'y',':position_id'=>$_GET["search"]["position"],':lang_id'=>1),
+			'order' => 'branch_name ASC'
+		));
+
+		if($_GET["search"]["level"] != ""){
+			$criteria->compare('user.branch_id', $_GET["search"]["level"]);
+		}
+	}
 }
 
 if($_GET["search"]["start_date"] != "" && $_GET["search"]["end_date"] != ""){
@@ -2538,17 +2574,7 @@ $arr_course_graph[$value_c->course_id]["pass"] = $arr_course_graph[$value_c->cou
     				// }
 
     			} //foreach ($search_course
-
-
-    			// var_dump("<pre>");
-    		// var_dump($arr_course_graph);
-    			// var_dump($arr_course_gen);
-    			// exit();
     		} //if(!empty($search_course))
-
-
-
-
 
 }else{ // if(isset($_GET["search"]["end_year"])  // ช่วงปี
 
@@ -2575,6 +2601,12 @@ $arr_course_graph[$value_c->course_id]["pass"] = $arr_course_graph[$value_c->cou
 							}else{
 								$criteria->addCondition('pro.type_employee IS NOT NULL');
 							}
+$model_department = Department::model()->findAll(array(
+	'condition' => 'active=:active AND lang_id=:lang_id AND type_employee_id=:type_id',
+	'params' => array(':active'=>'y', ':lang_id'=>1, ':type_id'=>$_GET["search"]["employee"]),
+	'order' => 'dep_title ASC'    	
+));
+
 						}else{
 							$criteria->addCondition('pro.type_employee IS NOT NULL');
 						}
@@ -2588,17 +2620,31 @@ $arr_course_graph[$value_c->course_id]["pass"] = $arr_course_graph[$value_c->cou
 						}
 						if($_GET["search"]["department"] != ""){
 							$criteria->compare('user.department_id', $_GET["search"]["department"]);
-						}
+
+$model_position = Position::model()->findAll(array(
+	'condition' => 'active=:active AND department_id=:department_id AND lang_id=:lang_id',
+	'params' => array(':active'=>'y',':department_id'=>$_GET["search"]["department"],':lang_id'=>1),
+	'order' => 'position_title ASC'
+));
 
 						if($authority == 3){ // ผู้จัดการแผนก
 							$_GET["search"]["position"] = $user_login->position_id;
 						}
 						if($_GET["search"]["position"] != ""){
 							$criteria->compare('user.position_id', $_GET["search"]["position"]);
+
+$model_level = Branch::model()->findAll(array(
+	'condition' => 'active=:active AND position_id=:position_id AND lang_id=:lang_id',
+	'params' => array(':active'=>'y', ':position_id'=>$_GET["search"]["position"], ':lang_id'=>1),
+	'order' => 'branch_name ASC'
+));
+
+							if($_GET["search"]["level"] != ""){
+								$criteria->compare('user.branch_id', $_GET["search"]["level"]);
+							}
+
 						}
 
-						if($_GET["search"]["level"] != ""){
-							$criteria->compare('user.branch_id', $_GET["search"]["level"]);
 						}
 
 						$criteria->compare('t.start_date', ">=".$_GET["search"]["start_year"]."-01-01"." 00:00:00");
@@ -2642,14 +2688,12 @@ if(!empty($LogStartcourse)){
 } // ช่วงปี
 
 
-
-// var_dump("<pre>");
-// var_dump($arr_course_year); exit();
-
-
     		$this->render('course', array(
     			'model_course'=>$model_course,
+    			'model_gen'=>$model_gen,
     			'model_department'=>$model_department,
+    			'model_position'=>$model_position,
+    			'model_level'=>$model_level,
     			'year_start'=>$year_start,
     			'year_end'=>$year_end,
     			'authority'=>$authority,
@@ -2666,13 +2710,11 @@ if(!empty($LogStartcourse)){
 
 
 
-
-
-
-
 		$this->render('course', array(
 			'model_course'=>$model_course,
 			'model_department'=>$model_department,
+			'model_position'=>$model_position,
+			'model_level'=>$model_level,
 			'year_start'=>$year_start,
 			'year_end'=>$year_end,
 			'authority'=>$authority,

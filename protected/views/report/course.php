@@ -125,19 +125,26 @@
                                                 }
                                             ?>
                                         </option>
-                                        <?php 
-                                        $gen_id = "";
-                                        if(isset($_GET["search"]["course_id"]) && $_GET["search"]["course_id"] != ""){
-                                            $gen_id = $_GET["search"]["gen_id"];
-                                            ?>
-                                            <script type="text/javascript">
-                                                $( document ).ready(function() {
-                                                    change_gen();
-                                                });                                                
-                                            </script>
-                                            <?php
-                                        } 
-                                        ?>
+<?php 
+if(isset($model_gen) && !empty($model_gen)){
+    ?>
+    <option value="0">
+        <?php 
+        if(Yii::app()->session['lang'] != 1){
+            echo "ไม่มีรุ่น";
+        }else{
+            echo "No Gen";
+        }
+        ?>
+    </option>
+    <?php
+    foreach ($model_gen as $key => $value) {
+        ?>
+        <option value="<?= $value->gen_id ?>" <?php if(isset($_GET["search"]["gen_id"]) && $_GET["search"]["gen_id"] == $value->gen_id){ echo "selected"; } ?> ><?= $value->gen_title ?></option>
+        <?php
+    }
+}
+?>
                                     </select>
                                 </div>
                             </div>
@@ -156,10 +163,7 @@
                                         <input <?php if(isset($_GET["search"]["graph"]) && in_array("bar", $_GET["search"]["graph"])){ echo "checked"; } ?> type="checkbox" name="search[graph][]" id="search_graph_bar" value="bar">
                                         <label for="search_graph_bar" class="text-black">Bar Graph </label>
                                     </div>
-                                    <!-- <div class="checkbox checkbox-main checkbox-inline">
-                                        <input <?php if(isset($_GET["search"]["graph"]) && in_array("pie", $_GET["search"]["graph"])){ echo "checked"; } ?> type="checkbox" name="search[graph][]" id="search_graph_pie" value="pie">
-                                        <label for="search_graph_pie" class="text-black">Pie Charts </label>
-                                    </div> -->
+
                                 </div>
                             </div>
 
@@ -231,19 +235,15 @@
                                                 }
                                             ?>
                                         </option>
-                                        <?php 
-                                        $department = "";
-                                        if(isset($_GET["search"]["employee"]) && $_GET["search"]["employee"] != ""){
-                                            $department = $_GET["search"]["department"];
-                                            ?>
-                                            <script type="text/javascript">
-                                                $( document ).ready(function() {
-                                                    change_department();
-                                                });                                                
-                                            </script>
-                                            <?php
-                                        } 
-                                        ?>
+<?php 
+if(isset($model_department) && !empty($model_department)){
+    foreach ($model_gen as $key => $value) {
+        ?>
+        <option <?php if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] == $value->id){ echo "selected"; $department = $_GET["search"]["department"];} ?> value="<?= $value->id?>"><?= $value->dep_title ?></option> 
+        <?php
+    }
+}
+?>
                                     </select>
                                 </div>
                             </div>
@@ -270,23 +270,20 @@
                                         }
                                         ?>
                                         </option>
-                                        <?php 
-                                        $position = "";
-                                        if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] != "" || ($authority == 2  && $_GET["search"]["position"] != "")){
-                                            $position = $_GET["search"]["position"];
-                                            ?>
-                                            <script type="text/javascript">
-                                                $( document ).ready(function() {
-                                                    change_position();
-                                                });                                                
-                                            </script>
-                                            <?php
-                                        } 
-                                        ?>
+<?php 
+if(isset($model_position) && !empty($model_position)){
+    foreach ($model_position as $key => $value) {
+        ?>
+        <option value="<?= $value->id ?>" <?php if(isset($_GET["search"]["position"]) && $_GET["search"]["position"] == $value->id){ echo "selected"; } ?> ><?= $value->position_title ?></option>
+        <?php
+    }
+}
+?>
                                     </select>
                                 </div>
                             </div>
                             <?php } ?>
+<?php if($authority == 1 || ( ($authority == 2 || $authority == 3) && $user_login->profile->type_employee == 2) ){ ?>
                             <div class="col-sm-3 col-md-3 col-xs-12" id="div_search_level">
                                 <div class="form-group">
                                     <label for="search_level">
@@ -308,42 +305,19 @@
                                             }
                                             ?>
                                         </option>
-                                        <?php 
-                                        $level = "";
-                                        if(isset($_GET["search"]["position"]) && $_GET["search"]["position"] != ""){
-                                            $level = $_GET["search"]["level"];
-                                            ?>
-                                            <script type="text/javascript">
-                                                $( document ).ready(function() {
-                                                    change_level();
-                                                });                                                
-                                            </script>
-                                            <?php
-                                        } 
-                                        ?>
+<?php 
+if(isset($model_level) && !empty($model_level)){
+    foreach ($model_level as $key => $value) {
+        ?>
+        <option value="<?= $value->id ?>" <?php if(isset($_GET["search"]["level"]) && $_GET["search"]["level"] == $value->id){ echo "selected"; } ?> ><?= $value->branch_name ?></option>
+        <?php
+    }
+}
+?>
                                     </select>
                                 </div>
                             </div>
-                            <!-- <div class="col-md-3 col-lg-3 col-xs-12">
-                                <div class="form-group">
-                                    <label for="search_fullname">
-                                        <?php 
-                                        // if(Yii::app()->session['lang'] != 1){
-                                        //     echo "ค้นหาตามชื่อ-นามสกุล";
-                                        // }else{
-                                        //     echo "Search Fullname";
-                                        // }
-                                        ?>
-                                    </label>
-                                    <input class="form-control" placeholder="<?php 
-                                        // if(Yii::app()->session['lang'] != 1){
-                                        //     echo "ชื่อ-นามสกุล";
-                                        // }else{
-                                        //     echo "Fullname";
-                                        // }
-                                        ?>" name="search[fullname]" id="search_fullname" type="text" value="<?php //if(isset($_GET["search"]["fullname"])){ echo $_GET["search"]["fullname"]; } ?>">
-                                </div>
-                            </div> -->
+                        <?php } ?>
                         </div>
                         <div class="row">
                             <div class="col-md-3 col-sm-6 col-xs-12">
@@ -488,60 +462,40 @@
                     </div>
                     <script type="text/javascript">
 
-                        google.charts.load("current", {packages:['bar']});
+                        google.charts.load("current", {packages:['corechart']});
                         google.charts.setOnLoadCallback(drawChart);
                         function drawChart() {
                           var data = google.visualization.arrayToDataTable([
-                            ["หลักสูตร", "ผู้สมัคร", "คนจบ" ],
+                            ["หลักสูตร", "คนสมัคร", "เรียนจบ" ],
                             <?php 
-                            // $color = Helpers::lib()->ColorCode();
-                            // $no_c = 0;
                             foreach ($model_graph as $key => $value) {
                                 if($value["register"] > 0){
-                                // if(!isset($color[$no_c])){
-                                //     $color[$no_c] = "silver";
-                                // }
-                                    echo "['".$value["title"]."', ".$value["register"].", ".$value["pass"]."],";
-                                // $no_c++;
+                                    echo "['".$value["title"]."', ".$value["register"].", ".$value["pass"]." ],";
                                 }
                             } 
                             ?>
-
-                            ]);
-
-                          var view = new google.visualization.DataView(data);
-                          view.setColumns([0, 1,
-                           { calc: "stringify",
-                           sourceColumn: 1,
-                           type: "string",
-                           role: "annotation" },
-                           2]);
+                          ]);
 
                           var options = {
-                            bar: {groupWidth: "95%"},
-                            legend: { position: "none" },
+                            seriesType: 'bars',
+                            bar: {groupWidth: "75%"},
+                            legend: { position: "right" },
                         };
 
-                        var chart = new google.charts.Bar(document.getElementById('chart_bar'));
+                        var chart = new google.visualization.ComboChart(document.getElementById('chart_bar'));
 
-                        chart.draw(data, google.charts.Bar.convertOptions(options));
+google.visualization.events.addListener(chart, 'ready', function () {
+    $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
 
+        var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
+        $("#result_search_graph").append("<img src='"+url_chart+"' >");
+        var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
+        $("#chart_graph").append("<img src='"+url_chart_2+"' >");
+    });
+    num_chart = num_chart+1;
+});
 
-                        // var chart = new google.visualization.ColumnChart(document.getElementById("chart_bar"));
-                        // google.visualization.events.addListener(chart, 'ready', function () {
-                        //     $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
-                        //         // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
-                        //         var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;                                
-                        //         $("#result_search_graph").append("<img src='"+url_chart+"' >");
-                        //         var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
-                        //         $("#chart_graph").append("<img src='"+url_chart_2+"' >");
-                        //     });
-                        //     num_chart = num_chart+1;
-
-
-                        //     // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
-                        // });
-                        // chart.draw(view, options);
+chart.draw(data, options);
                     }
                 </script>
                 </div>
@@ -550,53 +504,7 @@
             <?php
         }
 
-        if(isset($_GET["search"]["graph"]) && in_array("pie", $_GET["search"]["graph"])){
-        ?>
-            <div class="col-sm-6">
-                <div class="year-report">
-                    <h4>Pie Charts</h4>
-                    <div style="width:100%">
-                        <div id="chart_pie"></div>
-                    </div>
-                    <script type="text/javascript">
-                      google.charts.load('current', {'packages':['corechart']});
-                      google.charts.setOnLoadCallback(drawChart);
-
-                      function drawChart() {
-
-                        var data = google.visualization.arrayToDataTable([
-                          ['หลักสูตร', 'ผู้สมัคร'],
-                          <?php 
-                            foreach ($arr_count_course as $key => $value) {
-                                echo "['".$arr_course_title[$key]."', ".$value."],";
-                            } 
-                            ?>
-                          ]);
-
-                        var options = {
-                          // title: 'Pie Charts'
-                      };
-
-                      var chart = new google.visualization.PieChart(document.getElementById('chart_pie'));
-                      google.visualization.events.addListener(chart, 'ready', function () {
-                        // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
-
-                        $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
-                            // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
-                            var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
-                            $("#result_search_graph").append("<img src='"+url_chart+"' >");
-                            var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
-                            $("#chart_graph").append("<img src='"+url_chart_2+"' >");
-                        });
-                        num_chart = num_chart+1;
-                    });
-                      chart.draw(data, options);
-                  }
-              </script>
-                </div>
-            </div>
-        <?php
-        }
+        
         ?>
         </div>
         <!-- จบ กราฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟ -->
@@ -741,12 +649,10 @@
 
 </div> <!-- export excel -->
 
-        <div class="pull-right ">
-            <!-- <a class="btn btn-pdf" href="<?=$this->createUrl('report/ExportPDF')?>" target="blank_"><i class="fas fa-file-pdf"></i> Export PDF</a> -->
-            <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
-            
-            <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button>
-        </div>
+<div class="pull-right ">
+    <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
+    <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button>
+</div>
     <?php }else{ // ไม่ค้นหา ช่วงเวลา ?>
         <!-- ค้นหาแบบ ช่วงเวลา -->
         <?php if(isset($_GET["search"]["graph"]) && !empty($_GET["search"]["graph"])){ ?>
@@ -764,22 +670,19 @@
                                         <div id="chart_bar"></div>
                                     </div>
                                     <script type="text/javascript">
-                                        google.charts.load("current", {packages:['bar']});
+                                        google.charts.load("current", {packages:['corechart']});
                                         google.charts.setOnLoadCallback(drawChart);
                                         function drawChart() {
                                           var data = google.visualization.arrayToDataTable([
-                                            ["หลักสูตร", "ผู้สมัคร", "คนจบ" ],
+                                            ["หลักสูตร", "คนสมัคร", "เรียนจบ" ],
                                             <?php 
                                             $color = Helpers::lib()->ColorCode();
                                             $no_c = 0;
                                             foreach ($value_y as $key => $value) {
                                                 if($value["register"] > 0){
                                                     $course = CourseOnline::model()->findByPk($key);
-                                                // if(!isset($color[$no_c])){
-                                                //     $color[$no_c] = "silver";
-                                                // }
                                                 echo "['".$course->course_title."', ".$value["register"].", ".$value["pass"]."],";
-                                                // $no_c++;
+                                                
                                                 }
                                             } 
                                             ?>
@@ -794,30 +697,26 @@
                                            role: "annotation" },
                                            2]);
 
-                                          var options = {
-                                            bar: {groupWidth: "95%"},
-                                            legend: { position: "none" },
-                                        };
+                          var options = {
+                            seriesType: 'bars',
+                            bar: {groupWidth: "75%"},
+                            legend: { position: "right" },
+                        };
 
+var chart = new google.visualization.ComboChart(document.getElementById('chart_bar'));
 
-                                        var chart = new google.charts.Bar(document.getElementById('chart_bar'));
+google.visualization.events.addListener(chart, 'ready', function () {
+    $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
 
-                        chart.draw(data, google.charts.Bar.convertOptions(options));
+        var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
+        $("#result_search_graph").append("<img src='"+url_chart+"' >");
+        var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
+        $("#chart_graph").append("<img src='"+url_chart_2+"' >");
+    });
+    num_chart = num_chart+1;
+});
 
-                                        // var chart = new google.visualization.Bar(document.getElementById("chart_bar"));
-                                        // google.visualization.events.addListener(chart, 'ready', function () {
-                                        //     // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
-                                        //     $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
-                                        //         // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
-                                        //         var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
-                                        //         $("#result_search_graph").append("<img src='"+url_chart+"' >");
-                                        //         var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
-                                        //         $("#chart_graph").append("<img src='"+url_chart_2+"' >");
-                                        //     });
-                                        //     num_chart = num_chart+1;
-                                        // });
-                                        // chart.draw(data, google.charts.Bar.convertOptions(options));
-                                        // chart.draw(view, options);
+chart.draw(data, options);
                                     }
                                 </script>
                             </div>
@@ -826,48 +725,6 @@
 
                        <?php } // in_array("bar",
 
-                        if(isset($_GET["search"]["graph"]) && in_array("pie", $_GET["search"]["graph"])){ ?>
-                            <div class="col-sm-6">
-                                <div class="year-report">
-                                    <h4>ปี <?= $key_y ?></h4>
-                                    <div style="width:100%">
-                                        <div id="chart_pie"></div>
-                                    </div>
-                                    <script type="text/javascript">
-                                      google.charts.load('current', {'packages':['corechart']});
-                                      google.charts.setOnLoadCallback(drawChart);
-
-                                      function drawChart() {
-
-                                        var data = google.visualization.arrayToDataTable([
-                                          ['หลักสูตร', 'ผู้สมัคร'],
-                                          <?php 
-                                          foreach ($value_y as $key => $value) {
-                                            echo "['".$arr_course_title[$key]."', ".$value."],";
-                                        } 
-                                        ?>
-                                        ]);
-
-                                        var options = { };
-
-                                        var chart = new google.visualization.PieChart(document.getElementById('chart_pie'));
-                                        google.visualization.events.addListener(chart, 'ready', function () {
-                                            // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
-                                            $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
-                                                // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
-                                                var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
-                                                $("#result_search_graph").append("<img src='"+url_chart+"' >");
-                                                var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
-                                                $("#chart_graph").append("<img src='"+url_chart_2+"' >");
-                                            });
-                                            num_chart = num_chart+1;
-                                        });
-                                        chart.draw(data, options);
-                                    }
-                                </script>
-                            </div>
-                        </div>
-                     <?php   } // in_array("pie",
                     } //foreach ($arr_count_course
                      ?>
                 </div>
@@ -967,20 +824,9 @@
             success: function(data) {
                 if(data != ""){
                     $("#search_gen_id").html(data);
-                    if("<?= $gen_id ?>" != ""){
-                        select_gen();
-                    }
                 }
             }
         });
-    }
-
-    var status_gen = 1
-    function select_gen(){
-        if(status_gen == 1){
-            $("#search_gen_id").val("<?= $gen_id ?>");
-            status_gen = 2;
-        }
     }
 
     function change_department(){
@@ -1001,20 +847,9 @@
                     $("#search_department").html(data);
                     $("#search_position").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกตำแหน่ง"; }else{ echo "Select Position"; } ?></option>");
                     $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกเลเวล"; }else{ echo "Select Level"; } ?></option>");
-                    if("<?= $department ?>" != ""){
-                        select_department();
-                    }
                 }
             }
         });
-    }
-
-    var status_department = 1
-     function select_department(){
-        if(status_department == 1){
-            status_department = 2;
-            $("#search_department").val("<?= $department ?>");
-        }
     }
 
     function change_position(){
@@ -1035,24 +870,10 @@
                 if(data != ""){
                     $("#search_position").html(data);
                     $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกเลเวล"; }else{ echo "Select Level"; } ?></option>");
-                    
-
-                    if("<?= $position ?>" != "" && department_id != "" && department_id == "<?= $department ?>" || ("<?= $authority ?>" == 2 && "<?= $position ?>" != "")){
-                        select_position();
-                    }
                 }
             }
         });
     }
-
-    var status_position = 1
-     function select_position(){
-        if(status_position == 1){
-            status_position = 2;
-            $("#search_position").val("<?= $position ?>");
-        }
-    }
-
 
     function change_level(){      
     if(check_position == 1 && "<?= $position ?>" != ""){
@@ -1071,20 +892,9 @@
             success: function(data) {
                 if(data != ""){
                     $("#search_level").html(data);
-                    if("<?= $level ?>" != "" ){
-                        select_level();
-                    }
                 }
             }
         });
-    }
-
-    var status_level = 1
-     function select_level(){
-        if(status_level == 1){
-            $("#search_level").val("<?= $level ?>");
-            status_level = 2;
-        }
     }
 
     function chk_form_search(){
@@ -1125,21 +935,9 @@
             $("#search_end_date").removeClass('form-control-danger');
         }
 
-
         if(status_pass == 1){
             $("#form_search").submit();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 
 </script>
