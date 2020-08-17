@@ -30,8 +30,11 @@ $Chart = $data['Chart'];
 <body>
 	<div class="row">
 		<div class="col-sm-12">
-			<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint.png"; ?>">
-			<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint1.png"; ?>"> 
+			<?php if ($Chart === "accommodation=Bar_Graph") { ?>
+			<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint.png"; ?>" width="500" height="auto">
+		  	<?php }else if($Chart === "accommodation=Pie_Charts"){ ?>
+			<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint1.png"; ?>" width="500" height="auto"> 
+			<?php } ?>
 		</div><br>
 	</div>
 	<?php

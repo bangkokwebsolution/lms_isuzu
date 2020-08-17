@@ -1,24 +1,15 @@
-<?php
-$strExcelFileName = "รายงานภาพคนสมัครสมาชิกคนประจำเรือ-" . date('Ymd-His') . ".xls";
-header("Content-Type: application/x-msexcel; name=\"" . $strExcelFileName . "\"");
-header("Content-Disposition: inline; filename=\"" . $strExcelFileName . "\"");
-header('Content-Type: text/plain; charset=UTF-8');
-header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("Content-Type: application/force-download");
-header("Content-Type: application/octet-stream");
-header("Content-Type: application/download");
-header("Pragma:no-cache");
 
-		$Department = $data['Department'];
-		$Position = $data['Position'];
-		$Leval = $data['Leval'];
-		$datetime_start = $data['datetime_start'];
-		$datetime_end = $data['datetime_end'];
-		$Year_start = $data['Year_start'];
-		$Year_end = $data['Year_end'];
-		$Chart = $data['Chart'];
-		$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
-		$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
+<?php
+$Department = $data['Department'];
+$Position = $data['Position'];
+$Leval = $data['Leval'];
+$datetime_start = $data['datetime_start'];
+$datetime_end = $data['datetime_end'];
+$Year_start = $data['Year_start'];
+$Year_end = $data['Year_end'];
+$Chart = $data['Chart'];
+$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
+$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
 
 ?>
 <!DOCTYPE html>

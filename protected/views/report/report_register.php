@@ -426,16 +426,49 @@ $(document).ready(function(){
 
                         },
                         success: function(data) {
-                            if (Chart === "accommodation=Bar_Graph" || Chart === "accommodation=Pie_Charts") {
+                           if (Year_start === 'undefined' || Year_end === 'undefined' || Year_start === null || Year_end === null) {
+          
+                            if (Chart === "accommodation=Bar_Graph") {
+                              
+                            $('.Graph_1').show();
+                            $('.Graph_2').hide();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+
+                            }else if (Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") {
                             $('.Graph_1').show();
                             $('.Graph_2').show();
                             $('.Graph_3').hide();
                             $('.Graph_4').hide();
+
+                            }else if (Chart === "accommodation=Pie_Charts") {
+                            $('.Graph_1').hide();
+                            $('.Graph_2').show();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+                      
+                            }
+                             }else{
+
+                            if (Chart === "accommodation=Bar_Graph") {
+                            $('.Graph_1').show();
+                            $('.Graph_2').show();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+                      
                             }else if (Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") {
                             $('.Graph_1').show();
                             $('.Graph_2').show();
                             $('.Graph_3').show();
                             $('.Graph_4').show();
+
+                            }else if (Chart === "accommodation=Pie_Charts") {
+                            $('.Graph_1').show();
+                            $('.Graph_2').show();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+                      
+                            }
                             }
                 
                            $(".dataTable").html(data);
