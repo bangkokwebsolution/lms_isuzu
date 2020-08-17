@@ -615,7 +615,15 @@ if(isset($model_level) && !empty($model_level)){
                                     <td><?= $value->mem->position->position_title ?></td>
                                     <td><?= $value->mem->branch->branch_name ?></td>
                                     <td><?= $value->course->course_title ?></td>
-                                    <td><?= $value->gen->gen_title ?></td>
+                                    <td>
+                                        <?php 
+                                        if($value->gen->gen_title == ""){
+                                            echo "-";
+                                        }else{
+                                            echo $value->gen->gen_title;
+                                        }
+                                        ?>
+                                    </td>
                                 </tr>
                                 <?php
                             } // foreach search
