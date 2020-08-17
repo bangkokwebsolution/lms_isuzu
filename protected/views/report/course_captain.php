@@ -566,7 +566,15 @@ if(isset($model_position) && !empty($model_position)){
                                     <td><?= $value->mem->department->dep_title ?></td>
                                     <td><?= $value->mem->position->position_title ?></td>
                                     <td><?= $value->course->course_title ?></td>
-                                    <td><?= $value->gen->gen_title ?></td>
+                                    <td>
+                                        <?php 
+                                        if($value->gen->gen_title == ""){
+                                            echo "-";
+                                        }else{
+                                            echo $value->gen->gen_title;
+                                        }
+                                        ?>
+                                    </td>
                                 </tr>
                                 <?php
                             } // foreach search
