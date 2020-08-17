@@ -120,22 +120,22 @@
                             <div class="col-md-3 col-sm-6 col-xs-12">
                                 <div class="form-group day-icon">
                                     <i class="far fa-calendar-alt"></i>
-                                    <label><?= Yii::app()->session['lang'] == 1?'Start date':'ช่วงเวลาเริ่มต้น'; ?></label>
-                                    <input class="form-control datetimepicker" autocomplete="off" placeholder="<?= Yii::app()->session['lang'] == 1?'Start date':'ช่วงเวลาเริ่มต้น'; ?>" type="text" name="" id="datetime_start">
+                                    <label><?= Yii::app()->session['lang'] == 1?'Datetime start':'ช่วงเวลาเริ่มต้น'; ?></label>
+                                    <input class="form-control datetimepicker" autocomplete="off" placeholder="<?= Yii::app()->session['lang'] == 1?'Datetime start':'ช่วงเวลาเริ่มต้น'; ?>" type="text" name="" id="datetime_start">
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6 col-xs-12">
                                 <div class="form-group day-icon">
                                     <i class="far fa-calendar-alt"></i>
-                                    <label><?= Yii::app()->session['lang'] == 1?'End date':'ช่วงเวลาสิ้นสุด'; ?></label>
-                                    <input class="form-control datetimepicker" autocomplete="off" placeholder="<?= Yii::app()->session['lang'] == 1?'End date':'ช่วงเวลาสิ้นสุด'; ?>" type="text" name="" id="datetime_end">
+                                    <label><?= Yii::app()->session['lang'] == 1?'Datetime end':'ช่วงเวลาสิ้นสุด'; ?></label>
+                                    <input class="form-control datetimepicker" autocomplete="off" placeholder="<?= Yii::app()->session['lang'] == 1?'Datetime end':'ช่วงเวลาสิ้นสุด'; ?>" type="text" name="" id="datetime_end">
                                 </div>
                             </div>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Start year':'ช่วงปีเริ่มต้น'; ?></label>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Year start':'ช่วงปีเริ่มต้น'; ?></label>
                                     <select class="form-control Year_start" name="" id="x">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Start year':'ช่วงปีเริ่มต้น'; ?></option>
+                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Year start':'ช่วงปีเริ่มต้น'; ?></option>
                                         <?php
                                         $starting_year  = 2019;
                                         $ending_year = date('Y');
@@ -151,9 +151,9 @@
                             </div>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'End year':'ช่วงปีสิ้นสุด'; ?></label>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Year end':'ช่วงปีสิ้นสุด'; ?></label>
                                     <select class="form-control Year_end" name="" id="x">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'End year':'ช่วงปีสิ้นสุด'; ?></option>
+                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Year end':'ช่วงปีสิ้นสุด'; ?></option>
                                         <?php
                                         $starting_year  = 2019;
                                         $ending_year = date('Y');
@@ -181,17 +181,6 @@
         <div class="divider">
             <i class="fas fa-chevron-down"></i>
         </div>
-
-        <h2 class="text-center">
-            <?php
-            if (Yii::app()->session['lang'] == 1) {
-                echo "Report office member application";
-            } else {
-                echo "รายงานภาพการสมัครสมาชิกคน Office";
-            }
-            ?>
-        </h2>
-        <br>
 
             <div class="row">
                     <div class="col-sm-6 col-md-6 Graph_1">
@@ -301,6 +290,14 @@ $(document).ready(function(){
             var datetime_end = $("#datetime_end").val();
             var Year_start = $(".Year_start").val();
             var Year_end = $(".Year_end").val();
+
+            var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+                if (Department == '' || Department === null) {
+                    var DepartmentAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Department type! ':'กรุณาเลือกประเภทฝ่ายพนักงาน!'; ?>";
+                        swal(alert_message,DepartmentAlert)
+                        return false; 
+            }
+               
 
                     $.ajax({
                         type: 'POST',

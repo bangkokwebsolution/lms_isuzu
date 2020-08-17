@@ -152,26 +152,27 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row">
                             <div class="col-md-3 col-sm-6 col-xs-12">
                                 <div class="form-group day-icon">
                                     <i class="far fa-calendar-alt"></i>
-                                    <label><?= Yii::app()->session['lang'] == 1?'Start date':'ช่วงเวลาเริ่มต้น'; ?></label>
-                                    <input class="form-control datetimepicker" autocomplete="off" placeholder="<?= Yii::app()->session['lang'] == 1?'Start date':'ช่วงเวลาเริ่มต้น'; ?>" type="text" name="" id="datetime_start">
+                                    <label><?= Yii::app()->session['lang'] == 1?'Datetime start':'ช่วงเวลาเริ่มต้น'; ?></label>
+                                    <input class="form-control datetimepicker" autocomplete="off" placeholder="<?= Yii::app()->session['lang'] == 1?'Datetime start':'ช่วงเวลาเริ่มต้น'; ?>" type="text" name="" id="datetime_start">
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6 col-xs-12">
                                 <div class="form-group day-icon">
                                     <i class="far fa-calendar-alt"></i>
-                                    <label><?= Yii::app()->session['lang'] == 1?'End date':'ช่วงเวลาสิ้นสุด'; ?></label>
-                                    <input class="form-control datetimepicker" autocomplete="off" placeholder="<?= Yii::app()->session['lang'] == 1?'End date':'ช่วงเวลาสิ้นสุด'; ?>" type="text" name="" id="datetime_end">
+                                    <label><?= Yii::app()->session['lang'] == 1?'Datetime end':'ช่วงเวลาสิ้นสุด'; ?></label>
+                                    <input class="form-control datetimepicker" autocomplete="off" placeholder="<?= Yii::app()->session['lang'] == 1?'Datetime end':'ช่วงเวลาสิ้นสุด'; ?>" type="text" name="" id="datetime_end">
                                 </div>
                             </div>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Start year':'ช่วงปีเริ่มต้น'; ?></label>
-                                    <select class="form-control Year_start" name="" id="x">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Start year':'ช่วงปีเริ่มต้น'; ?></option>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Year start':'ช่วงปีเริ่มต้น'; ?></label>
+                                    <select class="form-control year_start" name="" id="Year_start">
+                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Year start':'ช่วงปีเริ่มต้น'; ?></option>
                                         <?php
                                         $starting_year  = 2019;
                                         $ending_year = date('Y');
@@ -187,9 +188,9 @@
                             </div>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'End year':'ช่วงปีสิ้นสุด'; ?></label>
-                                    <select class="form-control Year_end" name="" id="x">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'End year':'ช่วงปีสิ้นสุด'; ?></option>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Year end':'ช่วงปีสิ้นสุด'; ?></label>
+                                    <select class="form-control year_end" name="" id="Year_end">
+                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Year end':'ช่วงปีสิ้นสุด'; ?></option>
                                         <?php
                                         $starting_year  = 2019;
                                         $ending_year = date('Y');
@@ -217,7 +218,6 @@
         <div class="divider">
             <i class="fas fa-chevron-down"></i>
         </div>
-
 
              <div class="row">
                     <div class="col-sm-6 col-md-6 Graph_1">
@@ -363,10 +363,9 @@ $(document).ready(function(){
                     var Chart = $('input[name="accommodation"]:checked').serialize();                    
                     var datetime_start = $("#datetime_start").val();
                     var datetime_end = $("#datetime_end").val();
-                    var Year_start = $(".Year_start").val();
-                    var Year_end = $(".Year_end").val();
+                    var Year_start = $(".year_start").val();
+                    var Year_end = $(".year_end").val();
                     
-
                     var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
                     if (TypeEmployee == '' || TypeEmployee === null) {
                           var TypeEmployeeAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select staff type! ':'กรุณาเลือกประเภทพนักงาน!'; ?>";
@@ -382,7 +381,9 @@ $(document).ready(function(){
                         } 
 
                     }
-                    //else if(Department == '' || Department === null) {
+
+                
+                    // else if(Department == '' || Department === null) {
                     //       var DepartmentAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select department! ':'กรุณาเลือกฝ่าย!'; ?>";
                     //       swal(alert_message,DepartmentAlert)
                     //       return false; 
