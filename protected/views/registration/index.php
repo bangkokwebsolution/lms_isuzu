@@ -1459,14 +1459,14 @@ function editNamehouse_registration(filedoc_id){
                         <div class="col-md-3 col-lg-3 col-xs-12">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_firstname; ?>(TH)<font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control firstname', 'placeholder' => $label->label_firstname,'onkeyup'=>"isThaichar(this.value,this)")); ?>
+                                <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control firstname', 'placeholder' => $label->label_firstname,'onkeyup'=>"isThaichar(this.value,this)", 'autocomplete' => 'off')); ?>
                                 <?php echo $form->error($profile, 'firstname', array('class' => 'error2')); ?>
                             </div>
                         </div>
                         <div class="col-md-3 col-lg-3 col-xs-12">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_lastname; ?>(TH)<font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control lastname', 'placeholder' => $label->label_lastname,'onkeyup'=>"isThaichar(this.value,this)")); ?>
+                                <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control lastname', 'placeholder' => $label->label_lastname,'onkeyup'=>"isThaichar(this.value,this)", 'autocomplete' => 'off')); ?>
                                 <?php echo $form->error($profile, 'lastname', array('class' => 'error2')); ?>
                                 <!--<input type="text" class="form-control" id="">-->
                             </div>
@@ -1488,14 +1488,14 @@ function editNamehouse_registration(filedoc_id){
                         <div class="col-md-3 col-lg-3 col-xs-12">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_firstname; ?>(EN)<font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'firstname_en', array('class' => 'form-control firstname_en', 'placeholder' => $label->label_firstname,'onkeyup'=>"isEngchar(this.value,this)")); ?>
+                                <?php echo $form->textField($profile, 'firstname_en', array('class' => 'form-control firstname_en', 'placeholder' => $label->label_firstname,'onkeyup'=>"isEngchar(this.value,this)", 'autocomplete' => 'off')); ?>
                                 <?php echo $form->error($profile, 'firstname_en', array('class' => 'error2')); ?>
                             </div>
                         </div>
                         <div class="col-md-3 col-lg-3 col-xs-12">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_lastname; ?>(EN)<font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'lastname_en', array('class' => 'form-control lastname_en', 'placeholder' => $label->label_lastname,'onkeyup'=>"isEngchar(this.value,this)")); ?>
+                                <?php echo $form->textField($profile, 'lastname_en', array('class' => 'form-control lastname_en', 'placeholder' => $label->label_lastname,'onkeyup'=>"isEngchar(this.value,this)", 'autocomplete' => 'off')); ?>
                                 <?php echo $form->error($profile, 'lastname_en', array('class' => 'error2')); ?>
                                 <!--<input type="text" class="form-control" id="">-->
                             </div>
