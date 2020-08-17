@@ -4407,8 +4407,9 @@ public function checkStepLesson($lesson){
 
 
         public function ColorCode(){
-            
+        
            $colorName = array(
+            "#CC99FF", "#A9D1F7", "#B4F0A7", "#FFF898", "#FFC588", "#FFB1B0", "#FF93F7",
             "#4B0082", "#0000FF", "#00FF00", "#FFFF00", "#FF7F00", " #FF0000",
             '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D', '#80B300', 
             '#809900', '#E6B3B3', '#6680B3', '#66991A', '#FF99E6', '#CCFF1A', 
