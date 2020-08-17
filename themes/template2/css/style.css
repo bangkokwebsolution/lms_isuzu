@@ -4714,7 +4714,7 @@ ol.stat-alert li::before {
 }
 
  #report-main .nav-tabs{
-   border-bottom:3px solid #010C65;
+   border-bottom:none;
  }
 
  #report-main .nav-tabs>li.active>a, #report-main .nav-tabs>li.active>a:focus, #report-main .nav-tabs>li.active>a:hover{
@@ -4759,6 +4759,12 @@ ol.stat-alert li::before {
 }
 #report-main .nav-tabs{
   font-size: 18px;
+  display: flex;
+  justify-content: center;
+}
+
+#report-main .nav-tabs>li{
+  border-bottom: 3px solid #010c65
 }
 
 .search-collapse .panel-heading{
