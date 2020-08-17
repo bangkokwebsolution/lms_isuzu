@@ -494,8 +494,8 @@
                           var data = google.visualization.arrayToDataTable([
                             ["หลักสูตร", "ผู้สมัคร", "คนจบ" ],
                             <?php 
-                            $color = Helpers::lib()->ColorCode();
-                            $no_c = 0;
+                            // $color = Helpers::lib()->ColorCode();
+                            // $no_c = 0;
                             foreach ($model_graph as $key => $value) {
                                 if($value["register"] > 0){
                                 // if(!isset($color[$no_c])){
@@ -675,6 +675,7 @@
                                 echo "Not Pass Percent";
                             }
                             ?></th>
+                            <!-- <th></th> -->
                         </tr>
                     </thead>
 
@@ -686,7 +687,12 @@
                                 $course = CourseOnline::model()->findByPk($value_c["course_id"]);
                                 if(!empty($value_c["gen"])){ // วนรุ่น
                                     foreach ($value_c["gen"] as $key_g => $value_g) {
+                                        if($value_g["register"] > 0){
                                 $gen_course = CourseGeneration::model()->findByPk($value_g["gen_id"]);
+
+                                        if($gen_course == ""){
+                                            $gen_course->gen_title = "-";
+                                        }
                                         ?>  
                                         <tr>
                                             <td><?php echo $no; $no++; ?></td>
@@ -696,10 +702,16 @@
                                             <td style="background-color: #ffb97f;"><?= $value_g["notlearn"] ?></td>
                                             <td style="background-color: #ffb97f;"><?= $value_g["learn"] ?></td>
                                             <td style="background-color: #90ee90;"><?= $value_g["pass"] ?></td>
-                                            <td style="background-color: #90ee90;"><?php if(is_nan($value_g["per_pass"])){ echo "-"; }else{ echo $value_g["per_pass"]."%"; } ?></td>
-                                            <td style="background-color: #ffb97f;"><?php if(is_nan($value_g["per_notpass"])){ echo "-"; }else{ echo $value_g["per_notpass"]."%"; } ?></td>
+                                            <td style="background-color: #90ee90;">
+                                                <?php if(is_nan($value_g["per_pass"])){ echo "-"; }else{ echo number_format($value_g["per_pass"], 2)."%"; } ?>
+                                                </td>
+                                            <td style="background-color: #ffb97f;">
+                                                <?php if(is_nan($value_g["per_notpass"])){ echo "-"; }else{ echo number_format($value_g["per_notpass"], 2)."%"; } ?>                                                    
+                                                </td>
+                                            <!-- <td><?= $value_g["user"] ?></td> -->
                                         </tr>
                                         <?php
+                                    }
                                     }
                                 }else{ // ไม่มีรุ่น หรือ รุ่นเดียว
 
@@ -741,29 +753,34 @@
 
                 <div class="row">
                     <?php 
-                    foreach ($arr_count_course as $key_y => $value_y) {                       
+                    foreach ($model_year as $key_y => $value_y) {                      
+
                         if(isset($_GET["search"]["graph"]) && in_array("bar", $_GET["search"]["graph"])){ ?>
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="year-report">
                                     <h4>ปี <?= $key_y ?></h4>
                                     <div style="width:100%">
                                         <div id="chart_bar"></div>
                                     </div>
                                     <script type="text/javascript">
-                                        google.charts.load("current", {packages:['corechart']});
+                                        google.charts.load("current", {packages:['bar']});
                                         google.charts.setOnLoadCallback(drawChart);
                                         function drawChart() {
                                           var data = google.visualization.arrayToDataTable([
-                                            ["หลักสูตร", "ผู้สมัคร", { role: "style" } ],
+                                            ["หลักสูตร", "ผู้สมัคร", "คนจบ" ],
                                             <?php 
                                             $color = Helpers::lib()->ColorCode();
                                             $no_c = 0;
                                             foreach ($value_y as $key => $value) {
-                                                if(!isset($color[$no_c])){
-                                                    $color[$no_c] = "silver";
+                                                if($value["register"] > 0){
+                                                    $course = CourseOnline::model()->findByPk($key);
+                                                // if(!isset($color[$no_c])){
+                                                //     $color[$no_c] = "silver";
+                                                // }
+                                                echo "['".$course->course_title."', ".$value["register"].", ".$value["pass"]."],";
+                                                // $no_c++;
                                                 }
-                                                echo "['".$arr_course_title[$key]."', ".$value.", '".$color[$no_c]."'],";
-                                                $no_c++;
                                             } 
                                             ?>
 
@@ -781,23 +798,32 @@
                                             bar: {groupWidth: "95%"},
                                             legend: { position: "none" },
                                         };
-                                        var chart = new google.visualization.ColumnChart(document.getElementById("chart_bar"));
-                                        google.visualization.events.addListener(chart, 'ready', function () {
-                                            // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
-                                            $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
-                                                // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
-                                                var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
-                                                $("#result_search_graph").append("<img src='"+url_chart+"' >");
-                                                var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
-                                                $("#chart_graph").append("<img src='"+url_chart_2+"' >");
-                                            });
-                                            num_chart = num_chart+1;
-                                        });
-                                        chart.draw(view, options);
+
+
+                                        var chart = new google.charts.Bar(document.getElementById('chart_bar'));
+
+                        chart.draw(data, google.charts.Bar.convertOptions(options));
+
+                                        // var chart = new google.visualization.Bar(document.getElementById("chart_bar"));
+                                        // google.visualization.events.addListener(chart, 'ready', function () {
+                                        //     // $("#chart_graph").append("<img src='"+chart.getImageURI()+"' val='"+chart.getImageURI().replace("data:image/png;base64,", "")+"'>");
+                                        //     $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
+                                        //         // var url_chart = "<?= $path_file ?>\\..\\uploads\\pic_chart\\"+json;
+                                        //         var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
+                                        //         $("#result_search_graph").append("<img src='"+url_chart+"' >");
+                                        //         var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
+                                        //         $("#chart_graph").append("<img src='"+url_chart_2+"' >");
+                                        //     });
+                                        //     num_chart = num_chart+1;
+                                        // });
+                                        // chart.draw(data, google.charts.Bar.convertOptions(options));
+                                        // chart.draw(view, options);
                                     }
                                 </script>
                             </div>
                         </div>
+                            <div class="col-sm-1"></div>
+
                        <?php } // in_array("bar",
 
                         if(isset($_GET["search"]["graph"]) && in_array("pie", $_GET["search"]["graph"])){ ?>
@@ -973,6 +999,8 @@
             success: function(data) {
                 if(data != ""){
                     $("#search_department").html(data);
+                    $("#search_position").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกตำแหน่ง"; }else{ echo "Select Position"; } ?></option>");
+                    $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกเลเวล"; }else{ echo "Select Level"; } ?></option>");
                     if("<?= $department ?>" != ""){
                         select_department();
                     }
