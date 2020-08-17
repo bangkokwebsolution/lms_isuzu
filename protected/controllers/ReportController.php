@@ -112,6 +112,430 @@ class ReportController extends Controller
 
 					$User = User::model()->findAll($criteria);
 
+					if (isset($pos)) {
+						
+						$data_division_start = '["Element", "Position", { role: "style" } ],';
+
+						$colorName = Helpers::lib()->ColorCode();	
+				
+						foreach ($pos as $key => $value) {
+							$name_dep = $value->position_title;
+							$criteria = new CDbCriteria;
+							if($Position){
+								$criteria->compare('position_id',$Position);
+							}else{
+								$criteria->compare('position_id',$value->id);	
+							}
+							if($Department){
+								$criteria->compare('department_id',$Department);
+							}
+							$criteria->compare('superuser',0);
+							if ($Year_start != null) {
+								$criteria->compare('YEAR(create_at)', $Year_start);
+							}
+							if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+								$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+							}
+
+							$users_count= Users::model()->findAll($criteria);
+							$count_dep = count($users_count);
+
+							$data_division_start .= '["'.$name_dep.'",'.$count_dep.',"'.$colorName[$key].'"],';
+							}
+						}
+						if (empty($pos)) {	
+						$data_division_start = '["Element", "Division", { role: "style" } ],';			
+							foreach ($dep as $key => $value) {
+									$name_dep = $value->dep_title;
+								$criteria = new CDbCriteria;
+								if($Position){
+									$criteria->compare('position_id',$Position);
+								}
+								if($Department){
+									$criteria->compare('department_id',$Department);
+								}
+								$criteria->compare('superuser',0);
+								if ($Year_start != null) {
+									$criteria->compare('YEAR(create_at)', $Year_start);
+								}
+								if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+									$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+								}
+
+								$users_count= Users::model()->findAll($criteria);
+								$count_dep = count($users_count);
+
+								$data_division_start .= '["'.$name_dep.'",'.$count_dep.',"'.$colorName[$key].'"],';
+							}
+						}
+
+						if (isset($pos)) {
+						
+						$data_division_end = '["Element", "Position", { role: "style" } ],';
+
+						$colorName = Helpers::lib()->ColorCode();	
+				
+						foreach ($pos as $key => $value) {
+							$name_dep = $value->position_title;
+							$criteria = new CDbCriteria;
+							if($Position){
+								$criteria->compare('position_id',$Position);
+							}else{
+								$criteria->compare('position_id',$value->id);	
+							}
+							if($Department){
+								$criteria->compare('department_id',$Department);
+							}
+							$criteria->compare('superuser',0);
+							if ($Year_end != null) {
+								$criteria->compare('YEAR(create_at)', $Year_end);
+							}
+							if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+								$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+							}
+
+							$users_count= Users::model()->findAll($criteria);
+							$count_dep = count($users_count);
+
+							$data_division_end .= '["'.$name_dep.'",'.$count_dep.',"'.$colorName[$key].'"],';
+							}
+						}
+						if (empty($pos)) {	
+						$data_division_end = '["Element", "Division", { role: "style" } ],';			
+							foreach ($dep as $key => $value) {
+									$name_dep = $value->dep_title;
+								$criteria = new CDbCriteria;
+								if($Position){
+									$criteria->compare('position_id',$Position);
+								}
+								if($Department){
+									$criteria->compare('department_id',$Department);
+								}
+								$criteria->compare('superuser',0);
+								if ($Year_end != null) {
+									$criteria->compare('YEAR(create_at)', $Year_end);
+								}
+								if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+									$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+								}
+
+								$users_count= Users::model()->findAll($criteria);
+								$count_dep = count($users_count);
+
+								$data_division_end .= '["'.$name_dep.'",'.$count_dep.',"'.$colorName[$key].'"],';
+							}
+						}
+					
+					if ($_POST['Year_start'] != null || $_POST['Year_end'] != null) {
+
+					if ($Chart === "accommodation=Bar_Graph") { ?>
+					<script>
+						google.charts.load("current", {packages:['corechart']});
+						google.charts.setOnLoadCallback(drawChart);
+						function drawChart() {
+							var data = google.visualization.arrayToDataTable([
+								<?=$data_division_start?>    
+								]);
+
+							var view = new google.visualization.DataView(data);
+							view.setColumns([0, 1,
+								{ calc: "stringify",
+								sourceColumn: 1,
+								type: "string",
+								role: "annotation" },
+								2]);
+
+							var options = {
+								title: <?=$Year_start?>,
+								width: 600,
+								height: 400,
+								bar: {groupWidth: "95%"},
+								legend: { position: "none" },
+							};
+							var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
+							google.visualization.events.addListener(chart, 'ready', function () {
+								$.post('<?=$this->createUrl('report/saveChart')?>',{name:'AttendPrint',image_base64:chart.getImageURI()},function(json){
+									var jsonObj = $.parseJSON( json );
+								});
+							});
+							chart.draw(view, options);
+						}
+
+					</script>
+					<script>
+
+						google.charts.load("current", {packages:['corechart']});
+						google.charts.setOnLoadCallback(drawChart);
+						function drawChart() {
+							var data = google.visualization.arrayToDataTable([
+								<?=$data_division_end?>
+								]);
+
+							var view = new google.visualization.DataView(data);
+							view.setColumns([0, 1,
+								{ calc: "stringify",
+								sourceColumn: 1,
+								type: "string",
+								role: "annotation" },
+								2]);
+
+							var options = {
+								title: <?=$Year_end?>,
+								width: 600,
+								height: 400,
+								bar: {groupWidth: "95%"},
+								legend: { position: "none" },
+							};
+							var chart = new google.visualization.ColumnChart(document.getElementById("chart_div2"));
+							google.visualization.events.addListener(chart, 'ready', function () {
+								$.post('<?=$this->createUrl('report/saveChart')?>',{name:'AttendPrint1',image_base64:chart.getImageURI()},function(json){
+									var jsonObj = $.parseJSON( json );
+								});
+							});
+							chart.draw(view, options);
+						}
+					</script>
+					<?php }else if ($Chart === "accommodation=Pie_Charts") {
+
+					?>
+					<script>
+						google.charts.load("current", {packages:["corechart"]});
+						google.charts.setOnLoadCallback(drawChart);
+						function drawChart() {
+							var data = google.visualization.arrayToDataTable([
+								<?=$data_division_start?>
+								]);
+							if (data) {}
+								var options = {
+									title: <?=$Year_start?>,
+									sliceVisibilityThreshold:0,
+									pieSliceText:'value',
+									is3D: true,
+								};
+
+								var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+								google.visualization.events.addListener(chart, 'ready', function () {
+									$.post('<?=$this->createUrl('report/saveChart')?>',{name:'AttendPrint3',image_base64:chart.getImageURI()},function(json){
+										var jsonObj = $.parseJSON( json );
+									});
+								});
+								chart.draw(data, options);
+							}
+						</script>
+						<script>
+							google.charts.load("current", {packages:["corechart"]});
+							google.charts.setOnLoadCallback(drawChart);
+							function drawChart() {
+								var data = google.visualization.arrayToDataTable([
+									<?=$data_division_end?>
+									]);
+
+								var options = {
+									title: <?=$Year_end?>,
+									sliceVisibilityThreshold:0,
+									pieSliceText:'value',
+									is3D: true,
+								};
+
+								var chart = new google.visualization.PieChart(document.getElementById('chart_div2'));
+								google.visualization.events.addListener(chart, 'ready', function () {
+									$.post('<?=$this->createUrl('report/saveChart')?>',{name:'AttendPrint4',image_base64:chart.getImageURI()},function(json){
+										var jsonObj = $.parseJSON( json );
+									});
+								});
+								chart.draw(data, options);
+							}
+						</script>
+					<?php
+				}else if($Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts"){ ?>
+					<script>
+						google.charts.load("current", {packages:['corechart']});
+						google.charts.setOnLoadCallback(drawChart);
+						function drawChart() {
+							var data = google.visualization.arrayToDataTable([
+								<?=$data_division_start?>    
+								]);
+
+							var view = new google.visualization.DataView(data);
+							view.setColumns([0, 1,
+								{ calc: "stringify",
+								sourceColumn: 1,
+								type: "string",
+								role: "annotation" },
+								2]);
+
+							var options = {
+								title: <?=$Year_start?>,
+								width: 600,
+								height: 400,
+								bar: {groupWidth: "95%"},
+								legend: { position: "none" },
+							};
+							var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
+							google.visualization.events.addListener(chart, 'ready', function () {
+								$.post('<?=$this->createUrl('report/saveChart')?>',{name:'AttendPrint',image_base64:chart.getImageURI()},function(json){
+									var jsonObj = $.parseJSON( json );
+								});
+							});
+							chart.draw(view, options);
+						}
+
+					</script>
+					<script>
+
+						google.charts.load("current", {packages:['corechart']});
+						google.charts.setOnLoadCallback(drawChart);
+						function drawChart() {
+							var data = google.visualization.arrayToDataTable([
+								<?=$data_division_end?>
+								]);
+
+							var view = new google.visualization.DataView(data);
+							view.setColumns([0, 1,
+								{ calc: "stringify",
+								sourceColumn: 1,
+								type: "string",
+								role: "annotation" },
+								2]);
+
+							var options = {
+								title: <?=$Year_end?>,
+								width: 600,
+								height: 400,
+								bar: {groupWidth: "95%"},
+								legend: { position: "none" },
+							};
+							var chart = new google.visualization.ColumnChart(document.getElementById("chart_div2"));
+							google.visualization.events.addListener(chart, 'ready', function () {
+								$.post('<?=$this->createUrl('report/saveChart')?>',{name:'AttendPrint1',image_base64:chart.getImageURI()},function(json){
+									var jsonObj = $.parseJSON( json );
+								});
+							});
+							chart.draw(view, options);
+						}
+					</script>
+					<script>
+						google.charts.load("current", {packages:["corechart"]});
+						google.charts.setOnLoadCallback(drawChart);
+						function drawChart() {
+							var data = google.visualization.arrayToDataTable([
+								<?=$data_division_start?>
+								]);
+							if (data) {}
+								var options = {
+									title: <?=$Year_start?>,
+									sliceVisibilityThreshold:0,
+									pieSliceText:'value',
+									is3D: true,
+								};
+
+								var chart = new google.visualization.PieChart(document.getElementById('chart_div3'));
+								google.visualization.events.addListener(chart, 'ready', function () {
+									$.post('<?=$this->createUrl('report/saveChart')?>',{name:'AttendPrint3',image_base64:chart.getImageURI()},function(json){
+										var jsonObj = $.parseJSON( json );
+									});
+								});
+								chart.draw(data, options);
+							}
+						</script>
+						<script>
+							google.charts.load("current", {packages:["corechart"]});
+							google.charts.setOnLoadCallback(drawChart);
+							function drawChart() {
+								var data = google.visualization.arrayToDataTable([
+									<?=$data_division_end?>
+									]);
+
+								var options = {
+									title: <?=$Year_end?>,
+									sliceVisibilityThreshold:0,
+									pieSliceText:'value',
+									is3D: true,
+								};
+
+								var chart = new google.visualization.PieChart(document.getElementById('chart_div4'));
+								google.visualization.events.addListener(chart, 'ready', function () {
+									$.post('<?=$this->createUrl('report/saveChart')?>',{name:'AttendPrint4',image_base64:chart.getImageURI()},function(json){
+										var jsonObj = $.parseJSON( json );
+									});
+								});
+								chart.draw(data, options);
+							}
+						</script>
+
+						<?php	
+					}
+
+					}else{
+
+						if ($Chart === "accommodation=Bar_Graph" || $Chart === "accommodation=Pie_Charts" || $Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") {
+							
+						?>
+						<script>
+							google.charts.load("current", {packages:['corechart']});
+							google.charts.setOnLoadCallback(drawChart);
+							function drawChart() {
+								var data = google.visualization.arrayToDataTable([
+									<?=$data_division_start?>    
+									]);
+
+								var view = new google.visualization.DataView(data);
+								view.setColumns([0, 1,
+									{ calc: "stringify",
+									sourceColumn: 1,
+									type: "string",
+									role: "annotation" },
+									2]);
+
+								var options = {
+									title: "รายงานภาพคนสมัครสมาชิกคนออฟฟิต",
+									width: 600,
+									height: 400,
+									bar: {groupWidth: "95%"},
+									legend: { position: "none" },
+								};
+								var chart = new google.visualization.ColumnChart(document.getElementById("chart_div"));
+								google.visualization.events.addListener(chart, 'ready', function () {
+									$.post('<?=$this->createUrl('report/saveChart')?>',{name:'AttendPrint',image_base64:chart.getImageURI()},function(json){
+										var jsonObj = $.parseJSON( json );
+									});
+								});
+								chart.draw(view, options);
+							}
+
+						</script>
+						<script>
+							google.charts.load("current", {packages:["corechart"]});
+							google.charts.setOnLoadCallback(drawChart);
+							function drawChart() {
+								var data = google.visualization.arrayToDataTable([
+									<?=$data_division_start?>
+									]);
+								if (data) {}
+									var options = {
+										title: "รายงานภาพคนสมัครสมาชิกคนออฟฟิต",
+										sliceVisibilityThreshold:0,
+										pieSliceText:'value',
+										is3D: true,
+									};
+
+									var chart = new google.visualization.PieChart(document.getElementById('chart_div2'));
+									google.visualization.events.addListener(chart, 'ready', function () {
+										$.post('<?=$this->createUrl('report/saveChart')?>',{name:'AttendPrint1',image_base64:chart.getImageURI()},function(json){
+											var jsonObj = $.parseJSON( json );
+										});
+									});
+									chart.draw(data, options);
+								}
+							</script>
+
+				<?php }
+					}
+				if($_POST['Year_start'] == "" && $_POST['Year_end'] == ""){
 					if (!empty($User)) {
 									?>
 									<h2 class="text-center">
@@ -165,6 +589,52 @@ class ReportController extends Controller
 								}else{
 									echo "<p>ไม่พบข้อมูล</p>";
 								}
+							}
+			} ?>
+						 <div class="pull-left ShowGraph">
+								<a href="<?= $this->createUrl('report/reportRegisterOfficePDF',array('registerofficeData[Department]'=>$_POST['Department'],
+								'registerofficeData[Position]'=>$_POST['Position'],
+								'registerofficeData[Chart]'=>$_POST['Chart'],
+								'registerofficeData[datetime_start]'=>$_POST['datetime_start'],
+								'registerofficeData[datetime_end]'=>$_POST['datetime_end'],
+								'registerofficeData[Year_start]'=>$_POST['Year_start'],
+								'registerofficeData[Year_end]'=>$_POST['Year_end'])); ?>" target="_blank" class="btn btn btn-pdf"><i class="fas fa-file-pdf"></i>Export PDF</a>
+								<a href="<?= $this->createUrl('report/reportRegisterOfficeExcel',array('registerofficeData[Department]'=>$_POST['Department'],
+								'registerofficeData[Position]'=>$_POST['Position'],
+								'registerofficeData[Chart]'=>$_POST['Chart'],
+								'registerofficeData[datetime_start]'=>$_POST['datetime_start'],
+								'registerofficeData[datetime_end]'=>$_POST['datetime_end'],
+								'registerofficeData[Year_start]'=>$_POST['Year_start'],
+								'registerofficeData[Year_end]'=>$_POST['Year_end'])); ?>" target="_blank" class="btn btn btn-excel"><i class="fas fa-file-excel"></i>Export Excel</a>
+				</div> 
+	<?php 
+	}
+public function actionReportRegisterOfficeExcel()
+{
+	if ($_GET['registerofficeData']) {
+		$data = $_GET['registerofficeData'];
+
+		$this->renderPartial('report_registerOffice_excel',array('data' => $data));
+	}
+}
+
+	public function actionReportRegisterOfficePDF()
+	{
+		if ($_GET['registerofficeData']) {
+			$data = $_GET['registerofficeData'];
+			require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
+			$mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
+			$texttt= '
+			<style>
+			body { font-family: "garuda"; }
+			</style>
+			';
+			$mPDF->WriteHTML($texttt);
+			$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('report_registeOffice_pdf', array('data'=>$data),true),'UTF-8','UTF-8'));
+
+			$mPDF->Output("รายงานภาพรวมการสมัคร.pdf" , 'D');
+
+			
 		}
 	}
 	

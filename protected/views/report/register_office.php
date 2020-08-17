@@ -198,14 +198,14 @@
                         <div class="chart"></div>
                             <h4></h4>
                             <div style="width:100%">
-                                <div id="chart_div"></div>
+                                <div id="chart_div" style="width: auto; height: 400px;"></div>
                             </div>
                     </div>
                     <div class="col-sm-6 col-md-6 Graph_2">
                         <div class="chart"></div>
                             <h4></h4>
                          <div style="width:100%">
-                                <div id="chart_div2"></div>
+                                <div id="chart_div2" style="width: auto; height: 400px;"></div>
                         </div>
                     </div>
             </div>
@@ -214,13 +214,13 @@
                 <div class="col-sm-6 col-md-6 Graph_3">
                     <div class="chart"></div>
                         <div style="width:100%">
-                            <div id="chart_div3"></div>
+                            <div id="chart_div3" style="width: auto; height: 400px;"></div>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-6 Graph_4">
                     <div class="chart"></div>
                      <div style="width:100%">
-                            <div id="chart_div4"></div>
+                            <div id="chart_div4" style="width: auto; height: 400px;"></div>
                     </div>
                 </div>
             </div> 
@@ -255,6 +255,25 @@
         });
     });
 
+$(document).ready(function(){
+    $('#datetime_start').on('change',function(){
+    $('.Year_start').attr('disabled',true);
+    $('.Year_end').attr('disabled',true);
+    });
+    $('#datetime_end').on('change',function(){
+    $('.Year_start').attr('disabled',true);
+    $('.Year_end').attr('disabled',true);
+    });
+    $('.Year_start').on('change',function(){
+    $('#datetime_start').attr('disabled',true);
+    $('#datetime_end').attr('disabled',true);
+    });
+    $('.Year_end').on('change',function(){
+    $('#datetime_start').attr('disabled',true);
+    $('#datetime_end').attr('disabled',true);
+    });
+});
+
     $(".Position").change(function() {
                     var id = $(this).val();
                     $.ajax({
@@ -276,7 +295,8 @@
             var Department = $(".Department").val();
             var Position = $(".Position").val();
             var Leval = $(".Leval").val(); 
-            var Chart = $("input[name='accommodation']:checked").val();
+            // var Chart = $("input[name='accommodation']:checked").val();
+            var Chart = $('input[name="accommodation"]:checked').serialize();  
             var datetime_start = $("#datetime_start").val();
             var datetime_end = $("#datetime_end").val();
             var Year_start = $(".Year_start").val();
@@ -297,18 +317,50 @@
                         },
                         success: function(data) {
                             console.log(data);
-                            if (Chart === "accommodation=Bar_Graph" || Chart === "accommodation=Pie_Charts") {
+                                                  if (Year_start === 'undefined' || Year_end === 'undefined' || Year_start === null || Year_end === null) {
+          
+                            if (Chart === "accommodation=Bar_Graph") {
+                              
+                            $('.Graph_1').show();
+                            $('.Graph_2').hide();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+
+                            }else if (Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") {
                             $('.Graph_1').show();
                             $('.Graph_2').show();
                             $('.Graph_3').hide();
                             $('.Graph_4').hide();
+
+                            }else if (Chart === "accommodation=Pie_Charts") {
+                            $('.Graph_1').hide();
+                            $('.Graph_2').show();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+                      
+                            }
+                             }else{
+
+                            if (Chart === "accommodation=Bar_Graph") {
+                            $('.Graph_1').show();
+                            $('.Graph_2').show();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+                      
                             }else if (Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") {
                             $('.Graph_1').show();
                             $('.Graph_2').show();
                             $('.Graph_3').show();
                             $('.Graph_4').show();
+
+                            }else if (Chart === "accommodation=Pie_Charts") {
+                            $('.Graph_1').show();
+                            $('.Graph_2').show();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+                      
                             }
-                
+                            }
                            $(".dataTable").html(data);
                         }
         });

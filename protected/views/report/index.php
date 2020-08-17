@@ -74,7 +74,7 @@
 						</a>
 					</div>
 					<div class="col-sm-4 col-md-3">
-						<a href="#">
+						<a href="<?= $this->createUrl("report/registeroffice") ?>">
 							<div class="card-report">
 								<div class="img-report">
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-3.png" class="img-fluid ">

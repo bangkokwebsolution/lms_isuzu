@@ -9,16 +9,16 @@ header("Content-Type: application/octet-stream");
 header("Content-Type: application/download");
 header("Pragma:no-cache");
 
-$age = $data['age'];
-$age2 = $data['age2'];
-$datetime_start = $data['datetime_start'];
-$datetime_end = $data['datetime_end'];
-$status = $data['status'];
-$Year_start = $data['Year_start'];
-$Year_end = $data['Year_end'];
-$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
-$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
-$Chart = $data['Chart'];
+		$Department = $_POST['Department'];
+		$Position = $_POST['Position'];
+		$Leval = $_POST['Leval'];
+		$datetime_start = $_POST['datetime_start'];
+		$datetime_end = $_POST['datetime_end'];
+		$Year_start = $_POST['Year_start'];
+		$Year_end = $_POST['Year_end'];
+		$Chart = $_POST['Chart'];
+		$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
+		$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
 
 ?>
 <!DOCTYPE html>
@@ -57,49 +57,63 @@ $Chart = $data['Chart'];
 	}
 
 	$criteria = new CDbCriteria;
-	$criteria->compare('type_employee_id',1);
-	if($data['Department']){
-		$criteria->compare('id',$data['Department']);
-	}
-	$criteria->compare('active','y');
-	$dep = Department::model()->findAll($criteria);
+					if($Department){
+						$criteria->compare('id',$Department);
+					}
+					$criteria->compare('active','y');
+					$dep = Department::model()->findAll($criteria);
+					$dep_arr = [];
+					foreach ($dep as $key => $val_dep) {
+						$dep_arr[] = $val_dep->id;
+					}
 
-	$dep_arr = [];
-	foreach ($dep as $key => $val_dep) {
-		$dep_arr[] = $val_dep->id;
-	}
+					$criteria = new CDbCriteria;
+					$criteria->addIncondition('department_id',$dep_arr);
+					$criteria->compare('active','y');
+					if($Position){
+						$criteria->compare('id',$Position);
+					}
+					$pos = Position::model()->findAll($criteria);
 
-	$criteria = new CDbCriteria;
-	$criteria->compare('department_id',$dep_arr);
-	if($data['Position']){
-		$criteria->compare('id',$data['Position']);
-	}
-	$pos = Position::model()->findAll($criteria);
-	$pos_arr = [];
-	$posback_arr = [];
-	foreach ($pos as $key => $val_pos) {
-		$pos_arr[] = $val_pos->id;
-		$posback_arr[] = $val_pos->department_id;
-	}
-	$result_pos_arr = array_unique( $pos_arr );
-	$result_dep_arr = array_unique( $posback_arr );
+					$pos_arr = [];
+					$posback_arr = [];
+					foreach ($pos as $key => $val_pos) {
+						$pos_arr[] = $val_pos->id;
+						$posback_arr[] = $val_pos->department_id;
+					}
 
-	$criteria = new CDbCriteria;
-	$criteria->with = array('profile');
-	$criteria->compare('department_id',$result_dep_arr);
-	$criteria->compare('superuser',0);
-	if ($age != null && $age2 != null || $age != "" && $age2 != "") {
-		$criteria->addBetweenCondition('age', $age, $age2, 'AND');
-	}
-	if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
-		$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
-	}
-	if($Position){
-		$criteria->compare('position_id',$Position);
-	}else{
-		$criteria->compare('position_id',$result_pos_arr);	
-	}
-	$User = User::model()->findAll($criteria);
+					$criteria = new CDbCriteria;
+					$criteria->addIncondition('position_id',$pos_arr);
+					$criteria->compare('active','y');
+					if($Leval){
+						$criteria->compare('id',$Leval);
+					}
+					$branch = Branch::model()->findAll($criteria);
+
+					$branch_arr = [];
+					foreach ($branch as $key => $val_branch) {
+						$branch_arr[] = $val_branch->position_id;
+					}
+					$result_branch_arr = array_unique( $branch_arr );
+					$result_pos_arr = array_unique( $posback_arr );
+
+					$criteria = new CDbCriteria;
+					$criteria->with = array('profile');
+					$criteria->compare('department_id',$dep_arr);
+					$criteria->compare('superuser',0);
+					if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+						$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+					}
+					if($Position){
+						$criteria->compare('position_id',$Position);
+					}else{
+						$criteria->compare('position_id',$pos_arr);	
+					}
+					if ($Leval) {
+						$criteria->compare('branch_id',$Leval);
+					}
+
+					$User = User::model()->findAll($criteria);
 
 	if (!empty($User)) { ?>
 		<style type="text/css">
@@ -134,8 +148,6 @@ $Chart = $data['Chart'];
 							<th style="border:1px solid #d8d8d8; padding: 8px;">ชื่อ - สกุล</th>
 							<th style="border:1px solid #d8d8d8; padding: 8px;">ฝ่าย</th>
 							<th style="border:1px solid #d8d8d8; padding: 8px;">แผนก</th>
-							<th style="border:1px solid #d8d8d8; padding: 8px;">อายุ</th>
-							<th style="border:1px solid #d8d8d8; padding: 8px;">สถานะอนุมัติ</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -147,22 +159,6 @@ $Chart = $data['Chart'];
 								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $valuepos_back->profile->firstname; ?> <?php echo $valuepos_back->profile->lastname; ?></td>
 								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $valuepos_back->department->dep_title; ?></td>
 								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $valuepos_back->position->position_title; ?></td>
-								<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">
-									<?php
-									if ($valuepos_back->profile->age) { 
-										echo $valuepos_back->profile->age;
-									}else{ 
-										echo "-";
-									}
-									?>
-								</td>
-								<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">
-									<?php if ($valuepos_back->status == 1) { ?>
-										<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>
-									<?php }else{ ?>
-										<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>
-									<?php } ?>
-								</td>
 							</tr>
 
 						<?php }  ?>
