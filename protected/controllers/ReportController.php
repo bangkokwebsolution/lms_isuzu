@@ -2155,14 +2155,11 @@ public function actionReportRegisterData()
 			}
 		}
 
+	public function actionAssessment(){
 
 
-
-		public function actionAssessment(){
-
-
-			$this->render('assessment');
-		}
+		$this->render('assessment');
+	}
 
 
 

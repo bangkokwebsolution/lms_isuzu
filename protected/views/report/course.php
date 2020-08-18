@@ -55,6 +55,9 @@
             </li>
         </ol>
     </nav>
+    <a class="btn btn-reportsearch" href="<?php echo $this->createUrl('/report/index'); ?>?target=course" style="margin-bottom: 0px; margin-left: 0px; background-color: #087fe4;">
+        <i class="fas fa-angle-left"></i> ย้อนกลับ
+    </a>
 </div>
 
 
@@ -760,12 +763,12 @@ chart.draw(data, options);
     $(document).ready( function () {
 
         $('.btn-pdf').click(function(e) {
-            $("#text_element1").attr("value", encodeURIComponent($('#chart_graph').html()+'<br>'+$('#result_search').html()) );
+            $("#text_element1").attr("value", encodeURIComponent("<h2>Training Overview Report</h2>"+$('#chart_graph').html()+'<br>'+$('#result_search').html()) );
             $("#export_pdf").submit();
         });
       
         $('.btn-excel').click(function(e) {
-            window.open('data:application/vnd.ms-excel,' + encodeURIComponent($('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html() ));
+            window.open('data:application/vnd.ms-excel,' + encodeURIComponent("<h2>Training Overview Report</h2>"+$('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html() ));
             e.preventDefault();
         });
 
