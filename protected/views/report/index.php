@@ -39,9 +39,9 @@
 		</h2>
 
 		<ul class="nav nav-tabs mt-1">
-			<li class="active"><a data-toggle="tab" href="#first-report"><?php echo Yii::app()->session['lang'] == 1?'Register Report! ':'รายงานการสมัครสมาชิก!'; ?></a></li>
-			<li><a data-toggle="tab" href="#second-report"><?php echo Yii::app()->session['lang'] == 1?'Training Report! ':'รายงานการอบรม!'; ?></a></li>
-			<li><a data-toggle="tab" href="#third-report"><?php echo Yii::app()->session['lang'] == 1?'Training assessment Report! ':'รายงานแบบประเมินการอบรม!'; ?></a></li>
+			<li class="active"><a data-toggle="tab" href="#first-report"><?php echo Yii::app()->session['lang'] == 1?'Register Report ':'รายงานการสมัครสมาชิก'; ?></a></li>
+			<li><a data-toggle="tab" href="#second-report"><?php echo Yii::app()->session['lang'] == 1?'Training Report ':'รายงานการอบรม!'; ?></a></li>
+			<li><a data-toggle="tab" href="#third-report"><?php echo Yii::app()->session['lang'] == 1?'Training assessment Report ':'รายงานแบบประเมินการอบรม'; ?></a></li>
 		</ul>
 
 		<div class="tab-content">
@@ -55,7 +55,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-1.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Register Overview Report! ':'รายงานภาพรวมการสมัคร!'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Register Overview Report ':'รายงานภาพรวมการสมัคร'; ?>
 								</div>
 							</div>
 						</a>
@@ -67,8 +67,8 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-2.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Register Ship Report! ':'รายงานภาพการสมัครสมาชิก
-									คนประจำเรือ!'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Register Staff Ship Report ':'รายงานภาพการสมัครสมาชิก
+									คนประจำเรือ'; ?>
 								</div>
 							</div>
 						</a>
@@ -80,8 +80,8 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-3.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Register Office Report! ':'รายงานภาพการสมัครสมาชิก
-									คน Office!'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Register Staff Office Report ':'รายงานภาพการสมัครสมาชิก
+									คน Office'; ?>
 								</div>
 							</div>
 						</a>
@@ -99,7 +99,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-4.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Training Overview Report! ':'รายงานภาพรวมการฝึกอบรบ!'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Training Overview Report ':'รายงานภาพรวมการฝึกอบรบ'; ?>
 								</div>
 							</div>
 						</a>
@@ -113,7 +113,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-5.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Report of learners ship course! ':'รายงานผู้เรียนตามรายหลักสูตรคนประจำเรือ!'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Report of learners staff ship course ':'รายงานผู้เรียนตามรายหลักสูตรคนประจำเรือ'; ?>
 								</div>
 							</div>
 						</a>
@@ -128,7 +128,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-6.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Report of learners by course! ':'รายงานผู้เรียนตามรายหลักสูตร Office!'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Report of learners staff office course ':'รายงานผู้เรียนตามรายหลักสูตร Office'; ?>
 								</div>
 							</div>
 						</a>
@@ -149,7 +149,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-7.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Course Overview Report! ':'รายงานภาพรวมหลักสูตร!'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Course Overview Report ':'รายงานภาพรวมหลักสูตร'; ?>
 								</div>
 							</div>
 						</a>
@@ -161,7 +161,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-8.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Course Ship Report! ':'รายงานหลักสูตรของคนประจำเรือ!'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Course Staff Ship Report ':'รายงานหลักสูตรของคนประจำเรือ'; ?>
 								</div>
 							</div>
 						</a>
@@ -173,7 +173,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-9.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Course Office Report! ':'รายงานหลักสูตรของพนักงาน Office!'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Course Staff Office Report ':'รายงานหลักสูตรของพนักงาน Office'; ?>
 								</div>
 							</div>
 						</a>
