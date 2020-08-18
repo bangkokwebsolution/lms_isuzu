@@ -488,7 +488,11 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 $link = $arr[0];
                 $new_tab = ($arr[1] == '0') ? '' : 'target="_blank"';
             } else {
-                $link = $this->createUrl('news/detail/', array('id' => $value->cms_id));
+                if(Yii::app()->session['lang'] != 1){
+                    $link = $this->createUrl('news/detail/', array('id' => $value->parent_id));
+                }else{
+                    $link = $this->createUrl('news/detail/', array('id' => $value->cms_id));
+                }                
             }
             ?>
             <div class="col-md-4 col-sm-6 col-xs-12">
