@@ -426,7 +426,7 @@ $(document).ready(function(){
 
                         },
                         success: function(data) {
-                           if (Year_start === 'undefined' || Year_end === 'undefined' || Year_start === null || Year_end === null) {
+                           if (typeof Year_start === 'undefined' || typeof Year_end === 'undefined' || Year_start === null || Year_end === null) {
           
                             if (Chart === "accommodation=Bar_Graph") {
                               

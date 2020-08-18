@@ -361,11 +361,11 @@ $(document).ready(function(){
    
                         },
                         success: function(data) {
-                       
-                        if (Year_start === 'undefined' || Year_end === 'undefined' || Year_start === null || Year_end === null) {
+                       console.log(Year_start);
+                        if (typeof Year_start === 'undefined' || typeof Year_end === 'undefined' || Year_start === null || Year_end === null) {
           
                             if (Chart === "accommodation=Bar_Graph") {
-                              
+                      
                             $('.Graph_1').show();
                             $('.Graph_2').hide();
                             $('.Graph_3').hide();
