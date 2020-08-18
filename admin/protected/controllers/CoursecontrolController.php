@@ -331,7 +331,7 @@ class CoursecontrolController extends Controller
 
 				$orgc = OrgCourse::model()->findByPk($value['id']);
 
-				$orgchart = OrgChart::model()->findAll(array(
+				$orgchart = OrgChart::model()->findAll(array(  // ภายใต้ 1 ขั้น
 					'condition'=>'parent_id=:parent_id',
 					'params' => array(':parent_id' =>  $_POST['org_id'])
 				));
@@ -362,7 +362,7 @@ class CoursecontrolController extends Controller
 
 					if($orgchart){
 
-					foreach ($orgchart as $key => $val) {
+					foreach ($orgchart as $key => $val) { // LEVEL 4
 
 						$orgchart_check = OrgCourse::model()->findAll(array(
 							'condition'=>'parent_id=:parent_id AND orgchart_id=:orgchart_id AND course_id=:course_id',
@@ -385,7 +385,7 @@ class CoursecontrolController extends Controller
 							));
 
 							if(!empty($orgchart44)){
-								foreach ($orgchart44 as $key4 => $value4) {
+								foreach ($orgchart44 as $key4 => $value4) { // LEVEL 5
 									$orgchart44_check = OrgCourse::model()->findAll(array(
 										'condition'=>'parent_id=:parent_id AND orgchart_id=:orgchart_id AND course_id=:course_id',
 										'params' => array(':parent_id' => 0, ':orgchart_id'=>$value4->id, ':course_id'=>$value['id'])
@@ -402,11 +402,11 @@ class CoursecontrolController extends Controller
 
 									$orgchart55 = OrgChart::model()->findAll(array(
 										'condition'=>'parent_id=:parent_id',
-										'params' => array(':parent_id' =>  $val->id)
+										'params' => array(':parent_id' =>  $value4->id)
 									));
 
 									if(!empty($orgchart55)){
-										foreach ($orgchart55 as $key5 => $value5) {
+										foreach ($orgchart55 as $key5 => $value5) { // LEVEL 6
 											$orgchart55_check = OrgCourse::model()->findAll(array(
 												'condition'=>'parent_id=:parent_id AND orgchart_id=:orgchart_id AND course_id=:course_id',
 												'params' => array(':parent_id' => 0, ':orgchart_id'=>$value5->id, ':course_id'=>$value['id'])
@@ -424,7 +424,7 @@ class CoursecontrolController extends Controller
 
 											$orgchart66 = OrgChart::model()->findAll(array(
 												'condition'=>'parent_id=:parent_id',
-												'params' => array(':parent_id' =>  $val->id)
+												'params' => array(':parent_id' =>  $value5->id)
 											));
 
 											if(!empty($orgchart66)){

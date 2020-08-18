@@ -531,8 +531,8 @@ class CategoryController extends Controller
                     'condition' => 'course_id='.$value->course_id,
                 ));
                 foreach ($model_org_course as $key_oc => $value_oc) {
-                    $model_OC = OrgCourse::model()->findByPk($value_oc->id);
-                    $model_OC->delete();
+                    $value_oc->active = 'n';
+                    $value_oc->save(false);
                 }
                 ///////////////////////////////////////////////////// จบ Org Course
            } // foreach ($model_Course
