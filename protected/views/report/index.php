@@ -137,9 +137,6 @@
 
 					<?php } // if($authority == 1 || $authority == 2) ?>
 				</div>
-			</div>
-
-			<div id="third-report" class="tab-pane fade">
 
 				<div class="row d-flex justify-content-center">
 					<div class="col-sm-4 col-md-3">
@@ -174,6 +171,24 @@
 								</div>
 								<div class="detail-report">
 									<?php echo Yii::app()->session['lang'] == 1?'Course Staff Office Report ':'รายงานหลักสูตรของพนักงาน Office'; ?>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div id="third-report" class="tab-pane fade">
+
+				<div class="row d-flex justify-content-center">
+					<div class="col-sm-4 col-md-3">
+						<a href="#">
+							<div class="card-report">
+								<div class="img-report">
+									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-10.png" class="img-fluid ">
+								</div>
+								<div class="detail-report">
+									<?php echo Yii::app()->session['lang'] == 1?'Training assessment Report ':'รายงานภาพรวมแบบประเมินสอบถาม'; ?>
 								</div>
 							</div>
 						</a>

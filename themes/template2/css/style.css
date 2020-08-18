@@ -4713,6 +4713,9 @@ ol.stat-alert li::before {
   margin-top: 4em;
 }
 
+#report-main .tab-content .row{
+}
+
  #report-main .nav-tabs{
    border-bottom:none;
  }
@@ -4730,6 +4733,7 @@ ol.stat-alert li::before {
   border-radius: 4px;
   min-height: 300px;
   transition: all .25s ease;
+  margin: 1em 0;
 }
 
 .card-report:hover,.card-report:focus{
