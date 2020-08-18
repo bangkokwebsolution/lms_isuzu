@@ -192,14 +192,14 @@ if(isset($model_gen) && !empty($model_gen)){
                                                 if(Yii::app()->session['lang'] != 1){
                                                     echo "คนเรือ";
                                                 }else{
-                                                    echo "Master/Captain";
+                                                    echo "MASTER / CAPTAIN";
                                                 }
                                             ?>
                                         </option>
                                         <option value="2" <?php if(isset($_GET['search']['employee']) && $_GET['search']['employee'] == 2){ echo "selected"; } ?>>
                                             <?php 
                                                 if(Yii::app()->session['lang'] != 1){
-                                                    echo "คนออฟฟิต";
+                                                    echo "คนออฟฟิศ";
                                                 }else{
                                                     echo "Office";
                                                 }
