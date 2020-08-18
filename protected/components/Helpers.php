@@ -4410,6 +4410,21 @@ public function checkStepLesson($lesson){
         
            $colorName = array(
             "#CC99FF", "#A9D1F7", "#B4F0A7", "#FFF898", "#FFC588", "#FFB1B0", "#FF93F7",
+            "#be7dff", "#8ac6ff", "#96ff7f", "#fff569", "#ffb15e", "#ff8d8c", "#ff5bf3",
+            "#a74fff", "#5aafff", "#6eff4e", "#fff23e", "#ff9f39", "#ff6867", "#ff37f0",
+
+            "#CC99FF", "#A9D1F7", "#B4F0A7", "#FFF898", "#FFC588", "#FFB1B0", "#FF93F7",
+            "#be7dff", "#8ac6ff", "#96ff7f", "#fff569", "#ffb15e", "#ff8d8c", "#ff5bf3",
+            "#a74fff", "#5aafff", "#6eff4e", "#fff23e", "#ff9f39", "#ff6867", "#ff37f0",
+
+            "#CC99FF", "#A9D1F7", "#B4F0A7", "#FFF898", "#FFC588", "#FFB1B0", "#FF93F7",
+            "#be7dff", "#8ac6ff", "#96ff7f", "#fff569", "#ffb15e", "#ff8d8c", "#ff5bf3",
+            "#a74fff", "#5aafff", "#6eff4e", "#fff23e", "#ff9f39", "#ff6867", "#ff37f0",
+
+            "#CC99FF", "#A9D1F7", "#B4F0A7", "#FFF898", "#FFC588", "#FFB1B0", "#FF93F7",
+            "#be7dff", "#8ac6ff", "#96ff7f", "#fff569", "#ffb15e", "#ff8d8c", "#ff5bf3",
+            "#a74fff", "#5aafff", "#6eff4e", "#fff23e", "#ff9f39", "#ff6867", "#ff37f0",
+
             "#4B0082", "#0000FF", "#00FF00", "#FFFF00", "#FF7F00", " #FF0000",
             '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D', '#80B300', 
             '#809900', '#E6B3B3', '#6680B3', '#66991A', '#FF99E6', '#CCFF1A', 
