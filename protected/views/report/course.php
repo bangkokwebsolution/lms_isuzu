@@ -23,13 +23,6 @@
     $path_file_2 = explode("\\", $path_file_2);
     $path_file_2 = implode("\\\\", $path_file_2);
  ?>
- <?php 
-     if($authority == 2){
-        $_GET["search"]["department"] = $user_login->department_id;
-     }elseif($authority == 3){
-        $_GET["search"]["position"] = $user_login->position_id;
-     }
- ?>
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-main">
@@ -652,8 +645,8 @@ chart.draw(data, options);
 
 </div> <!-- export excel -->
 
-<div class="pull-right ">
-    <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
+<div class="pull-left ">
+    <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF1</button>
     <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button>
 </div>
     <?php }else{ // ไม่ค้นหา ช่วงเวลา ?>
@@ -738,8 +731,8 @@ chart.draw(data, options);
                  <div id="result_search"><table><tr><td></td></tr></table></div>
              </div>
 
-            <div class="pull-right ">
-                <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
+            <div class="pull-left ">
+                <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF2</button>
                 <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button>
             </div>
         <?php } // !empty($_GET["search"]["graph"]) ?>

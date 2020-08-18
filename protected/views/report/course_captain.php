@@ -605,7 +605,7 @@ if(isset($model_position) && !empty($model_position)){
 
 </div> <!-- export excel -->
 
-<div class="pull-right ">
+<div class="pull-left ">
     <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
     <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button>
 </div>
@@ -726,7 +726,7 @@ if(isset($model_position) && !empty($model_position)){
                  <div id="result_search"><table><tr><td></td></tr></table></div>
              </div>
 
-            <div class="pull-right ">
+            <div class="pull-left ">
                 <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
                 <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button>
             </div>
