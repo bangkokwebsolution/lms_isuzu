@@ -39,14 +39,16 @@
 		</h2>
 
 		<ul class="nav nav-tabs mt-1">
-			<li class="active"><a data-toggle="tab" href="#first-report"><?php echo Yii::app()->session['lang'] == 1?'Register Report ':'รายงานการสมัครสมาชิก'; ?></a></li>
-			<li><a data-toggle="tab" href="#second-report"><?php echo Yii::app()->session['lang'] == 1?'Training Report ':'รายงานการอบรม!'; ?></a></li>
+			<li <?php if(!isset($_GET["target"])){ echo 'class="active"'; } ?>><a data-toggle="tab" href="#first-report"><?php echo Yii::app()->session['lang'] == 1?'Register Report ':'รายงานการสมัครสมาชิก'; ?></a></li>
+			<li <?php if(isset($_GET["target"]) && $_GET["target"] == "course"){ echo 'class="active"'; } ?>>
+				<a data-toggle="tab" href="#second-report"><?php echo Yii::app()->session['lang'] == 1?'Training Report ':'รายงานการอบรม!'; ?></a>
+			</li>
 			<li><a data-toggle="tab" href="#third-report"><?php echo Yii::app()->session['lang'] == 1?'Training assessment Report ':'รายงานแบบประเมินการอบรม'; ?></a></li>
 		</ul>
 
 		<div class="tab-content">
 
-			<div id="first-report" class="tab-pane fade in active">
+			<div id="first-report" class="tab-pane fade <?php if(!isset($_GET["target"])){ echo 'in active'; } ?>">
 				<div class="row d-flex justify-content-center">
 					<div class="col-sm-4 col-md-3">
 						<a href="<?= $this->createUrl("report/report_register") ?>">
@@ -88,7 +90,7 @@
 					</div>
 				</div>
 			</div>
-			<div id="second-report" class="tab-pane fade">
+			<div id="second-report" class="tab-pane fade <?php if(isset($_GET["target"]) && $_GET["target"] == "course"){ echo 'in active'; } ?>">
 				<div class="row d-flex justify-content-center">
 					<?php if($authority == 1 || $authority == 2 || $authority == 3){ ?>
 
