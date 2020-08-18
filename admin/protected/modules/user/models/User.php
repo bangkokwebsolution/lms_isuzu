@@ -290,7 +290,7 @@ class User extends CActiveRecord
                 'condition'=>'superuser=1',
             ),
             'notsafe'=>array(
-            	'select' => 'id, username, password, department_idม branch_id, pic_user, email, activkey, create_at, superuser, status, online_status,online_user,company_id, division_id,position_id,orgchart_lv2,group,employee_id',
+            	'select' => 'id, username, password, department_id, branch_id, pic_user, email, activkey, create_at, superuser, status, online_status,online_user,company_id, division_id,position_id,orgchart_lv2,group,employee_id',
             ),
         );
     }
