@@ -3032,6 +3032,279 @@ $model_level = Branch::model()->findAll(array(
     ));
 }
 
+	public function actionExamOffice(){
+
+		if (Yii::app()->user->id == null) {   // ต้อง login ถึงจะเห็น
+        $msg = $label->label_alert_msg_plsLogin;
+        Yii::app()->user->setFlash('msg',$msg);
+        Yii::app()->user->setFlash('icon','warning');
+        $this->redirect(array('site/index'));
+        exit();
+    }else{
+    	$user_login = User::model()->findByPk(Yii::app()->user->id);
+		$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+		$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+
+		if($authority == "" || ($type_em != 2 && $authority != 1)){
+			$this->redirect(array('report/index'));
+			exit();
+		}
+    }
+
+    if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+    	$langId = Yii::app()->session['lang'] = 1;
+    }else{
+    	$langId = Yii::app()->session['lang'];
+    }
+
+    //------------------- ค่า form search ------------------------//
+    $model_course = CourseOnline::model()->with('CategoryTitle')->findAll(array(
+    	'condition' => 'course.active=:active AND course.lang_id=:lang_id AND categorys.active=:active',
+    	'params' => array(':active'=>'y', ':lang_id'=>$langId, ),
+    	'order' => 'course_title ASC'
+    ));
+
+    if($authority == 1){
+    	$model_department = Department::model()->findAll(array(
+	    	'condition' => 'active=:active AND lang_id=:lang_id AND type_employee_id=:type_id',
+	    	'params' => array(':active'=>'y', ':lang_id'=>1, ':type_id'=>2),
+	    	'order' => 'dep_title ASC'    	
+    	));
+    }else{
+    	$model_department = [];
+    }
+
+    if($authority == 2){
+    	$model_position = Position::model()->findAll(array(
+    		'condition' => 'active=:active AND department_id=:department_id AND lang_id=:lang_id',
+    		'params' => array(':active'=>'y',':department_id'=>$user_login->department_id,':lang_id'=>1),
+    		'order' => 'position_title ASC'
+    	));
+    }else{
+    	$model_position = [];
+    }
+
+    if($authority == 3){
+    	$model_level = Branch::model()->findAll(array(
+    		'condition' => 'active=:active AND position_id=:position_id AND lang_id=:lang_id',
+    		'params' => array(':active'=>'y',':position_id'=>$user_login->position_id,':lang_id'=>1),
+    		'order' => 'branch_name ASC'
+    	));
+    }else{
+    	$model_level = [];
+    }
+
+    $year_start = LogStartcourse::model()->find(array(
+    	'condition' => 'active=:active',
+    	'params' => array(':active'=>'y'),
+    	'order' => 'id ASC'
+    ));
+    $year_start = date("Y", strtotime($year_start->start_date));
+
+    $year_end = LogStartcourse::model()->find(array(
+    	'condition' => 'active=:active',
+    	'params' => array(':active'=>'y'),
+    	'order' => 'id DESC'
+    ));
+    $year_end = date("Y", strtotime($year_end->start_date));
+
+    if($year_end <= $year_start){
+    	$year_end = $year_start+1;
+    }
+    //------------------- ค่า form search ------------------------//
+
+    if(isset($_GET["search"])){
+
+    	$criteria = new CDbCriteria;
+
+    	if($_GET["search"]["fullname"] != ""){
+    		$ex_fullname = explode(" ", $_GET["search"]["fullname"]);
+
+    		if(isset($ex_fullname[0])){    			
+    			$name = $ex_fullname[0];
+    			$criteria->compare('pro.firstname', $name, true);
+        		$criteria->compare('pro.lastname', $name, true, 'OR');
+    		}
+
+    		if(isset($ex_fullname[1])){
+    			$name = $ex_fullname[1];
+    			$criteria->compare('pro.lastname',$name,true, 'OR');
+    		}
+    	}
+
+    	$criteria->compare('t.active', 'y');
+    	$criteria->compare('course.active', 'y');
+    	$criteria->compare('pro.type_employee', 2); //1=เรือ 2=office
+		$criteria->compare('user.superuser',0);
+
+    	$criteria->addCondition('user.id IS NOT NULL');
+    	$criteria->addCondition('t.course_id IS NOT NULL');
+
+    	if($_GET["search"]["course_id"] != ""){
+    		$criteria->compare('t.course_id', $_GET["search"]["course_id"]);
+
+    		if($_GET["search"]["gen_id"] != ""){
+    			$criteria->compare('t.gen_id', $_GET["search"]["gen_id"]);
+    		}
+    	}    	
+
+    	if($authority == 2 || $authority == 3){ // ผู้จัดการฝ่าย
+    		$_GET["search"]["department"] = $user_login->department_id;
+    	}
+    	if($_GET["search"]["department"] != ""){
+    		$criteria->compare('user.department_id', $_GET["search"]["department"]);
+
+    		$model_position = Position::model()->findAll(array(
+    			'condition' => 'active=:active AND department_id=:department_id AND lang_id=:lang_id',
+    			'params' => array(':active'=>'y',':department_id'=>$_GET["search"]["department"],':lang_id'=>1),
+    			'order' => 'position_title ASC'
+    		));
+
+    		if($authority == 3){ // ผู้จัดการแผนก
+    			$_GET["search"]["position"] = $user_login->position_id;
+    		}
+    		if($_GET["search"]["position"] != ""){
+    			$criteria->compare('user.position_id', $_GET["search"]["position"]);
+
+$model_level = Branch::model()->findAll(array(
+	'condition' => 'active=:active AND position_id=:position_id AND lang_id=:lang_id',
+	'params' => array(':active'=>'y',':position_id'=>$_GET["search"]["position"],':lang_id'=>1),
+	'order' => 'branch_name ASC'
+));    			
+
+    			if($_GET["search"]["level"] != ""){
+    				$criteria->compare('user.branch_id', $_GET["search"]["level"]);
+    			}
+    		}
+    	} 
+
+    	$arr_count_course = [];
+    	$arr_course_title = [];
+    	if($_GET["search"]["start_date"] != "" && $_GET["search"]["end_date"] != ""){
+    		if($_GET["search"]["start_date"] != ""){
+    			$criteria->compare('t.start_date', ">=".$_GET["search"]["start_date"]." 00:00:00");
+    		}
+    		if($_GET["search"]["end_date"] != ""){
+    			$criteria->compare('t.start_date', "<=".$_GET["search"]["end_date"]." 23:59:59");
+    		}
+
+    		$criteria->order = 't.id ASC';
+    		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+
+    		$criteria->order = 't.course_id ASC';
+    		$criteria->select ='t.course_id';
+    		$criteria->distinct = true;
+    		$model_graph = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+
+    		
+    		foreach ($model_graph as $key => $value) {
+    			$arr_count_course[$value->course_id] = $arr_count_course[$value->course_id]+1;
+    			$course_model = CourseOnline::model()->findByPk($value->course_id);
+    			$arr_course_title[$value->course_id] = $course_model->course_title;
+    		}
+
+
+    	}elseif($_GET["search"]["start_year"] != "" && $_GET["search"]["end_year"] != ""){
+    		if($_GET["search"]["start_year"] != ""){
+    			$criteria->compare('t.start_date', ">=".$_GET["search"]["start_year"]."-01-01 00:00:00");
+    		}
+    		if($_GET["search"]["end_year"] != ""){
+    			$criteria->compare('t.start_date', "<=".$_GET["search"]["end_year"]."-12-31 23:59:59");
+    		}
+
+    		$criteria->order = 't.id ASC';
+    		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+
+    		$criteria->order = 'yearrrr ASC';
+    		$criteria->select ='t.start_date, t.course_id, YEAR(t.start_date) AS yearrrr';
+    		$criteria->distinct = true;
+    		$model_graph = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+
+    		foreach ($model_graph as $key => $value) {
+    			$arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id] = $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]+1;
+    			$course_model = CourseOnline::model()->findByPk($value->course_id);
+    			$arr_course_title[$value->course_id] = $course_model->course_title;
+    		}
+
+    	}else{
+    		// if(Yii::app()->session['lang'] != 1){
+    		// 	$criteria->order = 'pro.firstname ASC';
+    		// }else{
+    		// 	$criteria->order = 'pro.firstname_en ASC';
+    		// }
+
+    		$criteria->order = 't.id ASC';
+    		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+
+    		$model_search_score = [];
+    		$model_search_graph = [];
+    		foreach ($model_search as $key => $value) {
+    			$course_score = Coursescore::model()->find(array(
+    				'condition' => 'active=:active AND user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id AND type=:type',
+    				'params' => array(':active'=>'y',':user_id'=>$value->user_id,':course_id'=>$value->course_id, ':gen_id'=>$value->gen_id, ':type'=>'post'),
+    				'order' => 'score_id DESC'
+    			));
+    			if($course_score != ""){
+    				$model_search_score[$key]["status"] = $course_score->score_past;
+    				$model_search_score[$key]["score"] = $course_score->score_number."/".$course_score->score_total;
+    			}
+
+$course_model = CourseOnline::model()->findByPk($value->course_id);
+$model_search_graph[$value->course_id]["title"] = $course_model->course_title;
+if($course_score->score_past == 'y'){
+	$model_search_graph[$value->course_id]["pass"] = $model_search_graph[$value->course_id]["pass"]+1;
+}else{
+	$model_search_graph[$value->course_id]["fail"] = $model_search_graph[$value->course_id]["fail"]+1;
+}
+    		}
+
+    		// $criteria->order = 't.course_id ASC';
+    		// $criteria->select ='t.course_id';
+    		// $criteria->distinct = true;
+    		// $model_graph = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+
+    		
+    		// foreach ($model_graph as $key => $value) {
+    		// 	$arr_count_course[$value->course_id] = $arr_count_course[$value->course_id]+1;
+    		// 	$course_model = CourseOnline::model()->findByPk($value->course_id);
+    		// 	$arr_course_title[$value->course_id] = $course_model->course_title;
+    		// }
+    	}
+
+		$this->render('exam_office', array(
+	        'model_course'=>$model_course,
+        	'model_gen'=>$model_gen,
+	        'model_department'=>$model_department,
+	        'model_position'=>$model_position,
+        	'model_level'=>$model_level,
+	        'year_start'=>$year_start,
+	        'year_end'=>$year_end,
+	        'model_search'=>$model_search,
+	        'model_search'=>$model_search,
+	        'model_search_score'=>$model_search_score,
+	        'model_search_graph'=>$model_search_graph,
+	        'arr_course_title'=>$arr_course_title,
+	        'authority'=>$authority,
+			'type_em'=>$type_em,
+			'user_login'=>$user_login,
+	    ));
+		exit();
+    } // if(isset($_GET["search"]))
+
+		$this->render('exam_office', array(
+			'model_course'=>$model_course,
+			'model_department'=>$model_department,
+			'model_position'=>$model_position,
+			'model_level'=>$model_level,
+			'year_start'=>$year_start,
+			'year_end'=>$year_end,
+			'authority'=>$authority,
+			'type_em'=>$type_em,
+			'user_login'=>$user_login,
+		));
+	}
+
+
 	public function actionGetGenid(){
 		if(isset($_POST["course_id"]) && $_POST["course_id"] != ""){
 			$model_gen = CourseGeneration::model()->findAll(array(
