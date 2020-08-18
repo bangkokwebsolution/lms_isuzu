@@ -2193,8 +2193,8 @@ public function actionReportRegisterData()
 		}
 
 		//------------------- ค่า form search ------------------------//
-		$model_course = CourseOnline::model()->findAll(array(
-			'condition' => 'active=:active AND lang_id=:lang_id',
+		$model_course = CourseOnline::model()->with('CategoryTitle')->findAll(array(
+			'condition' => 'course.active=:active AND course.lang_id=:lang_id AND categorys.active=:active',
 			'params' => array(':active'=>'y', ':lang_id'=>$langId, ),
 			'order' => 'course_title ASC'
 		));
@@ -2260,8 +2260,8 @@ $model_gen = CourseGeneration::model()->findAll(array(
 ));
 
     		}else{
-    			$search_course = CourseOnline::model()->findAll(array(
-    				'condition' => 'active=:active AND lang_id=:lang_id',
+    			$search_course = CourseOnline::model()->with('CategoryTitle')->findAll(array(
+    				'condition' => 'course.active=:active AND course.lang_id=:lang_id AND categorys.active=:active',
     				'params' => array(':active'=>'y', ':lang_id'=>1),
     				'order' => 'course_title ASC'
     			));
@@ -2590,8 +2590,8 @@ public function actionCourseCaptain(){ // อบรม คนเรือ
     }
 
     //------------------- ค่า form search ------------------------//
-    $model_course = CourseOnline::model()->findAll(array(
-    	'condition' => 'active=:active AND lang_id=:lang_id',
+    $model_course = CourseOnline::model()->with('CategoryTitle')->findAll(array(
+    	'condition' => 'course.active=:active AND course.lang_id=:lang_id AND categorys.active=:active',
     	'params' => array(':active'=>'y', ':lang_id'=>$langId, ),
     	'order' => 'course_title ASC'
     ));
@@ -2816,8 +2816,8 @@ public function actionCourseOffice(){ // อบรม office
     }
 
     //------------------- ค่า form search ------------------------//
-    $model_course = CourseOnline::model()->findAll(array(
-    	'condition' => 'active=:active AND lang_id=:lang_id',
+    $model_course = CourseOnline::model()->with('CategoryTitle')->findAll(array(
+    	'condition' => 'course.active=:active AND course.lang_id=:lang_id AND categorys.active=:active',
     	'params' => array(':active'=>'y', ':lang_id'=>$langId, ),
     	'order' => 'course_title ASC'
     ));
