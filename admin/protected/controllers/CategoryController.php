@@ -262,7 +262,7 @@ class CategoryController extends Controller
         $this->redirect(array('index'));
     	}
 
-    	public function actionDelete($id)
+    	public function actionDelete_old($id)
     	{
             $model = $this->loadModel($id);
             ////////////////// group id 7 และเป็นคนสร้าง ถึงจะเห็น
@@ -436,24 +436,127 @@ class CategoryController extends Controller
 
                     }
         $this->redirect(array('index'));
-    			}
+    }
 
-    			public function actionMultiDelete()
-    			{
-		//header('Content-type: application/json');
-    				if(isset($_POST['chk']))
-    				{
-    					foreach($_POST['chk'] as $val)
-    					{
-                              $this->actionDelete($val);
-                          
-    					}
-    				}
-    			}
+    public function actionDelete($id)
+    {
+        $model = $this->loadModel($id);
+        ////////////////// group id 7 และเป็นคนสร้าง ถึงจะเห็น
+        $check_user = User::model()->findByPk(Yii::app()->user->id);
+        $group = $check_user->group;
+        $group_arr = json_decode($group);
+        $see_all = 2;
+        if(in_array("1", $group_arr) || in_array("7", $group_arr)){
+            $see_all = 1;
+        }
+        if($see_all == 1 || $model->create_by == Yii::app()->user->id){
+            $model->active = 'n';
+            $model->save(false);
+            $modelChildren = Category::model()->findAll(array(
+                'condition'=>'parent_id=:parent_id AND active=:active',
+                'params' => array(':parent_id'=>$id, ':active'=>'y')
+            ));
+            foreach ($modelChildren as $key => $value) {
+               $value->active = 'n';
+               $value->save(false);
+           }
+           //////////////////////////////////////////////////////// จบ cate
+           $model_Course = CourseOnline::model()->findAll(array(
+            'condition' => 'cate_id='.$id,
+            ));
+           foreach ($model_Course as $key => $value) {
+                $value->active = 'n';
+                $value->save(false);
+                $model_course_ch = CourseOnline::model()->findAll(array(
+                    'condition' => 'parent_id='.$value->course_id,
+                ));
+                foreach ($model_course_ch as $key_ch => $value_ch) {
+                    $value_ch->active = 'n';
+                    $value_ch->save(false);
+                }
+                ///////////////////////////////////////////////////// จบ course
+                $model_lesson = Lesson::model()->findAll(array(
+                    'condition' => 'course_id='.$value->course_id,
+                ));
+                foreach ($model_lesson as $key_l => $value_l) {
+                    $value_l->active = 'n';
+                    $value_l->save(false);
+                    $model_lesson_ch = Lesson::model()->findAll(array(
+                        'condition' => 'parent_id='.$value_l->id,
+                    ));
+                    foreach ($model_lesson_ch as $key_l_ch => $value_l_ch) {
+                        $value_l_ch->active = 'n';
+                        $value_l_ch->save(false);
+                    }
+                    ////////////////////////////////////////////////// จบ lesson
+                    $model_file = File::model()->findAll(array(
+                        'condition' => 'lesson_id='.$value_l->id,
+                    ));
+                    $model_file_audio = FileAudio::model()->findAll(array(
+                        'condition' => 'lesson_id='.$value_l->id,
+                    ));
+                    $model_file_doc = FileDoc::model()->findAll(array(
+                        'condition' => 'lesson_id='.$value_l->id,
+                    ));
+                    $model_file_pdf = FilePdf::model()->findAll(array(
+                        'condition' => 'lesson_id='.$value_l->id,
+                    ));
+                    $model_file_scorm = FileScorm::model()->findAll(array(
+                        'condition' => 'lesson_id='.$value_l->id,
+                    ));
 
-    			public function actionCheckExists()
-    			{
-    				$webroot = Yii::app()->getUploadPath(null);
+                    foreach ($model_file as $key_f => $value_f) {
+                        $value_f->active = 'n';
+                        $value_f->save(false);
+                    }
+                    foreach ($model_file_audio as $key_f => $value_f) {
+                        $value_f->active = 'n';
+                        $value_f->save(false);
+                    }
+                    foreach ($model_file_doc as $key_f => $value_f) {
+                        $value_f->active = 'n';
+                        $value_f->save(false);
+                    }
+                    foreach ($model_file_pdf as $key_f => $value_f) {
+                        $value_f->active = 'n';
+                        $value_f->save(false);
+                    }
+                    foreach ($model_file_scorm as $key_f => $value_f) {
+                        $value_f->active = 'n';
+                        $value_f->save(false);
+                    }
+                    ////////////////////////////////////////////////// จบ file
+                } // foreach ($model_lesson
+                $model_org_course = OrgCourse::model()->findAll(array(
+                    'condition' => 'course_id='.$value->course_id,
+                ));
+                foreach ($model_org_course as $key_oc => $value_oc) {
+                    $model_OC = OrgCourse::model()->findByPk($value_oc->id);
+                    $model_OC->delete();
+                }
+                ///////////////////////////////////////////////////// จบ Org Course
+           } // foreach ($model_Course
+        } // if($see_all == 1 || $model->create_by == Yii::app()->user->id
+        if(!isset($_GET['ajax'])){
+            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('index'));
+        }
+    }
+
+	public function actionMultiDelete()
+	{
+		if(isset($_POST['chk']))
+		{
+			foreach($_POST['chk'] as $val)
+			{
+                  $this->actionDelete($val);
+              
+			}
+		}
+	}
+
+	public function actionCheckExists()
+	{
+        $webroot = Yii::app()->getUploadPath(null);
 		$targetFolder = $webroot; // Relative to the root and should match the upload folder in the uploader script
 
 		if (file_exists($targetFolder . $_POST['filename'])) {
