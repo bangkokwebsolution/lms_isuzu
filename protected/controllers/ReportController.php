@@ -2158,7 +2158,11 @@ public function actionReportRegisterData()
 
 
 
+		public function actionAssessment(){
 
+
+			$this->render('assessment');
+		}
 
 
 
@@ -3327,7 +3331,22 @@ $model_level = Branch::model()->findAll(array(
 
 		require_once __DIR__ . '/../../admin/protected/vendors/mpdf7/autoload.php';
 		$mPDF = new \Mpdf\Mpdf(['format' => 'A4-P']);
-		$result = '<style type="text/css"> body { font-family:"thaisansneue"; font-size:20px; } td{ text-align:center; } table{ width:100%; }</style>';
+		$result = '
+		<style type="text/css"> 
+			body{ 
+				font-family:"thaisansneue"; 
+				font-size:20px; 
+			}
+			table{ 
+				width:100%;
+				border-collapse: collapse; 
+			}
+			table, th, td {
+				border: 1px solid black;
+				text-align:center
+			}
+		</style>
+		';
 		$result .= urldecode($_POST["text_element1"]);
 		$page = mb_convert_encoding($result, 'UTF-8', 'UTF-8');
 		$mPDF->WriteHTML($page);
