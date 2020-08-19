@@ -139,6 +139,7 @@ class ReportProblem extends CActiveRecord
 		$criteria->compare('answer',$this->answer,true);
 		$criteria->compare('report_course',$this->report_course,true);
 
+		$criteria->order = 'report_date DESC';
 		$poviderArray = array('criteria'=>$criteria);
 		// Page
 		if(isset($this->news_per_page))

@@ -50,6 +50,12 @@ Yii::app()->clientScript->registerScript('search', "
 							<div>
 								<?php echo Rights::t('core', 'ที่นี่คุณสามารถดูว่ามีการมอบหมายสิทธิ์ใดให้กับผู้ใช้แต่ละราย'); ?>
 							</div>
+								 <div class="separator bottom form-inline small">
+								<span class="pull-right">
+									<label class="strong">แสดงแถว:</label>
+									<?php echo $this->listPageShow($formNameModel);?>
+								</span>
+							</div>
 							<div class="spacer"></div>
 							<div>
 
@@ -206,9 +212,6 @@ Yii::app()->clientScript->registerScript('search', "
 ));
 
 
-foreach (User::getOnlineUsers() as $user) {
-	echo $user["username"];
-}
 ?>
 <div class="modal fade" tabindex="-1" role="dialog" id="selectModal">
 	<div class="modal-dialog modal-lg" role="document">
