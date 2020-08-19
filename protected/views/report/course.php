@@ -474,8 +474,9 @@ if(isset($model_level) && !empty($model_level)){
 
                           var options = {
                             seriesType: 'bars',
-                            bar: {groupWidth: "75%"},
+                            bar: {groupWidth: "50%"},
                             legend: { position: "right" },
+                            chartArea:{ right:'15%' },
                         };
 
                         var chart = new google.visualization.ComboChart(document.getElementById('chart_bar'));
@@ -695,8 +696,9 @@ chart.draw(data, options);
 
                           var options = {
                             seriesType: 'bars',
-                            bar: {groupWidth: "75%"},
+                            bar: {groupWidth: "50%"},
                             legend: { position: "right" },
+                            chartArea:{ right:'15%' },
                         };
 
 var chart = new google.visualization.ComboChart(document.getElementById('chart_bar'));
