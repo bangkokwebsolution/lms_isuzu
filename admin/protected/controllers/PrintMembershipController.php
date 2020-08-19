@@ -37,6 +37,7 @@ class PrintMembershipController extends Controller
     {
         $model = new PrintMembership('search');
         $model->unsetAttributes();  // clear any default values
+        $model->status = array(1);
         $model->register_status = array(0,2);
         $model->supper_user_status = true;
       
@@ -51,7 +52,8 @@ class PrintMembershipController extends Controller
     {
         $model = new PrintMembership('search');
         $model->unsetAttributes();  // clear any default values
-        $model->register_status = array(4);
+        $model->status = array(1);
+        $model->register_status = array(1);
         $model->supper_user_status = true;
       
         if(isset($_GET['User'])){

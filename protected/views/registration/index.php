@@ -1315,6 +1315,7 @@ function editNamehouse_registration(filedoc_id){
                  </div> 
 
              </div>
+            <?php if ($users->isNewRecord) { ?>
 
              <div class="row justify-content-center select-profile mg-0">
                 <div class="form-group">
@@ -1344,7 +1345,9 @@ function editNamehouse_registration(filedoc_id){
                             ?>
                         </div>
                     </div>
-
+            <?php
+            }
+            ?>
                     <div class="row justify-content-center mt-1 id_employee" >
                         <div class="col-sm-4">
                             <div class="form-group" >
@@ -1391,10 +1394,10 @@ function editNamehouse_registration(filedoc_id){
                                     $criteria->order = 'sortOrder ASC';
                                     $departmentModel = Department::model()->findAll($criteria);
                                     $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
-                                    $departmentOption = array('class' => 'form-control department', 'empty' => $label->label_placeholder_company);
+                                    $departmentOption = array('class' => 'form-control department', 'empty' => $label->label_placeholder_company, 'disabled' => $users->isNewRecord == true? false : true);
                                     ?>
                                     <?php
-                                    echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption);
+                                    echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption );
                                     ?>
                                     <?php //echo $form->error($users, 'department_id', array('class' => 'error2')); ?>
                                 </div>
@@ -1410,7 +1413,7 @@ function editNamehouse_registration(filedoc_id){
                                     $criteria->order = 'sortOrder ASC';
                                     $positionModel = Position::model()->findAll($criteria);
                                     $positionList = CHtml::listData($positionModel, 'id', 'position_title');
-                                    $positiontOption = array('class' => 'form-control position', 'empty' => $label->label_placeholder_position);
+                                    $positiontOption = array('class' => 'form-control position', 'empty' => $label->label_placeholder_position, 'disabled' => $users->isNewRecord == true? false : true);
                                     ?>
                                     <?php
                                     echo $form->dropDownList($users, 'position_id', $positionList, $positiontOption); ?>
@@ -1432,7 +1435,7 @@ function editNamehouse_registration(filedoc_id){
                                     $criteria->order = 'sortOrder ASC';
                                     $BranchModel = Branch::model()->findAll($criteria);
                                     $BranchList = CHtml::listData($BranchModel, 'id', 'branch_name');
-                                    $BranchOption = array('class' => 'form-control Branch', 'empty' => $label->label_placeholder_branch );
+                                    $BranchOption = array('class' => 'form-control Branch', 'empty' => $label->label_placeholder_branch, 'disabled' => $users->isNewRecord == true? false : true );
                                     ?>
                                     <?php
                                     echo $form->dropDownList($users, 'branch_id', $BranchList, $BranchOption);
@@ -3185,7 +3188,7 @@ $count_tn = 1;
                     $criteria->order = 'sortOrder ASC';
                     $departmentModel = Department::model()->findAll($criteria);
                     $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
-                    $departmentOption = array('class' => 'form-control department_gen', 'empty' => $label->label_placeholder_company, 'name' => 'department_gen');
+                    $departmentOption = array('class' => 'form-control department_gen', 'empty' => $label->label_placeholder_company, 'name' => 'department_gen', 'disabled' => $users->isNewRecord == true? false : true);
                     ?>
                     <?php
                     echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption);
@@ -3218,7 +3221,7 @@ $count_tn = 1;
                <?php
                $positionLists = CHtml::listData($position_ship, 'id', 'position_title');
 
-               $positiontOption = array('class' => 'form-control position_gen ', 'empty' => $label->label_placeholder_position, 'name' => 'position_gen');
+               $positiontOption = array('class' => 'form-control position_gen ', 'empty' => $label->label_placeholder_position, 'name' => 'position_gen', 'disabled' => $users->isNewRecord == true? false : true);
                ?>
                <?php echo $form->dropDownList($users, 'position_id', $positionLists, $positiontOption); ?>
                <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>

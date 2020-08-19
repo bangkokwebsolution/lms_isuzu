@@ -173,8 +173,8 @@ echo ($data);
 		$model = new User('search');
         $model->unsetAttributes();  // clear any default values
         //$model->typeuser = array(1);
-        $model->register_status = array(1);
-        //$model->status = array(1);
+        $model->register_status = 0;
+        $model->status = array(1);
         $model->supper_user_status = false;
         if(isset($_GET['User'])){
         	$model->attributes=$_GET['User'];
@@ -333,6 +333,8 @@ echo ($data);
         $model->unsetAttributes();  // clear any default values
         $model->typeuser = array(3);
         $model->type_employee = array(2);
+        $model->status = array(1);
+        $model->register_status = array(1);
         $model->supper_user_status = true;
         if(isset($_GET['User']))
         	$model->attributes=$_GET['User'];
@@ -348,6 +350,8 @@ echo ($data);
 
         $model->typeuser = array(1);
         $model->type_employee = array(1);
+        $model->status = array(1);
+        $model->register_status = array(1);
         $model->supper_user_status = true;
         if(isset($_GET['User']))
         	$model->attributes=$_GET['User'];
@@ -361,6 +365,8 @@ echo ($data);
 		$model=new User('search');
         $model->unsetAttributes();  // clear any default values
         $model->typeuser = array(5);
+        $model->status = array(1);
+        $model->register_status = array(1);
         $model->supper_user_status = true;
         if(isset($_GET['User']))
         	$model->attributes=$_GET['User'];
@@ -374,11 +380,12 @@ echo ($data);
 		$model = User::model()->findByPk($id);
 		$profile = Profile::model()->findByPk($id);
 
-		if($model->status == 1 && $model->register_status == 1){
+		if($model->status == 1 && $model->register_status == 0){
 			// $model->status = 0;
-			// $model->status = 1;
-			$model->register_status = 4;
-			// $profile->type_user = 3;
+		    $model->status = 1;
+			$model->register_status = 1;
+		    $profile->type_user = 1;
+		    $profile->type_employee = 1;
 			$profile->save(false);
 		} else {
 			$model->status = 0;
@@ -406,7 +413,7 @@ echo ($data);
 		$model = User::model()->findByPk($id);
 		$Profile = Profile::model()->findByPk($id);
 		if($model->register_status == 0){
-			$model->register_status = 1;
+			//$model->register_status = 1;
 			$model->status = 1;
 		} else {
 			$model->register_status = 0;
@@ -435,7 +442,7 @@ echo ($data);
 		$id = $_POST['id'];
 		$model = User::model()->findByPk($id);
 		if($model->register_status == 0){
-			$model->register_status = 1;
+			//$model->register_status = 1;
 			$model->status = 1;
 		} else {
 			$model->register_status = 0;
@@ -512,7 +519,7 @@ echo ($data);
     	$id = $_POST['id'];
     	$passage = $_POST['passInput'];
 		$model = User::model()->findByPk($id);
-		if($model->status == 1 && $model->register_status == 1){
+		if($model->status == 1 && $model->register_status == 0){
 			$model->status = 0;
 			$model->register_status = 3;
 		} else {

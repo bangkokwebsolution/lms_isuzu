@@ -121,14 +121,12 @@ EOD
 									'type'=>'html',
 									'value'=>function($data){
 
-										if($data->status == 1 && $data->register_status == 1){
+										if($data->status == 1 && $data->register_status == 0){
 											//echo CHtml::button("ปิด",array("class"=>"btn btn-danger ","data-id" => $data->id));
 											echo "รออนุมัติ";
-										} else if($data->status == 0 && $data->register_status == 1){
+										} else if($data->status == 0 && $data->register_status == 2){
 											echo "ไม่ผ่านอนุมัติ";
 											//echo CHtml::button("รอการตรวจสอบ",array("class"=>"btn btn-success ","data-id" => $data->id));
-										}else if($data->register_status == 3 && $data->status == 0){
-											echo "ไม่ผ่านอนุมัติ";
 										}
 									}
 								),
@@ -190,12 +188,10 @@ EOD
 								array(
 									'type'=>'raw',
 									'value'=>function($data){
-										if($data->status == 1 && $data->register_status == 1){
+										if($data->status == 1 && $data->register_status == 0){
 											echo CHtml::button("รออนุมัติ",array('onclick'=>'sendMsgCheck('.$data->id.')',"class"=>"btn btn-info changeStatus","data-id" => $data->id));
-										} else if($data->status == 0 && $data->register_status == 1) {
+										} else if($data->status == 0 && $data->register_status == 0) {
 											echo CHtml::button("ไม่ผ่านอนุมัติ",array("class"=>"btn btn-danger","data-id" => $data->id));
-										} else if($data->register_status == 3 && $data->status == 0){
-											echo CHtml::button("ไม่ผ่านอนุมัติ",array("class"=>"btn btn-danger ","data-id" => $data->id));
 										}
 										// else {
 										// 	echo CHtml::button("ไม่ผ่าน",array("class"=>"btn btn-danger ","data-id" => $data->id));

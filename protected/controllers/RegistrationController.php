@@ -494,7 +494,7 @@ if ($profile->type_user == 1) {
     $users->username = $_POST['idcard'];
     $users->status = 0;
     $users->register_status = 0;
-}else{
+}else if($profile->type_user == 3){
     $profile->type_employee = 2;
     $users->register_status = 1;
     $users->status = 1;
