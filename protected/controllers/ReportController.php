@@ -3180,31 +3180,7 @@ $model_level = Branch::model()->findAll(array(
 
     	$arr_count_course = [];
     	$arr_course_title = [];
-    	if($_GET["search"]["start_date"] != "" && $_GET["search"]["end_date"] != ""){
-    		if($_GET["search"]["start_date"] != ""){
-    			$criteria->compare('t.start_date', ">=".$_GET["search"]["start_date"]." 00:00:00");
-    		}
-    		if($_GET["search"]["end_date"] != ""){
-    			$criteria->compare('t.start_date', "<=".$_GET["search"]["end_date"]." 23:59:59");
-    		}
-
-    		$criteria->order = 't.id ASC';
-    		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
-
-    		$criteria->order = 't.course_id ASC';
-    		$criteria->select ='t.course_id';
-    		$criteria->distinct = true;
-    		$model_graph = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
-
-    		
-    		foreach ($model_graph as $key => $value) {
-    			$arr_count_course[$value->course_id] = $arr_count_course[$value->course_id]+1;
-    			$course_model = CourseOnline::model()->findByPk($value->course_id);
-    			$arr_course_title[$value->course_id] = $course_model->course_title;
-    		}
-
-
-    	}elseif($_GET["search"]["start_year"] != "" && $_GET["search"]["end_year"] != ""){
+    	if($_GET["search"]["start_year"] != "" && $_GET["search"]["end_year"] != ""){
     		if($_GET["search"]["start_year"] != ""){
     			$criteria->compare('t.start_date', ">=".$_GET["search"]["start_year"]."-01-01 00:00:00");
     		}
@@ -3212,26 +3188,41 @@ $model_level = Branch::model()->findAll(array(
     			$criteria->compare('t.start_date', "<=".$_GET["search"]["end_year"]."-12-31 23:59:59");
     		}
 
-    		$criteria->order = 't.id ASC';
-    		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
-
     		$criteria->order = 'yearrrr ASC';
-    		$criteria->select ='t.start_date, t.course_id, YEAR(t.start_date) AS yearrrr';
+    		$criteria->select ='t.start_date, t.course_id, YEAR(t.start_date) AS yearrrr, t.user_id, t.gen_id';
     		$criteria->distinct = true;
     		$model_graph = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
 
+
     		foreach ($model_graph as $key => $value) {
-    			$arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id] = $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]+1;
-    			$course_model = CourseOnline::model()->findByPk($value->course_id);
-    			$arr_course_title[$value->course_id] = $course_model->course_title;
+    			$course_score = Coursescore::model()->find(array(
+    				'condition' => 'active=:active AND user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id AND type=:type',
+    				'params' => array(':active'=>'y',':user_id'=>$value->user_id,':course_id'=>$value->course_id, ':gen_id'=>$value->gen_id, ':type'=>'post'),
+    				'order' => 'score_id DESC'
+    			));
+    			if($course_score != ""){
+$arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["pass"] = $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["pass"];
+$arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["fail"] = $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["fail"];
+if($course_score->score_past == 'y'){
+	$arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["pass"] = $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["pass"]+1;
+	$course_model = CourseOnline::model()->findByPk($value->course_id);
+	$arr_course_title[$value->course_id] = $course_model->course_title;
+}elseif($course_score->score_past == 'n'){
+	$arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["fail"] = $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["fail"]+1;
+	$course_model = CourseOnline::model()->findByPk($value->course_id);
+	$arr_course_title[$value->course_id] = $course_model->course_title;
+}
+    			}    			
     		}
 
     	}else{
-    		// if(Yii::app()->session['lang'] != 1){
-    		// 	$criteria->order = 'pro.firstname ASC';
-    		// }else{
-    		// 	$criteria->order = 'pro.firstname_en ASC';
-    		// }
+
+    		if($_GET["search"]["start_date"] != ""){
+    			$criteria->compare('t.start_date', ">=".$_GET["search"]["start_date"]." 00:00:00");
+    		}
+    		if($_GET["search"]["end_date"] != ""){
+    			$criteria->compare('t.start_date', "<=".$_GET["search"]["end_date"]." 23:59:59");
+    		}
 
     		$criteria->order = 't.id ASC';
     		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
@@ -3247,29 +3238,29 @@ $model_level = Branch::model()->findAll(array(
     			if($course_score != ""){
     				$model_search_score[$key]["status"] = $course_score->score_past;
     				$model_search_score[$key]["score"] = $course_score->score_number."/".$course_score->score_total;
-    			}
+
+
 
 $course_model = CourseOnline::model()->findByPk($value->course_id);
 $model_search_graph[$value->course_id]["title"] = $course_model->course_title;
+$model_search_graph[$value->course_id]["pass"] = $model_search_graph[$value->course_id]["pass"];
+$model_search_graph[$value->course_id]["fail"] = $model_search_graph[$value->course_id]["fail"];
 if($course_score->score_past == 'y'){
 	$model_search_graph[$value->course_id]["pass"] = $model_search_graph[$value->course_id]["pass"]+1;
-}else{
+}elseif($course_score->score_past == 'n'){
 	$model_search_graph[$value->course_id]["fail"] = $model_search_graph[$value->course_id]["fail"]+1;
 }
-    		}
 
-    		// $criteria->order = 't.course_id ASC';
-    		// $criteria->select ='t.course_id';
-    		// $criteria->distinct = true;
-    		// $model_graph = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
 
-    		
-    		// foreach ($model_graph as $key => $value) {
-    		// 	$arr_count_course[$value->course_id] = $arr_count_course[$value->course_id]+1;
-    		// 	$course_model = CourseOnline::model()->findByPk($value->course_id);
-    		// 	$arr_course_title[$value->course_id] = $course_model->course_title;
-    		// }
-    	}
+    			}
+
+
+    		} // foreach ($model_search
+    	} // else
+
+    	// var_dump("<pre>");
+    	// var_dump($arr_count_course);
+    	// exit();
 
 		$this->render('exam_office', array(
 	        'model_course'=>$model_course,
@@ -3284,6 +3275,7 @@ if($course_score->score_past == 'y'){
 	        'model_search_score'=>$model_search_score,
 	        'model_search_graph'=>$model_search_graph,
 	        'arr_course_title'=>$arr_course_title,
+	        'arr_count_course'=>$arr_count_course,
 	        'authority'=>$authority,
 			'type_em'=>$type_em,
 			'user_login'=>$user_login,
