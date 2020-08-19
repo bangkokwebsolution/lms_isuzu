@@ -165,8 +165,9 @@
 							</div>
 						</a>
 					</div>
+					<?php if($authority == 1 || $type_em == 2){ ?>
 					<div class="col-sm-4 col-md-3">
-						<a href="#">
+						<a href="<?php echo $this->createUrl('/report/examOffice'); ?>">
 							<div class="card-report">
 								<div class="img-report">
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-9.png" class="img-fluid ">
@@ -177,6 +178,7 @@
 							</div>
 						</a>
 					</div>
+				<?php } ?>
 				</div>
 			</div>
 
