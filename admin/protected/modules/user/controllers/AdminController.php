@@ -441,7 +441,7 @@ echo ($data);
 		
 		$id = $_POST['id'];
 		$model = User::model()->findByPk($id);
-		if($model->register_status == 0){
+		if($model->register_status == 0 && $model->status == 0){
 			//$model->register_status = 1;
 			$model->status = 1;
 		} else {
@@ -471,7 +471,7 @@ echo ($data);
     	$id = $_POST['id'];
     	$passage = $_POST['passInput'];
 		$model = User::model()->findByPk($id);
-		if($model->register_status == 0){
+		if($model->register_status == 0 && $model->status == 1){
 			$model->register_status = 2;
 		} else {
 			$model->register_status = 1;
@@ -495,7 +495,7 @@ echo ($data);
     	$id = $_POST['id'];
     	$passage = $_POST['passInput'];
 		$model = User::model()->findByPk($id);
-		if($model->register_status == 0){
+		if($model->register_status == 0 && $model->status == 1){
 			$model->register_status = 2;
 		} else {
 			$model->register_status = 1;
