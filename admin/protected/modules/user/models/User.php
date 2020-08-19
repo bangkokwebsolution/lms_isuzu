@@ -443,7 +443,7 @@ public function validateIdCard($attribute,$params){
 	$criteria->compare('status',$this->status);
 	$criteria->compare('del_status',0); 
 	$criteria->compare('register_status',array(1,3));
-	$criteria->compare('profile.type_user',array(1,2));
+	$criteria->compare('profile.type_user',array(1));
 	$criteria->order = 'user.id DESC';
 	//$criteria->compare('profile.type_user',array(1));
 

@@ -331,7 +331,7 @@ echo ($data);
 	{
 		$model=new User('search');
         $model->unsetAttributes();  // clear any default values
-        $model->typeuser = array(2,3);
+        $model->typeuser = array(3);
         $model->type_employee = array(2);
         $model->supper_user_status = true;
         if(isset($_GET['User']))
@@ -346,7 +346,7 @@ echo ($data);
 		$model=new User('search');
         $model->unsetAttributes();  // clear any default values
 
-        $model->typeuser = array(2,3);
+        $model->typeuser = array(1);
         $model->type_employee = array(1);
         $model->supper_user_status = true;
         if(isset($_GET['User']))
@@ -378,7 +378,7 @@ echo ($data);
 			// $model->status = 0;
 			// $model->status = 1;
 			$model->register_status = 4;
-			$profile->type_user = 3;
+			// $profile->type_user = 3;
 			$profile->save(false);
 		} else {
 			$model->status = 0;
