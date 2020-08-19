@@ -412,7 +412,7 @@ echo ($data);
 		$id = $_POST['id'];
 		$model = User::model()->findByPk($id);
 		$Profile = Profile::model()->findByPk($id);
-		if($model->register_status == 0){
+		if($model->register_status == 0 && $model->status == 0){
 			//$model->register_status = 1;
 			$model->status = 1;
 		} else {
