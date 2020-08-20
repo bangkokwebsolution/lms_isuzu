@@ -2170,6 +2170,14 @@ public function actionCheckIdcard(){
                foreach ($model as $key_u => $value_u) {
                 $profile_chk = Profile::model()->findByPk($value_u->id);
                 if($profile_chk == ""){
+                    $addlog = new LogUsers;
+                    $addlog->controller = "Registration";
+                    $addlog->action = "CheckIdcardDelUser";
+                    $addlog->parameter = $str;
+                    $addlog->user_id = $value_u->id;
+                    $addlog->create_date = date("Y-m-d H:i:s");
+                    $addlog->save(false);
+                    
                     $Users_del = Users::model()->findByPk($value_u->id);
                     $Users_del->delete();
                 }
@@ -2178,7 +2186,7 @@ public function actionCheckIdcard(){
                $criteria->condition='user.identification=:identification';
                $criteria->params=array(':identification'=>$str);
                $model = Users::model()->findAll($criteria);
-               
+
                if ($model) {
                  $data = 'yes';
                  echo ($data);
