@@ -32,12 +32,14 @@ class ReportAuthorityController extends Controller
 		}
 
 		$criteria->compare('superuser', 0);
+		$criteria->compare('del_status', 0);
 		$criteria->compare('repass_status', 1);
 		$criteria->compare('register_status', 1);
 		$criteria->compare('status', 1);
-		$criteria->addCondition('profile.type_user = 1 OR profile.type_user = 3');
+
+		$criteria->addCondition('(profile.type_user = 1 AND profile.type_employee = 1) OR (profile.type_user = 3 AND profile.type_employee = 2)');
 		//OR profile.type_user = 5
-		$criteria->addCondition('profile.type_employee = 1 OR profile.type_employee = 2');
+		// $criteria->addCondition('profile.type_employee = 1 OR profile.type_employeee = 2');
 		$criteria->addCondition('report_authority IS NULL');
 		$criteria->order = 'profile.firstname ASC';
 		$userAll = User::model()->with('profile')->findAll($criteria);
@@ -107,12 +109,14 @@ class ReportAuthorityController extends Controller
 		}
 
 		$criteria->compare('superuser', 0);
+		$criteria->compare('del_status', 0);
 		$criteria->compare('repass_status', 1);
 		$criteria->compare('register_status', 1);
 		$criteria->compare('status', 1);
 		$criteria->compare('department.active', 'y');
-		$criteria->addCondition('profile.type_user = 1 OR profile.type_user = 3');
-		$criteria->addCondition('profile.type_employee = 1 OR profile.type_employee = 2');
+		// $criteria->addCondition('profile.type_user = 1 OR profile.type_user = 3');
+		// $criteria->addCondition('profile.type_employee = 1 OR profile.type_employee = 2');
+		$criteria->addCondition('(profile.type_user = 1 AND profile.type_employee = 1) OR (profile.type_user = 3 AND profile.type_employee = 2)');
 		$criteria->addCondition('report_authority IS NULL');
 		$criteria->addCondition('user.department_id IS NOT NULL');		
 		$criteria->order = 'profile.firstname ASC';
@@ -183,13 +187,15 @@ class ReportAuthorityController extends Controller
 		}
 
 		$criteria->compare('superuser', 0);
+		$criteria->compare('del_status', 0);
 		$criteria->compare('repass_status', 1);
 		$criteria->compare('register_status', 1);
 		$criteria->compare('status', 1);
 		$criteria->compare('department.active', 'y');
 		$criteria->compare('position.active', 'y');		
-		$criteria->addCondition('profile.type_user = 1 OR profile.type_user = 3');
-		$criteria->addCondition('profile.type_employee = 1 OR profile.type_employee = 2');
+		// $criteria->addCondition('profile.type_user = 1 OR profile.type_user = 3');
+		// $criteria->addCondition('profile.type_employee = 1 OR profile.type_employee = 2');
+		$criteria->addCondition('(profile.type_user = 1 AND profile.type_employee = 1) OR (profile.type_user = 3 AND profile.type_employee = 2)');
 		$criteria->addCondition('report_authority IS NULL');
 		$criteria->addCondition('user.department_id IS NOT NULL');
 		$criteria->addCondition('user.position_id IS NOT NULL');

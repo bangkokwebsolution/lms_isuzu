@@ -105,6 +105,10 @@ $this->breadcrumbs=array($titleName);
             <th>ฝ่าย</th>
             <th>แผนก</th>
             <th>เลเวล</th>
+           <!--  <th>typeuser</th>
+            <th>type_employee</th>
+            <th>status</th>
+            <th>register_status</th> -->
           </tr>
         </thead>
         <tbody>
@@ -127,6 +131,10 @@ $this->breadcrumbs=array($titleName);
                 <td><?= $value->department->dep_title ?></td>
                 <td><?= $value->position->position_title ?></td>
                 <td><?= $value->branch->branch_name ?></td>
+                <!-- <td><?= $value->profile->type_user ?></td>
+                <td><?= $value->profile->type_employee ?></td>
+                <td><?= $value->status ?></td>
+                <td><?= $value->register_status ?></td> -->
               </tr>
               <?php
             }
