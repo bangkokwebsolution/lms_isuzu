@@ -2167,6 +2167,18 @@ public function actionCheckIdcard(){
                $criteria->condition='user.identification=:identification';
                $criteria->params=array(':identification'=>$str);
                $model = Users::model()->findAll($criteria);
+               foreach ($model as $key_u => $value_u) {
+                $profile_chk = Profile::model()->findByPk($value_u->id);
+                if($profile_chk == ""){
+                    $Users_del = Users::model()->findByPk($value_u->id);
+                    $Users_del->delete();
+                }
+               }
+               $criteria= new CDbCriteria;
+               $criteria->condition='user.identification=:identification';
+               $criteria->params=array(':identification'=>$str);
+               $model = Users::model()->findAll($criteria);
+               
                if ($model) {
                  $data = 'yes';
                  echo ($data);
