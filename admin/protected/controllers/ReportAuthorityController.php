@@ -35,7 +35,8 @@ class ReportAuthorityController extends Controller
 		$criteria->compare('repass_status', 1);
 		$criteria->compare('register_status', 1);
 		$criteria->compare('status', 1);
-		$criteria->addCondition('profile.type_user = 1 OR profile.type_user = 3 OR profile.type_user = 5');
+		$criteria->addCondition('profile.type_user = 1 OR profile.type_user = 3');
+		//OR profile.type_user = 5
 		$criteria->addCondition('profile.type_employee = 1 OR profile.type_employee = 2');
 		$criteria->addCondition('report_authority IS NULL');
 		$criteria->order = 'profile.firstname ASC';
@@ -110,7 +111,7 @@ class ReportAuthorityController extends Controller
 		$criteria->compare('register_status', 1);
 		$criteria->compare('status', 1);
 		$criteria->compare('department.active', 'y');
-		$criteria->addCondition('profile.type_user = 1 OR profile.type_user = 3 OR profile.type_user = 5');
+		$criteria->addCondition('profile.type_user = 1 OR profile.type_user = 3');
 		$criteria->addCondition('profile.type_employee = 1 OR profile.type_employee = 2');
 		$criteria->addCondition('report_authority IS NULL');
 		$criteria->addCondition('user.department_id IS NOT NULL');		
@@ -187,7 +188,7 @@ class ReportAuthorityController extends Controller
 		$criteria->compare('status', 1);
 		$criteria->compare('department.active', 'y');
 		$criteria->compare('position.active', 'y');		
-		$criteria->addCondition('profile.type_user = 1 OR profile.type_user = 3 OR profile.type_user = 5');
+		$criteria->addCondition('profile.type_user = 1 OR profile.type_user = 3');
 		$criteria->addCondition('profile.type_employee = 1 OR profile.type_employee = 2');
 		$criteria->addCondition('report_authority IS NULL');
 		$criteria->addCondition('user.department_id IS NOT NULL');

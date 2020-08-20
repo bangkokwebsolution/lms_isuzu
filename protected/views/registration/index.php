@@ -3900,15 +3900,18 @@ $(function() {
     $('.user_ID').change(function(event,length){
         var max = 5;
         var vals = $(this).val();
-        if (max.length > vals.length) {      
+        // console.log(max);
+        // console.log(vals.length);
+        if (max != vals.length) {      
                var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
                var msg ="<?php echo Yii::app()->session['lang'] == 1?'Please fill in your 5-digit employee identification number! ':'กรุณากรอกเลขประจำตัวพนักงานให้ครบ 5 หลัก!'; ?>";   
                swal(alert_message,msg);       
-        }else{
-             var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
-               var msg ="<?php echo Yii::app()->session['lang'] == 1?'Please fill in your 5-digit employee identification number! ':'กรุณากรอกเลขประจำตัวพนักงานให้ครบ 5 หลัก!'; ?>";   
-               swal(alert_message,msg);     
         }
+        // else{
+        //      var alert_message ="<?php //echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+        //        var msg ="<?php //echo Yii::app()->session['lang'] == 1?'Please fill in your 5-digit employee identification number! ':'กรุณากรอกเลขประจำตัวพนักงานให้ครบ 5 หลัก!'; ?>";   
+        //        swal(alert_message,msg);     
+        // }
     });
     $("#card-5").change(function(event) {    
       var sick = $("input[name='history_of_illness']:checked").val();
