@@ -1630,7 +1630,7 @@ echo ($data);
 
 				// 	$model->email = $member[0]['mail'][0];
 				// }else{ //LMS
-					$model->email = $_POST['User']['username'];
+					$model->email = $_POST['User']['email'];
 					// $model->password = ($_POST['User']['identification']);
 					// $model->verifyPassword = $model->password;
 					// $model->department_id = 1;
