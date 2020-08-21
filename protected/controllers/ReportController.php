@@ -3402,6 +3402,7 @@ public function actionExamShip(){
     if(isset($_GET["search"])){
 
     	$criteria = new CDbCriteria;
+
     	if($_GET["search"]["fullname"] != ""){
     		$ex_fullname = explode(" ", $_GET["search"]["fullname"]);
 
@@ -3450,6 +3451,7 @@ public function actionExamShip(){
     		}
     		if($_GET["search"]["position"] != ""){
     			$criteria->compare('user.position_id', $_GET["search"]["position"]);
+    		}
     	} 
 
     	$arr_count_course = [];
@@ -3884,6 +3886,14 @@ if($course_score->score_past == 'y'){
 
 
 	}
+
+
+
+
+
+
+
+
 	
 
 	

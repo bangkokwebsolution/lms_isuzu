@@ -231,6 +231,7 @@ if(isset($model_position) && !empty($model_position)){
                                     </select>
                                 </div>
                             </div>
+                       <?php } ?>
                             <div class="col-md-3 col-lg-3 col-xs-12">
                                 <div class="form-group">
                                     <label for="search_fullname">
@@ -790,13 +791,13 @@ chart.draw(data, options);
             success: function(data) {
                 if(data != ""){
                     $("#search_position").html(data);
-                   
+                  
                 }
             }
         });
     }
 
-    function chk_form_search(){
+       function chk_form_search(){
         var status_pass = 1;
 
         var start_year = $("#search_start_year").val();
