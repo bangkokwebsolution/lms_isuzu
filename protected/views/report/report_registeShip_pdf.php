@@ -100,7 +100,7 @@ $Chart = $data['Chart'];
 		$criteria->compare('position_id',$result_pos_arr);	
 	}
 	$User = User::model()->findAll($criteria);
- if ($Year_start == "" && $Year_end) {
+ if ($Year_start == "" && $Year_end == "") {
  
 	if (!empty($User)) { ?>
 		<style type="text/css">
