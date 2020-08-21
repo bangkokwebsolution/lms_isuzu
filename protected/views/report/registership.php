@@ -16,14 +16,17 @@
             <li class="breadcrumb-item active" aria-current="page">
                 <?php
                 if (Yii::app()->session['lang'] == 1) {
-                    echo "Report...";
+                    echo "Register staff ship Report";
                 } else {
-                    echo "รายงานภาพการสมัครสมาชิกคนประจำเรือ";
+                    echo "รายงานภาพการสมัครสมาชิก คนประจำเรือ";
                 }
                 ?>
             </li>
         </ol>
     </nav>
+    <a class="btn btn-reportsearch" href="<?php echo $this->createUrl('/report'); ?>" style="margin-bottom: 0px; margin-left: 0px; background-color: #087fe4;">
+        <i class="fas fa-angle-left"></i><?php echo Yii::app()->session['lang'] == 1?'Back':' ย้อนกลับ'; ?>
+    </a>
 </div>
 
 <section id="report-detail">
@@ -38,7 +41,7 @@
                 <div id="report-search" class="panel-collapse collapse in">
                     <div class="panel-body">
                         <div class="row">
-                                 <div class="col-sm-3 col-md-3 col-xs-12">
+                            <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'Department':'ฝ่าย'; ?></label>
                                     <select class="form-control Department" name="" id="Department">
@@ -184,7 +187,19 @@
         <div class="divider">
             <i class="fas fa-chevron-down"></i>
         </div>
-
+<li class="breadcrumb-item active" aria-current="page">
+            <center>
+                <h3>
+                    <?php
+                    if (Yii::app()->session['lang'] == 1) {
+                        echo " Register staff ship Report";
+                    } else {
+                        echo " รายงานภาพการสมัครสมาชิก คนประจำเรือ";
+                    }
+                    ?>
+                </h3>    
+            </center>
+        </li>
          <div class="row">
                 <div class="col-sm-6 col-md-6 Graph_1">
                         <div class="chart"></div>

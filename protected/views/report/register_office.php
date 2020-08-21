@@ -16,14 +16,17 @@
             <li class="breadcrumb-item active" aria-current="page">
                 <?php
                 if (Yii::app()->session['lang'] == 1) {
-                    echo "Report...";
+                    echo "Register Staff Office Report";
                 } else {
-                    echo "รายงาน...";
+                    echo "รายงานภาพการสมัครสมาชิก คนประจำoffice";
                 }
                 ?>
             </li>
         </ol>
     </nav>
+    <a class="btn btn-reportsearch" href="<?php echo $this->createUrl('/report'); ?>" style="margin-bottom: 0px; margin-left: 0px; background-color: #087fe4;">
+        <i class="fas fa-angle-left"></i><?php echo Yii::app()->session['lang'] == 1?'Back':' ย้อนกลับ'; ?>
+    </a>
 </div>
 <section id="report-detail">
     <div class="container">
@@ -168,7 +171,6 @@
                </div>
            </div>
        </div>
-
        <div class="text-center">
         <button class="btn btn-reportsearch search"><i class="fas fa-search"></i> <?= Yii::app()->session['lang'] == 1?'Search':'ค้นหา'; ?> </button>
     </div>
@@ -182,6 +184,19 @@
     <i class="fas fa-chevron-down"></i>
 </div>
 
+        <li class="breadcrumb-item active" aria-current="page">
+            <center>
+                <h3>
+                    <?php
+                    if (Yii::app()->session['lang'] == 1) {
+                        echo "Register Staff Office Report";
+                    } else {
+                        echo "รายงานภาพการสมัครสมาชิก คนประจำoffice";
+                    }
+                    ?>
+                </h3>    
+            </center>
+        </li>
 <div class="row">
     <div class="col-sm-6 col-md-6 Graph_1">
         <div class="chart"></div>
@@ -225,7 +240,6 @@
         timepickerScrollbar: false,
         yearOffset: 0
     });
-    $.datetimepicker.setLocale('th');
 
     $(".Department").change(function() {
         var id = $(this).val();

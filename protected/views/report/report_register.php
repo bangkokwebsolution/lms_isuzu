@@ -16,14 +16,17 @@
             <li class="breadcrumb-item active" aria-current="page">
                 <?php
                 if (Yii::app()->session['lang'] == 1) {
-                    echo "Report...";
+                    echo "Register Overview Report";
                 } else {
-                    echo "รายงาน...";
+                    echo "รายงานภาพรวมการสมัคร";
                 }
                 ?>
             </li>
         </ol>
     </nav>
+    <a class="btn btn-reportsearch" href="<?php echo $this->createUrl('/report'); ?>" style="margin-bottom: 0px; margin-left: 0px; background-color: #087fe4;">
+        <i class="fas fa-angle-left"></i><?php echo Yii::app()->session['lang'] == 1?'Back':'ย้อนกลับ'; ?>
+    </a>
 </div>
 <section id="report-detail">
     <div class="container">
@@ -215,6 +218,20 @@
 
             </div>
         </div>
+
+        <li class="breadcrumb-item active" aria-current="page">
+            <center>
+                <h3>
+                    <?php
+                    if (Yii::app()->session['lang'] == 1) {
+                        echo "Register Overview Report";
+                    } else {
+                        echo "รายงานภาพรวมการสมัคร";
+                    }
+                    ?>
+                </h3>    
+            </center>
+        </li>
         <div class="divider">
             <i class="fas fa-chevron-down"></i>
         </div>
@@ -475,6 +492,106 @@ $(document).ready(function(){
                            
                         }
                     });
+        $(".search").click(function() {
 
+                    var TypeEmployee = $(".TypeEmployee").val();
+                    var Department = $(".Department").val();
+                    var Position = $(".Position").val();
+                    var Leval = $(".Leval").val(); 
+                    //var Chart = $("input[name='accommodation']:checked").val();
+                    var Chart = $('input[name="accommodation"]:checked').serialize();                    
+                    var datetime_start = $("#datetime_start").val();
+                    var datetime_end = $("#datetime_end").val();
+                    var Year_start = $(".year_start").val();
+                    var Year_end = $(".year_end").val();
+                    
+                    var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>";
+                    if (datetime_start == '' || datetime_start === null) {
+                          var datetime_startAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Datetime start! ':'กรุณาเลือกช่วงเวลาเริ่มต้น!'; ?>";
+                          swal(alert_message,datetime_startAlert)
+                          return false; 
+                    }
+                    if (datetime_end == '' || datetime_end === null) {
+                          var datetime_endAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Datetime end! ':'กรุณาเลือกช่วงเวลาสิ้นสุด!'; ?>";
+                          swal(alert_message,datetime_endAlert)
+                          return false; 
+                    }
+                    // if (Year_start == '' || Year_start === null) {
+                    //       var Year_startAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Year start! ':'กรุณาเลือกช่วงปีเริ่มต้น!'; ?>";
+                    //       swal(alert_message,Year_startAlert)
+                    //       return false; 
+                    // }
+                    // if (Year_end == '' || Year_end === null) {
+                    //       var Year_endAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Year end! ':'กรุณาเลือกช่วงปีสิ้นสุด!'; ?>";
+                    //       swal(alert_message,Year_endAlert)
+                    //       return false; 
+                    // }
+                    $.ajax({
+                        type: 'POST',
+                        url: "<?= Yii::app()->createUrl('report/reportRegisterData'); ?>",
+                        data: {
+                            TypeEmployee: TypeEmployee,
+                            Department: Department,
+                            Position: Position,
+                            Leval: Leval,
+                            Chart: Chart,
+                            datetime_start: datetime_start,
+                            datetime_end: datetime_end,
+                            Year_start: Year_start,
+                            Year_end: Year_end,
+                            status:status,
+
+                        },
+                        success: function(data) {
+                           if (typeof Year_start === 'undefined' || typeof Year_end === 'undefined' || Year_start === null || Year_end === null) {
+          
+                            if (Chart === "accommodation=Bar_Graph") {
+                              
+                            $('.Graph_1').show();
+                            $('.Graph_2').hide();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+
+                            }else if (Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") {
+                            $('.Graph_1').show();
+                            $('.Graph_2').show();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+
+                            }else if (Chart === "accommodation=Pie_Charts") {
+                            $('.Graph_1').hide();
+                            $('.Graph_2').show();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+                      
+                            }
+                             }else{
+
+                            if (Chart === "accommodation=Bar_Graph") {
+                            $('.Graph_1').show();
+                            $('.Graph_2').show();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+                      
+                            }else if (Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") {
+                            $('.Graph_1').show();
+                            $('.Graph_2').show();
+                            $('.Graph_3').show();
+                            $('.Graph_4').show();
+
+                            }else if (Chart === "accommodation=Pie_Charts") {
+                            $('.Graph_1').show();
+                            $('.Graph_2').show();
+                            $('.Graph_3').hide();
+                            $('.Graph_4').hide();
+                      
+                            }
+                            }
+                
+                           $(".dataTable").html(data);
+                           
+                        }
+                    });
+        });
     });
 </script>

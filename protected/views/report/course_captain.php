@@ -38,7 +38,7 @@
             <li class="breadcrumb-item active" aria-current="page">
                 <?php
                 if (Yii::app()->session['lang'] == 1) {
-                    echo "Report";
+                    echo "Report of learners staff ship course";
                 } else {
                     echo "รายงานผู้เรียนตามรายหลักสูตร คนประจำเรือ";
                 }
@@ -47,7 +47,7 @@
         </ol>
     </nav>
     <a class="btn btn-reportsearch" href="<?php echo $this->createUrl('/report/index'); ?>?target=course" style="margin-bottom: 0px; margin-left: 0px; background-color: #087fe4;">
-        <i class="fas fa-angle-left"></i> ย้อนกลับ
+        <i class="fas fa-angle-left"></i> <?php echo Yii::app()->session['lang'] == 1?'Back':' ย้อนกลับ'; ?>
     </a>
 </div>
 
@@ -118,26 +118,26 @@
                                             }
                                             ?>
                                         </option>
-<?php 
-if(isset($model_gen) && !empty($model_gen)){
-    ?>
-    <option value="0">
-        <?php 
-        if(Yii::app()->session['lang'] != 1){
-            echo "ไม่มีรุ่น";
-        }else{
-            echo "No Gen";
-        }
-        ?>
-    </option>
-    <?php
-    foreach ($model_gen as $key => $value) {
-        ?>
-        <option value="<?= $value->gen_id ?>" <?php if(isset($_GET["search"]["gen_id"]) && $_GET["search"]["gen_id"] == $value->gen_id){ echo "selected"; } ?> ><?= $value->gen_title ?></option>
-        <?php
-    }
-}
- ?>
+                                        <?php 
+                                        if(isset($model_gen) && !empty($model_gen)){
+                                            ?>
+                                            <option value="0">
+                                                <?php 
+                                                if(Yii::app()->session['lang'] != 1){
+                                                    echo "ไม่มีรุ่น";
+                                                }else{
+                                                    echo "No Gen";
+                                                }
+                                                ?>
+                                            </option>
+                                            <?php
+                                            foreach ($model_gen as $key => $value) {
+                                                ?>
+                                                <option value="<?= $value->gen_id ?>" <?php if(isset($_GET["search"]["gen_id"]) && $_GET["search"]["gen_id"] == $value->gen_id){ echo "selected"; } ?> ><?= $value->gen_title ?></option>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
                                     </select>
                                 </div>
                             </div>
@@ -188,9 +188,9 @@ if(isset($model_gen) && !empty($model_gen)){
                                             ?>
                                         </option>
                                         <?php foreach ($model_department as $key => $value) { ?>
-<option <?php if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] == $value->id){ echo "selected"; } ?> value="<?= $value->id?>">
-    <?= $value->dep_title ?>
-</option> 
+                                        <option <?php if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] == $value->id){ echo "selected"; } ?> value="<?= $value->id?>">
+                                            <?= $value->dep_title ?>
+                                        </option> 
                                         <?php } ?>
                                     </select>
                                 </div>
@@ -491,6 +491,20 @@ if(isset($model_position) && !empty($model_position)){
         ?>
         </div>
         <!-- จบ กราฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟ -->
+
+        <li class="breadcrumb-item active" aria-current="page">
+            <center>
+                <h3>
+                    <?php
+                    if (Yii::app()->session['lang'] == 1) {
+                        echo "Report of learners staff ship course";
+                    } else {
+                        echo "รายงานผู้เรียนตามรายหลักสูตร คนประจำเรือ";
+                    }
+                    ?>
+                </h3>    
+            </center>
+        </li>
         <div id="div_graph" style="display: none;">
                <div id="chart_graph"></div> 
                <div id="result_search_graph"></div> 

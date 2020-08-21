@@ -41,9 +41,9 @@
 		<ul class="nav nav-tabs mt-1">
 			<li <?php if(!isset($_GET["target"])){ echo 'class="active"'; } ?>><a data-toggle="tab" href="#first-report"><?php echo Yii::app()->session['lang'] == 1?'Register Report ':'รายงานการสมัครสมาชิก'; ?></a></li>
 			<li <?php if(isset($_GET["target"]) && $_GET["target"] == "course"){ echo 'class="active"'; } ?>>
-				<a data-toggle="tab" href="#second-report"><?php echo Yii::app()->session['lang'] == 1?'Training Report ':'รายงานการอบรม!'; ?></a>
+				<a data-toggle="tab" href="#second-report"><?php echo Yii::app()->session['lang'] == 1?'Training Report ':'รายงานการอบรม'; ?></a>
 			</li>
-			<li><a data-toggle="tab" href="#third-report"><?php echo Yii::app()->session['lang'] == 1?'Training assessment Report ':'รายงานแบบประเมินการอบรม'; ?></a></li>
+			<li><a data-toggle="tab" href="#third-report"><?php echo Yii::app()->session['lang'] == 1?'Training Assessment Report ':'รายงานแบบประเมินการอบรม'; ?></a></li>
 		</ul>
 
 		<div class="tab-content">
