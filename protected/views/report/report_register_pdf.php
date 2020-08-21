@@ -2,8 +2,8 @@
 $datetime_start = $data['datetime_start'];
 $datetime_end = $data['datetime_end'];
 $status = $data['status'];
-$Year_start = $data['Year_start'] != ""?$data['Year_start']:date('Y')-1;
-$Year_end = $data['Year_end']!= ""?$data['Year_end']:date('Y');
+$Year_start = $data['Year_start'];
+$Year_end = $data['Year_end'];
 $start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
 $end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
 $Chart = $data['Chart'];
@@ -19,30 +19,40 @@ $Chart = $data['Chart'];
 	<div class="row">
 		<div class="col-sm-12">
 			<?php if ($Chart === "accommodation=Bar_Graph") { ?>
-			<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint.png"; ?>" width="500" height="auto">
-		  	<?php }else if($Chart === "accommodation=Pie_Charts"){ ?>
-			<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint1.png"; ?>" width="500" height="auto"> 
+				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint.png"; ?>" width="500" height="auto">
+			<?php }else if($Chart === "accommodation=Pie_Charts"){ ?>
+				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint1.png"; ?>" width="500" height="auto"> 
 			<?php } ?>
 		</div><br>
 	</div>
 	<?php
-	if ($Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") {
-	$f = 20;
-	for ($p=0; $p <= $f ; $p++) { 
-		echo "<br>";
+	if ($Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") { ?>
+		<div class="row">
+			<div class="col-sm-12">
+				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint.png"; ?>" width="500" height="auto">
+				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint1.png"; ?>" width="500" height="auto">
+			</div><br>
+		</div>
+		<?php	$f = 20;
+		for ($p=0; $p <= $f ; $p++) { 
+			echo "<br>";
+		}
+
 	}
-	?>
-	<div class="row">
-		<div class="col-sm-12">
-		<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint3.png"; ?>" width="500" height="auto">
-		<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint4.png"; ?>" width="500" height="auto">
-		</div><br>
-	</div>
-	<?php
-	}
-	$l = 20;
-	for ($i=0; $i <= $l ; $i++) { 
-		echo "<br>";
+	if ($Year_start != null && $Year_end != null) {
+		if ($Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") { ?>
+			<div class="row">
+				<div class="col-sm-12">
+					<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint3.png"; ?>" width="500" height="auto">
+					<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint4.png"; ?>" width="500" height="auto">
+				</div><br>
+			</div>
+			<?php
+		}
+		$l = 20;
+		for ($i=0; $i <= $l ; $i++) { 
+			echo "<br>";
+		}
 	}
 	$criteria = new CDbCriteria;
 	$criteria->compare('type_employee_id',$data['TypeEmployee']);
@@ -108,7 +118,7 @@ $Chart = $data['Chart'];
 	$dep_back = Department::model()->findAll($criteria);
 
 
-	if($_POST['Year_start'] != "" && $_POST['Year_end'] != "" || $data['Department'] != "" || $data['Position'] != ""){
+	if($_POST['Year_start'] == "" && $_POST['Year_end'] == ""){
 		if (!empty($branch) || !empty($pos_back) || !empty($dep_back) ) {
 			?>
 			<style type="text/css">

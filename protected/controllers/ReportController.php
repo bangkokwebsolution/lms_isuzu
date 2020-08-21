@@ -21,21 +21,41 @@ class ReportController extends Controller
 
 	public function actionReport_register()
 	{
+		if(Yii::app()->user->id != null) {
 		$this->render('report_register');
+		}else{
+			$this->redirect(array('site/index'));
+			exit();
+		}
 	}
 
 	public function actionDetail()
 	{
+		if(Yii::app()->user->id != null) {
 		$this->render('detail');
+		}else{
+			$this->redirect(array('site/index'));
+			exit();
+		}
 	}
 	public function actionRegistership()
 	{
+		if(Yii::app()->user->id != null) {
 		$this->render('registership');
+		}else{
+			$this->redirect(array('site/index'));
+			exit();
+		}
 	}
 
 	public function actionRegisteroffice()
 	{
+		if(Yii::app()->user->id != null) {
 		$this->render('register_office');
+		}else{
+			$this->redirect(array('site/index'));
+			exit();
+		}
 	}
 
 	public function actionRegisterofficeData()
@@ -592,15 +612,6 @@ class ReportController extends Controller
 							}
 			} ?>
 						 <div class="pull-right ShowGraph">
-						 	<?php
-						 // echo CHtml::button('Export PDF', array('submit' => array('report/reportRegisterOfficePDF', 'registerofficeData[Department]'=>$_POST['Department'],
-							// 	'registerofficeData[Position]'=>$_POST['Position'],
-							// 	'registerofficeData[Chart]'=>$_POST['Chart'],
-							// 	'registerofficeData[datetime_start]'=>$_POST['datetime_start'],
-							// 	'registerofficeData[datetime_end]'=>$_POST['datetime_end'],
-							// 	'registerofficeData[Year_start]'=>$_POST['Year_start'],
-							// 	'registerofficeData[Year_end]'=>$_POST['Year_end']),'class' => 'btn btn btn-pdf'));
-						 	?>
 								<a href="<?= $this->createUrl('report/reportRegisterOfficePDF',array('registerofficeData[Department]'=>$_POST['Department'],
 								'registerofficeData[Position]'=>$_POST['Position'],
 								'registerofficeData[Chart]'=>$_POST['Chart'],
@@ -1188,6 +1199,8 @@ public function actionReportRegisterShipExcel()
 			$data = $_GET['registershipData'];
 			require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
 			$mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
+			$mPDF->useDictionaryLBR = false;
+			$mPDF->setDisplayMode('fullpage');
 			$texttt= '
 			<style>
 			body { font-family: "garuda"; }
@@ -1196,7 +1209,7 @@ public function actionReportRegisterShipExcel()
 			$mPDF->WriteHTML($texttt);
 			$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('report_registeShip_pdf', array('data'=>$data),true),'UTF-8','UTF-8'));
 
-			$mPDF->Output("รายงานภาพรวมการสมัคร.pdf" , 'D');
+			$mPDF->Output("รายงานภาพรวมการสมัคร.pdf" , 'I');
 
 			
 		}
@@ -2084,6 +2097,8 @@ public function actionReportRegisterData()
 							$data = $_GET['reportRegisterData'];
 							require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
 							$mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
+							$mPDF->useDictionaryLBR = false;
+							$mPDF->setDisplayMode('fullpage');
 							$texttt= '
 							<style>
 							body { font-family: "garuda"; }
@@ -2092,7 +2107,7 @@ public function actionReportRegisterData()
 							$mPDF->WriteHTML($texttt);
 							$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('report_register_pdf', array('data'=>$data),true),'UTF-8','UTF-8'));
 		
-							$mPDF->Output("รายงานภาพรวมการสมัคร.pdf" , 'D');
+							$mPDF->Output("รายงานภาพรวมการสมัคร.pdf" , 'I');
 
 			
 						}
@@ -2100,19 +2115,36 @@ public function actionReportRegisterData()
 
 		public function actionListDepartment()
 		{
-			$criteria= new CDbCriteria;
-			$criteria->condition='type_employee_id=:type_employee_id AND active=:active';
-			$criteria->params=array(':type_employee_id'=>$_POST['id'],':active'=>'y');
-			$criteria->order = 'sortOrder ASC';
-			$model = Department::model()->findAll($criteria);
-			$sub_list = Yii::app()->session['lang'] == 1?'Select Department ':'เลือกแผนก';
-			$data = '<option value ="">'.$sub_list.'</option>';
-			foreach ($model as $key => $value) {
-				$data .= '<option value = "'.$value->id.'"'.'>'.$value->dep_title.'</option>';
-			}
-			echo ($data);
+			if (Yii::app()->user->id == null) {   // ต้อง login ถึงจะเห็น
+				$msg = $label->label_alert_msg_plsLogin;
+				Yii::app()->user->setFlash('msg',$msg);
+				Yii::app()->user->setFlash('icon','warning');
+				$this->redirect(array('site/index'));
+				exit();
+			}else{
+				$user_login = User::model()->findByPk(Yii::app()->user->id);
+				$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+				$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
 
-		}
+				if($authority != 1 && $authority != 2 && $authority != 3){
+					$this->redirect(array('report/index'));
+					exit();
+				}
+			}
+
+				$criteria= new CDbCriteria;
+				$criteria->condition='type_employee_id=:type_employee_id AND active=:active';
+				$criteria->params=array(':type_employee_id'=>$_POST['id'],':active'=>'y');
+				$criteria->order = 'sortOrder ASC';
+				$model = Department::model()->findAll($criteria);
+				$sub_list = Yii::app()->session['lang'] == 1?'Select Department ':'เลือกแผนก';
+				$data = '<option value ="">'.$sub_list.'</option>';
+				foreach ($model as $key => $value) {
+					$data .= '<option value = "'.$value->id.'"'.'>'.$value->dep_title.'</option>';
+				}
+				echo ($data);
+			}
+	
 
 		public function actionListPosition()
 		{

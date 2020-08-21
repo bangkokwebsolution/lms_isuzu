@@ -30,30 +30,40 @@ $Chart = $data['Chart'];
 	<div class="row">
 		<div class="col-sm-12">
 			<?php if ($Chart === "accommodation=Bar_Graph") { ?>
-			<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint.png"; ?>" width="500" height="auto">
-		  	<?php }else if($Chart === "accommodation=Pie_Charts"){ ?>
-			<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint1.png"; ?>" width="500" height="auto"> 
+				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint.png"; ?>" width="500" height="auto">
+			<?php }else if($Chart === "accommodation=Pie_Charts"){ ?>
+				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint1.png"; ?>" width="500" height="auto"> 
 			<?php } ?>
 		</div><br>
 	</div>
 	<?php
-	if ($Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") {
-		$f = 20;
+	if ($Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") { ?>
+		<div class="row">
+			<div class="col-sm-12">
+				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint.png"; ?>" width="500" height="auto">
+				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint1.png"; ?>" width="500" height="auto">
+			</div><br>
+		</div>
+		<?php	$f = 20;
 		for ($p=0; $p <= $f ; $p++) { 
 			echo "<br>";
 		}
-		?>
-		<div class="row">
-			<div class="col-sm-12">
-				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint3.png"; ?>">
-				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint4.png"; ?>">
-			</div><br>
-		</div>
-		<?php
+
 	}
-	$l = 20;
-	for ($i=0; $i <= $l ; $i++) { 
-		echo "<br>";
+	if ($Year_start != null && $Year_end != null) {
+		if ($Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") { ?>
+			<div class="row">
+				<div class="col-sm-12">
+					<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint3.png"; ?>" width="500" height="auto">
+					<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint4.png"; ?>" width="500" height="auto">
+				</div><br>
+			</div>
+			<?php
+		}
+		$l = 20;
+		for ($i=0; $i <= $l ; $i++) { 
+			echo "<br>";
+		}
 	}
 
 	$criteria = new CDbCriteria;
@@ -101,6 +111,7 @@ $Chart = $data['Chart'];
 	}
 	$User = User::model()->findAll($criteria);
 
+	if ($Year_start == "" && $Year_end == "") {
 	if (!empty($User)) { ?>
 		<style type="text/css">
 			tr td,tr th{
@@ -171,7 +182,9 @@ $Chart = $data['Chart'];
 				</table>
 			</div>
 		</div>
-	<?php } ?>
+	<?php } 
+	}
+	?>
 	
 </body>
 </html>
