@@ -22,7 +22,19 @@ class ReportController extends Controller
 	public function actionReport_register()
 	{
 		if(Yii::app()->user->id != null) {
-		$this->render('report_register');
+			$user_login = User::model()->findByPk(Yii::app()->user->id);
+			$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+			$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+			$Level = $user_login->branch_id;
+			$Position = $user_login->position_id;
+			$Department = $user_login->department_id;
+		$this->render('report_register',array(
+				'authority'=>$authority,
+				'type_em'=>$type_em,
+				'Level' =>$Level,
+				'Position'=>$Position,
+				'Department'=>$Department
+			));
 		}else{
 			$this->redirect(array('site/index'));
 			exit();
@@ -41,7 +53,13 @@ class ReportController extends Controller
 	public function actionRegistership()
 	{
 		if(Yii::app()->user->id != null) {
-		$this->render('registership');
+			$user_login = User::model()->findByPk(Yii::app()->user->id);
+			$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+			$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+		$this->render('registership',array(
+				'authority'=>$authority,
+				'type_em'=>$type_em,
+			));
 		}else{
 			$this->redirect(array('site/index'));
 			exit();
@@ -1231,26 +1249,37 @@ public function actionReportRegisterData()
 				$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
 				$Chart = $_POST['Chart'];
 
-				if ($TypeEmployee) {
-
+				if (Yii::app()->user->id != null) {
+					$user_login = User::model()->findByPk(Yii::app()->user->id);
+					$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+					$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+					$user_Level = $user_login->branch_id;
+					$user_Position = $user_login->position_id;
+					$user_Department = $user_login->department_id;
 					$criteria = new CDbCriteria;
 					$criteria->compare('type_employee_id',$TypeEmployee);
 					if($Department){
 						$criteria->compare('id',$Department);
 					}
+					if ($authority == 2 || $authority == 3) {
+						$criteria->compare('id',$user_Department);
+					}
 					$criteria->compare('active','y');
 					$dep = Department::model()->findAll($criteria);
+
 					$dep_arr = [];
 					foreach ($dep as $key => $val_dep) {
 						$dep_arr[] = $val_dep->id;
 					}
-
 
 					$criteria = new CDbCriteria;
 					$criteria->addIncondition('department_id',$dep_arr);
 					$criteria->compare('active','y');
 					if($Position){
 						$criteria->compare('id',$Position);
+					}
+					if ($authority == 3) {
+						$criteria->compare('id',$user_Position);
 					}
 					$pos = Position::model()->findAll($criteria);
 
@@ -1268,6 +1297,9 @@ public function actionReportRegisterData()
 					if($Leval){
 						$criteria->compare('id',$Leval);
 					}
+					if ($authority == 3) {
+						$criteria->compare('id',$user_Level);
+					}
 					$branch = Branch::model()->findAll($criteria);
 
 
@@ -1283,6 +1315,9 @@ public function actionReportRegisterData()
 					if($Position){
 						$criteria->compare('id',$Position);
 					}
+					if ($authority == 3) {
+						$criteria->compare('id',$user_Position);
+					}
 					$criteria->addNotInCondition('id',$result_branch_arr);
 					$criteria->compare('active','y');
 					$pos_back = Position::model()->findAll($criteria);
@@ -1291,6 +1326,9 @@ public function actionReportRegisterData()
 					$criteria->compare('type_employee_id',$TypeEmployee);
 					if($Department){
 						$criteria->compare('id',$Department);
+					}
+					if ($authority == 2 || $authority == 3) {
+						$criteria->compare('id',$user_Department);
 					}
 					$criteria->addNotInCondition('id',$result_pos_arr);
 					$criteria->compare('active','y');
@@ -1326,8 +1364,6 @@ public function actionReportRegisterData()
 								$datas .= '["'.$name_pos.'",'.$count_pos.',"'.$colorName[$key].'"],';
 
 							}
-						
-
 						
 							$data_year_end = '["Element", "Position", { role: "style" } ],';
 							$colorName = Helpers::lib()->ColorCode();	
@@ -1496,9 +1532,11 @@ public function actionReportRegisterData()
 
 						
 					}
-
+				if ($Chart != "") {
+					
 					if ($_POST['Year_start'] != null || $_POST['Year_end'] != null) {
-
+					
+						
 				if ($Chart === "accommodation=Bar_Graph") {
 
 					?>
@@ -1802,6 +1840,7 @@ public function actionReportRegisterData()
 							</script>
 
 						<?php }
+						}
 					}
 							if ($_POST['Year_start'] == "" && $_POST['Year_end'] == "") {
 
@@ -1864,11 +1903,20 @@ public function actionReportRegisterData()
 											if($Department){
 												$criteria->compare('department_id',$Department);
 											}
+											if ($authority == 2 || $authority == 3) {
+												$criteria->compare('department_id',$user_Department);
+											}
 											if($Position){
 												$criteria->compare('position_id',$Position);
 											}
+											if ($authority == 3) {
+												$criteria->compare('position_id',$user_Position);
+											}
 											if($Leval){
 												$criteria->compare('branch_id',$Leval);
+											}
+											if ($authority == 3) {
+												$criteria->compare('branch_id',$user_Level);
 											}
 											$criteria->compare('superuser',0);
 											$usersAll = Users::model()->findAll($criteria);
@@ -1902,6 +1950,7 @@ public function actionReportRegisterData()
 											$datatable .= '</tr>';
 										}
 									}
+
 									foreach ($pos_back as $keypos_back => $valuepos_back) { 	
 
 										$criteria = new CDbCriteria;
@@ -1919,19 +1968,27 @@ public function actionReportRegisterData()
 
 										$criteria = new CDbCriteria;
 										$criteria->select = 'id';
-
 										if($TypeEmployee){
-											$criteria->compare('type_employee',$TypeEmployee);
-										}
-										if($Department){
-											$criteria->compare('department_id',$Department);
-										}
-										if($Position){
-											$criteria->compare('position_id',$Position);
-										}
-										if($Leval){
-											$criteria->compare('branch_id',$Leval);
-										}
+												$criteria->compare('type_employee',$TypeEmployee);
+											}
+											if($Department){
+												$criteria->compare('department_id',$Department);
+											}
+											if ($authority == 2 || $authority == 3) {
+												$criteria->compare('department_id',$user_Department);
+											}
+											if($Position){
+												$criteria->compare('position_id',$Position);
+											}
+											if ($authority == 3) {
+												$criteria->compare('position_id',$user_Position);
+											}
+											if($Leval){
+												$criteria->compare('branch_id',$Leval);
+											}
+											if ($authority == 3) {
+												$criteria->compare('branch_id',$user_Level);
+											}
 										$criteria->compare('superuser',0);
 										$usersAll = Users::model()->findAll($criteria);
 
@@ -1985,17 +2042,26 @@ public function actionReportRegisterData()
 										$criteria->select = 'id';
 
 										if($TypeEmployee){
-											$criteria->compare('type_employee',$TypeEmployee);
-										}
-										if($Department){
-											$criteria->compare('department_id',$Department);
-										}
-										if($Position){
-											$criteria->compare('position_id',$Position);
-										}
-										if($Leval){
-											$criteria->compare('branch_id',$Leval);
-										}
+												$criteria->compare('type_employee',$TypeEmployee);
+											}
+											if($Department){
+												$criteria->compare('department_id',$Department);
+											}
+											if ($authority == 2 || $authority == 3) {
+												$criteria->compare('department_id',$user_Department);
+											}
+											if($Position){
+												$criteria->compare('position_id',$Position);
+											}
+											if ($authority == 3) {
+												$criteria->compare('position_id',$user_Position);
+											}
+											if($Leval){
+												$criteria->compare('branch_id',$Leval);
+											}
+											if ($authority == 3) {
+												$criteria->compare('branch_id',$user_Level);
+											}
 										$criteria->compare('superuser',0);
 										$usersAll = Users::model()->findAll($criteria);
 

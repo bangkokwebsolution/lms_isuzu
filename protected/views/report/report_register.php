@@ -40,36 +40,86 @@
                 <div id="report-search" class="panel-collapse collapse in">
                     <div class="panel-body">
                         <div class="row">
+                            <?php
+                            if($authority == 1){
+                            ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'Employee type':'ประเภทพนักงาน'; ?></label>
                                     <select class="form-control TypeEmployee" name="" id="TypeEmployee">
                                         <option value="" selected disabled> <?= Yii::app()->session['lang'] == 1?'Select type':'เลือกประเภท'; ?></option>
                                         <?php
-
-                                    $criteria= new CDbCriteria;
-                                    $criteria->compare('active','y');
-                                    $TypeEmployeeModel = TypeEmployee::model()->findAll($criteria);
-                                   foreach ($TypeEmployeeModel as $key => $val) {
-                                    $TypeEmployee_list = $TypeEmployeeModel[$key]->attributes;
-                                    ?>
-                                    <option value="<?php echo $TypeEmployee_list['id']; ?>"><?php echo $TypeEmployee_list['type_employee_name']; ?></option>
-                                <?php   
-                                }                       
-                                ?>
+                                        if ($authority == 2 && $type_em == 1) { ?>
+                                            <option value="1" selected> <?= Yii::app()->session['lang'] == 1?'MASTER / CAPTAIN':'คนเรือ'; ?></option>
+                                       <?php
+                                        }
+                                        if ($authority == 2 && $type_em == 2) {
+                                        ?>
+                                        <option value="2" selected> <?= Yii::app()->session['lang'] == 1?'Office':'คนออฟฟิศ'; ?></option>
+                                        <?php
+                                        }else if($authority == 1){ ?>
+                                            <option value="1" > <?= Yii::app()->session['lang'] == 1?'MASTER / CAPTAIN':'คนเรือ'; ?></option>
+                                            <option value="2" > <?= Yii::app()->session['lang'] == 1?'Office':'คนออฟฟิศ'; ?></option>
+                                       <?php
+                                        }
+                                        ?>
+                               
                                     </select>
                                 </div>
                             </div>
-                        
+                         <?php   
+                                }  
+
+                           if($authority == 1){                        
+                                ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Department':'ฝ่าย'; ?></label>
+                                    <label for="">
+                                    <?php
+                                   if ($authority == 1 && $type_em == 2) {   
+                                         if (Yii::app()->session['lang'] == 1) {
+                                            echo "Division";
+                                        }else{
+                                            echo "ฝ่าย";
+                                        }
+                                    }else{
+                                       
+                                        if (Yii::app()->session['lang'] == 1) {
+                                            echo "Department";
+                                        }else{
+                                            echo "แผนก";
+                                        }
+                                    }
+                                    ?>
+                                    </label>
                                     <select class="form-control Department" name="" id="Department">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select department':'เลือกฝ่าย'; ?></option>
+                                        <option value="" selected disabled><?php
+                                    if ($authority == 1 && $type_em == 2) {
+                                        if (Yii::app()->session['lang'] == 1) {
+                                            echo "Division";
+                                        }else{
+                                            echo "ฝ่าย";
+                                        }
+                                    }else{
+                                        
+                                        if (Yii::app()->session['lang'] == 1) {
+                                            echo "Department";
+                                        }else{
+                                            echo "แผนก";
+                                        }
+                                    }
+                                    ?></option>
                                 <?php
 
                                     $criteria= new CDbCriteria;
-                                   // $criteria->compare('type_employee_id','2');
+                                    if ($authority == 2 || $authority == 3) {
+                                        if ($Department != "") {
+                                            $criteria->compare('id',$Department);
+                                        }else{
+                                            $criteria->compare('id',0);
+                                        }
+                                         
+                                    }
                                     $criteria->compare('active','y');
                                     $criteria->order = 'sortOrder ASC';
                                     $departmentModel = Department::model()->findAll($criteria);
@@ -77,19 +127,21 @@
                                     $department_list = $departmentModel[$key]->attributes;
                                     ?>
                                     <option value="<?php echo $department_list['id']; ?>"><?php echo $department_list['dep_title']; ?></option>
-                                <?php   
-                                }                       
-                                ?>
-                                    </select>
+                                   <?php  } ?>
+                                 
+                                  </select>
                                 </div>
                             </div>
+                            <?php
+                                } 
+                            ?>
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group">
                                      <div>
                                           <label for=""><?= Yii::app()->session['lang'] == 1?'Chart pattern':'รูปแบบกราฟ'; ?></label>
                                      </div>
                                     <div class="checkbox checkbox-main checkbox-inline">
-                                        <input class="accommodation" type="checkbox" name="accommodation" id="1" value="Bar_Graph" checked>
+                                        <input class="accommodation" type="checkbox" name="accommodation" id="1" value="Bar_Graph" ><!-- checked -->
                                         <label for="1" class="text-black"><?= Yii::app()->session['lang'] == 1?'Bar Graph':'กราฟแท่ง'; ?></label>
                                     </div>
                                     <div class="checkbox checkbox-main checkbox-inline">
@@ -101,15 +153,56 @@
 
                         </div>
                         <div class="row">
+                            <?php if($authority == 1 || $authority == 2 || $authority == 2 && $type_em == 2 ){   ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Position':'แผนก'; ?></label>
+                                    <label for="">
+                                    <?php
+                                    if ($authority == 2 && $type_em == 2) {
+                                        if (Yii::app()->session['lang'] == 1) {
+                                            echo "Department";
+                                        }else{
+                                            echo "แผนก";
+                                        }
+
+                                    }else{
+                                       
+                                         if (Yii::app()->session['lang'] == 1) {
+                                            echo "Position";
+                                        }else{
+                                            echo "ตำแหน่ง";
+                                        }    
+                                    }
+                                    ?>
+                                    </label>
                                     <select class="form-control Position" name="" id="x">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Position':'เลือกแผนก'; ?></label></option>
+                                        <option value="" selected disabled>  <?php
+                                    if ($authority == 2 && $type_em == 2) {
+                                        if (Yii::app()->session['lang'] == 1) {
+                                            echo "Department";
+                                        }else{
+                                            echo "แผนก";
+                                        }
+
+                                    }else{
+                                       
+                                         if (Yii::app()->session['lang'] == 1) {
+                                            echo "Position";
+                                        }else{
+                                            echo "ตำแหน่ง";
+                                        }    
+                                    }
+                                    ?></label></option>
                                     <?php
 
                                     $criteria= new CDbCriteria;
-                                   // $criteria->compare('type_employee_id','2');
+                                    if ($authority == 2 || $authority == 3 ) {
+                                        if ($Position != "") {
+                                            $criteria->compare('id',$Position);
+                                        }else{
+                                            $criteria->compare('id',0);
+                                        }
+                                    }
                                     $criteria->compare('active','y');
                                     $criteria->order = 'sortOrder ASC';
                                     $PositionModel = Position::model()->findAll($criteria);
@@ -123,6 +216,13 @@
                                     </select>
                                 </div>
                             </div>
+                            <?php
+                            }
+                            ?>
+                            <?php
+                            if($authority == 1 || $authority == 2 || $authority == 3){
+                                if ($authority == 2 && $type_em == 2 || $authority == 1 || $authority == 3 && $type_em == 2){
+                            ?>
                             <div class="col-sm-3 col-md-3 col-xs-12 tag_leval">
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'Level':'เลเวล'; ?></label></label>
@@ -130,7 +230,13 @@
                                         <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Level':'เลือกเลเวล'; ?></option>
                                     <?php
                                     $criteria= new CDbCriteria;
-                                   // $criteria->compare('type_employee_id','2');
+                                    if ($authority == 3 && $type_em == 2) {
+                                        if ($Level != "") {
+                                            $criteria->compare('id',$Level);
+                                        }else{
+                                            $criteria->compare('id',0);
+                                        }
+                                    }
                                     $criteria->compare('active','y');
                                     $criteria->order = 'sortOrder ASC';
                                     $BranchModel = Branch::model()->findAll($criteria);
@@ -144,6 +250,14 @@
                                     </select>
                                 </div>
                             </div>
+                            <?php
+                                    }
+                                }
+                            ?>
+                            <?php
+                            if($authority == 1 || $authority == 2 || $authority == 3){
+                                if ($authority == 2 && $type_em == 1 || $authority == 1 || $authority == 2 || $authority == 3 && $type_em == 1){
+                            ?>
                             <div class="col-sm-3 col-md-3 col-xs-12 tag_status">
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'Status':'สถานะอนุมัติ'; ?></label>
@@ -154,6 +268,10 @@
                                     </select>
                                 </div>
                             </div>
+                            <?php
+                                }
+                             }
+                            ?>
                         </div>
 
                         <div class="row">
@@ -384,7 +502,14 @@ $(document).ready(function(){
                     var Year_end = $(".year_end").val();
                     
                     var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
-                    if (TypeEmployee == '' || TypeEmployee === null) {
+                    var authority = <?php echo $authority ?>;
+                    var type_em = <?php echo $type_em ?>;
+                    if (authority == 3 && type_em == 1 || authority == 2 && type_em == 1) {
+                        TypeEmployee = 1;
+                    }else if(authority == 3 && type_em == 2 || authority == 2 && type_em == 1){
+                        TypeEmployee = 2;
+                    }
+                    if (TypeEmployee == '' || TypeEmployee === null || typeof  TypeEmployee === 'undefined') {
                           var TypeEmployeeAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select staff type! ':'กรุณาเลือกประเภทพนักงาน!'; ?>";
                           swal(alert_message,TypeEmployeeAlert)
                           return false; 
@@ -443,8 +568,9 @@ $(document).ready(function(){
 
                         },
                         success: function(data) {
+                           if (Chart != "") {
                            if (typeof Year_start === 'undefined' || typeof Year_end === 'undefined' || Year_start === null || Year_end === null) {
-          
+                            
                             if (Chart === "accommodation=Bar_Graph") {
                               
                             $('.Graph_1').show();
@@ -484,107 +610,7 @@ $(document).ready(function(){
                             $('.Graph_2').show();
                             $('.Graph_3').hide();
                             $('.Graph_4').hide();
-                      
                             }
-                            }
-                
-                           $(".dataTable").html(data);
-                           
-                        }
-                    });
-        $(".search").click(function() {
-
-                    var TypeEmployee = $(".TypeEmployee").val();
-                    var Department = $(".Department").val();
-                    var Position = $(".Position").val();
-                    var Leval = $(".Leval").val(); 
-                    //var Chart = $("input[name='accommodation']:checked").val();
-                    var Chart = $('input[name="accommodation"]:checked').serialize();                    
-                    var datetime_start = $("#datetime_start").val();
-                    var datetime_end = $("#datetime_end").val();
-                    var Year_start = $(".year_start").val();
-                    var Year_end = $(".year_end").val();
-                    
-                    var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>";
-                    if (datetime_start == '' || datetime_start === null) {
-                          var datetime_startAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Datetime start! ':'กรุณาเลือกช่วงเวลาเริ่มต้น!'; ?>";
-                          swal(alert_message,datetime_startAlert)
-                          return false; 
-                    }
-                    if (datetime_end == '' || datetime_end === null) {
-                          var datetime_endAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Datetime end! ':'กรุณาเลือกช่วงเวลาสิ้นสุด!'; ?>";
-                          swal(alert_message,datetime_endAlert)
-                          return false; 
-                    }
-                    // if (Year_start == '' || Year_start === null) {
-                    //       var Year_startAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Year start! ':'กรุณาเลือกช่วงปีเริ่มต้น!'; ?>";
-                    //       swal(alert_message,Year_startAlert)
-                    //       return false; 
-                    // }
-                    // if (Year_end == '' || Year_end === null) {
-                    //       var Year_endAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Year end! ':'กรุณาเลือกช่วงปีสิ้นสุด!'; ?>";
-                    //       swal(alert_message,Year_endAlert)
-                    //       return false; 
-                    // }
-                    $.ajax({
-                        type: 'POST',
-                        url: "<?= Yii::app()->createUrl('report/reportRegisterData'); ?>",
-                        data: {
-                            TypeEmployee: TypeEmployee,
-                            Department: Department,
-                            Position: Position,
-                            Leval: Leval,
-                            Chart: Chart,
-                            datetime_start: datetime_start,
-                            datetime_end: datetime_end,
-                            Year_start: Year_start,
-                            Year_end: Year_end,
-                            status:status,
-
-                        },
-                        success: function(data) {
-                           if (typeof Year_start === 'undefined' || typeof Year_end === 'undefined' || Year_start === null || Year_end === null) {
-          
-                            if (Chart === "accommodation=Bar_Graph") {
-                              
-                            $('.Graph_1').show();
-                            $('.Graph_2').hide();
-                            $('.Graph_3').hide();
-                            $('.Graph_4').hide();
-
-                            }else if (Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") {
-                            $('.Graph_1').show();
-                            $('.Graph_2').show();
-                            $('.Graph_3').hide();
-                            $('.Graph_4').hide();
-
-                            }else if (Chart === "accommodation=Pie_Charts") {
-                            $('.Graph_1').hide();
-                            $('.Graph_2').show();
-                            $('.Graph_3').hide();
-                            $('.Graph_4').hide();
-                      
-                            }
-                             }else{
-
-                            if (Chart === "accommodation=Bar_Graph") {
-                            $('.Graph_1').show();
-                            $('.Graph_2').show();
-                            $('.Graph_3').hide();
-                            $('.Graph_4').hide();
-                      
-                            }else if (Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") {
-                            $('.Graph_1').show();
-                            $('.Graph_2').show();
-                            $('.Graph_3').show();
-                            $('.Graph_4').show();
-
-                            }else if (Chart === "accommodation=Pie_Charts") {
-                            $('.Graph_1').show();
-                            $('.Graph_2').show();
-                            $('.Graph_3').hide();
-                            $('.Graph_4').hide();
-                      
                             }
                             }
                 
@@ -592,6 +618,6 @@ $(document).ready(function(){
                            
                         }
                     });
-        });
+        
     });
 </script>
