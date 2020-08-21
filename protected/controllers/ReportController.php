@@ -611,7 +611,7 @@ class ReportController extends Controller
 								}
 							}
 			} ?>
-						 <div class="pull-right ShowGraph">
+						 <div class="pull-left ShowGraph">
 								<a href="<?= $this->createUrl('report/reportRegisterOfficePDF',array('registerofficeData[Department]'=>$_POST['Department'],
 								'registerofficeData[Position]'=>$_POST['Position'],
 								'registerofficeData[Chart]'=>$_POST['Chart'],
@@ -1162,7 +1162,7 @@ public function actionReportRegisterOfficeExcel()
 						}
 					}			
 				} ?>
-				<div class="pull-right ShowGraph">
+				<div class="pull-left ShowGraph">
 								<a href="<?= $this->createUrl('report/reportRegisterShipPDF',array('registershipData[Department]'=>$_POST['Department'],
 								'registershipData[Position]'=>$_POST['Position'],
 								'registershipData[age]'=>$_POST['age'],
@@ -3380,16 +3380,6 @@ public function actionExamShip(){
     	$model_position = [];
     }
 
-    // if($authority == 3){
-    // 	$model_level = Branch::model()->findAll(array(
-    // 		'condition' => 'active=:active AND position_id=:position_id AND lang_id=:lang_id',
-    // 		'params' => array(':active'=>'y',':position_id'=>$user_login->position_id,':lang_id'=>1),
-    // 		'order' => 'branch_name ASC'
-    // 	));
-    // }else{
-    // 	$model_level = [];
-    // }
-
     $year_start = LogStartcourse::model()->find(array(
     	'condition' => 'active=:active',
     	'params' => array(':active'=>'y'),
@@ -3460,17 +3450,6 @@ public function actionExamShip(){
     		}
     		if($_GET["search"]["position"] != ""){
     			$criteria->compare('user.position_id', $_GET["search"]["position"]);
-
-$model_level = Branch::model()->findAll(array(
-	'condition' => 'active=:active AND position_id=:position_id AND lang_id=:lang_id',
-	'params' => array(':active'=>'y',':position_id'=>$_GET["search"]["position"],':lang_id'=>1),
-	'order' => 'branch_name ASC'
-));    			
-
-    			if($_GET["search"]["level"] != ""){
-    				$criteria->compare('user.branch_id', $_GET["search"]["level"]);
-    			}
-    		}
     	} 
 
     	$arr_count_course = [];
@@ -3558,7 +3537,6 @@ if($course_score->score_past == 'y'){
         	'model_gen'=>$model_gen,
 	        'model_department'=>$model_department,
 	        'model_position'=>$model_position,
-        	'model_level'=>$model_level,
 	        'year_start'=>$year_start,
 	        'year_end'=>$year_end,
 	        'model_search'=>$model_search,
@@ -3578,7 +3556,6 @@ if($course_score->score_past == 'y'){
 			'model_course'=>$model_course,
 			'model_department'=>$model_department,
 			'model_position'=>$model_position,
-			'model_level'=>$model_level,
 			'year_start'=>$year_start,
 			'year_end'=>$year_end,
 			'authority'=>$authority,
