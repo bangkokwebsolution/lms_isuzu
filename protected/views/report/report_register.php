@@ -328,7 +328,7 @@
                         </div>
 
                         <div class="text-center">
-                            <button class="btn btn-reportsearch search"><i class="fas fa-search"></i> <?= Yii::app()->session['lang'] == 1?'Search':'ค้นหา'; ?> </button>
+                            <button class="btn btn-reportsearch search" onclick="chk_form_search();"><i class="fas fa-search"></i> <?= Yii::app()->session['lang'] == 1?'Search':'ค้นหา'; ?> </button>
                         </div>
 
                     </div>
@@ -426,6 +426,49 @@ $(document).ready(function(){
     $('#datetime_end').attr('disabled',true);
     });
 });
+
+function chk_form_search(){
+        var status_pass = 1;
+
+        var start_year = $("#Year_start").val();
+        var end_year = $("#Year_end").val();
+        if(end_year != "" && start_year == ""){
+            status_pass =2;
+            alert("กรุณาเลือกช่วงปีเริ่มต้น");
+        //     $("#search_start_year").addClass('form-control-danger');
+        // }else{
+        //     $("#search_start_year").removeClass('form-control-danger');
+         }
+        if(end_year == "" && start_year != ""){
+            status_pass =2;
+            alert("กรุณาเลือกช่วงปีสิ้นสุด");
+        //     $("#search_end_year").addClass('form-control-danger');
+        // }else{
+        //     $("#search_end_year").removeClass('form-control-danger');
+         }
+
+
+        var start_date = $("#datetime_start").val();
+        var end_date = $("#datetime_end").val();
+        if(end_date != "" && start_date == ""){
+            status_pass =2;
+            alert("กรุณาเลือกช่วงเวลาเริ่มต้น");
+        //     $("#search_start_date").addClass('form-control-danger');
+        // }else{
+        //     $("#search_start_date").removeClass('form-control-danger');
+         }
+        if(end_date == "" && start_date != ""){
+            status_pass =2;
+            alert("กรุณาเลือกช่วงเวลาสิ้นสุด");
+        //     $("#search_end_date").addClass('form-control-danger');
+        // }else{
+        //     $("#search_end_date").removeClass('form-control-danger');
+        }
+
+        if(status_pass == 1){
+            $(".search").submit();
+        }
+    }
 
     $(".TypeEmployee").change(function() {
                     var id = $(this).val();

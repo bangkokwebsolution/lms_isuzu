@@ -56,9 +56,15 @@ class ReportController extends Controller
 			$user_login = User::model()->findByPk(Yii::app()->user->id);
 			$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
 			$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+			$Level = $user_login->branch_id;
+			$Position = $user_login->position_id;
+			$Department = $user_login->department_id;
 		$this->render('registership',array(
 				'authority'=>$authority,
 				'type_em'=>$type_em,
+				'Level' =>$Level,
+				'Position'=>$Position,
+				'Department'=>$Department
 			));
 		}else{
 			$this->redirect(array('site/index'));
@@ -69,7 +75,19 @@ class ReportController extends Controller
 	public function actionRegisteroffice()
 	{
 		if(Yii::app()->user->id != null) {
-		$this->render('register_office');
+			$user_login = User::model()->findByPk(Yii::app()->user->id);
+			$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+			$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+			$Level = $user_login->branch_id;
+			$Position = $user_login->position_id;
+			$Department = $user_login->department_id;
+		$this->render('register_office',array(
+				'authority'=>$authority,
+				'type_em'=>$type_em,
+				'Level' =>$Level,
+				'Position'=>$Position,
+				'Department'=>$Department
+			));
 		}else{
 			$this->redirect(array('site/index'));
 			exit();
@@ -89,12 +107,22 @@ class ReportController extends Controller
 		$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
 		$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
 
-		if ($Department) {
+		if (Yii::app()->user->id != null) {
+					$user_login = User::model()->findByPk(Yii::app()->user->id);
+					$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+					$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+					$user_Level = $user_login->branch_id;
+					$user_Position = $user_login->position_id;
+					$user_Department = $user_login->department_id;
 
 					$criteria = new CDbCriteria;
 					if($Department){
 						$criteria->compare('id',$Department);
 					}
+					if ($authority == 2 || $authority == 3) {
+                                         
+                        $criteria->compare('id',$user_Department);
+                    }
 					$criteria->compare('active','y');
 					$dep = Department::model()->findAll($criteria);
 					$dep_arr = [];
@@ -108,6 +136,10 @@ class ReportController extends Controller
 					if($Position){
 						$criteria->compare('id',$Position);
 					}
+					if ($authority == 3) {
+                                         
+                        $criteria->compare('id',$user_Position);
+                    }
 					$pos = Position::model()->findAll($criteria);
 
 					$pos_arr = [];
@@ -123,6 +155,10 @@ class ReportController extends Controller
 					if($Leval){
 						$criteria->compare('id',$Leval);
 					}
+					if ($authority == 3) {
+                                         
+                        $criteria->compare('id',$user_Level);
+                    }
 					$branch = Branch::model()->findAll($criteria);
 
 					$branch_arr = [];
@@ -147,6 +183,10 @@ class ReportController extends Controller
 					if ($Leval) {
 						$criteria->compare('branch_id',$Leval);
 					}
+					if ($authority == 3) {
+                                         
+        				$criteria->compare('branch_id',$user_Level);
+    				}
 
 					$User = User::model()->findAll($criteria);
 
@@ -167,6 +207,10 @@ class ReportController extends Controller
 							if($Department){
 								$criteria->compare('department_id',$Department);
 							}
+							if ($authority == 2 || $authority == 3) {
+                                         
+                        	$criteria->compare('department_id',$user_Department);
+                    		}
 							$criteria->compare('superuser',0);
 							if ($Year_start != null) {
 								$criteria->compare('YEAR(create_at)', $Year_start);
@@ -193,6 +237,10 @@ class ReportController extends Controller
 								if($Department){
 									$criteria->compare('department_id',$Department);
 								}
+								if ($authority == 2 || $authority == 3) {
+                                         
+                        		$criteria->compare('department_id',$user_Department);
+                    			}
 								$criteria->compare('superuser',0);
 								if ($Year_start != null) {
 									$criteria->compare('YEAR(create_at)', $Year_start);
@@ -226,6 +274,10 @@ class ReportController extends Controller
 							if($Department){
 								$criteria->compare('department_id',$Department);
 							}
+							if ($authority == 2 || $authority == 3) {
+                                         
+                        		$criteria->compare('department_id',$user_Department);
+                    		}
 							$criteria->compare('superuser',0);
 							if ($Year_end != null) {
 								$criteria->compare('YEAR(create_at)', $Year_end);
@@ -252,6 +304,10 @@ class ReportController extends Controller
 								if($Department){
 									$criteria->compare('department_id',$Department);
 								}
+								if ($authority == 2 || $authority == 3) {
+                                         
+                        			$criteria->compare('department_id',$user_Department);
+                    			}
 								$criteria->compare('superuser',0);
 								if ($Year_end != null) {
 									$criteria->compare('YEAR(create_at)', $Year_end);
@@ -267,7 +323,7 @@ class ReportController extends Controller
 								$data_division_end .= '["'.$name_dep.'",'.$count_dep.',"'.$colorName[$key].'"],';
 							}
 						}
-					
+					if ($Chart != "") { 
 					if ($_POST['Year_start'] != null || $_POST['Year_end'] != null) {
 
 					if ($Chart === "accommodation=Bar_Graph") { ?>
@@ -573,6 +629,7 @@ class ReportController extends Controller
 
 				<?php }
 					}
+				}
 				if($_POST['Year_start'] == "" && $_POST['Year_end'] == ""){
 					if (!empty($User)) {
 									?>
@@ -649,15 +706,18 @@ class ReportController extends Controller
 	}
 public function actionReportRegisterOfficeExcel()
 {
+	if (Yii::app()->user->id != null) { 
 	if ($_GET['registerofficeData']) {
 		$data = $_GET['registerofficeData'];
 
 		$this->renderPartial('report_registerOffice_excel',array('data' => $data));
 	}
 }
+}
 
 	public function actionReportRegisterOfficePDF()
 	{
+		if (Yii::app()->user->id != null) { 
 		if ($_GET['registerofficeData']) {
 			$data = $_GET['registerofficeData'];
 			require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
@@ -677,6 +737,7 @@ public function actionReportRegisterOfficeExcel()
 			
 		}
 	}
+	}
 	
 	public function actionRegistershipData()
 	{
@@ -693,11 +754,21 @@ public function actionReportRegisterOfficeExcel()
 		$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
 		$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
 
-		if ($Department) {
+		if (Yii::app()->user->id != null) {
+					$user_login = User::model()->findByPk(Yii::app()->user->id);
+					$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+					$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+					$user_Level = $user_login->branch_id;
+					$user_Position = $user_login->position_id;
+					$user_Department = $user_login->department_id;
+
 			$criteria = new CDbCriteria;
 			$criteria->compare('type_employee_id',1);
 			if($Department){
 				$criteria->compare('id',$Department);
+			}
+			if ($authority == 2 || $authority == 3) {
+				$criteria->compare('id',$user_Department);
 			}
 			$criteria->compare('active','y');
 			$dep = Department::model()->findAll($criteria);
@@ -711,6 +782,9 @@ public function actionReportRegisterOfficeExcel()
 			$criteria->compare('department_id',$dep_arr);
 			if($Position){
 				$criteria->compare('id',$Position);
+			}
+			if ($authority == 3) {
+				$criteria->compare('id',$user_Position);
 			}
 			$pos = Position::model()->findAll($criteria);
 			$pos_arr = [];
@@ -739,7 +813,7 @@ public function actionReportRegisterOfficeExcel()
 			}
 			$User = User::model()->findAll($criteria);
 
-			if ($Department) {
+			if (!empty($pos)) {
 
 				$datas = '["Element", "Position", { role: "style" } ],';
 				$colorName = Helpers::lib()->ColorCode();	
@@ -754,6 +828,9 @@ public function actionReportRegisterOfficeExcel()
 					}
 					if($Department){
 						$criteria->compare('department_id',$Department);
+					}
+					if ($authority == 2 || $authority == 3) {
+						$criteria->compare('department_id',$user_Department);
 					}
 					$criteria->compare('superuser',0);
 					if ($Year_start != null) {
@@ -788,6 +865,9 @@ public function actionReportRegisterOfficeExcel()
 					if($Department){
 						$criteria->compare('department_id',$Department);
 					}
+					if ($authority == 2 || $authority == 3) {
+						$criteria->compare('department_id',$user_Department);
+					}
 					$criteria->compare('superuser',0);
 					if ($Year_end != null) {
 						$criteria->compare('YEAR(create_at)', $Year_end);
@@ -806,7 +886,7 @@ public function actionReportRegisterOfficeExcel()
 					$data_year_end .= '["'.$name_pos.'",'.$count_pos.',"'.$colorName[$key].'"],';
 				}
 			}
-
+			if ($Chart != "") {
 			if ($_POST['Year_start'] != null || $_POST['Year_end'] != null) {
 
 				if ($Chart === "accommodation=Bar_Graph") {
@@ -1112,6 +1192,7 @@ public function actionReportRegisterOfficeExcel()
 							</script>
 
 						<?php }
+						}
 					}
 					if($_POST['Year_start'] == "" && $_POST['Year_end'] == ""){
 						if (!empty($User)) {
@@ -1204,15 +1285,26 @@ public function actionReportRegisterOfficeExcel()
 
 public function actionReportRegisterShipExcel()
 {
-	if ($_GET['registershipData']) {
-		$data = $_GET['registershipData'];
+	if (Yii::app()->user->id != null) { 
+							$user_login = User::model()->findByPk(Yii::app()->user->id);
+							$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+							$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+							$user_Level = $user_login->branch_id;
+							$user_Position = $user_login->position_id;
+							$user_Department = $user_login->department_id;
+				if ($_GET['registershipData']) {
+					$data = $_GET['registershipData'];
 
-		$this->renderPartial('report_registerShip_excel',array('data' => $data));
+					$this->renderPartial('report_registerShip_excel',array('data' => $data));
+				}
 	}
 }
 
 	public function actionReportRegisterShipPDF()
 	{
+		if (Yii::app()->user->id != null) { 
+						
+
 		if ($_GET['registershipData']) {
 			$data = $_GET['registershipData'];
 			require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
@@ -1230,6 +1322,7 @@ public function actionReportRegisterShipExcel()
 			$mPDF->Output("รายงานภาพรวมการสมัคร.pdf" , 'I');
 
 			
+		}
 		}
 	}
 
@@ -2150,68 +2243,67 @@ public function actionReportRegisterData()
 
 					public function actionReportRegisterExcel()
 					{
-						if ($_GET['reportRegisterData']) {
-							$data = $_GET['reportRegisterData'];
+						if (Yii::app()->user->id != null) { 
+			
+							if ($_GET['reportRegisterData']) {
+								$data = $_GET['reportRegisterData'];
 
-							$this->renderPartial('report_register_excel',array('data' => $data));
+								$this->renderPartial('report_register_excel',array('data' => $data));
+							}
 						}
 					}
 
 					public function actionReportRegisterPDF()
 					{
-						if ($_GET['reportRegisterData']) {
-							$data = $_GET['reportRegisterData'];
-							require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
-							$mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
-							$mPDF->useDictionaryLBR = false;
-							$mPDF->setDisplayMode('fullpage');
-							$texttt= '
-							<style>
-							body { font-family: "garuda"; }
-							</style>
-							';
-							$mPDF->WriteHTML($texttt);
-							$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('report_register_pdf', array('data'=>$data),true),'UTF-8','UTF-8'));
-		
-							$mPDF->Output("รายงานภาพรวมการสมัคร.pdf" , 'I');
-
+						if (Yii::app()->user->id != null) { 
+						
+							if ($_GET['reportRegisterData']) {
+								$data = $_GET['reportRegisterData'];
+								require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
+								$mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
+								$mPDF->useDictionaryLBR = false;
+								$mPDF->setDisplayMode('fullpage');
+								$texttt= '
+								<style>
+								body { font-family: "garuda"; }
+								</style>
+								';
+								$mPDF->WriteHTML($texttt);
+								$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('report_register_pdf', array('data'=>$data),true),'UTF-8','UTF-8'));
 			
+								$mPDF->Output("รายงานภาพรวมการสมัคร.pdf" , 'I');
+
+								}
 						}
 					}
 
 		public function actionListDepartment()
 		{
-			if (Yii::app()->user->id == null) {   // ต้อง login ถึงจะเห็น
-				$msg = $label->label_alert_msg_plsLogin;
-				Yii::app()->user->setFlash('msg',$msg);
-				Yii::app()->user->setFlash('icon','warning');
-				$this->redirect(array('site/index'));
-				exit();
-			}else{
+			if (Yii::app()->user->id != null) {   // ต้อง login ถึงจะเห็น
+			
 				$user_login = User::model()->findByPk(Yii::app()->user->id);
 				$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
-				$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
-
-				if($authority != 1 && $authority != 2 && $authority != 3){
-					$this->redirect(array('report/index'));
-					exit();
-				}
-			}
+				$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office			
 
 				$criteria= new CDbCriteria;
 				$criteria->condition='type_employee_id=:type_employee_id AND active=:active';
 				$criteria->params=array(':type_employee_id'=>$_POST['id'],':active'=>'y');
 				$criteria->order = 'sortOrder ASC';
 				$model = Department::model()->findAll($criteria);
-				$sub_list = Yii::app()->session['lang'] == 1?'Select Department ':'เลือกแผนก';
+				if ($type_em == 1) {
+					$sub_list = Yii::app()->session['lang'] == 1?'Select Department ':'เลือกแผนก';
+				}else{
+					$sub_list = Yii::app()->session['lang'] == 1?'Select Division ':'เลือกฝ่าย';
+				}
+				
+				
 				$data = '<option value ="">'.$sub_list.'</option>';
 				foreach ($model as $key => $value) {
 					$data .= '<option value = "'.$value->id.'"'.'>'.$value->dep_title.'</option>';
 				}
 				echo ($data);
-			}
-	
-
+			}	
+		}
 		public function actionListPosition()
 		{
 			$criteria= new CDbCriteria;

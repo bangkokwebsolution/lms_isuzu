@@ -20,6 +20,13 @@ $start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
 $end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
 $Chart = $data['Chart'];
 
+$user_login = User::model()->findByPk(Yii::app()->user->id);
+$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+$user_Level = $user_login->branch_id;
+$user_Position = $user_login->position_id;
+$user_Department = $user_login->department_id;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,12 +35,20 @@ $Chart = $data['Chart'];
 </head>
 <body>
 	<div class="row">
+		<?php
+			if ($Chart != "") {
+		?>
 		<div class="col-sm-12">
 			<?php if ($Chart === "accommodation=Bar_Graph") { ?>
 				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint.png"; ?>" width="500" height="auto">
 			<?php }else if($Chart === "accommodation=Pie_Charts"){ ?>
 				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint1.png"; ?>" width="500" height="auto"> 
-			<?php } ?>
+			<?php } 
+			$f = 20;
+			for ($p=0; $p <= $f ; $p++) { 
+			echo "<br>";
+		}
+			?>
 		</div><br>
 	</div>
 	<?php
@@ -65,11 +80,15 @@ $Chart = $data['Chart'];
 			echo "<br>";
 		}
 	}
+	}
 
 	$criteria = new CDbCriteria;
 	$criteria->compare('type_employee_id',1);
 	if($data['Department']){
 		$criteria->compare('id',$data['Department']);
+	}
+	if ($authority == 2 || $authority == 3) {
+		$criteria->compare('id',$user_Department);
 	}
 	$criteria->compare('active','y');
 	$dep = Department::model()->findAll($criteria);
@@ -83,6 +102,9 @@ $Chart = $data['Chart'];
 	$criteria->compare('department_id',$dep_arr);
 	if($data['Position']){
 		$criteria->compare('id',$data['Position']);
+	}
+	if ($authority == 3) {
+		$criteria->compare('id',$user_Position);
 	}
 	$pos = Position::model()->findAll($criteria);
 	$pos_arr = [];
