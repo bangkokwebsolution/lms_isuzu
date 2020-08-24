@@ -16,6 +16,9 @@ if ($news_forms) {
   $news_forms = 'n';
 }
 ?>
+<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/plugins/croppie/croppie.css">
+<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/plugins/croppie/croppie.min.js"></script>
+
 <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/bootstrap-daterangepicker/jquery.datetimepicker.full.min.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/js/bootstrap-daterangepicker/jquery.datetimepicker.css">
 <script src='https://www.google.com/recaptcha/api.js'></script>
@@ -191,7 +194,59 @@ if ($news_forms) {
         }
     }
 
+    .box-uploadimage {
+    position: relative;
+}
 
+.course-pagination {
+    padding-right: 15px;
+}
+
+.proflie-login img {
+    border-radius: 50%;
+    height: 38px;
+    width: 38px;
+    margin-right: 10px;
+}
+
+label.cabinet {
+    display: block;
+    cursor: pointer;
+}
+
+label.cabinet input.file {
+    position: absolute;
+    width: auto;
+    opacity: 0;
+    -moz-opacity: 0;
+    filter: progid:DXImageTransform.Microsoft.Alpha(opacity=0);
+    margin-top: -30px;
+    bottom: 0;
+    right: 0;
+}
+
+#upload-profileimg {
+    width: 250px;
+    height: 250px;
+    padding-bottom: 25px;
+}
+
+figure figcaption {
+    color: #fff;
+    width: 100%;
+    padding-left: 9px;
+    padding-bottom: 5px;
+    text-shadow: 0 0 10px #000;
+}
+
+.btn-uploadimg {
+    font-size: 14px;
+    padding: 10px 20px;
+}
+
+.clearfix {
+    overflow: auto;
+}
 </style>
 <script language="javascript">
 
@@ -1277,44 +1332,40 @@ function editNamehouse_registration(filedoc_id){
             ?>
             <div class="well">
 
-                <div class="row box-img-center mb-2 bb-1 uploads_image">
-                    <div class="col-sm-4">
-                        <div class="upload-img">
-                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                <div class="fileinput-new thumbnail" style="max-width: 180px; max-height: 240px;">
-                                    <div class="mt-2">
-                                        <!-- <input type="file" class="custom-file-input" id="customFileLang" lang="es"> -->
-                                        <?php
-                                        if ($users->pic_user == null) {
+                <!-- <div class="row box-img-center mb-2 bb-1 uploads_image">
+<div class="col-sm-4"> -->
+    <div class="row form-mb-1 justify-content-center box-uploadimage">
+        <div class="col-md-4 item-uploadimamge">
+            <div class="img-profile-setting">
+                <div class="text-center upload-img">
+                    <label class="cabinet center-block">
+                        <figure>
+                            <?php
+                            if ($users->pic_user == null) {
+                                $img  = Yii::app()->theme->baseUrl . "/images/thumbnail-profile.png";
+                            } else {
+                                $registor = new RegistrationForm;
+                                $registor->id = $users->id;
+                                $img = Yii::app()->baseUrl . '/uploads/user/' . $users->id . '/thumb/' . $users->pic_user;
+                            }
+                            $url_pro_pic = $img;
+                            ?>
+                            <img src="<?php echo $url_pro_pic; ?>" class="gambar img-responsive img-thumbnail" name="item-img-output" id="item-img-output" />
+                            <figcaption>
+                                <div class="btn btn-default btn-uploadimg"><i class="fa fa-camera"></i> เลือกรูป</div>
+                            </figcaption>
+                        </figure>
+                        <input type="hidden" name="url_pro_pic" id="url_pro_pic">
+                        <input type="file" id="Profile_pro_pic" class="item-img file center-block d-none" name="Profile_pro_pic" />
+                    </label>
+                    <span class="text-danger"><font color="red">*</font> รูปภาพควรมีขนาด 2X2</span>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- </div> 
 
-                                            $img  = Yii::app()->theme->baseUrl . "/images/thumbnail-profile.png";
-                                        } else {
-                                            $registor = new RegistrationForm;
-                                            $registor->id = $users->id;
-                                            $img = Yii::app()->baseUrl . '/uploads/user/' . $users->id . '/thumb/' . $users->pic_user;
-                                        }
-                                        ?>
-                                        <img src="<?= $img ?>" alt="">
-                                    </div>
-                                </div>
-                                <div class="custom-file">
-                                    <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 180px; max-height: 240px;"></div>
-                                    <!--  <?php echo $form->fileField($users, 'pic_user', array('id' => 'wizard-picture')); ?> 
-                                    <label class="btn btn-success" for="customFileLang"><span class="fileinput-new"> เลือกรูปภาพ</span></label> -->
-                                    <span class="btn btn-info btn-file"><span class="fileinput-new"><?= Yii::app()->session['lang'] == 1?'Choose image ':'เลือกรูปภาพ'; ?></span>
-                                    <?php echo $form->fileField($users, 'pic_user', array('id' => 'wizard-picture','class'=>'picture_pic')); ?>
-                                    <a href="#" class=" btn-info fileinput-exists" data-dismiss="fileinput"><?= Yii::app()->session['lang'] == 1?'Change picture ':'เปลี่ยนรูปภาพ'; ?></a>
-                                </div> 
-                                <div class="row" style="padding-left:30px;text-align:left;">
-                                   <font color="#990000">
-                                     *รูปภาพควรมีขนาด 2X2 
-                                 </font>
-                             </div>
-                         </div>
-                     </div>
-                 </div> 
-
-             </div>
+             </div> -->
             <?php if ($users->isNewRecord) { ?>
 
              <div class="row justify-content-center select-profile mg-0">
@@ -1389,7 +1440,8 @@ function editNamehouse_registration(filedoc_id){
                                     <?php
 
                                     $criteria= new CDbCriteria;
-                                    $criteria->compare('type_employee_id','2');
+                                    // $criteria->compare('type_employee_id','2'); // office
+                                    $criteria->compare('type_employee_id','5');
                                     $criteria->compare('active','y');
                                     $criteria->order = 'sortOrder ASC';
                                     $departmentModel = Department::model()->findAll($criteria);
@@ -3184,7 +3236,8 @@ $count_tn = 1;
 
                     $criteria= new CDbCriteria;
                     $criteria->compare('active','y');
-                    $criteria->compare('type_employee_id',1);
+                    // $criteria->compare('type_employee_id',1); // เรือ
+                    $criteria->compare('type_employee_id',4);
                     $criteria->order = 'sortOrder ASC';
                     $departmentModel = Department::model()->findAll($criteria);
                     $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
@@ -3201,7 +3254,7 @@ $count_tn = 1;
                   <?php
                   $Department_ship = Department::model()->findAll(array(
                     'condition' => 'type_employee_id=:type_employee_id AND active=:active',
-                    'params' => array(':type_employee_id'=>1, ':active'=>'y')));
+                    'params' => array(':type_employee_id'=>4, ':active'=>'y')));
 
                   $dep_id = [];
                   foreach ($Department_ship as $keydepart => $valuedepart) {
@@ -4730,6 +4783,88 @@ var new_forms = <?php echo $new_form; ?>;
             });
         </script>
 
+
+
+
+
+<div class="modal fade" id="cropImagePop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content crop-img">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">
+                    สร้างรูปประจำตัว
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div id="upload-profileimg" class="center-block"></div>
+                <button class="vanilla-rotate" data-deg="-90">Rotate Left</button>
+                <button class="vanilla-rotate" data-deg="90">Rotate Right</button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                <button type="button" id="cropImageBtn" class="btn btn-primary">บันทึกรูป</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    // crop รูปภาพ
+var $uploadCrop,
+tempFilename,
+rawImg,
+imageId;
+
+function readFile(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('.upload-profileimg').addClass('ready');
+            $('#cropImagePop').modal('show');
+            rawImg = e.target.result;
+        }
+        reader.readAsDataURL(input.files[0]);
+    } else {
+        swal("ขออภัย - เบราว์เซอร์ของคุณไม่รองรับ FileReader API");
+    }
+}
+
+$uploadCrop = $('#upload-profileimg').croppie({
+    viewport: {
+        width: 200,
+        height: 200,
+    },
+    enforceBoundary: false,
+    enableExif: true
+});
+$('#cropImagePop').on('shown.bs.modal', function() {
+    $uploadCrop.croppie('bind', {
+        url: rawImg
+    }).then(function() {});
+});
+
+$('.item-img').on('change', function() {
+    imageId = $(this).data('id');
+    tempFilename = $(this).val();
+    $('#cancelCropBtn').data('id', imageId);
+    readFile(this);
+});
+$('#cropImageBtn').on('click', function(ev) {
+    $uploadCrop.croppie('result', {
+        type: 'base64',
+        format: 'jpeg',
+        size: {
+            width: 150,
+            height: 150
+        }
+    }).then(function(resp) {
+        $('#item-img-output').attr('src', resp);
+        $('#cropImagePop').modal('hide');
+        $('#url_pro_pic').val($('#item-img-output').attr('src'));
+    });
+});
+
+</script>
 
 
 

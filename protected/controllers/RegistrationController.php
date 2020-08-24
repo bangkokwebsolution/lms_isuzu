@@ -563,14 +563,49 @@ if ($profile->type_user == 1) {
     //     // exit();
     // }
 
-    $uploadFile = CUploadedFile::getInstance($users, 'pic_user');
-    if (isset($uploadFile)) {
-        $uglyName = strtolower($uploadFile->name);
-        $mediocreName = preg_replace('/[^a-zA-Z0-9]+/', '_', $uglyName);
-        $beautifulName = trim($mediocreName, '_') . "." . $uploadFile->extensionName;
-        $users->pic_user = $beautifulName;
-    }
+    // $uploadFile = CUploadedFile::getInstance($users, 'pic_user');
+    // if (isset($uploadFile)) {
+    //     $uglyName = strtolower($uploadFile->name);
+    //     $mediocreName = preg_replace('/[^a-zA-Z0-9]+/', '_', $uglyName);
+    //     $beautifulName = trim($mediocreName, '_') . "." . $uploadFile->extensionName;
+    //     $users->pic_user = $beautifulName;
+    // }
+    
+
     if ($users->save()) {
+        // บันทึกรูปภาพ crop
+        if(isset($_POST['url_pro_pic']) && $_POST['url_pro_pic'] != ""){
+            $uploadDir = Yii::app()->getUploadPath(null);
+            $path1 = "user";
+            $path2 = $users->id;
+            $path3 = "thumb";
+            if (!is_dir($uploadDir."../".$path1."/")) {
+                mkdir($uploadDir."../".$path1."/", 0777, true);
+            }
+            if (!is_dir($uploadDir."../".$path1."/".$path2."/")) {
+                mkdir($uploadDir."../".$path1."/".$path2."/", 0777, true);
+            }
+            if (!is_dir($uploadDir."../".$path1."/".$path2."/".$path3."/")) {
+                mkdir($uploadDir."../".$path1."/".$path2."/".$path3."/", 0777, true);
+            }else{ // ลบ file เก่า
+                $files = glob($uploadDir."../".$path1."/".$path2."/".$path3.'/*');
+                    foreach($files as $file){ // iterate files
+                        if(is_file($file)){
+                            unlink($file); // delete file
+                        }             
+                    }
+            }
+
+            $users->pic_user = date("YmdHis")."_.jpg";
+            $uploadDir = $uploadDir."..\\".$path1."\\".$path2."\\".$path3."\\";
+            $targetFile = $uploadDir.$users->pic_user;
+            file_put_contents($targetFile,file_get_contents($_POST['url_pro_pic']));
+            $users->save();
+        }
+
+
+
+
                         // $findid = User::model()->notsafe()->findbyattributes(array('email'=>$_POST['User'][email]));
 
         $profile->user_id = $users->id;
@@ -660,33 +695,33 @@ if (isset($_POST['FileTraining'])){
 }
 }
 
-if(isset($uploadFile))
-{
-    Yush::init($users);
-    $originalPath = Yush::getPath($users, Yush::SIZE_ORIGINAL, $users->pic_user);
-    $thumbPath = Yush::getPath($users, Yush::SIZE_THUMB, $users->pic_user);
-    $smallPath = Yush::getPath($users, Yush::SIZE_SMALL, $users->pic_user);
-                                // Save the original resource to disk
-    $uploadFile->saveAs($originalPath);
-    $size = getimagesize($originalPath);
-                            /////////// SAVE IMAGE //////////
-    Yush::init($users);
-    $originalPath = Yush::getPath($users, Yush::SIZE_ORIGINAL, $users->pic_user);
-    $thumbPath = Yush::getPath($users, Yush::SIZE_THUMB, $users->pic_user);
-    $smallPath = Yush::getPath($users, Yush::SIZE_SMALL, $users->pic_user);
-                            // Save the original resource to disk
-    $uploadFile->saveAs($originalPath);
-    $size = getimagesize($originalPath);
+// if(isset($uploadFile))
+// {
+//     Yush::init($users);
+//     $originalPath = Yush::getPath($users, Yush::SIZE_ORIGINAL, $users->pic_user);
+//     $thumbPath = Yush::getPath($users, Yush::SIZE_THUMB, $users->pic_user);
+//     $smallPath = Yush::getPath($users, Yush::SIZE_SMALL, $users->pic_user);
+//                                 // Save the original resource to disk
+//     $uploadFile->saveAs($originalPath);
+//     $size = getimagesize($originalPath);
+//                             /////////// SAVE IMAGE //////////
+//     Yush::init($users);
+//     $originalPath = Yush::getPath($users, Yush::SIZE_ORIGINAL, $users->pic_user);
+//     $thumbPath = Yush::getPath($users, Yush::SIZE_THUMB, $users->pic_user);
+//     $smallPath = Yush::getPath($users, Yush::SIZE_SMALL, $users->pic_user);
+//                             // Save the original resource to disk
+//     $uploadFile->saveAs($originalPath);
+//     $size = getimagesize($originalPath);
 
-                                // Create a small image
-    $smallImage = Yii::app()->phpThumb->create($originalPath);
-    $smallImage->resize(385, 220);
-    $smallImage->save($smallPath);
-                                // Create a thumbnail
-    $thumbImage = Yii::app()->phpThumb->create($originalPath);
-    $thumbImage->resize(200, 200);
-    $thumbImage->save($thumbPath);
-}
+//                                 // Create a small image
+//     $smallImage = Yii::app()->phpThumb->create($originalPath);
+//     $smallImage->resize(385, 220);
+//     $smallImage->save($smallPath);
+//                                 // Create a thumbnail
+//     $thumbImage = Yii::app()->phpThumb->create($originalPath);
+//     $thumbImage->resize(200, 200);
+//     $thumbImage->save($thumbPath);
+// }
 
 $attach_passport  = CUploadedFile::getInstance($AttachName, 'attach_passport');
 if (isset($attach_passport)) {
@@ -1199,14 +1234,44 @@ public function actionUpdate() {
                     //     $users->pic_user = $beautifulName;
                     // }
 //                บันทึกข้อมูล
-         $uploadFile = CUploadedFile::getInstance($users, 'pic_user');
-         if (isset($uploadFile)) {
-            $uglyName = strtolower($uploadFile->name);
-            $mediocreName = preg_replace('/[^a-zA-Z0-9]+/', '_', $uglyName);
-            $beautifulName = trim($mediocreName, '_') . "." . $uploadFile->extensionName;
-            $users->pic_user = $beautifulName;
+        //  $uploadFile = CUploadedFile::getInstance($users, 'pic_user');
+        //  if (isset($uploadFile)) {
+        //     $uglyName = strtolower($uploadFile->name);
+        //     $mediocreName = preg_replace('/[^a-zA-Z0-9]+/', '_', $uglyName);
+        //     $beautifulName = trim($mediocreName, '_') . "." . $uploadFile->extensionName;
+        //     $users->pic_user = $beautifulName;
+        // }
+        // บันทึกรูปภาพ crop
+        if(isset($_POST['url_pro_pic']) && $_POST['url_pro_pic'] != ""){
+            $uploadDir = Yii::app()->getUploadPath(null);
+            $path1 = "user";
+            $path2 = $users->id;
+            $path3 = "thumb";
+            if (!is_dir($uploadDir."../".$path1."/")) {
+                mkdir($uploadDir."../".$path1."/", 0777, true);
+            }
+            if (!is_dir($uploadDir."../".$path1."/".$path2."/")) {
+                mkdir($uploadDir."../".$path1."/".$path2."/", 0777, true);
+            }
+            if (!is_dir($uploadDir."../".$path1."/".$path2."/".$path3."/")) {
+                mkdir($uploadDir."../".$path1."/".$path2."/".$path3."/", 0777, true);
+            }else{ // ลบ file เก่า
+                $files = glob($uploadDir."../".$path1."/".$path2."/".$path3.'/*');
+                    foreach($files as $file){ // iterate files
+                        if(is_file($file)){
+                            unlink($file); // delete file
+                        }             
+                    }
+            }
+
+            $users->pic_user = date("YmdHis")."_.jpg";
+            $uploadDir = $uploadDir."..\\".$path1."\\".$path2."\\".$path3."\\";
+            $targetFile = $uploadDir.$users->pic_user;
+            file_put_contents($targetFile,file_get_contents($_POST['url_pro_pic']));
         }
+
         if ($users->save() && $profile->save()) { 
+
             if ($_POST['ProfilesEdu']){
                 foreach ($_POST['ProfilesEdu'] as $action_index=>$action_value){
                   $new_action[] = $action_value['edu_id'];
@@ -1508,25 +1573,25 @@ if($model_del_Language){
                         /////// end ลบแอคชั่น
 } 
 
-if (isset($uploadFile)) {
-                            /////////// SAVE IMAGE //////////
-    Yush::init($users);
-    $originalPath = Yush::getPath($users, Yush::SIZE_ORIGINAL, $users->pic_user);
-    $thumbPath = Yush::getPath($users, Yush::SIZE_THUMB, $users->pic_user);
-    $smallPath = Yush::getPath($users, Yush::SIZE_SMALL, $users->pic_user);
-                            // Save the original resource to disk
-    $uploadFile->saveAs($originalPath);
+// if (isset($uploadFile)) {
+//                             /////////// SAVE IMAGE //////////
+//     Yush::init($users);
+//     $originalPath = Yush::getPath($users, Yush::SIZE_ORIGINAL, $users->pic_user);
+//     $thumbPath = Yush::getPath($users, Yush::SIZE_THUMB, $users->pic_user);
+//     $smallPath = Yush::getPath($users, Yush::SIZE_SMALL, $users->pic_user);
+//                             // Save the original resource to disk
+//     $uploadFile->saveAs($originalPath);
 
-                            // Create a small image
-    $smallImage = Yii::app()->phpThumb->create($originalPath);
-    $smallImage->resize(385, 220);
-    $smallImage->save($smallPath);
-//
-                            // Create a thumbnail
-    $thumbImage = Yii::app()->phpThumb->create($originalPath);
-    $thumbImage->resize(350, 200);
-    $thumbImage->save($thumbPath);
-}
+//                             // Create a small image
+//     $smallImage = Yii::app()->phpThumb->create($originalPath);
+//     $smallImage->resize(385, 220);
+//     $smallImage->save($smallPath);
+// //
+//                             // Create a thumbnail
+//     $thumbImage = Yii::app()->phpThumb->create($originalPath);
+//     $thumbImage->resize(350, 200);
+//     $thumbImage->save($thumbPath);
+// }
 $attach_passport  = CUploadedFile::getInstance($AttachName, 'attach_passport');
 if (isset($attach_passport)) {
     $uglyName = strtolower($attach_passport->name); 
