@@ -271,6 +271,7 @@ class User extends CActiveRecord
 			'month'=>'เดือน',
 			'report_authority'=>'สิทธิ์ Report',
 			'branch_id'=>'เลเวล',
+			'fullname'=>'ชื่อ-นามสกุล'
 		);
 	}
 
@@ -364,6 +365,15 @@ public function validateIdCard($attribute,$params){
 		
 	}
 
+	public function getFullname(){
+		$profile = Profile::model()->findByPk($this->id);
+		$text = $profile->firstname_en.' '.$profile->lastname_en;
+		if($text == " "){
+			$text = "";
+		}
+		return $text;
+	}
+
 /**
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -373,8 +383,22 @@ public function validateIdCard($attribute,$params){
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
         $criteria=new CDbCriteria;
-
         $criteria->with = array('profile','position','department');
+
+        if(isset($_GET['User']['fullname'])){
+        	$ex_fullname = explode(" ", $_GET['User']['fullname']);
+
+        	if(isset($ex_fullname[0])){
+        		$pro_fname = $ex_fullname[0];
+        		$criteria->compare('profile.firstname_en', $pro_fname, true);
+        		$criteria->compare('profile.lastname_en', $pro_fname, true, 'OR');
+        	}
+        	
+        	if(isset($ex_fullname[1])){
+        		$pro_lname = $ex_fullname[1];
+        		$criteria->compare('profile.lastname_en',$pro_lname,true);
+        	}
+        }
 
         $criteria->compare('id',$this->id);
         $criteria->compare('username',$this->username,true);

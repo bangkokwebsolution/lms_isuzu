@@ -97,13 +97,18 @@ Yii::app()->clientScript->registerScript('search', "
 								// 		}
 								// 	},
 								// ),
-										array(
-											'header' => 'ชื่อ - นามสกุล',
-											'type'=>'html',
-											'value'=>function($data){
-												return $data->profile->firstname . ' ' . $data->profile->lastname;
+										// array(
+										// 	'header' => 'ชื่อ - นามสกุล',
+										// 	'type'=>'html',
+										// 	'value'=>function($data){
+										// 		return $data->profile->firstname . ' ' . $data->profile->lastname;
 
-											}
+										// 	}
+										// ),
+										array(
+											'name'=>'fullname',
+											'type'=>'html',
+											'value'=>'$data->fullname',
 										),
 										array(
 											'header' => 'รหัสพนักงาน',
