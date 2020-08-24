@@ -2463,11 +2463,11 @@ $model_gen = CourseGeneration::model()->findAll(array(
     		$arr_course_graph = [];
     		if(!empty($search_course)){
     			foreach ($search_course as $key_c => $value_c) {
-    				$arr_course_gen[$key_c]["course_id"] = $value_c->course_id;    
-    				$arr_course_graph[$value_c->course_id]["title"] = $value_c->course_title;
-    				$arr_course_graph[$value_c->course_id]["register"] = 0;		
-    				$arr_course_graph[$value_c->course_id]["pass"] = 0;		
-    				$key_gen = 0;
+    				// $arr_course_gen[$key_c]["course_id"] = $value_c->course_id;    
+    				// $arr_course_graph[$value_c->course_id]["title"] = $value_c->course_title;
+    				// $arr_course_graph[$value_c->course_id]["register"] = 0;		
+    				// $arr_course_graph[$value_c->course_id]["pass"] = 0;		
+    				// $key_gen = 0;
 
 $gen_all= [];
 if($_GET["search"]["gen_id"] != ""){
@@ -2495,6 +2495,11 @@ if($_GET["search"]["gen_id"] != ""){
     				// else{
     					if(!empty($gen_all)){
     						foreach ($gen_all as $key_cg => $value_cg) {
+    							$arr_course_gen[$key_c]["course_id"] = $value_c->course_id;    
+    							$arr_course_graph[$value_c->course_id]["title"] = $value_c->course_title;
+    							$arr_course_graph[$value_c->course_id]["register"] = 0;		
+    							$arr_course_graph[$value_c->course_id]["pass"] = 0;		
+    							$key_gen = 0;
     								$arr_course_gen[$key_c]["gen"][$key_gen]["gen_id"] = $value_cg;
 
 $criteria = new CDbCriteria;
@@ -2601,7 +2606,7 @@ $arr_course_graph[$value_c->course_id]["pass"] = $arr_course_graph[$value_c->cou
     							// } // if($value_cg->active == 'y')
     						} // foreach ($value_c->CourseGeneration
     					}else{ // if(!empty($value_c->CourseGeneration))
-    						$arr_course_gen[$key_c]["gen"] = [];
+    						// $arr_course_gen[$key_c]["gen"] = [];
     					}
     				// }
 

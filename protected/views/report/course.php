@@ -192,7 +192,9 @@ if(isset($model_gen) && !empty($model_gen)){
                                                 if(Yii::app()->session['lang'] != 1){
                                                     echo "คนเรือ";
                                                 }else{
-                                                    echo "MASTER / CAPTAIN";
+                                                    $ship = TypeEmployee::model()->findByPk(1);
+                                                    echo $ship->type_employee_name;
+                                                    // echo "MASTER / CAPTAIN";
                                                 }
                                             ?>
                                         </option>
@@ -201,7 +203,9 @@ if(isset($model_gen) && !empty($model_gen)){
                                                 if(Yii::app()->session['lang'] != 1){
                                                     echo "คนออฟฟิศ";
                                                 }else{
-                                                    echo "Office";
+                                                    $office = TypeEmployee::model()->findByPk(2);
+                                                    echo $office->type_employee_name;
+                                                    // echo "Office";
                                                 }
                                             ?>
                                         </option>
@@ -632,9 +636,22 @@ chart.draw(data, options);
                                         <?php
                                     }
                                     }
-                                }else{ // ไม่มีรุ่น หรือ รุ่นเดียว
-
-                                }                                
+                                }
+                               // else{ // ไม่มีรุ่น หรือ รุ่นเดียว
+                                    //if($model_search <= 1){  ?>  
+                                    <!-- <tr>
+                                        <td colspan="9">
+                                            <?php 
+                                            // if(Yii::app()->session['lang'] != 1){
+                                            //     echo "ไม่มีข้อมูล";
+                                            // }else{
+                                            //     echo "No data";
+                                            // }
+                                            ?></td>
+                                        </tr> -->
+                                        <?php
+                                    //}
+                                //}                                                     
                             } // foreach search
                         }else{ // !empty
                             ?>  
