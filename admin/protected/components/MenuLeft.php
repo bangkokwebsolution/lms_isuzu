@@ -64,9 +64,14 @@ Class MenuLeft extends Controller
 			foreach ($menu as $key => $value)
 			{
 				$val = explode('.',$value);
-				$controller_name = $val[0];
-				$action_name = $val[1];
-				$check = AccessControl::check_access_action($controller_name,$action_name);
+				$controller_name = strtolower($val[0]);
+
+				// if($controller_name == "monthcheck"){
+				// 	var_dump($val);
+				// 	exit();
+				// }
+				$action_name = strtolower($val[1]);
+				$check = AccessControl::check_access_action(strtolower($controller_name),strtolower($action_name));
 				if($check){
 					$return = true;
 				}else{
@@ -74,6 +79,11 @@ Class MenuLeft extends Controller
 				}
 			}
 		}
+
+		// if($controller_name == "monthcheck"){
+		// 			var_dump($check);
+		// 			exit();
+		// 		}
 		return $return;
 	}
 
@@ -1180,8 +1190,8 @@ Class MenuLeft extends Controller
 	        	//////// print ////////
 	        	'visible'=>self::PermissionsMenu(array(
 	        		'printMembership.*',
-	        		'printMembership.Index',
-	        		'printMembership.Approve'
+	        		// 'printMembership.Index',
+	        		// 'printMembership.Approve'
 	        	)),
 	        	'label'=>'<span class="label label-primary"></span> <i></i><span>พิมพ์ใบสมัคร</span>',
 	        	'url'=>'#printMembership',
@@ -1223,8 +1233,8 @@ Class MenuLeft extends Controller
 	        	/*====== Check Permissions User (2) ======*/
 	        	'visible'=>self::PermissionsMenu(array(
 	        		'admin.*',
-	        		'admin.admin',
-	        		'admin.Create',
+	        		// 'admin.admin',
+	        		// 'admin.Create',
 	        	)),
 	        	'label'=>'<i></i><span>ระบบจัดการสมาชิก (สมาชิก)</span>',
 	        	'url'=>'#admin',
@@ -1328,7 +1338,7 @@ Class MenuLeft extends Controller
 	        	//////// print ////////
 	        	'visible'=>self::PermissionsMenu(array(
 	        		'monthCheck.*',
-	        		'monthCheck.admin',
+	        		// 'monthCheck.admin',
 	        	)),
 	        	'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบตรวจสอบการใช้งาน</span>',
 	        	'url'=>'#monthCheck',

@@ -63,7 +63,7 @@ class AccessControl extends CApplicationComponent
                                foreach (json_decode($permission->permission) as $key => $value) {
                                     if (strtolower(Yii::app()->controller->id) == strtolower($key)){
                                         if(!empty($value->action) && ($value->active == 1)){
-                                            $action = $value->action;
+                                            $action = strtolower($value->action);
                                         }
                                     }
                                 }
@@ -99,8 +99,10 @@ class AccessControl extends CApplicationComponent
                             } else {
                                foreach (json_decode($permission->permission) as $key => $value) {
                                     if (strtolower($controller_name) == strtolower($key)){
+                                        // return strtolower($key);
                                         if(!empty($value->action) && ($value->active == 1)){
-                                            $action = $value->action;
+                                            
+                                            $action = strtolower($value->action);
                                             if($action_name != '*'){
                                                 if(!in_array(strtolower($action_name), $action)){
                                                     return false;
