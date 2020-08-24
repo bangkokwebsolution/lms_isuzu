@@ -21,21 +21,77 @@ class ReportController extends Controller
 
 	public function actionReport_register()
 	{
-		$this->render('report_register');
+		if(Yii::app()->user->id != null) {
+			$user_login = User::model()->findByPk(Yii::app()->user->id);
+			$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+			$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+			$Level = $user_login->branch_id;
+			$Position = $user_login->position_id;
+			$Department = $user_login->department_id;
+		$this->render('report_register',array(
+				'authority'=>$authority,
+				'type_em'=>$type_em,
+				'Level' =>$Level,
+				'Position'=>$Position,
+				'Department'=>$Department
+			));
+		}else{
+			$this->redirect(array('site/index'));
+			exit();
+		}
 	}
 
 	public function actionDetail()
 	{
+		if(Yii::app()->user->id != null) {
 		$this->render('detail');
+		}else{
+			$this->redirect(array('site/index'));
+			exit();
+		}
 	}
 	public function actionRegistership()
 	{
-		$this->render('registership');
+		if(Yii::app()->user->id != null) {
+			$user_login = User::model()->findByPk(Yii::app()->user->id);
+			$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+			$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+			$Level = $user_login->branch_id;
+			$Position = $user_login->position_id;
+			$Department = $user_login->department_id;
+		$this->render('registership',array(
+				'authority'=>$authority,
+				'type_em'=>$type_em,
+				'Level' =>$Level,
+				'Position'=>$Position,
+				'Department'=>$Department
+			));
+		}else{
+			$this->redirect(array('site/index'));
+			exit();
+		}
 	}
 
 	public function actionRegisteroffice()
 	{
-		$this->render('register_office');
+		if(Yii::app()->user->id != null) {
+			$user_login = User::model()->findByPk(Yii::app()->user->id);
+			$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+			$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+			$Level = $user_login->branch_id;
+			$Position = $user_login->position_id;
+			$Department = $user_login->department_id;
+		$this->render('register_office',array(
+				'authority'=>$authority,
+				'type_em'=>$type_em,
+				'Level' =>$Level,
+				'Position'=>$Position,
+				'Department'=>$Department
+			));
+		}else{
+			$this->redirect(array('site/index'));
+			exit();
+		}
 	}
 
 	public function actionRegisterofficeData()
@@ -51,12 +107,22 @@ class ReportController extends Controller
 		$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
 		$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
 
-		if ($Department) {
+		if (Yii::app()->user->id != null) {
+					$user_login = User::model()->findByPk(Yii::app()->user->id);
+					$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+					$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+					$user_Level = $user_login->branch_id;
+					$user_Position = $user_login->position_id;
+					$user_Department = $user_login->department_id;
 
 					$criteria = new CDbCriteria;
 					if($Department){
 						$criteria->compare('id',$Department);
 					}
+					if ($authority == 2 || $authority == 3) {
+                                         
+                        $criteria->compare('id',$user_Department);
+                    }
 					$criteria->compare('active','y');
 					$dep = Department::model()->findAll($criteria);
 					$dep_arr = [];
@@ -70,6 +136,10 @@ class ReportController extends Controller
 					if($Position){
 						$criteria->compare('id',$Position);
 					}
+					if ($authority == 3) {
+                                         
+                        $criteria->compare('id',$user_Position);
+                    }
 					$pos = Position::model()->findAll($criteria);
 
 					$pos_arr = [];
@@ -85,6 +155,10 @@ class ReportController extends Controller
 					if($Leval){
 						$criteria->compare('id',$Leval);
 					}
+					if ($authority == 3) {
+                                         
+                        $criteria->compare('id',$user_Level);
+                    }
 					$branch = Branch::model()->findAll($criteria);
 
 					$branch_arr = [];
@@ -109,6 +183,10 @@ class ReportController extends Controller
 					if ($Leval) {
 						$criteria->compare('branch_id',$Leval);
 					}
+					if ($authority == 3) {
+                                         
+        				$criteria->compare('branch_id',$user_Level);
+    				}
 
 					$User = User::model()->findAll($criteria);
 
@@ -129,6 +207,10 @@ class ReportController extends Controller
 							if($Department){
 								$criteria->compare('department_id',$Department);
 							}
+							if ($authority == 2 || $authority == 3) {
+                                         
+                        	$criteria->compare('department_id',$user_Department);
+                    		}
 							$criteria->compare('superuser',0);
 							if ($Year_start != null) {
 								$criteria->compare('YEAR(create_at)', $Year_start);
@@ -155,6 +237,10 @@ class ReportController extends Controller
 								if($Department){
 									$criteria->compare('department_id',$Department);
 								}
+								if ($authority == 2 || $authority == 3) {
+                                         
+                        		$criteria->compare('department_id',$user_Department);
+                    			}
 								$criteria->compare('superuser',0);
 								if ($Year_start != null) {
 									$criteria->compare('YEAR(create_at)', $Year_start);
@@ -188,6 +274,10 @@ class ReportController extends Controller
 							if($Department){
 								$criteria->compare('department_id',$Department);
 							}
+							if ($authority == 2 || $authority == 3) {
+                                         
+                        		$criteria->compare('department_id',$user_Department);
+                    		}
 							$criteria->compare('superuser',0);
 							if ($Year_end != null) {
 								$criteria->compare('YEAR(create_at)', $Year_end);
@@ -214,6 +304,10 @@ class ReportController extends Controller
 								if($Department){
 									$criteria->compare('department_id',$Department);
 								}
+								if ($authority == 2 || $authority == 3) {
+                                         
+                        			$criteria->compare('department_id',$user_Department);
+                    			}
 								$criteria->compare('superuser',0);
 								if ($Year_end != null) {
 									$criteria->compare('YEAR(create_at)', $Year_end);
@@ -229,7 +323,7 @@ class ReportController extends Controller
 								$data_division_end .= '["'.$name_dep.'",'.$count_dep.',"'.$colorName[$key].'"],';
 							}
 						}
-					
+					if ($Chart != "") { 
 					if ($_POST['Year_start'] != null || $_POST['Year_end'] != null) {
 
 					if ($Chart === "accommodation=Bar_Graph") { ?>
@@ -535,6 +629,7 @@ class ReportController extends Controller
 
 				<?php }
 					}
+				}
 				if($_POST['Year_start'] == "" && $_POST['Year_end'] == ""){
 					if (!empty($User)) {
 									?>
@@ -591,16 +686,7 @@ class ReportController extends Controller
 								}
 							}
 			} ?>
-						 <div class="pull-right ShowGraph">
-						 	<?php
-						 // echo CHtml::button('Export PDF', array('submit' => array('report/reportRegisterOfficePDF', 'registerofficeData[Department]'=>$_POST['Department'],
-							// 	'registerofficeData[Position]'=>$_POST['Position'],
-							// 	'registerofficeData[Chart]'=>$_POST['Chart'],
-							// 	'registerofficeData[datetime_start]'=>$_POST['datetime_start'],
-							// 	'registerofficeData[datetime_end]'=>$_POST['datetime_end'],
-							// 	'registerofficeData[Year_start]'=>$_POST['Year_start'],
-							// 	'registerofficeData[Year_end]'=>$_POST['Year_end']),'class' => 'btn btn btn-pdf'));
-						 	?>
+						 <div class="pull-left ShowGraph">
 								<a href="<?= $this->createUrl('report/reportRegisterOfficePDF',array('registerofficeData[Department]'=>$_POST['Department'],
 								'registerofficeData[Position]'=>$_POST['Position'],
 								'registerofficeData[Chart]'=>$_POST['Chart'],
@@ -620,15 +706,18 @@ class ReportController extends Controller
 	}
 public function actionReportRegisterOfficeExcel()
 {
+	if (Yii::app()->user->id != null) { 
 	if ($_GET['registerofficeData']) {
 		$data = $_GET['registerofficeData'];
 
 		$this->renderPartial('report_registerOffice_excel',array('data' => $data));
 	}
 }
+}
 
 	public function actionReportRegisterOfficePDF()
 	{
+		if (Yii::app()->user->id != null) { 
 		if ($_GET['registerofficeData']) {
 			$data = $_GET['registerofficeData'];
 			require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
@@ -648,6 +737,7 @@ public function actionReportRegisterOfficeExcel()
 			
 		}
 	}
+	}
 	
 	public function actionRegistershipData()
 	{
@@ -664,11 +754,21 @@ public function actionReportRegisterOfficeExcel()
 		$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
 		$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
 
-		if ($Department) {
+		if (Yii::app()->user->id != null) {
+					$user_login = User::model()->findByPk(Yii::app()->user->id);
+					$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+					$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+					$user_Level = $user_login->branch_id;
+					$user_Position = $user_login->position_id;
+					$user_Department = $user_login->department_id;
+
 			$criteria = new CDbCriteria;
 			$criteria->compare('type_employee_id',1);
 			if($Department){
 				$criteria->compare('id',$Department);
+			}
+			if ($authority == 2 || $authority == 3) {
+				$criteria->compare('id',$user_Department);
 			}
 			$criteria->compare('active','y');
 			$dep = Department::model()->findAll($criteria);
@@ -682,6 +782,9 @@ public function actionReportRegisterOfficeExcel()
 			$criteria->compare('department_id',$dep_arr);
 			if($Position){
 				$criteria->compare('id',$Position);
+			}
+			if ($authority == 3) {
+				$criteria->compare('id',$user_Position);
 			}
 			$pos = Position::model()->findAll($criteria);
 			$pos_arr = [];
@@ -710,7 +813,7 @@ public function actionReportRegisterOfficeExcel()
 			}
 			$User = User::model()->findAll($criteria);
 
-			if ($Department) {
+			if (!empty($pos)) {
 
 				$datas = '["Element", "Position", { role: "style" } ],';
 				$colorName = Helpers::lib()->ColorCode();	
@@ -725,6 +828,9 @@ public function actionReportRegisterOfficeExcel()
 					}
 					if($Department){
 						$criteria->compare('department_id',$Department);
+					}
+					if ($authority == 2 || $authority == 3) {
+						$criteria->compare('department_id',$user_Department);
 					}
 					$criteria->compare('superuser',0);
 					if ($Year_start != null) {
@@ -759,6 +865,9 @@ public function actionReportRegisterOfficeExcel()
 					if($Department){
 						$criteria->compare('department_id',$Department);
 					}
+					if ($authority == 2 || $authority == 3) {
+						$criteria->compare('department_id',$user_Department);
+					}
 					$criteria->compare('superuser',0);
 					if ($Year_end != null) {
 						$criteria->compare('YEAR(create_at)', $Year_end);
@@ -777,7 +886,7 @@ public function actionReportRegisterOfficeExcel()
 					$data_year_end .= '["'.$name_pos.'",'.$count_pos.',"'.$colorName[$key].'"],';
 				}
 			}
-
+			if ($Chart != "") {
 			if ($_POST['Year_start'] != null || $_POST['Year_end'] != null) {
 
 				if ($Chart === "accommodation=Bar_Graph") {
@@ -1083,6 +1192,7 @@ public function actionReportRegisterOfficeExcel()
 							</script>
 
 						<?php }
+						}
 					}
 					if($_POST['Year_start'] == "" && $_POST['Year_end'] == ""){
 						if (!empty($User)) {
@@ -1151,7 +1261,7 @@ public function actionReportRegisterOfficeExcel()
 						}
 					}			
 				} ?>
-				<div class="pull-right ShowGraph">
+				<div class="pull-left ShowGraph">
 								<a href="<?= $this->createUrl('report/reportRegisterShipPDF',array('registershipData[Department]'=>$_POST['Department'],
 								'registershipData[Position]'=>$_POST['Position'],
 								'registershipData[age]'=>$_POST['age'],
@@ -1175,19 +1285,32 @@ public function actionReportRegisterOfficeExcel()
 
 public function actionReportRegisterShipExcel()
 {
-	if ($_GET['registershipData']) {
-		$data = $_GET['registershipData'];
+	if (Yii::app()->user->id != null) { 
+							$user_login = User::model()->findByPk(Yii::app()->user->id);
+							$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+							$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+							$user_Level = $user_login->branch_id;
+							$user_Position = $user_login->position_id;
+							$user_Department = $user_login->department_id;
+				if ($_GET['registershipData']) {
+					$data = $_GET['registershipData'];
 
-		$this->renderPartial('report_registerShip_excel',array('data' => $data));
+					$this->renderPartial('report_registerShip_excel',array('data' => $data));
+				}
 	}
 }
 
 	public function actionReportRegisterShipPDF()
 	{
+		if (Yii::app()->user->id != null) { 
+						
+
 		if ($_GET['registershipData']) {
 			$data = $_GET['registershipData'];
 			require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
 			$mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
+			$mPDF->useDictionaryLBR = false;
+			$mPDF->setDisplayMode('fullpage');
 			$texttt= '
 			<style>
 			body { font-family: "garuda"; }
@@ -1196,9 +1319,10 @@ public function actionReportRegisterShipExcel()
 			$mPDF->WriteHTML($texttt);
 			$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('report_registeShip_pdf', array('data'=>$data),true),'UTF-8','UTF-8'));
 
-			$mPDF->Output("รายงานภาพรวมการสมัคร.pdf" , 'D');
+			$mPDF->Output("รายงานภาพรวมการสมัคร.pdf" , 'I');
 
 			
+		}
 		}
 	}
 
@@ -1218,26 +1342,37 @@ public function actionReportRegisterData()
 				$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
 				$Chart = $_POST['Chart'];
 
-				if ($TypeEmployee) {
-
+				if (Yii::app()->user->id != null) {
+					$user_login = User::model()->findByPk(Yii::app()->user->id);
+					$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+					$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+					$user_Level = $user_login->branch_id;
+					$user_Position = $user_login->position_id;
+					$user_Department = $user_login->department_id;
 					$criteria = new CDbCriteria;
 					$criteria->compare('type_employee_id',$TypeEmployee);
 					if($Department){
 						$criteria->compare('id',$Department);
 					}
+					if ($authority == 2 || $authority == 3) {
+						$criteria->compare('id',$user_Department);
+					}
 					$criteria->compare('active','y');
 					$dep = Department::model()->findAll($criteria);
+
 					$dep_arr = [];
 					foreach ($dep as $key => $val_dep) {
 						$dep_arr[] = $val_dep->id;
 					}
-
 
 					$criteria = new CDbCriteria;
 					$criteria->addIncondition('department_id',$dep_arr);
 					$criteria->compare('active','y');
 					if($Position){
 						$criteria->compare('id',$Position);
+					}
+					if ($authority == 3) {
+						$criteria->compare('id',$user_Position);
 					}
 					$pos = Position::model()->findAll($criteria);
 
@@ -1255,6 +1390,9 @@ public function actionReportRegisterData()
 					if($Leval){
 						$criteria->compare('id',$Leval);
 					}
+					if ($authority == 3) {
+						$criteria->compare('id',$user_Level);
+					}
 					$branch = Branch::model()->findAll($criteria);
 
 
@@ -1270,6 +1408,9 @@ public function actionReportRegisterData()
 					if($Position){
 						$criteria->compare('id',$Position);
 					}
+					if ($authority == 3) {
+						$criteria->compare('id',$user_Position);
+					}
 					$criteria->addNotInCondition('id',$result_branch_arr);
 					$criteria->compare('active','y');
 					$pos_back = Position::model()->findAll($criteria);
@@ -1278,6 +1419,9 @@ public function actionReportRegisterData()
 					$criteria->compare('type_employee_id',$TypeEmployee);
 					if($Department){
 						$criteria->compare('id',$Department);
+					}
+					if ($authority == 2 || $authority == 3) {
+						$criteria->compare('id',$user_Department);
 					}
 					$criteria->addNotInCondition('id',$result_pos_arr);
 					$criteria->compare('active','y');
@@ -1313,8 +1457,6 @@ public function actionReportRegisterData()
 								$datas .= '["'.$name_pos.'",'.$count_pos.',"'.$colorName[$key].'"],';
 
 							}
-						
-
 						
 							$data_year_end = '["Element", "Position", { role: "style" } ],';
 							$colorName = Helpers::lib()->ColorCode();	
@@ -1483,9 +1625,11 @@ public function actionReportRegisterData()
 
 						
 					}
-
+				if ($Chart != "") {
+					
 					if ($_POST['Year_start'] != null || $_POST['Year_end'] != null) {
-
+					
+						
 				if ($Chart === "accommodation=Bar_Graph") {
 
 					?>
@@ -1789,6 +1933,7 @@ public function actionReportRegisterData()
 							</script>
 
 						<?php }
+						}
 					}
 							if ($_POST['Year_start'] == "" && $_POST['Year_end'] == "") {
 
@@ -1851,11 +1996,20 @@ public function actionReportRegisterData()
 											if($Department){
 												$criteria->compare('department_id',$Department);
 											}
+											if ($authority == 2 || $authority == 3) {
+												$criteria->compare('department_id',$user_Department);
+											}
 											if($Position){
 												$criteria->compare('position_id',$Position);
 											}
+											if ($authority == 3) {
+												$criteria->compare('position_id',$user_Position);
+											}
 											if($Leval){
 												$criteria->compare('branch_id',$Leval);
+											}
+											if ($authority == 3) {
+												$criteria->compare('branch_id',$user_Level);
 											}
 											$criteria->compare('superuser',0);
 											$usersAll = Users::model()->findAll($criteria);
@@ -1889,6 +2043,7 @@ public function actionReportRegisterData()
 											$datatable .= '</tr>';
 										}
 									}
+
 									foreach ($pos_back as $keypos_back => $valuepos_back) { 	
 
 										$criteria = new CDbCriteria;
@@ -1906,19 +2061,27 @@ public function actionReportRegisterData()
 
 										$criteria = new CDbCriteria;
 										$criteria->select = 'id';
-
 										if($TypeEmployee){
-											$criteria->compare('type_employee',$TypeEmployee);
-										}
-										if($Department){
-											$criteria->compare('department_id',$Department);
-										}
-										if($Position){
-											$criteria->compare('position_id',$Position);
-										}
-										if($Leval){
-											$criteria->compare('branch_id',$Leval);
-										}
+												$criteria->compare('type_employee',$TypeEmployee);
+											}
+											if($Department){
+												$criteria->compare('department_id',$Department);
+											}
+											if ($authority == 2 || $authority == 3) {
+												$criteria->compare('department_id',$user_Department);
+											}
+											if($Position){
+												$criteria->compare('position_id',$Position);
+											}
+											if ($authority == 3) {
+												$criteria->compare('position_id',$user_Position);
+											}
+											if($Leval){
+												$criteria->compare('branch_id',$Leval);
+											}
+											if ($authority == 3) {
+												$criteria->compare('branch_id',$user_Level);
+											}
 										$criteria->compare('superuser',0);
 										$usersAll = Users::model()->findAll($criteria);
 
@@ -1972,17 +2135,26 @@ public function actionReportRegisterData()
 										$criteria->select = 'id';
 
 										if($TypeEmployee){
-											$criteria->compare('type_employee',$TypeEmployee);
-										}
-										if($Department){
-											$criteria->compare('department_id',$Department);
-										}
-										if($Position){
-											$criteria->compare('position_id',$Position);
-										}
-										if($Leval){
-											$criteria->compare('branch_id',$Leval);
-										}
+												$criteria->compare('type_employee',$TypeEmployee);
+											}
+											if($Department){
+												$criteria->compare('department_id',$Department);
+											}
+											if ($authority == 2 || $authority == 3) {
+												$criteria->compare('department_id',$user_Department);
+											}
+											if($Position){
+												$criteria->compare('position_id',$Position);
+											}
+											if ($authority == 3) {
+												$criteria->compare('position_id',$user_Position);
+											}
+											if($Leval){
+												$criteria->compare('branch_id',$Leval);
+											}
+											if ($authority == 3) {
+												$criteria->compare('branch_id',$user_Level);
+											}
 										$criteria->compare('superuser',0);
 										$usersAll = Users::model()->findAll($criteria);
 
@@ -2071,49 +2243,67 @@ public function actionReportRegisterData()
 
 					public function actionReportRegisterExcel()
 					{
-						if ($_GET['reportRegisterData']) {
-							$data = $_GET['reportRegisterData'];
+						if (Yii::app()->user->id != null) { 
+			
+							if ($_GET['reportRegisterData']) {
+								$data = $_GET['reportRegisterData'];
 
-							$this->renderPartial('report_register_excel',array('data' => $data));
+								$this->renderPartial('report_register_excel',array('data' => $data));
+							}
 						}
 					}
 
 					public function actionReportRegisterPDF()
 					{
-						if ($_GET['reportRegisterData']) {
-							$data = $_GET['reportRegisterData'];
-							require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
-							$mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
-							$texttt= '
-							<style>
-							body { font-family: "garuda"; }
-							</style>
-							';
-							$mPDF->WriteHTML($texttt);
-							$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('report_register_pdf', array('data'=>$data),true),'UTF-8','UTF-8'));
-		
-							$mPDF->Output("รายงานภาพรวมการสมัคร.pdf" , 'D');
-
+						if (Yii::app()->user->id != null) { 
+						
+							if ($_GET['reportRegisterData']) {
+								$data = $_GET['reportRegisterData'];
+								require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
+								$mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
+								$mPDF->useDictionaryLBR = false;
+								$mPDF->setDisplayMode('fullpage');
+								$texttt= '
+								<style>
+								body { font-family: "garuda"; }
+								</style>
+								';
+								$mPDF->WriteHTML($texttt);
+								$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('report_register_pdf', array('data'=>$data),true),'UTF-8','UTF-8'));
 			
+								$mPDF->Output("รายงานภาพรวมการสมัคร.pdf" , 'I');
+
+								}
 						}
 					}
 
 		public function actionListDepartment()
 		{
-			$criteria= new CDbCriteria;
-			$criteria->condition='type_employee_id=:type_employee_id AND active=:active';
-			$criteria->params=array(':type_employee_id'=>$_POST['id'],':active'=>'y');
-			$criteria->order = 'sortOrder ASC';
-			$model = Department::model()->findAll($criteria);
-			$sub_list = Yii::app()->session['lang'] == 1?'Select Department ':'เลือกแผนก';
-			$data = '<option value ="">'.$sub_list.'</option>';
-			foreach ($model as $key => $value) {
-				$data .= '<option value = "'.$value->id.'"'.'>'.$value->dep_title.'</option>';
-			}
-			echo ($data);
+			if (Yii::app()->user->id != null) {   // ต้อง login ถึงจะเห็น
+			
+				$user_login = User::model()->findByPk(Yii::app()->user->id);
+				$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+				$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office			
 
+				$criteria= new CDbCriteria;
+				$criteria->condition='type_employee_id=:type_employee_id AND active=:active';
+				$criteria->params=array(':type_employee_id'=>$_POST['id'],':active'=>'y');
+				$criteria->order = 'sortOrder ASC';
+				$model = Department::model()->findAll($criteria);
+				if ($type_em == 1) {
+					$sub_list = Yii::app()->session['lang'] == 1?'Select Department ':'เลือกแผนก';
+				}else{
+					$sub_list = Yii::app()->session['lang'] == 1?'Select Division ':'เลือกฝ่าย';
+				}
+				
+				
+				$data = '<option value ="">'.$sub_list.'</option>';
+				foreach ($model as $key => $value) {
+					$data .= '<option value = "'.$value->id.'"'.'>'.$value->dep_title.'</option>';
+				}
+				echo ($data);
+			}	
 		}
-
 		public function actionListPosition()
 		{
 			$criteria= new CDbCriteria;
@@ -3031,6 +3221,508 @@ $model_level = Branch::model()->findAll(array(
 		'user_login'=>$user_login,
     ));
 }
+
+	public function actionExamOffice(){
+
+		if (Yii::app()->user->id == null) {   // ต้อง login ถึงจะเห็น
+        $msg = $label->label_alert_msg_plsLogin;
+        Yii::app()->user->setFlash('msg',$msg);
+        Yii::app()->user->setFlash('icon','warning');
+        $this->redirect(array('site/index'));
+        exit();
+    }else{
+    	$user_login = User::model()->findByPk(Yii::app()->user->id);
+		$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+		$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+
+		if($authority == "" || ($type_em != 2 && $authority != 1)){
+			$this->redirect(array('report/index'));
+			exit();
+		}
+    }
+
+    if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+    	$langId = Yii::app()->session['lang'] = 1;
+    }else{
+    	$langId = Yii::app()->session['lang'];
+    }
+
+    //------------------- ค่า form search ------------------------//
+    $model_course = CourseOnline::model()->with('CategoryTitle')->findAll(array(
+    	'condition' => 'course.active=:active AND course.lang_id=:lang_id AND categorys.active=:active',
+    	'params' => array(':active'=>'y', ':lang_id'=>$langId, ),
+    	'order' => 'course_title ASC'
+    ));
+
+    if($authority == 1){
+    	$model_department = Department::model()->findAll(array(
+	    	'condition' => 'active=:active AND lang_id=:lang_id AND type_employee_id=:type_id',
+	    	'params' => array(':active'=>'y', ':lang_id'=>1, ':type_id'=>2),
+	    	'order' => 'dep_title ASC'    	
+    	));
+    }else{
+    	$model_department = [];
+    }
+
+    if($authority == 2){
+    	$model_position = Position::model()->findAll(array(
+    		'condition' => 'active=:active AND department_id=:department_id AND lang_id=:lang_id',
+    		'params' => array(':active'=>'y',':department_id'=>$user_login->department_id,':lang_id'=>1),
+    		'order' => 'position_title ASC'
+    	));
+    }else{
+    	$model_position = [];
+    }
+
+    if($authority == 3){
+    	$model_level = Branch::model()->findAll(array(
+    		'condition' => 'active=:active AND position_id=:position_id AND lang_id=:lang_id',
+    		'params' => array(':active'=>'y',':position_id'=>$user_login->position_id,':lang_id'=>1),
+    		'order' => 'branch_name ASC'
+    	));
+    }else{
+    	$model_level = [];
+    }
+
+    $year_start = LogStartcourse::model()->find(array(
+    	'condition' => 'active=:active',
+    	'params' => array(':active'=>'y'),
+    	'order' => 'id ASC'
+    ));
+    $year_start = date("Y", strtotime($year_start->start_date));
+
+    $year_end = LogStartcourse::model()->find(array(
+    	'condition' => 'active=:active',
+    	'params' => array(':active'=>'y'),
+    	'order' => 'id DESC'
+    ));
+    $year_end = date("Y", strtotime($year_end->start_date));
+
+    if($year_end <= $year_start){
+    	$year_end = $year_start+1;
+    }
+    //------------------- ค่า form search ------------------------//
+
+    if(isset($_GET["search"])){
+
+    	$criteria = new CDbCriteria;
+
+    	if($_GET["search"]["fullname"] != ""){
+    		$ex_fullname = explode(" ", $_GET["search"]["fullname"]);
+
+    		if(isset($ex_fullname[0])){    			
+    			$name = $ex_fullname[0];
+    			$criteria->compare('pro.firstname', $name, true);
+        		$criteria->compare('pro.lastname', $name, true, 'OR');
+    		}
+
+    		if(isset($ex_fullname[1])){
+    			$name = $ex_fullname[1];
+    			$criteria->compare('pro.lastname',$name,true, 'OR');
+    		}
+    	}
+
+    	$criteria->compare('t.active', 'y');
+    	$criteria->compare('course.active', 'y');
+    	$criteria->compare('pro.type_employee', 2); //1=เรือ 2=office
+		$criteria->compare('user.superuser',0);
+
+    	$criteria->addCondition('user.id IS NOT NULL');
+    	$criteria->addCondition('t.course_id IS NOT NULL');
+
+    	if($_GET["search"]["course_id"] != ""){
+    		$criteria->compare('t.course_id', $_GET["search"]["course_id"]);
+
+    		if($_GET["search"]["gen_id"] != ""){
+    			$criteria->compare('t.gen_id', $_GET["search"]["gen_id"]);
+    		}
+    	}    	
+
+    	if($authority == 2 || $authority == 3){ // ผู้จัดการฝ่าย
+    		$_GET["search"]["department"] = $user_login->department_id;
+    	}
+    	if($_GET["search"]["department"] != ""){
+    		$criteria->compare('user.department_id', $_GET["search"]["department"]);
+
+    		$model_position = Position::model()->findAll(array(
+    			'condition' => 'active=:active AND department_id=:department_id AND lang_id=:lang_id',
+    			'params' => array(':active'=>'y',':department_id'=>$_GET["search"]["department"],':lang_id'=>1),
+    			'order' => 'position_title ASC'
+    		));
+
+    		if($authority == 3){ // ผู้จัดการแผนก
+    			$_GET["search"]["position"] = $user_login->position_id;
+    		}
+    		if($_GET["search"]["position"] != ""){
+    			$criteria->compare('user.position_id', $_GET["search"]["position"]);
+
+$model_level = Branch::model()->findAll(array(
+	'condition' => 'active=:active AND position_id=:position_id AND lang_id=:lang_id',
+	'params' => array(':active'=>'y',':position_id'=>$_GET["search"]["position"],':lang_id'=>1),
+	'order' => 'branch_name ASC'
+));    			
+
+    			if($_GET["search"]["level"] != ""){
+    				$criteria->compare('user.branch_id', $_GET["search"]["level"]);
+    			}
+    		}
+    	} 
+
+    	$arr_count_course = [];
+    	$arr_course_title = [];
+    	if($_GET["search"]["start_year"] != "" && $_GET["search"]["end_year"] != ""){
+    		if($_GET["search"]["start_year"] != ""){
+    			$criteria->compare('t.start_date', ">=".$_GET["search"]["start_year"]."-01-01 00:00:00");
+    		}
+    		if($_GET["search"]["end_year"] != ""){
+    			$criteria->compare('t.start_date', "<=".$_GET["search"]["end_year"]."-12-31 23:59:59");
+    		}
+
+    		$criteria->order = 'yearrrr ASC';
+    		$criteria->select ='t.start_date, t.course_id, YEAR(t.start_date) AS yearrrr, t.user_id, t.gen_id';
+    		$criteria->distinct = true;
+    		$model_graph = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+
+
+    		foreach ($model_graph as $key => $value) {
+    			$course_score = Coursescore::model()->find(array(
+    				'condition' => 'active=:active AND user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id AND type=:type',
+    				'params' => array(':active'=>'y',':user_id'=>$value->user_id,':course_id'=>$value->course_id, ':gen_id'=>$value->gen_id, ':type'=>'post'),
+    				'order' => 'score_id DESC'
+    			));
+    			if($course_score != ""){
+$arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["pass"] = $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["pass"];
+$arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["fail"] = $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["fail"];
+if($course_score->score_past == 'y'){
+	$arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["pass"] = $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["pass"]+1;
+	$course_model = CourseOnline::model()->findByPk($value->course_id);
+	$arr_course_title[$value->course_id] = $course_model->course_title;
+}elseif($course_score->score_past == 'n'){
+	$arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["fail"] = $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["fail"]+1;
+	$course_model = CourseOnline::model()->findByPk($value->course_id);
+	$arr_course_title[$value->course_id] = $course_model->course_title;
+}
+    			}    			
+    		}
+
+    	}else{
+
+    		if($_GET["search"]["start_date"] != ""){
+    			$criteria->compare('t.start_date', ">=".$_GET["search"]["start_date"]." 00:00:00");
+    		}
+    		if($_GET["search"]["end_date"] != ""){
+    			$criteria->compare('t.start_date', "<=".$_GET["search"]["end_date"]." 23:59:59");
+    		}
+
+    		$criteria->order = 't.id ASC';
+    		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+
+    		$model_search_score = [];
+    		$model_search_graph = [];
+    		foreach ($model_search as $key => $value) {
+    			$course_score = Coursescore::model()->find(array(
+    				'condition' => 'active=:active AND user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id AND type=:type',
+    				'params' => array(':active'=>'y',':user_id'=>$value->user_id,':course_id'=>$value->course_id, ':gen_id'=>$value->gen_id, ':type'=>'post'),
+    				'order' => 'score_id DESC'
+    			));
+    			if($course_score != ""){
+    				$model_search_score[$key]["status"] = $course_score->score_past;
+    				$model_search_score[$key]["score"] = $course_score->score_number."/".$course_score->score_total;
+
+
+
+$course_model = CourseOnline::model()->findByPk($value->course_id);
+$model_search_graph[$value->course_id]["title"] = $course_model->course_title;
+$model_search_graph[$value->course_id]["pass"] = $model_search_graph[$value->course_id]["pass"];
+$model_search_graph[$value->course_id]["fail"] = $model_search_graph[$value->course_id]["fail"];
+if($course_score->score_past == 'y'){
+	$model_search_graph[$value->course_id]["pass"] = $model_search_graph[$value->course_id]["pass"]+1;
+}elseif($course_score->score_past == 'n'){
+	$model_search_graph[$value->course_id]["fail"] = $model_search_graph[$value->course_id]["fail"]+1;
+}
+
+
+    			}
+
+
+    		} // foreach ($model_search
+    	} // else
+
+    	// var_dump("<pre>");
+    	// var_dump($arr_count_course);
+    	// exit();
+
+		$this->render('exam_office', array(
+	        'model_course'=>$model_course,
+        	'model_gen'=>$model_gen,
+	        'model_department'=>$model_department,
+	        'model_position'=>$model_position,
+        	'model_level'=>$model_level,
+	        'year_start'=>$year_start,
+	        'year_end'=>$year_end,
+	        'model_search'=>$model_search,
+	        'model_search'=>$model_search,
+	        'model_search_score'=>$model_search_score,
+	        'model_search_graph'=>$model_search_graph,
+	        'arr_course_title'=>$arr_course_title,
+	        'arr_count_course'=>$arr_count_course,
+	        'authority'=>$authority,
+			'type_em'=>$type_em,
+			'user_login'=>$user_login,
+	    ));
+		exit();
+    } // if(isset($_GET["search"]))
+
+		$this->render('exam_office', array(
+			'model_course'=>$model_course,
+			'model_department'=>$model_department,
+			'model_position'=>$model_position,
+			'model_level'=>$model_level,
+			'year_start'=>$year_start,
+			'year_end'=>$year_end,
+			'authority'=>$authority,
+			'type_em'=>$type_em,
+			'user_login'=>$user_login,
+		));
+	}
+
+public function actionExamShip(){
+
+		if (Yii::app()->user->id == null) {   // ต้อง login ถึงจะเห็น
+        $msg = $label->label_alert_msg_plsLogin;
+        Yii::app()->user->setFlash('msg',$msg);
+        Yii::app()->user->setFlash('icon','warning');
+        $this->redirect(array('site/index'));
+        exit();
+    }else{
+    	$user_login = User::model()->findByPk(Yii::app()->user->id);
+		$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+		$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+
+		if($authority == "" || ($type_em != 2 && $authority != 1)){
+			$this->redirect(array('report/index'));
+			exit();
+		}
+    }
+
+    if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+    	$langId = Yii::app()->session['lang'] = 1;
+    }else{
+    	$langId = Yii::app()->session['lang'];
+    }
+
+    //------------------- ค่า form search ------------------------//
+    $model_course = CourseOnline::model()->with('CategoryTitle')->findAll(array(
+    	'condition' => 'course.active=:active AND course.lang_id=:lang_id AND categorys.active=:active',
+    	'params' => array(':active'=>'y', ':lang_id'=>$langId, ),
+    	'order' => 'course_title ASC'
+    ));
+
+    if($authority == 1){
+    	$model_department = Department::model()->findAll(array(
+	    	'condition' => 'active=:active AND lang_id=:lang_id AND type_employee_id=:type_id',
+	    	'params' => array(':active'=>'y', ':lang_id'=>1, ':type_id'=>2),
+	    	'order' => 'dep_title ASC'    	
+    	));
+    }else{
+    	$model_department = [];
+    }
+
+    if($authority == 2){
+    	$model_position = Position::model()->findAll(array(
+    		'condition' => 'active=:active AND department_id=:department_id AND lang_id=:lang_id',
+    		'params' => array(':active'=>'y',':department_id'=>$user_login->department_id,':lang_id'=>1),
+    		'order' => 'position_title ASC'
+    	));
+    }else{
+    	$model_position = [];
+    }
+
+    $year_start = LogStartcourse::model()->find(array(
+    	'condition' => 'active=:active',
+    	'params' => array(':active'=>'y'),
+    	'order' => 'id ASC'
+    ));
+    $year_start = date("Y", strtotime($year_start->start_date));
+
+    $year_end = LogStartcourse::model()->find(array(
+    	'condition' => 'active=:active',
+    	'params' => array(':active'=>'y'),
+    	'order' => 'id DESC'
+    ));
+    $year_end = date("Y", strtotime($year_end->start_date));
+
+    if($year_end <= $year_start){
+    	$year_end = $year_start+1;
+    }
+    //------------------- ค่า form search ------------------------//
+
+    if(isset($_GET["search"])){
+
+    	$criteria = new CDbCriteria;
+
+    	if($_GET["search"]["fullname"] != ""){
+    		$ex_fullname = explode(" ", $_GET["search"]["fullname"]);
+
+    		if(isset($ex_fullname[0])){    			
+    			$name = $ex_fullname[0];
+    			$criteria->compare('pro.firstname', $name, true);
+        		$criteria->compare('pro.lastname', $name, true, 'OR');
+    		}
+
+    		if(isset($ex_fullname[1])){
+    			$name = $ex_fullname[1];
+    			$criteria->compare('pro.lastname',$name,true, 'OR');
+    		}
+    	}
+
+    	$criteria->compare('t.active', 'y');
+    	$criteria->compare('course.active', 'y');
+    	$criteria->compare('pro.type_employee', 1); //1=เรือ 2=office
+		$criteria->compare('user.superuser',0);
+
+    	$criteria->addCondition('user.id IS NOT NULL');
+    	$criteria->addCondition('t.course_id IS NOT NULL');
+
+    	if($_GET["search"]["course_id"] != ""){
+    		$criteria->compare('t.course_id', $_GET["search"]["course_id"]);
+
+    		if($_GET["search"]["gen_id"] != ""){
+    			$criteria->compare('t.gen_id', $_GET["search"]["gen_id"]);
+    		}
+    	}    	
+
+    	if($authority == 2 || $authority == 3){ // ผู้จัดการฝ่าย
+    		$_GET["search"]["department"] = $user_login->department_id;
+    	}
+    	if($_GET["search"]["department"] != ""){
+    		$criteria->compare('user.department_id', $_GET["search"]["department"]);
+
+    		$model_position = Position::model()->findAll(array(
+    			'condition' => 'active=:active AND department_id=:department_id AND lang_id=:lang_id',
+    			'params' => array(':active'=>'y',':department_id'=>$_GET["search"]["department"],':lang_id'=>1),
+    			'order' => 'position_title ASC'
+    		));
+
+    		if($authority == 3){ // ผู้จัดการแผนก
+    			$_GET["search"]["position"] = $user_login->position_id;
+    		}
+    		if($_GET["search"]["position"] != ""){
+    			$criteria->compare('user.position_id', $_GET["search"]["position"]);
+    		}
+    	} 
+
+    	$arr_count_course = [];
+    	$arr_course_title = [];
+    	if($_GET["search"]["start_year"] != "" && $_GET["search"]["end_year"] != ""){
+    		if($_GET["search"]["start_year"] != ""){
+    			$criteria->compare('t.start_date', ">=".$_GET["search"]["start_year"]."-01-01 00:00:00");
+    		}
+    		if($_GET["search"]["end_year"] != ""){
+    			$criteria->compare('t.start_date', "<=".$_GET["search"]["end_year"]."-12-31 23:59:59");
+    		}
+
+    		$criteria->order = 'yearrrr ASC';
+    		$criteria->select ='t.start_date, t.course_id, YEAR(t.start_date) AS yearrrr, t.user_id, t.gen_id';
+    		$criteria->distinct = true;
+    		$model_graph = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+
+
+    		foreach ($model_graph as $key => $value) {
+    			$course_score = Coursescore::model()->find(array(
+    				'condition' => 'active=:active AND user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id AND type=:type',
+    				'params' => array(':active'=>'y',':user_id'=>$value->user_id,':course_id'=>$value->course_id, ':gen_id'=>$value->gen_id, ':type'=>'post'),
+    				'order' => 'score_id DESC'
+    			));
+    			if($course_score != ""){
+$arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["pass"] = $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["pass"];
+$arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["fail"] = $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["fail"];
+if($course_score->score_past == 'y'){
+	$arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["pass"] = $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["pass"]+1;
+	$course_model = CourseOnline::model()->findByPk($value->course_id);
+	$arr_course_title[$value->course_id] = $course_model->course_title;
+}elseif($course_score->score_past == 'n'){
+	$arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["fail"] = $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["fail"]+1;
+	$course_model = CourseOnline::model()->findByPk($value->course_id);
+	$arr_course_title[$value->course_id] = $course_model->course_title;
+}
+    			}    			
+    		}
+
+    	}else{
+
+    		if($_GET["search"]["start_date"] != ""){
+    			$criteria->compare('t.start_date', ">=".$_GET["search"]["start_date"]." 00:00:00");
+    		}
+    		if($_GET["search"]["end_date"] != ""){
+    			$criteria->compare('t.start_date', "<=".$_GET["search"]["end_date"]." 23:59:59");
+    		}
+
+    		$criteria->order = 't.id ASC';
+    		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+
+    		$model_search_score = [];
+    		$model_search_graph = [];
+    		foreach ($model_search as $key => $value) {
+    			$course_score = Coursescore::model()->find(array(
+    				'condition' => 'active=:active AND user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id AND type=:type',
+    				'params' => array(':active'=>'y',':user_id'=>$value->user_id,':course_id'=>$value->course_id, ':gen_id'=>$value->gen_id, ':type'=>'post'),
+    				'order' => 'score_id DESC'
+    			));
+    			if($course_score != ""){
+    				$model_search_score[$key]["status"] = $course_score->score_past;
+    				$model_search_score[$key]["score"] = $course_score->score_number."/".$course_score->score_total;
+
+
+
+$course_model = CourseOnline::model()->findByPk($value->course_id);
+$model_search_graph[$value->course_id]["title"] = $course_model->course_title;
+$model_search_graph[$value->course_id]["pass"] = $model_search_graph[$value->course_id]["pass"];
+$model_search_graph[$value->course_id]["fail"] = $model_search_graph[$value->course_id]["fail"];
+if($course_score->score_past == 'y'){
+	$model_search_graph[$value->course_id]["pass"] = $model_search_graph[$value->course_id]["pass"]+1;
+}elseif($course_score->score_past == 'n'){
+	$model_search_graph[$value->course_id]["fail"] = $model_search_graph[$value->course_id]["fail"]+1;
+}
+
+
+    			}
+
+
+    		} // foreach ($model_search
+    	} // else
+
+		$this->render('exam_ship', array(
+	        'model_course'=>$model_course,
+        	'model_gen'=>$model_gen,
+	        'model_department'=>$model_department,
+	        'model_position'=>$model_position,
+	        'year_start'=>$year_start,
+	        'year_end'=>$year_end,
+	        'model_search'=>$model_search,
+	        'model_search'=>$model_search,
+	        'model_search_score'=>$model_search_score,
+	        'model_search_graph'=>$model_search_graph,
+	        'arr_course_title'=>$arr_course_title,
+	        'arr_count_course'=>$arr_count_course,
+	        'authority'=>$authority,
+			'type_em'=>$type_em,
+			'user_login'=>$user_login,
+	    ));
+		exit();
+    } // if(isset($_GET["search"]))
+
+		$this->render('exam_ship', array(
+			'model_course'=>$model_course,
+			'model_department'=>$model_department,
+			'model_position'=>$model_position,
+			'year_start'=>$year_start,
+			'year_end'=>$year_end,
+			'authority'=>$authority,
+			'type_em'=>$type_em,
+			'user_login'=>$user_login,
+		));
+	}
 
 	public function actionGetGenid(){
 		if(isset($_POST["course_id"]) && $_POST["course_id"] != ""){

@@ -20,6 +20,13 @@ header("Pragma:no-cache");
 		$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
 		$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
 
+		$user_login = User::model()->findByPk(Yii::app()->user->id);
+$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+$user_Level = $user_login->branch_id;
+$user_Position = $user_login->position_id;
+$user_Department = $user_login->department_id;
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -28,12 +35,20 @@ header("Pragma:no-cache");
 </head>
 <body>
 	<div class="row">
+		<?php
+			if ($Chart != "") {
+		?>
 		<div class="col-sm-12">
 			<?php if ($Chart === "accommodation=Bar_Graph") { ?>
 				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint.png"; ?>" width="500" height="auto">
 			<?php }else if($Chart === "accommodation=Pie_Charts"){ ?>
 				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint1.png"; ?>" width="500" height="auto"> 
-			<?php } ?>
+			<?php }
+			$f = 20;
+			for ($p=0; $p <= $f ; $p++) { 
+			echo "<br>";
+		}
+			 ?>
 		</div><br>
 	</div>
 	<?php
@@ -64,12 +79,17 @@ header("Pragma:no-cache");
 		for ($i=0; $i <= $l ; $i++) { 
 			echo "<br>";
 		}
+		}
 	}
 
 	$criteria = new CDbCriteria;
 	if($Department){
 		$criteria->compare('id',$Department);
 	}
+	if ($authority == 2 || $authority == 3) {
+                                         
+        $criteria->compare('id',$user_Department);
+    }
 	$criteria->compare('active','y');
 	$dep = Department::model()->findAll($criteria);
 	$dep_arr = [];
@@ -82,6 +102,10 @@ header("Pragma:no-cache");
 	if($Position){
 		$criteria->compare('id',$Position);
 	}
+	if ($authority == 3) {
+                                         
+        $criteria->compare('id',$user_Position);
+    }
 	$pos = Position::model()->findAll($criteria);
 
 	$pos_arr = [];
@@ -97,6 +121,10 @@ header("Pragma:no-cache");
 	if($Leval){
 		$criteria->compare('id',$Leval);
 	}
+	if ($authority == 3) {
+                                         
+        $criteria->compare('id',$user_Level);
+    }
 	$branch = Branch::model()->findAll($criteria);
 
 	$branch_arr = [];
@@ -121,6 +149,10 @@ header("Pragma:no-cache");
 	if ($Leval) {
 		$criteria->compare('branch_id',$Leval);
 	}
+	if ($authority == 3) {
+                                         
+        $criteria->compare('branch_id',$user_Level);
+    }
 
 	$User = User::model()->findAll($criteria);
 	if ($Year_start == null && $Year_end == null) {

@@ -11,10 +11,39 @@ class ReportAuthorityController extends Controller
 
 	public function actionBoard()
 	{
-		$userAll = User::model()->with('profile')->findAll(array(
-			'condition'=>'superuser=0 AND report_authority IS NULL',
-			'order'=>'profile.firstname ASC',
-		));
+		$criteria = new CDbCriteria;			
+
+		if($_GET['search']["fullname"] != ""){
+			$ex_fullname = explode(" ", $_GET["search"]["fullname"]);
+
+			if(isset($ex_fullname[0])){    			
+				$name = $ex_fullname[0];
+				$criteria->compare('profile.firstname', $name, true);
+				$criteria->compare('profile.lastname', $name, true, 'OR');
+			}
+
+			if(isset($ex_fullname[1])){
+				$name = $ex_fullname[1];
+				$criteria->compare('profile.lastname',$name,true, 'OR');
+			}
+		}
+		if($_GET['search']["position"] != ""){
+			$criteria->compare('position_id', $_GET["search"]["position"]);
+		}
+
+		$criteria->compare('superuser', 0);
+		$criteria->compare('del_status', 0);
+		$criteria->compare('repass_status', 1);
+		$criteria->compare('register_status', 1);
+		$criteria->compare('status', 1);
+
+		$criteria->addCondition('(profile.type_user = 1 AND profile.type_employee = 1) OR (profile.type_user = 3 AND profile.type_employee = 2)');
+		//OR profile.type_user = 5
+		// $criteria->addCondition('profile.type_employee = 1 OR profile.type_employeee = 2');
+		$criteria->addCondition('report_authority IS NULL');
+		$criteria->order = 'profile.firstname ASC';
+		$userAll = User::model()->with('profile')->findAll($criteria);
+
 		$user_board = User::model()->findAll(array(
 			'condition'=>'superuser=0 AND report_authority=1',
 			'order'=>'profile.firstname ASC',
@@ -59,10 +88,40 @@ class ReportAuthorityController extends Controller
 
 	public function actionDivisionManager()
 	{
-		$userAll = User::model()->with('profile', 'department')->findAll(array(
-            'condition'=>'superuser=0 AND report_authority IS NULL AND department_id IS NOT NULL AND department.active="y" AND profile.type_employee IS NOT NULL',
-            'order'=>'profile.firstname ASC',
-        ));
+        $criteria = new CDbCriteria;			
+		
+		if($_GET['search']["fullname"] != ""){
+			$ex_fullname = explode(" ", $_GET["search"]["fullname"]);
+
+			if(isset($ex_fullname[0])){    			
+				$name = $ex_fullname[0];
+				$criteria->compare('profile.firstname', $name, true);
+				$criteria->compare('profile.lastname', $name, true, 'OR');
+			}
+
+			if(isset($ex_fullname[1])){
+				$name = $ex_fullname[1];
+				$criteria->compare('profile.lastname',$name,true, 'OR');
+			}
+		}
+		if($_GET['search']["position"] != ""){
+			$criteria->compare('position_id', $_GET["search"]["position"]);
+		}
+
+		$criteria->compare('superuser', 0);
+		$criteria->compare('del_status', 0);
+		$criteria->compare('repass_status', 1);
+		$criteria->compare('register_status', 1);
+		$criteria->compare('status', 1);
+		$criteria->compare('department.active', 'y');
+		// $criteria->addCondition('profile.type_user = 1 OR profile.type_user = 3');
+		// $criteria->addCondition('profile.type_employee = 1 OR profile.type_employee = 2');
+		$criteria->addCondition('(profile.type_user = 1 AND profile.type_employee = 1) OR (profile.type_user = 3 AND profile.type_employee = 2)');
+		$criteria->addCondition('report_authority IS NULL');
+		$criteria->addCondition('user.department_id IS NOT NULL');		
+		$criteria->order = 'profile.firstname ASC';
+		$userAll = User::model()->with('profile', 'department')->findAll($criteria);
+
 		$user_division = User::model()->findAll(array(
             'condition'=>'superuser=0 AND report_authority=2 AND department_id IS NOT NULL',
             'order'=>'profile.firstname ASC',
@@ -107,10 +166,43 @@ class ReportAuthorityController extends Controller
 
 	public function actionDepartmentManager()
 	{
-		$userAll = User::model()->with('profile', 'department', 'position')->findAll(array(
-            'condition'=>'superuser=0 AND report_authority IS NULL AND user.department_id IS NOT NULL AND department.active="y" AND position_id IS NOT NULL AND position.active="y" AND profile.type_employee IS NOT NULL',
-            'order'=>'profile.firstname ASC',
-        ));
+		$criteria = new CDbCriteria;			
+		
+		if($_GET['search']["fullname"] != ""){
+			$ex_fullname = explode(" ", $_GET["search"]["fullname"]);
+
+			if(isset($ex_fullname[0])){    			
+				$name = $ex_fullname[0];
+				$criteria->compare('profile.firstname', $name, true);
+				$criteria->compare('profile.lastname', $name, true, 'OR');
+			}
+
+			if(isset($ex_fullname[1])){
+				$name = $ex_fullname[1];
+				$criteria->compare('profile.lastname',$name,true, 'OR');
+			}
+		}
+		if($_GET['search']["position"] != ""){
+			$criteria->compare('position_id', $_GET["search"]["position"]);
+		}
+
+		$criteria->compare('superuser', 0);
+		$criteria->compare('del_status', 0);
+		$criteria->compare('repass_status', 1);
+		$criteria->compare('register_status', 1);
+		$criteria->compare('status', 1);
+		$criteria->compare('department.active', 'y');
+		$criteria->compare('position.active', 'y');		
+		// $criteria->addCondition('profile.type_user = 1 OR profile.type_user = 3');
+		// $criteria->addCondition('profile.type_employee = 1 OR profile.type_employee = 2');
+		$criteria->addCondition('(profile.type_user = 1 AND profile.type_employee = 1) OR (profile.type_user = 3 AND profile.type_employee = 2)');
+		$criteria->addCondition('report_authority IS NULL');
+		$criteria->addCondition('user.department_id IS NOT NULL');
+		$criteria->addCondition('user.position_id IS NOT NULL');
+		
+		$criteria->order = 'profile.firstname ASC';
+		$userAll = User::model()->with('profile', 'department', 'position')->findAll($criteria);
+
 		$user_department = User::model()->findAll(array(
             'condition'=>'superuser=0 AND report_authority=3 AND user.department_id IS NOT NULL AND position_id IS NOT NULL',
             'order'=>'profile.firstname ASC',

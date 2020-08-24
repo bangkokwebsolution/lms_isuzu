@@ -40,7 +40,7 @@
             <li class="breadcrumb-item active" aria-current="page">
                 <?php
                 if (Yii::app()->session['lang'] == 1) {
-                    echo "Report";
+                    echo "Training Overview Report";
                 } else{
                     echo "รายงานภาพรวมการฝึกอบรม";
                 }
@@ -49,7 +49,7 @@
         </ol>
     </nav>
     <a class="btn btn-reportsearch" href="<?php echo $this->createUrl('/report/index'); ?>?target=course" style="margin-bottom: 0px; margin-left: 0px; background-color: #087fe4;">
-        <i class="fas fa-angle-left"></i> ย้อนกลับ
+        <i class="fas fa-angle-left"></i> <?php echo Yii::app()->session['lang'] == 1?'Back':' ย้อนกลับ'; ?>
     </a>
 </div>
 
@@ -60,7 +60,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" href="#report-search"><i class="fas fa-search"></i> ค้นหา <span class="pull-right"><i class="fas fa-chevron-down"></i></span></a>
+                        <a data-toggle="collapse" href="#report-search"><i class="fas fa-search"></i> <?php echo Yii::app()->session['lang'] == 1?'Search':' ค้นหา'; ?> <span class="pull-right"><i class="fas fa-chevron-down"></i></span></a>
                     </h4>
                 </div>
                 <div id="report-search" class="panel-collapse collapse in">
@@ -474,8 +474,9 @@ if(isset($model_level) && !empty($model_level)){
 
                           var options = {
                             seriesType: 'bars',
-                            bar: {groupWidth: "75%"},
+                            bar: {groupWidth: "50%"},
                             legend: { position: "right" },
+                            chartArea:{ right:'15%' },
                         };
 
                         var chart = new google.visualization.ComboChart(document.getElementById('chart_bar'));
@@ -504,6 +505,20 @@ chart.draw(data, options);
         ?>
         </div>
         <!-- จบ กราฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟ -->
+
+        <li class="breadcrumb-item active" aria-current="page">
+            <center>
+                <h3>
+                    <?php
+                    if (Yii::app()->session['lang'] == 1) {
+                        echo "Training Overview Report";
+                    } else {
+                        echo " รายงานภาพรวมการฝึกอบรม";
+                    }
+                    ?>
+                </h3>    
+            </center>
+        </li>
         <div id="div_graph" style="display: none;">
                <div id="chart_graph"></div> 
                <div id="result_search_graph"></div> 
@@ -646,7 +661,7 @@ chart.draw(data, options);
 </div> <!-- export excel -->
 
 <div class="pull-left ">
-    <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF1</button>
+    <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
     <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button>
 </div>
     <?php }else{ // ไม่ค้นหา ช่วงเวลา ?>
@@ -695,8 +710,9 @@ chart.draw(data, options);
 
                           var options = {
                             seriesType: 'bars',
-                            bar: {groupWidth: "75%"},
+                            bar: {groupWidth: "50%"},
                             legend: { position: "right" },
+                            chartArea:{ right:'15%' },
                         };
 
 var chart = new google.visualization.ComboChart(document.getElementById('chart_bar'));
@@ -732,7 +748,7 @@ chart.draw(data, options);
              </div>
 
             <div class="pull-left ">
-                <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF2</button>
+                <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
                 <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button>
             </div>
         <?php } // !empty($_GET["search"]["graph"]) ?>

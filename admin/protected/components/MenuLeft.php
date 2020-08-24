@@ -963,7 +963,30 @@ Class MenuLeft extends Controller
 	        ),
 			//====== END Menu Usability ======//
 
-
+	        array(
+	        	/*====== Check Permissions Group Contactus (2) ======*/
+	        	'visible'=>self::PermissionsMenu(array(
+	        		'ReportProblem.*',
+	        		'ReportProblem.index',
+	        	)),
+	        	'label'=>'<i></i><span>ระบบปัญหาการใช้งาน</span>',
+	        	'url'=>'#ReportProblem',
+	        	'linkOptions' => array('data-toggle' => 'collapse'),
+	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons adress_book'),
+	        	'submenuOptions' => array('class' => self::SetSubMenu( array('ReportProblem','Maildetail') ), 'id' => 'ReportProblem'),
+	        	'active' => self::SetSubMenu( array('ReportProblem','Maildetail') ,false),
+	        	'items'=>array(
+	        		array(
+	        			/*====== Check Permissions Sup-Contactus (2) ======*/
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'ReportProblem.*',
+	        				'ReportProblem.index'
+	        			)),
+	        			'label'=>'จัดการปัญหาการใช้งาน',
+	        			'url'=>array('//ReportProblem/index')
+	        		),
+	        	)
+	        ),
 
 
 	        array(
@@ -1651,30 +1674,6 @@ Class MenuLeft extends Controller
 			// ),
 			//====== END Menu Teacher ======//
 
-	        array(
-	        	/*====== Check Permissions Group Contactus (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'ReportProblem.*',
-	        		'ReportProblem.index',
-	        	)),
-	        	'label'=>'<i></i><span>ระบบปัญหาการใช้งาน</span>',
-	        	'url'=>'#ReportProblem',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons adress_book'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('ReportProblem','Maildetail') ), 'id' => 'ReportProblem'),
-	        	'active' => self::SetSubMenu( array('ReportProblem','Maildetail') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Sup-Contactus (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'ReportProblem.*',
-	        				'ReportProblem.index'
-	        			)),
-	        			'label'=>'จัดการปัญหาการใช้งาน',
-	        			'url'=>array('//ReportProblem/index')
-	        		),
-	        	)
-	        ),
 			//====== END Menu Group Contactus ======//
 			
 	        array(

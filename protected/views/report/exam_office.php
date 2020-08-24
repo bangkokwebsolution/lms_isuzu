@@ -38,7 +38,7 @@
             <li class="breadcrumb-item active" aria-current="page">
                 <?php
                 if (Yii::app()->session['lang'] == 1) {
-                    echo "Report of learners staff ofice course";
+                    echo "Course Staff Office Report";
                 } else {
                     echo "รายงานผู้เรียนตามรายหลักสูตร คนOffice";
                 }
@@ -61,7 +61,7 @@
                     </h4>
                 </div>
                 <div id="report-search" class="panel-collapse collapse in">
-                    <form method="GET" accept-charset="UTF-8" id="form_search" action="<?php echo $this->createUrl('/report/courseOffice'); ?>">
+                    <form method="GET" accept-charset="UTF-8" id="form_search" action="<?php echo $this->createUrl('/report/examOffice'); ?>">
 
                     <div class="panel-body">
                         <div class="row">
@@ -157,10 +157,6 @@ if(isset($model_gen) && !empty($model_gen)){
                                     <div class="checkbox checkbox-main checkbox-inline">
                                         <input <?php if(isset($_GET["search"]["graph"]) && in_array("bar", $_GET["search"]["graph"])){ echo "checked"; } ?> type="checkbox" name="search[graph][]" id="search_graph_bar" value="bar">
                                         <label for="search_graph_bar" class="text-black">Bar Graph </label>
-                                    </div>
-                                    <div class="checkbox checkbox-main checkbox-inline">
-                                        <input <?php if(isset($_GET["search"]["graph"]) && in_array("pie", $_GET["search"]["graph"])){ echo "checked"; } ?> type="checkbox" name="search[graph][]" id="search_graph_pie" value="pie">
-                                        <label for="search_graph_pie" class="text-black">Pie Charts </label>
                                     </div>
                                 </div>
                             </div>
@@ -266,7 +262,6 @@ if(isset($model_level) && !empty($model_level)){
     }
 }
 ?>
-
                                     </select>
                                 </div>
                             </div>
@@ -385,7 +380,7 @@ if(isset($model_level) && !empty($model_level)){
                                         ?>
                                         </option>
                                         <?php 
-                                        for ($i=($year_start+1); $i<$year_end ; $i++) {
+                                        for ($i=($year_start+1); $i<=$year_end ; $i++) {
                                             ?> <option <?php if(isset($_GET["search"]["end_year"]) && $_GET["search"]["end_year"] == $i){ echo "selected"; } ?> value="<?= $i ?>"><?= $i ?></option> <?php
                                         }
                                          ?>
@@ -425,7 +420,8 @@ if(isset($model_level) && !empty($model_level)){
         <?php 
         if(isset($_GET["search"]["graph"]) && in_array("bar", $_GET["search"]["graph"])){
             ?>
-            <div class="col-sm-6">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-10">
                 <div class="year-report">
                     <h4>Bar Graph</h4>
                     <div style="width:100%">
@@ -437,116 +433,68 @@ if(isset($model_level) && !empty($model_level)){
                         google.charts.setOnLoadCallback(drawChart);
                         function drawChart() {
                           var data = google.visualization.arrayToDataTable([
-                            ["หลักสูตร", "ผู้สมัคร", { role: "style" } ],
+                            ["หลักสูตร", "สอบผ่าน", "สอบไม่ผ่าน" ],
                             <?php 
-                            $color = Helpers::lib()->ColorCode();
-                            $no_c = 0;
-                            foreach ($arr_count_course as $key => $value) {
-                                if(!isset($color[$no_c])){
-                                    $color[$no_c] = "silver";
+                            foreach ($model_search_graph as $key => $value) {
+                                if($value["fail"] == null){
+                                    $value["fail"] = 0;
+                                }elseif($value["pass"] == null){
+                                    $value["pass"] = 0;
                                 }
-                                echo "['".$arr_course_title[$key]."', ".$value.", '".$color[$no_c]."'],";
-                                $no_c++;
-                            } 
-                            ?>
-
-                            ]);
-
-                          var view = new google.visualization.DataView(data);
-                          view.setColumns([0, 1,
-                           { calc: "stringify",
-                           sourceColumn: 1,
-                           type: "string",
-                           role: "annotation" },
-                           2]);
-
-                          var options = {
-                            bar: {groupWidth: "95%"},
-                            legend: { position: "none" },
-                        };
-                        var chart = new google.visualization.ColumnChart(document.getElementById("chart_bar"));
-                        google.visualization.events.addListener(chart, 'ready', function () {
-                            $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
-
-                                var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;                                
-                                $("#result_search_graph").append("<img src='"+url_chart+"' >");
-                                var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
-                                $("#chart_graph").append("<img src='"+url_chart_2+"' >");
-                            });
-                            num_chart = num_chart+1;
-
-                        });
-                        chart.draw(view, options);
-                    }
-                </script>
-                </div>
-            </div>
-            <?php
-        }
-
-        if(isset($_GET["search"]["graph"]) && in_array("pie", $_GET["search"]["graph"])){
-        ?>
-            <div class="col-sm-6">
-                <div class="year-report">
-                    <h4>Pie Charts</h4>
-                    <div style="width:100%">
-                        <div id="chart_pie"></div>
-                    </div>
-                    <script type="text/javascript">
-                      google.charts.load('current', {'packages':['corechart']});
-                      google.charts.setOnLoadCallback(drawChart);
-
-                      function drawChart() {
-
-                        var data = google.visualization.arrayToDataTable([
-                          ['หลักสูตร', 'ผู้สมัคร'],
-                          <?php 
-                            foreach ($arr_count_course as $key => $value) {
-                                echo "['".$arr_course_title[$key]."', ".$value."],";
+                                // if($value["register"] > 0){
+                                    echo "['".$value["title"]."', ".$value["pass"].", ".$value["fail"]." ],";
+                                // }
                             } 
                             ?>
                           ]);
 
-                        var options = {
-                          // title: 'Pie Charts'
-                      };
+                          var options = {
+                            seriesType: 'bars',
+                            bar: {groupWidth: "50%"},
+                            legend: { position: "right" },
+                            chartArea:{ right:'15%' },
+                        };
 
-                      var chart = new google.visualization.PieChart(document.getElementById('chart_pie'));
-                      google.visualization.events.addListener(chart, 'ready', function () {
+                        var chart = new google.visualization.ComboChart(document.getElementById('chart_bar'));
 
-                        $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
+google.visualization.events.addListener(chart, 'ready', function () {
+    $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
 
-                            var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
-                            $("#result_search_graph").append("<img src='"+url_chart+"' >");
-                            var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
-                            $("#chart_graph").append("<img src='"+url_chart_2+"' >");
-                        });
-                        num_chart = num_chart+1;
-                    });
-                      chart.draw(data, options);
-                  }
-              </script>
+        var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
+        $("#result_search_graph").append("<img src='"+url_chart+"' >");
+        var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
+        $("#chart_graph").append("<img src='"+url_chart_2+"' >");
+    });
+    num_chart = num_chart+1;
+});
+
+chart.draw(data, options);
+                    }
+                </script>
                 </div>
             </div>
-        <?php
+            <div class="col-sm-1"></div>
+            <?php
         }
+
         ?>
         </div>
         <!-- จบ กราฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟ -->
+
+        
         <li class="breadcrumb-item active" aria-current="page">
             <center>
                 <h3>
                     <?php
                     if (Yii::app()->session['lang'] == 1) {
-                        echo "Report of learners staff ofice course";
+                        echo "Course Staff Office Report";
                     } else {
-                        echo "รายงานผู้เรียนตามรายหลักสูตร คนOffice";
+                        echo " รายงานผู้เรียนตามรายหลักสูตร คนOffice";
                     }
                     ?>
                 </h3>    
             </center>
         </li>
-
         <div id="div_graph" style="display: none;">
                <div id="chart_graph"></div> 
                <div id="result_search_graph"></div> 
@@ -608,6 +556,20 @@ if(isset($model_level) && !empty($model_level)){
                                 echo "Gen";
                             }
                             ?></th>
+                            <th><?php 
+                            if(Yii::app()->session['lang'] != 1){
+                                echo "ผลสอบ";
+                            }else{
+                                echo "Result";
+                            }
+                            ?></th>
+                            <th><?php 
+                            if(Yii::app()->session['lang'] != 1){
+                                echo "คะแนน";
+                            }else{
+                                echo "Score";
+                            }
+                            ?></th>
                         </tr>
                     </thead>
 
@@ -616,6 +578,26 @@ if(isset($model_level) && !empty($model_level)){
                         if(!empty($model_search)){
                             $no = 1;
                             foreach ($model_search as $key => $value) {
+                                if(isset($model_search_score[$key]["status"]) && $model_search_score[$key]["status"] == y){
+                                    $text_status = "<font color='green'>";
+                                    if(Yii::app()->session['lang'] != 1){
+                                        $text_status .= "ผ่าน";
+                                    }else{
+                                        $text_status .= "pass";
+                                    }
+                                    $text_status .= "</font>";
+                                }elseif(isset($model_search_score[$key]["status"]) && $model_search_score[$key]["status"] == n){
+                                    $text_status = "<font color='red'>";
+                                    if(Yii::app()->session['lang'] != 1){
+                                        $text_status .= "ไม่ผ่าน";
+                                    }else{
+                                        $text_status .= "failed";
+                                    }
+                                    $text_status .= "</font>";
+                                }else{
+                                    $text_status = "-";
+                                    $model_search_score[$key]["score"] = "-";
+                                }
                                 ?>  
                                 <tr>
                                     <td><?php echo $no; $no++; ?></td>
@@ -642,6 +624,8 @@ if(isset($model_level) && !empty($model_level)){
                                         }
                                         ?>
                                     </td>
+                                    <td><?= $text_status ?></td>
+                                    <td><?= $model_search_score[$key]["score"] ?></td>
                                 </tr>
                                 <?php
                             } // foreach search
@@ -679,9 +663,11 @@ if(isset($model_level) && !empty($model_level)){
 
                 <div class="row">
                     <?php 
-                    foreach ($arr_count_course as $key_y => $value_y) {                       
+                    foreach ($arr_count_course as $key_y => $value_y) {                      
+
                         if(isset($_GET["search"]["graph"]) && in_array("bar", $_GET["search"]["graph"])){ ?>
-                            <div class="col-sm-6">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-10">
                                 <div class="year-report">
                                     <h4>ปี <?= $key_y ?></h4>
                                     <div style="width:100%">
@@ -692,16 +678,21 @@ if(isset($model_level) && !empty($model_level)){
                                         google.charts.setOnLoadCallback(drawChart);
                                         function drawChart() {
                                           var data = google.visualization.arrayToDataTable([
-                                            ["หลักสูตร", "ผู้สมัคร", { role: "style" } ],
+                                            ["หลักสูตร", "สอบผ่าน", "สอบไม่ผ่าน" ],
                                             <?php 
                                             $color = Helpers::lib()->ColorCode();
                                             $no_c = 0;
                                             foreach ($value_y as $key => $value) {
-                                                if(!isset($color[$no_c])){
-                                                    $color[$no_c] = "silver";
+                                                if($value["fail"] == null){
+                                                    $value["fail"] = 0;
+                                                }elseif($value["pass"] == null){
+                                                    $value["pass"] = 0;
                                                 }
-                                                echo "['".$arr_course_title[$key]."', ".$value.", '".$color[$no_c]."'],";
-                                                $no_c++;
+                                                // if($value["register"] > 0){
+                                                    $course = CourseOnline::model()->findByPk($key);
+                                                echo "['".$course->course_title."', ".$value["pass"].", ".$value["fail"]."],";
+                                                
+                                                // }
                                             } 
                                             ?>
 
@@ -715,71 +706,35 @@ if(isset($model_level) && !empty($model_level)){
                                            role: "annotation" },
                                            2]);
 
-                                          var options = {
-                                            bar: {groupWidth: "95%"},
-                                            legend: { position: "none" },
-                                        };
-                                        var chart = new google.visualization.ColumnChart(document.getElementById("chart_bar"));
-                                        google.visualization.events.addListener(chart, 'ready', function () {
+                          var options = {
+                            seriesType: 'bars',
+                            bar: {groupWidth: "50%"},
+                            legend: { position: "right" },
+                            chartArea:{ right:'15%' },
+                        };
 
-                                            $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
+var chart = new google.visualization.ComboChart(document.getElementById('chart_bar'));
 
-                                                var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
-                                                $("#result_search_graph").append("<img src='"+url_chart+"' >");
-                                                var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
-                                                $("#chart_graph").append("<img src='"+url_chart_2+"' >");
-                                            });
-                                            num_chart = num_chart+1;
-                                        });
-                                        chart.draw(view, options);
+google.visualization.events.addListener(chart, 'ready', function () {
+    $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
+
+        var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
+        $("#result_search_graph").append("<img src='"+url_chart+"' >");
+        var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
+        $("#chart_graph").append("<img src='"+url_chart_2+"' >");
+    });
+    num_chart = num_chart+1;
+});
+
+chart.draw(data, options);
                                     }
                                 </script>
                             </div>
                         </div>
+                            <div class="col-sm-1"></div>
+
                        <?php } // in_array("bar",
 
-                        if(isset($_GET["search"]["graph"]) && in_array("pie", $_GET["search"]["graph"])){ ?>
-                            <div class="col-sm-6">
-                                <div class="year-report">
-                                    <h4>ปี <?= $key_y ?></h4>
-                                    <div style="width:100%">
-                                        <div id="chart_pie"></div>
-                                    </div>
-                                    <script type="text/javascript">
-                                      google.charts.load('current', {'packages':['corechart']});
-                                      google.charts.setOnLoadCallback(drawChart);
-
-                                      function drawChart() {
-
-                                        var data = google.visualization.arrayToDataTable([
-                                          ['หลักสูตร', 'ผู้สมัคร'],
-                                          <?php 
-                                          foreach ($value_y as $key => $value) {
-                                            echo "['".$arr_course_title[$key]."', ".$value."],";
-                                        } 
-                                        ?>
-                                        ]);
-
-                                        var options = { };
-
-                                        var chart = new google.visualization.PieChart(document.getElementById('chart_pie'));
-                                        google.visualization.events.addListener(chart, 'ready', function () {
-
-                                            $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
-
-                                                var url_chart = "<?= $path_file ?>\\uploads\\pic_chart\\"+json;
-                                                $("#result_search_graph").append("<img src='"+url_chart+"' >");
-                                                var url_chart_2 = "<?= $path_file_2 ?>\\..\\uploads\\pic_chart\\"+json;
-                                                $("#chart_graph").append("<img src='"+url_chart_2+"' >");
-                                            });
-                                            num_chart = num_chart+1;
-                                        });
-                                        chart.draw(data, options);
-                                    }
-                                </script>
-                            </div>
-                        </div>
-                     <?php   } // in_array("pie",
                     } //foreach ($arr_count_course
                      ?>
                 </div>
@@ -812,12 +767,12 @@ if(isset($model_level) && !empty($model_level)){
     $(document).ready( function () {
 
         $('.btn-pdf').click(function(e) {
-            $("#text_element1").attr("value", encodeURIComponent("<h2>Report of learners staff office course</h2>"+$('#chart_graph').html()+'<br>'+$('#result_search').html()) );
+            $("#text_element1").attr("value", encodeURIComponent("<h2>Course Staff Office Report</h2>"+$('#chart_graph').html()+'<br>'+$('#result_search').html()) );
             $("#export_pdf").submit();
         });
       
         $('.btn-excel').click(function(e) {
-            window.open('data:application/vnd.ms-excel,' + encodeURIComponent("<h2>Report of learners staff office course</h2>"+$('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html() ));
+            window.open('data:application/vnd.ms-excel,' + encodeURIComponent("<h2>Course Staff Office Report</h2>"+$('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html() ));
             e.preventDefault();
         });
 

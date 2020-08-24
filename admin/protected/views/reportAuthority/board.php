@@ -59,9 +59,39 @@ $this->breadcrumbs=array($titleName);
            ?>
          </tbody>
       </table>
-      <hr><hr><br><br>
+      <hr><br><br>
 
-
+      <form action="<?= $this->createUrl('ReportAuthority/Board') ?>" method="GET">
+        <h3 style="padding-left: 5px;">ค้นหา</h3>
+        <div class="row">
+         <p style="padding-left: 15px;">แผนก/ตำแหน่ง :</p>
+          <div class="col-md-5"> 
+            <select class="form-control" name="search[position]">
+              <option value="">ทั้งหมด</option>
+              <?php 
+              $position = Position::model()->findAll(array(
+                'condition'=>'active="y"',
+                'order'=>'position_title ASC',
+              ));
+              if(!empty($position)){
+                foreach ($position as $key => $value) {
+                  ?>
+                  <option <?php if(isset($_GET["search"]["position"]) && $_GET["search"]["position"] == $value->id){ echo "selected"; } ?> value="<?= $value->id ?>"><?= $value->position_title ?></option>
+                  <?php
+                }
+              }
+              ?>          
+            </select>
+          </div>
+        </div>
+        <div class="row">
+         <p style="padding-left: 15px;">ชื่อ - นามสกุล :</p>
+          <div class="col-md-5"> 
+            <input type="text" class="form-control" name="search[fullname]" value="<?php if(isset($_GET["search"]["fullname"]) && $_GET["search"]["fullname"] != ""){ echo $_GET["search"]["fullname"]; } ?>">
+          </div>
+        </div>
+        <button style="margin-left: 5px;" type="submit" class="btn btn-defualt">ค้นหา</button>
+      </form>
      
 
       <h3>รายชื่อพนักงาน</h3>
@@ -75,6 +105,10 @@ $this->breadcrumbs=array($titleName);
             <th>ฝ่าย</th>
             <th>แผนก</th>
             <th>เลเวล</th>
+           <!--  <th>typeuser</th>
+            <th>type_employee</th>
+            <th>status</th>
+            <th>register_status</th> -->
           </tr>
         </thead>
         <tbody>
@@ -97,6 +131,10 @@ $this->breadcrumbs=array($titleName);
                 <td><?= $value->department->dep_title ?></td>
                 <td><?= $value->position->position_title ?></td>
                 <td><?= $value->branch->branch_name ?></td>
+                <!-- <td><?= $value->profile->type_user ?></td>
+                <td><?= $value->profile->type_employee ?></td>
+                <td><?= $value->status ?></td>
+                <td><?= $value->register_status ?></td> -->
               </tr>
               <?php
             }

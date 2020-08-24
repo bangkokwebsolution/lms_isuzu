@@ -494,7 +494,7 @@ if ($profile->type_user == 1) {
     $users->username = $_POST['idcard'];
     $users->status = 0;
     $users->register_status = 0;
-}else{
+}else if($profile->type_user == 3){
     $profile->type_employee = 2;
     $users->register_status = 1;
     $users->status = 1;
@@ -2167,6 +2167,26 @@ public function actionCheckIdcard(){
                $criteria->condition='user.identification=:identification';
                $criteria->params=array(':identification'=>$str);
                $model = Users::model()->findAll($criteria);
+               foreach ($model as $key_u => $value_u) {
+                $profile_chk = Profile::model()->findByPk($value_u->id);
+                if($profile_chk == ""){
+                    $addlog = new LogUsers;
+                    $addlog->controller = "Registration";
+                    $addlog->action = "CheckIdcardDelUser";
+                    $addlog->parameter = $str;
+                    $addlog->user_id = $value_u->id;
+                    $addlog->create_date = date("Y-m-d H:i:s");
+                    $addlog->save(false);
+                    
+                    $Users_del = Users::model()->findByPk($value_u->id);
+                    $Users_del->delete();
+                }
+               }
+               $criteria= new CDbCriteria;
+               $criteria->condition='user.identification=:identification';
+               $criteria->params=array(':identification'=>$str);
+               $model = Users::model()->findAll($criteria);
+
                if ($model) {
                  $data = 'yes';
                  echo ($data);

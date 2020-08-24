@@ -160,10 +160,19 @@ class NewsController extends Controller
         }
 		$id = $_GET['id'];
 		//News
+
+
+		if(Yii::app()->session['lang'] != 1){
+			$news_data = News::model()->findByAttributes(array(
+			'active'=>'y',
+			'parent_id'=>$id,
+		));
+		}else{
 		$news_data = News::model()->findByAttributes(array(
 			'active'=>'y',
 			'cms_id'=>$id,
 		));
+	}
 		$this->pageTitle = $news_data->cms_title;
 		$this->render('news-detail',array(
 			'news_data'=>$news_data

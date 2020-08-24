@@ -41,15 +41,16 @@
 		<ul class="nav nav-tabs mt-1">
 			<li <?php if(!isset($_GET["target"])){ echo 'class="active"'; } ?>><a data-toggle="tab" href="#first-report"><?php echo Yii::app()->session['lang'] == 1?'Register Report ':'รายงานการสมัครสมาชิก'; ?></a></li>
 			<li <?php if(isset($_GET["target"]) && $_GET["target"] == "course"){ echo 'class="active"'; } ?>>
-				<a data-toggle="tab" href="#second-report"><?php echo Yii::app()->session['lang'] == 1?'Training Report ':'รายงานการอบรม!'; ?></a>
+				<a data-toggle="tab" href="#second-report"><?php echo Yii::app()->session['lang'] == 1?'Training Report ':'รายงานการอบรม'; ?></a>
 			</li>
-			<li><a data-toggle="tab" href="#third-report"><?php echo Yii::app()->session['lang'] == 1?'Training assessment Report ':'รายงานแบบประเมินการอบรม'; ?></a></li>
+			<li><a data-toggle="tab" href="#third-report"><?php echo Yii::app()->session['lang'] == 1?'Training Assessment Report ':'รายงานแบบประเมินการอบรม'; ?></a></li>
 		</ul>
 
 		<div class="tab-content">
 
 			<div id="first-report" class="tab-pane fade <?php if(!isset($_GET["target"])){ echo 'in active'; } ?>">
 				<div class="row d-flex justify-content-center">
+					<?php if($authority == 1 || $authority == 2 || $authority == 3){ ?>
 					<div class="col-sm-4 col-md-3">
 						<a href="<?= $this->createUrl("report/report_register") ?>">
 							<div class="card-report">
@@ -62,6 +63,7 @@
 							</div>
 						</a>
 					</div>
+					<?php if($authority == 1 || $type_em == 1){ ?>
 					<div class="col-sm-4 col-md-3 ">
 						<a href="<?= $this->createUrl("report/registership") ?>">  
 							<div class="card-report">
@@ -75,6 +77,11 @@
 							</div>
 						</a>
 					</div>
+					<?php
+					}
+
+					if($authority == 1 || $type_em == 2){
+					?>
 					<div class="col-sm-4 col-md-3">
 						<a href="<?= $this->createUrl("report/registeroffice") ?>">
 							<div class="card-report">
@@ -89,6 +96,10 @@
 						</a>
 					</div>
 				</div>
+				<?php
+					}
+				}
+				?>
 			</div>
 			<div id="second-report" class="tab-pane fade <?php if(isset($_GET["target"]) && $_GET["target"] == "course"){ echo 'in active'; } ?>">
 				<div class="row d-flex justify-content-center">
@@ -153,8 +164,9 @@
 							</div>
 						</a>
 					</div>
+					<?php if($authority == 1 || $type_em == 1){ ?>
 					<div class="col-sm-4 col-md-3 ">
-						<a href="#">
+						<a href="<?php echo $this->createUrl('/report/examShip'); ?>">
 							<div class="card-report">
 								<div class="img-report">
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-8.png" class="img-fluid ">
@@ -165,8 +177,10 @@
 							</div>
 						</a>
 					</div>
+					<?php } ?>
+					<?php if($authority == 1 || $type_em == 2){ ?>
 					<div class="col-sm-4 col-md-3">
-						<a href="#">
+						<a href="<?php echo $this->createUrl('/report/examOffice'); ?>">
 							<div class="card-report">
 								<div class="img-report">
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-9.png" class="img-fluid ">
@@ -177,6 +191,7 @@
 							</div>
 						</a>
 					</div>
+				<?php } ?>
 				</div>
 			</div>
 

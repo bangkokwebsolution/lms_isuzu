@@ -14,12 +14,18 @@ header("Pragma:no-cache");
 $datetime_start = $data['datetime_start'];
 $datetime_end = $data['datetime_end'];
 $status = $data['status'];
-$Year_start = $data['Year_start'] != ""?$data['Year_start']:date('Y')-1;
-$Year_end = $data['Year_end']!= ""?$data['Year_end']:date('Y');
+$Year_start = $data['Year_start'];
+$Year_end = $data['Year_end'];
 $start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
 $end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
 $Chart = $data['Chart'];
   // exit();
+$user_login = User::model()->findByPk(Yii::app()->user->id);
+$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
+$type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
+$user_Level = $user_login->branch_id;
+$user_Position = $user_login->position_id;
+$user_Department = $user_login->department_id;
 ?>
 
 <!DOCTYPE html>
@@ -30,36 +36,58 @@ $Chart = $data['Chart'];
 <body>
 	<div class="row">
 		<div class="col-sm-12">
+			<?php
+			if ($Chart != "") {
+			?>
 			<?php if ($Chart === "accommodation=Bar_Graph") { ?>
-			<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint.png"; ?>" width="500" height="auto">
-		  	<?php }else if($Chart === "accommodation=Pie_Charts"){ ?>
-			<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint1.png"; ?>" width="500" height="auto"> 
-			<?php } ?>
+				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint.png"; ?>" width="500" height="auto">
+			<?php }else if($Chart === "accommodation=Pie_Charts"){ ?>
+				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint1.png"; ?>" width="500" height="auto"> 
+			<?php } 
+			$f = 20;
+			for ($p=0; $p <= $f ; $p++) { 
+			echo "<br>";
+		}
+			?>
 		</div><br>
 	</div>
 	<?php
-	if ($Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") {
-	$f = 20;
-	for ($p=0; $p <= $f ; $p++) { 
-		echo "<br>";
+	if ($Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") { ?>
+		<div class="row">
+			<div class="col-sm-12">
+				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint.png"; ?>" width="500" height="auto">
+				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint1.png"; ?>" width="500" height="auto">
+			</div><br>
+		</div>
+		<?php	$f = 20;
+		for ($p=0; $p <= $f ; $p++) { 
+			echo "<br>";
+		}
+
 	}
-	?>
-	<div class="row">
-		<div class="col-sm-12">
-		<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint3.png"; ?>">
-		<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint4.png"; ?>">
-		</div><br>
-	</div>
-	<?php
+	if ($Year_start != null && $Year_end != null) {
+		if ($Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") { ?>
+			<div class="row">
+				<div class="col-sm-12">
+					<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint3.png"; ?>" width="500" height="auto">
+					<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint4.png"; ?>" width="500" height="auto">
+				</div><br>
+			</div>
+			<?php
+		}
+		$l = 20;
+		for ($i=0; $i <= $l ; $i++) { 
+			echo "<br>";
+		}
 	}
-	$l = 20;
-	for ($i=0; $i <= $l ; $i++) { 
-		echo "<br>";
 	}
 	$criteria = new CDbCriteria;
 	$criteria->compare('type_employee_id',$data['TypeEmployee']);
 	if($data['Department']){
 		$criteria->compare('id',$data['Department']);
+	}
+	if ($authority == 2 || $authority == 3) {
+		$criteria->compare('id',$user_Department);
 	}
 	$criteria->compare('active','y');
 	$dep = Department::model()->findAll($criteria);
@@ -74,6 +102,9 @@ $Chart = $data['Chart'];
 	$criteria->compare('active','y');
 	if($data['Position']){
 		$criteria->compare('id',$data['Position']);
+	}
+	if ($authority == 3) {
+		$criteria->compare('id',$user_Position);
 	}
 	$pos = Position::model()->findAll($criteria);
 
@@ -91,6 +122,9 @@ $Chart = $data['Chart'];
 	if($data['Leval']){
 		$criteria->compare('id',$data['Leval']);
 	}
+	if ($authority == 3) {
+		$criteria->compare('id',$user_Level);
+	}
 	$branch = Branch::model()->findAll($criteria);
 
 
@@ -106,6 +140,9 @@ $Chart = $data['Chart'];
 	if($data['Position']){
 		$criteria->compare('id',$data['Position']);
 	}
+	if ($authority == 3) {
+		$criteria->compare('id',$user_Position);
+	}
 	$criteria->addNotInCondition('id',$result_branch_arr);
 	$criteria->compare('active','y');
 	$pos_back = Position::model()->findAll($criteria);
@@ -115,12 +152,15 @@ $Chart = $data['Chart'];
 	if($data['Department']){
 		$criteria->compare('id',$data['Department']);
 	}
+	if ($authority == 2 || $authority == 3) {
+		$criteria->compare('id',$user_Department);
+	}
 	$criteria->addNotInCondition('id',$result_pos_arr);
 	$criteria->compare('active','y');
 	$dep_back = Department::model()->findAll($criteria);
 
 
-	if($_POST['Year_start'] != "" && $_POST['Year_end'] != "" || $data['Department'] != "" || $data['Position'] != ""){
+	if($_POST['Year_start'] == "" && $_POST['Year_end'] == "" ){
 		if (!empty($branch) || !empty($pos_back) || !empty($dep_back) ) {
 			?>	
 			<style type="text/css">
@@ -193,11 +233,20 @@ $Chart = $data['Chart'];
 									if($data['Department']){
 										$criteria->compare('department_id',$data['Department']);
 									}
+									if ($authority == 2 || $authority == 3) {
+										$criteria->compare('department_id',$user_Department);
+									}
 									if($data['Position']){
 										$criteria->compare('position_id',$data['Position']);
 									}
+									if ($authority == 3) {
+										$criteria->compare('position_id',$user_Position);
+									}
 									if($data['Leval']){
 										$criteria->compare('branch_id',$data['Leval']);
+									}
+									if ($authority == 3) {
+										$criteria->compare('branch_id',$user_Level);
 									}
 									$criteria->compare('superuser',0);
 									$usersAll = Users::model()->findAll($criteria);
@@ -256,11 +305,20 @@ $Chart = $data['Chart'];
 									if($data['Department']){
 										$criteria->compare('department_id',$data['Department']);
 									}
+									if ($authority == 2 || $authority == 3) {
+										$criteria->compare('department_id',$user_Department);
+									}
 									if($data['Position']){
 										$criteria->compare('position_id',$data['Position']);
 									}
+									if ($authority == 3) {
+										$criteria->compare('position_id',$user_Position);
+									}
 									if($data['Leval']){
 										$criteria->compare('branch_id',$data['Leval']);
+									}
+									if ($authority == 3) {
+										$criteria->compare('branch_id',$user_Level);
 									}
 									$criteria->compare('superuser',0);
 									$usersAll = Users::model()->findAll($criteria);
@@ -320,11 +378,20 @@ $Chart = $data['Chart'];
 									if($data['Department']){
 										$criteria->compare('department_id',$data['Department']);
 									}
+									if ($authority == 2 || $authority == 3) {
+										$criteria->compare('department_id',$user_Department);
+									}
 									if($data['Position']){
 										$criteria->compare('position_id',$data['Position']);
 									}
+									if ($authority == 3) {
+										$criteria->compare('position_id',$user_Position);
+									}
 									if($data['Leval']){
 										$criteria->compare('branch_id',$data['Leval']);
+									}
+									if ($authority == 3) {
+										$criteria->compare('branch_id',$user_Level);
 									}
 									$criteria->compare('superuser',0);
 									$usersAll = Users::model()->findAll($criteria);

@@ -405,6 +405,7 @@ public function validateIdCard($attribute,$params){
  		$criteria->compare('register_status',$this->register_status);
  		$criteria->compare('profile.type_user',$this->typeuser);
  		$criteria->compare('profile.type_employee',$this->type_employee);
+ 		$criteria->order = 'user.id DESC';
  		// $criteria->compare('passport',$this->passport);
 
  		// $criteria->compare('profile.identification',$this->idensearch,true);
@@ -442,8 +443,8 @@ public function validateIdCard($attribute,$params){
 	$criteria->compare('not_passed',$this->not_passed);
 	$criteria->compare('status',$this->status);
 	$criteria->compare('del_status',0); 
-	$criteria->compare('register_status',array(1,3));
-	$criteria->compare('profile.type_user',array(1,2));
+	$criteria->compare('register_status',0);
+	$criteria->compare('profile.type_user',array(1));
 	$criteria->order = 'user.id DESC';
 	//$criteria->compare('profile.type_user',array(1));
 
@@ -636,7 +637,7 @@ public function searchmembership_personal()
 	$criteria->compare('status',$this->status);
 	$criteria->compare('del_status',1); 
 	$criteria->compare('register_status',$this->register_status);
-	$criteria->compare('profile.type_user',array(3));
+	$criteria->compare('profile.type_user',array(1,3));
 	$criteria->order = 'lastvisit_at ASC';
 	// if(empty($this->create_at)) {
 	// 	$criteria->compare('create_at',$this->create_at,true);

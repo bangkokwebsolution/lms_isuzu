@@ -16,14 +16,17 @@
             <li class="breadcrumb-item active" aria-current="page">
                 <?php
                 if (Yii::app()->session['lang'] == 1) {
-                    echo "Report...";
+                    echo "Register staff ship Report";
                 } else {
-                    echo "รายงานภาพการสมัครสมาชิกคนประจำเรือ";
+                    echo "รายงานภาพการสมัครสมาชิก คนประจำเรือ";
                 }
                 ?>
             </li>
         </ol>
     </nav>
+    <a class="btn btn-reportsearch" href="<?php echo $this->createUrl('/report'); ?>" style="margin-bottom: 0px; margin-left: 0px; background-color: #087fe4;">
+        <i class="fas fa-angle-left"></i><?php echo Yii::app()->session['lang'] == 1?'Back':' ย้อนกลับ'; ?>
+    </a>
 </div>
 
 <section id="report-detail">
@@ -38,7 +41,10 @@
                 <div id="report-search" class="panel-collapse collapse in">
                     <div class="panel-body">
                         <div class="row">
-                                 <div class="col-sm-3 col-md-3 col-xs-12">
+                            <?php
+                            if($authority == 1){
+                            ?>
+                            <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'Department':'ฝ่าย'; ?></label>
                                     <select class="form-control Department" name="" id="Department">
@@ -47,6 +53,14 @@
 
                                             $criteria= new CDbCriteria;
                                             $criteria->compare('type_employee_id','1');
+                                            if ($authority == 2 || $authority == 3) {
+                                                if ($Department != "") {
+                                                    $criteria->compare('id',$Department);
+                                                }else{
+                                                    $criteria->compare('id',0);
+                                                }
+                                                 
+                                            }
                                             $criteria->order = 'sortOrder ASC';
                                             $departmentModel = Department::model()->findAll($criteria);
                                             foreach ($departmentModel as $key => $val) {
@@ -59,6 +73,8 @@
                                     </select>
                                 </div>
                             </div>
+                        <?php } ?>
+                         <?php if($authority == 1 || $authority == 2 || $authority == 2 && $type_em == 1 ){   ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'Position':'แผนก'; ?></label>
@@ -67,7 +83,13 @@
                                     <?php
 
                                         $criteria= new CDbCriteria;
-                                       // $criteria->compare('type_employee_id','2');
+                                        if ($authority == 2 || $authority == 3 ) {
+                                            if ($Position != "") {
+                                                $criteria->compare('id',$Position);
+                                            }else{
+                                                $criteria->compare('id',0);
+                                            }
+                                        }
                                         $criteria->compare('active','y');
                                         $criteria->order = 'sortOrder ASC';
                                         $PositionModel = Position::model()->findAll($criteria);
@@ -82,11 +104,12 @@
                                     </select>
                                 </div>
                             </div>
+                        <?php } ?>
                             <div class="col-md-3 col-sm-3 col-xs-12">
                                 <div class="form-group">
                                     <div><label><?= Yii::app()->session['lang'] == 1?'Chart pattern':'รูปแบบกราฟ'; ?></label></div>
                                     <div class="checkbox checkbox-main checkbox-inline">
-                                        <input type="checkbox" name="accommodation" id="1" value="Bar_Graph" checked>
+                                        <input type="checkbox" name="accommodation" id="1" value="Bar_Graph" > <!-- checked -->
                                         <label for="1" class="text-black"><?= Yii::app()->session['lang'] == 1?'Bar Graph':'กราฟแท่ง'; ?></label>
                                     </div>
                                     <div class="checkbox checkbox-main checkbox-inline">
@@ -173,7 +196,7 @@
                         </div>
 
                         <div class="text-center">
-                            <button class="btn btn-reportsearch search"><i class="fas fa-search"></i> <?= Yii::app()->session['lang'] == 1?'Search':'ค้นหา'; ?> </button>
+                            <button class="btn btn-reportsearch search" onclick="chk_form_search();"><i class="fas fa-search"></i> <?= Yii::app()->session['lang'] == 1?'Search':'ค้นหา'; ?> </button>
                         </div>
 
                     </div>
@@ -184,7 +207,19 @@
         <div class="divider">
             <i class="fas fa-chevron-down"></i>
         </div>
-
+<li class="breadcrumb-item active" aria-current="page">
+            <center>
+                <h3>
+                    <?php
+                    if (Yii::app()->session['lang'] == 1) {
+                        echo " Register staff ship Report";
+                    } else {
+                        echo " รายงานภาพการสมัครสมาชิก คนประจำเรือ";
+                    }
+                    ?>
+                </h3>    
+            </center>
+        </li>
          <div class="row">
                 <div class="col-sm-6 col-md-6 Graph_1">
                         <div class="chart"></div>
@@ -256,6 +291,50 @@ $(document).ready(function(){
     $('#datetime_end').attr('disabled',true);
     });
 });
+
+function chk_form_search(){
+        var status_pass = 1;
+
+        var start_year = $("#Year_start").val();
+        var end_year = $("#Year_end").val();
+        if(end_year != "" && start_year == ""){
+            status_pass =2;
+            alert("กรุณาเลือกช่วงปีเริ่มต้น");
+        //     $("#search_start_year").addClass('form-control-danger');
+        // }else{
+        //     $("#search_start_year").removeClass('form-control-danger');
+         }
+        if(end_year == "" && start_year != ""){
+            status_pass =2;
+            alert("กรุณาเลือกช่วงปีสิ้นสุด");
+        //     $("#search_end_year").addClass('form-control-danger');
+        // }else{
+        //     $("#search_end_year").removeClass('form-control-danger');
+         }
+
+
+        var start_date = $("#datetime_start").val();
+        var end_date = $("#datetime_end").val();
+        if(end_date != "" && start_date == ""){
+            status_pass =2;
+            alert("กรุณาเลือกช่วงเวลาเริ่มต้น");
+        //     $("#search_start_date").addClass('form-control-danger');
+        // }else{
+        //     $("#search_start_date").removeClass('form-control-danger');
+         }
+        if(end_date == "" && start_date != ""){
+            status_pass =2;
+            alert("กรุณาเลือกช่วงเวลาสิ้นสุด");
+        //     $("#search_end_date").addClass('form-control-danger');
+        // }else{
+        //     $("#search_end_date").removeClass('form-control-danger');
+        }
+
+        if(status_pass == 1){
+            $(".search").submit();
+        }
+    }
+
     $(".Department").change(function() {
                     var id = $(this).val();
                     $.ajax({
@@ -361,7 +440,7 @@ $(document).ready(function(){
    
                         },
                         success: function(data) {
-                       console.log(Year_start);
+                        if (Chart != "") {
                         if (typeof Year_start === 'undefined' || typeof Year_end === 'undefined' || Year_start === null || Year_end === null) {
           
                             if (Chart === "accommodation=Bar_Graph") {
@@ -406,6 +485,7 @@ $(document).ready(function(){
                       
                             }
                             }
+                        }
                            $(".dataTable").html(data);
                         }
         });
