@@ -236,7 +236,7 @@ figure figcaption {
     width: 100%;
     padding-left: 9px;
     padding-bottom: 5px;
-    text-shadow: 0 0 10px #000;
+    margin-top: 10px;
 }
 
 .btn-uploadimg {
@@ -4798,8 +4798,10 @@ var new_forms = <?php echo $new_form; ?>;
             </div>
             <div class="modal-body">
                 <div id="upload-profileimg" class="center-block"></div>
-                <button class="vanilla-rotate" data-deg="-90">Rotate Left</button>
-                <button class="vanilla-rotate" data-deg="90">Rotate Right</button>
+                <!-- <div class="text-center center-block mt-2">
+                    <button class="rotate_left btn" data-deg="-90"><i class="fas fa-undo"></i> Rotate Left</button>
+                    <button class="rotate_right btn" data-deg="90"><i class="fas fa-redo-alt"></i> Rotate Right</button>
+                </div > -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
@@ -4814,6 +4816,7 @@ var $uploadCrop,
 tempFilename,
 rawImg,
 imageId;
+
 
 function readFile(input) {
     if (input.files && input.files[0]) {
@@ -4834,9 +4837,15 @@ $uploadCrop = $('#upload-profileimg').croppie({
         width: 200,
         height: 200,
     },
-    enforceBoundary: false,
+    showZoomer: true,
+    enableOrientation: true,
+    enforceBoundary: true,
     enableExif: true
 });
+
+// $('.rotate_left, .rotate_right').on('click', function (ev) {
+//     imageCrop.croppie('rotate', parseInt($(this).data('deg')));
+//     });
 $('#cropImagePop').on('shown.bs.modal', function() {
     $uploadCrop.croppie('bind', {
         url: rawImg
