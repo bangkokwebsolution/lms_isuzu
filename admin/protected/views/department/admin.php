@@ -94,7 +94,7 @@ EOD
 						// ),
 						array(
 							'name'=>'type_employee_id',
-							'value'=>'$data->emp->type_employee_name',
+							'value'=>'$data->emp->title',
 							'filter'=>false,
 			                'htmlOptions' => array(
 			                   'style' => 'width:150px',
