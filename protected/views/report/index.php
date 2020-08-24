@@ -112,7 +112,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-4.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Training Overview Report ':'รายงานภาพรวมการฝึกอบรบ'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Training Overview Report ':'รายงานภาพรวมการฝึกอบรม'; ?>
 								</div>
 							</div>
 						</a>
@@ -141,7 +141,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-6.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Report of learners staff office course ':'รายงานผู้เรียนตามรายหลักสูตร Office'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Report of learners staff office course ':'รายงานผู้เรียนตามรายหลักสูตรOffice'; ?>
 								</div>
 							</div>
 						</a>
@@ -159,7 +159,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-7.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Course Overview Report ':'รายงานภาพรวมหลักสูตร'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Course Overview Report ':'รายงานภาพรวมผลการสอบตามรายหลักสูตร'; ?>
 								</div>
 							</div>
 						</a>
@@ -172,7 +172,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-8.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Course Staff Ship Report ':'รายงานหลักสูตรของคนประจำเรือ'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Course Staff Ship Report ':'รายงานผลการสอบตามรายหลักสูตรคนประจำเรือ'; ?>
 								</div>
 							</div>
 						</a>
@@ -186,7 +186,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-9.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Course Staff Office Report ':'รายงานหลักสูตรของพนักงาน Office'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Course Staff Office Report ':'รายงานผลการสอบตามรายหลักสูตรOffice'; ?>
 								</div>
 							</div>
 						</a>
