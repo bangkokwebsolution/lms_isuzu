@@ -296,38 +296,70 @@ EOD
                                             foreach ($questionValue->choices as $choiceKey => $choiceValue) {
                                                 $label = $choiceValue->option_choice_name;
                                                 
-                                                $sql = "SELECT 
-                            	SUM(CASE WHEN (answer_numeric=5) THEN 1 ELSE 0 END) AS five,
-								SUM(CASE WHEN (answer_numeric=4) THEN 1 ELSE 0 END) AS four,
-								SUM(CASE WHEN (answer_numeric=3) THEN 1 ELSE 0 END) AS three,
-								SUM(CASE WHEN (answer_numeric=2) THEN 1 ELSE 0 END) AS two,
-								SUM(CASE WHEN (answer_numeric=1) THEN 1 ELSE 0 END) AS one,
-                            	SUM(CASE WHEN (answer_numeric=5) THEN 1 ELSE 0 END)*5 AS fivem,
-								SUM(CASE WHEN (answer_numeric=4) THEN 1 ELSE 0 END)*4 AS fourm,
-								SUM(CASE WHEN (answer_numeric=3) THEN 1 ELSE 0 END)*3 AS threem,
-								SUM(CASE WHEN (answer_numeric=2) THEN 1 ELSE 0 END)*2 AS twom,
-								SUM(CASE WHEN (answer_numeric=1) THEN 1 ELSE 0 END)*1 AS onem 
-								FROM q_answers_course INNER JOIN q_quest_ans_course ON q_answers_course.quest_ans_id = q_quest_ans_course.id ";
-                                                // $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id . "' AND q_quest_ans_course.teacher_id='" . $teacher_id . "' ";
-                                $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id."' AND q_quest_ans_course.gen_id='".$gen->gen_id."'";
-                                
-                                                if(!empty($teacher_id)){
-                                                    $sql .= " AND q_quest_ans_course.teacher_id='" . $teacher_id . "' ";
-                                                }
+                                            if($questionValue->question_range == "" || $questionValue->question_range == "5"){
+                                    $sql = "SELECT 
+                                    SUM(CASE WHEN (answer_numeric=5) THEN 1 ELSE 0 END) AS five,
+                                    SUM(CASE WHEN (answer_numeric=4) THEN 1 ELSE 0 END) AS four,
+                                    SUM(CASE WHEN (answer_numeric=3) THEN 1 ELSE 0 END) AS three,
+                                    SUM(CASE WHEN (answer_numeric=2) THEN 1 ELSE 0 END) AS two,
+                                    SUM(CASE WHEN (answer_numeric=1) THEN 0 ELSE 0 END) AS one,
+                                    SUM(CASE WHEN (answer_numeric=5) THEN 1 ELSE 0 END)*5 AS fivem,
+                                    SUM(CASE WHEN (answer_numeric=4) THEN 1 ELSE 0 END)*4 AS fourm,
+                                    SUM(CASE WHEN (answer_numeric=3) THEN 1 ELSE 0 END)*3 AS threem,
+                                    SUM(CASE WHEN (answer_numeric=2) THEN 1 ELSE 0 END)*2 AS twom,
+                                    SUM(CASE WHEN (answer_numeric=1) THEN 1 ELSE 0 END)*1 AS onem
+                                    FROM q_answers_course INNER JOIN q_quest_ans_course ON q_answers_course.quest_ans_id = q_quest_ans_course.id ";
+                                    $sql .= " WHERE header_id='".$header_id."' AND choice_id ='".$choiceValue->option_choice_id."' ";
 
-                                                if($schedule){
-                                                    $sql .= ' AND (q_quest_ans_course.date >= "'.$schedule->training_date_start.'" AND q_quest_ans_course.date <= "'.$schedule->training_date_end.'")';
-                                                }
-                                                $sql .= 'AND q_answers_course.user_id IS NOT NULL';
+                                    $count = Yii::app()->db->createCommand($sql)->queryRow();
+                                    $totalCount = $count['five']+$count['four']+$count['three']+$count['two']+$count['one'];
+                                    $totalCountM = $count['fivem']+$count['fourm']+$count['threem']+$count['twom']+$count['onem'];
+                                    $average = $totalCountM/(($totalCount!=0)?$totalCount:1);
+                                    $percent = ($average*100/5)-5;
+//                                    var_dump($percent);
+
+                                }else{
+                                    $sql = "SELECT 
+                                    SUM(CASE WHEN (answer_numeric=10) THEN 1 ELSE 0 END) AS ten,
+                                    SUM(CASE WHEN (answer_numeric=9) THEN 1 ELSE 0 END) AS nine,
+                                    SUM(CASE WHEN (answer_numeric=8) THEN 1 ELSE 0 END) AS eight,
+                                    SUM(CASE WHEN (answer_numeric=7) THEN 1 ELSE 0 END) AS seven,
+                                    SUM(CASE WHEN (answer_numeric=6) THEN 1 ELSE 0 END) AS six,
+                                    SUM(CASE WHEN (answer_numeric=5) THEN 1 ELSE 0 END) AS five,
+                                    SUM(CASE WHEN (answer_numeric=4) THEN 1 ELSE 0 END) AS four,
+                                    SUM(CASE WHEN (answer_numeric=3) THEN 1 ELSE 0 END) AS three,
+                                    SUM(CASE WHEN (answer_numeric=2) THEN 1 ELSE 0 END) AS two,
+                                    SUM(CASE WHEN (answer_numeric=1) THEN 1 ELSE 0 END) AS one,
+                                    SUM(CASE WHEN (answer_numeric=10) THEN 1 ELSE 0 END)*10 AS tenm,
+                                    SUM(CASE WHEN (answer_numeric=9) THEN 1 ELSE 0 END)*9 AS ninem,
+                                    SUM(CASE WHEN (answer_numeric=8) THEN 1 ELSE 0 END)*8 AS eightm,
+                                    SUM(CASE WHEN (answer_numeric=7) THEN 1 ELSE 0 END)*7 AS sevenm,
+                                    SUM(CASE WHEN (answer_numeric=6) THEN 1 ELSE 0 END)*6 AS sixm,
+                                    SUM(CASE WHEN (answer_numeric=5) THEN 1 ELSE 0 END)*5 AS fivem,
+                                    SUM(CASE WHEN (answer_numeric=4) THEN 1 ELSE 0 END)*4 AS fourm,
+                                    SUM(CASE WHEN (answer_numeric=3) THEN 1 ELSE 0 END)*3 AS threem,
+                                    SUM(CASE WHEN (answer_numeric=2) THEN 1 ELSE 0 END)*2 AS twom,
+                                    SUM(CASE WHEN (answer_numeric=1) THEN 1 ELSE 0 END)*1 AS onem 
+                                    FROM q_answers_course INNER JOIN q_quest_ans_course ON q_answers_course.quest_ans_id = q_quest_ans_course.id ";
+                                    $sql .= " WHERE header_id='".$header_id."' AND choice_id ='".$choiceValue->option_choice_id."' ";
+
+                                    // $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id."' AND q_quest_ans_course.gen_id='".$gen->gen_id."'";
+                                    // $sql .= 'AND q_answers_course.user_id IS NOT NULL';
+
+
+                                    $count = Yii::app()->db->createCommand($sql)->queryRow();
+                                    $totalCount = $count['ten']+$count['nine']+$count['eight']+$count['seven']+$count['six']+$count['five']+$count['four']+$count['three']+$count['two']+$count['one'];
+                                    $totalCountM = $count['tenm']+$count['ninem']+$count['eightm']+$count['sevenm']+$count['sixm']+$count['fivem']+$count['fourm']+$count['threem']+$count['twom']+$count['onem'];
+                                    var_dump($totalCount);
+                                    $average = $totalCountM/(($totalCount!=0)?$totalCount:1);
+                                    $percent = $average*100/10;
+                                }
+
+								
                                                 // echo $sql;
                                                 // echo '<br >';
-                                                $count = Yii::app()->db->createCommand($sql)->queryRow();
-                                                $totalCount = $count['five'] + $count['four'] + $count['three'] + $count['two'] + $count['one'];
-                                                $totalCountM = $count['fivem'] + $count['fourm'] + $count['threem'] + $count['twom'] + $count['onem'];
-                                                $average = $totalCountM / (($totalCount != 0) ? $totalCount : 1);
-                                                $percent = $average * 100 / 5;
-                                                // $dataArray[] = array($label, $percent);
                                                 $dataArray[] = array($label, $average);
+
                                                 $total_average += $average;
                                                 $msg_range = checkRange($average,$questionValue->question_range);
                                                 $date_table .= '<tr>

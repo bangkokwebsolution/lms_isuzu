@@ -153,7 +153,9 @@
 
 				<div class="row d-flex justify-content-center">
 					<div class="col-sm-4 col-md-3">
-						<a href="#">
+							<a href="<?php echo $this->createUrl('/report/courseall'); ?>">
+	
+
 							<div class="card-report">
 								<div class="img-report">
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-7.png" class="img-fluid ">
@@ -199,7 +201,7 @@
 
 				<div class="row d-flex justify-content-center">
 					<div class="col-sm-4 col-md-3">
-						<a href="#">
+						<a href="<?php echo $this->createUrl('/report/assessment'); ?>">
 							<div class="card-report">
 								<div class="img-report">
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-10.png" class="img-fluid ">
