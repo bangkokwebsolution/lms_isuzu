@@ -537,6 +537,7 @@ function chk_form_search(){
                     var Department = $(".Department").val();
                     var Position = $(".Position").val();
                     var Leval = $(".Leval").val(); 
+                    var status = $(".status").val(); 
                     //var Chart = $("input[name='accommodation']:checked").val();
                     var Chart = $('input[name="accommodation"]:checked').serialize();                    
                     var datetime_start = $("#datetime_start").val();
@@ -602,6 +603,7 @@ function chk_form_search(){
                             Department: Department,
                             Position: Position,
                             Leval: Leval,
+                            status: status,
                             Chart: Chart,
                             datetime_start: datetime_start,
                             datetime_end: datetime_end,
