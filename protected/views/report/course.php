@@ -532,7 +532,7 @@ chart.draw(data, options);
             <div class="table-responsive w-100 t-regis-language">
                 <table class="table" id="table_list">
                     <thead>
-                        <tr>
+                        <tr style="background-color: #010C65; color: #fff;">
                             <th><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ลำดับ";

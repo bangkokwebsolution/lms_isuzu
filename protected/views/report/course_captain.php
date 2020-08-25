@@ -514,7 +514,7 @@ if(isset($model_position) && !empty($model_position)){
             <div class="table-responsive w-100 t-regis-language">
                 <table class="table" id="table_list">
                     <thead>
-                        <tr>
+                        <tr style="background-color: #010C65; color: #fff;">
                             <th><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ลำดับ";
@@ -580,8 +580,10 @@ if(isset($model_position) && !empty($model_position)){
                                         }
                                         ?>
                                     </td>
-                                    <td><?= $value->mem->department->dep_title ?></td>
-                                    <td><?= $value->mem->position->position_title ?></td>
+                                    <!-- <td><?= $value->mem->department->dep_title ?></td>
+                                    <td><?= $value->mem->position->position_title ?></td> -->
+                                    <td><?php if($value->mem->department->dep_title != ""){ echo $value->mem->department->dep_title; }else{ echo "-"; } ?></td>
+                                    <td><?php if($value->mem->position->position_title != ""){ echo $value->mem->position->position_title; }else{ echo "-"; } ?></td>
                                     <td><?= $value->course->course_title ?></td>
                                     <td>
                                         <?php 

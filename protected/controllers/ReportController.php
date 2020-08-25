@@ -4057,6 +4057,9 @@ if($course_score->score_past == 'y'){
 				border: 1px solid black;
 				text-align:center
 			}
+			th{
+				color: #fff;
+			}
 		</style>
 		';
 		$result .= urldecode($_POST["text_element1"]);
