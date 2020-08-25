@@ -53,9 +53,13 @@ class LoginController extends Controller
 
                 // validate user input and redirect to previous page if valid
           if($model->validate()) {
-            if (User::model()->findbyPk(Yii::app()->user->id)->repass_status=='0'){
-                        $this->redirect(array('registration/Repassword'));
-                    }
+            if(User::model()->findbyPk(Yii::app()->user->id)->superuser == 1){
+              $this->actionLogout();
+
+            }else if (User::model()->findbyPk(Yii::app()->user->id)->repass_status=='0'){
+              $this->redirect(array('registration/Repassword'));
+            }
+            
             Yii::app()->session['popup'] = 1;
             $this->lastViset();
             $this->saveToken();
