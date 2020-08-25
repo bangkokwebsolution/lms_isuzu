@@ -623,7 +623,8 @@ chart.draw(data, options);
                                             <td><?= $course->course_title ?></td>
                                             <td><?= $gen_course->gen_title ?></td>
                                             <td><?= $value_g["register"] ?></td>
-                                            <td><b class="text-success">เรียนผ่าน </b>: <?= $value_g["postpass"]  ?> / <b class="text-danger">เรียนไม่ผ่าน </b>: <?= $value_g["postnopass"]  ?> </td>
+                                            <td><b class="text-success">ผ่าน </b>: <?= $value_g["postpass"]  ?> / <b class="text-danger">ไม่ผ่าน </b>: <?= $value_g["postnopass"]  ?> / 
+                                            <b class="text-muted">ยังไม่ได้เรียน </b>: <?= $value_g["postnolearn"]  ?></td>
                                             <td ><?= $value_g["percentpass"] ?> %</td>
                                             <td ><?= $value_g["meanpretest"] ?></td>
                                             <td ><?= $value_g["meanposttest"] ?>
@@ -639,7 +640,7 @@ chart.draw(data, options);
 
                                 }                                
                             } // foreach search
-                        }else{ // !empty
+                        }else{
                             ?>  
                             <tr>
                                 <td colspan="9">

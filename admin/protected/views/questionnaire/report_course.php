@@ -293,6 +293,7 @@ EOD
                                             $date_table = "";
                                             $total_average = 0;
                                             $countQuest = count($questionValue->choices);
+                                            var_dump($countQuest);
                                             foreach ($questionValue->choices as $choiceKey => $choiceValue) {
                                                 $label = $choiceValue->option_choice_name;
                                                 
@@ -346,11 +347,12 @@ EOD
                                     // $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id."' AND q_quest_ans_course.gen_id='".$gen->gen_id."'";
                                     // $sql .= 'AND q_answers_course.user_id IS NOT NULL';
 
-
                                     $count = Yii::app()->db->createCommand($sql)->queryRow();
                                     $totalCount = $count['ten']+$count['nine']+$count['eight']+$count['seven']+$count['six']+$count['five']+$count['four']+$count['three']+$count['two']+$count['one'];
                                     $totalCountM = $count['tenm']+$count['ninem']+$count['eightm']+$count['sevenm']+$count['sixm']+$count['fivem']+$count['fourm']+$count['threem']+$count['twom']+$count['onem'];
-                                    var_dump($totalCount);
+                                    // var_dump($count);
+
+                                    // var_dump($totalCount);
                                     $average = $totalCountM/(($totalCount!=0)?$totalCount:1);
                                     $percent = $average*100/10;
                                 }
@@ -415,6 +417,7 @@ EOD
 
 
                                         }
+                                        var_dump($total_average);
                                         ?>
                                     </div>
                                     <!-- Table  -->
