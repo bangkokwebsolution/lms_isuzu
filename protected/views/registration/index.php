@@ -1440,8 +1440,8 @@ function editNamehouse_registration(filedoc_id){
                                     <?php
 
                                     $criteria= new CDbCriteria;
-                                    // $criteria->compare('type_employee_id','2'); // office
-                                    $criteria->compare('type_employee_id','5');
+                                    $criteria->compare('type_employee_id','2'); // office
+                                    //$criteria->compare('type_employee_id','5');
                                     $criteria->compare('active','y');
                                     $criteria->order = 'sortOrder ASC';
                                     $departmentModel = Department::model()->findAll($criteria);
@@ -3236,8 +3236,8 @@ $count_tn = 1;
 
                     $criteria= new CDbCriteria;
                     $criteria->compare('active','y');
-                    // $criteria->compare('type_employee_id',1); // เรือ
-                    $criteria->compare('type_employee_id',4);
+                    $criteria->compare('type_employee_id',1); // เรือ
+                    //$criteria->compare('type_employee_id',4);
                     $criteria->order = 'sortOrder ASC';
                     $departmentModel = Department::model()->findAll($criteria);
                     $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
