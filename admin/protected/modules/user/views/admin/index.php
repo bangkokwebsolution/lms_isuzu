@@ -112,6 +112,7 @@ Yii::app()->clientScript->registerScript('search', "
 										),
 										array(
 											'header' => 'รหัสพนักงาน',
+											'name'=>'username',
 											'type'=>'html',
 											'value'=>function($data){
 												return $data->username;
