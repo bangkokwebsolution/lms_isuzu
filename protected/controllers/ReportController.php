@@ -2585,20 +2585,41 @@ $arr_course_gen[$key_c]["gen"][$key_gen]["user"] = $arr_course_gen[$key_c]["gen"
 	}
 } // if(!empty($LogStartcourse))
 
-$arr_course_gen[$key_c]["gen"][$key_gen]["register"] = count($LogStartcourse);
-$arr_course_gen[$key_c]["gen"][$key_gen]["pass"] = $num_pass;
-$arr_course_gen[$key_c]["gen"][$key_gen]["notlearn"] = $num_notlearn;
-$arr_course_gen[$key_c]["gen"][$key_gen]["learn"] = count($LogStartcourse)-($num_pass+$num_notlearn);
+if(count($LogStartcourse) > 0){
+	$arr_course_gen[$key_c]["gen"][$key_gen]["register"] = count($LogStartcourse);
+	$arr_course_gen[$key_c]["gen"][$key_gen]["pass"] = $num_pass;
+	$arr_course_gen[$key_c]["gen"][$key_gen]["notlearn"] = $num_notlearn;
+	$arr_course_gen[$key_c]["gen"][$key_gen]["learn"] = count($LogStartcourse)-($num_pass+$num_notlearn);
 
-$arr_course_gen[$key_c]["gen"][$key_gen]["per_pass"] = ($num_pass*100)/count($LogStartcourse);
-$arr_course_gen[$key_c]["gen"][$key_gen]["per_notpass"] = (($num_notlearn+count($LogStartcourse)-($num_pass+$num_notlearn))*100)/count($LogStartcourse);
+	$arr_course_gen[$key_c]["gen"][$key_gen]["per_pass"] = ($num_pass*100)/count($LogStartcourse);
+	$arr_course_gen[$key_c]["gen"][$key_gen]["per_notpass"] = (($num_notlearn+count($LogStartcourse)-($num_pass+$num_notlearn))*100)/count($LogStartcourse);
 
+
+	
+
+
+	$key_gen++;
+}else{
+		unset($arr_course_gen[$key_c]["gen"][$key_gen]);
+}
 
 $arr_course_graph[$value_c->course_id]["register"] = $arr_course_graph[$value_c->course_id]["register"]+count($LogStartcourse);
-$arr_course_graph[$value_c->course_id]["pass"] = $arr_course_graph[$value_c->course_id]["pass"]+$num_pass;
+	$arr_course_graph[$value_c->course_id]["pass"] = $arr_course_graph[$value_c->course_id]["pass"]+$num_pass;
+
+// $arr_course_gen[$key_c]["gen"][$key_gen]["register"] = count($LogStartcourse);
+// $arr_course_gen[$key_c]["gen"][$key_gen]["pass"] = $num_pass;
+// $arr_course_gen[$key_c]["gen"][$key_gen]["notlearn"] = $num_notlearn;
+// $arr_course_gen[$key_c]["gen"][$key_gen]["learn"] = count($LogStartcourse)-($num_pass+$num_notlearn);
+
+// $arr_course_gen[$key_c]["gen"][$key_gen]["per_pass"] = ($num_pass*100)/count($LogStartcourse);
+// $arr_course_gen[$key_c]["gen"][$key_gen]["per_notpass"] = (($num_notlearn+count($LogStartcourse)-($num_pass+$num_notlearn))*100)/count($LogStartcourse);
 
 
-    								$key_gen++;
+// $arr_course_graph[$value_c->course_id]["register"] = $arr_course_graph[$value_c->course_id]["register"]+count($LogStartcourse);
+// $arr_course_graph[$value_c->course_id]["pass"] = $arr_course_graph[$value_c->course_id]["pass"]+$num_pass;
+
+
+//     								$key_gen++;
     							// } // if($value_cg->active == 'y')
     						} // foreach ($value_c->CourseGeneration
     					}else{ // if(!empty($value_c->CourseGeneration))
@@ -2679,9 +2700,10 @@ $model_level = Branch::model()->findAll(array(
 						}
 
 						}
-
-						$criteria->compare('t.start_date', ">=".$_GET["search"]["start_year"]."-01-01"." 00:00:00");
-						$criteria->compare('t.start_date', "<=".$_GET["search"]["end_year"]."-12-31"." 23:59:59");
+						$criteria->compare('t.start_date', ">=".$year."-01-01"." 00:00:00");
+						$criteria->compare('t.start_date', "<=".$year."-12-31"." 23:59:59");
+						// $criteria->compare('t.start_date', ">=".$_GET["search"]["start_year"]."-01-01"." 00:00:00");
+						// $criteria->compare('t.start_date', "<=".$_GET["search"]["end_year"]."-12-31"." 23:59:59");
 
 						$criteria->order = 't.course_id ASC, t.gen_id ASC';
 						$LogStartcourse = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);

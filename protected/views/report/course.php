@@ -603,8 +603,17 @@ chart.draw(data, options);
                     </thead>
 
                     <tbody>
-                        <?php 
+                        <?php                         
                         if(!empty($model_search)){
+
+                            foreach ($model_search as $key_c => $value_c) {
+                                if(count($value_c["gen"]) <= 0){
+                                    unset($model_search[$key_c]);
+                                }
+                            }
+                        }
+
+                         if(!empty($model_search)){
                             $no = 1;
                             foreach ($model_search as $key_c => $value_c) {
                                 $course = CourseOnline::model()->findByPk($value_c["course_id"]);
@@ -701,21 +710,28 @@ chart.draw(data, options);
                                         google.charts.load("current", {packages:['corechart']});
                                         google.charts.setOnLoadCallback(drawChart);
                                         function drawChart() {
-                                          var data = google.visualization.arrayToDataTable([
-                                            ["หลักสูตร", "คนสมัคร", "เรียนจบ" ],
                                             <?php 
+                                            $data_g =  '["หลักสูตร", "คนสมัคร", "เรียนจบ" ],';
                                             $color = Helpers::lib()->ColorCode();
                                             $no_c = 0;
                                             foreach ($value_y as $key => $value) {
                                                 if($value["register"] > 0){
                                                     $course = CourseOnline::model()->findByPk($key);
-                                                echo "['".$course->course_title."', ".$value["register"].", ".$value["pass"]."],";
+                                                $data_g .=  "['".$course->course_title."', ".$value["register"].", ".$value["pass"]."],";
                                                 
                                                 }
                                             } 
+
+
                                             ?>
+                                            var data_num = [<?= $data_g ?>].length;
+                                            if(data_num > 1){
+                                          var data = google.visualization.arrayToDataTable([
+                                                <?= $data_g ?>
 
                                             ]);
+                                      }
+                                          // console.log([<?= $data_g ?>].length);
 
                                           var view = new google.visualization.DataView(data);
                                           view.setColumns([0, 1,
@@ -753,7 +769,6 @@ chart.draw(data, options);
                             <div class="col-sm-1"></div>
 
                        <?php } // in_array("bar",
-
                     } //foreach ($arr_count_course
                      ?>
                 </div>
