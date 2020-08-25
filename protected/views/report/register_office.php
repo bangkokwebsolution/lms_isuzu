@@ -253,7 +253,7 @@
 </section>
 <script>
     $('.datetimepicker').datetimepicker({
-        format: 'd-m-Y',
+        format: 'Y-m-d',
         step: 10,
         timepicker: false,
         timepickerScrollbar: false,

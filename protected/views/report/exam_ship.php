@@ -592,7 +592,7 @@ chart.draw(data, options);
                             } // foreach search
                         }else{ // !empty
                             ?>
-                            <td>
+                     <!--        <td>
                                 <?php 
                                     if(Yii::app()->session['lang'] != 1){
                                          echo $value->id." ".$value->id;
@@ -610,7 +610,7 @@ chart.draw(data, options);
                                             echo $value->id." ".$value->id;
                                         }
                                     ?>
-                                </td> 
+                                </td> --> 
                                 <td colspan="8">
                                     <?php 
                                     if(Yii::app()->session['lang'] != 1){

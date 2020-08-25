@@ -380,7 +380,7 @@
 </section>
 <script>
     $('.datetimepicker').datetimepicker({
-        format: 'd-m-Y',
+        format: 'Y-m-d',
         step: 10,
         timepicker: false,
         timepickerScrollbar: false,
@@ -420,11 +420,11 @@ function chk_form_search(){
         var end_year = $("#Year_end").val();
         if(end_year != "" && start_year == ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงปีเริ่มต้น");
+            swal("กรุณาเลือกช่วงปีเริ่มต้น");
          }
         if(end_year == "" && start_year != ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงปีสิ้นสุด");
+            swal("กรุณาเลือกช่วงปีสิ้นสุด");
          }
 
 
@@ -432,17 +432,44 @@ function chk_form_search(){
         var end_date = $("#datetime_end").val();
         if(end_date != "" && start_date == ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงเวลาเริ่มต้น");
+            swal("กรุณาเลือกช่วงเวลาเริ่มต้น");
          }
         if(end_date == "" && start_date != ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงเวลาสิ้นสุด");
+            swal("กรุณาเลือกช่วงเวลาสิ้นสุด");
         }
 
         if(status_pass == 1){
             $(".search").submit();
         }
     }
+    $("#datetime_end").change(function () {
+        var first = new Date($("#datetime_start").val());
+        var current = new Date($(this).val());
+
+        if (first.getTime() > current.getTime()) {
+            swal("ไม่สามารถเลือกช่วงเวลาสิ้นสุดมากกว่าช่วงเวลาเริ่มต้นได้");
+            $(this).val("");
+        }
+        $("#Year_start").val("");
+        $("#Year_end").val("");
+    });
+
+    $("#Year_start").change(function () {
+        $("#Year_end").val("");
+        $("#datetime_start").val("");
+        $("#datetime_end").val("");
+    });
+    $("#Year_end").change(function () {
+        var first = $("#Year_start").val();
+        var current = $(this).val();
+        if (first >= current && current != "") {
+            swal("ไม่สามารถเลือกช่วงปีสิ้นสุดมากกว่าช่วงปีเริ่มต้นได้");            
+            $(this).val("");
+        }
+        $("#datetime_start").val("");
+        $("#datetime_end").val("");
+    });
 
     $(".TypeEmployee").change(function() {
                     var id = $(this).val();
