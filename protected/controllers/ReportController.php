@@ -720,7 +720,7 @@ public function actionReportRegisterOfficeExcel()
 		if (Yii::app()->user->id != null) { 
 		if ($_GET['registerofficeData']) {
 			$data = $_GET['registerofficeData'];
-			require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
+			require_once __DIR__ . '/../../admin/protected/vendors/mpdf7/autoload.php';
 			$mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
 			$mPDF->useDictionaryLBR = false;
 			$mPDF->setDisplayMode('fullpage');
@@ -1307,7 +1307,7 @@ public function actionReportRegisterShipExcel()
 
 		if ($_GET['registershipData']) {
 			$data = $_GET['registershipData'];
-			require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
+			require_once __DIR__ . '/../../admin/protected/vendors/mpdf7/autoload.php';
 			$mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
 			$mPDF->useDictionaryLBR = false;
 			$mPDF->setDisplayMode('fullpage');
@@ -2259,7 +2259,7 @@ public function actionReportRegisterData()
 						
 							if ($_GET['reportRegisterData']) {
 								$data = $_GET['reportRegisterData'];
-								require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
+								require_once __DIR__ . '/../../admin/protected/vendors/mpdf7/autoload.php';
 								$mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
 								$mPDF->useDictionaryLBR = false;
 								$mPDF->setDisplayMode('fullpage');
