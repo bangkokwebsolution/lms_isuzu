@@ -3,6 +3,8 @@ $this->breadcrumbs=array(
 	// UserModule::t('Users')=>array('/user'),
 	UserModule::t('Manage'),
 );
+$formNameModel = 'user';
+
 // 
 // $this->menu=array(
 //     array('label'=>UserModule::t('Create User'), 'url'=>array('create')),
@@ -12,19 +14,28 @@ $this->breadcrumbs=array(
 // );
 
 Yii::app()->clientScript->registerScript('search', "
-	$('.search-button').click(function(){
-		$('.search-form').toggle();
-		return false;
-		});
+	$('#SearchFormAjax').submit(function(){
+	    $.fn.yiiGridView.update('$formNameModel-grid', {
+	        data: $(this).serialize()
+	    });
+	    return false;
+	});
+");
 
-		$('.search-form form').submit(function(){
-			$.fn.yiiGridView.update('user-grid', {
-				data: $(this).serialize()
-				});
-				return false;
-				});
-				");
-
+Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
+	$.updateGridView = function(gridID, name, value) {
+	    $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
+	    $.fn.yiiGridView.update(gridID, {data: $.param(
+	        $("#"+gridID+" input, #"+gridID+" .filters select")
+	    )});
+	}
+	$.appendFilter = function(name, varName) {
+	    var val = eval("$."+varName);
+	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
+	}
+	$.appendFilter("user[news_per_page]", "news_per_page");
+EOD
+, CClientScript::POS_READY);
 				?>
 				<div id="user" class="innerLR">
 

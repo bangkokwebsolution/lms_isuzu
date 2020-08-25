@@ -4358,9 +4358,8 @@ var new_forms = <?php echo $new_form; ?>;
 
                                      }              
                                  }else if(new_forms === 0 || typeof  new_forms === 'undefined' || new_forms === false){
-                                     var type_users = $("input[name='type_user']:checked").val();
-
-                                     if (type_users === '3') {
+                                     var type_users = <?php echo $profile->type_user; ?>;
+                                     if (type_users === 3) {
                     // var type_cards = $("input[name='type_card']:checked").val();
                     // if (type_cards === 'l') {
                         var branch = <?php echo $branch_js; ?>;
@@ -4500,7 +4499,7 @@ var new_forms = <?php echo $new_form; ?>;
                            $(".required_idline").hide();
                            // $(".required_identification").hide();
                            // $(".required_date_of_expiry").hide();
-                       }else if (type_users === '1'){
+                       }else if (type_users === 1){
 
                             // var type_card = $("input[name='type_card']:checked").val();
                             //     // if (type_card === 'l') {
@@ -4581,7 +4580,7 @@ var new_forms = <?php echo $new_form; ?>;
                               $(".required_idline").hide();
                               $(".required_identification").show();
                               $(".required_date_of_expiry").show();
-                          }else if(type_users === '5'){
+                          }else if(type_users === 5){
                             var type_card = $("input[name='type_card']:checked").val();
                                 if (type_card === 'l') {
                                     $('.form_identification').show();
