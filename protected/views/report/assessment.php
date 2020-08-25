@@ -31,6 +31,7 @@
     $path_file = "http:\\\\thorconn.com";
 
     $path_file_2 = explode("\\", $path_file_2);
+   
     $path_file_2 = implode("\\\\", $path_file_2);
  ?>
 <div class="container">
@@ -83,9 +84,9 @@
                                     <label for="search_course_id">
                                         <?php 
                                             if(Yii::app()->session['lang'] != 1){
-                                                echo "หลักสูตร";
+                                                echo "หลักสูตร *";
                                             }else{
-                                                echo "Course";
+                                                echo "Course *";
                                             }
                                         ?>                                             
                                     </label>
@@ -115,9 +116,9 @@
                                     <label for="search_gen_id">
                                          <?php 
                                                 if(Yii::app()->session['lang'] != 1){
-                                                    echo "รุ่น";
+                                                    echo "รุ่น *";
                                                 }else{
-                                                    echo "Gen";
+                                                    echo "Gen *";
                                                 }
                                             ?>
                                     </label>
@@ -558,7 +559,7 @@ chart.draw(data, options);
                 <table class="table" id="table_list">
                     <thead>
 
-                          <tr>
+                          <tr style="background-color: #010C65; color: #fff;">
                             <th rowspan="2" width="10%">
                                 <?php 
                             if(Yii::app()->session['lang'] != 1){
@@ -580,7 +581,7 @@ chart.draw(data, options);
                             }
                             ?></th>
                         </tr>
-                        <tr>
+                        <tr style="background-color: #010C65; color: #fff;">
 <!-- $average = round($total_section[0]/$countquest_section[0],2);
 $average2 = round($total_section[1]/$countquest_section[1],2); -->
 <!-- 
@@ -760,14 +761,16 @@ chart.draw(data, options);
     $(document).ready( function () {
 
         $('.btn-pdf').click(function(e) {
-            $("#text_element1").attr("value", encodeURIComponent("<h2>Course Overview Report</h2>"+$('#chart_graph').html()+'<br>'+$('#result_search').html()) );
+            $("#text_element1").attr("value", encodeURIComponent("<h2>Training assessment Report</h2>"+$('#chart_graph').html()+'<br>'+$('#result_search').html()) );
             $("#export_pdf").submit();
         });
       
-        $('.btn-excel').click(function(e) {
-            window.open('data:application/vnd.ms-excel,' + encodeURIComponent("<h2>Course Overview Report</h2>"+$('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html() ));
+       
+          $('.btn-excel').click(function(e) {
+            window.open('data:application/vnd.ms-excel;charset=UTF-8;,' + encodeURIComponent("<h2>Training assessment Report</h2>"+$('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br><font color="white">ตาราง</font>'+$('#result_search').html() ));
             e.preventDefault();
         });
+
 
     });
 
@@ -898,19 +901,25 @@ chart.draw(data, options);
     }
 
     function chk_form_search(){
+        var Alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+
         var status_pass = 1;
 
         var start_year = $("#search_start_year").val();
         var end_year = $("#search_end_year").val();
         if(end_year != "" && start_year == ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงปีเริ่มต้น");
+             var startyear_datealert = "<?php echo Yii::app()->session['lang'] == 1?'Please select a starting year! ':'กรุณาเลือกช่วงปีเริ่มต้น!'; ?>";
+            swal(Alert_message,startyear_datealert)
             $("#search_start_year").addClass('form-control-danger');
         }else{
             $("#search_start_year").removeClass('form-control-danger');
         }
         if(end_year == "" && start_year != ""){
             status_pass =2;
+             var endyear_datealert = "<?php echo Yii::app()->session['lang'] == 1?'Please select an end year! ':'กรุณาเลือกช่วงปีสิ้นสุด!'; ?>";
+            swal(Alert_message,endyear_datealert)
+
             alert("กรุณาเลือกช่วงปีสิ้นสุด");
             $("#search_end_year").addClass('form-control-danger');
         }else{
@@ -918,18 +927,23 @@ chart.draw(data, options);
         }
 
 
+
+
+
         var start_date = $("#search_start_date").val();
         var end_date = $("#search_end_date").val();
         if(end_date != "" && start_date == ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงเวลาเริ่มต้น");
+            var start_datealert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Start Date! ':'กรุณาเลือกช่วงเวลาเริ่มต้น!'; ?>";
+            swal(Alert_message,start_datealert)
             $("#search_start_date").addClass('form-control-danger');
         }else{
             $("#search_start_date").removeClass('form-control-danger');
         }
         if(end_date == "" && start_date != ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงเวลาสิ้นสุด");
+              var end_dateAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select End Date! ':'กรุณาเลือกช่วงเวลาสิ้นสุด!'; ?>";
+            swal(Alert_message,end_dateAlert)
             $("#search_end_date").addClass('form-control-danger');
         }else{
             $("#search_end_date").removeClass('form-control-danger');
@@ -940,14 +954,17 @@ chart.draw(data, options);
 
          if(course == "" ){
             status_pass =2;
-            alert("กรุณาเลือกหลักสูตร");
+            var CourseAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Course! ':'กรุณาเลือกหลักสูตร!'; ?>";
+            swal(Alert_message,CourseAlert)
+
             $("#search_course_id").addClass('form-control-danger');
         }else{
             $("#search_course_id").removeClass('form-control-danger');
         }
         if(gen == "" ){
             status_pass =2;
-            alert("กรุณาเลือกรุ่น");
+            var genAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Gen! ':'กรุณาเลือกรุ่น!'; ?>";
+            swal(Alert_message,genAlert)
             $("#search_gen_id").addClass('form-control-danger');
         }else{
             $("#search_gen_id").removeClass('form-control-danger');

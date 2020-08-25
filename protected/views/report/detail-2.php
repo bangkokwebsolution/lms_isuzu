@@ -537,8 +537,8 @@ chart.draw(data, options);
             <div class="table-responsive w-100 t-regis-language">
                 <table class="table" id="table_list">
                     <thead>
-                        <tr>
-                            <th><?php 
+                        <tr style="background-color: #010C65; color: #fff;">
+                            <th rowspan="2"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ลำดับ";
                             }else{
@@ -546,7 +546,7 @@ chart.draw(data, options);
                             }
                             ?></th>
                             <!-- <th>user_id</th> -->
-                            <th>
+                            <th rowspan="2">
                             <?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "หลักสูตร";
@@ -554,42 +554,45 @@ chart.draw(data, options);
                                 echo "Course";
                             }
                             ?></th>
-                            <th><?php 
+                            <th rowspan="2"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "รุ่น";
                             }else{
                                 echo "Gen";
                             }
                             ?></th>
-                            <th><?php 
+                            <th rowspan="2"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "คนสมัคร";
                             }else{
                                 echo "Register";
                             }
                             ?></th>
-                            <th><?php 
+                            <th colspan="3"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ผลสอบหลังเรียน";
                             }else{
-                                echo "Result Post-test";
+                                echo "Exam results Post-test";
                             }
                             ?></th>
-                            <th><?php 
+
+                            <th rowspan="2"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "% หลังเรียน";
                             }else{
                                 echo "% Post-test";
                             }
                             ?></th>
-                            <th><?php 
+
+
+                            <th rowspan="2"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ค่าเฉลี่ยก่อนเรียน";
                             }else{
                                 echo "Mean Pre-test";
                             }
                             ?></th>
-                            <th><?php 
+                            <th rowspan="2"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ค่าเฉลี่ยหลังเรียน";
                             }else{
@@ -599,8 +602,30 @@ chart.draw(data, options);
                            
                             <!-- <th></th> -->
                         </tr>
+                        <tr style="background-color: #010C65; color: #fff;">
+                            <th><?php 
+                            if(Yii::app()->session['lang'] != 1){
+                                echo "ผ่าน";
+                            }else{
+                                echo "Pass";
+                            }
+                            ?></th>
+                            <th><?php 
+                            if(Yii::app()->session['lang'] != 1){
+                                echo "ไม่ผ่าน";
+                            }else{
+                                echo "No Pass";
+                            }
+                            ?></th>
+                            <th><?php 
+                            if(Yii::app()->session['lang'] != 1){
+                                echo "ยังไม่ได้เรียน";
+                            }else{
+                                echo "No Learn";
+                            }
+                            ?></th>
+                        </tr>
                     </thead>
-
                     <tbody>
                         <?php 
                         if(!empty($model_search)){
@@ -623,8 +648,9 @@ chart.draw(data, options);
                                             <td><?= $course->course_title ?></td>
                                             <td><?= $gen_course->gen_title ?></td>
                                             <td><?= $value_g["register"] ?></td>
-                                            <td><b class="text-success">ผ่าน </b>: <?= $value_g["postpass"]  ?> / <b class="text-danger">ไม่ผ่าน </b>: <?= $value_g["postnopass"]  ?> / 
-                                            <b class="text-muted">ยังไม่ได้เรียน </b>: <?= $value_g["postnolearn"]  ?></td>
+                                            <td><b class="text-success">ผ่าน </b>: <?= $value_g["postpass"]  ?></td>
+                                            <td><b class="text-danger">ไม่ผ่าน </b>: <?= $value_g["postnopass"]  ?></td>
+                                            <td><b class="text-muted">ยังไม่ได้เรียน </b>: <?= $value_g["postnolearn"]  ?></td>
                                             <td ><?= $value_g["percentpass"] ?> %</td>
                                             <td ><?= $value_g["meanpretest"] ?></td>
                                             <td ><?= $value_g["meanposttest"] ?>
@@ -915,19 +941,21 @@ chart.draw(data, options);
 
     function chk_form_search(){
         var status_pass = 1;
-
+        var Alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
         var start_year = $("#search_start_year").val();
         var end_year = $("#search_end_year").val();
         if(end_year != "" && start_year == ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงปีเริ่มต้น");
+            var startyear_datealert = "<?php echo Yii::app()->session['lang'] == 1?'Please select a starting year! ':'กรุณาเลือกช่วงปีเริ่มต้น!'; ?>";
+            swal(Alert_message,startyear_datealert)
             $("#search_start_year").addClass('form-control-danger');
         }else{
             $("#search_start_year").removeClass('form-control-danger');
         }
         if(end_year == "" && start_year != ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงปีสิ้นสุด");
+             var endyear_datealert = "<?php echo Yii::app()->session['lang'] == 1?'Please select an end year! ':'กรุณาเลือกช่วงปีสิ้นสุด!'; ?>";
+            swal(Alert_message,endyear_datealert)
             $("#search_end_year").addClass('form-control-danger');
         }else{
             $("#search_end_year").removeClass('form-control-danger');
@@ -938,14 +966,16 @@ chart.draw(data, options);
         var end_date = $("#search_end_date").val();
         if(end_date != "" && start_date == ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงเวลาเริ่มต้น");
+            var start_datealert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Start Date! ':'กรุณาเลือกช่วงเวลาเริ่มต้น!'; ?>";
+            swal(Alert_message,start_datealert)
             $("#search_start_date").addClass('form-control-danger');
         }else{
             $("#search_start_date").removeClass('form-control-danger');
         }
         if(end_date == "" && start_date != ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงเวลาสิ้นสุด");
+            var end_dateAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select End Date! ':'กรุณาเลือกช่วงเวลาสิ้นสุด!'; ?>";
+            swal(Alert_message,end_dateAlert)
             $("#search_end_date").addClass('form-control-danger');
         }else{
             $("#search_end_date").removeClass('form-control-danger');

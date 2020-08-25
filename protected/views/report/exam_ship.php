@@ -535,7 +535,9 @@ chart.draw(data, options);
 
                     <tbody>
                         <?php 
+                        // var_dump($model_search);exit();
                         if(!empty($model_search)){
+
                             $no = 1;
                             foreach ($model_search as $key => $value) {
                                 if(isset($model_search_score[$key]["status"]) && $model_search_score[$key]["status"] == y){
@@ -565,9 +567,9 @@ chart.draw(data, options);
                                     <td>
                                         <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo $value->pro->firstname." ".$value->pro->lastname;
+                                            echo $value->id." ".$value->id;
                                         }else{
-                                            echo $value->pro->firstname_en." ".$value->pro->lastname_en;
+                                            echo $value->id." ".$value->id;
                                         }
                                         ?>
                                     </td>
@@ -593,9 +595,9 @@ chart.draw(data, options);
                             <td>
                                 <?php 
                                     if(Yii::app()->session['lang'] != 1){
-                                         echo $value->pro->firstname." ".$value->pro->lastname;
+                                         echo $value->id." ".$value->id;
                                     }else{
-                                        echo $value->pro->firstname_en." ".$value->pro->lastname_en;
+                                        echo $value->id." ".$value->id;
                                     }
                                 ?>
                             </td>  
@@ -603,9 +605,9 @@ chart.draw(data, options);
                                 <td>
                                     <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                             echo $value->pro->firstname." ".$value->pro->lastname;
+                                             echo $value->id." ".$value->id;
                                         }else{
-                                            echo $value->pro->firstname_en." ".$value->pro->lastname_en;
+                                            echo $value->id." ".$value->id;
                                         }
                                     ?>
                                 </td> 
