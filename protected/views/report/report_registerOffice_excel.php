@@ -1,5 +1,5 @@
 <?php
-$strExcelFileName = "รายงานภาพคนสมัครสมาชิกคนประจำเรือ-" . date('Ymd-His') . ".xls";
+$strExcelFileName = "รายงานภาพคนสมัครสมาชิกคนออฟฟิต-" . date('Ymd-His') . ".xls";
 header("Content-Type: application/x-msexcel; name=\"" . $strExcelFileName . "\"");
 header("Content-Disposition: inline; filename=\"" . $strExcelFileName . "\"");
 header('Content-Type: text/plain; charset=UTF-8');

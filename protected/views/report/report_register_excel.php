@@ -415,8 +415,8 @@ $user_Department = $user_login->department_id;
 									<tr>
 										<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $i++;?></td>
 										<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $valuedep_back->dep_title; ?></td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;"></td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;"></td>
+										<td style="border:1px solid #d8d8d8; padding: 8px;">-</td>
+										<td style="border:1px solid #d8d8d8; padding: 8px;">-</td>
 										<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $cou_use; ?></td>
 										<?php if($data['TypeEmployee'] != 2){ ?>
 											<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">

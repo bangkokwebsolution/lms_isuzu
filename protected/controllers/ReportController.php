@@ -2169,8 +2169,8 @@ public function actionReportRegisterData()
 										$datatable .= '<tr>';
 										$datatable .= '<td>'.$i++.'</td>';
 										$datatable .= '<td>'.$valuedep_back->dep_title.'</td>';
-										$datatable .= '<td></td>';
-										$datatable .= '<td></td>';
+										$datatable .= '<td>-</td>';
+										$datatable .= '<td>-</td>';
 										$datatable .= '<td>'.$cou_use.'</td>';
 										if($TypeEmployee != 2){
 											$datatable .= '<td>';

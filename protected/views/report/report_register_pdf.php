@@ -399,8 +399,8 @@ $user_Department = $user_login->department_id;
 									<tr>
 										<td><?php echo $i++;?></td>
 										<td><?php echo $valuedep_back->dep_title; ?></td>
-										<td></td>
-										<td></td>
+										<td class="text-center">-</td>
+										<td class="text-center">-</td>
 										<td class="text-center"><?php echo $cou_use; ?></td>
 										<?php if($data['TypeEmployee'] != 2){ ?>
 											<td class="text-center">
