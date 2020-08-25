@@ -36,7 +36,13 @@ $user_Department = $user_login->department_id;
 </head>
 <body>
 	<div class="row">
-		<h1>รายงานภาพรวมการสมัคร</h1>
+		<h1><?php
+		if (Yii::app()->user->id == 1) {
+			echo "Report overview register";
+		}else{
+			echo "รายงานภาพรวมการสมัคร";
+		}
+		?></h1>
 		<div class="col-sm-12">
 			<?php
 			if ($Chart != "") {

@@ -27,6 +27,13 @@ $user_Department = $user_login->department_id;
 <body>
 	<div class="row">
 		<?php
+		if (Yii::app()->user->id == 1) {
+			echo "Report register office";
+		}else{
+			echo "รายงานภาพรวมการสมัคร คนออฟฟิต";
+		}
+		?>
+		<?php
 			if ($Chart != "") {
 		?>
 		<div class="col-sm-12">

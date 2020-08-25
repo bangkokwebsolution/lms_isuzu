@@ -35,14 +35,21 @@ $user_Department = $user_login->department_id;
 </head>
 <body>
 	<div class="row">
-				<div class="col-sm-12">
+		<?php
+		if (Yii::app()->user->id == 1) {
+			echo "Report register office";
+		}else{
+			echo "รายงานภาพรวมการสมัคร คนออฟฟิต";
+		}
+		?>
+		<div class="col-sm-12">
 			<?php
 			if ($Chart != "") {
 			?>
 			<?php if ($Chart === "accommodation=Bar_Graph") { ?>
-				<img src="<?= Yii::app()->getBaseUrl(true) ?>/AttendPrint.png" width="500" height="auto">
+				<img src="<?= Yii::app()->getBaseUrl(true)?>/uploads/AttendPrint.png" width="500" height="auto">
 			<?php }else if($Chart === "accommodation=Pie_Charts"){ ?>
-				<img src="<?= Yii::app()->getBaseUrl(true) ?>/AttendPrint1.png" width="500" height="auto">
+				<img src="<?= Yii::app()->getBaseUrl(true)?>/uploads/AttendPrint1.png" width="500" height="auto">
 			<?php } 
 			$f = 20;
 			for ($p=0; $p <= $f ; $p++) { 
@@ -55,8 +62,8 @@ $user_Department = $user_login->department_id;
 	if ($Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") { ?>
 		<div class="row">
 			<div class="col-sm-12">
-				<img src="<?= Yii::app()->getBaseUrl(true) ?>/AttendPrint.png" width="500" height="auto">
-				<img src="<?= Yii::app()->getBaseUrl(true) ?>/AttendPrint1.png" width="500" height="auto">
+				<img src="<?= Yii::app()->getBaseUrl(true) ?>/uploads/AttendPrint.png" width="500" height="auto">
+				<img src="<?= Yii::app()->getBaseUrl(true) ?>/uploads/AttendPrint1.png" width="500" height="auto">
 			</div><br>
 		</div>
 		<?php	$f = 20;
@@ -69,8 +76,8 @@ $user_Department = $user_login->department_id;
 		if ($Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") { ?>
 			<div class="row">
 				<div class="col-sm-12">
-					<img src="<?= Yii::app()->getBaseUrl(true) ?>/AttendPrint3.png" width="500" height="auto">
-					<img src="<?= Yii::app()->getBaseUrl(true) ?>/AttendPrint4.png" width="500" height="auto">
+					<img src="<?= Yii::app()->getBaseUrl(true) ?>/uploads/AttendPrint3.png" width="500" height="auto">
+					<img src="<?= Yii::app()->getBaseUrl(true) ?>/uploads/AttendPrint4.png" width="500" height="auto">
 				</div><br>
 			</div>
 			<?php

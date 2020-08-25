@@ -732,7 +732,7 @@ public function actionReportRegisterOfficeExcel()
 			$mPDF->WriteHTML($texttt);
 			$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('report_registeOffice_pdf', array('data'=>$data),true),'UTF-8','UTF-8'));
 
-			$mPDF->Output("รายงานภาพรวมการสมัคร.pdf" , 'I');
+			$mPDF->Output("รายงานภาพรวมการสมัครคนออฟฟิต.pdf" , 'I');
 
 			
 		}
@@ -1319,7 +1319,7 @@ public function actionReportRegisterShipExcel()
 			$mPDF->WriteHTML($texttt);
 			$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('report_registeShip_pdf', array('data'=>$data),true),'UTF-8','UTF-8'));
 
-			$mPDF->Output("รายงานภาพรวมการสมัคร.pdf" , 'I');
+			$mPDF->Output("รายงานภาพรวมการสมัครคนเรือ.pdf" , 'I');
 
 			
 		}
@@ -2198,7 +2198,6 @@ public function actionReportRegisterData()
 									$datatable .= '</table>';
 									$datatable .= '</div>';
 									$datatable .= '</div>';
-
 
 									echo $datatable;
 								}else{
