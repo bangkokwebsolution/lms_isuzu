@@ -1195,17 +1195,21 @@ public function actionReportRegisterOfficeExcel()
 						}
 					}
 					if($_POST['Year_start'] == "" && $_POST['Year_end'] == ""){
-						if (!empty($User)) {
+						
 							?>
-							<h2 class="text-center">
-								<?php
-								if (Yii::app()->session['lang'] == 1) {
-									echo "Report";
-								} else {
-									echo "รายงานภาพ";
-								}
-								?>
-							</h2>
+							<li class="breadcrumb-item active" aria-current="page">
+				            <center>
+				                <h3>
+				                    <?php
+				                    if (Yii::app()->session['lang'] == 1) {
+				                        echo " Register staff ship Report";
+				                    } else {
+				                        echo " รายงานภาพการสมัครสมาชิก คนประจำเรือ";
+				                    }
+				                    ?>
+				                </h3>    
+				            </center>
+				        	</li>
 							<?php
 
 							$i = 1;
@@ -1223,7 +1227,7 @@ public function actionReportRegisterOfficeExcel()
 							$datatable .= '</tr>'; 
 							$datatable .= '</thead>';
 							$datatable .= '<tbody>';
-
+						if (!empty($User)) {
 							foreach ($User as $keypos_back => $valuepos_back) { 	
 
 								$datatable .= '<tr>';
@@ -1248,18 +1252,26 @@ public function actionReportRegisterOfficeExcel()
 								$datatable .= '</td>';
 								$datatable .= '</tr>';
 
-							}  
+							}  							
+						}else{
+						$datatable .= '<tr>';
+						$datatable .= '<td colspan="6">';
+                                    if(Yii::app()->session['lang'] != 1){
+                                        $datatable .= 'ไม่มีข้อมูล';
+                                    }else{
+                                        $datatable .= 'No data';
+                                    }
+                        $datatable .= '</td>';
+						$datatable .= '</tr>';
+					}
 
 							$datatable .= '</tbody>';
 							$datatable .= '</table>';
 							$datatable .= '</div>';
 							$datatable .= '</div>';
 
-							echo $datatable;
-						}else{
-							echo "<p>ไม่พบข้อมูล</p>";
-						}
-					}			
+					echo $datatable;	
+					}		
 				} ?>
 				<div class="pull-left ShowGraph">
 								<a href="<?= $this->createUrl('report/reportRegisterShipPDF',array('registershipData[Department]'=>$_POST['Department'],
@@ -1308,7 +1320,7 @@ public function actionReportRegisterShipExcel()
 		if ($_GET['registershipData']) {
 			$data = $_GET['registershipData'];
 			require_once __DIR__ . '/../../admin/protected/vendors/mpdf7/autoload.php';
-			$mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
+			$mPDF = new \Mpdf\Mpdf(['format' => 'A4-P']);
 			$mPDF->useDictionaryLBR = false;
 			$mPDF->setDisplayMode('fullpage');
 			$texttt= '
