@@ -4053,7 +4053,7 @@ if($course_score->score_past == 'y'){
 		<style type="text/css"> 
 			body{ 
 				font-family:"garuda"; 
-				font-size:14px;
+				font-size:12px;
 			}
 			table{ 
 				width:100%;
