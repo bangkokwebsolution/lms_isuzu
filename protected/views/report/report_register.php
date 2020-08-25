@@ -45,7 +45,7 @@
                             ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Employee type':'ประเภทพนักงาน'; ?></label>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Employee type':'ประเภทพนักงาน'; ?><font color="red">*</font></label>
                                     <select class="form-control TypeEmployee" name="" id="TypeEmployee">
                                         <option value="" selected disabled> <?= Yii::app()->session['lang'] == 1?'Select type':'เลือกประเภท'; ?></option>
                                         <?php
@@ -153,7 +153,7 @@
 
                         </div>
                         <div class="row">
-                            <?php if($authority == 1 || $authority == 2 || $authority == 2 && $type_em == 2 ){   ?>
+                            <?php if($authority == 1 || $authority == 2 || $authority == 2 && $type_em == 2 || $authority == 2 && $type_em == 1 ){   ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
                                     <label for="">
@@ -196,11 +196,11 @@
                                     <?php
 
                                     $criteria= new CDbCriteria;
-                                    if ($authority == 2 || $authority == 3 ) {
-                                        if ($Position != "") {
-                                            $criteria->compare('id',$Position);
+                                    if ($authority == 2) {
+                                        if ($Department != "") {
+                                            $criteria->compare('department_id',$Department);
                                         }else{
-                                            $criteria->compare('id',0);
+                                            $criteria->compare('department_id',0);
                                         }
                                     }
                                     $criteria->compare('active','y');
@@ -230,11 +230,11 @@
                                         <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Level':'เลือกเลเวล'; ?></option>
                                     <?php
                                     $criteria= new CDbCriteria;
-                                    if ($authority == 3 && $type_em == 2) {
-                                        if ($Level != "") {
-                                            $criteria->compare('id',$Level);
+                                    if ($authority == 3) {
+                                        if ($Position != "") {
+                                            $criteria->compare('position_id',$Position);
                                         }else{
-                                            $criteria->compare('id',0);
+                                            $criteria->compare('position_id',0);
                                         }
                                     }
                                     $criteria->compare('active','y');
@@ -260,7 +260,7 @@
                             ?>
                             <div class="col-sm-3 col-md-3 col-xs-12 tag_status">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Status':'สถานะอนุมัติ'; ?></label>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Status':'สถานะอนุมัติ'; ?><font color="red">*</font></label>
                                     <select class="form-control status" name="" id="x">
                                         <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Status':'สถานะอนุมัติ'; ?></option>
                                         <option value="1"><?= Yii::app()->session['lang'] == 1?'Approved':'อนุมัติ'; ?></option>
@@ -336,20 +336,6 @@
 
             </div>
         </div>
-
-        <li class="breadcrumb-item active" aria-current="page">
-            <center>
-                <h3>
-                    <?php
-                    if (Yii::app()->session['lang'] == 1) {
-                        echo "Register Overview Report";
-                    } else {
-                        echo "รายงานภาพรวมการสมัคร";
-                    }
-                    ?>
-                </h3>    
-            </center>
-        </li>
         <div class="divider">
             <i class="fas fa-chevron-down"></i>
         </div>
@@ -435,16 +421,10 @@ function chk_form_search(){
         if(end_year != "" && start_year == ""){
             status_pass =2;
             alert("กรุณาเลือกช่วงปีเริ่มต้น");
-        //     $("#search_start_year").addClass('form-control-danger');
-        // }else{
-        //     $("#search_start_year").removeClass('form-control-danger');
          }
         if(end_year == "" && start_year != ""){
             status_pass =2;
             alert("กรุณาเลือกช่วงปีสิ้นสุด");
-        //     $("#search_end_year").addClass('form-control-danger');
-        // }else{
-        //     $("#search_end_year").removeClass('form-control-danger');
          }
 
 
@@ -453,16 +433,10 @@ function chk_form_search(){
         if(end_date != "" && start_date == ""){
             status_pass =2;
             alert("กรุณาเลือกช่วงเวลาเริ่มต้น");
-        //     $("#search_start_date").addClass('form-control-danger');
-        // }else{
-        //     $("#search_start_date").removeClass('form-control-danger');
          }
         if(end_date == "" && start_date != ""){
             status_pass =2;
             alert("กรุณาเลือกช่วงเวลาสิ้นสุด");
-        //     $("#search_end_date").addClass('form-control-danger');
-        // }else{
-        //     $("#search_end_date").removeClass('form-control-danger');
         }
 
         if(status_pass == 1){

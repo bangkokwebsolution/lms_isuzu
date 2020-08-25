@@ -740,7 +740,7 @@ public function actionReportRegisterOfficeExcel()
 		if ($_GET['registerofficeData']) {
 			$data = $_GET['registerofficeData'];
 			require_once __DIR__ . '/../../admin/protected/vendors/mpdf7/autoload.php';
-			$mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
+			$mPDF = new \Mpdf\Mpdf(['format' => 'A4-P']);
 			$mPDF->useDictionaryLBR = false;
 			$mPDF->setDisplayMode('fullpage');
 			$texttt= '
@@ -1399,11 +1399,14 @@ public function actionReportRegisterData()
 					$criteria = new CDbCriteria;
 					$criteria->addIncondition('department_id',$dep_arr);
 					$criteria->compare('active','y');
-					if($Position){
-						$criteria->compare('id',$Position);
-					}
-					if ($authority == 3) {
-						$criteria->compare('id',$user_Position);
+					if ($Position != "") {
+						if($Position){
+							$criteria->compare('id',$Position);
+						}
+					}else{
+						if ($authority == 2 || $authority == 3) {
+							$criteria->compare('id',$user_Position);
+						}
 					}
 					$pos = Position::model()->findAll($criteria);
 
@@ -1418,11 +1421,14 @@ public function actionReportRegisterData()
 					$criteria = new CDbCriteria;
 					$criteria->addIncondition('position_id',$pos_arr);
 					$criteria->compare('active','y');
-					if($Leval){
-						$criteria->compare('id',$Leval);
-					}
-					if ($authority == 3) {
-						$criteria->compare('id',$user_Level);
+					if ($Leval != "") {
+						if($Leval){
+							$criteria->compare('id',$Leval);
+						}
+					}else{
+						if ($authority == 3) {
+							$criteria->compare('id',$user_Level);
+						}
 					}
 					$branch = Branch::model()->findAll($criteria);
 
@@ -1436,11 +1442,14 @@ public function actionReportRegisterData()
 
 					$criteria = new CDbCriteria;
 					$criteria->addIncondition('department_id',$dep_arr);
+					if ($Position != "") {
 					if($Position){
-						$criteria->compare('id',$Position);
-					}
-					if ($authority == 3) {
-						$criteria->compare('id',$user_Position);
+							$criteria->compare('id',$Position);
+						}
+					}else{
+						if ($authority == 2 || $authority == 3) {
+							$criteria->compare('id',$user_Position);
+						}
 					}
 					$criteria->addNotInCondition('id',$result_branch_arr);
 					$criteria->compare('active','y');
@@ -1965,20 +1974,25 @@ public function actionReportRegisterData()
 
 						<?php }
 						}
-					}
-							if ($_POST['Year_start'] == "" && $_POST['Year_end'] == "") {
-
-								if (!empty($branch) || !empty($pos_back) || !empty($dep_back) ) {
+					} ?>
+						<?php	if ($_POST['Year_start'] == "" && $_POST['Year_end'] == "") {
+								
 									?>
-									<h2 class="text-center">
-										<?php
-										if (Yii::app()->session['lang'] == 1) {
-											echo "Report";
-										} else {
-											echo "รายงานภาพ";
-										}
-										?>
-									</h2>
+										<li class="breadcrumb-item active" aria-current="page">
+						            <center>
+						                <h3>
+						                    <?php
+						                    if (Yii::app()->session['lang'] == 1) {
+						                        echo "Register Overview Report";
+						                    } else {
+						                        echo "รายงานภาพรวมการสมัครสมาชิก";
+						                    }
+						                    ?>
+						                </h3>    
+						            </center>
+						        </li>
+
+												
 									<?php
 
 									$i = 1;
@@ -2001,6 +2015,7 @@ public function actionReportRegisterData()
 									$datatable .= '</tr>'; 
 									$datatable .= '</thead>';
 									$datatable .= '<tbody>';
+									if (!empty($branch) || !empty($pos_back) || !empty($dep_back) ) {
 									if ($TypeEmployee == 2) {    
 										foreach ($branch as $key => $value) { 	
 
@@ -2030,21 +2045,27 @@ public function actionReportRegisterData()
 											if ($authority == 2 || $authority == 3) {
 												$criteria->compare('department_id',$user_Department);
 											}
-											if($Position){
-												$criteria->compare('position_id',$Position);
+											if ($Position != "") {
+												if($Position){
+													$criteria->compare('position_id',$Position);
+												}
+											}else{
+												if ($authority == 2 || $authority == 3) {
+													$criteria->compare('position_id',$user_Position);
+												}
 											}
-											if ($authority == 3) {
-												$criteria->compare('position_id',$user_Position);
-											}
+											if($Leval != ""){
 											if($Leval){
 												$criteria->compare('branch_id',$Leval);
 											}
-											if ($authority == 3) {
-												$criteria->compare('branch_id',$user_Level);
+											}else{
+												if ($authority == 3) {
+													$criteria->compare('branch_id',$user_Level);
+												}
 											}
 											$criteria->compare('superuser',0);
 											$usersAll = Users::model()->findAll($criteria);
-
+									
 											$cou_use = count($users);
 
 											$cou_useAll = count($usersAll);
@@ -2103,17 +2124,23 @@ public function actionReportRegisterData()
 											if ($authority == 2 || $authority == 3) {
 												$criteria->compare('department_id',$user_Department);
 											}
-											if($Position){
-												$criteria->compare('position_id',$Position);
+											if ($Position != "") {
+												if($Position){
+													$criteria->compare('position_id',$Position);
+												}
+											}else{
+												if ($authority == 2 || $authority == 3) {
+													$criteria->compare('position_id',$user_Position);
+												}
 											}
-											if ($authority == 3) {
-												$criteria->compare('position_id',$user_Position);
-											}
+											if($Leval != ""){
 											if($Leval){
 												$criteria->compare('branch_id',$Leval);
 											}
-											if ($authority == 3) {
-												$criteria->compare('branch_id',$user_Level);
+											}else{
+												if ($authority == 3) {
+													$criteria->compare('branch_id',$user_Level);
+												}
 											}
 										$criteria->compare('superuser',0);
 										$usersAll = Users::model()->findAll($criteria);
@@ -2178,17 +2205,23 @@ public function actionReportRegisterData()
 											if ($authority == 2 || $authority == 3) {
 												$criteria->compare('department_id',$user_Department);
 											}
-											if($Position){
-												$criteria->compare('position_id',$Position);
+											if ($Position != "") {
+												if($Position){
+													$criteria->compare('position_id',$Position);
+												}
+											}else{
+												if ($authority == 2 || $authority == 3) {
+													$criteria->compare('position_id',$user_Position);
+												}
 											}
-											if ($authority == 3) {
-												$criteria->compare('position_id',$user_Position);
-											}
+											if($Leval != ""){
 											if($Leval){
 												$criteria->compare('branch_id',$Leval);
 											}
-											if ($authority == 3) {
-												$criteria->compare('branch_id',$user_Level);
+											}else{
+												if ($authority == 3) {
+													$criteria->compare('branch_id',$user_Level);
+												}
 											}
 										$criteria->compare('superuser',0);
 										$usersAll = Users::model()->findAll($criteria);
@@ -2225,15 +2258,24 @@ public function actionReportRegisterData()
 
 									}  
 
+									
+								}else{
+									$datatable .= '<tr>';
+									$datatable .= '<td colspan="6">';
+	                                    if(Yii::app()->session['lang'] != 1){
+	                                        $datatable .= 'ไม่มีข้อมูล';
+	                                    }else{
+	                                        $datatable .= 'No data';
+	                                    }
+			                        $datatable .= '</td>';
+									$datatable .= '</tr>';
+								}
 									$datatable .= '</tbody>';
 									$datatable .= '</table>';
 									$datatable .= '</div>';
 									$datatable .= '</div>';
 
 									echo $datatable;
-								}else{
-									echo "<p>ไม่พบข้อมูล</p>";
-								}
 							}?>
 							<div class="pull-left ShowGraph">
 								<a href="<?= $this->createUrl('report/reportRegisterPDF',array('reportRegisterData[TypeEmployee]'=>$_POST['TypeEmployee'],
@@ -2296,7 +2338,7 @@ public function actionReportRegisterData()
 							if ($_GET['reportRegisterData']) {
 								$data = $_GET['reportRegisterData'];
 								require_once __DIR__ . '/../../admin/protected/vendors/mpdf7/autoload.php';
-								$mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
+								$mPDF = new \Mpdf\Mpdf(['format' => 'A4-P']);
 								$mPDF->useDictionaryLBR = false;
 								$mPDF->setDisplayMode('fullpage');
 								$texttt= '

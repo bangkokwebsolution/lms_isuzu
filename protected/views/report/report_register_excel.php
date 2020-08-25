@@ -40,7 +40,7 @@ $user_Department = $user_login->department_id;
 		if (Yii::app()->user->id == 1) {
 			echo "Report overview register";
 		}else{
-			echo "รายงานภาพรวมการสมัคร";
+			echo "รายงานภาพรวมการสมัครสมาชิก";
 		}
 		?></h1>
 		<div class="col-sm-12">
@@ -108,11 +108,14 @@ $user_Department = $user_login->department_id;
 	$criteria = new CDbCriteria;
 	$criteria->addIncondition('department_id',$dep_arr);
 	$criteria->compare('active','y');
-	if($data['Position']){
-		$criteria->compare('id',$data['Position']);
-	}
-	if ($authority == 3) {
-		$criteria->compare('id',$user_Position);
+	if ($data['Position'] != "") {
+		if($data['Position']){
+				$criteria->compare('id',$data['Position']);
+			}
+	}else{
+		if ($authority == 2 || $authority == 3) {
+			$criteria->compare('id',$user_Position);
+		}
 	}
 	$pos = Position::model()->findAll($criteria);
 
@@ -127,12 +130,16 @@ $user_Department = $user_login->department_id;
 	$criteria = new CDbCriteria;
 	$criteria->addIncondition('position_id',$pos_arr);
 	$criteria->compare('active','y');
-	if($data['Leval']){
-		$criteria->compare('id',$data['Leval']);
+	if ($data['Leval'] != "") {
+			if($data['Leval']){
+			$criteria->compare('id',$data['Leval']);
+		}
+	}else{
+			if ($authority == 3) {
+			$criteria->compare('id',$user_Level);
+		}
 	}
-	if ($authority == 3) {
-		$criteria->compare('id',$user_Level);
-	}
+	
 	$branch = Branch::model()->findAll($criteria);
 
 
@@ -145,11 +152,14 @@ $user_Department = $user_login->department_id;
 
 	$criteria = new CDbCriteria;
 	$criteria->addIncondition('department_id',$dep_arr);
-	if($data['Position']){
-		$criteria->compare('id',$data['Position']);
-	}
-	if ($authority == 3) {
-		$criteria->compare('id',$user_Position);
+	if ($data['Position'] != "") {
+		if($data['Position']){
+				$criteria->compare('id',$data['Position']);
+			}
+	}else{
+		if ($authority == 2 || $authority == 3) {
+			$criteria->compare('id',$user_Position);
+		}
 	}
 	$criteria->addNotInCondition('id',$result_branch_arr);
 	$criteria->compare('active','y');
@@ -168,7 +178,7 @@ $user_Department = $user_login->department_id;
 	$dep_back = Department::model()->findAll($criteria);
 
 
-	if($_POST['Year_start'] == "" && $_POST['Year_end'] == "" ){
+	if($Year_start == "" && $Year_end == "" ){
 		if (!empty($branch) || !empty($pos_back) || !empty($dep_back) ) {
 			?>	
 			<style type="text/css">
@@ -184,15 +194,6 @@ $user_Department = $user_login->department_id;
 					text-align: center;
 				}
 			</style>
-			<h2 class="text-center">
-				<?php
-				if (Yii::app()->session['lang'] == 1) {
-					echo "Report";
-				} else {
-					echo "รายงานภาพ";
-				}
-				?>
-			</h2>
 			<?php
 			$i = 1;?>
 		
@@ -215,7 +216,8 @@ $user_Department = $user_login->department_id;
 							</tr> 
 						</thead>
 						<tbody>
-							<?php if ($data['TypeEmployee'] == 2) {    
+							<?php 
+							if ($data['TypeEmployee'] == 2) {    
 								foreach ($branch as $key => $value) { 	
 
 									$criteria = new CDbCriteria;
@@ -244,21 +246,27 @@ $user_Department = $user_login->department_id;
 									if ($authority == 2 || $authority == 3) {
 										$criteria->compare('department_id',$user_Department);
 									}
-									if($data['Position']){
-										$criteria->compare('position_id',$data['Position']);
-									}
-									if ($authority == 3) {
-										$criteria->compare('position_id',$user_Position);
-									}
-									if($data['Leval']){
-										$criteria->compare('branch_id',$data['Leval']);
-									}
-									if ($authority == 3) {
-										$criteria->compare('branch_id',$user_Level);
-									}
+									if ($data['Position'] != "") {
+											if($data['Position']){
+													$criteria->compare('position_id',$data['Position']);
+												}
+											}else{
+												if ($authority == 2 || $authority == 3) {
+													$criteria->compare('position_id',$user_Position);
+												}
+											}
+											if($data['Leval'] != ""){
+											if($data['Leval']){
+												$criteria->compare('branch_id',$data['Leval']);
+											}
+											}else{
+												if ($authority == 3) {
+													$criteria->compare('branch_id',$user_Level);
+												}
+											}
 									$criteria->compare('superuser',0);
 									$usersAll = Users::model()->findAll($criteria);
-
+									var_dump($data['Position']);
 									$cou_use = count($users);
 
 									$cou_useAll = count($usersAll);
@@ -318,18 +326,24 @@ $user_Department = $user_login->department_id;
 									if ($authority == 2 || $authority == 3) {
 										$criteria->compare('department_id',$user_Department);
 									}
-									if($data['Position']){
-										$criteria->compare('position_id',$data['Position']);
-									}
-									if ($authority == 3) {
-										$criteria->compare('position_id',$user_Position);
-									}
-									if($data['Leval']){
-										$criteria->compare('branch_id',$data['Leval']);
-									}
-									if ($authority == 3) {
-										$criteria->compare('branch_id',$user_Level);
-									}
+									if ($data['Position'] != "") {
+												if($data['Position']){
+													$criteria->compare('position_id',$data['Position']);
+												}
+											}else{
+												if ($authority == 2 || $authority == 3) {
+													$criteria->compare('position_id',$user_Position);
+												}
+											}
+											if($data['Leval'] != ""){
+											if($data['Leval']){
+												$criteria->compare('branch_id',$data['Leval']);
+											}
+											}else{
+												if ($authority == 3) {
+													$criteria->compare('branch_id',$user_Level);
+												}
+											}
 									$criteria->compare('superuser',0);
 									$usersAll = Users::model()->findAll($criteria);
 
@@ -393,18 +407,24 @@ $user_Department = $user_login->department_id;
 									if ($authority == 2 || $authority == 3) {
 										$criteria->compare('department_id',$user_Department);
 									}
-									if($data['Position']){
-										$criteria->compare('position_id',$data['Position']);
-									}
-									if ($authority == 3) {
-										$criteria->compare('position_id',$user_Position);
-									}
-									if($data['Leval']){
-										$criteria->compare('branch_id',$data['Leval']);
-									}
-									if ($authority == 3) {
-										$criteria->compare('branch_id',$user_Level);
-									}
+									if ($data['Position'] != "") {
+												if($data['Position']){
+													$criteria->compare('position_id',$data['Position']);
+												}
+											}else{
+												if ($authority == 2 || $authority == 3) {
+													$criteria->compare('position_id',$user_Position);
+												}
+											}
+											if($data['Leval'] != ""){
+											if($data['Leval']){
+												$criteria->compare('branch_id',$data['Leval']);
+											}
+											}else{
+												if ($authority == 3) {
+													$criteria->compare('branch_id',$user_Level);
+												}
+											}
 									$criteria->compare('superuser',0);
 									$usersAll = Users::model()->findAll($criteria);
 
