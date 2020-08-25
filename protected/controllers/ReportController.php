@@ -2032,13 +2032,15 @@ public function actionReportRegisterData()
 													}else{
 														$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
 													}
-												}
+												}else{
+												$datatable .= '-';
+											}
 												$datatable .= '</td>';
 											}
 											if($cou_use > 0){
 												$datatable .= '<td>'.round($per_cen, 2).' %</td>';
 											}else{
-												$datatable .= '<td></td>';
+												$datatable .= '<td>-</td>';
 											}
 											$datatable .= '</tr>';
 										}
@@ -2105,13 +2107,15 @@ public function actionReportRegisterData()
 												}else{
 													$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
 												}
+											}else{
+												$datatable .= '-';
 											}
 											$datatable .= '</td>';
 										}	
 										if($cou_use > 0){
 											$datatable .= '<td>'.round($per_cen, 2).' %</td>';
 										}else{
-											$datatable .= '<td></td>';
+											$datatable .= '<td>-</td>';
 										}
 										$datatable .= '</tr>';
 
@@ -2176,13 +2180,15 @@ public function actionReportRegisterData()
 												}else{
 													$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
 												}
+											}else{
+												$datatable .= '-';
 											}
 											$datatable .= '</td>';
 										}
 										if($cou_use > 0){
 											$datatable .= '<td>'.round($per_cen, 2).' %</td>';
 										}else{
-											$datatable .= '<td></td>';
+											$datatable .= '<td>-</td>';
 										}
 										$datatable .= '</tr>';
 

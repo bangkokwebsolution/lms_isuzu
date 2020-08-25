@@ -27,7 +27,6 @@ $user_Level = $user_login->branch_id;
 $user_Position = $user_login->position_id;
 $user_Department = $user_login->department_id;
 
-var_dump(YiiBase::getPathOfAlias('webroot') . '/uploads/AttendPrint.png');
 ?>
 
 <!DOCTYPE html>
@@ -37,17 +36,15 @@ var_dump(YiiBase::getPathOfAlias('webroot') . '/uploads/AttendPrint.png');
 </head>
 <body>
 	<div class="row">
+		<h1>รายงานภาพรวมการสมัคร</h1>
 		<div class="col-sm-12">
-			<img src="<?= YiiBase::getPathOfAlias('webroot')?>/uploads/AttendPrint.png" width="500" height="auto">
 			<?php
 			if ($Chart != "") {
 			?>
 			<?php if ($Chart === "accommodation=Bar_Graph") { ?>
-				<!-- <img src="<?= Yii::app()->getBaseUrl(true) ?>/AttendPrint.png" width="500" height="auto"> -->
-				<img src="<?= YiiBase::getPathOfAlias('webroot')?>/uploads/AttendPrint.png" width="500" height="auto">
+				<img src="<?= Yii::app()->getBaseUrl(true)?>/uploads/AttendPrint.png" width="500" height="auto">
 			<?php }else if($Chart === "accommodation=Pie_Charts"){ ?>
-				<!-- <img src="<?= Yii::app()->getBaseUrl(true) ?>/AttendPrint1.png" width="500" height="auto"> -->
-				<img src="<?= YiiBase::getPathOfAlias('webroot')?>/uploads/AttendPrint1.png" width="500" height="auto">
+				<img src="<?= Yii::app()->getBaseUrl(true)?>/uploads/AttendPrint1.png" width="500" height="auto">
 			<?php } 
 			$f = 20;
 			for ($p=0; $p <= $f ; $p++) { 
@@ -60,10 +57,8 @@ var_dump(YiiBase::getPathOfAlias('webroot') . '/uploads/AttendPrint.png');
 	if ($Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") { ?>
 		<div class="row">
 			<div class="col-sm-12">
-				<img src="<?= YiiBase::getPathOfAlias('webroot')?>/uploads/AttendPrint.png" width="500" height="auto">
-				<img src="<?= YiiBase::getPathOfAlias('webroot')?>/uploads/AttendPrint1.png" width="500" height="auto">
-	<!-- 			<img src="<?= Yii::app()->getBaseUrl(true) ?>/AttendPrint.png" width="500" height="auto">
-				<img src="<?= Yii::app()->getBaseUrl(true) ?>/AttendPrint1.png" width="500" height="auto"> -->
+				<img src="<?= Yii::app()->getBaseUrl(true) ?>/uploads/AttendPrint.png" width="500" height="auto">
+				<img src="<?= Yii::app()->getBaseUrl(true) ?>/uploads/AttendPrint1.png" width="500" height="auto">
 			</div><br>
 		</div>
 		<?php	$f = 20;
@@ -76,10 +71,8 @@ var_dump(YiiBase::getPathOfAlias('webroot') . '/uploads/AttendPrint.png');
 		if ($Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") { ?>
 			<div class="row">
 				<div class="col-sm-12">
-				<!-- 	<img src="<?= Yii::app()->getBaseUrl(true) ?>/AttendPrint3.png" width="500" height="auto">
-					<img src="<?= Yii::app()->getBaseUrl(true) ?>/AttendPrint4.png" width="500" height="auto"> -->
-				<img src="<?= YiiBase::getPathOfAlias('webroot')?>/uploads/AttendPrint3.png" width="500" height="auto">
-				<img src="<?= YiiBase::getPathOfAlias('webroot')?>/uploads/AttendPrint4.png" width="500" height="auto">
+					<img src="<?= Yii::app()->getBaseUrl(true) ?>/uploads/AttendPrint3.png" width="500" height="auto">
+					<img src="<?= Yii::app()->getBaseUrl(true) ?>/uploads/AttendPrint4.png" width="500" height="auto">
 				</div><br>
 			</div>
 			<?php
@@ -278,6 +271,8 @@ var_dump(YiiBase::getPathOfAlias('webroot') . '/uploads/AttendPrint.png');
 														<?php}else{?>
 															<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>
 														<?php }
+													}else{
+														echo "-";
 													} ?>
 												</td>
 												<?php
@@ -285,7 +280,7 @@ var_dump(YiiBase::getPathOfAlias('webroot') . '/uploads/AttendPrint.png');
 											if($cou_use > 0){ ?>
 												<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo round($per_cen, 2); ?>%</td>
 											<?php }else{ ?>
-												<td style="border:1px solid #d8d8d8; padding: 8px;"></td>
+												<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">-</td>
 											<?php } ?>
 										</tr>
 									<?php }
@@ -352,13 +347,15 @@ var_dump(YiiBase::getPathOfAlias('webroot') . '/uploads/AttendPrint.png');
 													<?php }else{ ?>
 														<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>
 													<?php }
-												} ?>
+												}else{
+														echo "-";
+													} ?>
 											</td>
 										<?php }	
 										if($cou_use > 0){ ?>
 											<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo round($per_cen, 2) ?>%</td>
 										<?php }else{ ?>
-											<td style="border:1px solid #d8d8d8; padding: 8px;"></td>
+											<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">-</td>
 										<?php } ?>
 									</tr>
 
@@ -423,13 +420,15 @@ var_dump(YiiBase::getPathOfAlias('webroot') . '/uploads/AttendPrint.png');
 														<?php}else{?>
 															<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>
 														<?php }
+													}else{
+														echo "-";
 													} ?>
 												</td>
 											<?php }
 											if($cou_use > 0){ ?>
 												<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo round($per_cen, 2);?>%</td>
 											<?php }else{ ?>
-												<td style="border:1px solid #d8d8d8; padding: 8px;"></td>
+												<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">-</td>
 											<?php } ?>
 										</tr>
 

@@ -23,6 +23,7 @@ $user_Department = $user_login->department_id;
 </head>
 <body>
 	<div class="row">
+		<h1>รายงานภาพรวมการสมัคร</h1>
 		<div class="col-sm-12">
 			<?php
 			if ($Chart != "") {
@@ -253,6 +254,8 @@ $user_Department = $user_login->department_id;
 														<?php}else{?>
 															<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>
 														<?php }
+													}else{
+														echo "-";
 													} ?>
 												</td>
 												<?php
@@ -260,7 +263,7 @@ $user_Department = $user_login->department_id;
 											if($cou_use > 0){ ?>
 												<td class="text-center"><?php echo round($per_cen, 2); ?>%</td>
 											<?php }else{ ?>
-												<td></td>
+												<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">-</td>
 											<?php } ?>
 										</tr>
 									<?php }
@@ -327,13 +330,15 @@ $user_Department = $user_login->department_id;
 													<?php }else{ ?>
 														<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>
 													<?php }
-												} ?>
+												}else{
+														echo "-";
+													} ?>
 											</td>
 										<?php }	
 										if($cou_use > 0){ ?>
 											<td class="text-center"><?php echo round($per_cen, 2) ?>%</td>
 										<?php }else{ ?>
-											<td></td>
+											<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">-</td>
 										<?php } ?>
 									</tr>
 
@@ -399,13 +404,15 @@ $user_Department = $user_login->department_id;
 														<?php}else{?>
 															<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>
 														<?php }
+													}else{
+														echo "-";
 													} ?>
 												</td>
 											<?php }
 											if($cou_use > 0){ ?>
 												<td class="text-center"><?php echo round($per_cen, 2);?>%</td>
 											<?php }else{ ?>
-												<td></td>
+												<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">-</td>
 											<?php } ?>
 										</tr>
 
