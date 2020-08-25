@@ -64,11 +64,12 @@
                 <div class="row">
                     <?php echo $form->labelEx($model,'type_employee_id'); ?>
                     <?php 
-                        $criteria = new CDbCriteria();
-                        $criteria->compare('active','y');
-                        $criteria->compare('level','3');
+                        // $criteria = new CDbCriteria();
+                        // $criteria->compare('active','y');
+                        // $criteria->compare('level','3');
+
                     ?>
-                    <?php echo $form->dropDownList($model, 'type_employee_id', CHtml::listData(OrgChart::model()->findAll($criteria), 'id', 'title'),array('class'=>'span5','empty' => "--เลือก--")); ?>
+                    <?php echo $form->dropDownList($model, 'type_employee_id', CHtml::listData(TypeEmployee::model()->findAll(), 'id', 'type_employee_name'),array('class'=>'span5','empty' => "--เลือก--")); ?>
                     <?php echo $this->NotEmpty(); ?>
                     <?php echo $form->error($model,'type_employee_id'); ?>
                 </div>
