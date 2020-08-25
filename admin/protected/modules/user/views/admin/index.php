@@ -108,7 +108,7 @@ Yii::app()->clientScript->registerScript('search', "
 										array(
 											'name'=>'fullname',
 											'type'=>'html',
-											'value'=>'$data->fullname',
+											'value'=>'$data->fullnamee',
 										),
 										array(
 											'header' => 'รหัสพนักงาน',

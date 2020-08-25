@@ -41,6 +41,9 @@ class User extends CActiveRecord
 	public $user_id;
 	public $nameSearch;
 	public $month;
+	public $fullname;
+
+
 	//public $register_status;
 
 	/**
@@ -90,7 +93,7 @@ class User extends CActiveRecord
 			array('superuser, status, online_status,online_user,register_status', 'numerical', 'integerOnly'=>true),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'update'),
-			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,company_id, division_id,position_id,lastactivity,orgchart_lv2, group,idensearch,identification,station_id,supper_user_status,pic_cardid2,employee_id,typeuser,register_status,dateRang,user_id,nameSearch,note,not_passed, avatar, month,type_employee, report_authority, branch_id', 'safe', 'on'=>'search'),
+			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,company_id, division_id,position_id,lastactivity,orgchart_lv2, group,idensearch,identification,station_id,supper_user_status,pic_cardid2,employee_id,typeuser,register_status,dateRang,user_id,nameSearch,note,not_passed, avatar, month,type_employee, report_authority, branch_id, fullname', 'safe', 'on'=>'search'),
 			// array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
 			array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 			//array('confirmpass', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
@@ -271,7 +274,8 @@ class User extends CActiveRecord
 			'month'=>'เดือน',
 			'report_authority'=>'สิทธิ์ Report',
 			'branch_id'=>'เลเวล',
-			'fullname'=>'ชื่อ-นามสกุล'
+			'fullname'=>'ชื่อ-นามสกุล',
+			'fullnamee'=>'ชื่อ-นามสกุล'
 		);
 	}
 
@@ -365,7 +369,7 @@ public function validateIdCard($attribute,$params){
 		
 	}
 
-	public function getFullname(){
+	public function getFullnamee(){
 		$profile = Profile::model()->findByPk($this->id);
 		$text = $profile->firstname_en.' '.$profile->lastname_en;
 		if($text == " "){
