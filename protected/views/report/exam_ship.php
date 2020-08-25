@@ -250,6 +250,7 @@ if(isset($model_position) && !empty($model_position)){
                                             echo "Fullname";
                                         }
                                         ?>" name="search[fullname]" id="search_fullname" type="text" value="<?php if(isset($_GET["search"]["fullname"])){ echo $_GET["search"]["fullname"]; } ?>">
+
                                 </div>
                             </div>
                         </div>
@@ -508,13 +509,13 @@ chart.draw(data, options);
                                 echo "Course";
                             }
                             ?></th>
-                            <th><?php 
+                            <!-- <th><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "รุ่น";
                             }else{
                                 echo "Gen";
                             }
-                            ?></th>
+                            ?></th> -->
                             <th><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ผลสอบ";
@@ -573,7 +574,7 @@ chart.draw(data, options);
                                     <td><?= $value->mem->department->dep_title ?></td>
                                     <td><?= $value->mem->position->position_title ?></td>
                                     <td><?= $value->course->course_title ?></td>
-                                    <td>
+                                    <!-- <td>
                                         <?php 
                                         if($value->gen->gen_title == ""){
                                             echo "-";
@@ -581,16 +582,34 @@ chart.draw(data, options);
                                             echo $value->gen->gen_title;
                                         }
                                         ?>
-                                    </td>
+                                    </td> -->
                                     <td><?= $text_status ?></td>
                                     <td><?= $model_search_score[$key]["score"] ?></td>
                                 </tr>
                                 <?php
                             } // foreach search
                         }else{ // !empty
-                            ?>  
+                            ?>
+                            <td>
+                                <?php 
+                                    if(Yii::app()->session['lang'] != 1){
+                                         echo $value->pro->firstname." ".$value->pro->lastname;
+                                    }else{
+                                        echo $value->pro->firstname_en." ".$value->pro->lastname_en;
+                                    }
+                                ?>
+                            </td>  
                             <tr>
-                                <td colspan="7">
+                                <td>
+                                    <?php 
+                                        if(Yii::app()->session['lang'] != 1){
+                                             echo $value->pro->firstname." ".$value->pro->lastname;
+                                        }else{
+                                            echo $value->pro->firstname_en." ".$value->pro->lastname_en;
+                                        }
+                                    ?>
+                                </td> 
+                                <td colspan="8">
                                     <?php 
                                     if(Yii::app()->session['lang'] != 1){
                                         echo "ไม่มีข้อมูล";

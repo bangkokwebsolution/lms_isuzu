@@ -3544,14 +3544,14 @@ public function actionExamShip(){
     if($authority == 1){
     	$model_department = Department::model()->findAll(array(
 	    	'condition' => 'active=:active AND lang_id=:lang_id AND type_employee_id=:type_id',
-	    	'params' => array(':active'=>'y', ':lang_id'=>1, ':type_id'=>2),
+	    	'params' => array(':active'=>'y', ':lang_id'=>1, ':type_id'=>1),
 	    	'order' => 'dep_title ASC'    	
     	));
     }else{
     	$model_department = [];
     }
 
-    if($authority == 2){
+    if($authority == 1){
     	$model_position = Position::model()->findAll(array(
     		'condition' => 'active=:active AND department_id=:department_id AND lang_id=:lang_id',
     		'params' => array(':active'=>'y',':department_id'=>$user_login->department_id,':lang_id'=>1),
@@ -3587,15 +3587,16 @@ public function actionExamShip(){
     	if($_GET["search"]["fullname"] != ""){
     		$ex_fullname = explode(" ", $_GET["search"]["fullname"]);
 
-    		if(isset($ex_fullname[0])){    			
-    			$name = $ex_fullname[0];
+    		if(isset($ex_fullname[1])){    			
+    			$name = $ex_fullname[1];
     			$criteria->compare('pro.firstname', $name, true);
         		$criteria->compare('pro.lastname', $name, true, 'OR');
     		}
 
-    		if(isset($ex_fullname[1])){
-    			$name = $ex_fullname[1];
-    			$criteria->compare('pro.lastname',$name,true, 'OR');
+    		if(isset($ex_fullname[0])){
+    			$name = $ex_fullname[0];
+    			$criteria->compare('pro.firstname_en',$name,true, 'OR');
+    			$criteria->compare('pro.lastname_en',$name,true, 'OR');
     		}
     	}
 
