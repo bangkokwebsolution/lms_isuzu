@@ -586,7 +586,7 @@ class ReportController extends Controller
 									2]);
 
 								var options = {
-									title: "รายงานภาพคนสมัครสมาชิกคนออฟฟิต",
+									title: "รายงานภาพคนสมัครสมาชิกคนออฟฟิศ",
 									width: 600,
 									height: 400,
 									bar: {groupWidth: "95%"},
@@ -611,7 +611,7 @@ class ReportController extends Controller
 									]);
 								if (data) {}
 									var options = {
-										title: "รายงานภาพคนสมัครสมาชิกคนออฟฟิต",
+										title: "รายงานภาพคนสมัครสมาชิกคนออฟฟิศ",
 										sliceVisibilityThreshold:0,
 										pieSliceText:'value',
 										//is3D: true,
