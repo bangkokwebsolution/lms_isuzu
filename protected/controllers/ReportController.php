@@ -152,13 +152,15 @@ class ReportController extends Controller
 					$criteria = new CDbCriteria;
 					$criteria->addIncondition('position_id',$pos_arr);
 					$criteria->compare('active','y');
-					if($Leval){
+					if ($Leval != "") {
+						if($Leval){
 						$criteria->compare('id',$Leval);
-					}
-					if ($authority == 3) {
-                                         
+						}
+					}else{
+						if ($authority == 3) {              
                         $criteria->compare('id',$user_Level);
-                    }
+                    	}
+					}					
 					$branch = Branch::model()->findAll($criteria);
 
 					$branch_arr = [];
@@ -180,13 +182,17 @@ class ReportController extends Controller
 					}else{
 						$criteria->compare('position_id',$pos_arr);	
 					}
-					if ($Leval) {
-						$criteria->compare('branch_id',$Leval);
-					}
-					if ($authority == 3) {
+					if ($Leval != "") {
+						if ($Leval) {
+							$criteria->compare('branch_id',$Leval);
+						}
+					}else{
+						if ($authority == 3) {
                                          
         				$criteria->compare('branch_id',$user_Level);
-    				}
+    					}
+					}
+					
 
 					$User = User::model()->findAll($criteria);
 
@@ -631,17 +637,20 @@ class ReportController extends Controller
 					}
 				}
 				if($_POST['Year_start'] == "" && $_POST['Year_end'] == ""){
-					if (!empty($User)) {
 									?>
-									<h2 class="text-center">
-										<?php
-										if (Yii::app()->session['lang'] == 1) {
-											echo "Report";
-										} else {
-											echo "รายงานภาพ";
-										}
-										?>
-									</h2>
+									<li class="breadcrumb-item active" aria-current="page">
+						            <center>
+						                <h3>
+						                    <?php
+						                    if (Yii::app()->session['lang'] == 1) {
+						                        echo "Register Staff Office Report";
+						                    } else {
+						                        echo "รายงานภาพการสมัครสมาชิก คนประจำoffice";
+						                    }
+						                    ?>
+						                </h3>    
+						            </center>
+						        	</li>
 									<?php
     
 									$i = 1;
@@ -657,7 +666,7 @@ class ReportController extends Controller
 									$datatable .= '</tr>'; 
 									$datatable .= '</thead>';
 									$datatable .= '<tbody>';
-				
+							if (!empty($User)) {
 										foreach ($User as $key => $value) { 	
 
 											$datatable .= '<tr>';
@@ -674,6 +683,18 @@ class ReportController extends Controller
 											$datatable .= '</tr>';
 										}			 
 
+									
+								}else{
+									$datatable .= '<tr>';
+									$datatable .= '<td colspan="6">';
+	                                    if(Yii::app()->session['lang'] != 1){
+	                                        $datatable .= 'ไม่มีข้อมูล';
+	                                    }else{
+	                                        $datatable .= 'No data';
+	                                    }
+			                        $datatable .= '</td>';
+									$datatable .= '</tr>';
+								}
 									$datatable .= '</tbody>';
 									$datatable .= '</table>';
 									$datatable .= '</div>';
@@ -681,11 +702,9 @@ class ReportController extends Controller
 
 
 									echo $datatable;
-								}else{
-									echo "<p>ไม่พบข้อมูล</p>";
-								}
 							}
-			} ?>
+						} 
+						?>
 						 <div class="pull-left ShowGraph">
 								<a href="<?= $this->createUrl('report/reportRegisterOfficePDF',array('registerofficeData[Department]'=>$_POST['Department'],
 								'registerofficeData[Position]'=>$_POST['Position'],

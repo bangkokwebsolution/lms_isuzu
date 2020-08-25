@@ -82,11 +82,11 @@
                                         <?php
 
                                         $criteria= new CDbCriteria;
-                                        if ($authority == 3) {
-                                                if ($Position != "") {
-                                                    $criteria->compare('id',$Position);
+                                        if ($authority == 2) {
+                                                if ($Department != "") {
+                                                    $criteria->compare('department_id',$Department);
                                                 }else{
-                                                    $criteria->compare('id',0);
+                                                    $criteria->compare('department_id',0);
                                                 }
                                                  
                                         }
@@ -113,10 +113,10 @@
                                         <?php
                                         $criteria= new CDbCriteria;
                                         if ($authority == 3) {
-                                                if ($Level != "") {
-                                                    $criteria->compare('id',$Level);
+                                                if ($Position != "") {
+                                                    $criteria->compare('position_id',$Position);
                                                 }else{
-                                                    $criteria->compare('id',0);
+                                                    $criteria->compare('position_id',0);
                                                 }
                                                  
                                         }
@@ -216,19 +216,6 @@
     <i class="fas fa-chevron-down"></i>
 </div>
 
-        <li class="breadcrumb-item active" aria-current="page">
-            <center>
-                <h3>
-                    <?php
-                    if (Yii::app()->session['lang'] == 1) {
-                        echo "Register Staff Office Report";
-                    } else {
-                        echo "รายงานภาพการสมัครสมาชิก คนประจำoffice";
-                    }
-                    ?>
-                </h3>    
-            </center>
-        </li>
 <div class="row">
     <div class="col-sm-6 col-md-6 Graph_1">
         <div class="chart"></div>
@@ -320,41 +307,59 @@
         var end_year = $("#Year_end").val();
         if(end_year != "" && start_year == ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงปีเริ่มต้น");
-        //     $("#search_start_year").addClass('form-control-danger');
-        // }else{
-        //     $("#search_start_year").removeClass('form-control-danger');
+            swal("กรุณาเลือกช่วงปีเริ่มต้น");
          }
         if(end_year == "" && start_year != ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงปีสิ้นสุด");
-        //     $("#search_end_year").addClass('form-control-danger');
-        // }else{
-        //     $("#search_end_year").removeClass('form-control-danger');
+            swal("กรุณาเลือกช่วงปีสิ้นสุด");
          }
-
-
         var start_date = $("#datetime_start").val();
         var end_date = $("#datetime_end").val();
         if(end_date != "" && start_date == ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงเวลาเริ่มต้น");
-        //     $("#search_start_date").addClass('form-control-danger');
-        // }else{
-        //     $("#search_start_date").removeClass('form-control-danger');
+            swal("กรุณาเลือกช่วงเวลาเริ่มต้น");
          }
         if(end_date == "" && start_date != ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงเวลาสิ้นสุด");
-        //     $("#search_end_date").addClass('form-control-danger');
-        // }else{
-        //     $("#search_end_date").removeClass('form-control-danger');
+            swal("กรุณาเลือกช่วงเวลาสิ้นสุด");
         }
 
         if(status_pass == 1){
             $(".search").submit();
         }
     }
+    $("#datetime_start").change(function () {
+        $("#datetime_end").val("");
+        $("#Year_start").val("");
+        $("#Year_end").val("");
+    });
+    $("#datetime_end").change(function () {
+        var first = new Date($("#datetime_start").val());
+        var current = new Date($(this).val());
+
+        if (first.getTime() > current.getTime()) {
+            swal("ไม่สามารถเลือกช่วงเวลาสิ้นสุดมากกว่าช่วงเวลาเริ่มต้นได้");
+            $(this).val("");
+        }
+        $("#Year_start").val("");
+        $("#Year_end").val("");
+    });
+
+    $("#Year_start").change(function () {
+        $("#Year_end").val("");
+        $("#datetime_start").val("");
+        $("#datetime_end").val("");
+    });
+    $("#Year_end").change(function () {
+        var first = $("#Year_start").val();
+        var current = $(this).val();
+        if (first >= current && current != "") {
+            swal("ไม่สามารถเลือกช่วงปีสิ้นสุดมากกว่าช่วงปีเริ่มต้นได้");            
+            $(this).val("");
+        }
+        $("#datetime_start").val("");
+        $("#datetime_end").val("");
+    });
 
 
     $(".Position").change(function() {
@@ -385,12 +390,12 @@
             var Year_start = $(".Year_start").val();
             var Year_end = $(".Year_end").val();
 
-            var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
-            if (Department == '' || Department === null) {
-                var DepartmentAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Department type! ':'กรุณาเลือกประเภทฝ่ายพนักงาน!'; ?>";
-                swal(alert_message,DepartmentAlert)
-                return false; 
-            }
+            // var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+            // if (Department == '' || Department === null) {
+            //     var DepartmentAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Department type! ':'กรุณาเลือกประเภทฝ่ายพนักงาน!'; ?>";
+            //     swal(alert_message,DepartmentAlert)
+            //     return false; 
+            // }
             
 
             $.ajax({

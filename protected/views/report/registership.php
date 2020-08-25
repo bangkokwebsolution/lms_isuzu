@@ -74,7 +74,8 @@
                                 </div>
                             </div>
                         <?php } ?>
-                         <?php if($authority == 1 || $authority == 2 || $authority == 2 && $type_em == 1 ){   ?>
+                         <?php 
+                         if($authority == 1 || $authority == 2 || $authority == 2 && $type_em == 1){   ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'Position':'แผนก'; ?></label>
@@ -83,11 +84,11 @@
                                     <?php
 
                                         $criteria= new CDbCriteria;
-                                        if ($authority == 2 || $authority == 3 ) {
-                                            if ($Position != "") {
-                                                $criteria->compare('id',$Position);
+                                        if ($authority == 2) {
+                                            if ($Department != "") {
+                                                $criteria->compare('department_id',$Department);
                                             }else{
-                                                $criteria->compare('id',0);
+                                                $criteria->compare('department_id',0);
                                             }
                                         }
                                         $criteria->compare('active','y');
@@ -133,7 +134,7 @@
                             </div>
 
                         </div>
-                   <!--      <div class="row">
+                   <!--  <div class="row">
                            
                             <div class="col-md-3 col-lg-3 col-xs-12">
                                 <div class="form-group">
@@ -207,19 +208,7 @@
         <div class="divider">
             <i class="fas fa-chevron-down"></i>
         </div>
-<li class="breadcrumb-item active" aria-current="page">
-            <center>
-                <h3>
-                    <?php
-                    if (Yii::app()->session['lang'] == 1) {
-                        echo " Register staff ship Report";
-                    } else {
-                        echo " รายงานภาพการสมัครสมาชิก คนประจำเรือ";
-                    }
-                    ?>
-                </h3>    
-            </center>
-        </li>
+
          <div class="row">
                 <div class="col-sm-6 col-md-6 Graph_1">
                         <div class="chart"></div>
@@ -261,7 +250,7 @@
 
 <script>
     $('.datetimepicker').datetimepicker({
-        format: 'd-m-Y',
+        format: 'Y-m-d',
         step: 10,
         timepicker: false,
         timepickerScrollbar: false,
@@ -299,41 +288,59 @@ function chk_form_search(){
         var end_year = $("#Year_end").val();
         if(end_year != "" && start_year == ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงปีเริ่มต้น");
-        //     $("#search_start_year").addClass('form-control-danger');
-        // }else{
-        //     $("#search_start_year").removeClass('form-control-danger');
+            swal("กรุณาเลือกช่วงปีเริ่มต้น");
          }
         if(end_year == "" && start_year != ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงปีสิ้นสุด");
-        //     $("#search_end_year").addClass('form-control-danger');
-        // }else{
-        //     $("#search_end_year").removeClass('form-control-danger');
+            swal("กรุณาเลือกช่วงปีสิ้นสุด");
          }
-
-
         var start_date = $("#datetime_start").val();
         var end_date = $("#datetime_end").val();
         if(end_date != "" && start_date == ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงเวลาเริ่มต้น");
-        //     $("#search_start_date").addClass('form-control-danger');
-        // }else{
-        //     $("#search_start_date").removeClass('form-control-danger');
+            swal("กรุณาเลือกช่วงเวลาเริ่มต้น");
          }
         if(end_date == "" && start_date != ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงเวลาสิ้นสุด");
-        //     $("#search_end_date").addClass('form-control-danger');
-        // }else{
-        //     $("#search_end_date").removeClass('form-control-danger');
+            swal("กรุณาเลือกช่วงเวลาสิ้นสุด");
         }
 
         if(status_pass == 1){
             $(".search").submit();
         }
     }
+    $("#datetime_start").change(function () {
+        $("#datetime_end").val("");
+        $("#Year_start").val("");
+        $("#Year_end").val("");
+    });
+    $("#datetime_end").change(function () {
+        var first = new Date($("#datetime_start").val());
+        var current = new Date($(this).val());
+
+        if (first.getTime() > current.getTime()) {
+            swal("ไม่สามารถเลือกช่วงเวลาสิ้นสุดมากกว่าช่วงเวลาเริ่มต้นได้");
+            $(this).val("");
+        }
+        $("#Year_start").val("");
+        $("#Year_end").val("");
+    });
+
+    $("#Year_start").change(function () {
+        $("#Year_end").val("");
+        $("#datetime_start").val("");
+        $("#datetime_end").val("");
+    });
+    $("#Year_end").change(function () {
+        var first = $("#Year_start").val();
+        var current = $(this).val();
+        if (first >= current && current != "") {
+            swal("ไม่สามารถเลือกช่วงปีสิ้นสุดมากกว่าช่วงปีเริ่มต้นได้");            
+            $(this).val("");
+        }
+        $("#datetime_start").val("");
+        $("#datetime_end").val("");
+    });
 
     $(".Department").change(function() {
                     var id = $(this).val();
@@ -370,21 +377,20 @@ function chk_form_search(){
     $(".search").click(function() {
                     var Department = $(".Department").val();
                     var Position = $(".Position").val();
-                    var age = $(".age").val();
-                    var age2 = $(".age2").val();
-                    //var institution = $("#institution").val();
+                    var age = $("#age").val();
+                    var age2 = $("#age2").val();
                     var Chart = $('input[name="accommodation"]:checked').serialize();
                     var datetime_start = $("#datetime_start").val();
                     var datetime_end = $("#datetime_end").val();
                     var Year_start = $(".Year_start").val();
                     var Year_end = $(".Year_end").val();
 
-                    var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
-                        if (Department == '' || Department === null) {
-                            var DepartmentAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Department type! ':'กรุณาเลือกประเภทฝ่ายพนักงาน!'; ?>";
-                            swal(alert_message,DepartmentAlert)
-                        return false; 
-                    }
+                     var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+                    //     if (Department == '' || Department === null) {
+                    //         var DepartmentAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Department type! ':'กรุณาเลือกประเภทฝ่ายพนักงาน!'; ?>";
+                    //         swal(alert_message,DepartmentAlert)
+                    //     return false; 
+                    // }
 
 
                     // var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
@@ -393,35 +399,34 @@ function chk_form_search(){
                     //     swal(alert_message,DepartmentAlert) 
                     //     return false;
                     // }
-
-                    // if (datetime_start === '' || datetime_start === null) {
+                    // console.log(datetime_start);
+                    // if (datetime_start != "" || datetime_end != "") {
+                    // if (datetime_start != "" && datetime_end == "" ) {
                     //         var datetime_startAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select a datetime start! ':'กรุณาเลือกช่วงเวลาเริ่มต้น!'; ?>";
                     //         swal(alert_message,datetime_startAlert)
                     //           return false;
                     //     }
-                    
-                        
-                       
-                    //         if (datetime_end === '' || datetime_end === null) {
+
+                    // if (datetime_end != "" && datetime_end == "") {
                     //         var datetime_endAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select a datetime end! ':'กรุณาเลือกช่วงเวลาสิ้นสุด!'; ?>";
                     //         swal(alert_message,datetime_endAlert)
                     //           return false;
                     //     }
-
-                    //      if (year_start === '' || year_start === null) {
+                    // }
+                    // console.log(Year_start);
+                    // if (Year_start != "" || Year_end != "" || typeof  Year_start != 'undefined' || typeof  Year_end != 'undefined') {
+                    // if (Year_start == '' || Year_end != "") {
                     //         var year_startAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select a Year start! ':'กรุณาเลือกช่วงปีเริ่มต้น!'; ?>";
                     //         swal(alert_message,year_startAlert)
                     //           return false;
-                    //     }
-                    
-
+                    // }
                       
-                    //         if (year_end === '' || year_end === null) {
+                    // if (Year_start != '' || Year_end == "") {
                     //             var year_endtAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select a Year end! ':'กรุณาเลือกช่วงปีสิ้นสุด!'; ?>";
                     //             swal(alert_message,year_endtAlert)
                     //               return false;
-                    //         }
-                               
+                    // }
+                    // }         
 
                     $.ajax({
                         type: 'POST',

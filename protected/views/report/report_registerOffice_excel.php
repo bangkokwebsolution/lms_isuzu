@@ -35,13 +35,14 @@ $user_Department = $user_login->department_id;
 </head>
 <body>
 	<div class="row">
+		<h1>
 		<?php
 		if (Yii::app()->user->id == 1) {
 			echo "Report register office";
 		}else{
 			echo "รายงานภาพรวมการสมัคร คนออฟฟิต";
 		}
-		?>
+		?></h1>
 		<div class="col-sm-12">
 			<?php
 			if ($Chart != "") {
@@ -125,13 +126,15 @@ $user_Department = $user_login->department_id;
 	$criteria = new CDbCriteria;
 	$criteria->addIncondition('position_id',$pos_arr);
 	$criteria->compare('active','y');
-	if($Leval){
-		$criteria->compare('id',$Leval);
-	}
-	if ($authority == 3) {
-                                         
-        $criteria->compare('id',$user_Level);
-    }
+	if ($Leval != "") {
+						if($Leval){
+						$criteria->compare('id',$Leval);
+						}
+					}else{
+						if ($authority == 3) {              
+                        $criteria->compare('id',$user_Level);
+                    	}
+					}
 	$branch = Branch::model()->findAll($criteria);
 
 	$branch_arr = [];
@@ -153,17 +156,20 @@ $user_Department = $user_login->department_id;
 	}else{
 		$criteria->compare('position_id',$pos_arr);	
 	}
-	if ($Leval) {
-		$criteria->compare('branch_id',$Leval);
-	}
-	if ($authority == 3) {
+	if ($Leval != "") {
+						if ($Leval) {
+							$criteria->compare('branch_id',$Leval);
+						}
+					}else{
+						if ($authority == 3) {
                                          
-        $criteria->compare('branch_id',$user_Level);
-    }
+        				$criteria->compare('branch_id',$user_Level);
+    					}
+					}
 
 	$User = User::model()->findAll($criteria);
 	if ($Year_start == null && $Year_end == null) {
-	if (!empty($User)) { ?>
+	 ?>
 		<style type="text/css">
 			tr td,tr th{
 				border:1px solid #d8d8d8;
@@ -177,16 +183,7 @@ $user_Department = $user_login->department_id;
 				text-align: center;
 			}
 		</style>
-		<h2 class="text-center">
-			<?php
-			if (Yii::app()->session['lang'] == 1) {
-				echo "Report";
-			} else {
-				echo "รายงานภาพ";
-			}
-			$i = 1;
-			?>
-		</h2>
+		
 		<div class="report-table">
 			<div class="table-responsive w-100 t-regis-language">
 				<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 90%;">       
@@ -200,6 +197,8 @@ $user_Department = $user_login->department_id;
 					</thead>
 					<tbody>
 						<?php
+						if (!empty($User)) {
+							$i = 1;
 						foreach ($User as $key => $value) { ?>	
 
 							<tr class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">
@@ -209,13 +208,26 @@ $user_Department = $user_login->department_id;
 								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $value->position->position_title; ?></td>
 							</tr>
 
-						<?php }  ?>
+						<?php }  
+					}else{ ?>
+						<tr>
+								 <td colspan="4">
+                                    <?php 
+                                    if(Yii::app()->session['lang'] != 1){
+                                        echo "ไม่มีข้อมูล";
+                                    }else{
+                                        echo "No data";
+                                    }
+                                    ?></td>
+							</tr>
+				<?php	}
+					?>
 
 					</tbody>
 				</table>
 			</div>
 		</div>
-	<?php }
+	<?php 
 	}
 	 ?>
 

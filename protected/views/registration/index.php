@@ -3314,7 +3314,7 @@ $count_tn = 1;
 </div>  
 <?php 
 
-if (!$users->isNewRecord && $profile->type_employee) {
+if (!$users->isNewRecord && $profile->type_employee == 1) {
 
  ?>
  <div class="well form_ship">
