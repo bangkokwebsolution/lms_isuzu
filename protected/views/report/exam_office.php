@@ -775,7 +775,7 @@ chart.draw(data, options);
         });
       
         $('.btn-excel').click(function(e) {
-            window.open('data:application/vnd.ms-excel,' + encodeURIComponent("<h2>Course Staff Office Report</h2>"+$('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html() ));
+            window.open('data:application/vnd.ms-excel;charset=UTF-8;,' + encodeURIComponent("<h2>Course Staff Office Report</h2>"+$('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br><font color="white">ตาราง</font>'+$('#result_search').html() ));
             e.preventDefault();
         });
 

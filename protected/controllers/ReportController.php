@@ -4052,8 +4052,8 @@ if($course_score->score_past == 'y'){
 		$result = '
 		<style type="text/css"> 
 			body{ 
-				font-family:"thaisansneue"; 
-				font-size:20px; 
+				font-family:"garuda"; 
+				font-size:14px;
 			}
 			table{ 
 				width:100%;
