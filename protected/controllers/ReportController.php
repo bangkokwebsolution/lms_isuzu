@@ -1322,13 +1322,24 @@ public function actionReportRegisterOfficeExcel()
 								}
 
 								$datatable .= '</td>';
-								$datatable .= '<td>';
-								if ($valuepos_back->status == 1) {
-									$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
+								if (Yii::app()->session['lang'] == 1) {
+										$datatable .= '<td>';
+									if ($valuepos_back->status == 1) {
+										$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approve</span>';
+									}else{
+										$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
+									}
+									$datatable .= '</td>';
 								}else{
-									$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+										$datatable .= '<td>';
+									if ($valuepos_back->status == 1) {
+										$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
+									}else{
+										$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+									}
+									$datatable .= '</td>';
 								}
-								$datatable .= '</td>';
+								
 								$datatable .= '</tr>';
 
 							}  							

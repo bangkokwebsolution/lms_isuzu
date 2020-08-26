@@ -213,13 +213,26 @@ $user_Department = $user_login->department_id;
 									}
 									?>
 								</td>
-								<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">
+								<?php
+								if (Yii::app()->session['lang'] == 1) { ?>
+									<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">
+									<?php if ($valuepos_back->status == 1) { ?>
+										<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approve</span>
+									<?php }else{ ?>
+										<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>
+									<?php } ?>
+								</td>
+								<?php }else{ ?>
+									<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">
 									<?php if ($valuepos_back->status == 1) { ?>
 										<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>
 									<?php }else{ ?>
 										<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>
 									<?php } ?>
 								</td>
+							<?php }
+								?>
+								
 							</tr>
 
 						<?php } }else{ ?>
