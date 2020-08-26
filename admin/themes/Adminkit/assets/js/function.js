@@ -26,30 +26,35 @@ function multipleDeleteNews(url,form)
     return false;
 }
 
-
 function init_tinymce() {
+        var getUrl = window.location;
+    var baseUrl = getUrl.protocol + "//" + getUrl.host + "/" + getUrl.pathname.split('/')[1];
+    var baseUrl = baseUrl + '/filemanager/';
     tinymce.init({
+
         selector: ".tinymce",
         theme: "modern",
-        width: '90%',
+        width: '100%',
         height: 300,
         relative_urls: false,
-        remove_script_host : false,
+        remove_script_host: false,
         menubar: "view",
         autoresize_on_init: false,
         plugins: [
             "advlist autolink link image lists charmap print preview hr anchor pagebreak",
             "searchreplace wordcount visualblocks visualchars insertdatetime media nonbreaking",
-            "table contextmenu directionality emoticons paste textcolor responsivefilemanager code","fullscreen"
+            "table contextmenu directionality emoticons paste textcolor responsivefilemanager code", "fullscreen"
         ],
         toolbar1: "undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | styleselect",
         toolbar2: "| responsivefilemanager | link unlink anchor | image media | forecolor backcolor  | print preview code fullscreen | fontsizeselect",
-        image_advtab: true ,
+        image_advtab: true,
         fontsize_formats: "8pt 10pt 12pt 14pt 18pt 24pt 36pt",
 
-        external_filemanager_path:"../../../../filemanager/",
-        filemanager_title:"Filemanager" ,
-        external_plugins: { "filemanager" : "../../../../../../filemanager/plugin.min.js"}
+        external_filemanager_path: baseUrl,
+        filemanager_title: "Filemanager",
+        external_plugins: {
+            "filemanager": baseUrl + "plugin.min.js"
+        }
     });
 }
 
