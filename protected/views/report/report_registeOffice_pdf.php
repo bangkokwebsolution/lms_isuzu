@@ -31,7 +31,7 @@ $user_Department = $user_login->department_id;
 		if (Yii::app()->user->id == 1) {
 			echo "Report register office";
 		}else{
-			echo "รายงานภาพรวมการสมัคร คนออฟฟิต";
+			echo "รายงานภาพรวมการสมัคร คนออฟฟิศ";
 		}
 		?></h1>
 		<?php

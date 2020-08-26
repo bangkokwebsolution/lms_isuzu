@@ -241,7 +241,6 @@
                     </div>
                 </div>
             </div>
-        <hr>   
         <div class="dataTable"></div>
 
     </div>

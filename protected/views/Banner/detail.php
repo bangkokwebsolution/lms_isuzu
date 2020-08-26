@@ -33,7 +33,7 @@ function DateThai($strDate)
   border-radius: 8px;
   padding: 5px;
   width:377px;
-  height:50px;
+  height:auto;
 }
     p {
   color: navy;
