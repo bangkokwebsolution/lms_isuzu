@@ -4358,7 +4358,9 @@ var new_forms = <?php echo $new_form; ?>;
 
                                      }              
                                  }else if(new_forms === 0 || typeof  new_forms === 'undefined' || new_forms === false){
-                                     var type_users = <?php echo $profile->type_user; ?>;
+                                  
+                                     var type_users = <?php  echo $profile->type_user != ""?$profile->type_user:0; ?>;
+                                
                                      if (type_users === 3) {
                     // var type_cards = $("input[name='type_card']:checked").val();
                     // if (type_cards === 'l') {
