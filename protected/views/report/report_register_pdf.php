@@ -24,7 +24,7 @@ $user_Department = $user_login->department_id;
 <body>
 	<div class="row">
 		<h1><?php
-		if (Yii::app()->user->id == 1) {
+		if (Yii::app()->session['lang'] == 1) {
 			echo "Report overview register";
 		}else{
 			echo "รายงานภาพรวมการสมัครสมาชิก";
@@ -186,17 +186,33 @@ $user_Department = $user_login->department_id;
 					<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 100%;	">     
 						<thead>
 							<tr>
-								<th>ลำดับ</th>
-								<th>ฝ่าย</th>
-								<th>แผนก</th>
+								<?php
+								if (Yii::app()->session['lang'] == 1) { ?>
+								<th style="border:1px solid #d8d8d8; padding: 8px;">No.</th>
+								<th style="border:1px solid #d8d8d8; padding: 8px;">Department</th>
+								<th style="border:1px solid #d8d8d8; padding: 8px;">Position</th>
 								<?php if($data['TypeEmployee'] != 1){ ?>
 									<th>เลเวล</th>
 								<?php } ?>
-								<th>จำนวน</th>
+								<th style="border:1px solid #d8d8d8; padding: 8px;">Level</th>
 								<?php if($data['TypeEmployee'] != 2){ ?>
-									<th>สถานะอนุมัติ</th>
+									<th style="border:1px solid #d8d8d8; padding: 8px;">Status</th>
 								<?php } ?>
-								<th>คิดเป็นร้อยละ</th>
+								<th style="border:1px solid #d8d8d8; padding: 8px;">Percent</th>
+								<?php }else{ ?>
+								<th style="border:1px solid #d8d8d8; padding: 8px;">ลำดับ</th>
+								<th style="border:1px solid #d8d8d8; padding: 8px;">ฝ่าย</th>
+								<th style="border:1px solid #d8d8d8; padding: 8px;">แผนก</th>
+								<?php if($data['TypeEmployee'] != 1){ ?>
+									<th>เลเวล</th>
+								<?php } ?>
+								<th style="border:1px solid #d8d8d8; padding: 8px;">จำนวน</th>
+								<?php if($data['TypeEmployee'] != 2){ ?>
+									<th style="border:1px solid #d8d8d8; padding: 8px;">สถานะอนุมัติ</th>
+								<?php } ?>
+								<th style="border:1px solid #d8d8d8; padding: 8px;">คิดเป็นร้อยละ</th>
+							<?php }
+								?>
 							</tr> 
 						</thead>
 						<tbody>
@@ -262,18 +278,33 @@ $user_Department = $user_login->department_id;
 										<td><?php echo $value->Positions->position_title;?></td>
 										<td><?php echo $value->branch_name;?></td>
 										<td class="text-center"><?php echo $cou_use;?></td>
-										<?php if($data['TypeEmployee'] != 2){ ?>		
+										<?php if($data['TypeEmployee'] != 2){ ?>
+										<?php if (Yii::app()->session['lang'] == 1) {
+										 ?>		
 											<td class="text-center">
 												<?php	if($cou_use > 0){
 													if ($status == 1) {?>
+														<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approve</span>
+														<?php }else{ ?>
+															<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>
+														<?php }
+													}else{
+														echo "-";
+													} ?>
+												</td>
+											<?php }else{ ?>
+												<td class="text-center">
+												<?php	if($cou_use > 0){
+													if ($status == 1) {?>
 														<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>
-														<?php}else{?>
+														<?php }else{ ?>
 															<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>
 														<?php }
 													}else{
 														echo "-";
 													} ?>
 												</td>
+											<?php } ?>
 												<?php
 											}
 											if($cou_use > 0){ ?>
@@ -347,18 +378,34 @@ $user_Department = $user_login->department_id;
 										<?php } ?>
 										<td class="text-center"><?php echo $cou_use; ?></td>
 										<?php if($data['TypeEmployee'] != 2){ ?>
+										<?php if (Yii::app()->session['lang'] == 1) {
+										 ?>		
 											<td class="text-center">
-												<?php if($cou_use > 0){
+												<?php	if($cou_use > 0){
 													if ($status == 1) { ?>
-														<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>
-													<?php }else{ ?>
-														<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>
-													<?php }
-												}else{
+														<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approve</span>
+														<?php }else{ ?>
+															<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>
+														<?php }
+													}else{
 														echo "-";
 													} ?>
-											</td>
-										<?php }	
+												</td>
+											<?php }else{ ?>
+												<td class="text-center">
+												<?php	if($cou_use > 0){
+													if ($status == 1) {?>
+														<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>
+														<?php }else{ ?>
+															<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>
+														<?php }
+													}else{
+														echo "-";
+													} ?>
+												</td>
+											<?php } ?>
+												<?php
+											}
 										if($cou_use > 0){ ?>
 											<td class="text-center"><?php echo round($per_cen, 2) ?>%</td>
 										<?php }else{ ?>
@@ -429,18 +476,34 @@ $user_Department = $user_login->department_id;
 										<td class="text-center">-</td>
 										<td class="text-center"><?php echo $cou_use; ?></td>
 										<?php if($data['TypeEmployee'] != 2){ ?>
+										<?php if (Yii::app()->session['lang'] == 1) {
+										 ?>		
 											<td class="text-center">
-												<?php if($cou_use > 0){
-													if ($status == 1) { ?>
+												<?php	if($cou_use > 0){
+													if ($status == 1) {?>
+														<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approve</span>
+														<?php }else { ?>
+															<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>
+														<?php }
+													}else{
+														echo "-";
+													} ?>
+												</td>
+											<?php }else{ ?>
+												<td class="text-center">
+												<?php	if($cou_use > 0){
+													if ($status == 1) {?>
 														<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>
-														<?php}else{?>
+														<?php }else{ ?>
 															<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>
 														<?php }
 													}else{
 														echo "-";
 													} ?>
 												</td>
-											<?php }
+											<?php } ?>
+												<?php
+											}
 											if($cou_use > 0){ ?>
 												<td class="text-center"><?php echo round($per_cen, 2);?>%</td>
 											<?php }else{ ?>

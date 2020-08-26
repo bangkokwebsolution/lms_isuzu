@@ -1283,12 +1283,22 @@ public function actionReportRegisterOfficeExcel()
 							$datatable .= '<table class="table">';       
 							$datatable .= '<thead>';
 							$datatable .= '<tr>';
+							if (Yii::app()->session['lang'] == 1) {
+							$datatable .= '<th>No.</th>';
+							$datatable .= '<th>Fullname</th>';
+							$datatable .= '<th>Department</th>';
+							$datatable .= '<th>Position</th>';
+							$datatable .= '<th>Age</th>';
+							$datatable .= '<th>Status</th>';
+							}else{
 							$datatable .= '<th>ลำดับ</th>';
 							$datatable .= '<th>ชื่อ - สกุล</th>';
 							$datatable .= '<th>แผนก</th>';
 							$datatable .= '<th>ตำแหน่ง</th>';
 							$datatable .= '<th>อายุ</th>';
-							$datatable .= '<th>สถานะอนุมัติ</th>';
+							$datatable .= '<th>สถานะอนุมัติ</th>';	
+							}
+						
 							$datatable .= '</tr>'; 
 							$datatable .= '</thead>';
 							$datatable .= '<tbody>';
@@ -1297,7 +1307,11 @@ public function actionReportRegisterOfficeExcel()
 
 								$datatable .= '<tr>';
 								$datatable .= '<td>'.$i++.'</td>';
-								$datatable .= '<td>'.$valuepos_back->profile->firstname."  ".$valuepos_back->profile->lastname.'</td>';
+								if (Yii::app()->session['lang'] == 1) {
+									$datatable .= '<td>'.$valuepos_back->profile->firstname_en."  ".$valuepos_back->profile->lastname_en.'</td>';
+								}else{
+									$datatable .= '<td>'.$valuepos_back->profile->firstname."  ".$valuepos_back->profile->lastname.'</td>';	
+								}
 								$datatable .= '<td>'.$valuepos_back->department->dep_title.'</td>';
 								$datatable .= '<td>'.$valuepos_back->position->position_title.'</td>';
 								$datatable .= '<td>';
@@ -2055,6 +2069,19 @@ public function actionReportRegisterData()
 									$datatable .= '<table class="table">';       
 									$datatable .= '<thead>';
 									$datatable .= '<tr>';
+									if (Yii::app()->session['lang'] == 1) {
+									$datatable .= '<th>No.</th>';
+									$datatable .= '<th>Department</th>';
+									$datatable .= '<th>Position</th>';
+									if($TypeEmployee != 1){
+										$datatable .= '<th>Level</th>';
+									}
+									$datatable .= '<th>Number</th>';
+									if($TypeEmployee != 2){
+										$datatable .= '<th>Status</th>';
+									}
+									$datatable .= '<th>Percent</th>';
+									}else{
 									$datatable .= '<th>ลำดับ</th>';
 									$datatable .= '<th>ฝ่าย</th>';
 									$datatable .= '<th>แผนก</th>';
@@ -2066,6 +2093,7 @@ public function actionReportRegisterData()
 										$datatable .= '<th>สถานะอนุมัติ</th>';
 									}
 									$datatable .= '<th>คิดเป็นร้อยละ</th>';
+									}
 									$datatable .= '</tr>'; 
 									$datatable .= '</thead>';
 									$datatable .= '<tbody>';
@@ -2132,18 +2160,34 @@ public function actionReportRegisterData()
 											$datatable .= '<td>'.$value->Positions->position_title.'</td>';
 											$datatable .= '<td>'.$value->branch_name.'</td>';
 											$datatable .= '<td>'.$cou_use.'</td>';
-											if($TypeEmployee != 2){		
+											if($TypeEmployee != 2){
+												if (Yii::app()->session['lang'] == 1) {		
 												$datatable .= '<td>';
-												if($cou_use > 0){
-													if ($status == 1) {
-														$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
+													if($cou_use > 0){
+														if ($status == 1) {
+															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approve</span>';
+														}else{
+															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
+														}
 													}else{
-														$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+														$datatable .= '-';
 													}
-												}else{
-												$datatable .= '-';
-											}
+												
 												$datatable .= '</td>';
+												}else{
+												$datatable .= '<td>';
+													if($cou_use > 0){
+														if ($status == 1) {
+															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
+														}else{
+															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+														}
+													}else{
+														$datatable .= '-';
+													}
+													$datatable .= '</td>';
+												}
+												
 											}
 											if($cou_use > 0){
 												$datatable .= '<td>'.round($per_cen, 2).' %</td>';
@@ -2215,18 +2259,34 @@ public function actionReportRegisterData()
 										}
 										$datatable .= '<td>'.$cou_use.'</td>';
 										if($TypeEmployee != 2){
-											$datatable .= '<td>';
-											if($cou_use > 0){
-												if ($status == 1) {
-													$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
+												if (Yii::app()->session['lang'] == 1) {		
+												$datatable .= '<td>';
+													if($cou_use > 0){
+														if ($status == 1) {
+															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approve</span>';
+														}else{
+															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
+														}
+													}else{
+														$datatable .= '-';
+													}
+												
+												$datatable .= '</td>';
 												}else{
-													$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+												$datatable .= '<td>';
+													if($cou_use > 0){
+														if ($status == 1) {
+															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
+														}else{
+															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+														}
+													}else{
+														$datatable .= '-';
+													}
+													$datatable .= '</td>';
 												}
-											}else{
-												$datatable .= '-';
-											}
-											$datatable .= '</td>';
-										}	
+												
+											}	
 										if($cou_use > 0){
 											$datatable .= '<td>'.round($per_cen, 2).' %</td>';
 										}else{
@@ -2296,18 +2356,34 @@ public function actionReportRegisterData()
 										$datatable .= '<td>-</td>';
 										$datatable .= '<td>'.$cou_use.'</td>';
 										if($TypeEmployee != 2){
-											$datatable .= '<td>';
-											if($cou_use > 0){
-												if ($status == 1) {
-													$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
+												if (Yii::app()->session['lang'] == 1) {		
+												$datatable .= '<td>';
+													if($cou_use > 0){
+														if ($status == 1) {
+															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approve</span>';
+														}else{
+															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
+														}
+													}else{
+														$datatable .= '-';
+													}
+												
+												$datatable .= '</td>';
 												}else{
-													$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+												$datatable .= '<td>';
+													if($cou_use > 0){
+														if ($status == 1) {
+															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
+														}else{
+															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+														}
+													}else{
+														$datatable .= '-';
+													}
+													$datatable .= '</td>';
 												}
-											}else{
-												$datatable .= '-';
+												
 											}
-											$datatable .= '</td>';
-										}
 										if($cou_use > 0){
 											$datatable .= '<td>'.round($per_cen, 2).' %</td>';
 										}else{

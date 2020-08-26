@@ -36,7 +36,7 @@ $user_Department = $user_login->department_id;
 <body>
 	<div class="row">
 		<h1><?php
-		if (Yii::app()->user->id == 1) {
+		if (Yii::app()->session['lang'] == 1) {
 			echo "Report register ship";
 		}else{
 			echo "รายงานภาพรวมการสมัคร คนประจำเรือ";
@@ -170,12 +170,21 @@ $user_Department = $user_login->department_id;
 				<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 90%;">       
 					<thead>
 						<tr style="background: #010C65;color: #fff; border:1px solid #d8d8d8;padding: 8px;">
+							<?php if (Yii::app()->session['lang'] == 1) { ?>
+							<th style="border:1px solid #d8d8d8; padding: 8px;">No.</th>
+							<th style="border:1px solid #d8d8d8; padding: 8px;">Fullname</th>
+							<th style="border:1px solid #d8d8d8; padding: 8px;">Department</th>
+							<th style="border:1px solid #d8d8d8; padding: 8px;">Position</th>
+							<th style="border:1px solid #d8d8d8; padding: 8px;">Age</th>
+							<th style="border:1px solid #d8d8d8; padding: 8px;">Status</th>	
+							<?php }else{ ?>
 							<th style="border:1px solid #d8d8d8; padding: 8px;">ลำดับ</th>
 							<th style="border:1px solid #d8d8d8; padding: 8px;">ชื่อ - สกุล</th>
 							<th style="border:1px solid #d8d8d8; padding: 8px;">แผนก</th>
 							<th style="border:1px solid #d8d8d8; padding: 8px;">ตำแหน่ง</th>
 							<th style="border:1px solid #d8d8d8; padding: 8px;">อายุ</th>
 							<th style="border:1px solid #d8d8d8; padding: 8px;">สถานะอนุมัติ</th>
+							<?php } ?>
 						</tr>
 					</thead>
 					<tbody>
@@ -186,7 +195,13 @@ $user_Department = $user_login->department_id;
 
 							<tr class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">
 								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $i++; ?></td>
+								<?php
+								if (Yii::app()->session['lang'] == 1) { ?>
+									<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $valuepos_back->profile->firstname_en; ?> <?php echo $valuepos_back->profile->lastname_en; ?></td>
+							<?php	}else{ ?>
 								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $valuepos_back->profile->firstname; ?> <?php echo $valuepos_back->profile->lastname; ?></td>
+							<?php }
+								?>
 								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $valuepos_back->department->dep_title; ?></td>
 								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $valuepos_back->position->position_title; ?></td>
 								<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">
