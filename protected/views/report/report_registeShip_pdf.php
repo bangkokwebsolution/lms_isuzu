@@ -113,6 +113,11 @@ $user_Department = $user_login->department_id;
 	$criteria->with = array('profile');
 	$criteria->compare('department_id',$result_dep_arr);
 	$criteria->compare('superuser',0);
+	if ($status == 1) {
+		$criteria->compare('status',1);
+	}else if($status == 0){
+		$criteria->compare('status',0);
+	}
 	if ($age != null && $age2 != null || $age != "" && $age2 != "") {
 		$criteria->addBetweenCondition('age', $age, $age2, 'AND');
 	}

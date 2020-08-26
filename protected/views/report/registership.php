@@ -46,9 +46,9 @@
                             ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Department':'ฝ่าย'; ?></label>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Department':'แผนก'; ?></label>
                                     <select class="form-control Department" name="" id="Department">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select department':'เลือกฝ่าย'; ?></option>
+                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select department':'เลือกแผนก'; ?></option>
                                         <?php
 
                                             $criteria= new CDbCriteria;
@@ -78,9 +78,9 @@
                          if($authority == 1 || $authority == 2 || $authority == 2 && $type_em == 1){   ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Position':'แผนก'; ?></label>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Position':'ตำแหน่ง'; ?></label>
                                     <select class="form-control Position" name="" id="x">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Position':'เลือกแผนก'; ?></option>
+                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Position':'เลือกตำแหน่ง'; ?></option>
                                     <?php
 
                                         $criteria= new CDbCriteria;
@@ -119,7 +119,11 @@
                                     </div>
                                 </div>
                             </div>
-                             <div class="col-sm-3 col-md-3 col-xs-12">
+                             
+
+                        </div>
+                        <div class="row">
+                           <div class="col-sm-3 col-md-3 col-xs-12">
                             <div><label for=""><?= Yii::app()->session['lang'] == 1?'Age range':'ช่วงอายุ'; ?></label></div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
@@ -132,17 +136,17 @@
                                     </div>
                                 </div>
                             </div>
-
-                        </div>
-                   <!--  <div class="row">
-                           
-                            <div class="col-md-3 col-lg-3 col-xs-12">
+                            <div class="col-sm-3 col-md-3 col-xs-12 tag_status">
                                 <div class="form-group">
-                                    <label for="">มหาวิทยาลัย</label>
-                                    <input class="form-control " placeholder="มหาวิทยาลัย" name="" id="institution" type="text" maxlength="50">
+                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Status':'สถานะอนุมัติ'; ?></label>
+                                    <select class="form-control status" name="" id="x">
+                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Status':'สถานะอนุมัติ'; ?></option>
+                                        <option value="1"><?= Yii::app()->session['lang'] == 1?'Approved':'อนุมัติ'; ?></option>
+                                        <option value="0"><?= Yii::app()->session['lang'] == 1?'Disapproved':'ไม่อนุมัติ'; ?></option>
+                                    </select>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                         <div class="row">
                             <div class="col-md-3 col-sm-6 col-xs-12">
                                 <div class="form-group day-icon">
@@ -378,6 +382,7 @@ function chk_form_search(){
                     var Position = $(".Position").val();
                     var age = $("#age").val();
                     var age2 = $("#age2").val();
+                    var status = $(".status").val(); 
                     var Chart = $('input[name="accommodation"]:checked').serialize();
                     var datetime_start = $("#datetime_start").val();
                     var datetime_end = $("#datetime_end").val();
@@ -435,6 +440,7 @@ function chk_form_search(){
                             Position: Position,
                             age: age,
                             age2: age2,
+                            status: status,
                             //institution: institution,
                             Chart: Chart,
                             datetime_start: datetime_start,
