@@ -113,6 +113,7 @@ $user_Department = $user_login->department_id;
 	$criteria->with = array('profile');
 	$criteria->compare('department_id',$result_dep_arr);
 	$criteria->compare('superuser',0);
+	$criteria->compare('del_status',0);
 	if ($status == "1") {
 				$criteria->compare('status',1);
 			}

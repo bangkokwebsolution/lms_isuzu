@@ -40,7 +40,7 @@ $user_Department = $user_login->department_id;
 		if (Yii::app()->user->id == 1) {
 			echo "Report register office";
 		}else{
-			echo "รายงานภาพรวมการสมัคร คนออฟฟิศ";
+			echo "รายงานภาพรวมการสมัครสมาชิก คนออฟฟิศ";
 		}
 		?></h1>
 		<div class="col-sm-12">
@@ -149,6 +149,7 @@ $user_Department = $user_login->department_id;
 	$criteria->with = array('profile');
 	$criteria->compare('department_id',$dep_arr);
 	$criteria->compare('superuser',0);
+	$criteria->compare('del_status',0);
 	if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
 		$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 	}
@@ -167,7 +168,7 @@ $user_Department = $user_login->department_id;
         				$criteria->compare('branch_id',$user_Level);
     					}
 					}
-
+	$criteria->order = 'department_id ASC';
 	$User = User::model()->findAll($criteria);
 	if ($Year_start == null && $Year_end == null) {
 	 ?>

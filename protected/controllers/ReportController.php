@@ -175,6 +175,7 @@ class ReportController extends Controller
 					$criteria->with = array('profile');
 					$criteria->compare('department_id',$dep_arr);
 					$criteria->compare('superuser',0);
+					$criteria->compare('del_status',0);
 					if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
 						$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 					}
@@ -194,12 +195,12 @@ class ReportController extends Controller
     					}
 					}
 					
-
+					$criteria->order = 'department_id ASC';
 					$User = User::model()->findAll($criteria);
 
 					if (isset($pos)) {
 						
-						$data_division_start = '["Element", "Position", { role: "style" } ],';
+						$data_division_start = '["Element", "Division", { role: "style" } ],';
 
 						$colorName = Helpers::lib()->ColorCode();	
 				
@@ -219,6 +220,7 @@ class ReportController extends Controller
                         	$criteria->compare('department_id',$user_Department);
                     		}
 							$criteria->compare('superuser',0);
+							$criteria->compare('del_status',0);
 							if ($Year_start != null) {
 								$criteria->compare('YEAR(create_at)', $Year_start);
 							}
@@ -249,6 +251,7 @@ class ReportController extends Controller
                         		$criteria->compare('department_id',$user_Department);
                     			}
 								$criteria->compare('superuser',0);
+								$criteria->compare('del_status',0);
 								if ($Year_start != null) {
 									$criteria->compare('YEAR(create_at)', $Year_start);
 								}
@@ -266,7 +269,7 @@ class ReportController extends Controller
 
 						if (isset($pos)) {
 						
-						$data_division_end = '["Element", "Position", { role: "style" } ],';
+						$data_division_end = '["Element", "Division", { role: "style" } ],';
 
 						$colorName = Helpers::lib()->ColorCode();	
 				
@@ -286,6 +289,7 @@ class ReportController extends Controller
                         		$criteria->compare('department_id',$user_Department);
                     		}
 							$criteria->compare('superuser',0);
+							$criteria->compare('del_status',0);
 							if ($Year_end != null) {
 								$criteria->compare('YEAR(create_at)', $Year_end);
 							}
@@ -316,6 +320,7 @@ class ReportController extends Controller
                         			$criteria->compare('department_id',$user_Department);
                     			}
 								$criteria->compare('superuser',0);
+								$criteria->compare('del_status',0);
 								if ($Year_end != null) {
 									$criteria->compare('YEAR(create_at)', $Year_end);
 								}
@@ -821,6 +826,7 @@ public function actionReportRegisterOfficeExcel()
 			$criteria->with = array('profile');
 			$criteria->compare('department_id',$result_dep_arr);
 			$criteria->compare('superuser',0);
+			$criteria->compare('del_status',0);
 			if ($status == "1") {
 				$criteria->compare('status',1);
 			}
@@ -840,6 +846,7 @@ public function actionReportRegisterOfficeExcel()
 			}else{
 				$criteria->compare('position_id',$result_pos_arr);	
 			}
+			$criteria->order = 'department_id ASC';
 			$User = User::model()->findAll($criteria);
 
 			if (!empty($pos)) {
@@ -870,6 +877,7 @@ public function actionReportRegisterOfficeExcel()
 						$criteria->compare('status',array(0,1));
 					}
 					$criteria->compare('superuser',0);
+					$criteria->compare('del_status',0);
 					if ($Year_start != null) {
 						$criteria->compare('YEAR(create_at)', $Year_start);
 					}
@@ -914,6 +922,7 @@ public function actionReportRegisterOfficeExcel()
 						$criteria->compare('status',array(0,1));
 					}
 					$criteria->compare('superuser',0);
+					$criteria->compare('del_status',0);
 					if ($Year_end != null) {
 						$criteria->compare('YEAR(create_at)', $Year_end);
 					}
@@ -1509,6 +1518,7 @@ public function actionReportRegisterData()
 								$criteria->compare('position_id',$value->id);
 								$criteria->compare('department_id',$value->Departments->id);
 								$criteria->compare('superuser',0);
+								$criteria->compare('del_status',0);
 								if ($Year_start != null) {
 								$criteria->compare('YEAR(create_at)', $Year_start);
 								}
@@ -1537,6 +1547,7 @@ public function actionReportRegisterData()
 								$criteria->compare('position_id',$value->id);
 								$criteria->compare('department_id',$value->Departments->id);
 								$criteria->compare('superuser',0);
+								$criteria->compare('del_status',0);
 								if ($Year_end != null) {
 								$criteria->compare('YEAR(create_at)', $Year_end);
 								}
@@ -1594,6 +1605,7 @@ public function actionReportRegisterData()
 									$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 								}
 								$criteria->compare('superuser',0);
+								$criteria->compare('del_status',0);
 
 								$users_count = Users::model()->findAll($criteria);
 								$count_dep = count($users_count);
@@ -1614,6 +1626,7 @@ public function actionReportRegisterData()
 									$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 								}
 								$criteria->compare('superuser',0);
+								$criteria->compare('del_status',0);
 
 								$users_count = Users::model()->findAll($criteria);
 								$count_dep = count($users_count);
@@ -1662,6 +1675,7 @@ public function actionReportRegisterData()
 									$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 								}
 								$criteria->compare('superuser',0);
+								$criteria->compare('del_status',0);
 
 								$users_count = Users::model()->findAll($criteria);
 								$count_dep = count($users_count);
@@ -1683,6 +1697,7 @@ public function actionReportRegisterData()
 									$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 								}
 								$criteria->compare('superuser',0);
+								$criteria->compare('del_status',0);
 
 								$users_count = Users::model()->findAll($criteria);
 								$count_dep = count($users_count);
@@ -2056,6 +2071,7 @@ public function actionReportRegisterData()
 												$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 											}
 											$criteria->compare('superuser',0);
+											$criteria->compare('del_status',0);
 											if($status != null){
 												$criteria->compare('status',$status);		
 											}
@@ -2092,6 +2108,7 @@ public function actionReportRegisterData()
 												}
 											}
 											$criteria->compare('superuser',0);
+											$criteria->compare('del_status',0);
 											$usersAll = Users::model()->findAll($criteria);
 									
 											$cou_use = count($users);
@@ -2136,6 +2153,7 @@ public function actionReportRegisterData()
 											$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 										}
 										$criteria->compare('superuser',0);
+										$criteria->compare('del_status',0);
 										if($status != null){
 											$criteria->compare('status',$status);		
 										}
@@ -2216,6 +2234,7 @@ public function actionReportRegisterData()
 											$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 										}
 										$criteria->compare('superuser',0);
+										$criteria->compare('del_status',0);
 										if($status != null){
 											$criteria->compare('status',$status);		
 										}
@@ -2252,6 +2271,7 @@ public function actionReportRegisterData()
 												}
 											}
 										$criteria->compare('superuser',0);
+										$criteria->compare('del_status',0);
 										$usersAll = Users::model()->findAll($criteria);
 
 										$cou_use = count($users);

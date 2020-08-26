@@ -229,6 +229,7 @@ $user_Department = $user_login->department_id;
 										$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 									}
 									$criteria->compare('superuser',0);
+									$criteria->compare('del_status',0);
 									if($status != null){
 										$criteria->compare('status',$status);		
 									}
@@ -265,6 +266,7 @@ $user_Department = $user_login->department_id;
 												}
 											}
 									$criteria->compare('superuser',0);
+									$criteria->compare('del_status',0);
 									$usersAll = Users::model()->findAll($criteria);
 									$cou_use = count($users);
 
@@ -308,6 +310,7 @@ $user_Department = $user_login->department_id;
 										$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 									}
 									$criteria->compare('superuser',0);
+									$criteria->compare('del_status',0);
 									if($status != null){
 										$criteria->compare('status',$status);		
 									}
@@ -344,6 +347,7 @@ $user_Department = $user_login->department_id;
 												}
 											}
 									$criteria->compare('superuser',0);
+									$criteria->compare('del_status',0);
 									$usersAll = Users::model()->findAll($criteria);
 
 									$cou_use = count($users);
@@ -389,6 +393,7 @@ $user_Department = $user_login->department_id;
 										$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 									}
 									$criteria->compare('superuser',0);
+									$criteria->compare('del_status',0);
 									if($status != null){
 										$criteria->compare('status',$status);		
 									}
@@ -425,6 +430,7 @@ $user_Department = $user_login->department_id;
 												}
 											}
 									$criteria->compare('superuser',0);
+									$criteria->compare('del_status',0);
 									$usersAll = Users::model()->findAll($criteria);
 
 									$cou_use = count($users);
