@@ -84,9 +84,9 @@
                                     <label for="search_course_id">
                                         <?php 
                                             if(Yii::app()->session['lang'] != 1){
-                                                echo "หลักสูตร *";
+                                                echo 'หลักสูตร <b style="color:red">*</b>';
                                             }else{
-                                                echo "Course *";
+                                                echo 'Course <b style="color:red">*</b>';
                                             }
                                         ?>                                             
                                     </label>
@@ -116,9 +116,9 @@
                                     <label for="search_gen_id">
                                          <?php 
                                                 if(Yii::app()->session['lang'] != 1){
-                                                    echo "รุ่น *";
+                                                    echo 'รุ่น <b style="color:red">*</b>';
                                                 }else{
-                                                    echo "Gen *";
+                                                    echo 'Gen <b style="color:red">*</b>';
                                                 }
                                             ?>
                                     </label>
@@ -556,10 +556,10 @@ chart.draw(data, options);
         <div id="result_search"> <!-- export excel -->            
         <div class="report-table">
             <div class="table-responsive w-100 t-regis-language">
-                <table class="table" id="table_list">
+                <table class="table" id="table_list" style="width: 100%">
                     <thead>
 
-                          <tr style="background-color: #010C65; color: #fff;">
+                          <tr style="background-color: #010C65; color: #fff; border: 1.5px solid #000;">
                             <th rowspan="2" width="10%">
                                 <?php 
                             if(Yii::app()->session['lang'] != 1){
@@ -581,14 +581,8 @@ chart.draw(data, options);
                             }
                             ?></th>
                         </tr>
-                        <tr style="background-color: #010C65; color: #fff;">
-<!-- $average = round($total_section[0]/$countquest_section[0],2);
-$average2 = round($total_section[1]/$countquest_section[1],2); -->
-<!-- 
-sections
-title_section
-countquest_section
-total_section    -->        
+                        <tr style="background-color: #010C65; color: #fff; border: 1.5px solid #000;" >
+
                             <?php foreach ($sections as $keysections=> $valsections) { ?>
                            
                             <th> <?=$title_section[$valsections->survey_section_id] ?></th>
@@ -603,7 +597,7 @@ total_section    -->
                             $no = 1; ?>
                            
                             
-                            <tr>
+                            <tr style="border: 1.5px solid #000; text-align: center;">
                                 <td><?php echo $no; $no++; ?></td>
                                 <td><?= $course_title->course_title ?></td>
                                 <?php foreach ($sections as $keysections2 => $valsections2) {
@@ -616,8 +610,8 @@ total_section    -->
                             </tr>
                       <?php  }else{ // !empty
                             ?>  
-                            <tr>
-                                <td colspan="9">
+                            <tr style="border: 1.5px solid #000; text-align: center;">
+                                <td colspan="<?= count($sections) + 2 ?>">
                                     <?php 
                                     if(Yii::app()->session['lang'] != 1){
                                         echo "ไม่มีข้อมูล";
