@@ -266,7 +266,6 @@ $user_Department = $user_login->department_id;
 											}
 									$criteria->compare('superuser',0);
 									$usersAll = Users::model()->findAll($criteria);
-									var_dump($data['Position']);
 									$cou_use = count($users);
 
 									$cou_useAll = count($usersAll);
