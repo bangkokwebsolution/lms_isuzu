@@ -556,7 +556,7 @@ chart.draw(data, options);
         <div id="result_search"> <!-- export excel -->            
         <div class="report-table">
             <div class="table-responsive w-100 t-regis-language">
-                <table class="table" id="table_list" style="width: 100%">
+                <table class="table" id="table_list" >
                     <thead>
 
                           <tr style="background-color: #010C65; color: #fff; border: 1.5px solid #000;">
@@ -611,7 +611,7 @@ chart.draw(data, options);
                       <?php  }else{ // !empty
                             ?>  
                             <tr style="border: 1.5px solid #000; text-align: center;">
-                                <td colspan="<?= count($sections) + 2 ?>">
+                                <td colspan="3">
                                     <?php 
                                     if(Yii::app()->session['lang'] != 1){
                                         echo "ไม่มีข้อมูล";
@@ -755,13 +755,25 @@ chart.draw(data, options);
     $(document).ready( function () {
 
         $('.btn-pdf').click(function(e) {
-            $("#text_element1").attr("value", encodeURIComponent("<h2>Training assessment Report</h2>"+$('#chart_graph').html()+'<br>'+$('#result_search').html()) );
+            $("#text_element1").attr("value", encodeURIComponent("<h2> <?php
+                if (Yii::app()->session['lang'] == 1) {
+                    echo "Training assessment Report";
+                } else {
+                    echo "รายงานภาพรวมแบบประเมินสอบถาม";
+                }
+                ?></h2>"+$('#chart_graph').html()+'<br>'+$('#result_search').html()) );
             $("#export_pdf").submit();
         });
       
        
           $('.btn-excel').click(function(e) {
-            window.open('data:application/vnd.ms-excel;charset=UTF-8;,' + encodeURIComponent("<h2>Training assessment Report</h2>"+$('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br><font color="white">ตาราง</font>'+$('#result_search').html() ));
+            window.open('data:application/vnd.ms-excel;charset=UTF-8;,' + encodeURIComponent("<h2><?php
+                if (Yii::app()->session['lang'] == 1) {
+                    echo "Training assessment Report";
+                } else {
+                    echo "รายงานภาพรวมแบบประเมินสอบถาม";
+                }
+                ?></h2>"+$('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br><font color="white">ตาราง</font>'+$('#result_search').html() ));
             e.preventDefault();
         });
 
