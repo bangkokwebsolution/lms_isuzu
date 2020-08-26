@@ -198,7 +198,7 @@ $user_Department = $user_login->department_id;
 								</td>
 							</tr>
 
-						<?php }else{ ?>
+						<?php } }else{ ?>
 							<tr>
 								 <td colspan="6">
                                     <?php 
