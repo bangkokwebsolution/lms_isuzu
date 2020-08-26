@@ -42,6 +42,8 @@ class User extends CActiveRecord
 	public $nameSearch;
 	public $month;
 	public $fullname;
+	public $news_per_page;
+
 
 
 	//public $register_status;
@@ -93,6 +95,7 @@ class User extends CActiveRecord
 			array('superuser, status, online_status,online_user,register_status', 'numerical', 'integerOnly'=>true),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'update'),
+			array('news_per_page', 'safe'),
 			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,company_id, division_id,position_id,lastactivity,orgchart_lv2, group,idensearch,identification,station_id,supper_user_status,pic_cardid2,employee_id,typeuser,register_status,dateRang,user_id,nameSearch,note,not_passed, avatar, month,type_employee, report_authority, branch_id, fullname', 'safe', 'on'=>'search'),
 			// array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
 			array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
@@ -438,12 +441,14 @@ public function validateIdCard($attribute,$params){
 
  		// $criteria->compare('profile.identification',$this->idensearch,true);
 
-        return new CActiveDataProvider(get_class($this), array(
-            'criteria'=>$criteria,
-        	'pagination'=>array(
-				'pageSize'=>Yii::app()->getModule('user')->user_page_size,
-			),
-        ));
+      $dataProvider = array('criteria'=>$criteria);
+		// Page
+		if(isset($this->news_per_page))
+		{
+			$dataProvider['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
+		}
+		
+		return new CActiveDataProvider($this, $dataProvider);
     }
 
     public function searchapprove()

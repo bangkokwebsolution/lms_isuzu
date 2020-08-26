@@ -2,55 +2,44 @@
 <?php
 $titleName = 'พิมพ์ใบสมัครสำหรับคนประจำเรือ';
 $formNameModel = 'PrintMembership';
-// Yii::app()->clientScript->registerScript('search', "
-// 	$('.search-button').click(function(){
-// 		$('.search-form').toggle();
-// 		return false;
-// 		});
-// 		$('.search-form form').submit(function(){
-// 			$.fn.yiiGridView.update('user-grid', {
-// 				data: $(this).serialize()
-// 				});
-// 				return false;
-// 				});
-// 				");
-// Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
-// 	$.updateGridView = function(gridID, name, value) {
-// 	    $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
-// 	    $.fn.yiiGridView.update(gridID, {data: $.param(
-// 	        $("#"+gridID+" input, #"+gridID+" .filters select")
-// 	    )});
-// 	}
-// 	$.appendFilter = function(name, varName) {
-// 	    var val = eval("$."+varName);
-// 	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
-// 	}
-// 	$.appendFilter("PrintMembership[news_per_page]", "news_per_page");
-// EOD
-// , CClientScript::POS_READY);
 
-// Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
-// 	$('#User_create_at').attr('readonly','readonly');
-// 	$('#User_create_at').css('cursor','pointer');
-// 	$('#User_create_at').daterangepicker();
+$this->breadcrumbs=array($titleName);
+Yii::app()->clientScript->registerScript('search', "
+	$('#SearchFormAjax').submit(function(){
+	    $.fn.yiiGridView.update('$formNameModel-grid', {
+	        data: $(this).serialize()
+	    });
+	    return false;
+	});
+");
 
-// EOD
-// , CClientScript::POS_READY);
+Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
+	$.updateGridView = function(gridID, name, value) {
+	    $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
+	    $.fn.yiiGridView.update(gridID, {data: $.param(
+	        $("#"+gridID+" input, #"+gridID+" .filters select")
+	    )});
+	}
+	$.appendFilter = function(name, varName) {
+	    var val = eval("$."+varName);
+	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
+	}
+	$.appendFilter("PrintMembership[news_per_page]", "news_per_page");
+EOD
+, CClientScript::POS_READY);
+?>
 
-	?>
 	<div id="user" class="innerLR">
-		<?php
-		$this->widget('AdvanceSearchForm', array(
-			'data'=>$model,
-			'route' => $this->route,
-            'id'=>'SearchFormAjax',
-			'attributes'=>array(
-        
+		
+
+		<?php $this->widget('AdvanceSearchForm', array(
+		'data'=>$model,
+		'route' => $this->route,
+		'attributes'=>array(
 				array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
-                //array('name'=>'nameSearch','type'=>'text'),
-				//array('name'=>'create_at','type'=>'text'),
-			),
-		));?> 
+		),
+	));?>
+
 <style type="text/css">
 .coolContainer h4:first-of-type {
     float: left;
@@ -90,13 +79,31 @@ $formNameModel = 'PrintMembership';
 						</div> --><!-- search-form -->					  
 						<?php
 						$this->widget('AGridView', array(
-							'id'=>'user-grid',
-							'dataProvider'=>$model->searchmembership(),
-							'filter'=>$model,
-							'afterAjaxUpdate'=>'function(id, data){
-								$.appendFilter("PrintMembership[news_per_page]");	
-								InitialSortTable();
-							}',
+							'id'=>$formNameModel.'-grid',
+					'dataProvider'=>$model->searchmembership(),
+					'filter'=>$model,
+					'selectableRows' => 2,
+					'rowCssClassExpression'=>'"items[]_{$data->id}"',
+					'htmlOptions' => array(
+						'style'=> "margin-top: -1px;",
+					),
+					'afterAjaxUpdate'=>'function(id, data){
+						$.appendFilter("PrintMembership[news_per_page]");
+						InitialSortTable();	
+				        jQuery("#course_date").datepicker({
+						   	"dateFormat": "dd/mm/yy",
+						   	"showAnim" : "slideDown",
+					        "showOtherMonths": true,
+					        "selectOtherMonths": true,
+				            "yearRange" : "-5+10", 
+					        "changeMonth": true,
+					        "changeYear": true,
+				            "dayNamesMin" : ["อา.","จ.","อ.","พ.","พฤ.","ศ.","ส."],
+				            "monthNamesShort" : ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.",
+				                "ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."],
+					   })
+					}',
+					
 							'columns'=>array(
 								array(
 									'header'=>'No.',
@@ -214,3 +221,5 @@ $formNameModel = 'PrintMembership';
 		</div>
 	</div>
 	<!-- END innerLR -->
+
+

@@ -3,7 +3,7 @@ $this->breadcrumbs=array(
 	// UserModule::t('Users')=>array('/user'),
 	UserModule::t('Manage'),
 );
-$formNameModel = 'user';
+$formNameModel = 'User';
 
 // 
 // $this->menu=array(
@@ -33,7 +33,7 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	    var val = eval("$."+varName);
 	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
 	}
-	$.appendFilter("user[news_per_page]", "news_per_page");
+	$.appendFilter("User[news_per_page]", "news_per_page");
 EOD
 , CClientScript::POS_READY);
 				?>
@@ -61,12 +61,12 @@ EOD
 							<div>
 								<?php echo Rights::t('core', 'ที่นี่คุณสามารถดูว่ามีการมอบหมายสิทธิ์ใดให้กับผู้ใช้แต่ละราย'); ?>
 							</div>
-							<!-- 	 <div class="separator bottom form-inline small">
+							 <div class="separator bottom form-inline small">
 								<span class="pull-right">
 									<label class="strong">แสดงแถว:</label>
 									<?php echo $this->listPageShow($formNameModel);?>
 								</span>
-							</div> -->
+							</div> 
 							<div class="spacer"></div>
 							<div>
 
@@ -76,9 +76,32 @@ EOD
 								</div><!-- search-form -->
 
 								<?php $this->widget('AGridView', array(
-									'id'=>'user-grid',
+
+									'id'=>$formNameModel.'-grid',
 									'dataProvider'=>$model->search(),
 									'filter'=>$model,
+									'selectableRows' => 2,
+									'rowCssClassExpression'=>'"items[]_{$data->id}"',
+									'htmlOptions' => array(
+										'style'=> "margin-top: -1px;",
+									),
+									'afterAjaxUpdate'=>'function(id, data){
+										$.appendFilter("User[news_per_page]");
+										InitialSortTable();	
+										jQuery("#course_date").datepicker({
+											"dateFormat": "dd/mm/yy",
+											"showAnim" : "slideDown",
+											"showOtherMonths": true,
+											"selectOtherMonths": true,
+											"yearRange" : "-5+10", 
+											"changeMonth": true,
+											"changeYear": true,
+											"dayNamesMin" : ["อา.","จ.","อ.","พ.","พฤ.","ศ.","ส."],
+											"monthNamesShort" : ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.",
+											"ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."],
+											})
+										}',
+
 									'columns'=>array(
 										array(
 											'header'=>'No.',

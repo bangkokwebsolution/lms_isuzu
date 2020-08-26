@@ -68,6 +68,7 @@ class PrintMembership extends CActiveRecord
 			array('lastvisit_at, last_activity', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
+			array('news_per_page', 'safe'),
 
 			array('id, username, password, email, pic_user, orgchart_lv2, department_id, activkey, create_at, lastvisit_at, superuser, status, online_status, online_user, last_ip, last_activity, lastactivity, avatar, company_id, division_id, position_id, bookkeeper_id, pic_cardid, auditor_id, pic_cardid2, del_status, group, identification, supper_user_status, idensearch;', 'safe', 'on'=>'search'),
 		);
@@ -223,7 +224,7 @@ class PrintMembership extends CActiveRecord
 	$criteria->compare('password',$this->password);
 	$criteria->compare('pic_user',$this->pic_user);
 	$criteria->compare('department_id',$this->department_id);
-	$criteria->compare('position_id',$this->position_id);
+	$criteria->compare('position_id',$this->position_id,true);
 	$criteria->compare('email',$this->email,true);
 	$criteria->compare('activkey',$this->activkey);
 	$criteria->compare('lastvisit_at',$this->lastvisit_at);
@@ -254,13 +255,22 @@ class PrintMembership extends CActiveRecord
 	$criteria->compare('group',$this->group);
 	$criteria->compare('profile.identification',$this->idensearch,true);
 
-	$dataProvider = new CActiveDataProvider(get_class($this), array(
-		'criteria'=>$criteria,
-		'pagination'=>array(
-			'pageSize'=>Yii::app()->getModule('user')->user_page_size,
-		),
-	));
-	return $dataProvider;
+	// $dataProvider = new CActiveDataProvider(get_class($this), array(
+	// 	'criteria'=>$criteria,
+	// 	'pagination'=>array(
+	// 		'pageSize'=>Yii::app()->getModule('user')->user_page_size,
+	// 	),
+	// ));
+	// return $dataProvider;
+	$dataProvider = array('criteria'=>$criteria);
+		// Page
+		if(isset($this->news_per_page))
+		{
+			$dataProvider['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
+		}
+		
+		return new CActiveDataProvider($this, $dataProvider);
+
 }
 
 public function searchapprove()

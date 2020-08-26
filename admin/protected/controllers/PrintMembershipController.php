@@ -35,14 +35,14 @@ class PrintMembershipController extends Controller
 
     public function actionindex ()
     {
-        $model = new PrintMembership('search');
+        $model = new PrintMembership('searchmembership');
         $model->unsetAttributes();  // clear any default values
         $model->status = array(1);
-        $model->register_status = array(0,2);
+        $model->register_status = array(0);
         $model->supper_user_status = true;
       
-        if(isset($_GET['User'])){
-            $model->attributes=$_GET['User'];
+        if(isset($_GET['PrintMembership'])){
+            $model->attributes=$_GET['PrintMembership'];
         }
         $this->render('index',array(
             'model'=>$model,
