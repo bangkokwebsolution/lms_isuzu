@@ -1536,21 +1536,41 @@
     var class_btn = val.getAttribute("class");
 
     if (class_btn == "btn btn-warning") {
-      var text_text = "ที่จะยกเลิกการขอดาวน์โหลด"
+      if (<?= Yii::app()->session['lang'] ?> == 1) {
+         var text_text = "Cancel";
+      } else {
+         var text_text = "ที่จะยกเลิกการขอดาวน์โหลด";
+      }
+      // var text_text = "ที่จะยกเลิกการขอดาวน์โหลด"
     } else {
-      var text_text = "ที่จะขอดาวน์โหลด";
+      if (<?= Yii::app()->session['lang'] ?> == 1) {
+         var text_text = "Download";
+      } else {
+         var text_text = "ที่จะขอดาวน์โหลด";
+      }
+      // var text_text = "ที่จะขอดาวน์โหลด";
     }
+
+    if (<?= Yii::app()->session['lang'] ?> == 1) {
+      var text_title = "Confirm";
+      var text_btn_con = "Confirm";
+      var text_btn_can = "Cancel";
+    } else {
+     var text_title = "ยืนยันใช่ไหม";
+     var text_btn_con = "ยืนยัน";
+     var text_btn_can = "ยกเลิก";
+   }
 
     if (library != "") {
       swal({
-        title: 'ยืนยันใช่ไหม',
+        title: text_title,
         text: text_text,
         type: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
-        confirmButtonText: 'ยืนยัน',
-        cancelButtonText: 'ยกเลิก'
+        confirmButtonText: text_btn_con,
+        cancelButtonText: text_btn_can
       }, function(isConfirm) {
         if (isConfirm) {
           $.ajax({
@@ -1565,20 +1585,25 @@
               } else if (data == "request") {
                 val.removeAttribute("class");
                 val.setAttribute("class", "btn btn-warning");
+
                 if ("<?php echo Yii::app()->session['lang']; ?>" == "1") {
                   val.innerHTML = '<i class="fa fa-download"></i> waiting';
+                  var text_title = 'waiting';
+                  var text_text = 'Admin';
                 } else {
                   val.innerHTML = '<i class="fa fa-download"></i> รอการอนุมัติ';
+                  var text_title = 'รอการอนุมัติ';
+                  var text_text = 'จากผู้ดูแลระบบ';
                 }
 
                 swal({
-                  title: 'รอการอนุมัติ',
-                  text: "จากผู้ดูแลระบบ",
+                  title: text_title,
+                  text: text_text,
                   type: 'info',
                   showCancelButton: false,
                   confirmButtonColor: '#3085d6',
                   // cancelButtonColor: '#d33',
-                  confirmButtonText: 'ตกลง',
+                  confirmButtonText: text_btn_con,
                   // cancelButtonText: 'ยกเลิก'
                 });
 
