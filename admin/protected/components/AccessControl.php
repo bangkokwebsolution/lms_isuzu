@@ -104,7 +104,8 @@ class AccessControl extends CApplicationComponent
                                             
                                             $action = strtolower($value->action);
                                             if($action_name != '*'){
-                                                if(!in_array(strtolower($action_name), $action)){
+                                                    // var_dump(in_array(strtolower($action_name), $action));
+                                                if(!in_array(strtolower($action_name), $value->action)){
                                                     return false;
                                                 }
                                             }
