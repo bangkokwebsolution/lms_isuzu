@@ -38,10 +38,11 @@
             <li class="breadcrumb-item active" aria-current="page">
                 <?php
                 if (Yii::app()->session['lang'] == 1) {
-                    echo "Course Staff Office Report";
+                    $name_report = "Course Staff Office Report";
                 } else {
-                    echo "รายงานผู้เรียนตามรายหลักสูตร คนOffice";
+                    $name_report = "รายงานผู้เรียนตามรายหลักสูตร คนOffice";
                 }
+                echo $name_report;
                 ?>
             </li>
         </ol>
@@ -487,10 +488,11 @@ chart.draw(data, options);
                 <h3>
                     <?php
                     if (Yii::app()->session['lang'] == 1) {
-                        echo "Course Staff Office Report";
+                        $name_report = "Course Staff Office Report";
                     } else {
-                        echo " รายงานผู้เรียนตามรายหลักสูตร คนOffice";
+                        $name_report = " รายงานผู้เรียนตามรายหลักสูตร คนOffice";
                     }
+                    echo $name_report;
                     ?>
                 </h3>    
             </center>
@@ -504,7 +506,7 @@ chart.draw(data, options);
             <div class="table-responsive w-100 t-regis-language">
                 <table class="table" id="table_list">
                     <thead>
-                        <tr style="background-color: #010C65; color: #fff;">
+                        <tr style="background-color: #010C65; color: #fff; border: 1.5px solid #000;">
                             <th><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ลำดับ";
@@ -599,7 +601,7 @@ chart.draw(data, options);
                                     $model_search_score[$key]["score"] = "-";
                                 }
                                 ?>  
-                                <tr>
+                                <tr style="border: 1.5px solid #000;">
                                     <td><?php echo $no; $no++; ?></td>
                                     <!-- <td><?= $value->mem->id ?></td> -->
                                     <td>
@@ -634,7 +636,7 @@ chart.draw(data, options);
                             } // foreach search
                         }else{ // !empty
                             ?>  
-                            <tr>
+                            <tr style="border: 1.5px solid #000;">
                                 <td colspan="7">
                                     <?php 
                                     if(Yii::app()->session['lang'] != 1){
@@ -770,12 +772,12 @@ chart.draw(data, options);
     $(document).ready( function () {
 
         $('.btn-pdf').click(function(e) {
-            $("#text_element1").attr("value", encodeURIComponent("<h2>Course Staff Office Report</h2>"+$('#chart_graph').html()+'<br>'+$('#result_search').html()) );
+            $("#text_element1").attr("value", encodeURIComponent("<h2><?= $name_report ?></h2>"+$('#chart_graph').html()+'<br>'+$('#result_search').html()) );
             $("#export_pdf").submit();
         });
       
         $('.btn-excel').click(function(e) {
-            window.open('data:application/vnd.ms-excel;charset=UTF-8;,' + encodeURIComponent("<h2>Course Staff Office Report</h2>"+$('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br><font color="white">ตาราง</font>'+$('#result_search').html() ));
+            window.open('data:application/vnd.ms-excel;charset=UTF-8;,' + encodeURIComponent("<h2><?= $name_report ?></h2>"+$('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br><font color="white">ตาราง</font>'+$('#result_search').html() ));
             e.preventDefault();
         });
 
@@ -800,7 +802,12 @@ chart.draw(data, options);
         var current = new Date($(this).val());
 
         if (first.getTime() > current.getTime()) {
-            alert("ไม่สามารถเลือกช่วงเวลาสิ้นสุดมากกว่าช่วงเวลาเริ่มต้นได้");
+            if(<?= Yii::app()->session['lang'] ?> == 2){
+                swal("ไม่สามารถเลือกช่วงเวลาสิ้นสุดมากกว่าช่วงเวลาเริ่มต้นได้");
+            }else{
+                swal("Can't choose end range more than start range");                
+            }
+            // alert("ไม่สามารถเลือกช่วงเวลาสิ้นสุดมากกว่าช่วงเวลาเริ่มต้นได้");
             $(this).val("");
         }
         $("#search_start_year").val("");
@@ -816,7 +823,12 @@ chart.draw(data, options);
         var first = $("#search_start_year").val();
         var current = $(this).val();
         if (first >= current && current != "") {
-            alert("ไม่สามารถเลือกช่วงปีสิ้นสุดมากกว่าช่วงปีเริ่มต้นได้");            
+            if(<?= Yii::app()->session['lang'] ?> == 2){
+                swal("ไม่สามารถเลือกช่วงปีสิ้นสุดมากกว่าช่วงปีเริ่มต้นได้");
+            }else{
+                swal("Can't choose end range more than start range");                
+            }
+            // alert("ไม่สามารถเลือกช่วงปีสิ้นสุดมากกว่าช่วงปีเริ่มต้นได้");           
             $(this).val("");
         }
         $("#search_start_date").val("");
@@ -880,14 +892,24 @@ chart.draw(data, options);
         var end_year = $("#search_end_year").val();
         if(end_year != "" && start_year == ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงปีเริ่มต้น");
+            if(<?= Yii::app()->session['lang'] ?> == 2){
+                swal("กรุณาเลือกช่วงปีเริ่มต้น");
+            }else{
+                swal("Please choose start range");                
+            }
+            // alert("กรุณาเลือกช่วงปีเริ่มต้น");
             $("#search_start_year").addClass('form-control-danger');
         }else{
             $("#search_start_year").removeClass('form-control-danger');
         }
         if(end_year == "" && start_year != ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงปีสิ้นสุด");
+            if(<?= Yii::app()->session['lang'] ?> == 2){
+                swal("กรุณาเลือกช่วงปีสิ้นสุด");
+            }else{
+                swal("Please choose end range");                
+            }
+            // alert("กรุณาเลือกช่วงปีสิ้นสุด");
             $("#search_end_year").addClass('form-control-danger');
         }else{
             $("#search_end_year").removeClass('form-control-danger');
@@ -897,14 +919,24 @@ chart.draw(data, options);
         var end_date = $("#search_end_date").val();
         if(end_date != "" && start_date == ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงเวลาเริ่มต้น");
+            if(<?= Yii::app()->session['lang'] ?> == 2){
+                swal("กรุณาเลือกช่วงเวลาเริ่มต้น");
+            }else{
+                swal("Please choose start range");                
+            }
+            // alert("กรุณาเลือกช่วงเวลาเริ่มต้น");
             $("#search_start_date").addClass('form-control-danger');
         }else{
             $("#search_start_date").removeClass('form-control-danger');
         }
         if(end_date == "" && start_date != ""){
             status_pass =2;
-            alert("กรุณาเลือกช่วงเวลาสิ้นสุด");
+            if(<?= Yii::app()->session['lang'] ?> == 2){
+                swal("กรุณาเลือกช่วงเวลาสิ้นสุด");
+            }else{
+                swal("Please choose end range");                
+            }
+            // alert("กรุณาเลือกช่วงเวลาสิ้นสุด");
             $("#search_end_date").addClass('form-control-danger');
         }else{
             $("#search_end_date").removeClass('form-control-danger');
