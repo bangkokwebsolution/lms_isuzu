@@ -752,7 +752,7 @@ public function actionReportRegisterOfficeExcel()
 			$mPDF->WriteHTML($texttt);
 			$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('report_registeOffice_pdf', array('data'=>$data),true),'UTF-8','UTF-8'));
 
-			$mPDF->Output("รายงานภาพรวมการสมัครคนออฟฟิต.pdf" , 'I');
+			$mPDF->Output("รายงานภาพรวมการสมัครคนออฟฟิศ.pdf" , 'I');
 
 			
 		}

@@ -61,12 +61,12 @@ EOD
 							<div>
 								<?php echo Rights::t('core', 'ที่นี่คุณสามารถดูว่ามีการมอบหมายสิทธิ์ใดให้กับผู้ใช้แต่ละราย'); ?>
 							</div>
-								 <div class="separator bottom form-inline small">
+							<!-- 	 <div class="separator bottom form-inline small">
 								<span class="pull-right">
 									<label class="strong">แสดงแถว:</label>
 									<?php echo $this->listPageShow($formNameModel);?>
 								</span>
-							</div>
+							</div> -->
 							<div class="spacer"></div>
 							<div>
 
