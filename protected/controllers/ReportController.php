@@ -124,6 +124,7 @@ class ReportController extends Controller
                         $criteria->compare('id',$user_Department);
                     }
 					$criteria->compare('active','y');
+					$criteria->compare('type_employee_id',2);
 					$dep = Department::model()->findAll($criteria);
 					$dep_arr = [];
 					foreach ($dep as $key => $val_dep) {
