@@ -237,7 +237,7 @@ if(isset($model_gen) && !empty($model_gen)){
                                         </option>
 <?php 
 if(isset($model_department) && !empty($model_department)){
-    foreach ($model_gen as $key => $value) {
+    foreach ($model_department as $key => $value) {
         ?>
         <option <?php if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] == $value->id){ echo "selected"; $department = $_GET["search"]["department"];} ?> value="<?= $value->id?>"><?= $value->dep_title ?></option> 
         <?php
