@@ -54,7 +54,7 @@
                 if (Yii::app()->session['lang'] == 1) {
                     echo "Course Overview Report";
                 } else{
-                    echo "รายงานภาพรวมหลักสูตร";
+                    echo "รายงานภาพรวมผลการสอบตามรายหลักสูตร";
                 }
                 ?>
             </li>
@@ -524,7 +524,7 @@ chart.draw(data, options);
                     if (Yii::app()->session['lang'] == 1) {
                         echo "Course Overview Report";
                     } else {
-                        echo " รายงานภาพรวมหลักสูตร";
+                        echo "รายงานภาพรวมผลการสอบตามรายหลักสูตร";
                     }
                     ?>
                 </h3>    
@@ -823,7 +823,7 @@ chart.draw(data, options);
                 if (Yii::app()->session['lang'] == 1) {
                     echo "Course Overview Report";
                 } else{
-                    echo "รายงานภาพรวมหลักสูตร";
+                    echo "รายงานภาพรวมผลการสอบตามรายหลักสูตร";
                 }
                 ?></h2>"+$('#chart_graph').html()+'<br>'+$('#result_search').html()) );
             $("#export_pdf").submit();
@@ -834,7 +834,7 @@ chart.draw(data, options);
                 if (Yii::app()->session['lang'] == 1) {
                     echo "Course Overview Report";
                 } else{
-                    echo "รายงานภาพรวมหลักสูตร";
+                    echo "รายงานภาพรวมผลการสอบตามรายหลักสูตร";
                 }
                 ?></h2>"+$('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html() ));
             e.preventDefault();

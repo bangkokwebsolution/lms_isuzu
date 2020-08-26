@@ -59,7 +59,7 @@
             </li>
         </ol>
     </nav>
-    <a class="btn btn-reportsearch" href="<?php echo $this->createUrl('/report/index'); ?>?target=course" style="margin-bottom: 0px; margin-left: 0px; background-color: #087fe4;">
+    <a class="btn btn-reportsearch" href="<?php echo $this->createUrl('/report/index'); ?>?target=assessment" style="margin-bottom: 0px; margin-left: 0px; background-color: #087fe4;">
         <i class="fas fa-angle-left"></i> <?php echo Yii::app()->session['lang'] == 1?'Back':' ย้อนกลับ'; ?>
     </a>
 </div>
@@ -560,7 +560,14 @@ chart.draw(data, options);
                     <thead>
 
                           <tr style="background-color: #010C65; color: #fff; border: 1.5px solid #000;">
-                            <th rowspan="2" width="10%">
+                            <?php 
+                            if(!empty($sections)){
+                                $row = 2;
+                            }else{
+                                $row = 1;
+                            }
+                             ?>
+                            <th rowspan="<?=$row?>" width="10%">
                                 <?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ลำดับ";
@@ -568,7 +575,7 @@ chart.draw(data, options);
                                 echo "No.";
                             }
                             ?></th>
-                            <th rowspan="2"> <?php if(Yii::app()->session['lang'] != 1){
+                            <th rowspan="<?=$row?>"> <?php if(Yii::app()->session['lang'] != 1){
                                 echo "หลักสูตร";
                             }else{
                                 echo "Course";
@@ -581,21 +588,20 @@ chart.draw(data, options);
                             }
                             ?></th>
                         </tr>
-                        <tr style="background-color: #010C65; color: #fff; border: 1.5px solid #000;" >
+                        <?php if(!empty($sections)){ ?>
+                            <tr style="background-color: #010C65; color: #fff; border: 1.5px solid #000;" >
 
-                            <?php foreach ($sections as $keysections=> $valsections) { ?>
-                           
-                            <th> <?=$title_section[$valsections->survey_section_id] ?></th>
-                            <?php } ?>
-                        </tr>
+                                <?php foreach ($sections as $keysections=> $valsections) { ?>
+                                    <th> <?=$title_section[$valsections->survey_section_id] ?></th>
+                                <?php } ?> 
 
+                            </tr>
+                        <?php } ?>
                     </thead>
-
                     <tbody>
                         <?php 
                         if(!empty($sections)){
                             $no = 1; ?>
-                           
                             
                             <tr style="border: 1.5px solid #000; text-align: center;">
                                 <td><?php echo $no; $no++; ?></td>
