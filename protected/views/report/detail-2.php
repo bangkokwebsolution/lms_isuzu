@@ -9,6 +9,8 @@
     $.datetimepicker.setLocale('th');
 </script>
 <style type="text/css">
+
+    
     .form-control-danger {
         border-color: #d9534f;
         color: #d9534f;
@@ -535,9 +537,9 @@ chart.draw(data, options);
         <div id="result_search"> <!-- export excel -->            
         <div class="report-table">
             <div class="table-responsive w-100 t-regis-language">
-                <table class="table" id="table_list">
+                <table class="table" id="table_list" style="width: 100%">
                     <thead>
-                        <tr style="background-color: #010C65; color: #fff;">
+                        <tr  style="background-color: #010C65; color: #fff; border: 1.5px solid #000; text-align: center;">
                             <th rowspan="2"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ลำดับ";
@@ -602,7 +604,7 @@ chart.draw(data, options);
                            
                             <!-- <th></th> -->
                         </tr>
-                        <tr style="background-color: #010C65; color: #fff;">
+                        <tr  style="background-color: #010C65; color: #fff; border: 1.5px solid #000; text-align: center;">
                             <th><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ผ่าน";
@@ -630,21 +632,23 @@ chart.draw(data, options);
                         <?php 
                         if(!empty($model_search)){
                             $no = 1;
+                            $regis = 0;
                             foreach ($model_search as $key_c => $value_c) {
                                 $course = CourseOnline::model()->findByPk($value_c["course_id"]);
                                 if(!empty($value_c["gen"])){ // วนรุ่น
                                     foreach ($value_c["gen"] as $key_g => $value_g) {
                                         if($value_g["register"] > 0){
+                                            $regis ++;
                                 $gen_course = CourseGeneration::model()->findByPk($value_g["gen_id"]);
 
                                         if($gen_course == ""){
                                             $gen_course->gen_title = "-";
                                         }
                                         ?>  
-                                        <tr>
+                                        <tr style="border: 1.5px solid #000; text-align: center;">
                                             
 
-                                            <td><?php echo $no; $no++; ?></td>
+                                            <td ><?php echo $no; $no++; ?></td>
                                             <td><?= $course->course_title ?></td>
                                             <td><?= $gen_course->gen_title ?></td>
                                             <td><?= $value_g["register"] ?></td>
@@ -662,14 +666,27 @@ chart.draw(data, options);
                                         <?php
                                     }
                                     }
-                                }else{ // ไม่มีรุ่น หรือ รุ่นเดียว
-
-                                }                                
+                                }else{ // ไม่มีรุ่น หรือ รุ่นเดียว 
+                               
+                               }                                
                             } // foreach search
+
+                            if($regis == 0 ){ ?>
+                              <tr style="border: 1.5px solid #000; text-align: center;">
+                                <td colspan="10">
+                                    <?php 
+                                    if(Yii::app()->session['lang'] != 1){
+                                        echo "ไม่มีข้อมูล";
+                                    }else{
+                                        echo "No data";
+                                    }
+                                    ?></td>
+                                </tr>
+                            <?php }
                         }else{
                             ?>  
-                            <tr>
-                                <td colspan="9">
+                            <tr style="border: 1.5px solid #000; text-align: center;">
+                                <td colspan="10">
                                     <?php 
                                     if(Yii::app()->session['lang'] != 1){
                                         echo "ไม่มีข้อมูล";
