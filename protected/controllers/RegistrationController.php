@@ -1088,9 +1088,9 @@ public function actionUpdate() {
 //             }
 //         }
 //         $users->position_id = $position->id;
-        $users->department_id = $_POST['User'][department_id];
-        $users->position_id = $_POST['User'][position_id];
-        $users->branch_id = $_POST['User'][branch_id];
+        // $users->department_id = $_POST['User'][department_id];
+        // $users->position_id = $_POST['User'][position_id];
+        // $users->branch_id = $_POST['User'][branch_id];
         //$users->position_name = $_POST['User'][position_name];
            // $users->position_id = $_POST['User'][position_id];
         // $users->division_id = $_POST['User'][division_id];
@@ -1106,6 +1106,7 @@ public function actionUpdate() {
         $users->verifyPassword = $genpass;
             // $users->password = $_POST['Users'][password];
             // $users->verifyPassword = $_POST['Users'][verifyPassword];
+        $users->username = $_POST['User'][username];
         $users->identification = $_POST['idcard'];
         $profile->identification = $_POST['idcard'];
         $profile->passport = $_POST['passport'];
@@ -1115,10 +1116,10 @@ public function actionUpdate() {
         $profile->lastname = $_POST['Profile'][lastname];
         $profile->firstname_en = $_POST['Profile'][firstname_en];
         $profile->lastname_en = $_POST['Profile'][lastname_en];
-        $profile->type_user = $_POST['type_user']; 
+        //$profile->type_user = $_POST['type_user']; 
         $profile->history_of_illness = $_POST['history_of_illness'];;
         $profile->status_sm = $_POST['status_sm'];
-        $profile->type_employee = $_POST['type_employee'];
+       // $profile->type_employee = $_POST['type_employee'];
         $profile->type_card = $_POST['type_card'];
         $profile->sex = ($profile->title_id == 1)? "Male":"Female";
         $profile->tel = $_POST['Profile'][tel];
@@ -1185,13 +1186,13 @@ public function actionUpdate() {
          $profile->address_parent = 'n'; 
      }
 
-     if ($profile->type_user == 1) {
-    $users->position_id = $_POST['position_gen'];
-    $users->department_id = $_POST['department_gen'];
-    }else if($profile->type_user == 3){
-      $users->position_id = $_POST['User'][position_id];
-      $users->department_id = $_POST['User'][department_id];
-    }
+    //  if ($profile->type_user == 1) {
+    // $users->position_id = $_POST['position_gen'];
+    // $users->department_id = $_POST['department_gen'];
+    // }else if($profile->type_user == 3){
+    //   $users->position_id = $_POST['User'][position_id];
+    //   $users->department_id = $_POST['User'][department_id];
+    // }
         // var_dump($users);
         // echo "ddddddddddd";
         // var_dump($Profile);
