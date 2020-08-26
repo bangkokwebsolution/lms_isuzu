@@ -2607,7 +2607,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                                         console.log("imageCheck 7");
                                                         if(data.timeNext) {
                                                           $("#nextPageTag<?= $file->id; ?>").css("display", "none");
-                                                          countdownTime(data.timeNext,<?= $file->id; ?>,data.status);
+                                                          countdownTime(data.timeNext,<?= $file->id; ?>,data.status, <?= $langId ?>);
                                                         } else {
                                                           clearInterval(interval);
                                                           $("#nextPageTag<?= $file->id; ?>").css("display", "block");
@@ -2671,7 +2671,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                         console.log("imageCheck 8");
                                         if(data.timeNext) {
                                           $("#nextPageTag<?= $file->id; ?>").css("display", "none");
-                                          countdownTime(data.timeNext,<?= $file->id; ?>,data.status);
+                                          countdownTime(data.timeNext,<?= $file->id; ?>,data.status, <?= $langId ?>);
                                         } else {
                                           clearInterval(interval);
                                           $("#nextPageTag<?= $file->id; ?>").css("display", "block");
@@ -3071,7 +3071,7 @@ $(document).ready(function () {
    var t = new Date();
    t.setSeconds(t.getSeconds() + <?= $timeCountDown; ?>);
    $("#myCarousel<?= $_GET['file']; ?>").children("#nextPageTag<?= $_GET['file']; ?>").hide();
-   countdownTime(<?= $timeCountDown ?>,<?= $_GET['file']; ?>,'null',false);
+   countdownTime(<?= $timeCountDown ?>,<?= $_GET['file']; ?>,'null', <?= $langId ?>);
  <?php } else { ?>
   $("#myCarousel<?= $_GET['file']; ?>").children("#nextPageTag<?= $_GET['file']; ?>").show();
   $("#myCarousel<?= $_GET['file']; ?>").children("#prePageTag<?= $_GET['file']; ?>").show();
@@ -3108,7 +3108,7 @@ function time_countdown_start_ajax(learn_pdf_id){
     if(data.status!=false){
      if(data.idx != 1)$("#myCarousel"+file_id).children("#prePageTag"+file_id).show();
      $("#myCarousel"+file_id).children("#nextPageTag"+file_id).hide();
-     countdownTime(data.dateTime,file_id,'null',false);
+     countdownTime(data.dateTime,file_id,'null', <?= $langId ?>);
    } else {
      clearInterval(interval);
      $("#myCarousel"+file_id).children("#nextPageTag"+file_id).show();
@@ -3119,7 +3119,7 @@ function time_countdown_start_ajax(learn_pdf_id){
 
 var interval;
 
-function countdownTime(time_down,file,type){
+function countdownTime(time_down,file,type,lang){
   var count = time_down;
   var minute = 0;
   var second = 0;
@@ -3134,7 +3134,15 @@ function countdownTime(time_down,file,type){
     second = count < 10 ? '0'+count : count;
     minute = '00';
   }
-  timeStr = 'หน้าถัดไป : '+minute+':'+second+'';
+
+  if(lang == 2){
+    timeStr = 'หน้าถัดไป';
+  }else{
+    timeStr = 'Next page';
+  }
+  timeStr = timeStr+' : '+minute+':'+second+'';
+  // timeStr = 'หน้าถัดไป : '+minute+':'+second+'';
+
   $("#timeCountdownCarousel"+file).html(timeStr);
   $("#timeCountdownCarousel"+file).css("display", "block");
   if (count <= 0) {
@@ -3243,7 +3251,7 @@ function countdownTime(time_down,file,type){
       console.log("imageCheck 9");
       if(data.timeNext) {
         $("#nextPageTag<?= $file->id; ?>").css("display", "none");
-        countdownTime(data.timeNext,<?= $file->id; ?>,data.status);
+        countdownTime(data.timeNext,<?= $file->id; ?>,data.status, <?= $langId ?>);
       } else {
         clearInterval(interval);
         $("#nextPageTag<?= $file->id; ?>").css("display", "block");
@@ -3327,7 +3335,7 @@ function countdownTime(time_down,file,type){
                                             console.log("imageCheck 10");
                                             if(data.timeNext) {
                                               $("#nextPageTag<?= $file->id; ?>").css("display", "none");
-                                              countdownTime(data.timeNext,<?= $file->id; ?>,data.status);
+                                              countdownTime(data.timeNext,<?= $file->id; ?>,data.status, <?= $langId ?>);
                                             } else {
                                               clearInterval(interval);
                                               $("#nextPageTag<?= $file->id; ?>").css("display", "block");
