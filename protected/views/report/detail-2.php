@@ -537,7 +537,7 @@ chart.draw(data, options);
         <div id="result_search"> <!-- export excel -->            
         <div class="report-table">
             <div class="table-responsive w-100 t-regis-language">
-                <table class="table" id="table_list" style="width: 100%">
+                <table class="table" id="table_list" >
                     <thead>
                         <tr  style="background-color: #010C65; color: #fff; border: 1.5px solid #000; text-align: center;">
                             <th rowspan="2"><?php 
@@ -819,12 +819,24 @@ chart.draw(data, options);
     $(document).ready( function () {
 
         $('.btn-pdf').click(function(e) {
-            $("#text_element1").attr("value", encodeURIComponent("<h2>Course Overview Report</h2>"+$('#chart_graph').html()+'<br>'+$('#result_search').html()) );
+            $("#text_element1").attr("value", encodeURIComponent("<h2> <?php
+                if (Yii::app()->session['lang'] == 1) {
+                    echo "Course Overview Report";
+                } else{
+                    echo "รายงานภาพรวมหลักสูตร";
+                }
+                ?></h2>"+$('#chart_graph').html()+'<br>'+$('#result_search').html()) );
             $("#export_pdf").submit();
         });
       
         $('.btn-excel').click(function(e) {
-            window.open('data:application/vnd.ms-excel,' + encodeURIComponent("<h2>Course Overview Report</h2>"+$('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html() ));
+            window.open('data:application/vnd.ms-excel,' + encodeURIComponent("<h2> <?php
+                if (Yii::app()->session['lang'] == 1) {
+                    echo "Course Overview Report";
+                } else{
+                    echo "รายงานภาพรวมหลักสูตร";
+                }
+                ?></h2>"+$('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br>'+$('#result_search').html() ));
             e.preventDefault();
         });
 
