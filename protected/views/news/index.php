@@ -53,7 +53,14 @@ function DateThai($strDate)
                 <?php foreach ($news as $all) { ?>
                     <div class="col-xs-12 col-sm-4 col-md-3">
                         <div class="well">
-                            <a href="<?php echo $this->createUrl('news/detail/', array('id' => $all->cms_id)); ?>">
+                            <?php
+                            if (Yii::app()->session['lang'] == 1) { ?>
+                              <a href="<?php echo $this->createUrl('news/detail/', array('id' => $all->cms_id)); ?>">
+                           <?php }else{ ?>
+                                <a href="<?php echo $this->createUrl('news/detail/', array('id' => $all->parent_id)); ?>">
+                         <?php  }
+                            ?>
+                            
                                 <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/news/' . $all->cms_id . '/thumb/' . $all->cms_picture)) { ?>
                                     <div class="news-img" style="background-image: url('<?php echo Yii::app()->homeUrl; ?>uploads/news/<?php echo $all->cms_id ?>/thumb/<?php echo $all->cms_picture ?>');">
                                     <?php } else { ?>
