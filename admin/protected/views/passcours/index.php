@@ -1,4 +1,12 @@
-<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/bootstrap-chosen.css" />
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/moment.min.js"></script>
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker-bs2.css" />
+
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/highcharts.js"></script>
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/modules/exporting.js"></script>
+
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/chosen.min.css" />
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/chosen.jquery.js"></script>
 
 <?php
@@ -36,33 +44,50 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 EOD
 , CClientScript::POS_READY);
 ?>
-<script type="text/javascript">
-    $(function() {
 
-    	$(".chosen").chosen();
-    	$(".widget-body").css("overflow","");
-        // $('#courseSelectMulti').select2();
-        endDate();
-        startDate();
-    });
-    function startDate() {
-        $('#passcoursStartDateBtn').datepicker({
-            dateFormat:'yy/mm/dd',
-            showOtherMonths: true,
-            selectOtherMonths: true,
-            onSelect: function() {
-                $("#passcoursEndDateBtn").datepicker("option","minDate", this.value);
-            },
+<script>
+    $(document).ready(function(){
+
+        $(".toggleairasia-table td button").click(function(){
+            $(this).closest("tbody").next().toggle();
         });
-    }
-    function endDate() {
-        $('#passcoursEndDateBtn').datepicker({
-            dateFormat:'yy/mm/dd',
-            showOtherMonths: true,
-            selectOtherMonths: true,
+
+        $(".chosen").chosen();
+        $("#Passcours_period_start").datepicker({
+            // numberOfMonths: 2,
+            onSelect: function(selected) {
+              $("#Passcours_period_end").datepicker("option","minDate", selected)
+            }
         });
-    }
+        $("#Passcours_period_end").datepicker({
+            // numberOfMonths: 2,
+            onSelect: function(selected) {
+               $("#Passcours_period_start").datepicker("option","maxDate", selected)
+            }
+        }); 
+
+        $("#ReportUser_course").change(function(){
+            var course_id = $("#ReportUser_course option:selected").val();
+            if(course_id != ""){
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo Yii::app()->createAbsoluteUrl("/Report/ajaxFindGen"); ?>',
+                    data: ({
+                        course_id: course_id,
+                    }),
+                    success: function(data) {
+                        if(data != ""){
+                            $("#ReportUser_gen_id").html(data);
+                        }
+                    }
+                });
+            }
+        });
+
+
+});
 </script>
+
 <div class="innerLR">
 	<div class="widget">
 	<?php 

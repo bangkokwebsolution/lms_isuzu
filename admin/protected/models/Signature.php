@@ -57,6 +57,8 @@ class Signature extends AActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			
+			array('sign_title', 'required'),
 			array('sign_hide', 'numerical', 'integerOnly'=>true),
 			array('sign_title, sign_position, sign_path, create_by', 'length', 'max'=>255),
 			array('create_date, news_per_page', 'safe'),

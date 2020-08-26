@@ -27,7 +27,9 @@ class MainMenu extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('title', 'required'),
 			array('lang_id', 'numerical', 'integerOnly'=>true),
+			
 			array('status', 'length', 'max'=>1),
 			array('title, url, parent_id, lang_id', 'safe'),
 			// The following rule is used by search().
