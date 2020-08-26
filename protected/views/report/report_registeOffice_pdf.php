@@ -84,6 +84,7 @@ $user_Department = $user_login->department_id;
                                          
         $criteria->compare('id',$user_Department);
     }
+    $criteria->compare('type_employee_id',1);
 	$criteria->compare('active','y');
 	$dep = Department::model()->findAll($criteria);
 	$dep_arr = [];
