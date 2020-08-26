@@ -1806,7 +1806,7 @@ function editNamehouse_registration(filedoc_id){
         </div>
     </div> 
     <div class="row  mt-1 mb-1 bb-1 pb-20 mt-20 form_attach_house_registration">
-        <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'File attachment House registration':'ไฟล์สำเนาทะเบียนบ้าน'; ?></strong></div>
+        <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'Attachment copies of house paticular':'ไฟล์สำเนาทะเบียนบ้าน'; ?></strong></div>
         <div class="col-md-4">
             <div class="form-group">
 

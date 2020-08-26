@@ -665,10 +665,17 @@ class ReportController extends Controller
 									$datatable .= '<table class="table">';       
 									$datatable .= '<thead>';
 									$datatable .= '<tr>';
+									if (Yii::app()->session['lang'] == 1) {
+									$datatable .= '<th>No.</th>';
+									$datatable .= '<th>Fullname</th>';
+									$datatable .= '<th>Department</th>';
+									$datatable .= '<th>Position</th>';
+									}else{
 									$datatable .= '<th>ลำดับ</th>';
 									$datatable .= '<th>ชื่อ - นามสกุล</th>';
 									$datatable .= '<th>ฝ่าย</th>';
 									$datatable .= '<th>แผนก</th>';
+									}
 									$datatable .= '</tr>'; 
 									$datatable .= '</thead>';
 									$datatable .= '<tbody>';
@@ -677,7 +684,11 @@ class ReportController extends Controller
 
 											$datatable .= '<tr>';
 											$datatable .= '<td>'.$i++.'</td>';
-											$datatable .= '<td>'.$value->profile->firstname."  ".$value->profile->lastname.'</td>';
+											if (Yii::app()->session['lang'] == 1) {
+											$datatable .= '<td>'.$value->profile->firstname_en."     ".$value->profile->lastname_en.'</td>';
+											}else{
+											$datatable .= '<td>'.$value->profile->firstname."  ".$value->profile->lastname.'</td>';	
+											}
 											$datatable .= '<td>'.$value->department->dep_title.'</td>';
 											$datatable .= '<td>';
 											if ($value->position->position_title != "") {
