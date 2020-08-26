@@ -43,7 +43,7 @@
 			<li <?php if(isset($_GET["target"]) && $_GET["target"] == "course"){ echo 'class="active"'; } ?>>
 				<a data-toggle="tab" href="#second-report"><?php echo Yii::app()->session['lang'] == 1?'Training Report ':'รายงานการอบรม'; ?></a>
 			</li>
-			<li><a data-toggle="tab" href="#third-report"><?php echo Yii::app()->session['lang'] == 1?'Training Assessment Report ':'รายงานแบบประเมินการอบรม'; ?></a></li>
+			<li <?php if(isset($_GET["target"]) && $_GET["target"] == "assessment"){ echo 'class="active"'; } ?>><a data-toggle="tab" href="#third-report"><?php echo Yii::app()->session['lang'] == 1?'Training Assessment Report ':'รายงานแบบประเมินการอบรม'; ?></a></li>
 		</ul>
 
 		<div class="tab-content">
@@ -197,7 +197,7 @@
 				</div>
 			</div>
 
-			<div id="third-report" class="tab-pane fade">
+			<div id="third-report" class="tab-pane fade <?php if(isset($_GET["target"]) && $_GET["target"] == "assessment"){ echo 'in active'; } ?>" >
 
 				<div class="row d-flex justify-content-center">
 					<div class="col-sm-4 col-md-3">
