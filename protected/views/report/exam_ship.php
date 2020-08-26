@@ -471,7 +471,7 @@ chart.draw(data, options);
             <div class="table-responsive w-100 t-regis-language">
                 <table class="table" id="table_list">
                     <thead>
-                        <tr>
+                        <tr style="background-color: #010C65; color: #fff;">
                             <th><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ลำดับ";
@@ -490,14 +490,14 @@ chart.draw(data, options);
                             ?></th>
                             <th><?php 
                             if(Yii::app()->session['lang'] != 1){
-                                echo "ฝ่าย";
+                                echo "แผนก";
                             }else{
                                 echo "Department";
                             }
                             ?></th>
                             <th><?php 
                             if(Yii::app()->session['lang'] != 1){
-                                echo "แผนก";
+                                echo "ตำแหน่ง";
                             }else{
                                 echo "Position";
                             }
@@ -592,25 +592,6 @@ chart.draw(data, options);
                             } // foreach search
                         }else{ // !empty
                             ?>
-                     <!--        <td>
-                                <?php 
-                                    if(Yii::app()->session['lang'] != 1){
-                                         echo $value->id." ".$value->id;
-                                    }else{
-                                        echo $value->id." ".$value->id;
-                                    }
-                                ?>
-                            </td>  
-                            <tr>
-                                <td>
-                                    <?php 
-                                        if(Yii::app()->session['lang'] != 1){
-                                             echo $value->id." ".$value->id;
-                                        }else{
-                                            echo $value->id." ".$value->id;
-                                        }
-                                    ?>
-                                </td> --> 
                                 <td colspan="8">
                                     <?php 
                                     if(Yii::app()->session['lang'] != 1){

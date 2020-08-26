@@ -28,7 +28,7 @@ $user_Department = $user_login->department_id;
 		if (Yii::app()->user->id == 1) {
 			echo "Report register ship";
 		}else{
-			echo "รายงานภาพรวมการสมัคร คนเรือ";
+			echo "รายงานภาพรวมการสมัคร คนประจำเรือ";
 		}
 		?></h1>
 		
@@ -113,11 +113,14 @@ $user_Department = $user_login->department_id;
 	$criteria->with = array('profile');
 	$criteria->compare('department_id',$result_dep_arr);
 	$criteria->compare('superuser',0);
-	if ($status == 1) {
-		$criteria->compare('status',1);
-	}else if($status == 0){
-		$criteria->compare('status',0);
-	}
+	if ($status == "1") {
+				$criteria->compare('status',1);
+			}
+			if($status == "0"){
+				$criteria->compare('status',0);
+			}else if($status == ""){
+				$criteria->compare('status',array(0,1));
+			}
 	if ($age != null && $age2 != null || $age != "" && $age2 != "") {
 		$criteria->addBetweenCondition('age', $age, $age2, 'AND');
 	}
@@ -148,13 +151,13 @@ $user_Department = $user_login->department_id;
 		</style>
 		<div class="report-table">
 			<div class="table-responsive w-100 t-regis-language">
-				<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 90%;">       
+				<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 100%;">       
 					<thead>
 						<tr style="background: #010C65;color: #fff; border:1px solid #d8d8d8;padding: 8px;">
 							<th style="border:1px solid #d8d8d8; padding: 8px;">ลำดับ</th>
 							<th style="border:1px solid #d8d8d8; padding: 8px;">ชื่อ - สกุล</th>
-							<th style="border:1px solid #d8d8d8; padding: 8px;">ฝ่าย</th>
 							<th style="border:1px solid #d8d8d8; padding: 8px;">แผนก</th>
+							<th style="border:1px solid #d8d8d8; padding: 8px;">ตำแหน่ง</th>
 							<th style="border:1px solid #d8d8d8; padding: 8px;">อายุ</th>
 							<th style="border:1px solid #d8d8d8; padding: 8px;">สถานะอนุมัติ</th>
 						</tr>

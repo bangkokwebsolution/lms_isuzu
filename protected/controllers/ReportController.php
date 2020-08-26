@@ -821,10 +821,13 @@ public function actionReportRegisterOfficeExcel()
 			$criteria->with = array('profile');
 			$criteria->compare('department_id',$result_dep_arr);
 			$criteria->compare('superuser',0);
-			if ($status == 1) {
+			if ($status == "1") {
 				$criteria->compare('status',1);
-			}else if($status == 0){
+			}
+			if($status == "0"){
 				$criteria->compare('status',0);
+			}else if($status == ""){
+				$criteria->compare('status',array(0,1));
 			}
 			if ($age != null && $age2 != null || $age != "" && $age2 != "") {
 				$criteria->addBetweenCondition('age', $age, $age2, 'AND');
@@ -858,10 +861,13 @@ public function actionReportRegisterOfficeExcel()
 					if ($authority == 2 || $authority == 3) {
 						$criteria->compare('department_id',$user_Department);
 					}
-					if ($status == 1) {
-						$criteria->compare('status',1);
-					}else if($status == 0){
+					if ($status == "1") {
+					$criteria->compare('status',1);
+					}
+					if($status == "0"){
 						$criteria->compare('status',0);
+					}else if($status == ""){
+						$criteria->compare('status',array(0,1));
 					}
 					$criteria->compare('superuser',0);
 					if ($Year_start != null) {
@@ -899,10 +905,13 @@ public function actionReportRegisterOfficeExcel()
 					if ($authority == 2 || $authority == 3) {
 						$criteria->compare('department_id',$user_Department);
 					}
-					if ($status == 1) {
+					if ($status == "1") {
 						$criteria->compare('status',1);
-					}else if($status == 0){
+					}
+					if($status == "0"){
 						$criteria->compare('status',0);
+					}else if($status == ""){
+						$criteria->compare('status',array(0,1));
 					}
 					$criteria->compare('superuser',0);
 					if ($Year_end != null) {
@@ -1256,8 +1265,8 @@ public function actionReportRegisterOfficeExcel()
 							$datatable .= '<tr>';
 							$datatable .= '<th>ลำดับ</th>';
 							$datatable .= '<th>ชื่อ - สกุล</th>';
-							$datatable .= '<th>ฝ่าย</th>';
 							$datatable .= '<th>แผนก</th>';
+							$datatable .= '<th>ตำแหน่ง</th>';
 							$datatable .= '<th>อายุ</th>';
 							$datatable .= '<th>สถานะอนุมัติ</th>';
 							$datatable .= '</tr>'; 

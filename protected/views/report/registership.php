@@ -140,7 +140,7 @@
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'Status':'สถานะอนุมัติ'; ?></label>
                                     <select class="form-control status" name="" id="x">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Status':'สถานะอนุมัติ'; ?></option>
+                                        <option value="" selected><?= Yii::app()->session['lang'] == 1?'Status':'สถานะอนุมัติ'; ?></option>
                                         <option value="1"><?= Yii::app()->session['lang'] == 1?'Approved':'อนุมัติ'; ?></option>
                                         <option value="0"><?= Yii::app()->session['lang'] == 1?'Disapproved':'ไม่อนุมัติ'; ?></option>
                                     </select>
