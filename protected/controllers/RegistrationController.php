@@ -1833,8 +1833,9 @@ unset($session['pathComTrain']);
 unset($session['filenameComTrain']);
 unset($session['filenameOriComTrain']);
 $users->position_name = isset($_POST['User']['position_name']) ? $_POST['User']['position_name'] : $users->position->position_title;
+
 $this->render('index', array('profile' => $profile, 'users' => $users,'label'=>$label, 'ProfilesEdu' => $ProfilesEdu, 'FileEdu' => $FileEdu, 'FileTraining' => $FileTraining, 'ProfilesWorkHistory' => $ProfilesWorkHistory, 'AttachFile' => $AttachFile,'AttachName'=> $AttachName, 'ProfilesLanguage'=>$ProfilesLanguage,
-    'ProfilesTraining'=>$ProfilesTraining, 'FileTraining'=>$FileTraining));
+    'ProfilesTraining'=>$ProfilesTraining, 'FileTraining'=>$FileTraining, 'page'=>'update'));
 }
 
 //

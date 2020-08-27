@@ -3400,8 +3400,7 @@ if (!$users->isNewRecord && $profile->type_employee == 1) {
                         }
                         ?>
 
-
-                        <div class="text-center submit-register">
+                        <div class="text-center submit-register" <?php if($page != "update"){ ?>style="display: none;" <?php }  ?>>
 
                             <?php 
                             $branch_js = $users->branch_id;
@@ -3628,6 +3627,7 @@ $(wrapper_work).on("click", ".delete_work", function(e) {
 ////////////////////////////////////////// ประวัติการ /////////////////////////////////////////////////////////////////////////
 
 $('#accept').change(function(event) {
+    $(".submit-register").show();
     $(".id_employee").hide();
     $(".uploads_image").show();
     $('.form_name').show();
@@ -3683,6 +3683,7 @@ $('#accept').change(function(event) {
    $(".required_date_of_expiry").hide();
 });
 $("#reject").change(function(event) {
+    $('.submit-register').show();
     $(".id_employee").show();
     $(".uploads_image").show();
     $('.form_name').show();
@@ -3766,6 +3767,7 @@ $("#reject").change(function(event) {
 
 });
 $("#general").change(function(event) {
+    $('.submit-register').show();
     $('.Branch').hide();
     $(".uploads_image").hide();
     $('.label_branch').hide();
@@ -4794,19 +4796,55 @@ var new_forms = <?php echo $new_form; ?>;
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">
-                    สร้างรูปประจำตัว
-                </h4>
+                    <?php 
+                    if(Yii::app()->session['lang'] == 1){
+                        echo "Create image";                        
+                    }else{
+                        echo "สร้างรูปประจำตัว";
+                    }
+                    ?>
+                 </h4>
             </div>
             <div class="modal-body">
                 <div id="upload-profileimg" class="center-block"></div>
                 <div class="text-center center-block mt-2">
-                    <button class="rotate_btn rotate_left btn" data-deg="90"><i class="fas fa-undo"></i> Rotate Left</button>
-                    <button class="rotate_btn rotate_right btn" data-deg="-90"><i class="fas fa-redo-alt"></i> Rotate Right</button>
+                    <button class="rotate_btn rotate_left btn" data-deg="90"><i class="fas fa-undo"></i> 
+                    <?php 
+                    if(Yii::app()->session['lang'] == 1){
+                        echo "Rotate Left";                        
+                    }else{
+                        echo "หมุนซ้าย";
+                    }
+                    ?></button>
+                    <button class="rotate_btn rotate_right btn" data-deg="-90"><i class="fas fa-redo-alt"></i> 
+                    <?php 
+                    if(Yii::app()->session['lang'] == 1){
+                        echo "Rotate Right";                        
+                    }else{
+                        echo "หมุนขวา";
+                    }
+                    ?></button>
                 </div >
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                <button type="button" id="cropImageBtn" class="btn btn-primary">บันทึกรูป</button>
+                <button type="button" class="btn btn-default" id="cropcancel" data-dismiss="modal">
+                <?php 
+                    if(Yii::app()->session['lang'] == 1){
+                        echo "cancel";                        
+                    }else{
+                        echo "ยกเลิก";
+                    }
+                    ?>                        
+                    </button>
+                <button type="button" id="cropImageBtn" class="btn btn-primary">
+                <?php 
+                    if(Yii::app()->session['lang'] == 2){
+                        echo "บันทึกรูป";                                               
+                    }else{
+                        echo "Save";
+                    }
+                    ?>
+                    </button>
             </div>
         </div>
     </div>
@@ -4828,8 +4866,16 @@ function readFile(input) {
             rawImg = e.target.result;
         }
         reader.readAsDataURL(input.files[0]);
+
+        console.log($("#Profile_pro_pic").val());
     } else {
-        swal("ขออภัย - เบราว์เซอร์ของคุณไม่รองรับ FileReader API");
+        if(<?= Yii::app()->session['lang'] ?> == 2){
+            swal("ท่านยังไม่ได้เลือกรูป");                      
+        }else{
+            swal("Please select image");
+        }
+        
+        // swal("ขออภัย - เบราว์เซอร์ของคุณไม่รองรับ FileReader API");
     }
 }
 
@@ -4880,6 +4926,9 @@ $('#cropImageBtn').on('click', function(ev) {
     });
 });
 
+$('#cropcancel').on('click', function(ev) {
+$("#Profile_pro_pic").val("");
+    });
 </script>
 
 
