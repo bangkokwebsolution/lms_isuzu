@@ -285,6 +285,8 @@ public function actionResetLearn($id) {
             $userPosition = $userModel->position_id;
             $userBranch = $userModel->branch_id;
 
+            if($userModel->profile->type_user != 5){
+
             $criteria = new CDbCriteria;
             // $criteria->with = array('orgchart');
             $criteria->compare('department_id',$userDepartment);
@@ -299,6 +301,9 @@ public function actionResetLearn($id) {
             }
 
         
+        }else{ // general
+            $courseArr[] = "2";
+        }
 
    
 

@@ -662,6 +662,8 @@ class SiteController extends Controller
 		$userPosition = $userModel->position_id;
 		$userBranch = $userModel->branch_id;
 
+        if($userModel->profile->type_user != 5){
+
 		$criteria = new CDbCriteria;
 		$criteria->compare('department_id',$userDepartment);
 		$criteria->compare('position_id',$userPosition);
@@ -672,6 +674,10 @@ class SiteController extends Controller
 		foreach ($modelOrgDep as $key => $value) {
 			$courseArr[] = $value->id;
 		}
+
+        }else{ // general
+            $courseArr[] = "2";
+        }
 
 		$criteria = new CDbCriteria;
 		$criteria->with = array('course','course.CategoryTitle');
@@ -950,18 +956,25 @@ class SiteController extends Controller
 			$userPosition = $userModel->position_id;
 			$userBranch = $userModel->branch_id;
 
-			$criteria = new CDbCriteria;
-			// $criteria->with = array('orgchart');
-			$criteria->compare('department_id',$userDepartment);
-			$criteria->compare('position_id',$userPosition);
-			$criteria->compare('branch_id',$userBranch);
-			$criteria->compare('active','y');
-			// $criteria->group = 'orgchart_id';
-			$modelOrgDep = OrgChart::model()->findAll($criteria);
+            if($userModel->profile->type_user != 5){
 
-			foreach ($modelOrgDep as $key => $value) {
-				$courseArr[] = $value->id;
-			}
+             $criteria = new CDbCriteria;
+			// $criteria->with = array('orgchart');
+             $criteria->compare('department_id',$userDepartment);
+             $criteria->compare('position_id',$userPosition);
+             $criteria->compare('branch_id',$userBranch);
+             $criteria->compare('active','y');
+			// $criteria->group = 'orgchart_id';
+             $modelOrgDep = OrgChart::model()->findAll($criteria);
+
+             foreach ($modelOrgDep as $key => $value) {
+                $courseArr[] = $value->id;
+            }
+            
+            }else{ // general
+                $courseArr[] = "2";
+            }
+
 
 			$criteria = new CDbCriteria;
 			$criteria->with = array('course','course.CategoryTitle');
