@@ -250,6 +250,37 @@ figure figcaption {
 </style>
 <script language="javascript">
 
+    function isThaiEngchar(str,obj){
+        var isThai=true;
+        var orgi_text=" ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ";
+        var chk_text=str.split("");
+        chk_text.filter(function(s){        
+            if(orgi_text.indexOf(s)==-1){
+                isThai=false;
+            }           
+        }); 
+
+        console.log(isThai);
+
+        var isEng=true;
+        var orgi_text="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        var chk_text=str.split("");
+        chk_text.filter(function(s){        
+            if(orgi_text.indexOf(s)==-1){
+                isEng=false;
+                if(isThai == false){
+                    obj.value=str.replace(RegExp(s, "g"),'');
+                }
+            }           
+        }); 
+        
+        if(isThai == false && isEng == false){
+            return false;
+        }else{
+           return true; 
+       }
+ }
+
     function isThaichar(str,obj){
         var isThai=true;
         var orgi_text=" ๅภถุึคตจขชๆไำพะัีรนยบลฃฟหกดเ้่าสวงผปแอิืทมใฝ๑๒๓๔ู฿๕๖๗๘๙๐ฎฑธํ๊ณฯญฐฅฤฆฏโฌ็๋ษศซฉฮฺ์ฒฬฦ";
@@ -1514,14 +1545,14 @@ function editNamehouse_registration(filedoc_id){
                         <div class="col-md-3 col-lg-3 col-xs-12">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_firstname; ?>(TH)<font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control firstname', 'placeholder' => $label->label_firstname,'onkeyup'=>"isThaichar(this.value,this)", 'autocomplete' => 'off')); ?>
+                                <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control firstname', 'placeholder' => $label->label_firstname,'onkeyup'=>"isThaiEngchar(this.value,this)", 'autocomplete' => 'off')); ?>
                                 <?php echo $form->error($profile, 'firstname', array('class' => 'error2')); ?>
                             </div>
                         </div>
                         <div class="col-md-3 col-lg-3 col-xs-12">
                             <div class="form-group">
                                 <label for=""><?php echo $label->label_lastname; ?>(TH)<font color="red">*</font></label>
-                                <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control lastname', 'placeholder' => $label->label_lastname,'onkeyup'=>"isThaichar(this.value,this)", 'autocomplete' => 'off')); ?>
+                                <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control lastname', 'placeholder' => $label->label_lastname,'onkeyup'=>"isThaiEngchar(this.value,this)", 'autocomplete' => 'off')); ?>
                                 <?php echo $form->error($profile, 'lastname', array('class' => 'error2')); ?>
                                 <!--<input type="text" class="form-control" id="">-->
                             </div>
