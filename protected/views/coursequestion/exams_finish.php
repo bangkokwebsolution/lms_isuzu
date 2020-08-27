@@ -84,7 +84,7 @@ if($course->cate_id != 1){ //LMS
 			<div class="col-sm-8">
 				<div class="well bg-greendark">
 
-					<?php if($testType != "pre" && $quesType_ != 3){ // 3= บรรยาย   หัว icon ว่าผ่าน ไม่ผ่าน ?>
+					<?php if($testType != "pre" || $quesType_ != 3){ // 3= บรรยาย   หัว icon ว่าผ่าน ไม่ผ่าน ?>
 					<div class="well text-center result">
 						<h1 class="<?= $classH1; ?>">
 							<span><i class="<?= $class; ?>" aria-hidden="true"></i></span>
