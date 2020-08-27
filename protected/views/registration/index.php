@@ -1383,13 +1383,13 @@ function editNamehouse_registration(filedoc_id){
                             ?>
                             <img src="<?php echo $url_pro_pic; ?>" class="gambar img-responsive img-thumbnail" name="item-img-output" id="item-img-output" />
                             <figcaption>
-                                <div class="btn btn-default btn-uploadimg"><i class="fa fa-camera"></i> เลือกรูป</div>
+                                <div class="btn btn-default btn-uploadimg"><i class="fa fa-camera"></i><?= Yii::app()->session['lang'] == 1?'Select picture':'เลือกรูป'; ?> </div>
                             </figcaption>
                         </figure>
                         <input type="hidden" name="url_pro_pic" id="url_pro_pic">
                         <input type="file" id="Profile_pro_pic" class="item-img file center-block d-none" name="Profile_pro_pic" />
                     </label>
-                    <span class="text-danger"><font color="red">*</font> รูปภาพควรมีขนาด 2X2</span>
+                    <span class="text-danger"><font color="red">*</font><?= Yii::app()->session['lang'] == 1?'Image should be sized 2X2':'รูปภาพควรมีขนาด 2X2 '; ?> </span>
                 </div>
             </div>
         </div>
