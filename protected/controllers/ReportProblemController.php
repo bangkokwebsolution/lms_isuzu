@@ -84,10 +84,13 @@ class ReportProblemController extends Controller
 					{
 						$report_pic->saveAs($webroot);
 					}
-					Yii::app()->user->setFlash('msg',"ผู้ดูแลระบบได้รับปัญหาที่ท่านแจ้งแล้ว กรุณารอรับอีเมลตอบกลับจากผู้ดูแลระบบ");
-					Yii::app()->user->setFlash('icon', "success");
-					$this->redirect(array('site/index'));
+					
 				}
+
+				Yii::app()->user->setFlash('msg',"ผู้ดูแลระบบได้รับปัญหาที่ท่านแจ้งแล้ว กรุณารอรับอีเมลตอบกลับจากผู้ดูแลระบบ");
+				Yii::app()->user->setFlash('icon', "success");
+				$this->redirect(array('site/index'));
+					
 			}
 
 			$this->redirect(array('site/index'));
