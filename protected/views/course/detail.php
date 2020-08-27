@@ -1455,14 +1455,14 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
             $BestFinalTestScore_pass = Coursescore::model()->findAll($criteria);
 
 
-            
             if($checkHaveCourseTest && $CheckPreTestAnsTextAreaCoursePost == true && empty($BestFinalTestScore_pass) && count($BestFinalTestScore) < $course->cate_amount){ ?>
                <li class="list-group-item ">
                 <?php if($step == 4){ ?>
                     <!-- <div class="pt-now"> You are here</div> -->
                 <?php } ?>
                 <a href="<?= $pathCourseTest ?>" <?= $alertCourseTest ?> >
-                    <span class="list__course"><?= $label->label_testFinalTimes; ?> <?= $key+2; ?></span>
+                    <span class="list__course"><?= $label->label_testFinalTimes; ?> <?= count($BestFinalTestScore)+1; ?></span>
+                    <!-- <span class="list__course"><?= $label->label_testFinalTimes; ?> <?= $key+2; ?>5555</span> -->
                     <span class="btn btn-warning detailmore pull-right"><?= $clickFinal ?>
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></a>
                 </li>
