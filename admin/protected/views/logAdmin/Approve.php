@@ -10,7 +10,7 @@
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/chosen.jquery.js"></script>
 <?php
 $formNameModel = 'LogAdmin';
-$titleName = 'Log การตรวจสอบการสมัครสมาชิก';
+$titleName = 'Log การยืนยันการสมัครสมาชิก';
 
 $this->breadcrumbs=array($titleName);
 Yii::app()->clientScript->registerScript('search', "

@@ -25,7 +25,7 @@
   <h4>Dear : <?= $model->profile->firstname_en.' '.$model->profile->lastname_en; ?></h4>
   <h4>You have successfully applied a member of thorconn.com and Thoresen e-Leaning application</h4>
   <h4>Please see a username and password as follows.</h4>
-  <h4>- Username : <?= $username; ?></h4>
+  <h4>- Username : <?= $model->username; ?></h4>
   <h4>- Password : <?= $genpass; ?></h4>
   <h4>PasswordPolicy</h4>
   <h4>1. After the username and password have been approved, please immediately change your password in first login.</h4>
