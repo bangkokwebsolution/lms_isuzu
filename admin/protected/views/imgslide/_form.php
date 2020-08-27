@@ -45,7 +45,7 @@
 							<?php echo $this->NotEmpty();?> ตัวอย่าง http://www.cpdland.com/
 						</font> -->
 						<?php //echo $form->labelEx($model,'imgslide_link'); ?>
-						<?php echo $form->textField($model,'imgslide_link',array('size'=>60,'maxlength'=>250, 'class'=>'span8')); ?>
+						<?php echo $form->textField($model,'imgslide_link',array('size'=>60, 'class'=>'span8')); ?>
 						<?php echo $form->error($model,'imgslide_link'); ?>
 						
 					</div>
