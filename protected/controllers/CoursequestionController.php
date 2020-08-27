@@ -73,6 +73,8 @@ class CoursequestionController extends Controller
             $total_score += count($value->choices);
         }
 
+        $total_score = $Coursemanage->manage_row;
+
         $currentQuiz = TempCourseQuiz::model()->find(array(
             'condition' => "user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id AND type=:type order by id",
             'params' => array(':user_id' => Yii::app()->user->id,':course_id' => $id, ':gen_id'=>$gen_id, ':type'=>$que_type)
