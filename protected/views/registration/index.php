@@ -4855,7 +4855,7 @@ $('.rotate_btn').on('click', function(ev) {
 $('#cropImagePop').on('shown.bs.modal', function() {
     $uploadCrop.croppie('bind', {
         url: rawImg,
-        orientation: 2
+        // orientation: 2
     }).then(function() {});
 });
 
