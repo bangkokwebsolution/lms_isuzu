@@ -54,6 +54,7 @@ class Document extends CActiveRecord
 			array('dow_name, dow_createby, createby, updateby', 'length', 'max'=>100),
 			array('dow_address, dow_detail, category', 'length', 'max'=>255),
 			array('dow_status, active', 'length', 'max'=>1),
+			array('dow_name', 'required'),
 			array('dow_createday, dow_datestart, dow_timestart, dow_dateend, dow_timeend, createdate, updatedate,lang_id,parent_id', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.

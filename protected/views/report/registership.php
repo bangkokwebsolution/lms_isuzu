@@ -428,19 +428,17 @@ function chk_form_search(){
                     //     return false;
                     // }
                     // console.log(datetime_start);
-                    // if (datetime_start != "" || datetime_end != "") {
-                    // if (datetime_start != "" && datetime_end == "" ) {
-                    //         var datetime_startAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select a datetime start! ':'กรุณาเลือกช่วงเวลาเริ่มต้น!'; ?>";
-                    //         swal(alert_message,datetime_startAlert)
-                    //           return false;
-                    //     }
+                    // console.log(datetime_end);
+                    if (datetime_start != null || datetime_end != null || datetime_start != "" || datetime_end != "") {
+                    if ( datetime_start != "" &&  datetime_end === "") {
+                              return false;
+                        }
 
-                    // if (datetime_end != "" && datetime_end == "") {
-                    //         var datetime_endAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select a datetime end! ':'กรุณาเลือกช่วงเวลาสิ้นสุด!'; ?>";
-                    //         swal(alert_message,datetime_endAlert)
-                    //           return false;
-                    //     }
-                    // }
+                    if (datetime_end != "" &&  datetime_start === "") {
+                              return false;
+                        }
+
+                    }
 
                     if (Year_start != null || Year_end != null) {
                         if (Year_start == null && Year_end != null) {

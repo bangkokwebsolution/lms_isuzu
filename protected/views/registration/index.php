@@ -1389,7 +1389,7 @@ function editNamehouse_registration(filedoc_id){
                         <input type="hidden" name="url_pro_pic" id="url_pro_pic">
                         <input type="file" id="Profile_pro_pic" class="item-img file center-block d-none" name="Profile_pro_pic" />
                     </label>
-                    <span class="text-danger"><font color="red">*</font><?= Yii::app()->session['lang'] == 1?'Image should be sized 2X2':'รูปภาพควรมีขนาด 2X2 '; ?> </span>
+                    <span class="text-danger"><font color="red">*</font><?= Yii::app()->session['lang'] == 1?'Image should be sized 2X2 inch':'รูปภาพควรมีขนาด 2X2 นิ้ว'; ?> </span>
                 </div>
             </div>
         </div>
