@@ -128,12 +128,21 @@ function DateThai($strDate)
                 <?php  } ?>
 
                 <?php  $cate_id_show = ""; ?>
-                <?php foreach ($model_cate as $m_c) {
+                <?php 
+                unset($arr_cate_id);
+                $arr_cate_id = [];
+                foreach ($model_cate as $m_c) {
                      if($cate_id_show != $m_c->course->cate_id){
                             $cate_id_show = $m_c->course->cate_id;
 
 
                     $m_c  = $m_c->course->CategoryTitle;
+
+                    if(!in_array($m_c->cate_id, $arr_cate_id)){
+                        $arr_cate_id[] = $m_c->cate_id;
+                    }else{
+                        continue;
+                    }
 
                     if ($m_c->lang_id != 1) {
                         $m_c->cate_id = $m_c->parent_id;
