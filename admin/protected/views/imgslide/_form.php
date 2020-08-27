@@ -36,7 +36,7 @@
 
 				<div class="row">
 					<?php echo $form->labelEx($model,'imgslide_link'); ?>
-					<input type="checkbox" id="swiftLink"  data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
+					<input type="checkbox" id="swiftLink" <?php if($model->imgslide_link != ""){ echo "checked='checked'"; $status_type = 1;} ?> data-toggle="toggle" data-onstyle="success" data-offstyle="danger">
 
 				</div>
 				<br>
@@ -100,6 +100,12 @@
 	<!-- END innerLR -->
 
 	<script>
+		$( document ).ready(function() {
+			if(<?= $status_type ?> == 1){
+				checkswitch(true);
+			}			
+		});
+
 		$('#swiftLink').change(function(){
 			var chk = $(this).is(":checked");
 			checkswitch(chk);
@@ -108,9 +114,13 @@
 		function checkswitch(chk){
 			if (chk == true) {
 				$('#link').show();
+
 				$('#typeId').hide();
+				$('#Imgslide_gallery_type_id').val("");
 			}else{
 				$('#link').hide();
+				$('#Imgslide_imgslide_link').val("");
+
 				$('#typeId').show();
 			}
 		}

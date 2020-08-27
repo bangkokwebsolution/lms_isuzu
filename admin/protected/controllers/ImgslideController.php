@@ -46,7 +46,9 @@ class ImgslideController extends Controller
 			$model->imgslide_detail=$_POST['Imgslide'][imgslide_detail];
 			$model->imgslide_title=$_POST['Imgslide'][imgslide_title];
 			$model->imgslide_link=$_POST['Imgslide'][imgslide_link];
-			$model->gallery_type_id=$_POST['Imgslide'][gallery_type_id];
+			if($model->imgslide_link == ""){
+				$model->gallery_type_id=$_POST['Imgslide'][gallery_type_id];
+			}
 			$model->lang_id = isset($_GET['lang_id']) ? $_GET['lang_id'] : 1 ;
 			$model->parent_id = isset($_GET['parent_id']) ? $_GET['parent_id'] : 0 ;
 
@@ -113,8 +115,11 @@ class ImgslideController extends Controller
 			// $model->imgslide_link=$_POST['Imgslide'][imgslide_link];
 			$model->imgslide_detail=$_POST['Imgslide'][imgslide_detail];
 			$model->imgslide_title=$_POST['Imgslide'][imgslide_title];
-			$model->gallery_type_id=$_POST['Imgslide'][gallery_type_id];
-
+			if($model->imgslide_link == ""){
+				$model->gallery_type_id=$_POST['Imgslide'][gallery_type_id];
+			}else{
+				$model->gallery_type_id = "";
+			}
 			$imageOld = $model->imgslide_picture; // Image Old
 
 			$imgslide_picture = CUploadedFile::getInstance($model, 'imgslide_picture');
