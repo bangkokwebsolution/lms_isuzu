@@ -567,9 +567,9 @@ chart.draw(data, options);
                                     <td>
                                         <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo $value->id." ".$value->id;
+                                            echo $value->pro->firstname." ".$value->pro->lastname;
                                         }else{
-                                            echo $value->id." ".$value->id;
+                                            echo $value->pro->firstname_en." ".$value->pro->lastname_en;
                                         }
                                         ?>
                                     </td>
