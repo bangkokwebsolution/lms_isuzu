@@ -197,33 +197,35 @@ class DocumentController extends Controller {
 					$model->createby = $id;
 					$model->lang_id = isset($_GET['lang_id']) ? $_GET['lang_id'] : 1 ;
 					$model->parent_id = isset($_GET['parent_id']) ? $_GET['parent_id'] : 0 ;
-					if($model->save()){
-						if(Yii::app()->user->id){
-							Helpers::lib()->getControllerActionId();
-						}
-						$langs = Language::model()->findAll(array('condition'=>'active = "y"  and id != 1'));
-						if($model->parent_id == 0){
-							$rootStationId = $model->dty_id;
-						}else{
-							$rootStationId = $model->parent_id;
-						}
-						
-						foreach ($langs as $key => $lang) {
-							# code...
-
-							$station = DocumentType::model()->findByAttributes(array('lang_id'=> $lang->id,'parent_id'=>$rootStationId));
-							if(!$station){
-								$stationRoot = DocumentType::model()->findByPk($rootStationId);
-								Yii::app()->user->setFlash('Success', 'กรุณาเพิ่มสถานี '.$stationRoot->dty_name .',ภาษา '.$lang->language);
-					          	// $this->redirect(array('Category/index'));
-					          	$this->redirect(array('createtype','lang_id'=> $lang->id,'parent_id'=> $rootStationId));
-					          	exit();
+					if ($model->validate()) {
+						if($model->save()){
+							if(Yii::app()->user->id){
+								Helpers::lib()->getControllerActionId();
 							}
-						}
-						$this->redirect(array('index_type','id'=>$model->dty_id));
+							$langs = Language::model()->findAll(array('condition'=>'active = "y"  and id != 1'));
+							if($model->parent_id == 0){
+								$rootStationId = $model->dty_id;
+							}else{
+								$rootStationId = $model->parent_id;
+							}
+							
+							foreach ($langs as $key => $lang) {
+								# code...
 
-					}else{
-						var_dump($model->getErrors());exit();
+								$station = DocumentType::model()->findByAttributes(array('lang_id'=> $lang->id,'parent_id'=>$rootStationId));
+								if(!$station){
+									$stationRoot = DocumentType::model()->findByPk($rootStationId);
+									Yii::app()->user->setFlash('Success', 'กรุณาเพิ่มสถานี '.$stationRoot->dty_name .',ภาษา '.$lang->language);
+						          	// $this->redirect(array('Category/index'));
+						          	$this->redirect(array('createtype','lang_id'=> $lang->id,'parent_id'=> $rootStationId));
+						          	exit();
+								}
+							}
+							$this->redirect(array('index_type','id'=>$model->dty_id));
+
+						}else{
+							var_dump($model->getErrors());exit();
+						}
 					}
 
 				}

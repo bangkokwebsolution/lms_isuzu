@@ -34,6 +34,7 @@ class DocumentType extends CActiveRecord
 		return array(
 			array('lang_id, reference', 'numerical', 'integerOnly'=>true),
 			array('dty_name, createby, updateby', 'length', 'max'=>100),
+			array('dty_name', 'required'),
 			array('active', 'length', 'max'=>1),
 			array('createdate, updatedate', 'safe'),
 			// The following rule is used by search().
