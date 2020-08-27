@@ -19,7 +19,7 @@ class ReportProblem extends CActiveRecord
 	const STATUS_NOSEND='wait';
 	const STATUS_SEND='success';
 	const STATUS_EJECT='eject';
-	public $news_per_page = null;
+	public $news_per_page;
 	/**
 	 * @return string the associated database table name
 	 */
