@@ -64,7 +64,7 @@ function DateThai($strDate)
                                 <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/news/' . $all->cms_id . '/thumb/' . $all->cms_picture)) { ?>
                                     <div class="news-img" style="background-image: url('<?php echo Yii::app()->homeUrl; ?>uploads/news/<?php echo $all->cms_id ?>/thumb/<?php echo $all->cms_picture ?>');">
                                     <?php } else { ?>
-                                        <div class="news-img" style="background-image: url('<?php echo Yii::app()->theme->baseUrl; ?>/images/newspaper.png');">
+                                        <div class="news-img" style="background-image: url('<?php echo Yii::app()->theme->baseUrl; ?>/images/news.jpg');">
                                         <?php } ?>
                                         <!-- <span class="news-date"><?php echo DateThai($all->update_date) ?></span> -->
                                        <!--  <span class="news-date"><?php echo Helpers::lib()->DateLang($all->update_date, Yii::app()->session['lang']); ?></span> -->
