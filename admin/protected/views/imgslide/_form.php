@@ -81,7 +81,7 @@
 
 					<div class="row">
 						<font color="#990000">
-							<?php echo $this->NotEmpty();?> รูปภาพควรมีขนาด 750X416
+							<?php echo $this->NotEmpty();?> รูปภาพควรมีขนาด 750X416 Pixel
 						</font>
 					</div>
 					<?php if ($notsave == 1) { ?>

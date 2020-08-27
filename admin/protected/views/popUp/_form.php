@@ -104,7 +104,7 @@
 					<?php echo $form->error($model,'pic_file'); ?>
 					<div class="row">
 						<font color="#990000">
-							<?php echo $this->NotEmpty();?> รูปภาพควรมีขนาด 900X500
+							<?php echo $this->NotEmpty();?> รูปภาพควรมีขนาด 900X500 Pixel
 						</font>
 					</div>
 					<?php if ($notsave == 1) { ?>
