@@ -54,29 +54,39 @@ function DateThai($strDate)
                 <div class="type-menu gallery">
                     <button class="btn btn-default filter-button btn-lg " data-filter="cate-all"><?php echo $label->label_courseAll; ?></button>
                     <?php 
+                    $arr_cate_id = [];
                     $cate_id_show = "";
-
+                    // var_dump($model_cate); exit();
                     foreach ($model_cate as $m_c) {
+
                         if($cate_id_show != $m_c->course->cate_id){
                             $cate_id_show = $m_c->course->cate_id;
-                        $m_c  = $m_c->course->CategoryTitle;
-                        if (!$flag) {
-                            $m_cChildren  = Category::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $m_c->cate_id, 'order' => 'cate_id'));
-                            if ($m_cChildren) {
-                             $m_c->cate_title = $m_cChildren->cate_title;
-                             $m_c->cate_short_detail = $m_cChildren->cate_short_detail;
-                             $m_c->cate_detail = $m_cChildren->cate_detail;
-                             $m_c->cate_image = $m_cChildren->cate_image;
-                         }
-                     }
-                     if ($m_c->lang_id != 1) {
-                        $m_c->cate_id = $m_c->parent_id;
+
+                            $m_c  = $m_c->course->CategoryTitle;
+
+                            if(!in_array($m_c->cate_id, $arr_cate_id)){
+                                $arr_cate_id[] = $m_c->cate_id;
+                            }else{
+                                continue;
+                            }
+
+                            if (!$flag) {
+                                $m_cChildren  = Category::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $m_c->cate_id, 'order' => 'cate_id'));
+                                if ($m_cChildren) {
+                                   $m_c->cate_title = $m_cChildren->cate_title;
+                                   $m_c->cate_short_detail = $m_cChildren->cate_short_detail;
+                                   $m_c->cate_detail = $m_cChildren->cate_detail;
+                                   $m_c->cate_image = $m_cChildren->cate_image;
+                               }
+                           }
+                           if ($m_c->lang_id != 1) {
+                            $m_c->cate_id = $m_c->parent_id;
+                            }
+                        ?>
+                        <button style="white-space: normal;" class="btn btn-default filter-button btn-lg" data-filter="<?= $m_c->cate_id ?>"><?= $m_c->cate_title ?></button>
+                        <?php 
+                        } 
                     }
-                    ?>
-                    <button style="white-space: normal;" class="btn btn-default filter-button btn-lg" data-filter="<?= $m_c->cate_id ?>"><?= $m_c->cate_title ?></button>
-                <?php 
-            } 
-        }
 
                 ?>
 
