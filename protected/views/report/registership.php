@@ -291,21 +291,37 @@ function chk_form_search(){
         var end_year = $("#Year_end").val();
         if(end_year != "" && start_year == ""){
             status_pass =2;
-            swal("กรุณาเลือกช่วงปีเริ่มต้น");
+           if(<?= Yii::app()->session['lang'] ?> == 2){
+                swal("กรุณาเลือกช่วงปีเริ่มต้น");
+            }else{
+                swal("Please choose start range");                
+            }
          }
         if(end_year == "" && start_year != ""){
             status_pass =2;
-            swal("กรุณาเลือกช่วงปีสิ้นสุด");
+           if(<?= Yii::app()->session['lang'] ?> == 2){
+                swal("กรุณาเลือกช่วงปีสิ้นสุด");
+            }else{
+                swal("Please choose end range");                
+            }
          }
         var start_date = $("#datetime_start").val();
         var end_date = $("#datetime_end").val();
         if(end_date != "" && start_date == ""){
             status_pass =2;
-            swal("กรุณาเลือกช่วงเวลาเริ่มต้น");
+            if(<?= Yii::app()->session['lang'] ?> == 2){
+                swal("กรุณาเลือกช่วงเวลาเริ่มต้น");
+            }else{
+                swal("Please choose start range");                
+            }
          }
         if(end_date == "" && start_date != ""){
             status_pass =2;
-            swal("กรุณาเลือกช่วงเวลาสิ้นสุด");
+            if(<?= Yii::app()->session['lang'] ?> == 2){
+                swal("กรุณาเลือกช่วงเวลาสิ้นสุด");
+            }else{
+                swal("Please choose end range");                
+            }
         }
 
         if(status_pass == 1){
@@ -322,7 +338,11 @@ function chk_form_search(){
         var current = new Date($(this).val());
 
         if (first.getTime() > current.getTime()) {
-            swal("ไม่สามารถเลือกช่วงเวลาสิ้นสุดมากกว่าช่วงเวลาเริ่มต้นได้");
+            if(<?= Yii::app()->session['lang'] ?> == 2){
+                swal("ไม่สามารถเลือกช่วงเวลาสิ้นสุดมากกว่าช่วงเวลาเริ่มต้นได้");
+            }else{
+                swal("Can't choose end range more than start range");                
+            }
             $(this).val("");
         }
         $("#Year_start").val("");
@@ -338,7 +358,11 @@ function chk_form_search(){
         var first = $("#Year_start").val();
         var current = $(this).val();
         if (first >= current && current != "") {
-            swal("ไม่สามารถเลือกช่วงปีสิ้นสุดมากกว่าช่วงปีเริ่มต้นได้");            
+             if(<?= Yii::app()->session['lang'] ?> == 2){
+                swal("ไม่สามารถเลือกช่วงปีสิ้นสุดมากกว่าช่วงปีเริ่มต้นได้");
+            }else{
+                swal("Can't choose end range more than start range");                
+            }            
             $(this).val("");
         }
         $("#datetime_start").val("");
@@ -386,8 +410,8 @@ function chk_form_search(){
                     var Chart = $('input[name="accommodation"]:checked').serialize();
                     var datetime_start = $("#datetime_start").val();
                     var datetime_end = $("#datetime_end").val();
-                    var Year_start = $(".Year_start").val();
-                    var Year_end = $(".Year_end").val();
+                    var Year_start = $("#Year_start").val();
+                    var Year_end = $("#Year_end").val();
 
                      var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
                     //     if (Department == '' || Department === null) {
@@ -417,20 +441,25 @@ function chk_form_search(){
                     //           return false;
                     //     }
                     // }
-                    // console.log(Year_start);
-                    // if (Year_start != "" || Year_end != "" || typeof  Year_start != 'undefined' || typeof  Year_end != 'undefined') {
-                    // if (Year_start == '' || Year_end != "") {
-                    //         var year_startAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select a Year start! ':'กรุณาเลือกช่วงปีเริ่มต้น!'; ?>";
-                    //         swal(alert_message,year_startAlert)
-                    //           return false;
-                    // }
-                      
-                    // if (Year_start != '' || Year_end == "") {
-                    //             var year_endtAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select a Year end! ':'กรุณาเลือกช่วงปีสิ้นสุด!'; ?>";
-                    //             swal(alert_message,year_endtAlert)
-                    //               return false;
-                    // }
-                    // }         
+
+                    if (Year_start != null || Year_end != null) {
+                        if (Year_start == null && Year_end != null) {
+                                var year_startAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select a Year start! ':'กรุณาเลือกช่วงปีเริ่มต้น!'; ?>";
+                                swal(alert_message,year_startAlert)
+                                  return false;
+                        }
+                          
+                        if (Year_start != null && Year_end == null) {
+                                    var year_endtAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select a Year end! ':'กรุณาเลือกช่วงปีสิ้นสุด!'; ?>";
+                                    swal(alert_message,year_endtAlert)
+                                      return false;
+                        }
+                        if (Chart == "") {
+                            var ChartAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select a graph! ':'กรุณาเลือกรูปแบบกราฟ!'; ?>";
+                                    swal(alert_message,ChartAlert)
+                                      return false;
+                        }
+                    }         
 
                     $.ajax({
                         type: 'POST',

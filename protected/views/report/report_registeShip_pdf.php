@@ -98,6 +98,7 @@ $user_Department = $user_login->department_id;
 	if ($authority == 3) {
 		$criteria->compare('id',$user_Position);
 	}
+	$criteria->compare('active','y');
 	$pos = Position::model()->findAll($criteria);
 
 	$pos_arr = [];

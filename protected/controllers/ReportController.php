@@ -598,7 +598,7 @@ class ReportController extends Controller
 									2]);
 
 								var options = {
-									title: "รายงานภาพคนสมัครสมาชิกคนออฟฟิศ",
+									title: <?php echo Yii::app()->session['lang'] == 1?'"Register Staff Office Report"':'"รายงานภาพคนสมัครสมาชิกคนออฟฟิศ"' ?>,
 									width: 600,
 									height: 400,
 									bar: {groupWidth: "95%"},
@@ -623,7 +623,7 @@ class ReportController extends Controller
 									]);
 								if (data) {}
 									var options = {
-										title: "รายงานภาพคนสมัครสมาชิกคนออฟฟิศ",
+										title: <?php echo Yii::app()->session['lang'] == 1?'"Register Staff Office Report"':'"รายงานภาพคนสมัครสมาชิกคนออฟฟิศ"' ?>,
 										sliceVisibilityThreshold:0,
 										pieSliceText:'value',
 										//is3D: true,
@@ -651,7 +651,7 @@ class ReportController extends Controller
 						                    if (Yii::app()->session['lang'] == 1) {
 						                        echo "Register Staff Office Report";
 						                    } else {
-						                        echo "รายงานภาพการสมัครสมาชิก คนประจำoffice";
+						                        echo "รายงานภาพการสมัครสมาชิกคนออฟฟิศ";
 						                    }
 						                    ?>
 						                </h3>    
@@ -823,6 +823,7 @@ public function actionReportRegisterOfficeExcel()
 			if ($authority == 3) {
 				$criteria->compare('id',$user_Position);
 			}
+			$criteria->compare('active','y');
 			$pos = Position::model()->findAll($criteria);
 			$pos_arr = [];
 			$posback_arr = [];
@@ -1215,7 +1216,7 @@ public function actionReportRegisterOfficeExcel()
 									2]);
 
 								var options = {
-									title: "รายงานภาพคนสมัครสมาชิกคนประจำเรือ",
+									title: <?php echo Yii::app()->session['lang'] == 1?'"Register staff ship Report"':'"รายงานภาพคนสมัครสมาชิกคนประจำเรือ"' ?>,
 									width: 600,
 									height: 400,
 									bar: {groupWidth: "95%"},
@@ -1240,7 +1241,7 @@ public function actionReportRegisterOfficeExcel()
 									]);
 								if (data) {}
 									var options = {
-										title: "รายงานภาพคนสมัครสมาชิกคนประจำเรือ",
+										title: <?php echo Yii::app()->session['lang'] == 1?'"Register staff ship Report"':'"รายงานภาพคนสมัครสมาชิกคนประจำเรือ"' ?>,
 										sliceVisibilityThreshold:0,
 										pieSliceText:'value',
 										//is3D: true,
@@ -2010,7 +2011,7 @@ public function actionReportRegisterData()
 									2]);
 
 								var options = {
-									title: "รายงานภาพรวมสมัครสมาชิก",
+									title: <?php echo Yii::app()->session['lang'] == 1?'"Report overview register"':'"รายงานภาพรวมสมัครสมาชิก"' ?>,
 									width: 600,
 									height: 400,
 									bar: {groupWidth: "95%"},
@@ -2035,7 +2036,7 @@ public function actionReportRegisterData()
 									]);
 								if (data) {}
 									var options = {
-										title: "รายงานภาพสมัครสมาชิก",
+										title: <?php echo Yii::app()->session['lang'] == 1?'"Report overview register"':'"รายงานภาพรวมสมัครสมาชิก"' ?>,
 										sliceVisibilityThreshold:0,
 										pieSliceText:'value',
 										//is3D: true,
