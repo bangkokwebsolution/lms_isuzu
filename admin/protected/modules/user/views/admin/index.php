@@ -218,14 +218,14 @@ EOD
 											// 'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
 											// 'headerHtmlOptions'=>array('style'=>'text-align:center;width:100%;'),
 										),
-										array(
-											'header' => 'สิทธิการใช้งาน',
-											'type'=>'html',
-											'value'=>'User::itemAlias("AdminStatus",$data->superuser)',
-											'filterHtmlOptions'=>array('style'=>'width:30px'),
-										//	'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
-									// 'filter'=>User::itemAlias("AdminStatus"),
-										),
+									// 	array(
+									// 		'header' => 'สิทธิการใช้งาน',
+									// 		'type'=>'html',
+									// 		'value'=>'User::itemAlias("AdminStatus",$data->superuser)',
+									// 		'filterHtmlOptions'=>array('style'=>'width:30px'),
+									// 	//	'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
+									// // 'filter'=>User::itemAlias("AdminStatus"),
+									// 	),
 										array(
 											'name'=>'status',
 											'type'=>'raw',

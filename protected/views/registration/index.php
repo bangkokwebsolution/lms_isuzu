@@ -426,7 +426,7 @@ if ($('.email').val() == "") {
 
     if (type_users === '1') {
 
-        if ($('.picture_pic').val() == "" ) {
+        if ($('#url_pro_pic').val() == "" ) {
             var picture = "<?php echo Yii::app()->session['lang'] == 1?'Please add a picture! ':'กรุณาเพิ่มรูปภาพ!'; ?>";
             swal(alert_message,picture)
             return false; 
@@ -715,7 +715,7 @@ if ($('.email').val() == "") {
    //          }
    //  }
 
-   //  if ($('.picture_pic').val() == "" ) {
+   //  if ($('#url_pro_pic').val() == "" ) {
    //      var picture = "<?php echo Yii::app()->session['lang'] == 1?'Please add a picture! ':'กรุณาเพิ่มรูปภาพ!'; ?>";
    //      swal(alert_message,picture)
    //      return false; 
@@ -933,7 +933,7 @@ if ($('.email').val() == "") {
             }
     }
 
-    if ($('.picture_pic').val() == "" ) {
+    if ($('#url_pro_pic').val() == "" ) {
         var picture = "<?php echo Yii::app()->session['lang'] == 1?'Please add a picture! ':'กรุณาเพิ่มรูปภาพ!'; ?>";
         swal(alert_message,picture)
         return false; 
