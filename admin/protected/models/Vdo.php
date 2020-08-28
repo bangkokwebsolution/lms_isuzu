@@ -77,7 +77,7 @@ class Vdo extends AActiveRecord
 		$criteria->compare('lang_id',$this->lang_id,true);
 		$criteria->compare('vdo_credit',$this->vdo_credit,true);
 		$criteria->compare('parent_id',0);
-		$criteria->order = 'sortOrder DESC';
+		$criteria->order = 'sortOrder ASC';
 		$poviderArray = array('criteria'=>$criteria);
 
 		// Page

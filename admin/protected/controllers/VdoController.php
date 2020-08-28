@@ -323,13 +323,13 @@ class VdoController extends Controller
 		}
 	}
 
-	public function actionSequence() {
+	  public function actionSequence() {
 
     if (isset($_POST['items']) && is_array($_POST['items'])) {
-      
+       
             // Get all current target items to retrieve available sortOrders
         $cur_items = Vdo::model()->findAllByPk($_POST['items'], array('order'=>'sortOrder'));
-  
+        
             // Check 1 by 1 and update if neccessary
 
         foreach ($cur_items as $keys => $values) {
