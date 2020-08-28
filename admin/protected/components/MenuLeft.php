@@ -1739,7 +1739,7 @@ Class MenuLeft extends Controller
 	        				'Ship.*',
 	        				'Ship.Create'
 	        			)),
-	        			'label'=>'เพิ่มแผนก',
+	        			'label'=>'เพิ่มเรือ',
 	        			'url'=>array('//Ship/create')
 	        		),
 	        		array(
@@ -1747,7 +1747,7 @@ Class MenuLeft extends Controller
 	        				'Ship.*',
 	        				'Ship.index'
 	        			)),
-	        			'label'=>'จัดการแผนก',
+	        			'label'=>'จัดการเรือ',
 	        			'url'=>array('//Ship/index')
 	        		),
 	        	)
