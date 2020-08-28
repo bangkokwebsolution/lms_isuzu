@@ -191,7 +191,6 @@ class Ship extends CActiveRecord
 		// ));
 		$poviderArray = array('criteria'=>$criteria);
 
-		// Page
 		if(isset($this->news_per_page))
 		{
 			$poviderArray['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );

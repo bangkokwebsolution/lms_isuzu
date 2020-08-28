@@ -140,14 +140,14 @@ EOD
 											'value'=>'$data->fullnamee',
 											'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
 										),
-										array(
-											'header' => 'รหัสพนักงาน',
-											'name'=>'username',
-											'type'=>'html',
-											'value'=>function($data){
-												return $data->username;
-											}
-										),
+										// array(
+										// 	'header' => 'รหัสพนักงาน',
+										// 	'name'=>'username',
+										// 	'type'=>'html',
+										// 	'value'=>function($data){
+										// 		return $data->username;
+										// 	}
+										// ),
 										array(
 											'header' => 'เลขพาสปอร์ต',
 											'name'=>'passport',

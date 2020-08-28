@@ -49,7 +49,7 @@ class Profile extends CActiveRecord {
             array('fax', 'numerical', 'integerOnly' => true),
             array('phone, number_of_children', 'numerical', 'integerOnly' => true),
            // array('tel', 'length', 'min' => 9),
-            array('bussiness_model_id,bussiness_type_id,company,juristic,title_id, type_user, education, occupation, position, website, province, tel, phone, fax, advisor_email1, advisor_email2, generation, file,department, passport, date_of_expiry, race, nationality, religion, line_id, ship_name, ship_up_date, ship_down_date, address2, phone1, phone2, phone3, seamanbook, seaman_expire, pass_expire, ss_card,firstname_en,lastname_en, tax_payer, place_of_birth, hight, weight, hair_color, eye_color, place_issued, blood, spouse_firstname, spouse_lastname, father_firstname, father_lastname, mother_firstname, mother_lastname, military, sickness, start_working, occupation_spouse, occupation_father, occupation_mother, address_parent, mouth_birth, passport_place_issued, passport_date_issued, name_emergency, relationship_emergency', 'length', 'max' => 255),
+            array('bussiness_model_id,bussiness_type_id,company,juristic,title_id, type_user, education, occupation, position, website, province, tel, phone, fax, advisor_email1, advisor_email2, generation, file,department, passport, date_of_expiry, race, nationality, religion, line_id, ship_id, ship_up_date, ship_down_date, address2, phone1, phone2, phone3, seamanbook, seaman_expire, pass_expire, ss_card,firstname_en,lastname_en, tax_payer, place_of_birth, hight, weight, hair_color, eye_color, place_issued, blood, spouse_firstname, spouse_lastname, father_firstname, father_lastname, mother_firstname, mother_lastname, military, sickness, start_working, occupation_spouse, occupation_father, occupation_mother, address_parent, mouth_birth, passport_place_issued, passport_date_issued, name_emergency, relationship_emergency', 'length', 'max' => 255),
             array('firstname, lastname, expected_salary', 'length', 'max' => 50),
             // array('firstname, lastname', 'match', 'pattern'=>'/^[ก-๏\s]+$/','message' => 'กรอกข้อมูลภาษาไทยเท่านั้น'),
             // array('firstname_en, lastname_en', 'match', 'pattern'=>'/^[a-zA-Z]+$/','message' => 'Fill out information in English only.'),
@@ -72,7 +72,7 @@ class Profile extends CActiveRecord {
             // Please remove those attributes that should not be searched. 
             array('bussiness_model_id,bussiness_type_id,company,juristic,user_id, title_id, firstname, lastname, active, generation, type_user, sex, birthday, age, education, occupation, position, website, address, province, tel, phone, fax, contactfrom, advisor_email1, advisor_email2, file, passport, date_of_expiry, race, nationality, religion, history_of_illness, status_sm, type_employee, type_card, line_id, seamanbook, seaman_expire, pass_expire, ss_card,firstname_en,lastname_en, tax_payer, place_of_birth, hight, weight, hair_color, eye_color, place_issued, blood, spouse_firstname, spouse_lastname, father_firstname, father_lastname, mother_firstname, mother_lastname, military, sickness, expected_salary, start_working, accommodation, date_issued, number_of_children, occupation_spouse, occupation_father, occupation_mother, address_parent, passport_date_issued, passport_place_issued, name_emergency, relationship_emergency', 'safe', 'on' => 'search'),
             array('file_user', 'file', 'types' => 'pdf', 'allowEmpty' => true, 'on' => 'insert'),
-           // array('ship_name, ship_up_date, ship_down_date, address2, phone1, phone2, phone3', 'allowEmpty' => true, 'on' => 'update'),
+           // array('ship_id, ship_up_date, ship_down_date, address2, phone1, phone2, phone3', 'allowEmpty' => true, 'on' => 'update'),
             array('file_user', 'file', 'types' => 'pdf',
                 'wrongType' => 'รองรับไฟล์ pdf เท่านั้น', 'allowEmpty' => true, // ข้อความเตือน
                 'maxSize' => 1024 * 1024 * 5, // 5 MB
@@ -202,7 +202,7 @@ class Profile extends CActiveRecord {
             'type_employee'=> 'ประเภทพนักงาน',
             'type_card'=> 'ประเภทบัตร',
             'line_id' => 'ID Line',
-            'ship_name' => 'ชื่อเรือที่ขึ้น',
+            'ship_id' => 'ชื่อเรือที่ขึ้น',
             'address2' => 'ที่อยู่ปัจจุบันที่สามารถติดต่อได้',
             'ship_up_date' => 'วันที่ขึ้นจากเรือ',
             'ship_down_date'=> 'วันที่กลับไปขึ้นเรือ',
@@ -295,7 +295,7 @@ class Profile extends CActiveRecord {
         $criteria->compare('type_employee', $this->type_employee, true);
         $criteria->compare('type_card', $this->type_card, true);
         $criteria->compare('line_id', $this->line_id, true);
-        $criteria->compare('ship_name', $this->ship_name, true);
+        $criteria->compare('ship_id', $this->ship_id, true);
         $criteria->compare('ship_up_date', $this->ship_up_date, true);
         $criteria->compare('ship_down_date', $this->ship_down_date, true);
         $criteria->compare('address2', $this->address2, true);

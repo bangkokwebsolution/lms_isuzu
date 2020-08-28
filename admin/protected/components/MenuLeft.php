@@ -1,4 +1,4 @@
-<?php
+vv<?php
 Class MenuLeft extends Controller
 {
 	public static function SetSubMenu($Name = array(),$Set=true)
@@ -1298,7 +1298,7 @@ Class MenuLeft extends Controller
 	        		array(
 	        			/*====== Check Permissions Sup-User (2) ======*/
 	        			'visible'=>true,
-	        			'label'=>'รายชื่อสมาชิก(พนักงานออฟฟิต)',
+	        			'label'=>'รายชื่อสมาชิก(พนักงานออฟฟิศ)',
 	        			'url'=>array('//user/admin/employee')
 	        		),
 	        		array(
