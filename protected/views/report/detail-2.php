@@ -586,21 +586,15 @@ chart.draw(data, options);
                             }
                             ?></th>
 
+                            <th colspan="2"><?php 
+                            if(Yii::app()->session['lang'] != 1){
+                                echo "ค่าเฉลี่ย";
+                            }else{
+                                echo "Mean";
+                            }
+                            ?></th>
 
-                            <th rowspan="2"><?php 
-                            if(Yii::app()->session['lang'] != 1){
-                                echo "ค่าเฉลี่ยก่อนเรียน";
-                            }else{
-                                echo "Mean Pre-test";
-                            }
-                            ?></th>
-                            <th rowspan="2"><?php 
-                            if(Yii::app()->session['lang'] != 1){
-                                echo "ค่าเฉลี่ยหลังเรียน";
-                            }else{
-                                echo "Mean Post-test";
-                            }
-                            ?></th>
+                          
                            
                             <!-- <th></th> -->
                         </tr>
@@ -626,6 +620,24 @@ chart.draw(data, options);
                                 echo "No Learn";
                             }
                             ?></th>
+
+
+                              <th ><?php 
+                            if(Yii::app()->session['lang'] != 1){
+                                echo "ก่อนเรียน";
+                            }else{
+                                echo "Pre-test";
+                            }
+                            ?></th>
+                            <th ><?php 
+                            if(Yii::app()->session['lang'] != 1){
+                                echo "หลังเรียน";
+                            }else{
+                                echo "Post-test";
+                            }
+                            ?></th>
+
+
                         </tr>
                     </thead>
                     <tbody>
@@ -656,9 +668,8 @@ chart.draw(data, options);
                                             <td><b class="text-danger">ไม่ผ่าน </b>: <?= $value_g["postnopass"]  ?></td>
                                             <td><b class="text-muted">ยังไม่ได้เรียน </b>: <?= $value_g["postnolearn"]  ?></td>
                                             <td ><?= $value_g["percentpass"] ?> %</td>
-                                            <td ><?= $value_g["meanpretest"] ?></td>
-                                            <td ><?= $value_g["meanposttest"] ?>
-                                                
+                                            <td ><?= $value_g["meanpretest"] ?> / <?= $value_g["meantotalpretest"] ?></td>
+                                            <td ><?= $value_g["meanposttest"] ?> / <?= $value_g["meantotalposttest"] ?>
                                                 </td>
                                           
 

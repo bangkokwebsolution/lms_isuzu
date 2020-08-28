@@ -4515,6 +4515,9 @@ $num_prepass = 0;
 $user_pass = [];
 $score_passpost = [];
 $score_passpre = [];
+$total_passpost = [];
+$total_passpre = [];
+
 
 
 if(!empty($LogStartcourse)){
@@ -4527,11 +4530,14 @@ if(!empty($LogStartcourse)){
 			$num_pass++;
 			$user_pass[] = $passpost_course->user_id;
 			$score_passpost[] = $passpost_course->score_number;
+			$total_passpost[] = $passpost_course->score_total;
 		}
 
 		if(!empty($passpre_course)){
 			$num_prepass++;
 			$score_passpre[] = $passpre_course->score_number;
+			$total_passpre[] = $passpre_course->score_total;
+
 		}		
 
 
@@ -4550,14 +4556,20 @@ if(!empty($LogStartcourse)){
 
 if($num_pass > 0){
 $meanposttest = number_format( array_sum($score_passpost) / $num_pass , 2) ;
+$meantotalposttest = number_format( array_sum($total_passpost) / $num_pass , 2) ;
 }else{
 $meanposttest = 0 ;
+$meantotalposttest = 0 ;
 }
 
 if($num_prepass > 0){
 $meanpretest =  number_format(array_sum($score_passpre) / $num_prepass, 2);
+$meantotalpretest = number_format( array_sum($total_passpre) / $num_prepass , 2) ;
+
 }else{
 $meanpretest = 0 ;
+$meantotalpretest = 0 ;
+
 }
 $percentpass = ($num_pass / count($LogStartcourse)) * 100;
 $arr_course_gen[$key_c]["gen"][$key_gen]["register"] = count($LogStartcourse);
@@ -4568,6 +4580,11 @@ $arr_course_gen[$key_c]["gen"][$key_gen]["postnolearn"] = count($LogStartcourse)
 $arr_course_gen[$key_c]["gen"][$key_gen]["percentpass"] = number_format($percentpass , 2);
 $arr_course_gen[$key_c]["gen"][$key_gen]["meanposttest"] = $meanposttest;
 $arr_course_gen[$key_c]["gen"][$key_gen]["meanpretest"] = $meanpretest;
+
+
+$arr_course_gen[$key_c]["gen"][$key_gen]["meantotalposttest"] = $meantotalposttest;
+$arr_course_gen[$key_c]["gen"][$key_gen]["meantotalpretest"] = $meantotalpretest;
+
 
 
 $arr_course_graph[$value_c->course_id]["register"] = $arr_course_graph[$value_c->course_id]["register"]+count($LogStartcourse);
