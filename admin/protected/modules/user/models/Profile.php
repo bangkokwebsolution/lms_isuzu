@@ -40,7 +40,7 @@ class Profile extends UActiveRecord
 		return array( 
             array('firstname, lastname,identification', 'required'),
             array('age', 'numerical', 'integerOnly'=>true),
-            array('bussiness_model_id,bussiness_type_id,company,juristic,title_id, type_user, education, occupation, position, website, province, tel, phone, fax, advisor_email1, advisor_email2, generation, file,department, passport, date_of_expiry, race, nationality, religion, line_id, ship_name, ship_up_date, ship_down_date, address2, phone1, phone2, phone3, seamanbook, seaman_expire, pass_expire, ss_card,firstname_en,lastname_en, tax_payer, place_of_birth, hight, weight, hair_color, eye_color, place_issued, blood, spouse_firstname, spouse_lastname, father_firstname, father_lastname, mother_firstname, mother_lastname, military, sickness, start_working, occupation_spouse, occupation_father, occupation_mother, address_parent, mouth_birth, passport_place_issued, passport_date_issued, name_emergency, relationship_emergency', 'length', 'max'=>255),
+            array('bussiness_model_id,bussiness_type_id,company,juristic,title_id, type_user, education, occupation, position, website, province, tel, phone, fax, advisor_email1, advisor_email2, generation, file,department, passport, date_of_expiry, race, nationality, religion, line_id, ship_id, ship_up_date, ship_down_date, address2, phone1, phone2, phone3, seamanbook, seaman_expire, pass_expire, ss_card,firstname_en,lastname_en, tax_payer, place_of_birth, hight, weight, hair_color, eye_color, place_issued, blood, spouse_firstname, spouse_lastname, father_firstname, father_lastname, mother_firstname, mother_lastname, military, sickness, start_working, occupation_spouse, occupation_father, occupation_mother, address_parent, mouth_birth, passport_place_issued, passport_date_issued, name_emergency, relationship_emergency', 'length', 'max'=>255),
             array('firstname, lastname, expected_salary', 'length', 'max'=>50),
             array('identification', 'length', 'max'=>13),
             array('identification', 'length', 'max'=>13, 'min' => 13,'message' => 'กรอกเลขบัตรประชาชน 13 หลักเท่านั้น'),
@@ -52,7 +52,7 @@ class Profile extends UActiveRecord
 
             // The following rule is used by search(). 
             // Please remove those attributes that should not be searched. 
-            array('bussiness_model_id,bussiness_type_id,company,juristic,user_id, title_id, firstname, lastname, active, generation, type_user, sex, birthday, age, education, occupation, position, website, address, province, tel, phone, fax, contactfrom, advisor_email1, advisor_email2, file,department, passport, date_of_expiry, race, nationality, religion, line_id, ship_name, ship_up_date, ship_down_date, address2, phone1, phone2, phone3, seamanbook, seaman_expire, pass_expire, ss_card,firstname_en,lastname_en, tax_payer, place_of_birth, hight, weight, hair_color, eye_color, place_issued, blood, spouse_firstname, spouse_lastname, father_firstname, father_lastname, mother_firstname, mother_lastname, military, sickness, start_working, occupation_spouse, occupation_father, occupation_mother, address_parent, mouth_birth, passport_place_issued, passport_date_issued, name_emergency, relationship_emergency', 'safe', 'on'=>'search'),
+            array('bussiness_model_id,bussiness_type_id,company,juristic,user_id, title_id, firstname, lastname, active, generation, type_user, sex, birthday, age, education, occupation, position, website, address, province, tel, phone, fax, contactfrom, advisor_email1, advisor_email2, file,department, passport, date_of_expiry, race, nationality, religion, line_id, ship_id, ship_up_date, ship_down_date, address2, phone1, phone2, phone3, seamanbook, seaman_expire, pass_expire, ss_card,firstname_en,lastname_en, tax_payer, place_of_birth, hight, weight, hair_color, eye_color, place_issued, blood, spouse_firstname, spouse_lastname, father_firstname, father_lastname, mother_firstname, mother_lastname, military, sickness, start_working, occupation_spouse, occupation_father, occupation_mother, address_parent, mouth_birth, passport_place_issued, passport_date_issued, name_emergency, relationship_emergency', 'safe', 'on'=>'search'),
             array('file_user', 'file', 'types'=>'pdf','allowEmpty' => true, 'on'=>'insert'),
 			array('file_user', 'file', 'types'=>'pdf',
 				'wrongType' => 'รองรับไฟล์ pdf เท่านั้น', 'allowEmpty' => true, // ข้อความเตือน
@@ -146,7 +146,7 @@ class Profile extends UActiveRecord
             'type_employee'=> 'ประเภทพนักงาน',
             'type_card'=> 'ประเภทบัตร',
             'line_id' => 'ID Line',
-            'ship_name' => 'ชื่อเรือที่ขึ้น',
+            'ship_id' => 'ชื่อเรือที่ขึ้น',
             'address2' => 'ที่อยู่ปัจจุบันที่สามารถติดต่อได้',
             'ship_up_date' => 'วันที่ขึ้นจากเรือ',
             'ship_down_date'=> 'วันที่กลับไปขึ้นเรือ',

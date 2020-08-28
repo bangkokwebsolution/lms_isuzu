@@ -1719,7 +1719,39 @@ Class MenuLeft extends Controller
 	        		),
 	        	)
 	        ),
-
+	         array(
+	        	/*====== Check Permissions Department (2) ======*/
+	        	'visible'=>self::PermissionsMenu(array(
+	        		'Ship.*',
+	        		'Ship.index',
+	        		'Ship.Create'
+	        	)),
+	        	'label'=>'<i></i><span>เรือ</span>',
+	        	'url'=>'#Ship',
+	        	'linkOptions' => array('data-toggle' => 'collapse'),
+	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons anchor'),
+	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Ship') ), 'id' => 'Ship'),
+	        	'active' => self::SetSubMenu( array('Ship') ,false),
+	        	'items'=>array(
+	        		array(
+	        			/*====== Check Permissions Position (1) ======*/
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'Ship.*',
+	        				'Ship.Create'
+	        			)),
+	        			'label'=>'เพิ่มแผนก',
+	        			'url'=>array('//Ship/create')
+	        		),
+	        		array(
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'Ship.*',
+	        				'Ship.index'
+	        			)),
+	        			'label'=>'จัดการแผนก',
+	        			'url'=>array('//Ship/index')
+	        		),
+	        	)
+	        ),
             array(
 	        	/*====== Check Permissions Department (2) ======*/
 	        	'visible'=>self::PermissionsMenu(array(

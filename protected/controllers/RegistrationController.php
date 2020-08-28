@@ -438,7 +438,7 @@ class RegistrationController extends Controller {
  $profile->nationality = $_POST['Profile'][nationality];
  $profile->religion = $_POST['Profile'][religion];
  $profile->line_id = $_POST['Profile'][line_id];
- $profile->ship_name = $_POST['Profile'][ship_name];
+ $profile->ship_id = $_POST['Profile'][ship_id];
  $profile->address2 = $_POST['Profile'][address2];
  $profile->ship_up_date = $_POST['Profile'][ship_up_date];
  $profile->ship_down_date = $_POST['Profile'][ship_down_date];
@@ -1137,7 +1137,7 @@ public function actionUpdate() {
         $profile->race = $_POST['Profile'][race];
         $profile->nationality = $_POST['Profile'][nationality];
         $profile->religion = $_POST['Profile'][religion];
-        $profile->ship_name = $_POST['Profile'][ship_name];
+        $profile->ship_id = $_POST['Profile'][ship_id];
         $profile->address2 = $_POST['Profile'][address2];
         $profile->ship_up_date = $_POST['Profile'][ship_up_date];
         $profile->ship_down_date = $_POST['Profile'][ship_down_date];

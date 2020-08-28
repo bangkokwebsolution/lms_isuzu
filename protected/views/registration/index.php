@@ -3355,10 +3355,23 @@ if (!$users->isNewRecord && $profile->type_employee == 1) {
             <div class="col-md-4">
                 <div class="form-group">
                     <label for=""><?php echo $label->label_boat_name; ?></label>
-                                        <!-- <input type="text" class="form-control" id="" placeholder="ขึ้นจากเรือชื่อ">
-                                            <label><?php echo $label->label_race; ?></label> -->
-                                            <?php echo $form->textField($profile, 'ship_name', array('class' => 'form-control', 'placeholder' => $label->label_placeholder_boat_name)); ?>
-                                            <?php echo $form->error($profile, 'ship_name', array('class' => 'error2')); ?>
+                                       <?php
+                                       $criteria= new CDbCriteria;
+                                       $criteria->compare('active','y');
+                                       //$criteria->order = 'sortOrder ASC';
+                                       $ship = Ship::model()->findAll($criteria);
+                                       ?> 
+                                       <?php
+                                       if (Yii::app()->session['lang'] == 1) {
+                                        $shipLists = CHtml::listData($ship, 'ship_id', 'ship_name_en');   
+                                       }else{
+                                        $shipLists = CHtml::listData($ship, 'ship_id', 'ship_name');
+                                       }
+                                       $shipOption = array('class' => 'form-control','empty' => Yii::app()->session['lang'] == 1?'--------Select-------- ':'--------เลือก--------');
+                                       ?>
+                                       <?php echo $form->dropDownList($profile, 'ship_id', $shipLists, $shipOption); ?>
+                                      
+                                        <?php echo $form->error($profile, 'ship_id', array('class' => 'error2')); ?>
                                         </div>
                                     </div>
 

@@ -43,6 +43,7 @@ class User extends CActiveRecord
 	public $month;
 	public $fullname;
 	public $news_per_page;
+	public $passport;
 
 
 
@@ -96,7 +97,7 @@ class User extends CActiveRecord
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
 			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'update'),
 			array('news_per_page', 'safe'),
-			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,company_id, division_id,position_id,lastactivity,orgchart_lv2, group,idensearch,identification,station_id,supper_user_status,pic_cardid2,employee_id,typeuser,register_status,dateRang,user_id,nameSearch,note,not_passed, avatar, month,type_employee, report_authority, branch_id, fullname', 'safe', 'on'=>'search'),
+			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,company_id, division_id,position_id,lastactivity,orgchart_lv2, group,idensearch,identification,station_id,supper_user_status,pic_cardid2,employee_id,typeuser,register_status,dateRang,user_id,nameSearch,note,not_passed, avatar, month,type_employee, report_authority, branch_id, fullname, passport', 'safe', 'on'=>'search'),
 			// array('verifyPassword', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
 			array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 			//array('confirmpass', 'compare', 'compareAttribute'=>'password', 'message' => UserModule::t("Retype Password is incorrect.")),
@@ -269,7 +270,7 @@ class User extends CActiveRecord
 			'employee_id' => 'เลขประจำตัวพนักงาน',
 			'typeuser' =>'ประเภทผู้ใช้งาน',
 			'type_employee'=> 'ประเภทพนักงาน',
-			// 'passport'=> 'รหัสหนังสือเดินทาง',
+		    'passport'=> 'รหัสหนังสือเดินทาง',
 			'register_status' => 'สถานะการสมัครสมาชิก',
 			'dateRang' => 'เลือกระยะเวลา',
 			'note' => 'หมายเหตุ',
@@ -436,8 +437,9 @@ public function validateIdCard($attribute,$params){
  		$criteria->compare('register_status',$this->register_status);
  		$criteria->compare('profile.type_user',$this->typeuser);
  		$criteria->compare('profile.type_employee',$this->type_employee);
+ 		$criteria->compare('profile.passport',$this->passport);
  		$criteria->order = 'user.id DESC';
- 		// $criteria->compare('passport',$this->passport);
+ 	   
 
  		// $criteria->compare('profile.identification',$this->idensearch,true);
 
