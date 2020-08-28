@@ -588,9 +588,9 @@ chart.draw(data, options);
 
                             <th colspan="2"><?php 
                             if(Yii::app()->session['lang'] != 1){
-                                echo "ค่าเฉลี่ย";
+                                echo "คะแนนค่าเฉลี่ย";
                             }else{
-                                echo "Mean";
+                                echo "Mean Score";
                             }
                             ?></th>
 
