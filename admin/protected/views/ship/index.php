@@ -13,7 +13,7 @@ Yii::app()->clientScript->registerScript('search', "
 		return false;
 	});
 	$('.search-form form').submit(function(){
-		$('#ship-grid').yiiGridView('update', {
+		$('#Ship-grid').yiiGridView('update', {
 			data: $(this).serialize()
 		});
 		return false;
@@ -38,18 +38,13 @@ EOD
 
 <div class="innerLR">
 
-	<div class="widget" data-toggle="collapse-widget" data-collapse-closed="true">
-		<div class="widget-head">
-			<h4 class="heading  glyphicons search"><i></i>ค้นหาขั้นสูง</h4>
-		</div>
-		<div class="widget-body collapse" style="height: 0px;">
-			<div class="search-form">
-				<?php $this->renderPartial('_search',array(
-					'model'=>$model,
-				)); ?>
-			</div>
-		</div>
-	</div>
+<?php $this->widget('AdvanceSearchForm', array(
+		'data'=>$model,
+		'route' => $this->route,
+		'attributes'=>array( 
+			array('name'=>'ship_name','type'=>'text'),
+		),
+	));?>
 
 	<div class="widget" style="margin-top: -1px;">
 		<div class="widget-head">
@@ -85,12 +80,14 @@ EOD
 							'id'=>'chk',
 						),
 						array(
-							'name'=>'ship_name',
+							'header'=>'ชื่อเรือ',
+							//'name'=>'ship_name',
 							'type'=>'html',
 							'value'=>'UHtml::markSearch($data,"ship_name")'
 						),
 						array(
-							'name'=>'ship_name_en',
+							'header'=>'ชื่อเรือEN',
+							//'name'=>'ship_name_en',
 							'type'=>'html',
 							'value'=>'UHtml::markSearch($data,"ship_name_en")'
 						),

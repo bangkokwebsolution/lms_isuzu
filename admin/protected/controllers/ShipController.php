@@ -119,7 +119,7 @@ class ShipController extends Controller
 		// $this->render('index',array(
 		// 	'model'=>$model,
 		// ));
-$model = new Ship('search');
+	$model = new Ship('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['Ship']))
 			$model->attributes=$_GET['Ship'];
