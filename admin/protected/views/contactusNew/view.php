@@ -2,7 +2,7 @@
 
 $this->breadcrumbs=array(
 	'ระบบจัดการติดต่อเรา'=>array('admin'),
-	$model->name,
+	//$model->name,
 );
 ?>
 
@@ -19,24 +19,21 @@ $this->widget('ADetailView', array(
 						"class"=>"thumbnail"
 					)):'-',
 		),
-		'name',
-		'detail',
-		array(
-			'name'=>'start_date',
-			'value'=> ClassFunction::datethaiTime($model->start_date)
-		),
-		array(
-			'name'=>'end_date',
-			'value'=> ClassFunction::datethaiTime($model->end_date)
-		),
-		'link',
+		'con_firstname',
+		'con_lastname',
+		'con_firstname_en',
+		'con_lastname_en',
+		'con_position',
+		'con_position_en',
+		'con_tel',
+		'con_email',
 		array(
 			'name'=>'create_date',
 			'value'=> ClassFunction::datethaiTime($model->create_date)
 		),
 		array(
 			'name'=>'create_by',
-			'value'=>$model->usercreate->username
+			'value'=>$model->create_by
 		),
 		array(
 			'name'=>'update_date',
@@ -44,7 +41,7 @@ $this->widget('ADetailView', array(
 		),
 		array(
 			'name'=>'update_by',
-			'value'=>$model->userupdate->username
+			'value'=>$model->update_by
 		),
 		),
 )); 
