@@ -75,9 +75,9 @@ EOD
 									'dataProvider'=>$model->search(),
 									'filter'=>$model,
 									'selectableRows' => 2,
-									'rowCssClassExpression'=>'"items[]_{$data->id}"',
+									//'rowCssClassExpression'=>'"items[]_{$data->id}"',
 									'htmlOptions' => array(
-										'style'=> "margin-top: -1px;overflow-x:scroll;width:100%;",
+										'style'=> "margin-top: -1px;overflow-x:scroll;width:200%;",
 									),
 									'afterAjaxUpdate'=>'function(id, data){
 										$.appendFilter("User[news_per_page]");
@@ -100,7 +100,8 @@ EOD
 										array(
 											'header'=>'No.',
 											'value'=>'$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
-											'htmlOptions'=>array('style'=>'text-align: center;width:50%;'),
+											'filterHtmlOptions'=>array('style'=>'width:30px;'), 
+											'htmlOptions'=>array('style'=>'text-align: center;hight:5%;'),
 										),
 			// 					array(
 			// 						'name' => 'idensearch',
@@ -138,7 +139,8 @@ EOD
 											'name'=>'fullname',
 											'type'=>'html',
 											'value'=>'$data->fullnamee',
-											'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
+											'filterHtmlOptions'=>array('style'=>'width:30px'),
+											'htmlOptions'=>array('style'=>'text-align: center;'),
 										),
 										// array(
 										// 	'header' => 'รหัสพนักงาน',
@@ -156,8 +158,11 @@ EOD
 												return $data->profile->passport;
 						            	//var_dump($data->profile->type_user);
 											},
-											'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
-											'headerHtmlOptions'=>array('style'=>'text-align:center;width:100%;'),
+											'filterHtmlOptions'=>array('style'=>'width:30px'),
+											// 'filterHtmlOptions' => array('style' => 'width: 100%;'),
+											// 'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
+											//'headerHtmlOptions'=>array('style'=>'text-align:center;width:100%;'),
+
 										),
 										array(
 											'header' => 'แผนก',
@@ -165,7 +170,9 @@ EOD
 											'value'=>function($data){
 												return $data->department->dep_title;
 											},
-											'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
+											'filterHtmlOptions'=>array('style'=>'width:30px'),
+											// 'filterHtmlOptions' => array('style' => 'width: 100%;'),
+											// 'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
 										),
 										array(
 											'header' => 'ตำแหน่ง',
@@ -173,14 +180,17 @@ EOD
 											'value'=>function($data){
 												return $data->position->position_title;
 											},
-											'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
+											'filterHtmlOptions'=>array('style'=>'width:30px'),
+											// 'filterHtmlOptions' => array('style' => 'width: 100%;'),
+											// 'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
 										),
 										array(
 											'name'=>'email',
 											'type'=>'raw',
 											'value'=>'CHtml::link(UHtml::markSearch($data,"email"), "mailto:".$data->email)',
-											'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
-											'headerHtmlOptions'=>array('style'=>'text-align:center;width:100%;'),
+											'filterHtmlOptions'=>array('style'=>'width:30px'),
+											// 'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
+											// 'headerHtmlOptions'=>array('style'=>'text-align:center;width:100%;'),
 										),
 		// 'create_at',
 										array(
@@ -191,8 +201,9 @@ EOD
 											'value'=>function($data){
 												return Helpers::changeFormatDate($data->create_at,'datetime');
 											},
-											'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
-											'headerHtmlOptions'=>array('style'=>'text-align:center;width:100%;'),
+											'filterHtmlOptions'=>array('style'=>'width:30px'),
+											// 'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
+											// 'headerHtmlOptions'=>array('style'=>'text-align:center;width:100%;'),
 										),
 		// 'lastvisit_at',
 										array(
@@ -203,14 +214,16 @@ EOD
 											'value'=>function($data){
 												return Helpers::changeFormatDate($data->lastvisit_at,'datetime');
 											},
-											'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
-											'headerHtmlOptions'=>array('style'=>'text-align:center;width:100%;'),
+											'filterHtmlOptions'=>array('style'=>'width:30px'),
+											// 'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
+											// 'headerHtmlOptions'=>array('style'=>'text-align:center;width:100%;'),
 										),
 										array(
 											'header' => 'สิทธิการใช้งาน',
 											'type'=>'html',
 											'value'=>'User::itemAlias("AdminStatus",$data->superuser)',
-											'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
+											'filterHtmlOptions'=>array('style'=>'width:30px'),
+										//	'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
 									// 'filter'=>User::itemAlias("AdminStatus"),
 										),
 										array(
@@ -218,14 +231,16 @@ EOD
 											'type'=>'raw',
 											'value'=>'User::itemAlias("UserStatus",$data->status)',
 											'filter' => User::itemAlias("UserStatus"),
-											'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
+											'filterHtmlOptions'=>array('style'=>'width:30px'),
+											//'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
 										),
 										array(
 											'name'=>'online_status',
 											'type'=>'raw',
 											'value'=>'User::chk_online($data->id,$data->lastactivity,$data->online_status)',
 											'filter' => User::itemAlias("Online"),
-											'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
+											'filterHtmlOptions'=>array('style'=>'width:30px'),
+											//'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
 										),
 										array(
 											'type'=>'raw',
@@ -236,8 +251,9 @@ EOD
 
 											},
 											'header' => 'เปลี่ยนรหัสผ่าน',
-											'htmlOptions'=>array('style'=>'text-align: center;'),
-											'headerHtmlOptions'=>array( 'style'=>'text-align:center;width:100%;'),
+											'filterHtmlOptions'=>array('style'=>'width:30px'),
+											// 'htmlOptions'=>array('style'=>'text-align: center;'),
+											// 'headerHtmlOptions'=>array( 'style'=>'text-align:center;width:100%;'),
 										),
 								// array(
         //                                     'header' => 'พิมพ์ใบสมัคร',
@@ -255,7 +271,8 @@ EOD
 											'visible'=>Controller::PButton( 
 												array("Admin.*", "Admin.View", "Admin.Update", "Admin.Delete") 
 											),
-											'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
+											'filterHtmlOptions'=>array('style'=>'width:30px'),
+											//'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
 											'buttons' => array(
 												'view'=> array( 
 													'visible'=>'Controller::PButton( array("Admin.*", "Admin.View") )' 
