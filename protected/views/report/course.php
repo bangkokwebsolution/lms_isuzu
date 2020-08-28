@@ -472,6 +472,8 @@ if(isset($model_level) && !empty($model_level)){
                             foreach ($model_graph as $key => $value) {
                                 if($value["register"] > 0){
                                     echo "['".$value["title"]."', ".$value["register"].", ".$value["pass"]." ],";
+                                }else{
+                                    unset($model_graph[$key]);
                                 }
                             } 
                             ?>
@@ -525,13 +527,34 @@ chart.draw(data, options);
                 </h3>    
             </center>
         </li>
+        <div class="row">
+            <div class="col-md-12 text-right" style="padding-right: 47px;">
+                <p style="font-size: 18px; margin-bottom: 0px;">
+                    <?php 
+                    if(Yii::app()->session['lang'] != 1){
+                        echo "จำนวน ";
+                    }else{
+                        echo "";
+                    }
+                    
+                    echo count($model_graph);
+
+                    if(Yii::app()->session['lang'] != 1){
+                        echo " หลักสูตร";
+                    }else{
+                        echo " course";
+                    }
+                    ?>              
+                </p>
+            </div>
+        </div>
         <div id="div_graph" style="display: none;">
                <div id="chart_graph"></div> 
                <div id="result_search_graph"></div> 
         </div>
         <div id="result_search"> <!-- export excel -->            
         <div class="report-table">
-            <div class="table-responsive w-100 t-regis-language">
+            <div class="table-responsive w-100 t-regis-language" style="padding-top: 10px;">
                 <table class="table" id="table_list">
                     <thead>
                         <tr style="background-color: #010C65; color: #fff; border: 1.5px solid #000;">
@@ -630,16 +653,16 @@ chart.draw(data, options);
                                         ?>  
                                         <tr style="border: 1.5px solid #000;">
                                             <td><?php echo $no; $no++; ?></td>
-                                            <td><?= $course->course_title ?></td>
+                                            <td class="text-left"><?= $course->course_title ?></td>
                                             <td><?= $gen_course->gen_title ?></td>
                                             <td><?= $value_g["register"] ?></td>
-                                            <td style="background-color: #ffb97f;"><?= $value_g["notlearn"] ?></td>
-                                            <td style="background-color: #ffb97f;"><?= $value_g["learn"] ?></td>
-                                            <td style="background-color: #90ee90;"><?= $value_g["pass"] ?></td>
-                                            <td style="background-color: #90ee90;">
+                                            <td style="background-color: #ffb05f;"><?= $value_g["notlearn"] ?></td>
+                                            <td style="background-color: #ffb05f;"><?= $value_g["learn"] ?></td>
+                                            <td style="background-color: #5dff40;"><?= $value_g["pass"] ?></td>
+                                            <td style="background-color: #5dff40;">
                                                 <?php if(is_nan($value_g["per_pass"])){ echo "-"; }else{ echo number_format($value_g["per_pass"], 2)."%"; } ?>
                                                 </td>
-                                            <td style="background-color: #ffb97f;">
+                                            <td style="background-color: #ffb05f;">
                                                 <?php if(is_nan($value_g["per_notpass"])){ echo "-"; }else{ echo number_format($value_g["per_notpass"], 2)."%"; } ?>                                                    
                                                 </td>
                                             <!-- <td><?= $value_g["user"] ?></td> -->
