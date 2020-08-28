@@ -13,9 +13,9 @@ $this->widget('ADetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
 		array(
-			'name'=>'pic_file',
+			'name'=>'con_image',
 			'type'=>'raw',
-			'value'=> ($model->pic_file)?CHtml::image(Yush::getUrl($model, Yush::SIZE_THUMB, $model->pic_file), $model->pic_file,array(
+			'value'=> ($model->con_image)?CHtml::image(Yush::getUrl($model, Yush::SIZE_THUMB, $model->con_image), $model->con_image,array(
 						"class"=>"thumbnail"
 					)):'-',
 		),
