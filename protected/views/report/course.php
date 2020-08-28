@@ -472,8 +472,6 @@ if(isset($model_level) && !empty($model_level)){
                             foreach ($model_graph as $key => $value) {
                                 if($value["register"] > 0){
                                     echo "['".$value["title"]."', ".$value["register"].", ".$value["pass"]." ],";
-                                }else{
-                                    unset($model_graph[$key]);
                                 }
                             } 
                             ?>
@@ -537,6 +535,12 @@ chart.draw(data, options);
                         echo "";
                     }
                     
+                    foreach ($model_graph as $key => $value) {
+                        if($value["register"] <= 0){
+                            unset($model_graph[$key]);
+                        }
+                    }
+
                     echo count($model_graph);
 
                     if(Yii::app()->session['lang'] != 1){
