@@ -96,6 +96,14 @@ class DepartmentController extends Controller
 
 			if($_POST['Department'][type_employee_id] != null && $_POST['Department'][dep_title] != null){
 				$type_employee_id = $_POST['Department'][type_employee_id];
+
+				if($type_employee_id == 1){
+					$type_employee_id = 4;
+				}else{
+					$type_employee_id = 5;
+				}
+
+			
 				$dep_title = $_POST['Department'][dep_title];
 
 				// $modelTypeEmp = TypeEmployee::model()->findByPk($type_employee_id);
@@ -158,6 +166,12 @@ class DepartmentController extends Controller
 
 		if(isset($_POST['Department']))
 		{
+			if($type_employee_id == 1){
+				$type_employee_id = 4;
+			}else{
+				$type_employee_id = 5;
+			}
+
 			$criteria = new CDbCriteria();
 			$criteria->compare('department_id',$id);
 			$criteria->compare('title',$typeDepName);
