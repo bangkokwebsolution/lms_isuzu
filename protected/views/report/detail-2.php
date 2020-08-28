@@ -580,17 +580,17 @@ chart.draw(data, options);
 
                             <th rowspan="2"><?php 
                             if(Yii::app()->session['lang'] != 1){
-                                echo "% หลังเรียน";
+                                echo "ผู้เรียนสำเร็จ (%)";
                             }else{
-                                echo "% Post-test";
+                                echo "Successful students (%)";
                             }
                             ?></th>
 
                             <th colspan="2"><?php 
                             if(Yii::app()->session['lang'] != 1){
-                                echo "คะแนนค่าเฉลี่ย";
+                                echo "ค่าเฉลี่ยคะแนนสอบ";
                             }else{
-                                echo "Mean Score";
+                                echo "Test score average";
                             }
                             ?></th>
 
@@ -661,7 +661,7 @@ chart.draw(data, options);
                                             
 
                                             <td ><?php echo $no; $no++; ?></td>
-                                            <td><?= $course->course_title ?></td>
+                                            <td style="text-align: left;"><?= $course->course_title ?></td>
                                             <td><?= $gen_course->gen_title ?></td>
                                             <td><?= $value_g["register"] ?></td>
                                             <td><b class="text-success">ผ่าน </b>: <?= $value_g["postpass"]  ?></td>
