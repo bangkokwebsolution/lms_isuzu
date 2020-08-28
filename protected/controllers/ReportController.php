@@ -3144,8 +3144,9 @@ $model_position = Position::model()->findAll(array(
     			$criteria->compare('t.start_date', "<=".$_GET["search"]["end_date"]." 23:59:59");
     		}
 
-    		$criteria->order = 't.id ASC';
-    		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+    		// $criteria->order = 't.id ASC';
+    		$criteria->order = 'department.sortOrder ASC, position.sortOrder ASC';
+    		$model_search = LogStartcourse::model()->with("mem", "pro", "course", "mem.department", "mem.position")->findAll($criteria);
 
     		$criteria->order = 't.course_id ASC';
     		$criteria->select ='t.course_id';
@@ -3183,8 +3184,8 @@ $model_position = Position::model()->findAll(array(
     		}
 
     	}else{
-    		$criteria->order = 't.id ASC';
-    		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+    		$criteria->order = 'department.sortOrder ASC, position.sortOrder ASC';
+    		$model_search = LogStartcourse::model()->with("mem", "pro", "course", "mem.department", "mem.position")->findAll($criteria);
 
     		$criteria->order = 't.course_id ASC';
     		$criteria->select ='t.course_id';
@@ -3384,8 +3385,9 @@ $model_level = Branch::model()->findAll(array(
     			$criteria->compare('t.start_date', "<=".$_GET["search"]["end_date"]." 23:59:59");
     		}
 
-    		$criteria->order = 't.id ASC';
-    		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+    		// $criteria->order = 't.id ASC';
+    		$criteria->order = 'department.sortOrder ASC, position.sortOrder ASC, branch.sortOrder ASC';
+    		$model_search = LogStartcourse::model()->with("mem", "pro", "course", "mem.department", "mem.position", "mem.branch")->findAll($criteria);
 
     		$criteria->order = 't.course_id ASC';
     		$criteria->select ='t.course_id';
@@ -3423,8 +3425,9 @@ $model_level = Branch::model()->findAll(array(
     		}
 
     	}else{
-    		$criteria->order = 't.id ASC';
-    		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+    		// $criteria->order = 't.id ASC';
+    		$criteria->order = 'department.sortOrder ASC, position.sortOrder ASC, branch.sortOrder ASC';
+    		$model_search = LogStartcourse::model()->with("mem", "pro", "course", "mem.department", "mem.position", "mem.branch")->findAll($criteria);
 
     		$criteria->order = 't.course_id ASC';
     		$criteria->select ='t.course_id';
@@ -3662,8 +3665,9 @@ if($course_score->score_past == 'y'){
     			$criteria->compare('t.start_date', "<=".$_GET["search"]["end_date"]." 23:59:59");
     		}
 
-    		$criteria->order = 't.id ASC';
-    		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+    		// $criteria->order = 't.id ASC';
+    		$criteria->order = 'department.sortOrder ASC, position.sortOrder ASC, branch.sortOrder ASC';
+    		$model_search = LogStartcourse::model()->with("mem", "pro", "course", "mem.department", "mem.position", "mem.branch")->findAll($criteria);
 
     		$model_search_score = [];
     		$model_search_graph = [];
