@@ -167,6 +167,7 @@ $user_Department = $user_login->department_id;
 			}
 		</style>
 		<div class="report-table">
+			<h4 style="text-align: right;">จำนวนคนสมัครทั้งหมด <?php echo count($User); ?> คน</h4>
 			<div class="table-responsive w-100 t-regis-language">
 				<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 90%;">       
 					<thead>
@@ -198,9 +199,9 @@ $user_Department = $user_login->department_id;
 								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $i++; ?></td>
 								<?php
 								if (Yii::app()->session['lang'] == 1) { ?>
-									<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $valuepos_back->profile->firstname_en; ?> <?php echo $valuepos_back->profile->lastname_en; ?></td>
+									<td style="border:1px solid #d8d8d8; padding: 8px;text-align: left;"><?php echo $valuepos_back->profile->firstname_en; ?> <?php echo $valuepos_back->profile->lastname_en; ?></td>
 							<?php	}else{ ?>
-								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $valuepos_back->profile->firstname; ?> <?php echo $valuepos_back->profile->lastname; ?></td>
+								<td style="border:1px solid #d8d8d8; padding: 8px;text-align: left;"><?php echo $valuepos_back->profile->firstname; ?> <?php echo $valuepos_back->profile->lastname; ?></td>
 							<?php }
 								?>
 								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $valuepos_back->department->dep_title; ?></td>

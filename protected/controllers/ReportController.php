@@ -125,6 +125,7 @@ class ReportController extends Controller
                     }
 					$criteria->compare('active','y');
 					$criteria->compare('type_employee_id',2);
+	
 					$dep = Department::model()->findAll($criteria);
 					$dep_arr = [];
 					foreach ($dep as $key => $val_dep) {
@@ -141,6 +142,7 @@ class ReportController extends Controller
                                          
                         $criteria->compare('id',$user_Position);
                     }
+         
 					$pos = Position::model()->findAll($criteria);
 
 					$pos_arr = [];
@@ -172,7 +174,7 @@ class ReportController extends Controller
 					$result_pos_arr = array_unique( $posback_arr );
 
 					$criteria = new CDbCriteria;
-					$criteria->with = array('profile');
+					$criteria->with = array('profile','department');
 					$criteria->compare('department_id',$dep_arr);
 					$criteria->compare('superuser',0);
 					$criteria->compare('del_status',0);
@@ -195,7 +197,7 @@ class ReportController extends Controller
     					}
 					}
 					
-					$criteria->order = 'department_id ASC';
+					$criteria->order = 'department.sortOrder ASC';
 					$User = User::model()->findAll($criteria);
 
 					if (isset($pos)) {
@@ -661,6 +663,9 @@ class ReportController extends Controller
     
 									$i = 1;
 									$datatable .= '<div class="report-table">';
+									$datatable .= '<h4 style="text-align: right;">จำนวนคนสมัครทั้งหมด ';
+									$datatable .=  count($User);
+									$datatable .= ' คน</h4>';
 									$datatable .= '<div class="table-responsive w-100 t-regis-language">';
 									$datatable .= '<table class="table">';       
 									$datatable .= '<thead>';
@@ -685,9 +690,9 @@ class ReportController extends Controller
 											$datatable .= '<tr>';
 											$datatable .= '<td>'.$i++.'</td>';
 											if (Yii::app()->session['lang'] == 1) {
-											$datatable .= '<td>'.$value->profile->firstname_en."     ".$value->profile->lastname_en.'</td>';
+											$datatable .= '<td style="text-align: left;">'.$value->profile->firstname_en."     ".$value->profile->lastname_en.'</td>';
 											}else{
-											$datatable .= '<td>'.$value->profile->firstname."  ".$value->profile->lastname.'</td>';	
+											$datatable .= '<td style="text-align: left;">'.$value->profile->firstname."  ".$value->profile->lastname.'</td>';	
 											}
 											$datatable .= '<td>'.$value->department->dep_title.'</td>';
 											$datatable .= '<td>';
@@ -835,7 +840,7 @@ public function actionReportRegisterOfficeExcel()
 			$result_dep_arr = array_unique( $posback_arr );
 
 			$criteria = new CDbCriteria;
-			$criteria->with = array('profile');
+			$criteria->with = array('profile','department');
 			$criteria->compare('department_id',$result_dep_arr);
 			$criteria->compare('superuser',0);
 			$criteria->compare('del_status',0);
@@ -858,7 +863,7 @@ public function actionReportRegisterOfficeExcel()
 			}else{
 				$criteria->compare('position_id',$result_pos_arr);	
 			}
-			$criteria->order = 'department_id ASC';
+			$criteria->order = 'department.sortOrder ASC';
 			$User = User::model()->findAll($criteria);
 
 			if (!empty($pos)) {
@@ -1280,6 +1285,9 @@ public function actionReportRegisterOfficeExcel()
 
 							$i = 1;
 							$datatable .= '<div class="report-table">';
+							$datatable .= '<h4 style="text-align: right;">จำนวนคนสมัครทั้งหมด ';
+							$datatable .=  count($User);
+							$datatable .= ' คน</h4>';
 							$datatable .= '<div class="table-responsive w-100 t-regis-language">';
 							$datatable .= '<table class="table">';       
 							$datatable .= '<thead>';
@@ -1309,9 +1317,9 @@ public function actionReportRegisterOfficeExcel()
 								$datatable .= '<tr>';
 								$datatable .= '<td>'.$i++.'</td>';
 								if (Yii::app()->session['lang'] == 1) {
-									$datatable .= '<td>'.$valuepos_back->profile->firstname_en."  ".$valuepos_back->profile->lastname_en.'</td>';
+									$datatable .= '<td style="text-align: left;">'.$valuepos_back->profile->firstname_en."  ".$valuepos_back->profile->lastname_en.'</td>';
 								}else{
-									$datatable .= '<td>'.$valuepos_back->profile->firstname."  ".$valuepos_back->profile->lastname.'</td>';	
+									$datatable .= '<td style="text-align: left;">'.$valuepos_back->profile->firstname."  ".$valuepos_back->profile->lastname.'</td>';	
 								}
 								$datatable .= '<td>'.$valuepos_back->department->dep_title.'</td>';
 								$datatable .= '<td>'.$valuepos_back->position->position_title.'</td>';

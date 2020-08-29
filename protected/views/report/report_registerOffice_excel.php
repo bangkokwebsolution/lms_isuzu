@@ -100,7 +100,7 @@ $user_Department = $user_login->department_id;
                                          
         $criteria->compare('id',$user_Department);
     }
-    $criteria->compare('type_employee_id',1);
+    $criteria->compare('type_employee_id',2);
 	$criteria->compare('active','y');
 	$dep = Department::model()->findAll($criteria);
 	$dep_arr = [];
@@ -148,7 +148,7 @@ $user_Department = $user_login->department_id;
 	$result_pos_arr = array_unique( $posback_arr );
 
 	$criteria = new CDbCriteria;
-	$criteria->with = array('profile');
+	$criteria->with = array('profile','department');
 	$criteria->compare('department_id',$dep_arr);
 	$criteria->compare('superuser',0);
 	$criteria->compare('del_status',0);
@@ -170,7 +170,7 @@ $user_Department = $user_login->department_id;
         				$criteria->compare('branch_id',$user_Level);
     					}
 					}
-	$criteria->order = 'department_id ASC';
+	$criteria->order = 'department.sortOrder ASC';
 	$User = User::model()->findAll($criteria);
 	if ($Year_start == null && $Year_end == null) {
 	 ?>
@@ -189,6 +189,7 @@ $user_Department = $user_login->department_id;
 		</style>
 		
 		<div class="report-table">
+			<h4 style="text-align: right;">จำนวนคนสมัครทั้งหมด <?php echo count($User); ?> คน</h4>
 			<div class="table-responsive w-100 t-regis-language">
 				<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 90%;">       
 					<thead>
@@ -217,9 +218,9 @@ $user_Department = $user_login->department_id;
 							<tr class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">
 								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $i++; ?></td>
 								<?php if (Yii::app()->session['lang'] == 1) { ?>
-								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $value->profile->firstname_en; ?> <?php echo $value->profile->lastname_en; ?></td>
+								<td style="border:1px solid #d8d8d8; padding: 8px;text-align: left;"><?php echo $value->profile->firstname_en; ?> <?php echo $value->profile->lastname_en; ?></td>
 								<?php }else{ ?>
-								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $value->profile->firstname; ?> <?php echo $value->profile->lastname; ?></td>
+								<td style="border:1px solid #d8d8d8; padding: 8px;text-align: left;"><?php echo $value->profile->firstname; ?> <?php echo $value->profile->lastname; ?></td>
 								<?php } ?>
 								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $value->department->dep_title; ?></td>
 								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $value->position->position_title; ?></td>
