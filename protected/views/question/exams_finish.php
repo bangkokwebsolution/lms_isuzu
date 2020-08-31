@@ -77,7 +77,7 @@ if($modelScore->type=='post' && !$state){
 			<div class="col-sm-8 col-xs-12">
 				<div class="well bg-greendark">
 
-					<?php if($testType != "pre" || $quesType_ != 3){ ?>
+					<?php if($testType != "pre" && $quesType_ != 3){ ?>
 					<div class="well text-center result">
 						<h1 class="<?= $classH1; ?>"><span><i class="<?= $class; ?>" aria-hidden="true"></i></span><?= $strMsg; ?></h1>
 					</div>
