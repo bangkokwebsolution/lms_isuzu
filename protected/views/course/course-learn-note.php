@@ -2512,7 +2512,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                   </div>
                                   <script>
                                     $('#myCarousel<?= $file->id; ?>').on('slid.bs.carousel', '', function() {
-            console.log("เลื่อน slide");
+            // console.log("เลื่อน slide");
                                       
                                       <?php if($modelLearnFilePdf->learn_file_status!='s') { ?>
                                         $("#nextPageTag<?= $file->id; ?>").css("display", "none");
@@ -2549,7 +2549,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                             ?>
 
                             var checkType = <?= $checkType ?>; //0 = dont have, 1 = have type PDF
-                            console.log('currentIndex: '+currentIndex);
+                            // console.log('currentIndex: '+currentIndex);
                             if(currentIndex%checkSlide == 0 && checkType ){
                               $.post('<?php echo $this->createUrl("//course/GetSlide"); ?>', {
                                 id: <?php echo $file->id; ?>,
@@ -2572,6 +2572,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                         //     }
                                         // });
                                       }else{
+                                        console.log("LearnPdf 1");
                                         $.post('<?php echo $this->createUrl("//course/LearnPdf"); ?>', {
                                           id: <?php echo $file->id; ?>,
                                           learn_id: <?php echo $learn_id; ?>,
@@ -2637,6 +2638,10 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
 });
 
 }else {
+  // currentIndex = currentIndex-1;
+  // console.log("LearnPdf 2");
+  // console.log("currentIndex "+currentIndex);
+
   $.post('<?php echo $this->createUrl("//course/LearnPdf"); ?>', {
     id: <?php echo $file->id; ?>,
     learn_id: <?php echo $learn_id; ?>,
@@ -2668,7 +2673,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
 
                                         //if(data.camera)
                                         $('#imageCheck_' + data.no).html(data.image);
-                                        console.log("imageCheck 8");
+                                        // console.log("imageCheck 8");
                                         if(data.timeNext) {
                                           $("#nextPageTag<?= $file->id; ?>").css("display", "none");
                                           countdownTime(data.timeNext,<?= $file->id; ?>,data.status, <?= $langId ?>);
@@ -3216,6 +3221,7 @@ function countdownTime(time_down,file,type,lang){
 
   $("#yt3").click(function(event) {
     var current_slide = getCurrentSlide();
+    console.log("LearnPdf 3");
     $.post('<?php echo $this->createUrl("//course/LearnPdf"); ?>', {
       id: <?php echo $file->id; ?>,
       learn_id: <?php echo $learn_id; ?>,
@@ -3285,6 +3291,8 @@ function countdownTime(time_down,file,type,lang){
                           timer: 3000
                         });
                         var current_slide = getCurrentSlide();
+                        console.log("LearnPdf 4");
+
                         $.post('<?php echo $this->createUrl("//course/LearnPdf"); ?>', {
                           id: <?php echo $file->id; ?>,
                           learn_id: <?php echo $learn_id; ?>,

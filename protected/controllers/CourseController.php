@@ -918,9 +918,12 @@ public function actionCateIndex($id) {
             $id = $id != null ? $id : $_POST['id'];
             $learn_id = $learn_id != null ? $learn_id : $_POST['learn_id'];
             $slide = $slide != null ? $slide : $_POST['slide'];
+            
             $model = FilePdf::model()->findByPk($id);
             $countFile = PdfSlide::model()->count(array('condition' => 'file_id="'.$id.'"'));
+            
 
+            // var_dump($countFile); exit();
             $learn_model = Learn::model()->findByPk($learn_id);
             $gen_id = $learn_model->LessonMapper->CourseOnlines->getGenID($learn_model->LessonMapper->course_id);
 
@@ -928,6 +931,11 @@ public function actionCateIndex($id) {
                 'condition' => 'file_id=:file_id AND learn_id=:learn_id AND gen_id=:gen_id',
                 'params' => array(':file_id' => $id, ':learn_id' => $learn_id, ':gen_id'=>$gen_id)
             ));
+
+            if($slide == 0 && ($modelLearnFilePdf->learn_file_status+1) == $countFile){
+             $slide = $countFile;
+            }
+
             $filePdfSlide = PdfSlide::model()->find(array(
                 'condition' => 'file_id=:file_id AND image_slide_time=:image_slide_time',
                 'params' => array(':file_id' => $id, ':image_slide_time' => $slide)
@@ -951,19 +959,24 @@ public function actionCateIndex($id) {
                $learn->lesson_status = 'learning';
                $learn->save();
            } else {
-               if(($countFile-1) == $slide || $modelLearnFilePdf->learn_file_status == 's')
-               {
+               if($countFile == $slide || $modelLearnFilePdf->learn_file_status == 's'){
+               // if($countFile == $slide || $modelLearnFilePdf->learn_file_status == 's'){
+               // if(($countFile-1) == $slide || $modelLearnFilePdf->learn_file_status == 's'){
                 $modelLearnFilePdf->learn_file_status = 's';
             //$modelLearnFilePdf->learn_file_date_end = new CDbExpression('NOW()');
                 $att['no']      = $id;
+                if($countFile == $slide){
                 $att['status']  = true;
+            }
                 $att['image']   = '<input type="text" class="knob" value="100" data-skin="tron" data-thickness="0.2" data-width="25" data-height="25" data-displayInput="false" data-fgColor="#0C9C14" data-readonly="true">';
+                if($countFile == $slide){
                 $att['learn_file_status'] = $modelLearnFilePdf->learn_file_status;
+            }
             }else if($slide != ''){
                 //Jae edit 03/12/2561
                 if($modelLearnFilePdf->learn_file_status<=$slide){
                     //file_id = $id
-                    $index =  $slide - 1;
+                    // $index =  $slide - 1;
                     $att['no']      = $id;
                     // $att['timeNext'] = $filePdfSlide->image_slide_next_time;
                     if($index%5 == 0 && $slide != 0 && $modelLearnFilePdf->learn_file_status != $slide){
