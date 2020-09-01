@@ -844,13 +844,30 @@ public function actionReportRegisterOfficeExcel()
 			$criteria->compare('department_id',$result_dep_arr);
 			$criteria->compare('superuser',0);
 			$criteria->compare('del_status',0);
-			if ($status == "1") {
-				$criteria->compare('status',1);
-			}
-			if($status == "0"){
-				$criteria->compare('status',0);
-			}else if($status == ""){
-				$criteria->compare('status',array(0,1));
+			// if ($status == "1") {
+			// 	$criteria->compare('status',1);
+			// }
+			// if($status == "0"){
+			// 	$criteria->compare('status',0);
+			// }else if($status == ""){
+			// 	$criteria->compare('status',array(0,1));
+			// }
+			if ($status != null) {
+
+				if ($status == "1") {
+					$criteria->compare('register_status',1);
+					$criteria->compare('status',1);
+				}
+				if($status == "0"){
+					if ($status != "1") {
+						$criteria->compare('register_status',0);
+						$criteria->compare('status',1);
+					}else{
+						$criteria->compare('register_status',0);
+						$criteria->compare('status',0);
+					} 
+												
+				}
 			}
 			if ($age != null && $age2 != null || $age != "" && $age2 != "") {
 				$criteria->addBetweenCondition('age', $age, $age2, 'AND');
@@ -2167,6 +2184,8 @@ public function actionReportRegisterData()
 									 		$departments_pos[] = $valuepos_back->Departments->id;
 									}
 										$criteria = new CDbCriteria;
+										$criteria->with = array('profile');
+										$criteria->compare('profile.type_employee',$TypeEmployee);
 										$criteria->compare('position_id',$position_pos);
 										$criteria->compare('department_id',$departments_pos);
 										if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
@@ -2184,7 +2203,7 @@ public function actionReportRegisterData()
 											if($status == "0"){
 												if ($status != "1") {
 													$criteria->compare('register_status',0);
-													$criteria->compare('status',1);
+													$criteria->compare('status',array(0,1));
 												}else{
 													$criteria->compare('register_status',0);
 													$criteria->compare('status',0);
@@ -2193,7 +2212,7 @@ public function actionReportRegisterData()
 											}
 										}
 										$users_ps = Users::model()->findAll($criteria);
-										
+						
 										$total_pos = count($users_ps);
 									foreach ($dep_back as $keydep_back => $valuedep_back) { 
 										$departments_dep[] = $valuedep_back->id;
@@ -2240,6 +2259,7 @@ public function actionReportRegisterData()
 									}
 									$datatable .= '<th>Number</th>';
 									if($TypeEmployee != 2){
+										$datatable .= '<th>Total number</th>';
 										$datatable .= '<th>Status</th>';
 									}
 									$datatable .= '<th>Percent</th>';
@@ -2254,6 +2274,7 @@ public function actionReportRegisterData()
 									}
 									$datatable .= '<th>จำนวน</th>';
 									if($TypeEmployee != 2){
+										$datatable .= '<th>สมัครทั้งหมด</th>';
 										$datatable .= '<th>สถานะอนุมัติ</th>';
 									}
 									$datatable .= '<th>คิดเป็นร้อยละ</th>';
@@ -2390,6 +2411,8 @@ public function actionReportRegisterData()
 									foreach ($pos_back as $keypos_back => $valuepos_back) { 	
 
 										$criteria = new CDbCriteria;
+										$criteria->with = array('profile');
+										$criteria->compare('profile.type_employee',$TypeEmployee);
 										$criteria->compare('position_id',$valuepos_back->id);
 										$criteria->compare('department_id',$valuepos_back->Departments->id);
 										if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
@@ -2418,7 +2441,7 @@ public function actionReportRegisterData()
 										}
 
 										$users = Users::model()->findAll($criteria);
-									
+								
 										$criteria = new CDbCriteria;
 										$criteria->compare('position_id',$valuepos_back->id);
 										$criteria->compare('department_id',$valuepos_back->Departments->id);
@@ -2463,6 +2486,7 @@ public function actionReportRegisterData()
 
 										$cou_use = count($users);
 										$cou_useAll = count($usersAll);
+										$SUM_user[] = $cou_useAll;
 										$per_cen = ($cou_use * 100)/ $cou_useAll; 
 
 										$datatable .= '<tr>';
@@ -2473,7 +2497,9 @@ public function actionReportRegisterData()
 											$datatable .= '<td></td>';
 										}
 										$datatable .= '<td>'.$cou_use.'</td>';
+										
 										if($TypeEmployee != 2){
+											$datatable .= '<td>'.$cou_useAll.'</td>';
 												if (Yii::app()->session['lang'] == 1) {		
 												$datatable .= '<td>';
 													if($cou_use > 0){
@@ -2509,8 +2535,26 @@ public function actionReportRegisterData()
 										}
 										$datatable .= '</tr>';
 
-									}  
 
+									}  
+									if ($TypeEmployee != 2) {
+										$datatable .= '<tr>';
+											$datatable .= '<td>';
+											if (Yii::app()->session['lang'] == 1) {
+												$datatable .= "Total";
+											}else{
+												$datatable .= "รวม";
+											}
+											$datatable .= '</td>';
+											$datatable .= '<td></td>';
+											$datatable .= '<td></td>';
+											$datatable .= '<td></td>';
+											$datatable .= '<td>'.array_sum($SUM_user).'</td>';
+											$datatable .= '<td></td>';
+											$datatable .= '<td></td>';
+										$datatable .= '</tr>';	
+									}
+									
 									foreach ($dep_back as $keydep_back => $valuedep_back) { 
 
 										$criteria = new CDbCriteria;

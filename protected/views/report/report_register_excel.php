@@ -334,6 +334,7 @@ $user_Department = $user_login->department_id;
 								} ?>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">Number</th>
 								<?php if($data['TypeEmployee'] != 2){ ?>
+									<th style="border:1px solid #d8d8d8; padding: 8px;">Total number</th>
 									<th style="border:1px solid #d8d8d8; padding: 8px;">Status</th>
 								<?php } ?>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">Percent</th>
@@ -348,6 +349,7 @@ $user_Department = $user_login->department_id;
 								} ?>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">จำนวน</th>
 								<?php if($data['TypeEmployee'] != 2){ ?>
+									<th style="border:1px solid #d8d8d8; padding: 8px;">สมัครทั้งหมด</th>
 									<th style="border:1px solid #d8d8d8; padding: 8px;">สถานะอนุมัติ</th>
 								<?php } ?>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">คิดเป็นร้อยละ</th>
@@ -589,6 +591,7 @@ $user_Department = $user_login->department_id;
 
 										$cou_use = count($users);
 										$cou_useAll = count($usersAll);
+										$SUM_user[] = $cou_useAll;
 										$per_cen = ($cou_use * 100)/ $cou_useAll;
 									?>
 
@@ -601,6 +604,7 @@ $user_Department = $user_login->department_id;
 										<?php } ?>
 										<td class="text-center"><?php echo $cou_use; ?></td>
 										<?php if($data['TypeEmployee'] != 2){ ?>
+											<td class="text-center"><?php echo $cou_useAll ?></td>
 										<?php if (Yii::app()->session['lang'] == 1) {
 										 ?>		
 											<td class="text-center">
@@ -637,6 +641,17 @@ $user_Department = $user_login->department_id;
 									</tr>
 
 								<?php }  
+								if ($TypeEmployee != 2) { ?>
+										<tr>
+											<td><?php echo Yii::app()->session['lang'] == 1?"Total":"รวม"; ?></td>
+											<td></td>
+											<td></td>
+											<td></td>
+											<td class="text-center"><?php echo array_sum($SUM_user)?></td>
+											<td></td>
+											<td></td>
+										</tr>
+								<?php	}
 
 								foreach ($dep_back as $keydep_back => $valuedep_back) { 
 

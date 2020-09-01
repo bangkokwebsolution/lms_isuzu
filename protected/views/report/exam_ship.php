@@ -564,7 +564,7 @@ chart.draw(data, options);
                                 <tr>
                                     <td><?php echo $no; $no++; ?></td>
                                     <!-- <td><?= $value->mem->id ?></td> -->
-                                    <td>
+                                    <td class="text-left">
                                         <?php 
                                         if(Yii::app()->session['lang'] != 1){
                                             echo $value->pro->firstname." ".$value->pro->lastname;
