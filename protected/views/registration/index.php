@@ -247,6 +247,7 @@ figure figcaption {
 .clearfix {
     overflow: auto;
 }
+
 </style>
 <script language="javascript">
 
@@ -3367,7 +3368,7 @@ if (!$users->isNewRecord && $profile->type_employee == 1) {
                                        }else{
                                         $shipLists = CHtml::listData($ship, 'ship_id', 'ship_name');
                                        }
-                                       $shipOption = array('class' => 'form-control','empty' => Yii::app()->session['lang'] == 1?'--------Select-------- ':'--------เลือก--------');
+                                       $shipOption = array('class' => 'form-control','empty' => Yii::app()->session['lang'] == 1?'Please select a ship name':'กรุณาเลือกชื่อเรือ','disabled selected');
                                        ?>
                                        <?php echo $form->dropDownList($profile, 'ship_id', $shipLists, $shipOption); ?>
                                       
@@ -3597,7 +3598,7 @@ $(add_form_language).click(function(e) {
         ?>
         $(wrapper_language).append('<tr><td rowspan="2">'
             +'<input type="text" class="form-control" placeholder="' + language_name + '" name="ProfilesLanguage[' + numItems_language + '][language_name]" style="width:100px;line-height:28px;padding: 20px 10px;">'
-            +'<span class="delete_language btn-danger" name="mytextlg[]"><i class="fas fa-minus-circle" ></i> ' + del_language + '</span></div>'
+           // +'<span class="delete_language btn-danger" name="mytextlg[]"><i class="fas fa-minus-circle" ></i> ' + del_language + '</span></div>'
             +'</td>'
             +'<td>'+language_Written+'</td>'
             +'<td><div class="radio radio-danger "><input type="radio" name="ProfilesLanguage[' + numItems_language + '][writes]" id="lang_w-' + numItems_language + '<?php echo $h++ ?>" value="4"><label for="lang_w-' + numItems_language + '<?php echo $v++ ?>"></label></div></td>'
@@ -3782,7 +3783,7 @@ $("#reject").change(function(event) {
    $(".required_idline").hide();
    // $(".required_identification").show();
    // $(".required_date_of_expiry").show();
-              $(".required_Blood").hide();
+           $(".required_Blood").hide();
            $(".required_Height").hide();
            $(".required_Weight").hide();
            $(".required_race").hide();
@@ -4301,6 +4302,7 @@ var new_forms = <?php echo $new_form; ?>;
                        $(".required_idline").hide();
                        $(".required_identification").show();
                        $(".required_date_of_expiry").show();
+
                                              // }
                                          }else if (type_users === '5'){
                                             $('.Branch').hide();
@@ -4406,7 +4408,7 @@ var new_forms = <?php echo $new_form; ?>;
                                  }else if(new_forms === 0 || typeof  new_forms === 'undefined' || new_forms === false){
                                   
                                      var type_users = <?php  echo $profile->type_user != ""?$profile->type_user:0; ?>;
-                                
+                        
                                      if (type_users === 3) {
                     // var type_cards = $("input[name='type_card']:checked").val();
                     // if (type_cards === 'l') {
@@ -4480,7 +4482,7 @@ var new_forms = <?php echo $new_form; ?>;
                        //     $(".required_relationship_emergency").show();
                        //     $(".required_military").show();
                        //     $(".required_history_of_severe_illness").show();
-                       //     $(".required_educational").show();
+                       //    $(".required_educational").show();
                        //     $(".required_Attachments_educational").show();
 
                        //     $(".form_attach_identification").show();
@@ -4549,22 +4551,6 @@ var new_forms = <?php echo $new_form; ?>;
                            // $(".required_date_of_expiry").hide();
                        }else if (type_users === 1){
 
-                            // var type_card = $("input[name='type_card']:checked").val();
-                            //     // if (type_card === 'l') {
-                            //     //     $('.form_identification').show();
-                            //     //     $('.form_passport').hide();
-                            //     //     $('.form_identification_5').show();
-                            //     //     $('.form_passport_5').hide();
-                            //     //     $(".form_attach_identification").show();
-                            //     //     $(".form_attach_passport").hide();
-                            //     // }else if (type_card === 'p') {
-                            //     //     $('.form_identification').hide();
-                            //     //     $('.form_passport').show();
-                            //     //     $('.form_identification_5').hide();
-                            //     //     $('.form_passport_5').show();
-                            //     //     $(".form_attach_identification").hide();
-                            //     //     $(".form_attach_passport").show();
-                            //     // }
                                 var sick = $("input[name='history_of_illness']:checked").val();
                                 if (sick === 'y') {
                                     $('.form_sickness').show();
@@ -4626,8 +4612,10 @@ var new_forms = <?php echo $new_form; ?>;
                               $(".form_Training").show();
 
                               $(".required_idline").hide();
-                              $(".required_identification").show();
-                              $(".required_date_of_expiry").show();
+                              $(".required_identification").hide();
+                              $(".required_date_of_expiry").hide();
+                              $(".required_educational").show();
+
                           }else if(type_users === 5){
                             var type_card = $("input[name='type_card']:checked").val();
                                 if (type_card === 'l') {
