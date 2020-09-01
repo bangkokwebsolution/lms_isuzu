@@ -125,13 +125,13 @@ EOD
 								'width'=>'150',
 							),
 						),
-						array(
-							'type'=>'raw',
-							'value'=>'CHtml::link("<i></i>","", array("class"=>"glyphicons move btn-action btn-inverse"))',
-							'htmlOptions'=>array('style'=>'text-align: center; width:50px;', 'class'=>'row_move'),
-							'header' => 'ย้าย',
-							'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
-						),
+						// array(
+						// 	'type'=>'raw',
+						// 	'value'=>'CHtml::link("<i></i>","", array("class"=>"glyphicons move btn-action btn-inverse"))',
+						// 	'htmlOptions'=>array('style'=>'text-align: center; width:50px;', 'class'=>'row_move'),
+						// 	'header' => 'ย้าย',
+						// 	'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
+						// ),
 						// array(
 						// 	'name'=>'course_price',
 						// 	'value'=>'number_format($data->course_price)',
