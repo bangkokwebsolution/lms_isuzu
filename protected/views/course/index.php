@@ -135,9 +135,9 @@ function DateThai($strDate)
                      if($cate_id_show != $m_c->course->cate_id){
                             $cate_id_show = $m_c->course->cate_id;
 
-
+                    $cate_id_cate_id = $m_c->course->cate_id;
                     $m_c  = $m_c->course->CategoryTitle;
-
+                    $m_c->cate_id = $cate_id_cate_id;
                     if(!in_array($m_c->cate_id, $arr_cate_id)){
                         $arr_cate_id[] = $m_c->cate_id;
                     }else{

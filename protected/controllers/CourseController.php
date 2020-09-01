@@ -354,6 +354,7 @@ public function actionResetLearn($id) {
                 
                 $criteria = new CDbCriteria;
                 $criteria->addIncondition('course_id',$course_id);
+                $criteria->order = 'course_title ASC';
                 $course = CourseOnline::model()->findAll($criteria);
 
                 $criteria = new CDbCriteria;
@@ -366,7 +367,9 @@ public function actionResetLearn($id) {
                 $criteria->addIncondition('course.course_id',$course_id);
                 $criteria->addCondition('course.course_date_end >= :date_now');
                 $criteria->params[':date_now'] = date('Y-m-d H:i');
-                $criteria->order = 'course.course_id';
+                // $criteria->order = 'course.course_id';
+                $criteria->order = 'categorys.cate_title ASC';
+                // $criteria->order = 'course.course_title ASC';
             // $criteria->limit = 5;
                 $model_cate = OrgCourse::model()->findAll($criteria);
 
@@ -381,8 +384,9 @@ public function actionResetLearn($id) {
             }
 
     // var_dump("<pre>");
-    // var_dump($Model);
-    // var_dump("<br>");exit();
+    // var_dump($model_cate);
+    // // var_dump("<br>");
+    // exit();
 
     $label = MenuCourse::model()->find(array(
         'condition' => 'lang_id=:lang_id',
@@ -397,6 +401,7 @@ public function actionResetLearn($id) {
 
     $this->render('index', array(
         'model_cate'=>$model_cate,
+        'model_cate2'=>$model_cate,
         'model_cate_tms'=>$model_cate_tms,
         'modelCourseTms'=>$modelCourseTms,
         'Model' => $course,
