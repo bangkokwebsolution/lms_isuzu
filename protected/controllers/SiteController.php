@@ -1023,7 +1023,8 @@ class SiteController extends Controller
 
 				
 				$criteria = new CDbCriteria;
-				$criteria->addIncondition('course_id',$course_id);
+                $criteria->addIncondition('course_id',$course_id);
+				$criteria->order = 'course_title ASC';
 				$course = CourseOnline::model()->findAll($criteria);
 			}
 		} 
