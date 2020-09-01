@@ -1,4 +1,4 @@
-vv<?php
+<?php
 Class MenuLeft extends Controller
 {
 	public static function SetSubMenu($Name = array(),$Set=true)
