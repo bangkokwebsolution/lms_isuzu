@@ -139,7 +139,8 @@ $user_Department = $user_login->department_id;
 			$criteria->compare('id',$user_Level);
 		}
 	}
-	
+	$criteria->group = 'position_id';
+	$criteria->order = 'sortOrder ASC';
 	$branch = Branch::model()->findAll($criteria);
 
 
@@ -163,6 +164,7 @@ $user_Department = $user_login->department_id;
 	}
 	$criteria->addNotInCondition('id',$result_branch_arr);
 	$criteria->compare('active','y');
+	$criteria->order = 'sortOrder ASC';
 	$pos_back = Position::model()->findAll($criteria);
 
 	$criteria = new CDbCriteria;
@@ -175,12 +177,40 @@ $user_Department = $user_login->department_id;
 	}
 	$criteria->addNotInCondition('id',$result_pos_arr);
 	$criteria->compare('active','y');
+	$criteria->order = 'sortOrder ASC';
 	$dep_back = Department::model()->findAll($criteria);
 
+							foreach ($branch as $key => $value) { 	
+								$name_dep[] = $value->Positions->Departments->id;
+								$names_dep[] = $value->Positions->Departments->dep_title;
+								$id_pos[] = $value->Positions->id;
+								$name_pos[] = $value->Positions->position_title;
+								$name_level = $value->branch_name;
+								$id_level = $value->id;
 
-	if($Year_start == "" && $Year_end == "" ){
+							}
+							foreach ($dep_back as $keydep_back => $valuedep_back) { 
+								$name_dep_not[] = $valuedep_back->id;
+								$names_dep_not[] = $valuedep_back->dep_title;
+							}
+							$result_dep_in = array_unique( $name_dep );
+							$result_dep_not = array_unique( $name_dep_not );
+							$result_pos_in = array_unique( $id_pos );
+							$result_pos_not = array_unique( $name_pos );
+
+							$result_dep_in_name = array_unique( $names_dep );
+							$result_dep_not_name = array_unique( $names_dep_not );
+							foreach ($result_dep_not_name as $key => $value) {
+								array_push($result_dep_in_name,$value);
+
+							}
+							foreach ($result_dep_not as $key => $value) {
+								array_push($result_dep_in,$value);
+							}
+	if($Year_start == "" && $Year_end == ""){
+	
 		if (!empty($branch) || !empty($pos_back) || !empty($dep_back) ) {
-			?>	
+			?>
 			<style type="text/css">
 				tr td,tr th{
 					border:1px solid #d8d8d8;
@@ -195,11 +225,99 @@ $user_Department = $user_login->department_id;
 				}
 			</style>
 			<?php
-			$i = 1;?>
-		
+			$i = 1;
+			if (!empty($branch) || !empty($pos_back) || !empty($dep_back) ) { ?>
 			<div class="report-table">
+				<?php
+
+								
+									foreach ($result_pos_in as $key => $value) {
+										$var_result[] = $value;
+									}		
+												$criteria = new CDbCriteria;
+												$criteria->compare('position_id',$var_result);
+												if ($Leval != "") {
+													$criteria->compare('branch_id',$id_level);
+												}
+												if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+													$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+												}
+												$criteria->compare('superuser',0);
+												$criteria->compare('del_status',0);
+												$criteria->compare('status',1);
+												$criteria->compare('register_status',1);
+									
+											$users_br = Users::model()->findAll($criteria);
+											$total = count($users_br);
+
+									foreach ($pos_back as $keypos_back => $valuepos_back) { 
+									 		$position_pos[] = $valuepos_back->id;
+									 		$departments_pos[] = $valuepos_back->Departments->id;
+									}
+										$criteria = new CDbCriteria;
+										$criteria->compare('position_id',$position_pos);
+										$criteria->compare('department_id',$departments_pos);
+										if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+											$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+										}
+										$criteria->compare('superuser',0);
+										$criteria->compare('del_status',0);
+									if ($status != null) {
+
+											if ($status == "1") {
+												$criteria->compare('register_status',1);
+												$criteria->compare('status',1);
+											}
+											if($status == "0"){
+												if ($status != "1") {
+													$criteria->compare('register_status',0);
+													$criteria->compare('status',1);
+												}else{
+													$criteria->compare('register_status',0);
+													$criteria->compare('status',0);
+												} 
+												
+											}
+										}
+										$users_ps = Users::model()->findAll($criteria);
+										
+										$total_pos = count($users_ps);
+									foreach ($dep_back as $keydep_back => $valuedep_back) { 
+										$departments_dep[] = $valuedep_back->id;
+									}
+										$criteria = new CDbCriteria;
+										$criteria->compare('department_id',$departments_dep);
+										if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+											$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+										}
+										$criteria->compare('superuser',0);
+										$criteria->compare('del_status',0);
+										if($status != null){
+											$criteria->compare('status',$status);		
+										}
+										$users_dm = Users::model()->findAll($criteria);
+									
+										$total_dep = count($users_dm);
+				?>
+				<h4 style="text-align: right;">จำนวนคนสมัครทั้งหมด
+					<?php
+						if ($data['TypeEmployee'] == 2 && $dep_back && $data['Department'] != "") {
+										echo $total_dep;
+									}else if($data['TypeEmployee'] == 2 && $branch && $data['Department'] != ""){
+										echo $total;
+									}else if($data['TypeEmployee'] == 1 && $pos_back){
+										echo  $total_pos;
+									}else if($data['TypeEmployee'] == 2 && $data['Department'] == ""){
+										echo  $total_dep + $total;
+									}
+
+					?>
+				คน</h4>
 				<div class="table-responsive w-100 t-regis-language">
-					<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 90%;">     
+					<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 100%;	">     
 						<thead>
 							<tr style="background: #010C65;color: #fff; border:1px solid #d8d8d8;padding: 8px;">
 								<?php
@@ -207,10 +325,14 @@ $user_Department = $user_login->department_id;
 								<th style="border:1px solid #d8d8d8; padding: 8px;">No.</th>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">Department</th>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">Position</th>
-								<?php if($data['TypeEmployee'] != 1){ ?>
-									<th>เลเวล</th>
-								<?php } ?>
-								<th style="border:1px solid #d8d8d8; padding: 8px;">Level</th>
+								<?php if($data['TypeEmployee'] != 1){ 
+									if ($Leval != "") {
+									?>
+									<th style="border:1px solid #d8d8d8; padding: 8px;">Level</th>
+								<?php 
+									}
+								} ?>
+								<th style="border:1px solid #d8d8d8; padding: 8px;">Number</th>
 								<?php if($data['TypeEmployee'] != 2){ ?>
 									<th style="border:1px solid #d8d8d8; padding: 8px;">Status</th>
 								<?php } ?>
@@ -219,9 +341,11 @@ $user_Department = $user_login->department_id;
 								<th style="border:1px solid #d8d8d8; padding: 8px;">ลำดับ</th>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">ฝ่าย</th>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">แผนก</th>
-								<?php if($data['TypeEmployee'] != 1){ ?>
-									<th>เลเวล</th>
-								<?php } ?>
+								<?php if($data['TypeEmployee'] != 1){ 
+									if ($Leval != "") { ?>
+									<th style="border:1px solid #d8d8d8; padding: 8px;">เลเวล</th>									
+								<?php }
+								} ?>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">จำนวน</th>
 								<?php if($data['TypeEmployee'] != 2){ ?>
 									<th style="border:1px solid #d8d8d8; padding: 8px;">สถานะอนุมัติ</th>
@@ -229,72 +353,106 @@ $user_Department = $user_login->department_id;
 								<th style="border:1px solid #d8d8d8; padding: 8px;">คิดเป็นร้อยละ</th>
 							<?php }
 								?>
-								
 							</tr> 
 						</thead>
 						<tbody>
-							<?php 
-							if ($data['TypeEmployee'] == 2) {    
-								foreach ($branch as $key => $value) { 	
+							<?php if ($data['TypeEmployee'] == 2) {    
+								//foreach ($branch as $key => $value) { 	
 
-									$criteria = new CDbCriteria;
-									$criteria->compare('branch_id',$value->id);
-									$criteria->compare('position_id',$value->Positions->id);
-									$criteria->compare('department_id',$value->Positions->Departments->id);
-									if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+									// $criteria = new CDbCriteria;
+									// $criteria->compare('branch_id',$value->id);
+									// $criteria->compare('position_id',$value->Positions->id);
+									// $criteria->compare('department_id',$value->Positions->Departments->id);
+									// if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
 
-										$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
-									}
-									$criteria->compare('superuser',0);
-									$criteria->compare('del_status',0);
-									if($status != null){
-										$criteria->compare('status',$status);		
-									}
-									$users = Users::model()->findAll($criteria);
+									// 	$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+									// }
+									// $criteria->compare('superuser',0);
+									// $criteria->compare('del_status',0);
+									// if($status != null){
+									// 	$criteria->compare('status',$status);		
+									// }
+									// $users = Users::model()->findAll($criteria);
 
-									$criteria = new CDbCriteria;
-									$criteria->select = 'id';
+									// $criteria = new CDbCriteria;
+									// $criteria->select = 'id';
 
-									if($data['TypeEmployee']){
-										$criteria->compare('type_employee',$data['TypeEmployee']);
-									}
-									if($data['Department']){
-										$criteria->compare('department_id',$data['Department']);
-									}
-									if ($authority == 2 || $authority == 3) {
-										$criteria->compare('department_id',$user_Department);
-									}
-									if ($data['Position'] != "") {
-											if($data['Position']){
-													$criteria->compare('position_id',$data['Position']);
+									// if($data['TypeEmployee']){
+									// 	$criteria->compare('type_employee',$data['TypeEmployee']);
+									// }
+									// if($data['Department']){
+									// 	$criteria->compare('department_id',$data['Department']);
+									// }
+									// if ($authority == 2 || $authority == 3) {
+									// 	$criteria->compare('department_id',$user_Department);
+									// }
+									// if ($data['Position'] != "") {
+									// 		if($data['Position']){
+									// 				$criteria->compare('position_id',$data['Position']);
+									// 			}
+									// 		}else{
+									// 			if ($authority == 2 || $authority == 3) {
+									// 				$criteria->compare('position_id',$user_Position);
+									// 			}
+									// 		}
+									// 		if($data['Leval'] != ""){
+									// 		if($data['Leval']){
+									// 			$criteria->compare('branch_id',$data['Leval']);
+									// 		}
+									// 		}else{
+									// 			if ($authority == 3) {
+									// 				$criteria->compare('branch_id',$user_Level);
+									// 			}
+									// 		}
+									// $criteria->compare('superuser',0);
+									// $criteria->compare('del_status',0);
+									// $usersAll = Users::model()->findAll($criteria);
+								foreach ($result_pos_in as $key => $value) {
+										$criteria = new CDbCriteria;
+												$criteria->compare('position_id',$value);
+												if ($Leval != "") {
+													$criteria->compare('branch_id',$id_level);
 												}
-											}else{
-												if ($authority == 2 || $authority == 3) {
-													$criteria->compare('position_id',$user_Position);
-												}
-											}
-											if($data['Leval'] != ""){
-											if($data['Leval']){
-												$criteria->compare('branch_id',$data['Leval']);
-											}
-											}else{
-												if ($authority == 3) {
-													$criteria->compare('branch_id',$user_Level);
-												}
-											}
-									$criteria->compare('superuser',0);
-									$criteria->compare('del_status',0);
-									$usersAll = Users::model()->findAll($criteria);
-									$cou_use = count($users);
+												if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
 
-									$cou_useAll = count($usersAll);
-									$per_cen = ($cou_use / $cou_useAll) * 100; ?>
-									<tr style="border:1px solid #d8d8d8; padding: 8px;">
-										<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $i++;?></td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $value->Positions->Departments->dep_title;?></td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $value->Positions->position_title;?></td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $value->branch_name;?></td>
-										<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $cou_use;?></td>
+													$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+												}
+												$criteria->compare('superuser',0);
+												$criteria->compare('del_status',0);
+												$criteria->compare('status',1);
+												$criteria->compare('register_status',1);
+												$users_count = Users::model()->findAll($criteria);
+												$cou_use = count($users_count);									
+
+											$criteria = new CDbCriteria;
+											$criteria->compare('position_id',$value);
+											if ($Leval != "") {
+													$criteria->compare('branch_id',$id_level);
+												}
+											if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+													$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+											}
+											$criteria->compare('superuser',0);
+											$criteria->compare('del_status',0);
+											$criteria->compare('register_status',1);
+											$usersAll = Users::model()->findAll($criteria);		
+											$cou_useAll = count($usersAll);
+											
+											$per_cen = ($cou_useAll * 100 ) / $cou_use; 
+									?>
+									<tr class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">
+										<td><?php echo $i++;?></td>
+										<td><?php echo $names_dep[$key];?></td>
+										<td><?php echo $result_pos_not[$key];?></td>
+										<?php
+										if ($Leval != "") { ?>
+											<td><?php echo $name_level;?></td>
+										<?php
+										}
+										?>
+										
+										<td class="text-center"><?php echo $cou_use;?></td>
 										<?php if($data['TypeEmployee'] != 2){ ?>
 										<?php if (Yii::app()->session['lang'] == 1) {
 										 ?>		
@@ -302,7 +460,7 @@ $user_Department = $user_login->department_id;
 												<?php	if($cou_use > 0){
 													if ($status == 1) {?>
 														<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approve</span>
-														<?php}else{?>
+														<?php }else{ ?>
 															<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>
 														<?php }
 													}else{
@@ -312,7 +470,7 @@ $user_Department = $user_login->department_id;
 											<?php }else{ ?>
 												<td class="text-center">
 												<?php	if($cou_use > 0){
-													if ($status == 1) { ?>
+													if ($status == 1) {?>
 														<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>
 														<?php }else{ ?>
 															<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>
@@ -325,7 +483,7 @@ $user_Department = $user_login->department_id;
 												<?php
 											}
 											if($cou_use > 0){ ?>
-												<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo round($per_cen, 2); ?>%</td>
+												<td class="text-center"><?php echo round($per_cen, 2); ?>%</td>
 											<?php }else{ ?>
 												<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">-</td>
 											<?php } ?>
@@ -334,66 +492,114 @@ $user_Department = $user_login->department_id;
 								}
 								foreach ($pos_back as $keypos_back => $valuepos_back) { 	
 
+									// $criteria = new CDbCriteria;
+									// $criteria->compare('position_id',$valuepos_back->id);
+									// $criteria->compare('department_id',$valuepos_back->Departments->id);
+									// if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+									// 	$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+									// }
+									// $criteria->compare('superuser',0);
+									// $criteria->compare('del_status',0);
+									// if($status != null){
+									// 	$criteria->compare('status',$status);		
+									// }
+									// $users = Users::model()->findAll($criteria);
+
+									// $criteria = new CDbCriteria;
+									// $criteria->select = 'id';
+
+									// if($data['TypeEmployee']){
+									// 	$criteria->compare('type_employee',$data['TypeEmployee']);
+									// }
+									// if($data['Department']){
+									// 	$criteria->compare('department_id',$data['Department']);
+									// }
+									// if ($authority == 2 || $authority == 3) {
+									// 	$criteria->compare('department_id',$user_Department);
+									// }
+									// if ($data['Position'] != "") {
+									// 		if($data['Position']){
+									// 				$criteria->compare('position_id',$data['Position']);
+									// 			}
+									// 		}else{
+									// 			if ($authority == 2 || $authority == 3) {
+									// 				$criteria->compare('position_id',$user_Position);
+									// 			}
+									// 		}
+									// 		if($data['Leval'] != ""){
+									// 		if($data['Leval']){
+									// 			$criteria->compare('branch_id',$data['Leval']);
+									// 		}
+									// 		}else{
+									// 			if ($authority == 3) {
+									// 				$criteria->compare('branch_id',$user_Level);
+									// 			}
+									// 		}
+									// $criteria->compare('superuser',0);
+									// $criteria->compare('del_status',0);
+									// $usersAll = Users::model()->findAll($criteria);
+
+									// $cou_use = count($users);
+									// $cou_useAll = count($usersAll);
+									// $per_cen = ($cou_use / $cou_useAll) * 100; 
 									$criteria = new CDbCriteria;
-									$criteria->compare('position_id',$valuepos_back->id);
-									$criteria->compare('department_id',$valuepos_back->Departments->id);
-									if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+										$criteria->compare('position_id',$valuepos_back->id);
+										$criteria->compare('department_id',$valuepos_back->Departments->id);
+										if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
 
-										$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
-									}
-									$criteria->compare('superuser',0);
-									$criteria->compare('del_status',0);
-									if($status != null){
-										$criteria->compare('status',$status);		
-									}
-									$users = Users::model()->findAll($criteria);
+											$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+										}
+										$criteria->compare('superuser',0);
+										$criteria->compare('del_status',0);
+										
+										if ($status != null) {
 
-									$criteria = new CDbCriteria;
-									$criteria->select = 'id';
-
-									if($data['TypeEmployee']){
-										$criteria->compare('type_employee',$data['TypeEmployee']);
-									}
-									if($data['Department']){
-										$criteria->compare('department_id',$data['Department']);
-									}
-									if ($authority == 2 || $authority == 3) {
-										$criteria->compare('department_id',$user_Department);
-									}
-									if ($data['Position'] != "") {
-												if($data['Position']){
-													$criteria->compare('position_id',$data['Position']);
-												}
-											}else{
-												if ($authority == 2 || $authority == 3) {
-													$criteria->compare('position_id',$user_Position);
-												}
+											if ($status == "1") {
+												$criteria->compare('register_status',1);
+												$criteria->compare('status',1);
 											}
-											if($data['Leval'] != ""){
-											if($data['Leval']){
-												$criteria->compare('branch_id',$data['Leval']);
+											if($status == "0"){
+												if ($status != "1") {
+													$criteria->compare('register_status',0);
+													$criteria->compare('status',1);
+												}else{
+													$criteria->compare('register_status',0);
+													$criteria->compare('status',0);
+												} 
+												
 											}
-											}else{
-												if ($authority == 3) {
-													$criteria->compare('branch_id',$user_Level);
-												}
-											}
-									$criteria->compare('superuser',0);
-									$criteria->compare('del_status',0);
-									$usersAll = Users::model()->findAll($criteria);
+										}
 
-									$cou_use = count($users);
-									$cou_useAll = count($usersAll);
-									$per_cen = ($cou_use / $cou_useAll) * 100; ?>
+										$users = Users::model()->findAll($criteria);
+									
+										$criteria = new CDbCriteria;
+										$criteria->compare('position_id',$valuepos_back->id);
+										$criteria->compare('department_id',$valuepos_back->Departments->id);
+										if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
 
-									<tr style="border:1px solid #d8d8d8; padding: 8px;">
-										<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $i++;?></td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $valuepos_back->Departments->dep_title;?></td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $valuepos_back->position_title;?></td>
+											$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+										}
+										$criteria->compare('superuser',0);
+										$criteria->compare('del_status',0);
+										$criteria->compare('status',array(0,1));
+										$criteria->compare('register_status',array(0,1));
+										$criteria->compare('superuser',0);
+										$usersAll = Users::model()->findAll($criteria);
+
+										$cou_use = count($users);
+										$cou_useAll = count($usersAll);
+										$per_cen = ($cou_use * 100)/ $cou_useAll;
+									?>
+
+									<tr class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">
+										<td><?php echo $i++;?></td>
+										<td><?php echo $valuepos_back->Departments->dep_title;?></td>
+										<td><?php echo $valuepos_back->position_title;?></td>
 										<?php if($data['TypeEmployee'] != 1) { ?>
-											<td style="border:1px solid #d8d8d8; padding: 8px;"></td>
+											<td></td>
 										<?php } ?>
-										<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $cou_use; ?></td>
+										<td class="text-center"><?php echo $cou_use; ?></td>
 										<?php if($data['TypeEmployee'] != 2){ ?>
 										<?php if (Yii::app()->session['lang'] == 1) {
 										 ?>		
@@ -411,7 +617,7 @@ $user_Department = $user_login->department_id;
 											<?php }else{ ?>
 												<td class="text-center">
 												<?php	if($cou_use > 0){
-													if ($status == 1) { ?>
+													if ($status == 1) {?>
 														<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>
 														<?php }else{ ?>
 															<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>
@@ -424,7 +630,7 @@ $user_Department = $user_login->department_id;
 												<?php
 											}
 										if($cou_use > 0){ ?>
-											<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo round($per_cen, 2) ?>%</td>
+											<td class="text-center"><?php echo round($per_cen, 2) ?>%</td>
 										<?php }else{ ?>
 											<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">-</td>
 										<?php } ?>
@@ -434,71 +640,104 @@ $user_Department = $user_login->department_id;
 
 								foreach ($dep_back as $keydep_back => $valuedep_back) { 
 
+									// $criteria = new CDbCriteria;
+									// $criteria->compare('department_id',$valuedep_back->id);
+									// if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+									// 	$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+									// }
+									// $criteria->compare('superuser',0);
+									// $criteria->compare('del_status',0);
+									// if($status != null){
+									// 	$criteria->compare('status',$status);		
+									// }
+									// $users = Users::model()->findAll($criteria);
+
+									// $criteria = new CDbCriteria;
+									// $criteria->select = 'id';
+
+									// if($data['TypeEmployee']){
+									// 	$criteria->compare('type_employee',$data['TypeEmployee']);
+									// }
+									// if($data['Department']){
+									// 	$criteria->compare('department_id',$data['Department']);
+									// }
+									// if ($authority == 2 || $authority == 3) {
+									// 	$criteria->compare('department_id',$user_Department);
+									// }
+									// if ($data['Position'] != "") {
+									// 		if($data['Position']){
+									// 				$criteria->compare('position_id',$data['Position']);
+									// 			}
+									// 		}else{
+									// 			if ($authority == 2 || $authority == 3) {
+									// 				$criteria->compare('position_id',$user_Position);
+									// 			}
+									// 		}
+									// 		if($data['Leval'] != ""){
+									// 		if($data['Leval']){
+									// 			$criteria->compare('branch_id',$data['Leval']);
+									// 		}
+									// 		}else{
+									// 			if ($authority == 3) {
+									// 				$criteria->compare('branch_id',$user_Level);
+									// 			}
+									// 		}
+									// $criteria->compare('superuser',0);
+									// $criteria->compare('del_status',0);
+									// $usersAll = Users::model()->findAll($criteria);
+
+									// $cou_use = count($users);
+									// $cou_useAll = count($usersAll);
+									// $per_cen = ($cou_use / $cou_useAll) * 100; 
 									$criteria = new CDbCriteria;
-									$criteria->compare('department_id',$valuedep_back->id);
-									if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+										$criteria->compare('department_id',$valuedep_back->id);
+										if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
 
-										$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
-									}
-									$criteria->compare('superuser',0);
-									$criteria->compare('del_status',0);
-									if($status != null){
-										$criteria->compare('status',$status);		
-									}
-									$users = Users::model()->findAll($criteria);
+											$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+										}
+										$criteria->compare('superuser',0);
+										$criteria->compare('del_status',0);
+										$criteria->compare('status',1);
+										$criteria->compare('register_status',1);
+										$users = Users::model()->findAll($criteria);
 
-									$criteria = new CDbCriteria;
-									$criteria->select = 'id';
+										 $criteria = new CDbCriteria;
+										 $criteria->compare('department_id',$valuedep_back->id);
+										if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
 
-									if($data['TypeEmployee']){
-										$criteria->compare('type_employee',$data['TypeEmployee']);
-									}
-									if($data['Department']){
-										$criteria->compare('department_id',$data['Department']);
-									}
-									if ($authority == 2 || $authority == 3) {
-										$criteria->compare('department_id',$user_Department);
-									}
-									if ($data['Position'] != "") {
-												if($data['Position']){
-													$criteria->compare('position_id',$data['Position']);
-												}
-											}else{
-												if ($authority == 2 || $authority == 3) {
-													$criteria->compare('position_id',$user_Position);
-												}
-											}
-											if($data['Leval'] != ""){
-											if($data['Leval']){
-												$criteria->compare('branch_id',$data['Leval']);
-											}
-											}else{
-												if ($authority == 3) {
-													$criteria->compare('branch_id',$user_Level);
-												}
-											}
-									$criteria->compare('superuser',0);
-									$criteria->compare('del_status',0);
-									$usersAll = Users::model()->findAll($criteria);
+											$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+										}
+										$criteria->compare('superuser',0);
+										$criteria->compare('del_status',0);
+										$criteria->compare('register_status',1);
+										$usersAll = Users::model()->findAll($criteria);
 
-									$cou_use = count($users);
-									$cou_useAll = count($usersAll);
-									$per_cen = ($cou_use / $cou_useAll) * 100; ?>
+										$cou_use = count($users);
+										$cou_useAll = count($usersAll);
+										$per_cen = ($cou_useAll * 100)/ $cou_use;
 
-									<tr>
-										<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $i++;?></td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $valuedep_back->dep_title; ?></td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;">-</td>
-										<td style="border:1px solid #d8d8d8; padding: 8px;">-</td>
-										<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $cou_use; ?></td>
+									?>
+									<tr class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">
+										<td><?php echo $i++;?></td>
+										<td><?php echo $valuedep_back->dep_title; ?></td>
+										<td class="text-center">-</td>
+										<?php
+											if ($Leval != "") {
+										?>
+										<td class="text-center">-</td>
+										<?php
+										}
+										?>
+										<td class="text-center"><?php echo $cou_use; ?></td>
 										<?php if($data['TypeEmployee'] != 2){ ?>
 										<?php if (Yii::app()->session['lang'] == 1) {
 										 ?>		
 											<td class="text-center">
 												<?php	if($cou_use > 0){
-													if ($status == 1) { ?>
+													if ($status == 1) {?>
 														<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approve</span>
-														<?php }else{ ?>
+														<?php }else { ?>
 															<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>
 														<?php }
 													}else{
@@ -508,7 +747,7 @@ $user_Department = $user_login->department_id;
 											<?php }else{ ?>
 												<td class="text-center">
 												<?php	if($cou_use > 0){
-													if ($status == 1) { ?>
+													if ($status == 1) {?>
 														<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>
 														<?php }else{ ?>
 															<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>
@@ -521,7 +760,7 @@ $user_Department = $user_login->department_id;
 												<?php
 											}
 											if($cou_use > 0){ ?>
-												<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;"><?php echo round($per_cen, 2);?>%</td>
+												<td class="text-center"><?php echo round($per_cen, 2);?>%</td>
 											<?php }else{ ?>
 												<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">-</td>
 											<?php } ?>
@@ -537,6 +776,9 @@ $user_Department = $user_login->department_id;
 				<?php }else{ ?>
 					<p>ไม่พบข้อมูล</p>
 				<?php }
-			} ?>
+			} 
+		}
+			?>
 		</body>
 		</html>
+

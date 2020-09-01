@@ -1512,6 +1512,8 @@ public function actionReportRegisterData()
 							$criteria->compare('id',$user_Level);
 						}
 					}
+					$criteria->group = 'position_id';
+					$criteria->order = 'sortOrder ASC';
 					$branch = Branch::model()->findAll($criteria);
 
 
@@ -1535,6 +1537,7 @@ public function actionReportRegisterData()
 					}
 					$criteria->addNotInCondition('id',$result_branch_arr);
 					$criteria->compare('active','y');
+					$criteria->order = 'sortOrder ASC';
 					$pos_back = Position::model()->findAll($criteria);
 
 					$criteria = new CDbCriteria;
@@ -1547,6 +1550,7 @@ public function actionReportRegisterData()
 					}
 					$criteria->addNotInCondition('id',$result_pos_arr);
 					$criteria->compare('active','y');
+					$criteria->order = 'sortOrder ASC';
 					$dep_back = Department::model()->findAll($criteria);
 
 					if ($TypeEmployee == '1') {
@@ -1571,9 +1575,27 @@ public function actionReportRegisterData()
 
 									$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 								}
-								if($status != null){
-									$criteria->compare('status',$status);		
-								}
+								// if($status != null){
+								// 	$criteria->compare('status',$status);		
+								// }
+								if ($status != null) {
+
+											if ($status == "1") {
+												$criteria->compare('register_status',1);
+												$criteria->compare('status',1);
+											}
+											if($status == "0"){
+												if ($status != "1") {
+													$criteria->compare('register_status',0);
+													$criteria->compare('status',1);
+												}else{
+													$criteria->compare('register_status',0);
+													$criteria->compare('status',0);
+												} 
+												
+											}
+										}
+
 								$users_count= Users::model()->findAll($criteria);
 								$count_pos = count($users_count);
 
@@ -1600,9 +1622,27 @@ public function actionReportRegisterData()
 
 									$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 								}
-								if($status != null){
-									$criteria->compare('status',$status);		
-								}
+								// if($status != null){
+								// 	$criteria->compare('status',$status);		
+								// }
+								if ($status != null) {
+
+											if ($status == "1") {
+												$criteria->compare('register_status',1);
+												$criteria->compare('status',1);
+											}
+											if($status == "0"){
+												if ($status != "1") {
+													$criteria->compare('register_status',0);
+													$criteria->compare('status',1);
+												}else{
+													$criteria->compare('register_status',0);
+													$criteria->compare('status',0);
+												} 
+												
+											}
+										}
+
 								$users_count= Users::model()->findAll($criteria);
 								$count_pos = count($users_count);
 
@@ -1619,6 +1659,10 @@ public function actionReportRegisterData()
 							foreach ($branch as $key => $value) { 	
 								$name_dep[] = $value->Positions->Departments->id;
 								$names_dep[] = $value->Positions->Departments->dep_title;
+								$id_pos[] = $value->Positions->id;
+								$name_pos[] = $value->Positions->position_title;
+								$name_level = $value->branch_name;
+								$id_level = $value->id;
 
 							}
 							foreach ($dep_back as $keydep_back => $valuedep_back) { 
@@ -1627,38 +1671,59 @@ public function actionReportRegisterData()
 							}
 							$result_dep_in = array_unique( $name_dep );
 							$result_dep_not = array_unique( $name_dep_not );
+							$result_pos_in = array_unique( $id_pos );
+							$result_pos_not = array_unique( $name_pos );
 
 							$result_dep_in_name = array_unique( $names_dep );
 							$result_dep_not_name = array_unique( $names_dep_not );
-
 							foreach ($result_dep_not_name as $key => $value) {
 								array_push($result_dep_in_name,$value);
+
 							}
 							foreach ($result_dep_not as $key => $value) {
 								array_push($result_dep_in,$value);
 							}
+							if ($Department != "" ) {
+								foreach ($result_pos_in as $key => $value) {		
+									$criteria = new CDbCriteria;
+									$criteria->compare('position_id',$value);
+									if ($Year_start != null) {
+									$criteria->compare('YEAR(create_at)', $Year_start);
+									}
+									if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
 
-							foreach ($result_dep_in as $key => $value) {		
-								$criteria = new CDbCriteria;
-								$criteria->with = array('department');
-								$criteria->compare('department_id',$value);
-								if ($Year_start != null) {
-								$criteria->compare('YEAR(create_at)', $Year_start);
+										$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+									}
+									$criteria->compare('superuser',0);
+									$criteria->compare('del_status',0);
+
+									$users_count = Users::model()->findAll($criteria);
+									$count_dep = count($users_count);
+									$datas .= '["'.$result_pos_not[$key].'",'.$count_dep.',"'.$colorName[$key].'"],';
+
 								}
-								if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
 
-									$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+							}else{
+								foreach ($result_dep_in as $key => $value) {		
+									$criteria = new CDbCriteria;
+									$criteria->with = array('department');
+									$criteria->compare('department_id',$value);
+									if ($Year_start != null) {
+									$criteria->compare('YEAR(create_at)', $Year_start);
+									}
+									if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+										$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+									}
+									$criteria->compare('superuser',0);
+									$criteria->compare('del_status',0);
+
+									$users_count = Users::model()->findAll($criteria);
+									$count_dep = count($users_count);
+									$datas .= '["'.$result_dep_in_name[$key].'",'.$count_dep.',"'.$colorName[$key].'"],';
+
 								}
-								$criteria->compare('superuser',0);
-								$criteria->compare('del_status',0);
-
-								$users_count = Users::model()->findAll($criteria);
-								$count_dep = count($users_count);
-
-								$datas .= '["'.$result_dep_in_name[$key].'",'.$count_dep.',"'.$colorName[$key].'"],';
-
 							}
-
 							foreach ($result_dep_not as $key => $value) {		
 								$criteria = new CDbCriteria;
 								$criteria->with = array('department');
@@ -1680,56 +1745,50 @@ public function actionReportRegisterData()
 
 							}
 						
-						
-
-
 							$data_year_end = '["Element", "Division", { role: "style" } ],';
 							$colorName = Helpers::lib()->ColorCode();	
-					
-							foreach ($branch as $key => $value) { 	
-								$name_dep[] = $value->Positions->Departments->id;
-								$names_dep[] = $value->Positions->Departments->dep_title;
 
-							}
-							foreach ($dep_back as $keydep_back => $valuedep_back) { 
-								$name_dep_not[] = $valuedep_back->id;
-								$names_dep_not[] = $valuedep_back->dep_title;
-							}
-							$result_dep_in = array_unique( $name_dep );
-							$result_dep_not = array_unique( $name_dep_not );
+							if ($Department != "" ) {
+								foreach ($result_pos_in as $key => $value) {		
+									$criteria = new CDbCriteria;
+									$criteria->compare('position_id',$value);
+									if ($Year_end != null) {
+									$criteria->compare('YEAR(create_at)', $Year_end);
+									}
+									if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
 
-							$result_dep_in_name = array_unique( $names_dep );
-							$result_dep_not_name = array_unique( $names_dep_not );
+										$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+									}
+									$criteria->compare('superuser',0);
+									$criteria->compare('del_status',0);
 
-							foreach ($result_dep_not_name as $key => $value) {
-								array_push($result_dep_in_name,$value);
-							}
-							foreach ($result_dep_not as $key => $value) {
-								array_push($result_dep_in,$value);
-							}
+									$users_count = Users::model()->findAll($criteria);
+									$count_dep = count($users_count);
+									$data_year_end .= '["'.$result_pos_not[$key].'",'.$count_dep.',"'.$colorName[$key].'"],';
 
-							foreach ($result_dep_in as $key => $value) {		
-								$criteria = new CDbCriteria;
-								$criteria->with = array('department');
-								$criteria->compare('department_id',$value);
-								if($Year_end != null){
-								$criteria->compare('YEAR(create_at)', $Year_end);
 								}
-								if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
 
-									$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+							}else{
+								foreach ($result_dep_in as $key => $value) {		
+									$criteria = new CDbCriteria;
+									$criteria->with = array('department');
+									$criteria->compare('department_id',$value);
+									if ($Year_end != null) {
+									$criteria->compare('YEAR(create_at)', $Year_end);
+									}
+									if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+										$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+									}
+									$criteria->compare('superuser',0);
+									$criteria->compare('del_status',0);
+
+									$users_count = Users::model()->findAll($criteria);
+									$count_dep = count($users_count);
+									$data_year_end .= '["'.$result_dep_in_name[$key].'",'.$count_dep.',"'.$colorName[$key].'"],';
+
 								}
-								$criteria->compare('superuser',0);
-								$criteria->compare('del_status',0);
-
-								$users_count = Users::model()->findAll($criteria);
-								$count_dep = count($users_count);
-
-								$data_year_end .= '["'.$result_dep_in_name[$key].'",'.$count_dep.',"'.$colorName[$key].'"],';
-
-
 							}
-
 							foreach ($result_dep_not as $key => $value) {
 								$criteria = new CDbCriteria;
 								$criteria->with = array('department');
@@ -2082,9 +2141,90 @@ public function actionReportRegisterData()
 
 												
 									<?php
+								
+									foreach ($result_pos_in as $key => $value) {
+										$var_result[] = $value;
+									}		
+												$criteria = new CDbCriteria;
+												$criteria->compare('position_id',$var_result);
+												if ($Leval != "") {
+													$criteria->compare('branch_id',$id_level);
+												}
+												if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
 
+													$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+												}
+												$criteria->compare('superuser',0);
+												$criteria->compare('del_status',0);
+												$criteria->compare('status',1);
+												$criteria->compare('register_status',1);
+									
+											$users_br = Users::model()->findAll($criteria);
+											$total = count($users_br);
+
+									foreach ($pos_back as $keypos_back => $valuepos_back) { 
+									 		$position_pos[] = $valuepos_back->id;
+									 		$departments_pos[] = $valuepos_back->Departments->id;
+									}
+										$criteria = new CDbCriteria;
+										$criteria->compare('position_id',$position_pos);
+										$criteria->compare('department_id',$departments_pos);
+										if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+											$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+										}
+										$criteria->compare('superuser',0);
+										$criteria->compare('del_status',0);
+									if ($status != null) {
+
+											if ($status == "1") {
+												$criteria->compare('register_status',1);
+												$criteria->compare('status',1);
+											}
+											if($status == "0"){
+												if ($status != "1") {
+													$criteria->compare('register_status',0);
+													$criteria->compare('status',1);
+												}else{
+													$criteria->compare('register_status',0);
+													$criteria->compare('status',0);
+												} 
+												
+											}
+										}
+										$users_ps = Users::model()->findAll($criteria);
+										
+										$total_pos = count($users_ps);
+									foreach ($dep_back as $keydep_back => $valuedep_back) { 
+										$departments_dep[] = $valuedep_back->id;
+									}
+										$criteria = new CDbCriteria;
+										$criteria->compare('department_id',$departments_dep);
+										if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+											$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+										}
+										$criteria->compare('superuser',0);
+										$criteria->compare('del_status',0);
+										if($status != null){
+											$criteria->compare('status',$status);		
+										}
+										$users_dm = Users::model()->findAll($criteria);
+									
+										$total_dep = count($users_dm);
 									$i = 1;
 									$datatable .= '<div class="report-table">';
+									$datatable .= '<h4 style="text-align: right;">จำนวนคนสมัครทั้งหมด ';	
+									if ($TypeEmployee == 2 && $dep_back && $Department != "") {
+										$datatable .= $total_dep;
+									}else if($TypeEmployee == 2 && $branch && $Department != ""){
+										$datatable .= $total;
+									}else if($TypeEmployee == 1 && $pos_back){
+										$datatable .=  $total_pos;
+									}else if($TypeEmployee == 2 && $Department == ""){
+										$datatable .=  $total_dep + $total;
+									}
+									$datatable .= ' คน</h4>';
 									$datatable .= '<div class="table-responsive w-100 t-regis-language">';
 									$datatable .= '<table class="table">';       
 									$datatable .= '<thead>';
@@ -2094,7 +2234,9 @@ public function actionReportRegisterData()
 									$datatable .= '<th>Department</th>';
 									$datatable .= '<th>Position</th>';
 									if($TypeEmployee != 1){
-										$datatable .= '<th>Level</th>';
+										if ($Leval != "") {
+											$datatable .= '<th>Level</th>';
+										}
 									}
 									$datatable .= '<th>Number</th>';
 									if($TypeEmployee != 2){
@@ -2106,7 +2248,9 @@ public function actionReportRegisterData()
 									$datatable .= '<th>ฝ่าย</th>';
 									$datatable .= '<th>แผนก</th>';
 									if($TypeEmployee != 1){
+										if ($Leval != "") {
 										$datatable .= '<th>เลเวล</th>';
+										}
 									}
 									$datatable .= '<th>จำนวน</th>';
 									if($TypeEmployee != 2){
@@ -2118,67 +2262,91 @@ public function actionReportRegisterData()
 									$datatable .= '</thead>';
 									$datatable .= '<tbody>';
 									if (!empty($branch) || !empty($pos_back) || !empty($dep_back) ) {
-									if ($TypeEmployee == 2) {    
-										foreach ($branch as $key => $value) { 	
+									if ($TypeEmployee == 2) {   
+
+										// foreach ($branch as $key => $value) { }	
+
+											// $criteria = new CDbCriteria;
+											// $criteria->compare('branch_id',$value->id);
+											// $criteria->compare('position_id',$value->Positions->id);
+											// $criteria->compare('department_id',$value->Positions->Departments->id);
+											// if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+											// 	$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+											// }
+											// $criteria->compare('superuser',0);
+											// $criteria->compare('del_status',0);
+											// if($status != null){
+											// 	$criteria->compare('status',$status);		
+											// }
+											// $users = Users::model()->findAll($criteria);
+											foreach ($result_pos_in as $key => $value) {		
+												$criteria = new CDbCriteria;
+												$criteria->compare('position_id',$value);
+												if ($Leval != "") {
+													$criteria->compare('branch_id',$id_level);
+												}
+												if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+													$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+												}
+												$criteria->compare('superuser',0);
+												$criteria->compare('del_status',0);
+												$criteria->compare('status',1);
+												$criteria->compare('register_status',1);
+												$users_count = Users::model()->findAll($criteria);
+												$cou_use = count($users_count);									
 
 											$criteria = new CDbCriteria;
-											$criteria->compare('branch_id',$value->id);
-											$criteria->compare('position_id',$value->Positions->id);
-											$criteria->compare('department_id',$value->Positions->Departments->id);
+											$criteria->compare('position_id',$value);
+											if ($Leval != "") {
+													$criteria->compare('branch_id',$id_level);
+												}
 											if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
 
-												$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+													$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 											}
+											// if($Department){
+											// 	$criteria->compare('department_id',$Department);
+											// }
+											// if ($authority == 2 || $authority == 3) {
+											// 	$criteria->compare('department_id',$user_Department);
+											// }
+											// if ($Position != "") {
+											// 	if($Position){
+											// 		$criteria->compare('position_id',$Position);
+											// 	}
+											// }else{
+											// 	if ($authority == 2 || $authority == 3) {
+											// 		$criteria->compare('position_id',$user_Position);
+											// 	}
+											// }
+											// if($Leval != ""){
+											// if($Leval){
+											// 	$criteria->compare('branch_id',$Leval);
+											// }
+											// }else{
+											// 	if ($authority == 3) {
+											// 		$criteria->compare('branch_id',$user_Level);
+											// 	}
+											// }
 											$criteria->compare('superuser',0);
 											$criteria->compare('del_status',0);
-											if($status != null){
-												$criteria->compare('status',$status);		
-											}
-											$users = Users::model()->findAll($criteria);
-
-											$criteria = new CDbCriteria;
-											$criteria->select = 'id';
-
-											if($TypeEmployee){
-												$criteria->compare('type_employee',$TypeEmployee);
-											}
-											if($Department){
-												$criteria->compare('department_id',$Department);
-											}
-											if ($authority == 2 || $authority == 3) {
-												$criteria->compare('department_id',$user_Department);
-											}
-											if ($Position != "") {
-												if($Position){
-													$criteria->compare('position_id',$Position);
-												}
-											}else{
-												if ($authority == 2 || $authority == 3) {
-													$criteria->compare('position_id',$user_Position);
-												}
-											}
-											if($Leval != ""){
-											if($Leval){
-												$criteria->compare('branch_id',$Leval);
-											}
-											}else{
-												if ($authority == 3) {
-													$criteria->compare('branch_id',$user_Level);
-												}
-											}
-											$criteria->compare('superuser',0);
-											$criteria->compare('del_status',0);
-											$usersAll = Users::model()->findAll($criteria);
-									
-											$cou_use = count($users);
-
+											$criteria->compare('register_status',1);
+											$usersAll = Users::model()->findAll($criteria);		
 											$cou_useAll = count($usersAll);
-											$per_cen = ($cou_use / $cou_useAll) * 100; 
+											
+											$per_cen = ($cou_useAll * 100 ) / $cou_use; 
+										
 											$datatable .= '<tr>';
 											$datatable .= '<td>'.$i++.'</td>';
-											$datatable .= '<td>'.$value->Positions->Departments->dep_title.'</td>';
-											$datatable .= '<td>'.$value->Positions->position_title.'</td>';
-											$datatable .= '<td>'.$value->branch_name.'</td>';
+											$datatable .= '<td>'.$names_dep[$key].'</td>';
+											$datatable .= '<td>'.$result_pos_not[$key].'</td>';
+											if ($Leval != "") {
+												$datatable .= '<td>'.$name_level
+												.'</td>';
+											}
+											
 											$datatable .= '<td>'.$cou_use.'</td>';
 											if($TypeEmployee != 2){
 												if (Yii::app()->session['lang'] == 1) {		
@@ -2216,6 +2384,7 @@ public function actionReportRegisterData()
 											}
 											$datatable .= '</tr>';
 										}
+										
 									}
 
 									foreach ($pos_back as $keypos_back => $valuepos_back) { 	
@@ -2229,46 +2398,72 @@ public function actionReportRegisterData()
 										}
 										$criteria->compare('superuser',0);
 										$criteria->compare('del_status',0);
-										if($status != null){
-											$criteria->compare('status',$status);		
-										}
-										$users = Users::model()->findAll($criteria);
+										
+										if ($status != null) {
 
+											if ($status == "1") {
+												$criteria->compare('register_status',1);
+												$criteria->compare('status',1);
+											}
+											if($status == "0"){
+												if ($status != "1") {
+													$criteria->compare('register_status',0);
+													$criteria->compare('status',1);
+												}else{
+													$criteria->compare('register_status',0);
+													$criteria->compare('status',0);
+												} 
+												
+											}
+										}
+
+										$users = Users::model()->findAll($criteria);
+									
 										$criteria = new CDbCriteria;
-										$criteria->select = 'id';
-										if($TypeEmployee){
-												$criteria->compare('type_employee',$TypeEmployee);
-											}
-											if($Department){
-												$criteria->compare('department_id',$Department);
-											}
-											if ($authority == 2 || $authority == 3) {
-												$criteria->compare('department_id',$user_Department);
-											}
-											if ($Position != "") {
-												if($Position){
-													$criteria->compare('position_id',$Position);
-												}
-											}else{
-												if ($authority == 2 || $authority == 3) {
-													$criteria->compare('position_id',$user_Position);
-												}
-											}
-											if($Leval != ""){
-											if($Leval){
-												$criteria->compare('branch_id',$Leval);
-											}
-											}else{
-												if ($authority == 3) {
-													$criteria->compare('branch_id',$user_Level);
-												}
-											}
+										$criteria->compare('position_id',$valuepos_back->id);
+										$criteria->compare('department_id',$valuepos_back->Departments->id);
+										if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+											$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+										}
+										$criteria->compare('superuser',0);
+										$criteria->compare('del_status',0);
+										$criteria->compare('status',array(0,1));
+										$criteria->compare('register_status',array(0,1));
+										// $criteria->select = 'id';
+										// if($TypeEmployee){
+										// 		$criteria->compare('type_employee',$TypeEmployee);
+										// 	}
+										// 	if($Department){
+										// 		$criteria->compare('department_id',$Department);
+										// 	}
+										// 	if ($authority == 2 || $authority == 3) {
+										// 		$criteria->compare('department_id',$user_Department);
+										// 	}
+										// 	if ($Position != "") {
+										// 		if($Position){
+										// 			$criteria->compare('position_id',$Position);
+										// 		}
+										// 	}else{
+										// 		if ($authority == 2 || $authority == 3) {
+										// 			$criteria->compare('position_id',$user_Position);
+										// 		}
+										// 	}
+										// 	if($Leval != ""){
+										// 	if($Leval){
+										// 		$criteria->compare('branch_id',$Leval);
+										// 	}
+										// 	}else{
+										// 		if ($authority == 3) {
+										// 			$criteria->compare('branch_id',$user_Level);
+										// 		}
+										// 	}
 										$criteria->compare('superuser',0);
 										$usersAll = Users::model()->findAll($criteria);
 
 										$cou_use = count($users);
 										$cou_useAll = count($usersAll);
-										$per_cen = ($cou_use / $cou_useAll) * 100; 
+										$per_cen = ($cou_use * 100)/ $cou_useAll; 
 
 										$datatable .= '<tr>';
 										$datatable .= '<td>'.$i++.'</td>';
@@ -2326,54 +2521,62 @@ public function actionReportRegisterData()
 										}
 										$criteria->compare('superuser',0);
 										$criteria->compare('del_status',0);
-										if($status != null){
-											$criteria->compare('status',$status);		
-										}
+										$criteria->compare('status',1);
+										$criteria->compare('register_status',1);
 										$users = Users::model()->findAll($criteria);
 
-										$criteria = new CDbCriteria;
-										$criteria->select = 'id';
+										 $criteria = new CDbCriteria;
+										 $criteria->compare('department_id',$valuedep_back->id);
+										if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
 
-										if($TypeEmployee){
-												$criteria->compare('type_employee',$TypeEmployee);
-											}
-											if($Department){
-												$criteria->compare('department_id',$Department);
-											}
-											if ($authority == 2 || $authority == 3) {
-												$criteria->compare('department_id',$user_Department);
-											}
-											if ($Position != "") {
-												if($Position){
-													$criteria->compare('position_id',$Position);
-												}
-											}else{
-												if ($authority == 2 || $authority == 3) {
-													$criteria->compare('position_id',$user_Position);
-												}
-											}
-											if($Leval != ""){
-											if($Leval){
-												$criteria->compare('branch_id',$Leval);
-											}
-											}else{
-												if ($authority == 3) {
-													$criteria->compare('branch_id',$user_Level);
-												}
-											}
+											$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+										}
+									
+										// $criteria->select = 'id';
+
+										// if($TypeEmployee){
+										// 		$criteria->compare('type_employee',$TypeEmployee);
+										// 	}
+										// 	if($Department){
+										// 		$criteria->compare('department_id',$Department);
+										// 	}
+										// 	if ($authority == 2 || $authority == 3) {
+										// 		$criteria->compare('department_id',$user_Department);
+										// 	}
+										// 	if ($Position != "") {
+										// 		if($Position){
+										// 			$criteria->compare('position_id',$Position);
+										// 		}
+										// 	}else{
+										// 		if ($authority == 2 || $authority == 3) {
+										// 			$criteria->compare('position_id',$user_Position);
+										// 		}
+										// 	}
+										// 	if($Leval != ""){
+										// 	if($Leval){
+										// 		$criteria->compare('branch_id',$Leval);
+										// 	}
+										// 	}else{
+										// 		if ($authority == 3) {
+										// 			$criteria->compare('branch_id',$user_Level);
+										// 		}
+										// 	}
 										$criteria->compare('superuser',0);
 										$criteria->compare('del_status',0);
+										$criteria->compare('register_status',1);
 										$usersAll = Users::model()->findAll($criteria);
 
 										$cou_use = count($users);
 										$cou_useAll = count($usersAll);
-										$per_cen = ($cou_use / $cou_useAll) * 100; 
+										$per_cen = ($cou_useAll * 100)/ $cou_use;
 
 										$datatable .= '<tr>';
 										$datatable .= '<td>'.$i++.'</td>';
 										$datatable .= '<td>'.$valuedep_back->dep_title.'</td>';
 										$datatable .= '<td>-</td>';
+										if ($Leval != "") {
 										$datatable .= '<td>-</td>';
+										}
 										$datatable .= '<td>'.$cou_use.'</td>';
 										if($TypeEmployee != 2){
 												if (Yii::app()->session['lang'] == 1) {		
