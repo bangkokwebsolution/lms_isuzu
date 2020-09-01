@@ -64,7 +64,7 @@
    </div> 
    <div style="position:absolute; top: 173mm;">
      <div class="size14">
-        <?php echo $model['cert_text']; ?>
+        <?php echo nl2br($model['cert_text']); ?>
         <!-- This course is intended to provide with understanding of IMO 2020 Global Sulphur regulation and the ship implementation plan in accorddance with the regulation 14.1.3 of MARPOL Annex VI. -->
     </div>
 </div> 
@@ -115,7 +115,7 @@
    </div> 
    <div style="position:absolute; top: 185mm;">
      <div class="size14">
-        <?php echo $model['cert_text']; ?>
+        <?php echo nl2br($model['cert_text']); ?>
         <!-- This course is intended to provide with understanding of IMO 2020 Global Sulphur regulation and the ship implementation plan in accorddance with the regulation 14.1.3 of MARPOL Annex VI. -->
     </div>
 </div> 
@@ -165,7 +165,7 @@
 
 <div style="position:absolute; top: 132mm;">
    <div class="size12">
-    <?php echo $model['cert_text']; ?>
+    <?php echo nl2br($model['cert_text']); ?>
     <!-- This course is intended to provide with understanding of IMO 2020 Global Sulphur regulation and the ship implementation plan in accorddance with the regulation 14.1.3 of MARPOL Annex VI. -->
 </div>
 </div> 
