@@ -76,24 +76,26 @@ class AGridView extends CGridView
 					forcePlaceholderSize: true,
 			        update : function (event, ui) 
 			        {
+
 			            serial = $('.js-table-sortable').sortable('serialize', {key: 'items[]', attribute: 'class'});
 					    bootbox.confirm('ยืนยันการย้ายตำแหน่งหรือไม่ ?', function(result) 
 						{
-							if(!result) return false;
-				            $.ajax({
-				                'url': '$seq_path',
-				                'type': 'post',
-				                'data': serial,
-				                'success': function(data)
-				                {
-				                	jQuery('#$this->id').yiiGridView('update');
-				                	notyfy({dismissQueue: false,text: 'ย้ายตำแหน่งเรียบร้อย',type: 'success'});	
-				                },
-				                'error': function(request, status, error)
-				                {
-				                    notyfy({dismissQueue: false,text: 'เกิดข้อผิดพลาด',type: 'error'});	
-				                }
-				            });
+							if (result){
+					            $.ajax({
+					                'url': '$seq_path',
+					                'type': 'post',
+					                'data': serial,
+					                'success': function(data)
+					                {
+					                	jQuery('#$this->id').yiiGridView('update');
+					                	notyfy({dismissQueue: false,text: 'ย้ายตำแหน่งเรียบร้อย',type: 'success'});	
+					                },
+					                'error': function(request, status, error)
+					                {
+					                    notyfy({dismissQueue: false,text: 'เกิดข้อผิดพลาด',type: 'error'});	
+					                }
+					            });
+				       		 }
 						});
 						return false;
 			        },
