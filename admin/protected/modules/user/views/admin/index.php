@@ -150,10 +150,25 @@ EOD
 										// 		return $data->username;
 										// 	}
 										// ),
+										
+											array(
+											'header' => 'เลขประจำตัวบัตรประชาชน',
+											'name'=>'identification',
+											'type'=>'html',
+											'visible' => $this->route === "user/admin/General",
+											'value'=>function($data){
+												return $data->identification;
+											},
+											'filterHtmlOptions'=>array('style'=>'width:30px'),
+									
+
+										),
+									
 										array(
 											'header' => 'เลขพาสปอร์ต',
 											'name'=>'passport',
 											'type'=>'html',
+											'visible' => $this->route != "user/admin/General",
 											'value'=>function($data){
 												return $data->profile->passport;
 						            	//var_dump($data->profile->type_user);
@@ -167,6 +182,7 @@ EOD
 										array(
 											'header' => 'แผนก',
 											'type'=>'html',
+											'visible' => $this->route != "user/admin/General",
 											'value'=>function($data){
 												return $data->department->dep_title;
 											},
@@ -177,6 +193,7 @@ EOD
 										array(
 											'header' => 'ตำแหน่ง',
 											'type'=>'html',
+											'visible' => $this->route != "user/admin/General",
 											'value'=>function($data){
 												return $data->position->position_title;
 											},
