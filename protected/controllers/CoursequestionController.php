@@ -1017,7 +1017,8 @@ public function SendMailLearn($id){
         // $to['email'] = 'jojo99za@gmail.com';//'chalermpol.vi@gmail.com';
        $to['firstname'] = $modelUser->profile->firstname;
        $to['lastname'] = $modelUser->profile->lastname;
-       $subject = 'ผลการเรียน หลักสูตร  : ' . $modelCourseName->course_title;
+       // $subject = 'ผลการเรียน หลักสูตร  : ' . $modelCourseName->course_title;
+       $subject = 'Exams score\ ผลการทดสอบหลักสูตร  : ' . $modelCourseName->course_title;
 
        if($message){
          if(Helpers::lib()->SendMail($to, $subject, $message)){
