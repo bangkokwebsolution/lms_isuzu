@@ -156,9 +156,6 @@
 					<br>
 				<?php
 					} 
-				?>
-				
-			<?php
 			} 
 		?>
 		
@@ -173,6 +170,77 @@
 		<h4>Dear   : <span> <?= $modelUser->profile->firstname_en.' '.$modelUser->profile->lastname_en; ?></span></h4>
 		<h4>Course : <span><?= $modelCourseName->course_title ?> </span></h4>
 		<?php 
+		foreach ($learn as $key => $value) {
+			$checkLessonPass = Helpers::lib()->checkLessonPass($value->LessonMapper);
+			if($checkLessonPass == 'pass'){
+				$statusLearn = '<b>Pass</b>';
+			} else if($checkLessonPass == 'learning'){
+				$statusLearn = '<b>Not Pass</b>';
+			} else {
+				$statusLearn = '<b>Not Learn</b>';
+			}
+		?>
+		<h4>Chapter <span> <?= ($key+1) ?> </span> : <span>	<?= $value->LessonMapper->title ?> </span></h4>
+		<h4>Study Situation : <span class="<?= $checkLessonPass; ?>"> <?= $statusLearn; ?></span> </h4>
+		<!-- Pre test -->
+		<?php 
+		$criteria = new CDbCriteria;
+		$criteria->compare('lesson_id', $value->LessonMapper->id);
+		$criteria->compare('user_id',$user_id);
+		$criteria->compare('active','y');
+		$criteria->compare('type','pre');
+		$criteria->order = 'score_id';
+		$scorePre = Score::model()->findAll($criteria);
+		?>
+			<?php 
+				if($scorePre){
+					?>
+					<h4  class="prepost_test"><span>Pre Test score</span> </h4>
+					
+					<?php
+					foreach ($scorePre as $key => $scoreP) {
+						?>
+					<span class="exams-list">Pre Test <span class="passorno"> <?= ($key+1); ?> :  <?= ($scoreP->score_number); ?>/  <?= ($scoreP->score_total); ?> (<?= ($scoreP->score_past == "y")? 'Pass':'Fail' ?>)</span></span><br>
+						
+						<?php
+					}
+				}
+			 ?>
+
+		<?php 
+		$criteria = new CDbCriteria;
+		$criteria->compare('lesson_id', $value->LessonMapper->id);
+		$criteria->compare('user_id',$user_id);
+		$criteria->compare('active','y');
+		$criteria->compare('type','post');
+		$criteria->order = 'score_id';
+		$scorePosts = Score::model()->findAll($criteria);
+		?>
+			<?php 
+				if($scorePosts){
+					?>
+					<h4 class="prepost_test"><span>Test score</span> </h4>
+					<span class="exams-list">
+					<?php
+					foreach ($scorePosts as $key => $scorePost) {
+						?>
+					<span class="exams-list">Test   <span class="passorno"><?= ($key+1); ?> :  <?= ($scorePost->score_number); ?>/  <?= ($scorePost->score_total); ?> (<?= ($scorePost->score_past == "y")? 'Pass':'Fail' ?>)</span></span><br>
+						
+						<?php
+					}
+				}
+			 ?>
+
+		<?php } ?>
+
+
+
+
+
+
+
+
+		<?php 
 		if($score_course){
 			?>
 <h4  class="prepost_test"><span>Exams score</span></h4>
@@ -182,9 +250,8 @@
 Test  <span class="passorno"><?= ($key+1); ?> :  <?= ($scoreC->score_number); ?>/ <?= ($scoreC->score_total); ?> [<?= ($scoreC->score_past == "y")? 'Pass':'Fail' ?>]</span>
 </span>
 <br>
-<?php }  ?>
-
-<?php }  ?>
+<?php }  
+}  ?>
 
 </div>
 	</body>
