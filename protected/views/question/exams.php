@@ -344,9 +344,16 @@ $arr = json_decode($real);
 		}
 
 		if (evnt == 'save') {
+
+			if(<?= Yii::app()->session['lang'] ?> == 2){
+				var title_swal = "ยืนยันเพื่อส่งคำตอบ";
+			}else{
+				var title_swal = "Confirm";
+			}
+
 			swal({
-				title: "ยืนยันเพื่อส่งคำตอบ",
-				text: "(กรุณาตรวจสอบคำตอบของท่านอีกครั้ง !!)",
+				title: title_swal,
+				// text: "(กรุณาตรวจสอบคำตอบของท่านอีกครั้ง !!)",
 				type: "warning",
 				showCancelButton: true,
 				confirmButtonColor: "#DD6B55",
