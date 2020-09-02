@@ -462,13 +462,34 @@ chart.draw(data, options);
                 </h3>    
             </center>
         </li>
+            <div class="row">
+            <div class="col-md-12 text-right" style="padding-right: 47px;">
+                <p style="font-size: 18px; margin-bottom: 0px;">
+                    <?php 
+                    if(Yii::app()->session['lang'] != 1){
+                        echo "จำนวน ";
+                    }else{
+                        echo "";
+                    }
+                    
+                    echo count($model_search_graph);
+
+                    if(Yii::app()->session['lang'] != 1){
+                        echo " หลักสูตร";
+                    }else{
+                        echo " course";
+                    }
+                    ?>              
+                </p>
+            </div>
+        </div>
         <div id="div_graph" style="display: none;">
                <div id="chart_graph"></div> 
                <div id="result_search_graph"></div> 
         </div>
         <div id="result_search"> <!-- export excel -->            
         <div class="report-table">
-            <div class="table-responsive w-100 t-regis-language">
+            <div class="table-responsive w-100 t-regis-language" style="padding-top: 10px;">
                 <table class="table" id="table_list">
                     <thead>
                         <tr style="background-color: #010C65; color: #fff;">
