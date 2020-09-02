@@ -391,6 +391,7 @@ echo ($data);
 		} else {
 			$model->status = 0;
 		}
+		$model->username = $Profile->passport;
 		$model->save(false);
 		if(Yii::app()->user->id){
 						Helpers::lib()->getLogapprove($model);
