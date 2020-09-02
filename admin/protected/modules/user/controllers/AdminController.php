@@ -172,10 +172,11 @@ echo ($data);
 	{
 		$model = new User('search');
         $model->unsetAttributes();  // clear any default values
-        //$model->typeuser = array(1);
-        $model->register_status = 0;
+       // $model->typeuser = array(1);
+        $model->register_status = array(0);
         $model->status = array(1);
-        $model->supper_user_status = false;
+       $model->supper_user_status = false;
+
         if(isset($_GET['User'])){
         	$model->attributes=$_GET['User'];
         }
@@ -520,8 +521,8 @@ echo ($data);
     	$passage = $_POST['passInput'];
 		$model = User::model()->findByPk($id);
 		if($model->status == 1 && $model->register_status == 0){
-			$model->status = 0;
-			$model->register_status = 3;
+			$model->status = 1;
+			$model->register_status = 0;
 		} else {
 			$model->status = 1;
 		}
