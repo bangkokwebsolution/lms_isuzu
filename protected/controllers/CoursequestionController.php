@@ -880,7 +880,11 @@ class CoursequestionController extends Controller
                     }
                 }
             } else {
+                if(Yii::app()->session['lang'] == 2){
                 Yii::app()->user->setFlash('CheckQues',$label->label_alert_error);
+            }else{
+                Yii::app()->user->setFlash('CheckQues', "error");
+            }
                 Yii::app()->user->setFlash('class', "error");
 
                 $this->redirect(array('//course/detail', 'id' => $id));
