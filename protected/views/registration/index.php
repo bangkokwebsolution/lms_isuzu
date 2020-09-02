@@ -3273,7 +3273,7 @@ $count_tn = 1;
                     $criteria->order = 'sortOrder ASC';
                     $departmentModel = Department::model()->findAll($criteria);
                     $departmentList = CHtml::listData($departmentModel, 'id', 'dep_title');
-                    $departmentOption = array('class' => 'form-control department_gen', 'empty' => $label->label_placeholder_company, 'name' => 'department_gen', 'disabled' => $users->isNewRecord == true? false : true);
+                    $departmentOption = array('class' => 'form-control department_gen', 'empty' => $label->label_placeholder_position, 'name' => 'department_gen', 'disabled' => $users->isNewRecord == true? false : true);
                     ?>
                     <?php
                     echo $form->dropDownList($users, 'department_id', $departmentList, $departmentOption);
@@ -3306,7 +3306,7 @@ $count_tn = 1;
                <?php
                $positionLists = CHtml::listData($position_ship, 'id', 'position_title');
 
-               $positiontOption = array('class' => 'form-control position_gen ', 'empty' => $label->label_placeholder_position, 'name' => 'position_gen', 'disabled' => $users->isNewRecord == true? false : true);
+               $positiontOption = array('class' => 'form-control position_gen ', 'empty' => Yii::app()->session['lang'] == 1?'Select Position ':'เลือกตำแหน่ง', 'name' => 'position_gen', 'disabled' => $users->isNewRecord == true? false : true);
                ?>
                <?php echo $form->dropDownList($users, 'position_id', $positionLists, $positiontOption); ?>
                <?php echo $form->error($users, 'position_id', array('class' => 'error2')); ?>
@@ -4726,14 +4726,16 @@ var new_forms = <?php echo $new_form; ?>;
 
                 $(".department").change(function() {
                     var id = $(".department").val();
+                    var type_users = $("input[name='type_user']:checked").val();
                     $.ajax({
                         type: 'POST',
                         url: "<?= Yii::app()->createUrl('Registration/ListPosition'); ?>",
                         data: {
-                            id: id
+                            id: id,
+                            type_users: type_users,
                         },
                         success: function(data) {
-                           // console.log(data);
+                            // console.log(data);
                             // if (data === '<option value ="">Select Pocition </option>' || data === '<option value ="">เลือกตำแหน่ง</option>') {
                             // $('.position').hide();
                             // $('.label_position').hide();
@@ -4750,14 +4752,16 @@ var new_forms = <?php echo $new_form; ?>;
                 });
                 $(".department_gen").change(function() {
                     var id = $(this).val();
+                    var type_users = $("input[name='type_user']:checked").val();
                     $.ajax({
                         type: 'POST',
                         url: "<?= Yii::app()->createUrl('Registration/ListPosition'); ?>",
                         data: {
-                            id: id
+                            id: id,
+                            type_users: type_users,
                         },
                         success: function(data) {
-                           // console.log(data);
+                            console.log(data);
 
                             $('.position_gen').empty();
                             $('.position_gen').append(data);

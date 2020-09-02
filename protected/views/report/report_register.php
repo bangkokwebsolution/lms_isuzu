@@ -50,7 +50,7 @@
                                         <option value="" selected disabled> <?= Yii::app()->session['lang'] == 1?'Select type':'เลือกประเภท'; ?></option>
                                         <?php
                                         if ($authority == 2 && $type_em == 1) { ?>
-                                            <option value="1" selected> <?= Yii::app()->session['lang'] == 1?'MASTER / CAPTAIN':'คนเรือ'; ?></option>
+                                            <option value="1" selected> <?= Yii::app()->session['lang'] == 1?'SHIP':'คนเรือ'; ?></option>
                                        <?php
                                         }
                                         if ($authority == 2 && $type_em == 2) {
@@ -58,7 +58,7 @@
                                         <option value="2" selected> <?= Yii::app()->session['lang'] == 1?'Office':'คนออฟฟิศ'; ?></option>
                                         <?php
                                         }else if($authority == 1){ ?>
-                                            <option value="1" > <?= Yii::app()->session['lang'] == 1?'MASTER / CAPTAIN':'คนเรือ'; ?></option>
+                                            <option value="1" > <?= Yii::app()->session['lang'] == 1?'SHIP':'คนเรือ'; ?></option>
                                             <option value="2" > <?= Yii::app()->session['lang'] == 1?'Office':'คนออฟฟิศ'; ?></option>
                                        <?php
                                         }

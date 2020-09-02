@@ -2285,7 +2285,12 @@ public function actionListPosition(){
 
    $data=CHtml::listData($model,'id','position_title',array('empty' => 'ตำแหน่ง'));
    if ($data) {
-       $sub_list = Yii::app()->session['lang'] == 1?'Select Pocition ':'เลือกตำแหน่ง';
+    if ($_POST['type_users'] == "1") {
+        $sub_list = Yii::app()->session['lang'] == 1?'Select Position ':'เลือกตำแหน่ง';
+    }else{
+        $sub_list = Yii::app()->session['lang'] == 1?'Select Department ':'เลือกแผนก';
+    }
+       
        $data = '<option value ="">'.$sub_list.'</option>';
        foreach ($model as $key => $value) {
         $data .= '<option value = "'.$value->id.'"'.'>'.$value->position_title.'</option>';
