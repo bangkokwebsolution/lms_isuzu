@@ -743,8 +743,10 @@ public function actionReset_university()
         $user_id = $_POST['id'];
         $lesson = json_decode($_POST['checkedList']);
         $reset_type = $_POST['reset_type'];
-        $courseMsg = 'ผู้ดูแลระบบ ทำการ Reset ข้อมูลการเรียนบทเรียนต่อไปนี้ <br>';
-         
+        // $courseMsg = 'ผู้ดูแลระบบ ทำการ Reset ข้อมูลการเรียนบทเรียนต่อไปนี้ <br>';
+        $courseMsg = "";
+        $courseMsg_en = "";
+
         foreach ($lesson as $key => $value) {
             $val = array();
             $val = explode(",", $value);
@@ -826,22 +828,34 @@ public function actionReset_university()
 
             $lessonS = Lesson::model()->findByPk($lesson_id);
             $courseMsg .= ($key+1).". <b>หลักสูตร : </b> ".$lessonS->courseonlines->course_title.'<br> <b>บทเรียน : </b>'.$lessonS->title.'<br>';
+            $courseMsg_en .= ($key+1).". <b>Course : </b> ".$lessonS->courseonlines->course_title.'<br> <b>Chapter : </b>'.$lessonS->title.'<br>';
         }
 
         if(Yii::app()->user->id){
             Helpers::lib()->getControllerActionId();
         }
 
-        $courseMsg .= '<br><span style="color:red">สาเหตุ : '.$_POST['description'].'</span>';
+        $courseMsg .= '<span style="color:red">สาเหตุ : '.$_POST['description'].'</span>';
+        $courseMsg_en .= '<span style="color:red">Reason : '.$_POST['description'].'</span>';
         $model = Users::model()->findByPk($user_id);
         $to['email'] = $model->email;
         $to['firstname'] = $model->profiles->firstname;
         $to['lastname'] = $model->profiles->lastname;
-        $subject = 'แจ้งเตือน ระบบ reset การเรียน';
-        $message = "หัวช้อ : แจ้งเตือนระบบ reset <br> <br>";
-        $message .= "เรียน ".$model->profiles->firstname." ".$model->profiles->lastname."<br> <br>";
-        $message .= "<div style=\"text-indent: 4em;\">";
-        $message .= $courseMsg."</div>";
+        $subject = 'Study reset system\ ระบบการแจ้งเตือน Reset การเรียน';
+        $message = "เรื่อง : แจ้งเตือนการ Reset การเรียน <br>";
+        $message .= "เรียน ".$model->profiles->firstname." ".$model->profiles->lastname."<br>";
+        $message .= "ผู้ดูแลระบบดำเนินการ Reset การเรียนของหลักสูตรดังต่อไปนี้ <br>";
+        // $message .= "<div style=\"text-indent: 4em;\">";
+        $message .= $courseMsg;
+
+    $message .= "<br>Subject: Study reset notification.<br>";
+    $message .= "Dear: ".$model->profiles->firstname_en." ".$model->profiles->lastname_en."<br>";
+    $message .= "The administrator has performs a reset of course study as follows.<br>";
+    // $message .= "<div style=\"text-indent: 4em;\">";
+    $message .= $courseMsg_en;
+
+
+
         $send = Helpers::lib()->SendMail($to,$subject,$message);
 
         echo $reset_type;
@@ -1005,8 +1019,8 @@ $subject = 'Exams reset system\ ระบบการแจ้งเตือน
 $message = "เรื่อง : แจ้งเตือนการ Reset ผลการทดสอบ <br>";
 $message .= "เรียน: ".$model->profiles->firstname." ".$model->profiles->lastname."<br>";
 $message .= "ผู้ดูแลระบบดำเนินการ Reset ผลการทดสอบหลักสูตรดังต่อไปนี้ <br>";
-$message .= "<div style=\"text-indent: 4em;\">";
-$message .= $courseMsg."</div>";
+// $message .= "<div style=\"text-indent: 4em;\">";
+$message .= $courseMsg;
 
 //eng
 $message .= "<br> Subject: Exams reset notification. <br>";
