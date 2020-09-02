@@ -880,7 +880,9 @@ public function actionReset_university()
     $user_id = $_POST['id'];
     $courseData = json_decode($_POST['checkedList']);
     $reset_type = $_POST['reset_type'];
-    $courseMsg = 'ผู้ดูแลระบบ ทำการ Reset ผลสอบวัดผลหลักสูตรต่อไปนี้ <br>';
+    // $courseMsg = 'ผู้ดูแลระบบ ทำการ Reset ผลสอบวัดผลหลักสูตรต่อไปนี้ <br>';
+    $courseMsg = "";
+    $courseMsg_en = "";
 
     foreach ($courseData as $key => $value) {
         $ex = explode("_", $value);
@@ -984,6 +986,9 @@ public function actionReset_university()
 
         $courseName = CourseOnline::model()->findByPk($value);
         $courseMsg .= ($key+1)." หลักสูตร : ".$courseName->course_title.'<br>';
+        $courseMsg_en .= ($key+1)." Course : ".$courseName->course_title.'<br>';
+
+
 
  } // foreach coursedata
 
@@ -991,16 +996,27 @@ public function actionReset_university()
     Helpers::lib()->getControllerActionId();
 }
 
-$courseMsg .= '<br><span style="color:red">สาเหตุ : '.$_POST['description'].'</span>';
+$courseMsg .= '<span style="color:red">สาเหตุ : '.$_POST['description'].'</span>';
 $model = Users::model()->findByPk($user_id);
 $to['email'] = $model->email;
 $to['firstname'] = $model->profiles->firstname;
 $to['lastname'] = $model->profiles->lastname;
-$subject = 'แจ้งเตือน ระบบ reset สอบวัดผล';
-$message = "หัวช้อ : แจ้งเตือนระบบ reset <br> <br>";
-$message .= "เรียน ".$model->profiles->firstname." ".$model->profiles->lastname."<br> <br>";
+$subject = 'Exams reset system\ ระบบการแจ้งเตือน Reset ผลการทดสอบ';
+$message = "เรื่อง : แจ้งเตือนการ Reset ผลการทดสอบ <br>";
+$message .= "เรียน: ".$model->profiles->firstname." ".$model->profiles->lastname."<br>";
+$message .= "ผู้ดูแลระบบดำเนินการ Reset ผลการทดสอบหลักสูตรดังต่อไปนี้ <br>";
 $message .= "<div style=\"text-indent: 4em;\">";
 $message .= $courseMsg."</div>";
+
+//eng
+$message .= "<br> Subject: Exams reset notification. <br>";
+$message .= "Dear: ".$model->profiles->firstname_en." ".$model->profiles->lastname_en."<br>";
+$message .= "The administrator has performs a reset of course exams as follows. <br>";
+$message .= $courseMsg_en;
+$message .= '<span style="color:red">Reason : '.$_POST['description'].'</span>';
+
+
+
 $send = Helpers::lib()->SendMail($to,$subject,$message);
 
 echo $reset_type;
