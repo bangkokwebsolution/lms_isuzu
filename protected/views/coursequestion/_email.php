@@ -148,13 +148,16 @@
 		if($score_course){
 			?>
 			<h4  class="prepost_test"><span>ผลการทดสอบหลักสูตร</span></h4>
-			<span class="exams-list">
+			
 				<?php foreach ($score_course as $key => $scoreC) { ?>
-					ผลทดสอบครั้งที่  <span class="passorno"><?= ($key+1); ?> :  <?= ($scoreC->score_number); ?>/ <?= ($scoreC->score_total); ?> [<?= ($scoreC->score_past == "y")? 'ผ่าน':'ไม่ผ่าน' ?>]</span><br>
+					<span class="exams-list">
+					ผลทดสอบครั้งที่  <span class="passorno"><?= ($key+1); ?> :  <?= ($scoreC->score_number); ?>/ <?= ($scoreC->score_total); ?> [<?= ($scoreC->score_past == "y")? 'ผ่าน':'ไม่ผ่าน' ?>]</span>
+					</span>
+					<br>
 				<?php
 					} 
 				?>
-				</span>
+				
 			<?php
 			} 
 		?>
@@ -172,18 +175,17 @@
 		<?php 
 		if($score_course){
 			?>
-			<h4  class="prepost_test"><span>Exams score</span></h4>
-			<span class="exams-list"><?php foreach ($score_course as $key => $scoreC) {
-				?>
-			Test  <span class="passorno"><?= ($key+1); ?> :  <?= ($scoreC->score_number); ?>/ <?= ($scoreC->score_total); ?> [<?= ($scoreC->score_past == "y")? 'Pass':'Fail' ?>]</span><br>
-			<?php
-		} 
-		?>
-		</span>
-		<?php
-	} 
-	?>
+<h4  class="prepost_test"><span>Exams score</span></h4>
 
-		</div>
+<?php foreach ($score_course as $key => $scoreC) { ?>
+<span class="exams-list">
+Test  <span class="passorno"><?= ($key+1); ?> :  <?= ($scoreC->score_number); ?>/ <?= ($scoreC->score_total); ?> [<?= ($scoreC->score_past == "y")? 'Pass':'Fail' ?>]</span>
+</span>
+<br>
+<?php }  ?>
+
+<?php }  ?>
+
+</div>
 	</body>
 	</html>
