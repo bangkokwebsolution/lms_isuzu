@@ -285,7 +285,7 @@ class User extends CActiveRecord
                 'condition'=>'superuser=1',
             ),
             'notsafe'=>array(
-            	'select' => 'id, username, password, department_id, pic_user, email, activkey, create_at, superuser, status, report_authority, online_status,online_user,station_id,company_id, division_id,position_id,orgchart_lv2,pic_cardid2,employee_id,repass_status,branch_id',
+            	'select' => 'id, username, password, department_id, pic_user, email, activkey, create_at, superuser, status, report_authority, online_status,online_user,station_id,company_id, division_id,position_id,orgchart_lv2,pic_cardid2,employee_id,repass_status,branch_id, register_status',
             ),
         );
     }
@@ -299,7 +299,7 @@ class User extends CActiveRecord
 
     	return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
     		'alias'=>'user',
-    		'select' => 'user.id, user.username, user.pic_user, user.department_id,user.station_id,user.company_id, user.division_id,user.position_id, user.branch_id,user.auditor_id,user.bookkeeper_id, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.online_status, user.online_user, user.pic_cardid,lastactivity,user.avatar,user.employee_id,user.repass_status, report_authority',
+    		'select' => 'user.id, user.username, user.pic_user, user.department_id,user.station_id,user.company_id, user.division_id,user.position_id, user.branch_id,user.auditor_id,user.bookkeeper_id, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.online_status, user.online_user, user.pic_cardid,lastactivity,user.avatar,user.employee_id,user.repass_status, register_status, report_authority',
     	));
     }
 
