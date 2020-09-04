@@ -111,8 +111,8 @@ $user_Department = $user_login->department_id;
 	$result_dep_arr = array_unique( $posback_arr );
 
 	$criteria = new CDbCriteria;
-	$criteria->with = array('profile');
-	$criteria->compare('department_id',$result_dep_arr);
+	$criteria->with = array('profile','department','position');
+	$criteria->compare('user.department_id',$result_dep_arr);
 	$criteria->compare('superuser',0);
 	$criteria->compare('del_status',0);
 	if ($status == "1") {
@@ -134,6 +134,7 @@ $user_Department = $user_login->department_id;
 	}else{
 		$criteria->compare('position_id',$result_pos_arr);	
 	}
+	$criteria->order = 'position.sortOrder ASC';
 	$User = User::model()->findAll($criteria);
  if ($Year_start == "" && $Year_end == "") {
  
@@ -204,7 +205,7 @@ $user_Department = $user_login->department_id;
 								<?php
 								if (Yii::app()->session['lang'] == 1) { ?>
 									<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">
-									<?php if ($valuepos_back->status == 1) { ?>
+									<?php if ($valuepos_back->status == 1 && $valuepos_back->register_status == 1) { ?>
 										<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approve</span>
 									<?php }else{ ?>
 										<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>
@@ -212,7 +213,7 @@ $user_Department = $user_login->department_id;
 								</td>
 								<?php }else{ ?>
 									<td class="text-center" style="border:1px solid #d8d8d8; padding: 8px;">
-									<?php if ($valuepos_back->status == 1) { ?>
+									<?php if ($valuepos_back->status == 1 && $valuepos_back->register_status == 1) { ?>
 										<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>
 									<?php }else{ ?>
 										<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>

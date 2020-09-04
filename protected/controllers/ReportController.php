@@ -840,18 +840,11 @@ public function actionReportRegisterOfficeExcel()
 			$result_dep_arr = array_unique( $posback_arr );
 
 			$criteria = new CDbCriteria;
-			$criteria->with = array('profile','department');
-			$criteria->compare('department_id',$result_dep_arr);
+			$criteria->with = array('profile','department','position');
+			$criteria->compare('user.department_id',$result_dep_arr);
 			$criteria->compare('superuser',0);
 			$criteria->compare('del_status',0);
-			// if ($status == "1") {
-			// 	$criteria->compare('status',1);
-			// }
-			// if($status == "0"){
-			// 	$criteria->compare('status',0);
-			// }else if($status == ""){
-			// 	$criteria->compare('status',array(0,1));
-			// }
+
 			if ($status != null) {
 
 				if ($status == "1") {
@@ -880,7 +873,7 @@ public function actionReportRegisterOfficeExcel()
 			}else{
 				$criteria->compare('position_id',$result_pos_arr);	
 			}
-			$criteria->order = 'department.sortOrder ASC';
+			$criteria->order = 'position.sortOrder ASC';
 			$User = User::model()->findAll($criteria);
 
 			if (!empty($pos)) {
@@ -902,13 +895,30 @@ public function actionReportRegisterOfficeExcel()
 					if ($authority == 2 || $authority == 3) {
 						$criteria->compare('department_id',$user_Department);
 					}
+					// if ($status == "1") {
+					// $criteria->compare('status',1);
+					// }
+					// if($status == "0"){
+					// 	$criteria->compare('status',0);
+					// }else if($status == ""){
+					// 	$criteria->compare('status',array(0,1));
+					// }
+					if ($status != null) {
+
 					if ($status == "1") {
-					$criteria->compare('status',1);
+						$criteria->compare('register_status',1);
+						$criteria->compare('status',1);
 					}
-					if($status == "0"){
-						$criteria->compare('status',0);
-					}else if($status == ""){
-						$criteria->compare('status',array(0,1));
+						if($status == "0"){
+							if ($status != "1") {
+								$criteria->compare('register_status',0);
+								$criteria->compare('status',1);
+							}else{
+								$criteria->compare('register_status',0);
+								$criteria->compare('status',0);
+							} 
+														
+						}
 					}
 					$criteria->compare('superuser',0);
 					$criteria->compare('del_status',0);
@@ -947,13 +957,30 @@ public function actionReportRegisterOfficeExcel()
 					if ($authority == 2 || $authority == 3) {
 						$criteria->compare('department_id',$user_Department);
 					}
+					// if ($status == "1") {
+					// 	$criteria->compare('status',1);
+					// }
+					// if($status == "0"){
+					// 	$criteria->compare('status',0);
+					// }else if($status == ""){
+					// 	$criteria->compare('status',array(0,1));
+					// }
+					if ($status != null) {
+
 					if ($status == "1") {
+						$criteria->compare('register_status',1);
 						$criteria->compare('status',1);
 					}
-					if($status == "0"){
-						$criteria->compare('status',0);
-					}else if($status == ""){
-						$criteria->compare('status',array(0,1));
+						if($status == "0"){
+							if ($status != "1") {
+								$criteria->compare('register_status',0);
+								$criteria->compare('status',1);
+							}else{
+								$criteria->compare('register_status',0);
+								$criteria->compare('status',0);
+							} 
+														
+						}
 					}
 					$criteria->compare('superuser',0);
 					$criteria->compare('del_status',0);
@@ -1349,8 +1376,9 @@ public function actionReportRegisterOfficeExcel()
 
 								$datatable .= '</td>';
 								if (Yii::app()->session['lang'] == 1) {
+									
 										$datatable .= '<td>';
-									if ($valuepos_back->status == 1) {
+									if ($valuepos_back->status == 1 && $valuepos_back->register_status == 1) {
 										$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approve</span>';
 									}else{
 										$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
@@ -1358,7 +1386,7 @@ public function actionReportRegisterOfficeExcel()
 									$datatable .= '</td>';
 								}else{
 										$datatable .= '<td>';
-									if ($valuepos_back->status == 1) {
+									if ($valuepos_back->status == 1 && $valuepos_back->register_status == 1) {
 										$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
 									}else{
 										$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
@@ -2409,13 +2437,14 @@ public function actionReportRegisterData()
 									}
 
 									foreach ($pos_back as $keypos_back => $valuepos_back) { 	
-
+										
 										$criteria = new CDbCriteria;
 										$criteria->with = array('profile');
 										$criteria->compare('profile.type_employee',$TypeEmployee);
 										$criteria->compare('position_id',$valuepos_back->id);
 										$criteria->compare('department_id',$valuepos_back->Departments->id);
 										if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
 
 											$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 										}
@@ -2441,7 +2470,7 @@ public function actionReportRegisterData()
 										}
 
 										$users = Users::model()->findAll($criteria);
-								
+							
 										$criteria = new CDbCriteria;
 										$criteria->compare('position_id',$valuepos_back->id);
 										$criteria->compare('department_id',$valuepos_back->Departments->id);
@@ -2503,7 +2532,7 @@ public function actionReportRegisterData()
 												if (Yii::app()->session['lang'] == 1) {		
 												$datatable .= '<td>';
 													if($cou_use > 0){
-														if ($status == 1) {
+														if ($status == 1 ) {
 															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approve</span>';
 														}else{
 															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
@@ -2516,7 +2545,7 @@ public function actionReportRegisterData()
 												}else{
 												$datatable .= '<td>';
 													if($cou_use > 0){
-														if ($status == 1) {
+														if ($status == 1 ) {
 															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
 														}else{
 															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
