@@ -182,7 +182,11 @@ class QuestionController extends Controller
         $gen_id = $lesson->CourseOnlines->getGenID($lesson->course_id);
 
         if (!Helpers::lib()->CheckBuyItem($lesson->course_id, false)) {
-            Yii::app()->user->setFlash('CheckQues',$label->label_alert_error);
+            if(Yii::app()->session['lang'] == 2){
+                Yii::app()->user->setFlash('CheckQues',$label->label_alert_error);
+            }else{
+                Yii::app()->user->setFlash('CheckQues', "error");
+            }
             Yii::app()->user->setFlash('class','error');
 
             $this->redirect(array('//course/detail', 'id' => $lesson->course_id, 'lesson_id' => $id,
@@ -914,7 +918,11 @@ class QuestionController extends Controller
                 }
             }
         } else {
-            Yii::app()->user->setFlash('CheckQues',$label->label_alert_error);
+            if(Yii::app()->session['lang'] == 2){
+                Yii::app()->user->setFlash('CheckQues',$label->label_alert_error);
+            }else{
+                Yii::app()->user->setFlash('CheckQues', "error");
+            }
             Yii::app()->user->setFlash('class','error');
 
             $this->redirect(array('//course/detail', 'id' => $lesson->course_id, 'lesson_id' => $id));
