@@ -302,7 +302,7 @@ $user_Department = $user_login->department_id;
 									
 										$total_dep = count($users_dm);
 				?>
-				<h4 style="text-align: right;">จำนวนคนสมัครทั้งหมด
+				<p style="text-align: right;">จำนวนคนสมัครทั้งหมด<span style="font-weight:bold;">
 					<?php
 						if ($data['TypeEmployee'] == 2 && $dep_back && $data['Department'] != "") {
 										echo $total_dep;
@@ -315,7 +315,7 @@ $user_Department = $user_login->department_id;
 									}
 
 					?>
-				คน</h4>
+				</span>คน</p>
 				<div class="table-responsive w-100 t-regis-language">
 					<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 100%;	">     
 						<thead>
@@ -323,15 +323,19 @@ $user_Department = $user_login->department_id;
 								<?php
 								if (Yii::app()->session['lang'] == 1) { ?>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">No.</th>
+								<?php if($data['TypeEmployee'] != 1){ ?>
+								<th style="border:1px solid #d8d8d8; padding: 8px;">Division</th>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">Department</th>
-								<th style="border:1px solid #d8d8d8; padding: 8px;">Position</th>
-								<?php if($data['TypeEmployee'] != 1){ 
+								<?php
 									if ($Leval != "") {
 									?>
 									<th style="border:1px solid #d8d8d8; padding: 8px;">Level</th>
 								<?php 
 									}
-								} ?>
+								}else{ ?>
+								<th style="border:1px solid #d8d8d8; padding: 8px;">Department</th>
+								<th style="border:1px solid #d8d8d8; padding: 8px;">Position</th>
+								<?php } ?>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">Number</th>
 								<?php if($data['TypeEmployee'] != 2){ ?>
 									<th style="border:1px solid #d8d8d8; padding: 8px;">Total number</th>
@@ -340,13 +344,17 @@ $user_Department = $user_login->department_id;
 								<th style="border:1px solid #d8d8d8; padding: 8px;">Percent</th>
 								<?php }else{ ?>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">ลำดับ</th>
+								<?php if($data['TypeEmployee'] != 1){ ?>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">ฝ่าย</th>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">แผนก</th>
-								<?php if($data['TypeEmployee'] != 1){ 
+								<?php
 									if ($Leval != "") { ?>
 									<th style="border:1px solid #d8d8d8; padding: 8px;">เลเวล</th>									
 								<?php }
-								} ?>
+								}else{ ?>
+									<th style="border:1px solid #d8d8d8; padding: 8px;">แผนก</th>
+								<th style="border:1px solid #d8d8d8; padding: 8px;">ตำแหน่ง</th>
+								<?php } ?>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">จำนวน</th>
 								<?php if($data['TypeEmployee'] != 2){ ?>
 									<th style="border:1px solid #d8d8d8; padding: 8px;">สมัครทั้งหมด</th>
@@ -641,13 +649,13 @@ $user_Department = $user_login->department_id;
 									</tr>
 
 								<?php }  
-								if ($TypeEmployee != 2) { ?>
-										<tr>
-											<td><?php echo Yii::app()->session['lang'] == 1?"Total":"รวม"; ?></td>
+								if ($data['TypeEmployee'] != 2) { ?>
+										<tr style="border:2px solid #8B8386;">
+											<td class="text-center"><span style="font-weight:bold;"><?php echo Yii::app()->session['lang'] == 1?"Total":"รวม"; ?></span></td>
 											<td></td>
 											<td></td>
 											<td></td>
-											<td class="text-center"><?php echo array_sum($SUM_user)?></td>
+											<td class="text-center"><span style="font-weight:bold;"><?php echo array_sum($SUM_user)?></span></td>
 											<td></td>
 											<td></td>
 										</tr>

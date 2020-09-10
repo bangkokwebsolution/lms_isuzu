@@ -9,7 +9,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $QaA= "Question and answer"; 
     $problem_of_use= "Problem of use";
     $Number_of_website_visitors= "Website visitors";  
-    $peple= "People"; 
+    $peple= "Terms"; 
     $status= "Status"; 
     $edu= "Not study"; 
 } else {
@@ -22,7 +22,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $QaA= "คำถามที่พบบ่อย"; 
     $problem_of_use= "ปัญหาการใช้งาน";
     $Number_of_website_visitors= "จำนวนผู้เข้าชมเว็บไซต์";
-    $peple= "คน";
+    $peple= "ครั้ง";
     $status= "สถานะ"; 
     $edu= "ยังไม่เรียน";     
 }

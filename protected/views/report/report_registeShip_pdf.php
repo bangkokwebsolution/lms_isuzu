@@ -153,7 +153,7 @@ $user_Department = $user_login->department_id;
 			}
 		</style>
 		<div class="report-table">
-			<h4 style="text-align: right;">จำนวนคนสมัครทั้งหมด <?php echo count($User); ?> คน</h4>
+			<p style="text-align: right;">จำนวนคนสมัครทั้งหมด <span style="font-weight:bold;"><?php echo count($User); ?></span> คน</p>
 			<div class="table-responsive w-100 t-regis-language">
 				<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 100%;">       
 					<thead>

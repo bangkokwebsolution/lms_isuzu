@@ -663,9 +663,9 @@ class ReportController extends Controller
     
 									$i = 1;
 									$datatable .= '<div class="report-table">';
-									$datatable .= '<h4 style="text-align: right;">จำนวนคนสมัครทั้งหมด ';
+									$datatable .= '<p style="text-align: right;">จำนวนคนสมัครทั้งหมด <span style="font-weight:bold;">';
 									$datatable .=  count($User);
-									$datatable .= ' คน</h4>';
+									$datatable .= '</span> คน</p>';
 									$datatable .= '<div class="table-responsive w-100 t-regis-language">';
 									$datatable .= '<table class="table">';       
 									$datatable .= '<thead>';
@@ -1329,9 +1329,9 @@ public function actionReportRegisterOfficeExcel()
 
 							$i = 1;
 							$datatable .= '<div class="report-table">';
-							$datatable .= '<h4 style="text-align: right;">จำนวนคนสมัครทั้งหมด ';
+							$datatable .= '<p style="text-align: right;">จำนวนคนสมัครทั้งหมด <span style="font-weight:bold;">';
 							$datatable .=  count($User);
-							$datatable .= ' คน</h4>';
+							$datatable .= '</span> คน</p>';
 							$datatable .= '<div class="table-responsive w-100 t-regis-language">';
 							$datatable .= '<table class="table">';       
 							$datatable .= '<thead>';
@@ -2261,7 +2261,8 @@ public function actionReportRegisterData()
 										$total_dep = count($users_dm);
 									$i = 1;
 									$datatable .= '<div class="report-table">';
-									$datatable .= '<h4 style="text-align: right;">จำนวนคนสมัครทั้งหมด ';	
+									$datatable .= '<p style="text-align: right;">จำนวนคนสมัครทั้งหมด ';
+									$datatable .= '<span style="font-weight:bold;"> ';	
 									if ($TypeEmployee == 2 && $dep_back && $Department != "") {
 										$datatable .= $total_dep;
 									}else if($TypeEmployee == 2 && $branch && $Department != ""){
@@ -2271,19 +2272,24 @@ public function actionReportRegisterData()
 									}else if($TypeEmployee == 2 && $Department == ""){
 										$datatable .=  $total_dep + $total;
 									}
-									$datatable .= ' คน</h4>';
+									$datatable .= '</span>';
+									$datatable .= ' คน</p>';
 									$datatable .= '<div class="table-responsive w-100 t-regis-language">';
 									$datatable .= '<table class="table">';       
 									$datatable .= '<thead>';
 									$datatable .= '<tr>';
 									if (Yii::app()->session['lang'] == 1) {
 									$datatable .= '<th>No.</th>';
-									$datatable .= '<th>Department</th>';
-									$datatable .= '<th>Position</th>';
 									if($TypeEmployee != 1){
+									$datatable .= '<th>Division</th>';
+									$datatable .= '<th>Department</th>';
+									
 										if ($Leval != "") {
 											$datatable .= '<th>Level</th>';
 										}
+									}else{
+									$datatable .= '<th>Department</th>';
+									$datatable .= '<th>Position</th>';
 									}
 									$datatable .= '<th>Number</th>';
 									if($TypeEmployee != 2){
@@ -2293,12 +2299,16 @@ public function actionReportRegisterData()
 									$datatable .= '<th>Percent</th>';
 									}else{
 									$datatable .= '<th>ลำดับ</th>';
+									if($TypeEmployee != 1){
 									$datatable .= '<th>ฝ่าย</th>';
 									$datatable .= '<th>แผนก</th>';
-									if($TypeEmployee != 1){
+									
 										if ($Leval != "") {
 										$datatable .= '<th>เลเวล</th>';
 										}
+									}else{
+									$datatable .= '<th>แผนก</th>';
+									$datatable .= '<th>ตำแหน่ง</th>';	
 									}
 									$datatable .= '<th>จำนวน</th>';
 									if($TypeEmployee != 2){
@@ -2567,20 +2577,20 @@ public function actionReportRegisterData()
 
 									}  
 									if ($TypeEmployee != 2) {
-										$datatable .= '<tr>';
-											$datatable .= '<td>';
+										$datatable .= '<tr style="border:2px solid #8B8386;">';
+											$datatable .= '<td style="border:2px solid #8B8386;"><span style="font-weight:bold;">';
 											if (Yii::app()->session['lang'] == 1) {
 												$datatable .= "Total";
 											}else{
 												$datatable .= "รวม";
 											}
-											$datatable .= '</td>';
-											$datatable .= '<td></td>';
-											$datatable .= '<td></td>';
-											$datatable .= '<td></td>';
-											$datatable .= '<td>'.array_sum($SUM_user).'</td>';
-											$datatable .= '<td></td>';
-											$datatable .= '<td></td>';
+											$datatable .= '</span></td>';
+											$datatable .= '<td style="border:2px solid #8B8386;"></td>';
+											$datatable .= '<td style="border:2px solid #8B8386;"></td>';
+											$datatable .= '<td style="border:2px solid #8B8386;"></td>';
+											$datatable .= '<td style="border:2px solid #8B8386;"><span style="font-weight:bold;">'.array_sum($SUM_user).'</span></td>';
+											$datatable .= '<td style="border:2px solid #8B8386;"></td>';
+											$datatable .= '<td style="border:2px solid #8B8386;"></td>';
 										$datatable .= '</tr>';	
 									}
 									
