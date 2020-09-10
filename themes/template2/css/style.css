@@ -4832,10 +4832,13 @@ ol.stat-alert li::before {
   text-align: center;
   max-height: 120px;
   margin-bottom: 10px;
+  transform: translateY(-40px);
+  background: #fff;
 }
 .library-detail span{
   display: block;
-  min-height: 50px;
+  min-height: 60px;
+  font-size: 14px;
 }
 
 .other-file {
