@@ -2053,7 +2053,7 @@ function editNamehouse_registration(filedoc_id){
             -->
             <div class="row  mt-1 mb-1 form_marital_status">
                 <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_marital_status; ?><font class="required_marital_status" color="red">*</font></strong></div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <div class="form-group">
 
                         <span></span>
@@ -2067,8 +2067,11 @@ function editNamehouse_registration(filedoc_id){
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3 col-sm-12 col-xs-12">
+               
+            <div class="text-right-md"><label><?= Yii::app()->session['lang'] == 1?'Number of children':'จำนวนบุตร'; ?></label></div>
+            <div class="col-md-3">
                     <div class="form-group">
+                        
                         <?php echo $form->textField($profile, 'number_of_children', array('class' => 'form-control children', 'placeholder' => $label->label_number_of_children, 'maxlength' => '2')); ?>
                         <?php echo $form->error($profile, 'number_of_children', array('class' => 'error2')); ?>
 
