@@ -64,7 +64,7 @@ Yii::app()->user->returnUrl = $http->getUrl();
 </a> -->
 
 <div class="backtotop"><span><i class="fas fa-arrow-up"></i> <small>top</small></span></div>
-<?php if(Yii::app()->user->id){ ?>
+<?php //if(Yii::app()->user->id){ ?>
 <a class="contact-admin" data-toggle="modal" href="#user-report">
   
     <div id="mascot-contact"></div>
@@ -81,13 +81,14 @@ Yii::app()->user->returnUrl = $http->getUrl();
 </a>
 
  <?php
-if (Yii::app()->user->id) {
+
+
 if (Yii::app()->session['lang'] == 1) {
     $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact-en/mascot-contact-en.json');//อังกฤษ
     }else{
     $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact/mascot-contact.json');//ไทย
     }
-  }
+
 ?>
 <script>
     var animation = bodymovin.loadAnimation({
@@ -98,7 +99,7 @@ if (Yii::app()->session['lang'] == 1) {
         path: '<?php echo $mascot_path; ?>'
     });
 </script>
- <?php } ?>
+ <?php //} ?>
 <?php include("themes/template2/include/header.php"); ?>
 
 <?php echo $content; ?>
