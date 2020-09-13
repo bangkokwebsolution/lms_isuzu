@@ -9,8 +9,8 @@
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/bootstrap-chosen.css" />
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/chosen.jquery.js"></script>
 <?php
-$formNameModel = 'LogApprove';
-$titleName = 'Log การยืนยันการสมัครสมาชิก';
+$formNameModel = 'LogApprovePersonal';
+$titleName = 'Log การยืนยันการสมัครสมาชิกบุคคลทั่วไป';
 
 $this->breadcrumbs=array($titleName);
 // Yii::app()->clientScript->registerScript('search', "
@@ -22,25 +22,25 @@ $this->breadcrumbs=array($titleName);
 //     });
 // ");
 Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
-    $.updateGridView = function(gridID, name, value) {
-        $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
-        $.fn.yiiGridView.update(gridID, {data: $.param(
-            $("#"+gridID+" input, #"+gridID+" .filters select")
-        )});
-    }
-    $.appendFilter = function(name, varName) {
-        var val = eval("$."+varName);
-        $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
-    }
-    $.appendFilter("LogApprove[news_per_page]", "news_per_page");
+	$.updateGridView = function(gridID, name, value) {
+	    $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
+	    $.fn.yiiGridView.update(gridID, {data: $.param(
+	        $("#"+gridID+" input, #"+gridID+" .filters select")
+	    )});
+	}
+	$.appendFilter = function(name, varName) {
+	    var val = eval("$."+varName);
+	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
+	}
+	$.appendFilter("LogApprovePersonal[news_per_page]", "news_per_page");
 
-    $('#LogApprove_register_date').attr('readonly','readonly');
-    $('#LogApprove_register_date').css('cursor','pointer');
-    $('#LogApprove_register_date').datepicker();
+    $('#LogApprovePersonal_register_date').attr('readonly','readonly');
+    $('#LogApprovePersonal_register_date').css('cursor','pointer');
+    $('#LogApprovePersonal_register_date').datepicker();
 
-    $('#LogApprove_confirm_date').attr('readonly','readonly');
-    $('#LogApprove_confirm_date').css('cursor','pointer');
-    $('#LogApprove_confirm_date').datepicker();
+    $('#LogApprovePersonal_confirm_date').attr('readonly','readonly');
+    $('#LogApprovePersonal_confirm_date').css('cursor','pointer');
+    $('#LogApprovePersonal_confirm_date').datepicker();
 
 EOD
 , CClientScript::POS_READY);
@@ -58,7 +58,7 @@ EOD
             'attributes'=>array(
             //array('name'=>'status','type'=>'text'),
                 // array('name'=>'register_status','type'=>'list','query'=>$model->getregisstatusList()),
-                array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
+                //array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
                 array('name'=>'register_date','type'=>'text'),
                 array('name'=>'confirm_date','type'=>'text'),
             ),
@@ -86,7 +86,7 @@ EOD
                         'style'=> "margin-top: -1px;",
                     ),
                     'afterAjaxUpdate'=>'function(id, data){
-                        $.appendFilter("LogApprove[news_per_page]");
+                        $.appendFilter("CourseOnline[news_per_page]");
                         InitialSortTable(); 
                         jQuery("#course_date").datepicker({
                             "dateFormat": "dd/mm/yy",
@@ -120,13 +120,13 @@ EOD
                 return $data->firstname . ' ' . $data->lastname;
             }
         ),
-        array(
-            'header' => 'ตำแหน่ง',
-            'type'=>'raw',
-            'value'=>function($data){
-                return $data->position->position_title;
-            }
-        ),
+        // array(
+        //     'header' => 'ตำแหน่ง',
+        //     'type'=>'raw',
+        //     'value'=>function($data){
+        //         return $data->position->position_title;
+        //     }
+        // ),
         array(
             'header' => 'วันที่เข้าสมัคร',
            // 'name'=>'search_name',
@@ -145,7 +145,7 @@ EOD
         array(
            // 'header' => 'ผู้ที่กดยืนยัน',
             'name'=>'confirm_user',
-            'filter'=>LogApprove::getNameAdmin(),
+            'filter'=>LogApprovePersonal::getNameAdmin(),
             // 'type'=>'raw',
             'value'=>function($data){
                  $criteria = new CDbCriteria;

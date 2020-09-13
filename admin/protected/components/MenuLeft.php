@@ -2253,6 +2253,15 @@ Class MenuLeft extends Controller
 	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'LogAdmin.*',
+	        				'LogAdmin.approvePersonal'
+	        			)),
+	        			'label'=>'Log การยืนยันสมัครสมาชิกบุคคลทั่วไป',
+	        			'url'=>array('//logAdmin/approvePersonal')
+	        		),
+	        		array(
+	        			
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'LogAdmin.*',
 	        				'LogAdmin.register'
 	        			)),
 	        			'label'=>'Log การตรวจสอบการสมัครสมาชิก',

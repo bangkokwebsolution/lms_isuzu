@@ -103,6 +103,18 @@ class LogAdminController extends Controller
         ));
     }
 
+    public function actionApprovePersonal()
+    {
+        $model=new LogApprovePersonal('search');
+        $model->unsetAttributes();  // clear any default values
+        if(isset($_GET['LogApprovePersonal']))
+            $model->attributes=$_GET['LogApprovePersonal'];
+
+        $this->render('ApprovePersonal',array(
+            'model'=>$model,
+        ));
+    }
+
     public function getStrLog($data){
         $jsonData = json_decode( $data->log_data);
         if($data->log_event == "create"){

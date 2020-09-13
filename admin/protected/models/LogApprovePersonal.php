@@ -1,14 +1,13 @@
 <?php
 
 /**
- * This is the model class for table "{{log_approve}}".
+ * This is the model class for table "{{log_approve_personal}}".
  *
- * The followings are the available columns in table '{{log_approve}}':
+ * The followings are the available columns in table '{{log_approve_personal}}':
  * @property integer $id
  * @property string $firstname
  * @property string $lastname
  * @property string $register_date
- * @property integer $position_id
  * @property string $confirm_date
  * @property integer $confirm_user
  * @property string $create_date
@@ -18,7 +17,7 @@
  * @property string $active
  * @property integer $user_id
  */
-class LogApprove extends CActiveRecord
+class LogApprovePersonal extends CActiveRecord
 {
 	public $news_per_page;
 	public $search_name;
@@ -27,7 +26,7 @@ class LogApprove extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return '{{log_approve}}';
+		return '{{log_approve_personal}}';
 	}
 
 	/**
@@ -38,13 +37,13 @@ class LogApprove extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('position_id, confirm_user, create_by, update_by, user_id', 'numerical', 'integerOnly'=>true),
+			array('confirm_user, create_by, update_by, user_id', 'numerical', 'integerOnly'=>true),
 			array('firstname, lastname', 'length', 'max'=>255),
 			array('active', 'length', 'max'=>1),
-			array('register_date, confirm_date, create_date, update_date, news_per_page, search_name', 'safe'),
+			array('register_date, confirm_date, create_date, update_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('news_per_page, id, firstname, lastname, register_date, position_id, confirm_date, confirm_user, create_date, create_by, update_date, update_by, active, user_id, search_name, news_per_page', 'safe', 'on'=>'search'),
+			array('news_per_page , id, firstname, lastname, register_date, confirm_date, confirm_user, create_date, create_by, update_date, update_by, active, user_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -58,7 +57,6 @@ class LogApprove extends CActiveRecord
 		return array(
 			'user'=>array(self::BELONGS_TO, 'Users', 'user_id'),
 			'profile'=>array(self::BELONGS_TO, 'Profiles', 'user_id'),
-			'position'=>array(self::BELONGS_TO, 'Position', 'position_id'),
 		);
 	}
 
@@ -72,7 +70,6 @@ class LogApprove extends CActiveRecord
 			'firstname' => 'Firstname',
 			'lastname' => 'Lastname',
 			'register_date' => 'วันที่เข้าสมัคร',
-			'position_id' => 'ตำแหน่ง',
 			'confirm_date' => 'วันที่กดยืนยันการสมัคร',
 			'confirm_user' => 'ผู้ที่กดยืนยัน',
 			'create_date' => 'Create Date',
@@ -96,6 +93,29 @@ class LogApprove extends CActiveRecord
 	 * @return CActiveDataProvider the data provider that can return the models
 	 * based on the search/filter conditions.
 	 */
+	// public function search()
+	// {
+	// 	// @todo Please modify the following code to remove attributes that should not be searched.
+
+	// 	$criteria=new CDbCriteria;
+
+	// 	$criteria->compare('id',$this->id);
+	// 	$criteria->compare('firstname',$this->firstname,true);
+	// 	$criteria->compare('lastname',$this->lastname,true);
+	// 	$criteria->compare('register_date',$this->register_date,true);
+	// 	$criteria->compare('confirm_date',$this->confirm_date,true);
+	// 	$criteria->compare('confirm_user',$this->confirm_user);
+	// 	$criteria->compare('create_date',$this->create_date,true);
+	// 	$criteria->compare('create_by',$this->create_by);
+	// 	$criteria->compare('update_date',$this->update_date,true);
+	// 	$criteria->compare('update_by',$this->update_by);
+	// 	$criteria->compare('active',$this->active,true);
+	// 	$criteria->compare('user_id',$this->user_id);
+
+	// 	return new CActiveDataProvider($this, array(
+	// 		'criteria'=>$criteria,
+	// 	));
+	// }
 	public function search()
 	{
 		// @todo Please modify the following code to remove attributes that should not be searched.
@@ -103,13 +123,10 @@ class LogApprove extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->with = array('user','position','profile');
+		$criteria->with = array('user','profile');
 		$criteria->compare('firstname',$this->firstname,true);
 		$criteria->compare('lastname',$this->lastname,true);
 		$criteria->compare('CONCAT(t.firstname , " " , t.lastname)',$this->search_name,true);
-		//$criteria->compare('register_date',$this->register_date,true);
-		$criteria->compare('t.position_id',$this->position_id);
-		//$criteria->compare('confirm_date',$this->confirm_date,true);
 		$criteria->compare('confirm_user',$this->confirm_user);
 		$criteria->compare('create_date',$this->create_date,true);
 		$criteria->compare('create_by',$this->create_by);
@@ -168,7 +185,7 @@ class LogApprove extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return LogApprove the static model class
+	 * @return LogApprovePersonal the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

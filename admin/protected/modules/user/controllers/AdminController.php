@@ -454,9 +454,9 @@ echo ($data);
 		$model->password = UserModule::encrypting($genpass);
 		$model->username = $model->email;
 		$model->save(false);
-		// if(Yii::app()->user->id){
-		// 				Helpers::lib()->getLogregister($model);
-		// 			}
+		if(Yii::app()->user->id){
+						Helpers::lib()->getLogapprovePersonal($model);
+					}
 		$to['email'] = $model->email;
 		$to['firstname'] = $model->profile->firstname;
 		$to['lastname'] = $model->profile->lastname;

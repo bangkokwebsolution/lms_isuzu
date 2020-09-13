@@ -1681,6 +1681,22 @@ public function getLogapprove($model)
     }
 }
 
+public function getLogapprovePersonal($model)
+{
+    if ($model != null) {
+       $LogApprove = new LogApprovePersonal;
+       $LogApprove->firstname = $model->profile->firstname;
+       $LogApprove->lastname = $model->profile->lastname;
+       $LogApprove->register_date = $model->create_at;
+       $LogApprove->confirm_date = date("Y-m-d H:i:s");
+       $LogApprove->confirm_user = Yii::app()->user->id;
+       $LogApprove->create_date = date("Y-m-d H:i:s");
+       $LogApprove->create_by = Yii::app()->user->id;
+       $LogApprove->user_id = $model->id;
+       $LogApprove->save();
+    }
+}
+
 public function changeNameFunction($name)
 {
     switch ($name){
