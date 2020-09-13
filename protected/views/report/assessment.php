@@ -469,12 +469,20 @@ if(isset($model_level) && !empty($model_level)){
                         <div id="chart_bar"></div>
                     </div>
                     <?php 
+                    $graph_arr = [];
+                foreach ($model_course as $keycou => $valcou) {
+
+                                    foreach ($valcou->CourseGeneration as $key_cg => $value_cg) {
+                                        if($value_cg->active == 'y'){
+                              
+
+
                     $data = ['0'=>"หลักสูตร"];
                     $dataresult = [];
 
                     foreach ($sections as $keysectionschart => $valsectionschart) {
                         $data[] = $title_section[$valsectionschart->survey_section_id];
-                        $dataresult[] = $resultssec =  round($total_section[$valsectionschart->survey_section_id]/$countquest_section[$valsectionschart->survey_section_id],2) ;
+                        $dataresult[] = $resultssec =    round($total_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id]/$countquest_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id],2);  ;
 
                     } 
 
@@ -483,8 +491,9 @@ if(isset($model_level) && !empty($model_level)){
                     $dataresult_chk = implode(',',$dataresult);
 
                     $test  = '["'.$data_chk.'"],';
-                    $testresult  = '["'.$course_title->course_title.'",'.$dataresult_chk.'],';
-
+                    $testresult  = '["'.$valcou->course_title.'",'.$dataresult_chk.'],';
+                    $graph_arr[$valcou->course_id][$value_cg->gen_id] = $testresult;
+                }}}
                     
                     ?>
                    
@@ -497,7 +506,12 @@ if(isset($model_level) && !empty($model_level)){
                             <?php 
                             // foreach ($model_graph as $key => $value) {
                                     echo $test;
-                                    echo $testresult;
+                            foreach ($model_course as $keycou => $valcou) {
+                                foreach ($valcou->CourseGeneration as $key_cg => $value_cg) {
+                                    echo $graph_arr[$valcou->course_id][$value_cg->gen_id];
+                                }
+                            }
+
                             // } 
                             ?>
                           ]);
@@ -580,6 +594,13 @@ chart.draw(data, options);
                             }else{
                                 echo "Course";
                             } ?></th>
+
+                            <th rowspan="<?=$row?>"> <?php if(Yii::app()->session['lang'] != 1){
+                                echo "รุ่น";
+                            }else{
+                                echo "Gen";
+                            } ?></th>
+
                             <th colspan="<?= count($sections)?>" width="65%"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ผลการประเมิน";
@@ -600,24 +621,53 @@ chart.draw(data, options);
                     </thead>
                     <tbody>
                         <?php 
+                        $test = 0;
+                        $test_arr =[];
                         if(!empty($sections)){
                             $no = 1; ?>
-                            
+                                <?php foreach ($model_course as $keycou => $valcou) {
+
+                                    foreach ($valcou->CourseGeneration as $key_cg => $value_cg) {
+                                        if($value_cg->active == 'y'){
+                                    $test++;
+                                 ?>
+
+                                
                             <tr style="border: 1.5px solid #000; text-align: center;">
                                 <td><?php echo $no; $no++; ?></td>
-                                <td><?= $course_title->course_title ?></td>
-                                <?php foreach ($sections as $keysections2 => $valsections2) {
+                                <td><?= $valcou->course_title ?></td>
+                                <td><?= $value_cg->gen_title ?></td>
 
-                                    $resultssec =  round($total_section[$valsections2->survey_section_id]/$countquest_section[$valsections2->survey_section_id],2); ?>
-
-                                    <td> <?=$resultssec ?> %</td>
-
-                                <?php } ?>
+                                <?php 
+                                foreach ($sections as $keysections2 => $valsections2) {
+                                    // var_dump($total_section[$valsections2->survey_section_id][$valcou->course_id]);
+                                         $resultssec =  round($total_section[$valsections2->survey_section_id][$valcou->course_id][$value_cg->gen_id]/$countquest_section[$valsections2->survey_section_id][$valcou->course_id][$value_cg->gen_id],2); 
+                                  // $test_arr[$valsections2->survey_section_id] = $resultssec;
+                                   $test_arr[$keysections2] += $resultssec;
+                                         ?>  
+                                 <td> <?=$resultssec ?> %</td> 
+                                <?php }  ?>
                             </tr>
+
+                        <?php }} }?>
+                             <?php       var_dump($test_arr);
+                        ?>
+                        <?php if($_GET["search"]["course_id"] == null){ ?>
+                         <tr style="border: 1.5px solid #000; text-align: center;">
+                                <td colspan="3" >รวม</td> 
+                                
+                                <?php 
+                            foreach ($test_arr as $key => $value) {
+                                 ?>
+                                <td><?= round($value / $test,2)?> %</td> 
+                            <?php } ?>
+                             </tr>
+                         <?php } ?>
+
                       <?php  }else{ // !empty
                             ?>  
                             <tr style="border: 1.5px solid #000; text-align: center;">
-                                <td colspan="3">
+                                <td colspan="4">
                                     <?php 
                                     if(Yii::app()->session['lang'] != 1){
                                         echo "ไม่มีข้อมูล";
@@ -961,26 +1011,26 @@ chart.draw(data, options);
             $("#search_end_date").removeClass('form-control-danger');
         }
 
-        var course = $("#search_course_id").val();
-        var gen = $("#search_gen_id").val();
+        // var course = $("#search_course_id").val();
+        // var gen = $("#search_gen_id").val();
 
-         if(course == "" ){
-            status_pass =2;
-            var CourseAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Course! ':'กรุณาเลือกหลักสูตร!'; ?>";
-            swal(Alert_message,CourseAlert)
+        //  if(course == "" ){
+        //     status_pass =2;
+        //     var CourseAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Course! ':'กรุณาเลือกหลักสูตร!'; ?>";
+        //     swal(Alert_message,CourseAlert)
 
-            $("#search_course_id").addClass('form-control-danger');
-        }else{
-            $("#search_course_id").removeClass('form-control-danger');
-        }
-        if(gen == "" ){
-            status_pass =2;
-            var genAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Gen! ':'กรุณาเลือกรุ่น!'; ?>";
-            swal(Alert_message,genAlert)
-            $("#search_gen_id").addClass('form-control-danger');
-        }else{
-            $("#search_gen_id").removeClass('form-control-danger');
-        }
+        //     $("#search_course_id").addClass('form-control-danger');
+        // }else{
+        //     $("#search_course_id").removeClass('form-control-danger');
+        // }
+        // if(gen == "" ){
+        //     status_pass =2;
+        //     var genAlert = "<?php echo Yii::app()->session['lang'] == 1?'Please select Gen! ':'กรุณาเลือกรุ่น!'; ?>";
+        //     swal(Alert_message,genAlert)
+        //     $("#search_gen_id").addClass('form-control-danger');
+        // }else{
+        //     $("#search_gen_id").removeClass('form-control-danger');
+        // }
 
 
         if(status_pass == 1){

@@ -5062,22 +5062,39 @@ if(!empty($LogStartcourse)){
 			$langId = Yii::app()->session['lang'];
 		}
 
-		//------------------- ค่า form search ------------------------//
-		$model_course = CourseOnline::model()->with('CategoryTitle')->findAll(array(
-			'condition' => 'course.active=:active AND course.lang_id=:lang_id AND categorys.active=:active',
-			'params' => array(':active'=>'y', ':lang_id'=>$langId, ),
-			'order' => 'course_title ASC'
-		));
+		$course_teacher_chk = CourseTeacher::model()->findAll(array(
+	'condition' => 'survey_header_id=:survey_header_id',
+	'params' => array(':survey_header_id'=>35),
+));
+		$course_id_arr = [];
+		foreach ($course_teacher_chk as $keytea => $valuetea) {
+			$course_id_arr[] = $valuetea->course_id;
+		}
 
-		// if($authority == 1){
-		// 	$model_department = Department::model()->findAll(array(
-		// 		'condition' => 'active=:active AND lang_id=:lang_id AND type_employee_id=:type_id',
-	 //    	'params' => array(':active'=>'y', ':lang_id'=>1, ':type_id'=>1), //1=เรือ 2=office
-	 //    	'order' => 'dep_title ASC'    	
-	 //    ));
-		// }else{
+		//------------------- ค่า form search ------------------------//
+
+		    $criteria = new CDbCriteria;
+			$criteria->with = array('CategoryTitle');
+			$criteria->addIncondition('course.course_id',$course_id_arr);
+			$criteria->compare('course.active','y');
+			$criteria->compare('course.lang_id',$langId);
+			$criteria->compare('categorys.active','y');
+			$criteria->order = 'course_title';
+			$model_course = CourseOnline::model()->findAll($criteria);
+		// 
+			if($_GET["search"]["course_id"] != ""){
+
+			$criteria = new CDbCriteria;
+			$criteria->with = array('CategoryTitle');
+			$criteria->compare('course.course_id',$_GET["search"]["course_id"]);
+			$criteria->compare('course.active','y');
+			$criteria->compare('course.lang_id',$langId);
+			$criteria->compare('categorys.active','y');
+			$criteria->order = 'course_title';
+			$model_course = CourseOnline::model()->findAll($criteria);
+		}
+	
 			$model_department = [];
-		// }
 
 		if($authority == 2){
 			$model_position = Position::model()->findAll(array(
@@ -5142,6 +5159,10 @@ $model_gen = CourseGeneration::model()->findAll(array(
 
     		$arr_course_gen = [];
     		$arr_course_graph = [];
+    		$arr_total_course = [];
+    		$arr_countquest_course = [];
+
+
     		if(!empty($search_course)){
     			foreach ($search_course as $key_c => $value_c) {
     				$arr_course_gen[$key_c]["course_id"] = $value_c->course_id;    
@@ -5171,12 +5192,11 @@ if($_GET["search"]["gen_id"] != ""){
 			}
 		}
 	}
-
 }
-    				// else{
+    				// else{	
     					if(!empty($gen_all)){
     						foreach ($gen_all as $key_cg => $value_cg) {
-    								$arr_course_gen[$key_c]["gen"][$key_gen]["gen_id"] = $value_cg;
+    								// $arr_course_gen[$key_c]["gen"][$key_gen]["gen_id"] = $value_cg;
 
 // var_dump($value_cg);
 // var_dump($value_c->course_id);
@@ -5255,10 +5275,11 @@ $user_pass = [];
 $score_passpost = [];
 $score_passpre = [];
 
-$course_title = CourseOnline::model()->findByPk($_GET["search"]["course_id"]);
+$course_title = CourseOnline::model()->findByPk($value_c->course_id);
+
 $course_teacher = CourseTeacher::model()->find(array(
-	'condition' => ' course_id=:course_id',
-	'params' => array(':course_id'=>$_GET["search"]["course_id"]),
+	'condition' => ' course_id=:course_id and survey_header_id=:survey_header_id',
+	'params' => array(':course_id'=>$value_c->course_id , ':survey_header_id'=>35),
 ));
 $header = $course_teacher->q_header;
 $teacher_id = $course->teacher_id;
@@ -5312,7 +5333,7 @@ if (count($header->sections) > 0 && !empty($LogStartcourse)) {
                                     FROM q_answers_course INNER JOIN q_quest_ans_course ON q_answers_course.quest_ans_id = q_quest_ans_course.id ";
                                     $sql .= " WHERE header_id='".$header_id."' AND choice_id ='".$choiceValue->option_choice_id."' ";
 
-                                    $sql .= " AND course_id ='" . $_GET["search"]["course_id"] . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id."' AND q_quest_ans_course.gen_id='".$value_cg."'";
+                                    $sql .= " AND course_id ='" . $value_c->course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id."' AND q_quest_ans_course.gen_id='".$value_cg."'";
                                     if(!empty($user_id_chk)){
                                     $sql .= " AND q_quest_ans_course.user_id in (".$user_id_chk.")";
                                 	}
@@ -5349,7 +5370,7 @@ if (count($header->sections) > 0 && !empty($LogStartcourse)) {
                                     FROM q_answers_course INNER JOIN q_quest_ans_course ON q_answers_course.quest_ans_id = q_quest_ans_course.id ";
                                     $sql .= " WHERE header_id='".$header_id."' AND choice_id ='".$choiceValue->option_choice_id."' ";
 
-                                    $sql .= " AND course_id ='" . $_GET["search"]["course_id"] . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id."' AND q_quest_ans_course.gen_id='".$value_cg."'";
+                                    $sql .= " AND course_id ='" . $value_c->course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id."' AND q_quest_ans_course.gen_id='".$value_cg."'";
                                     if(!empty($user_id_chk)){
                                     $sql .= " AND q_quest_ans_course.user_id in (".$user_id_chk.")";
                                 	}
@@ -5366,31 +5387,29 @@ if (count($header->sections) > 0 && !empty($LogStartcourse)) {
                             }
 
                         }	
-                        $countquest_section[$sectionValue->survey_section_id] += $countQuest;
-                        $total_section[$sectionValue->survey_section_id] += $total_average ;
+                      
+
+                        $countquest_section[$sectionValue->survey_section_id][$value_c->course_id][$value_cg] += $countQuest;
+                        $total_section[$sectionValue->survey_section_id][$value_c->course_id][$value_cg] += $total_average ;
                         $title_section[$sectionValue->survey_section_id] = $sectionValue->section_title ;
 
                                     // var_dump(round($total_average/$countQuest,2));
                                     // var_dump($countQuest);
+$arr_total_course[$sectionValue->survey_section_id][$value_c->course_id][$value_cg] = $total_section[$sectionValue->survey_section_id][$value_c->course_id][$value_cg];
+$arr_countquest_course[$sectionValue->survey_section_id][$value_c->course_id][$value_cg] =  $countquest_section[$sectionValue->survey_section_id][$value_c->course_id][$value_cg];
 
                                     // round($total_average/$countQuest,2)
                     }
 			}
 		}
 
-	}
+	}	
 }
-
-
-$arr_course_graph[$value_c->course_id]["register"] = $arr_course_graph[$value_c->course_id]["register"]+count($LogStartcourse);
-$arr_course_graph[$value_c->course_id]["pass"] = $arr_course_graph[$value_c->course_id]["pass"]+$num_pass;
-
-
     								$key_gen++;
     							// } // if($value_cg->active == 'y')
     						} // foreach ($value_c->CourseGeneration
     					}else{ // if(!empty($value_c->CourseGeneration))
-    						$arr_course_gen[$key_c]["gen"] = [];
+    						// $arr_course_gen[$key_c]["gen"] = [];
     					}
     				// }
 
@@ -5471,11 +5490,15 @@ $model_level = Branch::model()->findAll(array(
 						$criteria->order = 't.course_id ASC, t.gen_id ASC';
 						$LogStartcourse = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
 
-$course_title = CourseOnline::model()->findByPk($_GET["search"]["course_id"]);
+
+$course_title = CourseOnline::model()->findByPk($value_c->course_id);
+
 $course_teacher = CourseTeacher::model()->find(array(
-	'condition' => ' course_id=:course_id',
-	'params' => array(':course_id'=>$_GET["search"]["course_id"]),
+	'condition' => ' course_id=:course_id and survey_header_id=:survey_header_id',
+	'params' => array(':course_id'=>$value_c->course_id , ':survey_header_id'=>35),
 ));
+
+
 $header = $course_teacher->q_header;
 $teacher_id = $course->teacher_id;
 $header_id = $header->survey_header_id;
@@ -5489,7 +5512,6 @@ if(!empty($LogStartcourse)){
 } 
 
 $user_id_chk = implode(",",$user_pass);
-
 if (count($header->sections) > 0 && !empty($LogStartcourse)) {	
 
 			$sections = $header->sections;
@@ -5529,7 +5551,7 @@ if (count($header->sections) > 0 && !empty($LogStartcourse)) {
                                     FROM q_answers_course INNER JOIN q_quest_ans_course ON q_answers_course.quest_ans_id = q_quest_ans_course.id ";
                                     $sql .= " WHERE header_id='".$header_id."' AND choice_id ='".$choiceValue->option_choice_id."' ";
 
-                                    $sql .= " AND course_id ='" . $_GET["search"]["course_id"] . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id."' AND q_quest_ans_course.gen_id='".$value_cg."'";
+                                    $sql .= " AND course_id ='" . $value_c->course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id."' AND q_quest_ans_course.gen_id='".$value_cg."'";
                                     if(!empty($user_id_chk)){
                                     $sql .= " AND q_quest_ans_course.user_id in (".$user_id_chk.")";
                                 	}
@@ -5566,7 +5588,7 @@ if (count($header->sections) > 0 && !empty($LogStartcourse)) {
                                     FROM q_answers_course INNER JOIN q_quest_ans_course ON q_answers_course.quest_ans_id = q_quest_ans_course.id ";
                                     $sql .= " WHERE header_id='".$header_id."' AND choice_id ='".$choiceValue->option_choice_id."' ";
 
-                                    $sql .= " AND course_id ='" . $_GET["search"]["course_id"] . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id."' ";
+                                    $sql .= " AND course_id ='" . $value_c->course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id."' ";
                                     if(!empty($user_id_chk)){
                                     $sql .= " AND q_quest_ans_course.user_id in (".$user_id_chk.")";
                                 	}
@@ -5584,26 +5606,20 @@ if (count($header->sections) > 0 && !empty($LogStartcourse)) {
 
                         }	
 
-                        $countquest_section[$sectionValue->survey_section_id] += $countQuest;
-                        $total_section[$sectionValue->survey_section_id] += $total_average ;
+ $countquest_section[$sectionValue->survey_section_id][$value_c->course_id][$value_cg] += $countQuest;
+                        $total_section[$sectionValue->survey_section_id][$value_c->course_id][$value_cg] += $total_average ;
                         $title_section[$sectionValue->survey_section_id] = $sectionValue->section_title ;
 
-                                    // var_dump(round($total_average/$countQuest,2));
-                                    // var_dump($countQuest);
 
-                                    // round($total_average/$countQuest,2)
+$arr_total_course[$sectionValue->survey_section_id][$value_c->course_id][$value_cg] = $total_section[$sectionValue->survey_section_id][$value_c->course_id][$value_cg];
+$arr_countquest_course[$sectionValue->survey_section_id][$value_c->course_id][$value_cg] =  $countquest_section[$sectionValue->survey_section_id][$value_c->course_id][$value_cg];
+
                     }
 			}
 		}
 
 	}
 }
-
-
-
-$arr_course_graph[$value_c->course_id]["register"] = $arr_course_graph[$value_c->course_id]["register"]+count($LogStartcourse);
-$arr_course_graph[$value_c->course_id]["pass"] = $arr_course_graph[$value_c->course_id]["pass"]+$num_pass;
-
 
 			} //for ($i=$_GET["search"]["start_year"]
 		} // foreach ($search_course
@@ -5629,8 +5645,8 @@ $arr_course_graph[$value_c->course_id]["pass"] = $arr_course_graph[$value_c->cou
 
     			'sections'=>$sections,
     			'title_section'=>$title_section,
-    			'countquest_section'=>$countquest_section,
-    			'total_section'=>$total_section,
+    			'countquest_section'=>$arr_countquest_course,
+    			'total_section'=>$arr_total_course,
     			'course_title'=>$course_title,
 
     		));

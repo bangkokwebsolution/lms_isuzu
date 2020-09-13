@@ -686,9 +686,11 @@ class QuestionnaireoutController extends Controller
 	public function actionDelete($id)
 	{
 		//$this->loadModel($id)->delete();
+        if($id != 35){
 		$model = $this->loadModel($id);
 		$model->active = 'n';
 		$model->save(false);
+        }
 		if(Yii::app()->user->id){
 			Helpers::lib()->getControllerActionId();
 		}
