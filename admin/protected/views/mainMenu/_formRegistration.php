@@ -236,6 +236,12 @@
                     <?php echo $form->error($label, 'label_age'); ?>
                 </div>
                 <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_month'); ?>
+                    <?php echo $form->textField($label, 'label_month', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_month'); ?>
+                </div>
+                <div class="col-md-4">
                     <?php echo $form->labelEx($label, 'label_race'); ?>
                     <?php echo $form->textField($label, 'label_race', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
                     <?php echo $this->NotEmpty(); ?>
@@ -259,6 +265,24 @@
                     <?php echo $this->NotEmpty(); ?>
                     <?php echo $form->error($label, 'label_sex'); ?>
                 </div>
+                <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_blood'); ?>
+                    <?php echo $form->textField($label, 'label_blood', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_blood'); ?>
+                </div>
+                <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_height'); ?>
+                    <?php echo $form->textField($label, 'label_height', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_height'); ?>
+                </div>
+                <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_weight'); ?>
+                    <?php echo $form->textField($label, 'label_weight', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_weight'); ?>
+                </div>
                  <div class="col-md-4">
                     <?php echo $form->labelEx($label, 'label_marital_status'); ?>
                     <?php echo $form->textField($label, 'label_marital_status', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
@@ -270,6 +294,12 @@
                     <?php echo $form->textField($label, 'label_address', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
                     <?php echo $this->NotEmpty(); ?>
                     <?php echo $form->error($label, 'label_address'); ?>
+                </div>
+                <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_addressParent'); ?>
+                    <?php echo $form->textField($label, 'label_addressParent', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_addressParent'); ?>
                 </div>
                 <div class="col-md-4">
                     <?php echo $form->labelEx($label, 'label_id_Line'); ?>
@@ -511,6 +541,30 @@
                     <?php echo $this->NotEmpty(); ?>
                     <?php echo $form->error($label, 'label_relationship_emergency'); ?>
                 </div>
+                 <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_FileAttachIdentification'); ?>
+                    <?php echo $form->textField($label, 'label_FileAttachIdentification', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_FileAttachIdentification'); ?>
+                </div>
+                   <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_FileAttachPassport'); ?>
+                    <?php echo $form->textField($label, 'label_FileAttachPassport', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_FileAttachPassport'); ?>
+                </div>
+                 <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_FileAttachCrewIdentification'); ?>
+                    <?php echo $form->textField($label, 'label_FileAttachCrewIdentification', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_FileAttachCrewIdentification'); ?>
+                </div>
+                <div class="col-md-4">
+                    <?php echo $form->labelEx($label, 'label_AttachCopiesOfHousePaticular'); ?>
+                    <?php echo $form->textField($label, 'label_AttachCopiesOfHousePaticular', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_AttachCopiesOfHousePaticular'); ?>
+                </div>
             </div>
 
                 <h4 class="labelCourse"><i class="fa fa-window-maximize" aria-hidden="true"></i>&nbsp; แจ้งเตือน (Alert ต่างๆ)<h4>
@@ -530,7 +584,7 @@
                 </div>
 
                 <h4 class="labelCourse"><i class="fa fa-chevron-circle-down" aria-hidden="true"></i>&nbsp; ตัวเลือก (Dropdown)<h4>
-                <div class="row">
+           
                     <div class="col-md-4">
                     <?php echo $form->labelEx($label, 'label_dropdown_mr'); ?>
                     <?php echo $form->textField($label, 'label_dropdown_mr', array('size' => 60, 'maxlength' => 250, 'class' => 'width300')); ?>
@@ -549,7 +603,7 @@
                     <?php echo $this->NotEmpty(); ?>
                     <?php echo $form->error($label, 'label_dropdown_mrs'); ?>
                 </div>
-                </div>
+           
                 <div class="row">
                     <div class="col-md-6">
                     <?php echo $form->labelEx($label, 'label_male'); ?>
@@ -566,12 +620,18 @@
                 </div>
 
                    <h4 class="labelCourse"><i class="fa fa-address-card-o" aria-hidden="true"></i>&nbsp;  ตัวเลือก (radio)<h4>
-                <div class="row">
+              <div class="row">
                     <div class="col-md-6">
                     <?php echo $form->labelEx($label, 'label_general_public'); ?>
                     <?php echo $form->textField($label, 'label_general_public', array('size' => 60, 'maxlength' => 250, 'class' => 'width500')); ?>
                     <?php echo $this->NotEmpty(); ?>
                     <?php echo $form->error($label, 'label_general_public'); ?>
+                </div>
+                <div class="col-md-6">
+                    <?php echo $form->labelEx($label, 'label_ship_public'); ?>
+                    <?php echo $form->textField($label, 'label_ship_public', array('size' => 60, 'maxlength' => 250, 'class' => 'width500')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_ship_public'); ?>
                 </div>
                  <div class="col-md-6">
                     <?php echo $form->labelEx($label, 'label_personnel'); ?>
@@ -579,7 +639,7 @@
                     <?php echo $this->NotEmpty(); ?>
                     <?php echo $form->error($label, 'label_personnel'); ?>
                 </div>
-                </div>
+                 </div>
                  <div class="row">
                     <div class="col-md-6">
                     <?php echo $form->labelEx($label, 'label_never'); ?>
@@ -624,19 +684,56 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                    <?php echo $form->labelEx($label, 'label_ship_public'); ?>
-                    <?php echo $form->textField($label, 'label_ship_public', array('size' => 60, 'maxlength' => 250, 'class' => 'width500')); ?>
+                    <?php echo $form->labelEx($label, 'label_OwnHouse'); ?>
+                    <?php echo $form->textField($label, 'label_OwnHouse', array('size' => 60, 'maxlength' => 250, 'class' => 'width500')); ?>
                     <?php echo $this->NotEmpty(); ?>
-                    <?php echo $form->error($label, 'label_ship_public'); ?>
+                    <?php echo $form->error($label, 'label_OwnHouse'); ?>
                 </div>
-                 <!-- <div class="col-md-6">
-                    <?php echo $form->labelEx($label, 'label_ship'); ?>
-                    <?php echo $form->textField($label, 'label_ship', array('size' => 60, 'maxlength' => 250, 'class' => 'width500')); ?>
+                 <div class="col-md-6">
+                    <?php echo $form->labelEx($label, 'label_RentHouse'); ?>
+                    <?php echo $form->textField($label, 'label_RentHouse', array('size' => 60, 'maxlength' => 250, 'class' => 'width500')); ?>
                     <?php echo $this->NotEmpty(); ?>
-                    <?php echo $form->error($label, 'label_ship'); ?>
-                </div> -->
+                    <?php echo $form->error($label, 'label_RentHouse'); ?>
+                </div> 
+                <div class="col-md-6">
+                    <?php echo $form->labelEx($label, 'label_WithParents'); ?>
+                    <?php echo $form->textField($label, 'label_WithParents', array('size' => 60, 'maxlength' => 250, 'class' => 'width500')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_WithParents'); ?>
                 </div>
-
+                 <div class="col-md-6">
+                    <?php echo $form->labelEx($label, 'label_Apartment'); ?>
+                    <?php echo $form->textField($label, 'label_Apartment', array('size' => 60, 'maxlength' => 250, 'class' => 'width500')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_Apartment'); ?>
+                </div> 
+                <div class="col-md-6">
+                    <?php echo $form->labelEx($label, 'label_WithRelative'); ?>
+                    <?php echo $form->textField($label, 'label_WithRelative', array('size' => 60, 'maxlength' => 250, 'class' => 'width500')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_WithRelative'); ?>
+                </div> 
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                    <?php echo $form->labelEx($label, 'label_Enlisted'); ?>
+                    <?php echo $form->textField($label, 'label_Enlisted', array('size' => 60, 'maxlength' => 250, 'class' => 'width500')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_Enlisted'); ?>
+                </div>
+                 <div class="col-md-6">
+                    <?php echo $form->labelEx($label, 'label_NotEnlisted'); ?>
+                    <?php echo $form->textField($label, 'label_NotEnlisted', array('size' => 60, 'maxlength' => 250, 'class' => 'width500')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_NotEnlisted'); ?>
+                </div> 
+                <div class="col-md-6">
+                    <?php echo $form->labelEx($label, 'label_Exempt'); ?>
+                    <?php echo $form->textField($label, 'label_Exempt', array('size' => 60, 'maxlength' => 250, 'class' => 'width500')); ?>
+                    <?php echo $this->NotEmpty(); ?>
+                    <?php echo $form->error($label, 'label_Exempt'); ?>
+                </div>
+                </div>
 
                 <div class="row">
                     <?php echo $form->labelEx($model,'status'); ?>

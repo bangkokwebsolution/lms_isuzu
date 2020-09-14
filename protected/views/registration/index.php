@@ -1384,7 +1384,7 @@ function editNamehouse_registration(filedoc_id){
                             ?>
                             <img src="<?php echo $url_pro_pic; ?>" class="gambar img-responsive img-thumbnail" name="item-img-output" id="item-img-output" />
                             <figcaption>
-                                <div class="btn btn-default btn-uploadimg"><i class="fa fa-camera"></i><?= Yii::app()->session['lang'] == 1?'Select picture':'เลือกรูป'; ?> </div>
+                                <div class="btn btn-default btn-uploadimg"><i class="fa fa-camera"></i> <?= Yii::app()->session['lang'] == 1?'Select picture':'เลือกรูป'; ?> </div>
                             </figcaption>
                         </figure>
                         <input type="hidden" name="url_pro_pic" id="url_pro_pic">
@@ -1656,7 +1656,7 @@ function editNamehouse_registration(filedoc_id){
                 <div class="clearfix"></div>
             </div>
             <div class="row  mt-1 mb-1 form_attach_identification">
-                <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'File attachment identification':'ไฟล์สำเนาบัตรประชาชน'; ?></strong></div>
+                <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_FileAttachIdentification;?></strong></div>
                 <div class="col-md-4">
                     <div class="form-group">
                        <div class="input-append">
@@ -1739,7 +1739,7 @@ function editNamehouse_registration(filedoc_id){
             <div class="clearfix"></div>
         </div>
         <div class="row  mt-1 mb-1 form_attach_passport">
-            <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'File attachment passport':'ไฟล์พาสปอร์ต'; ?></strong></div>
+            <div class="col-md-3 text-right-md"><strong><?php echo $label->label_FileAttachPassport;?></strong></div>
             <div class="col-md-4">
                 <div class="form-group">
                     <div class="input-append">
@@ -1803,7 +1803,7 @@ function editNamehouse_registration(filedoc_id){
             <div class="clearfix"></div>
         </div>
         <div class="row  mt-1 mb-1 form_attach_crew_identification">
-            <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?' File attachment Crew identification':'ไฟล์หนังสือประจำตัวลูกเรือ'; ?></strong></div>
+            <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_FileAttachCrewIdentification;?></strong></div>
             <div class="col-md-4">
                 <div class="form-group">
 
@@ -1847,7 +1847,7 @@ function editNamehouse_registration(filedoc_id){
         </div>
     </div> 
     <div class="row  mt-1 mb-1 bb-1 pb-20 mt-20 form_attach_house_registration">
-        <div class="col-md-3 text-right-md"> <strong><?php echo Yii::app()->session['lang'] == 1?'Attachment copies of house paticular':'ไฟล์สำเนาทะเบียนบ้าน'; ?></strong></div>
+        <div class="col-md-3 text-right-md"> <strong><?php echo $label->label_AttachCopiesOfHousePaticular;?></strong></div>
         <div class="col-md-4">
             <div class="form-group">
 
@@ -1910,7 +1910,7 @@ function editNamehouse_registration(filedoc_id){
     </div>
     <div class="col-md-2 col-sm-6 col-xs-12">
         <div class="form-group">
-            <label><?= Yii::app()->session['lang'] == 1?'Month':'เดือน'; ?></label>
+            <label><?php echo $label->label_month; ?></label>
             <?php echo $form->textField($profile, 'mouth_birth', array('class' => 'form-control mouth', 'placeholder' => Yii::app()->session['lang'] == 1?'Month':'เดือน','readonly'=>true )); ?>
             <?php echo $form->error($profile, 'mouth_birth', array('class' => 'error2')); ?>
         </div>
@@ -1931,7 +1931,7 @@ function editNamehouse_registration(filedoc_id){
 <div class="col-md-4 col-sm-6 col-xs-12">
     <div class="form-group">
 
-        <label><?= Yii::app()->session['lang'] == 1?'Blood type ':'กรุ๊ปเลือด'; ?><font class="required_Blood" color="red">*</font></label>
+        <label><?php echo $label->label_blood; ?><font class="required_Blood" color="red">*</font></label>
         <?php echo $form->textField($profile, 'blood', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Blood type ':'กรุ๊ปเลือด')); ?>
         <?php echo $form->error($profile, 'blood', array('class' => 'error2')); ?>
     </div>
@@ -1943,7 +1943,7 @@ function editNamehouse_registration(filedoc_id){
     <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="form-group">
 
-            <label><?= Yii::app()->session['lang'] == 1?'Height ':'ส่วนสูง'; ?><font class="required_Height" color="red">*</font></label>
+            <label><?php echo $label->label_height; ?><font class="required_Height" color="red">*</font></label>
             <?php echo $form->textField($profile, 'hight', array('class' => 'form-control', 'placeholder' =>Yii::app()->session['lang'] == 1?'Height ':'ส่วนสูง','onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '3')); ?>
             <?php echo $form->error($profile, 'hight', array('class' => 'error2')); ?>
         </div>
@@ -1952,7 +1952,7 @@ function editNamehouse_registration(filedoc_id){
     <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="form-group">
 
-            <label><?= Yii::app()->session['lang'] == 1?'Weight ':'น้ำหนัก'; ?><font class="required_Weight" color="red">*</font></label>
+            <label><?php echo $label->label_weight; ?><font class="required_Weight" color="red">*</font></label>
             <?php echo $form->textField($profile, 'weight', array('class' => 'form-control', 'placeholder' => Yii::app()->session['lang'] == 1?'Weight ':'น้ำหนัก','onkeyup'=>"isNumberchar(this.value,this)", 'maxlength' => '3')); ?>
             <?php echo $form->error($profile, 'weight', array('class' => 'error2')); ?>
         </div>
@@ -2077,7 +2077,7 @@ function editNamehouse_registration(filedoc_id){
                     </div>
                 </div>
                
-            <div class="text-right-md"><label><?= Yii::app()->session['lang'] == 1?'Number of children':'จำนวนบุตร'; ?></label></div>
+            <div class="text-right-md"><label><?php echo $label->label_number_of_children;  ?></label></div>
             <div class="col-md-3">
                     <div class="form-group">
                         
@@ -2185,23 +2185,23 @@ function editNamehouse_registration(filedoc_id){
             <span></span>
             <div class="radio radio-danger radio-inline">
                 <input type="radio" name="accommodation" id="accommodation_1" value="own house" <?php if ($profile->accommodation == "own house") : ?> checked="checked" <?php endif ?>>
-                <label for="accommodation_1" class="bg-success text-black"><?= Yii::app()->session['lang'] == 1?'Own house':'ของตนเอง'; ?> </label>
+                <label for="accommodation_1" class="bg-success text-black"><?php echo $label->label_OwnHouse; ?> </label>
             </div>
             <div class="radio radio-danger radio-inline">
                 <input type="radio" name="accommodation" id="accommodation_2" value="rent house" <?php if ($profile->accommodation == "rent house") : ?> checked="checked" <?php endif ?>>
-                <label for="accommodation_2" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'Rent house':'บ้านเช่า'; ?> </label>
+                <label for="accommodation_2" class="bg-danger text-black"><?php echo $label->label_RentHouse; ?> </label>
             </div>
             <div class="radio radio-danger radio-inline">
                 <input type="radio" name="accommodation" id="accommodation_3" value="with parents" <?php if ($profile->accommodation == "with parents") : ?> checked="checked" <?php endif ?>>
-                <label for="accommodation_3" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'Live with parents':'อาศัยอยู่กับบิดามารดา'; ?> </label>
+                <label for="accommodation_3" class="bg-danger text-black"><?php echo $label->label_WithParents; ?> </label>
             </div>
             <div class="radio radio-danger radio-inline">
                 <input type="radio" name="accommodation" id="accommodation_4" value="apartment" <?php if ($profile->accommodation == "apartment") : ?> checked="checked" <?php endif ?>>
-                <label for="accommodation_4" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'Rent apartment':'อพาร์ทเม้นท์'; ?> </label>
+                <label for="accommodation_4" class="bg-danger text-black"><?php echo $label->label_Apartment; ?> </label>
             </div>
             <div class="radio radio-danger radio-inline">
                 <input type="radio" name="accommodation" id="accommodation_5" value="with relative" <?php if ($profile->accommodation == "with relative") : ?> checked="checked" <?php endif ?>>
-                <label for="accommodation_5" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'Live with relatives / friends':'อยู่กับญาติ/เพื่อน'; ?> </label>
+                <label for="accommodation_5" class="bg-danger text-black"><?php echo $label->label_WithRelative; ?> </label>
             </div>
         </div>
     </div>
@@ -2231,8 +2231,7 @@ function editNamehouse_registration(filedoc_id){
             <label><?php echo $label->label_address; ?><font class="required_address" color="red">*</font></label>&nbsp;&nbsp;&nbsp;&nbsp;
             <div class="checkbox checkbox-danger checkbox-inline">
                 <input type="checkbox" name="address_parent" id="address_parent" value="y" <?php if ($profile->address_parent == "y") : ?> checked="checked" <?php endif ?>>
-                <label for="address_parent" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'
-                Use the address as an ID card':'ใช้ที่อยู่ตามบัตรประชาชน'; ?> </label>
+                <label for="address_parent" class="bg-danger text-black"><?php echo $label->label_addressParent; ?> </label>
             </div>
             <?php echo $form->textArea($profile, 'address', array('class' => 'form-control', 'cols' => "30", 'rows' => "3", 'placeholder' => $label->label_address)); ?>
             <?php echo $form->error($profile, 'address', array('class' => 'error2')); ?>
@@ -2333,15 +2332,15 @@ function editNamehouse_registration(filedoc_id){
                         <span></span>
                         <div class="radio radio-danger radio-inline">
                             <input type="radio" name="military" id="military_1" value="enlisted" <?php if ($profile->military == "enlisted") : ?> checked="checked" <?php endif ?>>
-                            <label for="military_1" class="bg-success text-black"><?= Yii::app()->session['lang'] == 1?'Enlisted':'เกณฑ์แล้ว'; ?> </label>
+                            <label for="military_1" class="bg-success text-black"><?php echo $label->label_Enlisted; ?> </label>
                         </div>
                         <div class="radio radio-danger radio-inline">
                             <input type="radio" name="military" id="military_2" value="not enlisted" <?php if ($profile->military == "not enlisted") : ?> checked="checked" <?php endif ?>>
-                            <label for="military_2" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'Not yet enlisted':'ยังไม่ได้เกณฑ์'; ?> </label>
+                            <label for="military_2" class="bg-danger text-black"><?php echo $label->label_NotEnlisted; ?> </label>
                         </div>
                         <div class="radio radio-danger radio-inline">
                             <input type="radio" name="military" id="military_3" value="exempt" <?php if ($profile->military == "exempt") : ?> checked="checked" <?php endif ?>>
-                            <label for="military_3" class="bg-danger text-black"><?= Yii::app()->session['lang'] == 1?'Exempt':'ได้รับการยกเว้น'; ?> </label>
+                            <label for="military_3" class="bg-danger text-black"><?php echo $label->label_Exempt; ?> </label>
                         </div>
                     </div>
                 </div>

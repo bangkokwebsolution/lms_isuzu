@@ -91,6 +91,26 @@
  * @property string $label_place_issued
  * @property string $label_date_issued
  * @property string $label_tel
+ * @property string $label_ship_public
+ * @property string $label_name_emergency
+ * @property string $label_relationship_emergency
+ * @property string $label_FileAttachIdentification
+ * @property string $label_FileAttachPassport
+ * @property string $label_FileAttachCrewIdentification
+ * @property string $label_AttachCopiesOfHousePaticular
+ * @property string $label_OwnHouse
+ * @property string $label_RentHouse
+ * @property string $label_WithParents
+ * @property string $label_Apartment
+ * @property string $label_WithRelative
+ * @property string $label_Enlisted
+ * @property string $label_NotEnlisted
+ * @property string $label_Exempt
+ * @property string $label_month
+ * @property string $label_blood
+ * @property string $label_height
+ * @property string $label_weight
+ * @property string $label_addressParent
  */
 class MenuRegistration extends CActiveRecord
 {
@@ -112,12 +132,12 @@ class MenuRegistration extends CActiveRecord
 		return array(
 			array('id', 'required'),
 			array('id, lang_id, parent_id', 'numerical', 'integerOnly'=>true),
-			array('label_regis, label_homepage, label_identification, label_email, label_courseAll, label_placeholder_course, label_title, label_firstname, label_lastname, label_phone, label_station, label_company, label_position, label_placeholder_station, label_placeholder_company, label_placeholder_position, label_save, label_alert_identification, label_alert_notNumber, label_general_public, label_personnel, label_employee_id, label_passport, label_date_of_expiry, label_birthday, label_age, label_race, label_nationality, label_religion, label_sex, label_male, label_female, label_marital_status, label_single, label_marry, label_address, label_id_Line, label_history_of_severe_illness, label_never, label_ever, label_educational, label_education_level, label_academy, label_graduation_year, label_office, label_ship, label_branch, label_placeholder_branch, label_boat_person_report, label_boat_name, label_placeholder_boat_name, label_adress2, label_placeholder_address2, label_ship_up_date, label_ship_down_date, label_phone1, label_phone2, label_phone3,  label_seamanbook, label_spouse_firstname, label_spouse_lastname, label_father_firstname, label_father_lastname, label_mother_firstname, label_mother_lastname, label_military, label_sickness, label_expected_salary, label_start_working, label_accommodation, label_domicile_address, label_occupation, label_ss_card, label_tax_payer, label_number_of_children, label_place_of_birth, label_place_issued, label_date_issued, label_tel, label_ship_public, label_name_emergency, label_relationship_emergency', 'length', 'max'=>255),
-			array('label_accept, label_reject', 'length', 'max'=>100),
+			array('label_regis, label_homepage, label_OwnHouse, label_RentHouse, label_WithParents, label_Apartment, label_WithRelative, label_Enlisted, label_NotEnlisted, label_Exempt, label_month, label_blood, label_height, label_weight', 'length', 'max'=>50),
+			array('label_accept, label_reject, label_identification, label_email, label_courseAll, label_placeholder_course, label_title, label_firstname, label_lastname, label_phone, label_station, label_company, label_position, label_placeholder_station, label_placeholder_company, label_placeholder_position, label_save, label_alert_identification, label_alert_notNumber, label_general_public, label_personnel, label_employee_id, label_passport, label_date_of_expiry, label_birthday, label_age, label_race, label_nationality, label_religion, label_sex, label_male, label_female, label_marital_status, label_single, label_marry, label_address, label_id_Line, label_history_of_severe_illness, label_never, label_ever, label_educational, label_education_level, label_academy, label_graduation_year, label_office, label_ship, label_branch, label_placeholder_branch, label_boat_person_report, label_boat_name, label_placeholder_boat_name, label_adress2, label_placeholder_address2, label_ship_up_date, label_ship_down_date, label_phone1, label_phone2, label_phone3, label_seamanbook, label_spouse_firstname, label_spouse_lastname, label_father_firstname, label_father_lastname, label_mother_firstname, label_mother_lastname, label_military, label_sickness, label_expected_salary, label_start_working, label_accommodation, label_domicile_address, label_occupation, label_ss_card, label_tax_payer, label_number_of_children, label_place_of_birth, label_place_issued, label_date_issued, label_tel, label_ship_public, label_name_emergency, label_relationship_emergency, label_FileAttachIdentification, label_FileAttachPassport, label_FileAttachCrewIdentification, label_AttachCopiesOfHousePaticular, label_addressParent', 'length', 'max'=>100),
 			array('label_dropdown_mr, label_dropdown_ms, label_dropdown_mrs', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, label_regis, label_homepage, label_accept, label_reject, label_identification, label_email, label_courseAll, label_placeholder_course, label_title, label_firstname, label_lastname, label_phone, label_station, label_company, label_position, label_placeholder_station, label_placeholder_company, label_placeholder_position, label_save, label_alert_identification, label_alert_notNumber, label_dropdown_mr, label_dropdown_ms, label_dropdown_mrs, lang_id, parent_id, label_general_public, label_personnel, label_employee_id, label_passport, label_date_of_expiry, label_birthday, label_age, label_race, label_nationality, label_religion, label_sex, label_male, label_female, label_marital_status, label_single, label_marry, label_address, label_id_Line, label_history_of_severe_illness, label_never, label_ever, label_educational, label_education_level, label_academy, label_graduation_year, label_office, label_ship, label_branch, label_placeholder_branch, label_boat_person_report, label_boat_name, label_placeholder_boat_name, label_adress2, label_placeholder_address2, label_ship_up_date, label_ship_down_date, label_phone1, label_phone2, label_phone3,  label_seamanbook, label_spouse_firstname, label_spouse_lastname, label_father_firstname, label_father_lastname, label_mother_firstname, label_mother_lastname, label_military, label_sickness, label_expected_salary, label_start_working, label_accommodation, label_domicile_address, label_occupation, label_ss_card, label_tax_payer, label_number_of_children, label_place_of_birth, label_place_issued, label_date_issued, label_tel, label_ship_public, label_name_emergency, label_relationship_emergency', 'safe', 'on'=>'search'),
+			array('id, label_regis, label_homepage, label_accept, label_reject, label_identification, label_email, label_courseAll, label_placeholder_course, label_title, label_firstname, label_lastname, label_phone, label_station, label_company, label_position, label_placeholder_station, label_placeholder_company, label_placeholder_position, label_save, label_alert_identification, label_alert_notNumber, label_dropdown_mr, label_dropdown_ms, label_dropdown_mrs, lang_id, parent_id, label_general_public, label_personnel, label_employee_id, label_passport, label_date_of_expiry, label_birthday, label_age, label_race, label_nationality, label_religion, label_sex, label_male, label_female, label_marital_status, label_single, label_marry, label_address, label_id_Line, label_history_of_severe_illness, label_never, label_ever, label_educational, label_education_level, label_academy, label_graduation_year, label_office, label_ship, label_branch, label_placeholder_branch, label_boat_person_report, label_boat_name, label_placeholder_boat_name, label_adress2, label_placeholder_address2, label_ship_up_date, label_ship_down_date, label_phone1, label_phone2, label_phone3, label_seamanbook, label_spouse_firstname, label_spouse_lastname, label_father_firstname, label_father_lastname, label_mother_firstname, label_mother_lastname, label_military, label_sickness, label_expected_salary, label_start_working, label_accommodation, label_domicile_address, label_occupation, label_ss_card, label_tax_payer, label_number_of_children, label_place_of_birth, label_place_issued, label_date_issued, label_tel, label_ship_public, label_name_emergency, label_relationship_emergency, label_FileAttachIdentification, label_FileAttachPassport, label_FileAttachCrewIdentification, label_AttachCopiesOfHousePaticular, label_OwnHouse, label_RentHouse, label_WithParents, label_Apartment, label_WithRelative, label_Enlisted, label_NotEnlisted, label_Exempt, label_month, label_blood, label_height, label_weight, label_addressParent', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -228,6 +248,23 @@ class MenuRegistration extends CActiveRecord
 			'label_ship_public'=>'สำหรับคนประจำเรือ',
 			'label_name_emergency'=>'ชื่อผู้ที่ติดต่อฉุกเฉิน',
 			'label_relationship_emergency'=>'ความสัมพันธ์',
+			'label_FileAttachIdentification' => 'ไฟล์สำเนาบัตรประชาชน',
+			'label_FileAttachPassport' => 'ไฟล์พาสปอร์ต',
+			'label_FileAttachCrewIdentification' => 'ไฟล์หนังสือประจำตัวลูกเรือ',
+			'label_AttachCopiesOfHousePaticular' => 'ไฟล์สำเนาทะเบียนบ้าน',
+			'label_OwnHouse' => 'ของตนเอง',
+			'label_RentHouse' => 'บ้านเช่า',
+			'label_WithParents' => 'อาศัยอยู่กับบิดามารดา',
+			'label_Apartment' => 'อพาร์ทเม้นท์',
+			'label_WithRelative' => 'อยู่กับญาติ/เพื่อน',
+			'label_Enlisted' => 'เกณฑ์แล้ว',
+			'label_NotEnlisted' => 'ยังไม่ได้เกณฑ์',
+			'label_Exempt' => 'ได้รับการยกเว้น',
+			'label_month' => 'เดือน',
+			'label_blood' => 'กรุ๊ปเลือด',
+			'label_height' => 'ส่วนสูง',
+			'label_weight' => 'น้ำหนัก',
+			'label_addressParent' => 'ใช้ที่อยู่ตามบัตรประชาชน',
 		);
 	}
 
@@ -339,6 +376,23 @@ class MenuRegistration extends CActiveRecord
 		$criteria->compare('label_ship_public',$this->label_ship_public,true);
 		$criteria->compare('label_name_emergency',$this->label_name_emergency,true);
 		$criteria->compare('label_relationship_emergency',$this->label_relationship_emergency,true);
+		$criteria->compare('label_FileAttachIdentification',$this->label_FileAttachIdentification,true);
+		$criteria->compare('label_FileAttachPassport',$this->label_FileAttachPassport,true);
+		$criteria->compare('label_FileAttachCrewIdentification',$this->label_FileAttachCrewIdentification,true);
+		$criteria->compare('label_AttachCopiesOfHousePaticular',$this->label_AttachCopiesOfHousePaticular,true);
+		$criteria->compare('label_OwnHouse',$this->label_OwnHouse,true);
+		$criteria->compare('label_RentHouse',$this->label_RentHouse,true);
+		$criteria->compare('label_WithParents',$this->label_WithParents,true);
+		$criteria->compare('label_Apartment',$this->label_Apartment,true);
+		$criteria->compare('label_WithRelative',$this->label_WithRelative,true);
+		$criteria->compare('label_Enlisted',$this->label_Enlisted,true);
+		$criteria->compare('label_NotEnlisted',$this->label_NotEnlisted,true);
+		$criteria->compare('label_Exempt',$this->label_Exempt,true);
+		$criteria->compare('label_month',$this->label_month,true);
+		$criteria->compare('label_blood',$this->label_blood,true);
+		$criteria->compare('label_height',$this->label_height,true);
+		$criteria->compare('label_weight',$this->label_weight,true);
+		$criteria->compare('label_addressParent',$this->label_addressParent,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
