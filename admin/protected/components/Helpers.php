@@ -431,6 +431,7 @@ Class Helpers
         $SetUpSetting['SITE_LINE'] = $Setting->settings_line;
         $SetUpSetting['SITE_EMAIL'] = $Setting->settings_email;
         $SetUpSetting['ACTIVE_OFFICE'] = $Setting->settings_register_office;
+        $SetUpSetting['ACTIVE_PERSONAL'] = $Setting->settings_register_personal;
 
         return $SetUpSetting;
     }

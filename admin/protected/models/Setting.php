@@ -12,8 +12,8 @@ class Setting extends AActiveRecord
 			array('settings_testing, settings_intro_status,password_expire_day,settings_score', 'numerical', 'integerOnly'=>true),
 			array('settings_user_email, settings_pass_email', 'length', 'max'=>255),
 			// array('settings_user_email, settings_pass_email', 'required'),
-			array('settings_intro_detail, settings_score, settings_register, settings_confirmmail, settings_intro_bg_color, settings_institution, settings_email, settings_tel, settings_line, settings_register_office', 'safe'),
-			array('setting_id, settings_score, settings_user_email, settings_register, settings_confirmmail, settings_pass_email, settings_testing, settings_intro_status, settings_intro_detail, settings_intro_bg_color, settings_institution, settings_email, settings_tel, settings_line, settings_register_office', 'safe', 'on'=>'search'),
+			array('settings_intro_detail, settings_score, settings_register, settings_confirmmail, settings_intro_bg_color, settings_institution, settings_email, settings_tel, settings_line, settings_register_office, settings_register_personal', 'safe'),
+			array('setting_id, settings_score, settings_user_email, settings_register, settings_confirmmail, settings_pass_email, settings_testing, settings_intro_status, settings_intro_detail, settings_intro_bg_color, settings_institution, settings_email, settings_tel, settings_line, settings_register_office, settings_register_personal', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -42,7 +42,8 @@ class Setting extends AActiveRecord
 			'settings_tel' => 'เบอร์โทรศัพท์ที่ติดต่อได้',
 			'settings_line' => 'line ที่ติดต่อได้',
 			'password_expire_day' => 'จำนวนวัน ที่รหัสผ่าน User จะหมดอายุ (ใส่ 0 หรือเว้นว่างถ้าไม่กำหนด)',
-			'settings_register_office' => 'เปิด-ปิด ลงทะเบียนพนักงาน Office'
+			'settings_register_office' => 'เปิด-ปิด ลงทะเบียนพนักงาน Office',
+			'settings_register_personal' => 'เปิด-ปิด ลงทะเบียนบุคคลทั่วไป',
 		);
 	}
 

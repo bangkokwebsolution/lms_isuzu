@@ -118,6 +118,17 @@
 					<?php echo $form->error($model,'settings_register_office'); ?>
 				</div>
 
+				
+				<div class="row">
+					<?php echo $form->labelEx($model,'settings_register_personal'); ?>
+					<!--<div class="toggle-button" data-toggleButton-style-enabled="success">-->
+						<?php echo $form->checkBox($model,'settings_register_personal',array(
+							'value'=>1, 'uncheckValue'=>0,
+                                                        'data-toggle'=> 'toggle','data-onstyle'=>'success','data-size'=>'mini'
+						)); ?>
+					<!--</div>-->
+					<?php echo $form->error($model,'settings_register_personal'); ?>
+				</div>
 				<p><div class="progress progress-inverse progress-mini"><div class="bar" style="width: 100%;"></div></div></p>
 
 

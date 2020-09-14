@@ -1402,11 +1402,20 @@ function editNamehouse_registration(filedoc_id){
 
              <div class="row justify-content-center select-profile mg-0">
                 <div class="form-group">
+                     <?php
+                        
+                    $chk_status_reg = $SettingAll = Helpers::lib()->SetUpSetting();
+                    $chk_status_reg = $SettingAll['ACTIVE_PERSONAL'];
+                    if ($chk_status_reg) {
+                        ?>
                     <div class="radio radio-danger radio-inline">
                         <input type="radio" name="type_user" id="general" value="5" <?php if ($profile->type_user == 5) : ?> checked="checked" <?php endif ?>>
                         <label for="general" class="bg-success text-black">
                             <?php echo $label->label_general_public; ?> </label>
                         </div>
+                        <?php
+                        }
+                        ?>
                         <div class="radio radio-danger radio-inline">
                             <input type="radio" name="type_user" id="accept" value="1" <?php if ($profile->type_user == 1) : ?> checked="checked" <?php endif ?>>
                             <label for="accept" class="bg-success text-black">

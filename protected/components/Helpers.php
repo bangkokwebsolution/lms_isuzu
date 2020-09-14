@@ -209,6 +209,7 @@ public function SetUpSetting()
     $SetUpSetting['ACTIVE_REGIS'] = $Setting->settings_register;
     $SetUpSetting['CONFIRM_MAIL'] = $Setting->settings_confirmmail;
     $SetUpSetting['ACTIVE_OFFICE'] = $Setting->settings_register_office;
+    $SetUpSetting['ACTIVE_PERSONAL'] = $Setting->settings_register_personal;
 
     return $SetUpSetting;
 }
