@@ -5073,6 +5073,16 @@ if(!empty($LogStartcourse)){
 
 		//------------------- ค่า form search ------------------------//
 
+
+			$criteria = new CDbCriteria;
+			$criteria->with = array('CategoryTitle');
+			$criteria->addIncondition('course.course_id',$course_id_arr);
+			$criteria->compare('course.active','y');
+			$criteria->compare('course.lang_id',$langId);
+			$criteria->compare('categorys.active','y');
+			$criteria->order = 'course_title';
+			$model_courseselect = CourseOnline::model()->findAll($criteria);
+
 		    $criteria = new CDbCriteria;
 			$criteria->with = array('CategoryTitle');
 			$criteria->addIncondition('course.course_id',$course_id_arr);
@@ -5421,9 +5431,39 @@ $arr_countquest_course[$sectionValue->survey_section_id][$value_c->course_id][$v
 	$arr_course_year = [];
 	if(!empty($search_course)){		
 		foreach ($search_course as $key_c => $value_c) {
-			for ($year=$_GET["search"]["start_year"]; $year <= 2020 ; $year++) { 
-						$arr_course_year[$year][$value_c->course_id]["register"] = 0;
-						$arr_course_year[$year][$value_c->course_id]["pass"] = 0;
+
+
+		$gen_all= [];
+if($_GET["search"]["gen_id"] != ""){
+	$value_c->CourseGeneration = CourseGeneration::model()->findAll("gen_id=".$_GET["search"]["gen_id"]);
+
+	if(!empty($value_c->CourseGeneration)){
+		foreach ($value_c->CourseGeneration as $key_cg => $value_cg) {
+			if($value_cg->active == 'y'){
+				$gen_all[] = $value_cg->gen_id;
+			}
+		}
+	}	
+}else{
+
+	if(!empty($value_c->CourseGeneration)){
+		$gen_all[] = 0;
+		foreach ($value_c->CourseGeneration as $key_cg => $value_cg) {
+			if($value_cg->active == 'y'){
+				$gen_all[] = $value_cg->gen_id;
+			}
+		}
+	}
+}
+    				// else{	
+
+    					if(!empty($gen_all)){
+    						foreach ($gen_all as $key_cg => $value_cg) {
+
+
+			for ($year=$_GET["search"]["start_year"]; $year <= $_GET["search"]["end_year"] ; $year++) { 
+								
+						$arr_course_year[] = $year;
 
 						$criteria = new CDbCriteria;
 						$criteria->addCondition('user.id IS NOT NULL');
@@ -5484,8 +5524,8 @@ $model_level = Branch::model()->findAll(array(
 						}
 						}
 
-						$criteria->compare('t.start_date', ">=".$_GET["search"]["start_year"]."-01-01"." 00:00:00");
-						$criteria->compare('t.start_date', "<=".$_GET["search"]["end_year"]."-12-31"." 23:59:59");
+						$criteria->compare('t.start_date', ">=".$year."-01-01"." 00:00:00");
+						$criteria->compare('t.start_date', "<=".$year."-12-31"." 23:59:59");
 
 						$criteria->order = 't.course_id ASC, t.gen_id ASC';
 						$LogStartcourse = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
@@ -5606,13 +5646,12 @@ if (count($header->sections) > 0 && !empty($LogStartcourse)) {
 
                         }	
 
- $countquest_section[$sectionValue->survey_section_id][$value_c->course_id][$value_cg] += $countQuest;
-                        $total_section[$sectionValue->survey_section_id][$value_c->course_id][$value_cg] += $total_average ;
+ $countquest_section[$sectionValue->survey_section_id][$value_c->course_id][$value_cg][$year] += $countQuest;
+                        $total_section[$sectionValue->survey_section_id][$value_c->course_id][$value_cg][$year] += $total_average ;
                         $title_section[$sectionValue->survey_section_id] = $sectionValue->section_title ;
 
-
-$arr_total_course[$sectionValue->survey_section_id][$value_c->course_id][$value_cg] = $total_section[$sectionValue->survey_section_id][$value_c->course_id][$value_cg];
-$arr_countquest_course[$sectionValue->survey_section_id][$value_c->course_id][$value_cg] =  $countquest_section[$sectionValue->survey_section_id][$value_c->course_id][$value_cg];
+$arr_total_course[$sectionValue->survey_section_id][$value_c->course_id][$value_cg][$year] = $total_section[$sectionValue->survey_section_id][$value_c->course_id][$value_cg][$year];
+$arr_countquest_course[$sectionValue->survey_section_id][$value_c->course_id][$value_cg][$year] =  $countquest_section[$sectionValue->survey_section_id][$value_c->course_id][$value_cg][$year];
 
                     }
 			}
@@ -5621,14 +5660,20 @@ $arr_countquest_course[$sectionValue->survey_section_id][$value_c->course_id][$v
 	}
 }
 
+
 			} //for ($i=$_GET["search"]["start_year"]
+			} // foreach ($value_c->CourseGeneration
+			 } // if(!empty($value_c->CourseGeneration))
+
 		} // foreach ($search_course
     } // if(!empty($search_course))
-
+   $arr_course_year =  array_unique($arr_course_year);
 
 } // ช่วงปี
 
     		$this->render('assessment', array(
+    			
+    			'model_courseselect'=>$model_courseselect,
     			'model_course'=>$model_course,
     			'model_gen'=>$model_gen,
     			'model_department'=>$model_department,

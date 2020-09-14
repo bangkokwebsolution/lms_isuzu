@@ -84,9 +84,9 @@
                                     <label for="search_course_id">
                                         <?php 
                                             if(Yii::app()->session['lang'] != 1){
-                                                echo 'หลักสูตร <b style="color:red">*</b>';
+                                                echo 'หลักสูตร <b style="color:red"></b>';
                                             }else{
-                                                echo 'Course <b style="color:red">*</b>';
+                                                echo 'Course <b style="color:red"></b>';
                                             }
                                         ?>                                             
                                     </label>
@@ -101,7 +101,7 @@
                                             ?>
                                         </option>
                                         <?php 
-                                        foreach ($model_course as $key => $value) {
+                                        foreach ($model_courseselect as $key => $value) {
                                             if(Yii::app()->session['lang'] != 1){
                                                 $value->course_id = $value->parent_id;
                                             }
@@ -116,9 +116,9 @@
                                     <label for="search_gen_id">
                                          <?php 
                                                 if(Yii::app()->session['lang'] != 1){
-                                                    echo 'รุ่น <b style="color:red">*</b>';
+                                                    echo 'รุ่น <b style="color:red"></b>';
                                                 }else{
-                                                    echo 'Gen <b style="color:red">*</b>';
+                                                    echo 'Gen <b style="color:red"></b>';
                                                 }
                                             ?>
                                     </label>
@@ -246,7 +246,6 @@ if(isset($model_gen) && !empty($model_gen)){
 if(isset($model_department) && !empty($model_department)){
     foreach ($model_department as $key => $value) {
         ?>
-        <?php var_dump($value); ?>
         <option <?php if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] == $value->id){ echo "selected"; $department = $_GET["search"]["department"];} ?> value="<?= $value->id?>"><?= $value->dep_title ?></option> 
         <?php
 }
@@ -650,8 +649,7 @@ chart.draw(data, options);
                             </tr>
 
                         <?php }} }?>
-                             <?php       var_dump($test_arr);
-                        ?>
+                            
                         <?php if($_GET["search"]["course_id"] == null){ ?>
                          <tr style="border: 1.5px solid #000; text-align: center;">
                                 <td colspan="3" >รวม</td> 
@@ -698,32 +696,50 @@ chart.draw(data, options);
 
                 <div class="row">
                     <?php 
+                    $i = 0;
                     foreach ($model_year as $key_y => $value_y) { 
-                       
+
+                        $value_chk_year = '2020';
                         if(isset($_GET["search"]["graph"]) && in_array("bar", $_GET["search"]["graph"])){ ?>
                             <div class="col-sm-1"></div>
                             <div class="col-sm-10">
                                 <div class="year-report">
-                                    <h4>ปี <?= $key_y ?></h4>
+                                    <h4>ปี <?= $value_chk_year ?></h4>
                                     <div style="width:100%">
                                         <div id="chart_bar"></div>
                                     </div>
                                     <?php
 
-                                    $data = ['0'=>"หลักสูตร"];
-                                    $dataresult = [];
-                                    foreach ($sections as $keysectionschart2 => $valsectionschart2) {
-                                        $data[] = $title_section[$valsectionschart2->survey_section_id];
-                                        $dataresult[] = $resultssec =  round($total_section[$valsectionschart2->survey_section_id]/$countquest_section[$valsectionschart2->survey_section_id],2) ;
+                                    $graph_arr = [];
+                foreach ($model_course as $keycou => $valcou) {
 
-                                    } 
+                                    foreach ($valcou->CourseGeneration as $key_cg => $value_cg) {
+                                        if($value_cg->active == 'y'){
+                              
+
+
+                    $data = ['0'=>"หลักสูตร"];
+                    $dataresult = [];
+                    foreach ($sections as $keysectionschart => $valsectionschart) {
+                        $data[] = $title_section[$valsectionschart->survey_section_id];
+                     
+
+                        $dataresult[] = $resultssec =    round($total_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id][$model_year[$i]]/$countquest_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id][$model_year[$i]],2);  ;
+
+                    } 
+                   
 
                     // $data =  ['0'=>"หลักสูตร",'1'=>"คนสมัคร" ,'3'=>"test"] ; 
-                                    $data_chk = implode('","',$data);
-                                    $dataresult_chk = implode(',',$dataresult);
+                    $data_chk = implode('","',$data);
+                    $dataresult_chk = implode(',',$dataresult);
 
-                                    $test  = '["'.$data_chk.'"],';
-                                    $testresult  = '["'.$course_title->course_title.'",'.$dataresult_chk.'],';
+                    $test  = '["'.$data_chk.'"],';
+                    $testresult  = '["'.$valcou->course_title.'",'.$dataresult_chk.'],';
+                    $graph_arr[$valcou->course_id][$value_cg->gen_id][test.$i] = $testresult;
+
+                }}}
+               
+
 
                                     ?>
                                     <script type="text/javascript">
@@ -731,12 +747,18 @@ chart.draw(data, options);
                                         google.charts.setOnLoadCallback(drawChart);
                                         function drawChart() {
                                          var data = google.visualization.arrayToDataTable([
-                                            <?php 
+                                             <?php 
                             // foreach ($model_graph as $key => $value) {
-                                            echo $test;
-                                            echo $testresult;
+                                    echo $test;
+                            foreach ($model_course as $keycou => $valcou) {
+                                foreach ($valcou->CourseGeneration as $key_cg => $value_cg) {
+                                    
+                                    echo $graph_arr[$valcou->course_id][$value_cg->gen_id][test.$i];
+                                }
+                            }
+
                             // } 
-                                            ?>
+                            ?>
                                             ]);
 
                                           var view = new google.visualization.DataView(data);
@@ -768,14 +790,13 @@ google.visualization.events.addListener(chart, 'ready', function () {
 });
 
 chart.draw(data, options);
+
                                     }
                                 </script>
                             </div>
                         </div>
                             <div class="col-sm-1"></div>
-
-                       <?php } // in_array("bar",
-
+                       <?php  } // in_array("bar",
                     }//foreach ($arr_count_course
                      ?>
                 </div>
