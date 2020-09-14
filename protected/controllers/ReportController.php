@@ -660,12 +660,13 @@ class ReportController extends Controller
 						            </center>
 						        	</li>
 									<?php
-    
+    								$people_total = Yii::app()->session['lang'] == 1?"Total number of people applying":"จำนวนคนสมัครทั้งหมด";
+    								$people = Yii::app()->session['lang'] == 1?"People":"คน";
 									$i = 1;
 									$datatable .= '<div class="report-table">';
-									$datatable .= '<p style="text-align: right;">จำนวนคนสมัครทั้งหมด <span style="font-weight:bold;">';
+									$datatable .= '<p style="text-align: right;">'.$people_total.' <span style="font-weight:bold;">';
 									$datatable .=  count($User);
-									$datatable .= '</span> คน</p>';
+									$datatable .= '</span> '.$people.'</p>';
 									$datatable .= '<div class="table-responsive w-100 t-regis-language">';
 									$datatable .= '<table class="table">';       
 									$datatable .= '<thead>';
@@ -1328,10 +1329,12 @@ public function actionReportRegisterOfficeExcel()
 							<?php
 
 							$i = 1;
+							$people_total = Yii::app()->session['lang'] == 1?"Total number of people applying":"จำนวนคนสมัครทั้งหมด";
+    						$people = Yii::app()->session['lang'] == 1?"People":"คน";
 							$datatable .= '<div class="report-table">';
-							$datatable .= '<p style="text-align: right;">จำนวนคนสมัครทั้งหมด <span style="font-weight:bold;">';
+							$datatable .= '<p style="text-align: right;">'.$people_total.' <span style="font-weight:bold;">';
 							$datatable .=  count($User);
-							$datatable .= '</span> คน</p>';
+							$datatable .= '</span> '.$people.'</p>';
 							$datatable .= '<div class="table-responsive w-100 t-regis-language">';
 							$datatable .= '<table class="table">';       
 							$datatable .= '<thead>';
@@ -2260,9 +2263,11 @@ public function actionReportRegisterData()
 									
 										$total_dep = count($users_dm);
 									$i = 1;
+									$people_total = Yii::app()->session['lang'] == 1?"Total number of people applying":"จำนวนคนสมัครทั้งหมด";
+    								$people = Yii::app()->session['lang'] == 1?"People":"คน";
 									$datatable .= '<div class="report-table">';
-									$datatable .= '<p style="text-align: right;">จำนวนคนสมัครทั้งหมด ';
-									$datatable .= '<span style="font-weight:bold;"> ';	
+									$datatable .= '<p style="text-align: right;">'.$people_total;
+									$datatable .= ' <span style="font-weight:bold;"> ';	
 									if ($TypeEmployee == 2 && $dep_back && $Department != "") {
 										$datatable .= $total_dep;
 									}else if($TypeEmployee == 2 && $branch && $Department != ""){
@@ -2272,8 +2277,8 @@ public function actionReportRegisterData()
 									}else if($TypeEmployee == 2 && $Department == ""){
 										$datatable .=  $total_dep + $total;
 									}
-									$datatable .= '</span>';
-									$datatable .= ' คน</p>';
+									$datatable .= '</span> ';
+									$datatable .=  $people.'</p>';
 									$datatable .= '<div class="table-responsive w-100 t-regis-language">';
 									$datatable .= '<table class="table">';       
 									$datatable .= '<thead>';

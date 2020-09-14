@@ -168,7 +168,7 @@ $user_Department = $user_login->department_id;
 			}
 		</style>
 		<div class="report-table">
-			<p style="text-align: right;">จำนวนคนสมัครทั้งหมด <span style="font-weight:bold;"><?php echo count($User); ?></span> คน</p>
+			<p style="text-align: right;"><?php echo Yii::app()->session['lang'] == 1?"Total number of people applying":"จำนวนคนสมัครทั้งหมด"; ?> <span style="font-weight:bold;"><?php echo count($User); ?></span> <?php echo Yii::app()->session['lang'] == 1?"People":"คน"; ?></p>
 			<div class="table-responsive w-100 t-regis-language">
 				<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 90%;">       
 					<thead>
