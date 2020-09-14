@@ -82,11 +82,35 @@ class LoginController extends Controller
                     //     $this->redirect(Yii::app()->user->returnUrl);
                     // }
           } else {
+
             foreach ($model->getErrors() as $key => $value) {
              $error .= $value[0];
+
            }
-           Yii::app()->user->setFlash('msg',$error);
-           Yii::app()->user->setFlash('icon','warning');
+           if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+              switch ($error) {
+                case "ชื่อผู้ใช้ไม่ถูกต้อง":
+                  $msg = "Username is incorrect.";
+                  break;
+                case "อีเมลล์ไม่ถูกต้อง":
+                  $msg = "Email is incorrect.";
+                  break;
+                case "Account คุณยังไม่ได้ยืนยันการใช้งาน":
+                  $msg = "You account is not activated.";
+                  break;
+                case "Account คุณถูกระงับ":
+                  $msg = "You account is blocked.";
+                  break;
+                case "รหัสผ่านไม่ถูกต้อง":
+                  $msg = "Password is incorrect.";
+                  break;
+              }
+              Yii::app()->user->setFlash('msg',$msg);
+              Yii::app()->user->setFlash('icon','warning'); 
+           }else{
+               Yii::app()->user->setFlash('msg',$error);
+               Yii::app()->user->setFlash('icon','warning'); 
+           }        
                     // $error = $model->getErrors();
                     /*var_dump($error);
                     exit();*/
