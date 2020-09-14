@@ -15,6 +15,7 @@
  */
 class Ship extends CActiveRecord
 {
+	public $news_per_page;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -34,10 +35,10 @@ class Ship extends CActiveRecord
 			array('create_by, update_by', 'numerical', 'integerOnly'=>true),
 			array('ship_name, ship_name_en', 'length', 'max'=>255),
 			array('active', 'length', 'max'=>1),
-			array('create_date, update_date', 'safe'),
+			array('create_date, update_date, news_per_page', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('ship_id, ship_name, ship_name_en, create_date, create_by, update_date, update_by, active', 'safe', 'on'=>'search'),
+			array('news_per_page, ship_id, ship_name, ship_name_en, create_date, create_by, update_date, update_by, active', 'safe', 'on'=>'search'),
 		);
 	}
 
