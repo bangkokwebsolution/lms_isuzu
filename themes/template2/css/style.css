@@ -1142,6 +1142,7 @@ hr {
   max-height: 170px;
   padding: .50em;
   border-radius: 15px;
+  max-width:100%;
 }
 
 
