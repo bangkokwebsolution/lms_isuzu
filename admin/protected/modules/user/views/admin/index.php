@@ -36,6 +36,7 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	$.appendFilter("User[news_per_page]", "news_per_page");
 EOD
 , CClientScript::POS_READY);
+var_dump($this->route);
 				?>
 				<div id="user" class="innerLR">
 
@@ -168,9 +169,25 @@ EOD
 											'header' => 'เลขพาสปอร์ต',
 											'name'=>'passport',
 											'type'=>'html',
-											'visible' => $this->route != "user/admin/General",
+											'visible' => $this->route == "user/admin/employeeShip",
 											'value'=>function($data){
 												return $data->profile->passport;
+						            	//var_dump($data->profile->type_user);
+											},
+											'filterHtmlOptions'=>array('style'=>'width:30px'),
+											// 'filterHtmlOptions' => array('style' => 'width: 100%;'),
+											// 'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
+											//'headerHtmlOptions'=>array('style'=>'text-align:center;width:100%;'),
+
+										),
+
+										array(
+											'header' => 'รหัสพนักงาน',
+											'name'=>'username',
+											'type'=>'html',
+											'visible' =>  $this->route === "user/admin/employee" ,
+											'value'=>function($data){
+												return $data->username;
 						            	//var_dump($data->profile->type_user);
 											},
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
