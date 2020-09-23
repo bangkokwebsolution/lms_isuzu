@@ -124,7 +124,7 @@ class LibraryFileController extends Controller
 						rename($path , $path_new);
 						unlink($path);
 					}
-					var_dump($name_old);
+					// var_dump($name_old);
 
 
 					$time = date("YmdHis");					
@@ -132,8 +132,8 @@ class LibraryFileController extends Controller
 					$path = Yii::app()->getUploadPath(null).$model->library_filename;
 					$course_picture->saveAs($path);
 					$model->save();
-					var_dump($model->library_filename);
-					exit();
+					// var_dump($model->library_filename);
+					// exit();
 				}
 
 				$this->redirect(array('view','id'=>$model->library_id));
