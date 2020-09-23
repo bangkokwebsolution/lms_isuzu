@@ -117,6 +117,15 @@ class LibraryFileController extends Controller
 			if($model->validate() && $model->save()){
 				$course_picture = CUploadedFile::getInstance($model, 'library_filename');
 				if(!empty($course_picture)){
+
+					$path = Yii::app()->getUploadPath(null).$model->library_filename;
+					$path_new = Yii::app()->getUploadPath(null)."update___".$model->library_filename;
+					if($path != ""){
+						rename($path , $path_new);
+						unlink($path);
+					}
+
+
 					$time = date("YmdHis");					
 					$fileNamePicture = $model->library_name_en.".".$course_picture->getExtensionName();
 					// $fileNamePicture = $time."_.".$course_picture->getExtensionName();
