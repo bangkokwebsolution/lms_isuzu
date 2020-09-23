@@ -119,7 +119,7 @@ class LibraryFileController extends Controller
 				if(!empty($course_picture)){
 
 					$path = Yii::app()->getUploadPath(null).$model->library_filename;
-					$path_new = Yii::app()->getUploadPath(null)."update___".$model->library_filename;
+					$path_new = Yii::app()->getUploadPath(null)."update___".date("YmdHis")."___".$model->library_filename;
 					if($path != ""){
 						rename($path , $path_new);
 						unlink($path);
@@ -155,7 +155,7 @@ class LibraryFileController extends Controller
 		$model->save(false);
 
 		$path = Yii::app()->getUploadPath(null).$model->library_filename;
-		$path_new = Yii::app()->getUploadPath(null)."del___n___".$model->library_filename;
+		$path_new = Yii::app()->getUploadPath(null)."del___n___".date("YmdHis")."___".$model->library_filename;
 		if($path != ""){
 			rename($path , $path_new);
 			unlink($path);
