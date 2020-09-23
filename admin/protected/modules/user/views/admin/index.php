@@ -36,7 +36,7 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	$.appendFilter("User[news_per_page]", "news_per_page");
 EOD
 , CClientScript::POS_READY);
-var_dump($this->route);
+
 				?>
 				<div id="user" class="innerLR">
 
