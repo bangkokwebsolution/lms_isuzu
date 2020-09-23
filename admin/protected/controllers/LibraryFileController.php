@@ -105,8 +105,8 @@ class LibraryFileController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
+		$name_old = $model->library_filename;
 
-		$fileNamePicture = $model->library_filename;
 
 		if(isset($_POST['LibraryFile']))
 		{
@@ -118,19 +118,22 @@ class LibraryFileController extends Controller
 				$course_picture = CUploadedFile::getInstance($model, 'library_filename');
 				if(!empty($course_picture)){
 
-					$path = Yii::app()->getUploadPath(null).$model->library_filename;
-					$path_new = Yii::app()->getUploadPath(null)."update___".date("YmdHis")."___".$model->library_filename;
+					$path = Yii::app()->getUploadPath(null).$name_old;
+					$path_new = Yii::app()->getUploadPath(null)."update___".date("YmdHis")."___".$name_old;
 					if($path != ""){
 						rename($path , $path_new);
 						unlink($path);
 					}
+					var_dump($name_old);
 
 
 					$time = date("YmdHis");					
-					$fileNamePicture = $model->library_name_en.".".$course_picture->getExtensionName();
-					// $fileNamePicture = $time."_.".$course_picture->getExtensionName();
+					$model->library_filename = $model->library_name_en.".".$course_picture->getExtensionName();
 					$path = Yii::app()->getUploadPath(null).$model->library_filename;
 					$course_picture->saveAs($path);
+					$model->save();
+					var_dump($model->library_filename);
+					exit();
 				}
 
 				$this->redirect(array('view','id'=>$model->library_id));
