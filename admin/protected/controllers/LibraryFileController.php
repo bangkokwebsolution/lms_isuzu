@@ -145,6 +145,14 @@ class LibraryFileController extends Controller
 		$model->active = 'n';
 		$model->save(false);
 
+		$path = Yii::app()->getUploadPath(null).$model->library_filename;
+		$path_new = Yii::app()->getUploadPath(null)."del___n___".$model->library_filename;
+		if($path != ""){
+			rename($path , $path_new);
+			unlink($path);
+		}
+
+
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
