@@ -28,14 +28,17 @@ class Passcours extends AActiveRecord
 			$start = date("Y")."-01-01 00:00:00";
 			$last = date("Y")."-12-31 23:59:59";
 			$model_find = PasscourseNumber::model()->find(array(
-				'condition' => 'course_id=:course_id AND created_date IS NOT NULL AND (created_date<=:last) AND (created_date>=:start)',
+				'condition' => 'course_id=:course_id AND (created_date<=:last) AND (created_date>=:start)',
 				'params' => array(':course_id'=>$this->passcours_cours, ':start'=>$start, ':last'=>$last,),
-				'order' => 'created_date DESC',
+				'order' => 'id DESC',
+				// 'order' => 'created_date DESC',
 			));
 			if($model_find != ""){
-				$run_number = sprintf('%04d', $model_find+1);
+				$run_number = sprintf('%04d', $model_find->code_number+1);
+				$id_before = $model_find->id;
 			}else{
 				$run_number = sprintf('%04d',"1");
+				$id_before = 0;
 			}
 
 			$model_number = new PasscourseNumber;
@@ -44,6 +47,7 @@ class Passcours extends AActiveRecord
 			$model_number->gen_id = $this->gen_id;
 			$model_number->user_id = $this->passcours_user;
 			$model_number->code_number = $run_number;
+			$model_number->passcourse_id = $id_before;
 			$model_number->save();
 
 			$user_id = base64_encode($this->passcours_user);
