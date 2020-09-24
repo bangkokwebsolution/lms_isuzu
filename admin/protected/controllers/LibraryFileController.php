@@ -75,11 +75,13 @@ class LibraryFileController extends Controller
 		{
 			$model->attributes=$_POST['LibraryFile'];
 
+			$model->library_name_en = str_replace(' ', '_', $model->library_name_en);
+
 			if($model->validate() && $model->save()){
 				$course_picture = CUploadedFile::getInstance($model, 'library_filename');
 				if(!empty($course_picture)){
 					$time = date("YmdHis");
-					// $fileNamePicture = $time."_.".$course_picture->getExtensionName();
+
 					$fileNamePicture = $model->library_name_en.".".$course_picture->getExtensionName();
 					$model->library_filename = $fileNamePicture;
 					$path = Yii::app()->getUploadPath(null).$model->library_filename;		
@@ -106,6 +108,8 @@ class LibraryFileController extends Controller
 	{
 		$model=$this->loadModel($id);
 		$name_old = $model->library_filename;
+		$exten_old = explode(".", $model->library_filename);
+		$exten_old = $exten_old[(count($exten_old)-1)];
 
 
 		if(isset($_POST['LibraryFile']))
@@ -113,6 +117,7 @@ class LibraryFileController extends Controller
 			$model->attributes=$_POST['LibraryFile'];
 			$model->scenario = 'validateCheckk';
 
+			$model->library_name_en = str_replace(' ', '_', $model->library_name_en);
 			
 			if($model->validate() && $model->save()){
 				$course_picture = CUploadedFile::getInstance($model, 'library_filename');
@@ -124,16 +129,23 @@ class LibraryFileController extends Controller
 						rename($path , $path_new);
 						unlink($path);
 					}
-					// var_dump($name_old);
-
 
 					$time = date("YmdHis");					
 					$model->library_filename = $model->library_name_en.".".$course_picture->getExtensionName();
 					$path = Yii::app()->getUploadPath(null).$model->library_filename;
 					$course_picture->saveAs($path);
 					$model->save();
-					// var_dump($model->library_filename);
-					// exit();
+
+				}else{
+					$path = Yii::app()->getUploadPath(null).$name_old;
+					$path_new = Yii::app()->getUploadPath(null).$model->library_name_en.".".$exten_old;
+					if($path != ""){
+						rename($path , $path_new);
+						unlink($path);
+					}
+					$model->library_filename = $model->library_name_en.".".$exten_old;
+					$model->save();
+
 				}
 
 				$this->redirect(array('view','id'=>$model->library_id));

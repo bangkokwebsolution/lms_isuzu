@@ -81,7 +81,7 @@ class LibraryFile extends CActiveRecord
 			'sortOrder' => 'Sort Order',
 			'library_type_id' => 'ประเภท',
 			'library_name' => 'ชื่อไฟล์ (TH)',
-			'library_name_en' => 'ชื่อไฟล์ (EN) ห้ามมีสัญลักษณ์พิเศษ',
+			'library_name_en' => 'ชื่อไฟล์ (EN) ห้ามมีสัญลักษณ์พิเศษและช่องว่าง',
 			'library_filename' => 'ไฟล์',
 			'created_by' => 'ผู้สร้าง',
 			'created_date' => 'วันที่สร้าง',
