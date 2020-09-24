@@ -1020,12 +1020,12 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                                                                                             <span class="pull-right">
                                                                                                 <span id="lblduration-<?=$les->id?>"></span>  <span class="btn btn-warning detailmore"><?php echo $label->label_gotoLesson; ?> <i class="fa fa-play-circle"></i> </span></span>
                                                                                                 <span class="list__course"><?= $les->getRefileName(); ?></span>&nbsp;<?=$statusValue?>
-                                                                                                <div class="hidden">
+                                                                                                <!-- <div class="hidden">
                                                                                                     <video id="video_player<?=$les->id?>" width="320" height="240" controls>
-                                                                                                        <source src="<?php echo $uploadFolder . $les->filename;?>" type="video/mp4">
+                                                                                                        <source src="<?php //echo $uploadFolder . $les->filename;?>" type="video/mp4">
                                                                                                         </video>
                                                                                                         <div id="meta"></div>   
-                                                                                                    </div>
+                                                                                                    </div> -->
                                                                                                 </li>
                                                                                             </a>  
                                                                                             <?php 
