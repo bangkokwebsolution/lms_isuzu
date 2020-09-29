@@ -4054,10 +4054,41 @@ function time_test_start(time_down){
                         file: file,
                         gen_id: gen_iddd,
                         lesson: lesson,
+                        page: "courselearnsavetimevideo",
                       }),
                       success: function(data) {
                         if(data != "error" ){
+
+                          if(data == "logout"){
+                              Swal.fire({
+                                  title: 'กรุณาเข้าสู่ระบบ',
+                                  // text: "ว่าต้องการลบบันทึก",
+                                  icon: 'error',
+                                  showCancelButton: true,
+                                  confirmButtonColor: '#3085d6',
+                                  cancelButtonColor: '#d33',
+                                  confirmButtonText: 'ตกลง',
+                                  cancelButtonText: 'ยกเลิก'
+                                }).then((result) => {
+                                  window.location = "http://thorconn.com/";
+                                  // if (result.value) {
+
+                                  // }
+                                });
+
+
+
+
+                        }else{
                           console.log(data);
+                          // console.log(textStatus);
+                          // console.log(xhr);
+                          // console.log(xhr.status);
+                        
+                        }
+
+
+                          // console.log(data);
                         }
                       }
                     });

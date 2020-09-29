@@ -25,6 +25,9 @@ class CourseController extends Controller {
         ));
     }
     if (Yii::app()->user->id == null) {
+        if(isset($_POST['page']) && $_POST['page'] == "courselearnsavetimevideo"){ // ถ้า logout แล้วกำลังเรียนอยู่
+            echo "logout"; exit();
+        }
 
         $msg = $label->label_alert_msg_plsLogin;
         Yii::app()->user->setFlash('msg',$msg);
@@ -2474,6 +2477,10 @@ public function actionCourseLearnNoteRemove(){
 public function actionCourseLearnSaveTimeVideo(){
     // var_dump($_POST); 
     if(isset($_POST["time"]) && isset($_POST["file"])){
+        if(Yii::app()->user->id == null){
+            echo "logout";
+            exit();
+        }
         $user_id = Yii::app()->user->id;
         $file_id = $_POST["file"];
         $gen_id = $_POST["gen_id"];
