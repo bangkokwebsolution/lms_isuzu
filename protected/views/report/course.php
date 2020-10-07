@@ -309,7 +309,7 @@ if(isset($model_position) && !empty($model_position)){
                                     <label for="search_level">
                                         <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "เลเวล";
+                                            echo "ระดับตำแหน่ง";
                                         }else{
                                             echo "Level";
                                         }
@@ -319,7 +319,7 @@ if(isset($model_position) && !empty($model_position)){
                                         <option value="" selected>
                                             <?php 
                                             if(Yii::app()->session['lang'] != 1){
-                                                echo "เลือกเลเวล";
+                                                echo "เลือกระดับตำแหน่ง";
                                             }else{
                                                 echo "Select Level";
                                             }
