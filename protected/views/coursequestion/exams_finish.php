@@ -127,7 +127,7 @@ if($course->cate_id != 1){ //LMS
 				</div>
 			</div>
 
-			<?php if($testType != "pre" && ($quesType_ != 4 || $quesType_ != 6 || $quesType_ != 3)){ // โชว์ว่าข้อไหนถูก ไม่ถูก ?>
+			<?php if($testType != "pre" && ($quesType_ != 4 && $quesType_ != 6 && $quesType_ != 3)){ // โชว์ว่าข้อไหนถูก ไม่ถูก ?>
 			<div class="col-sm-4">
 				<aside>
 					<h4 class="title text-success"><span class="pull-right"><?= $modelScore->score_number; ?></span><?=UserModule::t('scoreAll');?></h4>
@@ -158,7 +158,7 @@ if($course->cate_id != 1){ //LMS
 	</div>
 </section>
 <div class="container">
-	<?php if($course->course_refer == 'y'){ ?>	
+	<?php if($course->course_refer == 'y' && $testType != "pre"){ ?>	
 		<div class="question-content-wrap">
 			<div class="row">
 				<div class="col-md-8">

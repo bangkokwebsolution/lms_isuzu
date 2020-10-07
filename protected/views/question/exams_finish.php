@@ -100,7 +100,7 @@ if($modelScore->type=='post' && !$state){
 					<a href="<?= $linkNextStep; ?>" type="button" class="btn btn-warning btn-lg"><?=UserModule::t('complete_btn');?></a>
 				</div>
 			</div>
-			<?php if($testType != "pre" && ($quesType_ != 4 || $quesType_ != 6 || $quesType_ != 3)){ ?>
+			<?php if($testType != "pre" && ($quesType_ != 4 && $quesType_ != 6 && $quesType_ != 3)){ ?>
 			<div class="col-sm-4">
 				<aside>
 					<h4 class="title text-success"><span class="pull-right"><?= $modelScore->score_number; ?></span><?=UserModule::t('scoreAll');?></h4>
@@ -130,7 +130,7 @@ if($modelScore->type=='post' && !$state){
 	</div>
 </section>
 <div class="container">
-	<?php if($lesson->status == 'y'){ ?>	
+	<?php if($lesson->status == 'y' && $testType != "pre"){ ?>	
 		<div class="question-content-wrap">
 			<div class="row">
 				<div class="col-md-8">
