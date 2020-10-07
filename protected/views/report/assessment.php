@@ -51,7 +51,7 @@
             <li class="breadcrumb-item active" aria-current="page">
                 <?php
                 if (Yii::app()->session['lang'] == 1) {
-                    echo "Training assessment Report";
+                    echo "Training Evaluation Report";
                 } else {
                     echo "รายงานภาพรวมแบบประเมินสอบถาม";
                 }
@@ -76,6 +76,8 @@
                 </div>
                 <div id="report-search" class="panel-collapse collapse in">
                     <form method="GET" accept-charset="UTF-8" id="form_search" action="<?php echo $this->createUrl('/report/assessment'); ?>">
+
+                                      <?php       var_dump(); ?>
 
                     <div class="panel-body">
                         <div class="row">
@@ -103,7 +105,15 @@
                                         <?php 
                                         foreach ($model_courseselect as $key => $value) {
                                             if(Yii::app()->session['lang'] != 1){
-                                                $value->course_id = $value->parent_id;
+                                                // $value->course_id = $value->parent_id;
+                                                   $modelChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = ' . Yii::app()->session['lang'] . ' AND parent_id = ' . $value->course_id, 'order' => 'course_id'));
+                            if ($modelChildren) {
+                                $value->course_title = $modelChildren->course_title;
+                                $value->course_short_title = $modelChildren->course_short_title;
+                                $value->course_detail = $modelChildren->course_detail;
+                                $value->course_picture = $modelChildren->course_picture;
+                            }
+
                                             }
                         ?> <option <?php if(isset($_GET["search"]["course_id"]) && $_GET["search"]["course_id"] == $value->course_id){ echo "selected"; } ?> value="<?= $value->course_id ?>"><?= $value->course_title ?></option> <?php
                                         }
@@ -471,6 +481,14 @@ if(isset($model_level) && !empty($model_level)){
                     $graph_arr = [];
                 foreach ($model_course as $keycou => $valcou) {
 
+                    $modelChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = ' . Yii::app()->session['lang'] . ' AND parent_id = ' . $valcou->course_id, 'order' => 'course_id'));
+                            if ($modelChildren) {
+                                $valcou->course_title = $modelChildren->course_title;
+                                $valcou->course_short_title = $modelChildren->course_short_title;
+                                $valcou->course_detail = $modelChildren->course_detail;
+                                $valcou->course_picture = $modelChildren->course_picture;
+                            }
+                            
                                     foreach ($valcou->CourseGeneration as $key_cg => $value_cg) {
                                         if($value_cg->active == 'y'){
                               
@@ -480,24 +498,35 @@ if(isset($model_level) && !empty($model_level)){
                     $dataresult = [];
 
                     foreach ($sections as $keysectionschart => $valsectionschart) {
+                        
+                    if($_GET['search']['course_id'] == null){
+
+                        if($keysectionschart == 3){
                         $data[] = $title_section[$valsectionschart->survey_section_id];
-                        $dataresult[] = $resultssec =    round($total_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id]/$countquest_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id],2);  ;
+                        $dataresult[] = $resultssec =    round($total_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id]/$countquest_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id],2);  
+                        }
+                    }else{
+                        $data[] = $title_section[$valsectionschart->survey_section_id];
+                        $dataresult[] = $resultssec =    round($total_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id]/$countquest_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id],2);  
+                        
+                    }
 
                     } 
 
                     // $data =  ['0'=>"หลักสูตร",'1'=>"คนสมัคร" ,'3'=>"test"] ; 
                     $data_chk = implode('","',$data);
                     $dataresult_chk = implode(',',$dataresult);
+                    // var_dump($data_chk);
+                    // var_dump($dataresult_chk);
+
 
                     $test  = '["'.$data_chk.'"],';
                     $testresult  = '["'.$valcou->course_title.'",'.$dataresult_chk.'],';
                     $graph_arr[$valcou->course_id][$value_cg->gen_id] = $testresult;
                 }}}
-                    
                     ?>
                    
                     <script type="text/javascript">
-
                         google.charts.load("current", {packages:['corechart']});
                         google.charts.setOnLoadCallback(drawChart);
                         function drawChart() {
@@ -507,6 +536,7 @@ if(isset($model_level) && !empty($model_level)){
                                     echo $test;
                             foreach ($model_course as $keycou => $valcou) {
                                 foreach ($valcou->CourseGeneration as $key_cg => $value_cg) {
+
                                     echo $graph_arr[$valcou->course_id][$value_cg->gen_id];
                                 }
                             }
@@ -515,7 +545,37 @@ if(isset($model_level) && !empty($model_level)){
                             ?>
                           ]);
 
+                           var view = new google.visualization.DataView(data);
+                                                       
+
+                     <?php if($_GET['search']['course_id'] != null){ ?>                                   
+                        view.setColumns([0, 1,
+                       { calc: 'stringify',
+                         sourceColumn: 1,
+                         type: 'string',
+                         role: 'annotation' },
+                       2,{ calc: 'stringify',
+                         sourceColumn: 2,
+                         type: 'string',
+                         role: 'annotation' },3,{ calc: 'stringify',
+                         sourceColumn: 3,
+                         type: 'string',
+                         role: 'annotation' },4,{ calc: 'stringify',
+                         sourceColumn: 4,
+                         type: 'string',
+                         role: 'annotation' }]);
+                        <?php }else{ ?>
+                             view.setColumns([0, 1,
+                       { calc: 'stringify',
+                         sourceColumn: 1,
+                         type: 'string',
+                         role: 'annotation' }]);
+                            <?php } ?>
+
                           var options = {
+                            <?php if($_GET['search']['course_id'] == null){ ?>
+                            colors: ['#109618'],
+                            <?php } ?>
                             seriesType: 'bars',
                             bar: {groupWidth: "50%"},
                             legend: { position: "right" },
@@ -534,7 +594,11 @@ google.visualization.events.addListener(chart, 'ready', function () {
     num_chart = num_chart+1;
 });
 
-chart.draw(data, options);
+
+chart.draw(view, options);
+
+
+
                     }
                 </script>
 
@@ -554,7 +618,7 @@ chart.draw(data, options);
                 <h3>
                     <?php
                     if (Yii::app()->session['lang'] == 1) {
-                        echo "Training assessment Report";
+                        echo "Training Evaluation Report";
                     } else {
                         echo "รายงานภาพรวมแบบประเมินสอบถาม";
                     }
@@ -604,7 +668,7 @@ chart.draw(data, options);
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ผลการประเมิน";
                             }else{
-                                echo "Assessment results";
+                                echo "Evaluation results";
                             }
                             ?></th>
                         </tr>
@@ -625,6 +689,15 @@ chart.draw(data, options);
                         if(!empty($sections)){
                             $no = 1; ?>
                                 <?php foreach ($model_course as $keycou => $valcou) {
+
+                            $modelChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = ' . Yii::app()->session['lang'] . ' AND parent_id = ' . $valcou->course_id, 'order' => 'course_id'));
+                            if ($modelChildren) {
+                                $valcou->course_title = $modelChildren->course_title;
+                                $valcou->course_short_title = $modelChildren->course_short_title;
+                                $valcou->course_detail = $modelChildren->course_detail;
+                                $valcou->course_picture = $modelChildren->course_picture;
+                            }
+
 
                                     foreach ($valcou->CourseGeneration as $key_cg => $value_cg) {
                                         if($value_cg->active == 'y'){
@@ -834,7 +907,7 @@ chart.draw(data, options);
         $('.btn-pdf').click(function(e) {
             $("#text_element1").attr("value", encodeURIComponent("<h2> <?php
                 if (Yii::app()->session['lang'] == 1) {
-                    echo "Training assessment Report";
+                    echo "Training Evaluation Report";
                 } else {
                     echo "รายงานภาพรวมแบบประเมินสอบถาม";
                 }
@@ -846,7 +919,7 @@ chart.draw(data, options);
           $('.btn-excel').click(function(e) {
             window.open('data:application/vnd.ms-excel;charset=UTF-8;,' + encodeURIComponent("<h2><?php
                 if (Yii::app()->session['lang'] == 1) {
-                    echo "Training assessment Report";
+                    echo "Training Evaluation Report";
                 } else {
                     echo "รายงานภาพรวมแบบประเมินสอบถาม";
                 }
