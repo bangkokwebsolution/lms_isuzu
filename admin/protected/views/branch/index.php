@@ -101,7 +101,7 @@ EOD
 			                ),  
 						),
 						array(
-							'name'=>'แผนก',
+							'header'=>'แผนก',
 							'value'=>'$data->position->dep->dep_title',
 							'filter'=>false,
 			                'htmlOptions' => array(
@@ -109,7 +109,7 @@ EOD
 			                ),  
 						),
 						array(
-							'name'=>'ตำแหน่ง',
+							'header'=>'ตำแหน่ง',
 							'value'=>'$data->position->position_title',
 							'filter'=>false,
 			                'htmlOptions' => array(
