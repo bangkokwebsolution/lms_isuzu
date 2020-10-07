@@ -479,6 +479,16 @@ if(isset($model_level) && !empty($model_level)){
                     </div>
                     <?php 
                     $graph_arr = [];
+                    function random_color_part() {
+                        return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+                    }
+
+                    function random_color() {
+                        return random_color_part() . random_color_part() . random_color_part();
+                    }
+
+                  
+
                 foreach ($model_course as $keycou => $valcou) {
 
                     $modelChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = ' . Yii::app()->session['lang'] . ' AND parent_id = ' . $valcou->course_id, 'order' => 'course_id'));
@@ -488,10 +498,10 @@ if(isset($model_level) && !empty($model_level)){
                                 $valcou->course_detail = $modelChildren->course_detail;
                                 $valcou->course_picture = $modelChildren->course_picture;
                             }
-                            
+
                                     foreach ($valcou->CourseGeneration as $key_cg => $value_cg) {
                                         if($value_cg->active == 'y'){
-                              
+                                
 
 
                     $data = ['0'=>"หลักสูตร"];
@@ -503,7 +513,7 @@ if(isset($model_level) && !empty($model_level)){
 
                         if($keysectionschart == 3){
                         $data[] = $title_section[$valsectionschart->survey_section_id];
-                        $dataresult[] = $resultssec =    round($total_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id]/$countquest_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id],2);  
+                        $dataresult[] = $resultssec =    round($total_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id]/$countquest_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id],2); 
                         }
                     }else{
                         $data[] = $title_section[$valsectionschart->survey_section_id];
@@ -513,17 +523,25 @@ if(isset($model_level) && !empty($model_level)){
 
                     } 
 
+
+
                     // $data =  ['0'=>"หลักสูตร",'1'=>"คนสมัคร" ,'3'=>"test"] ; 
                     $data_chk = implode('","',$data);
                     $dataresult_chk = implode(',',$dataresult);
                     // var_dump($data_chk);
                     // var_dump($dataresult_chk);
 
-
                     $test  = '["'.$data_chk.'"],';
+                    if($_GET['search']['course_id'] == null){ 
+                    $testresult  = '["'.$valcou->course_title.'",'.$dataresult_chk.',"'.'#'.random_color().'",'.$dataresult_chk.'],';
+                    }else{
                     $testresult  = '["'.$valcou->course_title.'",'.$dataresult_chk.'],';
+                    }
+
+                    // var_dump($testresult);
                     $graph_arr[$valcou->course_id][$value_cg->gen_id] = $testresult;
                 }}}
+                // var_dump($graph_arr[$valcou->course_id][$value_cg->gen_id]);
                     ?>
                    
                     <script type="text/javascript">
@@ -531,9 +549,15 @@ if(isset($model_level) && !empty($model_level)){
                         google.charts.setOnLoadCallback(drawChart);
                         function drawChart() {
                           var data = google.visualization.arrayToDataTable([
+                                <?php if($_GET['search']['course_id'] == null){ ?>
+                                     ['หลักสูตร', 'IIII : ส่วนของภาพรวมความพึงพอใจ (Overall of Satisfaction)',{ role: 'style' },{ role: 'annotation' }],
+                                 <?php } ?>
                             <?php 
+                             if($_GET['search']['course_id'] != null){ 
                             // foreach ($model_graph as $key => $value) {
-                                    echo $test;
+                             echo $test;
+                            } 
+
                             foreach ($model_course as $keycou => $valcou) {
                                 foreach ($valcou->CourseGeneration as $key_cg => $value_cg) {
 
@@ -566,16 +590,16 @@ if(isset($model_level) && !empty($model_level)){
                          role: 'annotation' }]);
                         <?php }else{ ?>
                              view.setColumns([0, 1,
-                       { calc: 'stringify',
+                       { 
+                         calc: 'stringify',
                          sourceColumn: 1,
                          type: 'string',
-                         role: 'annotation' }]);
+                         role: 'annotation' 
+                     }
+                         ]);
                             <?php } ?>
 
                           var options = {
-                            <?php if($_GET['search']['course_id'] == null){ ?>
-                            colors: ['#109618'],
-                            <?php } ?>
                             seriesType: 'bars',
                             bar: {groupWidth: "50%"},
                             legend: { position: "right" },
@@ -594,8 +618,11 @@ google.visualization.events.addListener(chart, 'ready', function () {
     num_chart = num_chart+1;
 });
 
-
+     <?php if($_GET['search']['course_id'] == null){ ?>
+chart.draw(data, options);
+     <?php }else{ ?>
 chart.draw(view, options);
+     <?php } ?>
 
 
 
@@ -770,6 +797,13 @@ chart.draw(view, options);
                 <div class="row">
                     <?php 
                     $i = 0;
+                     function random_color_part() {
+                        return str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
+                    }
+
+                    function random_color() {
+                        return random_color_part() . random_color_part() . random_color_part();
+                    }
                     foreach ($model_year as $key_y => $value_y) { 
 
                         $value_chk_year = '2020';
@@ -786,6 +820,14 @@ chart.draw(view, options);
                                     $graph_arr = [];
                 foreach ($model_course as $keycou => $valcou) {
 
+                    $modelChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = ' . Yii::app()->session['lang'] . ' AND parent_id = ' . $valcou->course_id, 'order' => 'course_id'));
+                            if ($modelChildren) {
+                                $valcou->course_title = $modelChildren->course_title;
+                                $valcou->course_short_title = $modelChildren->course_short_title;
+                                $valcou->course_detail = $modelChildren->course_detail;
+                                $valcou->course_picture = $modelChildren->course_picture;
+                            }
+
                                     foreach ($valcou->CourseGeneration as $key_cg => $value_cg) {
                                         if($value_cg->active == 'y'){
                               
@@ -794,10 +836,18 @@ chart.draw(view, options);
                     $data = ['0'=>"หลักสูตร"];
                     $dataresult = [];
                     foreach ($sections as $keysectionschart => $valsectionschart) {
-                        $data[] = $title_section[$valsectionschart->survey_section_id];
-                     
+                    if($_GET['search']['course_id'] == null){
 
+                        if($keysectionschart == 3){
+                             $data[] = $title_section[$valsectionschart->survey_section_id];
                         $dataresult[] = $resultssec =    round($total_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id][$model_year[$i]]/$countquest_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id][$model_year[$i]],2);  ;
+                        }
+                    }else{
+                         $data[] = $title_section[$valsectionschart->survey_section_id];
+                        $dataresult[] = $resultssec =    round($total_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id][$model_year[$i]]/$countquest_section[$valsectionschart->survey_section_id][$valcou->course_id][$value_cg->gen_id][$model_year[$i]],2);  ;
+                    }
+
+                       
 
                     } 
                    
@@ -807,7 +857,12 @@ chart.draw(view, options);
                     $dataresult_chk = implode(',',$dataresult);
 
                     $test  = '["'.$data_chk.'"],';
+                    // $testresult  = '["'.$valcou->course_title.'",'.$dataresult_chk.'],';
+                    if($_GET['search']['course_id'] == null){ 
+                    $testresult  = '["'.$valcou->course_title.'",'.$dataresult_chk.',"'.'#'.random_color().'",'.$dataresult_chk.'],';
+                    }else{
                     $testresult  = '["'.$valcou->course_title.'",'.$dataresult_chk.'],';
+                    }
                     $graph_arr[$valcou->course_id][$value_cg->gen_id][test.$i] = $testresult;
 
                 }}}
@@ -819,10 +874,16 @@ chart.draw(view, options);
                                         google.charts.load("current", {packages:['corechart']});
                                         google.charts.setOnLoadCallback(drawChart);
                                         function drawChart() {
+
                                          var data = google.visualization.arrayToDataTable([
-                                             <?php 
+                                            <?php if($_GET['search']['course_id'] == null){ ?>
+                                     ['หลักสูตร', 'IIII : ส่วนของภาพรวมความพึงพอใจ (Overall of Satisfaction)',{ role: 'style' },{ role: 'annotation' }],
+                                 <?php } ?>
+                            <?php 
+                             if($_GET['search']['course_id'] != null){ 
                             // foreach ($model_graph as $key => $value) {
-                                    echo $test;
+                             echo $test;
+                            } 
                             foreach ($model_course as $keycou => $valcou) {
                                 foreach ($valcou->CourseGeneration as $key_cg => $value_cg) {
                                     
@@ -834,13 +895,36 @@ chart.draw(view, options);
                             ?>
                                             ]);
 
-                                          var view = new google.visualization.DataView(data);
-                                          view.setColumns([0, 1,
-                                           { calc: "stringify",
-                                           sourceColumn: 1,
-                                           type: "string",
-                                           role: "annotation" },
-                                           2]);
+                    var view = new google.visualization.DataView(data);
+                                                       
+
+                     
+                     <?php if($_GET['search']['course_id'] != null){ ?>                                   
+                        view.setColumns([0, 1,
+                       { calc: 'stringify',
+                         sourceColumn: 1,
+                         type: 'string',
+                         role: 'annotation' },
+                       2,{ calc: 'stringify',
+                         sourceColumn: 2,
+                         type: 'string',
+                         role: 'annotation' },3,{ calc: 'stringify',
+                         sourceColumn: 3,
+                         type: 'string',
+                         role: 'annotation' },4,{ calc: 'stringify',
+                         sourceColumn: 4,
+                         type: 'string',
+                         role: 'annotation' }]);
+                        <?php }else{ ?>
+                             view.setColumns([0, 1,
+                       { 
+                         calc: 'stringify',
+                         sourceColumn: 1,
+                         type: 'string',
+                         role: 'annotation' 
+                     }
+                         ]);
+                            <?php } ?>
 
                           var options = {
                             seriesType: 'bars',
@@ -848,6 +932,7 @@ chart.draw(view, options);
                             legend: { position: "right" },
                             chartArea:{ right:'15%' },
                         };
+
 
 var chart = new google.visualization.ComboChart(document.getElementById('chart_bar'));
 
@@ -861,9 +946,11 @@ google.visualization.events.addListener(chart, 'ready', function () {
     });
     num_chart = num_chart+1;
 });
-
+  <?php if($_GET['search']['course_id'] == null){ ?>
 chart.draw(data, options);
-
+     <?php }else{ ?>
+chart.draw(view, options);
+     <?php } ?>
                                     }
                                 </script>
                             </div>
