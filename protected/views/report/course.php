@@ -40,7 +40,7 @@
             <li class="breadcrumb-item active" aria-current="page">
                 <?php
                 if (Yii::app()->session['lang'] == 1) {
-                    $name_report = "Training Overview Report";
+                    $name_report = "Overview of Training Course Report";
                 } else{
                     $name_report = "รายงานภาพรวมการฝึกอบรม";
                 }
@@ -122,9 +122,27 @@
                                                 }
                                             ?>
                                         </option>
+<!-- <option value="">
+    <?php 
+        if(Yii::app()->session['lang'] != 1){
+            echo "“เลือกทั้งหมด”";
+        }else{
+            echo "Select All";
+        }
+    ?>
+    </option> -->
 <?php 
 if(isset($model_gen) && !empty($model_gen)){
+    ?>   
+    <option value="">
+    <?php 
+        if(Yii::app()->session['lang'] != 1){
+            echo "“เลือกทั้งหมด”";
+        }else{
+            echo "Select All";
+        }
     ?>
+    </option>
     <option value="0">
         <?php 
         if(Yii::app()->session['lang'] != 1){
@@ -133,7 +151,8 @@ if(isset($model_gen) && !empty($model_gen)){
             echo "No Gen";
         }
         ?>
-    </option>
+    </option> 
+      
     <?php
     foreach ($model_gen as $key => $value) {
         ?>
@@ -152,13 +171,13 @@ if(isset($model_gen) && !empty($model_gen)){
                                             if(Yii::app()->session['lang'] != 1){
                                                 echo "รูปแบบกราฟแสดงผล";
                                             }else{
-                                                echo "Graph Type";
+                                                echo "Chart Type";
                                             }
                                         ?>
                                     </label></div>
                                     <div class="checkbox checkbox-main checkbox-inline">
                                         <input <?php if(isset($_GET["search"]["graph"]) && in_array("bar", $_GET["search"]["graph"])){ echo "checked"; } ?> type="checkbox" name="search[graph][]" id="search_graph_bar" value="bar">
-                                        <label for="search_graph_bar" class="text-black">Bar Graph </label>
+                                        <label for="search_graph_bar" class="text-black">Column Chart</label>
                                     </div>
 
                                 </div>
@@ -184,14 +203,14 @@ if(isset($model_gen) && !empty($model_gen)){
                                                 if(Yii::app()->session['lang'] != 1){
                                                     echo "เลือกประเภทพนักงาน";
                                                 }else{
-                                                    echo "Select Employee Type";
+                                                    echo "Select Type";
                                                 }
                                             ?>
                                         </option>
                                         <option value="1" <?php if(isset($_GET['search']['employee']) && $_GET['search']['employee'] == 1){ echo "selected"; } ?>>
                                             <?php 
                                                 if(Yii::app()->session['lang'] != 1){
-                                                    echo "คนเรือ";
+                                                    echo "พนักงานประจำเรือ";
                                                 }else{
                                                     $ship = TypeEmployee::model()->findByPk(1);
                                                     echo $ship->type_employee_name;
@@ -202,7 +221,7 @@ if(isset($model_gen) && !empty($model_gen)){
                                         <option value="2" <?php if(isset($_GET['search']['employee']) && $_GET['search']['employee'] == 2){ echo "selected"; } ?>>
                                             <?php 
                                                 if(Yii::app()->session['lang'] != 1){
-                                                    echo "คนออฟฟิศ";
+                                                    echo "พนักงานออฟฟิศ";
                                                 }else{
                                                     $office = TypeEmployee::model()->findByPk(2);
                                                     echo $office->type_employee_name;
@@ -329,7 +348,7 @@ if(isset($model_level) && !empty($model_level)){
                                         if(Yii::app()->session['lang'] != 1){
                                             echo "ช่วงเวลาเริ่มต้น";
                                         }else{
-                                            echo "Range start date";
+                                            echo "Start Date";
                                         }
                                         ?>
                                     </label>
@@ -337,7 +356,7 @@ if(isset($model_level) && !empty($model_level)){
                                         if(Yii::app()->session['lang'] != 1){
                                             echo "ช่วงเวลาเริ่มต้น";
                                         }else{
-                                            echo "Range start date";
+                                            echo "Start Date";
                                         }
                                         ?>" type="text" name="search[start_date]" id="search_start_date" value="<?php if(isset($_GET["search"]["start_date"])){ echo $_GET["search"]["start_date"]; } ?>">
                                 </div>
@@ -350,7 +369,7 @@ if(isset($model_level) && !empty($model_level)){
                                         if(Yii::app()->session['lang'] != 1){
                                             echo "ช่วงเวลาสิ้นสุด";
                                         }else{
-                                            echo "Range end date";
+                                            echo "End Date";
                                         }
                                         ?>
                                     </label>
@@ -358,7 +377,7 @@ if(isset($model_level) && !empty($model_level)){
                                         if(Yii::app()->session['lang'] != 1){
                                             echo "ช่วงเวลาสิ้นสุด";
                                         }else{
-                                            echo "Range end date";
+                                            echo "End Date";
                                         }
                                         ?>" type="text" name="search[end_date]" id="search_end_date" value="<?php if(isset($_GET["search"]["end_date"])){ echo $_GET["search"]["end_date"]; } ?>">
                                 </div>
@@ -368,9 +387,9 @@ if(isset($model_level) && !empty($model_level)){
                                     <label for="search_start_year">
                                         <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "ช่วงปีเริ่มต้น";
+                                            echo "ปีเริ่มต้น";
                                         }else{
-                                            echo "Range start year";
+                                            echo "From Year";
                                         }
                                         ?>                                            
                                     </label>
@@ -378,9 +397,9 @@ if(isset($model_level) && !empty($model_level)){
                                         <option value="">
                                             <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "เลือกช่วงปีเริ่มต้น";
+                                            echo "เลือกปีเริ่มต้น";
                                         }else{
-                                            echo "Select Range start year";
+                                            echo "From Year";
                                         }
                                         ?>
                                         </option>
@@ -397,9 +416,9 @@ if(isset($model_level) && !empty($model_level)){
                                     <label for="search_end_year">
                                         <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "ช่วงปีสิ้นสุด";
+                                            echo "ปีสิ้นสุด";
                                         }else{
-                                            echo "Range end year";
+                                            echo "To Year";
                                         }
                                         ?>
                                     </label>
@@ -407,9 +426,9 @@ if(isset($model_level) && !empty($model_level)){
                                         <option value="">
                                             <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "เลือกช่วงปีสิ้นสุด";
+                                            echo "เลือกปีสิ้นสุด";
                                         }else{
-                                            echo "Select Range end year";
+                                            echo "To Year";
                                         }
                                         ?>
                                         </option>
@@ -516,7 +535,7 @@ chart.draw(data, options);
                 <h3>
                     <?php
                     if (Yii::app()->session['lang'] == 1) {
-                        $name_report = "Training Overview Report";
+                        $name_report = "Overview of Training Course Report";
                     } else{
                         $name_report = "รายงานภาพรวมการฝึกอบรม";
                     }
@@ -546,7 +565,7 @@ chart.draw(data, options);
                     if(Yii::app()->session['lang'] != 1){
                         echo " หลักสูตร";
                     }else{
-                        echo " course";
+                        echo " Course";
                     }
                     ?>              
                 </p>
@@ -562,7 +581,7 @@ chart.draw(data, options);
                 <table class="table" id="table_list">
                     <thead>
                         <tr style="background-color: #010C65; color: #fff; border: 1.5px solid #000;">
-                            <th><?php 
+                            <th rowspan="2"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ลำดับ";
                             }else{
@@ -570,7 +589,7 @@ chart.draw(data, options);
                             }
                             ?></th>
                             <!-- <th>user_id</th> -->
-                            <th>
+                            <th rowspan="2">
                             <?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "หลักสูตร";
@@ -578,56 +597,76 @@ chart.draw(data, options);
                                 echo "Course";
                             }
                             ?></th>
-                            <th><?php 
+                            <th rowspan="2"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "รุ่น";
                             }else{
                                 echo "Gen";
                             }
                             ?></th>
-                            <th><?php 
+                            <th rowspan="2"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "คนสมัคร";
                             }else{
                                 echo "Register";
                             }
                             ?></th>
+                            <th colspan="3"><?php 
+                            if(Yii::app()->session['lang'] != 1){
+                                echo "ไม่สำเร็จ";
+                            }else{
+                                echo "Not Finish";
+                            }
+                            ?></th>
+                            <th colspan="2"><?php 
+                            if(Yii::app()->session['lang'] != 1){
+                                echo "สำเร็จ";
+                            }else{
+                                echo "Finished";
+                            }
+                            ?></th>
+                           
+                        </tr>
+                        <tr  style="background-color: #010C65; color: #fff; border: 1.5px solid #000; text-align: center;">
                             <th><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ยังไม่เรียน";
                             }else{
-                                echo "Not Learn";
+                                echo "Not Start";
                             }
                             ?></th>
                             <th><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "กำลังเรียน";
                             }else{
-                                echo "Learning";
+                                echo "On Process";
                             }
                             ?></th>
                             <th><?php 
                             if(Yii::app()->session['lang'] != 1){
-                                echo "เรียนจบ";
+                                echo "(Percent)";
                             }else{
-                                echo "Pass";
+                                echo "(Percent)";
                             }
                             ?></th>
-                            <th><?php 
+
+
+                              <th ><?php 
                             if(Yii::app()->session['lang'] != 1){
-                                echo "%คนผ่าน";
+                                echo "สำเร็จ";
                             }else{
-                                echo "Pass Percent";
+                                echo "Finished";
                             }
                             ?></th>
-                            <th><?php 
+                            <th ><?php 
                             if(Yii::app()->session['lang'] != 1){
-                                echo "%คนไม่ผ่าน";
+                                echo "(Percent)";
                             }else{
-                                echo "Not Pass Percent";
+                                echo "(Percent)";
                             }
                             ?></th>
-                            <!-- <th></th> -->
+
+
                         </tr>
                     </thead>
 
@@ -662,12 +701,12 @@ chart.draw(data, options);
                                             <td><?= $value_g["register"] ?></td>
                                             <td style="background-color: #ffb05f;"><?= $value_g["notlearn"] ?></td>
                                             <td style="background-color: #ffb05f;"><?= $value_g["learn"] ?></td>
+                                            <td style="background-color: #ffb05f;">
+                                                <?php if(is_nan($value_g["per_notpass"])){ echo "-"; }else{ echo number_format($value_g["per_notpass"], 2)."%"; } ?>                                                    
+                                                </td>
                                             <td style="background-color: #5dff40;"><?= $value_g["pass"] ?></td>
                                             <td style="background-color: #5dff40;">
                                                 <?php if(is_nan($value_g["per_pass"])){ echo "-"; }else{ echo number_format($value_g["per_pass"], 2)."%"; } ?>
-                                                </td>
-                                            <td style="background-color: #ffb05f;">
-                                                <?php if(is_nan($value_g["per_notpass"])){ echo "-"; }else{ echo number_format($value_g["per_notpass"], 2)."%"; } ?>                                                    
                                                 </td>
                                             <!-- <td><?= $value_g["user"] ?></td> -->
                                         </tr>
@@ -843,15 +882,19 @@ chart.draw(data, options);
         });
 
     });
-
+    
     $('.datetimepicker').datetimepicker({
         format: 'Y-m-d',
         step: 10,
         timepicker: false,
         timepickerScrollbar: false,
-        yearOffset: 0
+        yearOffset: 0,
     });
+    var lang_id = <?php echo Yii::app()->session['lang'] ?>;
+    if (lang_id == 2) {
     $.datetimepicker.setLocale('th');
+    $('.datetimepicker').datetimepicker({yearOffset: 543});
+    }
 
     $("#search_start_date").change(function () {
         $("#search_end_date").val("");

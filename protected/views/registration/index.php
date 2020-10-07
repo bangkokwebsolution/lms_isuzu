@@ -2492,7 +2492,7 @@ function editNamehouse_registration(filedoc_id){
                         }               
                        ?>
                     </select>
-                            <?php //echo CHtml::activeDropDownList($valedu, '[' . $kedu . ']date_graduation',$edu_lest, $graduation); ?>
+                       
                         </div>
                     </div>
                     <span class="delete btn-danger" name="mytext[]"><i class="fas fa-minus-circle"></i><?= Yii::app()->session['lang'] == 1?'Delete ':'ลบ'; ?> </span>

@@ -41,9 +41,9 @@
 		<ul class="nav nav-tabs mt-1">
 			<li <?php if(!isset($_GET["target"])){ echo 'class="active"'; } ?>><a data-toggle="tab" href="#first-report"><?php echo Yii::app()->session['lang'] == 1?'Register Report ':'รายงานการสมัครสมาชิก'; ?></a></li>
 			<li <?php if(isset($_GET["target"]) && $_GET["target"] == "course"){ echo 'class="active"'; } ?>>
-				<a data-toggle="tab" href="#second-report"><?php echo Yii::app()->session['lang'] == 1?'Training Report ':'รายงานการอบรม'; ?></a>
+				<a data-toggle="tab" href="#second-report"><?php echo Yii::app()->session['lang'] == 1?'Training Report ':'รายงานการฝึกอบรม'; ?></a>
 			</li>
-			<li <?php if(isset($_GET["target"]) && $_GET["target"] == "assessment"){ echo 'class="active"'; } ?>><a data-toggle="tab" href="#third-report"><?php echo Yii::app()->session['lang'] == 1?'Training Assessment Report ':'รายงานแบบประเมินการอบรม'; ?></a></li>
+			<li <?php if(isset($_GET["target"]) && $_GET["target"] == "assessment"){ echo 'class="active"'; } ?>><a data-toggle="tab" href="#third-report"><?php echo Yii::app()->session['lang'] == 1?'Training Evoluation Report ':'รายงานการประเมินผลการฝึกอบรม'; ?></a></li>
 		</ul>
 
 		<div class="tab-content">
@@ -112,7 +112,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-4.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Training Overview Report ':'รายงานภาพรวมการฝึกอบรม'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Overview of Training Course Report ':'รายงานภาพรวมการฝึกอบรม'; ?>
 								</div>
 							</div>
 						</a>
@@ -126,7 +126,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-5.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Report of learners staff ship course ':'รายงานผู้เรียนตามรายหลักสูตรคนประจำเรือ'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Training Course Report For Ship Staff ':'รายงานการฝึกอบรมพนักงานประจำเรือ'; ?>
 								</div>
 							</div>
 						</a>
@@ -141,7 +141,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-6.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Report of learners staff office course ':'รายงานผู้เรียนตามรายหลักสูตรOffice'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Training Course Report For Office Staff  ':'รายงานการฝึกอบรมพนักงานออฟฟิศ'; ?>
 								</div>
 							</div>
 						</a>
@@ -161,7 +161,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-7.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Course Overview Report ':'รายงานภาพรวมผลการสอบตามรายหลักสูตร'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Overview of Test Report ':'รายงานภาพรวมผลสอบ '; ?>
 								</div>
 							</div>
 						</a>
@@ -174,7 +174,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-8.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Course Staff Ship Report ':'รายงานผลการสอบตามรายหลักสูตรคนประจำเรือ'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Test Result Report For Ship Staff ':'รายงานผลการสอบพนักงานเรือ'; ?>
 								</div>
 							</div>
 						</a>
@@ -188,7 +188,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-9.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Course Staff Office Report ':'รายงานผลการสอบตามรายหลักสูตรOffice'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Test Report for Office Staff':'รายงานผลการสอบพนักงานออฟฟิศ'; ?>
 								</div>
 							</div>
 						</a>
@@ -207,7 +207,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-10.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Training assessment Report ':'รายงานภาพรวมแบบประเมินสอบถาม'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Training Evaluation Report ':'รายงานการประเมินผลการฝึกอบรม'; ?>
 								</div>
 							</div>
 						</a>
