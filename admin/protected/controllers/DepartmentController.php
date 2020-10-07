@@ -213,6 +213,71 @@ class DepartmentController extends Controller
             'department_id ='.$id
             );
 
+		/////// ลบ Position
+		$model_Position = Position::model()->findAll(array(
+			'condition' => 'active=:active AND department_id="'.$id.'"',
+			'params' => array(':active'=>'y'),
+		));
+
+		if(!empty($model_Position)){
+			foreach ($model_Position as $key_p => $value_p) {
+
+				$modelOrgChart = OrgChart::model()->updateAll(
+					array('active' => "n"), 
+					'position_id ='.$value_p->id
+				);
+
+				/////////////////ลบ level ก่อน
+				$model_Branch = Branch::model()->findAll(array(
+					'condition' => 'active=:active AND position_id="'.$value_p->id.'"',
+					'params' => array(':active'=>'y'),
+				));
+
+				if(!empty($model_Branch)){
+					foreach ($model_Branch as $key_b => $value_b) {
+						$modelOrgChart=OrgChart::model()->updateAll(
+							array('active' => "n"), 
+							'branch_id ='.$value_b->id
+						);
+
+
+						$model = $this->loadModel($value_b->id);
+						$model->active = 'n';
+						$model->save(false);
+
+						$mmodell = Branch::model()->findAll(array(
+							'condition' => 'active=:active',
+							'params' => array(':active'=>'y'),
+							'order' => 'sortOrder ASC',
+						));
+						foreach ($mmodell as $key => $value) {
+							$model_edit = Branch::model()->findByPk($value->id);
+							$model_edit->sortOrder = $key+1;
+							$model_edit->save(false);
+						}
+					}
+				}
+				///////////////// จบ level
+
+				$model = $this->loadModel($value_p->id);
+				$model->active = 'n';
+				$model->save(false);
+
+				unset($mmodell);
+				$mmodell = Position::model()->findAll(array(
+					'condition' => 'active=:active',
+					'params' => array(':active'=>'y'),
+					'order' => 'sortOrder ASC',
+				));
+				foreach ($mmodell as $key => $value) {
+					$model_edit = Position::model()->findByPk($value->id);
+					$model_edit->sortOrder = $key+1;
+					$model_edit->save(false);
+				}
+			}
+		}
+		//////////////  จบ position
+
 		$model = $this->loadModel($id);
 		$model->active = 'n';
 		$model->save(false);

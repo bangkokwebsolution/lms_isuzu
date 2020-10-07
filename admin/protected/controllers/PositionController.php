@@ -158,17 +158,48 @@ class PositionController extends Controller
 	{
 		//$this->loadModel($id)->delete();
 
-		$modelOrgChart=OrgChart::model()->updateAll(
+		$modelOrgChart = OrgChart::model()->updateAll(
             array('active' => "n"), 
             'position_id ='.$id
             );
 
+		/////////////////ลบ level ก่อน
+		$model_Branch = Branch::model()->findAll(array(
+			'condition' => 'active=:active AND position_id="'.$id.'"',
+			'params' => array(':active'=>'y'),
+		));
+
+		if(!empty($model_Branch)){
+			foreach ($model_Branch as $key_b => $value_b) {
+				$modelOrgChart=OrgChart::model()->updateAll(
+					array('active' => "n"), 
+					'branch_id ='.$value_b->id
+				);
+
+
+				$model = $this->loadModel($value_b->id);
+				$model->active = 'n';
+				$model->save(false);
+
+				$mmodell = Branch::model()->findAll(array(
+					'condition' => 'active=:active',
+					'params' => array(':active'=>'y'),
+					'order' => 'sortOrder ASC',
+				));
+				foreach ($mmodell as $key => $value) {
+					$model_edit = Branch::model()->findByPk($value->id);
+					$model_edit->sortOrder = $key+1;
+					$model_edit->save(false);
+				}
+			}
+		}
+		///////////////// จบ level
 
 		$model = $this->loadModel($id);
 		$model->active = 'n';
 		$model->save(false);
 
-
+		unset($mmodell);
 		$mmodell = Position::model()->findAll(array(
 			'condition' => 'active=:active',
 			'params' => array(':active'=>'y'),
