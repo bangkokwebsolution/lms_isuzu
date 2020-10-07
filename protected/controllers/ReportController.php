@@ -4825,6 +4825,10 @@ if($course_score->score_past == 'y'){
 		));
 		$year_end = date("Y", strtotime($year_end->start_date));
 
+		if (Yii::app()->session['lang'] == 2) {
+			$year_start = $year_start+543;
+			$year_end = $year_end+543;
+		}
 		if($year_end <= $year_start){
 			$year_end = $year_start+1;
 		}
@@ -4946,15 +4950,39 @@ if($_GET["search"]["department"] != ""){
 }
 
 if($_GET["search"]["start_date"] != "" && $_GET["search"]["end_date"] != ""){
-	if($_GET["search"]["start_date"] != ""){
-		$criteria->compare('t.start_date', ">=".$_GET["search"]["start_date"]." 00:00:00");
-	}
-	if($_GET["search"]["end_date"] != ""){
-		$criteria->compare('t.start_date', "<=".$_GET["search"]["end_date"]." 23:59:59");
+	// if($_GET["search"]["start_date"] != ""){
+	// 	$criteria->compare('t.start_date', ">=".$_GET["search"]["start_date"]." 00:00:00");
+	// }
+	// if($_GET["search"]["end_date"] != ""){
+	// 	$criteria->compare('t.start_date', "<=".$_GET["search"]["end_date"]." 23:59:59");
+	// }
+	if (Yii::app()->session['lang'] == 1) {
+		if($_GET["search"]["start_date"] != ""){
+			$criteria->compare('t.start_date', ">=".$_GET["search"]["start_date"]." 00:00:00");
+		}
+		if($_GET["search"]["end_date"] != ""){
+			$criteria->compare('t.start_date', "<=".$_GET["search"]["end_date"]." 23:59:59");
+		}
+	}else{
+		
+		$start_date = explode("-", $_GET["search"]["start_date"]);
+		$start_dateExplode = $start_date[0]-543;
+		$start_dateImplode = $start_dateExplode."-".$start_date[1]."-".$start_date[2];
+		
+		$end_date = explode("-", $_GET["search"]["end_date"]);
+		$end_dateExplode = $end_date[0]-543;
+		$end_dateImplode = $end_dateExplode."-".$end_date[1]."-".$end_date[2];
+
+		if($_GET["search"]["start_date"] != ""){
+			$criteria->compare('t.start_date', ">=".$start_dateImplode." 00:00:00");
+		}
+		if($_GET["search"]["end_date"] != ""){
+			$criteria->compare('t.start_date', "<=".$end_dateImplode." 23:59:59");
+		}
 	}
 }
 
-$criteria->order = 't.course_id ASC, t.gen_id ASC';
+$criteria->order = 'course.course_title ASC, t.gen_id ASC';
 $LogStartcourse = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
 
 $num_pass = 0;
@@ -5053,10 +5081,17 @@ $arr_course_graph[$value_c->course_id]["pass"] = $arr_course_graph[$value_c->cou
 }else{ // if(isset($_GET["search"]["end_year"])  // ช่วงปี
 
 	$arr_course_year = [];
-	if(!empty($search_course)){		
+	if(!empty($search_course)){	
+		if (Yii::app()->session['lang'] != 1) {
+				 $searchStart_year = $_GET["search"]["start_year"]-543;
+				 $searchEnd_year = $_GET["search"]["end_year"]-543;
+			}else{
+				 $searchStart_year = $_GET["search"]["start_year"];
+				 $searchEnd_year = $_GET["search"]["end_year"];	
+			}	
 		foreach ($search_course as $key_c => $value_c) {
-
-			for ($year=$_GET["search"]["start_year"]; $year <= 2020 ; $year++) { 
+			
+			for ($year=$searchStart_year; $year <= 2020 ; $year++) { 
 						$arr_course_year[$year][$value_c->course_id]["register"] = 0;
 						$arr_course_year[$year][$value_c->course_id]["pass"] = 0;
 
@@ -5121,10 +5156,10 @@ $model_level = Branch::model()->findAll(array(
 
 						}
 
-						$criteria->compare('t.start_date', ">=".$_GET["search"]["start_year"]."-01-01"." 00:00:00");
-						$criteria->compare('t.start_date', "<=".$_GET["search"]["end_year"]."-12-31"." 23:59:59");
+						$criteria->compare('t.start_date', ">=".$searchStart_year."-01-01"." 00:00:00");
+						$criteria->compare('t.start_date', "<=".$searchEnd_year."-12-31"." 23:59:59");
 
-						$criteria->order = 't.course_id ASC, t.gen_id ASC';
+						$criteria->order = 'course.course_title ASC, t.gen_id ASC';
 						$LogStartcourse = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
 
 
@@ -5849,6 +5884,7 @@ $arr_countquest_course[$sectionValue->survey_section_id][$value_c->course_id][$v
 		} //if(isset($_GET["search"]))
 
 		$this->render('assessment', array(
+			'model_courseselect'=>$model_courseselect,
 			'model_course'=>$model_course,
 			'model_department'=>$model_department,
 			'model_position'=>$model_position,
