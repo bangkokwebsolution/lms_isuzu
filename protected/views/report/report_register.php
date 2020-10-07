@@ -50,16 +50,16 @@
                                         <option value="" selected disabled> <?= Yii::app()->session['lang'] == 1?'Select type':'เลือกประเภท'; ?></option>
                                         <?php
                                         if ($authority == 2 && $type_em == 1) { ?>
-                                            <option value="1" selected> <?= Yii::app()->session['lang'] == 1?'SHIP':'คนเรือ'; ?></option>
+                                            <option value="1" selected> <?= Yii::app()->session['lang'] == 1?'Ship Staff':'พนักงานประจำเรือ'; ?></option>
                                        <?php
                                         }
                                         if ($authority == 2 && $type_em == 2) {
                                         ?>
-                                        <option value="2" selected> <?= Yii::app()->session['lang'] == 1?'Office':'คนออฟฟิศ'; ?></option>
+                                        <option value="2" selected> <?= Yii::app()->session['lang'] == 1?'Office Staff ':'พนักงานออฟฟิศ'; ?></option>
                                         <?php
                                         }else if($authority == 1){ ?>
-                                            <option value="1" > <?= Yii::app()->session['lang'] == 1?'SHIP':'คนเรือ'; ?></option>
-                                            <option value="2" > <?= Yii::app()->session['lang'] == 1?'Office':'คนออฟฟิศ'; ?></option>
+                                            <option value="1" > <?= Yii::app()->session['lang'] == 1?'Ship Staff':'พนักงานประจำเรือ'; ?></option>
+                                            <option value="2" > <?= Yii::app()->session['lang'] == 1?'Office Staff ':'พนักงานออฟฟิศ'; ?></option>
                                        <?php
                                         }
                                         ?>
@@ -74,7 +74,7 @@
                                 ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for="">
+                                    <label for="" class="DivisionLabel">
                                     <?php
                                    if ($authority == 1 && $type_em == 2) {   
                                          if (Yii::app()->session['lang'] == 1) {
@@ -96,16 +96,16 @@
                                         <option value="" selected disabled><?php
                                     if ($authority == 1 && $type_em == 2) {
                                         if (Yii::app()->session['lang'] == 1) {
-                                            echo "Division";
+                                            echo "Select Division";
                                         }else{
-                                            echo "ฝ่าย";
+                                            echo "เลือกฝ่าย";
                                         }
                                     }else{
                                         
                                         if (Yii::app()->session['lang'] == 1) {
-                                            echo "Department";
+                                            echo "Select Department";
                                         }else{
-                                            echo "แผนก";
+                                            echo "เลือกแผนก";
                                         }
                                     }
                                     ?></option>
@@ -138,15 +138,15 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div class="form-group">
                                      <div>
-                                          <label for=""><?= Yii::app()->session['lang'] == 1?'Chart pattern':'รูปแบบกราฟ'; ?></label>
+                                          <label for=""><?= Yii::app()->session['lang'] == 1?'Chart Type':'รูปแบบกราฟ'; ?></label>
                                      </div>
                                     <div class="checkbox checkbox-main checkbox-inline">
                                         <input class="accommodation" type="checkbox" name="accommodation" id="1" value="Bar_Graph" ><!-- checked -->
-                                        <label for="1" class="text-black"><?= Yii::app()->session['lang'] == 1?'Bar Graph':'กราฟแท่ง'; ?></label>
+                                        <label for="1" class="text-black"><?= Yii::app()->session['lang'] == 1?'Column Chart':'Column Chart'; ?></label>
                                     </div>
                                     <div class="checkbox checkbox-main checkbox-inline">
                                         <input class="accommodation" type="checkbox" name="accommodation" id="2" value="Pie_Charts">
-                                        <label for="2" class="text-black"><?= Yii::app()->session['lang'] == 1?'Pie Charts':'กราฟวงกลม'; ?> </label>
+                                        <label for="2" class="text-black"><?= Yii::app()->session['lang'] == 1?'Pie Charts':'Pie Charts'; ?> </label>
                                     </div>
                                 </div>
                             </div>
@@ -156,7 +156,7 @@
                             <?php if($authority == 1 || $authority == 2 || $authority == 2 && $type_em == 2 || $authority == 2 && $type_em == 1 ){   ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for="">
+                                    <label for="" class="DepartmentLabel">
                                     <?php
                                     if ($authority == 2 && $type_em == 2) {
                                         if (Yii::app()->session['lang'] == 1) {
@@ -179,17 +179,17 @@
                                         <option value="" selected disabled>  <?php
                                     if ($authority == 2 && $type_em == 2) {
                                         if (Yii::app()->session['lang'] == 1) {
-                                            echo "Department";
+                                            echo "Select Department";
                                         }else{
-                                            echo "แผนก";
+                                            echo " เลือกแผนก";
                                         }
 
                                     }else{
                                        
                                          if (Yii::app()->session['lang'] == 1) {
-                                            echo "Position";
+                                            echo "Select Position";
                                         }else{
-                                            echo "ตำแหน่ง";
+                                            echo "เลือกตำแหน่ง";
                                         }    
                                     }
                                     ?></label></option>
@@ -225,9 +225,9 @@
                             ?>
                             <div class="col-sm-3 col-md-3 col-xs-12 tag_leval">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Level':'เลเวล'; ?></label></label>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Level':'ระดับตำแหน่ง'; ?></label></label>
                                     <select class="form-control Leval" name="" id="x">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Level':'เลือกเลเวล'; ?></option>
+                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Level':'เลือกระดับตำแหน่ง'; ?></option>
                                     <?php
                                     $criteria= new CDbCriteria;
                                     if ($authority == 3) {
@@ -278,49 +278,73 @@
                             <div class="col-md-3 col-sm-6 col-xs-12">
                                 <div class="form-group day-icon">
                                     <i class="far fa-calendar-alt"></i>
-                                    <label><?= Yii::app()->session['lang'] == 1?'Datetime start':'ช่วงเวลาเริ่มต้น'; ?></label>
-                                    <input class="form-control datetimepicker" autocomplete="off" placeholder="<?= Yii::app()->session['lang'] == 1?'Datetime start':'ช่วงเวลาเริ่มต้น'; ?>" type="text" name="" id="datetime_start">
+                                    <label><?= Yii::app()->session['lang'] == 1?'Start Date':'ช่วงเวลาเริ่มต้น'; ?></label>
+                                    <input class="form-control datetimepicker" autocomplete="off" placeholder="<?= Yii::app()->session['lang'] == 1?'Start Date':'ช่วงเวลาเริ่มต้น'; ?>" type="text" name="" id="datetime_start">
                                 </div>
                             </div>
                             <div class="col-md-3 col-sm-6 col-xs-12">
                                 <div class="form-group day-icon">
                                     <i class="far fa-calendar-alt"></i>
-                                    <label><?= Yii::app()->session['lang'] == 1?'Datetime end':'ช่วงเวลาสิ้นสุด'; ?></label>
-                                    <input class="form-control datetimepicker" autocomplete="off" placeholder="<?= Yii::app()->session['lang'] == 1?'Datetime end':'ช่วงเวลาสิ้นสุด'; ?>" type="text" name="" id="datetime_end">
+                                    <label><?= Yii::app()->session['lang'] == 1?'End Date':'ช่วงเวลาสิ้นสุด'; ?></label>
+                                    <input class="form-control datetimepicker" autocomplete="off" placeholder="<?= Yii::app()->session['lang'] == 1?'End Date':'ช่วงเวลาสิ้นสุด'; ?>" type="text" name="" id="datetime_end">
                                 </div>
                             </div>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Year start':'ช่วงปีเริ่มต้น'; ?></label>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1?'From Year':'ปีเริ่มต้น'; ?></label>
                                     <select class="form-control year_start" name="" id="Year_start">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Year start':'ช่วงปีเริ่มต้น'; ?></option>
+                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select From Year':'เลือกปีเริ่มต้น'; ?></option>
                                         <?php
-                                        $starting_year  = 2019;
-                                        $ending_year = date('Y');
-                                              if ($ending_year) {
+                                        if (Yii::app()->session['lang'] == 1) {
+                                            $starting_year  = 2019;
+                                            $ending_year = date('Y');
+                                                  if ($ending_year) {
 
-                                               for($starting_year; $starting_year <= $ending_year; $starting_year++) {?>
-                                                     <option value="<?php echo $starting_year; ?>"><?php echo $starting_year; ?></option>
-                                              <?php   }                 
-                                             }
+                                                   for($starting_year; $starting_year <= $ending_year; $starting_year++) {?>
+                                                         <option value="<?php echo $starting_year; ?>"><?php echo $starting_year; ?></option>
+                                                  <?php   }                 
+                                                 }
+                                        }else{
+                                           $starting_year  = 2562;
+                                            $ending_year = date('Y')+543;
+                                                  if ($ending_year) {
+
+                                                   for($starting_year; $starting_year <= $ending_year; $starting_year++) {?>
+                                                         <option value="<?php echo $starting_year; ?>"><?php echo $starting_year; ?></option>
+                                                  <?php   }                 
+                                                 } 
+                                        }
+                                        
                                        ?>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Year end':'ช่วงปีสิ้นสุด'; ?></label>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1?'To Year':'ปีสิ้นสุด'; ?></label>
                                     <select class="form-control year_end" name="" id="Year_end">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Year end':'ช่วงปีสิ้นสุด'; ?></option>
+                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select To Year':'เลือกปีสิ้นสุด'; ?></option>
                                         <?php
-                                        $starting_year  = 2019;
-                                        $ending_year = date('Y');
-                                              if ($ending_year) {
+                                        if (Yii::app()->session['lang'] == 1) {
+                                            $starting_year  = 2019;
+                                            $ending_year = date('Y');
+                                                  if ($ending_year) {
 
-                                               for($starting_year; $starting_year <= $ending_year; $starting_year++) {?>
-                                                     <option value="<?php echo $starting_year; ?>"><?php echo $starting_year; ?></option>
-                                              <?php   }                 
-                                             }
+                                                   for($starting_year; $starting_year <= $ending_year; $starting_year++) {?>
+                                                         <option value="<?php echo $starting_year; ?>"><?php echo $starting_year; ?></option>
+                                                  <?php   }                 
+                                                 }
+                                        }else{
+                                           $starting_year  = 2562;
+                                            $ending_year = date('Y')+543;
+                                                  if ($ending_year) {
+
+                                                   for($starting_year; $starting_year <= $ending_year; $starting_year++) {?>
+                                                         <option value="<?php echo $starting_year; ?>"><?php echo $starting_year; ?></option>
+                                                  <?php   }                 
+                                                 } 
+                                        }
+                                        
                                        ?>
                                     </select>
                                 </div>
@@ -384,7 +408,11 @@
         timepickerScrollbar: false,
         yearOffset: 0
     });
+    var lang_id = <?php echo Yii::app()->session['lang'] ?>;
+    if (lang_id == 2) {
     $.datetimepicker.setLocale('th');
+    $('.datetimepicker').datetimepicker({yearOffset: 543});
+    }
 
     $('.Graph_1').hide();
     $('.Graph_2').hide();
@@ -508,16 +536,46 @@ function chk_form_search(){
                          
                             $('.Department').empty();
                             $('.Department').append(data);
-
+//console.log(data);
                             $('.Position').val("");
                             $('.Leval').val("");
 
                             var e = document.getElementById("TypeEmployee");
                             var strUser = e.options[e.selectedIndex].value;
                             if (strUser === '1') {
+                                var lang = <?php echo Yii::app()->session['lang'] ?>;
+                                if (lang == 1) {
+                                    var DepartmentText = "Department";
+                                    var DivisionText = "Division";
+                                    var DepartmentList = "<option value >Select Position</option>";
+                                }else{
+                                    var DepartmentText = "แผนก";
+                                    var DivisionText = "ฝ่าย";
+                                    var DepartmentList = "<option value >เลือกตำแหน่ง</option>";
+                                }
+                                
+                                 $('.DivisionLabel').text(DepartmentText);
+                                 $('.DepartmentLabel').text();
+                                 $('.Position').empty();
+                                 $('.Position').append(DepartmentList);
                                  $('.tag_status').show();
                                  $('.tag_leval').hide();
                             }else if (strUser === '2') {
+                                var lang = <?php echo Yii::app()->session['lang'] ?>;
+                                if (lang == 1) {
+                                    var DepartmentText = "Department";
+                                    var DivisionText = "Division";
+                                    var DepartmentList = "<option value >Select Department</option>";
+                                }else{
+                                    var DepartmentText = "แผนก";
+                                    var DivisionText = "ฝ่าย";
+                                    var DepartmentList = "<option value >เลือกแผนก</option>";
+                                }
+                                
+                                $('.DivisionLabel').text(DivisionText);
+                                $('.DepartmentLabel').text(DepartmentText);
+                                $('.Position').empty();
+                                $('.Position').append(DepartmentList);
                                  $('.tag_status').hide();
                                  $('.tag_leval').show();
                             }

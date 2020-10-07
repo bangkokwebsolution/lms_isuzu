@@ -101,11 +101,41 @@ class ReportController extends Controller
 		$Leval = $_POST['Leval'];
 		$datetime_start = $_POST['datetime_start'];
 		$datetime_end = $_POST['datetime_end'];
-		$Year_start = $_POST['Year_start'];
-		$Year_end = $_POST['Year_end'];
+		if ($_POST['Year_start'] != null && $_POST['Year_end'] != null) {
+					if (Yii::app()->session['lang'] == 1) {
+						$Year_start = $_POST['Year_start'];
+						$Year_end = $_POST['Year_end'];
+					}else{
+						$Year_starts = $_POST['Year_start']-543;
+						$Year_ends = $_POST['Year_end']-543;
+						$Year_start = (string)$Year_starts;
+						$Year_end = (string)$Year_ends;
+					}
+				}else{
+					$Year_start = $_POST['Year_start'];
+					$Year_end = $_POST['Year_end'];
+				}
+				if ($datetime_start != null && $datetime_end != null) {
+					if (Yii::app()->session['lang'] == 1) {
+						$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
+						$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
+					}else{
+						$start_dates = explode("-", $datetime_start);
+						$start_dateExplode = $start_dates[0]-543;
+						$start_dateImplode = $start_dateExplode."-".$start_dates[1]."-".$start_dates[2];
+						
+						$end_dates = explode("-", $datetime_end);
+						$end_dateExplode = $end_dates[0]-543;
+						$end_dateImplode = $end_dateExplode."-".$end_dates[1]."-".$end_dates[2];
+
+						$start_date = date("Y-m-d", strtotime($start_dateImplode))." 00:00:00";
+						$end_date = date("Y-m-d", strtotime($end_dateImplode))." 23:59:59";	
+					}
+				}else{
+					$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
+				    $end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
+				}
 		$Chart = $_POST['Chart'];
-		$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
-		$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
 
 		if (Yii::app()->user->id != null) {
 					$user_login = User::model()->findByPk(Yii::app()->user->id);
@@ -791,11 +821,42 @@ public function actionReportRegisterOfficeExcel()
 		$status = $_POST['status'];
 		$datetime_start = $_POST['datetime_start'];
 		$datetime_end = $_POST['datetime_end'];
-		$Year_start = $_POST['Year_start'];
-		$Year_end = $_POST['Year_end'];
+		if ($_POST['Year_start'] != null && $_POST['Year_end'] != null) {
+					if (Yii::app()->session['lang'] == 1) {
+						$Year_start = $_POST['Year_start'];
+						$Year_end = $_POST['Year_end'];
+					}else{
+						$Year_starts = $_POST['Year_start']-543;
+						$Year_ends = $_POST['Year_end']-543;
+						$Year_start = (string)$Year_starts;
+						$Year_end = (string)$Year_ends;
+					}
+				}else{
+					$Year_start = $_POST['Year_start'];
+					$Year_end = $_POST['Year_end'];
+				}
+				if ($datetime_start != null && $datetime_end != null) {
+					if (Yii::app()->session['lang'] == 1) {
+						$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
+						$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
+					}else{
+						$start_dates = explode("-", $datetime_start);
+						$start_dateExplode = $start_dates[0]-543;
+						$start_dateImplode = $start_dateExplode."-".$start_dates[1]."-".$start_dates[2];
+						
+						$end_dates = explode("-", $datetime_end);
+						$end_dateExplode = $end_dates[0]-543;
+						$end_dateImplode = $end_dateExplode."-".$end_dates[1]."-".$end_dates[2];
+
+						$start_date = date("Y-m-d", strtotime($start_dateImplode))." 00:00:00";
+						$end_date = date("Y-m-d", strtotime($end_dateImplode))." 23:59:59";	
+					}
+				}else{
+					$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
+				    $end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
+				}
 		$Chart = $_POST['Chart'];
-		$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
-		$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
+	
 
 		if (Yii::app()->user->id != null) {
 					$user_login = User::model()->findByPk(Yii::app()->user->id);
@@ -1497,10 +1558,42 @@ public function actionReportRegisterData()
 				$datetime_start = $_POST['datetime_start'];
 				$datetime_end = $_POST['datetime_end'];
 				$status = $_POST['status'];
-				$Year_start = $_POST['Year_start'];
-				$Year_end = $_POST['Year_end'];
-				$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
-				$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
+				
+				if ($_POST['Year_start'] != null && $_POST['Year_end'] != null) {
+					if (Yii::app()->session['lang'] == 1) {
+						$Year_start = $_POST['Year_start'];
+						$Year_end = $_POST['Year_end'];
+					}else{
+						$Year_starts = $_POST['Year_start']-543;
+						$Year_ends = $_POST['Year_end']-543;
+						$Year_start = (string)$Year_starts;
+						$Year_end = (string)$Year_ends;
+					}
+				}else{
+					$Year_start = $_POST['Year_start'];
+					$Year_end = $_POST['Year_end'];
+				}
+				if ($datetime_start != null && $datetime_end != null) {
+					if (Yii::app()->session['lang'] == 1) {
+						$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
+						$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
+					}else{
+						$start_dates = explode("-", $datetime_start);
+						$start_dateExplode = $start_dates[0]-543;
+						$start_dateImplode = $start_dateExplode."-".$start_dates[1]."-".$start_dates[2];
+						
+						$end_dates = explode("-", $datetime_end);
+						$end_dateExplode = $end_dates[0]-543;
+						$end_dateImplode = $end_dateExplode."-".$end_dates[1]."-".$end_dates[2];
+
+						$start_date = date("Y-m-d", strtotime($start_dateImplode))." 00:00:00";
+						$end_date = date("Y-m-d", strtotime($end_dateImplode))." 23:59:59";	
+					}
+				}else{
+					$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
+				    $end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
+				}
+
 				$Chart = $_POST['Chart'];
 
 				if (Yii::app()->user->id != null) {
@@ -2814,7 +2907,7 @@ public function actionReportRegisterData()
 				$criteria->params=array(':type_employee_id'=>$_POST['id'],':active'=>'y');
 				$criteria->order = 'sortOrder ASC';
 				$model = Department::model()->findAll($criteria);
-				if ($type_em == 1) {
+				if ($type_em == 1 && $_POST['id'] == 1) {
 					$sub_list = Yii::app()->session['lang'] == 1?'Select Department ':'เลือกแผนก';
 				}else{
 					$sub_list = Yii::app()->session['lang'] == 1?'Select Division ':'เลือกฝ่าย';
@@ -4653,16 +4746,30 @@ if($course_score->score_past == 'y'){
 			));
 
 			if(!empty($model_department)){
-				?>
+				if ($_POST["employee_type"] == 1) { ?>
 				<option value="" selected>
 					<?php 
 					if(Yii::app()->session['lang'] != 1){
-						echo "เลือกฝ่าย/แผนก";
+						echo "เลือกแผนก";
 					}else{
 						echo "Select Department";
 					}
 					?>
 				</option>
+			<?php }else{ ?>
+					<option value="" selected>
+					<?php 
+					if(Yii::app()->session['lang'] != 1){
+						echo "เลือกฝ่าย";
+					}else{
+						echo "Select Division";
+					}
+					?>
+				</option>
+				<?php
+				}
+				?>
+				
 				<?php
 				foreach ($model_department as $key => $value) {					
 					?>
@@ -5472,6 +5579,10 @@ if(!empty($LogStartcourse)){
 		));
 		$year_end = date("Y", strtotime($year_end->start_date));
 
+		if (Yii::app()->session['lang'] == 2) {
+			$year_start = $year_start+543;
+			$year_end = $year_end+543;
+		}
 		if($year_end <= $year_start){
 			$year_end = $year_start+1;
 		}
@@ -5600,12 +5711,37 @@ if($_GET["search"]["department"] != ""){
 }
 
 if($_GET["search"]["start_date"] != "" && $_GET["search"]["end_date"] != ""){
-	if($_GET["search"]["start_date"] != ""){
-		$criteria->compare('t.start_date', ">=".$_GET["search"]["start_date"]." 00:00:00");
+	// if($_GET["search"]["start_date"] != ""){
+	// 	$criteria->compare('t.start_date', ">=".$_GET["search"]["start_date"]." 00:00:00");
+	// }
+	// if($_GET["search"]["end_date"] != ""){
+	// 	$criteria->compare('t.start_date', "<=".$_GET["search"]["end_date"]." 23:59:59");
+	// }
+	if (Yii::app()->session['lang'] == 1) {
+		if($_GET["search"]["start_date"] != ""){
+			$criteria->compare('t.start_date', ">=".$_GET["search"]["start_date"]." 00:00:00");
+		}
+		if($_GET["search"]["end_date"] != ""){
+			$criteria->compare('t.start_date', "<=".$_GET["search"]["end_date"]." 23:59:59");
+		}
+	}else{
+		
+		$start_date = explode("-", $_GET["search"]["start_date"]);
+		$start_dateExplode = $start_date[0]-543;
+		$start_dateImplode = $start_dateExplode."-".$start_date[1]."-".$start_date[2];
+		
+		$end_date = explode("-", $_GET["search"]["end_date"]);
+		$end_dateExplode = $end_date[0]-543;
+		$end_dateImplode = $end_dateExplode."-".$end_date[1]."-".$end_date[2];
+
+		if($_GET["search"]["start_date"] != ""){
+			$criteria->compare('t.start_date', ">=".$start_dateImplode." 00:00:00");
+		}
+		if($_GET["search"]["end_date"] != ""){
+			$criteria->compare('t.start_date', "<=".$end_dateImplode." 23:59:59");
+		}
 	}
-	if($_GET["search"]["end_date"] != ""){
-		$criteria->compare('t.start_date', "<=".$_GET["search"]["end_date"]." 23:59:59");
-	}
+
 }
 
 $criteria->order = 't.course_id ASC, t.gen_id ASC';
@@ -5791,9 +5927,15 @@ if($_GET["search"]["gen_id"] != ""){
 
     					if(!empty($gen_all)){
     						foreach ($gen_all as $key_cg => $value_cg) {
+		if (Yii::app()->session['lang'] != 1) {
+				 $searchStart_year = $_GET["search"]["start_year"]-543;
+				 $searchEnd_year = $_GET["search"]["end_year"]-543;
+			}else{
+				 $searchStart_year = $_GET["search"]["start_year"];
+				 $searchEnd_year = $_GET["search"]["end_year"];	
+			}
 
-
-			for ($year=$_GET["search"]["start_year"]; $year <= $_GET["search"]["end_year"] ; $year++) { 
+			for ($year=$searchStart_year; $year <= $searchEnd_year ; $year++) { 
 								
 						$arr_course_year[] = $year;
 

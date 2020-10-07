@@ -137,15 +137,15 @@
                             <div class="col-md-3 col-sm-3 col-xs-12">
                                 <div class="form-group">
                                    <div>
-                                      <label for=""><?= Yii::app()->session['lang'] == 1?'Chart pattern':'รูปแบบกราฟ'; ?></label>
+                                      <label for=""><?= Yii::app()->session['lang'] == 1?'Chart Type':'รูปแบบกราฟ'; ?></label>
                                   </div>
                                   <div class="checkbox checkbox-main checkbox-inline">
                                     <input class="accommodation" type="checkbox" name="accommodation" id="1" value="Bar_Graph" >
-                                    <label for="1" class="text-black"><?= Yii::app()->session['lang'] == 1?'Bar Graph':'กราฟแท่ง'; ?></label>
+                                    <label for="1" class="text-black"><?= Yii::app()->session['lang'] == 1?'Column Chart':'Column Chart'; ?></label>
                                 </div>
                                 <div class="checkbox checkbox-main checkbox-inline">
                                     <input class="accommodation" type="checkbox" name="accommodation" id="2" value="Pie_Charts">
-                                    <label for="2" class="text-black"><?= Yii::app()->session['lang'] == 1?'Pie Charts':'กราฟวงกลม'; ?> </label>
+                                    <label for="2" class="text-black"><?= Yii::app()->session['lang'] == 1?'Pie Charts':'Pie Charts'; ?> </label>
                                 </div>
                             </div>
                         </div>
@@ -155,50 +155,74 @@
                         <div class="col-md-3 col-sm-6 col-xs-12">
                             <div class="form-group day-icon">
                                 <i class="far fa-calendar-alt"></i>
-                                <label><?= Yii::app()->session['lang'] == 1?'Datetime start':'ช่วงเวลาเริ่มต้น'; ?></label>
-                                <input class="form-control datetimepicker" autocomplete="off" placeholder="<?= Yii::app()->session['lang'] == 1?'Datetime start':'ช่วงเวลาเริ่มต้น'; ?>" type="text" name="" id="datetime_start">
+                                <label><?= Yii::app()->session['lang'] == 1?'Start Date':'ช่วงเวลาเริ่มต้น'; ?></label>
+                                <input class="form-control datetimepicker" autocomplete="off" placeholder="<?= Yii::app()->session['lang'] == 1?'Start Date':'ช่วงเวลาเริ่มต้น'; ?>" type="text" name="" id="datetime_start">
                             </div>
                         </div>
                         <div class="col-md-3 col-sm-6 col-xs-12">
                             <div class="form-group day-icon">
                                 <i class="far fa-calendar-alt"></i>
-                                <label><?= Yii::app()->session['lang'] == 1?'Datetime end':'ช่วงเวลาสิ้นสุด'; ?></label>
-                                <input class="form-control datetimepicker" autocomplete="off" placeholder="<?= Yii::app()->session['lang'] == 1?'Datetime end':'ช่วงเวลาสิ้นสุด'; ?>" type="text" name="" id="datetime_end">
+                                <label><?= Yii::app()->session['lang'] == 1?'End Date':'ช่วงเวลาสิ้นสุด'; ?></label>
+                                <input class="form-control datetimepicker" autocomplete="off" placeholder="<?= Yii::app()->session['lang'] == 1?'End Date':'ช่วงเวลาสิ้นสุด'; ?>" type="text" name="" id="datetime_end">
                             </div>
                         </div>
                         <div class="col-sm-3 col-md-3 col-xs-12">
                             <div class="form-group">
-                                <label for=""><?= Yii::app()->session['lang'] == 1?'Year start':'ช่วงปีเริ่มต้น'; ?></label>
+                                <label for=""><?= Yii::app()->session['lang'] == 1?'From Year':'ปีเริ่มต้น'; ?></label>
                                 <select class="form-control Year_start" name="" id="x">
-                                    <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Year start':'ช่วงปีเริ่มต้น'; ?></option>
+                                    <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select From Year':'เลือกปีเริ่มต้น'; ?></option>
                                     <?php
-                                    $starting_year  = 2019;
-                                    $ending_year = date('Y');
-                                    if ($ending_year) {
+                                        if (Yii::app()->session['lang'] == 1) {
+                                            $starting_year  = 2019;
+                                            $ending_year = date('Y');
+                                                  if ($ending_year) {
 
-                                     for($starting_year; $starting_year <= $ending_year; $starting_year++) {?>
-                                       <option value="<?php echo $starting_year; ?>"><?php echo $starting_year; ?></option>
-                                   <?php   }                 
-                               }
-                               ?>
+                                                   for($starting_year; $starting_year <= $ending_year; $starting_year++) {?>
+                                                         <option value="<?php echo $starting_year; ?>"><?php echo $starting_year; ?></option>
+                                                  <?php   }                 
+                                                 }
+                                        }else{
+                                           $starting_year  = 2562;
+                                            $ending_year = date('Y')+543;
+                                                  if ($ending_year) {
+
+                                                   for($starting_year; $starting_year <= $ending_year; $starting_year++) {?>
+                                                         <option value="<?php echo $starting_year; ?>"><?php echo $starting_year; ?></option>
+                                                  <?php   }                 
+                                                 } 
+                                        }
+                                        
+                                       ?>
                            </select>
                        </div>
                    </div>
                    <div class="col-sm-3 col-md-3 col-xs-12">
                     <div class="form-group">
-                        <label for=""><?= Yii::app()->session['lang'] == 1?'Year end':'ช่วงปีสิ้นสุด'; ?></label>
+                        <label for=""><?= Yii::app()->session['lang'] == 1?'To Year':'ปีสิ้นสุด'; ?></label>
                         <select class="form-control Year_end" name="" id="x">
-                            <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Year end':'ช่วงปีสิ้นสุด'; ?></option>
+                            <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select To Year':'เลือกปีสิ้นสุด'; ?></option>
                             <?php
-                            $starting_year  = 2019;
-                            $ending_year = date('Y');
-                            if ($ending_year) {
+                                        if (Yii::app()->session['lang'] == 1) {
+                                            $starting_year  = 2019;
+                                            $ending_year = date('Y');
+                                                  if ($ending_year) {
 
-                             for($starting_year; $starting_year <= $ending_year; $starting_year++) {?>
-                               <option value="<?php echo $starting_year; ?>"><?php echo $starting_year; ?></option>
-                           <?php   }                 
-                       }
-                       ?>
+                                                   for($starting_year; $starting_year <= $ending_year; $starting_year++) {?>
+                                                         <option value="<?php echo $starting_year; ?>"><?php echo $starting_year; ?></option>
+                                                  <?php   }                 
+                                                 }
+                                        }else{
+                                           $starting_year  = 2562;
+                                            $ending_year = date('Y')+543;
+                                                  if ($ending_year) {
+
+                                                   for($starting_year; $starting_year <= $ending_year; $starting_year++) {?>
+                                                         <option value="<?php echo $starting_year; ?>"><?php echo $starting_year; ?></option>
+                                                  <?php   }                 
+                                                 } 
+                                        }
+                                        
+                                       ?>
                    </select>
                </div>
            </div>
@@ -259,6 +283,11 @@
         timepickerScrollbar: false,
         yearOffset: 0
     });
+     var lang_id = <?php echo Yii::app()->session['lang'] ?>;
+    if (lang_id == 2) {
+    $.datetimepicker.setLocale('th');
+    $('.datetimepicker').datetimepicker({yearOffset: 543});
+    }
     $('.Graph_1').hide();
     $('.Graph_2').hide();
     $('.Graph_3').hide();

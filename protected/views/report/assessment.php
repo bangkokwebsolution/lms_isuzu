@@ -53,7 +53,7 @@
                 if (Yii::app()->session['lang'] == 1) {
                     echo "Training Evaluation Report";
                 } else {
-                    echo "รายงานภาพรวมแบบประเมินสอบถาม";
+                    echo "รายงานการประเมินผลการฝึกอบรม";
                 }
                 ?>
             </li>
@@ -145,6 +145,15 @@
 <?php 
 if(isset($model_gen) && !empty($model_gen)){
     ?>
+    <option value="">
+        <?php 
+            if(Yii::app()->session['lang'] != 1){
+                echo "“เลือกทั้งหมด”";
+            }else{
+                echo "Select All";
+            }
+        ?>
+    </option>
     <option value="0">
         <?php 
         if(Yii::app()->session['lang'] != 1){
@@ -178,7 +187,7 @@ if(isset($model_gen) && !empty($model_gen)){
                                     </label></div>
                                     <div class="checkbox checkbox-main checkbox-inline">
                                         <input <?php if(isset($_GET["search"]["graph"]) && in_array("bar", $_GET["search"]["graph"])){ echo "checked"; } ?> type="checkbox" name="search[graph][]" id="search_graph_bar" value="bar">
-                                        <label for="search_graph_bar" class="text-black">Bar Graph </label>
+                                        <label for="search_graph_bar" class="text-black">Column Chart </label>
                                     </div>
 
                                 </div>
@@ -211,18 +220,18 @@ if(isset($model_gen) && !empty($model_gen)){
                                         <option value="1" <?php if(isset($_GET['search']['employee']) && $_GET['search']['employee'] == 1){ echo "selected"; } ?>>
                                             <?php 
                                                 if(Yii::app()->session['lang'] != 1){
-                                                    echo "คนเรือ";
+                                                    echo "พนักงานประจำเรือ";
                                                 }else{
-                                                    echo "MASTER / CAPTAIN";
+                                                    echo "Ship Staff";
                                                 }
                                             ?>
                                         </option>
                                         <option value="2" <?php if(isset($_GET['search']['employee']) && $_GET['search']['employee'] == 2){ echo "selected"; } ?>>
                                             <?php 
                                                 if(Yii::app()->session['lang'] != 1){
-                                                    echo "คนออฟฟิศ";
+                                                    echo "พนักงานออฟฟิศ";
                                                 }else{
-                                                    echo "Office";
+                                                    echo "Office Staff";
                                                 }
                                             ?>
                                         </option>
@@ -233,20 +242,20 @@ if(isset($model_gen) && !empty($model_gen)){
                             <?php if($authority == 1){ ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for="search_department">
+                                    <label for="search_department" class="DepartmentLabel">
                                         <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "ฝ่าย/แผนก";
+                                            echo "แผนก";
                                         }else{
                                             echo "Department";
                                         }
                                         ?>
                                     </label>
-                                    <select class="form-control" name="search[department]" id="search_department" onchange="change_position();">
+                                    <select class="form-control Department" name="search[department]" id="search_department" onchange="change_position();">
                                         <option value="" selected>
                                             <?php 
                                                 if(Yii::app()->session['lang'] != 1){
-                                                    echo "เลือกฝ่าย/แผนก";
+                                                    echo "เลือกแผนก";
                                                 }else{
                                                     echo "Select Department";
                                                 }
@@ -268,20 +277,20 @@ if(isset($model_department) && !empty($model_department)){
                             <?php if($authority == 1 || $authority == 2){ ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for="search_position">
+                                    <label for="search_position" class="PositionLabel">
                                         <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "แผนก/ตำแหน่ง";
+                                            echo "ตำแหน่ง";
                                         }else{
                                             echo "Position";
                                         }
                                         ?>
                                     </label>
-                                    <select class="form-control" name="search[position]" id="search_position" onchange="change_level();">
+                                    <select class="form-control Position" name="search[position]" id="search_position" onchange="change_level();">
                                         <option value="" selected>
                                             <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "เลือกแผนก/ตำแหน่ง";
+                                            echo "position";
                                         }else{
                                             echo "Select Position";
                                         }
@@ -300,13 +309,14 @@ if(isset($model_position) && !empty($model_position)){
                                 </div>
                             </div>
                             <?php } ?>
+                          
 <?php if($authority == 1 || ( ($authority == 2 || $authority == 3) && $user_login->profile->type_employee == 2) ){ ?>
                             <div class="col-sm-3 col-md-3 col-xs-12" id="div_search_level">
                                 <div class="form-group">
                                     <label for="search_level">
                                         <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "เลเวล";
+                                            echo "ระดับตำแหน่ง";
                                         }else{
                                             echo "Level";
                                         }
@@ -316,7 +326,7 @@ if(isset($model_position) && !empty($model_position)){
                                         <option value="" selected>
                                             <?php 
                                             if(Yii::app()->session['lang'] != 1){
-                                                echo "เลือกเลเวล";
+                                                echo "เลือกระดับตำแหน่ง";
                                             }else{
                                                 echo "Select Level";
                                             }
@@ -345,7 +355,7 @@ if(isset($model_level) && !empty($model_level)){
                                         if(Yii::app()->session['lang'] != 1){
                                             echo "ช่วงเวลาเริ่มต้น";
                                         }else{
-                                            echo "Range start date";
+                                            echo "Start Date";
                                         }
                                         ?>
                                     </label>
@@ -353,7 +363,7 @@ if(isset($model_level) && !empty($model_level)){
                                         if(Yii::app()->session['lang'] != 1){
                                             echo "ช่วงเวลาเริ่มต้น";
                                         }else{
-                                            echo "Range start date";
+                                            echo "Start Date";
                                         }
                                         ?>" type="text" name="search[start_date]" id="search_start_date" value="<?php if(isset($_GET["search"]["start_date"])){ echo $_GET["search"]["start_date"]; } ?>">
                                 </div>
@@ -366,7 +376,7 @@ if(isset($model_level) && !empty($model_level)){
                                         if(Yii::app()->session['lang'] != 1){
                                             echo "ช่วงเวลาสิ้นสุด";
                                         }else{
-                                            echo "Range end date";
+                                            echo "End Date";
                                         }
                                         ?>
                                     </label>
@@ -374,7 +384,7 @@ if(isset($model_level) && !empty($model_level)){
                                         if(Yii::app()->session['lang'] != 1){
                                             echo "ช่วงเวลาสิ้นสุด";
                                         }else{
-                                            echo "Range end date";
+                                            echo "End Date";
                                         }
                                         ?>" type="text" name="search[end_date]" id="search_end_date" value="<?php if(isset($_GET["search"]["end_date"])){ echo $_GET["search"]["end_date"]; } ?>">
                                 </div>
@@ -384,9 +394,9 @@ if(isset($model_level) && !empty($model_level)){
                                     <label for="search_start_year">
                                         <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "ช่วงปีเริ่มต้น";
+                                            echo "ปีเริ่มต้น";
                                         }else{
-                                            echo "Range start year";
+                                            echo "From Year";
                                         }
                                         ?>                                            
                                     </label>
@@ -394,9 +404,9 @@ if(isset($model_level) && !empty($model_level)){
                                         <option value="">
                                             <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "เลือกช่วงปีเริ่มต้น";
+                                            echo "เลือกปีเริ่มต้น";
                                         }else{
-                                            echo "Select Range start year";
+                                            echo "Select From Year";
                                         }
                                         ?>
                                         </option>
@@ -413,9 +423,9 @@ if(isset($model_level) && !empty($model_level)){
                                     <label for="search_end_year">
                                         <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "ช่วงปีสิ้นสุด";
+                                            echo "ปีสิ้นสุด";
                                         }else{
-                                            echo "Range end year";
+                                            echo "To Year";
                                         }
                                         ?>
                                     </label>
@@ -423,9 +433,9 @@ if(isset($model_level) && !empty($model_level)){
                                         <option value="">
                                             <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "เลือกช่วงปีสิ้นสุด";
+                                            echo "เลือกปีสิ้นสุด";
                                         }else{
-                                            echo "Select Range end year";
+                                            echo "Select To Year";
                                         }
                                         ?>
                                         </option>
@@ -647,7 +657,7 @@ chart.draw(view, options);
                     if (Yii::app()->session['lang'] == 1) {
                         echo "Training Evaluation Report";
                     } else {
-                        echo "รายงานภาพรวมแบบประเมินสอบถาม";
+                        echo "รายงานการประเมินผลการฝึกอบรม";
                     }
                     ?>
                 </h3>    
@@ -1024,7 +1034,11 @@ chart.draw(view, options);
         timepickerScrollbar: false,
         yearOffset: 0
     });
+    var lang_id = <?php echo Yii::app()->session['lang'] ?>;
+    if (lang_id == 2) {
     $.datetimepicker.setLocale('th');
+    $('.datetimepicker').datetimepicker({yearOffset: 543});
+    }
 
     $("#search_start_date").change(function () {
         $("#search_end_date").val("");
@@ -1091,11 +1105,49 @@ chart.draw(view, options);
             success: function(data) {
                 if(data != ""){
                     $("#search_department").html(data);
-                    $("#search_position").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกตำแหน่ง"; }else{ echo "Select Position"; } ?></option>");
+                    // $("#search_position").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกตำแหน่ง"; }else{ echo "Select Position"; } ?></option>");
                     $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกเลเวล"; }else{ echo "Select Level"; } ?></option>");
                 }
             }
         });
+   
+                                if (employee_type == 1) {
+                                    var lang = <?php echo Yii::app()->session['lang'] ?>;
+                                    if (lang == 1) {
+                                        var PositionLabel = "Position";
+                                        var Position = "<option value >Select Position</option>";
+                                        var DepartmentLabel = "Department";
+                                        $('.PositionLabel').text(PositionLabel);
+                                        $('#search_position').html(Position);
+                                        $('.DepartmentLabel').text(DepartmentLabel);
+                                    }else{
+                                        var PositionLabel = "ตำแหน่ง";
+                                        var Position = "<option value >เลือกตำแหน่ง</option>";
+                                        var DepartmentLabel = "แผนก";
+                                        $('.PositionLabel').text(PositionLabel);
+                                        $('#search_position').html(Position);
+                                        $('.DepartmentLabel').text(DepartmentLabel);
+                                    }
+                                }else{
+                                    var lang = <?php echo Yii::app()->session['lang'] ?>;
+                                    if (lang == 1) {
+                                        var PositionLabel = "Department";
+                                        var Position = "<option value >Select Department</option>";
+                                        var DepartmentLabel = "Division";
+                                        $('.PositionLabel').text(PositionLabel);
+                                        $('#search_position').html(Position);
+                                        $('.DepartmentLabel').text(DepartmentLabel);
+
+                                    }else{
+                                        var PositionLabel = "แผนก";
+                                        var Position = "<option value >เลือกแผนก</option>";
+                                        var DepartmentLabel = "ฝ่าย";
+                                        $('.PositionLabel').text(PositionLabel);
+                                        $('#search_position').html(Position);
+                                        $('.DepartmentLabel').text(DepartmentLabel);
+        
+                                    }
+                                }
     }
 
     function change_position(){

@@ -5,11 +5,45 @@ $Position = $data['Position'];
 $Leval = $data['Leval'];
 $datetime_start = $data['datetime_start'];
 $datetime_end = $data['datetime_end'];
-$Year_start = $data['Year_start'];
-$Year_end = $data['Year_end'];
+// $Year_start = $data['Year_start'];
+// $Year_end = $data['Year_end'];
 $Chart = $data['Chart'];
-$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
-$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
+// $start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
+// $end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
+if ($data['Year_start'] != null && $data['Year_end'] != null) {
+					if (Yii::app()->session['lang'] == 1) {
+						$Year_start = $data['Year_start'];
+						$Year_end = $data['Year_end'];
+					}else{
+						$Year_starts = $data['Year_start']-543;
+						$Year_ends = $data['Year_end']-543;
+						$Year_start = (string)$Year_starts;
+						$Year_end = (string)$Year_ends;
+					}
+				}else{
+					$Year_start = $data['Year_start'];
+					$Year_end = $data['Year_end'];
+				}
+				if ($datetime_start != null && $datetime_end != null) {
+					if (Yii::app()->session['lang'] == 1) {
+						$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
+						$end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
+					}else{
+						$start_dates = explode("-", $datetime_start);
+						$start_dateExplode = $start_dates[0]-543;
+						$start_dateImplode = $start_dateExplode."-".$start_dates[1]."-".$start_dates[2];
+						
+						$end_dates = explode("-", $datetime_end);
+						$end_dateExplode = $end_dates[0]-543;
+						$end_dateImplode = $end_dateExplode."-".$end_dates[1]."-".$end_dates[2];
+
+						$start_date = date("Y-m-d", strtotime($start_dateImplode))." 00:00:00";
+						$end_date = date("Y-m-d", strtotime($end_dateImplode))." 23:59:59";	
+					}
+				}else{
+					$start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
+				    $end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
+				}
 
 $user_login = User::model()->findByPk(Yii::app()->user->id);
 $authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi

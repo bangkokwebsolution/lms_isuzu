@@ -233,10 +233,10 @@ if(isset($model_gen) && !empty($model_gen)){
                             <?php if($authority == 1){ ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for="search_department">
+                                    <label for="search_department" class="DepartmentLabel">
                                         <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "ฝ่าย/แผนก";
+                                            echo "แผนก";
                                         }else{
                                             echo "Department";
                                         }
@@ -246,7 +246,7 @@ if(isset($model_gen) && !empty($model_gen)){
                                         <option value="" selected>
                                             <?php 
                                                 if(Yii::app()->session['lang'] != 1){
-                                                    echo "เลือกฝ่าย/แผนก";
+                                                    echo "เลือกแผนก";
                                                 }else{
                                                     echo "Select Department";
                                                 }
@@ -268,10 +268,10 @@ if(isset($model_department) && !empty($model_department)){
                             <?php if($authority == 1 || $authority == 2){ ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for="search_position">
+                                    <label for="search_position" class="PositionLabel">
                                         <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "แผนก/ตำแหน่ง";
+                                            echo "ตำแหน่ง";
                                         }else{
                                             echo "Position";
                                         }
@@ -281,7 +281,7 @@ if(isset($model_department) && !empty($model_department)){
                                         <option value="" selected>
                                             <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "เลือกแผนก/ตำแหน่ง";
+                                            echo "เลือกตำแหน่ง";
                                         }else{
                                             echo "Select Position";
                                         }
@@ -940,11 +940,48 @@ chart.draw(data, options);
             success: function(data) {
                 if(data != ""){
                     $("#search_department").html(data);
-                    $("#search_position").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกตำแหน่ง"; }else{ echo "Select Position"; } ?></option>");
+                    //$("#search_position").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกตำแหน่ง"; }else{ echo "Select Position"; } ?></option>");
                     $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกเลเวล"; }else{ echo "Select Level"; } ?></option>");
                 }
             }
         });
+        if (employee_type == 1) {
+                                    var lang = <?php echo Yii::app()->session['lang'] ?>;
+                                    if (lang == 1) {
+                                        var PositionLabel = "Position";
+                                        var Position = "<option value >Select Position</option>";
+                                        var DepartmentLabel = "Department";
+                                        $('.PositionLabel').text(PositionLabel);
+                                        $('#search_position').html(Position);
+                                        $('.DepartmentLabel').text(DepartmentLabel);
+                                    }else{
+                                        var PositionLabel = "ตำแหน่ง";
+                                        var Position = "<option value >เลือกตำแหน่ง</option>";
+                                        var DepartmentLabel = "แผนก";
+                                        $('.PositionLabel').text(PositionLabel);
+                                        $('#search_position').html(Position);
+                                        $('.DepartmentLabel').text(DepartmentLabel);
+                                    }
+                                }else{
+                                    var lang = <?php echo Yii::app()->session['lang'] ?>;
+                                    if (lang == 1) {
+                                        var PositionLabel = "Department";
+                                        var Position = "<option value >Select Department</option>";
+                                        var DepartmentLabel = "Division";
+                                        $('.PositionLabel').text(PositionLabel);
+                                        $('#search_position').html(Position);
+                                        $('.DepartmentLabel').text(DepartmentLabel);
+
+                                    }else{
+                                        var PositionLabel = "แผนก";
+                                        var Position = "<option value >เลือกแผนก</option>";
+                                        var DepartmentLabel = "ฝ่าย";
+                                        $('.PositionLabel').text(PositionLabel);
+                                        $('#search_position').html(Position);
+                                        $('.DepartmentLabel').text(DepartmentLabel);
+        
+                                    }
+                                }
     }
 
     function change_position(){
