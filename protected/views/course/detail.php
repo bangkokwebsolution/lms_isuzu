@@ -598,7 +598,9 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
 
                                                             ?> 
                                                             <li id="collapseles<?= $lessonListValue->id ?>">
-                                                                <img src="<?= $filename; ?>" class="img-rounded" alt="" style=" width:70px; height:50px;">
+                                                                <?php if($lessonListValue->image != ""){ ?>
+                                                                    <img src="<?= $filename; ?>" class="img-rounded" alt="" style=" width:70px; height:50px;">
+                                                                <?php } ?>
                                                                 <span class="title__course">
                                                                     <?= $lessonListValue->title ?> 
                                                                 </span>
