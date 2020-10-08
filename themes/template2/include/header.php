@@ -292,6 +292,9 @@
                 }
            }else{
                 $mainMenu = MainMenu::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y', 'lang_id' => Yii::app()->session['lang']));
+
+                $Profile_model = Profile::model()->findByPk(Yii::app()->user->id);
+
                 foreach ($mainMenu as $key => $value) {
                     $url = !empty($value->parent) ? $value->parent->url : $value->url;
                     $controller = explode('/', $url);
@@ -304,7 +307,12 @@
 
                                 <a data-toggle="modal" class="btn-login-course" href="#modal-login" >' . $value->title . '</span></a>
                                 </li>';
-                            } else {
+                            } elseif($url == "video/library" && ($Profile_model->type_employee == 1 || $Profile_model->type_employee == 2) ){
+                                //เห็นเฉพาะคนเรือ+ออฟฟิศ
+                                echo '<li class="' . $clss . '">
+                                <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
+                                </li>';
+                            }else {
                                 echo '<li class="' . $clss . '">
                                 <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
                                 </li>';
