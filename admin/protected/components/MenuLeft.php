@@ -755,6 +755,40 @@ Class MenuLeft extends Controller
 
                )
             ),
+	         array(
+               /*====== Check Permissions AuthitemAccess (1) ======*/
+                'visible'=>self::PermissionsMenu(array(
+                   'LogStartcourse.*',
+                   'LogStartcourse.Index',
+                )),
+                'label'=>'<i></i><span>ระบบส่งเมลล์แจ้งเตือนผู้เรียน</span>',
+                                'url'=>'#LogStartcourse',
+                'linkOptions' => array('data-toggle' => 'collapse'),
+                'itemOptions' => array('class' => 'hasSubmenu glyphicons eye_open'),
+                'submenuOptions' => array('class' => self::SetSubMenu( array('LogStartcourse') ), 'id' => 'LogStartcourse'),
+                'active' => self::SetSubMenu( array('LogStartcourse') ,false),
+                'items'=>array(
+                    array(
+	                	/*====== Check Permissions Sup-User (1) ======*/
+	                	'visible'=>self::PermissionsMenu(array(
+	                		'LogStartcourse.*',
+	                		'LogStartcourse.Index'
+	                	)),
+	                	'label'=>'จัดการ',
+	                	'url'=>array('//LogStartcourse/index')
+	                ),
+	                //    array(
+	                // 	/*====== Check Permissions Sup-User (1) ======*/
+	                // 	'visible'=>self::PermissionsMenu(array(
+	                // 		'VirtualClassroom.*',
+	                // 		'VirtualClassroom.Logmeeting'
+	                // 	)),
+	                // 	'label'=>'Logmeeting',
+	                // 	'url'=>array('//VirtualClassroom/logmeeting')
+	                // ),
+
+               )
+            ),
             array(
 				
 				'visible'=>self::PermissionsMenu(array(
