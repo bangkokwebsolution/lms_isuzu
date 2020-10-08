@@ -75,14 +75,15 @@ class LibraryFileController extends Controller
 		{
 			$model->attributes=$_POST['LibraryFile'];
 
-			$model->library_name_en = str_replace(' ', '_', $model->library_name_en);
+			// $model->library_name_en = str_replace(' ', '_', $model->library_name_en);
+			$filename_rename = str_replace(' ', '_', $model->library_name_en);
 
 			if($model->validate() && $model->save()){
 				$course_picture = CUploadedFile::getInstance($model, 'library_filename');
 				if(!empty($course_picture)){
 					$time = date("YmdHis");
 
-					$fileNamePicture = $model->library_name_en.".".$course_picture->getExtensionName();
+					$fileNamePicture = $filename_rename.".".$course_picture->getExtensionName();
 					$model->library_filename = $fileNamePicture;
 					$path = Yii::app()->getUploadPath(null).$model->library_filename;		
 					$course_picture->saveAs($path);		
@@ -117,7 +118,9 @@ class LibraryFileController extends Controller
 			$model->attributes=$_POST['LibraryFile'];
 			$model->scenario = 'validateCheckk';
 
-			$model->library_name_en = str_replace(' ', '_', $model->library_name_en);
+			// $model->library_name_en = str_replace(' ', '_', $model->library_name_en);
+			$filename_rename = str_replace(' ', '_', $model->library_name_en);
+			
 			
 			if($model->validate() && $model->save()){
 				$course_picture = CUploadedFile::getInstance($model, 'library_filename');
@@ -131,19 +134,19 @@ class LibraryFileController extends Controller
 					}
 
 					$time = date("YmdHis");					
-					$model->library_filename = $model->library_name_en.".".$course_picture->getExtensionName();
+					$model->library_filename = $filename_rename.".".$course_picture->getExtensionName();
 					$path = Yii::app()->getUploadPath(null).$model->library_filename;
 					$course_picture->saveAs($path);
 					$model->save();
 
 				}else{
 					$path = Yii::app()->getUploadPath(null).$name_old;
-					$path_new = Yii::app()->getUploadPath(null).$model->library_name_en.".".$exten_old;
+					$path_new = Yii::app()->getUploadPath(null).$filename_rename.".".$exten_old;
 					if($path != ""){
 						rename($path , $path_new);
 						unlink($path);
 					}
-					$model->library_filename = $model->library_name_en.".".$exten_old;
+					$model->library_filename = $filename_rename.".".$exten_old;
 					$model->save();
 
 				}
