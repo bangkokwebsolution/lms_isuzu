@@ -987,8 +987,8 @@ public function actionCateIndex($id) {
                     // $index =  $slide - 1;
                     $att['no']      = $id;
                     // $att['timeNext'] = $filePdfSlide->image_slide_next_time;
-                    if($index%5 == 0 && $slide != 0 && $modelLearnFilePdf->learn_file_status != $slide){
-                        $att['indicators'] = '<li data-target="#myCarousel'.$id.'" data-slide-to="'.$index.'" >'.$index.'</li>';
+                    if( (($slide+1)%5 == 1) && ($slide != 0) && ($modelLearnFilePdf->learn_file_status != $slide) ){
+                        $att['indicators'] = '<li data-target="#myCarousel'.$id.'" data-slide-to="'.$slide.'" >'.($slide+1).'</li>';
                     }
                     $modelLearnFilePdf->learn_file_status = $slide;
                     

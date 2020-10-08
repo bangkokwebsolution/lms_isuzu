@@ -2438,7 +2438,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
       $active = 'class';
     }
     ?>
-    <li data-target="#myCarousel<?= $file->id; ?>" data-slide-to="<?= $x-1 ?>" <?= $active ?>><?= $x ?></li>
+    <li data-target="#myCarousel<?= $file->id; ?>" data-slide-to="<?= $x-1 ?>" <?= $active ?> > <?= $x ?> </li>
     <?php
   }  
   ?>
@@ -2667,9 +2667,9 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                             // }
                                               }
                                               ?>
-                                              $('#ic_pdf_'+data.no).addClass("o-view");
+        $('#ic_pdf_'+data.no).addClass("o-view");
 
-                                            }
+      }
 
                                         //if(data.camera)
                                         $('#imageCheck_' + data.no).html(data.image);
