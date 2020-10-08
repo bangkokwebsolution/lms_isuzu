@@ -1041,7 +1041,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                                                                                             if ($lessonStatus != 'pass') {
                                                                                                 $link = 'javascript:void(0);';
                                                                                                 $alert = 'alertswal();';
-                                                                                            } elseif ($can_next_step != 2){
+                                                                                            } elseif ($lessonStatus == 'pass' && $can_next_step != 2){
                                                                                                 $link = $this->createUrl('question/preexams', array('id' => $lessonListValue->id));
                                                                                                 $alert = '';
                                                                                             }else{
@@ -1124,7 +1124,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                     if ($isPostTest) {//ถ้ายังไม่ทำข้อสอบ
                         $link_questionnair = 'javascript:void(0);';
                         $alert_questionnair = 'alertswal_test();';
-                    } elseif ($can_next_step != 2){//ถ้าทำข้อสอบแล้ว
+                    } elseif ($isPostTest && $can_next_step != 2){//ถ้าทำข้อสอบแล้ว
                         $link_questionnair = $this->createUrl('questionnaire/index', array('id' => $lessonListValue->id));
                         $alert_questionnair = '';
                     }else{
@@ -1136,7 +1136,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                     if ($isLearnPass != 'pass') { //ถ้าเรียนยังไม่ผ่าน
                         $link_questionnair = 'javascript:void(0);';
                         $alert_questionnair = 'alertswal();';
-                    } elseif ($can_next_step != 2) {//ถ้าเรียนผ่านแล้ว
+                    } elseif ($isLearnPass == 'pass' && $can_next_step != 2) {//ถ้าเรียนผ่านแล้ว
                         $link_questionnair = $this->createUrl('questionnaire/index', array('id' => $lessonListValue->id));
                         $alert_questionnair = '';
                     }else{
