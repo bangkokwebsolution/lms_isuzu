@@ -2,7 +2,7 @@
 if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $langId = Yii::app()->session['lang'] = 1;
     $flag = true;
-    $learnn = "Learn lesson";
+    $learnn = "Learn Lesson";
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -297,7 +297,7 @@ function DateThai($strDate)
                                                    $url = 'javascript:void(0)';
                                                     if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                                         $langId = Yii::app()->session['lang'] = 1;
-                                                        $learnn = 'Timeout lesson';
+                                                        $learnn = 'Timeout Lesson';
                                                         $btcl = 'btn-danger';
                                                     } else {
                                                         $langId = Yii::app()->session['lang'];
@@ -316,7 +316,7 @@ function DateThai($strDate)
                                                 }
                                                     if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                                         $langId = Yii::app()->session['lang'] = 1;
-                                                        $learnn = 'Learn lesson';
+                                                        $learnn = 'Learn Lesson';
                                                         $btcl = 'btn-success';
                                                     } else {
                                                         $langId = Yii::app()->session['lang'];
@@ -338,7 +338,7 @@ function DateThai($strDate)
 
                                                 if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                                     $langId = Yii::app()->session['lang'] = 1;
-                                                    $learnn = 'register lesson';
+                                                    $learnn = 'Register Lesson';
                                                     $btcl = 'btn-primary';
                                                 } else {
                                                     $langId = Yii::app()->session['lang'];
