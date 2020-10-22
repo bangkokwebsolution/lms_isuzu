@@ -9,7 +9,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/bootstrap-chosen.css" />
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/chosen.jquery.js"></script>
 <?php
-$formNameModel = 'LogAdmin';
+$formNameModel = 'LogRegister';
 $titleName = 'Log การตรวจสอบการสมัครสมาชิก';
 
 $this->breadcrumbs=array($titleName);
@@ -33,9 +33,7 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
 	}
 	$.appendFilter("LogRegister[news_per_page]", "news_per_page");
-EOD
-    , CClientScript::POS_READY);
-Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
+
     $('#LogRegister_register_date').attr('readonly','readonly');
     $('#LogRegister_register_date').css('cursor','pointer');
     $('#LogRegister_register_date').datepicker();
@@ -107,7 +105,11 @@ EOD
             'name'=>'search_name',
             'type'=>'raw',
             'value'=>function($data){
-                return $data->firstname . ' ' . $data->lastname;
+                 if ($data->profile->firstname_en != null && $data->profile->lastname_en != null) {
+                     return $data->profile->firstname_en . ' ' . $data->profile->lastname_en;
+                }else if($data->profile->firstname != null && $data->profile->lastname != null){
+                    return $data->profile->firstname . ' ' . $data->profile->lastname;
+                }
             }
         ),
         array(

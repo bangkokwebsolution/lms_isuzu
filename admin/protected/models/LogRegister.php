@@ -156,7 +156,7 @@ class LogRegister extends CActiveRecord
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
 		//$criteria->compare('user_id',$this->user_id);
-		$criteria->compare('concat(t.firstname," ",t.lastname)',$this->search_name,true);
+		//$criteria->compare('concat(t.firstname," ",t.lastname)',$this->search_name,true);
 		$criteria->compare('user.id',$this->search_admin,true);
 	
 		$regis_date = $this->register_date;
@@ -189,6 +189,8 @@ class LogRegister extends CActiveRecord
         $criteria->compare('confirm_date',$this->confirm_date,true);
 		
 	    }
+	    $criteria->compare('CONCAT(profile.firstname , " " , profile.lastname , " ", " ", username," ",profile.firstname_en , " " , profile.lastname_en)',$this->search_name,true);
+        $criteria->order = 'confirm_date DESC';
        //var_dump($_REQUEST);exit();
 		$poviderArray = array('criteria' => $criteria);
 

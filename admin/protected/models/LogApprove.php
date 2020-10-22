@@ -106,7 +106,7 @@ class LogApprove extends CActiveRecord
 		$criteria->with = array('user','position','profile');
 		$criteria->compare('firstname',$this->firstname,true);
 		$criteria->compare('lastname',$this->lastname,true);
-		$criteria->compare('CONCAT(t.firstname , " " , t.lastname)',$this->search_name,true);
+		//$criteria->compare('CONCAT(t.firstname , " " , t.lastname)',$this->search_name,true);
 		//$criteria->compare('register_date',$this->register_date,true);
 		$criteria->compare('t.position_id',$this->position_id);
 		//$criteria->compare('confirm_date',$this->confirm_date,true);
@@ -147,7 +147,9 @@ class LogApprove extends CActiveRecord
         $criteria->compare('confirm_date',$this->confirm_date,true);
 		
 	    }
-        
+
+        $criteria->compare('CONCAT(profile.firstname , " " , profile.lastname , " ", " ", username," ",profile.firstname_en , " " , profile.lastname_en)',$this->search_name,true);
+        $criteria->order = 'confirm_date DESC';
 		$poviderArray = array('criteria' => $criteria);
 
         // Page

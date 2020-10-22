@@ -95,7 +95,12 @@ EOD
             'name'=>'search_name',
             'type'=>'raw',
             'value'=>function($data){
-                return $data->member->firstname . ' ' . $data->member->lastname;
+                if ($data->member->firstname_en != null && $data->member->lastname_en != null) {
+                    return $data->member->firstname_en . ' ' . $data->member->lastname_en;
+                }else{
+                    return $data->member->firstname . ' ' . $data->member->lastname;
+                }
+                
             }
         ),
         array(

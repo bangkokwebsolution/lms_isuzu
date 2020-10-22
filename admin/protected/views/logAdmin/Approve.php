@@ -61,6 +61,7 @@ EOD
                 array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
                 array('name'=>'register_date','type'=>'text'),
                 array('name'=>'confirm_date','type'=>'text'),
+                //array('name'=>'search_name','type'=>'text'),
             ),
         ));?>
 <div class="widget" style="margin-top: -1px;">
@@ -117,7 +118,12 @@ EOD
             'name'=>'search_name',
             'type'=>'raw',
             'value'=>function($data){
-                return $data->firstname . ' ' . $data->lastname;
+                if ($data->profile->firstname_en != null && $data->profile->lastname_en != null) {
+                     return $data->profile->firstname_en . ' ' . $data->profile->lastname_en;
+                }else if($data->profile->firstname != null && $data->profile->lastname != null){
+                    return $data->profile->firstname . ' ' . $data->profile->lastname;
+                }
+               
             }
         ),
         array(

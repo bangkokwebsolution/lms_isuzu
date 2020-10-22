@@ -764,7 +764,7 @@ Class MenuLeft extends Controller
                 'label'=>'<i></i><span>ระบบส่งเมลล์แจ้งเตือนผู้เรียน</span>',
                                 'url'=>'#LogStartcourse',
                 'linkOptions' => array('data-toggle' => 'collapse'),
-                'itemOptions' => array('class' => 'hasSubmenu glyphicons eye_open'),
+                'itemOptions' => array('class' => 'hasSubmenu glyphicons envelope'),
                 'submenuOptions' => array('class' => self::SetSubMenu( array('LogStartcourse') ), 'id' => 'LogStartcourse'),
                 'active' => self::SetSubMenu( array('LogStartcourse') ,false),
                 'items'=>array(

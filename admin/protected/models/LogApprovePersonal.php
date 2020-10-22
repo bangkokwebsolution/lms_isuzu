@@ -126,7 +126,7 @@ class LogApprovePersonal extends CActiveRecord
 		$criteria->with = array('user','profile');
 		$criteria->compare('firstname',$this->firstname,true);
 		$criteria->compare('lastname',$this->lastname,true);
-		$criteria->compare('CONCAT(t.firstname , " " , t.lastname)',$this->search_name,true);
+		//$criteria->compare('CONCAT(t.firstname , " " , t.lastname)',$this->search_name,true);
 		$criteria->compare('confirm_user',$this->confirm_user);
 		$criteria->compare('create_date',$this->create_date,true);
 		$criteria->compare('create_by',$this->create_by);
@@ -164,7 +164,8 @@ class LogApprovePersonal extends CActiveRecord
         $criteria->compare('confirm_date',$this->confirm_date,true);
 		
 	    }
-        
+        $criteria->compare('CONCAT(profile.firstname , " " , profile.lastname , " ", " ", username," ",profile.firstname_en , " " , profile.lastname_en)',$this->search_name,true);
+        $criteria->order = 'confirm_date DESC';
 		$poviderArray = array('criteria' => $criteria);
 
         // Page

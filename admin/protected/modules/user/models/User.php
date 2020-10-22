@@ -500,6 +500,7 @@ public function validateIdCard($attribute,$params){
 	$criteria->compare('online_user',$this->online_user);
 	$criteria->compare('group',$this->group);
 	$criteria->compare('profile.identification',$this->idensearch,true);
+	$criteria->compare('CONCAT(profile.firstname , " " , profile.lastname , " ", " ", username," ",profile.firstname_en , " " , profile.lastname_en)',$this->fullname,true);
      
 	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
 	//$criteria->compare('orgchart_lv2',$org,true);
@@ -566,6 +567,7 @@ public function searchmembership()
 			
 		$criteria->addBetweenCondition('create_at', $date_start, $date_end, 'AND');
 	}
+	$criteria->compare('CONCAT(profile.firstname , " " , profile.lastname , " ", " ", username," ",profile.firstname_en , " " , profile.lastname_en)',$this->fullname,true);
 	//var_dump($_REQUEST);exit();
 	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
 	//$criteria->compare('orgchart_lv2',$org,true);
@@ -633,6 +635,7 @@ public function searchmembership_personal()
 			
 		$criteria->addBetweenCondition('create_at', $date_start, $date_end, 'AND');
 	}
+	$criteria->compare('CONCAT(profile.firstname , " " , profile.lastname , " ", " ", username," ",profile.firstname_en , " " , profile.lastname_en)',$this->fullname,true);
 	//var_dump($_REQUEST);exit();
 	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
 	//$criteria->compare('orgchart_lv2',$org,true);
