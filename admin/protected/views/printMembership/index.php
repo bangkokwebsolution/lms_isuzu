@@ -4,6 +4,7 @@ $titleName = 'พิมพ์ใบสมัครสำหรับคนปร
 $formNameModel = 'PrintMembership';
 
 $this->breadcrumbs=array($titleName);
+
 Yii::app()->clientScript->registerScript('search', "
 	$('#SearchFormAjax').submit(function(){
 	    $.fn.yiiGridView.update('$formNameModel-grid', {
@@ -37,6 +38,7 @@ EOD
 		'route' => $this->route,
 		'attributes'=>array(
 				array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
+				array('name'=>'nameSearch','type'=>'text'),
 		),
 	));?>
 
@@ -68,6 +70,7 @@ EOD
 						?>
 					</span>
 				</div>
+				<div class="clear-div"></div>
 				<div class="spacer"></div>
 				<div>
 
@@ -90,18 +93,6 @@ EOD
 					'afterAjaxUpdate'=>'function(id, data){
 						$.appendFilter("PrintMembership[news_per_page]");
 						InitialSortTable();	
-				        jQuery("#course_date").datepicker({
-						   	"dateFormat": "dd/mm/yy",
-						   	"showAnim" : "slideDown",
-					        "showOtherMonths": true,
-					        "selectOtherMonths": true,
-				            "yearRange" : "-5+10", 
-					        "changeMonth": true,
-					        "changeYear": true,
-				            "dayNamesMin" : ["อา.","จ.","อ.","พ.","พฤ.","ศ.","ส."],
-				            "monthNamesShort" : ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.",
-				                "ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."],
-					   })
 					}',
 					
 							'columns'=>array(
@@ -113,7 +104,7 @@ EOD
 									'header' => 'ชื่อ - นามสกุล',
 									'type'=>'html',
 									'value'=>function($data){
-										return $data->profile->firstname . ' ' . $data->profile->lastname;
+										return $data->profile->firstname_en . ' ' . $data->profile->lastname_en;
 									}
 								),
 								array(

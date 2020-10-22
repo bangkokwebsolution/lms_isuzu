@@ -42,6 +42,7 @@ class PrintMembership extends CActiveRecord
 	public $news_per_page;
 	public $supper_user_status;
 	public $idensearch;
+	public $nameSearch;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -70,7 +71,7 @@ class PrintMembership extends CActiveRecord
 			// @todo Please remove those attributes that should not be searched.
 			array('news_per_page', 'safe'),
 
-			array('id, username, password, email, pic_user, orgchart_lv2, department_id, activkey, create_at, lastvisit_at, superuser, status, online_status, online_user, last_ip, last_activity, lastactivity, avatar, company_id, division_id, position_id, bookkeeper_id, pic_cardid, auditor_id, pic_cardid2, del_status, group, identification, supper_user_status, idensearch;', 'safe', 'on'=>'search'),
+			array('id, username, password, email, pic_user, orgchart_lv2, department_id, activkey, create_at, lastvisit_at, superuser, status, online_status, online_user, last_ip, last_activity, lastactivity, avatar, company_id, division_id, position_id, bookkeeper_id, pic_cardid, auditor_id, pic_cardid2, del_status, group, identification, supper_user_status, idensearch, nameSearch', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -126,6 +127,7 @@ class PrintMembership extends CActiveRecord
 			'searchValue' => 'ชื่อ นามสกุล',
 			'supper_user_status' => 'สถานะ',
 			'idensearch' => 'รหัสบัตรประชาชน',
+			'nameSearch' => 'ชื่อ นามสกุล',
 		);
 	}
 
@@ -254,6 +256,7 @@ class PrintMembership extends CActiveRecord
 	$criteria->compare('online_user',$this->online_user);
 	$criteria->compare('group',$this->group);
 	$criteria->compare('profile.identification',$this->idensearch,true);
+	$criteria->compare('CONCAT(profile.firstname , " " , profile.lastname , " ", " ", username," ",profile.firstname_en , " " , profile.lastname_en)',$this->nameSearch,true);
 
 	// $dataProvider = new CActiveDataProvider(get_class($this), array(
 	// 	'criteria'=>$criteria,
@@ -316,16 +319,26 @@ public function searchapprove()
 	$criteria->compare('online_user',$this->online_user);
 	$criteria->compare('group',$this->group);
 	$criteria->compare('profile.identification',$this->idensearch,true);
+	$criteria->compare('CONCAT(profile.firstname , " " , profile.lastname , " ", " ", username," ",profile.firstname_en , " " , profile.lastname_en)',$this->nameSearch,true);
      
 	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
 	//$criteria->compare('orgchart_lv2',$org,true);
-	$dataProvider = new CActiveDataProvider(get_class($this), array(
-		'criteria'=>$criteria,
-		'pagination'=>array(
-			'pageSize'=>Yii::app()->getModule('user')->user_page_size,
-		),
-	));
-	return $dataProvider;
+	// $dataProvider = new CActiveDataProvider(get_class($this), array(
+	// 	'criteria'=>$criteria,
+	// 	'pagination'=>array(
+	// 		'pageSize'=>Yii::app()->getModule('user')->user_page_size,
+	// 	),
+	// ));
+	// return $dataProvider;
+	$dataProvider = array('criteria'=>$criteria);
+		// Page
+		if(isset($this->news_per_page))
+		{
+			$dataProvider['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
+		}
+		
+		return new CActiveDataProvider($this, $dataProvider);
+
 }
 	/**
 	 * Returns the static model of the specified AR class.

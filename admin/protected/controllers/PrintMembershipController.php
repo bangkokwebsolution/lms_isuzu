@@ -56,8 +56,8 @@ class PrintMembershipController extends Controller
         $model->register_status = array(1);
         $model->supper_user_status = true;
       
-        if(isset($_GET['User'])){
-            $model->attributes=$_GET['User'];
+        if(isset($_GET['PrintMembership'])){
+            $model->attributes=$_GET['PrintMembership'];
         }
         $this->render('approve',array(
             'model'=>$model,

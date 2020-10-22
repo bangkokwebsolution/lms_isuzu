@@ -12,39 +12,41 @@ $titleName = 'พิมพ์ใบสมัครสำหรับคนปร
 $formNameModel = 'approve';
 
 Yii::app()->clientScript->registerScript('search', "
-	$('.search-button').click(function(){
-		$('.search-form').toggle();
-		return false;
-		});
-		$('.search-form form').submit(function(){
-			$.fn.yiiGridView.update('user-grid', {
-				data: $(this).serialize()
-				});
-				return false;
-				});
-				");
+	$('#SearchFormAjax').submit(function(){
+	    $.fn.yiiGridView.update('$formNameModel-grid', {
+	        data: $(this).serialize()
+	    });
+	    return false;
+	});
+");
 
-// Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
-// 	$('#User_create_at').attr('readonly','readonly');
-// 	$('#User_create_at').css('cursor','pointer');
-// 	$('#User_create_at').daterangepicker();
-
-// EOD
-// , CClientScript::POS_READY);
-
+Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
+	$.updateGridView = function(gridID, name, value) {
+	    $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
+	    $.fn.yiiGridView.update(gridID, {data: $.param(
+	        $("#"+gridID+" input, #"+gridID+" .filters select")
+	    )});
+	}
+	$.appendFilter = function(name, varName) {
+	    var val = eval("$."+varName);
+	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
+	}
+	$.appendFilter("PrintMembership[news_per_page]", "news_per_page");
+EOD
+    , CClientScript::POS_READY);
 	?>
 	<div id="user" class="innerLR">
-		<!-- <?php
+		 <?php
 		$this->widget('AdvanceSearchForm', array(
 			'data'=>$model,
 			'route' => $this->route,
         //'id'=>'SearchFormAjax',
 			'attributes'=>array(
 				array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
-            //array('name'=>'nameSearch','type'=>'text'),
+                array('name'=>'nameSearch','type'=>'text'),
 				//array('name'=>'create_at','type'=>'text'),
 			),
-		));?> -->
+		));?>
 <style type="text/css">
 .coolContainer h4:first-of-type {
     float: left;
@@ -73,6 +75,7 @@ Yii::app()->clientScript->registerScript('search', "
 						?>
 					</span>
 				</div>
+				<div class="clear-div"></div>
 				<div class="spacer"></div>
 				<div>
 
@@ -84,13 +87,13 @@ Yii::app()->clientScript->registerScript('search', "
 						</div> --><!-- search-form -->					  
 						<?php
 						$this->widget('AGridView', array(
-							'id'=>'user-grid',
+							'id'=>$formNameModel.'-grid',
 							'dataProvider'=>$model->searchapprove(),
 							'filter'=>$model,
 							'afterAjaxUpdate'=>'function(id, data){
-								$.appendFilter("[news_per_page]");	
-								InitialSortTable();
-							}',
+						$.appendFilter("PrintMembership[news_per_page]");
+						InitialSortTable();	
+					}',
 							'columns'=>array(
 								array(
 									'header'=>'No.',
@@ -100,7 +103,7 @@ Yii::app()->clientScript->registerScript('search', "
 									'header' => 'ชื่อ - นามสกุล',
 									'type'=>'html',
 									'value'=>function($data){
-										return $data->profile->firstname . ' ' . $data->profile->lastname;
+										return $data->profile->firstname_en . ' ' . $data->profile->lastname_en;
 									}
 								),
 								array(
