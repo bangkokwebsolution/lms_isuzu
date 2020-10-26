@@ -126,7 +126,9 @@ EOD
                                 // }
                             $logques = Courselogques::model()->with('Coursescore')->find(array(
                                 'condition' => 't.user_id=:user_id and t.active = "y" and Coursescore.active = "y" and t.ques_type = 3 and t.course_id=:course_id and t.confirm = 0 and t.test_type=:test_type','order'=>'t.user_id',
-                                'params' => array(':user_id' => $val->user_id,':course_id' => $val->course_id, ':test_type'=>$type)));
+                                'params' => array(':user_id' => $val->user_id,':course_id' => $val->course_id, ':test_type'=>$type),
+                                'order'=>'logques_id DESC'
+                            ));
                             $score = $logques->Coursescore->score_number;
                             $scoreTotal = $logques->Coursescore->score_total;
                             if($logques->check == '0'){
@@ -163,7 +165,9 @@ EOD
                                 // }
                             $logques = Courselogques::model()->with('Coursescore')->find(array(
                                 'condition' => 't.user_id=:user_id and t.active = "y" and Coursescore.active = "y" and t.ques_type = 3 and t.course_id=:course_id and t.confirm = 0 and t.test_type=:test_type','order'=>'t.user_id',
-                                'params' => array(':user_id' => $val->user_id,':course_id' => $val->course_id, ':test_type'=>$type)));
+                                'params' => array(':user_id' => $val->user_id,':course_id' => $val->course_id, ':test_type'=>$type),
+                                'order'=>'logques_id DESC'
+                            ));
                             $score = $logques->Coursescore->score_number;
                             $scoreTotal = $logques->Coursescore->score_total;
                             if($logques->check == '0'){

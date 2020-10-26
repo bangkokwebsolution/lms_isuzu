@@ -1023,6 +1023,7 @@ body {
         }
         ?>
     });
+
     $('#Lesson_type').on('change', function() {
       if(this.value == 'vdo'){
         $('.pdf_upload').hide();
@@ -1056,7 +1057,8 @@ body {
         $('#file_doc').hide();
         $('.youtube_vdo').show();
     } 
-})
+});
+
 </script>
 <script type="text/javascript">
    $('.default_datetimepicker').datetimepicker({

@@ -158,7 +158,7 @@ if($course->cate_id != 1){ //LMS
 	</div>
 </section>
 <div class="container">
-	<?php if($course->course_refer == 'y' && $testType != "pre"){ ?>	
+	<?php if($course->course_refer == 'y' && $testType != "pre" && $quesType_ != 3){ ?>    
 		<div class="question-content-wrap">
 			<div class="row">
 				<div class="col-md-8">

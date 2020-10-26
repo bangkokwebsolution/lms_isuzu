@@ -1357,8 +1357,12 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
         </a>
     </div>
 <?php } ?>
-<?php $CheckPreTestAnsTextAreaCoursePost = Helpers::lib()->CheckPreTestAnsTextAreaCourse($_GET['id'], "post"); ?>
+<?php $CheckPreTestAnsTextAreaCoursePost = Helpers::lib()->CheckPreTestAnsTextAreaCourse($_GET['id'], "post"); 
 
+// var_dump($CheckPreTestAnsTextAreaCoursePost); exit();
+?>
+
+<?php //var_dump($BestFinalTestScore); exit(); ?>
 
 <!-- Check count test -->
 <div id="collapseFinal<?=$key?>">
@@ -1367,13 +1371,15 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
             <?php //$CheckPreTestAnsTextAreaCoursePost = Helpers::lib()->CheckPreTestAnsTextAreaCourse($course->course_id, "post"); ?>
 
             <?php if(count($BestFinalTestScore) < $course->cate_amount){ ?>
-                <?php if($course_score->score_past == 'n'){ ?>
+                <?php if($course_score->score_past == 'n'){ 
+                    //อาจจะยังไม่ตรวจ หรือ ตรวจแล้ว แต่คะแนนไม่ผ่าน
+                    ?>
 
                     <?php 
                     if($CheckPreTestAnsTextAreaCoursePost){
                         ?>
                         <li class="list-group-item ">
-                    <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
+                    <a href="javascript:void(0);"><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
                         <span class="pull-right  text-danger prepost"> 
                             <?= $course_score->score_number ?>/<?= $course_score->score_total ?>
                             <?= $label->label_point; ?>                                
@@ -1385,8 +1391,8 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                         $course_wait_cer = 2;
                         ?>
                         <li class="list-group-item ">
-                    <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
-                        <span class="pull-right  text-danger prepost"> <?= $label->label_course_wait; ?> </span></a> 
+                    <a href="javascript:void(0);"><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
+                        <span class="pull-right  text-danger prepost"> <?= $label->label_course_wait; ?> 888</span></a> 
                     </li>
 
                         <?php
@@ -1394,11 +1400,13 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                      ?>
                  <?php }else{ ?>
                     <?php 
+                    $logcourseques = Courselogques::model()->find("score_id='".$course_score->score_id."' ");
 
-                    if($CheckPreTestAnsTextAreaCoursePost){
+                    // ตรวจแล้ว แต่ยังไม่ยืนยัน คะแนนผ่าน
+                    if(($logcourseques->confirm == 1 && $logcourseques->check == 1 && $logcourseques->ques_type == 3) || ($logcourseques->ques_type != 3)){
                         ?>
                         <li class="list-group-item ">
-                        <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
+                        <a href="javascript:void(0);"><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
                             <span class="pull-right  text-success prepost"> <?= $course_score->score_number ?>/<?= $course_score->score_total ?> <?= $label->label_point; ?></span></a> 
                         </li>
                         <?php
@@ -1406,19 +1414,20 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                         $course_wait_cer = 2;
                         ?>  
                          <li class="list-group-item ">
-                        <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
-                            <span class="pull-right  text-success prepost"> <?= $label->label_course_wait; ?></span></a> 
+                        <a href="javascript:void(0);"><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
+                            <span class="pull-right  text-success prepost"> <?= $label->label_course_wait; ?>999</span></a> 
                         </li>
                         <?php
                     }
                      ?>                    
                     <?php } ?>
                 <?php }else{
+                    // สอบครบจำนวนแล้ว
                     if($CheckPreTestAnsTextAreaCoursePost){
                         ?>
 
                         <li class="list-group-item ">
-                        <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
+                        <a href="javascript:void(0);"><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
                             <span class="pull-right  text-success prepost"> <?= $course_score->score_number ?>/<?= $course_score->score_total ?> <?= $label->label_point; ?></span></a> 
                         </li>
                         <?php
@@ -1426,8 +1435,8 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                         $course_wait_cer = 2;
                         ?>
                         <li class="list-group-item ">
-                        <a href=""><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
-                            <span class="pull-right  text-success prepost"> <?= $label->label_course_wait; ?></span></a> 
+                        <a href="javascript:void(0);"><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
+                            <span class="pull-right  text-success prepost"> <?= $label->label_course_wait; ?>000</span></a> 
                         </li>
                         <?php
                     }
@@ -1456,8 +1465,8 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
             $criteria->order = 'create_date ASC';
             $BestFinalTestScore_pass = Coursescore::model()->findAll($criteria);
 
-
-            if($checkHaveCourseTest && $CheckPreTestAnsTextAreaCoursePost == true && empty($BestFinalTestScore_pass) && count($BestFinalTestScore) < $course->cate_amount){ ?>
+            // && empty($BestFinalTestScore_pass) ตัวบอกว่า ไม่มีคะแนนสอบ
+            if($checkHaveCourseTest && $CheckPreTestAnsTextAreaCoursePost == true && count($BestFinalTestScore) < $course->cate_amount){ ?>
                <li class="list-group-item ">
                 <?php if($step == 4){ ?>
                     <!-- <div class="pt-now"> You are here</div> -->

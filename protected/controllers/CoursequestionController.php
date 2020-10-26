@@ -39,6 +39,13 @@ class CoursequestionController extends Controller
             "choice_answer" => 1,
         ));
 
+        if(empty( $Question)){ // ถ้าไม่มีช้อย แสดงว่าเป็นข้อเขียน
+            $Question = Coursequestion::model()->with('choices')->findAll("ques.group_id=:group_id AND ques_type=3", array(
+                "group_id" => $Coursemanage->group_id,
+            ));
+        }
+
+
         if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
             $langId = Yii::app()->session['lang'] = 1;
             Yii::app()->language = 'en';
@@ -69,11 +76,17 @@ class CoursequestionController extends Controller
             ));
         }
 
-        foreach ($Question as $key => $value) {   
-            $total_score += count($value->choices);
+        if($Question[0]->ques_type == 3){
+
+           foreach ($Question as $key => $value) {   
+                $total_score += $value->max_score;
+           }   
+
+        }else{
+            $total_score = $Coursemanage->manage_row;
         }
 
-        $total_score = $Coursemanage->manage_row;
+       
 
         $currentQuiz = TempCourseQuiz::model()->find(array(
             'condition' => "user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id AND type=:type order by id",
@@ -117,6 +130,7 @@ class CoursequestionController extends Controller
             $que_type = $_GET['type']; // pre
         }
         $quesType_ = 2; // เช็คว่ามี ข้อสอบ 3 บรรยาย ไหม
+        $type_question = 0; // ประเภทข้อสอบ
 
         $id = isset($_POST['course_id']) ? $_POST['course_id'] : $id;
         if(Yii::app()->user->id){
@@ -226,12 +240,13 @@ class CoursequestionController extends Controller
                         "score_past" => "y", ':gen_id'=>$gen_id, ':type'=>$que_type
                     ));
 
-                    if (!empty($countCoursescorePast)) {
+                    $chk_passssss = 1;
+                    if (!empty($countCoursescorePast) && $chk_passssss == 2) {
 
-                        Yii::app()->user->setFlash('CheckQues', $label->label_alert_testPass);
-                        Yii::app()->user->setFlash('class', "success");
+                        // Yii::app()->user->setFlash('CheckQues', $label->label_alert_testPass);
+                        // Yii::app()->user->setFlash('class', "success");
 
-                        $this->redirect(array('//course/detail', 'id' => $id));
+                        // $this->redirect(array('//course/detail', 'id' => $id));
                     } else {
                         // Config default pass score 60 percent
                         $scorePercent = $course->percen_test;
@@ -486,6 +501,7 @@ class CoursequestionController extends Controller
                                         $modelCourselogques->result = $result;
                                         $modelCourselogques->save();
 
+                                        $type_question = $coursequestion->ques_type;
                                         if($coursequestion->ques_type == 3){
                                                 $quesType_ = 1;
                                             }
@@ -545,6 +561,7 @@ class CoursequestionController extends Controller
                                         $modelCourselogques->result = $result;
                                         $modelCourselogques->save();
 
+                                        $type_question = $coursequestion->ques_type;
                                          if($coursequestion->ques_type == 3){
                                                 $quesType_ = 1;
                                             }
@@ -584,6 +601,7 @@ class CoursequestionController extends Controller
                                         $modelCourselogques->logques_text = $value->ans_id;
                                         $modelCourselogques->save();
 
+                                        $type_question = $coursequestion->ques_type;
                                          if($coursequestion->ques_type == 3){
                                                 $quesType_ = 1;
                                             }
@@ -641,6 +659,7 @@ class CoursequestionController extends Controller
                                         $modelCourselogques->result = $result;
                                         $modelCourselogques->save();
 
+                                        $type_question = $coursequestion->ques_type;
                                          if($coursequestion->ques_type == 3){
                                                 $quesType_ = 1;
                                             }
@@ -753,6 +772,7 @@ class CoursequestionController extends Controller
                                             $modelCourselogques->result = $quest_score;
                                             $modelCourselogques->save();
 
+                                        $type_question = $coursequestion->ques_type;
                                             if($coursequestion->ques_type == 3){
                                                 $quesType_ = 1;
                                             }
@@ -798,6 +818,7 @@ class CoursequestionController extends Controller
                                     Helpers::lib()->checkDateStartandEnd(Yii::app()->user->id,$course->course_id);
                                     // $this->SendMailLearn($course->course_id);
                                     $this->renderPartial('exams_finish', array(
+                                        'quesType_'=>$type_question,
                                         'model' => $model,
                                         'testType' => $type,
                                         'quesType' => $quesType_,

@@ -4360,7 +4360,7 @@ public function checkStepLesson($lesson){
             $ques_type = "3"; // 3=textarea
 
             $model = Courselogques::model()->findAll(array( 
-                'condition' => 'gen_id=:gen_id AND course_id=:course_id AND user_id=:user_id AND test_type=:test_type AND ques_type=:ques_type AND active=:active AND t.check=:confirm',
+                'condition' => 'gen_id=:gen_id AND course_id=:course_id AND user_id=:user_id AND test_type=:test_type AND ques_type=:ques_type AND active=:active AND (t.check=:confirm OR confirm=:confirm)',
                 'params' => array(':gen_id'=>$gen_id, ':course_id'=>$course_id, ':user_id'=>$user_id, ':test_type'=>$test_type, ':active'=>'y', ':ques_type'=>$ques_type, ':confirm'=>0),
             ));
 

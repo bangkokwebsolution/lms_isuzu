@@ -81,6 +81,14 @@ class QuestionController extends Controller
                     foreach ($check_ques as $keyy => $valuee) {
                         $arr_id_ques[] = $valuee->ques_id;
                     }
+                }else{
+                    $check_ques = Question::model()->findAll("active='y' AND ques_type=3 AND group_id='".$value->group_id."'");
+                    if(!empty($check_ques)){
+                        $total_score = 0;
+                        foreach ($check_ques as $key => $value) {
+                            $total_score += $value->max_score;
+                        }
+                    }
                 }
             }
 
@@ -161,6 +169,7 @@ class QuestionController extends Controller
         }
 
         $quesType_ = 2; // เช็คว่ามี ข้อสอบ 3 บรรยาย ไหม
+        $type_question = 0; // ประเภทข้อสอบ
 
 
         $id = isset($_POST['lesson_id']) ? $_POST['lesson_id'] : $id;
@@ -512,6 +521,8 @@ class QuestionController extends Controller
                                         $modelCourselogques->result = $result;
                                         $modelCourselogques->save();
 
+                                        $type_question = $coursequestion->ques_type;
+
                                         if($coursequestion->ques_type == 3){
                                                 $quesType_ = 1;
                                             }
@@ -548,7 +559,7 @@ class QuestionController extends Controller
                                         $modelCourselogques->result = $result;
                                         $modelCourselogques->logques_text = $value->ans_id;
                                         $modelCourselogques->save();
-
+                                        $type_question = $coursequestion->ques_type;
                                         if($coursequestion->ques_type == 3){
                                                 $quesType_ = 1;
                                             }
@@ -608,7 +619,7 @@ class QuestionController extends Controller
                                         $modelCourselogques->ques_type = $coursequestion->ques_type;
                                         $modelCourselogques->result = $result;
                                         $modelCourselogques->save();
-
+                                        $type_question = $coursequestion->ques_type;
                                         if($coursequestion->ques_type == 3){
                                                 $quesType_ = 1;
                                             }
@@ -664,7 +675,7 @@ class QuestionController extends Controller
                                         $modelCourselogques->ques_type = $coursequestion->ques_type;
                                         $modelCourselogques->result = $result;
                                         $modelCourselogques->save();
-
+                                        $type_question = $coursequestion->ques_type;
                                         if($coursequestion->ques_type == 3){
                                                 $quesType_ = 1;
                                             }
@@ -797,7 +808,7 @@ class QuestionController extends Controller
                                         $modelCourselogques->ques_type = $coursequestion->ques_type;
                                         $modelCourselogques->result = $quest_score;
                                         $modelCourselogques->save();
-
+                                        $type_question = $coursequestion->ques_type;
                                         if($coursequestion->ques_type == 3){
                                                 $quesType_ = 1;
                                             }
@@ -833,6 +844,7 @@ class QuestionController extends Controller
                                 }
                                 $this->actiondeleteTemp($id,$testType,$gen_id);
                                 $this->renderPartial('exams_finish', array(
+                                    'quesType_'=>$type_question,
                                     'model' => $model,
                                     'lesson' => $lesson,
                                     'temp_all' => $temp_all,

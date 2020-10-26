@@ -130,7 +130,7 @@ if($modelScore->type=='post' && !$state){
 	</div>
 </section>
 <div class="container">
-	<?php if($lesson->status == 'y' && $testType != "pre"){ ?>	
+	<?php if($lesson->status == 'y' && $testType != "pre" && $quesType_ != 3){ ?>	
 		<div class="question-content-wrap">
 			<div class="row">
 				<div class="col-md-8">
