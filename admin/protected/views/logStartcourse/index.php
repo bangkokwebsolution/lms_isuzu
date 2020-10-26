@@ -84,10 +84,11 @@ EOD
         //     'value'=>'$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
         // ),
         array(
-        'visible'=>Controller::DeleteAll(
-                array("LogStartcourse.*", "LogStartcourse.sendMailMessage", "LogStartcourse.MultiSendMailMessages")
-                ),
+        // 'visible'=>Controller::DeleteAll(
+        //         array("LogStartcourse.*", "LogStartcourse.sendMailMessage", "LogStartcourse.MultiSendMailMessages")
+        //         ),
         'class'=>'CCheckBoxColumn',
+        //'htmlOptions'=>array('style'=>'text-align: center; width:3%'),
         'id'=>'chk',
         ),
         array(
@@ -152,18 +153,16 @@ EOD
                 'header'=>'ส่งเมลล์',
                 'type' => 'raw',
                 'visible' => Controller::PButton( array("LogStartcourse.*", "LogStartcourse.sendMailMessage") ),
-                'htmlOptions'=>array('style'=>'text-align: center; width:10%'),
+                'htmlOptions'=>array('style'=>'text-align: center; width:20%'),
                 'value' => function($data) {
-                    return  CHtml::button("ส่งเมลล์",array('onclick'=>'sendMsg('.$data->id.')','class' => 'btn btn-danger','style'=>'font-size: 8px;'));
+                    return  CHtml::button("ส่งเมลล์",array('onclick'=>'sendMsg('.$data->id.')','class' => 'btn btn-danger','style'=>'font-size: 15px;'));
               },  
               ),
                     ),
                 )); ?>
             </div>
         </div>
-    </div>
-</div>
-<?php if( Controller::DeleteAll(array("LogStartcourse.*", "LogStartcourse.sendMailMessage", "LogStartcourse.MultiSendMailMessages")) ) : ?>
+        <?php //if( Controller::DeleteAll(array("LogStartcourse.*", "LogStartcourse.sendMailMessage", "LogStartcourse.MultiSendMailMessages")) ) : ?>
         <!-- Options -->
         <div class="separator top form-inline small">
             <!-- With selected actions -->
@@ -177,7 +176,11 @@ EOD
             <div class="clearfix"></div>
         </div>
         <!-- // Options END -->
-<?php endif; ?>
+<?php //endif; ?>
+    </div>
+
+</div>
+
 <script type="text/javascript">
 
     function MultiSendMailMessage(url, form) {
