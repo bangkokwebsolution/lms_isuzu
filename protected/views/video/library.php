@@ -167,14 +167,14 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
                     ?>
-                  <div class="col-sm-6 col-md-3 col-xs-12">
+                  <div class="col-sm-6 col-md-5 col-xs-12">
                     <div class=" text-center">
                       <div class="library-item">
                         <div class="item item-library-index">
                           <div class="library-card">
 
-                            <video class="video-js" poster="" controls controlsList="nodownload" preload="auto" style="width: 100%; height: 150px;">
-                              <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='video/mp3'>
+                            <video class="video-js" poster="" controls controlsList="nodownload" preload="auto">
+                              <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='audio/mpeg'>
                               </video>
 
                               <!-- <a href="" class=""> -->
@@ -183,14 +183,16 @@
                                   <!-- </span> -->
                           <!-- <img src="<?php //echo Yii::app()->theme->baseUrl; 
                           ?>/images/other-library.png" class="img-fluid "> -->
-                          <div class="library-detail">
-                            <span><?= $libra_file ?></span>
+                          <!-- <div class="library-detail"> -->
+                            <!-- <span> -->
+                              <?= $libra_file ?>                                
+                              </span>
                                 <div class="text-center">
                                   <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
                                     <i class="fa fa-download"></i> <?= $text_status ?>
                                   </button>
                                 </div>
-                          </div>
+                          <!-- </div> -->
                           <!-- </a> -->
                         </div>
                       </div>
@@ -384,14 +386,14 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
                     ?>
-                  <div class="col-sm-6 col-md-3 col-xs-12">
+                  <div class="col-sm-6 col-md-5 col-xs-12">
                     <div class=" text-center">
                       <div class="library-item">
                         <div class="item item-library-index">
                           <div class="library-card">
 
-                            <video class="video-js" poster="" controls controlsList="nodownload" preload="auto" style="width: 100%; height: 150px;">
-                              <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='video/mp3'>
+                            <video class="video-js" poster="" controls controlsList="nodownload" preload="auto">
+                              <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='audio/mpeg'>
                               </video>
 
                               <!-- <a href="" class=""> -->
@@ -400,13 +402,19 @@
                                   <!-- </span> -->
                           <!-- <img src="<?php //echo Yii::app()->theme->baseUrl; 
                           ?>/images/other-library.png" class="img-fluid "> -->
-                          <div class="library-detail">
+                          <!-- <div class="library-detail">
                             <span><?= $libra_file ?></span>
                                 <div class="text-center">
                                   <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
                                     <i class="fa fa-download"></i> <?= $text_status ?>
                                   </button>
                                 </div>
+                          </div> -->
+                          <?= $libra_file ?>
+                          <div class="text-center">
+                              <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                                <i class="fa fa-download"></i> <?= $text_status ?>
+                              </button>
                           </div>
                           <!-- </a> -->
                         </div>
@@ -617,14 +625,14 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
                     ?>
-                  <div class="col-sm-6 col-md-3 col-xs-12">
+                  <div class="col-sm-6 col-md-5 col-xs-12">
                     <div class=" text-center">
                       <div class="library-item">
                         <div class="item item-library-index">
                           <div class="library-card">
 
-                            <video class="video-js" poster="" controls controlsList="nodownload" preload="auto" style="width: 100%; height: 150px;">
-                              <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='video/mp3'>
+                            <video class="video-js" poster="" controls controlsList="nodownload" preload="auto">
+                              <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='audio/mpeg'>
                               </video>
 
                               <!-- <a href="" class=""> -->
@@ -633,13 +641,19 @@
                                   <!-- </span> -->
                           <!-- <img src="<?php //echo Yii::app()->theme->baseUrl; 
                           ?>/images/other-library.png" class="img-fluid "> -->
-                          <div class="library-detail">
+                          <!-- <div class="library-detail">
                             <span><?= $libra_file ?></span>
                               <div class="text-center">
                                 <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
                                   <i class="fa fa-download"></i> <?= $text_status ?>
                                 </button>
                               </div>
+                          </div> -->
+                          <?= $libra_file ?>
+                          <div class="text-center">
+                              <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                                <i class="fa fa-download"></i> <?= $text_status ?>
+                              </button>
                           </div>
                           <!-- </a> -->
                         </div>
@@ -898,14 +912,14 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
                     ?>
-                  <div class="col-sm-6 col-md-3 col-xs-12">
+                  <div class="col-sm-6 col-md-5 col-xs-12">
                     <div class=" text-center">
                       <div class="library-item">
                         <div class="item item-library-index">
                           <div class="library-card">
 
-                            <video class="video-js" poster="" controls controlsList="nodownload" preload="auto" style="width: 100%; height: 150px;">
-                              <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='video/mp3'>
+                            <video class="video-js" poster="" controls controlsList="nodownload" preload="auto">
+                              <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='audio/mpeg'>
                               </video>
 
                               <!-- <a href="" class=""> -->
@@ -914,13 +928,19 @@
                                   <!-- </span> -->
                           <!-- <img src="<?php //echo Yii::app()->theme->baseUrl; 
                           ?>/images/other-library.png" class="img-fluid "> -->
-                          <div class="library-detail">
+                          <!-- <div class="library-detail">
                             <span><?= $libra_file ?></span>
                             <div class="text-center">
                               <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
                               <i class="fa fa-download"></i> <?= $text_status ?>
                             </button>
                             </div>
+                          </div> -->
+                          <?= $libra_file ?>
+                          <div class="text-center">
+                              <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                                <i class="fa fa-download"></i> <?= $text_status ?>
+                              </button>
                           </div>
                           <!-- </a> -->
                         </div>
@@ -1117,14 +1137,14 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
                     ?>
-                  <div class="col-sm-6 col-md-3 col-xs-12">
+                  <div class="col-sm-6 col-md-5 col-xs-12">
                     <div class=" text-center">
                       <div class="library-item">
                         <div class="item item-library-index">
                           <div class="library-card">
 
-                            <video class="video-js" poster="" controls controlsList="nodownload" preload="auto" style="width: 100%; height: 150px;">
-                              <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='video/mp3'>
+                            <video class="video-js" poster="" controls controlsList="nodownload" preload="auto">
+                              <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='audio/mpeg'>
                               </video>
 
                               <!-- <a href="" class=""> -->
@@ -1133,13 +1153,19 @@
                                   <!-- </span> -->
                           <!-- <img src="<?php //echo Yii::app()->theme->baseUrl; 
                           ?>/images/other-library.png" class="img-fluid "> -->
-                          <div class="library-detail">
+                          <!-- <div class="library-detail">
                             <span><?= $libra_file ?></span>
                             <div class="text-center">
                               <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
                               <i class="fa fa-download"></i> <?= $text_status ?>
                             </button>
                             </div>
+                          </div> -->
+                          <?= $libra_file ?>
+                          <div class="text-center">
+                              <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                                <i class="fa fa-download"></i> <?= $text_status ?>
+                              </button>
                           </div>
                           <!-- </a> -->
                         </div>
@@ -1357,14 +1383,14 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
                     ?>
-                  <div class="col-sm-6 col-md-3 col-xs-12">
+                  <div class="col-sm-6 col-md-5 col-xs-12">
                     <div class=" text-center">
                       <div class="library-item">
                         <div class="item item-library-index">
                           <div class="library-card">
 
-                            <video class="video-js" poster="" controls controlsList="nodownload" preload="auto" style="width: 100%; height: 150px;">
-                              <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='video/mp3'>
+                            <video class="video-js" poster="" controls controlsList="nodownload" preload="auto">
+                              <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='audio/mpeg'>
                               </video>
 
                               <!-- <a href="" class=""> -->
@@ -1373,13 +1399,19 @@
                                   <!-- </span> -->
                           <!-- <img src="<?php //echo Yii::app()->theme->baseUrl; 
                           ?>/images/other-library.png" class="img-fluid "> -->
-                          <div class="library-detail">
+                          <!-- <div class="library-detail">
                             <span><?= $libra_file ?></span>
                               <div class="text-center">
                                  <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
                                 <i class="fa fa-download"></i> <?= $text_status ?>
                               </button>
                             </div>
+                          </div> -->
+                          <?= $libra_file ?>
+                          <div class="text-center">
+                              <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
+                                <i class="fa fa-download"></i> <?= $text_status ?>
+                              </button>
                           </div>
                           <!-- </a> -->
                         </div>
@@ -1587,8 +1619,8 @@
                 val.setAttribute("class", "btn btn-warning");
 
                 if ("<?php echo Yii::app()->session['lang']; ?>" == "1") {
-                  val.innerHTML = '<i class="fa fa-download"></i> waiting';
-                  var text_title = 'waiting';
+                  val.innerHTML = '<i class="fa fa-download"></i> Waiting';
+                  var text_title = 'Waiting';
                   var text_text = 'Admin';
                 } else {
                   val.innerHTML = '<i class="fa fa-download"></i> รอการอนุมัติ';
