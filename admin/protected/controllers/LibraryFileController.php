@@ -28,7 +28,7 @@ class LibraryFileController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view', 'sequence', 'download', 'accept', 'reject'),
+				'actions'=>array('index','view', 'sequence', 'download', 'accept', 'reject', 'approveall'),
 				'users'=>array('*'),
 			),
 			// array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -276,6 +276,22 @@ class LibraryFileController extends Controller
 			echo "error";
 		}
 		// $this->redirect('../LibraryFile/download');		
+	}
+
+	public function actionapproveall(){
+		if (isset($_POST["arr_chkbox"])) {
+			foreach ($_POST["arr_chkbox"] as $key => $value) {
+				$model=LibraryRequest::model()->findByPk($value);
+				$model->req_status = 2;
+				if($model->save()){
+			// echo "success";
+				}else{
+					echo "error"; exit();
+				}
+
+			}
+		}
+		// var_dump($_POST["arr_chkbox"]); exit();
 	}
 
 

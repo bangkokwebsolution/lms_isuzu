@@ -100,6 +100,27 @@ EOD
 						// 	'id'=>'chk',
 						// ),
 						array(
+							'header'=>'',
+							// 'value'=>'$data->req_status',
+
+							'type'=>'raw',
+							'filter'=>false,
+			                'htmlOptions' => array(
+			                   'style' => 'width:20px; text-align: center',
+			                ),  
+			                'value'=> function ($data){
+			                	if($data->req_status == 1){
+			                		return "<input type='checkbox' value='".$data->req_id."' onclick='chkbox_app(this)' class='chkboxapp'>";
+			                	}elseif($data->req_status == 2){
+			                		// return "<font color='green'>อนุมัติ</font>";
+
+			                	}elseif($data->req_status == 3){
+			                		return "<input type='checkbox' value='".$data->req_id."' onclick='chkbox_app(this)' class='chkboxapp'>";
+			                	}
+			                }
+						),
+
+						array(
 							'name'=>'user_id',
 							// 'value'=>'$data->usercreate->profile->firstname',
 							'filter'=>false,
@@ -121,18 +142,20 @@ EOD
 						array(
 							'name'=>'req_status',
 							// 'value'=>'$data->req_status',
+
+							'type'=>'raw',
 							'filter'=>false,
 			                'htmlOptions' => array(
 			                   'style' => 'width:130px',
 			                ),  
 			                'value'=> function ($data){
 			                	if($data->req_status == 1){
-			                		return "รอการอนุมัติ";
+			                		return "<font color='orange'>รอการอนุมัติ</font>";
 			                	}elseif($data->req_status == 2){
-			                		return "อนุมัติ";
+			                		return "<font color='green'>อนุมัติ</font>";
 
 			                	}elseif($data->req_status == 3){
-			                		return "ปฏิเสธ";
+			                		return "<font color='red'>ปฏิเสธ</font>";
 			                	}
 			                }
 						),
@@ -198,8 +221,61 @@ EOD
 			</div>
 		</div>
 	</div>	
+
+
+	<div class="row">
+		<div class="col-md-12">
+			<button class="btn btn-defualt btn-icon" onclick="btn_app()"> อนุมัติทั้งหมด</button>
+		</div>
+	</div>
+
+
+
 </div>
+
+
+
 <script type="text/javascript">
+	function chkbox_app(tag){
+		// console.log(tag);
+	}
+
+	var arr_chkbox = [];
+	function btn_app(){
+		arr_chkbox = [];
+		$( ".chkboxapp" ).each(function( index ) {
+			if($(this).prop("checked") == true){
+				arr_chkbox.push($(this).val());
+				// console.log($(this).val());
+			}
+		});
+		// console.log(arr_chkbox.length);
+
+		if(arr_chkbox.length < 0){
+			alert("กรุณาเลือกรายการก่อน");
+		}else{
+			approve_all();
+		}
+	}
+
+	function approve_all(){
+		$.ajax({
+			url : 'approveall',
+			data : {
+				arr_chkbox:arr_chkbox,
+			},
+			type : 'POST',
+			success : function(data){
+				if(data != "error"){
+					window.location.reload();
+				}else{
+					alert("ทำรายการใหม่");
+				}                 
+			},              
+		});
+	}
+
+
 	function acceptF(library){
 		swal({
 			title: 'ยืนยันใช่ไหม',
