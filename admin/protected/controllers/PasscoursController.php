@@ -19,7 +19,7 @@ class PasscoursController extends Controller
     {
         return array(
         	array('allow',  // allow all users to perform 'index' and 'view' actions
-            	'actions' => array('PrintCertificate', 'PrintPDF'),
+            	'actions' => array('PrintCertificate', 'PrintPDF', 'ajaxgetdepartment', 'ajaxgetposition'),
             	'users' => array('*'),
             	),
             array('allow',
@@ -34,34 +34,212 @@ class PasscoursController extends Controller
             );
     }
 
-	public function actionIndex()
-	{
+	public function actionIndex() { //รายงานผู้ผ่านการเรียน
+
 		$model= new Passcours('search');
 		$model->unsetAttributes();
+
 		if(isset($_GET['Passcours'])) {
+
 			$passcours = $_GET['Passcours'];
 			$model = new Passcours('highsearch');
-			//set attributes
-			$model->generation = $passcours['generation'];
+
 			$model->passcours_cours = $passcours['passcours_cours'];
 			$model->search = $passcours['search'];
+			$model->type_register = $passcours['type_register'];			
+			$model->department = $passcours['department'];
+			$model->position = $passcours['position'];
 			$model->period_start = $passcours['period_start'];
 			$model->period_end = $passcours['period_end'];
 
-			$model->type_register = $passcours['type_register'];
-
-			$model->division_id = $passcours['division_id'];
-			$model->department = $passcours['department'];
-			$model->station = $passcours['station'];
-
 		}
+		
 		//setstat
 		Yii::app()->user->setState('ReportPassCours',$model);
 
 		$this->render('index',array(
 			'model'=>$model,
+			'passcours'=>$passcours,
 		));
 	}
+
+	public function actionExcelIndex() {
+
+		$model= new Passcours('search');
+		$model->unsetAttributes();
+
+		if(isset($_GET['Passcours'])) {
+			$model->attributes=$_GET['Passcours'];
+
+		}
+
+		$this->renderPartial('ExcelIndex', array(
+            'model'=>$model
+        ));
+	}
+
+	public function actionDownloadIndex(){
+
+		$arr_Passcours = [];
+		if(isset($_GET["val"])){
+			$arr_Passcours = explode(",", $_GET["val"]);
+		}
+
+
+		$uploadDir = Yii::app()->getUploadPath(null);
+		$path1 = "download_cer";
+		$path2 = Yii::app()->user->id;
+
+		if (!is_dir($uploadDir."../".$path1."/".$path2."/")) {
+			mkdir($uploadDir."../".$path1."/".$path2."/", 0777, true);
+		}else{
+			$files = glob($uploadDir."../".$path1."/".$path2.'/*');
+			foreach($files as $file){
+				if(is_file($file)){
+					unlink($file);
+				}             
+			}
+		}
+
+
+		$renderFile = 'Newcertificate';
+		require_once __DIR__ . '/../vendors/mpdf7/autoload.php';
+
+
+		foreach ($arr_Passcours as $keyy => $valuee) { // วนสร้าง pdf cer
+
+			$model = Passcours::model()->findByPk($valuee);
+
+			$PassCoursId = $model->passcours_cours;
+			$UserId = $model->passcours_user;
+			$gen_id = $model->gen_id;
+
+			$certIdModel = CertificateNameRelations::model()->find(array('condition' => 'course_id = '.$PassCoursId));
+			$certId = $certIdModel->cert_id;
+			$modelSign = Certificate::model()->find(array('condition' => 'cert_id= '.$certId));
+			$pageSide = $modelSign->cert_display;
+
+			$modelSign2 = $modelSign->sign_id2;
+			$model2 = Signature::model()->find(array('condition' => 'sign_id = '.$modelSign2));
+
+			$CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId.' AND gen_id="'.$gen_id.'" AND passcours_cours="'.$PassCoursId.'"'));
+			$CourseDatePass = $CourseDatePassModel->passcours_date;
+			$num_pass = PasscourseNumber::model()->find(array(
+				'condition' => 'course_id=:course_id AND gen_id=:gen_id AND user_id=:user_id',
+				'params' => array(':course_id'=>$CourseDatePassModel->passcours_cours, ':gen_id'=>$CourseDatePassModel->gen_id, ':user_id'=>$CourseDatePassModel->passcours_user,),
+				'order' => 'id DESC',
+			));
+			$num_pass = $num_pass->code_number;
+			$CoursePassedModel = Coursescore::model()->find(array(
+				'condition' => 'user_id = ' . $UserId . ' AND course_id = ' . $PassCoursId . ' AND score_past = "y" AND gen_id="'.$gen_id.'"',
+				'order' => 'create_date ASC'
+			));
+
+			if($CoursePassedModel) {
+				$CourseDatePass = date('Y-m-d', strtotime($CoursePassedModel->create_date));
+			}
+			$lastPasscourse = Helpers::lib()->PeriodDate($CourseDatePass, true);
+			$year_pass = date("y", strtotime($CourseDatePass));
+			$format_date_pass = date('jS F Y', strtotime($lastPasscourse));
+			$format_date_pass2 = date('d M Y', strtotime($lastPasscourse));
+
+			$renderSign = $modelSign->signature->sign_path;
+			$nameSign = $modelSign->signature->sign_title;
+			$positionSign = $modelSign->signature->sign_position;
+
+			$renderSign2 = $model2->sign_path;
+			$nameSign2 = $model2->sign_title;
+			$positionSign2 = $model2->sign_position;
+
+			$fulltitle =  $model->Profiles->firstname . " " . $model->Profiles->lastname;
+			$fulltitle_en =  $model->Profiles->firstname_en . " " . $model->Profiles->lastname_en;
+
+
+			$setCertificateData = array(
+				'fulltitle' => $fulltitle,
+				'fulltitle_en' => $fulltitle_en,
+				'cert_text' => $modelSign->cert_text,
+				'courseTitle_en' => $model->CourseOnlines->course_title,
+				'coursenumber' => $model->CourseOnlines->course_number,
+				'renderSign' => $renderSign,
+				'renderSign2' => $renderSign2,
+				'nameSign' => $nameSign,
+				'nameSign2' => $nameSign2,
+				'positionSign' => $positionSign,
+				'positionSign2' => $positionSign2,
+				'bgPath' => $modelSign->cert_background,
+				'format_date_pass' => $format_date_pass,
+				'format_date_pass2' => $format_date_pass2,
+				'year_pass' => $year_pass,
+				'num_pass' => $num_pass,
+				'pageSide' => $pageSide,
+				'user' => $UserId,
+				'course' => $PassCoursId,
+				'gen' => $gen_id
+			);
+
+
+			if($modelSign->cert_display == '1'){
+				$pageFormat = 'P';
+			}else if($modelSign->cert_display == '3'){
+				$pageFormat = 'P';
+			} else {
+				$pageFormat = 'L';
+			}
+
+			$mPDF = new \Mpdf\Mpdf(['format' => 'A4-'.$pageFormat]);
+			$mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('cerfile/' . $renderFile, array('model'=>$setCertificateData), true), 'UTF-8', 'UTF-8'));
+			$mPDF->Output('..\uploads\\'.$path1.'\\'.$path2."\\".$model->user->username.'_cer'.'.pdf', 'F');
+			// $mPDF->Output();
+
+		} // foreach ($model
+
+
+		$files = glob(Yii::app()->getUploadPath(null)."../".$path1."/".$path2.'/*'); //วนเก็บที่อยู่ file cer
+		if(!empty($files)){
+			foreach ($files as $key => $value) {
+				$path_zip[] = "../uploads/".$path1."/".$path2."/".basename($value);	
+				$name_file[] = basename($value);	
+			}		
+		}
+
+
+		if(!empty($path_zip)){
+			$zip = Yii::app()->zip;
+			$path_in_zip = "..\uploads\\".$path1.'\\'.$path2."\\";
+			$name_zip = "certificate_".date("YmdHis").".zip";
+
+			foreach ($path_zip as $key => $link_file) { // วน zip file
+				$zip->makeZip_nn($link_file, $path_in_zip.$name_zip, $name_file[$key]);
+			}
+
+			$file_in_folder = glob(Yii::app()->getUploadPath(null)."..\\".$path1."\\".$path2."\\"."\\*");
+			foreach($file_in_folder as $file_in){
+				if(is_file($file_in)){
+					$file = basename($file_in); 
+					if($file == $name_zip){
+						// echo "..\..\..\uploads\\".$path1."\\".$path2."\\".$name_zip;
+						$this->redirect(array('../../uploads/'.$path1."/".$path2."/".$name_zip));
+						exit();
+					}
+				}
+			}
+		}else{
+			echo "ไม่มีข้อมูล";
+			exit();
+		}
+
+
+
+
+		// var_dump($model); exit();
+
+	}
+
+
+
+
+
 
 	public function actionReportPass() 
 	{
@@ -412,4 +590,53 @@ class PasscoursController extends Controller
 			throw new CHttpException(404,'The requested page does not exist.');
 		}
 	}
+
+
+
+
+	public function actionajaxgetdepartment(){
+		if(isset($_POST["value"]) && $_POST["value"] != ""){
+			$department = Department::model()->findAll(array(
+				'condition' => 'active = "y" AND type_employee_id="'.$_POST["value"].'"',
+				'order' => 'dep_title ASC'
+			));
+
+
+			?>
+			<option value="">ทั้งหมด</option>
+			<?php
+			if(!empty($department)){				
+				foreach ($department as $key => $value) {
+					?>
+					<option value="<?= $value->id ?>"><?= $value->dep_title ?></option>
+					<?php
+				}
+			}
+		}
+	}
+
+	public function actionajaxgetposition(){
+		if(isset($_POST["value"]) && $_POST["value"] != ""){
+			$position = Position::model()->findAll(array(
+				'condition' => 'active = "y" AND department_id="'.$_POST["value"].'"',
+				'order' => 'position_title ASC'
+			));
+
+
+			?>
+			<option value="">ทั้งหมด</option>
+			<?php
+			if(!empty($position)){				
+				foreach ($position as $key => $value) {
+					?>
+					<option value="<?= $value->id ?>"><?= $value->position_title ?></option>
+					<?php
+				}
+			}
+		}
+	}
+
+
+
+
 }

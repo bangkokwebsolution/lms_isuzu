@@ -15,6 +15,7 @@ class Passcours extends AActiveRecord
     public $page_false;
     public $division_id;
     public $department;
+    public $position;
     public $station;
     public $type_register;
 
@@ -33,7 +34,7 @@ class Passcours extends AActiveRecord
 		return array(
 			array('passcours_cours, passcours_user', 'numerical', 'integerOnly'=>true),
 			array('passcours_date, user_name, cours_name, news_per_page,page_false', 'safe'),
-			array('cate_title, cours_name, user_name, passcours_id, passcours_cours,passcours_cates, passcours_user, passcours_date,division_id,department,station,type_register, gen_id', 'safe', 'on'=>'search'),
+			array('cate_title, cours_name, user_name, passcours_id, passcours_cours,passcours_cates, passcours_user, passcours_date,division_id,department, position,station,type_register, gen_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -41,6 +42,7 @@ class Passcours extends AActiveRecord
 	{
 		return array(
 			'Profiles'=>array(self::BELONGS_TO, 'Profiles', 'passcours_user'),
+			'profile'=>array(self::BELONGS_TO, 'profile', 'passcours_user'),
 			'CourseOnlines'=>array(self::BELONGS_TO, 'CourseOnline', 'passcours_cours'),
 			'Category'=>array(self::BELONGS_TO, 'Category', 'passcours_cates'),
 			'user'=>array(self::BELONGS_TO, 'User', 'passcours_user'),
@@ -59,106 +61,115 @@ class Passcours extends AActiveRecord
 			'passcours_user' => 'ชื่อผู้อบรม',
 			'passcours_date' => 'วันที่สอบผ่าน',
 			'generation' => 'เลือกรุ่น',
-			'search' => 'ค้นหา',
+			'search' => 'ชื่อ – นามสกุล',
 			'period_start' => 'วันที่เริ่มต้น',
 			'period_end' => 'วันที่สิ้นสุด',
 			'division_id' => 'ฝ่าย',
-			'department' => 'แผนก',
+			'department' => 'ฝ่าย',
+			'position' => 'แผนก',
 			'station' => 'สถานี',
-			'type_register' => 'ประเภทผู้ใช้งาน',
+			'type_register' => 'ประเภทพนักงาน',
 			'gen_id' => 'รุ่น'
 
 		);
 	}
 
 	public function highsearch() {
+
 		$criteria = new CDbCriteria;
-		//join with relations
+
 		$criteria->with = array('Profiles', 'CourseOnlines', 'user');
 
-		//check memtype
-		if(isset($this->type_register) && $this->type_register != null) {
-			if($this->type_register == 1){ //General
-				$criteria->addIncondition('user.type_register',[1,2],false);
-                }else if($this->type_register == 2){ //Staff
-                	$criteria->compare('user.type_register', 3 , false);
-                }
+		//search text
+		// if(isset($this->search) && $this->search != null) {
+		// 	$criteria->compare('Profiles.firstname', $this->search, true);
+		// 	$criteria->compare('Profiles.lastname', $this->search, true, 'OR');
+		// 	$criteria->compare('user.bookkeeper_id', $this->search, true, 'OR');
+		// }
+
+		if(isset($this->search) && $this->search != null){
+			// var_dump($this->search); exit();
+        	$ex_fullname = explode(" ", $this->search);
+
+        	if(isset($ex_fullname[0])){
+        		$pro_fname = $ex_fullname[0];
+        		$criteria->compare('Profiles.firstname_en', $pro_fname, true);
+        		$criteria->compare('Profiles.lastname_en', $pro_fname, true, 'OR');
+
+        		$criteria->compare('Profiles.firstname', $pro_fname, true, 'OR');
+        		$criteria->compare('Profiles.lastname', $pro_fname, true, 'OR');
+        	}
+        	
+        	if(isset($ex_fullname[1])){
+        		$pro_lname = $ex_fullname[1];
+        		$criteria->compare('Profiles.lastname',$pro_lname,true);
+        		$criteria->compare('Profiles.lastname_en', $pro_lname, true, 'OR');
+        	}
         }
 
-		//search text
-		if(isset($this->search) && $this->search != null) {
-			$criteria->compare('Profiles.firstname', $this->search, true);
-			$criteria->compare('Profiles.lastname', $this->search, true, 'OR');
-			$criteria->compare('user.bookkeeper_id', $this->search, true, 'OR');
-		}
-
-
-
-                //check course category type
-		if(isset($this->cate_id) && $this->cate_id != null) {
-			$criteria->compare('courseonline.cate_id', $this->cate_id, false, 'AND');
-		}
-                
-		//check generation
-		if(isset($this->generation) && $this->generation != null) {
-			$criteria->compare('Profiles.generation', $this->generation, true, 'OR');
-		}
-		//check memtype
-		if(isset($this->memtype) && $this->memtype != null) {
-			$criteria->compare('Profiles.type_user', $this->memtype, true, 'OR');
-		}
-
-		//check Divsion
-		if(isset($this->division_id) && $this->division_id != null) {
-			// $criteria->compare('user.division_id', $this->division_id, false, 'OR');
-			$criteria->addIncondition('user.division_id',$this->division_id);
-		}
-
-		//check Department
-		if(isset($this->department) && $this->department != null) {
-			// $criteria->compare('user.department', $this->department, false, 'OR');
-			$criteria->addIncondition('user.department_id',$this->department);
-		}
-
-		//check Station
-		if(isset($this->station) && $this->station != null) {
-			// $criteria->compare('user.station', $this->station, false, 'OR');
-			$criteria->addIncondition('user.station_id',$this->station);
-		}
-
-		//check course id
+        //check course id
 		if(isset($this->passcours_cours) && $this->passcours_cours != null) {
+			// var_dump($this->passcours_cours); exit();
 			// $criteria->addInCondition('passcours_cours', $this->passcours_cours, 'AND');
 			$criteria->compare('passcours_cours', $this->passcours_cours);
 		}
 
-		// if(isset($this->gen_id) && $this->gen_id != null) {
-			$criteria->compare('gen_id', $this->gen_id);
-		// }
+		//check memtype
+		if(isset($this->type_register) && $this->type_register != null) {
+			$criteria->compare('Profiles.type_employee', $this->type_register);
+			// if($this->type_register == 1){ //General
+			// 	$criteria->addIncondition('user.type_employee',[1,2],false);
+   //              }else if($this->type_register == 2){ //Staff
+   //              	$criteria->compare('user.type_register', 3 , false);
+   //              }
+        }
 
+        //check Department
+		if(isset($this->department) && $this->department != null) {
+			// $criteria->compare('user.department', $this->department, false, 'OR');
+			$criteria->compare('user.department_id',$this->department);
+		}
+
+		//check position
+		if(isset($this->position) && $this->position != null) {
+			// $criteria->compare('user.department', $this->department, false, 'OR');
+			$criteria->compare('user.position_id',$this->position);
+		}
+
+		
 		//check period start - end
 		if(isset($this->period_start) && $this->period_start != null) {
-			$criteria->addCondition('passcours_date >= "' . date('Y-m-d 00:00:00', strtotime($this->period_start)) . '"');
+			$criteria->compare('passcours_date >= "' . date('Y-m-d 00:00:00', strtotime($this->period_start)) . '"');
 		}
 		if(isset($this->period_end) && $this->period_end != null) {
-			$criteria->addCondition('passcours_date <= "' . date('Y-m-d 23:59:59', strtotime($this->period_end)) . '"');
+			$criteria->compare('passcours_date <= "' . date('Y-m-d 23:59:59', strtotime($this->period_end)) . '"');
 		}
+
+
+		$criteria->order = 'Profiles.type_employee ASC, Profiles.firstname_en ASC';
+		// $criteria->order = 'passcours_date DESC';
+
+
+
 		//provider array
-		$poviderArray = array(
-				'criteria' => $criteria
-			);
+		$poviderArray = array( 'criteria' => $criteria );
 
 		// Page
-		if(isset($this->news_per_page)) {
-			$poviderArray['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
+		if(isset($_GET["Passcours"]["news_per_page"])) {
+
+			$poviderArray['pagination'] = array( 'pageSize'=> intval($_GET["Passcours"]["news_per_page"]) );
 		}
-                // Page
-		if(isset($this->page_false)) {
-			$poviderArray['pagination'] = FALSE;
-		}
+
+		
 		//return
 		return new CActiveDataProvider($this, $poviderArray);
 	}
+
+
+
+
+
+
 
 	public function search() {
 		$criteria=new CDbCriteria;
