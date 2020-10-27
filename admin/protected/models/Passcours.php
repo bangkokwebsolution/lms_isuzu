@@ -32,6 +32,7 @@ class Passcours extends AActiveRecord
 	public function rules()
 	{
 		return array(
+			array('passcours_cours', 'required'),
 			array('passcours_cours, passcours_user', 'numerical', 'integerOnly'=>true),
 			array('passcours_date, user_name, cours_name, news_per_page,page_false', 'safe'),
 			array('cate_title, cours_name, user_name, passcours_id, passcours_cours,passcours_cates, passcours_user, passcours_date,division_id,department, position,station,type_register, gen_id', 'safe', 'on'=>'search'),
@@ -56,7 +57,7 @@ class Passcours extends AActiveRecord
 	{
 		return array(
 			'passcours_id' => 'Passcours',
-			'passcours_cours' => 'ชื่อหลักสูตร',
+			'passcours_cours' => 'ชื่อหลักสูตร (บังคับ)',
 			'passcours_cates' => 'ชื่อหลักสูตร',
 			'passcours_user' => 'ชื่อผู้อบรม',
 			'passcours_date' => 'วันที่สอบผ่าน',

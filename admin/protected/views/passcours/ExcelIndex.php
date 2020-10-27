@@ -85,7 +85,7 @@ $Passcours = Passcours::model()->findAll($criteria);
 	</thead>
 	<tbody>
 		<?php 
-		if(!empty($Passcours)){
+		if(!empty($Passcours) && $model->passcours_cours != null){
 			$no = 1;
 			foreach ($Passcours as $key => $data) {
 				?>

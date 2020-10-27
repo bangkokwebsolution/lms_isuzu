@@ -193,7 +193,7 @@ EOD
 		<div class="widget-head">
 			<h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $titleName;?></h4>
 		</div>
-		<?php if(!empty($_GET)){ ?>
+		<?php if(!empty($_GET) && $passcours_cours != null){ ?>
 		<div class="widget-body">
 			<div class="separator bottom form-inline small">
 				<span class="pull-right">
