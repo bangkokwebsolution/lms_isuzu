@@ -111,6 +111,7 @@ EOD
             ?>
             <div class="div-table">
             <?php
+            $no_course = 1;
             foreach ($course as $key => $courseItem) {
 
                 if(!$state) {
@@ -148,7 +149,7 @@ EOD
                     <div class="widget" style="margin-top: -1px;">
                         <div class="widget-head">
                             <h4 class="heading glyphicons show_thumbnails_with_lines">
-                                <i></i> หลักสูตร <?php echo $courseItem->course_title; // . " | " . $user[0][firstname] . " " . $user[0][lastname] ?>
+                                <i></i> <?php echo $no_course.".) หลักสูตร ".$courseItem->course_title; $no_course++; // . " | " . $user[0][firstname] . " " . $user[0][lastname] ?>
                             </h4>
                         </div>
                         <div class="widget-body">
@@ -208,7 +209,7 @@ EOD
                                             ?>
                                             <!-- Table row -->
                                             <tr>
-                                                <td ><?php echo $lessonItem->title.$text_gen." ".$lessonItem->id; ?></td>
+                                                <td ><?php echo $lessonItem->title.$text_gen; ?></td>
                                                 <td class="center">
                                                     <?php 
                                                     $learnStatus = Helpers::lib()->checkLessonPassById($lessonItem, $user[0]['id'], $model->dateRang);
@@ -254,7 +255,8 @@ EOD
                                         }
 
                                     }else{
-                                        echo '<font color="red">'."ไม่ผ่าน".'</font>';
+                                        echo '<font color="red">'."ไม่ผ่าน".'</font> | <font color="orange">กำลังเรียน ';
+                                        echo Helpers::lib()->percent_CourseGen($courseItem->course_id, $genn->gen_id, $user[0][user_id])." % </font>";
                                     }
 
                                      ?>
@@ -278,6 +280,8 @@ EOD
                         </div>
 
                     </div>
+                    <hr>
+                    <br>
                     <?php
                     } // if(count($chk_learn) > 0) {
                         
@@ -287,7 +291,7 @@ EOD
             } // foreach
             ?>
             </div>
-            <button type="button" id="btnExport" class="btn btn-primary btn-icon glyphicons file"><i></i> Export</button>
+            <!-- <button type="button" id="btnExport" class="btn btn-primary btn-icon glyphicons file"><i></i> Export</button> -->
             <?php
         }else{ // if (!empty($user)) {
             ?>
