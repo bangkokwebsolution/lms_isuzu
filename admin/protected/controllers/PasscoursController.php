@@ -19,7 +19,7 @@ class PasscoursController extends Controller
     {
         return array(
         	array('allow',  // allow all users to perform 'index' and 'view' actions
-            	'actions' => array('PrintCertificate', 'PrintPDF', 'ajaxgetdepartment', 'ajaxgetposition'),
+            	'actions' => array('PrintCertificate', 'PrintPDF', 'ajaxgetdepartment', 'ajaxgetposition', 'ExcelIndex', 'DownloadIndex'),
             	'users' => array('*'),
             	),
             array('allow',
@@ -229,12 +229,47 @@ class PasscoursController extends Controller
 			exit();
 		}
 
-
-
-
 		// var_dump($model); exit();
 
 	}
+
+
+	public function actionPasscoursLog() {
+
+		$model = new PasscoursLog('search');
+
+		if(isset($_GET['PasscoursLog'])) {
+
+			$model->attributes = $_GET['PasscoursLog'];
+
+		}
+
+		$this->render('passcours_log',array(
+			'model'=>$model,
+		));
+	}
+
+	public function actionGenExcelPasscoursLog() {
+
+		$model = new PasscoursLog('search');
+		if(isset($_GET['PasscoursLog'])) {
+
+			$model->attributes = $_GET['PasscoursLog'];
+			
+		}
+
+		$this->renderPartial('ExcelPasscoursLog', array(
+            'model'=>$model
+        ));
+	}
+
+
+
+
+
+
+
+
 
 
 
@@ -269,35 +304,9 @@ class PasscoursController extends Controller
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
-	}
+	}	
 
-	public function actionPasscoursLog() {
-
-		$model = new PasscoursLog('search');
-		if(isset($_GET['PasscoursLog'])) {
-			$model->attributes = $_GET['PasscoursLog'];
-			// $model->period_start = $_POST['Passcours']['period_start'];
-			// $model->period_end = $_POST['Passcours']['period_end'];
-		}
-
-		$this->render('passcours_log',array(
-			'model'=>$model,
-		));
-	}
-
-		public function actionGenExcelPasscoursLog() {
-
-		$model = new PasscoursLog('search');
-		if(isset($_GET['PasscoursLog'])) {
-			$model->attributes = $_GET['PasscoursLog'];
-			// $model->period_start = $_POST['Passcours']['period_start'];
-			// $model->period_end = $_POST['Passcours']['period_end'];
-		}
-
-		$this->renderPartial('ExcelPasscoursLog', array(
-            'model'=>$model
-        ));
-	}
+		
 
 	public function actionPrintCertificate() {
 

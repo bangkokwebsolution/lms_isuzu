@@ -1,14 +1,14 @@
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/bootstrap-chosen.css" />
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/chosen.jquery.js"></script>
 <?php
-$title = 'สถิติจำนวนผู้พิมพ์หนังสือรับรองออกจากระบบรายเดือน แยกตามรายหัวข้อวิชา และรายหลักสูตร';
+$title = 'รายงานสถิติจำนวนผู้พิมพ์ใบประกาศ';
 $form_name_model = 'Passcours Report';
 
 $this->breadcrumbs = array($title);
 
 $get = $_GET['PasscoursLog'];
 
-$course_array = (is_array($get['pclog_target']))? implode(',', $get['pclog_target']) : null;
+$course_array = (is_array($get['passcours_cours']))? implode(',', $get['passcours_cours']) : null;
 $period_start = ($get['period_start'])?date('Y-m-d 00:00:00', strtotime($get['period_start'])):null;
 $period_end = ($get['period_end'])?date('Y-m-d 23:59:59', strtotime($get['period_end'])):null;
 
@@ -38,46 +38,135 @@ EOD
     position:static!important;
 }
 </style>
+<script>
+    $(document).ready(function(){
+    	$(".form").css("height", "500px"); // select มันโดนกลืนอะ เลยต้องขยายช่อง
+
+
+        $(".toggleairasia-table td button").click(function(){
+            $(this).closest("tbody").next().toggle();
+        });
+
+        $(".chosen").chosen();
+
+        $("#PasscoursLog_period_start").datepicker({
+            onSelect: function(selected) {
+              $("#PasscoursLog_period_end").datepicker("option","minDate", selected)
+            }
+        });
+        $("#PasscoursLog_period_end").datepicker({
+            onSelect: function(selected) {
+               $("#PasscoursLog_period_start").datepicker("option","maxDate", selected)
+            }
+        }); 
+
+        $("#PasscoursLog_type_register").change(function(){
+            var value = $("#PasscoursLog_type_register option:selected").val();
+            if(value != ""){
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo Yii::app()->createAbsoluteUrl("/Passcours/ajaxgetdepartment"); ?>',
+                    data: ({
+                        value: value,
+                    }),
+                    success: function(data) {
+                        if(data != ""){
+                            $("#PasscoursLog_department").html(data);
+                            $("#PasscoursLog_position").html('<option value="">ทั้งหมด</option>');
+                            $('.chosen').trigger("chosen:updated");
+                        }
+                    }
+                });
+            }
+        });
+        $("#PasscoursLog_department").change(function(){
+            var value = $("#PasscoursLog_department option:selected").val();
+            if(value != ""){
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo Yii::app()->createAbsoluteUrl("/Passcours/ajaxgetposition"); ?>',
+                    data: ({
+                        value: value,
+                    }),
+                    success: function(data) {
+                        if(data != ""){
+                            $("#PasscoursLog_position").html(data);
+                            $('.chosen').trigger("chosen:updated");
+                        }
+                    }
+                });
+            }
+        });
+
+
+});
+</script>
 <div class="innerLR">
 	<?php 
 
 	if(!$state){
 		$CourseOnline = CourseOnline::model()->findAll(array(
-			'condition' => 'active = "y" and lang_id = 1 and cate_id != 1 and create_by = "'.Yii::app()->user->id.'"',
-			'order' => 'course_id DESC'
+			'condition' => 'active = "y" and lang_id = 1 and create_by = "'.Yii::app()->user->id.'"',
+			'order' => 'course_title ASC'
 		)
 	);
 	}else{
 		$CourseOnline = CourseOnline::model()->findAll(array(
-			'condition' => 'active = "y" and lang_id = 1 and cate_id != 1',
-			'order' => 'course_id DESC'
+			'condition' => 'active = "y" and lang_id = 1',
+			'order' => 'course_title ASC'
 		)
 	);
 	}
-	
+	$listCourse = CHtml::listData($CourseOnline,'course_id','course_title');
+
+
+	$TypeEmployee = TypeEmployee::model()->findAll(array(
+    	'condition' => 'active = "y"',
+    	'order' => 'type_employee_name ASC'
+    ));
+    $listtype_user = CHtml::listData($TypeEmployee,'id','type_employee_name');
+
+
+
+    $department = Department::model()->findAll(array(
+    	'condition' => 'active = "y"',
+    	'order' => 'dep_title ASC'
+    ));
+    $listdepartment = CHtml::listData($department,'id','dep_title');
+
+
+    $position = Position::model()->findAll(array(
+    	'condition' => 'active = "y"',
+    	'order' => 'position_title ASC'
+    ));
+    $listposition = CHtml::listData($position,'id','position_title');
+
 
 	$this->widget('AdvanceSearchForm', array(
 		'data'=>$model,
 		'route' => $this->route,
 		'attributes'=>array(
-			array('name'=>'pclog_target','type'=>'list','query'=>$model->getCourseList()),
-			array('name'=>'type_register','type'=>'list','query'=>$type_user),
-			//array('name'=>'division_id','type'=>'listMultiple','query'=>$divisiondata),
-			array('name'=>'department','type'=>'listMultiple','query'=>$departmentdata),
-			//array('name'=>'station','type'=>'listMultiple','query'=>$stationdata),
+			array('name'=>'passcours_cours','type'=>'list','query'=>$listCourse),
+			array('name'=>'type_register','type'=>'list','query'=>$listtype_user),
+			array('name'=>'department','type'=>'list','query'=>$listdepartment),
+			array('name'=>'position','type'=>'list','query'=>$listposition),			
 			array('name'=>'period_start','type'=>'text'),
 			array('name'=>'period_end','type'=>'text'),
-		),
-		));?>
+	),
+
+	));
+
+
+		?>
 		<div class="widget" id="export-table">
 			<div class="widget-head">
 				<h4 class="heading glyphicons search">
 					<i></i> สถิติจำนวนผู้พิมพ์หนังสือรับรอง : วันที่ <?= Helpers::lib()->changeFormatDate($period_start) ?> ถึงวันที่ <?= Helpers::lib()->changeFormatDate($period_end) ?>
 				</h4>
 			</div>
-			<?php if(!empty($_GET)){ ?>
+			<?php if(!empty($_GET["PasscoursLog"] && $_GET['PasscoursLog']['passcours_cours'] != null)){ ?>
 			<div class="widget-body">
-				<table class="table table-bordered table-striped" id="export-excel-<?php echo $less['id'] ?>">
+				<table class="table table-bordered table-striped" id="export-excel">
 					<thead>
 						<tr>
 							<!--<th class="center" style="width: 80px;">ลำดับ</th>-->
@@ -91,18 +180,19 @@ EOD
 					</thead>
 					<tbody>
 						<?php
-						if(!empty($_GET['PasscoursLog']['pclog_target'])){
-							$courseSearch = ' and courseonline.course_id = '.$_GET['PasscoursLog']['pclog_target'];
+						if(!empty($_GET['PasscoursLog']['passcours_cours'])){
+							$courseSearch = ' and courseonline.course_id = '.$_GET['PasscoursLog']['passcours_cours'];
 						}
+
 						if(!$state){
 							$allCurrentCourse = CourseOnline::model()->with('category')->findAll(array(
-								'condition' => 'courseonline.lang_id = 1 and courseonline.cate_id != 1 and courseonline.active = "y"' . $coursesql.' and courseonline.create_by = "'.Yii::app()->user->id.'"'.$courseSearch,
-								'order' => 'courseonline.cate_id ASC, courseonline.cate_course ASC',
+								'condition' => 'courseonline.lang_id = 1 and courseonline.active = "y"' . $coursesql.' and courseonline.create_by = "'.Yii::app()->user->id.'"'.$courseSearch,
+								'order' => 'courseonline.course_title ASC',
 							));
 						}else{
 							$allCurrentCourse = CourseOnline::model()->with('category')->findAll(array(
-								'condition' => 'courseonline.lang_id = 1 and courseonline.cate_id != 1 and courseonline.active = "y"' . $coursesql.$courseSearch,
-								'order' => 'courseonline.cate_id ASC, courseonline.cate_course ASC',
+								'condition' => 'courseonline.lang_id = 1 and courseonline.active = "y"' . $coursesql.$courseSearch,
+								'order' => 'courseonline.course_title ASC',
 							));
 						}
 						
@@ -110,6 +200,7 @@ EOD
 						$sumPass = 0;
 						$sumPrint = 0;
 						$sumNotPrint = 0;
+						$count_pass = 0;
 						if($allCurrentCourse) {
 							$last_cate_id = null;
 							$lastCategory = null;
@@ -147,10 +238,19 @@ EOD
 									'condition' => 't.course_id = "' . $Course['course_id'] . '" and lesson_active = "y"'.' AND gen_id="'.$gen->gen_id.'"',
 									'group' => 'user_id'
 								));
-								$pass = Learn::model()->with('les')->findAll(array(
-									'condition' => 't.course_id = "' . $Course['course_id'] . '" and lesson_status = "pass" and lesson_active = "y"'.' AND gen_id="'.$gen->gen_id.'"',
-									'group' => 'user_id'
+
+								// $pass = Learn::model()->with('les')->findAll(array(
+								// 	'condition' => 't.course_id = "' . $Course['course_id'] . '" and lesson_status = "pass" and lesson_active = "y"'.' AND gen_id="'.$gen->gen_id.'"',
+								// 	'group' => 'user_id'
+								// ));
+
+
+								$pass = Passcours::model()->findAll(array(
+									'condition' => 'passcours_cours = "' . $Course['course_id'] . '" '.' AND gen_id="'.$gen->gen_id.'"',
+									'group' => 'passcours_user'
 								));
+
+
 								$CurrentLesson = Lesson::model()->findAll(array(
 									'condition' => 'course_id = "' . $Course['course_id'] . '" AND active ="y" AND lang_id = 1',
 								));
@@ -214,13 +314,13 @@ EOD
 	</div>
 			 <div class="widget-body">
 			 <a href="<?= $this->createUrl('passcours/genExcelPasscoursLog',array(
-			'PasscoursLog[pclog_target]'=>$_GET['PasscoursLog']['pclog_target'],
-            'PasscoursLog[type_register]'=>$_GET['PasscoursLog']['type_register'],
-            'PasscoursLog[division_id]'=>$_GET['PasscoursLog']['division_id'],
-            'PasscoursLog[department]'=>$_GET['PasscoursLog']['department'],
-            'PasscoursLog[station]'=>$_GET['PasscoursLog']['station'],
-            'PasscoursLog[period_start]'=>$_GET['PasscoursLog']['period_start'],
-            'PasscoursLog[period_end]'=>$_GET['PasscoursLog']['period_end'])); ?>" 
+			 'PasscoursLog[passcours_cours]'=> $_GET['PasscoursLog']['passcours_cours'],
+			 'PasscoursLog[type_register]'	 => $_GET['PasscoursLog']['type_register'],
+			 'PasscoursLog[department]'	 => $_GET['PasscoursLog']['department'],
+			 'PasscoursLog[position]'		 => $_GET['PasscoursLog']['position'],
+			 'PasscoursLog[period_start]'	 => $_GET['PasscoursLog']['period_start'],
+			 'PasscoursLog[period_end]'	 => $_GET['PasscoursLog']['period_end'],
+            )); ?>" 
             target="_blank">
 					<button type="button" id="btnExport" class="btn btn-primary btn-icon glyphicons file"><i></i> Export</button>
 			</a>

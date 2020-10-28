@@ -1,21 +1,34 @@
+<?php
 
-			<?php
-			$strExcelFileName = "Export-Data-" . date('Ymd-His') . ".xls";
-			header("Content-Type: application/x-msexcel; name=\"" . $strExcelFileName . "\"");
-			header("Content-Disposition: inline; filename=\"" . $strExcelFileName . "\"");
-			header('Content-Type: text/plain; charset=UTF-8');
-			header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-			header("Content-Type: application/force-download");
-			header("Content-Type: application/octet-stream");
-			header("Content-Type: application/download");
-			header("Pragma:no-cache");
+
+$strExcelFileName = "Export-Data-" . date('Ymd-His') . ".xls";
+header("Content-Type: application/x-msexcel; name=\"" . $strExcelFileName . "\"");
+header("Content-Disposition: inline; filename=\"" . $strExcelFileName . "\"");
+header('Content-Type: text/plain; charset=UTF-8');
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header("Content-Type: application/force-download");
+header("Content-Type: application/octet-stream");
+header("Content-Type: application/download");
+header("Pragma:no-cache");
 			
-			 if(!empty($_GET)){ ?>
+if(!empty($model) && $model['passcours_cours'] != null){ 
+
+	$get = $model;
+
+	$course_array = (is_array($get['passcours_cours']))? implode(',', $get['passcours_cours']) : null;
+	$period_start = ($get['period_start'])?date('Y-m-d 00:00:00', strtotime($get['period_start'])):null;
+	$period_end = ($get['period_end'])?date('Y-m-d 23:59:59', strtotime($get['period_end'])):null;
+
+	$coursesql = ($course_array!=null)?' and courseonline.course_id in (' . $course_array . ')':null;
+	$startdate = ($period_start)?' and pclog_date >= "'. $period_start .'"':null;
+	$enddate = ($period_end)?' and pclog_date <= "'. $period_end .'"':null;
+
+
+?>
 			<div class="widget-body">
-				<table class="table table-bordered table-striped" id="export-excel-<?php echo $less['id'] ?>">
+				<table class="table table-bordered table-striped" id="export-excel">
 					<thead>
 						<tr>
-							<!--<th class="center" style="width: 80px;">ลำดับ</th>-->
 							<th style="min-width: 400px;" class="left">บทเรียน</th>
 							<th class="center" style="width: 75x;">ผู้เรียนทั้งหมด</th>
 							<th class="center" style="width: 75x;">เรียนผ่าน</th>
@@ -26,18 +39,23 @@
 					</thead>
 					<tbody>
 						<?php
-						if(!empty($_GET['PasscoursLog']['pclog_target'])){
-							$courseSearch = ' and courseonline.course_id = '.$_GET['PasscoursLog']['pclog_target'];
+						if($model['passcours_cours'] != null){
+							$courseSearch = ' and courseonline.course_id = '.$model['passcours_cours'];
 						}
+
+
+						$userModel = Users::model()->findByPk(Yii::app()->user->id);
+						$state = Helpers::lib()->getStatePermission($userModel);
+
 						if(!$state){
 							$allCurrentCourse = CourseOnline::model()->with('category')->findAll(array(
-								'condition' => 'courseonline.lang_id = 1 and courseonline.cate_id != 1 and courseonline.active = "y"' . $coursesql.' and courseonline.create_by = "'.Yii::app()->user->id.'"'.$courseSearch,
-								'order' => 'courseonline.cate_id ASC, courseonline.cate_course ASC',
+								'condition' => 'courseonline.lang_id = 1 and courseonline.active = "y"' . $coursesql.' and courseonline.create_by = "'.Yii::app()->user->id.'"'.$courseSearch,
+								'order' => 'courseonline.course_title ASC',
 							));
 						}else{
 							$allCurrentCourse = CourseOnline::model()->with('category')->findAll(array(
-								'condition' => 'courseonline.lang_id = 1 and courseonline.cate_id != 1 and courseonline.active = "y"' . $coursesql.$courseSearch,
-								'order' => 'courseonline.cate_id ASC, courseonline.cate_course ASC',
+								'condition' => 'courseonline.lang_id = 1 and courseonline.active = "y"' . $coursesql.$courseSearch,
+								'order' => 'courseonline.course_title ASC',
 							));
 						}
 						
@@ -45,10 +63,23 @@
 						$sumPass = 0;
 						$sumPrint = 0;
 						$sumNotPrint = 0;
+						$count_pass = 0;
 						if($allCurrentCourse) {
 							$last_cate_id = null;
 							$lastCategory = null;
 							foreach($allCurrentCourse as $Course) {
+								$course_gen = CourseGeneration::model()->findAll(array(
+									'condition' => 'course_id=:course_id AND active=:active ',
+									'params' => array(':course_id'=>$Course['course_id'], ':active'=>"y"),
+									'order' => 'gen_title ASC',
+								));
+								if(empty($course_gen)){
+									$course_gen[]->gen_id = 0;
+								}
+
+								foreach($course_gen as $key => $gen) {
+
+
 								if($last_cate_id != $Course['cate_id']) { 
 									$last_cate_id = $Course['cate_id'];
 									?>
@@ -66,17 +97,25 @@
 									<?php
 								}
 								$print = PasscoursLog::model()->with('Course')->findAll(array(
-									'condition' => 'passcours_cours = "' . $Course['course_id'] . '"' . $startdate . $enddate,
+									'condition' => 'passcours_cours = "' . $Course['course_id'] . '"' . $startdate . $enddate.' AND t.gen_id="'.$gen->gen_id.'"',
 									'group' => 'pclog_target'
 								));
 								$allLearn = Learn::model()->with('les')->findAll(array(
-									'condition' => 't.course_id = "' . $Course['course_id'] . '" and lesson_active = "y"',
+									'condition' => 't.course_id = "' . $Course['course_id'] . '" and lesson_active = "y"'.' AND gen_id="'.$gen->gen_id.'"',
 									'group' => 'user_id'
 								));
-								$pass = Learn::model()->with('les')->findAll(array(
-									'condition' => 't.course_id = "' . $Course['course_id'] . '" and lesson_status = "pass" and lesson_active = "y"',
-									'group' => 'user_id'
+
+								// $pass = Learn::model()->with('les')->findAll(array(
+								// 	'condition' => 't.course_id = "' . $Course['course_id'] . '" and lesson_status = "pass" and lesson_active = "y"',
+								// 	'group' => 'user_id'
+								// ));
+
+								$pass = Passcours::model()->findAll(array(
+									'condition' => 'passcours_cours = "' . $Course['course_id'] . '" '.' AND gen_id="'.$gen->gen_id.'"',
+									'group' => 'passcours_user'
 								));
+
+
 								$CurrentLesson = Lesson::model()->findAll(array(
 									'condition' => 'course_id = "' . $Course['course_id'] . '" AND active ="y" AND lang_id = 1',
 								));
@@ -100,10 +139,15 @@
 								$sumPrint = $sumPrint + $count_print;
 								$sumNotPrint = $sumNotPrint + $count_notprint;
 								$sumPercentage = $sumPrint*100/$sumPass;
+
+								$text_gen = "";
+								if($gen->gen_id != 0){
+									$text_gen = " รุ่น ".$gen->gen_title;
+								}
 								
 								?>
 								<tr>
-									<td><span style="padding-left: 60px; "><?= $Course['course_title'] ?></span></td>
+									<td><span style="padding-left: 60px; "><?= $Course['course_title'].$text_gen ?></span></td>
 									<td class="center"><?= $count_learn ?></td>
 									<td class="center"><?= $count_pass ?></td>
 									<td class="center"><?= $count_print ?></td>
@@ -111,6 +155,7 @@
 									<td class="center"><?= ($calPercentage>0)?round($calPercentage, 2).'%':0 ?></td>
 								</tr>
 								<?php
+								} // gen
 							}
 						} else {
 							echo 'no course yet.';

@@ -16,9 +16,11 @@ class PasscoursLog extends CActiveRecord
 	public $period_start;
 	public $period_end;
 	public $division_id;
+	public $position;
 	public $department;
 	public $station;
 	public $type_register;
+	public $passcours_cours;
 
 	/**
 	 * @return string the associated database table name
@@ -38,10 +40,10 @@ class PasscoursLog extends CActiveRecord
 		return array(
 			array('pclog_userid, pclog_target', 'numerical', 'integerOnly'=>true),
 			array('pclog_event', 'length', 'max'=>50),
-			array('pclog_date,period_start,period_end,type_register,station,department,division_id', 'safe'),
+			array('pclog_date,period_start,period_end,type_register, position, passcours_cours,station,department,division_id', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('pclog_id, pclog_userid, pclog_event, pclog_target, pclog_date, period_start, period_end,type_register,station,department,division_id, gen_id', 'safe', 'on'=>'search'),
+			array('pclog_id, pclog_userid, pclog_event, pclog_target, pclog_date, period_start, period_end,type_register, position, passcours_cours,station,department,division_id, gen_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -73,9 +75,13 @@ class PasscoursLog extends CActiveRecord
 			'period_start' => 'วันที่เริ่มต้น',
 			'period_end' => 'วันที่สิ้นสุด',
 			'division_id' => 'ฝ่าย',
-			'department' => 'แผนก',
+			'department' => 'ฝ่าย',
 			'station' => 'สถานี',
 			'type_register' => 'ประเภทสมาชิก',
+			'position' => 'แผนก',
+
+
+			'passcours_cours' => 'หลักสูตร',
 			'gen_id' => 'gen_id',
 			
 		);
