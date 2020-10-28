@@ -843,126 +843,132 @@ Class Helpers
     }
 
     //("true" return string) && ("false" return true or false)
-    public function CheckTestCount($status, $id, $return = false, $check = true)
+    public function CheckTestCount($status, $id, $return = false, $check = true, $user_id = null)
     {
         if ($status == "notLearn" || $status == "learning") {
             if ($check == true) {
                 if ($return == true)
-                    $CheckTesting = '<font color="#E60000">ยังไม่มีสิทธิสอบ Post-Test</font>';
+                    $CheckTesting = '<font color="#E60000">ยังไม่มีสิทธิ์สอบ Post-Test</font>';
                 else
                     $CheckTesting = false; //No Past
             } else {
                 $CheckTesting = false;
             }
         } else if ($status == "pass") {
-            $CheckTesting = "<font color='#00EC00'>ผ่านการทำแบบทดสอบ</font>";
+            $CheckTesting = "<font color='#00EC00'>ผ่าน</font>";
 
-            // $countManage = Manage::Model()->count("id=:id AND active=:active AND type = 'post' ", array(
-            //     "id"=>$id,"active"=>"y"
-            // ));
-            // //Condition Testing
-            // if(!empty($countManage))
-            // {
-            //     $Lesson = Lesson::model()->find(array(
-            //         'condition'=>'id=:id','params' => array(':id' => $id)
-            //     ));
+            $countManage = Manage::Model()->count("id=:id AND active=:active AND type = 'post' ", array(
+                "id"=>$id,"active"=>"y"
+            ));
 
-            //     $countScore = Score::Model()->count("lesson_id=:lesson_id AND user_id=:user_id  AND type = 'post'", array(
-            //         "lesson_id"=>$id,"user_id"=>Yii::app()->user->id
-            //     ));
+            if(!empty($countManage)) { // ถ้ามีข้อสอบ
+            
+                $Lesson = Lesson::model()->find(array(
+                    'condition'=>'id=:id','params' => array(':id' => $id)
+                ));
 
-            //     $countScorePast = Score::Model()->count("lesson_id=:lesson_id AND user_id=:user_id AND score_past=:score_past AND type='post'", array(
-            //         "lesson_id"=>$id,"user_id"=>Yii::app()->user->id,"score_past"=>"y"
-            //     ));
+                if($user_id == null){
+                    $user_id = Yii::app()->user->id;
+                }
 
-            //     if(!empty($countScorePast))
-            //     {
-            //         if($check == true)
-            //         {
-            //             if($return == true)
-            //             {
-            //                 $CheckTesting = '<font color="#008000">สอบผ่าน</font>';
-            //             }
-            //             else
-            //             {
-            //                 $CheckTesting =  true; //Past
-            //             }
-            //         }
-            //         else
-            //         {
-            //             $CheckTesting =  true;
-            //         }
-            //     }
-            //     else
-            //     {
+                $countScore = Score::Model()->find("lesson_id=:lesson_id AND user_id=:user_id  AND type = 'post' ORDER BY score_id DESC", array(
+                    "lesson_id"=>$id,"user_id"=> $user_id
+                ));
 
-            //         if($countScore == $Lesson->cate_amount)
-            //         {
-            //             if($check == true)
-            //             {
-            //                 if($return == true)
-            //                 {
-            //                     $CheckTesting =  '<font color="#E60000">สอบไม่ผ่าน</font>';
-            //                 }
-            //                 else
-            //                 {
-            //                     $CheckTesting =  false; //No Past
-            //                 }
+                // $countScorePast = Score::Model()->count("lesson_id=:lesson_id AND user_id=:user_id AND score_past=:score_past AND type='post'", array(
+                //     "lesson_id"=>$id,"user_id"=>Yii::app()->user->id,"score_past"=>"y"
+                // ));
 
-            //             }
-            //             else
-            //             {
-            //                 $CheckTesting =  true;
-            //             }
-            //         }
-            //         else
-            //         {
-            //             if($check == true)
-            //             {
-            //                 if($return == true)
-            //                 {
-            //                     $CheckTesting = CHtml::link('สอบ Post-Test', array(
-            //                         '//question/index',
-            //                         'id'=>$id
-            //                     ),array(
-            //                         //'target'=>'_blank'
-            //                     ));
-            //                 }
-            //                 else
-            //                 {
-            //                     $CheckTesting =  false; //No Past
-            //                 }
-            //             }
-            //             else
-            //             {
-            //                 $CheckTesting =  false;
-            //             }
-            //         }
 
-            //     }
-            // }
-            // else
-            // {
-            //     if($check == true)
-            //     {
-            //         if($return == true)
-            //         {
-            //             $CheckTesting = '-';
-            //         }
-            //         else
-            //         {
-            //             $CheckTesting =  true; //Past
-            //         }
-            //     }
-            //     else
-            //     {
-            //         $CheckTesting =  false;
-            //     }
-            // }
+                if($countScore != ""){
+                    if($countScore->score_past == "y"){
+                        $CheckTesting = '<font color="#008000">สอบผ่าน</font>';
+                    }else{
+                        $CheckTesting =  '<font color="#E60000">สอบไม่ผ่าน</font>';
+                    }   
+                }else{
+                    $CheckTesting = '<font color="#E60000">ยังไม่สอบ</font>';  
+                }
+
+
+                // if(!empty($countScorePast))
+                // {
+                //     if($check == true)
+                //     {
+                //         if($return == true)
+                //         {
+                //             $CheckTesting = '<font color="#008000">สอบผ่าน</font>';
+                //         }
+                //         else
+                //         {
+                //             $CheckTesting =  true; //Past
+                //         }
+                //     }
+                //     else
+                //     {
+                //         $CheckTesting =  true;
+                //     }
+                // } else {
+
+                //     if($countScore == $Lesson->cate_amount)
+                //     {
+                //         if($check == true)
+                //         {
+                //             if($return == true)
+                //             {
+                //                 $CheckTesting =  '<font color="#E60000">สอบไม่ผ่าน</font>';
+                //             } else {
+                //                 $CheckTesting =  false; //No Past
+                //             }
+
+                //         } else {
+                //             $CheckTesting =  true;
+                //         }
+                //     } else {
+                //         if($check == true)
+                //         {
+                //             if($return == true)
+                //             {
+                //                 $CheckTesting = CHtml::link('สอบ Post-Test', array(
+                //                     '//question/index',
+                //                     'id'=>$id
+                //                 ),array(
+                //                     //'target'=>'_blank'
+                //                 ));
+                //             } else {
+                //                 $CheckTesting =  false; //No Past
+                //             }
+                //         } else {
+                //             $CheckTesting =  false;
+                //         }
+                //     }
+
+                // }
+
+            } else { // ไม่มีข้อสอบ
+                  $CheckTesting = '<font>ไม่มีข้อสอบ Post Test</font>';  
+                // if($check == true)
+                // {
+                //     if($return == true)
+                //     {
+                //         $CheckTesting = '-';
+                //     } else {
+                //         $CheckTesting =  true; //Past
+                //     }
+                // } else {
+                //     $CheckTesting =  false;
+                // }
+            }
+
+
+
+
+
+
         } else {
             if ($check == true) {
                 if ($return == true) {
-                    $CheckTesting = '<font color="#E60000">ยังเรียนไม่ผ่าน</font>';
+                    $CheckTesting = '<font color="#E60000">ไม่ผ่าน</font>';
                 } else {
                     $CheckTesting = false; //No Past
                 }
@@ -972,6 +978,9 @@ Class Helpers
         }
         return $CheckTesting;
     }
+
+
+
 
     public function CountTestIng($status, $id, $amount)
     {

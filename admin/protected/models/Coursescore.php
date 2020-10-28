@@ -16,7 +16,7 @@
  */
 class Coursescore extends CActiveRecord
 {
-    public $score_totle;
+    public $score_total;
     public $score_max;
     /**
      * Returns the static model of the specified AR class.
@@ -44,12 +44,12 @@ class Coursescore extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('course_id, user_id, score_number,score_totle, create_by, update_by', 'numerical', 'integerOnly'=>true),
+            array('course_id, user_id, score_number,score_total, create_by, update_by', 'numerical', 'integerOnly'=>true),
             array('active', 'length', 'max'=>1),
             array('create_date, update_date, type', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('score_id, course_id, user_id, score_number,score_totle, create_date, create_by, update_date, update_by, active, gen_id, type', 'safe', 'on'=>'search'),
+            array('score_id, course_id, user_id, score_number,score_total, create_date, create_by, update_date, update_by, active, gen_id, type', 'safe', 'on'=>'search'),
         );
     }
 
@@ -106,7 +106,7 @@ class Coursescore extends CActiveRecord
             'gen_id'    => 'gen_id',
             'user_id'      => 'User',
             'type'         => 'type',
-            'score_totle'  => 'Score Totle',
+            'score_total'  => 'score_total',
             'score_number' => 'Score Number',
             'create_date'  => 'Create Date',
             'create_by'    => 'Create By',
@@ -131,7 +131,7 @@ class Coursescore extends CActiveRecord
         $criteria->compare('course_id',$this->course_id);
         $criteria->compare('user_id',$this->user_id);
         $criteria->compare('type',$this->type);
-        $criteria->compare('score_totle',$this->score_totle);
+        $criteria->compare('score_total',$this->score_total);
         $criteria->compare('score_number',$this->score_number);
         $criteria->compare('create_date',$this->create_date,true);
         $criteria->compare('create_by',$this->create_by);

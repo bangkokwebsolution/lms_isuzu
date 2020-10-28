@@ -1930,8 +1930,8 @@ Class MenuLeft extends Controller
 	        	'url'=>'#ReportFollow',
 	        	'linkOptions' => array('data-toggle' => 'collapse'),
 	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('ReportFollow') ), 'id' => 'ReportFollow'),
-	        	'active' => self::SetSubMenu( array('ReportFollow') ,false),
+	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Report') ), 'id' => 'ReportFollow'),
+	        	'active' => self::SetSubMenu( array('Report') ,false),
 	        	'items'=>array(
 	        		array(
 	        			

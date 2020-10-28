@@ -1,26 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nutti_000
- * Date: 7/5/2558
- * Time: 16:22
- */
-
 class ReportController extends Controller
 {
     public function filters()
     {
         return array(
-            'accessControl', // perform access control for CRUD operations
-            // 'rights',
+            'accessControl', 
         );
     }
 
-    /**
-     * Specifies the access control rules.
-     * This method is used by the 'accessControl' filter.
-     * @return array access control rules
-     */
     public function accessRules()
     {
         return array(
@@ -39,6 +26,23 @@ class ReportController extends Controller
             ),
         );
     }
+
+    public function actionStatus($id=null) { //ข้อมูลการฝึกอบรมของพนักงานรายบุคคล
+        $model=new Report('search');
+        $model->unsetAttributes();
+
+        if($id != null) {
+            $model->user_id = $id;
+        }
+
+        if(isset($_GET['Report'])){
+            $model->attributes=$_GET['Report'];
+        }
+
+        $this->render('status', array('model'=>$model));
+    }
+
+
 
     public function actionIndex()
     {
@@ -69,21 +73,6 @@ class ReportController extends Controller
             $model->attributes=$_GET['Report'];
 
         $this->render('track2',array('model'=>$model));
-    }
-
-    public function actionStatus($id=null)
-    {
-        $model=new Report('search');
-        $model->unsetAttributes();
-
-        if($id!=null) {
-            $model->user_id = $id;
-        }
-
-        if(isset($_GET['Report']))
-            $model->attributes=$_GET['Report'];
-
-        $this->render('status', array('model'=>$model));
     }
 
     public function actionCourse($id=null) {
