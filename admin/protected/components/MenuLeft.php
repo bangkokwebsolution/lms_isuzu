@@ -1957,14 +1957,14 @@ Class MenuLeft extends Controller
 	        			'label'=>'3.) ค้นหาโดยใช้บทเรียน',
 	        			'url'=>array('//Report/ByLesson')
 	        		),
-	        		array(
+	        		// array(
 	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Report.*',
-	        			)),
-	        			'label'=>'4.) รายงานติดตามผู้เรียนรายบุคคล',
-	        			'url'=>array('//Report/ByUser')
-	        		),
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'Report.*',
+	        		// 	)),
+	        		// 	'label'=>'4.) รายงานติดตามผู้เรียนรายบุคคล',
+	        		// 	'url'=>array('//Report/ByUser')
+	        		// ),
 	        		// array(
 	        		// 	
 	        		// 	'visible'=>self::PermissionsMenu(array(
@@ -2024,8 +2024,8 @@ Class MenuLeft extends Controller
 	        	'url'=>'#Report',
 	        	'linkOptions' => array('data-toggle' => 'collapse'),
 	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Report', 'Passcours', 'Questionnaire') ), 'id' => 'Report'),
-	        	'active' => self::SetSubMenu( array('Report', 'Questionnaire', 'Passcours') ,false),
+	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Report', 'Questionnaire') ), 'id' => 'Report'),
+	        	'active' => self::SetSubMenu( array('Report', 'Questionnaire') ,false),
 	        	'items'=>array(
 					//set new menu
 	        		array(
@@ -2060,14 +2060,14 @@ Class MenuLeft extends Controller
 	        		// 	'label'=>'4.) รายงานผู้ผ่านการเรียน',
 	        		// 	'url'=>array('//Passcours/index')
 	        		// ),
-	        		array(
+	        		// array(
 	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Passcours.*',
-	        			)),
-	        			'label'=>'5.) รายงานสถิติจำนวนผู้พิมพ์ใบประกาศฯ',
-	        			'url'=>array('//Passcours/PasscoursLog')
-	        		),
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'Passcours.*',
+	        		// 	)),
+	        		// 	'label'=>'5.) รายงานสถิติจำนวนผู้พิมพ์ใบประกาศฯ',
+	        		// 	'url'=>array('//Passcours/PasscoursLog')
+	        		// ),
 	        		array(
 	        			
 	        			'visible'=>self::PermissionsMenu(array(
