@@ -81,8 +81,8 @@ class PasscoursLog extends CActiveRecord
 			'position' => 'แผนก',
 
 
-			'passcours_cours' => 'หลักสูตร',
-			'gen_id' => 'gen_id',
+			'passcours_cours' => 'หลักสูตร (บังคับ)',
+			'gen_id' => 'รุ่น (บังคับ)',
 			
 		);
 	}

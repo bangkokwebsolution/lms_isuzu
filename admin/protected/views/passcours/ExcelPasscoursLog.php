@@ -11,7 +11,13 @@ header("Content-Type: application/octet-stream");
 header("Content-Type: application/download");
 header("Pragma:no-cache");
 			
-if(!empty($model) && $model['passcours_cours'] != null){ 
+if(!empty($model) && $model['passcours_cours'] != null && $model['gen_id'] != null){ 
+
+	$gen->gen_id = $model['gen_id'];
+	if($model['gen_id'] != 0){
+		$gen = CourseGeneration::model()->findByPk($model['gen_id']);
+	}
+				
 
 	$get = $model;
 
@@ -68,16 +74,16 @@ if(!empty($model) && $model['passcours_cours'] != null){
 							$last_cate_id = null;
 							$lastCategory = null;
 							foreach($allCurrentCourse as $Course) {
-								$course_gen = CourseGeneration::model()->findAll(array(
-									'condition' => 'course_id=:course_id AND active=:active ',
-									'params' => array(':course_id'=>$Course['course_id'], ':active'=>"y"),
-									'order' => 'gen_title ASC',
-								));
-								if(empty($course_gen)){
-									$course_gen[]->gen_id = 0;
-								}
+								// $course_gen = CourseGeneration::model()->findAll(array(
+								// 	'condition' => 'course_id=:course_id AND active=:active ',
+								// 	'params' => array(':course_id'=>$Course['course_id'], ':active'=>"y"),
+								// 	'order' => 'gen_title ASC',
+								// ));
+								// if(empty($course_gen)){
+								// 	$course_gen[]->gen_id = 0;
+								// }
 
-								foreach($course_gen as $key => $gen) {
+								// foreach($course_gen as $key => $gen) {
 
 
 								if($last_cate_id != $Course['cate_id']) { 
@@ -155,7 +161,7 @@ if(!empty($model) && $model['passcours_cours'] != null){
 									<td class="center"><?= ($calPercentage>0)?round($calPercentage, 2).'%':0 ?></td>
 								</tr>
 								<?php
-								} // gen
+								// } // gen
 							}
 						} else {
 							echo 'no course yet.';

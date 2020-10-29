@@ -462,7 +462,7 @@ EOD
 				<a target="blank_" href="<?= $this->createUrl('Passcours/ExcelIndex', array(
 
 				'Passcours[passcours_cours]' => $passcours['passcours_cours'],
-				'Passcours[gen_id]' => $passcours['gen_id'],
+				'Passcours[gen_id]' 		 => $passcours['gen_id'],
 				'Passcours[search]' 		 => $passcours['search'],
 				'Passcours[type_register]'	 => $passcours['type_register'],
 				'Passcours[department]'		 => $passcours['department'],

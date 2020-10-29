@@ -16,9 +16,6 @@ $coursesql = ($course_array!=null)?' and courseonline.course_id in (' . $course_
 $startdate = ($period_start)?' and pclog_date >= "'. $period_start .'"':null;
 $enddate = ($period_end)?' and pclog_date <= "'. $period_end .'"':null;
 
-$type_user[1] = 'บุคลากรทั่วไป';
-$type_user[2] = 'บุคลากรภายใน';
-
 $divisiondata = Division::model()->getDivisionListNew(); 
 $departmentdata = Department::model()->getDepartmentListNew();
 $stationdata = Station::model()->getStationList();
@@ -98,6 +95,25 @@ EOD
             }
         });
 
+        $("#PasscoursLog_passcours_cours").change(function(){
+            var value = $("#PasscoursLog_passcours_cours option:selected").val();
+            if(value != ""){
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo Yii::app()->createAbsoluteUrl("/Passcours/ajaxgetgenid"); ?>',
+                    data: ({
+                        value: value,
+                    }),
+                    success: function(data) {
+                        if(data != ""){
+                            $("#PasscoursLog_gen_id").html(data);
+                            $('.chosen').trigger("chosen:updated");
+                        }
+                    }
+                });
+            }
+        });
+
 
 });
 </script>
@@ -141,12 +157,30 @@ EOD
     ));
     $listposition = CHtml::listData($position,'id','position_title');
 
+     if($passcours_cours != ""){
+    	$arr_gen = CourseGeneration::model()->findAll(array(
+    		'condition' => 'course_id=:course_id AND active=:active ',
+    		'params' => array(':course_id'=>$passcours_cours, ':active'=>"y"),
+    		'order' => 'gen_title ASC',
+    	));    	
+
+    	if(empty($arr_gen)){
+    		$arr_gen[0] = "ไม่มีรุ่น";
+    	}else{
+    		$arr_gen = CHtml::listData($arr_gen,'gen_id','gen_title');
+    	}
+
+    }else{
+    	$arr_gen[""] = "กรุณาเลือกหลักสูตร";
+    }
+
 
 	$this->widget('AdvanceSearchForm', array(
 		'data'=>$model,
 		'route' => $this->route,
 		'attributes'=>array(
 			array('name'=>'passcours_cours','type'=>'list','query'=>$listCourse),
+			array('name'=>'gen_id','type'=>'list','query'=>$arr_gen),	
 			array('name'=>'type_register','type'=>'list','query'=>$listtype_user),
 			array('name'=>'department','type'=>'list','query'=>$listdepartment),
 			array('name'=>'position','type'=>'list','query'=>$listposition),			
@@ -164,7 +198,15 @@ EOD
 					<i></i> สถิติจำนวนผู้พิมพ์หนังสือรับรอง : วันที่ <?= Helpers::lib()->changeFormatDate($period_start) ?> ถึงวันที่ <?= Helpers::lib()->changeFormatDate($period_end) ?>
 				</h4>
 			</div>
-			<?php if(!empty($_GET["PasscoursLog"] && $_GET['PasscoursLog']['passcours_cours'] != null)){ ?>
+			<?php 
+			if(!empty($_GET["PasscoursLog"] && $_GET['PasscoursLog']['passcours_cours'] != null && $_GET['PasscoursLog']['gen_id'] != null)){ 
+
+				$gen->gen_id = $_GET['PasscoursLog']['gen_id'];
+				if($_GET['PasscoursLog']['gen_id'] != 0){
+					$gen = CourseGeneration::model()->findByPk($_GET['PasscoursLog']['gen_id']);
+				}
+
+				?>
 			<div class="widget-body">
 				<table class="table table-bordered table-striped" id="export-excel">
 					<thead>
@@ -205,15 +247,16 @@ EOD
 							$last_cate_id = null;
 							$lastCategory = null;
 							foreach($allCurrentCourse as $Course) {
-								$course_gen = CourseGeneration::model()->findAll(array(
-									'condition' => 'course_id=:course_id AND active=:active ',
-									'params' => array(':course_id'=>$Course['course_id'], ':active'=>"y"),
-									'order' => 'gen_title ASC',
-								));
-								if(empty($course_gen)){
-									$course_gen[]->gen_id = 0;
-								}
-								foreach($course_gen as $key => $gen) {
+								// $course_gen = CourseGeneration::model()->findAll(array(
+								// 	'condition' => 'course_id=:course_id AND active=:active ',
+								// 	'params' => array(':course_id'=>$Course['course_id'], ':active'=>"y"),
+								// 	'order' => 'gen_title ASC',
+								// ));
+								// if(empty($course_gen)){
+								// 	$course_gen[]->gen_id = 0;
+								// }
+								// foreach($course_gen as $key => $gen) {
+
 								if($last_cate_id != $Course['cate_id']) { 
 									$last_cate_id = $Course['cate_id'];
 									?>
@@ -289,7 +332,7 @@ EOD
 									<td class="center"><?= ($calPercentage>0)?round($calPercentage, 2).'%':0 ?></td>
 								</tr>
 								<?php
-							} // gen
+							// } // gen
 							}
 						} else {
 							echo 'no course yet.';
@@ -306,25 +349,30 @@ EOD
 					</tbody>
 				</table>
 			</div>
-		<?php } else { ?>
-			<div class="widget-body div-table" style="overflow: auto;">
-				<h4>กรุณาเลือกหลักสูตร หรือข้อมูลที่ต้องการ แล้วกด ปุ่มค้นหา</h4>
-			</div>
-		<?php } ?>
-	</div>
-			 <div class="widget-body">
+
+			<div class="widget-body">
 			 <a href="<?= $this->createUrl('passcours/genExcelPasscoursLog',array(
 			 'PasscoursLog[passcours_cours]'=> $_GET['PasscoursLog']['passcours_cours'],
-			 'PasscoursLog[type_register]'	 => $_GET['PasscoursLog']['type_register'],
-			 'PasscoursLog[department]'	 => $_GET['PasscoursLog']['department'],
-			 'PasscoursLog[position]'		 => $_GET['PasscoursLog']['position'],
-			 'PasscoursLog[period_start]'	 => $_GET['PasscoursLog']['period_start'],
+			 'PasscoursLog[gen_id]' 		=> $_GET['PasscoursLog']['gen_id'],
+			 'PasscoursLog[type_register]'	=> $_GET['PasscoursLog']['type_register'],
+			 'PasscoursLog[department]'		=> $_GET['PasscoursLog']['department'],
+			 'PasscoursLog[position]'		=> $_GET['PasscoursLog']['position'],
+			 'PasscoursLog[period_start]'	=> $_GET['PasscoursLog']['period_start'],
 			 'PasscoursLog[period_end]'	 => $_GET['PasscoursLog']['period_end'],
             )); ?>" 
             target="_blank">
 					<button type="button" id="btnExport" class="btn btn-primary btn-icon glyphicons file"><i></i> Export</button>
 			</a>
 			</div>
+
+
+		<?php } else { ?>
+			<div class="widget-body div-table" style="overflow: auto;">
+				<h4>กรุณาเลือกหลักสูตร หรือข้อมูลที่ต้องการ แล้วกด ปุ่มค้นหา</h4>
+			</div>
+		<?php } ?>
+	</div>
+			 
 		
 	</div>
 	<script type="text/javascript">
