@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: nutti_000
- * Date: 7/5/2558
- * Time: 17:09
- */
 
 class Report extends CFormModel {
 
@@ -33,11 +27,15 @@ class Report extends CFormModel {
     public $station;
     public $schedule_id;
     public $type_user;
+    public $type_register;
+    public $gen_id;
+    public $position;
+
 
     public function rules()
     {
         return array(
-            array('period_start,period_end,typeOfUser,dateRang,course,nameSearch,university,company,categoryUniversity,categoryCompany,company_id,division_id,position_id,department,station,schedule_id,type_user,course_id', 'safe'),
+            array('period_start,period_end,typeOfUser,dateRang,course,nameSearch,university,company,categoryUniversity,categoryCompany,company_id,division_id,position_id,department,station,schedule_id,type_user,course_id, type_register, gen_id, position', 'safe'),
         );
     }
 
@@ -51,16 +49,20 @@ class Report extends CFormModel {
             'company_id' => 'หน่วยงาน',
             'division_id' => 'ฝ่าย',
             'position_id' => 'ตำแหน่ง',
-            'search' => 'ค้นหา',
+            'search' => 'ค้นหา ชื่อ-นามสกุล ทั้งไทยและอังกฤษ',
             'period_start' => 'วันที่เริ่มต้น',
             'period_end' => 'วันที่สิ้นสุด',
             'generation' => 'เลือกรุ่น',
-            'course_id' => 'เลือกหลักสูตร',
+            'course_id' => 'เลือกหลักสูตร (บังคับ)',
             'lesson_id' => 'เลือกบทเรียน',
-            'department' => 'แผนก',
             'station' => 'สถานี',
             'schedule_id' => 'ตารางเรียน',
-            'type_user' => 'ประเภทผู้ใช้งาน'
+            'type_user' => 'ประเภทผู้ใช้งาน',
+
+            'type_register'=>'ประเภทพนักงาน',
+            'gen_id' => 'รุ่น  (บังคับ)',
+            'department' => 'ฝ่าย',
+            'position' => 'แผนก',
         );
     }
 

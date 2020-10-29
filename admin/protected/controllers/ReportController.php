@@ -43,6 +43,62 @@ class ReportController extends Controller
     }
 
 
+    public function actionByCourse($id=null) { // ค้นหาโดยใช้หลักสูตร
+
+        $model = new Report('ByCourse');
+        $model->unsetAttributes();
+
+        if($id!=null) {
+            $model->course_id = $id;
+        }
+
+        if(isset($_GET['Report'])) {
+           
+            $model->course_id = $_GET['Report']['course_id'];
+            $model->gen_id = $_GET['Report']['gen_id'];
+            $model->search = $_GET['Report']['search'];
+            $model->type_register = $_GET['Report']['type_register'];
+            $model->department = $_GET['Report']['department'];
+            $model->position = $_GET['Report']['position'];
+            $model->period_start = $_GET['Report']['period_start'];
+            $model->period_end = $_GET['Report']['period_end'];
+
+        }
+
+        $this->render('ByCourse', array(
+            'model' => $model
+        ));
+    }
+
+    public function actionGenExcelByCourse(){
+        $model = new Report('ByCourse');
+        $model->unsetAttributes();
+
+        if($id!=null) {
+            $model->course_id = $id;
+        }
+        
+        if(isset($_GET['Report'])) {
+            $model->course_id = $_GET['Report']['course_id'];
+            $model->gen_id = $_GET['Report']['gen_id'];
+            $model->search = $_GET['Report']['search'];
+            $model->type_register = $_GET['Report']['type_register'];
+            $model->department = $_GET['Report']['department'];
+            $model->position = $_GET['Report']['position'];
+            $model->period_start = $_GET['Report']['period_start'];
+            $model->period_end = $_GET['Report']['period_end'];
+        }    
+
+        $this->renderPartial('ExcelByCourse', array(
+            'model'=>$model
+        ));
+
+    }
+
+
+
+
+
 
     public function actionIndex()
     {
@@ -1248,25 +1304,6 @@ public function actionByStatus($id=null) {
     }            
 }
 
-public function actionByCourse($id=null) {
-
-    $model = new Report('ByCourse');
-    $model->unsetAttributes();
-
-    if($id!=null) {
-        $model->course_id = $id;
-    }
-
-    if(isset($_GET['Report'])) {
-        $model->nameSearch = $_GET['Report']['search'];
-        $model->course_id = $_GET['Report']['course_id'];
-            // $model->attributes = $_POST['Status'];
-    }
-
-    $this->render('ByCourse', array(
-        'model' => $model
-    ));
-}
 
 public function actionBeforAndAfter($id=null) {
     $model = new Report();
@@ -1424,24 +1461,6 @@ public function actionGenPdfByCourse(){
     $mPDF = new \Mpdf\Mpdf(['orientation' => 'L']);
     $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial($renderFile, array('model'=>$model),true),'UTF-8','UTF-8'));
     $mPDF->Output("PdfByCourse.pdf" , 'D');
-
-}
-
-public function actionGenExcelByCourse(){
-    $model = new Report('ByCourse');
-    $model->unsetAttributes();
-
-    if($id!=null) {
-        $model->course_id = $id;
-    }
-    if(isset($_GET['Report'])) {
-        $model->nameSearch = $_GET['Report']['search'];
-        $model->course_id = $_GET['Report']['course_id'];
-    }    
-
-     $this->renderPartial('ExcelByCourse', array(
-            'model'=>$model
-        ));
 
 }
 

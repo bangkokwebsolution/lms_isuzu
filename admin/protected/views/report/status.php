@@ -149,7 +149,7 @@ EOD
                     <div class="widget" style="margin-top: -1px;">
                         <div class="widget-head">
                             <h4 class="heading glyphicons show_thumbnails_with_lines">
-                                <i></i> <?php echo $no_course.".) หลักสูตร ".$courseItem->course_title; $no_course++; // . " | " . $user[0][firstname] . " " . $user[0][lastname] ?>
+                                <i></i> <?php echo $no_course.") หลักสูตร ".$courseItem->course_title; $no_course++; // . " | " . $user[0][firstname] . " " . $user[0][lastname] ?>
                             </h4>
                         </div>
                         <div class="widget-body">
