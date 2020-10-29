@@ -37,6 +37,10 @@ if($model->passcours_cours != null) {
 	$criteria->compare('passcours_cours', $model->passcours_cours);
 }
 
+if(isset($model->gen_id) && $model->gen_id != null) {
+	$criteria->compare('gen_id', $model->gen_id);
+}
+
 if($model->type_register != null) {
 	$criteria->compare('Profiles.type_employee', $model->type_register);
 }
@@ -85,7 +89,7 @@ $Passcours = Passcours::model()->findAll($criteria);
 	</thead>
 	<tbody>
 		<?php 
-		if(!empty($Passcours) && $model->passcours_cours != null){
+		if(!empty($Passcours) && $model->passcours_cours != null && $model->gen_id != null){
 			$no = 1;
 			foreach ($Passcours as $key => $data) {
 				?>

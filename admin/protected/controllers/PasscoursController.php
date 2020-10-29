@@ -5,21 +5,15 @@ class PasscoursController extends Controller
     public function filters()
     {
         return array(
-            'accessControl', // perform access control for CRUD operations
-            // 'rights',
+            'accessControl',
             );
     }
-
-    /**
-     * Specifies the access control rules.
-     * This method is used by the 'accessControl' filter.
-     * @return array access control rules
-     */
+    
     public function accessRules()
     {
         return array(
         	array('allow',  // allow all users to perform 'index' and 'view' actions
-            	'actions' => array('PrintCertificate', 'PrintPDF', 'ajaxgetdepartment', 'ajaxgetposition', 'ExcelIndex', 'DownloadIndex'),
+            	'actions' => array('PrintCertificate', 'PrintPDF', 'ajaxgetdepartment', 'ajaxgetposition', 'ajaxgetgenid', 'ExcelIndex', 'DownloadIndex'),
             	'users' => array('*'),
             	),
             array('allow',
@@ -45,12 +39,14 @@ class PasscoursController extends Controller
 			$model = new Passcours('highsearch');
 
 			$model->passcours_cours = $passcours['passcours_cours'];
+			$model->gen_id = $passcours['gen_id'];
 			$model->search = $passcours['search'];
 			$model->type_register = $passcours['type_register'];			
 			$model->department = $passcours['department'];
 			$model->position = $passcours['position'];
 			$model->period_start = $passcours['period_start'];
 			$model->period_end = $passcours['period_end'];
+
 
 		}
 		
@@ -644,6 +640,36 @@ class PasscoursController extends Controller
 			}
 		}
 	}
+
+	public function actionajaxgetgenid(){
+		if(isset($_POST["value"]) && $_POST["value"] != ""){
+
+
+			$course_gen = CourseGeneration::model()->findAll(array(
+				'condition' => 'course_id=:course_id AND active=:active ',
+				'params' => array(':course_id'=>$_POST["value"], ':active'=>"y"),
+				'order' => 'gen_title ASC',
+			));
+
+			if(empty($course_gen)){
+				$course_gen[0]->gen_id = 0;
+				$course_gen[0]->gen_title = "ไม่มีรุ่น";
+			}
+
+
+			?>
+			<option value="">กรุณาเลือกรุ่น</option>
+			<?php
+			if(!empty($course_gen)){				
+				foreach ($course_gen as $key => $value) {
+					?>
+					<option value="<?= $value->gen_id ?>"><?= $value->gen_title ?></option>
+					<?php
+				}
+			}
+		}
+	}
+
 
 
 

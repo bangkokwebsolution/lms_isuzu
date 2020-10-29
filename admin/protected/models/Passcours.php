@@ -18,6 +18,7 @@ class Passcours extends AActiveRecord
     public $position;
     public $station;
     public $type_register;
+    public $gen_id;
 
 	public static function model($className=__CLASS__)
 	{
@@ -70,7 +71,7 @@ class Passcours extends AActiveRecord
 			'position' => 'แผนก',
 			'station' => 'สถานี',
 			'type_register' => 'ประเภทพนักงาน',
-			'gen_id' => 'รุ่น'
+			'gen_id' => 'รุ่น (บังคับ)'
 
 		);
 	}
@@ -113,6 +114,10 @@ class Passcours extends AActiveRecord
 			// var_dump($this->passcours_cours); exit();
 			// $criteria->addInCondition('passcours_cours', $this->passcours_cours, 'AND');
 			$criteria->compare('passcours_cours', $this->passcours_cours);
+		}
+
+		if(isset($this->gen_id) && $this->gen_id != null) {
+			$criteria->compare('gen_id', $this->gen_id);
 		}
 
 		//check memtype

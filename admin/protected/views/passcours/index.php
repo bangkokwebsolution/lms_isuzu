@@ -25,6 +25,7 @@ Yii::app()->clientScript->registerScript('search', "
 ");
 
 $passcours_cours = $passcours['passcours_cours'];
+$gen_id = $passcours['gen_id'];
 $search = $passcours['search'];
 $type_register = $passcours['type_register'];
 $department = $passcours['department'];
@@ -48,6 +49,7 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 
 
 	    $("#$formNameModel-grid").append('<input type="hidden" name="Passcours[passcours_cours]" value="$passcours_cours">');
+	    $("#$formNameModel-grid").append('<input type="hidden" name="Passcours[gen_id]" value="$gen_id">');
 	    $("#$formNameModel-grid").append('<input type="hidden" name="Passcours[search]" value="$search">');
 	    $("#$formNameModel-grid").append('<input type="hidden" name="Passcours[type_register]" value="$type_register">');
 	    $("#$formNameModel-grid").append('<input type="hidden" name="Passcours[department]" value="$department">');
@@ -120,6 +122,25 @@ EOD
             }
         });
 
+        $("#Passcours_passcours_cours").change(function(){
+            var value = $("#Passcours_passcours_cours option:selected").val();
+            if(value != ""){
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo Yii::app()->createAbsoluteUrl("/Passcours/ajaxgetgenid"); ?>',
+                    data: ({
+                        value: value,
+                    }),
+                    success: function(data) {
+                        if(data != ""){
+                            $("#Passcours_gen_id").html(data);
+                            $('.chosen').trigger("chosen:updated");
+                        }
+                    }
+                });
+            }
+        });
+
 
 });
 </script>
@@ -168,12 +189,31 @@ EOD
     $listposition = CHtml::listData($position,'id','position_title');
 
 
+    if($passcours_cours != ""){
+    	$arr_gen = CourseGeneration::model()->findAll(array(
+    		'condition' => 'course_id=:course_id AND active=:active ',
+    		'params' => array(':course_id'=>$passcours_cours, ':active'=>"y"),
+    		'order' => 'gen_title ASC',
+    	));    	
+
+    	if(empty($arr_gen)){
+    		$arr_gen[0] = "ไม่มีรุ่น";
+    	}else{
+    		$arr_gen = CHtml::listData($arr_gen,'gen_id','gen_title');
+    	}
+
+    }else{
+    	$arr_gen[""] = "กรุณาเลือกหลักสูตร";
+    }
+    
+
 
 	$this->widget('AdvanceSearchForm', array(
 		'data'=>$model,
 		'route' => $this->route,
 		'attributes'=>array(
 			array('name'=>'passcours_cours','type'=>'list','query'=>$listCourse),	
+			array('name'=>'gen_id','type'=>'list','query'=>$arr_gen),	
 			array('name'=>'search','type'=>'text'),		
 			array('name'=>'type_register','type'=>'list','query'=>$listtype_user),
 			array('name'=>'department','type'=>'list','query'=>$listdepartment),
@@ -193,7 +233,7 @@ EOD
 		<div class="widget-head">
 			<h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $titleName;?></h4>
 		</div>
-		<?php if(!empty($_GET) && $passcours_cours != null){ ?>
+		<?php if(!empty($_GET) && $passcours_cours != null && $gen_id != null){ ?>
 		<div class="widget-body">
 			<div class="separator bottom form-inline small">
 				<span class="pull-right">
@@ -422,6 +462,7 @@ EOD
 				<a target="blank_" href="<?= $this->createUrl('Passcours/ExcelIndex', array(
 
 				'Passcours[passcours_cours]' => $passcours['passcours_cours'],
+				'Passcours[gen_id]' => $passcours['gen_id'],
 				'Passcours[search]' 		 => $passcours['search'],
 				'Passcours[type_register]'	 => $passcours['type_register'],
 				'Passcours[department]'		 => $passcours['department'],
