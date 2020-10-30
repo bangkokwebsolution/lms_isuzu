@@ -1,63 +1,120 @@
-     <?php
+<?php
 
-         $strExcelFileName = "Export-Data-" . date('Ymd-His') . ".xls";
-            header("Content-Type: application/x-msexcel; name=\"" . $strExcelFileName . "\"");
-            header("Content-Disposition: inline; filename=\"" . $strExcelFileName . "\"");
-            header('Content-Type: text/plain; charset=UTF-8');
-            header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-            header("Content-Type: application/force-download");
-            header("Content-Type: application/octet-stream");
-            header("Content-Type: application/download");
-            header("Pragma:no-cache");
+$strExcelFileName = "Export-Data-" . date('Ymd-His') . ".xls";
+header("Content-Type: application/x-msexcel; name=\"" . $strExcelFileName . "\"");
+header("Content-Disposition: inline; filename=\"" . $strExcelFileName . "\"");
+header('Content-Type: text/plain; charset=UTF-8');
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header("Content-Type: application/force-download");
+header("Content-Type: application/octet-stream");
+header("Content-Type: application/download");
+header("Pragma:no-cache");
 
-        $search = $_GET['Report'];
-        $textsearch = ($search['search']!=null)?'and email like "%'.$search['search'].'%" or profile.firstname like "%'.$search['search'].'%" or profile.lastname like "%'.$search['search'].'%"':null;
-        $searchLesson = $search['lesson_id'];
-        $searchLessonArray = implode(',', $searchLesson);
-        $sqlLessonQuery = ($searchLessonArray!='')?' and id in ('.$searchLessonArray.')':null;
-        //generation
-        $searchGeneration = $search['generation'];
-        $gen = ($searchGeneration!='')?' and generation = "'. $searchGeneration . '"':null;
+$_GET['Report'] = $model;
 
-        //type_user
-        $searchTyprUser = $search['type_user'];
-        if( !empty($searchTyprUser)) {
-                if($searchTyprUser == 1){ //General
-                    $texttype .= " AND type_register != '3' ";
-                }else if($searchTyprUser == 2){ //Staff
-                    $texttype .= " AND type_register = '3' ";
+if(isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != null && $_GET['Report']['gen_id'] != null){
 
-                }
-            }
 
-        //Divsion
-        if(!empty($search['division_id'])){
-            $divisionInarray =  implode(",",$search['division_id']);
-            $textsearch .= " and division_id IN ( ".$divisionInarray." )";
-        }
-            //Department
-        if(!empty($search['department'])){
-            $departmentInarray =  implode(",",$search['department']);
-            $textsearch .= " and department_id IN ( ".$departmentInarray." )";
-        }
-            //Station
-        if(!empty($search['station'])){
-            $stationInarray =  implode(",",$search['station']);
-            $textsearch .= " and station_id IN ( ".$stationInarray." )";
+    $search = $_GET['Report'];
+
+    $course_online = CourseOnline::model()->findByPk($search["course_id"]);
+
+    $statusArray = array(
+        'learning'=>'<b style="color: green;">กำลังเรียน</b>', 
+        'pass' => '<b style="color: blue;">เรียนสำเร็จ</b>',
+        'notlearn'=>'<b style="color: red;">ยังไม่เรียน</b>'
+    );
+
+    $criteria = new CDbCriteria;
+    $criteria->with = array('pro', 'course', 'mem');
+
+    if(isset($_GET['Report']['search']) && $_GET['Report']['search'] != null){
+        $ex_fullname = explode(" ", $_GET['Report']['search']);
+
+        if(isset($ex_fullname[0])){
+            $pro_fname = $ex_fullname[0];
+            $criteria->compare('pro.firstname_en', $pro_fname, true);
+            $criteria->compare('pro.lastname_en', $pro_fname, true, 'OR');
+
+            $criteria->compare('pro.firstname', $pro_fname, true, 'OR');
+            $criteria->compare('pro.lastname', $pro_fname, true, 'OR');
         }
 
-        //period
-        $period_start = ($search['period_start'])?date('Y-m-d 00:00:00', strtotime($search['period_start'])):null;
-        $period_end = ($search['period_end'])?date('Y-m-d 23:59:59', strtotime($search['period_end'])):null;
-        
-        $startdate = ($period_start)?' and learn.create_date >= "'. $period_start .'"':null;
-        $enddate = ($period_end)?' and learn.create_date <= "'. $period_end .'"':null;
+        if(isset($ex_fullname[1])){
+            $pro_lname = $ex_fullname[1];
+            $criteria->compare('pro.lastname',$pro_lname,true);
+            $criteria->compare('pro.lastname_en', $pro_lname, true, 'OR');
+        }
+    }   
 
-        $lesson_online = Lesson::model()->findAll(array(
-            'condition' => 'active = "y"' . $sqlLessonQuery,
-            'order' => 'lesson_no ASC'
-        ));
-        $lesson_count = ($lesson_online)?count($lesson_online):0;
+    $criteria->compare('user.superuser', 0);
+
+    if(isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != null) {
+        $criteria->compare('t.course_id', $_GET['Report']['course_id']);
+    }
+
+    if(isset($_GET['Report']['gen_id']) && $_GET['Report']['gen_id'] != null) {
+        $criteria->compare('t.gen_id', $_GET['Report']['gen_id']);
+    }
+
+    if(isset($_GET['Report']['type_register']) && $_GET['Report']['type_register'] != null) {
+        $criteria->compare('pro.type_employee', $_GET['Report']['type_register']);
+    }
+
+    if(isset($_GET['Report']['department']) && $_GET['Report']['department'] != null) {
+        $criteria->compare('user.department_id',$_GET['Report']['department']);
+    }
+
+    if(isset($_GET['Report']['position']) && $_GET['Report']['position'] != null) {
+        $criteria->compare('user.position_id',$_GET['Report']['position']);
+    }
+
+    if(isset($_GET['Report']['period_start']) && $_GET['Report']['period_start'] != null) {
+        $criteria->compare('start_date >= "' . date('Y-m-d 00:00:00', strtotime($_GET['Report']['period_start'])) . '"');
+    }
+    if(isset($_GET['Report']['period_end']) && $_GET['Report']['period_end'] != null) {
+        $criteria->compare('start_date <= "' . date('Y-m-d 23:59:59', strtotime($_GET['Report']['period_end'])) . '"');
+    }
+
+    $user_Learn = LogStartcourse::model()->findAll($criteria);
+
+    $user_chk = array();
+    foreach ($user_Learn as $key => $val) {
+        if($val->user_id != ""){
+            $user_chk[] = $val->user_id;
+        }
+    }
+
+    if(count($user_chk) == 0){
+        $user_chk = array(0);
+    } 
+
+    $allUsers = User::model()->with('profile')->findAll(array(
+        'condition' => 'status ="1" and user.id IN ('.implode(",", $user_chk).')',
+        'order' => 'profile.firstname_en ASC'
+    ));
+
+
+    if(isset($_GET['Report']['lesson_id']) && $_GET['Report']['lesson_id'] != null) {
+
+     $lesson_online = Lesson::model()->findAll("active='y' AND id='".$_GET['Report']['lesson_id']."' AND course_id='".$search["course_id"]."'");
+
+ }else{
+  $lesson_online = Lesson::model()->findAll(array(
+    "condition"=>"active='y' AND lang_id='1' AND course_id='".$search["course_id"]."'",
+    "order"=>"title ASC"
+));
+}
+
+$gen_title = "";
+if($_GET['Report']['gen_id'] != 0){
+    $gen_title = CourseGeneration::model()->findByPk($_GET['Report']['gen_id']);
+    $gen_title = " รุ่น ".$gen_title->gen_title;
+}
+
+
+
+
     ?>
 
 <style type="text/css">
@@ -69,78 +126,113 @@
         <div class="widget" id="export-table">
             <div class="widget-head">
                 <div class="widget-head">
-                    <h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> รายงานผู้เรียนตามหัวข้อวิชา</h4>
+                    <h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> ค้นหาโดยใช้บทเรียน</h4>
                 </div>
             </div> 
             <div class="widget-body" style=" overflow-x: scroll;">
                 <table class="table table-bordered table-striped">
+
                     <thead>
                         <tr>
                             <th rowspan="2">ลำดับ</th>
-                            <th rowspan="2">ชื่อ - สกุล</th>
-                            <th rowspan="2">อีเมลล์</th>
-                            <th colspan="<?= $lesson_count?>" class="center">สถานะผู้เรียนรายวิชา</th>
+                            <th rowspan="2">ประเภทพนักงาน</th>                            
+                            <th rowspan="2">Name - Surname</th>
+                            <th rowspan="2">แผนก/ฝ่าย</th>
+                            <th rowspan="2">ตำแหน่ง/แผนก</th>
+                            <th class="center" colspan="<?= count($lesson_online)+1 ?>">หลักสูตร <?= $course_online->course_title.$gen_title ?></th>
                         </tr>
                         <tr>
-                            <?php
-                                foreach($lesson_online as $lesson) {
-                                   ?>
-                                <th style="writing-mode: tb-rl;"><?= $lesson['title'] ?></th>
-                                   <?php
-                                }
-                            ?>
+                            <?php foreach($lesson_online as $lesson) { ?>
+                                <th class="center"><?= $lesson->title ?></th>
+                            <?php } ?>
+                            <th class="center">Percent</th>
                         </tr>
                     </thead>
+
+
                     <tbody>
                         <?php
-                            if(!empty($_GET)){
-                               $allUsers = User::model()->with('profile')->findAll(array(
-                                'condition' => 'status ="1"' . $gen . $textsearch . $texttype,
-                                ));
-                            }
-                           
-                             $dataProvider=new CArrayDataProvider($allUsers, array(
-                                'pagination'=>false
+                        if(!empty($allUsers)){
+                            
+                           $dataProvider=new CArrayDataProvider($allUsers, array(
+                            'pagination'=>array(
+                                'pageSize'=>25
+                            ),
                         ));
+
                             $getPages = $_GET['page'];
                             if($getPages = $_GET['page']!=0 ){
                                 $getPages = $_GET['page'] -1;
                             }
+
                             $start_cnt = $dataProvider->pagination->pageSize * $getPages;
+
                             if($dataProvider->getData()) {
                                 foreach($dataProvider->getData() as $i => $user) {
                                     ?>
                                     <tr>
                                         <td><?= $start_cnt+1 ?></td>
-                                        <td><?= $user->profile->firstname . ' ' . $user->profile->lastname ?></td>
-                                        <td><?= $user->email ?>&nbsp;</td>
+                                        <td><?= $user->profile->typeEmployee->type_employee_name; ?></td>
+                                        <td><?= $user->profile->firstname_en . ' ' . $user->profile->lastname_en ?></td>
+                                        <td><?= $user->department->dep_title ?></td>
+                                        <td><?= $user->position->position_title ?></td>
                                         <?php
                                            if($lesson_online) {
                                                 foreach($lesson_online as $lesson) {
-                                                    $statusLearn = Learn::model()->with('les')->find(array(
-                                                        'condition' => 'lesson_active = "y" and user_id ="'.$user['id'].'" and lesson_id ="'. $lesson['id'] .'"' . $startdate . $enddate ,
-                                                        'alias' => 'learn'
-                                                    ));
-                                                    $statusArray = array('learning'=>'<b style="color: green;">กำลังเรียน</b>', 'pass' => '<b style="color: blue;">ผ่าน</b>','notlearn'=>'<b style="color: red;">ยังไม่เรียน</b>');
-                                                    ?>
-                                                    <td class="center"><?= ($statusLearn['lesson_status']==null)?$statusArray['notlearn']:$statusArray[$statusLearn['lesson_status']] ?></td>
-                                                    <?php
+                                                    $statusLearn_course =  Helpers::lib()->chk_status_course($course_online->course_id, $_GET['Report']['gen_id'], $user->id);
+
+                                                        ?>
+                                                        <td class="center" <?php if($statusLearn_course != "learning"){ echo 'colspan="'.count($lesson_online).'"'; } ?>>
+                                                            <?php 
+                                                            if($statusLearn_course != "learning"){
+                                                                echo $statusArray[$statusLearn_course];
+                                                            }else{
+                                                                $statusLearn_lesson =  Helpers::lib()->chk_status_lesson($lesson->id, $_GET['Report']['gen_id'], $user->id);
+                                                                echo $statusArray[$statusLearn_lesson];
+                                                            }
+                                                             ?>
+                                                        </td>
+                                                        <?php
+                                                        if($statusLearn_course != "learning"){
+                                                            break;
+                                                        }
                                                 }
                                            }
                                         ?>
+                                        <td class="center">
+                                            <?php 
+                                            if($statusLearn_course != "pass"){
+                                                echo Helpers::lib()->percent_CourseGen($course_online->course_id, $_GET['Report']['gen_id'], $user->id)." %"; 
+                                            }else{
+                                                echo "-";
+                                            }
+                                            ?>
+                                        </td>
                                     </tr>
                                     <?php
                                     $start_cnt++;
                                 }
+                            }
                             } else {
                                 ?>
                                 <tr>
                                     <strong>ไม่พบข้อมูล</strong>
                                 </tr>
-                                <?php
-                            }
-                        ?>
+                    <?php } ?>
                     </tbody>
                 </table>
+
+
+
+
+
+
+                
             </div>
         </div>
+
+
+
+
+
+<?php }  ?>

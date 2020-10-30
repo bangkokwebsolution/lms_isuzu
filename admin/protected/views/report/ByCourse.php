@@ -557,19 +557,21 @@ EOD
                                                     //     'alias' => 'learn'
                                                     // ));
 
-                                            $passcourse = Passcours::model()->find("passcours_cours='".$_GET['Report']['course_id']."' AND passcours_user='".$user->id."' AND gen_id='".$_GET['Report']['gen_id']."' ");
-                                            if($passcourse != ""){
-                                                $statusLearn = "pass";
-                                            }else{
-                                                $statusLearn = Learn::model()->findAll(array(
-                                                    'condition' => 'user_id ="'.$user->id.'" and course_id ="'. $_GET['Report']['course_id'] .'" AND gen_id="'.$_GET['Report']['gen_id'].'"' ,
-                                                ));
-                                                if(!empty($statusLearn)){
-                                                    $statusLearn = "learning";
-                                                }else{
-                                                    $statusLearn = "notlearn"; 
-                                                }
-                                            }
+                                            // $passcourse = Passcours::model()->find("passcours_cours='".$_GET['Report']['course_id']."' AND passcours_user='".$user->id."' AND gen_id='".$_GET['Report']['gen_id']."' ");
+                                            // if($passcourse != ""){
+                                            //     $statusLearn = "pass";
+                                            // }else{
+                                            //     $statusLearn = Learn::model()->findAll(array(
+                                            //         'condition' => 'user_id ="'.$user->id.'" and course_id ="'. $_GET['Report']['course_id'] .'" AND gen_id="'.$_GET['Report']['gen_id'].'"' ,
+                                            //     ));
+                                            //     if(!empty($statusLearn)){
+                                            //         $statusLearn = "learning";
+                                            //     }else{
+                                            //         $statusLearn = "notlearn"; 
+                                            //     }
+                                            // }
+
+                                            $statusLearn =  Helpers::lib()->chk_status_course($course_online->course_id, $_GET['Report']['gen_id'], $user->id);
 
                                                     ?>
                                         <td class="center">

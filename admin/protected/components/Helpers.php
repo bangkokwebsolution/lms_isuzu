@@ -2379,6 +2379,42 @@ public function changeLink($link)
             // exit();
 
             return round($percent_pass, 2);
-        }   
+        }  
+
+        public function chk_status_course($course_id, $gen_id, $user_id){ // เช็คสถานะ course ถ้ามี passcourse ก็ผ่านแล้ว ประมาณนี้
+
+            $passcourse = Passcours::model()->find("passcours_cours='".$course_id."' AND passcours_user='".$user_id."' AND gen_id='".$gen_id."' ");
+            if($passcourse != ""){
+                $statusLearn = "pass";
+            }else{
+                $statusLearn = Learn::model()->findAll(array(
+                    'condition' => 'user_id ="'.$user_id.'" and course_id ="'. $course_id .'" AND gen_id="'.$gen_id.'" AND lesson_active="y"' ,
+                ));
+                if(!empty($statusLearn)){
+                    $statusLearn = "learning";
+                }else{
+                    $statusLearn = "notlearn"; 
+                }
+            }
+
+            return $statusLearn;
+        } 
+
+        public function chk_status_lesson($lesson_id, $gen_id, $user_id){ // เช็คสถานะ แต่ละบทเรียน ถ้ามี passcourse ก็ผ่านแล้ว ประมาณนี้
+
+            $statusLearn = Learn::model()->find(array(
+                'condition' => 'user_id ="'.$user_id.'" and lesson_id ="'. $lesson_id .'" AND gen_id="'.$gen_id.'" AND lesson_active="y"' ,
+            ));
+
+            if($statusLearn->lesson_status == "pass"){
+                $statusLearn = "pass";
+            }elseif($statusLearn->lesson_status == "learning"){
+                $statusLearn = "learning";
+            }else{
+                $statusLearn = "notlearn";
+            }
+
+            return $statusLearn;
+        } 
 
 }

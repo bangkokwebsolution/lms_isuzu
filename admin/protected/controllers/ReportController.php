@@ -12,7 +12,7 @@ class ReportController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'Loadgen', 'LogReset'),
+                'actions' => array('index', 'Loadgen', 'LogReset', 'ajaxgetlesson'),
                 'users' => array('*'),
             ),
             array('allow',
@@ -77,7 +77,7 @@ class ReportController extends Controller
         if($id!=null) {
             $model->course_id = $id;
         }
-        
+
         if(isset($_GET['Report'])) {
             $model->course_id = $_GET['Report']['course_id'];
             $model->gen_id = $_GET['Report']['gen_id'];
@@ -94,6 +94,82 @@ class ReportController extends Controller
         ));
 
     }
+
+    public function actionByLesson() {
+        $model = new Report();
+        $model->unsetAttributes(); 
+
+        if(isset($_GET['Report'])) {
+            $model->course_id = $_GET['Report']['course_id'];
+            $model->gen_id = $_GET['Report']['gen_id'];
+            $model->lesson_id = $_GET['Report']['lesson_id'];
+            $model->search = $_GET['Report']['search'];
+            $model->type_register = $_GET['Report']['type_register'];
+            $model->department = $_GET['Report']['department'];
+            $model->position = $_GET['Report']['position'];
+            $model->period_start = $_GET['Report']['period_start'];
+            $model->period_end = $_GET['Report']['period_end'];
+        }    
+        
+
+        $this->render('ByLesson', array(
+            'model' => $model,
+        ));
+    }
+
+    public function actionGenExcelByLesson(){
+        $model = new Report();
+        $model->unsetAttributes(); 
+
+        if(isset($_GET['Report'])) {
+            $model->course_id = $_GET['Report']['course_id'];
+            $model->gen_id = $_GET['Report']['gen_id'];
+            $model->lesson_id = $_GET['Report']['lesson_id'];
+            $model->search = $_GET['Report']['search'];
+            $model->type_register = $_GET['Report']['type_register'];
+            $model->department = $_GET['Report']['department'];
+            $model->position = $_GET['Report']['position'];
+            $model->period_start = $_GET['Report']['period_start'];
+            $model->period_end = $_GET['Report']['period_end'];
+        }    
+
+        
+        $this->renderPartial('ExcelByLesson', array(
+            'model'=>$model
+        ));
+    }
+
+
+
+    public function actionajaxgetlesson(){
+
+        if(isset($_POST["value"]) && $_POST["value"] != ""){
+
+            $Lesson = Lesson::model()->findAll(array(
+                'condition' => 'course_id=:course_id AND active=:active ',
+                'params' => array(':course_id'=>$_POST["value"], ':active'=>"y"),
+                'order' => 'title ASC',
+            ));
+
+
+            ?>
+            <option value="">กรุณาบทเรียน</option>
+            <?php
+            if(!empty($Lesson)){                
+                foreach ($Lesson as $key => $value) {
+                    ?>
+                    <option value="<?= $value->id ?>"><?= $value->title ?></option>
+                    <?php
+                }
+            }
+
+        }
+    }
+
+
+
+
+
 
 
 
@@ -1370,14 +1446,6 @@ public function actionByPlatform($id=null) {
     ));
 }
 
-public function actionByLesson() {
-    $model = new Report();
-    $model->unsetAttributes(); 
-
-    $this->render('ByLesson', array(
-        'model' => $model,
-    ));
-}
 
 public function actionByUser() {
     $model = new Report();
@@ -1484,15 +1552,6 @@ public function actionGenPdfByLesson(){
     $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial($renderFile, array('model'=>$model),true),'UTF-8','UTF-8'));
     $mPDF->Output("PdfByLesson.pdf" , 'D');
 
-}
-
-public function actionGenExcelByLesson(){
-    $model = new Report();
-    $model->unsetAttributes(); 
-        
-     $this->renderPartial('ExcelByLesson', array(
-            'model'=>$model
-        ));
 }
 
 

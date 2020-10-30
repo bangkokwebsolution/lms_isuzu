@@ -105,7 +105,7 @@ if(isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != null &
         <div class="widget hidden" id="export-table">
             <div class="widget-head">
                 <div class="widget-head">
-                    <h4 class="heading glyphicons show_thumbnails_with_lines">รายงานผู้เรียนตามรายหลักสูตร</h4>
+                    <h4 class="heading glyphicons show_thumbnails_with_lines">ค้นหาโดยใช้หลักสูตร</h4>
                 </div>
             </div>
             <div class="widget-body" style=" overflow-x: scroll;">
