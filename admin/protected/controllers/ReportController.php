@@ -140,7 +140,6 @@ class ReportController extends Controller
     }
 
 
-
     public function actionajaxgetlesson(){
 
         if(isset($_POST["value"]) && $_POST["value"] != ""){
@@ -165,6 +164,31 @@ class ReportController extends Controller
 
         }
     }
+
+
+    public function actionAttendPrint()
+    {
+        $model=new Report();
+        $model->unsetAttributes();
+        if(isset($_GET['Report'])){            
+            $model->attributes = $_GET['Report'];
+
+        }
+        $this->render('attendprint',array('model'=>$model));
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -253,16 +277,6 @@ class ReportController extends Controller
         $this->render('individual',array('model'=>$model));
     }
 
-    public function actionAttendPrint()
-    {
-        $model=new ReportUser();
-        $model->unsetAttributes();
-        if(isset($_GET['ReportUser'])){
-            //course_type = 1 TMS,course_type = 0 LMS
-            $model->attributes=$_GET['ReportUser'];
-        }
-        $this->render('attendprint',array('model'=>$model));
-    }
 
     public function actionCoursePass()
     {

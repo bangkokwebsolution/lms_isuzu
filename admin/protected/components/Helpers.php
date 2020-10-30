@@ -2408,11 +2408,13 @@ public function changeLink($link)
 
             if($statusLearn->lesson_status == "pass"){
                 $statusLearn = "pass";
-            }elseif($statusLearn->lesson_status == "learning"){
-                $statusLearn = "learning";
             }else{
-                $statusLearn = "notlearn";
+                $statusLearn = "learning";
             }
+            // elseif($statusLearn->lesson_status == "learning"){
+            //     $statusLearn = "learning";
+            // }
+           
 
             return $statusLearn;
         } 
