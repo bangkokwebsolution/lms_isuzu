@@ -2028,25 +2028,6 @@ Class MenuLeft extends Controller
 	        	'active' => self::SetSubMenu( array('Report', 'Questionnaire') ,false),
 	        	'items'=>array(
 					//set new menu				
-
-	        		array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Report.*',
-	        			)),
-	        			'label'=>'1.) รายงานภาพรวมของหลักสูตร',
-	        			'url'=>array('//Report/AttendPrint')
-	        		),
-	        		array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Report.*',
-	        			)),
-	        			'label'=>'4.) รายงานติดตามผู้เรียน',
-	        			'url'=>array('//Report/ByUser')
-	        		),
-
-
 	        		array(
 	        			
 	        			'visible'=>self::PermissionsMenu(array(
@@ -2055,7 +2036,34 @@ Class MenuLeft extends Controller
 	        			'label'=>'2.) รายงานผลการสมัครสมาชิก (ผู้เรียน)',
 						//'url'=>array('//PassCpd/index')
 	        			'url'=>array('//user/admin/Status')
-	        		),array(
+	        		),
+
+	        		array(
+	        			
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'Report.*',
+	        			)),
+	        			'label'=>'3.) รายงานภาพรวมของหลักสูตร',
+	        			'url'=>array('//Report/AttendPrint')
+	        		),
+	        		array(
+	        			
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'Report.*',
+	        			)),
+	        			'label'=>'4.) รายงานการฝึกอบรมหลักสูตร',
+	        			'url'=>array('//Report/ByCourseDetail')
+	        		),
+	        		array(
+	        			
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'Report.*',
+	        			)),
+	        			'label'=>'5..) รายงานติดตามผู้เรียน',
+	        			'url'=>array('//Report/ByUser')
+	        		),
+
+	        		array(
 	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Report.*',

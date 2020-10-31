@@ -12,7 +12,7 @@ class ReportController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'Loadgen', 'LogReset', 'ajaxgetlesson'),
+                'actions' => array('index', 'Loadgen', 'LogReset', 'ajaxgetlesson', 'ajaxgetlevel'),
                 'users' => array('*'),
             ),
             array('allow',
@@ -163,6 +163,31 @@ class ReportController extends Controller
             }
 
         }
+    }    
+
+    public function actionajaxgetlevel(){
+
+        if(isset($_POST["value"]) && $_POST["value"] != ""){
+
+            $Lesson = Branch::model()->findAll(array(
+                'condition' => 'course_id=:course_id AND active=:active ',
+                'params' => array(':course_id'=>$_POST["value"], ':active'=>"y"),
+                'order' => 'title ASC',
+            ));
+
+
+            ?>
+            <option value="">กรุณาบทเรียน</option>
+            <?php
+            if(!empty($Lesson)){                
+                foreach ($Lesson as $key => $value) {
+                    ?>
+                    <option value="<?= $value->id ?>"><?= $value->title ?></option>
+                    <?php
+                }
+            }
+
+        }
     }
 
 
@@ -175,6 +200,34 @@ class ReportController extends Controller
 
         }
         $this->render('attendprint',array('model'=>$model));
+    }
+
+    public function actionByCourseDetail($id=null) { // รายงานการฝึกอบรมหลักสูตร
+
+        $model = new Report();
+        $model->unsetAttributes();
+
+        if($id!=null) {
+            $model->course_id = $id;
+        }
+
+        if(isset($_GET['Report'])) {
+           
+            $model->course_id = $_GET['Report']['course_id'];
+            $model->gen_id = $_GET['Report']['gen_id'];
+            $model->search = $_GET['Report']['search'];
+            $model->type_register = $_GET['Report']['type_register'];
+            $model->department = $_GET['Report']['department'];
+            $model->position = $_GET['Report']['position'];
+            $model->level = $_GET['Report']['level'];
+            $model->period_start = $_GET['Report']['period_start'];
+            $model->period_end = $_GET['Report']['period_end'];
+
+        }
+
+        $this->render('ByCourseDetail', array(
+            'model' => $model
+        ));
     }
 
 
