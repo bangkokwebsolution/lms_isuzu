@@ -16,9 +16,9 @@
             <li class="breadcrumb-item active" aria-current="page">
                 <?php
                 if (Yii::app()->session['lang'] == 1) {
-                    echo "Register Staff Office Report";
+                    echo "Register Report for Office Staff";
                 } else {
-                    echo "รายงานภาพการสมัครสมาชิก คนประจำoffice";
+                    echo "รายงานภาพรวมการสมัครสมาชิกพนักงานออฟฟิศ";
                 }
                 ?>
             </li>
@@ -47,7 +47,7 @@
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'Division':'ฝ่าย'; ?></label>
                                     <select class="form-control Department" name="" id="Department">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select division':'เลือกฝ่าย'; ?></option>
+                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Division':'เลือกฝ่าย'; ?></option>
                                         <?php
 
                                         $criteria= new CDbCriteria;
@@ -76,9 +76,9 @@
                             <?php if($authority == 1 || $authority == 2 || $authority == 2 && $type_em == 2 ){   ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Position':'แผนก'; ?></label>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Department':'แผนก'; ?></label>
                                     <select class="form-control Position" name="" id="x">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Position':'เลือกแผนก'; ?></label></option>
+                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Department':'เลือกแผนก'; ?></label></option>
                                         <?php
 
                                         $criteria= new CDbCriteria;
@@ -107,9 +107,9 @@
                             <?php if($authority == 1 || $authority == 2 || $authority == 2 && $type_em == 2 || $authority == 3 && $type_em == 2){   ?>
                             <div class="col-sm-3 col-md-3 col-xs-12 tag_leval">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Level':'เลเวล'; ?></label></label>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Level':'ระดับตำแหน่ง'; ?></label></label>
                                     <select class="form-control Leval" name="" id="x">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Level':'เลือกเลเวล'; ?></option>
+                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Level':'เลือกระดับตำแหน่ง'; ?></option>
                                         <?php
                                         $criteria= new CDbCriteria;
                                         if ($authority == 3) {
@@ -170,7 +170,7 @@
                             <div class="form-group">
                                 <label for=""><?= Yii::app()->session['lang'] == 1?'From Year':'ปีเริ่มต้น'; ?></label>
                                 <select class="form-control Year_start" name="" id="x">
-                                    <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select From Year':'เลือกปีเริ่มต้น'; ?></option>
+                                    <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select From Year':'ปีเริ่มต้น'; ?></option>
                                     <?php
                                         if (Yii::app()->session['lang'] == 1) {
                                             $starting_year  = 2019;
@@ -200,7 +200,7 @@
                     <div class="form-group">
                         <label for=""><?= Yii::app()->session['lang'] == 1?'To Year':'ปีสิ้นสุด'; ?></label>
                         <select class="form-control Year_end" name="" id="x">
-                            <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select To Year':'เลือกปีสิ้นสุด'; ?></option>
+                            <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select To Year':'ปีสิ้นสุด'; ?></option>
                             <?php
                                         if (Yii::app()->session['lang'] == 1) {
                                             $starting_year  = 2019;

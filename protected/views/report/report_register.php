@@ -16,9 +16,9 @@
             <li class="breadcrumb-item active" aria-current="page">
                 <?php
                 if (Yii::app()->session['lang'] == 1) {
-                    echo "Register Overview Report";
+                    echo "Overview of Register Report";
                 } else {
-                    echo "รายงานภาพรวมการสมัคร";
+                    echo "รายงานภาพรวมการสมัครสมาชิก";
                 }
                 ?>
             </li>
@@ -45,7 +45,7 @@
                             ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Employee type':'ประเภทพนักงาน'; ?><font color="red">*</font></label>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Employee Type':'ประเภทพนักงาน'; ?><font color="red">*</font></label>
                                     <select class="form-control TypeEmployee" name="" id="TypeEmployee">
                                         <option value="" selected disabled> <?= Yii::app()->session['lang'] == 1?'Select type':'เลือกประเภท'; ?></option>
                                         <?php
@@ -78,7 +78,7 @@
                                     <?php
                                    if ($authority == 1 && $type_em == 2) {   
                                          if (Yii::app()->session['lang'] == 1) {
-                                            echo "Division";
+                                            echo "Division or Department";
                                         }else{
                                             echo "ฝ่าย";
                                         }
@@ -142,11 +142,11 @@
                                      </div>
                                     <div class="checkbox checkbox-main checkbox-inline">
                                         <input class="accommodation" type="checkbox" name="accommodation" id="1" value="Bar_Graph" ><!-- checked -->
-                                        <label for="1" class="text-black"><?= Yii::app()->session['lang'] == 1?'Column Chart':'Column Chart'; ?></label>
+                                        <label for="1" class="text-black"><?= Yii::app()->session['lang'] == 1?'Column Chart':'กราฟแท่ง'; ?></label>
                                     </div>
                                     <div class="checkbox checkbox-main checkbox-inline">
                                         <input class="accommodation" type="checkbox" name="accommodation" id="2" value="Pie_Charts">
-                                        <label for="2" class="text-black"><?= Yii::app()->session['lang'] == 1?'Pie Charts':'Pie Charts'; ?> </label>
+                                        <label for="2" class="text-black"><?= Yii::app()->session['lang'] == 1?'Pie Charts':'กราฟวงกลม'; ?> </label>
                                     </div>
                                 </div>
                             </div>
@@ -237,11 +237,14 @@
                                             $criteria->compare('position_id',0);
                                         }
                                     }
+                                    $i = 0;
                                     $criteria->compare('active','y');
                                     $criteria->order = 'sortOrder ASC';
                                     $BranchModel = Branch::model()->findAll($criteria);
                                    foreach ($BranchModel as $key => $val) {
                                     $Branch_list = $BranchModel[$key]->attributes;
+                                    $i++;
+                                    if ($i >= 10)  { break;}
                                     ?>
                                     <option value="<?php echo $Branch_list['id']; ?>"><?php echo $Branch_list['branch_name']; ?></option>
                                 <?php   
@@ -260,9 +263,9 @@
                             ?>
                             <div class="col-sm-3 col-md-3 col-xs-12 tag_status">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Status':'สถานะอนุมัติ'; ?><font color="red">*</font></label>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Status':'สถานะ'; ?><font color="red">*</font></label>
                                     <select class="form-control status" name="" id="x">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Status':'สถานะอนุมัติ'; ?></option>
+                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Status':'เลือกสถานะ'; ?></option>
                                         <option value="1"><?= Yii::app()->session['lang'] == 1?'Approved':'อนุมัติ'; ?></option>
                                         <option value="0"><?= Yii::app()->session['lang'] == 1?'Disapproved':'ไม่อนุมัติ'; ?></option>
                                     </select>
@@ -293,7 +296,7 @@
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'From Year':'ปีเริ่มต้น'; ?></label>
                                     <select class="form-control year_start" name="" id="Year_start">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select From Year':'เลือกปีเริ่มต้น'; ?></option>
+                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select From Year':'ช่วงปีเริ่มต้น'; ?></option>
                                         <?php
                                         if (Yii::app()->session['lang'] == 1) {
                                             $starting_year  = 2019;
@@ -323,7 +326,7 @@
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'To Year':'ปีสิ้นสุด'; ?></label>
                                     <select class="form-control year_end" name="" id="Year_end">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select To Year':'เลือกปีสิ้นสุด'; ?></option>
+                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select To Year':'ช่วงปีสิ้นสุด'; ?></option>
                                         <?php
                                         if (Yii::app()->session['lang'] == 1) {
                                             $starting_year  = 2019;

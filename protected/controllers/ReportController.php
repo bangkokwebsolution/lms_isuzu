@@ -229,7 +229,6 @@ class ReportController extends Controller
 					
 					$criteria->order = 'department.sortOrder ASC';
 					$User = User::model()->findAll($criteria);
-
 					if (isset($pos)) {
 						
 						$data_division_start = '["Element", "Division", { role: "style" } ],';
@@ -630,7 +629,7 @@ class ReportController extends Controller
 									2]);
 
 								var options = {
-									title: <?php echo Yii::app()->session['lang'] == 1?'"Register Staff Office Report"':'"รายงานภาพคนสมัครสมาชิกคนออฟฟิศ"' ?>,
+									title: <?php echo Yii::app()->session['lang'] == 1?'"Register Report for Office Staff"':'"รายงานภาพคนสมัครสมาชิกคนออฟฟิศ"' ?>,
 									width: 600,
 									height: 400,
 									bar: {groupWidth: "95%"},
@@ -655,7 +654,7 @@ class ReportController extends Controller
 									]);
 								if (data) {}
 									var options = {
-										title: <?php echo Yii::app()->session['lang'] == 1?'"Register Staff Office Report"':'"รายงานภาพคนสมัครสมาชิกคนออฟฟิศ"' ?>,
+										title: <?php echo Yii::app()->session['lang'] == 1?'"Register Report for Office Staff"':'"รายงานภาพคนสมัครสมาชิกคนออฟฟิศ"' ?>,
 										sliceVisibilityThreshold:0,
 										pieSliceText:'value',
 										//is3D: true,
@@ -681,16 +680,16 @@ class ReportController extends Controller
 						                <h3>
 						                    <?php
 						                    if (Yii::app()->session['lang'] == 1) {
-						                        echo "Register Staff Office Report";
+						                        echo "Register Report for Office Staff";
 						                    } else {
-						                        echo "รายงานภาพการสมัครสมาชิกคนออฟฟิศ";
+						                        echo "รายงานภาพรวมการสมัครสมาชิกพนักงานออฟฟิศ";
 						                    }
 						                    ?>
 						                </h3>    
 						            </center>
 						        	</li>
 									<?php
-    								$people_total = Yii::app()->session['lang'] == 1?"Total number of people applying":"จำนวนคนสมัครทั้งหมด";
+    								$people_total = Yii::app()->session['lang'] == 1?"No. of Staff:":"จำนวนผู้สมัครทั้งหมด";
     								$people = Yii::app()->session['lang'] == 1?"People":"คน";
 									$i = 1;
 									$datatable .= '<div class="report-table">';
@@ -703,9 +702,9 @@ class ReportController extends Controller
 									$datatable .= '<tr>';
 									if (Yii::app()->session['lang'] == 1) {
 									$datatable .= '<th>No.</th>';
-									$datatable .= '<th>Fullname</th>';
+									$datatable .= '<th>Name - Surname</th>';
+									$datatable .= '<th>Division</th>';
 									$datatable .= '<th>Department</th>';
-									$datatable .= '<th>Position</th>';
 									}else{
 									$datatable .= '<th>ลำดับ</th>';
 									$datatable .= '<th>ชื่อ - นามสกุล</th>';
@@ -1057,7 +1056,6 @@ public function actionReportRegisterOfficeExcel()
 						$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 					}
 					$users_count= Users::model()->findAll($criteria);
-
 					$count_pos = count($users_count);
 
 					$data_year_end .= '["'.$name_pos.'",'.$count_pos.',"'.$colorName[$key].'"],';
@@ -1327,7 +1325,7 @@ public function actionReportRegisterOfficeExcel()
 									2]);
 
 								var options = {
-									title: <?php echo Yii::app()->session['lang'] == 1?'"Register staff ship Report"':'"รายงานภาพคนสมัครสมาชิกคนประจำเรือ"' ?>,
+									title: <?php echo Yii::app()->session['lang'] == 1?'"Register Report for Ship Staff"':'"รายงานภาพคนสมัครสมาชิกคนประจำเรือ"' ?>,
 									width: 600,
 									height: 400,
 									bar: {groupWidth: "95%"},
@@ -1352,7 +1350,7 @@ public function actionReportRegisterOfficeExcel()
 									]);
 								if (data) {}
 									var options = {
-										title: <?php echo Yii::app()->session['lang'] == 1?'"Register staff ship Report"':'"รายงานภาพคนสมัครสมาชิกคนประจำเรือ"' ?>,
+										title: <?php echo Yii::app()->session['lang'] == 1?'"Register Report for Ship Staff"':'"รายงานภาพคนสมัครสมาชิกคนประจำเรือ"' ?>,
 										sliceVisibilityThreshold:0,
 										pieSliceText:'value',
 										//is3D: true,
@@ -1379,9 +1377,9 @@ public function actionReportRegisterOfficeExcel()
 				                <h3>
 				                    <?php
 				                    if (Yii::app()->session['lang'] == 1) {
-				                        echo " Register staff ship Report";
+				                        echo " Register Report for Ship Staff";
 				                    } else {
-				                        echo " รายงานภาพการสมัครสมาชิก คนประจำเรือ";
+				                        echo " รายงานภาพรวมการสมัครสมาชิกพนักงานประจำเรือ";
 				                    }
 				                    ?>
 				                </h3>    
@@ -1390,8 +1388,8 @@ public function actionReportRegisterOfficeExcel()
 							<?php
 
 							$i = 1;
-							$people_total = Yii::app()->session['lang'] == 1?"Total number of people applying":"จำนวนคนสมัครทั้งหมด";
-    						$people = Yii::app()->session['lang'] == 1?"People":"คน";
+							$people_total = Yii::app()->session['lang'] == 1?"No. of Staff:":"จำนวนผู้สมัครทั้งหมด";
+    						$people = Yii::app()->session['lang'] == 1?"persons":"คน";
 							$datatable .= '<div class="report-table">';
 							$datatable .= '<p style="text-align: right;">'.$people_total.' <span style="font-weight:bold;">';
 							$datatable .=  count($User);
@@ -1402,7 +1400,7 @@ public function actionReportRegisterOfficeExcel()
 							$datatable .= '<tr>';
 							if (Yii::app()->session['lang'] == 1) {
 							$datatable .= '<th>No.</th>';
-							$datatable .= '<th>Fullname</th>';
+							$datatable .= '<th>Name - Surname</th>';
 							$datatable .= '<th>Department</th>';
 							$datatable .= '<th>Position</th>';
 							$datatable .= '<th>Age</th>';
@@ -1443,7 +1441,7 @@ public function actionReportRegisterOfficeExcel()
 									
 										$datatable .= '<td>';
 									if ($valuepos_back->status == 1 && $valuepos_back->register_status == 1) {
-										$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approve</span>';
+										$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
 									}else{
 										$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
 									}
@@ -2271,7 +2269,7 @@ public function actionReportRegisterData()
 						                <h3>
 						                    <?php
 						                    if (Yii::app()->session['lang'] == 1) {
-						                        echo "Register Overview Report";
+						                        echo "Overview of Register Report";
 						                    } else {
 						                        echo "รายงานภาพรวมการสมัครสมาชิก";
 						                    }
@@ -2282,7 +2280,7 @@ public function actionReportRegisterData()
 
 												
 									<?php
-								
+									$sumtotal = 0;
 									foreach ($result_pos_in as $key => $value) {
 										$var_result[] = $value;
 									}		
@@ -2356,19 +2354,24 @@ public function actionReportRegisterData()
 									
 										$total_dep = count($users_dm);
 									$i = 1;
-									$people_total = Yii::app()->session['lang'] == 1?"Total number of people applying":"จำนวนคนสมัครทั้งหมด";
-    								$people = Yii::app()->session['lang'] == 1?"People":"คน";
+									$people_total = Yii::app()->session['lang'] == 1?"No. of Staff:":"จำนวนผู้สมัครทั้งหมด";
+    								$people = Yii::app()->session['lang'] == 1?"persons":"คน";
 									$datatable .= '<div class="report-table">';
 									$datatable .= '<p style="text-align: right;">'.$people_total;
 									$datatable .= ' <span style="font-weight:bold;"> ';	
+									$total_new = 0;
 									if ($TypeEmployee == 2 && $dep_back && $Department != "") {
 										$datatable .= $total_dep;
+										$total_new = $total_dep;
 									}else if($TypeEmployee == 2 && $branch && $Department != ""){
 										$datatable .= $total;
+										$total_new = $total;
 									}else if($TypeEmployee == 1 && $pos_back){
 										$datatable .=  $total_pos;
+										$total_new = $total_pos;
 									}else if($TypeEmployee == 2 && $Department == ""){
 										$datatable .=  $total_dep + $total;
+										$total_new = $total_dep + $total;
 									}
 									$datatable .= '</span> ';
 									$datatable .=  $people.'</p>';
@@ -2389,10 +2392,12 @@ public function actionReportRegisterData()
 									$datatable .= '<th>Department</th>';
 									$datatable .= '<th>Position</th>';
 									}
-									$datatable .= '<th>Number</th>';
 									if($TypeEmployee != 2){
-										$datatable .= '<th>Total number</th>';
+										$datatable .= '<th>Total of Register</th>';
+										$datatable .= '<th>Total of Approved</th>';
 										$datatable .= '<th>Status</th>';
+									}else{
+										$datatable .= '<th>Total</th>';
 									}
 									$datatable .= '<th>Percent</th>';
 									}else{
@@ -2405,12 +2410,12 @@ public function actionReportRegisterData()
 										$datatable .= '<th>เลเวล</th>';
 										}
 									}else{
-									$datatable .= '<th>แผนก</th>';
-									$datatable .= '<th>ตำแหน่ง</th>';	
+									$datatable .= '<th>ฝ่าย</th>';
+									$datatable .= '<th>แผนก</th>';	
 									}
-									$datatable .= '<th>จำนวน</th>';
+									$datatable .= '<th>จำนวนผู้สมัคร</th>';
 									if($TypeEmployee != 2){
-										$datatable .= '<th>สมัครทั้งหมด</th>';
+										$datatable .= '<th>จำนวนผู้อนุมัติ</th>';
 										$datatable .= '<th>สถานะอนุมัติ</th>';
 									}
 									$datatable .= '<th>คิดเป็นร้อยละ</th>';
@@ -2492,7 +2497,7 @@ public function actionReportRegisterData()
 											$criteria->compare('register_status',1);
 											$usersAll = Users::model()->findAll($criteria);		
 											$cou_useAll = count($usersAll);
-											
+											$sumtotal += $cou_useAll;
 											$per_cen = ($cou_useAll * 100 ) / $cou_use; 
 										
 											$datatable .= '<tr>';
@@ -2510,7 +2515,7 @@ public function actionReportRegisterData()
 												$datatable .= '<td>';
 													if($cou_use > 0){
 														if ($status == 1) {
-															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approve</span>';
+															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
 														}else{
 															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
 														}
@@ -2540,8 +2545,7 @@ public function actionReportRegisterData()
 												$datatable .= '<td>-</td>';
 											}
 											$datatable .= '</tr>';
-										}
-										
+										}										
 									}
 
 									foreach ($pos_back as $keypos_back => $valuepos_back) { 	
@@ -2623,6 +2627,7 @@ public function actionReportRegisterData()
 
 										$cou_use = count($users);
 										$cou_useAll = count($usersAll);
+										$sumtotal += $cou_useAll;
 										$SUM_user[] = $cou_useAll;
 										$per_cen = ($cou_use * 100)/ $cou_useAll; 
 
@@ -2641,7 +2646,7 @@ public function actionReportRegisterData()
 												$datatable .= '<td>';
 													if($cou_use > 0){
 														if ($status == 1 ) {
-															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approve</span>';
+															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
 														}else{
 															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
 														}
@@ -2683,6 +2688,7 @@ public function actionReportRegisterData()
 												$datatable .= "รวม";
 											}
 											$datatable .= '</span></td>';
+											
 											$datatable .= '<td style="border:2px solid #8B8386;"></td>';
 											$datatable .= '<td style="border:2px solid #8B8386;"></td>';
 											$datatable .= '<td style="border:2px solid #8B8386;"></td>';
@@ -2748,6 +2754,7 @@ public function actionReportRegisterData()
 										$usersAll = Users::model()->findAll($criteria);
 
 										$cou_use = count($users);
+										$search_new = true;
 										$cou_useAll = count($usersAll);
 										$per_cen = ($cou_useAll * 100)/ $cou_use;
 
@@ -2764,7 +2771,7 @@ public function actionReportRegisterData()
 												$datatable .= '<td>';
 													if($cou_use > 0){
 														if ($status == 1) {
-															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approve</span>';
+															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
 														}else{
 															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
 														}
@@ -2794,10 +2801,26 @@ public function actionReportRegisterData()
 											$datatable .= '<td>-</td>';
 										}
 										$datatable .= '</tr>';
-
-									}  
-
-									
+									}  	
+									if ($TypeEmployee == 2){
+										if ($search_new){
+											$sumtotal += $cou_useAll;
+										}
+										$percent_new = ($sumtotal * 100) / $total_new;
+										if ($total_new <= 0){ $percent_new = 0;}
+										if(Yii::app()->session['lang'] != 1){
+											$txtgrand = "จำนวนทั้งหมด";
+										}else{
+											$txtgrand = "Grand Total";
+										}
+										if ($Leval != ""){
+											$datatable .= "<tr style='border:2px solid #8B8386;'><td colspan=4 style='text-align:right'><b>" .$txtgrand. "</b></td>";
+										}else{
+											$datatable .= "<tr style='border:2px solid #8B8386;'><td colspan=3 style='text-align:right'><b>" .$txtgrand. "</b></td>";
+										}
+										$datatable .= "<td class='text-center'><b>" .$sumtotal. "</b></td>";
+										$datatable .= "<td class='text-center'><b>" .intval($percent_new). "%</b></td></tr>";
+									}
 								}else{
 									$datatable .= '<tr>';
 									$datatable .= '<td colspan="6">';

@@ -48,7 +48,7 @@
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'Department':'แผนก'; ?></label>
                                     <select class="form-control Department" name="" id="Department">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select department':'เลือกแผนก'; ?></option>
+                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Department':'เลือกแผนก'; ?></option>
                                         <?php
 
                                             $criteria= new CDbCriteria;
@@ -124,23 +124,23 @@
                         </div>
                         <div class="row">
                            <div class="col-sm-3 col-md-3 col-xs-12">
-                            <div><label for=""><?= Yii::app()->session['lang'] == 1?'Age range':'ช่วงอายุ'; ?></label></div>
+                            <div><label for=""><?= Yii::app()->session['lang'] == 1?'Age':'ช่วงอายุ'; ?></label></div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <input class="form-control " placeholder="<?= Yii::app()->session['lang'] == 1?'low':'จาก'; ?>" name="" id="age" type="text" maxlength="50">
+                                        <input class="form-control " placeholder="<?= Yii::app()->session['lang'] == 1?'From':'จาก'; ?>" name="" id="age" type="text" maxlength="50">
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <input class="form-control " placeholder="<?= Yii::app()->session['lang'] == 1?'high':'ถึง'; ?>" name="" id="age2" type="text" maxlength="50">
+                                        <input class="form-control " placeholder="<?= Yii::app()->session['lang'] == 1?'To':'ถึง'; ?>" name="" id="age2" type="text" maxlength="50">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-sm-3 col-md-3 col-xs-12 tag_status">
                                 <div class="form-group">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Status':'สถานะอนุมัติ'; ?></label>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1?'Status':'สถานะ'; ?></label>
                                     <select class="form-control status" name="" id="x">
-                                        <option value="" selected><?= Yii::app()->session['lang'] == 1?'Status':'สถานะอนุมัติ'; ?></option>
+                                        <option value="" selected><?= Yii::app()->session['lang'] == 1?'Status':'เลือกสถานะ'; ?></option>
                                         <option value="1"><?= Yii::app()->session['lang'] == 1?'Approved':'อนุมัติ'; ?></option>
                                         <option value="0"><?= Yii::app()->session['lang'] == 1?'Disapproved':'ไม่อนุมัติ'; ?></option>
                                     </select>
