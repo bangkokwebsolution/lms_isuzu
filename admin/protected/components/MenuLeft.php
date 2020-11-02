@@ -2102,7 +2102,15 @@ Class MenuLeft extends Controller
 	        			)),
 	        			'label'=>'7.) รายงานการรีเซตหลักสูตร',
 	        			'url'=>array('//Report/logReset')
-	        		),
+					),
+					array(
+	        			
+	        			'visible'=>self::PermissionsMenu(array(
+							'Report.*',
+	        			)),
+	        			'label'=>'8.) รายงานภาพรวมการสมัครสมาชิก',
+	        			'url'=>array('//Report/logAllRegister')
+					),
 	        	)
 	        ),
             array(

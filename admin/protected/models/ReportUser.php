@@ -37,11 +37,13 @@ class ReportUser extends CFormModel {
     public $course_type;
     public $schedule_id;
     public $gen_id;
+    public $employee_type;
+    public $register_status;
 
     public function rules()
     {
         return array(
-            array('generation,typeOfUser,dateRang,date_start,date_start_lastuse,date_end,date_end_lastuse,course,lesson,nameSearch,nameIdenSearch,university,company,categoryUniversity,categoryCompany,company_id,division_id,position_id,type_user,department,occupation,email,identification,status_login,status_learn,station,course_type,schedule_id, gen_id', 'safe'),
+            array('generation,typeOfUser,dateRang,date_start,date_start_lastuse,date_end,date_end_lastuse,course,lesson,nameSearch,nameIdenSearch,university,company,categoryUniversity,categoryCompany,company_id,division_id,position_id,type_user,department,occupation,email,identification,status_login,status_learn,station,course_type,schedule_id, gen_id, employee_type, register_status', 'safe'),
         );
     }
 
@@ -73,7 +75,8 @@ class ReportUser extends CFormModel {
             'course_type'=>'ประเภทหลักสูตร',
             'schedule_id' => 'ตารางเรียน',
             'gen_id' => 'รุ่น',
-
+            'employee_type' => 'ประเภทพนักงาน', 
+            'register_status' => 'สถานะ',
         );
     }
 
@@ -172,6 +175,17 @@ class ReportUser extends CFormModel {
         return $courseList;
     }
 
+    public function getTypeEmployeeList(){
+        $model = TypeEmployee::model()->findAll(array('condition'=>'active = "y"'));
+        $list = CHtml::listData($model,'id','type_employee_name');
+        return $list;
+    }
+
+    public function getDivisionList(){
+        $model = Department::model()->findAll(array('condition' => 'type_employee_id=2 and active="y"', 'order' => 'sortOrder'));
+        $list = CHtml::listData($model, 'id', 'dep_title');
+        return $list;
+    }
 
     public function search()
     {

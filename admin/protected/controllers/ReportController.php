@@ -1732,4 +1732,23 @@ public  function actionReport_list(){
         }
     }
 
+    public function actionLogAllRegister()
+    {
+        $model=new ReportUser();
+        $model->unsetAttributes();
+        if(isset($_GET['ReportUser'])){
+            $model->attributes=$_GET['ReportUser'];
+        }
+        $this->render('logAllRegister',array('model'=>$model));
+    }
+
+    public function actionLogRegister()
+    {
+        $model=new ReportUser();
+        $model->unsetAttributes();
+        if(isset($_GET['ReportUser'])){
+            $model->attributes=$_GET['ReportUser'];
+        }
+        $this->render('logRegister',array('model'=>$model));
+    }
 }

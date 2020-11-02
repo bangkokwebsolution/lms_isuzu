@@ -58,7 +58,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-1.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Register Overview Report ':'รายงานภาพรวมการสมัคร'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Overview of Register Report ':'รายงานภาพรวมการสมัครสมาชิก'; ?>
 								</div>
 							</div>
 						</a>
@@ -71,8 +71,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-2.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Register Staff Ship Report ':'รายงานภาพการสมัครสมาชิก
-									คนประจำเรือ'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Register Report for Ship Staff ':'รายงานการสมัครสมาชิกพนักงานประจำเรือ'; ?>
 								</div>
 							</div>
 						</a>
@@ -89,8 +88,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-3.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Register Staff Office Report ':'รายงานภาพการสมัครสมาชิก
-									คน Office'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Register Report for Office Staff ':'รายงานการสมัครสมาชิกพนักงานออฟฟิศ'; ?>
 								</div>
 							</div>
 						</a>
