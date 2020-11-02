@@ -1778,4 +1778,34 @@ public  function actionReport_list(){
         }
         $this->render('logRegister',array('model'=>$model));
     }
+
+    public function actionGetDataLogRegister(){
+        if (isset($_POST['type']) && isset($_POST['department']) || isset($_POST['position'])){
+            if ($_POST['department'] == 1){
+                if ($_POST['type'] == 1){
+                    $txt .= '<option value="" selected>ทั้งหมด</option>';
+                    $Dep = Department::model()->findAll(array('condition' => 'type_employee_id=1 and active="y"'));
+                    foreach ($Dep as $value){
+                        $txt .= '<option value="' . $value->id . '">' . $value->dep_title . '</option>';
+                    }
+                    echo $txt;
+                }else if ($_POST['type'] == 2){
+                    $txt .= '<option value="" selected>ทั้งหมด</option>';
+                    $Dep = Department::model()->findAll(array('condition' => 'type_employee_id=2 and active="y"'));
+                    foreach ($Dep as $value){
+                        $txt .= '<option value="' . $value->id . '">' . $value->dep_title . '</option>';
+                    }
+                    echo $txt;
+                }
+            }
+            if ($_POST['position']){
+                $Pos = Position::model()->findAll(array('condition' => 'department_id=' . $_POST['position'] . ' and active="y"'));
+                $txt .= '<option value="" selected>ทั้งหมด</option>';
+                foreach ($Pos as $value){
+                    $txt .= '<option value="' . $value->id . '">' . $value->position_title . '</option>';
+                }
+                echo $txt;
+            }
+        }
+    }
 }
