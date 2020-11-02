@@ -257,6 +257,48 @@ class ReportController extends Controller
 
     }
 
+    public function actionByUser() {
+        $model = new Report();
+        $model->unsetAttributes(); 
+
+        if(isset($_GET['Report'])) {
+            $model->course_id = $_GET['Report']['course_id'];
+            $model->gen_id = $_GET['Report']['gen_id'];
+            $model->lesson_id = $_GET['Report']['lesson_id'];
+            $model->search = $_GET['Report']['search'];
+            $model->type_register = $_GET['Report']['type_register'];
+            $model->department = $_GET['Report']['department'];
+            $model->position = $_GET['Report']['position'];
+            $model->period_start = $_GET['Report']['period_start'];
+            $model->period_end = $_GET['Report']['period_end'];
+        }
+
+        $this->render('ByUser', array(
+            'model' => $model,
+        ));
+    }
+
+    public function actionGenExcelByUser(){
+        $model = new Report();
+        $model->unsetAttributes(); 
+
+        if(isset($_GET['Report'])) {
+            $model->course_id = $_GET['Report']['course_id'];
+            $model->gen_id = $_GET['Report']['gen_id'];
+            $model->lesson_id = $_GET['Report']['lesson_id'];
+            $model->search = $_GET['Report']['search'];
+            $model->type_register = $_GET['Report']['type_register'];
+            $model->department = $_GET['Report']['department'];
+            $model->position = $_GET['Report']['position'];
+            $model->period_start = $_GET['Report']['period_start'];
+            $model->period_end = $_GET['Report']['period_end'];
+        }
+
+        $this->renderPartial('ExcelByUser', array(
+            'model'=>$model
+        ));
+    }
+
 
 
 
@@ -1541,30 +1583,6 @@ public function actionByPlatform($id=null) {
 }
 
 
-public function actionByUser() {
-    $model = new Report();
-    $model->unsetAttributes(); 
-
-    $course_id = $_POST['id'];
-    if($course_id) {
-        $html = '';
-        foreach(json_decode($course_id) as $course) {
-            $lesson = Lesson::model()->findAll(array(
-                'condition' => 'course_id = "' . $course .'" and active = "y"',
-            ));
-            if($lesson) {
-                foreach($lesson as $l) {
-                    $html.= '<option value="'. $l['id'] . '">' . $l['title'] . '</option>';
-                }
-            }
-        }
-        echo $html;
-    } else {
-        $this->render('ByUser', array(
-            'model' => $model,
-        ));
-    }
-}
 
 public function actionGenPdfAttendPrint(){
     $model=new ReportUser();
@@ -1666,14 +1684,6 @@ public function actionGenPdfByUser(){
     $mPDF->Output("PdfByUser.pdf" , 'D');
 }
 
-public function actionGenExcelByUser(){
-    $model = new Report();
-    $model->unsetAttributes(); 
-
-     $this->renderPartial('ExcelByUser', array(
-            'model'=>$model
-        ));
-}
 
 public function actionGenPdfBeforeAndAfter(){
     $model = new Report();
