@@ -152,7 +152,7 @@ class ReportController extends Controller
 
 
             ?>
-            <option value="">กรุณาบทเรียน</option>
+            <option value="">ทั้งหมด</option>
             <?php
             if(!empty($Lesson)){                
                 foreach ($Lesson as $key => $value) {
@@ -177,7 +177,7 @@ class ReportController extends Controller
 
 
             ?>
-            <option value="">กรุณาบทเรียน</option>
+            <option value="">ทั้งหมด</option>
             <?php
             if(!empty($Lesson)){                
                 foreach ($Lesson as $key => $value) {
@@ -215,6 +215,7 @@ class ReportController extends Controller
            
             $model->course_id = $_GET['Report']['course_id'];
             $model->gen_id = $_GET['Report']['gen_id'];
+            $model->status_learn = $_GET['Report']['status_learn'];
             $model->search = $_GET['Report']['search'];
             $model->type_register = $_GET['Report']['type_register'];
             $model->department = $_GET['Report']['department'];
@@ -228,6 +229,32 @@ class ReportController extends Controller
         $this->render('ByCourseDetail', array(
             'model' => $model
         ));
+    }
+
+    public function actionGenExcelByCourseDetail(){
+        $model = new Report();
+        $model->unsetAttributes();
+
+        if($id!=null) {
+            $model->course_id = $id;
+        }
+
+        if(isset($_GET['Report'])) {
+            $model->course_id = $_GET['Report']['course_id'];
+            $model->gen_id = $_GET['Report']['gen_id'];
+            $model->status_learn = $_GET['Report']['status_learn'];
+            $model->search = $_GET['Report']['search'];
+            $model->type_register = $_GET['Report']['type_register'];
+            $model->department = $_GET['Report']['department'];
+            $model->position = $_GET['Report']['position'];
+            $model->period_start = $_GET['Report']['period_start'];
+            $model->period_end = $_GET['Report']['period_end'];
+        }    
+
+        $this->renderPartial('ExcelByCourseDetail', array(
+            'model'=>$model
+        ));
+
     }
 
 

@@ -31,12 +31,15 @@ class Report extends CFormModel {
     public $gen_id;
     public $position;
     public $level;
+    public $status_learn;
+    
+    
 
 
     public function rules()
     {
         return array(
-            array('period_start,period_end,typeOfUser,dateRang,course,nameSearch,university,company,categoryUniversity,categoryCompany,company_id,division_id,position_id,department,station,schedule_id,type_user,course_id, type_register, gen_id, position, level', 'safe'),
+            array('period_start,period_end,typeOfUser,dateRang,course,nameSearch,university,company,categoryUniversity,categoryCompany,company_id,division_id,position_id,department,station,schedule_id,type_user,course_id, type_register, gen_id, position, level, status_learn', 'safe'),
         );
     }
 
@@ -64,7 +67,9 @@ class Report extends CFormModel {
             'gen_id' => 'รุ่น  (บังคับ)',
             'department' => 'ฝ่าย',
             'position' => 'แผนก',
-            'level'=>'level'
+            'level'=>'level',
+            'status_learn'=>'สถานะเรียน',
+            
         );
     }
 
