@@ -318,6 +318,25 @@ class ReportController extends Controller
         ));   
     }
 
+    public function actionGenExcelLogReset(){
+        $model = new Report();
+        $model->unsetAttributes(); 
+
+        if(isset($_GET['Report'])) {
+            $model->course_id = $_GET['Report']['course_id'];
+            $model->gen_id = $_GET['Report']['gen_id'];
+            $model->lesson_id = $_GET['Report']['lesson_id'];
+            $model->search = $_GET['Report']['search'];
+            $model->type_register = $_GET['Report']['type_register'];
+            $model->period_start = $_GET['Report']['period_start'];
+            $model->period_end = $_GET['Report']['period_end'];
+        }
+
+        $this->renderPartial('ExcelLogReset', array(
+            'model'=>$model
+        ));
+    }
+
 
 
 

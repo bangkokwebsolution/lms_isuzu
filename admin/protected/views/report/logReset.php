@@ -224,7 +224,6 @@ if(!empty($_GET) && $_GET['Report']['course_id'] != null && $_GET['Report']['gen
 
         $search = $_GET['Report'];
 
-
         $course_online = CourseOnline::model()->findByPk($search["course_id"]);
 
         $statusArray = array(
@@ -266,6 +265,12 @@ if(!empty($_GET) && $_GET['Report']['course_id'] != null && $_GET['Report']['gen
             $criteria->compare('t.gen_id', $_GET['Report']['gen_id']);
         }
 
+        if(isset($_GET['Report']['lesson_id']) && $_GET['Report']['lesson_id'] != null) {
+            $criteria->compare('t.lesson_id', $_GET['Report']['gen_id']);
+
+            $Lesson = Lesson::model()->findByPk($search["lesson_id"]);
+        }
+
         if(isset($_GET['Report']['type_register']) && $_GET['Report']['type_register'] != null) {
             $criteria->compare('pro.type_employee', $_GET['Report']['type_register']);
         }
@@ -279,10 +284,10 @@ if(!empty($_GET) && $_GET['Report']['course_id'] != null && $_GET['Report']['gen
         }
 
         if(isset($_GET['Report']['period_start']) && $_GET['Report']['period_start'] != null) {
-            $criteria->compare('start_date >= "' . date('Y-m-d 00:00:00', strtotime($_GET['Report']['period_start'])) . '"');
+            $criteria->compare('reset_date >= "' . date('Y-m-d 00:00:00', strtotime($_GET['Report']['period_start'])) . '"');
         }
         if(isset($_GET['Report']['period_end']) && $_GET['Report']['period_end'] != null) {
-            $criteria->compare('start_date <= "' . date('Y-m-d 23:59:59', strtotime($_GET['Report']['period_end'])) . '"');
+            $criteria->compare('reset_date <= "' . date('Y-m-d 23:59:59', strtotime($_GET['Report']['period_end'])) . '"');
         }
 
         $user_Learn = LogReset::model()->findAll($criteria);
@@ -303,18 +308,6 @@ if(!empty($_GET) && $_GET['Report']['course_id'] != null && $_GET['Report']['gen
             'order' => 'profile.firstname_en ASC'
         ));
 
-
-        if(isset($_GET['Report']['lesson_id']) && $_GET['Report']['lesson_id'] != null) {
-
-           $lesson_online = Lesson::model()->findAll("active='y' AND id='".$_GET['Report']['lesson_id']."' AND course_id='".$search["course_id"]."'");
-
-       }else{
-          $lesson_online = Lesson::model()->findAll(array(
-            "condition"=>"active='y' AND lang_id='1' AND course_id='".$search["course_id"]."'",
-            "order"=>"title ASC"
-        ));
-      }
-
         $gen_title = "";
         if($_GET['Report']['gen_id'] != 0){
             $gen_title = CourseGeneration::model()->findByPk($_GET['Report']['gen_id']);
@@ -323,7 +316,7 @@ if(!empty($_GET) && $_GET['Report']['course_id'] != null && $_GET['Report']['gen
 
 ?>
 
-
+<?php if(!empty($user_Learn)){ ?>
 <div class="widget" id="export-table33">
             <div class="widget-head">
                 <div class="widget-head">
@@ -335,27 +328,24 @@ if(!empty($_GET) && $_GET['Report']['course_id'] != null && $_GET['Report']['gen
 
                     <thead>
                         <tr>
-                            <th rowspan="2">ลำดับ</th>
-                            <th rowspan="2">ประเภทพนักงาน</th>                            
-                            <th rowspan="2">Name - Surname</th>
-                            <th rowspan="2">แผนก/ฝ่าย</th>
-                            <th rowspan="2">ตำแหน่ง/แผนก</th>
-                            <th class="center" colspan="<?= count($lesson_online)+1 ?>">หลักสูตร <?= $course_online->course_title.$gen_title ?></th>
-                        </tr>
-                        <tr>
-                            <?php foreach($lesson_online as $lesson) { ?>
-                                <th class="center"><?= $lesson->title ?></th>
-                            <?php } ?>
-                            <th class="center">Percent</th>
+                            <th>ลำดับ</th>
+                            <th>ประเภทพนักงาน</th>                            
+                            <th>Name - Surname</th>
+                            <th>แผนก/ฝ่าย</th>
+                            <th>ตำแหน่ง/แผนก</th>
+                            <th>หลักสูตร</th>
+                            <th>บทเรียน</th>
+                            <th>วันที่ทำรายการ</th>
+                            <th>หมายเหตุการ reset</th>
                         </tr>
                     </thead>
 
 
                     <tbody>
                         <?php
-                        if(!empty($allUsers)){
+                        
                             
-                           $dataProvider=new CArrayDataProvider($allUsers, array(
+                           $dataProvider=new CArrayDataProvider($user_Learn, array(
                             'pagination'=>array(
                                 'pageSize'=>25
                             ),
@@ -373,42 +363,14 @@ if(!empty($_GET) && $_GET['Report']['course_id'] != null && $_GET['Report']['gen
                                     ?>
                                     <tr>
                                         <td><?= $start_cnt+1 ?></td>
-                                        <td><?= $user->profile->typeEmployee->type_employee_name; ?></td>
-                                        <td><?= $user->profile->firstname_en . ' ' . $user->profile->lastname_en ?></td>
-                                        <td><?= $user->department->dep_title ?></td>
-                                        <td><?= $user->position->position_title ?></td>
-                                        <?php
-                                           if($lesson_online) {
-                                                foreach($lesson_online as $lesson) {
-                                                    $statusLearn_course =  Helpers::lib()->chk_status_course($course_online->course_id, $_GET['Report']['gen_id'], $user->id);
-
-                                                        ?>
-                                                        <td class="center" <?php if($statusLearn_course != "learning"){ echo 'colspan="'.count($lesson_online).'"'; } ?>>
-                                                            <?php 
-                                                            if($statusLearn_course != "learning"){
-                                                                echo $statusArray[$statusLearn_course];
-                                                            }else{
-                                                                $statusLearn_lesson =  Helpers::lib()->chk_status_lesson($lesson->id, $_GET['Report']['gen_id'], $user->id);
-                                                                echo $statusArray[$statusLearn_lesson];
-                                                            }
-                                                             ?>
-                                                        </td>
-                                                        <?php
-                                                        if($statusLearn_course != "learning"){
-                                                            break;
-                                                        }
-                                                }
-                                           }
-                                        ?>
-                                        <td class="center">
-                                            <?php 
-                                            if($statusLearn_course != "pass"){
-                                                echo Helpers::lib()->percent_CourseGen($course_online->course_id, $_GET['Report']['gen_id'], $user->id)." %"; 
-                                            }else{
-                                                echo "-";
-                                            }
-                                            ?>
-                                        </td>
+                                        <td><?= $user->pro->typeEmployee->type_employee_name; ?></td>
+                                        <td><?= $user->pro->firstname_en . ' ' . $user->pro->lastname_en ?></td>
+                                        <td><?= $user->mem->department->dep_title ?></td>
+                                        <td><?= $user->mem->position->position_title ?></td>
+                                        <td><?= $course_online->course_title ?></td>
+                                        <td><?= $Lesson->title ?></td>
+                                        <td><?= $user->reset_date ?></td>
+                                        <td><?= $user->reset_description ?></td>
                                     </tr>
                                     <?php
                                     $start_cnt++;
@@ -431,14 +393,12 @@ if(!empty($_GET) && $_GET['Report']['course_id'] != null && $_GET['Report']['gen
                 ?>
                 <br>
                 <br>
-                <a href="<?= $this->createUrl('report/GenExcelByLesson',array(
+                <a href="<?= $this->createUrl('report/GenExcelLogReset',array(
                 'Report[course_id]'=>$_GET['Report']['course_id'],
                 'Report[gen_id]'=>$_GET['Report']['gen_id'],
                 'Report[lesson_id]'=>$_GET['Report']['lesson_id'],
                 'Report[search]'=>$_GET['Report']['search'],
-                'Report[type_register]'=>$_GET['Report']['type_register'],
-                'Report[department]'=>$_GET['Report']['department'],
-                'Report[position]'=>$_GET['Report']['position'],
+                'Report[type_register]'=>$_GET['Report']['type_register'],                
                 'Report[period_start]'=>$_GET['Report']['period_start'],
                 'Report[period_end]'=>$_GET['Report']['period_end']
                 )); ?>" 
@@ -446,10 +406,8 @@ if(!empty($_GET) && $_GET['Report']['course_id'] != null && $_GET['Report']['gen
                 <button type="button" id="btnExport" class="btn btn-primary btn-icon glyphicons file"><i></i> Export</button></a>
             </div>
         </div>
-    </div>
-</div>
-        <?php }else{ ?>
-            <div class="innerLR">
+    
+        <?php }else{  ?>
             <div class="widget" style="margin-top: -1px;">
                 <div class="widget-head">
                     <h4 class="heading glyphicons show_thumbnails_with_lines">
@@ -457,12 +415,25 @@ if(!empty($_GET) && $_GET['Report']['course_id'] != null && $_GET['Report']['gen
                     </div>
                     <div class="widget-body">
 
-                        <h3 class="text-success">กรุณาป้อนข้อมูลให้ถูกต้อง แล้วกด ปุ่มค้นหา</h3>
+                        <h3 class="text-success">ไม่พบข้อมูล</h3>
 
                     </div>
                 </div>
-                </div>
         <?php 
     }  
+}else{
+    ?>
+    <div class="widget" style="margin-top: -1px;">
+        <div class="widget-head">
+            <h4 class="heading glyphicons show_thumbnails_with_lines">
+                <i></i> </h4>
+            </div>
+            <div class="widget-body">
+
+                <h3 class="text-success">กรุณาป้อนข้อมูลให้ถูกต้อง แล้วกด ปุ่มค้นหา</h3>
+
+            </div>
+        </div>
+    <?php
 }
 ?>
