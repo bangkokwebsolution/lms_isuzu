@@ -33,6 +33,7 @@ class LoginController extends Controller
      */
     public function actionIndex()
     {
+
       if($_POST['UserLogin']['checkbox'] == "on") {
         $value = $_POST['UserLogin']['username'];
         // $value = "admin'\"()&%<acx><ScRiPt >rOfs(9977)</ScRiPt>";
@@ -122,6 +123,37 @@ class LoginController extends Controller
                 $this->redirect(Yii::app()->controller->module->returnUrl);
               }
             }
+   public function actionLoginApp($id)
+    {
+      $key = $_GET['key'];
+      // var_dump($key);exit();
+      if($key == 'BwjPHhyjbhhhU4pex5e1igys5Dp8adlWe'){
+        $model=new UserLogin;
+
+          $user = User::model()->findbyPk($id);
+
+          $model->username= $user->username;
+          $model->password= 'bangkokweb@thoresen2563';
+
+      if($model->validate()) {
+
+            if(User::model()->findbyPk(Yii::app()->user->id)->superuser == 1){
+              $this->actionLogout();
+
+            }
+
+            $this->lastViset();
+            $this->saveToken();
+
+            $this->redirect(array('virtualclassroom/index'));
+
+          }
+    }else{
+        echo 'รหัสยืนยันไม่ถูก';exit();
+    } 
+
+            }
+
 
             // public function actionldapTms(){
             //  $email = 'uraiwank@airasia.com';
