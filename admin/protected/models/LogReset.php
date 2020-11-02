@@ -52,6 +52,10 @@ class LogReset extends CActiveRecord
 			'course' => array(self::BELONGS_TO,'CourseOnline','course_id'),
 			// 'lesson' => array(self::BELONGS_TO,'LessonList','lesson_id'),
 			'lesson' => array(self::BELONGS_TO, 'lesson', 'lesson_id'),
+			
+			'pro' => array(self::BELONGS_TO, 'Profile', 'user_id'),
+			'mem' => array(self::BELONGS_TO, 'User', 'user_id','foreignKey' => array('user_id'=>'id')),
+			// 'course' => array(self::BELONGS_TO, 'CourseOnline', 'course_id'),
 		);
 	}
 

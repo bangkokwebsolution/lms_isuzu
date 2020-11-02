@@ -145,7 +145,7 @@ class ReportController extends Controller
         if(isset($_POST["value"]) && $_POST["value"] != ""){
 
             $Lesson = Lesson::model()->findAll(array(
-                'condition' => 'course_id=:course_id AND active=:active ',
+                'condition' => 'course_id=:course_id AND active=:active lang_id=1',
                 'params' => array(':course_id'=>$_POST["value"], ':active'=>"y"),
                 'order' => 'title ASC',
             ));
@@ -299,7 +299,24 @@ class ReportController extends Controller
         ));
     }
 
+    public function actionLogReset(){
+        $model = new Report();
+        $model->unsetAttributes(); 
 
+        if(isset($_GET['Report'])) {
+            $model->course_id = $_GET['Report']['course_id'];
+            $model->gen_id = $_GET['Report']['gen_id'];
+            $model->lesson_id = $_GET['Report']['lesson_id'];
+            $model->search = $_GET['Report']['search'];
+            $model->type_register = $_GET['Report']['type_register'];
+            $model->period_start = $_GET['Report']['period_start'];
+            $model->period_end = $_GET['Report']['period_end'];
+        }  
+
+        $this->render('logReset', array(
+            'model' => $model,
+        ));   
+    }
 
 
 
@@ -1740,14 +1757,7 @@ public  function actionReport_list(){
     }
 
 
-    public function actionLogReset()
-    {
-        if(isset($_GET['Report'])){
 
-            $this->render('logReset', array());
-        }   
-        $this->render('logReset');     
-    }
 
     public function actionLoadgen()
     {

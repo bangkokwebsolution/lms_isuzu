@@ -2063,14 +2063,14 @@ Class MenuLeft extends Controller
 	        			'url'=>array('//Report/ByUser')
 	        		),
 
-	        		array(
+	        		// array(
 	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Report.*',
-	        			)),
-	        			'label'=>'3.) รายงานผลสอบ',
-	        			'url'=>array('//Report/BeforAndAfter')
-	        		),
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'Report.*',
+	        		// 	)),
+	        		// 	'label'=>'3.) รายงานผลสอบ',
+	        		// 	'url'=>array('//Report/BeforAndAfter')
+	        		// ),
 	        		// array(
 	        		// 	
 	        		// 	'visible'=>self::PermissionsMenu(array(
