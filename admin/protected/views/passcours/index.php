@@ -15,14 +15,14 @@ $titleName = 'รายงานผู้ผ่านการเรียน';
 $formNameModel = 'Passcours';
 
 $this->breadcrumbs=array($titleName);
-Yii::app()->clientScript->registerScript('search', "
-	$('#SearchFormAjax').submit(function(){
-	    $.fn.yiiGridView.update('$formNameModel-grid', {
-	        data: $(this).serialize()
-	    });
-	    return false;
-	});
-");
+// Yii::app()->clientScript->registerScript('search', "
+// 	$('#SearchFormAjax').submit(function(){
+// 	    $.fn.yiiGridView.update('$formNameModel-grid', {
+// 	        data: $(this).serialize()
+// 	    });
+// 	    return false;
+// 	});
+// ");
 
 $passcours_cours = $passcours['passcours_cours'];
 $gen_id = $passcours['gen_id'];
@@ -427,7 +427,7 @@ EOD
 							'value'=>function($data){
 								$certIdModel = CertificateNameRelations::model()->find(array('condition' => 'course_id = '.$data->passcours_cours));
 								if(empty($certIdModel)){
-									return $data->passcours_cours.'ไม่มีใบประกาศนียบัตร';
+									return 'ไม่มีใบประกาศนียบัตร';
 								}else{
 									return $data->PrintCertificate;
 								}
@@ -458,7 +458,12 @@ EOD
 
 		<div class="row" style="margin-bottom: 20px;">
 			<div class="col-md-12">
+				<?php 
+				$certIdModel = CertificateNameRelations::model()->find(array('condition' => 'course_id = '.$_GET['Passcours']['passcours_cours']));
+					if($certIdModel){
+				 ?>
 				<button class="btn btn-warning" onclick="get_chkbox();">ดาวโหลดทั้งหมด</button>
+				<?php } ?>
 				<a target="blank_" href="<?= $this->createUrl('Passcours/ExcelIndex', array(
 
 				'Passcours[passcours_cours]' => $passcours['passcours_cours'],
@@ -497,7 +502,7 @@ EOD
 			}
 		});
 
-		if(arr_chkbox.length < 0){
+		if(arr_chkbox.length <= 0){
 			alert("กรุณาเลือกรายการก่อน");
 		}else{
 			download_cer();

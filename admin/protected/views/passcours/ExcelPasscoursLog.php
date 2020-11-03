@@ -102,12 +102,12 @@ if(!empty($model) && $model['passcours_cours'] != null && $model['gen_id'] != nu
 									</tr>
 									<?php
 								}
-								$print = PasscoursLog::model()->with('Course')->findAll(array(
-									'condition' => 'passcours_cours = "' . $Course['course_id'] . '"' . $startdate . $enddate.' AND t.gen_id="'.$gen->gen_id.'"',
+								$print = PasscoursLog::model()->with('Course', 'user')->findAll(array(
+									'condition' => 'superuser="0" AND user.id IS NOT NULL AND passcours_cours = "' . $Course['course_id'] . '"' . $startdate . $enddate.' AND t.gen_id="'.$gen->gen_id.'"',
 									'group' => 'pclog_target'
 								));
-								$allLearn = Learn::model()->with('les')->findAll(array(
-									'condition' => 't.course_id = "' . $Course['course_id'] . '" and lesson_active = "y"'.' AND gen_id="'.$gen->gen_id.'"',
+								$allLearn = Learn::model()->with('les', 'User')->findAll(array(
+									'condition' => 'superuser="0" AND User.id IS NOT NULL AND t.course_id = "' . $Course['course_id'] . '" and lesson_active = "y"'.' AND gen_id="'.$gen->gen_id.'"',
 									'group' => 'user_id'
 								));
 
@@ -116,8 +116,8 @@ if(!empty($model) && $model['passcours_cours'] != null && $model['gen_id'] != nu
 								// 	'group' => 'user_id'
 								// ));
 
-								$pass = Passcours::model()->findAll(array(
-									'condition' => 'passcours_cours = "' . $Course['course_id'] . '" '.' AND gen_id="'.$gen->gen_id.'"',
+								$pass = Passcours::model()->with('Profiles', 'CourseOnlines', 'user')->findAll(array(
+									'condition' => 'superuser="0" AND user.id IS NOT NULL AND passcours_cours = "' . $Course['course_id'] . '" '.' AND gen_id="'.$gen->gen_id.'"',
 									'group' => 'passcours_user'
 								));
 

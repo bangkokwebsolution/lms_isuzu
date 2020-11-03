@@ -21,6 +21,7 @@ class PasscoursLog extends CActiveRecord
 	public $station;
 	public $type_register;
 	public $passcours_cours;
+	public $gen_id;
 
 	/**
 	 * @return string the associated database table name
@@ -58,6 +59,7 @@ class PasscoursLog extends CActiveRecord
 			'Profiles' => array(self::BELONGS_TO, 'Profile', array('pclog_userid'=>'user_id')),
 			'Course' => array(self::BELONGS_TO, 'Passcours', array('pclog_target'=>'passcours_id')),
 			'Users' => array(self::BELONGS_TO, 'Users', array('pclog_userid'=>'id')),
+			'user'=>array(self::BELONGS_TO, 'User', 'pclog_userid'),
 		);
 	}
 

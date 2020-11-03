@@ -33,6 +33,9 @@ if($model->search != null){
 	}
 }
 
+$criteria->compare('superuser',0);
+$criteria->addCondition('user.id IS NOT NULL');
+
 if($model->passcours_cours != null) {
 	$criteria->compare('passcours_cours', $model->passcours_cours);
 }

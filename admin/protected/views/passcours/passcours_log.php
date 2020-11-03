@@ -157,10 +157,10 @@ EOD
     ));
     $listposition = CHtml::listData($position,'id','position_title');
 
-     if($passcours_cours != ""){
+     if($get['passcours_cours'] != ""){
     	$arr_gen = CourseGeneration::model()->findAll(array(
     		'condition' => 'course_id=:course_id AND active=:active ',
-    		'params' => array(':course_id'=>$passcours_cours, ':active'=>"y"),
+    		'params' => array(':course_id'=>$get['passcours_cours'], ':active'=>"y"),
     		'order' => 'gen_title ASC',
     	));    	
 
@@ -273,23 +273,17 @@ EOD
 									</tr>
 									<?php
 								}
-								$print = PasscoursLog::model()->with('Course')->findAll(array(
-									'condition' => 'passcours_cours = "' . $Course['course_id'] . '"' . $startdate . $enddate.' AND t.gen_id="'.$gen->gen_id.'"',
+								$print = PasscoursLog::model()->with('Course', 'user')->findAll(array(
+									'condition' => 'superuser="0" AND user.id IS NOT NULL AND passcours_cours = "' . $Course['course_id'] . '"' . $startdate . $enddate.' AND t.gen_id="'.$gen->gen_id.'"',
 									'group' => 'pclog_target'
 								));
-								$allLearn = Learn::model()->with('les')->findAll(array(
-									'condition' => 't.course_id = "' . $Course['course_id'] . '" and lesson_active = "y"'.' AND gen_id="'.$gen->gen_id.'"',
+								$allLearn = Learn::model()->with('les', 'User')->findAll(array(
+									'condition' => 'superuser="0" AND User.id IS NOT NULL AND t.course_id = "' . $Course['course_id'] . '" and lesson_active = "y"'.' AND gen_id="'.$gen->gen_id.'"',
 									'group' => 'user_id'
 								));
 
-								// $pass = Learn::model()->with('les')->findAll(array(
-								// 	'condition' => 't.course_id = "' . $Course['course_id'] . '" and lesson_status = "pass" and lesson_active = "y"'.' AND gen_id="'.$gen->gen_id.'"',
-								// 	'group' => 'user_id'
-								// ));
-
-
-								$pass = Passcours::model()->findAll(array(
-									'condition' => 'passcours_cours = "' . $Course['course_id'] . '" '.' AND gen_id="'.$gen->gen_id.'"',
+								$pass = Passcours::model()->with('Profiles', 'CourseOnlines', 'user')->findAll(array(
+									'condition' => 'superuser="0" AND user.id IS NOT NULL AND passcours_cours = "' . $Course['course_id'] . '" '.' AND gen_id="'.$gen->gen_id.'"',
 									'group' => 'passcours_user'
 								));
 

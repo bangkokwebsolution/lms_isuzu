@@ -109,6 +109,9 @@ class Passcours extends AActiveRecord
         	}
         }
 
+        $criteria->compare('superuser',0);
+		$criteria->addCondition('user.id IS NOT NULL');
+
         //check course id
 		if(isset($this->passcours_cours) && $this->passcours_cours != null) {
 			// var_dump($this->passcours_cours); exit();
