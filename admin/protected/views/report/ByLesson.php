@@ -4,11 +4,11 @@ $currentModel = 'Report';
 
 $this->breadcrumbs = array($title);
 
-Yii::app()->clientScript->registerScript('search', "
-	$('#SearchFormAjax').submit(function(){
-	    return true;
-	});
-");
+// Yii::app()->clientScript->registerScript('search', "
+// 	$('#SearchFormAjax').submit(function(){
+// 	    return true;
+// 	});
+// ");
 
 Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	$('.collapse-toggle').click();
@@ -255,6 +255,9 @@ if(!empty($_GET) && $_GET['Report']['course_id'] != null && $_GET['Report']['gen
                 $criteria->compare('pro.lastname_en', $pro_lname, true, 'OR');
             }
         }   
+        
+        $criteria->compare('superuser',0);
+        $criteria->addCondition('user.id IS NOT NULL');
 
         $criteria->compare('user.superuser', 0);
 

@@ -48,6 +48,9 @@ if(isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != null &
         }
     }
 
+    $criteria->compare('superuser',0);
+    $criteria->addCondition('user.id IS NOT NULL');
+
     if(isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != null) {
         $criteria->compare('t.course_id', $_GET['Report']['course_id']);
     }

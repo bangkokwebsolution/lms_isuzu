@@ -45,7 +45,10 @@ if(isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != null &
             $criteria->compare('pro.lastname',$pro_lname,true);
             $criteria->compare('pro.lastname_en', $pro_lname, true, 'OR');
         }
-    }   
+    }
+
+    $criteria->compare('superuser',0);
+    $criteria->addCondition('user.id IS NOT NULL');   
 
     $criteria->compare('user.superuser', 0);
 

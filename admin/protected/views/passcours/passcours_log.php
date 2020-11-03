@@ -277,6 +277,7 @@ EOD
 									'condition' => 'superuser="0" AND user.id IS NOT NULL AND passcours_cours = "' . $Course['course_id'] . '"' . $startdate . $enddate.' AND t.gen_id="'.$gen->gen_id.'"',
 									'group' => 'pclog_target'
 								));
+								
 								$allLearn = Learn::model()->with('les', 'User')->findAll(array(
 									'condition' => 'superuser="0" AND User.id IS NOT NULL AND t.course_id = "' . $Course['course_id'] . '" and lesson_active = "y"'.' AND gen_id="'.$gen->gen_id.'"',
 									'group' => 'user_id'

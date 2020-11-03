@@ -59,11 +59,11 @@ $formNameModel = 'Report';
 
 $this->breadcrumbs=array($titleName);
 
-Yii::app()->clientScript->registerScript('search', "
-    $('#SearchFormAjax').submit(function(){
-        return true;
-    });
-");
+// Yii::app()->clientScript->registerScript('search', "
+//     $('#SearchFormAjax').submit(function(){
+//         return true;
+//     });
+// ");
 
 Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
     $('.collapse-toggle').click();
@@ -261,6 +261,9 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
                 $criteria->compare('pro.lastname_en', $pro_lname, true, 'OR');
             }
         }
+
+        $criteria->compare('superuser',0);
+        $criteria->addCondition('user.id IS NOT NULL');
 
         if(isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != null) {
             $criteria->compare('t.course_id', $_GET['Report']['course_id']);

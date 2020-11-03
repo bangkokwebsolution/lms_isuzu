@@ -7,11 +7,11 @@ ob_start();
 
 $this->breadcrumbs = array($title);
 
-Yii::app()->clientScript->registerScript('search', "
-	$('#SearchFormAjax').submit(function(){
-	    return true;
-	});
-");
+// Yii::app()->clientScript->registerScript('search', "
+// 	$('#SearchFormAjax').submit(function(){
+// 	    return true;
+// 	});
+// ");
 
 Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	$('.collapse-toggle').click();
@@ -269,6 +269,9 @@ EOD
                 $criteria->compare('pro.lastname_en', $pro_lname, true, 'OR');
             }
         }
+
+        $criteria->compare('superuser',0);
+        $criteria->addCondition('user.id IS NOT NULL');
 
         if(isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != null) {
             $criteria->compare('t.course_id', $_GET['Report']['course_id']);
