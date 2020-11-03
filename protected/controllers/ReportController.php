@@ -715,27 +715,35 @@ class ReportController extends Controller
 									$datatable .= '</thead>';
 									$datatable .= '<tbody>';
 							if (!empty($User)) {
-										foreach ($User as $key => $value) { 	
+									// Sort
+									foreach ($User as $val){
+										$SortData[$val->id]['department']['dep_title'] = $val->department->dep_title;
+										$SortData[$val->id]['profile']['firstname_en'] = $val->profile->firstname_en;
+										$SortData[$val->id]['profile']['lastname_en'] = $val->profile->lastname_en;
+										$SortData[$val->id]['profile']['firstname'] = $val->profile->firstname;
+										$SortData[$val->id]['profile']['lastname'] = $val->profile->lastname;
+										$SortData[$val->id]['position']['position_title'] = $val->position->position_title;
+									}
+									asort($SortData);		
+									foreach ($SortData as $key => $value) { 	
 
-											$datatable .= '<tr>';
-											$datatable .= '<td>'.$i++.'</td>';
-											if (Yii::app()->session['lang'] == 1) {
-											$datatable .= '<td style="text-align: left;">'.$value->profile->firstname_en."     ".$value->profile->lastname_en.'</td>';
-											}else{
-											$datatable .= '<td style="text-align: left;">'.$value->profile->firstname."  ".$value->profile->lastname.'</td>';	
-											}
-											$datatable .= '<td>'.$value->department->dep_title.'</td>';
-											$datatable .= '<td>';
-											if ($value->position->position_title != "") {
-												$datatable .= $value->position->position_title;
-											}else{
-												$datatable .="-";
-											}
-											$datatable .= '</td>';										
-											$datatable .= '</tr>';
-										}			 
-
-									
+										$datatable .= '<tr>';
+										$datatable .= '<td>'.$i++.'</td>';
+										if (Yii::app()->session['lang'] == 1) {
+										$datatable .= '<td style="text-align: left;">'.$value['profile']['firstname_en']."     ".$value['profile']['lastname_en'].'</td>';
+										}else{
+										$datatable .= '<td style="text-align: left;">'.$value['profile']['firstname']."  ".$value['profile']['lastname'].'</td>';	
+										}
+										$datatable .= '<td>'.$value['department']['dep_title'].'</td>';
+										$datatable .= '<td>';
+										if ($value['position']['position_title'] != "") {
+											$datatable .= $value['position']['position_title'];
+										}else{
+											$datatable .="-";
+										}
+										$datatable .= '</td>';										
+										$datatable .= '</tr>';
+									}			 				
 								}else{
 									$datatable .= '<tr>';
 									$datatable .= '<td colspan="6">';
@@ -936,7 +944,6 @@ public function actionReportRegisterOfficeExcel()
 			}
 			$criteria->order = 'position.sortOrder ASC';
 			$User = User::model()->findAll($criteria);
-
 			if (!empty($pos)) {
 
 				$datas = '["Element", "Position", { role: "style" } ],';
