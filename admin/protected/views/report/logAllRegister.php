@@ -191,10 +191,11 @@ EOD
                                         <?php }
                                     }
                                 } else {
+                                    $idcheckOld = 0;
                                     if ($_GET['ReportUser']['department'] != "") {
-                                        $DivisionAll = Department::model()->findAll(array('condition' => 'id=' . $_GET['ReportUser']['department']));
+                                        $DivisionAll = Department::model()->findAll(array('condition' => 'id=' . $_GET['ReportUser']['department'], 'order' => 'sortOrder asc'));
                                     } else {
-                                        $DivisionAll = Department::model()->findAll(array('condition' => 'type_employee_id=2 and active="y"'));
+                                        $DivisionAll = Department::model()->findAll(array('condition' => 'type_employee_id=2 and active="y"', 'order' => 'sortOrder asc'));
                                     }
                                     for ($i = 0; $i < count($DivisionAll); $i++) {
                                         $Setdiv = 0;
@@ -210,11 +211,23 @@ EOD
                                                 $re_total = 0;
                                                 $accept_total = 0;
                                                 for ($r = 0; $r < count($modelAll); $r++) {
+                                                    //$modelAll[$r]['department_id'] == $DivisionAll[$i]['id']
                                                     if ($modelAll[$r]['branch_id'] == $levelAll[$x]['id']) {
                                                         if ($modelAll[$r]['register_status'] == 1) {
                                                             $accept_total++;
                                                         }
                                                         $re_total++;
+                                                    }
+                                                    else{
+                                                        if ($modelAll[$r]['branch_id'] == "" && $modelAll[$r]['position_id'] == $PosAll[$n]['id']){
+                                                            if ($idcheckOld != $modelAll[$r]['id']){
+                                                                if ($modelAll[$r]['register_status'] == 1) {
+                                                                    $accept_total++;
+                                                                }
+                                                                $re_total++;
+                                                                $idcheckOld = $modelAll[$r]['id'];
+                                                            }
+                                                        }
                                                     }
                                                 }
                                                 $total_re_total += $re_total;
@@ -236,7 +249,33 @@ EOD
                                                     <td class="center"><?= ($re_total - $accept_total); ?></td>
                                                 </tr>
                                         <?php }
-                                        } ?>
+                                        }
+                                        if (!$PosAll){
+                                            $userIT = Users::model()->findAll(array('condition' => 'department_id=' . $DivisionAll[$i]['id'] . ' and superuser=0 and del_status=0'));
+                                            if ($userIT){
+                                                $userIT_Approved = Users::model()->findAll(array('condition' => 'department_id=' . $DivisionAll[$i]['id'] . ' and superuser=0 and del_status=0 and register_status=1'));
+                                                $total_re_total += count($userIT);
+                                                $total_accept_total += count($userIT_Approved);
+                                                ?>
+                                                <tr>
+                                                    <td></td>
+                                                    <td><?php if ($Setdiv == 0) {
+                                                            echo $DivisionAll[$i]['dep_title'];
+                                                            $Setdiv = 1;
+                                                        } ?></td>
+                                                    <td><?php if ($Setpos == 0) {
+                                                            echo $PosAll[$n]['position_title'];
+                                                            $Setpos = 1;
+                                                        } ?></td>
+                                                    <td>-</td>
+                                                    <td class="center"><?= count($userIT_Approved); ?></td>
+                                                    <td class="center"><?= count($userIT); ?></td>
+                                                    <td class="center"><?= (count($userIT) - count($userIT_Approved)); ?></td>
+                                                </tr>
+                                                <?php
+                                            }
+                                        }
+                                        ?>
                                 <?php }
                                 } ?>
                                 <tr>

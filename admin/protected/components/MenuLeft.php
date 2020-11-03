@@ -2111,6 +2111,14 @@ Class MenuLeft extends Controller
 	        			'label'=>'8.) รายงานภาพรวมการสมัครสมาชิก',
 	        			'url'=>array('//Report/logAllRegister')
 					),
+					array(
+	        			
+	        			'visible'=>self::PermissionsMenu(array(
+							'Report.*',
+	        			)),
+	        			'label'=>'9.) รายงานการสมัครสมาชิก',
+	        			'url'=>array('//Report/logRegister')
+					),
 	        	)
 	        ),
             array(
