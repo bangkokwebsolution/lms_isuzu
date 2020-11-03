@@ -77,6 +77,7 @@ EOD
     <?php
     if(!empty($_GET)){
         $sqlUser = " SELECT * FROM tbl_users INNER JOIN tbl_profiles ON tbl_users.id = tbl_profiles.user_id";
+        $sqlUser .= " AND tbl_users.superuser = 0";
         if ($model->employee_type != ''){
             $sqlUser .= " AND tbl_profiles.type_employee=" . $model->employee_type;
         }
@@ -105,7 +106,6 @@ EOD
             $sqlUser .= " AND tbl_users.create_at between '".$startDate."' and '".$endDate."' ";
         }
         $sqlUser .= " order by firstname_en asc";
-
         $modelAll = Yii::app()->db->createCommand($sqlUser)->queryAll();
         $dataProvider = new CArrayDataProvider($modelAll);
         $model = $dataProvider->getData();
@@ -154,7 +154,7 @@ EOD
                                         }
                                     ),
                                     array('header' => 'เลขที่บัตรประชาชน', 'name' => 'identification'),
-                                    array('header' => 'เลขพาสปอร์ต', 'name' => 'passport'),
+                                   // array('header' => 'เลขพาสปอร์ต', 'name' => 'passport'),
                                     array('header' => 'รหัสพนักงานออฟฟิศ', 'name' => 'username', 'value' => function($data){
                                         if ($data['type_employee'] == 2){
                                             return $data['username'];
@@ -198,7 +198,7 @@ EOD
                                         return $edu->institution;
                                     }),
                                     array('header' => 'เบอร์โทร', 'name' => 'phone'),
-                                    array('header' => 'Email', 'name' => 'advisor_email1'),
+                                    array('header' => 'Email', 'name' => 'email'),
                                     array('header' => 'สถานะการสมัคร', 'name' => 'register_status', 'value' => function($data){
                                         if ($data['register_status'] == 1){
                                             return 'Approved';
@@ -285,7 +285,7 @@ EOD
                                         return $edu->institution;
                                     }),
                                     array('header' => 'เบอร์โทร', 'name' => 'phone'),
-                                    array('header' => 'Email', 'name' => 'advisor_email1'),
+                                    array('header' => 'Email', 'name' => 'email'),
                                     array('header' => 'สถานะการสมัคร', 'name' => 'register_status', 'value' => function($data){
                                         if ($data['register_status'] == 1){
                                             return 'Approved';

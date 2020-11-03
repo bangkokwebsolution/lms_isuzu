@@ -39,11 +39,12 @@ class ReportUser extends CFormModel {
     public $gen_id;
     public $employee_type;
     public $register_status;
+    public $status;
 
     public function rules()
     {
         return array(
-            array('generation,typeOfUser,dateRang,date_start,date_start_lastuse,date_end,date_end_lastuse,course,lesson,nameSearch,nameIdenSearch,university,company,categoryUniversity,categoryCompany,company_id,division_id,position_id,type_user,department,occupation,email,identification,status_login,status_learn,station,course_type,schedule_id, gen_id, employee_type, register_status', 'safe'),
+            array('generation,typeOfUser,dateRang,date_start,date_start_lastuse,date_end,date_end_lastuse,course,lesson,nameSearch,nameIdenSearch,university,company,categoryUniversity,categoryCompany,company_id,division_id,position_id,type_user,department,occupation,email,identification,status_login,status_learn,station,course_type,schedule_id, gen_id, employee_type, register_status, status', 'safe'),
         );
     }
 
@@ -77,6 +78,7 @@ class ReportUser extends CFormModel {
             'gen_id' => 'รุ่น',
             'employee_type' => 'ประเภทพนักงาน', 
             'register_status' => 'สถานะ',
+            'status' => 'สถานะการใช้งาน'
         );
     }
 
@@ -97,6 +99,15 @@ class ReportUser extends CFormModel {
             '0'=>'ยังไม่ล็อคอิน'
         );
         return $statusLogin;
+    }
+
+    public function getStatusUser()
+    {
+        $statusUser = array(
+            '1'=>'เปิดการใช้งาน',
+            '0'=>'ระงับการใช้งาน'
+        );
+        return $statusUser;
     }
 
     public function getOccupationList(){
