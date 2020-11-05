@@ -135,7 +135,12 @@ EOD
                                         'name' => 'type_employee',
                                         'value' => function ($data){
                                             $type_emp = TypeEmployee::model()->findByPk($data['type_employee']);
-                                            return $type_emp->type_employee_name;
+                                            if ($type_emp->id == 1){
+                                                return "พนักงานประจำเรือ";
+                                            }
+                                            if ($type_emp->id == 2){
+                                                return "พนักงานออฟฟิศ";
+                                            }
                                         },
                                         'filterHtmlOptions'=>array('style'=>'width:30px'),
                                     ),
@@ -186,7 +191,10 @@ EOD
                                             }
                                         }
                                     ),
-                                    array('header' => 'วันเดือนปีเกิด', 'name' => 'birthday'),
+                                    array('header' => 'วันเดือนปีเกิด', 'name' => 'birthday', 'value' => function($data){
+                                        $date=date_create($data['birthday']);
+                                        return date_format($date,"d/m/Y");
+                                    }),
                                     array('header' => 'อายุ', 'name' => 'age'),
                                     array('header' => 'ระดับการศึกษา', 'value' => function($data){
                                         $edu = ProfilesEdu::model()->find(array('condition' => 'user_id=' . $data['user_id']));
@@ -206,19 +214,6 @@ EOD
                                             return 'Disapproved';
                                         }
                                     }),
-                                    array('header' => 'วันที่สมัคร', 'value' => function($data){
-                                        $regis_date =  LogRegister::model()->find(array('condition' => 'user_id=' . $data['user_id']. ' and active="y"'));
-                                        return $regis_date->register_date;
-                                    }),
-                                    array('header' => 'ชื่อผู้ตรวจสอบใบสมัคร', 'value' => function($data){
-                                        $regis = LogRegister::model()->find(array('condition' => 'user_id=' . $data['user_id']. ' and active="y"'));
-                                        $user_approv = Profile::model()->findByPk($regis->confirm_user);
-                                        return $user_approv->firstname . ' ' . $user_approv->lastname;
-                                    }),
-                                    array('header' => 'วันที่อนุมัติ', 'value' => function($data){
-                                        $regis_date = LogRegister::model()->find(array('condition' => 'user_id=' . $data['user_id']. ' and active="y"'));
-                                        return $regis_date->confirm_date;
-                                    }),
                                 ),
                             ));
                         }else{
@@ -237,7 +232,12 @@ EOD
                                         'name' => 'type_employee',
                                         'value' => function ($data){
                                             $type_emp = TypeEmployee::model()->findByPk($data['type_employee']);
-                                            return $type_emp->type_employee_name;
+                                            if ($type_emp->id == 1){
+                                                return "พนักงานประจำเรือ";
+                                            }
+                                            if ($type_emp->id == 2){
+                                                return "พนักงานออฟฟิศ";
+                                            }
                                         },
                                         'filterHtmlOptions'=>array('style'=>'width:30px'),
                                     ),
@@ -273,7 +273,10 @@ EOD
                                             return $depart['position_title'];
                                         }
                                     ),
-                                    array('header' => 'วันเดือนปีเกิด', 'name' => 'birthday'),
+                                    array('header' => 'วันเดือนปีเกิด', 'name' => 'birthday', 'value' => function($data){
+                                        $date=date_create($data['birthday']);
+                                        return date_format($date,"d/m/Y");
+                                    }),
                                     array('header' => 'อายุ', 'name' => 'age'),
                                     array('header' => 'ระดับการศึกษา', 'value' => function($data){
                                         $edu = ProfilesEdu::model()->find(array('condition' => 'user_id=' . $data['user_id']));
@@ -295,7 +298,7 @@ EOD
                                     }),
                                     array('header' => 'วันที่สมัคร', 'value' => function($data){
                                         $regis_date =  LogRegister::model()->find(array('condition' => 'user_id=' . $data['user_id']. ' and active="y"'));
-                                        return $regis_date->register_date;
+                                        return Helpers::changeFormatDate($regis_date->register_date,'datetime');
                                     }),
                                     array('header' => 'ชื่อผู้ตรวจสอบใบสมัคร', 'value' => function($data){
                                         $regis = LogRegister::model()->find(array('condition' => 'user_id=' . $data['user_id']. ' and active="y"'));
@@ -304,15 +307,25 @@ EOD
                                     }),
                                     array('header' => 'วันที่อนุมัติ', 'value' => function($data){
                                         $regis_date = LogRegister::model()->find(array('condition' => 'user_id=' . $data['user_id']. ' and active="y"'));
-                                        return $regis_date->confirm_date;
+                                        return Helpers::changeFormatDate($regis_date->confirm_date,'datetime');
                                     }),
                                 ),
                             ));
                         }
                         ?>
                     </div>
-                    <button type="button" id="btnExport" class="btn btn-primary btn-icon glyphicons file"><i></i> Export</button>
-                </div>
+                    <a href="<?= $this->createUrl('report/GenExcelLogRegister',array(
+                    'ReportUser[employee_type]'=>$_GET['ReportUser']['employee_type'],
+                    'ReportUser[register_status]'=>$_GET['ReportUser']['register_status'],
+                    'ReportUser[nameSearch]'=>$_GET['ReportUser']['nameSearch'],
+                    'ReportUser[department]'=>$_GET['ReportUser']['department'],
+                    'ReportUser[position_id]'=>$_GET['ReportUser']['position_id'],                
+                    'ReportUser[date_start]'=>$_GET['ReportUser']['date_start'],
+                    'ReportUser[date_end]'=>$_GET['ReportUser']['date_end']
+                    )); ?>" 
+                    target="_blank">
+                    <button type="button" id="btnExport" class="btn btn-primary btn-icon glyphicons file"><i></i> Export</button></a>               
+                 </div>
             <?php 
         }else{ ?>
             <div class="widget" style="margin-top: -1px;">
@@ -347,7 +360,8 @@ EOD
     for(var i = 0, l = select.options.length; i < l; i++) {
         var option = select.options[i];
         if(option.innerHTML == "ทั้งหมด") {
-            option.innerHTML = "กรุณาเลือกประเภท";
+            option.innerHTML = "กรุณาเลือกประเภทพนักงาน";
+            option.disabled = true;
         }
     }
 
@@ -356,6 +370,7 @@ EOD
         var option = select.options[i];
         if(option.innerHTML == "ทั้งหมด") {
             option.innerHTML = "กรุณาเลือกแผนก";
+            option.disabled = true;
         }
     }
 
@@ -364,6 +379,7 @@ EOD
         var option = select.options[i];
         if(option.innerHTML == "ทั้งหมด") {
             option.innerHTML = "กรุณาเลือกตำแหน่ง";
+            option.disabled = true;
         }
     }
 

@@ -290,8 +290,9 @@ EOD
                     
                     <!-- <td class="center"><?= Province::getNameProvince($userItem[province]) ?></td> -->
                     <!-- <td class="center"><?= Generation::getNameGen($userItem[generation]) ?></td> -->
-                    <td class="center"><?= Helpers::changeFormatDate($userItem[create_at],'datetime'); ?></td>
                     <td class="center"><?= $status ?></td>
+                    <td class="center"><?= Helpers::changeFormatDate($userItem[create_at],'datetime'); ?></td>
+
                     <?php 
                     if ($userItem[lastvisit_at] == 0) {
                         $lastvisit_at = 'ยังไม่เข้าสู่ระบบ';

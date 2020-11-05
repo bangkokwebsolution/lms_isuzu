@@ -122,16 +122,19 @@
                 <thead>
                 <tr>
                     <th class="center">ลำดับ</th>
-                    <th class="center">ชื่อ</th>
-                    <th class="center">นามสกุล</th>
+                    <th class="center">ประเภทพนักงาน</th>
+                    <th class="center">ชื่อ - นามสกุล</th>
+                    <th class="center">แผนก</th>
+                    <th class="center">ตำแหน่ง</th>
                     <!-- <th class="center">บัตรประชาชน</th> -->
                     <!-- <th class="center">เบอร์</th> -->
-                    <th class="center">อีเมล</th>
+                    <th class="center">เบอร์โทรศัพท์</th>
+                    <th class="center">อีเมลล์</th>
+                    <th class="center">สถานะการใช้งาน</th>
                     <!-- <th class="center">ประเภทสมาชิก</th> -->
                     <!-- <th class="center">จังหวัด</th> -->
                     <!-- <th class="center">รุ่น</th> -->
                     <th class="center">วันที่สมัคร</th>
-                    <th class="center">สถานะ</th>
                     <th class="center">วันที่ใช้งาน</th>
                 </tr>
                 </thead>
@@ -153,20 +156,30 @@
                         $status = "เปิดการใช้งาน";
                     }
                     $type = TypeUser::model()->findByPk($userItem[type_user]);
+                    $typeemployee = Profile::model()->findByPk($userItem['user_id']);
+                    if ($typeemployee['type_employee'] == 1){
+                        $typeemp = "คนประจำเรือ";
+                    }
+                    if ($typeemployee['type_employee'] == 2){
+                        $typeemp = "พนักงานออฟฟิศ";
+                    }
+                    $Dep = Department::model()->findByPk($userItem['department_id']);
+                    $Pos = Position::model()->findByPk($userItem['position_id']);
             ?>
                 <!-- Table row -->
                 <tr>
                     <td class="center"><?= $i ?></td>
-                    <td class="center"><?= $userItem[firstname] ?></td>
-                    <td class="center"><?= $userItem[lastname] ?></td>
-                    <!-- <td class="center" style="mso-number-format:'@';"><?= $userItem[identification] ?></td> -->
-                   <!--  <td class="center"><?= $userItem[tel] ?></td> -->
+                    <td class="center"><?= $typeemp ?></td>
+                    <td class="center"><?= $userItem[firstname] . " " . $userItem[lastname] ?></td>
+                    <td class="center"><?= ($Dep->dep_title) ? $Dep->dep_title : '-'; ?></td>
+                    <td class="center"><?= ($Pos->position_title) ? $Pos->position_title : '-'; ?></td>
+                    <td class="center"><?= $userItem[tel] ?></td>
                     <td class="center"><?= $userItem[email] ?></td>
+                    <td class="center"><?= $status ?></td>
                     <!-- <td class="center"><?= $type->name ?></td> -->
                     <!-- <td class="center"><?= Province::getNameProvince($userItem[province]) ?></td> -->
                     <!-- <td class="center"><?= Generation::getNameGen($userItem[generation]) ?></td> -->
                     <td class="center"><?= Helpers::changeFormatDate($userItem[create_at],'datetime'); ?></td>
-                    <td class="center"><?= $status ?></td>
                     <?php 
                     if ($userItem[lastvisit_at] == 0) {
                         $lastvisit_at = 'ยังไม่เข้าสู่ระบบ';
@@ -174,7 +187,7 @@
                         $lastvisit_at = $userItem[lastvisit_at];
                     }
                     ?>
-                    <td class="center"><?= $lastvisit_at ?></td>
+                    <td class="center"><?= ($lastvisit_at == 'ยังไม่เข้าสู่ระบบ') ? $lastvisit_at : Helpers::changeFormatDate($lastvisit_at,'datetime'); ?></td>
                 </tr>
                 <!-- // Table row END -->
             <?php

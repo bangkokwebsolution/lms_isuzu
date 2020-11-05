@@ -361,7 +361,8 @@ EOD
 		var Html = table_div.outerHTML;
 		var table_html = Html.replace(/ /g, '%20');
 		a.href = data_type + ', ' + table_html;
-		a.download = 'log_allregister.xls';
+        var filename = "<?= "Export-Data-" . date('Ymd-His') . ".xls";?>";
+		a.download = filename;
 		a.click();
 		e.preventDefault();
 	});

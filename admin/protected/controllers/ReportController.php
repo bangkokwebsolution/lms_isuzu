@@ -1808,14 +1808,27 @@ public  function actionReport_list(){
         $this->render('logAllRegister',array('model'=>$model));
     }
 
+    
     public function actionLogRegister()
     {
         $model=new ReportUser();
         $model->unsetAttributes();
         if(isset($_GET['ReportUser'])){
-            $model->attributes=$_GET['ReportUser'];
+            $model->attributes= $_GET['ReportUser'];
         }
         $this->render('logRegister',array('model'=>$model));
+    }
+
+    public function actionGenExcelLogRegister(){
+        $model = new ReportUser();
+        $model->unsetAttributes(); 
+
+        if(isset($_GET['ReportUser'])) {
+            $model->attributes=$_GET['ReportUser'];
+        }
+        $this->renderPartial('ExcelLogRegister', array(
+            'model'=>$model
+        ));
     }
 
     public function actionGetDataLogRegister(){

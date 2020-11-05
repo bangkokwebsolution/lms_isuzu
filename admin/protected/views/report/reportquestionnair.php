@@ -45,7 +45,7 @@ function checkRange($val,$max){
 ?>
 
 <style>
-    th {
+    th, .redclr {
         background-color: #E25F39;
         color: white;
     }
@@ -62,13 +62,13 @@ function checkRange($val,$max){
 ?>
 
 <div class="innerLR">
-    <div class="widget" id="export-table33">
+    <div class="widget">
         <div class="widget-head">
             <div class="widget-head">
                 <h4 class="heading glyphicons show_thumbnails_with_lines"><i></i>รายงานแบบสอบถามสำหรับหลักสูตร <?= $course->course_title; ?> </h4>
             </div>
         </div>
-        <div class="widget-body" style=" overflow-x: scroll;">
+        <div class="widget-body" style=" overflow-x: scroll;" id="export-table1">
             <h5><b><?= $question[0]['survey_name']; ?></b></h5>
             <table class="table table-bordered table-striped">
                 <thead>
@@ -96,14 +96,14 @@ function checkRange($val,$max){
                         for ($i = 0; $i < count($questionsections); $i ++){
                             ?>
                                 <tr>
-                                    <td colspan="50" style="color:red;"><b><?= $questionsections[$i]['section_title']; ?></b></td>
+                                    <td colspan="16" style="color:red;"><b><?= $questionsections[$i]['section_title']; ?></b></td>
                                 </tr>
                                 <?php 
                                     $sql = "select * from q_questions where survey_section_id=" . $questionsections[$i]['survey_section_id'] . " and input_type_id = 4";
                                     $questtionname = Yii::app()->db->createCommand($sql)->queryAll();
                                     foreach ($questtionname as $value){
                                         echo '<tr>';
-                                        echo '<td colspan="50"><b>' . $value['question_name'] . '</b></td>';
+                                        echo '<td colspan="16"><b>' . $value['question_name'] . '</b></td>';
                                         echo '</tr>';
                                         $sql = "select * from q_option_choices where question_id=" . $value['question_id'];
                                         $questionoption = Yii::app()->db->createCommand($sql)->queryAll();
@@ -152,12 +152,12 @@ function checkRange($val,$max){
                         }
                     ?>
                     <tr>
-                        <td class="center" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b>รวม</b></td>
-                        <td class="right" colspan="11" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b><?= $user_quest_total ?></b></td>
-                        <td class="center" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b><?= number_format(($xbar_total/$q_total), 2, '.', '') ?></b></td>
-                        <td class="center" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b></b></td>
-                        <td class="center" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b><?= number_format((($xbar_total/$q_total) * 100/10), 2, '.', '') ?>%</b></td>
-                        <td class="center" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b><?= checkRange($xbar_total,10) ?></b></td>
+                        <td class="center redclr" style="font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b>รวม</b></td>
+                        <td class="right redclr" colspan="11" style="font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b><?= $user_quest_total ?></b></td>
+                        <td class="center redclr" style="font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b><?= number_format(($xbar_total/$q_total), 2, '.', '') ?></b></td>
+                        <td class="center redclr" style="font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b></b></td>
+                        <td class="center redclr" style="font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b><?= number_format((($xbar_total/$q_total) * 100/10), 2, '.', '') ?>%</b></td>
+                        <td class="center redclr" style="font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b><?= checkRange($xbar_total,10) ?></b></td>
                     </tr>
                 </tbody>
             </table>
@@ -169,7 +169,7 @@ function checkRange($val,$max){
             ?>
         </div>
     </div>
-    <button type="button" id="btnExport" class="btn btn-primary btn-icon glyphicons file"><i></i> Export</button>
+    <button type="button" id="btnExport1" class="btn btn-primary btn-icon glyphicons file"><i></i> Export</button>
 </div>
 
 <?php } 
@@ -183,14 +183,14 @@ else if ($_GET['all'] == 1){
         $questionsections = Yii::app()->db->createCommand($sql)->queryAll();
     ?>
         <div class="innerLR">
-            <div class="widget" id="export-table33">
+            <div class="widget">
                 <div class="widget-head">
                     <div class="widget-head">
                         <h4 class="heading glyphicons show_thumbnails_with_lines"><i></i>รายงานภาพรวมแบบสอบถาม - <?= $question[0]['survey_name']; ?> </h4>
                     </div>
                 </div>
-                <div class="widget-body" style=" overflow-x: scroll;">
-                    <h5><b><?= $question[0]['survey_name']; ?></b></h5>
+                <div class="widget-body" style=" overflow-x: scroll;" id="export-table2">
+                    <h5><b>ภาพรวม <?= $question[0]['survey_name']; ?></b></h5>
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -217,14 +217,14 @@ else if ($_GET['all'] == 1){
                                 for ($i = 0; $i < count($questionsections); $i ++){
                                     ?>
                                         <tr>
-                                            <td colspan="50" style="color:red;"><b><?= $questionsections[$i]['section_title']; ?></b></td>
+                                            <td colspan="16" style="color:red;"><b><?= $questionsections[$i]['section_title']; ?></b></td>
                                         </tr>
                                         <?php 
                                             $sql = "select * from q_questions where survey_section_id=" . $questionsections[$i]['survey_section_id'] . " and input_type_id = 4";
                                             $questtionname = Yii::app()->db->createCommand($sql)->queryAll();
                                             foreach ($questtionname as $value){
                                                 echo '<tr>';
-                                                echo '<td colspan="50"><b>' . $value['question_name'] . '</b></td>';
+                                                echo '<td colspan="16"><b>' . $value['question_name'] . '</b></td>';
                                                 echo '</tr>';
                                                 $sql = "select * from q_option_choices where question_id=" . $value['question_id'];
                                                 $questionoption = Yii::app()->db->createCommand($sql)->queryAll();
@@ -277,12 +277,12 @@ else if ($_GET['all'] == 1){
                                 }
                             ?>
                             <tr>
-                                <td class="center" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b>รวม</b></td>
-                                <td class="right" colspan="11" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b><?= $user_quest_total ?></b></td>
-                                <td class="center" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b><?= number_format(($xbar_total/$q_total), 2) ?>%</b></td>
-                                <td class="center" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b></b></td>
-                                <td class="center" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b><?= number_format((($xbar_total/$q_total) * 100/10), 2) ?>%</b></td>
-                                <td class="center" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b><?= checkRange($xbar_total,10) ?></b></td>
+                                <td class="center redclr" style="font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b>รวม</b></td>
+                                <td class="right redclr" colspan="11" style="font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b><?= $user_quest_total ?></b></td>
+                                <td class="center redclr" style="font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b><?= number_format(($xbar_total/$q_total), 2) ?>%</b></td>
+                                <td class="center redclr" style="white; font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b></b></td>
+                                <td class="center redclr" style="white; font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b><?= number_format((($xbar_total/$q_total) * 100/10), 2) ?>%</b></td>
+                                <td class="center redclr" style="font-weight: bold; font-size: 1.1em;vertical-align:middle;"><b><?= checkRange($xbar_total,10) ?></b></td>
                             </tr>
                         </tbody>
                     </table>
@@ -294,7 +294,7 @@ else if ($_GET['all'] == 1){
                     ?>
                 </div>
             </div>
-            <button type="button" id="btnExport" class="btn btn-primary btn-icon glyphicons file"><i></i> Export</button>
+            <button type="button" id="btnExport2" class="btn btn-primary btn-icon glyphicons file"><i></i> Export</button>
         </div>
     <?php }else{
         echo '<h2 style="color:red;">ไม่มีข้อมูล</h2>';
@@ -303,3 +303,32 @@ else if ($_GET['all'] == 1){
 }else{
     echo '<h2 style="color:red;">ไม่มีข้อมูล</h2>';
 } ?>
+
+
+<script>
+      $('#btnExport1').click(function(e) {
+		var a = document.createElement('a');
+		var data_type = 'data:application/vnd.ms-excel';
+		var table_div = document.getElementById('export-table1');
+		var Html = table_div.outerHTML;
+		var table_html = Html.replace(/ /g, '%20');
+		a.href = data_type + ', ' + table_html;
+        var filename = "<?= "Export-Data-" . date('Ymd-His') . ".xls";?>";
+		a.download = filename;
+		a.click();
+		e.preventDefault();
+	});
+
+    $('#btnExport2').click(function(e) {
+		var a = document.createElement('a');
+		var data_type = 'data:application/vnd.ms-excel';
+		var table_div = document.getElementById('export-table2');
+		var Html = table_div.outerHTML;
+		var table_html = Html.replace(/ /g, '%20');
+		a.href = data_type + ', ' + table_html;
+        var filename = "<?= "Export-Data-" . date('Ymd-His') . ".xls";?>";
+		a.download = filename;
+		a.click();
+		e.preventDefault();
+	});
+</script>
