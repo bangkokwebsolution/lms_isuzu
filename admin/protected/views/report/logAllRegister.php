@@ -7,9 +7,9 @@
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/highcharts.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/modules/exporting.js"></script>
 <style>
-    th {
-        background-color: #E25F39;
-        color: white;
+    th, .redclr {
+        background-color: #E25F39!important;
+        color: white!important;
     }
 </style>
 <?php
@@ -107,7 +107,7 @@ EOD
                 <div class="widget-body" style=" overflow-x: scroll;">
                     <div class="clear-div"></div>
                     <div class="overflow-table">
-                        <table class="table table-bordered table-striped">
+                        <table class="table table-bordered table-striped" id="export-table">
                             <thead>
                                 <tr>
                                     <th rowspan="2" class="center" width="20%" style="vertical-align:middle;">ประเภทพนักงาน</th>
@@ -130,7 +130,7 @@ EOD
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td colspan="10" style="background-color:burlywood;"><b><?php $emptype = TypeEmployee::model()->findByPk($_GET['ReportUser']['employee_type']);
+                                    <td colspan="7" style="background-color:burlywood;"><b><?php $emptype = TypeEmployee::model()->findByPk($_GET['ReportUser']['employee_type']);
                                                                                             echo $emptype->type_employee_name; ?></b></td>
                                 </tr>
                                 <?php $regispass = 0;
@@ -280,14 +280,14 @@ EOD
                                 } ?>
                                 <tr>
                                     <?php if ($_GET['ReportUser']['employee_type'] == '2') { ?>
-                                        <td class="right" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;"></td>
+                                        <td class="right redclr" style="font-weight: bold; font-size: 1.1em;"></td>
                                     <?php } ?>
-                                    <td class="right" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;"></td>
-                                    <td class="right" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;"></td>
-                                    <td class="right" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;">รวมทั้งหมด</td>
-                                    <td class="center" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;"><?= $total_re_total; ?></td>
-                                    <td class="center" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;"><?= $total_accept_total; ?></td>
-                                    <td class="center" style="background: #e25f39; color: white; font-weight: bold; font-size: 1.1em;"><?= ($total_re_total - $total_accept_total); ?></td>
+                                    <td class="right redclr" style="font-weight: bold; font-size: 1.1em;"></td>
+                                    <td class="right redclr" style="font-weight: bold; font-size: 1.1em;"></td>
+                                    <td class="right redclr" style="font-weight: bold; font-size: 1.1em;">รวมทั้งหมด</td>
+                                    <td class="center redclr" style="font-weight: bold; font-size: 1.1em;"><?= $total_re_total; ?></td>
+                                    <td class="center redclr" style="font-weight: bold; font-size: 1.1em;"><?= $total_accept_total; ?></td>
+                                    <td class="center redclr" style="font-weight: bold; font-size: 1.1em;"><?= ($total_re_total - $total_accept_total); ?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -353,4 +353,16 @@ EOD
             document.getElementById('ReportUser_position_id').innerHTML = data;
         });
     };
+
+    $('#btnExport').click(function(e) {
+		var a = document.createElement('a');
+		var data_type = 'data:application/vnd.ms-excel';
+		var table_div = document.getElementById('export-table');
+		var Html = table_div.outerHTML;
+		var table_html = Html.replace(/ /g, '%20');
+		a.href = data_type + ', ' + table_html;
+		a.download = 'log_allregister.xls';
+		a.click();
+		e.preventDefault();
+	});
 </script>
