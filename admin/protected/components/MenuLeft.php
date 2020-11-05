@@ -2119,6 +2119,22 @@ Class MenuLeft extends Controller
 	        			'label'=>'9.) รายงานการสมัครสมาชิก',
 	        			'url'=>array('//Report/logRegister')
 					),
+					array(
+	        			
+	        			'visible'=>self::PermissionsMenu(array(
+							'Report.*',
+	        			)),
+	        			'label'=>'10.) รายงานแบบสอบถามสำหรับหลักสูตร',
+	        			'url'=>array('//Report/logQuestioncourse')
+					),
+					array(
+	        			
+	        			'visible'=>self::PermissionsMenu(array(
+							'Report.*',
+	        			)),
+	        			'label'=>'11.) รายงานภาพรวมแบบสอบถาม',
+	        			'url'=>array('//Report/logQuestionall')
+					),
 	        	)
 	        ),
             array(

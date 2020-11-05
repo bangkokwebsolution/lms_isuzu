@@ -1847,4 +1847,26 @@ public  function actionReport_list(){
             }
         }
     }
+
+    public function actionLogQuestionCourse()
+    {
+        $model = new Report();
+        $model->unsetAttributes(); 
+        if(isset($_GET['Report'])){
+            $model->attributes=$_GET['Report'];
+        }
+        $this->render('logQuestioncourse',array('model'=>$model));
+    }
+
+    public function actionLogQuestionAll()
+    {
+        $header = New QHeader('Search');
+        $this->render('logQuestionall', array(
+            'header' => $header
+        ));
+    }
+
+    public function actionReportQuestionnair(){
+        $this->render('reportquestionnair');
+    }
 }

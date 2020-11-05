@@ -1,8 +1,8 @@
 <?php
-$titleName = 'แบบสอบถามภายนอก';
+$titleName = 'รายงานภาพรวมแบบสอบถาม';
 $formNameModel = 'Questionnaire';
 $this->breadcrumbs = array(
-	'ระบบแบบสอบถามภายนอก'
+	'รายงานภาพรวมแบบสอบถาม'
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -85,36 +85,16 @@ EOD
 						InitialSortTable();
 					}',
 					'columns'=>array(
-						// array(
-						// 	'visible'=>Controller::DeleteAll(
-						// 		array("Questionnaire.*", "Questionnaire.Delete", "Questionnaire.MultiDelete")
-						// 	),
-						// 	'class'=>'CCheckBoxColumn',
-						// 	'id'=>'chk',
-						// ),
 						array(
 							'name'=>'survey_name',
 							'type'=>'html',
 							'value'=>'CHtml::decode(UHtml::markSearch($data,"survey_name"))'
 						),
-						/*array(
-							'header'=>'ส่งเมล',
-					    	//'value'=>'CHtml::button("เลือกข้อสอบ (".$data->getCountTest("pre").")",  array("class" => "btn btn-primary btn-icon" ,"submit" => Yii::app()->createUrl("Lesson/FormLesson", array("id"=>$data->id,"type"=>"pre"))))',
-					    	'value'=>'CHtml::link("ส่งเมล", array(
-					      		"Questionnaireout/Sendmail",
-					      		"id"=>$data->survey_header_id,
-					      		), array(
-								"class"=>"btn btn-primary btn-icon btn-sendmail"
-						    )); ',
-					    	'type'=>'raw',
-					    	'htmlOptions'=>array('style'=>'text-align: center','width'=>'100px'),
-					    ),*/
 						array(
 							'header'=>'link ทำแบบสอบถาม',
 							'value'=>function($data){
 								$url = Yii::app()->createAbsoluteUrl('questionnaire/out');
 								$url = str_replace("admin/", "", $url);
-//								$url = str_replace("index.php/", "index.php?r=", $url);
 								$url = $url."?id=".$data->survey_header_id;
 								return CHtml::textField("liketxt",$url,array("id"=>"liketxt"))." ".CHtml::button("Copy link", array(
 									"class"=>"btn btn-primary btn-icon",
@@ -124,17 +104,18 @@ EOD
 							'type'=>'raw',
 							'htmlOptions'=>array('style'=>'text-align: center','width'=>'300px'),
 						),
-					/*	array(
+						array(
 							'header'=>'รายงาน',
 					    	'value'=>'CHtml::link("รายงาน", array(
-					      		"Questionnaireout/report",
-					      		"id"=>$data->survey_header_id,
+					      		"Report/reportquestionnair",
+                                  "id"=>$data->survey_header_id,
+                                  "all"=>1,
 					      		), array(
 								"class"=>"btn btn-primary btn-icon"
 						    )); ',
 					    	'type'=>'raw',
 					    	'htmlOptions'=>array('style'=>'text-align: center','width'=>'100px'),
-					    ),*/
+					    ),
 						array(            
 							'class'=>'AButtonColumn',
 							'visible'=>Controller::PButton( 
@@ -142,9 +123,6 @@ EOD
 							),
 							'template'=>'{update} {delete}',
 							'buttons' => array(
-								// 'view'=> array( 
-								// 	'visible'=>'Controller::PButton( array("Questionnaire.*", "Questionnaire.View") )' 
-								// ),
 								'update'=> array( 
 									'visible'=>'Controller::PButton( array("Questionnaire.*", "Questionnaire.Update") )' 
 								),
@@ -158,25 +136,6 @@ EOD
 			</div>
 		</div>
 	</div>
-
-	<?php if( Controller::DeleteAll(array("Questionnaire.*", "Questionnaire.Delete", "Questionnaire.MultiDelete")) ) : ?>
-		<!-- Options -->
-		<div class="separator top form-inline small">
-			<!-- With selected actions -->
-			<div class="buttons pull-left">
-				<?php 
-				echo CHtml::link("<i></i> ลบข้อมูลทั้งหมด",
-					"#",
-					array("class"=>"btn btn-primary btn-icon glyphicons circle_minus",
-						"onclick"=>"return multipleDeleteNews('".$this->createUrl('//'.$formNameModel.'/MultiDelete')."','$formNameModel-grid');")); 
-				?>
-			</div>
-			<!-- // With selected actions END -->
-			<div class="clearfix"></div>
-		</div>
-		<!-- // Options END -->
-	<?php endif; ?>
-
 </div>
 
 <div class="modal hide fade" id="myModal">

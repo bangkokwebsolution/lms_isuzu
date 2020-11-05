@@ -21,7 +21,7 @@
 }
 </style>
 <?php
-$titleName = 'รายงายการเรียนรายวิชา';
+$titleName = 'รายงานสถานะของสมาชิก';
 $formNameModel = 'Report';
 
 $this->breadcrumbs=array($titleName);
@@ -92,26 +92,28 @@ EOD
         'attributes'=>array(
             // array('name'=>'generation','type'=>'list','query'=>$model->getGenerationList()),
             // array('name'=>'identification','type'=>'text'),
+            //array('name'=>'type_user','type'=>'list','query'=>$type_user),
+            array('name' => 'employee_type', 'type' => 'list', 'query' => $model->getTypeEmployeeList()),
             array('name'=>'nameSearch','type'=>'text'),
-            array('name'=>'type_user','type'=>'list','query'=>$type_user),
+            array('name'=>'status','type'=>'list','query'=>$model->getStatusUser()),
+            array('name'=>'status_login','type'=>'list','query'=>$model->getStatusLogin()),
+
             // array('name'=>'type_user','type'=>'list','query'=>$model->getTypeuserList()),
             // array('name'=>'occupation','type'=>'list','query'=>$model->getOccupationList()),
             // array('name'=>'email','type'=>'text'),
             //array('name'=>'division_id','type'=>'listMultiple','query'=>$divisiondata),
-            array('name'=>'department','type'=>'listMultiple','query'=>$departmentdata),
+          //  array('name'=>'department','type'=>'listMultiple','query'=>$departmentdata),
            // array('name'=>'station','type'=>'listMultiple','query'=>$stationdata),
 
             array('name'=>'date_start','type'=>'text'),
             array('name'=>'date_end','type'=>'text'),
             array('name'=>'date_start_lastuse','type'=>'text'),
             array('name'=>'date_end_lastuse','type'=>'text'),
-            array('name'=>'status_login','type'=>'list','query'=>$model->getStatusLogin()),
-
             //array('name'=>'course_point','type'=>'text'),
         ),
     ));?>
     <?php
-    if((($model->date_start != '') && ($model->date_end != '')) || (($model->date_start_lastuse != '') && ($model->date_end_lastuse != '')) || ($model->generation != '') || ($model->identification != '') || ($model->nameSearch != '') || ($model->department != '') || ($model->occupation != '') || ($model->email != '') || ($model->status_login != '') || (isset($model->type_user))){
+    if((($model->date_start != '') && ($model->date_end != '')) || (($model->date_start_lastuse != '') && ($model->date_end_lastuse != '')) || ($model->generation != '') || ($model->identification != '') || ($model->nameSearch != '') || ($model->department != '') || ($model->occupation != '') || ($model->email != '') || ($model->status_login != '') || (isset($model->employee_type))){
         $sqlUser = " SELECT * FROM tbl_users INNER JOIN tbl_profiles ON tbl_users.id = tbl_profiles.user_id 
         WHERE del_status = 0 ";//INNER JOIN tbl_type_user ON tbl_type_user.id = tbl_users.department_id 
             if(($model->date_start != '') && ($model->date_end != '')){
@@ -135,6 +137,9 @@ EOD
             if($model->generation !='') {
                 $sqlUser .= " AND tbl_profiles.generation = '".$model->generation."' ";      
             }
+            if($model->status !='') {
+                $sqlUser .= " AND tbl_users.status = '".$model->status."' ";      
+            }
 
             //type_user
             if($model->type_user !='') {
@@ -145,6 +150,9 @@ EOD
 
                 }
                 // $sqlUser .= " AND tbl_profiles.type_user LIKE '".$model->type_user."' ";
+            }
+            if ($model->employee_type != ''){
+                $sqlUser .= " AND tbl_profiles.type_employee = " . $model->employee_type;
             }
             // if($model->department !='') {
             //     $sqlUser .= " AND tbl_users.department_id = '".$model->department."' ";   
@@ -220,17 +228,21 @@ EOD
                 <thead>
                 <tr>
                     <th class="center">ลำดับ</th>
-                    <th class="center">ชื่อ</th>
-                    <th class="center">นามสกุล</th>
+                    <th class="center">ประเภทพนักงาน</th>
+                    <th class="center">ชื่อ - นามสกุล</th>
                     <!-- <th class="center">บัตรประชาชน</th> -->
                     <!-- <th class="center">เบอร์</th> -->
-                    <th class="center">อีเมล</th>
+                    <th class="center">แผนก</th>
+                    <th class="center">ตำแหน่ง</th>
+                    <!--<th class="center">ฝ่าย</th>-->
+                    <th class="center">เบอร์โทรศัพท์</th>
+                    <th class="center">อีเมลล์</th>
+                    <th class="center">สถานะการใช้งาน</th>
                     <!-- <th class="center">ประเภทสมาชิก</th> -->
                     <!-- <th class="center">จังหวัด</th> -->
                     <!-- <th class="center">รุ่น</th> -->
                     <th class="center">วันที่สมัคร</th>
-                    <th class="center">สถานะ</th>
-                    <th class="center">วันที่ใช้งาน</th>
+                    <th class="center">วันที่ใช้งานล่าสุด</th>
                 </tr>
                 </thead>
                 <!-- // Table heading END -->
@@ -251,14 +263,28 @@ EOD
                         $status = "เปิดการใช้งาน";
                     }
                     $type = TypeUser::model()->findByPk($userItem[type_user]);
+                    $typeemployee = Profile::model()->findByPk($userItem['user_id']);
+                    if ($typeemployee['type_employee'] == 1){
+                        $typeemp = "คนประจำเรือ";
+                    }
+                    if ($typeemployee['type_employee'] == 2){
+                        $typeemp = "พนักงานออฟฟิศ";
+                    }
+                    $Dep = Department::model()->findByPk($userItem['department_id']);
+                    $Pos = Position::model()->findByPk($userItem['position_id']);
+                    //$Div = Division::model()->findByPk($userItem['division_id']);
+                    if ($typeemployee['type_employee'] != ""){
             ?>
                 <!-- Table row -->
                 <tr>
                     <td class="center"><?= $i ?></td>
-                    <td class="center"><?= $userItem[firstname] ?></td>
-                    <td class="center"><?= $userItem[lastname] ?></td>
+                    <td class="center"><?= $typeemp ?></td>
+                    <td class="center"><?= $userItem[firstname] . " " . $userItem[lastname] ?></td>
+                    <td class="center"><?= ($Dep->dep_title) ? $Dep->dep_title : '-'; ?></td>
+                    <td class="center"><?= ($Pos->position_title) ? $Pos->position_title : '-'; ?></td>
+                    <td class="center"><?= $userItem[tel] ?></td>
+
                     <!-- <td class="center"><?= $userItem[identification] ?></td> -->
-                   <!--  <td class="center"><?= $userItem[tel] ?></td> -->
                     <td class="center"><?= $userItem[email] ?></td>
                     <!-- <td class="center"><?= $type->name ?></td> -->
                     
@@ -273,12 +299,12 @@ EOD
                         $lastvisit_at = $userItem[lastvisit_at];
                     }
                     ?>
-                    <td class="center"><?= $lastvisit_at ?></td>
+                    <td class="center"><?= ($lastvisit_at == 'ยังไม่เข้าสู่ระบบ') ? $lastvisit_at : Helpers::changeFormatDate($lastvisit_at,'datetime'); ?></td>
                 </tr>
                 <!-- // Table row END -->
             <?php
             $i++;
-            }
+                }}
             ?>
                 </tbody>
             <!-- // Table body END -->

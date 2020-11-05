@@ -105,7 +105,7 @@ EOD
             }
             $sqlUser .= " AND tbl_users.create_at between '".$startDate."' and '".$endDate."' ";
         }
-        $sqlUser .= " order by firstname_en asc";
+        $sqlUser .= " order by firstname_en asc, firstname asc";
         $modelAll = Yii::app()->db->createCommand($sqlUser)->queryAll();
         $dataProvider = new CArrayDataProvider($modelAll);
         $model = $dataProvider->getData();

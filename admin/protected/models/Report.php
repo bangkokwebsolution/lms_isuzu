@@ -32,6 +32,7 @@ class Report extends CFormModel {
     public $position;
     public $level;
     public $status_learn;
+    public $question;
     
     
 
@@ -39,7 +40,7 @@ class Report extends CFormModel {
     public function rules()
     {
         return array(
-            array('period_start,period_end,typeOfUser,dateRang,course,nameSearch,university,company,categoryUniversity,categoryCompany,company_id,division_id,position_id,department,station,schedule_id,type_user,course_id, type_register, gen_id, position, level, status_learn', 'safe'),
+            array('period_start,period_end,typeOfUser,dateRang,course,nameSearch,university,company,categoryUniversity,categoryCompany,company_id,division_id,position_id,department,station,schedule_id,type_user,course_id, type_register, gen_id, position, level, status_learn, question', 'safe'),
         );
     }
 
@@ -69,6 +70,7 @@ class Report extends CFormModel {
             'position' => 'แผนก',
             'level'=>'level',
             'status_learn'=>'สถานะเรียน',
+            'question'=>'เลือกแบบสอบถาม',
             
         );
     }
@@ -76,6 +78,17 @@ class Report extends CFormModel {
     /**
      * @return mixed
      */
+
+    public function getAllQuestion(){
+        $sql = '';
+        $sql .= ' select * from q_survey_headers';
+        $sql .= ' join q_survey_sections on q_survey_headers.survey_header_id = q_survey_sections.survey_header_id';
+        $sql .= ' where q_survey_headers.active = "y"';
+        $question = Yii::app()->db->createCommand($sql)->queryAll();
+        $questionlist = CHtml::listData($question,'survey_header_id','survey_name');
+
+        return $questionlist;
+    }
 
     public function getAllOfUsers() {
 
