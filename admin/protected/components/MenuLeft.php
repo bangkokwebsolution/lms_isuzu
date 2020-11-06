@@ -1938,7 +1938,7 @@ Class MenuLeft extends Controller
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Report.*',
 	        			)),
-	        			'label'=>'1.) ข้อมูลการฝึกอบรมของพนักงาน',
+	        			'label'=>'1.) ข้อมูลการฝึกอบรมของพนักงานรายบุคคล',
 	        			'url'=>array('//Report/Status')
 	        		),
 	        		array(
