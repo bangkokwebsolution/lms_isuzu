@@ -342,12 +342,20 @@ EOD
         function(data) {
             document.getElementById('ReportUser_department').innerHTML = data;
         });
+        $.post("<?=$this->createUrl('report/GetDataLogRegister');?>", {
+            position: document.getElementById("ReportUser_employee_type").value,
+            all: true,
+        },
+        function(data) {
+            document.getElementById('ReportUser_position_id').innerHTML = data;
+        });
     };
 
     document.getElementById("ReportUser_department").onchange = function() {
         $.post("<?=$this->createUrl('report/GetDataLogRegister');?>", {
             type: document.getElementById("ReportUser_department").value,
             position: document.getElementById("ReportUser_department").value,
+            all: false,
         },
         function(data) {
             document.getElementById('ReportUser_position_id').innerHTML = data;

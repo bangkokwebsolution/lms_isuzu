@@ -360,7 +360,7 @@ EOD
     for(var i = 0, l = select.options.length; i < l; i++) {
         var option = select.options[i];
         if(option.innerHTML == "ทั้งหมด") {
-            option.innerHTML = "กรุณาเลือกประเภทพนักงาน";
+            option.innerHTML = "กรุณาเลือกประเภท";
             option.disabled = true;
         }
     }
@@ -389,9 +389,14 @@ EOD
             department: 1,
         },
         function(data) {
-            if (data != ""){
-                document.getElementById('ReportUser_department').innerHTML = data;
-            }
+            document.getElementById('ReportUser_department').innerHTML = data;
+        });
+        $.post("<?=$this->createUrl('report/GetDataLogRegister');?>", {
+            position: document.getElementById("ReportUser_employee_type").value,
+            all: true,
+        },
+        function(data) {
+            document.getElementById('ReportUser_position_id').innerHTML = data;
         });
     }
 
@@ -399,6 +404,7 @@ EOD
         $.post("<?=$this->createUrl('report/GetDataLogRegister');?>", {
             type: document.getElementById("ReportUser_department").value,
             position: document.getElementById("ReportUser_department").value,
+            all: false,
         },
         function(data) {
             if (data != ""){
