@@ -2042,7 +2042,6 @@ Class MenuLeft extends Controller
 	        				'admin.*',
 	        			)),
 	        			'label'=>'2.) รายงานผลการสมัครสมาชิก (ผู้เรียน)',
-						//'url'=>array('//PassCpd/index')
 	        			'url'=>array('//user/admin/Status')
 	        		),
 
@@ -2071,6 +2070,31 @@ Class MenuLeft extends Controller
 	        			'url'=>array('//Report/ByUser')
 	        		),
 
+	        		array(
+	        			
+	        			'visible'=>self::PermissionsMenu(array(
+							'Report.*',
+	        			)),
+	        			'label'=>'6.) รายงานแบบสอบถามสำหรับหลักสูตร',
+	        			'url'=>array('//Report/logQuestioncourse')
+					),
+					array(
+	        			
+	        			'visible'=>self::PermissionsMenu(array(
+							'Report.*',
+	        			)),
+	        			'label'=>'7.) รายงานภาพรวมแบบสอบถาม',
+	        			'url'=>array('//Report/logQuestionall')
+					),
+					array(
+	        			
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'Report.*',
+	        			)),
+	        			'label'=>'8.) รายงานการรีเซตหลักสูตร',
+	        			'url'=>array('//Report/logReset')
+					),
+
 	        		// array(
 	        			
 	        		// 	'visible'=>self::PermissionsMenu(array(
@@ -2095,47 +2119,24 @@ Class MenuLeft extends Controller
 	        		// 	'label'=>'5.) รายงานสถิติจำนวนผู้พิมพ์ใบประกาศฯ',
 	        		// 	'url'=>array('//Passcours/PasscoursLog')
 	        		// ),
-	        		array(
+	        		// array(
 	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Questionnaire.*',
-	        			)),
-	        			'label'=>'6.) รายงานแบบสอบถามสำหรับใช้ภายนอก',
-	        			'url'=>array('//Questionnaire/Report_list')
-	        		),
-	        		array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Report.*',
-	        			)),
-	        			'label'=>'7.) รายงานการรีเซตหลักสูตร',
-	        			'url'=>array('//Report/logReset')
-					),
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'Questionnaire.*',
+	        		// 	)),
+	        		// 	'label'=>'6.) รายงานแบบสอบถามสำหรับใช้ภายนอก',
+	        		// 	'url'=>array('//Questionnaire/Report_list')
+	        		// ),
 					
-					array(
+					// array(
 	        			
-	        			'visible'=>self::PermissionsMenu(array(
-							'Report.*',
-	        			)),
-	        			'label'=>'9.) รายงานการสมัครสมาชิก',
-	        			'url'=>array('//Report/logRegister')
-					),
-					array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-							'Report.*',
-	        			)),
-	        			'label'=>'10.) รายงานแบบสอบถามสำหรับหลักสูตร',
-	        			'url'=>array('//Report/logQuestioncourse')
-					),
-					array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-							'Report.*',
-	        			)),
-	        			'label'=>'11.) รายงานภาพรวมแบบสอบถาม',
-	        			'url'=>array('//Report/logQuestionall')
-					),
+	    //     			'visible'=>self::PermissionsMenu(array(
+					// 		'Report.*',
+	    //     			)),
+	    //     			'label'=>'9.) รายงานการสมัครสมาชิก',
+	    //     			'url'=>array('//Report/logRegister')
+					// ),
+					
 	        	)
 	        ),
             array(
