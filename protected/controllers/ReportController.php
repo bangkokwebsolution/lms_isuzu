@@ -136,7 +136,6 @@ class ReportController extends Controller
 				    $end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
 				}
 		$Chart = $_POST['Chart'];
-
 		if (Yii::app()->user->id != null) {
 					$user_login = User::model()->findByPk(Yii::app()->user->id);
 					$authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
@@ -214,7 +213,7 @@ class ReportController extends Controller
 					if($Position){
 						$criteria->compare('position_id',$Position);
 					}else{
-						$criteria->compare('position_id',$pos_arr);	
+						//$criteria->compare('position_id',$pos_arr);	
 					}
 					if ($Leval != "") {
 						if ($Leval) {
@@ -229,6 +228,7 @@ class ReportController extends Controller
 					
 					$criteria->order = 'department.sortOrder ASC';
 					$User = User::model()->findAll($criteria);
+					//var_dump($pos_arr); exit;
 					if (isset($pos)) {
 						
 						$data_division_start = '["Element", "Division", { role: "style" } ],';
@@ -936,7 +936,6 @@ public function actionReportRegisterOfficeExcel()
 			}
 			$criteria->order = 'position.sortOrder ASC';
 			$User = User::model()->findAll($criteria);
-
 			if (!empty($pos)) {
 
 				$datas = '["Element", "Position", { role: "style" } ],';
