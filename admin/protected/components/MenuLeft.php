@@ -2027,7 +2027,15 @@ Class MenuLeft extends Controller
 	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Report', 'Questionnaire') ), 'id' => 'Report'),
 	        	'active' => self::SetSubMenu( array('Report', 'Questionnaire') ,false),
 	        	'items'=>array(
-					//set new menu				
+					//set new menu	
+					array(
+	        			
+	        			'visible'=>self::PermissionsMenu(array(
+							'Report.*',
+	        			)),
+	        			'label'=>'1.) รายงานภาพรวมการสมัครสมาชิก',
+	        			'url'=>array('//Report/logAllRegister')
+					),			
 	        		array(
 	        			
 	        			'visible'=>self::PermissionsMenu(array(
@@ -2103,14 +2111,7 @@ Class MenuLeft extends Controller
 	        			'label'=>'7.) รายงานการรีเซตหลักสูตร',
 	        			'url'=>array('//Report/logReset')
 					),
-					array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-							'Report.*',
-	        			)),
-	        			'label'=>'8.) รายงานภาพรวมการสมัครสมาชิก',
-	        			'url'=>array('//Report/logAllRegister')
-					),
+					
 					array(
 	        			
 	        			'visible'=>self::PermissionsMenu(array(
