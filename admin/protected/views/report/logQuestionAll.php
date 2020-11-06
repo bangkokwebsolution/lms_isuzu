@@ -91,20 +91,6 @@ EOD
 							'value'=>'CHtml::decode(UHtml::markSearch($data,"survey_name"))'
 						),
 						array(
-							'header'=>'link ทำแบบสอบถาม',
-							'value'=>function($data){
-								$url = Yii::app()->createAbsoluteUrl('questionnaire/out');
-								$url = str_replace("admin/", "", $url);
-								$url = $url."?id=".$data->survey_header_id;
-								return CHtml::textField("liketxt",$url,array("id"=>"liketxt"))." ".CHtml::button("Copy link", array(
-									"class"=>"btn btn-primary btn-icon",
-									"data-clipboard-text"=>$url
-							    )); 
-							},
-							'type'=>'raw',
-							'htmlOptions'=>array('style'=>'text-align: center','width'=>'300px'),
-						),
-						array(
 							'header'=>'รายงาน',
 					    	'value'=>'CHtml::link("รายงาน", array(
 					      		"Report/reportquestionnair",
@@ -116,21 +102,6 @@ EOD
 					    	'type'=>'raw',
 					    	'htmlOptions'=>array('style'=>'text-align: center','width'=>'100px'),
 					    ),
-						array(            
-							'class'=>'AButtonColumn',
-							'visible'=>Controller::PButton( 
-								array("Questionnaire.*", "Questionnaire.View", "Questionnaire.Update", "Questionnaire.Delete") 
-							),
-							'template'=>'{update} {delete}',
-							'buttons' => array(
-								'update'=> array( 
-									'visible'=>'Controller::PButton( array("Questionnaire.*", "Questionnaire.Update") )' 
-								),
-								'delete'=> array( 
-									'visible'=>'Controller::PButton( array("Questionnaire.*", "Questionnaire.Delete") )' 
-								),
-							),
-						),
 					),
 				)); ?>
 			</div>

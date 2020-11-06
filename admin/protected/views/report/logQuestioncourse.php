@@ -43,7 +43,6 @@ EOD
 <?php
 if (!empty($_GET) && $_GET['Report']['question'] != "") {
     $search = $_GET['Report'];
-    $course_online = CourseOnline::model()->findByPk($search["course_id"]);
     $criteria = new CDbCriteria;
     $criteria->with = array('pro', 'course', 'mem');
 ?>
@@ -68,16 +67,24 @@ if (!empty($_GET) && $_GET['Report']['question'] != "") {
                     <?php 
                         $course_teacher = CourseTeacher::model()->findAll(array('condition' => 'survey_header_id=' . $search['question']));
                         if (count($course_teacher) > 0){
+                            $k = false;
                             for ($i = 0; $i < count($course_teacher); $i ++){
-                                $gen = CourseGeneration::model()->findAll(array('condition' => 'course_id=' . $course_teacher[$i]['course_id'] . ' and active="y"'));
-                                foreach ($gen as $value){
-                                    echo '<tr>';
-                                    echo '<td class="center">'. ($i+1). '</td>';
-                                    echo '<td class="center">'. $course_teacher[$i]['title']. '</td>';
-                                    echo '<td class="center">'. $value->gen_title . '</td>';
-                                    echo '<td class="center"><a href="'.$this->createUrl('//Report/reportquestionnair/id/' . $course_teacher[$i]['course_id'] . '/genid/' . $value->gen_id . '/all/0').'" class="btn btn-primary btn-icon">รายงาน</a></td>';
-                                    echo '</tr>';
+                                $checkcourse = CourseOnline::model()->findByPk($course_teacher[$i]['course_id']);
+                                if ($checkcourse->active == "y") {
+                                    $gen = CourseGeneration::model()->findAll(array('condition' => 'course_id=' . $course_teacher[$i]['course_id'] . ' and active="y"'));
+                                    foreach ($gen as $value){
+                                        echo '<tr>';
+                                        echo '<td class="center">'. ($i+1). '</td>';
+                                        echo '<td class="center">'. $course_teacher[$i]['title']. '</td>';
+                                        echo '<td class="center">'. $value->gen_title . '</td>';
+                                        echo '<td class="center"><a href="'.$this->createUrl('//Report/reportquestionnair/id/' . $course_teacher[$i]['course_id'] . '/genid/' . $value->gen_id . '/all/0').'" class="btn btn-primary btn-icon">รายงาน</a></td>';
+                                        echo '</tr>';
+                                        $k = true;
+                                    }
                                 }
+                            }
+                            if ($k == false){
+                                echo '<tr><td colspan="8" class="center">ไม่มีข้อมูล</td></tr>';
                             }
                         }else{
                             echo '<tr><td colspan="8" class="center">ไม่มีข้อมูล</td></tr>';
