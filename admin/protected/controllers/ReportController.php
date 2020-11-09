@@ -145,7 +145,7 @@ class ReportController extends Controller
         if(isset($_POST["value"]) && $_POST["value"] != ""){
 
             $Lesson = Lesson::model()->findAll(array(
-                'condition' => 'course_id=:course_id AND active=:active lang_id=1',
+                'condition' => 'course_id=:course_id AND active=:active AND lang_id=1',
                 'params' => array(':course_id'=>$_POST["value"], ':active'=>"y"),
                 'order' => 'title ASC',
             ));
