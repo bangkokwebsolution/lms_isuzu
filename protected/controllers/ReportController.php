@@ -225,7 +225,7 @@ class ReportController extends Controller
         				$criteria->compare('branch_id',$user_Level);
     					}
 					}
-					
+					$criteria->addCondition("profile.user_id=User.id");
 					$criteria->order = 'department.sortOrder ASC';
 					$User = User::model()->findAll($criteria);
 					//var_dump($pos_arr); exit;
@@ -934,6 +934,7 @@ public function actionReportRegisterOfficeExcel()
 			}else{
 				$criteria->compare('position_id',$result_pos_arr);	
 			}
+			$criteria->addCondition('profile.user_id=user.id');
 			$criteria->order = 'position.sortOrder ASC';
 			$User = User::model()->findAll($criteria);
 			if (!empty($pos)) {
@@ -1385,7 +1386,6 @@ public function actionReportRegisterOfficeExcel()
 				            </center>
 				        	</li>
 							<?php
-
 							$i = 1;
 							$people_total = Yii::app()->session['lang'] == 1?"No. of Staff:":"จำนวนผู้สมัครทั้งหมด";
     						$people = Yii::app()->session['lang'] == 1?"persons":"คน";
@@ -1790,7 +1790,6 @@ public function actionReportRegisterData()
 						
 					}else if($TypeEmployee == '2'){
 
-						
 							$datas = '["Element", "Division", { role: "style" } ],';
 							$colorName = Helpers::lib()->ColorCode();	
 						
@@ -2296,10 +2295,9 @@ public function actionReportRegisterData()
 												$criteria->compare('del_status',0);
 												$criteria->compare('status',1);
 												$criteria->compare('register_status',1);
-									
+												$criteria->addCondition("user_id=id");
 											$users_br = Users::model()->findAll($criteria);
 											$total = count($users_br);
-
 									foreach ($pos_back as $keypos_back => $valuepos_back) { 
 									 		$position_pos[] = $valuepos_back->id;
 									 		$departments_pos[] = $valuepos_back->Departments->id;
@@ -2332,8 +2330,8 @@ public function actionReportRegisterData()
 												
 											}
 										}
+										$criteria->addCondition('profile.user_id=user.id');
 										$users_ps = Users::model()->findAll($criteria);
-						
 										$total_pos = count($users_ps);
 									foreach ($dep_back as $keydep_back => $valuedep_back) { 
 										$departments_dep[] = $valuedep_back->id;

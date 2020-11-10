@@ -167,7 +167,7 @@ EOD
                                                     $re_total = 0;
                                                     $accept_total = 0;
                                                     for ($n = 0; $n < count($modelAll); $n++) {
-                                                        if ($modelAll[$n]['position_id'] == $PositionAll[$i]['id']) {
+                                                        if ($modelAll[$n]['position_id'] == $PositionAll[$i]['id'] && $modelAll[$n]['department_id'] == $value->id) {
                                                             if ($modelAll[$n]['register_status'] == 1) {
                                                                 $accept_total++;
                                                             }
