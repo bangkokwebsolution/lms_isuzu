@@ -2453,8 +2453,9 @@ public function actionReportRegisterData()
 												$criteria->compare('del_status',0);
 												$criteria->compare('status',1);
 												$criteria->compare('register_status',1);
+												$criteria->addCondition('profile.user_id=id');
 												$users_count = Users::model()->findAll($criteria);
-												$cou_use = count($users_count);									
+												$cou_use = count($users_count);	
 
 											$criteria = new CDbCriteria;
 											$criteria->compare('position_id',$value);
@@ -2492,6 +2493,7 @@ public function actionReportRegisterData()
 											$criteria->compare('superuser',0);
 											$criteria->compare('del_status',0);
 											$criteria->compare('register_status',1);
+											$criteria->addCondition('profile.user_id=id');
 											$usersAll = Users::model()->findAll($criteria);		
 											$cou_useAll = count($usersAll);
 											$sumtotal += $cou_useAll;
@@ -2590,7 +2592,7 @@ public function actionReportRegisterData()
 										$criteria->compare('superuser',0);
 										$criteria->compare('del_status',0);
 										$criteria->compare('status',array(0,1));
-										$criteria->compare('register_status',array(0,1));
+										$criteria->compare('register_status',$_POST['status']);
 										// $criteria->select = 'id';
 										// if($TypeEmployee){
 										// 		$criteria->compare('type_employee',$TypeEmployee);
@@ -2620,10 +2622,12 @@ public function actionReportRegisterData()
 										// 		}
 										// 	}
 										$criteria->compare('superuser',0);
+										$criteria->addCondition('profile.user_id=id');
 										$usersAll = Users::model()->findAll($criteria);
 
 										$cou_use = count($users);
 										$cou_useAll = count($usersAll);
+
 										$sumtotal += $cou_useAll;
 										$SUM_user[] = $cou_useAll;
 										$per_cen = ($cou_use * 100)/ $cou_useAll; 
@@ -2708,7 +2712,6 @@ public function actionReportRegisterData()
 										$criteria->compare('status',1);
 										$criteria->compare('register_status',1);
 										$users = Users::model()->findAll($criteria);
-
 										 $criteria = new CDbCriteria;
 										 $criteria->compare('department_id',$valuedep_back->id);
 										if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
