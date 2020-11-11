@@ -909,19 +909,12 @@ public function actionReportRegisterOfficeExcel()
 			if ($status != null) {
 
 				if ($status == "1") {
-					$criteria->compare('register_status',1);
-					$criteria->compare('status',1);
+					$criteria->compare('register_status', 1);
+					$criteria->compare('status',1);	
 				}
 				if($status == "0"){
-					if ($status != "1") {
-						$criteria->compare('register_status',0);
-						$criteria->compare('status',1);
-					}else{
-						$criteria->compare('register_status',0);
-						$criteria->compare('status',0);
-					} 
-												
-				}
+					$criteria->compare('register_status', 0);
+				}						
 			}
 			if ($age != null && $age2 != null || $age != "" && $age2 != "") {
 				$criteria->addBetweenCondition('age', $age, $age2, 'AND');
@@ -1388,7 +1381,7 @@ public function actionReportRegisterOfficeExcel()
 							<?php
 							$i = 1;
 							$people_total = Yii::app()->session['lang'] == 1?"No. of Staff:":"จำนวนผู้สมัครทั้งหมด";
-    						$people = Yii::app()->session['lang'] == 1?"persons":"คน";
+							$people = Yii::app()->session['lang'] == 1?"persons":"คน";
 							$datatable .= '<div class="report-table">';
 							$datatable .= '<p style="text-align: right;">'.$people_total.' <span style="font-weight:bold;">';
 							$datatable .=  count($User);
@@ -1462,7 +1455,7 @@ public function actionReportRegisterOfficeExcel()
 						$datatable .= '<tr>';
 						$datatable .= '<td colspan="6">';
                                     if(Yii::app()->session['lang'] != 1){
-                                        $datatable .= 'ไม่มีข้อมูล';
+										$datatable .= 'ไม่มีข้อมูล';
                                     }else{
                                         $datatable .= 'No data';
                                     }
@@ -2315,20 +2308,15 @@ public function actionReportRegisterData()
 										$criteria->compare('del_status',0);
 									if ($status != null) {
 
-											if ($status == "1") {
-												$criteria->compare('register_status',1);
-												$criteria->compare('status',1);
-											}
-											if($status == "0"){
-												if ($status != "1") {
-													$criteria->compare('register_status',0);
-													$criteria->compare('status',array(0,1));
-												}else{
-													$criteria->compare('register_status',0);
-													$criteria->compare('status',0);
-												} 
-												
-											}
+											/*if ($status != "1") {
+												$criteria->compare('register_status',0);
+												$criteria->compare('status',array(0,1));
+											}else{
+												$criteria->compare('register_status',array(0,1));
+												$criteria->compare('status',array(0,1));
+											} */
+											$criteria->compare('register_status',array(0,1));
+											$criteria->compare('status',array(0,1));
 										}
 										$criteria->addCondition('profile.user_id=user.id');
 										$users_ps = Users::model()->findAll($criteria);
@@ -2350,9 +2338,11 @@ public function actionReportRegisterData()
 										$users_dm = Users::model()->findAll($criteria);
 									
 										$total_dep = count($users_dm);
+
+										
 									$i = 1;
 									$people_total = Yii::app()->session['lang'] == 1?"No. of Staff:":"จำนวนผู้สมัครทั้งหมด";
-    								$people = Yii::app()->session['lang'] == 1?"persons":"คน";
+									$people = Yii::app()->session['lang'] == 1?"persons":"คน";
 									$datatable .= '<div class="report-table">';
 									$datatable .= '<p style="text-align: right;">'.$people_total;
 									$datatable .= ' <span style="font-weight:bold;"> ';	
@@ -2569,30 +2559,26 @@ public function actionReportRegisterData()
 												$criteria->compare('status',1);
 											}
 											if($status == "0"){
-												if ($status != "1") {
-													$criteria->compare('register_status',0);
-													$criteria->compare('status',1);
-												}else{
-													$criteria->compare('register_status',0);
-													$criteria->compare('status',0);
-												} 
-												
+												$criteria->compare('register_status',0);
+												$criteria->compare('status',0);				
 											}
 										}
 
 										$users = Users::model()->findAll($criteria);
-							
 										$criteria = new CDbCriteria;
 										$criteria->compare('position_id',$valuepos_back->id);
 										$criteria->compare('department_id',$valuepos_back->Departments->id);
 										if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
-
 											$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 										}
 										$criteria->compare('superuser',0);
 										$criteria->compare('del_status',0);
 										$criteria->compare('status',array(0,1));
-										$criteria->compare('register_status',$_POST['status']);
+										if ($_POST['status'] == 1){
+											$criteria->compare('register_status',array(0,1));
+										}else{
+											$criteria->compare('register_status',array(0,1));
+										}
 										// $criteria->select = 'id';
 										// if($TypeEmployee){
 										// 		$criteria->compare('type_employee',$TypeEmployee);
@@ -2624,59 +2610,65 @@ public function actionReportRegisterData()
 										$criteria->compare('superuser',0);
 										$criteria->addCondition('profile.user_id=id');
 										$usersAll = Users::model()->findAll($criteria);
-
 										$cou_use = count($users);
 										$cou_useAll = count($usersAll);
+										if ($cou_useAll > 0){
+											$sumtotal += $cou_useAll;
+											$SUM_user[] = $cou_use;
+											$per_cen = ($cou_use * 100)/ $cou_useAll; 
 
-										$sumtotal += $cou_useAll;
-										$SUM_user[] = $cou_useAll;
-										$per_cen = ($cou_use * 100)/ $cou_useAll; 
-
-										$datatable .= '<tr>';
-										$datatable .= '<td>'.$i++.'</td>';
-										$datatable .= '<td>'.$valuepos_back->Departments->dep_title.'</td>';
-										$datatable .= '<td>'.$valuepos_back->position_title.'</td>';
-										if($TypeEmployee != 1){
-											$datatable .= '<td></td>';
-										}
-										$datatable .= '<td>'.$cou_useAll.'</td>';
-										
-										if($TypeEmployee != 2){
-											$datatable .= '<td>'.$cou_use.'</td>';
-												if (Yii::app()->session['lang'] == 1) {		
-												$datatable .= '<td>';
-													if($cou_use > 0){
-														if ($status == 1 ) {
-															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
-														}else{
-															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
-														}
-													}else{
-														$datatable .= '-';
-													}
-												
-												$datatable .= '</td>';
+											$datatable .= '<tr>';
+											$datatable .= '<td>'.$i++.'</td>';
+											$datatable .= '<td>'.$valuepos_back->Departments->dep_title.'</td>';
+											$datatable .= '<td>'.$valuepos_back->position_title.'</td>';
+											if($TypeEmployee != 1){
+												$datatable .= '<td></td>';
+											}
+											$datatable .= '<td>'.$cou_useAll.'</td>';
+											
+											if($TypeEmployee != 2){
+												if ($status != 0){
+													$datatable .= '<td>'.$cou_use.'</td>';
 												}else{
-												$datatable .= '<td>';
-													if($cou_use > 0){
-														if ($status == 1 ) {
-															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
-														}else{
-															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
-														}
-													}else{
-														$datatable .= '-';
-													}
-													$datatable .= '</td>';
+													$datatable .= '<td>'.$cou_use.'</td>';
 												}
-												
-											}	
-										if($cou_use > 0){
-											$datatable .= '<td>'.round($per_cen, 2).' %</td>';
-										}else{
-											$datatable .= '<td>-</td>';
+													if (Yii::app()->session['lang'] == 1) {		
+													$datatable .= '<td>';
+														if($cou_use > 0){
+															if ($status == 1 ) {
+																$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
+															}else{
+																$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
+															}
+														}else{
+															if ($status == 1){
+																$datatable .= '-';
+															}
+														}
+													
+													$datatable .= '</td>';
+													}else{
+													$datatable .= '<td>';
+														if($cou_use > 0){
+															if ($status == 1 ) {
+																$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
+															}else{
+																$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+															}
+														}else{
+															$datatable .= '-';
+														}
+														$datatable .= '</td>';
+													}
+													
+												}	
+											if($cou_use > 0){
+												$datatable .= '<td>'.round($per_cen, 2).' %</td>';
+											}else{
+												$datatable .= '<td>-</td>';
+											}
+											$datatable .= '</tr>';
 										}
-										$datatable .= '</tr>';
 
 
 									}  

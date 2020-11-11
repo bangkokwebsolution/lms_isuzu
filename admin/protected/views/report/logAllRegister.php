@@ -199,8 +199,12 @@ EOD
                                     }
                                     for ($i = 0; $i < count($DivisionAll); $i++) {
                                         $Setdiv = 0;
-                                        $PosAll = Position::model()->findAll(array('condition' => 'department_id=' . $DivisionAll[$i]['id'] . ' and active="y"'));
-                                        ?>
+                                        if ($_GET['ReportUser']['position_id'] != ""){
+                                            $PosAll = Position::model()->findAll(array('condition' => 'department_id=' . $DivisionAll[$i]['id'] . ' and active="y" and id=' . $_GET['ReportUser']['position_id']));
+                                        }else{
+                                            $PosAll = Position::model()->findAll(array('condition' => 'department_id=' . $DivisionAll[$i]['id'] . ' and active="y"'));
+                                        }
+                                       ?>
                                         <?php for ($n = 0; $n < count($PosAll); $n++) {
                                             $Setpos = 0;
                                             $levelAll = Branch::model()->findAll(array('condition' => 'position_id=' . $PosAll[$n]['id'] . ' and active="y"'));
@@ -211,7 +215,6 @@ EOD
                                                 $re_total = 0;
                                                 $accept_total = 0;
                                                 for ($r = 0; $r < count($modelAll); $r++) {
-                                                    //$modelAll[$r]['department_id'] == $DivisionAll[$i]['id']
                                                     if ($modelAll[$r]['branch_id'] == $levelAll[$x]['id']) {
                                                         if ($modelAll[$r]['register_status'] == 1) {
                                                             $accept_total++;
@@ -334,7 +337,8 @@ EOD
         }
     }
 
-    document.getElementById("ReportUser_employee_type").onchange = function() {
+    function ReportEmpChange(databack){
+        var x = document.getElementById('ReportUser_department').selectedIndex;
         $.post("<?=$this->createUrl('report/GetDataLogRegister');?>", {
             type: document.getElementById("ReportUser_employee_type").value,
             department: 1,
@@ -349,9 +353,10 @@ EOD
         function(data) {
             document.getElementById('ReportUser_position_id').innerHTML = data;
         });
-    };
+    }
 
-    document.getElementById("ReportUser_department").onchange = function() {
+    function ReportDepChange(databack){
+        var x1 = document.getElementById('ReportUser_position_id').selectedIndex;
         $.post("<?=$this->createUrl('report/GetDataLogRegister');?>", {
             type: document.getElementById("ReportUser_department").value,
             position: document.getElementById("ReportUser_department").value,
@@ -360,6 +365,14 @@ EOD
         function(data) {
             document.getElementById('ReportUser_position_id').innerHTML = data;
         });
+    }
+
+    document.getElementById("ReportUser_employee_type").onchange = function() {
+        ReportEmpChange();
+    };
+
+    document.getElementById("ReportUser_department").onchange = function() {
+        ReportDepChange();
     };
 
     $('#btnExport').click(function(e) {
@@ -374,4 +387,9 @@ EOD
 		a.click();
 		e.preventDefault();
 	});
+
+    $(document).ready(function(){ 
+        ReportEmpChange(true);
+        ReportDepChange(true); 
+    }); 
 </script>
