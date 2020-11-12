@@ -30,6 +30,50 @@ class Passcours extends AActiveRecord
 		return '{{passcours}}';
 	}
 
+
+	public function beforeSave()
+	{
+		if($this->isNewRecord){
+			$start = date("Y")."-01-01 00:00:00";
+			$last = date("Y")."-12-31 23:59:59";
+			$model_find = PasscourseNumber::model()->find(array(
+				'condition' => 'course_id=:course_id AND (created_date<=:last) AND (created_date>=:start)',
+				'params' => array(':course_id'=>$this->passcours_cours, ':start'=>$start, ':last'=>$last,),
+				'order' => 'id DESC',
+				// 'order' => 'created_date DESC',
+			));
+			if($model_find != ""){
+				$run_number = sprintf('%04d', $model_find->code_number+1);
+				$id_before = $model_find->id;
+			}else{
+				$run_number = sprintf('%04d',"1");
+				$id_before = 0;
+			}
+
+			$model_number = new PasscourseNumber;
+			// $model_number->passcourse_id = $this->passcours_id;
+			$model_number->course_id = $this->passcours_cours;
+			$model_number->gen_id = $this->gen_id;
+			$model_number->user_id = $this->passcours_user;
+			$model_number->code_number = $run_number;
+			$model_number->passcourse_id = $id_before;
+			$model_number->save();
+
+			$user_id = base64_encode($this->passcours_user);
+			$course_id = base64_encode($this->passcours_cours);
+			$gen_id = base64_encode($this->gen_id);
+			$name = $this->passcours_user."_".$this->passcours_cours."_".$this->gen_id;
+			
+			Yii::import('ext.qrcode.QRCode');
+			$code=new QRCode("http://thorconn.com/site/ShowCer?user=".$user_id."&course=".$course_id."&gen=".$gen_id);
+			$code->create('uploads/qrcode_cer/'.$name.'.png');
+		}
+
+		return parent::beforeSave();
+	}
+
+	
+
 	public function rules()
 	{
 		return array(

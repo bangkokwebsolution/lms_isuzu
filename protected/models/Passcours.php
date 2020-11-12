@@ -42,7 +42,7 @@ class Passcours extends AActiveRecord
 			}
 
 			$model_number = new PasscourseNumber;
-			$model_number->passcourse_id = $this->passcours_id;
+			// $model_number->passcourse_id = $this->passcours_id;
 			$model_number->course_id = $this->passcours_cours;
 			$model_number->gen_id = $this->gen_id;
 			$model_number->user_id = $this->passcours_user;

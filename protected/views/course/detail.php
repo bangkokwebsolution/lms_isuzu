@@ -1392,7 +1392,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                         ?>
                         <li class="list-group-item ">
                     <a href="javascript:void(0);"><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
-                        <span class="pull-right  text-danger prepost"> <?= $label->label_course_wait; ?> 888</span></a> 
+                        <span class="pull-right  text-danger prepost"> <?= $label->label_course_wait; ?> <!-- 888 --></span></a> 
                     </li>
 
                         <?php
@@ -1415,7 +1415,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                         ?>  
                          <li class="list-group-item ">
                         <a href="javascript:void(0);"><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
-                            <span class="pull-right  text-success prepost"> <?= $label->label_course_wait; ?>999</span></a> 
+                            <span class="pull-right  text-success prepost"> <?= $label->label_course_wait; ?><!-- 999 --></span></a> 
                         </li>
                         <?php
                     }
@@ -1436,7 +1436,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                         ?>
                         <li class="list-group-item ">
                         <a href="javascript:void(0);"><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
-                            <span class="pull-right  text-success prepost"> <?= $label->label_course_wait; ?>000</span></a> 
+                            <span class="pull-right  text-success prepost"> <?= $label->label_course_wait; ?><!-- 000 --></span></a> 
                         </li>
                         <?php
                     }

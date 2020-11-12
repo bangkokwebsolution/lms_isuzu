@@ -110,6 +110,35 @@ public function actionSaveExamConfirm(){
     $Score = Score::model()->updateAll(array('confirm' => '1'),array(
         'condition' => 'user_id=:user_id and active = "y" and type=:type and ques_type = 3 and lesson_id=:lesson_id',
         'params' => array(':user_id' => $user_id,':lesson_id' => $lesson_id,':type' => $type)));
+
+
+    $post_score = Coursescore::model()->findAll(array(
+        'condition' => 'user_id=:user_id and active = "y" and ques_type = 3 and course_id=:course_id and type="post" AND confirm=1',
+        'params' => array(':user_id' => $user_id,':course_id' => $course_id)));
+
+    $post_score_check = Coursescore::model()->find(array(
+      'condition' => 'user_id=:user_id and active = "y" and ques_type = 3 and course_id=:course_id and type="post" AND confirm=1',
+      'params' => array(':user_id' => $user_id,':course_id' => $course_id)));
+      
+    if ($post_score_check->score_number <= $post_score_check->score_total){
+      if(!empty($post_score)){
+        $passcourse = Passcours::model()->findAll(array(
+          'condition' => 'passcours_user=:user_id AND passcours_cours=:course_id',
+          'params' => array(':user_id' => $user_id,':course_id' => $course_id)));
+        
+        if(empty($passcourse)){
+          $course_model = CourseOnline::model()->findByPk($course_id);
+          $Passcours = new Passcours;
+          $Passcours->passcours_cates = $course_model->cate_id;
+          $Passcours->passcours_cours = $course_id;
+          $Passcours->passcours_user = $user_id;
+          $Passcours->passcours_date = date("Y-m-d H:i:s");
+          $Passcours->save();
+        }
+      }
+    }
+
+    
     echo true;
 }
 
@@ -124,6 +153,7 @@ public function actionSaveCourseExamConfirm(){
         'params' => array(':user_id' => $user_id,':course_id' => $course_id)));
     echo true;
 }
+
 public function actionCoureCheck()
 {
         // $model=new Logques('search');
