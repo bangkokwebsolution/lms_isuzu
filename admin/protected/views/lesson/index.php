@@ -181,6 +181,10 @@ EOD
 					        		$str = 'ไฟล์ Scorm';
 					        		$count = count($data->fileScorm);
 					        		$path = 'FileScorm/index';
+					        	} else if($data->type == 'ebook'){
+					        		$str = 'ไฟล์ Ebook';
+					        		$count = count($data->fileebook);
+					        		$path = 'FileEbook/index';
 					        	} else if($data->type == 'audio'){
 					        		$str = 'ไฟล์ Audio';
 					        		$count = count($data->fileAudio);

@@ -1035,7 +1035,17 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                         'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                     )
                 );
-            } else if($lesson->type == 'audio'){
+            } else if($lesson->type == 'ebook'){
+                $countFile = $lesson->fileCountEbook;
+                $countLearnCompareTrueVdos = $user->countLearnCompareTrueEbook(
+                    array(
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
+                    )
+                );
+
+
+            }else if($lesson->type == 'audio'){
                 $countFile = $lesson->fileAudioCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTrueAudio(
                     array(
@@ -1147,6 +1157,16 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
             } else if($lesson->type == 'youtube'){
                 $countFile = $lesson->fileCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTrueVdos(
+                    array(
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
+                    )
+                );
+
+
+            } else if($lesson->type == 'ebook'){
+                $countFile = $lesson->fileCountEbook;
+                $countLearnCompareTrueVdos = $user->countLearnCompareTrueEbook(
                     array(
                         'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
                         'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
@@ -1314,6 +1334,16 @@ public function checkLessonPass_Percent($lesson,$format=null, $gen_id=null)
                     'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
                 )
             );
+        } else if($lesson->type == 'ebook'){
+                $countFile = $lesson->fileCountEbook;
+                $countLearnCompareTrueVdos = $user->countLearnCompareTrueEbook(
+                    array(
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id'=>$gen_id)
+                    )
+                );
+
+
         } else if($lesson->type == 'audio'){
             $countFile = $lesson->fileAudioCount;
             $countLearnCompareTrueVdos = $user->countLearnCompareTrueAudio(

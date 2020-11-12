@@ -205,6 +205,18 @@ class User extends CActiveRecord
                 AND t.learn_id = tbl_learn_file.learn_id',
         );
 
+         $relations['countLearnCompareTrueEbook'] = array(
+            self::STAT,
+            'Learn',
+            'user_id',
+            'select' => 'COUNT(tbl_lesson.id)',
+            'join' => 'INNER JOIN tbl_lesson ON tbl_lesson.id = t.lesson_id
+                INNER JOIN tbl_file_ebook ON tbl_file_ebook.lesson_id = tbl_lesson.id
+                INNER JOIN tbl_learn_file ON tbl_file_ebook.id = tbl_learn_file.file_id
+                AND t.learn_id = tbl_learn_file.learn_id',
+        );
+
+
         $relations['countLearnCompareTruePdf'] = array(
             self::STAT,
             'Learn',

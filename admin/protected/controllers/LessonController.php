@@ -19,7 +19,7 @@ class LessonController extends Controller
     {
         return array(
             array('allow',  // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view','DeleteVdo','DeleteFileDoc','add_teacher','CheckExists','uploadifive','uploadifivedoc','uploadifivepdf','uploadifivescorm','EditName','update','delete','create', 'UploadifiveAudio'),
+                'actions' => array('index', 'view','DeleteVdo','DeleteFileDoc','add_teacher','CheckExists','uploadifive','uploadifivedoc','uploadifivepdf','uploadifiveebook','uploadifivescorm','EditName','update','delete','create', 'UploadifiveAudio'),
                 'users' => array('*'),
             ),
             array('allow',
@@ -166,6 +166,9 @@ public function actionCreate()
     $filePdf = new FilePdf;
     $fileAudio = new FileAudio;
     $fileScorm = new FileScorm;
+    $fileebook = new FileEbook;
+
+
     $session = Yii::app()->session;
 
    //echo "<pre>"; var_dump($session); exit();
@@ -183,7 +186,7 @@ public function actionCreate()
         $time = date("dmYHis");
         $lesson->attributes=$_POST['Lesson'];
 
-        
+
         // $lesson->course_id = $_POST['course_id'];
         $lesson->lang_id = isset($_GET['lang_id']) ? $_GET['lang_id'] : 1 ;
         $lesson->parent_id = isset($_GET['parent_id']) ? $_GET['parent_id'] : 0 ;
@@ -201,6 +204,7 @@ public function actionCreate()
 
         if($valid)
         {
+
             if($lesson->save(false))
             {
                 if(Yii::app()->user->id){
@@ -228,7 +232,6 @@ public function actionCreate()
                 }
 
                 
-
                 if($lesson->type == "youtube"){
                     if(isset($_POST["link_youtube"])){
                         foreach ($_POST["link_youtube"] as $key => $youtube) {
@@ -299,6 +302,22 @@ public function actionCreate()
                         $file->lesson_id = $lesson->id;
                         $file->filename = $filenameComValue;
                         $file->file_name = "multiscreen.html";
+                        $file->save(false);
+                    }
+                }
+
+                     if(isset($session['filenameComEbook']) || count($session['filenameComEbook'])!=0)
+                {
+                    foreach ($session['filenameComEbook'] as $filenameComKey => $filenameComValue)
+                    {
+                        $fileScorm = FileEbook::model()->find(array('order'=>'id DESC'));
+                        $cid = $fileScorm['id']+1;
+
+                        $file = new FileEbook;
+                        $file->id = $cid;
+                        $file->lesson_id = $lesson->id;
+                        $file->filename = $filenameComValue;
+                        $file->file_name = $filenameComValue.".html";
                         $file->save(false);
                     }
                 }
@@ -394,6 +413,8 @@ public function actionCreate()
                         unset($session['filenameOriComDoc']);
                         unset($session['filenameComPdf']);
                         unset($session['filenameOriComPdf']);
+                        unset($session['filenameComScorm']);
+                        unset($session['filenameComEbook']);
                         unset($session['idxDoc']);
                         unset($session['idxPdf']);
                         $this->redirect(array('create','lang_id'=> $lang->id,'parent_id'=> $rootId));
@@ -412,6 +433,7 @@ public function actionCreate()
             unset($session['filenameComAudio']);
             unset($session['filenameOriComPdf']);
             unset($session['filenameComScorm']);
+            unset($session['filenameComEbook']);
             unset($session['filenameComPdf']);
             unset($session['idxDoc']);
             unset($session['idxPdf']);
@@ -423,17 +445,19 @@ public function actionCreate()
     unset($session['pathCom']);
     unset($session['filenameCom']);
     unset($session['idx']);
+
     unset($session['pathComDoc']);
     unset($session['filenameComDoc']);
     unset($session['filenameOriComDoc']);
     unset($session['filenameComAudio']);
     unset($session['filenameOriComPdf']);
     unset($session['filenameComScorm']);
+    unset($session['filenameComEbook']);
     unset($session['filenameComPdf']);
     unset($session['idxDoc']);
     unset($session['idxPdf']);
     $this->render('create',array(
-        'lesson'=>$lesson,'file'=>$file,'fileDoc'=>$fileDoc,'filePdf'=>$filePdf,'fileScorm'=>$fileScorm,'fileAudio'=>$fileAudio
+        'lesson'=>$lesson,'file'=>$file,'fileDoc'=>$fileDoc,'filePdf'=>$filePdf,'fileScorm'=>$fileScorm,'fileAudio'=>$fileAudio,'fileebook'=>$fileebook
     ));
 }
 
@@ -517,6 +541,8 @@ public function actionFormLesson($id,$type)
         $fileAudio = $this->loadFileAudioModel($id);
         $filePdf = $this->loadFilePdfModel($id);
         $fileScorm = $this->loadFileScormModel($id);
+        $fileebook = $this->loadFileEbookModel($id);
+
         $session = Yii::app()->session;
 
         //echo "<pre>";var_dump($file); exit();
@@ -728,6 +754,19 @@ public function actionFormLesson($id,$type)
                         }
                     }
 
+                         if(isset($session['filenameComEbook']) || count($session['filenameComEbook'])!=0)
+                    {
+                        foreach ($session['filenameComEbook'] as $filenameComKey => $filenameComValue)
+                        {
+                            $file = new FileEbook;
+                            $file->lesson_id = $lesson->id;
+                            $file->filename = $filenameComValue;
+                            $file->file_name = $filenameComValue.".html";
+                            $file->save(false);
+                        }
+                    }
+                    
+
                     $parent_id = $lesson->id;
                     $modelChildren = Lesson::model()->updateAll(array(
                         'course_id'=>$lesson->course_id,
@@ -753,6 +792,8 @@ public function actionFormLesson($id,$type)
                 unset($session['filenameOriComDoc']);
                 unset($session['filenameOriComPdf']);
                 unset($session['filenameComPdf']);
+                unset($session['filenameComEbook']);
+
                 unset($session['idxDoc']);
                 unset($session['idxPdf']);
                 if(Yii::app()->user->id){
@@ -774,11 +815,13 @@ public function actionFormLesson($id,$type)
         unset($session['filenameOriComDoc']);
         unset($session['filenameOriComPdf']);
         unset($session['filenameComPdf']);
+        unset($session['filenameComEbook']);
+
         unset($session['idxDoc']);
         unset($session['idxPdf']);
 
         $this->render('update',array(
-            'lesson'=>$lesson,'file'=>$file,'fileDoc'=>$fileDoc,'filePdf'=>$filePdf,'imageShow'=>$imageOld,'fileScorm'=>$fileScorm,'fileAudio' => $fileAudio
+            'lesson'=>$lesson,'file'=>$file,'fileDoc'=>$fileDoc,'filePdf'=>$filePdf,'imageShow'=>$imageOld,'fileScorm'=>$fileScorm,'fileAudio' => $fileAudio,'fileebook'=>$fileebook
         ));
 
         }
@@ -1250,6 +1293,92 @@ public function actionFormLesson($id,$type)
 }
 
 
+public function actionuploadifiveebook()
+    {
+        require_once(__DIR__.'/../vendors/scorm/classes/pclzip.lib.php');
+        require_once(__DIR__.'/../vendors/scorm/filemanager.inc.php');
+        // Get arguments from argument array
+        $session = Yii::app()->session;
+        if(!isset($session['idxEbook'])){
+            $session['idxEbook'] = 1;
+        }
+        $fileEbook = FileEbook::model()->find(array('order'=>'id desc'));
+        $cid = $fileEbook['id']+1;
+
+       
+
+        // Set the uplaod directory
+        // $webroot = Yii::app()->getUploadPath('scorm');
+        $webroot = Yii::app()->basePath."/../../uploads/ebook/";
+        $import_path = $webroot.$cid."/";
+        // Set the allowed file extensions
+        $fileTypes = array('zip'); // Allowed file extensions
+
+        $verifyToken = md5('unique_salt' . $_POST['timestamp']);
+    if (!empty($_FILES) /*&& $_POST['token'] == $verifyToken*/) {
+        // Validate the filetype
+        $fileName = $_FILES['Filedata']['name'];
+        $fileName = str_replace(".zip","",$fileName);
+        $ext = pathinfo($_FILES['Filedata']['name']);
+        if (in_array(strtolower($ext['extension']), $fileTypes)) {
+
+
+            /* Copy package To Course/Import folder*/
+            if (  !$_FILES['Filedata']['name'] || !is_uploaded_file($_FILES['Filedata']['tmp_name']) ||  ($_FILES['Filedata']['size'] == 0) ) {
+                echo 'File: '.$_FILES['Filedata']['name'].' upload problem.'.$_FILES['Filedata']['size'];
+                exit;
+            }else{
+                echo "<BR>upload Complete";
+            }
+
+            if (!is_dir($import_path)) {
+                if (!@mkdir($import_path, 0777)) {
+                    echo 'Cannot make import directory.';
+                    exit;
+                }
+            }
+
+            $pptFolder = Yii::app()->file->set($import_path);
+            $pptFolder->Delete();
+            if(!$pptFolder->CreateDir()){
+                echo "Can not create directory";
+                exit;
+            }
+            chmod($import_path, 0777);
+
+            /* extract the entire archive into ../../content/import/$course using the call back function to filter out php files */
+            $archive = new PclZip($_FILES['Filedata']['tmp_name']);
+            if ($archive->extract(  PCLZIP_OPT_PATH,    $import_path,
+                PCLZIP_CB_PRE_EXTRACT,  'preImportCallBack') == 0) {
+                echo 'Cannot extract to $import_path';
+                clr_dir($import_path);
+                exit;
+            }else {
+                echo "<BR>Extract Complete";
+            }
+     
+     if (!isset($session['filenameComEbook']) || count($session['filenameComEbook'])==0)
+     {
+        $session['filenameComEbook'] = array($fileName);
+    }else{
+        $filenameComArr = $session['filenameComEbook'];
+        $filenameComArr[] = $fileName;
+        $session['filenameComEbook'] = $filenameComArr;
+    }
+
+     copy('C:\inetpub\wwwroot\lms_thoresen\uploads\main.js', 'C:\inetpub\wwwroot\lms_thoresen\uploads\ebook'.'\\'.$cid.'\mobile\javascript\main.js');
+
+    unlink($_FILES['Filedata']['tmp_name']);
+} else {
+                // The file type wasn't allowed
+    echo 'Invalid file type.';
+}
+}
+}
+
+
+
+
 public function actionIndex()
 {
     $model=new Lesson('search');
@@ -1382,6 +1511,16 @@ public function actionIndex()
         //     throw new CHttpException(404,'The requested page does not exist.');
         return $model;
     }
+
+     public function loadFileEbookModel($id)
+    {
+        $model=Lesson::model()->with('fileebook')->findByPk($id);
+        // if($model===null)
+        //     throw new CHttpException(404,'The requested page does not exist.');
+        return $model;
+    }
+
+    
     public function actionCreatefolder(){
         $dirPpt = Yii::app()->basePath."/../../uploads/ppt_audio/";
         $pptFolder = Yii::app()->file->set($dirPpt);

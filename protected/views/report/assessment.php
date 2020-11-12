@@ -483,7 +483,7 @@ if(isset($model_level) && !empty($model_level)){
             <div class="col-sm-1"></div>
             <div class="col-sm-10">
                 <div class="year-report">
-                    <h4>Bar Graph</h4>
+                    <h4>Column Chart</h4>
                     <div style="width:100%">
                         <div id="chart_bar"></div>
                     </div>

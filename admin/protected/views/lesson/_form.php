@@ -88,7 +88,7 @@
         }
         else
         {
-            if($('#queue .uploadifive-queue-item').length == 0 && $('#docqueue .uploadifive-queue-item').length == 0 && $('#pdfqueue .uploadifive-queue-item').length == 0 && $('#scormqueue .uploadifive-queue-item').length == 0 && $('#audioqueue .uploadifive-queue-item').length == 0){
+            if($('#queue .uploadifive-queue-item').length == 0 && $('#docqueue .uploadifive-queue-item').length == 0 && $('#pdfqueue .uploadifive-queue-item').length == 0 && $('#scormqueue .uploadifive-queue-item').length == 0 && $('#ebookqueue .uploadifive-queue-item').length == 0 && $('#audioqueue .uploadifive-queue-item').length == 0){
                 return true;
             }else{
                 if($('#queue .uploadifive-queue-item').length > 0) {
@@ -99,6 +99,9 @@
                     return false;
                 }else if($('#scormqueue .uploadifive-queue-item').length > 0){
                     $('#scorm').uploadifive('upload');
+                    return false;
+                }else if($('#ebookqueue .uploadifive-queue-item').length > 0){
+                    $('#ebook').uploadifive('upload');
                     return false;
                 }else if($('#audioqueue .uploadifive-queue-item').length > 0){
                     $('#audio').uploadifive('upload');
@@ -202,6 +205,15 @@ body {
 }
 
 #scormqueue {
+    border: 1px solid #E5E5E5;
+    height: 177px;
+    overflow: auto;
+    margin-bottom: 10px;
+    padding: 0 3px 3px;
+    width: 600px;
+}
+
+#ebookqueue {
     border: 1px solid #E5E5E5;
     height: 177px;
     overflow: auto;
@@ -402,7 +414,7 @@ body {
                 <div class="row">
                     <!-- <div class="col-md-12"> -->
                     <?php echo $form->labelEx($lesson,'type'); ?>
-                    <?php echo $form->dropDownList($lesson, 'type', array('vdo'=>'VDO','pdf'=>'PDF','scorm'=>'SCORM','audio'=>'AUDIO', 'youtube'=>'Youtube')) ?>
+                    <?php echo $form->dropDownList($lesson, 'type', array('vdo'=>'VDO','pdf'=>'PDF','scorm'=>'SCORM','audio'=>'AUDIO', 'youtube'=>'Youtube', 'ebook'=>'Ebook')) ?>
                     <?php echo $form->error($lesson,'type'); ?>
                     <!-- </div> -->
                 </div>
@@ -727,6 +739,53 @@ body {
                 </div>
                 </div>
 
+                <div class="ebook_upload">
+                    <div class="row">
+                    <label>ไฟล์ประกอบบทเรียน (zip)</label>
+                    <div id="ebookqueue"></div>
+                    <?php echo $form->fileField($fileebook,'filename',array('id'=>'ebook','multiple'=>'true')); ?>
+                    <!-- <input id="file_upload" name="file_upload" type="file" multiple="true" > -->
+                    <!-- <a style="position: relative; top: 8px;" href="javascript:$('#file_upload').uploadifive('upload')">Upload Files</a> -->
+                    <script type="text/javascript">
+                        <?php $timestamp = time();?>
+                        $(function() {
+                            $('#ebook').uploadifive({
+                                'auto'             : false,
+                                    //'checkScript'      : 'check-exists.php',
+                                    //                    'checkScript'      : '<?php //echo $this->createUrl("lesson/checkExists"); ?>//',
+                                    'formData'         : {
+                                        'timestamp' : '<?php echo $timestamp;?>',
+                                        'token'     : '<?php echo md5("unique_salt" . $timestamp);?>'
+                                    },
+                                    'queueID'          : 'ebookqueue',
+                                    'uploadScript'     : '<?php echo $this->createUrl("lesson/uploadifiveebook"); ?>',
+                                    'onAddQueueItem' : function(file){
+                                                var fileName = file.name;
+                                                    var ext = fileName.substring(fileName.lastIndexOf('.') + 1); // Extract EXT
+                                                    switch (ext) {
+                                                        case 'zip':
+                                                        break;
+                                                        default:
+                                                        alert('Wrong filetype');
+                                                        $('#ebook').uploadifive('cancel', file);
+                                                        break;
+                                                    }
+                                    },
+                                    'onQueueComplete' : function(file, data) {
+                                                            // console.log(data);
+                                                            // console.log(file);
+                                                            if($('#docqueue .uploadifive-queue-item').length == 0) {
+                                                                $('#lesson-form').submit();
+                                                            }else{
+                                                                $('#doc').uploadifive('upload');
+                                                            }
+                                                        }
+                                                    });
+                        });
+                    </script>
+                    <?php echo $form->error($fileebook,'filename'); ?>
+                </div>
+                </div>
 
                 <div class="youtube_vdo">
                     <div class="row">
@@ -974,12 +1033,15 @@ body {
     $(function () {
         init_tinymce();
         <?php
+
         if($lesson->isNewRecord){
             ?>
             $('.pdf_upload').hide();
             $('.audio_upload').hide();
             $('.scorm_upload').hide();
-        $('.youtube_vdo').hide();
+            $('.youtube_vdo').hide();
+            $('.ebook_upload').hide();
+
             <?php
         } else {
             if($lesson->type == 'vdo'){
@@ -987,28 +1049,36 @@ body {
                 $('.pdf_upload').hide();
                 $('.scorm_upload').hide();
                 $('.audio_upload').hide();
-        $('.youtube_vdo').hide();
+                $('.youtube_vdo').hide();
+                $('.ebook_upload').hide();
+
                 <?php
             } else if($lesson->type == 'pdf'){
                 ?>
                 $('.scorm_upload').hide();
                 $('.vdo_upload').hide();
                 $('.audio_upload').hide();
-        $('.youtube_vdo').hide();
+                $('.youtube_vdo').hide();
+                $('.ebook_upload').hide();
+
                 <?php
             } else if($lesson->type == 'scorm'){
                 ?>
                 $('.pdf_upload').hide();
                 $('.vdo_upload').hide();
                 $('.audio_upload').hide();
-        $('.youtube_vdo').hide();
+                $('.youtube_vdo').hide();
+                $('.ebook_upload').hide();
+
                 <?php
             } else if($lesson->type == 'audio'){
                 ?>
                 $('.pdf_upload').hide();
                 $('.vdo_upload').hide();
                 $('.scorm_upload').hide();
-        $('.youtube_vdo').hide();
+                $('.youtube_vdo').hide();
+                $('.ebook_upload').hide();
+
                 <?php
             }   else if($lesson->type == 'youtube'){
                 ?>
@@ -1017,7 +1087,18 @@ body {
                 $('.scorm_upload').hide();
                 $('.audio_upload').hide();
                 $('#file_doc').hide();
-        $('.youtube_vdo').show();
+                $('.youtube_vdo').show();
+                $('.ebook_upload').hide();
+
+                <?php
+            } else if($lesson->type == 'ebook'){
+                ?>
+                $('.pdf_upload').hide();
+                $('.vdo_upload').hide();
+                $('.scorm_upload').hide();
+                $('.audio_upload').hide();
+                $('.youtube_vdo').hide();
+                $('.ebook_upload').show();
                 <?php
             }   
         }
@@ -1031,24 +1112,32 @@ body {
         $('.audio_upload').hide();
         $('.vdo_upload').show();
         $('.youtube_vdo').hide();
+        $('.ebook_upload').hide();
+
     } else if(this.value == 'pdf'){
         $('.vdo_upload').hide();
         $('.scorm_upload').hide();
         $('.audio_upload').hide();
         $('.pdf_upload').show();
         $('.youtube_vdo').hide();
+        $('.ebook_upload').hide();
+
     } else if(this.value == 'scorm'){
         $('.pdf_upload').hide();
         $('.vdo_upload').hide();
         $('.audio_upload').hide();
         $('.scorm_upload').show();
         $('.youtube_vdo').hide();
+        $('.ebook_upload').hide();
+
     } else if(this.value == 'audio'){
         $('.pdf_upload').hide();
         $('.vdo_upload').hide();
         $('.scorm_upload').hide();
         $('.audio_upload').show();
         $('.youtube_vdo').hide();
+        $('.ebook_upload').hide();
+
     } else if(this.value == 'youtube'){
         $('.pdf_upload').hide();
         $('.vdo_upload').hide();
@@ -1056,6 +1145,16 @@ body {
         $('.audio_upload').hide();
         $('#file_doc').hide();
         $('.youtube_vdo').show();
+        $('.ebook_upload').hide();
+
+    } else if(this.value == 'ebook'){
+        $('.pdf_upload').hide();
+        $('.vdo_upload').hide();
+        $('.scorm_upload').hide();
+        $('.audio_upload').hide();
+        $('.youtube_vdo').hide();
+        $('.ebook_upload').show();
+
     } 
 });
 

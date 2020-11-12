@@ -87,6 +87,7 @@ class Lesson extends AActiveRecord
             'fileDocs'=> array(self::HAS_MANY, 'FileDoc', 'lesson_id'),
             'filePdf'=> array(self::HAS_MANY, 'FilePdf', 'lesson_id'),
             'fileScorm'=> array(self::HAS_MANY, 'FileScorm', 'lesson_id'),
+            'fileebook'=> array(self::HAS_MANY, 'FileEbook', 'lesson_id'),
             'fileAudio'=> array(self::HAS_MANY, 'FileAudio', 'lesson_id'),
             'documents' => array(self::HAS_MANY, 'Document', 'lesson_id'),
             'usercreate' => array(self::BELONGS_TO, 'User', 'create_by'),

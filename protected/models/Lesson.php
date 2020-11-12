@@ -71,10 +71,14 @@ class Lesson extends CActiveRecord
             'fileDocs'=> array(self::HAS_MANY, 'FileDoc', 'lesson_id'),
             'filePdf'=> array(self::HAS_MANY, 'FilePdf', 'lesson_id'),
             'fileScorm'=> array(self::HAS_MANY, 'FileScorm', 'lesson_id'),
+            'fileEbook'=> array(self::HAS_MANY, 'FileEbook', 'lesson_id'),
+            
             'fileAudio'=> array(self::HAS_MANY, 'FileAudio', 'lesson_id'),
             'fileCount'=>array(self::STAT, 'File', 'lesson_id'),
             'fileDocCount'=>array(self::STAT, 'FileDoc', 'lesson_id'),
             'fileScormCount'=>array(self::STAT, 'FileScorm', 'lesson_id'),
+            'fileCountEbook'=>array(self::STAT, 'FileEbook', 'lesson_id'),
+            
             'filePdfCount'=>array(self::STAT, 'FilePdf', 'lesson_id'),
             'fileAudioCount'=>array(self::STAT, 'FileAudio', 'lesson_id'),
             'creater'=>array(self::BELONGS_TO, 'User', 'create_by'),
