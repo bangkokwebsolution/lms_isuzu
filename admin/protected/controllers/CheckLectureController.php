@@ -131,6 +131,7 @@ public function actionSaveExamConfirm(){
           $Passcours = new Passcours;
           $Passcours->passcours_cates = $course_model->cate_id;
           $Passcours->passcours_cours = $course_id;
+          $Passcours->gen_id = $post_score_check->gen_id;
           $Passcours->passcours_user = $user_id;
           $Passcours->passcours_date = date("Y-m-d H:i:s");
           $Passcours->save();

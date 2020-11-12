@@ -66,13 +66,13 @@ class Passcours extends AActiveRecord
 			
 			Yii::import('ext.qrcode.QRCode');
 			$code=new QRCode("http://thorconn.com/site/ShowCer?user=".$user_id."&course=".$course_id."&gen=".$gen_id);
-			$code->create('uploads/qrcode_cer/'.$name.'.png');
+			$code->create(Yii::app()->basePath.'/../../uploads/qrcode_cer/'.$name.'.png');
 		}
 
 		return parent::beforeSave();
 	}
 
-	
+
 
 	public function rules()
 	{
