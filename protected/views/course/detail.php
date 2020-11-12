@@ -918,7 +918,49 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                                                                                     </a>  
                                                                                     <?php 
                                                                                 } 
-                                                                            } else if($lessonListValue->type == 'audio'){
+                                                                            }
+                                                                              else if($lessonListValue->type == 'ebook') {
+                                                                        foreach ($lessonListValue->fileEbook as $les) {
+                                                                            if(!$prelearn){
+                                                                                $learnlink = 'javascript:void(0);';
+                                                                                $learnalert = 'alertswalpretest();';
+                                                                            } elseif ($can_next_step != 2){
+                                                                                $learnlink = $this->createUrl('/course/courselearnebook', array('id' => $lessonListValue->id, 'file' => $les->id));
+                                                                                $learnalert = '';    
+                                                                            }else{
+                                                                                $learnlink = 'javascript:void(0);';
+                                                                                $learnalert = 'alertswalpretest();';
+                                                                            }
+                                                                            $learnFiles = Helpers::lib()->checkLessonFile($les,$learnModel->learn_id);
+                                                                            if ($learnFiles == "notLearn") {
+                                                                                $statusValue = '<span class="label label-default" >'. $label->label_notLearn .'</span>';
+                                                                            } else if ($learnFiles == "learning") {
+                                                                                $statusValue = '<span class="label label-warning" >'. $label->label_learning .'</span>';
+                                                                            } else if ($learnFiles == "pass") {
+                                                                                $statusValue = '<span class="label label-success" >'. $label->label_learnPass .'</span>';
+                                                                            }
+                                                                            ?>
+                                                                            <a href="<?=$learnlink?>"  <?= $learnalert != '' ? 'onclick="' . $learnalert . '"' : ''; ?>>
+                                                                                <li class="list-group-item ">
+                                                                                    <?php if($step == 2){ ?>
+                                                                                        <!-- <div class="pt-now"> You are here</div> -->
+                                                                                    <?php } ?>
+                                                                                    <span class="pull-right">
+                                                                                        <span id="lblduration-<?=$les->id?>"></span>  <span class="label label-default"><?php echo $label->label_gotoLesson; ?> <i class="fa fa-play-circle"></i> </span></span>
+                                                                                        <span class="list__course"><?= $les->filename; ?></span>&nbsp;<?=$statusValue?>
+                                                                                        <div class="hidden">
+                                                                                            <video id="video_player<?=$les->id?>" width="320" height="240" controls>
+                                                                                                <source src="<?php echo $uploadFolder . $les->filename;?>" type="video/mp4">
+                                                                                                </video>
+                                                                                                <div id="meta"></div>   
+                                                                                            </div>
+                                                                                        </li>
+                                                                                    </a>  
+                                                                                    <?php 
+                                                                                }
+                                                                            }
+
+                                                                             else if($lessonListValue->type == 'audio'){
                                                                                 foreach ($lessonListValue->fileAudio as $les) {
                                                                                     if(!$prelearn){
                                                                                         $learnlink = 'javascript:void(0);';
