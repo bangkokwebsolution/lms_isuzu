@@ -519,9 +519,9 @@ chart.draw(data, options);
                     echo count($model_search_graph);
 
                     if(Yii::app()->session['lang'] != 1){
-                        echo " คน";
+                        echo " หลักสูตร";
                     }else{
-                        echo " persons";
+                        echo " course";
                     }
                     ?>              
                 </p>
