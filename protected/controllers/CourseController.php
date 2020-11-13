@@ -1153,13 +1153,13 @@ public function actionCateIndex($id) {
                     unset(Yii::app()->session['id_file']);
                     unset(Yii::app()->session['id_learn']);
 
-                $this->redirect(array('detail','id'=>285, 'gen'=>0));
+                $this->redirect(array('detail','id'=>$lesson->course_id, 'gen'=>$gen_id));
 
                 }
                     unset(Yii::app()->session['id_file']);
                     unset(Yii::app()->session['id_learn']);
 
-                $this->redirect(array('detail','id'=>285, 'gen'=>0));
+                $this->redirect(array('detail','id'=>$learn_model->LessonMapper->course_id, 'gen'=>$gen_id));
 
         }
     }
