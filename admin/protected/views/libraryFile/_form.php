@@ -76,6 +76,18 @@
                     </div>
                 </div>
 
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <?php echo $form->labelEx($model,'status_ebook'); ?>
+                        <?php echo $form->checkBox($model,'status_ebook',array(
+                            'data-toggle'=> 'toggle','value'=>"1", 'uncheckValue'=>"2"
+                        )); ?>
+                        <?php echo $form->error($model,'status_ebook'); ?>
+                    </div>
+                </div>
+                
+
                 <div class="row">
                 	<div class="col-md-8">
                     <?php echo $form->labelEx($model, 'library_filename'); ?>
@@ -83,14 +95,31 @@
                     <?php echo $form->error($model, 'library_filename'); ?>
                     </div>
                 </div>
+
                 <div class="row">
                 	<div class="col-md-8">
                 		<?php 
-                		if($model->library_filename != ""){
+                		if($model->status_ebook == 1){ // E book                            
+                            $file = glob(Yii::app()->getUploadPath(null)."../LibraryFile_ebook/".$model->library_id."/*");
+                            if(!empty($file)){
+                                foreach ($file as $key => $value) {
+                                    $ext = pathinfo($value, PATHINFO_EXTENSION);
+                                    if($ext == "html"){
+                                    $filename = basename($value);
+                                    ?>
+                                    <a href="javascript:void(0)"><?= $filename ?></a>
+                                    <?php
+                                    break;
+                                    }
+                                }
+                            }
+                        }elseif($model->library_filename != ""){
                 			$file = glob(Yii::app()->getUploadPath(null)."*");
-                			 $path = Yii::app()->basePath;                			 
+                			 $path = Yii::app()->basePath;
                 			foreach ($file as $key => $value) {
                 				$filename = basename($value);
+
+
                 				if($model->library_filename == $filename){
                 					$ext = pathinfo($value, PATHINFO_EXTENSION);
                 					?>
@@ -133,10 +162,11 @@
              var count_extension = extension.length;
              extension = (extension[count_extension-1]).toLowerCase();
 
-             if(extension !== 'mp4' && extension !== 'mkv' && extension !== 'mp3' && extension !== 'pdf' && extension !== 'doc' && extension !== 'docx' && extension !== 'xls' && extension !== 'xlsx' && extension !== 'ppt' && extension !== 'pptx'){
+             if(extension !== 'mp4' && extension !== 'mkv' && extension !== 'mp3' && extension !== 'pdf' && extension !== 'doc' && extension !== 'docx' && extension !== 'xls' && extension !== 'xlsx' && extension !== 'ppt' && extension !== 'pptx' && extension !== 'zip'){
+
                 swal({
                     title: "ไม่สามารถทำรายการได้",
-                    text: 'กรุณาเลือกไฟล์นามสกุล mp4, mkv, mp3, pdf, doc, docx, xls, xlsx, ppt, pptx ค่ะ',
+                    text: 'กรุณาเลือกไฟล์นามสกุล mp4, mkv, mp3, pdf, doc, docx, xls, xlsx, ppt, pptx, zip(E-Book) ค่ะ',
                     type: "error",
                     successMode: true,
                 });

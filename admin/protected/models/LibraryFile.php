@@ -15,8 +15,11 @@
  * @property integer $updated_by
  * @property string $updated_date
  */
+
+
 class LibraryFile extends CActiveRecord
 {
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -48,13 +51,13 @@ class LibraryFile extends CActiveRecord
 		return array(			
 			// nameFunction on scenario
 			array('library_name_en', 'validateCheckk', 'on' => 'validateCheckk'),
-			array('library_type_id, library_name, library_name_en', 'required'),			
+			array('library_type_id, library_name, library_name_en, status_ebook', 'required'),			
 			array('sortOrder, library_type_id, created_by, updated_by', 'numerical', 'integerOnly'=>true),
 			array('library_name, library_name_en, library_filename', 'length', 'max'=>255),
 			array('created_date, updated_date, active', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('library_id, sortOrder, library_type_id, library_name, library_name_en, library_filename, created_by, created_date, updated_by, updated_date, active', 'safe', 'on'=>'search'),
+			array('library_id, sortOrder, library_type_id, library_name, library_name_en, library_filename, created_by, created_date, updated_by, updated_date, active, status_ebook', 'safe', 'on'=>'search'),
 		);
 	}
 	/**
@@ -88,6 +91,7 @@ class LibraryFile extends CActiveRecord
 			'updated_by' => 'ผู้แก้ไข',
 			'updated_date' => 'วันที่แก้ไข',
 			'active' => 'active',
+			'status_ebook' => 'เป็นไฟล์ E-Book'
 		);
 	}
 
@@ -120,6 +124,11 @@ class LibraryFile extends CActiveRecord
 		$criteria->compare('updated_by',$this->updated_by);
 		$criteria->compare('updated_date',$this->updated_date,true);
 		$criteria->compare('active',$this->active,true);
+		$criteria->compare('status_ebook',$this->status_ebook,true);
+
+		
+
+
 		$criteria->order = 'sortOrder ASC';
 		
 
