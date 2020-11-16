@@ -73,7 +73,10 @@ class VideoController extends Controller{
     {
         if(Yii::app()->user->id){
 
-            if(isset($_GET["cate_1"])){
+            //2=DOC    1=Media
+
+            // ทำ ค้นหา search
+            if(isset($_GET["cate_1"]) && $_GET["cate_1"] != ""){
                 $search_input = $_GET["cate_1"];
 
                 $library_file_search = LibraryFile::model()->with('type')->findAll(array(
@@ -83,7 +86,7 @@ class VideoController extends Controller{
                 'params' => array(':active' => 'y', ':keyword'=>"%$search_input%"),
                 'order' => 't.sortOrder ASC'
             ));
-            }elseif(isset($_GET["cate_2"])){
+            }elseif(isset($_GET["cate_2"]) && $_GET["cate_2"] != ""){
                 $search_input = $_GET["cate_2"];
 
                 $library_file_search = LibraryFile::model()->with('type')->findAll(array(
@@ -97,6 +100,8 @@ class VideoController extends Controller{
                 $library_file_search = "";
             }
 
+            // จบ ทำ ค้นหา search
+
 
 
             $library_file_1 = LibraryFile::model()->with('type')->findAll(array(
@@ -109,6 +114,7 @@ class VideoController extends Controller{
                 'params' => array(':active' => 'y'),
                 'order' => 't.sortOrder ASC'
             ));
+
             $library_type_1 = LibraryType::model()->findAll(array(
                 'condition' => 'active=:active AND library_cate=1',
                 'params' => array(':active' => 'y'),

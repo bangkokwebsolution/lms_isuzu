@@ -71,7 +71,7 @@
                 }
                 ?>
                 <button style="white-space: normal;" class="tab-btn-cate-type btn btn-default filter-button btn-lg" data-filter="cate_<?= $value->library_type_id ?>"><?= $libra_type ?></button>
-                <?php } // foreach ($library_type_2 ?>              
+        <?php } // foreach ($library_type_2 ?>              
             </div>
           </div>
 
@@ -81,6 +81,10 @@
 
             <div class="gallery_product  filter cate-all-2">  
                   <?php 
+
+                    // var_dump("<pre>");
+                    // var_dump($library_file_2); exit();
+
                   foreach ($library_file_2 as $key => $value) {
                     if (Yii::app()->session['lang'] == 1) {
                   $libra_file = $value->library_name_en;
@@ -128,7 +132,38 @@
                 $type_ex = explode(".", $value->library_filename);
                 $extension = $type_ex[count($type_ex) - 1];
 
-                if (in_array($extension, $arr_type_video)) {
+                if($value->status_ebook == 1){ // Ebook
+                  $check_file = glob(Yii::app()->getUploadPath(null) . "../LibraryFile_ebook/".$value->library_id."/*");
+                  if(!empty($check_file)){
+                    foreach ($check_file as $keyy => $valuee) {                      
+                      $ext = pathinfo($valuee, PATHINFO_EXTENSION);
+                      if($ext == "html"){
+                        $filename = basename($valuee);
+                        ?>
+                        <div class="col-sm-6 col-md-3 col-xs-12">
+                          <div class=" text-center">
+                            <div class="library-item">
+                              <div class="item item-library-index">
+                                <div class="library-card">
+                                  <a target="blank_" href="<?= $this->createUrl('uploads/LibraryFile_ebook/'.$value->library_id.'/'.$filename) ?>" class="" library-id="<?= $value->library_id ?>">
+                                    <span class="other-file">
+                                      <i class="fas fa-file-word word"></i>&nbsp;<small>E-Book</small>
+                                    </span>
+                                    <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="w-100">
+                                    <div class="library-detail">
+                                      <span><?= $libra_file ?></span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <?php
+                      }
+                    }
+                  }
+                }elseif (in_array($extension, $arr_type_video)) {
 
                   $check_file = glob(Yii::app()->getUploadPath(null) . "../LibraryFile/*");
                   // var_dump($check_file); exit();
@@ -347,7 +382,38 @@
                 $type_ex = explode(".", $value->library_filename);
                 $extension = $type_ex[count($type_ex) - 1];
 
-                if (in_array($extension, $arr_type_video)) {
+                if($value->status_ebook == 1){ // Ebook
+                  $check_file = glob(Yii::app()->getUploadPath(null) . "../LibraryFile_ebook/".$value->library_id."/*");
+                  if(!empty($check_file)){
+                    foreach ($check_file as $keyy => $valuee) {                      
+                      $ext = pathinfo($valuee, PATHINFO_EXTENSION);
+                      if($ext == "html"){
+                        $filename = basename($valuee);
+                        ?>
+                        <div class="col-sm-6 col-md-3 col-xs-12">
+                          <div class=" text-center">
+                            <div class="library-item">
+                              <div class="item item-library-index">
+                                <div class="library-card">
+                                  <a target="blank_" href="<?= $this->createUrl('uploads/LibraryFile_ebook/'.$value->library_id.'/'.$filename) ?>" class="" library-id="<?= $value->library_id ?>">
+                                    <span class="other-file">
+                                      <i class="fas fa-file-word word"></i>&nbsp;<small>E-Book</small>
+                                    </span>
+                                    <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="w-100">
+                                    <div class="library-detail">
+                                      <span><?= $libra_file ?></span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <?php
+                      }
+                    }
+                  }
+                }elseif (in_array($extension, $arr_type_video)) {
 
                   $check_file = glob(Yii::app()->getUploadPath(null) . "../LibraryFile/*");
                   // var_dump($check_file); exit();
@@ -586,7 +652,38 @@
                 $type_ex = explode(".", $value->library_filename);
                 $extension = $type_ex[count($type_ex) - 1];
 
-                if (in_array($extension, $arr_type_video)) {
+                if($value->status_ebook == 1){ // Ebook
+                  $check_file = glob(Yii::app()->getUploadPath(null) . "../LibraryFile_ebook/".$value->library_id."/*");
+                  if(!empty($check_file)){
+                    foreach ($check_file as $keyy => $valuee) {                      
+                      $ext = pathinfo($valuee, PATHINFO_EXTENSION);
+                      if($ext == "html"){
+                        $filename = basename($valuee);
+                        ?>
+                        <div class="col-sm-6 col-md-3 col-xs-12">
+                          <div class=" text-center">
+                            <div class="library-item">
+                              <div class="item item-library-index">
+                                <div class="library-card">
+                                  <a target="blank_" href="<?= $this->createUrl('uploads/LibraryFile_ebook/'.$value->library_id.'/'.$filename) ?>" class="" library-id="<?= $value->library_id ?>">
+                                    <span class="other-file">
+                                      <i class="fas fa-file-word word"></i>&nbsp;<small>E-Book</small>
+                                    </span>
+                                    <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="w-100">
+                                    <div class="library-detail">
+                                      <span><?= $libra_file ?></span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <?php
+                      }
+                    }
+                  }
+                }elseif (in_array($extension, $arr_type_video)) {
 
                   $check_file = glob(Yii::app()->getUploadPath(null) . "../LibraryFile/*");
                   // var_dump($check_file); exit();
@@ -873,7 +970,43 @@
                 $type_ex = explode(".", $value->library_filename);
                 $extension = $type_ex[count($type_ex) - 1];
 
-                if (in_array($extension, $arr_type_video)) {
+                if($value->status_ebook == 1){ // Ebook
+                  $check_file = glob(Yii::app()->getUploadPath(null) . "../LibraryFile_ebook/".$value->library_id."/*");
+
+                  // var_dump($check_file); exit();
+
+
+                  if(!empty($check_file)){
+                    foreach ($check_file as $keyy => $valuee) {                      
+                      $ext = pathinfo($valuee, PATHINFO_EXTENSION);
+                      if($ext == "html"){
+                        $filename = basename($valuee);
+                        ?>
+                        <div class="col-sm-6 col-md-3 col-xs-12">
+                          <div class=" text-center">
+                            <div class="library-item">
+                              <div class="item item-library-index">
+                                <div class="library-card">
+                                  <a target="blank_" href="<?= $this->createUrl('uploads/LibraryFile_ebook/'.$value->library_id.'/'.$filename) ?>" class="" library-id="<?= $value->library_id ?>">
+                                    <span class="other-file">
+                                      <!-- <i class="fas fa-file-word word"></i>&nbsp; -->
+                                      <small>E-Book</small>
+                                    </span>
+                                    <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="w-100">
+                                    <div class="library-detail">
+                                      <span><?= $libra_file ?></span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <?php
+                      }
+                    }
+                  }
+                }elseif (in_array($extension, $arr_type_video)) {
 
                   $check_file = glob(Yii::app()->getUploadPath(null) . "../LibraryFile/*");
                   // var_dump($check_file); exit();
@@ -1098,7 +1231,38 @@
                 $type_ex = explode(".", $value->library_filename);
                 $extension = $type_ex[count($type_ex) - 1];
 
-                if (in_array($extension, $arr_type_video)) {
+                if($value->status_ebook == 1){ // Ebook
+                  $check_file = glob(Yii::app()->getUploadPath(null) . "../LibraryFile_ebook/".$value->library_id."/*");
+                  if(!empty($check_file)){
+                    foreach ($check_file as $keyy => $valuee) {                      
+                      $ext = pathinfo($valuee, PATHINFO_EXTENSION);
+                      if($ext == "html"){
+                        $filename = basename($valuee);
+                        ?>
+                        <div class="col-sm-6 col-md-3 col-xs-12">
+                          <div class=" text-center">
+                            <div class="library-item">
+                              <div class="item item-library-index">
+                                <div class="library-card">
+                                  <a target="blank_" href="<?= $this->createUrl('uploads/LibraryFile_ebook/'.$value->library_id.'/'.$filename) ?>" class="" library-id="<?= $value->library_id ?>">
+                                    <span class="other-file">
+                                      <i class="fas fa-file-word word"></i>&nbsp;<small>E-Book</small>
+                                    </span>
+                                    <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="w-100">
+                                    <div class="library-detail">
+                                      <span><?= $libra_file ?></span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <?php
+                      }
+                    }
+                  }
+                }elseif (in_array($extension, $arr_type_video)) {
 
                   $check_file = glob(Yii::app()->getUploadPath(null) . "../LibraryFile/*");
                   // var_dump($check_file); exit();
@@ -1344,7 +1508,38 @@
                 $type_ex = explode(".", $value->library_filename);
                 $extension = $type_ex[count($type_ex) - 1];
 
-                if (in_array($extension, $arr_type_video)) {
+                if($value->status_ebook == 1){ // Ebook
+                  $check_file = glob(Yii::app()->getUploadPath(null) . "../LibraryFile_ebook/".$value->library_id."/*");
+                  if(!empty($check_file)){
+                    foreach ($check_file as $keyy => $valuee) {                      
+                      $ext = pathinfo($valuee, PATHINFO_EXTENSION);
+                      if($ext == "html"){
+                        $filename = basename($valuee);
+                        ?>
+                        <div class="col-sm-6 col-md-3 col-xs-12">
+                          <div class=" text-center">
+                            <div class="library-item">
+                              <div class="item item-library-index">
+                                <div class="library-card">
+                                  <a target="blank_" href="<?= $this->createUrl('uploads/LibraryFile_ebook/'.$value->library_id.'/'.$filename) ?>" class="" library-id="<?= $value->library_id ?>">
+                                    <span class="other-file">
+                                      <i class="fas fa-file-word word"></i>&nbsp;<small>E-Book</small>
+                                    </span>
+                                    <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="w-100">
+                                    <div class="library-detail">
+                                      <span><?= $libra_file ?></span>
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <?php
+                      }
+                    }
+                  }
+                }elseif (in_array($extension, $arr_type_video)) {
 
                   $check_file = glob(Yii::app()->getUploadPath(null) . "../LibraryFile/*");
                   // var_dump($check_file); exit();
