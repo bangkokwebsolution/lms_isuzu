@@ -2139,18 +2139,18 @@ Class MenuLeft extends Controller
 					
 	        	)
 	        ),
-            array(
-	        	/*====== Check Permissions PopUp (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'LogEmail.*',
-	        		'LogEmail.email'
-	        	)),
-	        	'label'=>'<i></i><span>web service</span>',
-	        	'url'=>array(),
-				//'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('LogEmail') ), 'id' => 'LogEmail'),
-	        ),
+    //         array(
+	   //      	/*====== Check Permissions PopUp (2) ======*/
+	   //      	'visible'=>self::PermissionsMenu(array(
+	   //      		'LogEmail.*',
+	   //      		'LogEmail.email'
+	   //      	)),
+	   //      	'label'=>'<i></i><span>web service</span>',
+	   //      	'url'=>array(),
+				// //'linkOptions' => array('data-toggle' => 'collapse'),
+	   //      	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
+	   //      	'submenuOptions' => array('class' => self::SetSubMenu( array('LogEmail') ), 'id' => 'LogEmail'),
+	   //      ),
 			//====== END Menu Information ======//
 	       
 
