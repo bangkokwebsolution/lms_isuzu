@@ -671,7 +671,7 @@ public function actionCateIndex($id) {
         }
     }
 
-    public function actionLearnVdo($id=null, $learn_id=null) {
+    public function actionLearnVdo() {
 
         if(isset($_REQUEST['user_id'])){
             Yii::app()->user->id = $_POST['user_id'];
@@ -918,7 +918,7 @@ public function actionCateIndex($id) {
             }
         }
 
-        public function actionLearnPdf($id=null,$learn_id=null,$slide=null){
+        public function actionLearnPdf(){
 
             if(isset($_REQUEST['user_id'])){
                 Yii::app()->user->id = $_POST['user_id'];
