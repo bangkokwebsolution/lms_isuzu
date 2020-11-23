@@ -16,17 +16,21 @@ $this->breadcrumbs=array(
 // );
 ?>
 
-<h1>View CourseNotification #<?php echo $model->id; ?></h1>
+<h1>CourseNotification </h1>
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
-		'id',
-		'course_id',
+		// 'id',
+		array(
+			'name'=>'course_id',
+			'value'=> $model->courses->course_title
+		),
+		// 'course_id',
 		// 'generation_id',
 		'notification_time',
 		'create_date',
 		// 'update_date',
-		'active',
+		// 'active',
 	),
 )); ?>

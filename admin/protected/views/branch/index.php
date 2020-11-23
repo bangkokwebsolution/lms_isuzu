@@ -29,14 +29,67 @@ EOD
 , CClientScript::POS_READY);
 ?>
 
+	<script type="text/javascript">
+		$(function() {
+
+
+			
+
+			$("#Branch_department").change(function(){
+				var value = $("#Branch_department option:selected").val();
+				if(value != ""){
+					$.ajax({
+						type: 'POST',
+						url: '<?php echo Yii::app()->createAbsoluteUrl("/Passcours/ajaxgetposition"); ?>',
+						data: ({
+							value: value,
+						}),
+						success: function(data) {
+							if(data != ""){
+								$("#Branch_position_id").html(data);
+								$('.chosen').trigger("chosen:updated");
+							}
+						}
+					});
+				}
+			});
+
+
+
+
+		});
+	</script>
+
+
+
+
 <div class="innerLR">
-	<?php $this->widget('AdvanceSearchForm', array(
+	<?php 
+
+	 $department = Department::model()->findAll(array(
+        'condition' => 'active = "y"',
+        'order' => 'dep_title ASC'
+    ));
+    $listdepartment = CHtml::listData($department,'id','dep_title');
+
+
+    $position = Position::model()->findAll(array(
+        'condition' => 'active = "y"',
+        'order' => 'position_title ASC'
+    ));
+    $listposition = CHtml::listData($position,'id','position_title');
+
+
+	$this->widget('AdvanceSearchForm', array(
 		'data'=>$model,
 		'route' => $this->route,
 		'attributes'=>array(
 			array('name'=>'branch_name','type'=>'text'),
+			array('name'=>'department','type'=>'list','query'=>$listdepartment),
+			array('name'=>'position_id','type'=>'list','query'=>$listposition),
 		),
-	));?>
+	));
+	?>
 	<div class="widget" style="margin-top: -1px;">
 		<div class="widget-head">
 			<h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $titleName;?></h4>

@@ -15,6 +15,7 @@
  */
 class Branch extends CActiveRecord
 {
+	public $department;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -38,7 +39,7 @@ class Branch extends CActiveRecord
 			array('branch_name, position_id ', 'required'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, branch_name, create_date, create_by, update_date, update_by, lang_id, parent_id, active, position_id, sortOrder', 'safe', 'on'=>'search'),
+			array('id, branch_name, create_date, create_by, update_date, update_by, lang_id, parent_id, active, position_id, sortOrder, department', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -77,8 +78,9 @@ class Branch extends CActiveRecord
 			'active' => 'สถานะ',
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
-			'position_id' => 'ตำแหน่ง',
+			'position_id' => 'ฝ่าย',
 			'sortOrder' => 'ลำดับ',
+			'department'=>'แผนก'
 		);
 	}
 
@@ -107,7 +109,36 @@ class Branch extends CActiveRecord
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by,true);
 		$criteria->compare('sortOrder',$this->sortOrder,true);
-		$criteria->compare('position_id',$this->position_id);
+
+
+
+		if(isset($_GET['Branch']['position_id']) && $_GET['Branch']['position_id'] != ""){
+			$criteria->compare('position_id',$this->position_id);
+		}else{
+			if(isset($_GET['Branch']['department']) && $_GET['Branch']['department'] != ""){
+
+				$position = Position::model()->findAll("active='y' AND department_id=".$_GET['Branch']['department']);
+
+
+
+				if(!empty($position)){
+					$arr_posi = [];
+					foreach ($position as $key => $value) {
+						$arr_posi[] = $value->id;
+					}
+
+					$criteria->addIncondition('position_id', $arr_posi);
+				}
+
+			}else{
+				$criteria->compare('position_id',$this->position_id);
+			}
+		}
+
+
+
+
+
 		$criteria->compare('parent_id',0);
 	    $criteria->compare('active',y);
 		$criteria->order = 'sortOrder ASC';

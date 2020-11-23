@@ -96,7 +96,7 @@ class ImgslideController extends Controller
 					}
 				}
 
-				$this->redirect(array('index','id'=>$model->imgslide_id));
+				$this->redirect(array('index'));
 			}
 		}
 
@@ -186,14 +186,19 @@ class ImgslideController extends Controller
 		$model = $this->loadModel($id);
 		$model->active = 'n';
 
-          $parent = Imgslide::model()->find(array(
-                    'condition' => 'lang_id=:lang_id AND parent_id=:parent_id',
-                    'params' => array(':lang_id' => 2,':parent_id'=>$id)
-                    ));
-          $parent->active = 'n';
-         
-		$model->save();
-		$parent->save();
+		$parent = Imgslide::model()->find(array(
+			'condition' => 'lang_id=:lang_id AND parent_id=:parent_id',
+			'params' => array(':lang_id' => 2,':parent_id'=>$id)
+		));
+
+		if($parent){
+			$parent->active = 'n';
+			$parent->save(false);
+		}
+
+		$model->save(false);
+		
+
 		if(Yii::app()->user->id){
 			Helpers::lib()->getControllerActionId();
 		}
@@ -217,6 +222,7 @@ class ImgslideController extends Controller
 	{
 		$model=new Imgslide('search');
 		$model->unsetAttributes();  // clear any default values
+		$model->active = 'y';
 		if(isset($_GET['Imgslide']))
 			$model->attributes=$_GET['Imgslide'];
 
