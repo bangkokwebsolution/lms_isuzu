@@ -64,9 +64,15 @@ class NewsController extends Controller
 	    	));
     		$time = date("dmYHis");
     		$model->attributes=$_POST['News'];
-    		$model->sortOrder = $sort+1;
+    		// $model->sortOrder = $sort+1;
+    		$model->sortOrder = 1;
     		$model->lang_id = isset($_GET['lang_id']) ? $_GET['lang_id'] : 1 ;
 			$model->parent_id = isset($_GET['parent_id']) ? $_GET['parent_id'] : 0 ;
+
+			if($model->lang_id == 2){
+				$m_news = News::model()->findByPk($model->parent_id);
+				$model->sortOrder = $m_news->sortOrder;
+			}
 
     		$cms_picture = CUploadedFile::getInstance($model, 'picture');
     		if(!empty($cms_picture)){
@@ -90,7 +96,28 @@ class NewsController extends Controller
     		if($model->validate())
     		{
     			if($model->save())
-    			{
+    			{	
+    				if($model->lang_id == 1){
+
+    					$model_main = News::model()->findAll(array(
+    						'condition'=>'active="y" AND lang_id=1 AND cms_id!="'.$model->cms_id.'" AND parent_id!="'.$model->cms_id.'" ',
+    						'order'=>'sortOrder ASC'
+    					));
+
+    					foreach ($model_main as $key => $value) {
+    						$value->sortOrder = $value->sortOrder+1;
+    						$value->save(false);
+
+    						$mo_news = News::model()->find("active='y' AND parent_id='".$value->cms_id."' ");
+    						if($mo_news){
+    							$mo_news->sortOrder = $value->sortOrder;
+    							$mo_news->save(false);
+    						}
+
+    					}
+    				}
+
+
     				if(isset($cms_picture))
     				{
 						/////////// SAVE IMAGE //////////
@@ -125,7 +152,7 @@ class NewsController extends Controller
 						foreach ($langs as $key => $lang) {
 							# code...
 
-							$new = News::model()->findByAttributes(array('lang_id'=> $lang->id));
+							$new = News::model()->findByAttributes(array('lang_id'=> $lang->id, 'parent_id'=>$rootId));
 							if(!$new){
 								$newsRoot = News::model()->findByPk($rootId);
 								Yii::app()->user->setFlash('Success', 'กรุณาเพิ่มข่าวประชาสัมพันธ์ '.$newsRoot->cms_short_title .',ภาษา '.$lang->language);
@@ -193,6 +220,37 @@ class NewsController extends Controller
 			{
 				if($model->save())
 				{
+
+
+					if($model->lang_id == 1){
+
+						$model_main = News::model()->findAll(array(
+							'condition'=>'active="y" AND lang_id=1 AND cms_id!="'.$model->cms_id.'" AND parent_id!="'.$model->cms_id.'" AND sortOrder<="'.$model->sortOrder.'" ',
+							'order'=>'sortOrder ASC'
+						));
+
+						$model->sortOrder = 1;
+						$model->save(false);
+
+						$model_sub = News::model()->find("active='y' AND parent_id='".$model->cms_id."' ");
+						$model_sub->sortOrder = $model->sortOrder;
+						$model_sub->save(false);
+
+						foreach ($model_main as $key => $value) {
+							$value->sortOrder = $value->sortOrder+1;
+							$value->save(false);
+
+							$mo_news = News::model()->find("active='y' AND parent_id='".$value->cms_id."' ");
+							if($mo_news){
+								$mo_news->sortOrder = $value->sortOrder;
+								$mo_news->save(false);
+							}
+
+						}
+					}
+
+
+
 					if(isset($imageShow) && isset($cms_picture))
 					{
 						Yii::app()->getDeleteImageYush('news',$model->id,$imageShow);
@@ -239,7 +297,7 @@ class NewsController extends Controller
 	{
 		//$this->loadModel($id)->delete();
 		$model = $this->loadModel($id);
-		$this->actionSort($model->sortOrder);
+		// $this->actionSort($model->sortOrder);
 		$model->active = 'n';
 
 		if($model->cms_picture != '')
@@ -252,7 +310,7 @@ class NewsController extends Controller
             'params' => array(':parent_id' => $model->cms_id, ':active' => 'y')
               ));
 		foreach ($modelChrilden as $key => $value) {
-			$this->actionSort($value->sortOrder);
+			// $this->actionSort($value->sortOrder);
 			$value->active = 'n';
 
 			if($value->cms_picture != ''){
