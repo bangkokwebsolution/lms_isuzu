@@ -2,18 +2,13 @@
 
 class LearnResetController extends Controller
 {
- public function filters()
- {
-    return array(
-            'accessControl', // perform access control for CRUD operations
-        );
-}
 
-    /**
-     * Specifies the access control rules.
-     * This method is used by the 'accessControl' filter.
-     * @return array access control rules
-     */
+    public function filters(){
+        return array( 'accessControl');
+    }
+
+
+
     public function accessRules()
     {
         return array(
@@ -32,10 +27,610 @@ class LearnResetController extends Controller
             ),
         );
     }
+
+
+
+    public function actionResetUser()   // หน้าแรก
+    {
+        $model = new Learn('searchReset');
+        if(isset($_GET['Learn'])){
+            $model->attributes = $_GET['Learn'];
+            $model->searchname = $_GET['Learn']['searchname'];
+        }
+
+        $this->render('reset_user',array(
+            'model'=>$model,
+        ));
+    }
+
+
+
+
+    public function actionSaveResetPre() {  // Reset สอบก่อนเรียน บทเรียน
+        $user_id = $_POST['id'];
+        $lesson = json_decode($_POST['checkedList']);
+        $reset_type = $_POST['reset_type'];
+        $courseMsg = 'ผู้ดูแลระบบ ทำการ Reset ข้อมูลการเรียนบทเรียนต่อไปนี้ <br>';
+
+        foreach ($lesson as $key => $value) {
+            $val = array();
+            $val = explode(",", $value);
+            $course_id = $val[0];
+            $lesson_id = $val[1];
+            $learn_id = $val[2];
+            $gen_id = $val[3];
+
+
+            $logReset = new LogReset;
+            $logReset->user_id = $user_id;
+            $logReset->course_id = $course_id;
+            $logReset->lesson_id = $lesson_id;
+            $logReset->gen_id = $gen_id;
+            $logReset->reset_description = $_POST['description'];
+            $logReset->reset_date = date('Y-m-d h:i:s');
+            $logReset->reset_by = Yii::app()->user->id;
+            $logReset->reset_type = 2;
+
+            if ($logReset->save()){
+                // $learnFile = LearnFile::model()->deleteAll('user_id_file="' . $user_id . '" AND learn_id="' . $data->learn_id . '"');
+
+                $score = Score::model()->findAllByAttributes(array(
+                    'user_id' => $user_id,
+                    'lesson_id' => $lesson_id,
+                    'course_id' => $course_id,
+                    'gen_id' => $gen_id,
+                    //'type'=>'pre',
+                    'active' => 'y'
+                ));
+
+            foreach ($score as $key1 => $sc) {
+                $sc->active = 'n';
+                $sc->save(false);
+
+                Logques::model()->deleteAll(array(
+                    'condition' => 'user_id=:user_id AND lesson_id=:lesson_id AND score_id=:score_id AND gen_id=:gen_id',
+                    'params' => array(':user_id' => $user_id,':lesson_id' => $lesson_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
+
+                Logchoice::model()->deleteAll(array(
+                    'condition' => 'lesson_id=:lesson_id AND user_id=:user_id AND score_id=:score_id AND gen_id=:gen_id',
+                    'params' => array(':lesson_id' => $lesson_id,':user_id' => $user_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
+            }
+
+            $learn = Learn::model()->findAllByAttributes(array(
+                'user_id' => $user_id,
+                'lesson_id' => $lesson_id,
+                'course_id' => $course_id,
+                'gen_id' => $gen_id,
+                'lesson_active' => 'y'
+            ));
+
+            foreach ($learn as $key => $data) {
+                $learnFile = LearnFile::model()->deleteAll('user_id_file="' . $user_id . '" AND learn_id="' . $data->learn_id . '" AND gen_id="'.$gen_id.'"');
+
+                $LearnNote = LearnNote::model()->findAll('user_id="' . $user_id . '" AND gen_id="'.$gen_id.'"');
+
+                foreach ($LearnNote as $key => $value_note) {
+                    $value_note->active = 'n';
+                    $value_note->save(false);
+                }
+
+                $data->lesson_status = null;
+                $data->lesson_active = 'n';
+                $data->save(false);
+
+            }
+
+            //Reset Course    exam final
+            $courseScore = Coursescore::model()->findAll(array(
+                'condition' => 'course_id=:course_id AND user_id=:user_id AND active = "y" AND gen_id=:gen_id AND type="post"',
+                'params' => array(':course_id' => $course_id,':user_id' => $user_id, ':gen_id'=>$gen_id)
+            ));
+
+            foreach ($courseScore as $valScore) {
+
+               Courselogques::model()->deleteAll(array(
+                'condition' => 'user_id=:user_id AND course_id=:course_id AND score_id=:score_id AND gen_id=:gen_id',
+                'params' => array(':user_id' => $user_id,':course_id' => $course_id,':score_id'=>$valScore->score_id, ':gen_id'=>$gen_id)));
+
+               Courselogchoice::model()->deleteAll(array(
+                'condition' => 'course_id=:course_id AND user_id=:user_id AND score_id=:score_id AND gen_id=:gen_id',
+                'params' => array(':course_id' => $course_id,':user_id' => $user_id,':score_id'=>$valScore->score_id, ':gen_id'=>$gen_id)));
+
+               $valScore->active = 'n';
+               $valScore->save();
+            }
+
+            }else{
+                var_dump($logReset->getErrors());
+            }
+
+            $lessonS = Lesson::model()->findByPk($lesson_id);
+            $courseMsg .= ($key+1).". <b>หลักสูตร : </b> ".$lessonS->courseonlines->course_title.'<br> <b>บทเรียน : </b>'.$lessonS->title.'<br>';
+            $reset_type = $_POST['reset_type'];
+
+        }
+
+        if(Yii::app()->user->id){
+            Helpers::lib()->getControllerActionId();
+        }
+
+        $courseMsg .= '<br><span style="color:red">สาเหตุ : '.$_POST['description'].'</span>';
+        $model = Users::model()->findByPk($user_id);
+        $to['email'] = $model->email;
+        $to['firstname'] = $model->profiles->firstname;
+        $to['lastname'] = $model->profiles->lastname;
+        $subject = 'แจ้งเตือน ระบบ reset สอบวัดผลก่อนเรียน';
+        $message = "หัวช้อ : แจ้งเตือนระบบ reset <br> <br>";
+        $message .= "เรียน ".$model->profiles->firstname." ".$model->profiles->lastname."<br> <br>";
+        $message .= "<div style=\"text-indent: 4em;\">";
+        $message .= $courseMsg."</div>";
+        $send = Helpers::lib()->SendMail($to,$subject,$message);
+
+        echo $reset_type;
+    }
+
+
+
+    public function actionSaveResetLearn()  // Reset การเรียน
+    {
+        $user_id = $_POST['id'];
+        $lesson = json_decode($_POST['checkedList']);
+        $reset_type = $_POST['reset_type'];        
+        $courseMsg = ""; // $courseMsg = 'ผู้ดูแลระบบ ทำการ Reset ข้อมูลการเรียนบทเรียนต่อไปนี้ <br>';
+        $courseMsg_en = "";
+
+        foreach ($lesson as $key => $value) {
+            $val = array();
+            $val = explode(",", $value);
+            $course_id = $val[0];
+            $lesson_id = $val[1];
+            $learn_id = $val[2];
+            $gen_id = $val[3];
+
+            $logReset = new LogReset;
+            $logReset->user_id = $user_id;
+            $logReset->course_id = $course_id;
+            $logReset->lesson_id = $lesson_id;
+            $logReset->gen_id = $gen_id;
+            $logReset->reset_description = $_POST['description'];
+            $logReset->reset_date = date('Y-m-d h:i:s');
+            $logReset->reset_by = Yii::app()->user->id;
+            $logReset->reset_type = '0';
+
+            if ($logReset->save()){
+
+                $learn = Learn::model()->findAllByAttributes(array(
+                    'user_id' => $user_id,
+                    'lesson_id' => $lesson_id,
+                    'gen_id' => $gen_id,
+                    'course_id' => $course_id,
+                    'lesson_active' => 'y'
+                ));
+
+                if ($learn) {
+                    foreach ($learn as $key => $data) {
+                        $learnFile = LearnFile::model()->deleteAll('user_id_file="' . $user_id . '" AND learn_id="' . $data->learn_id . '" AND gen_id="'.$gen_id.'"');
+                        $LearnNote = LearnNote::model()->findAll('user_id="' . $user_id . '" AND gen_id="'.$gen_id.'"');
+                        foreach ($LearnNote as $key => $value_note) {
+                            $value_note->active = 'n';
+                            $value_note->save(false);
+                        }
+                        $score = Score::model()->findAllByAttributes(array(
+                            'user_id' => $user_id,
+                            'lesson_id' => $lesson_id,
+                            'course_id' => $course_id,
+                            'gen_id' => $gen_id,
+                            // 'type'=>'post',
+                            'active' => 'y'
+                        ));
+                        foreach ($score as $key1 => $sc) {
+                            $sc->active = 'n';
+                            $sc->save(false);
+
+                            Logques::model()->deleteAll(array(
+                                'condition' => 'user_id=:user_id AND lesson_id=:lesson_id AND score_id=:score_id AND gen_id=:gen_id',
+                                'params' => array(':user_id' => $user_id,':lesson_id' => $lesson_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
+
+                            Logchoice::model()->deleteAll(array(
+                                'condition' => 'lesson_id=:lesson_id AND user_id=:user_id AND score_id=:score_id AND gen_id=:gen_id',
+                                'params' => array(':lesson_id' => $lesson_id,':user_id' => $user_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
+                        }
+
+                        $data->lesson_status = null;
+                        $data->lesson_active = 'n';
+                        $data->save(false);
+
+                    }
+
+                     //Reset Course    exam final
+                    $courseScore = Coursescore::model()->findAll(array(
+                        'condition' => 'course_id=:course_id AND user_id=:user_id AND gen_id=:gen_id AND type="post"',
+                        'params' => array(':course_id' => $course_id,':user_id' => $user_id, ':gen_id'=>$gen_id)
+                    ));
+
+                    foreach ($courseScore as $valScore) {
+                       $valScore->active = 'n';
+                       $valScore->save();
+                   }
+
+                }
+
+            }else{
+                var_dump($logReset->getErrors());
+            }
+
+            Passcours::model()->deleteAll(array(
+                'condition' => 'passcours_cours=:passcours_cours AND passcours_user=:passcours_user AND gen_id=:gen_id',
+                'params' => array(':passcours_cours' => $course_id,':passcours_user' => $user_id, ':gen_id'=>$gen_id)));
+
+            $reset_type = $_POST['reset_type'];
+
+            $lessonS = Lesson::model()->findByPk($lesson_id);
+            $courseMsg .= ($key+1).". <b>หลักสูตร : </b> ".$lessonS->courseonlines->course_title.'<br> <b>บทเรียน : </b>'.$lessonS->title.'<br>';
+            $courseMsg_en .= ($key+1).". <b>Course : </b> ".$lessonS->courseonlines->course_title.'<br> <b>Chapter : </b>'.$lessonS->title.'<br>';
+        }
+
+        if(Yii::app()->user->id){
+            Helpers::lib()->getControllerActionId();
+        }
+
+        $courseMsg .= '<span style="color:red">สาเหตุ : '.$_POST['description'].'</span>';
+        $courseMsg_en .= '<span style="color:red">Reason : '.$_POST['description'].'</span>';
+        $model = Users::model()->findByPk($user_id);
+        $to['email'] = $model->email;
+        $to['firstname'] = $model->profiles->firstname;
+        $to['lastname'] = $model->profiles->lastname;
+        $subject = 'Study reset system\ ระบบการแจ้งเตือน Reset การเรียน';
+        $message = "เรื่อง : แจ้งเตือนการ Reset การเรียน <br>";
+        $message .= "เรียน ".$model->profiles->firstname." ".$model->profiles->lastname."<br>";
+        $message .= "ผู้ดูแลระบบดำเนินการ Reset การเรียนของหลักสูตรดังต่อไปนี้ <br>";
+        // $message .= "<div style=\"text-indent: 4em;\">";
+        $message .= $courseMsg;
+
+        $message .= "<br>Subject: Study reset notification.<br>";
+        $message .= "Dear: ".$model->profiles->firstname_en." ".$model->profiles->lastname_en."<br>";
+        $message .= "The administrator has performs a reset of course study as follows.<br>";
+        // $message .= "<div style=\"text-indent: 4em;\">";
+        $message .= $courseMsg_en;
+
+        $send = Helpers::lib()->SendMail($to,$subject,$message);
+
+        echo $reset_type;
+
+    }
+
+
+    public function actionSaveResetPost() // Reset สอบหลังเรียน บทเรียน
+    {
+        $user_id = $_POST['id'];
+        $lesson = json_decode($_POST['checkedList']);
+        $reset_type = $_POST['reset_type'];
+        $courseMsg = 'ผู้ดูแลระบบ ทำการ Reset ข้อมูลการเรียนบทเรียนต่อไปนี้ <br>';
+
+        foreach ($lesson as $key => $value) {
+            $val = array();
+            $val = explode(",", $value);
+            $course_id = $val[0];
+            $lesson_id = $val[1];
+            $learn_id = $val[2];
+            $gen_id = $val[3];
+
+            $logReset = new LogReset;
+            $logReset->user_id = $user_id;
+            $logReset->course_id = $course_id;
+            $logReset->gen_id = $gen_id;
+            $logReset->lesson_id = $lesson_id;
+            $logReset->reset_description = $_POST['description'];
+            $logReset->reset_date = date('Y-m-d h:i:s');
+            $logReset->reset_by = Yii::app()->user->id;
+            $logReset->reset_type = 3;
+
+            if ($logReset->save()){
+                // $learnFile = LearnFile::model()->deleteAll('user_id_file="' . $user_id . '" AND learn_id="' . $data->learn_id . '"');
+
+                $score = Score::model()->findAllByAttributes(array(
+                    'user_id' => $user_id,
+                    'lesson_id' => $lesson_id,
+                    'gen_id' => $gen_id,
+                    'course_id' => $course_id,
+                    'type'=>'post',
+                    'active' => 'y'
+                ));
+
+            foreach ($score as $key1 => $sc) {
+                $sc->active = 'n';
+                $sc->save(false);
+
+                Logques::model()->deleteAll(array(
+                    'condition' => 'user_id=:user_id AND lesson_id=:lesson_id AND score_id=:score_id AND gen_id=:gen_id',
+                    'params' => array(':user_id' => $user_id,':lesson_id' => $lesson_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
+
+                Logchoice::model()->deleteAll(array(
+                    'condition' => 'lesson_id=:lesson_id AND user_id=:user_id AND score_id=:score_id AND gen_id=:gen_id',
+                    'params' => array(':lesson_id' => $lesson_id,':user_id' => $user_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
+            }
+
+
+                $learn = Learn::model()->findAllByAttributes(array(
+                    'user_id' => $user_id,
+                    'lesson_id' => $lesson_id,
+                    'course_id' => $course_id,
+                    'gen_id' => $gen_id,
+                    'lesson_active' => 'y'
+                ));
+
+                foreach ($learn as $key => $data) {
+                    $data->lesson_status = null;
+                    $data->save(false);
+                }
+
+
+                 //Reset Course    exam final
+                $courseScore = Coursescore::model()->findAll(array(
+                    'condition' => 'course_id=:course_id AND user_id=:user_id AND active = "y" AND gen_id=:gen_id AND type="post"',
+                    'params' => array(':course_id' => $course_id,':user_id' => $user_id, ':gen_id'=>$gen_id)
+                ));
+
+
+                foreach ($courseScore as $valScore) {
+
+                   Courselogques::model()->deleteAll(array(
+                    'condition' => 'user_id=:user_id AND course_id=:course_id AND score_id=:score_id AND gen_id=:gen_id',
+                    'params' => array(':user_id' => $user_id,':course_id' => $course_id,':score_id'=>$valScore->score_id, ':gen_id'=>$gen_id)));
+
+                   Courselogchoice::model()->deleteAll(array(
+                    'condition' => 'course_id=:course_id AND user_id=:user_id AND score_id=:score_id AND gen_id=:gen_id',
+                    'params' => array(':course_id' => $course_id,':user_id' => $user_id,':score_id'=>$valScore->score_id, ':gen_id'=>$gen_id)));
+
+                   $valScore->active = 'n';
+                   $valScore->save();
+                }
+
+            }else{
+                var_dump($logReset->getErrors());
+            }
+
+            $lessonS = Lesson::model()->findByPk($lesson_id);
+            $courseMsg .= ($key+1).". <b>หลักสูตร : </b> ".$lessonS->courseonlines->course_title.'<br> <b>บทเรียน : </b>'.$lessonS->title.'<br>';
+
+            $reset_type = $_POST['reset_type'];
+
+        } // foreach
+
+
+        if(Yii::app()->user->id){
+            Helpers::lib()->getControllerActionId();
+        }
+
+
+        $courseMsg .= '<br><span style="color:red">สาเหตุ : '.$_POST['description'].'</span>';
+        $model = Users::model()->findByPk($user_id);
+        $to['email'] = $model->email;
+        $to['firstname'] = $model->profiles->firstname;
+        $to['lastname'] = $model->profiles->lastname;
+        $subject = 'แจ้งเตือน ระบบ reset สอบวัดผลหลังเรียน';
+        $message = "หัวช้อ : แจ้งเตือนระบบ reset <br> <br>";
+        $message .= "เรียน ".$model->profiles->firstname." ".$model->profiles->lastname."<br> <br>";
+        $message .= "<div style=\"text-indent: 4em;\">";
+        $message .= $courseMsg."</div>";
+        $send = Helpers::lib()->SendMail($to,$subject,$message);
+
+        echo $reset_type;
+    }
+
+
+    public function actionSaveResetExam()
+    {
+        $type_test = $_POST['type_test'];
+        $user_id = $_POST['id'];
+        $courseData = json_decode($_POST['checkedList']);
+        $reset_type = $_POST['reset_type'];
+        // $courseMsg = 'ผู้ดูแลระบบ ทำการ Reset ผลสอบวัดผลหลักสูตรต่อไปนี้ <br>';
+        $courseMsg = "";
+        $courseMsg_en = "";
+
+        foreach ($courseData as $key => $value) {
+            $ex = explode("_", $value);
+            $value = $ex[0];
+            $gen_id = $ex[1];
+                    // $scoreLesson = Score::model()->deleteAll('user_id="' . Yii::app()->user->id . '" AND lesson_id="' . $value->id . '"');
+
+            $logReset = new LogReset;
+            $logReset->user_id = $user_id;
+            $logReset->course_id = $value;
+            $logReset->gen_id = $gen_id;
+            $logReset->reset_description = $_POST['description'];
+            $logReset->reset_date = date('Y-m-d h:i:s');
+            $logReset->reset_type = 1;
+            $logReset->reset_by = Yii::app()->user->id;
+
+            if($logReset->save()){
+
+                    if($type_test == 'pre'){ // หลักสูตร สอบก่อนเรียน
+
+                        $score = Score::model()->findAllByAttributes(array(
+                            'user_id' => $user_id,
+                            'course_id' => $value,
+                            'gen_id' => $gen_id,
+                            'active' => 'y'
+                        ));
+
+                        foreach ($score as $key1 => $sc) {
+                            $sc->active = 'n';
+                            $sc->save(false);
+
+                            Logques::model()->deleteAll(array(
+                                'condition' => 'user_id=:user_id AND lesson_id=:lesson_id AND score_id=:score_id AND gen_id=:gen_id',
+                                'params' => array(':user_id' => $user_id,':lesson_id' => $sc->lesson_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
+
+                            Logchoice::model()->deleteAll(array(
+                                'condition' => 'lesson_id=:lesson_id AND user_id=:user_id AND score_id=:score_id AND gen_id=:gen_id',
+                                'params' => array(':lesson_id' => $sc->lesson_id,':user_id' => $user_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
+
+                        } // foreach ($score
+
+
+                        $learn = Learn::model()->findAllByAttributes(array(
+                            'user_id' => $user_id,
+                            'course_id' => $value,
+                            'gen_id' => $gen_id,
+                            'lesson_active' => 'y'
+                        ));
+
+                    foreach ($learn as $key => $data) {
+
+                        $learnFile = LearnFile::model()->deleteAll('user_id_file="' . $user_id . '" AND learn_id="' . $data->learn_id . '" AND gen_id="'.$gen_id.'"');
+
+                        $LearnNote = LearnNote::model()->findAll('user_id="' . $user_id . '" AND gen_id="'.$gen_id.'"');
+                        foreach ($LearnNote as $key => $value_note) {
+                            $value_note->active = 'n';
+                            $value_note->save(false);
+                        }
+
+                        $data->lesson_status = null;
+                        $data->lesson_active = 'n';
+                        $data->save(false);
+
+                    } // foreach ($learn
+
+                    $sql_text_type_post = "";
+                    $sql_text2 = "";
+                    $sql_text_type_course = "";
+
+                }else{ // $type_test == 'pre'  // หลักสูตร สอบหลังเรียน
+
+                    $sql_text_type_post = " AND type='post'";
+                    $sql_text_type_course = " AND type='course'";
+                    $sql_text2 = " AND test_type='post'";
+                }
+
+
+                $courseScore = Coursescore::model()->findAll(array(
+                    'condition' => 'course_id=:course_id AND user_id=:user_id AND active = "y" AND gen_id=:gen_id'.$sql_text_type_post,
+                    'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$gen_id)
+                ));
+            
+
+                TempCourseQuiz::model()->deleteAll(array(
+                    'condition' => 'course_id=:course_id AND user_id=:user_id AND gen_id=:gen_id'.$sql_text_type_course,
+                    'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$gen_id)
+                ));
+
+                foreach ($courseScore as $valScore) {
+                    $valScore->active = 'n';
+                    $valScore->save();
+                }
+            }
+
+
+            if($type_test == 'course'){
+                $type_test == 'post';
+            }
+
+            Courselogques::model()->deleteAll(array(
+                'condition' => 'course_id=:course_id AND user_id=:user_id AND gen_id=:gen_id'.$sql_text2,
+                'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$gen_id)));
+
+            Courselogchoice::model()->deleteAll(array(
+                'condition' => 'course_id=:course_id AND user_id=:user_id AND gen_id=:gen_id'.$sql_text2,
+                'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$gen_id)));
+
+            Passcours::model()->deleteAll(array(
+                'condition' => 'passcours_cours=:passcours_cours AND passcours_user=:passcours_user AND gen_id=:gen_id',
+                'params' => array(':passcours_cours' => $value,':passcours_user' => $user_id, ':gen_id'=>$gen_id)));
+
+            $courseName = CourseOnline::model()->findByPk($value);
+            $courseMsg .= ($key+1)." หลักสูตร : ".$courseName->course_title.'<br>';
+            $courseMsg_en .= ($key+1)." Course : ".$courseName->course_title.'<br>';
+
+
+
+        } // foreach coursedata
+
+        if(Yii::app()->user->id){
+            Helpers::lib()->getControllerActionId();
+        }
+
+        $courseMsg .= '<span style="color:red">สาเหตุ : '.$_POST['description'].'</span>';
+        $model = Users::model()->findByPk($user_id);
+        $to['email'] = $model->email;
+        $to['firstname'] = $model->profiles->firstname;
+        $to['lastname'] = $model->profiles->lastname;
+        $subject = 'Exams reset system\ ระบบการแจ้งเตือน Reset ผลการทดสอบ';
+        $message = "เรื่อง : แจ้งเตือนการ Reset ผลการทดสอบ <br>";
+        $message .= "เรียน: ".$model->profiles->firstname." ".$model->profiles->lastname."<br>";
+        $message .= "ผู้ดูแลระบบดำเนินการ Reset ผลการทดสอบหลักสูตรดังต่อไปนี้ <br>";
+        // $message .= "<div style=\"text-indent: 4em;\">";
+        $message .= $courseMsg;
+
+        //eng
+        $message .= "<br> Subject: Exams reset notification. <br>";
+        $message .= "Dear: ".$model->profiles->firstname_en." ".$model->profiles->lastname_en."<br>";
+        $message .= "The administrator has performs a reset of course exams as follows. <br>";
+        $message .= $courseMsg_en;
+        $message .= '<span style="color:red">Reason : '.$_POST['description'].'</span>';
+
+
+
+        $send = Helpers::lib()->SendMail($to,$subject,$message);
+
+        echo $reset_type;
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public function actionIndex()
     {
       $this->render('index');
-  }
+    }
     //// USER ////
   public function actionShowResetCourse()
   {
@@ -451,24 +1046,7 @@ public function actionResetScoreLessonUni()
 }
     //// UNIVERSITY ////
 
-public function actionResetUser()
-{
 
-    // $criteria = new CDbCriteria;
-    // $criteria->group = 'user_id';
-    // $model = Learn::model()->findAll($criteria);
-    $model = new Learn('searchReset');
-     //var_dump($model);exit();
-    // $model = new MtAuthCourseName('searchReset');
-    if(isset($_GET['Learn'])){
-        $model->attributes = $_GET['Learn'];
-        $model->searchname = $_GET['Learn']['searchname'];
-    }
-
-    $this->render('reset_user',array(
-        'model'=>$model,
-    ));
-}
 
 
 public function actionReset_university()
@@ -737,130 +1315,20 @@ public function actionReset_university()
         $respon = $this->renderPartial('_modal_post',array('course' => $course,'user_id' => $user_id,'type' => $type));
     }
 
-    public function actionSaveResetLearn()
-    {
-
-        $user_id = $_POST['id'];
-        $lesson = json_decode($_POST['checkedList']);
-        $reset_type = $_POST['reset_type'];
-        // $courseMsg = 'ผู้ดูแลระบบ ทำการ Reset ข้อมูลการเรียนบทเรียนต่อไปนี้ <br>';
-        $courseMsg = "";
-        $courseMsg_en = "";
-
-        foreach ($lesson as $key => $value) {
-            $val = array();
-            $val = explode(",", $value);
-            $course_id = $val[0];
-            $lesson_id = $val[1];
-            $learn_id = $val[2];
-            $gen_id = $val[3];
-
-            $logReset = new LogReset;
-            $logReset->user_id = $user_id;
-            $logReset->course_id = $course_id;
-            $logReset->lesson_id = $lesson_id;
-            $logReset->gen_id = $gen_id;
-            $logReset->reset_description = $_POST['description'];
-            $logReset->reset_date = date('Y-m-d h:i:s');
-            $logReset->reset_by = Yii::app()->user->id;
-            $logReset->reset_type = '0';
-            if ($logReset->save()){
-                $learn = Learn::model()->findAllByAttributes(array(
-                    'user_id' => $user_id,
-                    'lesson_id' => $lesson_id,
-                    'gen_id' => $gen_id,
-                    'course_id' => $course_id,
-                    'lesson_active' => 'y'
-                ));
-
-                if ($learn) {
-                    foreach ($learn as $key => $data) {
-                        $learnFile = LearnFile::model()->deleteAll('user_id_file="' . $user_id . '" AND learn_id="' . $data->learn_id . '" AND gen_id="'.$gen_id.'"');
-                        $LearnNote = LearnNote::model()->findAll('user_id="' . $user_id . '" AND gen_id="'.$gen_id.'"');
-                        foreach ($LearnNote as $key => $value_note) {
-                            $value_note->active = 'n';
-                            $value_note->save(false);
-                        }
-                        $score = Score::model()->findAllByAttributes(array(
-                            'user_id' => $user_id,
-                            'lesson_id' => $lesson_id,
-                            'course_id' => $course_id,
-                            'gen_id' => $gen_id,
-                            // 'type'=>'post',
-                            'active' => 'y'
-                        ));
-                        foreach ($score as $key1 => $sc) {
-                            $sc->active = 'n';
-                            $sc->save(false);
-
-                            Logques::model()->deleteAll(array(
-                                'condition' => 'user_id=:user_id AND lesson_id=:lesson_id AND score_id=:score_id AND gen_id=:gen_id',
-                                'params' => array(':user_id' => $user_id,':lesson_id' => $lesson_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
-
-                            Logchoice::model()->deleteAll(array(
-                                'condition' => 'lesson_id=:lesson_id AND user_id=:user_id AND score_id=:score_id AND gen_id=:gen_id',
-                                'params' => array(':lesson_id' => $lesson_id,':user_id' => $user_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
-                        }
-
-                        $data->lesson_status = null;
-                        $data->lesson_active = 'n';
-                        $data->save(false);
-
-                    }
-                     //Reset Course
-                    $courseScore = Coursescore::model()->findAll(array(
-                        'condition' => 'course_id=:course_id AND user_id=:user_id AND gen_id=:gen_id',
-                        'params' => array(':course_id' => $course_id,':user_id' => $user_id, ':gen_id'=>$gen_id)));
-                    foreach ($courseScore as $valScore) {
-                       $valScore->active = 'n';
-                       $valScore->save();
-                   }
-                }
-            }else{
-                var_dump($logReset->getErrors());
-            }
-
-            Passcours::model()->deleteAll(array(
-                'condition' => 'passcours_cours=:passcours_cours AND passcours_user=:passcours_user AND gen_id=:gen_id',
-                'params' => array(':passcours_cours' => $course_id,':passcours_user' => $user_id, ':gen_id'=>$gen_id)));
-
-            $reset_type = $_POST['reset_type'];
-
-            $lessonS = Lesson::model()->findByPk($lesson_id);
-            $courseMsg .= ($key+1).". <b>หลักสูตร : </b> ".$lessonS->courseonlines->course_title.'<br> <b>บทเรียน : </b>'.$lessonS->title.'<br>';
-            $courseMsg_en .= ($key+1).". <b>Course : </b> ".$lessonS->courseonlines->course_title.'<br> <b>Chapter : </b>'.$lessonS->title.'<br>';
-        }
-
-        if(Yii::app()->user->id){
-            Helpers::lib()->getControllerActionId();
-        }
-
-        $courseMsg .= '<span style="color:red">สาเหตุ : '.$_POST['description'].'</span>';
-        $courseMsg_en .= '<span style="color:red">Reason : '.$_POST['description'].'</span>';
-        $model = Users::model()->findByPk($user_id);
-        $to['email'] = $model->email;
-        $to['firstname'] = $model->profiles->firstname;
-        $to['lastname'] = $model->profiles->lastname;
-        $subject = 'Study reset system\ ระบบการแจ้งเตือน Reset การเรียน';
-        $message = "เรื่อง : แจ้งเตือนการ Reset การเรียน <br>";
-        $message .= "เรียน ".$model->profiles->firstname." ".$model->profiles->lastname."<br>";
-        $message .= "ผู้ดูแลระบบดำเนินการ Reset การเรียนของหลักสูตรดังต่อไปนี้ <br>";
-        // $message .= "<div style=\"text-indent: 4em;\">";
-        $message .= $courseMsg;
-
-    $message .= "<br>Subject: Study reset notification.<br>";
-    $message .= "Dear: ".$model->profiles->firstname_en." ".$model->profiles->lastname_en."<br>";
-    $message .= "The administrator has performs a reset of course study as follows.<br>";
-    // $message .= "<div style=\"text-indent: 4em;\">";
-    $message .= $courseMsg_en;
 
 
 
-        $send = Helpers::lib()->SendMail($to,$subject,$message);
 
-        echo $reset_type;
 
-    }
+
+
+
+
+
+
+
+
+
 
     public function actionGet_dialog_exam()
     {
@@ -888,379 +1356,8 @@ public function actionReset_university()
      exit();
  }
 
- public function actionSaveResetExam()
- {
-    $type_test = $_POST['type_test'];
-    $user_id = $_POST['id'];
-    $courseData = json_decode($_POST['checkedList']);
-    $reset_type = $_POST['reset_type'];
-    // $courseMsg = 'ผู้ดูแลระบบ ทำการ Reset ผลสอบวัดผลหลักสูตรต่อไปนี้ <br>';
-    $courseMsg = "";
-    $courseMsg_en = "";
 
-    foreach ($courseData as $key => $value) {
-        $ex = explode("_", $value);
-        $value = $ex[0];
-        $gen_id = $ex[1];
-                // $scoreLesson = Score::model()->deleteAll('user_id="' . Yii::app()->user->id . '" AND lesson_id="' . $value->id . '"');
 
-        $logReset = new LogReset;
-        $logReset->user_id = $user_id;
-        $logReset->course_id = $value;
-        $logReset->gen_id = $gen_id;
-        $logReset->reset_description = $_POST['description'];
-        $logReset->reset_date = date('Y-m-d h:i:s');
-        $logReset->reset_type = 1;
-        $logReset->reset_by = Yii::app()->user->id;
-        if($logReset->save()){
-
-            if($type_test == 'pre'){
-                $score = Score::model()->findAllByAttributes(array(
-                    'user_id' => $user_id,
-                    'course_id' => $value,
-                    'gen_id' => $gen_id,
-                    'active' => 'y'
-                ));
-                foreach ($score as $key1 => $sc) {
-                    $sc->active = 'n';
-                    $sc->save(false);
-
-                    Logques::model()->deleteAll(array(
-                        'condition' => 'user_id=:user_id AND lesson_id=:lesson_id AND score_id=:score_id AND gen_id=:gen_id',
-                        'params' => array(':user_id' => $user_id,':lesson_id' => $sc->lesson_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
-
-                    Logchoice::model()->deleteAll(array(
-                        'condition' => 'lesson_id=:lesson_id AND user_id=:user_id AND score_id=:score_id AND gen_id=:gen_id',
-                        'params' => array(':lesson_id' => $sc->lesson_id,':user_id' => $user_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
-
-                } // foreach ($score
-
-
-                $learn = Learn::model()->findAllByAttributes(array(
-                    'user_id' => $user_id,
-                    'course_id' => $value,
-                    'gen_id' => $gen_id,
-                    'lesson_active' => 'y'
-                ));
-
-                foreach ($learn as $key => $data) {
-                    $learnFile = LearnFile::model()->deleteAll('user_id_file="' . $user_id . '" AND learn_id="' . $data->learn_id . '" AND gen_id="'.$gen_id.'"');
-                    $LearnNote = LearnNote::model()->findAll('user_id="' . $user_id . '" AND gen_id="'.$gen_id.'"');
-                    foreach ($LearnNote as $key => $value_note) {
-                        $value_note->active = 'n';
-                        $value_note->save(false);
-                    }
-
-                    $data->lesson_status = null;
-                    $data->lesson_active = 'n';
-                    $data->save(false);
-
-                } // foreach ($learn
-
-                $sql_text_type_post = "";
-                $sql_text2 = "";
-                $sql_text_type_course = "";
-            }else{ // $type_test == 'pre'
-
-                $sql_text_type_post = " AND type='post'";
-                $sql_text_type_course = " AND type='course'";
-                $sql_text2 = " AND test_type='post'";
-            }
-
-            $courseScore = Coursescore::model()->findAll(array(
-                'condition' => 'course_id=:course_id AND user_id=:user_id AND active = "y" AND gen_id=:gen_id'.$sql_text_type_post,
-                'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$gen_id)));
-            
-
-            TempCourseQuiz::model()->deleteAll(array(
-                'condition' => 'course_id=:course_id AND user_id=:user_id AND gen_id=:gen_id'.$sql_text_type_course,
-                'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$gen_id)));
-
-            foreach ($courseScore as $valScore) {
-             $valScore->active = 'n';
-             $valScore->save();
-         }
-     }
-
-     if($type_test == 'course'){
-        $type_test == 'post';
-    }
-
-     Courselogques::model()->deleteAll(array(
-        'condition' => 'course_id=:course_id AND user_id=:user_id AND gen_id=:gen_id'.$sql_text2,
-        'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$gen_id)));
-
-     Courselogchoice::model()->deleteAll(array(
-        'condition' => 'course_id=:course_id AND user_id=:user_id AND gen_id=:gen_id'.$sql_text2,
-        'params' => array(':course_id' => $value,':user_id' => $user_id, ':gen_id'=>$gen_id)));
-
-     Passcours::model()->deleteAll(array(
-        'condition' => 'passcours_cours=:passcours_cours AND passcours_user=:passcours_user AND gen_id=:gen_id',
-        'params' => array(':passcours_cours' => $value,':passcours_user' => $user_id, ':gen_id'=>$gen_id)));
-
-        $courseName = CourseOnline::model()->findByPk($value);
-        $courseMsg .= ($key+1)." หลักสูตร : ".$courseName->course_title.'<br>';
-        $courseMsg_en .= ($key+1)." Course : ".$courseName->course_title.'<br>';
-
-
-
- } // foreach coursedata
-
- if(Yii::app()->user->id){
-    Helpers::lib()->getControllerActionId();
-}
-
-$courseMsg .= '<span style="color:red">สาเหตุ : '.$_POST['description'].'</span>';
-$model = Users::model()->findByPk($user_id);
-$to['email'] = $model->email;
-$to['firstname'] = $model->profiles->firstname;
-$to['lastname'] = $model->profiles->lastname;
-$subject = 'Exams reset system\ ระบบการแจ้งเตือน Reset ผลการทดสอบ';
-$message = "เรื่อง : แจ้งเตือนการ Reset ผลการทดสอบ <br>";
-$message .= "เรียน: ".$model->profiles->firstname." ".$model->profiles->lastname."<br>";
-$message .= "ผู้ดูแลระบบดำเนินการ Reset ผลการทดสอบหลักสูตรดังต่อไปนี้ <br>";
-// $message .= "<div style=\"text-indent: 4em;\">";
-$message .= $courseMsg;
-
-//eng
-$message .= "<br> Subject: Exams reset notification. <br>";
-$message .= "Dear: ".$model->profiles->firstname_en." ".$model->profiles->lastname_en."<br>";
-$message .= "The administrator has performs a reset of course exams as follows. <br>";
-$message .= $courseMsg_en;
-$message .= '<span style="color:red">Reason : '.$_POST['description'].'</span>';
-
-
-
-$send = Helpers::lib()->SendMail($to,$subject,$message);
-
-echo $reset_type;
-
-}
-
-public function actionSaveResetPre()
-{
- $user_id = $_POST['id'];
- $lesson = json_decode($_POST['checkedList']);
- $reset_type = $_POST['reset_type'];
- $courseMsg = 'ผู้ดูแลระบบ ทำการ Reset ข้อมูลการเรียนบทเรียนต่อไปนี้ <br>';
- foreach ($lesson as $key => $value) {
-    $val = array();
-    $val = explode(",", $value);
-    $course_id = $val[0];
-    $lesson_id = $val[1];
-    $learn_id = $val[2];
-    $gen_id = $val[3];
-
-
-    $logReset = new LogReset;
-    $logReset->user_id = $user_id;
-    $logReset->course_id = $course_id;
-    $logReset->lesson_id = $lesson_id;
-    $logReset->gen_id = $gen_id;
-    $logReset->reset_description = $_POST['description'];
-    $logReset->reset_date = date('Y-m-d h:i:s');
-    $logReset->reset_by = Yii::app()->user->id;
-    $logReset->reset_type = 2;
-    if ($logReset->save()){
-                // $learnFile = LearnFile::model()->deleteAll('user_id_file="' . $user_id . '" AND learn_id="' . $data->learn_id . '"');
-
-        $score = Score::model()->findAllByAttributes(array(
-            'user_id' => $user_id,
-            'lesson_id' => $lesson_id,
-            'course_id' => $course_id,
-            'gen_id' => $gen_id,
-            //'type'=>'pre',
-            'active' => 'y'
-        ));
-
-        foreach ($score as $key1 => $sc) {
-            $sc->active = 'n';
-            $sc->save(false);
-
-            Logques::model()->deleteAll(array(
-                'condition' => 'user_id=:user_id AND lesson_id=:lesson_id AND score_id=:score_id AND gen_id=:gen_id',
-                'params' => array(':user_id' => $user_id,':lesson_id' => $lesson_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
-
-            Logchoice::model()->deleteAll(array(
-                'condition' => 'lesson_id=:lesson_id AND user_id=:user_id AND score_id=:score_id AND gen_id=:gen_id',
-                'params' => array(':lesson_id' => $lesson_id,':user_id' => $user_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
-        }
-
-        $learn = Learn::model()->findAllByAttributes(array(
-            'user_id' => $user_id,
-            'lesson_id' => $lesson_id,
-            'course_id' => $course_id,
-            'gen_id' => $gen_id,
-            'lesson_active' => 'y'
-        ));
-
-        foreach ($learn as $key => $data) {
-            $learnFile = LearnFile::model()->deleteAll('user_id_file="' . $user_id . '" AND learn_id="' . $data->learn_id . '" AND gen_id="'.$gen_id.'"');
-            $LearnNote = LearnNote::model()->findAll('user_id="' . $user_id . '" AND gen_id="'.$gen_id.'"');
-            foreach ($LearnNote as $key => $value_note) {
-                $value_note->active = 'n';
-                $value_note->save(false);
-            }
-
-            $data->lesson_status = null;
-            $data->lesson_active = 'n';
-            $data->save(false);
-
-        }
-
-        $courseScore = Coursescore::model()->findAll(array(
-            'condition' => 'course_id=:course_id AND user_id=:user_id AND active = "y" AND gen_id=:gen_id',
-            'params' => array(':course_id' => $course_id,':user_id' => $user_id, ':gen_id'=>$gen_id)));
-        foreach ($courseScore as $valScore) {
-
-         Courselogques::model()->deleteAll(array(
-            'condition' => 'user_id=:user_id AND course_id=:course_id AND score_id=:score_id AND gen_id=:gen_id',
-            'params' => array(':user_id' => $user_id,':course_id' => $course_id,':score_id'=>$valScore->score_id, ':gen_id'=>$gen_id)));
-
-         Courselogchoice::model()->deleteAll(array(
-            'condition' => 'course_id=:course_id AND user_id=:user_id AND score_id=:score_id AND gen_id=:gen_id',
-            'params' => array(':course_id' => $course_id,':user_id' => $user_id,':score_id'=>$valScore->score_id, ':gen_id'=>$gen_id)));
-
-         $valScore->active = 'n';
-         $valScore->save();
-     }
-
- }else{
-    var_dump($logReset->getErrors());
-}
-$lessonS = Lesson::model()->findByPk($lesson_id);
-$courseMsg .= ($key+1).". <b>หลักสูตร : </b> ".$lessonS->courseonlines->course_title.'<br> <b>บทเรียน : </b>'.$lessonS->title.'<br>';
-$reset_type = $_POST['reset_type'];
-
-}
-
-if(Yii::app()->user->id){
-    Helpers::lib()->getControllerActionId();
-}
-
-$courseMsg .= '<br><span style="color:red">สาเหตุ : '.$_POST['description'].'</span>';
-$model = Users::model()->findByPk($user_id);
-$to['email'] = $model->email;
-$to['firstname'] = $model->profiles->firstname;
-$to['lastname'] = $model->profiles->lastname;
-$subject = 'แจ้งเตือน ระบบ reset สอบวัดผลก่อนเรียน';
-$message = "หัวช้อ : แจ้งเตือนระบบ reset <br> <br>";
-$message .= "เรียน ".$model->profiles->firstname." ".$model->profiles->lastname."<br> <br>";
-$message .= "<div style=\"text-indent: 4em;\">";
-$message .= $courseMsg."</div>";
-$send = Helpers::lib()->SendMail($to,$subject,$message);
-
-echo $reset_type;
-}
-
-public function actionSaveResetPost()
-{
- $user_id = $_POST['id'];
- $lesson = json_decode($_POST['checkedList']);
- $reset_type = $_POST['reset_type'];
- $courseMsg = 'ผู้ดูแลระบบ ทำการ Reset ข้อมูลการเรียนบทเรียนต่อไปนี้ <br>';
- foreach ($lesson as $key => $value) {
-    $val = array();
-    $val = explode(",", $value);
-    $course_id = $val[0];
-    $lesson_id = $val[1];
-    $learn_id = $val[2];
-    $gen_id = $val[3];
-
-
-    $logReset = new LogReset;
-    $logReset->user_id = $user_id;
-    $logReset->course_id = $course_id;
-    $logReset->gen_id = $gen_id;
-    $logReset->lesson_id = $lesson_id;
-    $logReset->reset_description = $_POST['description'];
-    $logReset->reset_date = date('Y-m-d h:i:s');
-    $logReset->reset_by = Yii::app()->user->id;
-    $logReset->reset_type = 3;
-    if ($logReset->save()){
-                // $learnFile = LearnFile::model()->deleteAll('user_id_file="' . $user_id . '" AND learn_id="' . $data->learn_id . '"');
-        $score = Score::model()->findAllByAttributes(array(
-            'user_id' => $user_id,
-            'lesson_id' => $lesson_id,
-            'gen_id' => $gen_id,
-            'course_id' => $course_id,
-            'type'=>'post',
-            'active' => 'y'
-        ));
-
-        foreach ($score as $key1 => $sc) {
-            $sc->active = 'n';
-            $sc->save(false);
-
-            Logques::model()->deleteAll(array(
-                'condition' => 'user_id=:user_id AND lesson_id=:lesson_id AND score_id=:score_id AND gen_id=:gen_id',
-                'params' => array(':user_id' => $user_id,':lesson_id' => $lesson_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
-
-            Logchoice::model()->deleteAll(array(
-                'condition' => 'lesson_id=:lesson_id AND user_id=:user_id AND score_id=:score_id AND gen_id=:gen_id',
-                'params' => array(':lesson_id' => $lesson_id,':user_id' => $user_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
-        }
-
-        $learn = Learn::model()->findAllByAttributes(array(
-            'user_id' => $user_id,
-            'lesson_id' => $lesson_id,
-            'course_id' => $course_id,
-            'gen_id' => $gen_id,
-            'lesson_active' => 'y'
-        ));
-
-        foreach ($learn as $key => $data) {
-
-            $data->lesson_status = null;
-                //$data->active = 'n';
-            $data->save(false);
-
-        }
-
-        $courseScore = Coursescore::model()->findAll(array(
-            'condition' => 'course_id=:course_id AND user_id=:user_id AND active = "y" AND gen_id=:gen_id',
-            'params' => array(':course_id' => $course_id,':user_id' => $user_id, ':gen_id'=>$gen_id)));
-        foreach ($courseScore as $valScore) {
-
-         Courselogques::model()->deleteAll(array(
-            'condition' => 'user_id=:user_id AND course_id=:course_id AND score_id=:score_id AND gen_id=:gen_id',
-            'params' => array(':user_id' => $user_id,':course_id' => $course_id,':score_id'=>$valScore->score_id, ':gen_id'=>$gen_id)));
-
-         Courselogchoice::model()->deleteAll(array(
-            'condition' => 'course_id=:course_id AND user_id=:user_id AND score_id=:score_id AND gen_id=:gen_id',
-            'params' => array(':course_id' => $course_id,':user_id' => $user_id,':score_id'=>$valScore->score_id, ':gen_id'=>$gen_id)));
-
-         $valScore->active = 'n';
-         $valScore->save();
-     }
-
- }else{
-    var_dump($logReset->getErrors());
-}
-
-$lessonS = Lesson::model()->findByPk($lesson_id);
-$courseMsg .= ($key+1).". <b>หลักสูตร : </b> ".$lessonS->courseonlines->course_title.'<br> <b>บทเรียน : </b>'.$lessonS->title.'<br>';
-
-$reset_type = $_POST['reset_type'];
-}
-
-if(Yii::app()->user->id){
-    Helpers::lib()->getControllerActionId();
-}
-$courseMsg .= '<br><span style="color:red">สาเหตุ : '.$_POST['description'].'</span>';
-$model = Users::model()->findByPk($user_id);
-$to['email'] = $model->email;
-$to['firstname'] = $model->profiles->firstname;
-$to['lastname'] = $model->profiles->lastname;
-$subject = 'แจ้งเตือน ระบบ reset สอบวัดผลหลังเรียน';
-$message = "หัวช้อ : แจ้งเตือนระบบ reset <br> <br>";
-$message .= "เรียน ".$model->profiles->firstname." ".$model->profiles->lastname."<br> <br>";
-$message .= "<div style=\"text-indent: 4em;\">";
-$message .= $courseMsg."</div>";
-$send = Helpers::lib()->SendMail($to,$subject,$message);
-
-echo $reset_type;
-}
 
 public function actionResetDetail(){
     $id = $_POST['id'];

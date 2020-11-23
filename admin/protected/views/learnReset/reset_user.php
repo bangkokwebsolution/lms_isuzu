@@ -1,13 +1,9 @@
 <?php
-//var_dump($model);exit();
-/* @var $this TestController */
-/* @var $model User */
-$titleName = 'ระบบ Reset การเรียนและการสอบ';
-//$this->headerText = $titleName;
 
+$titleName = 'ระบบ Reset การเรียนและการสอบ';
 $this->breadcrumbs=array('ระบบ Reset การเรียนและการสอบ'=>array('LearnReset/ResetUser'),
 );
-//$formNameModel = 'MtAuthCourseName';
+
 
 Yii::app()->clientScript->registerScript('search', "
     $('.search-button').click(function(){
@@ -41,6 +37,12 @@ Yii::app()->clientScript->registerScript('search', "
 
                         <div class="widget-body">
                             <div>
+
+                                <h3 style="color: red;">
+                                    * เมื่อทำการ <b><u>Reset การสอบวัดผล ก่อนเรียน</u></b> จะทำการ Reset ทุกอย่างเหมือนเรียนหลักสูตรใหม่ *
+                                </h3>
+
+
 
                                 <?php $this->widget('zii.widgets.grid.CGridView', array(
                                     'id'=>'user-grid',
@@ -341,6 +343,9 @@ function InitialResetLearn() {
 });
 }
 
+
+
+
 function saveModal() {
                 //sendLogAndSaveReset();
                 //var id = $('input[name="user_id"]').val();
@@ -459,7 +464,9 @@ function saveModal() {
                         var type_test = $('input[name="type_test"]').val();
                         var checkLessonList = [];
                         var url = '';
-                        if(type=='learn'){
+
+
+                        if(type=='learn'){ // การเรียน
                             var checkedList = $('.checkedLesson');
                             url = "<?= $this->createUrl('learnReset/saveresetlearn') ?>";
                         } else if(type=='exam'){

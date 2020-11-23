@@ -101,6 +101,7 @@ EOD
 								),
 								array(
 									'header' => 'ชื่อ - นามสกุล',
+									// 'name' => 'fullname',
 									'type'=>'html',
 									'value'=>function($data){
 										return $data->profile->firstname_en . ' ' . $data->profile->lastname_en;
@@ -108,6 +109,7 @@ EOD
 								),
 								array(
 									'header' => 'ตำแหน่งที่สมัคร',
+									// 'name' => 'position_id',
 									'type'=>'html',
 									'value'=>function($data){
 										return $data->position->position_title;

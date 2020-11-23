@@ -43,6 +43,10 @@ class PrintMembership extends CActiveRecord
 	public $supper_user_status;
 	public $idensearch;
 	public $nameSearch;
+	public $fullname;
+
+
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -71,7 +75,7 @@ class PrintMembership extends CActiveRecord
 			// @todo Please remove those attributes that should not be searched.
 			array('news_per_page', 'safe'),
 
-			array('id, username, password, email, pic_user, orgchart_lv2, department_id, activkey, create_at, lastvisit_at, superuser, status, online_status, online_user, last_ip, last_activity, lastactivity, avatar, company_id, division_id, position_id, bookkeeper_id, pic_cardid, auditor_id, pic_cardid2, del_status, group, identification, supper_user_status, idensearch, nameSearch', 'safe', 'on'=>'search'),
+			array('id, username, password, email, pic_user, orgchart_lv2, department_id, activkey, create_at, lastvisit_at, superuser, status, online_status, online_user, last_ip, last_activity, lastactivity, avatar, company_id, division_id, position_id, bookkeeper_id, pic_cardid, auditor_id, pic_cardid2, del_status, group, identification, supper_user_status, idensearch, nameSearch, fullname', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -128,6 +132,7 @@ class PrintMembership extends CActiveRecord
 			'supper_user_status' => 'สถานะ',
 			'idensearch' => 'รหัสบัตรประชาชน',
 			'nameSearch' => 'ชื่อ นามสกุล',
+			'fullname' => 'ชื่อเต็ม',
 		);
 	}
 
@@ -278,12 +283,62 @@ class PrintMembership extends CActiveRecord
 
 public function searchapprove()
   {
-        // Warning: Please modify the following code to remove attributes that
-        // should not be searched.
+
 	$criteria=new CDbCriteria;
 
-	//$criteria->with = array('profile');
 	$criteria->with = array('profile','position');
+
+	// var_dump($_GET['PrintMembership']); exit();
+
+
+
+	// if(isset($_GET['PrintMembership']['fullname']) && $_GET['PrintMembership']['fullname'] != ""){
+	// 	$ex_fullname = explode(" ", $_GET['PrintMembership']['fullname']);
+
+	// 	if(isset($ex_fullname[0])){
+	// 		$pro_fname = $ex_fullname[0];
+	// 		$criteria->compare('profile.firstname', $pro_fname, true);
+	// 		$criteria->compare('profile.lastname', $pro_fname, true, 'OR');
+	// 	}
+
+	// 	if(isset($ex_fullname[1])){
+	// 		$pro_lname = $ex_fullname[1];
+	// 		$criteria->compare('profile.lastname',$pro_lname,true);
+	// 	}
+	// }
+
+
+	// if(isset($_GET['PrintMembership']['position_id']) && $_GET['PrintMembership']['position_id'] != ""){
+	// var_dump($_GET['PrintMembership']); exit();
+		
+
+	// 	$org_chart = Position::model()->findAll("active='y' AND position_title LIKE '%".$_GET['PrintMembership']['position_id']."%' ");
+
+	// 	if($org_chart){
+	// 		$arr_user = [];
+
+
+	// 		foreach ($org_chart as $key => $value) {
+	// 			$arr_user[] = $value->id;
+	// 		}
+
+	// 		// var_dump($org_chart); exit();
+
+	// 		$criteria->addIncondition('position_id', $arr_user);
+
+	// 	}
+	// }else{
+	// 	$criteria->compare('position_id',$this->position_id,true);
+
+	// }
+
+
+
+
+
+
+
+
 	$criteria->compare('id',$this->id);
 	$criteria->compare('username',$this->username,true);
 	$criteria->compare('password',$this->password);
