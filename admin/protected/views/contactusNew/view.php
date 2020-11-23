@@ -33,7 +33,7 @@ $this->widget('ADetailView', array(
 		),
 		array(
 			'name'=>'create_by',
-			'value'=>$model->create_by
+			'value'=>$model->usercreate->username
 		),
 		array(
 			'name'=>'update_date',
@@ -41,7 +41,7 @@ $this->widget('ADetailView', array(
 		),
 		array(
 			'name'=>'update_by',
-			'value'=>$model->update_by
+			'value'=>$model->userupdate->username
 		),
 		),
 )); 

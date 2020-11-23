@@ -59,6 +59,8 @@ class ContactusNew extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'usercreate' => array(self::BELONGS_TO, 'User', 'create_by'),
+			'userupdate' => array(self::BELONGS_TO, 'User', 'update_by'),
 		);
 	}
 
