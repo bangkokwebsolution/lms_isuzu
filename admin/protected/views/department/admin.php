@@ -30,13 +30,24 @@ EOD
 ?>
 
 <div class="innerLR">
-	<?php $this->widget('AdvanceSearchForm', array(
+	<?php 
+
+	$TypeEmployee = TypeEmployee::model()->findAll(array(
+        'condition' => 'active = "y"',
+        'order' => 'type_employee_name ASC'
+    ));
+    $listtype_user = CHtml::listData($TypeEmployee,'id','type_employee_name');
+
+
+	$this->widget('AdvanceSearchForm', array(
 		'data'=>$model,
 		'route' => $this->route,
 		'attributes'=>array(
 			array('name'=>'dep_title','type'=>'text'),
+			array('name'=>'type_employee_id', 'type'=>'list', 'query'=>$listtype_user),
 		),
-	));?>
+	));
+	?>
 	<div class="widget" style="margin-top: -1px;">
 		<div class="widget-head">
 			<h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $titleName;?></h4>
