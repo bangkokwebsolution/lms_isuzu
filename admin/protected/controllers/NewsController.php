@@ -288,6 +288,7 @@ class NewsController extends Controller
 	{
 		$model=new News('search');
 		$model->unsetAttributes();
+		$model->active = 'y';
 		if(isset($_GET['News']))
 			$model->attributes=$_GET['News'];
 

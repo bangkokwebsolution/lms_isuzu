@@ -80,7 +80,7 @@ class News extends AActiveRecord
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('parent_id',0);
-		//$criteria->order = 'sortOrder ASC';
+		$criteria->order = 'sortOrder ASC';
 
 		$poviderArray = array('criteria'=>$criteria);
 
