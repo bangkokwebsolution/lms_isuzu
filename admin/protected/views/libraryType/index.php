@@ -94,7 +94,7 @@ EOD
 							'class'=>'CCheckBoxColumn',
 							'id'=>'chk',
 						),
-						'library_type_name',
+						'library_type_name_en',
 						// 'library_type',						
 				        array(
 							'type'=>'raw',

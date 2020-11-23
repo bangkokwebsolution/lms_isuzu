@@ -96,13 +96,13 @@ EOD
 						),
 						array(
 							'name'=>'library_type_id',
-							'value'=>'$data->type->library_type_name',
+							'value'=>'$data->type->library_type_name_en',
 							'filter'=>false,
 			                'htmlOptions' => array(
 			                   'style' => 'width:130px',
 			                ),  
 						),
-						'library_name',											
+						'library_name_en',											
 				        array(
 							'type'=>'raw',
 							'value'=>'CHtml::link("<i></i>","", array("class"=>"glyphicons move btn-action btn-inverse"))',
