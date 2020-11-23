@@ -25,14 +25,14 @@ $this->widget('ADetailView', array(
 			'value'=>$model->courseonlines->course_title,
 		),
 		'title',
-		'description',
+		// 'description',
 		'cate_amount',
 		'time_test',
-		array(
-			'label'=>'เนื้อหา',
-			'type'=>'raw',
-			'value'=>$model->content,
-		),
+		// array(
+		// 	'label'=>'เนื้อหา',
+		// 	'type'=>'raw',
+		// 	'value'=>$model->content,
+		// ),
 		array(
 			'name'=>'create_date',
 			'value'=> ClassFunction::datethaiTime($model->create_date)
@@ -74,14 +74,14 @@ foreach ($lessonCh as $key => $value) {
 				'value'=>$value->courseonlines->course_title,
 			),
 			'title',
-			'description',
+			// 'description',
 			'cate_amount',
 			'time_test',
-			array(
-				'label'=>'เนื้อหา',
-				'type'=>'raw',
-				'value'=>$value->content,
-			),
+			// array(
+			// 	'label'=>'เนื้อหา',
+			// 	'type'=>'raw',
+			// 	'value'=>$value->content,
+			// ),
 			array(
 				'name'=>'create_date',
 				'value'=> ClassFunction::datethaiTime($value->create_date)

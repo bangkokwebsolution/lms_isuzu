@@ -346,14 +346,19 @@ body {
                         <!-- </div> -->
                     </div>
 
-                    <div class="row">
+
+
+
+                    <!-- <div class="row"> -->
                         <!-- <div class="col-md-12"> -->
-                        <?php echo $form->labelEx($lesson,'description'); ?>
-                        <?php echo $form->textArea($lesson,'description',array('size'=>60,'class'=>'span8')); ?>
-                        <?php echo $this->NotEmpty();?>
-                        <?php echo $form->error($lesson,'description'); ?>
+                        <?php //echo $form->labelEx($lesson,'description'); ?>
+                        <?php //echo $form->textArea($lesson,'description',array('size'=>60,'class'=>'span8')); ?>
+                        <?php //echo $this->NotEmpty();?>
+                        <?php //echo $form->error($lesson,'description'); ?>
                         <!-- </div> -->
-                    </div>
+                    <!-- </div> -->
+
+
                     <div class="row" style="display:none;">
                         <!-- <div class="col-md-12"> -->
                         <?php echo $form->labelEx($lesson,'view_all'); ?>
@@ -402,14 +407,17 @@ body {
                 <!-- </div> -->
             </div>
 
-                <div class="row">
+                <!-- <div class="row"> -->
                     <!-- <div class="col-md-12"> -->
-                    <?php echo $form->labelEx($lesson,'content'); ?>
-                    <?php echo $form->textArea($lesson,'content',array('class'=>'tinymce')); ?>
-                    <?php echo $form->error($lesson,'content'); ?>
+                    <?php //echo $form->labelEx($lesson,'content'); ?>
+                    <?php //echo $form->textArea($lesson,'content',array('class'=>'tinymce')); ?>
+                    <?php //echo $form->error($lesson,'content'); ?>
                     <?php //$this->widget('application.extensions.tinymce.ETinyMce', array('name'=>'html')); ?>
                     <!-- </div> -->
-                </div>
+                <!-- </div> -->
+
+
+                
                 <?php if($flag ){ ?>
                 <div class="row">
                     <!-- <div class="col-md-12"> -->
