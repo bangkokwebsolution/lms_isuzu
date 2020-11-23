@@ -478,7 +478,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         $criteria = new CDbCriteria;
         $criteria->compare('active', y);
         $criteria->compare('lang_id', $langId);
-        $criteria->order = 'sortOrder DESC';
+        $criteria->order = 'sortOrder ASC';
         $criteria->limit = 6;   
         $news = News::model()->findAll($criteria);
         ?>

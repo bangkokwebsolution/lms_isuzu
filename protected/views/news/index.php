@@ -47,7 +47,7 @@ function DateThai($strDate)
                 $criteria = new CDbCriteria;
                 $criteria->compare('active', y);
                 $criteria->compare('lang_id', $langId);
-                $criteria->order = 'update_date  ASC';
+                $criteria->order = 'sortOrder  ASC';
                 ?>
                 <?php $news = News::model()->findAll($criteria); ?>
                 <?php foreach ($news as $all) { ?>
