@@ -20,7 +20,7 @@ class PopupController extends Controller
 	{
 		return array(
 			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			// 'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
 
@@ -73,6 +73,16 @@ class PopupController extends Controller
 	public function actionCreate()
 	{
 		$model = new Popup;
+
+		$model->lang_id = isset($_GET['lang_id']) ? $_GET['lang_id'] : 1 ;
+		$model->parent_id = isset($_GET['parent_id']) ? $_GET['parent_id'] : 0 ;
+
+
+		if($model->lang_id == 2){
+			$model_parent = Popup::model()->findByPk($model->parent_id);
+			$model->start_date = $model_parent->start_date;
+			$model->end_date = $model_parent->end_date;
+		}
 
 		if(isset($_POST['Popup']))
 		{
@@ -128,7 +138,7 @@ class PopupController extends Controller
 					if(Yii::app()->user->id){
 						Helpers::lib()->getControllerActionId();
 					}
-					$langs = Language::model()->findAll(array('condition'=>'active = "y"'));
+					$langs = Language::model()->findAll(array('condition'=>'active = "y" and id != 1'));
 						if($model->parent_id == 0){
 							$rootId = $model->id;
 						}else{
@@ -137,7 +147,7 @@ class PopupController extends Controller
 						
 						foreach ($langs as $key => $lang) {
 
-							$new = Popup::model()->findByAttributes(array('lang_id'=> $lang->id));
+							$new = Popup::model()->findByAttributes(array('lang_id'=> $lang->id, 'parent_id'=>$rootId));
 							if(!$new){
 								$popupRoot = Popup::model()->findByPk($rootId);
 								Yii::app()->user->setFlash('Success', 'กรุณาเพิ่มป๊อปอัพ '.$popupRoot->name .',ภาษา '.$lang->language);
@@ -145,7 +155,7 @@ class PopupController extends Controller
 					          	exit();
 							}
 						}
-						$this->redirect(array('admin','id'=>$model->id));
+						$this->redirect(array('admin'));  //'id'=>$model->id
 				}
 			}
 		}
@@ -242,37 +252,25 @@ class PopupController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
-		$model = $this->loadModel($id);
-		//$model->active = 'n';
 		$model = Popup::model()->findByPk($id);
-             $modelChildren = Popup::model()->findAll(array(
-            'condition'=>'parent_id=:parent_id',
-            'params' => array(':parent_id' => $model->id)
-              ));
-            foreach ($modelChildren as $key => $value) {
-            	$value->delete();
-                // if($value->active == 'y'){
-                //     $value->active = 'n';
-                //     $value->save(false);
-                // } else {
-                //     $value->active = 'y';
-                //     $value->save(false);
-                // }
-            }
-    	// if($model->active == 'y'){
-    	// 	$model->active = 'n';
-    	// 	$model->save(false);
-    	// } else {
-    	// 	$model->active = 'y';
-    	// 	$model->save(false);
-    	// }
+		$modelChildren = Popup::model()->findAll(array(
+			'condition'=>'parent_id=:parent_id',
+			'params' => array(':parent_id' => $model->id)
+		));
+		foreach ($modelChildren as $key => $value) {
+			// $value->delete();
+			$value->active = 'n';
+			$value->save(false);
+		}
+
+		$model->active = 'n';
+		$model->save(false);
+		// $this->loadModel($id)->delete();
+
 
 		if($model->pic_file != '')
 			Yii::app()->getDeleteImageYush('Popup',$model->id,$model->pic_file);
 
-		// $model->pic_file = null;
-		// $model->save(false);
 
 		if(Yii::app()->user->id){
 			Helpers::lib()->getControllerActionId();
@@ -307,6 +305,7 @@ class PopupController extends Controller
 	{
 		$model=new Popup('search');
 		$model->unsetAttributes();  // clear any default values
+		$model->active = 'y';
 		if(isset($_GET['Popup'])){
 			$model->attributes=$_GET['Popup'];
 		}

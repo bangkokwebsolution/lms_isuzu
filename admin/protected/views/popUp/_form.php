@@ -1,20 +1,4 @@
-<script>
-	$(document).ready(function(){
-	    $("#Popup_start_date").datepicker({
-	        // numberOfMonths: 2,
-	        onSelect: function(selected) {
-	          $("#Popup_end_date").datepicker("option","minDate", selected)
-	        }
-	    });
-	    $("#Popup_end_date").datepicker({
-	        // numberOfMonths: 2,
-	        onSelect: function(selected) {
-	           $("#Popup_start_date").datepicker("option","maxDate", selected)
-	        }
-	    }); 
-});
 
-</script>
 
 
 <!-- innerLR -->
@@ -32,15 +16,50 @@
 		<div class="widget-body">
 			<div class="form">
 
-			<?php $form = $this->beginWidget('AActiveForm', array(
-								'id'=>'popup-form',
-						        'enableClientValidation'=>true,
-						        'clientOptions'=>array(
-						            'validateOnSubmit'=>true
-						        ),
-						        'errorMessageCssClass' => 'label label-important',
-						        'htmlOptions' => array('enctype' => 'multipart/form-data')
-							)); ?>
+<?php 
+$form = $this->beginWidget('AActiveForm', array(
+	'id'=>'popup-form',
+	'enableClientValidation'=>true,
+	'clientOptions'=>array(
+		'validateOnSubmit'=>true
+	),
+	'errorMessageCssClass' => 'label label-important',
+	'htmlOptions' => array('enctype' => 'multipart/form-data')
+)); 
+
+
+$lang_id = isset($_GET['lang_id']) ? $_GET['lang_id'] : 1 ;
+$parent_id = isset($_GET['parent_id']) ? $_GET['parent_id'] : 0 ;
+$modelLang = Language::model()->findByPk($lang_id);
+
+if($lang_id == 1){
+
+
+	?>
+	<script type="text/javascript">
+	$(document).ready(function(){
+
+		$("#Popup_start_date").datepicker({
+	        // numberOfMonths: 2,
+	        onSelect: function(selected) {
+	        	$("#Popup_end_date").datepicker("option","minDate", selected)
+	        }
+	    });
+		$("#Popup_end_date").datepicker({
+	        // numberOfMonths: 2,
+	        onSelect: function(selected) {
+	        	$("#Popup_start_date").datepicker("option","maxDate", selected)
+	        }
+	    }); 
+	});
+
+</script>
+	<?php
+}else{
+$attTime = array('readonly'=>true,'autocomplete'=>'off');
+
+}
+?>
 				<p class="note">ค่าที่มี <?php echo $this->NotEmpty();?> จำเป็นต้องใส่ให้ครบ</p>
 
 				<?php echo $form->errorSummary($model); ?>
@@ -60,14 +79,14 @@
 
 				<div class="row">
 					<?php echo $form->labelEx($model,'start_date'); ?>
-					<?php echo $form->textField($model,'start_date', array('autocomplete' => 'off' )); ?>
+					<?php echo $form->textField($model,'start_date', $attTime); ?>
 			        <?php echo $this->NotEmpty();?>
 					<?php echo $form->error($model,'start_date'); ?>
 				</div>
 				
 				<div class="row">
 					<?php echo $form->labelEx($model,'end_date'); ?>
-					<?php echo $form->textField($model,'end_date', array('autocomplete' => 'off' )); ?>
+					<?php echo $form->textField($model,'end_date', $attTime); ?>
 			        <?php echo $this->NotEmpty();?>
 					<?php echo $form->error($model,'end_date'); ?>
 				</div>

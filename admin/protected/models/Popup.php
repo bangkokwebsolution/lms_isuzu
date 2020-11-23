@@ -76,7 +76,7 @@ class Popup extends CActiveRecord
 			array('id, name, detail, start_date, end_date, link, pic_file, create_date, create_by, update_date, update_by, active,lang_id,parent_id', 'safe', 'on'=>'search'),
 			array('pic_file', 'file', 'types'=>'jpg, png, gif, jpeg','allowEmpty' => true, 'on'=>'insert'),
 			array('pic_file', 'file', 'types'=>'jpg, png, gif, jpeg','allowEmpty' => true, 'on'=>'update'),
-			array('name', 'unique', 'message' => UserModule::t("This name already exists.")),
+			// array('name', 'unique', 'message' => UserModule::t("This name already exists.")),
 		);
 	}
 
@@ -158,7 +158,7 @@ public function defaultScope()
 		$criteria->compare('create_by',$this->create_by,true);
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by,true);
-		// $criteria->compare('active',$this->active,true);
+		$criteria->compare('active',$this->active,true);
 		$criteria->compare('lang_id',1);
 		$criteria->order = 'sortOrder ASC';
 
