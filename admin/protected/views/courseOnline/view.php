@@ -51,7 +51,7 @@ $this->widget('ADetailView', array(
 		// 	'value'=>$model->teachers->teacher_name,
 		// ),
 			'course_short_title',
-			array('name'=>'course_detail', 'type'=>'raw'),
+			array('name'=>'course_detail', 'type'=>'raw', 'value'=>htmlspecialchars_decode($model->course_detail)),
 		// array(
 		// 	'name'=>'course_tax',
 		// 	'value'=>($model->course_tax == 0)?"ไม่เสียภาษี":"เสียภาษี",
@@ -131,7 +131,7 @@ foreach ($courseCh as $key => $value) {
 		// 	'value'=>$model->teachers->teacher_name,
 		// ),
 			'course_short_title',
-			array('name'=>'course_detail', 'type'=>'raw'),
+			array('name'=>'course_detail', 'type'=>'raw', 'value'=>htmlspecialchars_decode($value->course_detail)),
 		// array(
 		// 	'name'=>'course_tax',
 		// 	'value'=>($model->course_tax == 0)?"ไม่เสียภาษี":"เสียภาษี",
