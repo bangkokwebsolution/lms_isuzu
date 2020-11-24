@@ -563,7 +563,7 @@ chart.draw(data, options);
                         echo "";
                     }
                     
-                    $unique_val = array_unique(array_column($model_search, 'user_id'));
+                    $unique_val = Helpers::lib()->unique_multidim_array($model_search, 'user_id');
                     echo count($unique_val);
 
                     if(Yii::app()->session['lang'] != 1){
