@@ -60,7 +60,7 @@ function DateThai($strDate)
                  ?></h2>
                 <ul class="list-inline">
                     <!-- <li><small><i class="fa fa-calendar"></i> <?php echo DateThai($news_data->update_date) ?></small></li> -->
-                    <li><small><i class="fa fa-calendar"></i> <?php echo Helpers::lib()->DateLang($news_data->update_date, Yii::app()->session['lang']); ?></small></li>
+                    <!-- <li><small><i class="fa fa-calendar"></i> <?php echo Helpers::lib()->DateLang($news_data->update_date, Yii::app()->session['lang']); ?></small></li> -->
 
                     <?php
                     $id = $news_data->create_by;

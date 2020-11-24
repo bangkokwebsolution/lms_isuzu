@@ -518,9 +518,9 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             <div class="col-md-6 col-sm-7  col-xs-6">
                                 <h4 class="text22"><?php echo $value->cms_title ?></h4>
                                 <p class="p2"><?php echo $value->cms_short_title ?></p>
-                                <div class="news-date">
+                                <!-- <div class="news-date">
                                     <small><i class="far fa-clock"></i> <?php echo Helpers::lib()->DateLangTms($value->update_date, Yii::app()->session['lang']); ?></small>
-                                </div>
+                                </div> -->
                                 <!-- <div class="news-more"><a href="<?php echo $link; ?>" <?= $new_tab ?>" class="more">อ่านเพิ่มเติม <i class="fas fa-arrow-right"></i></a></div> -->
                             </div>
                         </div>
