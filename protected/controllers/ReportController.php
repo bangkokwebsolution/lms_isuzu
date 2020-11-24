@@ -1699,6 +1699,8 @@ public function actionReportRegisterData()
 								$criteria->compare('department_id',$value->Departments->id);
 								$criteria->compare('superuser',0);
 								$criteria->compare('del_status',0);
+								$criteria->addCondition('profile.user_id=user.id');
+
 								if ($Year_start != null) {
 								$criteria->compare('YEAR(create_at)', $Year_start);
 								}
@@ -1716,17 +1718,9 @@ public function actionReportRegisterData()
 												$criteria->compare('status',1);
 											}
 											if($status == "0"){
-												if ($status != "1") {
-													$criteria->compare('register_status',0);
-													$criteria->compare('status',1);
-												}else{
-													$criteria->compare('register_status',0);
-													$criteria->compare('status',0);
-												} 
-												
+												$criteria->compare('register_status',0);
 											}
 										}
-
 								$users_count= Users::model()->findAll($criteria);
 								$count_pos = count($users_count);
 
@@ -1746,6 +1740,7 @@ public function actionReportRegisterData()
 								$criteria->compare('department_id',$value->Departments->id);
 								$criteria->compare('superuser',0);
 								$criteria->compare('del_status',0);
+								$criteria->addCondition('profile.user_id=user.id');
 								if ($Year_end != null) {
 								$criteria->compare('YEAR(create_at)', $Year_end);
 								}
@@ -1757,20 +1752,12 @@ public function actionReportRegisterData()
 								// 	$criteria->compare('status',$status);		
 								// }
 								if ($status != null) {
-
 											if ($status == "1") {
 												$criteria->compare('register_status',1);
 												$criteria->compare('status',1);
 											}
 											if($status == "0"){
-												if ($status != "1") {
-													$criteria->compare('register_status',0);
-													$criteria->compare('status',1);
-												}else{
-													$criteria->compare('register_status',0);
-													$criteria->compare('status',0);
-												} 
-												
+												$criteria->compare('register_status',0);
 											}
 										}
 
