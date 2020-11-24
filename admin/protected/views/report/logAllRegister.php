@@ -110,22 +110,22 @@ EOD
                         <table class="table table-bordered table-striped" id="export-table">
                             <thead>
                                 <tr>
-                                    <th rowspan="2" class="center" width="20%" style="vertical-align:middle;">ประเภทพนักงาน</th>
+                                    <th rowspan="2" class="center" width="20%" style="vertical-align:middle;">Employee Type</th>
                                     <?php if ($_GET['ReportUser']['employee_type'] == '1') { ?>
-                                        <th rowspan="2" class="center" width="25%" style="vertical-align:middle;">แผนก</th>
-                                        <th rowspan="2" class="center" width="25%" style="vertical-align:middle;">ตำแหน่ง</th>
-                                        <th colspan="3" class="center">จำนวน</th>
+                                        <th rowspan="2" class="center" width="25%" style="vertical-align:middle;">Department</th>
+                                        <th rowspan="2" class="center" width="25%" style="vertical-align:middle;">Position</th>
+                                        <th colspan="3" class="center">Total</th>
                                     <?php } else { ?>
-                                        <th rowspan="2" class="center" width="15%" style="vertical-align:middle;">ฝ่าย</th>
-                                        <th rowspan="2" class="center" width="15%" style="vertical-align:middle;">แผนก</th>
-                                        <th rowspan="2" class="center" width="15%" style="vertical-align:middle;">ระดับ</th>
-                                        <th colspan="3" class="center">จำนวน</th>
+                                        <th rowspan="2" class="center" width="15%" style="vertical-align:middle;">Division</th>
+                                        <th rowspan="2" class="center" width="15%" style="vertical-align:middle;">Department</th>
+                                        <th rowspan="2" class="center" width="15%" style="vertical-align:middle;">Level</th>
+                                        <th colspan="3" class="center">Total</th>
                                     <?php } ?>
                                 </tr>
                                 <tr>
-                                    <th class="center">จำนวนคนสมัคร</th>
-                                    <th class="center">จำนวนที่รับสมัคร</th>
-                                    <th class="center">จำนวนที่ไม่รับสมัคร</th>
+                                    <th class="center">No. of Register</th>
+                                    <th class="center">No. of Approved</th>
+                                    <th class="center">No. of Disapproved</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -287,7 +287,7 @@ EOD
                                     <?php } ?>
                                     <td class="right redclr" style="font-weight: bold; font-size: 1.1em;"></td>
                                     <td class="right redclr" style="font-weight: bold; font-size: 1.1em;"></td>
-                                    <td class="right redclr" style="font-weight: bold; font-size: 1.1em;">รวมทั้งหมด</td>
+                                    <td class="right redclr" style="font-weight: bold; font-size: 1.1em;">Total</td>
                                     <td class="center redclr" style="font-weight: bold; font-size: 1.1em;"><?= $total_re_total; ?></td>
                                     <td class="center redclr" style="font-weight: bold; font-size: 1.1em;"><?= $total_accept_total; ?></td>
                                     <td class="center redclr" style="font-weight: bold; font-size: 1.1em;"><?= ($total_re_total - $total_accept_total); ?></td>

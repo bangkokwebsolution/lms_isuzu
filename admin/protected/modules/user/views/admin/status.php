@@ -164,7 +164,7 @@ EOD
             if($model->nameSearch !='') {
                 $search = explode(" ",$model->nameSearch);
                 foreach ($search as $key => $searchText) {
-                    $sqlUser .= " AND (tbl_profiles.firstname LIKE '%". trim($searchText) ."%' OR tbl_profiles.lastname LIKE '%" . trim($searchText) . "%')";
+                    $sqlUser .= " AND (tbl_profiles.firstname_en LIKE '%". trim($searchText) ."%' OR tbl_profiles.lastname_en LIKE '%" . trim($searchText) . "%')";
                 }
             }
             if($model->email !='') {
@@ -196,6 +196,7 @@ EOD
                 $stationInarray =  implode(",",$model->station);
                 $sqlUser .= " and tbl_users.station_id IN ( ".$stationInarray." )";
             }
+            $sqlUser .= " ORDER BY tbl_profiles.type_employee DESC, tbl_profiles.firstname_en ASC";
 
         // $item_count = Yii::app()->db->createCommand($sqlUser)->queryScalar();
 
@@ -227,22 +228,22 @@ EOD
                 <!-- Table heading -->
                 <thead>
                 <tr>
-                    <th class="center">ลำดับ</th>
-                    <th class="center">ประเภทพนักงาน</th>
-                    <th class="center">ชื่อ - นามสกุล</th>
+                    <th class="center">Number</th>
+                    <th class="center">Employee Type</th>
+                    <th class="center">Name - Surname</th>
                     <!-- <th class="center">บัตรประชาชน</th> -->
                     <!-- <th class="center">เบอร์</th> -->
-                    <th class="center">แผนก</th>
-                    <th class="center">ตำแหน่ง</th>
+                    <th class="center">Department</th>
+                    <th class="center">Position</th>
                     <!--<th class="center">ฝ่าย</th>-->
-                    <th class="center">เบอร์โทรศัพท์</th>
-                    <th class="center">อีเมลล์</th>
-                    <th class="center">สถานะการใช้งาน</th>
+                    <th class="center">Phone number</th>
+                    <th class="center">Email</th>
+                    <th class="center">Status</th>
                     <!-- <th class="center">ประเภทสมาชิก</th> -->
                     <!-- <th class="center">จังหวัด</th> -->
                     <!-- <th class="center">รุ่น</th> -->
-                    <th class="center">วันที่สมัคร</th>
-                    <th class="center">วันที่ใช้งานล่าสุด</th>
+                    <th class="center">Date of Register</th>
+                    <th class="center">Last Login Date</th>
                 </tr>
                 </thead>
                 <!-- // Table heading END -->
@@ -265,10 +266,10 @@ EOD
                     $type = TypeUser::model()->findByPk($userItem[type_user]);
                     $typeemployee = Profile::model()->findByPk($userItem['user_id']);
                     if ($typeemployee['type_employee'] == 1){
-                        $typeemp = "คนประจำเรือ";
+                        $typeemp = "Ship Staff";
                     }
                     if ($typeemployee['type_employee'] == 2){
-                        $typeemp = "พนักงานออฟฟิศ";
+                        $typeemp = "Office Staff";
                     }
                     $Dep = Department::model()->findByPk($userItem['department_id']);
                     $Pos = Position::model()->findByPk($userItem['position_id']);
@@ -279,7 +280,7 @@ EOD
                 <tr>
                     <td class="center"><?= $i ?></td>
                     <td class="center"><?= $typeemp ?></td>
-                    <td class="center"><?= $userItem[firstname] . " " . $userItem[lastname] ?></td>
+                    <td class="center"><?= $userItem[firstname_en] . " " . $userItem[lastname_en] ?></td>
                     <td class="center"><?= ($Dep->dep_title) ? $Dep->dep_title : '-'; ?></td>
                     <td class="center"><?= ($Pos->position_title) ? $Pos->position_title : '-'; ?></td>
                     <td class="center"><?= $userItem[tel] ?></td>
@@ -441,7 +442,7 @@ target="_blank"><button type="button" id="btnExport" class="btn btn-primary btn-
                 </div>
                 <div class="widget-body">
                     <!-- Table -->
-                    <h3 style="color: red;">ไม่พบข้อมูล</h3>
+                    <h3 style="color: red;">No data</h3>
                     <!-- // Table END -->
                 </div>
             </div>

@@ -356,7 +356,7 @@ EOD
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                           <th>ลำดับ</th>
+                            <th>ลำดับ</th>
                             <th>ประเภทพนักงาน</th>                            
                             <th>Name - Surname</th>
                             <th>ชื่อ – นามสกุล</th>

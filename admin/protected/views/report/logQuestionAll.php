@@ -87,12 +87,13 @@ EOD
 					'columns'=>array(
 						array(
 							'name'=>'survey_name',
+							'header' => 'Name',
 							'type'=>'html',
 							'value'=>'CHtml::decode(UHtml::markSearch($data,"survey_name"))'
 						),
 						array(
-							'header'=>'รายงาน',
-					    	'value'=>'CHtml::link("รายงาน", array(
+							'header'=>'Report',
+					    	'value'=>'CHtml::link("Report", array(
 					      		"Report/reportquestionnair",
                                   "id"=>$data->survey_header_id,
                                   "all"=>1,

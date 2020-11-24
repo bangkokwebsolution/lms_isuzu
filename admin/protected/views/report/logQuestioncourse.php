@@ -57,10 +57,10 @@ if (!empty($_GET) && $_GET['Report']['question'] != "") {
 
                 <thead>
                     <tr>
-                        <th class="center" width="10%">ลำดับ</th>
-                        <th class="center">ชื่อหลักสูตร</th>              
-                        <th class="center">รุ่น</th>              
-                        <th class="center">รายงาน</th>              
+                        <th class="center" width="10%">Number</th>
+                        <th class="center">Course Name</th>              
+                        <th class="center">Gen</th>              
+                        <th class="center">Report</th>              
                     </tr>
                 </thead>
                 <tbody>
@@ -77,17 +77,17 @@ if (!empty($_GET) && $_GET['Report']['question'] != "") {
                                         echo '<td class="center">'. ($i+1). '</td>';
                                         echo '<td class="center">'. $course_teacher[$i]['title']. '</td>';
                                         echo '<td class="center">'. $value->gen_title . '</td>';
-                                        echo '<td class="center"><a href="'.$this->createUrl('//Report/reportquestionnair/id/' . $course_teacher[$i]['course_id'] . '/genid/' . $value->gen_id . '/all/0').'" class="btn btn-primary btn-icon">รายงาน</a></td>';
+                                        echo '<td class="center"><a href="'.$this->createUrl('//Report/reportquestionnair/id/' . $course_teacher[$i]['course_id'] . '/genid/' . $value->gen_id . '/all/0').'" class="btn btn-primary btn-icon">Report</a></td>';
                                         echo '</tr>';
                                         $k = true;
                                     }
                                 }
                             }
                             if ($k == false){
-                                echo '<tr><td colspan="8" class="center">ไม่มีข้อมูล</td></tr>';
+                                echo '<tr><td colspan="8" class="center">No data</td></tr>';
                             }
                         }else{
-                            echo '<tr><td colspan="8" class="center">ไม่มีข้อมูล</td></tr>';
+                            echo '<tr><td colspan="8" class="center">No data</td></tr>';
                         }
                     ?>
                 </tbody>

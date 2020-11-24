@@ -392,16 +392,24 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
             <table class="table table-bordered toggleairasia-table">
                 <thead>
                     <tr style="background-color: #e476e8;">
-                        <th rowspan="2" style="vertical-align: middle;" class="center"><b>หลักสูตร/หัวข้อวิชา</b></th>
+                        <!--<th rowspan="2" style="vertical-align: middle;" class="center"><b>หลักสูตร/หัวข้อวิชา</b></th>
                         <th rowspan="2" style="vertical-align: middle;" class="center"><b>ผู้เรียนทั้งหมด</b></th>
                         <th rowspan="2" style="vertical-align: middle;" class="center"><b>กำลังเรียน</b></th>
                         <th rowspan="2" style="vertical-align: middle;" class="center"><b>เรียนผ่าน</b></th>
                         <th rowspan="2" style="vertical-align: middle;" class="center"><b>%ที่เรียนจบ</b></th>
-                        <th colspan="2" style="vertical-align: middle;" class="center"><b>ผลการเรียน</b></th>
+                        <th colspan="2" style="vertical-align: middle;" class="center"><b>ผลการเรียน</b></th>-->
+                        <th rowspan="2" style="vertical-align: middle;" class="center"><b>Course/Subject</b></th>
+                        <th rowspan="2" style="vertical-align: middle;" class="center"><b>No. of student</b></th>
+                        <th rowspan="2" style="vertical-align: middle;" class="center"><b>On Process</b></th>
+                        <th rowspan="2" style="vertical-align: middle;" class="center"><b>Passed</b></th>
+                        <th rowspan="2" style="vertical-align: middle;" class="center"><b>% Success</b></th>
+                        <th colspan="2" style="vertical-align: middle;" class="center"><b>Result</b></th>
                     </tr>
                     <tr  style="background-color: #e476e8;">
-                        <th class="center"><b>จำนวนผ่าน</b></th>
-                        <th class="center"><b>จำนวนไม่ผ่าน</b></th>
+                        <!--<th class="center"><b>จำนวนผ่าน</b></th>
+                        <th class="center"><b>จำนวนไม่ผ่าน</b></th>-->
+                        <th class="center"><b>Passed</b></th>
+                        <th class="center"><b>Failed</b></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -415,7 +423,8 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
                         <td class="center"><?= $num_final_notpass ?></td>
                     </tr>
                     <tr>
-                        <td colspan="7" style="background-color: #e3c9ff;"><b>รายบทเรียน</b></td>
+                        <!--<td colspan="7" style="background-color: #e3c9ff;"><b>รายบทเรียน</b></td>-->
+                        <td colspan="7" style="background-color: #e3c9ff;"><b>Lession</b></td>
                     </tr>
                 <?php
                 foreach ($lesson_online as $key => $value) {
