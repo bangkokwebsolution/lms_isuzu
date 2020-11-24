@@ -151,6 +151,10 @@ class GalleryGroupController extends Controller
 
                 // Save the filevar_dump($targetFile); exit();
 
+// var_dump($_POST); exit();
+
+
+
               if (!isset($session['filenameComgallery']) || count($session['filenameComgallery'])==0)
               {
                 $session['filenameComgallery'] = array($fileName);
@@ -159,6 +163,15 @@ class GalleryGroupController extends Controller
                 $filenameComArr[] = $fileName;
                 $session['filenameComgallery'] = $filenameComArr;
             }
+
+            // $filenameCheck = explode('.', $filenameComValue);
+            $Gallery = new Gallery;
+            $Gallery->image = $fileName;
+            $Gallery->group_gallery_id = $_POST['updateid'];
+            // $Gallery->group_gallery_id = $model->id;
+            $Gallery->save(false);
+
+
             if (!isset($session['filenameOriComgallery']) || count($session['filenameOriComgallery'])==0)
             {
                 $session['filenameOriComgallery'] = array(str_replace(".".$fileParts,"",$_FILES['Filedata']['name']));
@@ -203,17 +216,24 @@ class GalleryGroupController extends Controller
         {
         $model->gallery_type_id = $type_id;
         $model->save();
-        foreach ($session['filenameComgallery'] as $filenameComKey => $filenameComValue)
-        {
-            $filenameCheck = explode('.', $filenameComValue);
-            $Gallery = new Gallery;
-            $Gallery->image = $filenameComValue;
-            $Gallery->gallery_type_id = $type_id;
-            $Gallery->group_gallery_id = $model->id;
-            $Gallery->save(false);
-                            // }
-        }
 
+
+        $gallery_all = Gallery::model()->findAll('active="y" AND group_gallery_id="'.$id.'"  ');
+        foreach ($gallery_all as $key => $value) {
+            $value->gallery_type_id = $model->gallery_type_id;
+            $value->save(false);
+        }
+        // foreach ($session['filenameComgallery'] as $filenameComKey => $filenameComValue)
+        // {
+        //     $filenameCheck = explode('.', $filenameComValue);
+        //     $Gallery = new Gallery;
+        //     $Gallery->image = $filenameComValue;
+        //     $Gallery->gallery_type_id = $type_id;
+        //     $Gallery->group_gallery_id = $model->id;
+        //     $Gallery->save(false);
+        //                     // }
+        // }
+        // exit();
        $this->redirect('../index',array('model'=>$model));
     }else{
     	 $this->redirect('create',array(

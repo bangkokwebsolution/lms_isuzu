@@ -141,7 +141,8 @@ function deletes(filedoc_id,file_id){
 
                         'formData'         : {
                             'timestamp' : '<?php echo $timestamp;?>',
-                            'token'     : '<?php echo md5("unique_salt" . $timestamp);?>'
+                            'token'     : '<?php echo md5("unique_salt" . $timestamp);?>',
+                            'updateid' :'<?php echo $model->id; ?>'
                         },
                         'queueID'          : 'queue',
                         'uploadScript'     : '<?php echo $this->createUrl("GalleryGroup/UploadifiveImages"); ?>',

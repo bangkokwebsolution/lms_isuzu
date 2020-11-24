@@ -1487,43 +1487,7 @@ Class MenuLeft extends Controller
 	        		
 	        	)
 	        ),
-
-	        array(
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'LibraryType.*',
-	        		'LibraryFile.*',
-	        	)),
-	        	'label'=>'<span class="label label-primary"></span> <i></i><span>ห้องสมุด</span>',
-	        	'url'=>'#LibraryType',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons posterous_spaces'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('LibraryType', 'LibraryFile') ), 'id' => 'LibraryType'),
-	        	'active' => self::SetSubMenu( array('LibraryType', 'LibraryFile') ,false),
-	        	'items'=>array(
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'LibraryType.Index'
-	        			)),
-	        			'label'=>'จัดการประเภทห้องสมุด',
-	        			'url'=>array('//LibraryType/index')
-	        		),
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'LibraryFile.Index'
-	        			)),
-	        			'label'=>'จัดการห้องสมุด',
-	        			'url'=>array('//LibraryFile/index')
-	        		),
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'LibraryFile.download'
-	        			)),
-	        			'label'=>'จัดการการอนุมัติการดาวน์โหลด',
-	        			'url'=>array('//LibraryFile/download')
-	        		),
-	        		
-	        	)
-	        ),
+	       
 
 	        // array(
 	        // 	//////// Gallery ////////
@@ -1590,6 +1554,43 @@ Class MenuLeft extends Controller
 	        			'label'=>'จัดการแกลลอรี่',
 	        			'url'=>array('//GalleryGroup/Index')
 	        		),
+	        	)
+	        ),
+
+	        array(
+	        	'visible'=>self::PermissionsMenu(array(
+	        		'LibraryType.*',
+	        		'LibraryFile.*',
+	        	)),
+	        	'label'=>'<span class="label label-primary"></span> <i></i><span>ห้องสมุด</span>',
+	        	'url'=>'#LibraryType',
+	        	'linkOptions' => array('data-toggle' => 'collapse'),
+	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons posterous_spaces'),
+	        	'submenuOptions' => array('class' => self::SetSubMenu( array('LibraryType', 'LibraryFile') ), 'id' => 'LibraryType'),
+	        	'active' => self::SetSubMenu( array('LibraryType', 'LibraryFile') ,false),
+	        	'items'=>array(
+	        		array(
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'LibraryType.Index'
+	        			)),
+	        			'label'=>'จัดการประเภทห้องสมุด',
+	        			'url'=>array('//LibraryType/index')
+	        		),
+	        		array(
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'LibraryFile.Index'
+	        			)),
+	        			'label'=>'จัดการห้องสมุด',
+	        			'url'=>array('//LibraryFile/index')
+	        		),
+	        		array(
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'LibraryFile.download'
+	        			)),
+	        			'label'=>'จัดการการอนุมัติการดาวน์โหลด',
+	        			'url'=>array('//LibraryFile/download')
+	        		),
+	        		
 	        	)
 	        ),
 	        
