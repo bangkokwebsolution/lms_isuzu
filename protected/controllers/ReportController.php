@@ -2560,7 +2560,7 @@ public function actionReportRegisterData()
 											}
 											if($status == "0"){
 												$criteria->compare('register_status',0);
-												$criteria->compare('status',0);				
+												//$criteria->compare('status',0);				
 											}
 										}
 
@@ -2612,6 +2612,7 @@ public function actionReportRegisterData()
 										$usersAll = Users::model()->findAll($criteria);
 										$cou_use = count($users);
 										$cou_useAll = count($usersAll);
+										
 										if ($cou_useAll > 0){
 											$sumtotal += $cou_useAll;
 											$SUM_user[] = $cou_use;
