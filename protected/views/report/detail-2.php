@@ -1,13 +1,4 @@
-<script>
-    $('.datetimepicker').datetimepicker({
-        format: 'd-m-Y',
-        step: 10,
-        timepicker: false,
-        timepickerScrollbar: false,
-        yearOffset: 0
-    });
-    $.datetimepicker.setLocale('th');
-</script>
+
 <style type="text/css">
 
     
@@ -329,8 +320,26 @@ if(isset($model_level) && !empty($model_level)){
         <option value="<?= $value->id ?>" <?php if(isset($_GET["search"]["level"]) && $_GET["search"]["level"] == $value->id){ echo "selected"; } ?> ><?= $value->branch_name ?></option>
         <?php
     }
-}
-?>
+}else{
+    $criteria= new CDbCriteria;
+    if ($authority == 3) {
+        if ($Position != "") {
+            $criteria->compare('position_id',$Position);
+        }else{
+            $criteria->compare('position_id',0);
+        }
+    }
+    $i = 0;
+    $criteria->compare('active','y');
+    $criteria->order = 'sortOrder ASC';
+    $BranchModel = Branch::model()->findAll($criteria);
+    foreach ($BranchModel as $key => $val) {
+        $Branch_list = $BranchModel[$key]->attributes;
+        $i++;
+        if ($i >= 10)  { break;}
+    ?>
+        <option <?php echo ($Branch_list['id'] == $_GET['search']['level']) ? 'selected' : '';?> value="<?php echo $Branch_list['id']; ?>"><?php echo $Branch_list['branch_name']; ?></option>
+    <?php }} ?>
                                     </select>
                                 </div>
                             </div>
@@ -473,7 +482,7 @@ if(isset($model_level) && !empty($model_level)){
             <div class="col-sm-1"></div>
             <div class="col-sm-10">
                 <div class="year-report">
-                    <h4>Bar Graph</h4>
+                    <h4>Column Chart</h4>
                     <div style="width:100%">
                         <div id="chart_bar"></div>
                     </div>
@@ -483,7 +492,7 @@ if(isset($model_level) && !empty($model_level)){
                         google.charts.setOnLoadCallback(drawChart);
                         function drawChart() {
                           var data = google.visualization.arrayToDataTable([
-                            ["หลักสูตร", "คนสมัคร", "เรียนผ่าน" ],
+                            ["หลักสูตร", "No. of Registration", "No. of Finished" ],
                             <?php 
                             foreach ($model_graph as $key => $value) {
                                 if($value["register"] > 0){
@@ -539,13 +548,28 @@ chart.draw(data, options);
                 </h3>    
             </center>
         </li>
+        <div class="row">
+            <div class="col-md-12 text-right" style="padding-right: 47px;">
+                <p style="font-size: 18px; margin-bottom: 0px;">
+                    <?php 
+                    
+                    echo count($model_search);
+                    if(Yii::app()->session['lang'] != 1){
+                        echo " หลักสูตร";
+                    }else{
+                        echo " Courses";
+                    }
+                    ?>              
+                </p>
+            </div>
+        </div>
         <div id="div_graph" style="display: none;">
                <div id="chart_graph"></div> 
                <div id="result_search_graph"></div> 
         </div>
         <div id="result_search"> <!-- export excel -->            
         <div class="report-table">
-            <div class="table-responsive w-100 t-regis-language">
+            <div class="table-responsive w-100 t-regis-language" style="margin-top: 0px;">
                 <table class="table" id="table_list" >
                     <thead>
                         <tr  style="background-color: #010C65; color: #fff; border: 1.5px solid #000; text-align: center;">
@@ -583,7 +607,7 @@ chart.draw(data, options);
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ผลสอบหลังเรียน";
                             }else{
-                                echo "Exam results Post-test";
+                                echo "Post-Test Results";
                             }
                             ?></th>
 
@@ -591,7 +615,7 @@ chart.draw(data, options);
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ผู้เรียนสำเร็จ (%)";
                             }else{
-                                echo "Successful students (%)";
+                                echo "Successful (%)";
                             }
                             ?></th>
 
@@ -599,7 +623,7 @@ chart.draw(data, options);
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ค่าเฉลี่ยคะแนนสอบ";
                             }else{
-                                echo "Test score average";
+                                echo "Average Test Score";
                             }
                             ?></th>
 
@@ -608,37 +632,37 @@ chart.draw(data, options);
                             <!-- <th></th> -->
                         </tr>
                         <tr  style="background-color: #010C65; color: #fff; border: 1.5px solid #000; text-align: center;">
-                            <th><?php 
+                            <th width="10%"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ผ่าน";
                             }else{
-                                echo "Pass";
+                                echo "Passed";
                             }
                             ?></th>
-                            <th><?php 
+                            <th width="10%"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ไม่ผ่าน";
                             }else{
-                                echo "No Pass";
+                                echo "Failled";
                             }
                             ?></th>
-                            <th><?php 
+                            <th width="12%"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ยังไม่ได้เรียน";
                             }else{
-                                echo "No Learn";
+                                echo "Not Start";
                             }
                             ?></th>
 
 
-                              <th ><?php 
+                              <th width="11%"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ก่อนเรียน";
                             }else{
                                 echo "Pre-test";
                             }
                             ?></th>
-                            <th ><?php 
+                            <th width="11%"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "หลังเรียน";
                             }else{
@@ -673,12 +697,12 @@ chart.draw(data, options);
                                             <td style="text-align: left;"><?= $course->course_title ?></td>
                                             <td><?= $gen_course->gen_title ?></td>
                                             <td><?= $value_g["register"] ?></td>
-                                            <td><b class="text-success">ผ่าน </b>: <?= $value_g["postpass"]  ?></td>
-                                            <td><b class="text-danger">ไม่ผ่าน </b>: <?= $value_g["postnopass"]  ?></td>
-                                            <td><b class="text-muted">ยังไม่ได้เรียน </b>: <?= $value_g["postnolearn"]  ?></td>
+                                            <td><b class="text-success"><?= (Yii::app()->session['lang'] == 1) ? 'Passed' : 'ผ่าน'; ?> </b>: <?= $value_g["postpass"]  ?></td>
+                                            <td><b class="text-danger"><?= (Yii::app()->session['lang'] == 1) ? 'Failed' : 'ไม่ผ่าน'; ?> </b>: <?= $value_g["postnopass"]  ?></td>
+                                            <td><b class="text-muted"><?= (Yii::app()->session['lang'] == 1) ? 'Not Start' : 'ยังไม่ได้เรียน'; ?> </b>: <?= $value_g["postnolearn"]  ?></td>
                                             <td ><?= $value_g["percentpass"] ?> %</td>
-                                            <td ><?= $value_g["meanpretest"] ?> / <?= $value_g["meantotalpretest"] ?></td>
-                                            <td ><?= $value_g["meanposttest"] ?> / <?= $value_g["meantotalposttest"] ?>
+                                            <td ><span class="text-success"><?= $value_g["meanpretest"] ?></span> / <?= $value_g["meantotalpretest"] ?></td>
+                                            <td ><span class="text-success"><?= $value_g["meanposttest"] ?></span> / <?= $value_g["meantotalposttest"] ?>
                                                 </td>
                                           
 
@@ -752,7 +776,8 @@ chart.draw(data, options);
                                         google.charts.setOnLoadCallback(drawChart);
                                         function drawChart() {
                                           var data = google.visualization.arrayToDataTable([
-                                            ["หลักสูตร", "คนสมัคร", "เรียนผ่าน" ],
+                                            
+                                            ["หลักสูตร", "No. of Registration", "No. of Finished" ],
                                             <?php 
                                             $color = Helpers::lib()->ColorCode();
                                             $no_c = 0;
@@ -871,9 +896,10 @@ chart.draw(data, options);
     });
     var lang_id = <?php echo Yii::app()->session['lang'] ?>;
     if (lang_id == 2) {
-    $.datetimepicker.setLocale('th');
-    $('.datetimepicker').datetimepicker({yearOffset: 543});
+        $.datetimepicker.setLocale('th');
+        $('.datetimepicker').datetimepicker({yearOffset: 543});
     }
+    
 
     $("#search_start_date").change(function () {
         $("#search_end_date").val("");
@@ -941,7 +967,7 @@ chart.draw(data, options);
                 if(data != ""){
                     $("#search_department").html(data);
                     //$("#search_position").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกตำแหน่ง"; }else{ echo "Select Position"; } ?></option>");
-                    $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกเลเวล"; }else{ echo "Select Level"; } ?></option>");
+                    $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกระดับตำแหน่ง"; }else{ echo "Select Level"; } ?></option>");
                 }
             }
         });
@@ -1001,7 +1027,7 @@ chart.draw(data, options);
             success: function(data) {
                 if(data != ""){
                     $("#search_position").html(data);
-                    $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกเลเวล"; }else{ echo "Select Level"; } ?></option>");
+                    $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกระดับตำแหน่ง"; }else{ echo "Select Level"; } ?></option>");
                 }
             }
         });

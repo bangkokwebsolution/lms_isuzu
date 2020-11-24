@@ -125,7 +125,7 @@
 <!-- <option value="">
     <?php 
         if(Yii::app()->session['lang'] != 1){
-            echo "“เลือกทั้งหมด”";
+            echo "เลือกทั้งหมด";
         }else{
             echo "Select All";
         }
@@ -137,7 +137,7 @@ if(isset($model_gen) && !empty($model_gen)){
     <option value="">
     <?php 
         if(Yii::app()->session['lang'] != 1){
-            echo "“เลือกทั้งหมด”";
+            echo "เลือกทั้งหมด";
         }else{
             echo "Select All";
         }
@@ -249,7 +249,7 @@ if(isset($model_gen) && !empty($model_gen)){
                                         <option value="" selected>
                                             <?php 
                                                 if(Yii::app()->session['lang'] != 1){
-                                                    echo "แผนก";
+                                                    echo "เลือกแผนก";
                                                 }else{
                                                     echo "Select Department";
                                                 }
@@ -404,7 +404,7 @@ if(isset($model_level) && !empty($model_level)){
                                         ?>
                                         </option>
                                         <?php 
-                                        for ($i=$year_start; $i<$year_end ; $i++) {
+                                        for ($i=($year_start-1); $i<$year_end ; $i++) {
                                             ?> <option <?php if(isset($_GET["search"]["start_year"]) && $_GET["search"]["start_year"] == $i){ echo "selected"; } ?> value="<?= $i ?>"><?= $i ?></option> <?php
                                         }
                                          ?>
@@ -433,7 +433,7 @@ if(isset($model_level) && !empty($model_level)){
                                         ?>
                                         </option>
                                         <?php 
-                                        for ($i=($year_start+1); $i<$year_end ; $i++) {
+                                        for ($i=$year_start; $i<$year_end ; $i++) {
                                             ?> <option <?php if(isset($_GET["search"]["end_year"]) && $_GET["search"]["end_year"] == $i){ echo "selected"; } ?> value="<?= $i ?>"><?= $i ?></option> <?php
                                         }
                                          ?>
@@ -476,7 +476,7 @@ if(isset($model_level) && !empty($model_level)){
             <div class="col-sm-1"></div>
             <div class="col-sm-10">
                 <div class="year-report">
-                    <h4>Bar Graph</h4>
+                    <h4>Column Chart</h4>
                     <div style="width:100%">
                         <div id="chart_bar"></div>
                     </div>
@@ -486,7 +486,7 @@ if(isset($model_level) && !empty($model_level)){
                         google.charts.setOnLoadCallback(drawChart);
                         function drawChart() {
                           var data = google.visualization.arrayToDataTable([
-                            ["หลักสูตร", "คนสมัคร", "เรียนจบ" ],
+                            ["หลักสูตร", "No. of Registration", "No. of Finished" ],
                             <?php 
                             foreach ($model_graph as $key => $value) {
                                 if($value["register"] > 0){
@@ -565,7 +565,7 @@ chart.draw(data, options);
                     if(Yii::app()->session['lang'] != 1){
                         echo " หลักสูตร";
                     }else{
-                        echo " Course";
+                        echo " Courses";
                     }
                     ?>              
                 </p>
@@ -606,7 +606,7 @@ chart.draw(data, options);
                             ?></th>
                             <th rowspan="2"><?php 
                             if(Yii::app()->session['lang'] != 1){
-                                echo "คนสมัคร";
+                                echo "จำนวนผู้ลงทะเบียน";
                             }else{
                                 echo "Register";
                             }
@@ -779,7 +779,7 @@ chart.draw(data, options);
                                         google.charts.setOnLoadCallback(drawChart);
                                         function drawChart() {
                                             <?php 
-                                            $data_g =  '["หลักสูตร", "คนสมัคร", "เรียนจบ" ],';
+                                            $data_g =  '["หลักสูตร", "No. of Registration", "No. of Finished" ],';
                                             $color = Helpers::lib()->ColorCode();
                                             $no_c = 0;
                                             foreach ($value_y as $key => $value) {
@@ -972,7 +972,7 @@ chart.draw(data, options);
                 if(data != ""){
                     $("#search_department").html(data);
                     //$("#search_position").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกตำแหน่ง"; }else{ echo "Select Position"; } ?></option>");
-                    $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกเลเวล"; }else{ echo "Select Level"; } ?></option>");
+                    $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกระดับตำแหน่ง"; }else{ echo "Select Level"; } ?></option>");
                 }
             }
         });
@@ -1032,7 +1032,7 @@ chart.draw(data, options);
             success: function(data) {
                 if(data != ""){
                     $("#search_position").html(data);
-                    $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกเลเวล"; }else{ echo "Select Level"; } ?></option>");
+                    $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกระดับตำแหน่ง"; }else{ echo "Select Level"; } ?></option>");
                 }
             }
         });
@@ -1055,6 +1055,7 @@ chart.draw(data, options);
             success: function(data) {
                 if(data != ""){
                     $("#search_level").html(data);
+                    $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกระดับตำแหน่ง"; }else{ echo "Select Level"; } ?></option>");
                 }
             }
         });

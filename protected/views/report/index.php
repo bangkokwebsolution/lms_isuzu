@@ -186,7 +186,7 @@
 									<img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/report-item-9.png" class="img-fluid ">
 								</div>
 								<div class="detail-report">
-									<?php echo Yii::app()->session['lang'] == 1?'Test Report for Office Staff':'รายงานผลการสอบพนักงานออฟฟิศ'; ?>
+									<?php echo Yii::app()->session['lang'] == 1?'Test Result Report for Office Staff':'รายงานผลการสอบพนักงานออฟฟิศ'; ?>
 								</div>
 							</div>
 						</a>

@@ -3893,7 +3893,19 @@ $model_level = Branch::model()->findAll(array(
     				$criteria->compare('user.branch_id', $_GET["search"]["level"]);
     			}
     		}
-    	} 
+    	}else{
+			if($_GET["search"]["level"] != ""){
+				// SearchBranch;
+				$GetnameBranch = Branch::model()->findByPk($_GET["search"]["level"]);
+				if ($GetnameBranch){
+					$Branch_new = Branch::model()->findAll(array('condition' => 'branch_name="' . $GetnameBranch->branch_name . '"'));
+					for ($v = 0; $v < count($Branch_new); $v++){
+						$idsbranch[] = $Branch_new[$v]['id'];
+					}
+					$criteria->addInCondition('user.branch_id', $idsbranch);
+				}
+			}
+		}
 
     	$arr_count_course = [];
     	$arr_course_title = [];
@@ -4207,7 +4219,19 @@ $model_level = Branch::model()->findAll(array(
     				$criteria->compare('user.branch_id', $_GET["search"]["level"]);
     			}
     		}
-    	} 
+    	}else{
+			if($_GET["search"]["level"] != ""){
+				// SearchBranch;
+				$GetnameBranch = Branch::model()->findByPk($_GET["search"]["level"]);
+				if ($GetnameBranch){
+					$Branch_new = Branch::model()->findAll(array('condition' => 'branch_name="' . $GetnameBranch->branch_name . '"'));
+					for ($v = 0; $v < count($Branch_new); $v++){
+						$idsbranch[] = $Branch_new[$v]['id'];
+					}
+					$criteria->addInCondition('user.branch_id', $idsbranch);
+				}
+			}
+		}
 
     	$arr_count_course = [];
     	$arr_course_title = [];
@@ -4242,7 +4266,7 @@ $model_level = Branch::model()->findAll(array(
     				'condition' => 'active=:active AND user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id AND type=:type',
     				'params' => array(':active'=>'y',':user_id'=>$value->user_id,':course_id'=>$value->course_id, ':gen_id'=>$value->gen_id, ':type'=>'post'),
     				'order' => 'score_id DESC'
-    			));
+				));
     			if($course_score != ""){
 $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["pass"] = $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["pass"];
 $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["fail"] = $arr_count_course[date("Y", strtotime($value->start_date))][$value->course_id]["fail"];
@@ -4255,7 +4279,7 @@ if($course_score->score_past == 'y'){
 	$course_model = CourseOnline::model()->findByPk($value->course_id);
 	$arr_course_title[$value->course_id] = $course_model->course_title;
 }
-    			}    			
+    			}			
     		}
 
     	}else{
@@ -4309,8 +4333,11 @@ if($course_score->score_past == 'y'){
     				'condition' => 'active=:active AND user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id AND type=:type',
     				'params' => array(':active'=>'y',':user_id'=>$value->user_id,':course_id'=>$value->course_id, ':gen_id'=>$value->gen_id, ':type'=>'post'),
     				'order' => 'score_id DESC'
-    			));
-    			if($course_score != ""){
+				));
+				$model_search_graph[$value->course_id]["process"] = $model_search_graph[$value->course_id]["process"];
+				$model_search_graph[$value->course_id]["notprocess"] = $model_search_graph[$value->course_id]["notprocess"];
+				$model_search_graph[$value->course_id]["timeout"] = $model_search_graph[$value->course_id]["timeout"];
+				//if($course_score != ""){
     				$model_search_score[$key]["status"] = $course_score->score_past;
     				$model_search_score[$key]["score"] = $course_score->score_number."/".$course_score->score_total;
 
@@ -4320,17 +4347,59 @@ $course_model = CourseOnline::model()->findByPk($value->course_id);
 $model_search_graph[$value->course_id]["title"] = $course_model->course_title;
 $model_search_graph[$value->course_id]["pass"] = $model_search_graph[$value->course_id]["pass"];
 $model_search_graph[$value->course_id]["fail"] = $model_search_graph[$value->course_id]["fail"];
+$model_search_graph[$value->course_id]["totalregister"] = $model_search_graph[$value->course_id]["totalregister"] + 1;
+
 if($course_score->score_past == 'y'){
 	$model_search_graph[$value->course_id]["pass"] = $model_search_graph[$value->course_id]["pass"]+1;
 }elseif($course_score->score_past == 'n'){
 	$model_search_graph[$value->course_id]["fail"] = $model_search_graph[$value->course_id]["fail"]+1;
-}
+}else{
+		$isLearning = false;
+		$logstart_check = $model_search[$key];
+		$checklearn = Learn::model()->findAll(array('condition' => 'user_id=' . $logstart_check["user_id"] . ' and gen_id=' . $logstart_check["gen_id"] . ' and course_id=' . $logstart_check["course_id"] . ' and lesson_active="y"'));
+		foreach ($checklearn as $val){
+			if ($val["lesson_status"] != "pass"){
+				$isLearning = true;
+				break;
+			}else
+				$isLearning = false;
+		}
+		$ts1 = strtotime(date("Y-m-d H:i:s"));
+		$ts2 = strtotime($logstart_check['end_date']);     
+		$seconds_diff = $ts2 - $ts1;                            
+		$time = ($seconds_diff/3600);
+		if ($time < 0){
+			// Timeout
+			$model_search_graph[$value->course_id]["timeout"] = $model_search_graph[$value->course_id]["timeout"]+1;
+		}else{
+			if ($isLearning == true){
+				// On Process
+				$model_search_graph[$value->course_id]["process"] = $model_search_graph[$value->course_id]["process"]+1;
+			}else{
+				// Not Process
+				$model_search_graph[$value->course_id]["notprocess"] = $model_search_graph[$value->course_id]["notprocess"]+1;
+			}
+		}
+	}
 
 
-    			}
+    			//}
 
-
-    		} // foreach ($model_search
+			} // foreach ($model_search
+			foreach ($model_search_graph as $key => $valll){
+				// ConvertToPercentang ----------------
+				$total_register = $model_search_graph[$key]["totalregister"];
+				$pass = $model_search_graph[$key]["pass"];
+				$model_search_graph[$key]["pass"] = number_format(($pass * 100) / $total_register, 2);
+				$notpass = $model_search_graph[$key]["notpass"];
+				$model_search_graph[$key]["notpass"] = number_format(($notpass * 100) / $total_register, 2);
+				$process = $model_search_graph[$key]["process"];
+				$model_search_graph[$key]["process"] = number_format(($process * 100) / $total_register, 2);
+				$notprocess = $model_search_graph[$key]["notprocess"];
+				$model_search_graph[$key]["notprocess"] = number_format(($notprocess * 100) / $total_register, 2);
+				$timeout = $model_search_graph[$key]["timeout"];
+				$model_search_graph[$key]["timeout"] = number_format(($timeout * 100) / $total_register, 2);
+			}
     	} // else
 
     	// var_dump("<pre>");
@@ -4453,29 +4522,41 @@ public function actionExamShip(){
     		if (Yii::app()->session['lang'] == 1) {
     			$ex_fullname = explode(" ", $_GET["search"]["fullname"]);
 
-	    		if(isset($ex_fullname[0])){    			
-	    			$name = $ex_fullname[0];
-	    			$criteria->compare('pro.firstname_en', $name, true);
-	        		$criteria->compare('pro.lastname_en', $name, true, 'OR');
-	    		}
+				if (count($ex_fullname) == 1){
+					if(isset($ex_fullname[0])){    			
+						$name = $ex_fullname[0];
+						$criteria->compare('pro.firstname_en', $name, true);					
+					}
+				}else{
+					if(isset($ex_fullname[0])){    			
+						$name = $ex_fullname[0];
+						$criteria->compare('pro.firstname_en', $name, true);
+					}
 
-	    		if(isset($ex_fullname[1])){
-	    			$name = $ex_fullname[1];
-	    			$criteria->compare('pro.lastname_en',$name,true, 'OR');
-	    		}
+					if(isset($ex_fullname[1])){
+						$name = $ex_fullname[1];
+						$criteria->compare('pro.lastname_en',$name,true, 'AND');
+					}
+				}
     		}else{
     			$ex_fullname = explode(" ", $_GET["search"]["fullname"]);
 
-	    		if(isset($ex_fullname[0])){    			
-	    			$name = $ex_fullname[0];
-	    			$criteria->compare('pro.firstname', $name, true);
-	        		$criteria->compare('pro.lastname', $name, true, 'OR');
-	    		}
+	    		if (count($ex_fullname) == 1){
+					if(isset($ex_fullname[0])){    			
+						$name = $ex_fullname[0];
+						$criteria->compare('pro.firstname', $name, true);					
+					}
+				}else{
+					if(isset($ex_fullname[0])){    			
+						$name = $ex_fullname[0];
+						$criteria->compare('pro.firstname', $name, true);
+					}
 
-	    		if(isset($ex_fullname[1])){
-	    			$name = $ex_fullname[1];
-	    			$criteria->compare('pro.lastname',$name,true, 'OR');
-	    		}
+					if(isset($ex_fullname[1])){
+						$name = $ex_fullname[1];
+						$criteria->compare('pro.lastname',$name,true, 'AND');
+					}
+				}
     		}  		
     	}
 
@@ -4596,11 +4677,20 @@ if($course_score->score_past == 'y'){
 						$criteria->compare('t.start_date', "<=".$end_dateImplode." 23:59:59");
 					}
 				}
-			if (Yii::app()->session['lang'] == 1) {
-				$criteria->order = 'course.course_title ASC, t.gen_id ASC, pro.firstname_en ASC';
-			}else{
-				$criteria->order = 'course.course_title ASC, t.gen_id ASC, pro.firstname ASC';
-			}
+			
+				if($_GET["search"]["course_id"] != ""){
+					if (Yii::app()->session['lang'] == 1) {
+						$criteria->order = 'pro.firstname_en ASC, t.gen_id ASC';
+					}else{
+						$criteria->order = 'pro.firstname ASC, t.gen_id ASC';
+					}
+				}else{
+					if (Yii::app()->session['lang'] == 1) {
+						$criteria->order = 'course.course_title ASC, pro.firstname_en ASC, t.gen_id ASC';
+					}else{
+						$criteria->order = 'course.course_title ASC, pro.firstname ASC, t.gen_id ASC';
+					}
+				}
     		
     		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
 
@@ -4611,8 +4701,12 @@ if($course_score->score_past == 'y'){
     				'condition' => 'active=:active AND user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id AND type=:type',
     				'params' => array(':active'=>'y',':user_id'=>$value->user_id,':course_id'=>$value->course_id, ':gen_id'=>$value->gen_id, ':type'=>'post'),
     				'order' => 'score_id DESC'
-    			));
-    			if($course_score != ""){
+				));
+				$model_search_graph[$value->course_id]["process"] = $model_search_graph[$value->course_id]["process"];
+				$model_search_graph[$value->course_id]["notprocess"] = $model_search_graph[$value->course_id]["notprocess"];
+				$model_search_graph[$value->course_id]["timeout"] = $model_search_graph[$value->course_id]["timeout"];
+				$model_search_graph[$value->course_id]["totalregister"] = $model_search_graph[$value->course_id]["totalregister"] + 1;
+				if($course_score != ""){
     				$model_search_score[$key]["status"] = $course_score->score_past;
     				$model_search_score[$key]["score"] = $course_score->score_number."/".$course_score->score_total;
 
@@ -4629,10 +4723,50 @@ if($course_score->score_past == 'y'){
 }
 
 
-    			}
 
-
-    		} // foreach ($model_search
+    			}else{
+					$isLearning = false;
+					$logstart_check = $model_search[$key];
+					$checklearn = Learn::model()->findAll(array('condition' => 'user_id=' . $logstart_check["user_id"] . ' and gen_id=' . $logstart_check["gen_id"] . ' and course_id=' . $logstart_check["course_id"] . ' and lesson_active="y"'));
+					foreach ($checklearn as $val){
+						if ($val["lesson_status"] != "pass"){
+							$isLearning = true;
+							break;
+						}else
+							$isLearning = false;
+					}
+					$ts1 = strtotime(date("Y-m-d H:i:s"));
+					$ts2 = strtotime($logstart_check['end_date']);     
+					$seconds_diff = $ts2 - $ts1;                            
+					$time = ($seconds_diff/3600);
+					if ($time < 0){
+						// Timeout
+						$model_search_graph[$value->course_id]["timeout"] = $model_search_graph[$value->course_id]["timeout"]+1;
+					}else{
+						if ($isLearning == true){
+							// On Process
+							$model_search_graph[$value->course_id]["process"] = $model_search_graph[$value->course_id]["process"]+1;
+						}else{
+							// Not Process
+							$model_search_graph[$value->course_id]["notprocess"] = $model_search_graph[$value->course_id]["notprocess"]+1;
+						}
+					}
+				}
+			}
+			foreach ($model_search_graph as $key => $valll){
+				// ConvertToPercentang ----------------
+				$total_register = $model_search_graph[$key]["totalregister"];
+				$pass = $model_search_graph[$key]["pass"];
+				$model_search_graph[$key]["pass"] = number_format(($pass * 100) / $total_register, 2);
+				$notpass = $model_search_graph[$key]["notpass"];
+				$model_search_graph[$key]["notpass"] = number_format(($notpass * 100) / $total_register, 2);
+				$process = $model_search_graph[$key]["process"];
+				$model_search_graph[$key]["process"] = number_format(($process * 100) / $total_register, 2);
+				$notprocess = $model_search_graph[$key]["notprocess"];
+				$model_search_graph[$key]["notprocess"] = number_format(($notprocess * 100) / $total_register, 2);
+				$timeout = $model_search_graph[$key]["timeout"];
+				$model_search_graph[$key]["timeout"] = number_format(($timeout * 100) / $total_register, 2);
+			}
     	} // else
 
 		$this->render('exam_ship', array(
@@ -4689,7 +4823,7 @@ if($course_score->score_past == 'y'){
 				<option value="">
 			    <?php 
 			        if(Yii::app()->session['lang'] != 1){
-			            echo "“เลือกทั้งหมด”";
+			            echo "เลือกทั้งหมด";
 			        }else{
 			            echo "Select All";
 			        }
@@ -4917,7 +5051,7 @@ if($course_score->score_past == 'y'){
 				<option value="" selected>
 					<?php 
 					if(Yii::app()->session['lang'] != 1){
-						echo "เลือกเลเวล";
+						echo "เลือกระดับตำแหน่ง";
 					}else{
 						echo "Select Level";
 					}
@@ -4947,7 +5081,7 @@ if($course_score->score_past == 'y'){
 			<option value="" selected>
 				<?php 
 				if(Yii::app()->session['lang'] != 1){
-					echo "เลือกเลเวล";
+					echo "เลือกระดับตำแหน่ง";
 				}else{
 					echo "Select Level";
 				}
@@ -5216,6 +5350,18 @@ if($_GET["search"]["department"] != ""){
 			$criteria->compare('user.branch_id', $_GET["search"]["level"]);
 		}
 	}
+}else{
+	if($_GET["search"]["level"] != ""){
+		// SearchBranch;
+		$GetnameBranch = Branch::model()->findByPk($_GET["search"]["level"]);
+		if ($GetnameBranch){
+			$Branch_new = Branch::model()->findAll(array('condition' => 'branch_name="' . $GetnameBranch->branch_name . '"'));
+			for ($v = 0; $v < count($Branch_new); $v++){
+				$idsbranch[] = $Branch_new[$v]['id'];
+			}
+			$criteria->addInCondition('user.branch_id', $idsbranch);
+		}
+	}
 }
 
 if($_GET["search"]["start_date"] != "" && $_GET["search"]["end_date"] != ""){
@@ -5346,9 +5492,7 @@ $arr_course_graph[$value_c->course_id]["pass"] = $arr_course_graph[$value_c->cou
 
     			} //foreach ($search_course
     		} //if(!empty($search_course))
-
 }else{ // if(isset($_GET["search"]["end_year"])  // ช่วงปี
-
 	$arr_course_year = [];
 	if(!empty($search_course)){	
 		if (Yii::app()->session['lang'] != 1) {
@@ -5423,6 +5567,18 @@ $model_level = Branch::model()->findAll(array(
 
 						}
 
+						}else{
+							if($_GET["search"]["level"] != ""){
+								// SearchBranch;
+								$GetnameBranch = Branch::model()->findByPk($_GET["search"]["level"]);
+								if ($GetnameBranch){
+									$Branch_new = Branch::model()->findAll(array('condition' => 'branch_name="' . $GetnameBranch->branch_name . '"'));
+									for ($v = 0; $v < count($Branch_new); $v++){
+										$idsbranch[] = $Branch_new[$v]['id'];
+									}
+									$criteria->addInCondition('user.branch_id', $idsbranch);
+								}
+							}
 						}
 
 						$criteria->compare('t.start_date', ">=".$searchStart_year."-01-01"." 00:00:00");

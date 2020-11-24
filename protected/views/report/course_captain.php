@@ -38,9 +38,9 @@
             <li class="breadcrumb-item active" aria-current="page">
                 <?php
                 if (Yii::app()->session['lang'] == 1) {
-                    $name_report = "Report of learners staff ship course";
+                    $name_report = "Training Course Report for Ship Staff";
                 } else {
-                    $name_report = "รายงานผู้เรียนตามรายหลักสูตรคนประจำเรือ";
+                    $name_report = "รายงานการฝึกอบรมพนักงานประจำเรือ";
                 }
                 echo $name_report;
                 ?>
@@ -168,7 +168,7 @@
                                     </div>
                                     <div class="checkbox checkbox-main checkbox-inline">
                                         <input <?php if(isset($_GET["search"]["graph"]) && in_array("pie", $_GET["search"]["graph"])){ echo "checked"; } ?> type="checkbox" name="search[graph][]" id="search_graph_pie" value="pie">
-                                        <label for="search_graph_pie" class="text-black">Pie Charts </label>
+                                        <label for="search_graph_pie" class="text-black">Pie Chart </label>
                                     </div>
                                 </div>
                             </div>
@@ -248,7 +248,7 @@ if(isset($model_position) && !empty($model_position)){
                                         if(Yii::app()->session['lang'] != 1){
                                             echo "ค้นหาตามชื่อ-นามสกุล";
                                         }else{
-                                            echo "Search Fullname";
+                                            echo "Employee Search";
                                         }
                                         ?>
                                     </label>
@@ -256,7 +256,7 @@ if(isset($model_position) && !empty($model_position)){
                                         if(Yii::app()->session['lang'] != 1){
                                             echo "ชื่อ-นามสกุล";
                                         }else{
-                                            echo "Fullname";
+                                            echo "Name or Surname";
                                         }
                                         ?>" name="search[fullname]" id="search_fullname" type="text" value="<?php if(isset($_GET["search"]["fullname"])){ echo $_GET["search"]["fullname"]; } ?>">
                                 </div>
@@ -327,7 +327,7 @@ if(isset($model_position) && !empty($model_position)){
                                         ?>
                                         </option>
                                         <?php 
-                                        for ($i=$year_start; $i<$year_end ; $i++) {
+                                        for ($i=($year_start-1); $i<$year_end ; $i++) {
                                             ?> <option <?php if(isset($_GET["search"]["start_year"]) && $_GET["search"]["start_year"] == $i){ echo "selected"; } ?> value="<?= $i ?>"><?= $i ?></option> <?php
                                         }
                                          ?>
@@ -356,7 +356,7 @@ if(isset($model_position) && !empty($model_position)){
                                         ?>
                                         </option>
                                         <?php 
-                                        for ($i=($year_start+1); $i<$year_end ; $i++) {
+                                        for ($i=$year_start; $i < $year_end ; $i++) {
                                             ?> <option <?php if(isset($_GET["search"]["end_year"]) && $_GET["search"]["end_year"] == $i){ echo "selected"; } ?> value="<?= $i ?>"><?= $i ?></option> <?php
                                         }
                                          ?>
@@ -398,7 +398,7 @@ if(isset($model_position) && !empty($model_position)){
             ?>
             <div class="col-sm-6">
                 <div class="year-report">
-                    <h4>Bar Graph</h4>
+                    <h4>Column Chart</h4>
                     <div style="width:100%">
                         <div id="chart_bar"></div>
                     </div>
@@ -457,7 +457,7 @@ if(isset($model_position) && !empty($model_position)){
         ?>
             <div class="col-sm-6">
                 <div class="year-report">
-                    <h4>Pie Charts</h4>
+                    <h4>Pie Chart</h4>
                     <div style="width:100%">
                         <div id="chart_pie"></div>
                     </div>
@@ -477,7 +477,7 @@ if(isset($model_position) && !empty($model_position)){
                           ]);
 
                         var options = {
-                          // title: 'Pie Charts'
+                          // title: 'Pie Chart'
                       };
 
                       var chart = new google.visualization.PieChart(document.getElementById('chart_pie'));
@@ -520,18 +520,19 @@ if(isset($model_position) && !empty($model_position)){
             <div class="col-md-12 text-right" style="padding-right: 47px;">
                 <p style="font-size: 18px; margin-bottom: 0px;">
                     <?php 
-                    if(Yii::app()->session['lang'] != 1){
-                        echo "";
-                    }else{
-                        echo "";
-                    }
-                    
                     echo count($arr_count_course);
-
                     if(Yii::app()->session['lang'] != 1){
-                        echo "คน";
+                        echo " หลักสูตร";
                     }else{
-                        echo "persons";
+                        echo " Courses";
+                    }
+                    echo '<br>';
+                    $unique_val = array_unique(array_column($model_search, 'user_id'));
+                    echo count($unique_val);
+                    if(Yii::app()->session['lang'] != 1){
+                        echo " คน";
+                    }else{
+                        echo " Persons";
                     }
                     ?>              
                 </p>
@@ -574,7 +575,7 @@ if(isset($model_position) && !empty($model_position)){
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ชื่อ - นามสกุล";
                             }else{
-                                echo "Fullname";
+                                echo "Name - Surname";
                             }
                             ?></th>
                             <th><?php 
@@ -603,7 +604,7 @@ if(isset($model_position) && !empty($model_position)){
                                 <tr style="border: 1.5px solid #000;">
                                     <td><?php echo $no; $no++; ?></td>
                                     <!-- <td><?= $value->mem->id ?></td> -->
-                                    <td><?= $value->course->course_title ?></td>
+                                    <td class="text-left"><?= $value->course->course_title ?></td>
                                     <td>
                                         <?php 
                                         if($value->gen->gen_title == ""){

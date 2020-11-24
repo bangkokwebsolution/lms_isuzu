@@ -178,7 +178,7 @@ if(isset($model_gen) && !empty($model_gen)){
                                     <label for="search_department">
                                         <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "ฝ่าย";
+                                            echo "แผนก";
                                         }else{
                                             echo "Department";
                                         }
@@ -188,7 +188,7 @@ if(isset($model_gen) && !empty($model_gen)){
                                         <option value="" selected>
                                             <?php 
                                                 if(Yii::app()->session['lang'] != 1){
-                                                    echo "เลือกฝ่าย";
+                                                    echo "เลือกแผนก";
                                                 }else{
                                                     echo "Select Department";
                                                 }
@@ -212,7 +212,7 @@ foreach ($model_department as $key => $value) {
                                     <label for="search_position">
                                         <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "แผนก";
+                                            echo "ตำแหน่ง";
                                         }else{
                                             echo "Position";
                                         }
@@ -222,7 +222,7 @@ foreach ($model_department as $key => $value) {
                                         <option value="" selected>
                                             <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "เลือกแผนก";
+                                            echo "เลือกตำแหน่ง";
                                         }else{
                                             echo "Select Position";
                                         }
@@ -248,7 +248,7 @@ if(isset($model_position) && !empty($model_position)){
                                         if(Yii::app()->session['lang'] != 1){
                                             echo "ค้นหาตามชื่อ-นามสกุล";
                                         }else{
-                                            echo "Search Fullname";
+                                            echo "Employee Search";
                                         }
                                         ?>
                                     </label>
@@ -256,7 +256,7 @@ if(isset($model_position) && !empty($model_position)){
                                         if(Yii::app()->session['lang'] != 1){
                                             echo "ชื่อ-นามสกุล";
                                         }else{
-                                            echo "Fullname";
+                                            echo "Name - Surname";
                                         }
                                         ?>" name="search[fullname]" id="search_fullname" type="text" value="<?php if(isset($_GET["search"]["fullname"])){ echo $_GET["search"]["fullname"]; } ?>">
 
@@ -400,7 +400,7 @@ if(isset($model_position) && !empty($model_position)){
             <div class="col-sm-1"></div>
             <div class="col-sm-10">
                 <div class="year-report">
-                    <h4>Bar Graph</h4>
+                    <h4>Column Chart</h4>
                     <div style="width:100%">
                         <div id="chart_bar"></div>
                     </div>
@@ -410,17 +410,29 @@ if(isset($model_position) && !empty($model_position)){
                         google.charts.setOnLoadCallback(drawChart);
                         function drawChart() {
                           var data = google.visualization.arrayToDataTable([
-                            ["หลักสูตร", "สอบผ่าน", "สอบไม่ผ่าน" ],
+                            ["หลักสูตร", "Passed", "Failed", "On Process", "Not Process", "Timeout" ],
                             <?php 
                             foreach ($model_search_graph as $key => $value) {
                                 if($value["fail"] == null){
                                     $value["fail"] = 0;
-                                }elseif($value["pass"] == null){
+                                }
+                                if($value["pass"] == null){
                                     $value["pass"] = 0;
                                 }
+                                if($value["process"] == null){
+                                    $value["process"] = 0;
+                                }
+                                if($value["notprocess"] == null){
+                                    $value["notprocess"] = 0;
+                                }
+                                if($value["timeout"] == null){
+                                    $value["timeout"] = 0;
+                                }
+                                if ($value["title"] != null){
                                 // if($value["register"] > 0){
-                                    echo "['".$value["title"]."', ".$value["pass"].", ".$value["fail"]." ],";
+                                    echo "['".$value["title"]."', ".$value["pass"].", ".$value["fail"].", ".$value["process"].", ".$value["notprocess"].", ".$value["timeout"]." ],";
                                 // }
+                                }
                             } 
                             ?>
                           ]);
@@ -486,7 +498,21 @@ chart.draw(data, options);
                     if(Yii::app()->session['lang'] != 1){
                         echo " หลักสูตร";
                     }else{
-                        echo " course";
+                        echo " Courses";
+                    }
+                    if(Yii::app()->session['lang'] != 1){
+                        echo " ";
+                    }else{
+                        echo "";
+                    }
+                    echo '<br>';
+                    $unique_val = array_unique(array_column($model_search, 'user_id'));
+                    echo count($unique_val);
+
+                    if(Yii::app()->session['lang'] != 1){
+                        echo " คน";
+                    }else{
+                        echo " Persons";
                     }
                     ?>              
                 </p>
@@ -524,36 +550,36 @@ chart.draw(data, options);
                             }
                             ?></th> 
                             <!-- <th>user_id</th> -->
-                            <th>
+                            <th width="15%">
                             <?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ชื่อ - นามสกุล";
                             }else{
-                                echo "Fullname";
+                                echo "Name - Surname";
                             }
                             ?></th>
-                            <th><?php 
+                            <th width="18%"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "แผนก";
                             }else{
                                 echo "Department";
                             }
                             ?></th>
-                            <th><?php 
+                            <th width="18%"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ตำแหน่ง";
                             }else{
                                 echo "Position";
                             }
                             ?></th>
-                            <th><?php 
+                            <th width="10%"><?php 
                             if(Yii::app()->session['lang'] != 1){
-                                echo "ผลสอบ";
+                                echo "สถานะ";
                             }else{
-                                echo "Result";
+                                echo "Status";
                             }
                             ?></th>
-                            <th><?php 
+                            <th width="10%"><?php 
                             if(Yii::app()->session['lang'] != 1){
                                 echo "คะแนน";
                             }else{
@@ -567,7 +593,6 @@ chart.draw(data, options);
                         <?php 
                         // var_dump($model_search);exit();
                         if(!empty($model_search)){
-
                             $no = 1;
                             foreach ($model_search as $key => $value) {
                                 if(isset($model_search_score[$key]["status"]) && $model_search_score[$key]["status"] == y){
@@ -575,7 +600,7 @@ chart.draw(data, options);
                                     if(Yii::app()->session['lang'] != 1){
                                         $text_status .= "ผ่าน";
                                     }else{
-                                        $text_status .= "pass";
+                                        $text_status .= "Passed";
                                     }
                                     $text_status .= "</font>";
                                 }elseif(isset($model_search_score[$key]["status"]) && $model_search_score[$key]["status"] == n){
@@ -583,18 +608,57 @@ chart.draw(data, options);
                                     if(Yii::app()->session['lang'] != 1){
                                         $text_status .= "ไม่ผ่าน";
                                     }else{
-                                        $text_status .= "failed";
+                                        $text_status .= "Failed";
                                     }
                                     $text_status .= "</font>";
                                 }else{
-                                    $text_status = "-";
-                                    $model_search_score[$key]["score"] = "-";
+                                    $isLearning = false;
+                                    $logstart_check = $model_search[$key];
+                                    $checklearn = Learn::model()->findAll(array('condition' => 'user_id=' . $logstart_check["user_id"] . ' and gen_id=' . $logstart_check["gen_id"] . ' and course_id=' . $logstart_check["course_id"] . ' and lesson_active="y"'));
+                                    foreach ($checklearn as $val){
+                                        if ($val["lesson_status"] != "pass"){
+                                            $isLearning = true;
+                                            break;
+                                        }else
+                                            $isLearning = false;
+                                    }
+                                    $ts1 = strtotime(date("Y-m-d H:i:s"));
+                                    $ts2 = strtotime($logstart_check['end_date']);     
+                                    $seconds_diff = $ts2 - $ts1;                            
+                                    $time = ($seconds_diff/3600);
+                                    if ($time < 0){
+                                        if(Yii::app()->session['lang'] == 1){
+                                            $text_status = "Timeout";
+                                            $model_search_score[$key]["score"] = "Timeout";
+                                        }else{
+                                            $text_status = "หมดเวลาเรียน";
+                                            $model_search_score[$key]["score"] = "หมดเวลาเรียน";
+                                        }
+                                    }else{
+                                        if ($isLearning == true){
+                                            if(Yii::app()->session['lang'] == 1){
+                                                $text_status = "On Process";
+                                                $model_search_score[$key]["score"] = "On Process";
+                                            }else{
+                                                $text_status = "กำลังเรียน";
+                                                $model_search_score[$key]["score"] = "กำลังเรียน";
+                                            }
+                                        }else{
+                                            if(Yii::app()->session['lang'] == 1){
+                                                $text_status = "Not Process";
+                                                $model_search_score[$key]["score"] = "Not Process";
+                                            }else{
+                                                $text_status = "ยังไม่ได้เรียน";
+                                                $model_search_score[$key]["score"] = "ยังไม่ได้เรียน";
+                                            }
+                                        }
+                                    }
                                 }
                                 ?>  
                                 <tr>
                                     <td><?php echo $no; $no++; ?></td>
                                     <!-- <td><?= $value->mem->id ?></td> -->
-                                    <td><?= $value->course->course_title ?></td>
+                                    <td class="text-left"><?= $value->course->course_title ?></td>
                                     <td>
                                         <?php 
                                         if($value->gen->gen_title == ""){
@@ -654,6 +718,7 @@ chart.draw(data, options);
 
                 <div class="row">
                     <?php 
+                    var_dump($arr_count_course); exit;
                     foreach ($arr_count_course as $key_y => $value_y) {                      
 
                         if(isset($_GET["search"]["graph"]) && in_array("bar", $_GET["search"]["graph"])){ ?>
@@ -669,21 +734,25 @@ chart.draw(data, options);
                                         google.charts.setOnLoadCallback(drawChart);
                                         function drawChart() {
                                           var data = google.visualization.arrayToDataTable([
-                                            ["หลักสูตร", "สอบผ่าน", "สอบไม่ผ่าน" ],
+                                            ["หลักสูตร", "Passed", "Failed", "On Process" ],
                                             <?php 
                                             $color = Helpers::lib()->ColorCode();
                                             $no_c = 0;
                                             foreach ($value_y as $key => $value) {
                                                 if($value["fail"] == null){
                                                     $value["fail"] = 0;
-                                                }elseif($value["pass"] == null){
+                                                }if($value["pass"] == null){
                                                     $value["pass"] = 0;
+                                                }
+                                                if($value["process"] == null){
+                                                    $value["process"] = 0;
                                                 }
                                                 // if($value["register"] > 0){
                                                     $course = CourseOnline::model()->findByPk($key);
-                                                echo "['".$course->course_title."', ".$value["pass"].", ".$value["fail"]."],";
-                                                
-                                                // }
+                                                    if ($course){
+                                                        echo "['".$course->course_title."', ".$value["pass"]. ", ".$value["fail"].", ".$value["process"]."],";
+                                                    }
+                                                    // }
                                             } 
                                             ?>
 
