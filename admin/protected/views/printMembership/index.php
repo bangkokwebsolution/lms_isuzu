@@ -128,7 +128,8 @@ EOD
 									'value' => function($data) {
                                                //var_dump($data->id);
                                                 //return CHtml::button("พิมพ์",array('class' => 'btn btn btn-success print_pdf','data-id' => $data->id));
-										return CHtml::button('พิมพ์ใบสมัคร', array('submit' => array('PrintMembership/Printpdf', 'id'=> $data->id),'class' => 'btn btn btn-success'));
+										// return CHtml::button('พิมพ์ใบสมัคร', array('submit' => array('PrintMembership/Printpdf', 'id'=> $data->id),'class' => 'btn btn btn-success'));
+										return CHtml::link("พิมพ์ใบสมัคร",array("/PrintMembership/Printpdf","id"=>$data->id), array("class"=>"btn btn-success"));
 									},'htmlOptions' => array(
 										'style'=> "text-align: center;",
 									),
