@@ -9,7 +9,7 @@
 
 <?php
 $titleName = 'พิมพ์ใบสมัครสำหรับคนประจำเรือ';
-$formNameModel = 'approve';
+$formNameModel = 'PrintMembership';
 
 Yii::app()->clientScript->registerScript('search', "
 	$('#SearchFormAjax').submit(function(){
@@ -88,11 +88,28 @@ EOD
 						<?php
 						$this->widget('AGridView', array(
 							'id'=>$formNameModel.'-grid',
-							'dataProvider'=>$model->searchapprove(),
-							'filter'=>$model,
-							'afterAjaxUpdate'=>'function(id, data){
+					'dataProvider'=>$model->searchapprove(),
+					'filter'=>$model,
+					'selectableRows' => 2,
+					'rowCssClassExpression'=>'"items[]_{$data->id}"',
+					'htmlOptions' => array(
+						'style'=> "margin-top: -1px;",
+					),
+					'afterAjaxUpdate'=>'function(id, data){
 						$.appendFilter("PrintMembership[news_per_page]");
 						InitialSortTable();	
+				        jQuery("#course_date").datepicker({
+						   	"dateFormat": "dd/mm/yy",
+						   	"showAnim" : "slideDown",
+					        "showOtherMonths": true,
+					        "selectOtherMonths": true,
+				            "yearRange" : "-5+10", 
+					        "changeMonth": true,
+					        "changeYear": true,
+				            "dayNamesMin" : ["อา.","จ.","อ.","พ.","พฤ.","ศ.","ส."],
+				            "monthNamesShort" : ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.",
+				                "ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."],
+					   })
 					}',
 							'columns'=>array(
 								array(
@@ -128,8 +145,8 @@ EOD
 									'type' => 'raw',
 									'value' => function($data) {
                                                //var_dump($data->id);
-                                                //return CHtml::button("พิมพ์",array('class' => 'btn btn btn-success print_pdf','data-id' => $data->id));
-										return CHtml::button('พิมพ์ใบสมัคร', array('submit' => array('PrintMembership/Printpdf_approve', 'id'=> $data->id),'class' => 'btn btn btn-success'));
+										//return CHtml::button('พิมพ์ใบสมัคร', array('submit' => array('PrintMembership/Printpdf_approve', 'id'=> $data->id),'class' => 'btn btn btn-success'));
+                                              return CHtml::link("พิมพ์ใบสมัคร",array("/PrintMembership/Printpdf_approve","id"=>$data->id), array("class"=>"btn btn-success"));
 									},'htmlOptions' => array(
 										'style'=> "text-align: center;",
 									),
