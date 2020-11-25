@@ -32,6 +32,23 @@ EOD
 ?>
 <script src="<?php echo $this->assetsBase;; ?>/js/jquery.uploadifive.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/uploadifive.css">
+<script type="text/javascript">
+	function deletevdo(filedoc_id,file_id){
+         $.get("<?php echo $this->createUrl('VirtualClassroom/deletevdo'); ?>",{id:file_id,vdo_id:filedoc_id},function(data){
+            if(data){
+            	var obj = JSON.parse(data);
+            	if (obj['success'] === true) {
+            		swal(obj['message']);
+            		location.reload();
+            	}else{
+            		swal(obj['message']);
+            	}
+             }else{
+                swal('ไม่สามารถลบไฟล์ได้');
+             }
+         });
+    }
+</script>
 <div class="innerLR">
 	
 	<div class="widget" style="margin-top: -1px;">
@@ -194,15 +211,15 @@ EOD
 									}	
 									else { 
 									// We got an XML response, so let's see what it says:
-									
 										if ($result['returncode'] == 'SUCCESS') {
 											// Then do stuff ...
 											unset($result['returncode']);
 											unset($result['messageKey']);
 											unset($result['message']);
-											foreach ($result as $key => $record) {//var_dump($record);
-												echo "<a href='".$record['playbackFormatUrl'][0]."' target='_blank'>".($key+1).". วีดีโอ</a>";
-												echo "<br>";
+											foreach ($result as $key => $record) {
+														echo "<a href='".$record['playbackFormatUrl'][0]."' target='_blank'>".($key+1).". วีดีโอ</a>";
+														echo CHtml::link('<i></i>','', array('title'=>'ลบไฟล์','class'=>'btn-action fa fa-times btn-danger remove_2','style'=>'z-index:1; background-color:black; cursor:pointer;','onclick'=>'if(confirm("คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร")){ deletevdo("'.$record['recordId'][0].'","'.$data->id.'"); }'));
+														echo "<br>";
 											}
 											//echo "<p>Meeting info was found on the server.</p>";
 										}
@@ -220,14 +237,14 @@ EOD
 						// 		$bbb = new BigBlueButton();
 
 						// 		$recordingsParams = array(
-						// 			//'meetingId' => $data->id, 			// OPTIONAL - comma separate if multiples
-						// 			'recordId' => '12f0de3dc76e067d21ed85125716e02e9f1e69f0-1592368803153', 			
+						// 			'meetingId' => $data->id, 			// OPTIONAL - comma separate if multiples
+						// 			'recordId' => 'f38cfe2e2facbcc742bad63f91ad55637300cb45-1593514266630', 			
 						// 			'publish' => 'true',
 						// 		);
-								
+						// 		//var_dump($recordingsParams);
 						// 		// Get the URL to join meeting:
 						// 		$itsAllGood = true;
-						// 		try {$result = $bbb->getRecordingsWithXmlResponseArray($recordingsParams);}
+						// 		try {$result = $bbb->publishRecordingsWithXmlResponseArray($recordingsParams);}
 						// 		catch (Exception $e) {
 						// 			echo 'Caught exception: ', $e->getMessage(), "\n";
 						// 			$itsAllGood = false;
@@ -241,20 +258,21 @@ EOD
 						// 			}	
 						// 			else { 
 						// 			// We got an XML response, so let's see what it says:
-									
+							
 						// 				if ($result['returncode'] == 'SUCCESS') {
-						// 					//print_r($result);
+						// 					//var_dump($result['published']);
 						// 					// Then do stuff ...
 						// 					// unset($result['returncode']);
 						// 					// unset($result['messageKey']);
-						// 					// unset($result['message']);//var_dump($result);
+						// 					// unset($result['message']);
 						// 					foreach ($result as $key => $record) {
-
+      //                             			 var_dump($record['playbackFormatUrl'][0]);
 						// 						 //header('Content-Disposition: attachment; filename="'.$record['playbackFormatUrl'][0].'.mp4"');
-
 
 						// 						echo "<a href='".$record['playbackFormatUrl'][0]."' target='_blank'>".($key+1).". วีดีโอ</a>";
 						// 						echo "<br>";
+						// 						// echo "<a href='".$record['playbackFormatUrl'][0]."' target='_blank'>".($key+1).". วีดีโอ</a>";
+						// 						// echo "<br>";
 						// 					} 
 						// 					//echo "<p>Meeting info was found on the server.</p>";
 						// 				}

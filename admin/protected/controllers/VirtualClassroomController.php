@@ -187,6 +187,7 @@ class VirtualClassroomController extends Controller
 				$vroom = VRoom::model()->findByPk($model->id);
 				$model->pic_vroom = $vroom->pic_vroom;
 			}
+
 			if(!empty($pic_vroom))
 					{
 						
@@ -221,6 +222,7 @@ class VirtualClassroomController extends Controller
 						// 		'model'=>$model,'notsave'=>$notsave));
 						// }
 					}
+					
 			$model->save();
 			if($model->save() == true){
 			$model_log = Vroomlogmail::model()->findByAttributes(array('vroom__id'=>$model->id));
@@ -636,6 +638,63 @@ class VirtualClassroomController extends Controller
         }
     }
 
+    	public function actionDeletevdo($id,$vdo_id)
+    {
+    	if(null !== Yii::app()->user && isset(Yii::app()->user->id)){
+	    	if ($id !== null && $vdo_id !== null) {
+	    		$VRoomDeletevdo = new VRoomDeletevdo;
+	    		$VRoomDeletevdo->room_id = $id;
+	    		$VRoomDeletevdo->vdo_id = $vdo_id;
+	    		$VRoomDeletevdo->create_date = date("Y-m-d H:i:s");
+	    		$VRoomDeletevdo->create_by = Yii::app()->user->id;
+	    		$VRoomDeletevdo->active = 'y';
+	    		if ($VRoomDeletevdo->save()) {
+	    				require_once Yii::app()->basePath . '/extensions/virtualclassroomapi/includes/bbb-api.php';
+	    				$bbb = new BigBlueButton();
+
+						$recordingParams = array(
+					
+								'recordId' => $vdo_id, 		
+
+							);
+
+							$itsAllGood = true;
+							try {$result = $bbb->deleteRecordingsWithXmlResponseArray($recordingParams);}
+								catch (Exception $e) {
+									echo 'Caught exception: ', $e->getMessage(), "\n";
+									$itsAllGood = false;
+								}
+
+							if ($itsAllGood == true) {
+								$response = [ 
+									'success' => true,
+									'message' => 'Delete Successful'
+									];
+									echo json_encode($response); 
+								//print_r($result);
+						}			
+	    		}else{
+	    			$response = [ 
+						'success' => false,
+						'message' => 'Delete Unsuccessful'
+						];
+						echo json_encode($response); 
+	    		}
+	    	}else{
+	    		$response = [ 
+					'success' => false,
+					'message' => 'No data found'
+				];
+				echo json_encode($response); 
+	    	}
+    	}else{
+    		$response = [ 
+				'success' => false,
+				'message' => 'User not found'
+			];
+			echo json_encode($response); 
+    	}
+    }
 
 
        public function actionChecklearn()
