@@ -186,7 +186,7 @@ class NewsController extends Controller
     	// var_dump($model->cms_detail);
 
 
-    	$model->cms_detail = htmlspecialchars_decode($model->cms_detail);
+    	$model->cms_detail = htmlspecialchars_decode(htmlspecialchars_decode($model->cms_detail));
 
     	// var_dump($model->cms_detail);
     	// exit();
