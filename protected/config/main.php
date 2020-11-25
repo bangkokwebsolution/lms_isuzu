@@ -98,19 +98,26 @@ return array(
 //          // enable cookie-based authentication
 //          'allowAutoLogin'=>true,
 //      ),
+
         'session' => array (
-         'class' => 'application.components.DbHttpSession',
-         'connectionID' => 'db',
-         'sessionTableName' => 'session',
-         'userTableName' => 'tbl_users'
+            'timeout' => 7200,
+            'class' => 'application.components.DbHttpSession',
+            'connectionID' => 'db',
+            'sessionTableName' => 'session',
+            'userTableName' => 'tbl_users',
+            'cookieParams' => array(
+            'httponly' => TRUE
+            )
         ),
 
         //prevent  XSS
-        'session' => array(
-           'cookieParams' => array(
-            'httponly' => TRUE
-            )
-         ),
+        // 'session' => array(
+        //    'cookieParams' => array(
+        //     'httponly' => TRUE
+        //     )
+        //  ),
+
+
         'request'=>array(
             'enableCookieValidation'=>true,
         ),
