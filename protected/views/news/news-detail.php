@@ -76,7 +76,7 @@ function DateThai($strDate)
                 </ul>
             </div>
             <div class="content-detail">
-                <?php echo htmlspecialchars_decode($news_data->cms_detail); ?>
+                <?php echo htmlspecialchars_decode(htmlspecialchars_decode($news_data->cms_detail)); ?>
             </div>
             <hr>
             <?php

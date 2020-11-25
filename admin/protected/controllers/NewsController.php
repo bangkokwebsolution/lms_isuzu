@@ -93,6 +93,11 @@ class NewsController extends Controller
     			$model->cms_link = json_encode($arr);
     		}
 
+
+    		// var_dump($model->cms_detail); exit();
+
+
+
     		if($model->validate())
     		{
     			if($model->save())
@@ -176,11 +181,23 @@ class NewsController extends Controller
     public function actionUpdate($id)
     {
     	$model = $this->loadModel($id);
+
+
+    	// var_dump($model->cms_detail);
+
+
+    	$model->cms_detail = htmlspecialchars_decode($model->cms_detail);
+
+    	// var_dump($model->cms_detail);
+    	// exit();
+
     	if(isset($model->cms_link)){
     		$arr = json_decode($model->cms_link);
     		$model->cms_url = $arr[0];
     		$model->cms_tab = $arr[1];
     	}
+
+
     	if($model->cms_type_display == 'content'){
     		$model->cms_type_display = '0';
     	} else {
@@ -190,6 +207,13 @@ class NewsController extends Controller
     	$imageShow = $model->cms_picture;
     	if(isset($_POST['News']))
     	{
+
+
+    	// $model->cms_detail = htmlspecialchars_decode($model->cms_detail);
+    		$model->cms_detail = htmlspecialchars($model->cms_detail, ENT_QUOTES);
+
+
+
     		$time = date("dmYHis");
     		$model->attributes=$_POST['News'];
 
@@ -233,8 +257,10 @@ class NewsController extends Controller
 						$model->save(false);
 
 						$model_sub = News::model()->find("active='y' AND parent_id='".$model->cms_id."' ");
+						if($model_sub){
 						$model_sub->sortOrder = $model->sortOrder;
 						$model_sub->save(false);
+					}
 
 						foreach ($model_main as $key => $value) {
 							$value->sortOrder = $value->sortOrder+1;

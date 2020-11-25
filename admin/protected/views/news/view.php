@@ -24,7 +24,14 @@ $this->widget('ADetailView', array(
 			'name'=>'cms_link',
 			'value'=> ClassFunction::_getLink($model)
 		),
-		array('name'=>'cms_detail', 'type'=>'raw'),
+
+		// array('name'=>'cms_detail', 'type'=>'raw'),
+		array(
+			'name' => 'cms_detail',
+			'type'=>'raw',
+			'value' => htmlspecialchars_decode($model->cms_detail),
+		),
+
 		array(
 			'name'=>'create_date',
 			'value'=> ClassFunction::datethaiTime($model->create_date)
