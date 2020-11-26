@@ -2611,6 +2611,10 @@ public function actionCourseLearnNoteSave(){
         }
 
         if($note_lesson_id != "" && $note_file_id != "" && $note_time != "" && $user_id != "" && $note_text != ""){
+            if(Yii::app()->user->id){
+                Helpers::lib()->getControllerActionId();
+            }
+
             $lesson_fine_course = Lesson::model()->findByPk($note_lesson_id);
             $learn_note = LearnNote::model()->find(array(
                 'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND file_id=:file_id AND note_time=:note_time AND gen_id=:gen_id',
@@ -2709,6 +2713,10 @@ public function actionCourseLearnNoteRemove(){
         $learn_note = LearnNote::model()->findByPk($note_id);
         $learn_note->active = 'n'; 
         if($learn_note->save()){
+            if(Yii::app()->user->id){
+                Helpers::lib()->getControllerActionId();
+            }
+
             echo "success";
         }
     }
@@ -2717,10 +2725,16 @@ public function actionCourseLearnNoteRemove(){
 public function actionCourseLearnSaveTimeVideo(){
     // var_dump($_POST); 
     if(isset($_POST["time"]) && isset($_POST["file"])){
+
         if(Yii::app()->user->id == null){
             echo "logout";
             exit();
         }
+
+        if(Yii::app()->user->id){
+            Helpers::lib()->getControllerActionId();
+        }
+
         $user_id = Yii::app()->user->id;
         $file_id = $_POST["file"];
         $gen_id = $_POST["gen_id"];
@@ -2769,6 +2783,11 @@ public function actionLessonShow() {
 
 public function actionCheckCaptcha()
 {
+
+    if(Yii::app()->user->id){
+        Helpers::lib()->getControllerActionId();
+    }
+
     $model = new ValidateCaptcha;
     $model->attributes = $_POST['ValidateCaptcha'];
     $user = Yii::app()->getModule('user')->user();
@@ -2906,6 +2925,10 @@ public function actionCheckCaptchaPdf()
             //     echo json_encode($val);
             // }
     if(isset($_POST['file_id'])){
+
+        if(Yii::app()->user->id){
+            Helpers::lib()->getControllerActionId();
+        }
 
         $learn_model = Learn::model()->findByPk($_POST['learn_id']);
         $gen_id = $learn_model->LessonMapper->CourseOnlines->getGenID($learn_model->LessonMapper->course_id);
