@@ -323,18 +323,29 @@ function isPassportchar(str,obj,s){
     var orgi_text="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     var chk_text=str.split("");
     chk_text.filter(function(s){     
-        if (/\s/g.test(s)) {   
-            if(orgi_text.indexOf(s)==-1){
+     
+        if(orgi_text.indexOf(s)==-1 || /\s/g.test(s)){
                 isNumber=false;
-                var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Enter only uppercase letters and numbers.! ':'กรอกตัวอักษรพิมพ์ใหญ่และตัวเลขเท่านั้น!'; ?>"; 
+                var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Do not use spaces and only enter uppercase letters and numbers.! ':'ห้ามเว้นวรรคและป้อนตัวอักษรพิมพ์ใหญ่และตัวเลขเท่านั้น!'; ?>"; 
                 swal(alert_message);
                 obj.value=str.replace(RegExp(s, "g"),'');
-            }
-            var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'No spaces.! ':'ห้ามเว้นวรรค!'; ?>"; 
-                swal(alert_message);
-        }           
+        }          
     }); 
-    return isNumber; 
+    return isNumber; isSpaces
+}
+
+function isSpaces(s){
+    var isNumber=true;
+        if(/\s/g.test(s)){
+                isNumber=false;
+                var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Do not use spaces.! ':'ห้ามเว้นวรรค!'; ?>"; 
+                swal(alert_message);
+                //replace(RegExp(s, "g"),'');
+                //replaceSpace.replace(/ /g, ";");
+                 $(".email").empty();
+                 $(".email").val(null);
+        }          
+    return isNumber;
 }
 
 function isNumbercharSalary(str,obj){
@@ -2330,7 +2341,7 @@ function editNamehouse_registration(filedoc_id){
                             <!-- <label for="">Email</label>
                                 <input type="text" class="form-control" id="" placeholder="Email"> -->
                                 <label><?php echo $label->label_email; ?><font color="red">*</font></label>
-                                <?php echo $form->emailField($users, 'email', array('class' => 'form-control email', 'placeholder' => $label->label_email)); ?>
+                                <?php echo $form->emailField($users, 'email', array('class' => 'form-control email', 'placeholder' => $label->label_email,'onkeyup'=>"isSpaces(this.value,this)")); ?>
                                 <?php echo $form->error($users, 'email', array('class' => 'error2')); ?>
                             </div>
                         </div>
