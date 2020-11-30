@@ -318,6 +318,25 @@ function isNumberchar(str,obj){
     }); 
     return isNumber; 
 }
+function isPassportchar(str,obj,s){
+    var isNumber=true;
+    var orgi_text="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var chk_text=str.split("");
+    chk_text.filter(function(s){     
+        if (/\s/g.test(s)) {   
+            if(orgi_text.indexOf(s)==-1){
+                isNumber=false;
+                var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Enter only uppercase letters and numbers.! ':'กรอกตัวอักษรพิมพ์ใหญ่และตัวเลขเท่านั้น!'; ?>"; 
+                swal(alert_message);
+                obj.value=str.replace(RegExp(s, "g"),'');
+            }
+            var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'No spaces.! ':'ห้ามเว้นวรรค!'; ?>"; 
+                swal(alert_message);
+        }           
+    }); 
+    return isNumber; 
+}
+
 function isNumbercharSalary(str,obj){
     var isNumberSalary=true;
     var orgi_text="0123456789,";
@@ -1703,7 +1722,7 @@ function editNamehouse_registration(filedoc_id){
             <div class="col-md-4 col-sm-6 col-xs-12" >
                 <div class="form-group">
                     <label><?php echo $label->label_passport;?><font color="red">*</font></label>
-                    <?php echo $form->textField($profile, 'passport', array('class' => 'form-control passport', 'name' => 'passport', 'placeholder' => $label->label_passport)); ?>
+                    <?php echo $form->textField($profile, 'passport', array('class' => 'form-control passport', 'name' => 'passport', 'placeholder' => $label->label_passport,'onkeyup'=>"isPassportchar(this.value,this)")); ?>
                     <?php echo $form->error($profile, 'passport', array('class' => 'error2')); ?>
                 </div>
             </div>
