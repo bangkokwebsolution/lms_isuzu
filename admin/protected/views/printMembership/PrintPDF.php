@@ -1083,17 +1083,23 @@ table .t-edu {
   <div style="padding-left:0;padding-top: 50px;">
     <p class="f-14" >รับ : ............................................................</p>
     <p class="f-14" style="padding-left:90px; padding-bottom: -27px;" > <?php 
-    $criteria= new CDbCriteria;
-    $criteria->compare('user_id',$LogRegister->confirm_user);
-    $Profile_admin = Profile::model()->findAll($criteria);
-    foreach ($Profile_admin as $key => $value) {
-       $firstname_admin = $value["firstname"]; 
-       $lastname_admin = $value["lastname"];
+    if ($LogRegister->confirm_user != null) {
+      $criteria= new CDbCriteria;
+      $criteria->compare('user_id',$LogRegister->confirm_user);
+      $Profile_admin = Profile::model()->findAll($criteria);
+    
+      foreach ($Profile_admin as $key => $value) {
+         $firstname_admin = $value["firstname"]; 
+         $lastname_admin = $value["lastname"];
+      }
+    }else{
+         $firstname_admin = "-"; 
+         $lastname_admin = " ";
     }
-     echo $firstname_admin; ?>&nbsp;&nbsp;&nbsp;<?php echo $lastname_admin; ?> </p>
+    echo $firstname_admin; ?>&nbsp;&nbsp;&nbsp;<?php echo $lastname_admin; ?> </p>
      <p class="f-14">(...................................................................)</p>
      <p class="f-14" style="padding-left:90px; padding-bottom: -27px;" >
-      <?php if($LogRegister['confirm_date'] != ""){
+      <?php if($LogRegister['confirm_date'] != null){
         $check = Helpers::lib()->changeFormatDate($LogRegister['confirm_date'],'datetime');
         $newformat = substr($check,0,-10);
         echo $newformat;    
