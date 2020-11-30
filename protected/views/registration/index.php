@@ -4134,6 +4134,31 @@ $(".email").change(function() {
     }
 });
 
+$(".passport").change(function() {
+    var text_passport = $(".passport").val();
+    if (text_passport != "") {
+        $.ajax({
+            type: 'POST',
+            url: "<?= Yii::app()->createUrl('Registration/CheckPassport'); ?>",
+            data: {
+                text_passport: text_passport
+            },
+            success: function(data) {
+
+                if (data != true) {
+                 $(".passport").empty();
+                 var alert_message ="<?php echo Yii::app()->session['lang'] == 1?'Warning message! ':'ข้อความแจ้งเตือน!'; ?>"; 
+                 var msg ="<?php echo Yii::app()->session['lang'] == 1?'This passport number is already in use.! ':'เลขพาสปอร์ตนี้มีผู้ใช้งานแล้ว!'; ?>"; 
+                 swal(alert_message,msg);
+                 $(".passport").val(null);
+
+             }
+
+         }
+     });
+    }
+});
+
 $(".idcard").change(function() {
     var idcard = $(".idcard").val();
     if (idcard != "") {

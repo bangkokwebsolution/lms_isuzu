@@ -2212,6 +2212,22 @@ public function actionDeleteFilePassport($id)
 
 }
 
+  public function actionCheckPassport(){
+
+       $criteria= new CDbCriteria;
+       $criteria->condition='passport=:passport';
+       $criteria->params=array(':passport'=>$_POST['text_passport']);
+       $model = Profile::model()->findAll($criteria);
+       if ($model != null) {
+        $data = false;
+        echo ($data);
+        }else{ 
+             $data = true; 
+             echo ($data);
+       }
+
+}
+
 public function actionCheckIdcard(){
  $str = $_POST['idcard'];
  $chk = strlen($str);
