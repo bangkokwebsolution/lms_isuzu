@@ -99,7 +99,7 @@ class LogUsers extends CActiveRecord
 		$criteria->compare('module',$this->module,true);
 		$criteria->compare('user_id',$this->user_id);
 		//$criteria->compare('create_date',$this->create_date,true);
-		$criteria->compare('CONCAT(member.m_firstname_th , " " , member.m_lastname_th , " ", " ", username," ",member.m_firstname_en , " " , member.m_lastname_en)',$this->search_name,true);
+		$criteria->compare('CONCAT(member.firstname_en , " " , member.lastname_en , " ")',$this->search_name,true);
 		$criteria->compare('user.identification',$this->search_passport,true);
 		$criteria->order = 't.create_date DESC';
 //        $criteria->group = 'create_date';
