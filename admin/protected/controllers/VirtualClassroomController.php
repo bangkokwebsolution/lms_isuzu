@@ -380,12 +380,15 @@ class VirtualClassroomController extends Controller
 			);
 
 			// preupload doc 
+			// http://203.154.140.77/lms_thoresen/uploads/vc/test.pdf
+
 			if(count($room->docs) > 0){
 				
-				$xml = "<?xml version='1.0' encoding ='UTF-8'?> <modules><module name='presentation'> ";
+				$xml = "<?xml version='1.0' encoding ='UTF-8'?> 
+				<modules><module name='presentation'> ";
 				foreach ($room->docs as $key => $doc) {
 
-					$xml .= "<document url='".str_replace("/admin/../", "/", Yii::app()->getUploadUrl('vc')).$doc->name."' />";
+					$xml .= "<document url='".str_replace("/admin/../", "/", Yii::app()->getUploadUrl('vc')).$doc->file_name."' />";
 
 				}
 
@@ -611,11 +614,14 @@ class VirtualClassroomController extends Controller
         $fileTypes = array('jpg','pdf','ppt','pptx','doc'); // Allowed file extensions
 
         if (!empty($_FILES)) {
+
+            $rnd = rand(0,9999999999);
             $tempFile   = $_FILES['Filedata']['tmp_name'];
             $uploadedFile = CUploadedFile::getInstanceByName('Filedata');
             $fileName = $uploadedFile->getName();
+            $file_Name = "{$rnd}.".strtolower($uploadedFile->getExtensionName());
 
-            $targetFile = $uploadDir . $fileName;
+            $targetFile = $uploadDir . $file_Name;
 
             // Validate the filetype
             $fileParts = pathinfo($_FILES['Filedata']['name']);
@@ -626,6 +632,8 @@ class VirtualClassroomController extends Controller
                 $roomDoc = new VRoomDoc();
                 $roomDoc->room_id = $_POST['room_id'];
                 $roomDoc->name = $fileName;
+                $roomDoc->file_name = $file_Name;
+
                 $roomDoc->save();
                 echo 1;
 
