@@ -2055,7 +2055,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
               // console.log(event.target);
               // console.log(event.target.f);
               // console.log($(event.target.l).attr("id")); // tag div id
-              var id_you = $(event.target.l).attr("id").split("_");
+              var id_you = $(event.target.m).attr("id").split("_");
               id_you = id_you[1];
               // console.log(id_you);
               // console.log(event.target.getDuration());
@@ -2089,7 +2089,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
         if(event.data == 1){ //play
           youyube_playing = event;
 
-          var id_you = $(event.target.l).attr("id").split("_");
+          var id_you = $(event.target.m).attr("id").split("_");
           id_you = id_you[1];
 
           <?php foreach ($model->files as $file){ ?>
@@ -2123,7 +2123,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
         }else if(event.data == 3){ // รี
 
         }else if(event.data == 0){ // จบ
-          var id_you = $(event_playing.target.l).attr("id").split("_");
+          var id_you = $(event_playing.target.m).attr("id").split("_");
             id_you = id_you[1];
           event_playing = event;
           arr_status[id_you] = 1;
@@ -2164,7 +2164,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
 
         function followVDOyoutube() {  // ติดตามเวลา vdo
 
-            var id_you = $(event_playing.target.l).attr("id").split("_");
+            var id_you = $(event_playing.target.m).attr("id").split("_");
             id_you = id_you[1];
 
             // console.log(event_playing.data);
