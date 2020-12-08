@@ -96,6 +96,7 @@
                   'condition' => 'active=:active AND user_id=:user_id AND library_id=:library_id',
                   'params' => array(':active' => 'y', ':library_id' => $value->library_id, ':user_id' => Yii::app()->user->id),
                 ));
+                //var_dump($req_library);
                 if ($req_library != "") {
                   if ($req_library->req_status == 1) {
                     $text_class = "btn btn-warning";
@@ -140,7 +141,7 @@
                       if($ext == "html"){
                         $filename = basename($valuee);
                         ?>
-                        <div class="col-sm-6 col-md-3 col-xs-12">
+                        <div class="col-sm-6 col-md-4 col-xs-12">
                           <div class=" text-center">
                             <div class="library-item">
                               <div class="item item-library-index">
@@ -170,7 +171,7 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
               ?>
-              <div class="col-sm-6 col-md-3 col-xs-12">
+              <div class="col-sm-6 col-md-4 col-xs-12">
                 <div class=" text-center">
                   <div class="library-item">
                     <div class="item item-library-index">
@@ -202,8 +203,8 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
                     ?>
-                  <div class="col-sm-6 col-md-5 col-xs-12">
-                    <div class=" text-center">
+                  <div class="col-sm-6 col-md-4 col-xs-12" style="height: 285.6px;">
+                    <div class=" text-center" style="height: 275.6px;">
                       <div class="library-item">
                         <div class="item item-library-index">
                           <div class="library-card">
@@ -239,7 +240,7 @@
                   }
                 } elseif ($extension == "doc" || $extension == "docx") {
                   ?>
-                  <div class="col-sm-6 col-md-3 col-xs-12">
+                  <div class="col-sm-6 col-md-4 col-xs-12">
                     <div class=" text-center">
                       <div class="library-item">
                         <div class="item item-library-index">
@@ -261,7 +262,7 @@
                 <?php
                 } elseif ($extension == "xls" || $extension == "xlsx") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
@@ -283,7 +284,7 @@
                 <?php
                 } elseif ($extension == "ppt" || $extension == "pptx") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
@@ -305,7 +306,7 @@
                 <?php
                 } elseif ($extension == "pdf") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
@@ -390,7 +391,7 @@
                       if($ext == "html"){
                         $filename = basename($valuee);
                         ?>
-                        <div class="col-sm-6 col-md-3 col-xs-12">
+                        <div class="col-sm-6 col-md-4 col-xs-12">
                           <div class=" text-center">
                             <div class="library-item">
                               <div class="item item-library-index">
@@ -420,7 +421,7 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
               ?>
-              <div class="col-sm-6 col-md-3 col-xs-12">
+              <div class="col-sm-6 col-md-4 col-xs-12">
                 <div class=" text-center">
                   <div class="library-item">
                     <div class="item item-library-index">
@@ -452,8 +453,8 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
                     ?>
-                  <div class="col-sm-6 col-md-5 col-xs-12">
-                    <div class=" text-center">
+                  <div class="col-sm-6 col-md-4 col-xs-12" style="height: 285.6px;">
+                    <div class=" text-center" style="height: 275.6px;">
                       <div class="library-item">
                         <div class="item item-library-index">
                           <div class="library-card">
@@ -493,7 +494,7 @@
                   }
                 } elseif ($extension == "doc" || $extension == "docx") {
                   ?>
-                  <div class="col-sm-6 col-md-3 col-xs-12">
+                  <div class="col-sm-6 col-md-4 col-xs-12">
                     <div class=" text-center">
                       <div class="library-item">
                         <div class="item item-library-index">
@@ -515,7 +516,7 @@
                 <?php
                 } elseif ($extension == "xls" || $extension == "xlsx") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
@@ -537,7 +538,7 @@
                 <?php
                 } elseif ($extension == "ppt" || $extension == "pptx") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
@@ -559,7 +560,7 @@
                 <?php
                 } elseif ($extension == "pdf") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
@@ -660,7 +661,7 @@
                       if($ext == "html"){
                         $filename = basename($valuee);
                         ?>
-                        <div class="col-sm-6 col-md-3 col-xs-12">
+                        <div class="col-sm-6 col-md-4 col-xs-12">
                           <div class=" text-center">
                             <div class="library-item">
                               <div class="item item-library-index">
@@ -690,7 +691,7 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
               ?>
-              <div class="col-sm-6 col-md-3 col-xs-12">
+              <div class="col-sm-6 col-md-4 col-xs-12">
                 <div class=" text-center">
                   <div class="library-item">
                     <div class="item item-library-index">
@@ -722,8 +723,8 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
                     ?>
-                  <div class="col-sm-6 col-md-5 col-xs-12">
-                    <div class=" text-center">
+                  <div class="col-sm-6 col-md-4 col-xs-12" style="height: 285.6px;">
+                    <div class=" text-center" style="height: 275.6px;">
                       <div class="library-item">
                         <div class="item item-library-index">
                           <div class="library-card">
@@ -785,7 +786,7 @@
                 <?php
                 } elseif ($extension == "xls" || $extension == "xlsx") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
@@ -807,7 +808,7 @@
                 <?php
                 } elseif ($extension == "ppt" || $extension == "pptx") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
@@ -829,7 +830,7 @@
                 <?php
                 } elseif ($extension == "pdf") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
@@ -982,7 +983,7 @@
                       if($ext == "html"){
                         $filename = basename($valuee);
                         ?>
-                        <div class="col-sm-6 col-md-3 col-xs-12">
+                        <div class="col-sm-6 col-md-4 col-xs-12">
                           <div class=" text-center">
                             <div class="library-item">
                               <div class="item item-library-index">
@@ -1013,7 +1014,7 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
               ?>
-              <div class="col-sm-6 col-md-3 col-xs-12">
+              <div class="col-sm-6 col-md-4 col-xs-12">
                 <div class=" text-center">
                   <div class="library-item">
                     <div class="item item-library-index">
@@ -1045,8 +1046,8 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
                     ?>
-                  <div class="col-sm-6 col-md-5 col-xs-12">
-                    <div class=" text-center">
+                  <div class="col-sm-6 col-md-4 col-xs-12" style="height: 285.6px;">
+                    <div class=" text-center" style="height: 275.6px;">
                       <div class="library-item">
                         <div class="item item-library-index">
                           <div class="library-card">
@@ -1086,7 +1087,7 @@
                   }
                 } elseif ($extension == "doc" || $extension == "docx") {
                   ?>
-                  <div class="col-sm-6 col-md-3 col-xs-12">
+                  <div class="col-sm-6 col-md-4 col-xs-12">
                     <div class=" text-center">
                       <div class="library-item">
                         <div class="item item-library-index">
@@ -1108,7 +1109,7 @@
                 <?php
                 } elseif ($extension == "xls" || $extension == "xlsx") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
@@ -1130,7 +1131,7 @@
                 <?php
                 } elseif ($extension == "ppt" || $extension == "pptx") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
@@ -1152,7 +1153,7 @@
                 <?php
                 } elseif ($extension == "pdf") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
@@ -1239,7 +1240,7 @@
                       if($ext == "html"){
                         $filename = basename($valuee);
                         ?>
-                        <div class="col-sm-6 col-md-3 col-xs-12">
+                        <div class="col-sm-6 col-md-4 col-xs-12">
                           <div class=" text-center">
                             <div class="library-item">
                               <div class="item item-library-index">
@@ -1269,7 +1270,7 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
               ?>
-              <div class="col-sm-6 col-md-3 col-xs-12">
+              <div class="col-sm-6 col-md-4 col-xs-12">
                 <div class=" text-center">
                   <div class="library-item">
                     <div class="item item-library-index">
@@ -1301,8 +1302,8 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
                     ?>
-                  <div class="col-sm-6 col-md-5 col-xs-12">
-                    <div class=" text-center">
+                  <div class="col-sm-6 col-md-4 col-xs-12" style="height: 285.6px;">
+                    <div class=" text-center" style="height: 275.6px;">
                       <div class="library-item">
                         <div class="item item-library-index">
                           <div class="library-card">
@@ -1342,7 +1343,7 @@
                   }
                 } elseif ($extension == "doc" || $extension == "docx") {
                   ?>
-                  <div class="col-sm-6 col-md-3 col-xs-12">
+                  <div class="col-sm-6 col-md-4 col-xs-12">
                     <div class=" text-center">
                       <div class="library-item">
                         <div class="item item-library-index">
@@ -1364,7 +1365,7 @@
                 <?php
                 } elseif ($extension == "xls" || $extension == "xlsx") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
@@ -1386,7 +1387,7 @@
                 <?php
                 } elseif ($extension == "ppt" || $extension == "pptx") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
@@ -1408,7 +1409,7 @@
                 <?php
                 } elseif ($extension == "pdf") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
@@ -1516,7 +1517,7 @@
                       if($ext == "html"){
                         $filename = basename($valuee);
                         ?>
-                        <div class="col-sm-6 col-md-3 col-xs-12">
+                        <div class="col-sm-6 col-md-4 col-xs-12">
                           <div class=" text-center">
                             <div class="library-item">
                               <div class="item item-library-index">
@@ -1546,7 +1547,7 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
               ?>
-              <div class="col-sm-6 col-md-3 col-xs-12">
+              <div class="col-sm-6 col-md-4 col-xs-12">
                 <div class=" text-center">
                   <div class="library-item">
                     <div class="item item-library-index">
@@ -1578,8 +1579,8 @@
                   foreach ($check_file as $keyy => $valuee) {
                     if (basename($valuee) == $value->library_filename) {
                     ?>
-                  <div class="col-sm-6 col-md-5 col-xs-12">
-                    <div class=" text-center">
+                  <div class="col-sm-6 col-md-4 col-xs-12" style="height: 285.6px;">
+                    <div class=" text-center" style="height: 275.6px;">
                       <div class="library-item">
                         <div class="item item-library-index">
                           <div class="library-card">
@@ -1619,7 +1620,7 @@
                   }
                 } elseif ($extension == "doc" || $extension == "docx") {
                   ?>
-                  <div class="col-sm-6 col-md-3 col-xs-12">
+                  <div class="col-sm-6 col-md-4 col-xs-12">
                     <div class=" text-center">
                       <div class="library-item">
                         <div class="item item-library-index">
@@ -1641,7 +1642,7 @@
                 <?php
                 } elseif ($extension == "xls" || $extension == "xlsx") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
@@ -1663,7 +1664,7 @@
                 <?php
                 } elseif ($extension == "ppt" || $extension == "pptx") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
@@ -1685,7 +1686,7 @@
                 <?php
                 } elseif ($extension == "pdf") {
                 ?>
-                <div class="col-sm-6 col-md-3 col-xs-12">
+                <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
