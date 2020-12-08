@@ -49,7 +49,7 @@ echo CHtml::dropDownList('type',$_GET['type'], $listype , array(
     <label>  <h5>ประเภทบุคคลภายใน</h5></label>
 
     <?php 
-    $listype_in = array('1'=>'MASTER / CAPTAIN' , '2'=>'Office');
+    $listype_in = array('1'=>'SHIP' , '2'=>'Office');
 
 echo CHtml::dropDownList('type_in',$_GET['type_in'], $listype_in , array(
       'empty'=>'ทั้งหมด',
@@ -135,7 +135,6 @@ echo CHtml::dropDownList('branch','', '' , array(
         <tbody>
           <?php 
 
-
           if($_GET['dep'] != null || $_GET['pos'] != null || $_GET['namesearch'] != null || $_GET['type'] != null){
 
             $criteria = new CDbCriteria; 
@@ -170,21 +169,21 @@ echo CHtml::dropDownList('branch','', '' , array(
 
             }
 
-            $org_id = $_GET['orgchart_id']; 
-            $orgRoot = OrgChart::model()->findByPk($org_id);
+            // $org_id = $_GET['orgchart_id']; 
+            // $orgRoot = OrgChart::model()->findByPk($org_id);
             
             
-            if($orgRoot->department_id != null){
-            $criteria->addNotInCondition('department_id',[$orgRoot->department_id]); 
-            }
+            // if($orgRoot->department_id != null){
+            // $criteria->addNotInCondition('department_id',[$orgRoot->department_id]); 
+            // }
 
-            if($orgRoot->position_id != null){
-            $criteria->addNotInCondition('position_id',[$orgRoot->position_id]); 
-            }
+            // if($orgRoot->position_id != null){
+            // $criteria->addNotInCondition('position_id',[$orgRoot->position_id]); 
+            // }
 
-            if($orgRoot->branch_id != null){
-            $criteria->addNotInCondition('branch_id',[$orgRoot->branch_id]); 
-            }
+            // if($orgRoot->branch_id != null){
+            // $criteria->addNotInCondition('branch_id',[$orgRoot->branch_id]); 
+            // }
 
             if($modelUsers_old_chk){
               $criteria->addNotInCondition('id',[$modelUsers_old_chk->user_id]); 
@@ -321,6 +320,10 @@ $(".typehid").hide();
     }
 });
 
+  
+<?php if($_GET['type_in'] != null){?>
+$(".typehid").show();
+<?php } ?>
 </script>
 
 
