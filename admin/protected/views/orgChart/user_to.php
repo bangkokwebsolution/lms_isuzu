@@ -154,9 +154,9 @@ echo CHtml::dropDownList('branch','', '' , array(
             if($_GET['type_in'] != null){
               $criteria->compare('profiles.type_employee',$_GET['type_in']);
             }
-            if($_GET['type'] != null){
-              $criteria->compare('type_user',$_GET['type']);
-            }
+            // if($_GET['type'] != null){
+            //   $criteria->compare('type_user',$_GET['type']);
+            // }
 
              if($_GET['namesearch'] != null){
 

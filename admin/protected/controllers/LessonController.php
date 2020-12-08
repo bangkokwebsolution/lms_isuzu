@@ -754,17 +754,21 @@ public function actionFormLesson($id,$type)
                         }
                     }
 
-                         if(isset($session['filenameComEbook']) || count($session['filenameComEbook'])!=0)
+                      if(isset($session['filenameComEbook']) || count($session['filenameComEbook'])!=0)
+                {
+                    foreach ($session['filenameComEbook'] as $filenameComKey => $filenameComValue)
                     {
-                        foreach ($session['filenameComEbook'] as $filenameComKey => $filenameComValue)
-                        {
-                            $file = new FileEbook;
-                            $file->lesson_id = $lesson->id;
-                            $file->filename = $filenameComValue;
-                            $file->file_name = $filenameComValue.".html";
-                            $file->save(false);
-                        }
+                        $fileScorm = FileEbook::model()->find(array('order'=>'id DESC'));
+                        $cid = $fileScorm['id']+1;
+
+                        $file = new FileEbook;
+                        $file->id = $cid;
+                        $file->lesson_id = $lesson->id;
+                        $file->filename = $filenameComValue;
+                        $file->file_name = $filenameComValue.".html";
+                        $file->save(false);
                     }
+                } 
                     
 
                     $parent_id = $lesson->id;
