@@ -1449,7 +1449,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                         ?>
                         <li class="list-group-item ">
                         <a href="javascript:void(0);"><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
-                            <span class="pull-right  text-success prepost"> <?= $course_score->score_number ?>/<?= $course_score->score_total ?> <?= $label->label_point; ?></span></a> 
+                            <span class="pull-right  <?php if($course_score->score_past == "y"){ echo "text-success"; }else{ echo "text-danger"; } ?> prepost"> <?= $course_score->score_number ?>/<?= $course_score->score_total ?> <?= $label->label_point; ?></span></a> 
                         </li>
                         <?php
                     }else{
@@ -1457,7 +1457,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                         ?>  
                          <li class="list-group-item ">
                         <a href="javascript:void(0);"><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
-                            <span class="pull-right  text-success prepost"> <?= $label->label_course_wait; ?><!-- 999 --></span></a> 
+                            <span class="pull-right  <?php if($course_score->score_past == "y"){ echo "text-success"; }else{ echo "text-danger"; } ?> prepost"> <?= $label->label_course_wait; ?><!-- 999 --></span></a> 
                         </li>
                         <?php
                     }
@@ -1470,7 +1470,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
 
                         <li class="list-group-item ">
                         <a href="javascript:void(0);"><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
-                            <span class="pull-right  text-success prepost"> <?= $course_score->score_number ?>/<?= $course_score->score_total ?> <?= $label->label_point; ?></span></a> 
+                            <span class="pull-right  <?php if($course_score->score_past == "y"){ echo "text-success"; }else{ echo "text-danger"; } ?> prepost"> <?= $course_score->score_number ?>/<?= $course_score->score_total ?> <?= $label->label_point; ?></span></a> 
                         </li>
                         <?php
                     }else{
@@ -1478,7 +1478,7 @@ if($checkHaveScoreCoursePreTest){ //ยังไม่สอบ ไม่มี�
                         ?>
                         <li class="list-group-item ">
                         <a href="javascript:void(0);"><span class="list__course"><?= $label->label_resultFinal; ?> <?= $key+1; ?></span>
-                            <span class="pull-right  text-success prepost"> <?= $label->label_course_wait; ?><!-- 000 --></span></a> 
+                            <span class="pull-right  <?php if($course_score->score_past == "y"){ echo "text-success"; }else{ echo "text-danger"; } ?> prepost"> <?= $label->label_course_wait; ?><!-- 000 --></span></a> 
                         </li>
                         <?php
                     }
