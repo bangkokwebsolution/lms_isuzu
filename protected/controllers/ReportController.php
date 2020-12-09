@@ -1646,7 +1646,7 @@ public function actionReportRegisterData()
 					$criteria->group = 'position_id';
 					$criteria->order = 'sortOrder ASC';
 					$branch = Branch::model()->findAll($criteria);
-
+// var_dump($branch);
 
 					$branch_arr = [];
 					foreach ($branch as $key => $val_branch) {
@@ -1793,7 +1793,6 @@ public function actionReportRegisterData()
 
 							$result_dep_in_name = array_unique( $names_dep );
 							$result_dep_not_name = array_unique( $names_dep_not );
-
 							foreach ($result_dep_not_name as $key => $value) {
 								array_push($result_dep_in_name,$value);
 
@@ -1814,13 +1813,13 @@ public function actionReportRegisterData()
 									}
 									$criteria->compare('superuser',0);
 									$criteria->compare('del_status',0);
-									$criteria->compare('status',1);
-									$criteria->order = 'dep_title DESC';
+
 									$users_count = Users::model()->findAll($criteria);
 									$count_dep = count($users_count);
 									$datas .= '["'.$result_pos_not[$key].'",'.$count_dep.',"'.$colorName[$key].'"],';
 
 								}
+
 							}else{
 								sort($result_dep_in_name);
 								// var_dump($result_dep_in_name);
@@ -1850,9 +1849,10 @@ public function actionReportRegisterData()
 								}
 							}
 						
+						
 							$data_year_end = '["Element", "Division", { role: "style" } ],';
 							$colorName = Helpers::lib()->ColorCode();	
-							
+
 							if ($Department != "" ) {
 								foreach ($result_pos_in as $key => $value) {		
 									$criteria = new CDbCriteria;
@@ -2208,7 +2208,7 @@ public function actionReportRegisterData()
 									]);
 								if (data) {}
 									var options = {
-										title: <?php echo Yii::app()->session['lang'] == 1?'"Pie Chart"':'"Pie Chart"' ?>,
+										title: <?php echo Yii::app()->session['lang'] == 1?'" Pie Chart"':'"Pie Chart"' ?>,
 										sliceVisibilityThreshold:0,
 										pieSliceText:'value',
 										//is3D: true,
@@ -2587,13 +2587,12 @@ public function actionReportRegisterData()
 										$usersAll = Users::model()->findAll($criteria);
 										$cou_use = count($users);
 										$cou_useAll = count($usersAll);
+
 										
 										if ($cou_useAll > 0){
 											$sumtotal += $cou_useAll;
 											$SUM_user[] = $cou_use;
-											$per_cen = ($cou_use * 100)/ $cou_useAll;
-				
-
+											$per_cen = ($cou_use * 100)/ $cou_useAll; 
 
 											$datatable .= '<tr>';
 											$datatable .= '<td>'.$i++.'</td>';
@@ -2648,7 +2647,7 @@ public function actionReportRegisterData()
 											$datatable .= '</tr>';
 										}
 
-										
+
 									}  
 									if ($TypeEmployee != 2) {
 										// var_dump($total_new);
