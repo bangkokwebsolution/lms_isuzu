@@ -1793,6 +1793,7 @@ public function actionReportRegisterData()
 
 							$result_dep_in_name = array_unique( $names_dep );
 							$result_dep_not_name = array_unique( $names_dep_not );
+
 							foreach ($result_dep_not_name as $key => $value) {
 								array_push($result_dep_in_name,$value);
 
@@ -1813,18 +1814,24 @@ public function actionReportRegisterData()
 									}
 									$criteria->compare('superuser',0);
 									$criteria->compare('del_status',0);
-
+									$criteria->compare('status',1);
+									$criteria->order = 'dep_title DESC';
 									$users_count = Users::model()->findAll($criteria);
 									$count_dep = count($users_count);
 									$datas .= '["'.$result_pos_not[$key].'",'.$count_dep.',"'.$colorName[$key].'"],';
 
 								}
-
 							}else{
-								foreach ($result_dep_in as $key => $value) {		
+								sort($result_dep_in_name);
+								// var_dump($result_dep_in_name);
+								$i = 0;
+								foreach ($result_dep_in as $key => $value) {
 									$criteria = new CDbCriteria;
 									$criteria->with = array('department');
-									$criteria->compare('department_id',$value);
+									$criteria->compare('dep_title',$result_dep_in_name[$i]);
+									$criteria->order = 'dep_title DESC';
+									
+									// $criteria->compare('department_id',$value);
 									if ($Year_start != null) {
 									$criteria->compare('YEAR(create_at)', $Year_start);
 									}
@@ -1834,37 +1841,18 @@ public function actionReportRegisterData()
 									}
 									$criteria->compare('superuser',0);
 									$criteria->compare('del_status',0);
-
+									$criteria->compare('status',1);
+									
 									$users_count = Users::model()->findAll($criteria);
 									$count_dep = count($users_count);
-									$datas .= '["'.$result_dep_in_name[$key].'",'.$count_dep.',"'.$colorName[$key].'"],';
-
+									$datas .= '["'.$result_dep_in_name[$i].'",'.$count_dep.',"'.$colorName[$key].'"],';
+									$i++;
 								}
-							}
-							foreach ($result_dep_not as $key => $value) {		
-								$criteria = new CDbCriteria;
-								$criteria->with = array('department');
-								$criteria->compare('department_id',$value);
-								if ($Year_start != null) {
-								$criteria->compare('YEAR(create_at)', $Year_start);
-								}
-								if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
-
-									$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
-								}
-								$criteria->compare('superuser',0);
-								$criteria->compare('del_status',0);
-
-								$users_count = Users::model()->findAll($criteria);
-								$count_dep = count($users_count);
-
-								$datas .= '["'.$result_dep_in_name[$key].'",'.$count_dep.',"'.$color[$key].'"],';
-
 							}
 						
 							$data_year_end = '["Element", "Division", { role: "style" } ],';
 							$colorName = Helpers::lib()->ColorCode();	
-
+							
 							if ($Department != "" ) {
 								foreach ($result_pos_in as $key => $value) {		
 									$criteria = new CDbCriteria;
@@ -2195,7 +2183,7 @@ public function actionReportRegisterData()
 									2]);
 
 								var options = {
-									title: <?php echo Yii::app()->session['lang'] == 1?'"Report overview register"':'"รายงานภาพรวมสมัครสมาชิก"' ?>,
+									title: <?php echo Yii::app()->session['lang'] == 1?'"Column Chart"':'"Column Chart"' ?>,
 									width: 600,
 									height: 400,
 									bar: {groupWidth: "95%"},
@@ -2220,7 +2208,7 @@ public function actionReportRegisterData()
 									]);
 								if (data) {}
 									var options = {
-										title: <?php echo Yii::app()->session['lang'] == 1?'"Report overview register"':'"รายงานภาพรวมสมัครสมาชิก"' ?>,
+										title: <?php echo Yii::app()->session['lang'] == 1?'"Pie Chart"':'"Pie Chart"' ?>,
 										sliceVisibilityThreshold:0,
 										pieSliceText:'value',
 										//is3D: true,
@@ -2603,7 +2591,9 @@ public function actionReportRegisterData()
 										if ($cou_useAll > 0){
 											$sumtotal += $cou_useAll;
 											$SUM_user[] = $cou_use;
-											$per_cen = ($cou_use * 100)/ $cou_useAll; 
+											$per_cen = ($cou_use * 100)/ $cou_useAll;
+				
+
 
 											$datatable .= '<tr>';
 											$datatable .= '<td>'.$i++.'</td>';
@@ -2658,11 +2648,20 @@ public function actionReportRegisterData()
 											$datatable .= '</tr>';
 										}
 
-
+										
 									}  
 									if ($TypeEmployee != 2) {
+										// var_dump($total_new);
+										// 	var_dump(array_sum($SUM_user));
+										// 	exit();
+										if ($status == 1 ) {
+											
+											$per_cent_new = (array_sum($SUM_user) * 100) / $total_new;
+										}else{
+											$per_cent_new = (array_sum($SUM_user) * 100) / $total_new;
+										}
 										$datatable .= '<tr style="border:2px solid #8B8386;">';
-											$datatable .= '<td style="border:2px solid #8B8386;"><span style="font-weight:bold;">';
+											$datatable .= '<td colspan=3 style="text-align:right;border:2px;solid;#8B8386"><span style="font-weight:bold;">';
 											if (Yii::app()->session['lang'] == 1) {
 												$datatable .= "Total";
 											}else{
@@ -2670,12 +2669,11 @@ public function actionReportRegisterData()
 											}
 											$datatable .= '</span></td>';
 											
-											$datatable .= '<td style="border:2px solid #8B8386;"></td>';
-											$datatable .= '<td style="border:2px solid #8B8386;"></td>';
-											$datatable .= '<td style="border:2px solid #8B8386;"></td>';
+
+											$datatable .= '<td style="border:2px solid #8B8386;"><span style="font-weight:bold;">'.$total_new.'</span></td>';
 											$datatable .= '<td style="border:2px solid #8B8386;"><span style="font-weight:bold;">'.array_sum($SUM_user).'</span></td>';
 											$datatable .= '<td style="border:2px solid #8B8386;"></td>';
-											$datatable .= '<td style="border:2px solid #8B8386;"></td>';
+											$datatable .= '<td style="border:2px solid #8B8386;"><span style="font-weight:bold;">'.round($per_cent_new,2).'%</span></td>';
 										$datatable .= '</tr>';	
 									}
 									
@@ -2932,7 +2930,7 @@ public function actionReportRegisterData()
 			$criteria->order = 'sortOrder ASC';
 			$model = Position::model()->findAll($criteria);
 			if ($model) {
-				$sub_list = Yii::app()->session['lang'] == 1?'Select Pocition ':'เลือกตำแหน่ง';
+				$sub_list = Yii::app()->session['lang'] == 1?'Select Position ':'เลือกตำแหน่ง';
 				$data = '<option value ="">'.$sub_list.'</option>';
 				foreach ($model as $key => $value) {
 					$data .= '<option value = "'.$value->id.'"'.'>'.$value->position_title.'</option>';

@@ -47,7 +47,7 @@
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'Employee Type':'ประเภทพนักงาน'; ?><font color="red">*</font></label>
                                     <select class="form-control TypeEmployee" name="" id="TypeEmployee">
-                                        <option value="" selected disabled> <?= Yii::app()->session['lang'] == 1?'Select type':'เลือกประเภท'; ?></option>
+                                        <option value="" selected disabled> <?= Yii::app()->session['lang'] == 1?'Select Type':'เลือกประเภท'; ?></option>
                                         <?php
                                         if ($authority == 2 && $type_em == 1) { ?>
                                             <option value="1" selected> <?= Yii::app()->session['lang'] == 1?'Ship Staff':'พนักงานประจำเรือ'; ?></option>
@@ -78,7 +78,7 @@
                                     <?php
                                    if ($authority == 1 && $type_em == 2) {   
                                          if (Yii::app()->session['lang'] == 1) {
-                                            echo "Division or Department";
+                                            echo "Division";
                                         }else{
                                             echo "ฝ่าย";
                                         }
@@ -142,11 +142,11 @@
                                      </div>
                                     <div class="checkbox checkbox-main checkbox-inline">
                                         <input class="accommodation" type="checkbox" name="accommodation" id="1" value="Bar_Graph" ><!-- checked -->
-                                        <label for="1" class="text-black"><?= Yii::app()->session['lang'] == 1?'Column Chart':'กราฟแท่ง'; ?></label>
+                                        <label for="1" class="text-black"><?= Yii::app()->session['lang'] == 1?'Column Chart':'Column Chart'; ?></label>
                                     </div>
                                     <div class="checkbox checkbox-main checkbox-inline">
                                         <input class="accommodation" type="checkbox" name="accommodation" id="2" value="Pie_Charts">
-                                        <label for="2" class="text-black"><?= Yii::app()->session['lang'] == 1?'Pie Charts':'กราฟวงกลม'; ?> </label>
+                                        <label for="2" class="text-black"><?= Yii::app()->session['lang'] == 1?'Pie Chart':'กราฟวงกลม'; ?> </label>
                                     </div>
                                 </div>
                             </div>
