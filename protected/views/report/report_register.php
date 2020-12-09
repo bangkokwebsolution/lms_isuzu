@@ -424,18 +424,26 @@
 
     
 $(document).ready(function(){
+
     $('#datetime_start').on('change',function(){
+    if($("#datetime_start").val() != ''){
     $('#Year_start').attr('disabled',true);
     $('#Year_end').attr('disabled',true);
+    }
     });
+
     $('#datetime_end').on('change',function(){
+    if($("#datetime_end").val() != ''){
     $('#Year_start').attr('disabled',true);
     $('#Year_end').attr('disabled',true);
+    }
     });
+
     $('#Year_start').on('change',function(){
     $('#datetime_start').attr('disabled',true);
     $('#datetime_end').attr('disabled',true);
     });
+
     $('#Year_end').on('change',function(){
     $('#datetime_start').attr('disabled',true);
     $('#datetime_end').attr('disabled',true);

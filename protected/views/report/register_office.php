@@ -60,8 +60,11 @@
                                                 }
                                                  
                                         }
-                                        $criteria->order = 'sortOrder ASC';
-                                        $departmentModel = Department::model()->findAll($criteria);
+                                        /* $criteria->order = 'sortOrder ASC'; */
+                                        $departmentModel = Department::model()->findAll(array(
+                                            'condition'=>'active="y"',
+                                            'order'=>'dep_title ASC',
+                                        ));
                                         foreach ($departmentModel as $key => $val) {
                                             $department_list = $departmentModel[$key]->attributes;
                                             ?>
@@ -90,9 +93,12 @@
                                                 }
                                                  
                                         }
-                                        $criteria->compare('active','y');
-                                        $criteria->order = 'sortOrder ASC';
-                                        $PositionModel = Position::model()->findAll($criteria);
+                                        /* $criteria->compare('active','y');
+                                        $criteria->order = 'sortOrder ASC'; */
+                                        $PositionModel = Position::model()->findAll(array(
+                                                'condition' => 'active="y"',
+                                                'order'=>'position_title ASC',
+                                        ));
                                         foreach ($PositionModel as $key => $val) {
                                             $Position_list = $PositionModel[$key]->attributes;
                                             ?>
@@ -125,6 +131,8 @@
                                         $BranchModel = Branch::model()->findAll($criteria);
                                         foreach ($BranchModel as $key => $val) {
                                             $Branch_list = $BranchModel[$key]->attributes;
+                                            $i++;
+                                            if ($i >= 10)  { break;}
                                             ?>
                                             <option value="<?php echo $Branch_list['id']; ?>"><?php echo $Branch_list['branch_name']; ?></option>
                                             <?php   
@@ -145,7 +153,7 @@
                                 </div>
                                 <div class="checkbox checkbox-main checkbox-inline">
                                     <input class="accommodation" type="checkbox" name="accommodation" id="2" value="Pie_Charts">
-                                    <label for="2" class="text-black"><?= Yii::app()->session['lang'] == 1?'Pie Charts':'Pie Charts'; ?> </label>
+                                    <label for="2" class="text-black"><?= Yii::app()->session['lang'] == 1?'Pie Chart':'Pie Chart'; ?> </label>
                                 </div>
                             </div>
                         </div>
@@ -309,15 +317,24 @@
             }
         });
     });
+    
 
     $(document).ready(function(){
-        $('#datetime_start').on('change',function(){
+          $('#datetime_start').on('change',function(){
+              /* console.log($("#datetime_start").val()); */
+            //   $("#datetime_start").val();
+            if($("#datetime_start").val() != ''){
             $('.Year_start').attr('disabled',true);
             $('.Year_end').attr('disabled',true);
+            } 
+           /*  $('.Year_start').attr('disabled',true);
+            $('.Year_end').attr('disabled',true); */
         });
-        $('#datetime_end').on('change',function(){
-            $('.Year_start').attr('disabled',true);
-            $('.Year_end').attr('disabled',true);
+          $('#datetime_end').on('change',function(){
+            if($("#datetime_end").val() != ''){
+              $('.Year_start').attr('disabled',true);
+              $('.Year_end').attr('disabled',true);
+            }
         });
         $('.Year_start').on('change',function(){
             $('#datetime_start').attr('disabled',true);
@@ -328,7 +345,7 @@
             $('#datetime_end').attr('disabled',true);
         });
     });
-
+    
     function chk_form_search(){
         var status_pass = 1;
 
@@ -544,3 +561,4 @@
         });
 
     </script>
+    
