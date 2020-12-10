@@ -18,7 +18,7 @@
                 if (Yii::app()->session['lang'] == 1) {
                     echo "Register Report for Ship Staff";
                 } else {
-                    echo "รายงานภาพการสมัครสมาชิกพนักงานคนประจำเรือ";
+                    echo "รายงานการสมัครสมาชิกพนักงานประจำเรือ";
                 }
                 ?>
             </li>
