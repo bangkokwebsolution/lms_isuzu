@@ -226,10 +226,19 @@ class ReportController extends Controller
     					}
 					}
 					$criteria->addCondition("profile.user_id=User.id");
-					if (Yii::app()->session['lang'] == 1) {
+					if($Position == "" && $Department == ""){
+						if (Yii::app()->session['lang'] == 1) {
+						$criteria->order = 'profile.firstname_en ASC';
+						}else{
+						$criteria->order = 'profile.firstname ASC';
+						}
+					}
+					if($Department != "" || $Position != ""){
+						if (Yii::app()->session['lang'] == 1) {
 						$criteria->order = 'position.position_title ASC,profile.firstname_en ASC';
-					}else{
+						}else{
 						$criteria->order = 'position.position_title ASC,profile.firstname ASC';
+						}
 					}
 					$User = User::model()->findAll($criteria);
 					//var_dump($pos_arr); exit;
@@ -933,9 +942,9 @@ public function actionReportRegisterOfficeExcel()
 			}
 			$criteria->addCondition("profile.user_id=User.id");
 					if (Yii::app()->session['lang'] == 1) {
-						$criteria->order = 'position.sortOrder ASC,profile.firstname_en ASC';
+						$criteria->order = 'profile.firstname_en ASC';
 					}else{
-						$criteria->order = 'position.sortOrder ASC,profile.firstname ASC';
+						$criteria->order = 'profile.firstname ASC';
 					}
 			$User = User::model()->findAll($criteria);
 			if (!empty($pos)) {
