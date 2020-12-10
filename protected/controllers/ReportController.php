@@ -2936,7 +2936,8 @@ public function actionReportRegisterData()
 				}
 				echo ($data);
 			}else{
-				echo '<option value = "">ไม่พบข้อมูล</option>';
+				echo Yii::app()->session['lang'] == 1?'<option value = "">No Data</option> ':'<option value = "">ไม่พบข้อมูล</option>';
+				//echo '<option value = "">ไม่พบข้อมูล</option>';
 
 			}
 		}
@@ -2957,7 +2958,8 @@ public function actionReportRegisterData()
 				}
 				echo ($data); 
 			}else{
-				echo '<option value = "">ไม่พบข้อมูล</option>';
+				//echo '<option value = "">ไม่พบข้อมูล</option>';
+				echo Yii::app()->session['lang'] == 1?'<option value = "">No Data</option> ':'<option value = "">ไม่พบข้อมูล</option>';
 
 			}
 		}
