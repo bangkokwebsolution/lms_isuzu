@@ -47,7 +47,7 @@
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'Employee Type':'ประเภทพนักงาน'; ?><font color="red">*</font></label>
                                     <select class="form-control TypeEmployee" name="" id="TypeEmployee">
-                                        <option value="" selected disabled> <?= Yii::app()->session['lang'] == 1?'Select Type':'เลือกประเภท'; ?></option>
+                                        <option value="" selected > <?= Yii::app()->session['lang'] == 1?'Select Type':'เลือกประเภท'; ?></option>
                                         <?php
                                         if ($authority == 2 && $type_em == 1) { ?>
                                             <option value="1" selected> <?= Yii::app()->session['lang'] == 1?'Ship Staff':'พนักงานประจำเรือ'; ?></option>
