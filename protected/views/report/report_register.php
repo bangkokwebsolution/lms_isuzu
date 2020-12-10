@@ -175,7 +175,7 @@
                                     }
                                     ?>
                                     </label>
-                                    <select class="form-control Position" name="" id="x">
+                                    <select class="form-control Position" name="" id="department_test">
                                         <option value="" selected disabled>  <?php
                                     if ($authority == 2 && $type_em == 2) {
                                         if (Yii::app()->session['lang'] == 1) {
@@ -226,7 +226,7 @@
                             <div class="col-sm-3 col-md-3 col-xs-12 tag_leval">
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'Level':'ระดับตำแหน่ง'; ?></label></label>
-                                    <select class="form-control Leval" name="" id="x">
+                                    <select class="form-control Leval" name="" id="level_test">
                                         <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Level':'เลือกระดับตำแหน่ง'; ?></option>
                                     <?php
                                     $criteria= new CDbCriteria;
@@ -547,34 +547,32 @@ function chk_form_search(){
                          
                             $('.Department').empty();
                             $('.Department').append(data);
-//console.log(data);
+
                             $('.Position').val("");
                             $('.Leval').val("");
 
                             var e = document.getElementById("TypeEmployee");
                             var strUser = e.options[e.selectedIndex].value;
-          
-                            if (strUser == 1) {
-                      
+                            if (strUser === '1') {
                                 var lang = <?php echo Yii::app()->session['lang'] ?>;
                                 if (lang == 1) {
                                     var DepartmentText = "Department";
-                                    var DivisionText = "Position";
+                                    var DivisionText = "Division";
                                     var DepartmentList = "<option value >Select Position</option>";
                                 }else{
                                     var DepartmentText = "แผนก";
                                     var DivisionText = "ฝ่าย";
                                     var DepartmentList = "<option value >เลือกตำแหน่ง</option>";
                                 }
-                                
+                                $('#department_test').attr('disabled',false);
+                                $('#level_test').attr('disabled',false);
                                  $('.DivisionLabel').text(DepartmentText);
-                                 $('.DepartmentLabel').text(DivisionText);
+                                 $('.DepartmentLabel').text();
                                  $('.Position').empty();
                                  $('.Position').append(DepartmentList);
                                  $('.tag_status').show();
                                  $('.tag_leval').hide();
-                            }else if (strUser == 2) {
-          
+                            }else if (strUser === '2') {
                                 var lang = <?php echo Yii::app()->session['lang'] ?>;
                                 if (lang == 1) {
                                     var DepartmentText = "Department";
@@ -585,7 +583,8 @@ function chk_form_search(){
                                     var DivisionText = "ฝ่าย";
                                     var DepartmentList = "<option value >เลือกแผนก</option>";
                                 }
-                                
+                                $('#department_test').attr('disabled',true);
+                                $('#level_test').attr('disabled',true);
                                 $('.DivisionLabel').text(DivisionText);
                                 $('.DepartmentLabel').text(DepartmentText);
                                 $('.Position').empty();
@@ -605,11 +604,14 @@ function chk_form_search(){
                             id: id
                         },
                         success: function(data) {
-                            
+                            $('#department_test').attr('disabled',true);
+                            $('#level_test').attr('disabled',true);
                             $('.Position').empty();
                             $('.Position').append(data);
                             $('.Leval').val("");
+                            $('#department_test').attr('disabled',false);
                         }
+                        
         });
     });
 
@@ -625,6 +627,7 @@ function chk_form_search(){
                             
                             $('.Leval').empty();
                             $('.Leval').append(data);
+                            $('#level_test').attr('disabled',false);
                         }
         });
     });

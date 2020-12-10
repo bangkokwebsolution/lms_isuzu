@@ -1830,7 +1830,7 @@ public function actionReportRegisterData()
 							foreach ($result_dep_not as $key => $value) {
 								array_push($result_dep_in,$value);
 							}
-							if ($Department != "" ) {
+							if ($Department != "" && $Leval == "") {
 								foreach ($result_pos_in as $key => $value) {		
 									$criteria = new CDbCriteria;
 									$criteria->compare('position_id',$value);
@@ -1850,6 +1850,29 @@ public function actionReportRegisterData()
 
 								}
 
+							}
+							else if ($Department != "" && $Leval != "") {
+								foreach ($result_pos_in as $key => $value) {		
+									$criteria = new CDbCriteria;
+									$criteria->compare('position_id',$value);
+									$criteria->compare('branch_id',$id_level);
+									if ($Year_start != null) {
+									$criteria->compare('YEAR(create_at)', $Year_start);
+									}
+									if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+										$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+									}
+									$criteria->compare('superuser',0);
+									$criteria->compare('del_status',0);
+
+									$users_count = Users::model()->findAll($criteria);
+									$count_dep = count($users_count);
+									$datas .= '["'.$result_pos_not[$key].'",'.$count_dep.',"'.$colorName[$key].'"],';
+
+								}
+
+							
 							}else{
 								sort($result_dep_in_name);
 								// var_dump($result_dep_in_name);
