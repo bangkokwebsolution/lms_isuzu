@@ -553,11 +553,13 @@ function chk_form_search(){
 
                             var e = document.getElementById("TypeEmployee");
                             var strUser = e.options[e.selectedIndex].value;
-                            if (strUser === '1') {
+          
+                            if (strUser == 1) {
+                      
                                 var lang = <?php echo Yii::app()->session['lang'] ?>;
                                 if (lang == 1) {
                                     var DepartmentText = "Department";
-                                    var DivisionText = "Division";
+                                    var DivisionText = "Position";
                                     var DepartmentList = "<option value >Select Position</option>";
                                 }else{
                                     var DepartmentText = "แผนก";
@@ -566,12 +568,13 @@ function chk_form_search(){
                                 }
                                 
                                  $('.DivisionLabel').text(DepartmentText);
-                                 $('.DepartmentLabel').text();
+                                 $('.DepartmentLabel').text(DivisionText);
                                  $('.Position').empty();
                                  $('.Position').append(DepartmentList);
                                  $('.tag_status').show();
                                  $('.tag_leval').hide();
-                            }else if (strUser === '2') {
+                            }else if (strUser == 2) {
+          
                                 var lang = <?php echo Yii::app()->session['lang'] ?>;
                                 if (lang == 1) {
                                     var DepartmentText = "Department";
