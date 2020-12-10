@@ -203,8 +203,8 @@ class ReportController extends Controller
 					$result_pos_arr = array_unique( $posback_arr );
 
 					$criteria = new CDbCriteria;
-					$criteria->with = array('profile','department');
-					$criteria->compare('department_id',$dep_arr);
+					$criteria->with = array('profile','department','position');
+					$criteria->compare('user.department_id',$dep_arr);
 					$criteria->compare('superuser',0);
 					$criteria->compare('del_status',0);
 					if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
@@ -226,7 +226,11 @@ class ReportController extends Controller
     					}
 					}
 					$criteria->addCondition("profile.user_id=User.id");
-					$criteria->order = 'department.sortOrder ASC';
+					if (Yii::app()->session['lang'] == 1) {
+						$criteria->order = 'position.position_title ASC,profile.firstname_en ASC';
+					}else{
+						$criteria->order = 'position.position_title ASC,profile.firstname ASC';
+					}
 					$User = User::model()->findAll($criteria);
 					//var_dump($pos_arr); exit;
 					if (isset($pos)) {
@@ -629,7 +633,7 @@ class ReportController extends Controller
 									2]);
 
 								var options = {
-									title: <?php echo Yii::app()->session['lang'] == 1?'"Register Report for Office Staff"':'"รายงานภาพคนสมัครสมาชิกคนออฟฟิศ"' ?>,
+									title: <?php echo Yii::app()->session['lang'] == 1?'"Column Chart"':'"Column Chart"' ?>,
 									width: 600,
 									height: 400,
 									bar: {groupWidth: "95%"},
@@ -654,7 +658,7 @@ class ReportController extends Controller
 									]);
 								if (data) {}
 									var options = {
-										title: <?php echo Yii::app()->session['lang'] == 1?'"Register Report for Office Staff"':'"รายงานภาพคนสมัครสมาชิกคนออฟฟิศ"' ?>,
+										title: <?php echo Yii::app()->session['lang'] == 1?'"Pie Chart"':'"Pie Chart"' ?>,
 										sliceVisibilityThreshold:0,
 										pieSliceText:'value',
 										//is3D: true,
@@ -682,7 +686,7 @@ class ReportController extends Controller
 						                    if (Yii::app()->session['lang'] == 1) {
 						                        echo "Register Report for Office Staff";
 						                    } else {
-						                        echo "รายงานภาพรวมการสมัครสมาชิกพนักงานออฟฟิศ";
+						                        echo "รายงานการสมัครสมาชิกพนักงานออฟฟิศ";
 						                    }
 						                    ?>
 						                </h3>    
@@ -927,8 +931,12 @@ public function actionReportRegisterOfficeExcel()
 			}else{
 				$criteria->compare('position_id',$result_pos_arr);	
 			}
-			$criteria->addCondition('profile.user_id=user.id');
-			$criteria->order = 'position.sortOrder ASC';
+			$criteria->addCondition("profile.user_id=User.id");
+					if (Yii::app()->session['lang'] == 1) {
+						$criteria->order = 'position.sortOrder ASC,profile.firstname_en ASC';
+					}else{
+						$criteria->order = 'position.sortOrder ASC,profile.firstname ASC';
+					}
 			$User = User::model()->findAll($criteria);
 			if (!empty($pos)) {
 
@@ -1318,7 +1326,7 @@ public function actionReportRegisterOfficeExcel()
 									2]);
 
 								var options = {
-									title: <?php echo Yii::app()->session['lang'] == 1?'"Register Report for Ship Staff"':'"รายงานภาพคนสมัครสมาชิกคนประจำเรือ"' ?>,
+									title: <?php echo Yii::app()->session['lang'] == 1?'"Column Chart"':'"Column Chart"' ?>,
 									width: 600,
 									height: 400,
 									bar: {groupWidth: "95%"},
@@ -1343,7 +1351,7 @@ public function actionReportRegisterOfficeExcel()
 									]);
 								if (data) {}
 									var options = {
-										title: <?php echo Yii::app()->session['lang'] == 1?'"Register Report for Ship Staff"':'"รายงานภาพคนสมัครสมาชิกคนประจำเรือ"' ?>,
+										title: <?php echo Yii::app()->session['lang'] == 1?'"Pie Chart"':'"Pie Chart"' ?>,
 										sliceVisibilityThreshold:0,
 										pieSliceText:'value',
 										//is3D: true,
@@ -1372,7 +1380,7 @@ public function actionReportRegisterOfficeExcel()
 				                    if (Yii::app()->session['lang'] == 1) {
 				                        echo " Register Report for Ship Staff";
 				                    } else {
-				                        echo " รายงานภาพรวมการสมัครสมาชิกพนักงานประจำเรือ";
+				                        echo " รายงานการสมัครสมาชิกคนประจำเรือ";
 				                    }
 				                    ?>
 				                </h3>    
