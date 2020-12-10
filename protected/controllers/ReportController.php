@@ -702,8 +702,21 @@ class ReportController extends Controller
 						            </center>
 						        	</li>
 									<?php
-    								$people_total = Yii::app()->session['lang'] == 1?"No. of Staff:":"จำนวนผู้สมัครทั้งหมด";
-    								$people = Yii::app()->session['lang'] == 1?"People":"คน";
+									$people_total = Yii::app()->session['lang'] == 1?"No. of Staff:":"จำนวนผู้สมัครทั้งหมด";
+									if(count($User) > 1){
+										if (Yii::app()->session['lang'] == 1) {
+											$people = "Peoples";
+										}else{
+											$people = "คน";
+										}
+									}else{
+										if (Yii::app()->session['lang'] == 1) {
+											$people = "People";
+										}else{
+											$people = "คน";
+										}
+									}
+    								/* $people = Yii::app()->session['lang'] == 1?"People":"คน"; */
 									$i = 1;
 									$datatable .= '<div class="report-table">';
 									$datatable .= '<p style="text-align: right;">'.$people_total.' <span style="font-weight:bold;">';
