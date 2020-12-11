@@ -317,8 +317,23 @@
             }
         });
     });
-    
-
+    $(document).ready(function(){
+        $('.Leval').attr('disabled',true);
+        $('.Department').on('change',function(){
+        if($('.Department').val() != ''){
+            $('.Leval').attr('disabled',false);
+        }else{
+            $('.Leval').attr('disabled',true);
+        }
+    });
+        $('.Position').on('change',function(){
+        if($('.Position').val() != ''){
+            $('.Leval').attr('disabled',false);
+        }else{
+            $('.Leval').attr('disabled',true);
+        }
+    });
+    });
     $(document).ready(function(){
           $('#datetime_start').on('change',function(){
               /* console.log($("#datetime_start").val()); */
