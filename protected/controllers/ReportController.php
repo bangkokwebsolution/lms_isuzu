@@ -163,6 +163,7 @@ class ReportController extends Controller
 
 					$criteria = new CDbCriteria;
 					$criteria->addIncondition('department_id',$dep_arr);
+					$criteria->order = 'position_title ASC';
 					$criteria->compare('active','y');
 					if($Position){
 						$criteria->compare('id',$Position);
@@ -922,6 +923,7 @@ public function actionReportRegisterOfficeExcel()
 
 			$criteria = new CDbCriteria;
 			$criteria->compare('department_id',$dep_arr);
+			$criteria->order = 'position_title ASC';
 			if($Position){
 				$criteria->compare('id',$Position);
 			}
