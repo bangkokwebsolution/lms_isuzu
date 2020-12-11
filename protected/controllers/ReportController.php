@@ -259,12 +259,16 @@ class ReportController extends Controller
 							if($Department){
 								$criteria->compare('department_id',$Department);
 							}
+							if($Leval){
+								$criteria->compare('branch_id',$Leval);
+							}
 							if ($authority == 2 || $authority == 3) {
                                          
                         	$criteria->compare('department_id',$user_Department);
                     		}
 							$criteria->compare('superuser',0);
 							$criteria->compare('del_status',0);
+							$criteria->addCondition("profile.user_id=User.id");
 							if ($Year_start != null) {
 								$criteria->compare('YEAR(create_at)', $Year_start);
 							}
@@ -289,6 +293,9 @@ class ReportController extends Controller
 								}
 								if($Department){
 									$criteria->compare('department_id',$Department);
+								}
+								if($Leval){
+									$criteria->compare('branch_id',$Leval);
 								}
 								if ($authority == 2 || $authority == 3) {
                                          
@@ -328,6 +335,9 @@ class ReportController extends Controller
 							if($Department){
 								$criteria->compare('department_id',$Department);
 							}
+							if($Leval){
+								$criteria->compare('branch_id',$Leval);
+							}
 							if ($authority == 2 || $authority == 3) {
                                          
                         		$criteria->compare('department_id',$user_Department);
@@ -358,6 +368,9 @@ class ReportController extends Controller
 								}
 								if($Department){
 									$criteria->compare('department_id',$Department);
+								}
+								if($Leval){
+								$criteria->compare('branch_id',$Leval);
 								}
 								if ($authority == 2 || $authority == 3) {
                                          
@@ -940,6 +953,7 @@ public function actionReportRegisterOfficeExcel()
 				}
 				if($status == "0"){
 					$criteria->compare('register_status', 0);
+					/* $criteria->compare('status', 0); */
 				}						
 			}
 			if ($age != null && $age2 != null || $age != "" && $age2 != "") {
@@ -955,9 +969,9 @@ public function actionReportRegisterOfficeExcel()
 			}
 			$criteria->addCondition("profile.user_id=User.id");
 					if (Yii::app()->session['lang'] == 1) {
-						$criteria->order = 'profile.firstname_en ASC';
+						$criteria->order = 'profile.firstname_en ASC,position.position_title ASC';
 					}else{
-						$criteria->order = 'profile.firstname ASC';
+						$criteria->order = 'profile.firstname ASC,position.position_title ASC';
 					}
 			$User = User::model()->findAll($criteria);
 			if (!empty($pos)) {
@@ -989,23 +1003,18 @@ public function actionReportRegisterOfficeExcel()
 					// }
 					if ($status != null) {
 
-					if ($status == "1") {
-						$criteria->compare('register_status',1);
-						$criteria->compare('status',1);
-					}
-						if($status == "0"){
-							if ($status != "1") {
-								$criteria->compare('register_status',0);
-								$criteria->compare('status',1);
-							}else{
-								$criteria->compare('register_status',0);
-								$criteria->compare('status',0);
-							} 
-														
+						if ($status == "1") {
+							$criteria->compare('register_status', 1);
+							$criteria->compare('status',1);	
 						}
+						if($status == "0"){
+							$criteria->compare('register_status', 0);
+							/* $criteria->compare('status', 0); */
+						}						
 					}
 					$criteria->compare('superuser',0);
 					$criteria->compare('del_status',0);
+					$criteria->addCondition('profile.user_id=user.id');
 					if ($Year_start != null) {
 						$criteria->compare('YEAR(create_at)', $Year_start);
 					}
@@ -1051,23 +1060,17 @@ public function actionReportRegisterOfficeExcel()
 					// }
 					if ($status != null) {
 
-					if ($status == "1") {
-						$criteria->compare('register_status',1);
-						$criteria->compare('status',1);
-					}
+						if ($status == "1") {
+							$criteria->compare('register_status',1);
+							$criteria->compare('status',1);
+						}
 						if($status == "0"){
-							if ($status != "1") {
-								$criteria->compare('register_status',0);
-								$criteria->compare('status',1);
-							}else{
-								$criteria->compare('register_status',0);
-								$criteria->compare('status',0);
-							} 
-														
+							$criteria->compare('register_status',0);
 						}
 					}
 					$criteria->compare('superuser',0);
 					$criteria->compare('del_status',0);
+					$criteria->addCondition('profile.user_id=user.id');
 					if ($Year_end != null) {
 						$criteria->compare('YEAR(create_at)', $Year_end);
 					}
