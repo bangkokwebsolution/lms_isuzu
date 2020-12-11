@@ -1652,15 +1652,13 @@ public function actionReportRegisterData()
 						}
 					}
 					$pos = Position::model()->findAll($criteria);
-
 					$pos_arr = [];
 					$posback_arr = [];
 					foreach ($pos as $key => $val_pos) {
+
 						$pos_arr[] = $val_pos->id;
 						$posback_arr[] = $val_pos->department_id;
 					}
-
-
 					$criteria = new CDbCriteria;
 					$criteria->addIncondition('position_id',$pos_arr);
 					$criteria->compare('active','y');
@@ -1673,10 +1671,11 @@ public function actionReportRegisterData()
 							$criteria->compare('id',$user_Level);
 						}
 					}
-					$criteria->group = 'position_id';
+					// $criteria->group = 'position_id';
 					$criteria->order = 'sortOrder ASC';
 					$branch = Branch::model()->findAll($criteria);
-// var_dump($branch);
+					// var_export($branch);
+
 
 					$branch_arr = [];
 					foreach ($branch as $key => $val_branch) {
@@ -1700,7 +1699,7 @@ public function actionReportRegisterData()
 					$criteria->compare('active','y');
 					$criteria->order = 'sortOrder ASC';
 					$pos_back = Position::model()->findAll($criteria);
-
+					
 					$criteria = new CDbCriteria;
 					$criteria->compare('type_employee_id',$TypeEmployee);
 					if($Department){
@@ -1802,16 +1801,20 @@ public function actionReportRegisterData()
 
 							$datas = '["Element", "Division", { role: "style" } ],';
 							$colorName = Helpers::lib()->ColorCode();	
-						
-							foreach ($branch as $key => $value) { 	
+							
+							foreach ($branch as $key => $value) { 
 								$name_dep[] = $value->Positions->Departments->id;
 								$names_dep[] = $value->Positions->Departments->dep_title;
 								$id_pos[] = $value->Positions->id;
 								$name_pos[] = $value->Positions->position_title;
 								$name_level = $value->branch_name;
 								$id_level = $value->id;
-
+								$names_level[] = $value->branch_name;
+								$ids_level[] = $value->id;
+								
 							}
+
+							// var_export($ids_level);
 							foreach ($dep_back as $keydep_back => $valuedep_back) { 
 								$name_dep_not[] = $valuedep_back->id;
 								$names_dep_not[] = $valuedep_back->dep_title;
@@ -1830,8 +1833,9 @@ public function actionReportRegisterData()
 							foreach ($result_dep_not as $key => $value) {
 								array_push($result_dep_in,$value);
 							}
-							if ($Department != "" && $Leval == "") {
-								foreach ($result_pos_in as $key => $value) {		
+							
+							if ($Department != "" && $Leval == "" && $Position == "") {
+								foreach ($result_pos_in as $key => $value) {
 									$criteria = new CDbCriteria;
 									$criteria->compare('position_id',$value);
 									if ($Year_start != null) {
@@ -1851,11 +1855,12 @@ public function actionReportRegisterData()
 								}
 
 							}
-							else if ($Department != "" && $Leval != "") {
+							else if ($Department != "" && $Leval != "" && $Position != "") {
 								foreach ($result_pos_in as $key => $value) {		
 									$criteria = new CDbCriteria;
 									$criteria->compare('position_id',$value);
 									$criteria->compare('branch_id',$id_level);
+									// var_export($id_level);
 									if ($Year_start != null) {
 									$criteria->compare('YEAR(create_at)', $Year_start);
 									}
@@ -1873,7 +1878,31 @@ public function actionReportRegisterData()
 								}
 
 							
-							}else{
+							}
+							else if ($Department != "" && $Leval == "" && $Position != "") {
+								foreach ($id_pos as $key => $value) {
+									$criteria = new CDbCriteria;
+									$criteria->compare('position_id',$value);
+									$criteria->compare('branch_id',$ids_level[$key]);
+									if ($Year_start != null) {
+									$criteria->compare('YEAR(create_at)', $Year_start);
+									}
+									if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+										$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+									}
+									$criteria->compare('superuser',0);
+									$criteria->compare('del_status',0);
+									$criteria->addCondition('profile.user_id=id');
+									$users_count = Users::model()->findAll($criteria);
+
+									// var_export($users_count);
+									$count_dep = count($users_count);
+									$datas .= '["'.$names_level[$key].'",'.$count_dep.',"'.$colorName[$key].'"],';
+
+								}
+							}
+							else{
 								sort($result_dep_in_name);
 								// var_dump($result_dep_in_name);
 								$i = 0;
@@ -2400,7 +2429,7 @@ public function actionReportRegisterData()
 									$datatable .= '<th>Division</th>';
 									$datatable .= '<th>Department</th>';
 									
-										if ($Leval != "") {
+										if ($Leval != "" || $Position != "") {
 											$datatable .= '<th>Level</th>';
 										}
 									}else{
@@ -2421,7 +2450,7 @@ public function actionReportRegisterData()
 									$datatable .= '<th>ฝ่าย</th>';
 									$datatable .= '<th>แผนก</th>';
 									
-										if ($Leval != "") {
+										if ($Leval != "" || $Position != "") {
 										$datatable .= '<th>เลเวล</th>';
 										}
 									}else{
@@ -2457,6 +2486,22 @@ public function actionReportRegisterData()
 											// 	$criteria->compare('status',$status);		
 											// }
 											// $users = Users::model()->findAll($criteria);
+											foreach ($ids_level as $key => $value) {
+											$criteria = new CDbCriteria;
+											$criteria->compare('branch_id',$value);
+											if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+													$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+											}
+											$criteria->compare('superuser',0);
+											$criteria->compare('del_status',0);
+											$criteria->compare('register_status',1);
+											$criteria->addCondition('profile.user_id=id');
+											$usersAll_end = Users::model()->findAll($criteria);		
+											$cou_useAll_end = count($usersAll_end);
+											$sumtotal_end += $cou_useAll_end;
+											}
+											if ($Position == ""){
 											foreach ($result_pos_in as $key => $value) {		
 												$criteria = new CDbCriteria;
 												$criteria->compare('position_id',$value);
@@ -2514,6 +2559,7 @@ public function actionReportRegisterData()
 											$criteria->addCondition('profile.user_id=id');
 											$usersAll = Users::model()->findAll($criteria);		
 											$cou_useAll = count($usersAll);
+											
 											$sumtotal += $cou_useAll;
 											$per_cen = ($cou_useAll * 100 ) / $cou_use; 
 										
@@ -2521,11 +2567,10 @@ public function actionReportRegisterData()
 											$datatable .= '<td>'.$i++.'</td>';
 											$datatable .= '<td>'.$names_dep[$key].'</td>';
 											$datatable .= '<td>'.$result_pos_not[$key].'</td>';
-											if ($Leval != "") {
-												$datatable .= '<td>'.$name_level
+											if ($Leval != "" || $Position != "") {
+												$datatable .= '<td>'.$names_level[$key]
 												.'</td>';
 											}
-											
 											$datatable .= '<td>'.$cou_use.'</td>';
 											if($TypeEmployee != 2){
 												if (Yii::app()->session['lang'] == 1) {		
@@ -2562,7 +2607,121 @@ public function actionReportRegisterData()
 												$datatable .= '<td>-</td>';
 											}
 											$datatable .= '</tr>';
-										}										
+										}
+										}
+										else{
+											foreach ($ids_level as $key => $value) {		
+												$criteria = new CDbCriteria;
+												// $criteria->compare('position_id',$value);
+												if ($Leval != "" || $Position != "") {
+													$criteria->compare('branch_id',$value);
+												}
+												if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+													$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+												}
+												$criteria->compare('superuser',0);
+												$criteria->compare('del_status',0);
+												$criteria->compare('status',1);
+												$criteria->compare('register_status',1);
+												$criteria->addCondition('profile.user_id=id');
+												$users_count = Users::model()->findAll($criteria);
+												
+												$cou_use = count($users_count);	
+											$criteria = new CDbCriteria;
+											// $criteria->compare('position_id',$value);
+											if ($Leval != "" || $Position != "") {
+													$criteria->compare('branch_id',$value);
+												}
+											if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
+
+													$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
+											}
+											// if($Department){
+											// 	$criteria->compare('department_id',$Department);
+											// }
+											// if ($authority == 2 || $authority == 3) {
+											// 	$criteria->compare('department_id',$user_Department);
+											// }
+											// if ($Position != "") {
+											// 	if($Position){
+											// 		$criteria->compare('position_id',$Position);
+											// 	}
+											// }else{
+											// 	if ($authority == 2 || $authority == 3) {
+											// 		$criteria->compare('position_id',$user_Position);
+											// 	}
+											// }
+											// if($Leval != ""){
+											// if($Leval){
+											// 	$criteria->compare('branch_id',$Leval);
+											// }
+											// }else{
+											// 	if ($authority == 3) {
+											// 		$criteria->compare('branch_id',$user_Level);
+											// 	}
+											// }
+											$criteria->compare('superuser',0);
+											$criteria->compare('del_status',0);
+											$criteria->compare('register_status',1);
+											$criteria->addCondition('profile.user_id=id');
+											$usersAll = Users::model()->findAll($criteria);		
+											$cou_useAll = count($usersAll);
+											// var_dump($cou_useAll);
+											$sumtotal += $cou_useAll;
+											// var_dump($sumtotal);
+											$per_cen = ($cou_use * 100 ) / $sumtotal_end;
+
+											
+		
+											$datatable .= '<tr>';
+											$datatable .= '<td>'.$i++.'</td>';
+											$datatable .= '<td>'.$names_dep[$key].'</td>';
+											$datatable .= '<td>'.$name_pos[$key].'</td>';
+											if ($Leval != "" || $Position != "") {
+												$datatable .= '<td>'.$names_level[$key]
+												.'</td>';
+											}
+											$datatable .= '<td>'.$cou_use.'</td>';
+											if($TypeEmployee != 2){
+												if (Yii::app()->session['lang'] == 1) {		
+												$datatable .= '<td>';
+													if($cou_use > 0){
+														if ($status == 1) {
+															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
+														}else{
+															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
+														}
+													}else{
+														$datatable .= '-';
+													}
+												
+												$datatable .= '</td>';
+												}else{
+												$datatable .= '<td>';
+													if($cou_use > 0){
+														if ($status == 1) {
+															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
+														}else{
+															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+														}
+													}else{
+														$datatable .= '-';
+													}
+													$datatable .= '</td>';
+												}
+												
+											}
+											if($cou_use > 0){
+												$datatable .= '<td>'.round($per_cen, 2).' %</td>';
+											}else{
+												$datatable .= '<td>-</td>';
+											}
+											$datatable .= '</tr>';
+										}
+										}
+										
+
 									}
 
 									foreach ($pos_back as $keypos_back => $valuepos_back) { 	
@@ -2836,14 +2995,19 @@ public function actionReportRegisterData()
 										if ($search_new){
 											$sumtotal += $cou_useAll;
 										}
-										$percent_new = ($sumtotal * 100) / $total_new;
+										if ($Position == ""){
+											$percent_new = ( $sumtotal * 100) / $total_new;
+										}
+										else{
+										$percent_new = ( $sumtotal_end * 100) / $sumtotal_end;
+									}
 										if ($total_new <= 0){ $percent_new = 0;}
 										if(Yii::app()->session['lang'] != 1){
 											$txtgrand = "จำนวนทั้งหมด";
 										}else{
 											$txtgrand = "Grand Total";
 										}
-										if ($Leval != ""){
+										if ($Leval != "" || $Position != ""){
 											$datatable .= "<tr style='border:2px solid #8B8386;'><td colspan=4 style='text-align:right'><b>" .$txtgrand. "</b></td>";
 										}else{
 											$datatable .= "<tr style='border:2px solid #8B8386;'><td colspan=3 style='text-align:right'><b>" .$txtgrand. "</b></td>";
