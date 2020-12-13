@@ -48,7 +48,7 @@
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'Department':'แผนก'; ?></label>
                                     <select class="form-control Department" name="" id="Department">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Department':'เลือกแผนก'; ?></option>
+                                        <option value="" selected ><?= Yii::app()->session['lang'] == 1?'Select Department':'เลือกแผนก'; ?></option>
                                         <?php
 
                                             $criteria= new CDbCriteria;

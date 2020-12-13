@@ -52,6 +52,7 @@
 
                                         $criteria= new CDbCriteria;
                                         $criteria->compare('type_employee_id','2');
+                                        $criteria->compare('active','y');
                                         if ($authority == 2 || $authority == 3) {
                                                 if ($Department != "") {
                                                     $criteria->compare('id',$Department);
@@ -60,11 +61,12 @@
                                                 }
                                                  
                                         }
-                                        /* $criteria->order = 'sortOrder ASC'; */
-                                        $departmentModel = Department::model()->findAll(array(
-                                            'condition'=>'active="y"',
-                                            'order'=>'dep_title ASC',
-                                        ));
+                                        $criteria->order = 'dep_title ASC'; 
+                                        $departmentModel = Department::model()->findAll($criteria);
+                                        // $departmentModel = Department::model()->findAll(array(
+                                        //     'condition'=>'active="y"',
+                                        //     'order'=>'dep_title ASC',
+                                        // ));
                                         foreach ($departmentModel as $key => $val) {
                                             $department_list = $departmentModel[$key]->attributes;
                                             ?>
@@ -76,14 +78,23 @@
                                 </div>
                             </div>
                             <?php } ?>
-                            <?php if($authority == 1 || $authority == 2 || $authority == 2 && $type_em == 2 ){   ?>
+                            <?php if($authority == 1 || $authority == 2 || $authority == 2 && $type_em == 2 ){   
+                                   $arr_depart = [];
+                                        $criteria= new CDbCriteria;
+                                        $criteria->compare('type_employee_id','2');
+                                        $criteria->compare('active','y');
+                                        $DepartmentGroup = Department::model()->findAll($criteria);
+                                        foreach ($DepartmentGroup as $key => $value) {
+                                          $arr_depart[]  = $value->id;
+                                        }
+                                        //var_dump();
+                                ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'Department':'แผนก'; ?></label>
                                     <select class="form-control Position" name="" id="x">
                                         <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Department':'เลือกแผนก'; ?></label></option>
                                         <?php
-
                                         $criteria= new CDbCriteria;
                                         if ($authority == 2) {
                                                 if ($Department != "") {
@@ -92,13 +103,16 @@
                                                     $criteria->compare('department_id',0);
                                                 }
                                                  
+                                        }else{
+                                            $criteria->compare('department_id',$arr_depart);
                                         }
-                                        /* $criteria->compare('active','y');
-                                        $criteria->order = 'sortOrder ASC'; */
-                                        $PositionModel = Position::model()->findAll(array(
-                                                'condition' => 'active="y"',
-                                                'order'=>'position_title ASC',
-                                        ));
+                                        $criteria->compare('active','y');
+                                        $criteria->order = 'position_title ASC'; 
+                                        $PositionModel = Position::model()->findAll($criteria);
+                                        // $PositionModel = Position::model()->findAll(array(
+                                        //         'condition' => 'active="y"',
+                                        //         'order'=>'position_title ASC',
+                                        // ));
                                         foreach ($PositionModel as $key => $val) {
                                             $Position_list = $PositionModel[$key]->attributes;
                                             ?>
