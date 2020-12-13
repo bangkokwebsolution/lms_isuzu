@@ -609,14 +609,15 @@ function chk_form_search(){
     });
     $(".Department").change(function() {
                     var id = $(this).val();
+                      var Emp_id = $(".TypeEmployee").val();
                     $.ajax({
                         type: 'POST',
                         url: "<?= Yii::app()->createUrl('report/ListPosition'); ?>",
                         data: {
-                            id: id
+                            id: id,
+                             Emp_id : Emp_id
                         },
                         success: function(data) {
-    
                             $('#department_test').attr('disabled',true);
                             $('#level_test').attr('disabled',true);
                             $('.Position').empty();
@@ -630,11 +631,13 @@ function chk_form_search(){
 
     $(".Position").change(function() {
                     var id = $(this).val();
+                  
                     $.ajax({
                         type: 'POST',
                         url: "<?= Yii::app()->createUrl('report/ListLeval'); ?>",
                         data: {
                             id: id
+                           
                         },
                         success: function(data) {
                             

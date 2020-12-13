@@ -1727,7 +1727,6 @@ public function actionReportRegisterData()
 							foreach ($pos_back as $key => $value) {
 
 								$name_pos = $value->position_title;
-
 								$criteria = new CDbCriteria;
 								$criteria->compare('position_id',$value->id);
 								$criteria->compare('department_id',$value->Departments->id);
@@ -1838,7 +1837,7 @@ public function actionReportRegisterData()
 							foreach ($result_dep_not as $key => $value) {
 								array_push($result_dep_in,$value);
 							}
-							
+			
 							if ($Department != "" && $Leval == "" && $Position == "") {
 								foreach ($result_pos_in as $key => $value) {
 									$criteria = new CDbCriteria;
@@ -1865,7 +1864,7 @@ public function actionReportRegisterData()
 									$criteria = new CDbCriteria;
 									$criteria->compare('position_id',$value);
 									$criteria->compare('branch_id',$id_level);
-									// var_export($id_level);
+	
 									if ($Year_start != null) {
 									$criteria->compare('YEAR(create_at)', $Year_start);
 									}
@@ -1901,7 +1900,6 @@ public function actionReportRegisterData()
 									$criteria->addCondition('profile.user_id=id');
 									$users_count = Users::model()->findAll($criteria);
 
-									// var_export($users_count);
 									$count_dep = count($users_count);
 									$datas .= '["'.$names_level[$key].'",'.$count_dep.',"'.$colorName[$key].'"],';
 
@@ -1909,15 +1907,14 @@ public function actionReportRegisterData()
 							}
 							else{
 								sort($result_dep_in_name);
-								// var_dump($result_dep_in_name);
+								
 								$i = 0;
+
 								foreach ($result_dep_in as $key => $value) {
 									$criteria = new CDbCriteria;
 									$criteria->with = array('department');
 									$criteria->compare('dep_title',$result_dep_in_name[$i]);
 									$criteria->order = 'dep_title DESC';
-									
-									// $criteria->compare('department_id',$value);
 									if ($Year_start != null) {
 									$criteria->compare('YEAR(create_at)', $Year_start);
 									}
@@ -2475,22 +2472,6 @@ public function actionReportRegisterData()
 									if (!empty($branch) || !empty($pos_back) || !empty($dep_back) ) {
 									if ($TypeEmployee == 2) {   
 
-										// foreach ($branch as $key => $value) { }	
-
-											// $criteria = new CDbCriteria;
-											// $criteria->compare('branch_id',$value->id);
-											// $criteria->compare('position_id',$value->Positions->id);
-											// $criteria->compare('department_id',$value->Positions->Departments->id);
-											// if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
-
-											// 	$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
-											// }
-											// $criteria->compare('superuser',0);
-											// $criteria->compare('del_status',0);
-											// if($status != null){
-											// 	$criteria->compare('status',$status);		
-											// }
-											// $users = Users::model()->findAll($criteria);
 											foreach ($ids_level as $key => $value) {
 											$criteria = new CDbCriteria;
 											$criteria->compare('branch_id',$value);
@@ -2534,30 +2515,7 @@ public function actionReportRegisterData()
 
 													$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 											}
-											// if($Department){
-											// 	$criteria->compare('department_id',$Department);
-											// }
-											// if ($authority == 2 || $authority == 3) {
-											// 	$criteria->compare('department_id',$user_Department);
-											// }
-											// if ($Position != "") {
-											// 	if($Position){
-											// 		$criteria->compare('position_id',$Position);
-											// 	}
-											// }else{
-											// 	if ($authority == 2 || $authority == 3) {
-											// 		$criteria->compare('position_id',$user_Position);
-											// 	}
-											// }
-											// if($Leval != ""){
-											// if($Leval){
-											// 	$criteria->compare('branch_id',$Leval);
-											// }
-											// }else{
-											// 	if ($authority == 3) {
-											// 		$criteria->compare('branch_id',$user_Level);
-											// 	}
-											// }
+						
 											$criteria->compare('superuser',0);
 											$criteria->compare('del_status',0);
 											$criteria->compare('register_status',1);
@@ -2566,7 +2524,7 @@ public function actionReportRegisterData()
 											$cou_useAll = count($usersAll);
 											
 											$sumtotal += $cou_useAll;
-											$per_cen = ($cou_useAll * 100 ) / $cou_use; 
+											$per_cen = ($cou_useAll * 100 ) / $total_new;
 										
 											$datatable .= '<tr>';
 											$datatable .= '<td>'.$i++.'</td>';
@@ -2642,37 +2600,13 @@ public function actionReportRegisterData()
 
 													$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 											}
-											// if($Department){
-											// 	$criteria->compare('department_id',$Department);
-											// }
-											// if ($authority == 2 || $authority == 3) {
-											// 	$criteria->compare('department_id',$user_Department);
-											// }
-											// if ($Position != "") {
-											// 	if($Position){
-											// 		$criteria->compare('position_id',$Position);
-											// 	}
-											// }else{
-											// 	if ($authority == 2 || $authority == 3) {
-											// 		$criteria->compare('position_id',$user_Position);
-											// 	}
-											// }
-											// if($Leval != ""){
-											// if($Leval){
-											// 	$criteria->compare('branch_id',$Leval);
-											// }
-											// }else{
-											// 	if ($authority == 3) {
-											// 		$criteria->compare('branch_id',$user_Level);
-											// 	}
-											// }
+											
 											$criteria->compare('superuser',0);
 											$criteria->compare('del_status',0);
 											$criteria->compare('register_status',1);
 											$criteria->addCondition('profile.user_id=id');
 											$usersAll = Users::model()->findAll($criteria);		
 											$cou_useAll = count($usersAll);
-											// var_dump($cou_useAll);
 											$sumtotal += $cou_useAll;
 											// var_dump($sumtotal);
 											$per_cen = ($cou_use * 100 ) / $sumtotal_end;
@@ -2771,34 +2705,7 @@ public function actionReportRegisterData()
 										}else{
 											$criteria->compare('register_status',array(0,1));
 										}
-										// $criteria->select = 'id';
-										// if($TypeEmployee){
-										// 		$criteria->compare('type_employee',$TypeEmployee);
-										// 	}
-										// 	if($Department){
-										// 		$criteria->compare('department_id',$Department);
-										// 	}
-										// 	if ($authority == 2 || $authority == 3) {
-										// 		$criteria->compare('department_id',$user_Department);
-										// 	}
-										// 	if ($Position != "") {
-										// 		if($Position){
-										// 			$criteria->compare('position_id',$Position);
-										// 		}
-										// 	}else{
-										// 		if ($authority == 2 || $authority == 3) {
-										// 			$criteria->compare('position_id',$user_Position);
-										// 		}
-										// 	}
-										// 	if($Leval != ""){
-										// 	if($Leval){
-										// 		$criteria->compare('branch_id',$Leval);
-										// 	}
-										// 	}else{
-										// 		if ($authority == 3) {
-										// 			$criteria->compare('branch_id',$user_Level);
-										// 		}
-										// 	}
+	
 										$criteria->compare('superuser',0);
 										$criteria->addCondition('profile.user_id=id');
 										$usersAll = Users::model()->findAll($criteria);
@@ -2867,9 +2774,7 @@ public function actionReportRegisterData()
 
 									}  
 									if ($TypeEmployee != 2) {
-										// var_dump($total_new);
-										// 	var_dump(array_sum($SUM_user));
-										// 	exit();
+								
 										if ($status == 1 ) {
 											
 											$per_cent_new = (array_sum($SUM_user) * 100) / $total_new;
@@ -2912,36 +2817,7 @@ public function actionReportRegisterData()
 
 											$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 										}
-									
-										// $criteria->select = 'id';
-
-										// if($TypeEmployee){
-										// 		$criteria->compare('type_employee',$TypeEmployee);
-										// 	}
-										// 	if($Department){
-										// 		$criteria->compare('department_id',$Department);
-										// 	}
-										// 	if ($authority == 2 || $authority == 3) {
-										// 		$criteria->compare('department_id',$user_Department);
-										// 	}
-										// 	if ($Position != "") {
-										// 		if($Position){
-										// 			$criteria->compare('position_id',$Position);
-										// 		}
-										// 	}else{
-										// 		if ($authority == 2 || $authority == 3) {
-										// 			$criteria->compare('position_id',$user_Position);
-										// 		}
-										// 	}
-										// 	if($Leval != ""){
-										// 	if($Leval){
-										// 		$criteria->compare('branch_id',$Leval);
-										// 	}
-										// 	}else{
-										// 		if ($authority == 3) {
-										// 			$criteria->compare('branch_id',$user_Level);
-										// 		}
-										// 	}
+				
 										$criteria->compare('superuser',0);
 										$criteria->compare('del_status',0);
 										$criteria->compare('register_status',1);
@@ -2950,7 +2826,7 @@ public function actionReportRegisterData()
 										$cou_use = count($users);
 										$search_new = true;
 										$cou_useAll = count($usersAll);
-										$per_cen = ($cou_useAll * 100)/ $cou_use;
+										$per_cen = ($cou_useAll * 100)/ $total_new;
 
 										$datatable .= '<tr>';
 										$datatable .= '<td>'.$i++.'</td>';
@@ -2960,36 +2836,7 @@ public function actionReportRegisterData()
 										$datatable .= '<td>-</td>';
 										}
 										$datatable .= '<td>'.$cou_use.'</td>';
-										if($TypeEmployee != 2){
-												if (Yii::app()->session['lang'] == 1) {		
-												$datatable .= '<td>';
-													if($cou_use > 0){
-														if ($status == 1) {
-															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
-														}else{
-															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
-														}
-													}else{
-														$datatable .= '-';
-													}
-												
-												$datatable .= '</td>';
-												}else{
-												$datatable .= '<td>';
-													if($cou_use > 0){
-														if ($status == 1) {
-															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
-														}else{
-															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
-														}
-													}else{
-														$datatable .= '-';
-													}
-													$datatable .= '</td>';
-												}
-												
-											}
-										if($cou_use > 0){
+									if($cou_use > 0){
 											$datatable .= '<td>'.round($per_cen, 2).' %</td>';
 										}else{
 											$datatable .= '<td>-</td>';
@@ -3129,7 +2976,7 @@ public function actionReportRegisterData()
 				$criteria->params=array(':type_employee_id'=>$_POST['id'],':active'=>'y');
 				$criteria->order = 'sortOrder ASC';
 				$model = Department::model()->findAll($criteria);
-				if ($type_em == 1 && $_POST['id'] == 1) {
+				if ($_POST['id'] == 1) {
 					$sub_list = Yii::app()->session['lang'] == 1?'Select Department ':'เลือกแผนก';
 				}else{
 					$sub_list = Yii::app()->session['lang'] == 1?'Select Division ':'เลือกฝ่าย';
@@ -3151,7 +2998,13 @@ public function actionReportRegisterData()
 			$criteria->order = 'sortOrder ASC';
 			$model = Position::model()->findAll($criteria);
 			if ($model) {
-				$sub_list = Yii::app()->session['lang'] == 1?'Select Position ':'เลือกตำแหน่ง';
+				var_dump($_POST['Emp_id']);
+				if ($_POST['Emp_id'] == 1) {
+					$sub_list = Yii::app()->session['lang'] == 1?'Select Position ':'เลือกตำแหน่ง';
+				}else{
+					$sub_list = Yii::app()->session['lang'] == 1?'Select Department ':'เลือกแผนก';
+				}
+				
 				$data = '<option value ="">'.$sub_list.'</option>';
 				foreach ($model as $key => $value) {
 					$data .= '<option value = "'.$value->id.'"'.'>'.$value->position_title.'</option>';
