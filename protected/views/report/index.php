@@ -43,7 +43,7 @@
 			<li <?php if(isset($_GET["target"]) && $_GET["target"] == "course"){ echo 'class="active"'; } ?>>
 				<a data-toggle="tab" href="#second-report"><?php echo Yii::app()->session['lang'] == 1?'Training Report ':'รายงานการฝึกอบรม'; ?></a>
 			</li>
-			<li <?php if(isset($_GET["target"]) && $_GET["target"] == "assessment"){ echo 'class="active"'; } ?>><a data-toggle="tab" href="#third-report"><?php echo Yii::app()->session['lang'] == 1?'Training Evoluation Report ':'รายงานการประเมินผลการฝึกอบรม'; ?></a></li>
+			<li <?php if(isset($_GET["target"]) && $_GET["target"] == "assessment"){ echo 'class="active"'; } ?>><a data-toggle="tab" href="#third-report"><?php echo Yii::app()->session['lang'] == 1?'Training Evaluation Report ':'รายงานการประเมินผลการฝึกอบรม'; ?></a></li>
 		</ul>
 
 		<div class="tab-content">
