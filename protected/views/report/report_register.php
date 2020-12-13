@@ -146,7 +146,7 @@
                                     </div>
                                     <div class="checkbox checkbox-main checkbox-inline">
                                         <input class="accommodation" type="checkbox" name="accommodation" id="2" value="Pie_Charts">
-                                        <label for="2" class="text-black"><?= Yii::app()->session['lang'] == 1?'Pie Chart':'กราฟวงกลม'; ?> </label>
+                                        <label for="2" class="text-black"><?= Yii::app()->session['lang'] == 1?'Pie Chart':'Pie Chart'; ?> </label>
                                     </div>
                                 </div>
                             </div>
@@ -448,6 +448,16 @@ $(document).ready(function(){
     $('#datetime_start').attr('disabled',true);
     $('#datetime_end').attr('disabled',true);
     });
+
+    var TypeEmployee = $(".TypeEmployee").val();
+    if (TypeEmployee == "") {
+        $('.Department').empty();
+        $('.Department').append(<?php echo Yii::app()->session['lang'] == 1 ? '"<option value >Select Division</option>"' : '"<option value >เลือกฝ่าย</option>"'; ?>);
+        $('.Position').empty();
+        $('.Position').append(<?php echo Yii::app()->session['lang'] == 1 ? '"<option value >Select Position</option>"' : '"<option value >เลือกแผนก</option>"'; ?>);
+        $('.Leval').empty();
+        $('.Leval').append(<?php echo Yii::app()->session['lang'] == 1 ? '"<option value >Select Level</option>"' : '"<option value >เลือกระดับ</option>"'; ?>);
+    }
 });
 
 function chk_form_search(){
@@ -544,7 +554,7 @@ function chk_form_search(){
                             id: id
                         },
                         success: function(data) {
-                         
+     
                             $('.Department').empty();
                             $('.Department').append(data);
 
@@ -553,12 +563,14 @@ function chk_form_search(){
 
                             var e = document.getElementById("TypeEmployee");
                             var strUser = e.options[e.selectedIndex].value;
-                            if (strUser === '1') {
+                            if (strUser == '1') {
                                 var lang = <?php echo Yii::app()->session['lang'] ?>;
                                 if (lang == 1) {
                                     var DepartmentText = "Department";
                                     var DivisionText = "Division";
+                                    var DepartmentLabel = "Position";
                                     var DepartmentList = "<option value >Select Position</option>";
+
                                 }else{
                                     var DepartmentText = "แผนก";
                                     var DivisionText = "ฝ่าย";
@@ -567,12 +579,12 @@ function chk_form_search(){
                                 $('#department_test').attr('disabled',false);
                                 $('#level_test').attr('disabled',false);
                                  $('.DivisionLabel').text(DepartmentText);
-                                 $('.DepartmentLabel').text();
+                                 $('.DepartmentLabel').text(DepartmentLabel);
                                  $('.Position').empty();
                                  $('.Position').append(DepartmentList);
                                  $('.tag_status').show();
                                  $('.tag_leval').hide();
-                            }else if (strUser === '2') {
+                            }else if (strUser == '2') {
                                 var lang = <?php echo Yii::app()->session['lang'] ?>;
                                 if (lang == 1) {
                                     var DepartmentText = "Department";
@@ -604,6 +616,7 @@ function chk_form_search(){
                             id: id
                         },
                         success: function(data) {
+    
                             $('#department_test').attr('disabled',true);
                             $('#level_test').attr('disabled',true);
                             $('.Position').empty();
