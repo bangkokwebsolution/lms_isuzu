@@ -114,4 +114,46 @@ class LogStartcourseController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+	public function actionListTypeEmployee()
+		{
+			$criteria= new CDbCriteria;
+			$criteria->condition='type_employee_id=:type_employee_id AND active=:active';
+			$criteria->params=array(':type_employee_id'=>$_POST['employee_id'],':active'=>'y');
+			$criteria->order = 'sortOrder ASC';
+			$model = Department::model()->findAll($criteria);
+			if ($model) {
+
+				$sub_list = Yii::app()->session['lang'] == 1?'Select Department ':'เลือกแผนก';
+				$data = '<option value ="">'.$sub_list.'</option>';
+				foreach ($model as $key => $value) {
+					$data .= '<option value = "'.$value->id.'"'.'>'.$value->dep_title.'</option>';
+				}
+				echo ($data); 
+			}else{
+				echo '<option value = "">ไม่พบข้อมูล</option>';
+
+			}
+		}
+
+	public function actionListDepartment()
+		{
+			$criteria= new CDbCriteria;
+			$criteria->condition='department_id=:department_id AND active=:active';
+			$criteria->params=array(':department_id'=>$_POST['department_id'],':active'=>'y');
+			$criteria->order = 'sortOrder ASC';
+			$model = Position::model()->findAll($criteria);
+			if ($model) {
+
+				$sub_list = Yii::app()->session['lang'] == 1?'Select Position ':'เลือกตำแหน่ง';
+				$data = '<option value ="">'.$sub_list.'</option>';
+				foreach ($model as $key => $value) {
+					$data .= '<option value = "'.$value->id.'"'.'>'.$value->position_title.'</option>';
+				}
+				echo ($data); 
+			}else{
+				echo '<option value = "">ไม่พบข้อมูล</option>';
+
+			}
+		}
 }

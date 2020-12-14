@@ -23,11 +23,54 @@ EOD
         <?php echo $this->listPageShow($formNameModel);?>
     </span>
     </div> -->
+<script type="text/javascript">
+ $(document).ready(function(){
+    $("#LogStartcourse_type_employee").change(function(){
+            var employee_id = $("#LogStartcourse_type_employee option:selected").val();
+
+            if(employee_id != ""){
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo Yii::app()->createAbsoluteUrl("/LogStartcourse/ListTypeEmployee"); ?>',
+                    data: ({
+                        employee_id: employee_id,
+                    }),
+                    success: function(data) {
+                        console.log(data);
+                        if(data != ""){
+                            $("#LogStartcourse_department_id").html(data);
+                        }
+                    }
+                });
+            }
+        }); 
+    $("#LogStartcourse_department_id").change(function(){
+            var department_id = $("#LogStartcourse_department_id option:selected").val();
+
+            if(department_id != ""){
+                $.ajax({
+                    type: 'POST',
+                    url: '<?php echo Yii::app()->createAbsoluteUrl("/LogStartcourse/ListDepartment"); ?>',
+                    data: ({
+                        department_id: department_id,
+                    }),
+                    success: function(data) {
+    
+                        if(data != ""){
+                            $("#LogStartcourse_position_id").html(data);
+                        }
+                    }
+                });
+            }
+        });
+});
+</script>
     <div class="innerLR">
             <?php $this->widget('AdvanceSearchForm', array(
             'data'=>$model,
             'route' => $this->route,
             'attributes'=>array(
+                array('name'=>'type_employee','type'=>'list','query'=>TypeEmployee::getTypeEmployeeListNew()),
                 array('name'=>'department_id','type'=>'list','query'=>Department::getDepartmentList()),
                 array('name'=>'position_id','type'=>'list','query'=>Position::getPositionList()),
                 array('name'=>'search_name','type'=>'text'),
@@ -106,7 +149,7 @@ EOD
             'type'=>'raw',
             'filter' => false,
             'value'=>function($data){
-                return $data->gen_id;
+                return $data->gen->gen_title;
             }
         ),
         array(
@@ -145,7 +188,7 @@ EOD
             'name'=>'search_name',
             'type'=>'raw',
             'value'=>function($data){
-                return $data->mem->profile->firstname . ' ' . $data->mem->profile->lastname;
+                return $data->mem->profile->firstname_en . ' ' . $data->mem->profile->lastname_en;
             }
         ),
         

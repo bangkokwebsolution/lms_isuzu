@@ -19,6 +19,7 @@ class LogStartcourse extends CActiveRecord
 {
 	public $news_per_page;
 	public $search_name;
+	public $type_employee;
 	public $position_id;
 	public $department_id;
 	/**
@@ -61,7 +62,7 @@ class LogStartcourse extends CActiveRecord
 			array('start_date, create_date, update_date, end_date, news_per_page', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user_id, course_id, start_date, create_date, create_by, update_date, update_by, active, end_date, search_name, position_id, department_id', 'safe', 'on'=>'search'),
+			array('id, user_id, course_id, start_date, create_date, create_by, update_date, update_by, active, end_date, search_name,type_employee , position_id, department_id', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -76,6 +77,7 @@ class LogStartcourse extends CActiveRecord
 			'pro' => array(self::BELONGS_TO, 'Profile', 'user_id'),
 			'mem' => array(self::BELONGS_TO, 'User', 'user_id','foreignKey' => array('user_id'=>'id')),
 			'course' => array(self::BELONGS_TO, 'CourseOnline', 'course_id'),
+			'gen' => array(self::BELONGS_TO, 'CourseGeneration', 'gen_id'),
 		);
 	}
 
@@ -95,6 +97,7 @@ class LogStartcourse extends CActiveRecord
 			'update_by' => 'Update By',
 			'active' => 'Active',
 			'end_date' => 'End Date',
+			'type_employee' => 'ประเภทพนักงาน',
 			'position_id' => 'ตำแหน่ง',
 			'department_id' => 'แผนก',
 			'search_name' => 'ชื่อ-สกุล',//, เลขบัตรประชาชน-พาสปอร์ต
@@ -122,7 +125,7 @@ class LogStartcourse extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('user_id',$this->user_id);
 		$criteria->compare('t.course_id',$this->course_id);
-		$criteria->compare('gen_id',$this->gen_id,true);
+		$criteria->compare('t.gen_id',$this->gen_id,true);
 		$criteria->compare('start_date',$this->start_date,true);
 		$criteria->compare('create_date',$this->create_date,true);
 		$criteria->compare('create_by',$this->create_by);
@@ -130,6 +133,7 @@ class LogStartcourse extends CActiveRecord
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('end_date',$this->end_date,true);
+		$criteria->compare('pro.type_employee',$this->type_employee,true);
 		$criteria->compare('position_id',$this->position_id,true);
 		$criteria->compare('department_id',$this->department_id,true);
 
