@@ -54,12 +54,24 @@ class LogStartcourseController extends Controller
     	if ($id != null) {
 	    	$LogStartcourse = LogStartcourse::model()->findByPk($id);
 	    	$User = User::model()->findByPk($LogStartcourse->user_id);
+
+	    	$criteria = new CDbCriteria;
+            $criteria->compare('course_id', $LogStartcourse->course_id);
+            $criteria->compare('lang_id', 1);
+            $criteria->compare('active', 'y');
+            $CourseOnline = CourseOnline::model()->find($criteria);
+	    
+	    	$criteria = new CDbCriteria;
+            $criteria->compare('gen_id', $LogStartcourse->gen_id);
+            $criteria->compare('active', 'y');
+	    	$CourseGeneration = CourseGeneration::model()->find($criteria);
+
 			$profile = Profile::model()->findByPk($LogStartcourse->user_id);
     		
     	$to['email'] = $User->email;
 		$to['firstname'] = $User->profile->firstname;
 		$to['lastname'] = $User->profile->lastname;
-		$message = $this->renderPartial('_mail_CourseAlart',array('User' => $User),true);
+		$message = $this->renderPartial('_mail_CourseAlart',array('User' => $User,'CourseOnline'=> $CourseOnline,'CourseGeneration'=>$CourseGeneration),true);
 		if($message){
 			 $send = Helpers::lib()->SendMail($to,'แจ้งเตือนสมัครเข้าเรียนระบบ',$message);
 	
@@ -74,11 +86,23 @@ class LogStartcourseController extends Controller
     		foreach ($_POST['chk'] as $key => $value) {
     			$LogStartcourse = LogStartcourse::model()->findByPk($value);
 	    		$User = User::model()->findByPk($LogStartcourse->user_id);
+
+		    	$criteria = new CDbCriteria;
+	            $criteria->compare('course_id', $LogStartcourse->course_id);
+	            $criteria->compare('lang_id', 1);
+	            $criteria->compare('active', 'y');
+	            $CourseOnline = CourseOnline::model()->find($criteria);
+		    
+		    	$criteria = new CDbCriteria;
+	            $criteria->compare('gen_id', $LogStartcourse->gen_id);
+	            $criteria->compare('active', 'y');
+		    	$CourseGeneration = CourseGeneration::model()->find($criteria);
+		    	
 				$profile = Profile::model()->findByPk($LogStartcourse->user_id);
 				$to['email'] = $User->email;
 				$to['firstname'] = $User->profile->firstname;
 				$to['lastname'] = $User->profile->lastname;
-				$message = $this->renderPartial('_mail_CourseAlart',array('User' => $User),true);
+				$message = $this->renderPartial('_mail_CourseAlart',array('User' => $User,'CourseOnline'=> $CourseOnline,'CourseGeneration'=>$CourseGeneration),true);
 				if($message){
 					 $send = Helpers::lib()->SendMail($to,'แจ้งเตือนสมัครเข้าเรียนระบบ',$message);
 			
