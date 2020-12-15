@@ -149,7 +149,11 @@ EOD
             'type'=>'raw',
             'filter' => false,
             'value'=>function($data){
-                return $data->gen->gen_title;
+                if ($data->gen->gen_title == null || $data->gen->gen_title == "") {
+                    return "-";
+                }else{
+                    return $data->gen->gen_title;
+                }
             }
         ),
         array(

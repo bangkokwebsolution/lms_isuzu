@@ -774,8 +774,17 @@ Class MenuLeft extends Controller
 	                		'LogStartcourse.*',
 	                		'LogStartcourse.Index'
 	                	)),
-	                	'label'=>'จัดการ',
+	                	'label'=>'สมัครเข้าเรียนแล้ว',
 	                	'url'=>array('//LogStartcourse/index')
+	                ),
+	                 array(
+	                	/*====== Check Permissions Sup-User (1) ======*/
+	                	'visible'=>self::PermissionsMenu(array(
+	                		'LogStartcourse.*',
+	                		'LogStartcourse.SendOrgChart'
+	                	)),
+	                	'label'=>'ยังไม่ได้เข้าเรียน',
+	                	'url'=>array('//LogStartcourse/SendOrgChart')
 	                ),
 	                //    array(
 	                // 	/*====== Check Permissions Sup-User (1) ======*/

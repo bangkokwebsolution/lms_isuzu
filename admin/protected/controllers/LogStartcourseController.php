@@ -48,6 +48,18 @@ class LogStartcourseController extends Controller
 		));
     }
 
+    public function actionSendOrgChart()
+    {
+        $model=new SendMailAlertCourse();
+        $model->unsetAttributes();
+        if(isset($_GET['SendMailAlertCourse']))
+
+            $model->attributes=$_GET['SendMailAlertCourse'];
+
+        $this->render('SendOrgChart',array('model'=>$model));
+    }
+
+    
     public function actionSendMailMessage()
     {
     	$id = $_POST['id'];
@@ -97,12 +109,76 @@ class LogStartcourseController extends Controller
 	            $criteria->compare('gen_id', $LogStartcourse->gen_id);
 	            $criteria->compare('active', 'y');
 		    	$CourseGeneration = CourseGeneration::model()->find($criteria);
-		    	
+
 				$profile = Profile::model()->findByPk($LogStartcourse->user_id);
 				$to['email'] = $User->email;
 				$to['firstname'] = $User->profile->firstname;
 				$to['lastname'] = $User->profile->lastname;
 				$message = $this->renderPartial('_mail_CourseAlart',array('User' => $User,'CourseOnline'=> $CourseOnline,'CourseGeneration'=>$CourseGeneration),true);
+				if($message){
+					 $send = Helpers::lib()->SendMail($to,'แจ้งเตือนสมัครเข้าเรียนระบบ',$message);
+			
+				}
+    		}
+    	}
+    }
+
+    public function actionSendMailMessageCourse()
+    {
+    	$id = $_POST['id'];
+    	if ($id != null) {
+	    	// $LogStartcourse = LogStartcourse::model()->findByPk($id);
+	    	$User = User::model()->findByPk($id);
+
+	    	$criteria = new CDbCriteria;
+            $criteria->compare('course_id', $_POST['course_id']);
+            $criteria->compare('lang_id', 1);
+            $criteria->compare('active', 'y');
+            $CourseOnline = CourseOnline::model()->find($criteria);
+	    
+	    	// $criteria = new CDbCriteria;
+      //       $criteria->compare('gen_id', $_POST['course_id']);
+      //       $criteria->compare('active', 'y');
+	    	// $CourseGeneration = CourseGeneration::model()->find($criteria);
+
+			$profile = Profile::model()->findByPk($id);
+    		
+    	$to['email'] = $User->email;
+		$to['firstname'] = $User->profile->firstname;
+		$to['lastname'] = $User->profile->lastname;
+		$message = $this->renderPartial('_mail_CourseAlartCourse',array('User' => $User,'CourseOnline'=> $CourseOnline),true);
+		if($message){
+			 $send = Helpers::lib()->SendMail($to,'แจ้งเตือนสมัครเข้าเรียนระบบ',$message);
+	
+		}
+		$this->redirect(array('index'));
+		}
+    }
+
+    public function actionMultiSendMailCourseMessages()
+    {
+    	if (isset($_POST['chk'])) {
+
+    		foreach ($_POST['chk'] as $key => $value) {
+ 
+	    		$User = User::model()->findByPk($value);
+
+		    	$criteria = new CDbCriteria;
+	            $criteria->compare('course_id', $_POST['course_id']);
+	            $criteria->compare('lang_id', 1);
+	            $criteria->compare('active', 'y');
+	            $CourseOnline = CourseOnline::model()->find($criteria);
+		    
+		    	// $criteria = new CDbCriteria;
+	      //       $criteria->compare('gen_id', course_id);
+	      //       $criteria->compare('active', 'y');
+		    	// $CourseGeneration = CourseGeneration::model()->find($criteria);
+
+				$profile = Profile::model()->findByPk($value);
+				$to['email'] = $User->email;
+				$to['firstname'] = $User->profile->firstname;
+				$to['lastname'] = $User->profile->lastname;
+				$message = $this->renderPartial('_mail_CourseAlartCourse',array('User' => $User,'CourseOnline'=> $CourseOnline),true);
 				if($message){
 					 $send = Helpers::lib()->SendMail($to,'แจ้งเตือนสมัครเข้าเรียนระบบ',$message);
 			
