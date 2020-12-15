@@ -13,6 +13,36 @@
 $titleName = 'ส่งเมลล์แจ้งเตือนผู้เรียน';
 $formNameModel = 'LogStartcourse';
 
+$this->breadcrumbs=array($titleName);
+Yii::app()->clientScript->registerScript('search', "
+    $('#SearchFormAjax').submit(function(){
+       /* $.fn.yiiGridView.update('$formNameModel-grid', {
+            data: $(this).serialize()
+        });*/
+        return true;
+    });
+");
+
+Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
+    /*$.updateGridView = function(gridID, name, value) {
+        $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
+        $.fn.yiiGridView.update(gridID, {data: $.param(
+            $("#"+gridID+" input, #"+gridID+" .filters select")
+        )});
+    }
+    $.appendFilter = function(name, varName) {
+        var val = eval("$."+varName);
+        $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
+    }
+    $.appendFilter("Report[news_per_page]", "news_per_page");*/
+
+    $('.collapse-toggle').click();
+    $('#Report_dateRang').attr('readonly','readonly');
+    $('#Report_dateRang').css('cursor','pointer');
+    $('#Report_dateRang').daterangepicker();
+
+EOD
+, CClientScript::POS_READY);
 ?>
 <script type="text/javascript">
     $(document).ready(function(){
