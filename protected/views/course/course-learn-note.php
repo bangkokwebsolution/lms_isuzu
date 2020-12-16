@@ -1978,7 +1978,6 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
               var $box = $(".youtube-iframe");
               $win.on("click.Bst", function(event){      
                 if ( $box.has(event.target).length == 0  &&!$box.is(event.target) ){
-                  // console.log("ifffff");
 
                   <?php foreach ($model->files as $file){ ?>
                     player_<?= $file->id ?>.pauseVideo();
@@ -1989,88 +1988,34 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                 } 
               });
 
-              // $(document).mousedown(function(e) {
-              //   if (e.which === 1 || e.which === 3) {
-              //    console.log("click");
-              //   }
-              // });
- // <?php //foreach ($model->files as $file){ ?>
- //  console.log($("#youtube_<?= $file->id ?>"));
- //                $("#youtube_<?= $file->id ?>").blur(function() {
- //                  console.log("blur <?= $file->id ?>");
-
-                 
- //                    // player_<?= $file->id ?>.pauseVideo();
- //                    // player_<?= $file->id ?>.pauseVideo();
-
                  
                 });
- // <?php //} ?>
-            });
-            // var toggle_check = 2;
-            // window.onblur = function() { 
- // $(document).mousedown(function(e) {
-              // if (e.which === 1 || e.which === 3) {
-              // console.log("onblur");
-              // pauseVideoYoutube();
+ 
 
-              // console.log(youyube_playing);
-              // console.log(youyube_playing !== undefined);
-
-              // if(youyube_playing !== undefined){
-              //   toggle_check = 1;
-              //   // youyube_playing.target.pauseVideo();
-              //   console.log("!== undefined");
-              // }
-            // }
-          // });
-            //   <?php foreach ($model->files as $file){ ?>
-            //     player_<?= $file->id ?>.pauseVideo();
-            //   <?php } ?>
-
-             // }
 
              function pauseVideoYoutube(){
-              // console.log("pauseVideoYoutube");
 
-              <?php //foreach ($model->files as $file){ ?>
-              // console.log("player_<?= $file->id ?> => pause");
-
-                // player_<?= $file->id ?>.pauseVideo();            
-              <?php //} ?>
             }
 
 
-            var tag = document.createElement('script');
-            tag.src = "https://www.youtube.com/iframe_api";
-            var firstScriptTag = document.getElementsByTagName('script')[0];
-            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+      var tag = document.createElement('script');
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 
-            var arr_Duration = new Array();
-            var arr_status = new Array();
+      var arr_Duration = new Array();
+      var arr_status = new Array();
 
-            function onPlayerReady(event) {
-              // console.log(event);
-              // console.log(event.target);
-              // console.log(event.target.f);
-              // console.log($(event.target.l).attr("id")); // tag div id
-              var id_you = $(event.target.m).attr("id").split("_");
-              id_you = id_you[1];
-              // console.log(id_you);
-              // console.log(event.target.getDuration());
-              arr_Duration[id_you] = event.target.getDuration();
-              // arr_status[id_you] = 2;
-              // id_you = id_you[1];
-              // console.log(player_+id_you.getCurrentTime());
-              // console.log(arr_status);
-              // console.log($("#"+$(event.target.l).attr("id")).getCurrentTime());
-              // event.target.playVideo(); // เล่นวิดีโอ
-              // console.log(player.getCurrentTime());
-            }
+      function onPlayerReady(event) {
+
+        var id_you = $(event.target.o).attr("id").split("_");
+        id_you = id_you[1];
+        arr_Duration[id_you] = event.target.getDuration();
+      }
 
       function onPlayerPlaybackRateChange(event) {
-        // console.log('onPlayerPlaybackRateChange '+player.getCurrentTime());
+
       }
 
       function onPlayerError(event) {
@@ -2083,48 +2028,47 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
 
       }
 
+
+      var mysetInterval, event_playing;
+
+
       // var done = false;
       function onPlayerStateChange(event) {
         // console.log(event);
+
         if(event.data == 1){ //play
           youyube_playing = event;
-
-          var id_you = $(event.target.m).attr("id").split("_");
+          var id_you = $(event.target.o).attr("id").split("_");
           id_you = id_you[1];
-
           <?php foreach ($model->files as $file){ ?>
-            if(id_you != <?= $file->id ?>){
-              // player_<?= $file->id ?>.stopVideo();
+            if(id_you != <?= $file->id ?>){              
               player_<?= $file->id ?>.pauseVideo();
             }
           <?php } ?>
-
-          // if(toggle_check == 1){
-          //   youyube_playing.target.pauseVideo();
-          //       console.log("pauseVideo");
-          //       toggle_check = 2;
-          // }
-          // followVDOyoutube(event);
           mysetInterval = setInterval(followVDOyoutube,1000);
           event_playing = event;
+          // console.log("event_playing   play");
+          // console.log(event_playing);
           $(window).focus();
+
         }else if(event.data == 2){ //paused
           event.target.pauseVideo();
-              // player_<?= $file->id ?>.pauseVideo();
-
-          // console.log(event.target.getCurrentTime());
-          // console.log(event.target.getDuration());
-          // console.log(arr_Duration);
-          // unset(event_playing);
-          // event_playing = event;
-          // console.log(event_playing);
           clearInterval(mysetInterval);
           $(window).focus();
+
         }else if(event.data == 3){ // รี
 
         }else if(event.data == 0){ // จบ
-          var id_you = $(event_playing.target.m).attr("id").split("_");
-            id_you = id_you[1];
+          // console.log("event_playing    end");
+          // console.log(event_playing);
+
+
+          // l m o           
+          var id_you = $(event_playing.target.o).attr("id").split("_");
+          id_you = id_you[1];
+
+          // console.log(id_you);
+
           event_playing = event;
           arr_status[id_you] = 1;
           updateStatus(id_you);
@@ -2134,51 +2078,19 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
         
 
 
-        //-1 (unstarted)
-        // 0 (ended)
-        // 1 (playing)
-        // 2 (paused)
-        // 3 (buffering)
-        // 5 (video cued).
 
 
-
-        // console.log("onPlayerStateChange "+player.getCurrentTime());
-        // if (event.data == YT.PlayerState.PLAYING && !done) {
-        //   // setTimeout(stopVideo, 6000);
-        
-
-        //   done = true;
-        // }
       }
 
 
-
-      var mysetInterval, event_playing;
-
-        // function followVDOyoutube(event){ // เช็ค วิดีโอ
-        
-
-        //   mysetInterval = setInterval(myTimer,1000);
-        // }
-
         function followVDOyoutube() {  // ติดตามเวลา vdo
 
-            var id_you = $(event_playing.target.m).attr("id").split("_");
+            var id_you = $(event_playing.target.o).attr("id").split("_");
             id_you = id_you[1];
 
-            // console.log(event_playing.data);
-            if(event_playing.data == 1 && arr_status[id_you] == 2){
-              // console.log(arr_Duration[id_you] +" <= "+ Math.ceil(event_playing.target.getCurrentTime()));
-              // if(arr_Duration[id_you] <= Math.ceil(event_playing.target.getCurrentTime())){
-              //   arr_status[id_you] = 1;
-              //   console.log(arr_status[id_you]);
-                // clearInterval(mysetInterval);
 
-              // }else{
-                // console.log(event_playing);
-                // console.log(event_playing.target.getCurrentTime());
-              // }
+            if(event_playing.data == 1 && arr_status[id_you] == 2){
+
 
 
               $.post('<?php echo $this->createUrl("//course/LearnVdo"); ?>', {
