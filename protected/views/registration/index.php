@@ -3444,7 +3444,7 @@ if (!$users->isNewRecord && $profile->type_employee == 1) {
                                             <label for=""><?php echo $label->label_phone1; ?></label>
                                            <!--  <input type="text" class="form-control" id="" placeholder="เบอร์โทรศัพท์ที่สามารถติดต่อได้"> 
                                                <label><?php echo $label->label_phone; ?></label>-->
-                                               <?php echo $form->textField($profile, 'phone1', array('class' => 'form-control', 'placeholder' => $label->label_phone1 ,'onkeyup'=>"isNumberchar(this.value,this)")); ?>
+                                               <?php echo $form->textField($profile, 'phone1', array('class' => 'form-control', 'placeholder' => $label->label_phone1 ,'onkeyup'=>"isNumberchar(this.value,this)", 'autocomplete'=>'chrome-off')); ?>
                                                <?php echo $form->error($profile, 'phone1', array('class' => 'error2')); ?>
                                            </div>
                                        </div>
