@@ -2276,7 +2276,7 @@ function editNamehouse_registration(filedoc_id){
     <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="form-group">
             <label><?php echo $label->label_phone; ?><font color="red">*</font></label>
-            <?php echo $form->textField($profile, 'tel', array('class' => 'form-control', 'placeholder' => $label->label_phone,'onkeyup'=>"isNumberchar(this.value,this)")); ?>
+            <?php echo $form->textField($profile, 'tel', array('class' => 'form-control', 'placeholder' => $label->label_phone,'onkeyup'=>"isNumberchar(this.value,this)", 'autocomplete'=>'chrome-off')); ?>
             <?php echo $form->error($profile, 'tel', array('class' => 'error2')); ?>
 
         </div>
@@ -2284,7 +2284,7 @@ function editNamehouse_registration(filedoc_id){
     <div class="col-md-4 col-sm-6 col-xs-12 ">
         <div class="form-group">
             <label><?php echo $label->label_tel; ?><font class="required_Emergency" color="red">*</font></label>
-            <?php echo $form->textField($profile, 'phone', array('class' => 'form-control', 'placeholder' => $label->label_tel,'onkeyup'=>"isNumberchar(this.value,this)")); ?>
+            <?php echo $form->textField($profile, 'phone', array('class' => 'form-control', 'placeholder' => $label->label_tel,'onkeyup'=>"isNumberchar(this.value,this)", 'autocomplete'=>'chrome-off')); ?>
             <?php echo $form->error($profile, 'phone', array('class' => 'error2')); ?>
 
         </div>
@@ -2701,12 +2701,13 @@ function editNamehouse_registration(filedoc_id){
         <?php 
         if ($ProfilesLanguage->isNewRecord === null) { 
             $i = 1;
+            if (!empty($ProfilesLanguage)) {
             foreach ($ProfilesLanguage as $keylg => $vallg) {
                $i++;
                $p = 1;
                $m = 1;
                ?> 
-               <tbody class="group-language">
+           <tbody class="group-language">
                 <tr>
                  <td rowspan="2"><?php echo $form->textField($vallg,'['.$keylg.']language_name' , array('class' => 'form-control' ,'style'=>' width:100px;line-height:28px;padding: 20px 10px;','readonly'=>true)); ?></td>
                  <td><?= Yii::app()->session['lang'] == 1?'Written ':'เขียน'; ?></td>
@@ -2764,6 +2765,126 @@ function editNamehouse_registration(filedoc_id){
         </tr>
     </tbody>
 <?php   }
+    }else{ 
+        $ProfilesLanguage = new ProfilesLanguage; 
+        ?>
+        <tbody class="group-language">
+        <tr>
+         <td rowspan="2" ><?php echo $form->textField($ProfilesLanguage, '[1]language_name', array('class' => 'form-control','value'=>'Thai' ,'style'=>'width:100px;line-height:28px;padding: 20px 10px;','readonly'=>true,'placeholder'=> Yii::app()->session['lang'] == 1?'Thai ':'ไทย')); ?></td>
+         <td><?= Yii::app()->session['lang'] == 1?'Written ':'เขียน'; ?></td>
+         <td>
+            <div class="radio radio-danger ">
+                <input type="radio" name="ProfilesLanguage[1][writes]" id="lang_w_th-1" value="4"<?php if ($ProfilesLanguage->writes == "4") : ?> checked="checked" <?php endif ?>>
+                <label for="lang_w_th-1"></label>
+            </div>
+        </td>
+        <td>
+            <div class="radio radio-danger ">
+                <input type="radio" name="ProfilesLanguage[1][writes]" id="lang_w_th-2" value="3"<?php if ($ProfilesLanguage->writes == "3") : ?> checked="checked" <?php endif ?>>
+                <label for="lang_w_th-2"></label>
+            </div>
+        </td>
+        <td>
+            <div class="radio radio-danger ">
+                <input type="radio" name="ProfilesLanguage[1][writes]" id="lang_w_th-3" value="2"<?php if ($ProfilesLanguage->writes == "2") : ?> checked="checked" <?php endif ?>>
+                <label for="lang_w_th-3"></label>
+            </div>
+        </td>
+        <td>
+            <div class="radio radio-danger ">
+                <input type="radio" name="ProfilesLanguage[1][writes]" id="lang_w_th-4" value="1"<?php if ($ProfilesLanguage->writes == "1") : ?> checked="checked" <?php endif ?>>
+                <label for="lang_w_th-4"></label>
+            </div>
+        </td>
+    </tr>
+    <tr>
+     <td><?= Yii::app()->session['lang'] == 1?'Spoken ':'พูด'; ?></td>
+     <td>
+        <div class="radio radio-danger ">
+            <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-1" value="4"<?php if ($ProfilesLanguage->spoken == "4") : ?> checked="checked" <?php endif ?>>
+            <label for="lang_s_th-1"></label>
+        </div>
+    </td>
+    <td>
+        <div class="radio radio-danger ">
+            <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-2" value="3"<?php if ($ProfilesLanguage->spoken == "3") : ?> checked="checked" <?php endif ?>>
+            <label for="lang_s_th-2"></label>
+        </div>
+    </td>
+    <td>
+        <div class="radio radio-danger ">
+            <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-3" value="2"<?php if ($ProfilesLanguage->spoken == "2") : ?> checked="checked" <?php endif ?>>
+            <label for="lang_s_th-3"></label>
+        </div>
+    </td>
+    <td>
+        <div class="radio radio-danger ">
+            <input type="radio" name="ProfilesLanguage[1][spoken]" id="lang_s_th-4" value="1"<?php if ($ProfilesLanguage->spoken == "1") : ?> checked="checked" <?php endif ?>>
+            <label for="lang_s_th-4"></label>
+        </div>
+    </td>
+</tr>
+</tbody>
+
+<tbody class="group-language">
+    <tr>
+     <td rowspan="2"><?php echo $form->textField($ProfilesLanguage, '[2]language_name', array('class' => 'form-control','value'=>'English' ,'style'=>' width:100px;line-height:28px;padding: 20px 10px;','readonly'=>true,'placeholder'=> Yii::app()->session['lang'] == 1?'English ':'อังกฤษ')); ?></td>
+     <td><?= Yii::app()->session['lang'] == 1?'Written ':'เขียน'; ?></td>
+     <td>
+        <div class="radio radio-danger ">
+            <input type="radio" name="ProfilesLanguage[2][writes]" id="lang_w_en-1" value="4"<?php if ($ProfilesLanguage->writes == "4") : ?> checked="checked" <?php endif ?>>
+            <label for="lang_w_en-1"></label>
+        </div>
+    </td>
+    <td>
+        <div class="radio radio-danger ">
+            <input type="radio" name="ProfilesLanguage[2][writes]" id="lang_w_en-2" value="3"<?php if ($ProfilesLanguage->writes == "3") : ?> checked="checked" <?php endif ?>>
+            <label for="lang_w_en-2"></label>
+        </div>
+    </td>
+    <td>
+        <div class="radio radio-danger ">
+            <input type="radio" name="ProfilesLanguage[2][writes]" id="lang_w_en-3" value="2"<?php if ($ProfilesLanguage->writes == "2") : ?> checked="checked" <?php endif ?>>
+            <label for="lang_w_en-3"></label>
+        </div>
+    </td>
+    <td>
+        <div class="radio radio-danger ">
+            <input type="radio" name="ProfilesLanguage[2][writes]" id="lang_w_en-4" value="1"<?php if ($ProfilesLanguage->writes == "1") : ?> checked="checked" <?php endif ?>>
+            <label for="lang_w_en-4"></label>
+        </div>
+    </td>
+</tr>
+<tr>
+ <td><?= Yii::app()->session['lang'] == 1?'Spoken ':'พูด'; ?></td>
+ <td>
+    <div class="radio radio-danger ">
+        <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-5" value="4"<?php if ($ProfilesLanguage->spoken == "4") : ?> checked="checked" <?php endif ?>>
+        <label for="lang_s_en-5"></label>
+    </div>
+</td>
+<td>
+    <div class="radio radio-danger ">
+        <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-6" value="3"<?php if ($ProfilesLanguage->spoken == "3") : ?> checked="checked" <?php endif ?>>
+        <label for="lang_s_en-6"></label>
+    </div>
+</td>
+<td>
+    <div class="radio radio-danger ">
+        <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-7" value="2"<?php if ($ProfilesLanguage->spoken == "2") : ?> checked="checked" <?php endif ?>>
+        <label for="lang_s_en-7"></label>
+    </div>
+</td>
+<td>
+    <div class="radio radio-danger ">
+        <input type="radio" name="ProfilesLanguage[2][spoken]" id="lang_s_en-8" value="1"<?php if ($ProfilesLanguage->spoken == "1") : ?> checked="checked" <?php endif ?>>
+        <label for="lang_s_en-8"></label>
+    </div>
+</td>
+</tr>
+</tbody>
+
+  <?php  }
 }else{
     ?>
     <tbody class="group-language">
