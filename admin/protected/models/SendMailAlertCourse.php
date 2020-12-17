@@ -39,7 +39,7 @@ class SendMailAlertCourse extends CFormModel {
         return array(
             'id' => 'ID',
             'user_id' => 'User',
-            'course_id' => 'Course *',
+            'course_id' => 'Course',
             'type_employee' => 'ประเภทพนักงาน',
             'position_id' => 'ตำแหน่ง',
             'department_id' => 'แผนก',

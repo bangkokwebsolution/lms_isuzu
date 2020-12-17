@@ -135,4 +135,11 @@ class Department extends CActiveRecord
 		$list = CHtml::listData($model,'id','dep_title');
 		return $list;
 	}
+
+	public function getDepartment(){
+
+		$model = Department::model()->findAll('active = "y" AND lang_id = 1 ');
+		$list = CHtml::listData($model,'id','dep_title');
+		return $list;
+	}
 }

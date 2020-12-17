@@ -175,9 +175,6 @@ EOD
 						            	//var_dump($data->profile->type_user);
 											},
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
-											// 'filterHtmlOptions' => array('style' => 'width: 100%;'),
-											// 'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
-											//'headerHtmlOptions'=>array('style'=>'text-align:center;width:100%;'),
 
 										),
 
@@ -191,40 +188,37 @@ EOD
 						            	//var_dump($data->profile->type_user);
 											},
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
-											// 'filterHtmlOptions' => array('style' => 'width: 100%;'),
-											// 'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
-											//'headerHtmlOptions'=>array('style'=>'text-align:center;width:100%;'),
-
 										),
 										array(
 											'header' => 'แผนก',
+											'name'=>'department_id',
 											'type'=>'html',
 											'visible' => $this->route != "user/admin/General",
+											'filter'=>Department::getDepartment(),
 											'value'=>function($data){
 												return $data->department->dep_title;
 											},
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
-											// 'filterHtmlOptions' => array('style' => 'width: 100%;'),
-											// 'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
+									
 										),
 										array(
 											'header' => 'ตำแหน่ง',
+											'name'=>'position_id',
 											'type'=>'html',
 											'visible' => $this->route != "user/admin/General",
+											'filter'=>Position::getPositionListNew(),
 											'value'=>function($data){
 												return $data->position->position_title;
 											},
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
-											// 'filterHtmlOptions' => array('style' => 'width: 100%;'),
-											// 'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
+									
 										),
 										array(
 											'name'=>'email',
 											'type'=>'raw',
 											'value'=>'CHtml::link(UHtml::markSearch($data,"email"), "mailto:".$data->email)',
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
-											// 'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
-											// 'headerHtmlOptions'=>array('style'=>'text-align:center;width:100%;'),
+			
 										),
 		// 'create_at',
 										array(

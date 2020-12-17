@@ -413,7 +413,8 @@ public function validateIdCard($attribute,$params){
         $criteria->compare('password',$this->password);
         $criteria->compare('pic_user',$this->pic_user);
         $criteria->compare('station_id',$this->station_id);
-        $criteria->compare('department_id',$this->department_id);
+        $criteria->compare('position_id',$this->position_id);
+        $criteria->compare('user.department_id',$this->department_id);
         $criteria->compare('branch_id',$this->branch_id);
         $criteria->compare('email',$this->email,true);
         $criteria->compare('activkey',$this->activkey);

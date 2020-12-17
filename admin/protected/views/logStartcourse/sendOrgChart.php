@@ -46,69 +46,69 @@ EOD
 ?>
 <script type="text/javascript">
     $(document).ready(function(){
-     $("#SendMailAlertCourse_type_employee").change(function(){
-            var employee_id = $("#SendMailAlertCourse_type_employee option:selected").val();
+       $("#SendMailAlertCourse_type_employee").change(function(){
+        var employee_id = $("#SendMailAlertCourse_type_employee option:selected").val();
 
-            if(employee_id != ""){
-                $.ajax({
-                    type: 'POST',
-                    url: '<?php echo Yii::app()->createAbsoluteUrl("/LogStartcourse/ListTypeEmployee"); ?>',
-                    data: ({
-                        employee_id: employee_id,
-                    }),
-                    success: function(data) {
-                        console.log(data);
-                        if(data != ""){
-                            $("#SendMailAlertCourse_department_id").html(data);
-                        }
+        if(employee_id != ""){
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo Yii::app()->createAbsoluteUrl("/LogStartcourse/ListTypeEmployee"); ?>',
+                data: ({
+                    employee_id: employee_id,
+                }),
+                success: function(data) {
+                    console.log(data);
+                    if(data != ""){
+                        $("#SendMailAlertCourse_department_id").html(data);
                     }
-                });
-            }
-        }); 
-    $("#SendMailAlertCourse_department_id").change(function(){
-            var department_id = $("#SendMailAlertCourse_department_id option:selected").val();
+                }
+            });
+        }
+    }); 
+       $("#SendMailAlertCourse_department_id").change(function(){
+        var department_id = $("#SendMailAlertCourse_department_id option:selected").val();
 
-            if(department_id != ""){
-                $.ajax({
-                    type: 'POST',
-                    url: '<?php echo Yii::app()->createAbsoluteUrl("/LogStartcourse/ListDepartment"); ?>',
-                    data: ({
-                        department_id: department_id,
-                    }),
-                    success: function(data) {
-    
-                        if(data != ""){
-                            $("#SendMailAlertCourse_position_id").html(data);
-                        }
+        if(department_id != ""){
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo Yii::app()->createAbsoluteUrl("/LogStartcourse/ListDepartment"); ?>',
+                data: ({
+                    department_id: department_id,
+                }),
+                success: function(data) {
+
+                    if(data != ""){
+                        $("#SendMailAlertCourse_position_id").html(data);
                     }
-                });
-            }
-        });
-        });
+                }
+            });
+        }
+    });
+   });
 </script>
 <div class="innerLR">
 
   <?php
-    $this->widget('AdvanceSearchForm', array(
-                  'data'=>$model,
-                  'route' => $this->route,
-                  'attributes'=>array(
-                                array('name'=>'type_employee','type'=>'list','query'=>TypeEmployee::getTypeEmployeeListNew()),
-                                array('name'=>'department_id','type'=>'list','query'=>Department::getDepartmentList()),
-                                array('name'=>'position_id','type'=>'list','query'=>Position::getPositionList()),
-                                array('name'=>'search_name','type'=>'text'),
-                                array('name'=>'course_id','type'=>'list','query'=>ReportProblem::getCourseOnlineListNew()),
-                        ),
+  $this->widget('AdvanceSearchForm', array(
+      'data'=>$model,
+      'route' => $this->route,
+      'attributes'=>array(
+        array('name'=>'type_employee','type'=>'list','query'=>TypeEmployee::getTypeEmployeeListNew()),
+        array('name'=>'department_id','type'=>'list','query'=>Department::getDepartmentList()),
+        array('name'=>'position_id','type'=>'list','query'=>Position::getPositionList()),
+        array('name'=>'search_name','type'=>'text'),
+        array('name'=>'course_id','type'=>'list','query'=>ReportProblem::getCourseOnlineListNew()),
+    ),
 
-    ));
-                   
+  ));
+
   ?>
-<div class="widget" style="margin-top: -1px;">
-        <div class="widget-head">
-            <h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $titleName;?></h4>
-        </div>
-        <div class="widget-body">
-            <div class="separator bottom form-inline small">
+  <div class="widget" style="margin-top: -1px;">
+    <div class="widget-head">
+        <h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $titleName;?></h4>
+    </div>
+    <div class="widget-body">
+        <div class="separator bottom form-inline small">
                <!--  <span class="pull-right">
                     <label class="strong">แสดงแถว:</label>
                     <?php echo $this->listPageShow($formNameModel);?>
@@ -138,40 +138,24 @@ EOD
                     $OrgCourse = OrgCourse::model()->find($criteria);
 
                     if (!empty($OrgCourse)) {
-                    
-                    if($orgRoot->branch_id != null || $orgRoot->position_id != null || $orgRoot->department_id != null ){
-                        $criteria = new CDbCriteria; 
-                        $criteria->compare('course_id',$OrgCourse->course_id);
+
+                        if($orgRoot->branch_id != null || $orgRoot->position_id != null || $orgRoot->department_id != null ){
+                            $criteria = new CDbCriteria; 
+                            $criteria->compare('course_id',$OrgCourse->course_id);
 
                             if($orgRoot->branch_id != ""){ // branch
-                            $criteria->compare('branch_id',$orgRoot->branch_id);
+                                $criteria->compare('branch_id',$orgRoot->branch_id);
                             }elseif($orgRoot->position_id != ""){ // position
                                 $criteria->compare('position_id',$orgRoot->position_id);
                             }elseif($orgRoot->department_id != ""){ // dept
                                 $criteria->compare('department_id',$orgRoot->department_id);
                             }
 
-                         $modelUsers_old = ChkUsercourse::model()->findAll($criteria);
-                    }
-
-                    $criteria = new CDbCriteria; 
-                    $criteria->with = array('chk_usercourse');
-                    if($orgRoot->branch_id == null && $orgRoot->position_id == null && $orgRoot->department_id == null){
-
-                        if($orgRoot->title == "General"){
-                            $criteria->compare('type_user',1);
-
-                        }elseif($orgRoot->title == "Personnel"){
-                            $criteria->compare('type_user',5);
-
+                            $modelUsers_old = ChkUsercourse::model()->findAll($criteria);
                         }
-                        elseif($orgRoot->title == "MASTER / CAPTAIN"){
-                            $criteria->compare('type_employee',1);
-                        }
-                        elseif($orgRoot->title == "Office"){
-                            $criteria->compare('type_employee',2);
-                        }
-                    }else{
+
+                        $criteria = new CDbCriteria; 
+                        $criteria->with = array('chk_usercourse');
 
                         if($orgRoot->branch_id != ""){ // branch
                             $criteria->compare('t.branch_id',$orgRoot->branch_id);
@@ -182,67 +166,166 @@ EOD
                         }elseif($orgRoot->department_id != ""){ // dept
                             $criteria->compare('t.department_id',$orgRoot->department_id);
                         }
-                     }  
 
-                    if($model->search_name != ""){
+
+                        if($model->search_name != ""){
                             $criteria->compare('CONCAT(profiles.firstname_en, " " , profiles.lastname_en , " "," ",profiles.firstname , " " , profiles.lastname)',$model->search_name,true);
+                        }
+
+                        $usersall_chk = Users::model()->with('profiles')->findAll($criteria);
+
+                        if($modelUsers_old){
+                            $criteria->compare('chk_usercourse.org_user_status',1);
+                            $criteria->compare('chk_usercourse.course_id',$OrgCourse->course_id);
+                        }
+
+                        $usersall = Users::model()->with('profiles')->findAll($criteria);
+
+                    }
+                }else{
+
+
+                    $search_course = CourseOnline::model()->findAll("active='y' AND lang_id=1");
+                    $arrayIDCourse = [];
+                    $arrayIDCourseOrgCourse = [];
+                    foreach ($search_course as $keycourse => $valuecourse) {
+                     $arrayIDCourse[] = $valuecourse->course_id;
+                 }
+
+                 $criteria = new CDbCriteria;
+                 if ($model->department_id != null) {
+                    $criteria->compare('department_id',$model->department_id);
+                }
+                if ($model->position_id != null) {
+                    $criteria->compare('position_id',$model->position_id);
+                }
+                $orgRoot = OrgChart::model()->find($criteria);
+
+                $criteria = new CDbCriteria;
+                $criteria->compare('course_id',$arrayIDCourse);
+                $criteria->compare('orgchart_id',$orgRoot->id);
+                $criteria->compare('active','y');
+                $OrgCourse = OrgCourse::model()->findAll($criteria);
+
+                foreach ($OrgCourse as $keyOrgCourse => $valueOrgCourse) {
+                    $arrayIDCourseOrgCourse[] = $valueOrgCourse->course_id;
+                }
+                if (!empty($OrgCourse)) {
+
+                    if($orgRoot->branch_id != null || $orgRoot->position_id != null || $orgRoot->department_id != null ){
+                        $criteria = new CDbCriteria; 
+                        $criteria->compare('course_id',$arrayIDCourseOrgCourse);
+
+                                if($orgRoot->branch_id != ""){ // branch
+                                    $criteria->compare('branch_id',$orgRoot->branch_id);
+                                }elseif($orgRoot->position_id != ""){ // position
+                                    $criteria->compare('position_id',$orgRoot->position_id);
+                                }elseif($orgRoot->department_id != ""){ // dept
+                                    $criteria->compare('department_id',$orgRoot->department_id);
+                                }
+
+                                $modelUsers_old = ChkUsercourse::model()->findAll($criteria);
+                            }
+
+                            $criteria = new CDbCriteria; 
+                            $criteria->with = array('chk_usercourse');
+                            if($orgRoot->branch_id != ""){ 
+                                $criteria->compare('t.branch_id',$orgRoot->branch_id);
+                            }
+                            if($orgRoot->position_id != ""){ 
+                                $criteria->compare('t.position_id',$orgRoot->position_id);
+                            }
+                            if($orgRoot->department_id != ""){ 
+                                $criteria->compare('t.department_id',$orgRoot->department_id);
+                            }
+
+                            if($model->search_name != ""){
+                                $criteria->compare('CONCAT(profiles.firstname_en, " " , profiles.lastname_en , " "," ",profiles.firstname , " " , profiles.lastname)',$model->search_name,true);
+                            }
+
+                            $usersall_chk = Users::model()->with('profiles')->findAll($criteria);
+
+
+                            if($modelUsers_old){
+                                $criteria->compare('chk_usercourse.org_user_status',1);
+                                $criteria->compare('chk_usercourse.course_id',$arrayIDCourseOrgCourse);
+                            }
+                         // var_dump($arrayIDCourseOrgCourse);
+                            $usersall = Users::model()->with('profiles')->findAll($criteria);
+
+                        //var_dump($usersall);
+                        }
                     }
 
-                     $usersall_chk = Users::model()->with('profiles')->findAll($criteria);
-                
-                     if($modelUsers_old){
-                        $criteria->compare('chk_usercourse.org_user_status',0);
-                        $criteria->compare('chk_usercourse.course_id',$OrgCourse->course_id);
-                     }
+                    ?>
+                    <table class="table table-bordered" id="user-list">
+                       <thead>
+                          <tr>
+                            <th></th>
+                            <th>หลักสูตร</th>
+                            <th>แผนก</th>
+                            <th>ตำแหน่ง</th> 
+                            <th>Name</th>
+                            <th>ส่งเมลล์</th>           
 
-                     $usersall = Users::model()->with('profiles')->findAll($criteria);
+                        </tr>
+                    </thead>
+                    <tbody>
+                      <?php 
+                      if ($model->course_id != null) {
 
-          
-                 }
-                ?>
-                <table class="table table-bordered" id="user-list">
-         <thead>
-          <tr>
-            <th></th>
-            <th>หลักสูตร</th>
-            <th>แผนก</th>
-            <th>ตำแหน่ง</th> 
-            <th>Name</th>
-            <th>ส่งเมลล์</th>           
 
-          </tr>
-        </thead>
-        <tbody>
-          <?php 
+                          if($usersall){  
+                                $arrayIDCourseSend = "";
+                              foreach ($usersall as $key => $userItem) {
+                                 $arrayIDCourseSend = $userItem->chk_usercourse->Courses->course_id == null ? $OrgCourse->courses->course_id : $userItem->chk_usercourse->Courses->course_id;
+                                 ?>
+                                 <tr>
+                                    <td><input type="checkbox" id="UserItem<?= $userItem->id ?>" name="UserItem" value="<?= $userItem->id ?>" data="<?= $arrayIDCourseSend ?>"></td>
+                                    <td><?= $userItem->chk_usercourse->Courses->course_id == null ? $OrgCourse->courses->course_title : $userItem->chk_usercourse->Courses->course_title ?></td>
+                                    <td><?= $userItem->department->dep_title ?></td>
+                                    <td><?= $userItem->position->position_title ?></td>
+                                    <td><?= $userItem->profiles->firstname_en.' '.$userItem->profiles->lastname_en ?></td>
+                                    <td class="center"><button type="button" class="btn btn-danger" style='font-size: 15px;' onclick="sendMsg(<?= $userItem->id ?>,<?= $arrayIDCourseSend ?>);" >ส่งเมลล์</button></td>
+                                </tr>
+                            <?php } 
 
-          if($usersall){
-          foreach ($usersall as $key => $userItem) {
-           ?>
-           <tr>
-            <td><input type="checkbox" id="UserItem<?= $userItem->id ?>" name="UserItem" value="<?= $userItem->id ?>" data="<?= $OrgCourse->courses->course_title?>"></td>
-            <td><?= $OrgCourse->courses->course_title ?></td>
-            <td><?= $userItem->department->dep_title ?></td>
-            <td><?= $userItem->position->position_title ?></td>
-            <td><?= $userItem->profiles->firstname_en.' '.$userItem->profiles->lastname_en ?></td>
-            <td class="center"><button type="button" class="btn btn-danger" style='font-size: 15px;' onclick="sendMsg(<?= $userItem->id ?>,<?= $OrgCourse->course_id ?>);" >ส่งเมลล์</button></td>
-          </tr>
-          <?php } 
+                        }else{ ?>
+                           <td colspan ="999">ไม่พบข้อมูล</td>
+                       <?php }
 
-           }else{?>
-             <td colspan ="999">ไม่พบข้อมูล</td>
-         <?php }
-           ?>
+                   }else{
 
-        </tbody>
+                    if($usersall){  
+                        $arrayIDCourseSend = "";
+                        foreach ($OrgCourse as $keyOrgCourse => $valueOrgCourse) {
+                          foreach ($usersall as $key => $userItem) {
+                                $arrayIDCourseSend = $userItem->chk_usercourse->Courses->course_id == null ? $valueOrgCourse->courses->course_id : $userItem->chk_usercourse->Courses->course_id;
+                             ?>
+                             <tr>
+                                <td><input type="checkbox" id="UserItem<?= $userItem->id ?>" name="UserItem" value="<?= $userItem->id ?>" data="<?= $arrayIDCourseSend ?>"></td>
+                                <td><?= $userItem->chk_usercourse->Courses->course_id == null ? $valueOrgCourse->courses->course_title : $userItem->chk_usercourse->Courses->course_title ?></td>
+                                <td><?= $userItem->department->dep_title ?></td>
+                                <td><?= $userItem->position->position_title ?></td>
+                                <td><?= $userItem->profiles->firstname_en.' '.$userItem->profiles->lastname_en ?></td>
+                                <td class="center"><button type="button" class="btn btn-danger" style='font-size: 15px;' onclick="sendMsg(<?= $userItem->id ?>,<?= $valueOrgCourse->courses->course_id ?>);" >ส่งเมลล์</button></td>
+                            </tr>
+                        <?php } 
+                    }
 
-      </table>
-<?php
-}
-?>
-               
-            </div>
-        </div>
-        <?php  if ($usersall) {
+                }else{ ?>
+                   <td colspan ="999">ไม่พบข้อมูล</td>
+               <?php }
+
+           } ?>
+
+       </tbody>
+
+   </table>
+
+</div>
+</div>
+<?php  if ($usersall) {
         //if( Controller::DeleteAll(array("LogStartcourse.*", "LogStartcourse.sendMailMessage", "LogStartcourse.MultiSendMailMessages")) ) : ?>
         <!-- Options -->
         <div class="separator top form-inline small">
@@ -250,31 +333,33 @@ EOD
             <div class="buttons pull-left">
                 <?php echo CHtml::link("<i></i> ส่งเมลล์ทั้งหมด","#",array(
                     "class"=>"btn btn-primary btn-icon glyphicons circle_minus",
-                    "onclick"=>"return MultiSendMailMessage('".$this->createUrl('//'.$formNameModel.'/MultiSendMailCourseMessages')."','".$OrgCourse->course_id."');"
+                    "onclick"=>"return MultiSendMailMessage('".$this->createUrl('//'.$formNameModel.'/MultiSendMailCourseMessages')."');"
                 )); ?>
             </div>
             <!-- // With selected actions END -->
             <div class="clearfix"></div>
         </div>
         <!-- // Options END -->
-<?php }//endif; ?>
-    </div>
+    <?php }//endif; ?>
+</div>
 
 </div>
 
 <script type="text/javascript">
 
-function MultiSendMailMessage(url,course_id) {
+function MultiSendMailMessage(url) {
 
   var items = new Array();
+  var course = new Array();
  $('input[name=UserItem]').each(function() {
     var $this = $(this);
     if ($this.is(':checked')) {
         items.push($this.val());
+        course.push($this.attr('data'));
     }
   });
-
-  if (items.length <= 0) {
+// console.log(course);
+  if (items.length <= 0 && course.length <= 0) {
         swal("กรุณาเลือกรายชื่อที่จะส่งเมลล์");
         return false;
     }
@@ -296,15 +381,16 @@ function MultiSendMailMessage(url,course_id) {
             url: url,
             data: {
                 chk: items,
-                course_id: course_id,
+                course: course,
             },
             success: function (data) {
+                console.log(data);
                 notyfy({
                     dismissQueue: false,
                     text: "ลบส่งเมลล์เรียบร้อย",
                     type: 'success'
                 });
-                location.reload();
+                //location.reload();
             },
             error: function (XHR) {
                 alert('เกินข้อผิดพลาดกรุณาทำข้อมูลไหม');
