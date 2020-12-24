@@ -7051,3 +7051,24 @@ a.thumbnail:focus {
 .of-in{
     overflow: initial !important;
 }
+
+
+.clear-div {
+    clear: both;
+}
+
+
+.form-control{
+    max-width: 90%;
+}
+
+@media (max-width: 767px){
+    .table-responsive {
+        display: block;
+    }
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
