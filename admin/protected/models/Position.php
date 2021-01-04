@@ -145,11 +145,11 @@ class Position extends CActiveRecord
 		return parent::beforeSave();
 	}
 
-	public function getPositionListNew(){
-		$model = Position::model()->findAll('active = "y" AND lang_id = 1');
-		$list = CHtml::listData($model,'id','position_title');
-		return $list;
-	}
+	// public function getPositionListNew(){
+	// 	$model = Position::model()->findAll('active = "y" AND lang_id = 1');
+	// 	$list = CHtml::listData($model,'id','position_title');
+	// 	return $list;
+	// }
 
 	public function getPositionList($department_id = null){
 		$strSql = $department_id != null ? ' AND department_id='.$department_id : '';

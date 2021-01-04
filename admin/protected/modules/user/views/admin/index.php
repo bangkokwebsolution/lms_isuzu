@@ -12,6 +12,32 @@ $formNameModel = 'User';
 //     array('label'=>UserModule::t('Manage Profile Field'), 'url'=>array('profileField/admin')),
 //     array('label'=>UserModule::t('List User'), 'url'=>array('/user')),
 // );
+$type_emp = 0;
+$Department_ID = array();
+if ($this->route === "user/admin/employeeShip") {
+	$type_emp = 1;
+	$Department = Department::model()->findAll('active = "y" AND lang_id = 1 AND type_employee_id = 1');
+	foreach ($Department as $key => $value) {
+	$Department_ID[] = $value->id;
+	}
+	  $criteria= new CDbCriteria;
+	  $criteria->compare('active','y');
+	  $criteria->compare('lang_id',1);
+	  $criteria->addInCondition('department_id', $Department_ID);
+	  $ListPosition = Position::model()->findAll($criteria);
+
+}else if ($this->route === "user/admin/employee"){
+	$type_emp = 2;
+	$Department = Department::model()->findAll('active = "y" AND lang_id = 1 AND type_employee_id = 2');
+	foreach ($Department as $key => $value) {
+	$Department_ID[] = $value->id;
+	}
+	$criteria= new CDbCriteria;
+	  $criteria->compare('active','y');
+	  $criteria->compare('lang_id',1);
+	  $criteria->addInCondition('department_id', $Department_ID);
+	  $ListPosition = Position::model()->findAll($criteria);
+}
 
 Yii::app()->clientScript->registerScript('search', "
 	$('#SearchFormAjax').submit(function(){
@@ -172,7 +198,7 @@ EOD
 											'visible' => $this->route == "user/admin/employeeShip",
 											'value'=>function($data){
 												return $data->profile->passport;
-						            	//var_dump($data->profile->type_user);
+						  
 											},
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
 
@@ -185,7 +211,6 @@ EOD
 											'visible' =>  $this->route === "user/admin/employee" ,
 											'value'=>function($data){
 												return $data->username;
-						            	//var_dump($data->profile->type_user);
 											},
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
 										),
@@ -194,7 +219,7 @@ EOD
 											'name'=>'department_id',
 											'type'=>'html',
 											'visible' => $this->route != "user/admin/General",
-											'filter'=>Department::getDepartment(),
+											'filter'=>CHtml::listData(Department::model()->findAll('active = "y" AND lang_id = 1 AND type_employee_id = "'.$type_emp.'" '),'id','dep_title'),
 											'value'=>function($data){
 												return $data->department->dep_title;
 											},
@@ -206,7 +231,7 @@ EOD
 											'name'=>'position_id',
 											'type'=>'html',
 											'visible' => $this->route != "user/admin/General",
-											'filter'=>Position::getPositionListNew(),
+											'filter'=>CHtml::listData($ListPosition,'id','position_title'),
 											'value'=>function($data){
 												return $data->position->position_title;
 											},
@@ -249,7 +274,7 @@ EOD
 									// 	array(
 									// 		'header' => 'สิทธิการใช้งาน',
 									// 		'type'=>'html',
-									// 		'value'=>'User::itemAlias("AdminStatus",$data->superuser)',
+									//		'value'=>'User::itemAlias("AdminStatus",$data->superuser)',
 									// 		'filterHtmlOptions'=>array('style'=>'width:30px'),
 									// 	//	'htmlOptions'=>array('style'=>'text-align: center;width:100%;'),
 									// // 'filter'=>User::itemAlias("AdminStatus"),
