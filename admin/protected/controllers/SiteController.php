@@ -30,11 +30,17 @@ class SiteController extends Controller
 
 	//No Login
 	public function redirecting()
-	{
-		Yii::app()->session->clear();
-		Yii::app()->session->destroy();
-	    $this->redirect(array('/user/login'));
-	    Yii::app()->end();
+	{ 
+		if (Yii::app()->user->id) {
+			Yii::app()->session->clear();
+			Yii::app()->session->destroy();
+		    $this->redirect(array('/user/login'));
+		    Yii::app()->end();
+		}else{
+			Yii::app()->session->clear();
+		    $this->redirect(array('/user/login'));
+		    Yii::app()->end();
+		}
 	}
 
 	public function actionIndex()
@@ -86,7 +92,7 @@ class SiteController extends Controller
 
 	public function actionTest()
 	{
-		var_dump("asdasdasdasdasd");exit();
+		
 		require_once __DIR__ . '/vendor/autoload.php';
 
 		$mpdf = new \Mpdf\Mpdf();
