@@ -1796,7 +1796,7 @@ public function actionDetail($id) {
         }
 
         $course_model = CourseOnline::model()->findByPk($PassCoursId);
-        $gen_id = $course_model->getGenID($course_model->course_id);
+        // $gen_id = $course_model->getGenID($course_model->course_id);
 
         $logStartTime = LogStartcourse::model()->findByAttributes(array('user_id' => $UserId,'course_id'=> $PassCoursId, 'gen_id'=>$gen_id));
 
