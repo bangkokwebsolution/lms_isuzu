@@ -8,6 +8,8 @@ class SendMailAlertCourse extends CFormModel {
     public $position_id;
     public $department_id;
     public $course_id;
+    public $status;
+    public $gen_id;
     
     
 
@@ -16,10 +18,10 @@ class SendMailAlertCourse extends CFormModel {
     {
         return array(
             // array('course_id', 'required'),
-            array('news_per_page,search_name,type_employee , position_id, department_id,course_id', 'safe'),
+            array('news_per_page,search_name,type_employee , position_id, department_id,course_id,status,gen_id', 'safe'),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('search_name,type_employee , position_id, department_id,course_id', 'safe', 'on'=>'search'),
+            array('search_name,type_employee , position_id, department_id,course_id,status,gen_id', 'safe', 'on'=>'search'),
         );
     }
     
@@ -35,17 +37,38 @@ class SendMailAlertCourse extends CFormModel {
     //     );
     // }
 
+
     public function attributeLabels(){
+        $color = '<font style="color:red">*</font>';
         return array(
             'id' => 'ID',
             'user_id' => 'User',
-            'course_id' => 'Course',
-            'type_employee' => 'ประเภทพนักงาน',
+            'course_id' => 'Course'.$color,
+            'type_employee' => 'ประเภทพนักงาน'.$color,
             'position_id' => 'ตำแหน่ง',
-            'department_id' => 'แผนก',
+            'department_id' => 'แผนก'.$color,
             'search_name' => 'ชื่อ-สกุล',//, เลขบัตรประชาชน-พาสปอร์ต
+            'status'=>'สถานะการเรียน'.$color,
+            'gen_id'=>'รุ่น'.$color,
             
         );
+    }
+
+    public function getSatus(){
+       $list = array(
+        '1'=>'สมัครเข้าเรียนแล้ว',
+        '2'=>'กำลังเรียน',
+        '3'=>'ยังไม่ได้เข้าเรียน'
+        );
+        return $list;
+    }
+
+    public function getGenList(){
+
+        $model = CourseGeneration::model()->findAll('active = "y"');
+        $list = CHtml::listData($model,'gen_id','gen_title');
+        return $list;
+        
     }
 
 }

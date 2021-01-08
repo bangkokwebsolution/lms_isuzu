@@ -257,4 +257,24 @@ class LogStartcourseController extends Controller
 
 			}
 		}
+
+	public function actionListGen()
+		{
+			$criteria= new CDbCriteria;
+			$criteria->condition='course_id=:course_id AND active=:active';
+			$criteria->params=array(':course_id'=>$_POST['course_id'],':active'=>'y');
+			$model = CourseGeneration::model()->findAll($criteria);
+			if ($model) {
+
+				$sub_list = Yii::app()->session['lang'] == 1?'Select Gen ':'เลือกรุ่น';
+				$data = '<option value ="">'.$sub_list.'</option>';
+				foreach ($model as $key => $value) {
+					$data .= '<option value = "'.$value->gen_id.'"'.'>'.$value->gen_title.'</option>';
+				}
+				echo ($data); 
+			}else{
+				echo '<option value = "">ไม่พบข้อมูล</option>';
+
+			}
+		}
 }
