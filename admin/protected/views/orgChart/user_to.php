@@ -1,11 +1,17 @@
 
 <?php
-$modelUsers_old_chk = ChkUsercourseto::model()->find(
+$modelUsers_old_chk = ChkUsercourseto::model()->findAll(
         array(
           'condition' => 'course_id=:course_id AND orgchart_id=:orgchart_id',
           'params' => array(':course_id'=>$_GET['id'], ':orgchart_id'=>$_GET['orgchart_id'] )
         )
       );
+
+$modelUsers_old_chk_user = [];
+foreach ($modelUsers_old_chk as $key2 => $val) {
+  $modelUsers_old_chk_user[] = $val->user_id;
+}
+
   
 $titleName = 'จัดการผู้ใช้งาน';
 $formNameModel = 'CourseOnline';
@@ -139,7 +145,7 @@ echo CHtml::dropDownList('branch','', '' , array(
 
             $criteria = new CDbCriteria; 
             $criteria->with = array('profiles');
-
+           
             if($_GET['dep'] != null){
               $criteria->compare('department_id',$_GET['dep']);
             }
@@ -185,13 +191,13 @@ echo CHtml::dropDownList('branch','', '' , array(
             // $criteria->addNotInCondition('branch_id',[$orgRoot->branch_id]); 
             // }
 
-            if($modelUsers_old_chk){
-              $criteria->addNotInCondition('id',[$modelUsers_old_chk->user_id]); 
+            if(count($modelUsers_old_chk) > 0){
+              $criteria->addNotInCondition('id',$modelUsers_old_chk_user); 
             }
 
 
-
             $user_list = Users::model()->findAll($criteria);
+
 
             if($user_list){
               foreach ($user_list as $key => $userItem) {
@@ -241,10 +247,11 @@ echo CHtml::dropDownList('branch','', '' , array(
         </thead>
         <tbody>
           <?php 
+
           $criteria = new CDbCriteria; 
           $criteria->with = array('profiles');
-          if($modelUsers_old_chk){
-            $criteria->addInCondition('id',[$modelUsers_old_chk->user_id]);
+          if(count($modelUsers_old_chk) > 0){
+            $criteria->addInCondition('id',$modelUsers_old_chk_user);
             $modeluser = Users::model()->findAll($criteria);
           }
 

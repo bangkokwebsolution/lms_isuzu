@@ -28,7 +28,7 @@ class OrgChartController extends Controller
     {
     	return array(
         	array('allow',  // allow all users to perform 'index' and 'view' actions
-        		'actions'=>array('index','view','OrgChart2','OrgChartSave','SaveOrgchart', 'CheckUser','Course', 'DelUser','DelteUser','CreateUser'),
+        		'actions'=>array('index','view','OrgChart2','OrgChartSave','SaveOrgchart', 'CheckUser','Course', 'DelUser','DelteUser','CreateUser','AddUserTo'),
         		'users'=>array('*'),
         	),
         	array('allow',
