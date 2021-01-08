@@ -744,7 +744,7 @@ table .t-edu {
           <td style="text-align:center; " valign="top">
             <p class="f-14"><?php
         if ($edu_id == $edu_ids) {
-         echo 25; echo  $date_graduation;
+          echo  $date_graduation;
             }else{
            echo "-";   
             }  
