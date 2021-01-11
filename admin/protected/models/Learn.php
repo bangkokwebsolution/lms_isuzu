@@ -117,7 +117,7 @@ class Learn extends CActiveRecord
 		// $criteria->addCondition('lesson_active = "y"');
 	    $criteria->addCondition('User.del_status = "0"');
 		$criteria->compare('CONCAT(User.username)',$this->search_value,true);
-		$criteria->compare('concat(Profile.firstname," ",Profile.lastname)',$this->searchname,true);
+		$criteria->compare('concat(Profile.firstname_en," ",Profile.lastname_en)',$this->searchname,true);
 		//$criteria->compare('search_course',$this->search_course);
       
 		$poviderArray = array('criteria' => $criteria);

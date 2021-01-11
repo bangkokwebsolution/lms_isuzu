@@ -60,7 +60,7 @@ Yii::app()->clientScript->registerScript('search', "
                                             'header' => 'ชือ-นามสกุล',
                                             'type' => 'html',
                                             'value' => function($val) {
-                                                $strName = $val->Profile->firstname."  ".$val->Profile->lastname;
+                                                $strName = $val->Profile->firstname_en."  ".$val->Profile->lastname_en;
                                                 return $strName;
                                             },
                                         ),
