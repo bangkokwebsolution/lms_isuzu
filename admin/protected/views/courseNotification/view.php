@@ -30,7 +30,15 @@ $this->breadcrumbs=array(
 		// 'generation_id',
 		'notification_time',
 		'create_date',
-		// 'update_date',
+		array(
+			'name'=>'create_by',
+			'value'=>$model->usercreate->username
+		),
+		'update_date',
+		array(
+			'name'=>'update_by',
+			'value'=>$model->userupdate->username
+		),
 		// 'active',
 	),
 )); ?>
