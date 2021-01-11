@@ -134,7 +134,7 @@ class ReportProblem extends CActiveRecord
 		$criteria->compare('report_title',$this->report_title,true);
 		$criteria->compare('report_detail',$this->report_detail,true);
 		$criteria->compare('report_pic',$this->report_pic,true);
-		$criteria->compare('status',$this->status,true);
+		$criteria->compare('t.status',$this->status,true);
 		$criteria->compare('accept_report_date',$this->accept_report_date,true);	
 		$criteria->compare('answer',$this->answer,true);
 		$criteria->compare('report_course',$this->report_course,true);
