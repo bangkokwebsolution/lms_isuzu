@@ -24,7 +24,7 @@
 									<hr>
 									<ul class="list-unstyled">
 										<li><?= $labelCourse->label_totalTest  ?> <span class="pull-right"><?= $total_score; ?> <?= $labelCourse->label_list ?></span></li>
-										<li><?= UserModule::t('timeTest') ?> <span class="pull-right"><?= $lesson->time_test; ?> <?= UserModule::t('minute') ?></span></li>
+										<li><?= UserModule::t('timeTest') ?> <span class="pull-right"><?= $lesson->time_test; ?> <?= UserModule::t('Minutes') ?></span></li>
 										<li><?= UserModule::t('totoal') ?> <span class="pull-right"><?php if($num_choice != 0){ echo $num_choice; }else{ echo $total_score; } ?> <?= $labelCourse->label_point ?></span></li>
 									</ul>
 									<div class="text-center">

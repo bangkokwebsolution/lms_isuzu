@@ -86,9 +86,9 @@ if($modelScore->type=='post' && !$state){
 					<div class="well detail">
 						<ul class="list-unstyled">
 							<li><?= $labelCourse->label_totalTest ?> <span class="pull-right"><?= count($temp_all) ?> <?= $labelCourse->label_list ?></span></li>
-							<li><?=UserModule::t('timeTest');?> <span class="pull-right"><?= $lesson->time_test; ?> <?=UserModule::t('minute');?></span></li>
+							<li><?=UserModule::t('timeTest');?> <span class="pull-right"><?= $lesson->time_test; ?> <?=UserModule::t('Minutes');?></span></li>
 
-							<li><?=UserModule::t('timeToUse');?> <span class="pull-right"><?= $timeTest ?> <?=UserModule::t('minute');?></span></li>
+							<li><?=UserModule::t('timeToUse');?> <span class="pull-right"><?= $timeTest ?> <?=UserModule::t('Minutes');?></span></li>
 							<li><?=UserModule::t('totoal');?> <span class="pull-right"><?= $modelScore->score_total; ?> <?= $labelCourse->label_point; ?></span></li>
 							<li><?= $labelCourse->label_haveCorrect; ?> <span class="pull-right"><?= $modelScore->score_number; ?> <?= $labelCourse->label_point; ?></span></li>
 							<li><?= $labelCourse->label_percentage ?> <span class="pull-right"><?= $percent; ?> %</span></li>

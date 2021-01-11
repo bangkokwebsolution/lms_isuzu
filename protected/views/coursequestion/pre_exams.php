@@ -31,7 +31,7 @@
 							<li>
 								<?= UserModule::t('timeTest') ?> 
 								<span class="pull-right">
-									<?= $course->time_test; ?> <?= UserModule::t('Minute') ?>
+									<?= $course->time_test; ?> <?= UserModule::t('Minutes') ?>
 								</span>
 							</li>
 							<li>

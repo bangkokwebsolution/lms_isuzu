@@ -101,11 +101,11 @@ if($course->cate_id != 1){ //LMS
 							</li>
 							<li>
 								<?=UserModule::t('timeTest');?> 
-								<span class="pull-right"><?= $course->time_test; ?> <?=UserModule::t('Minute');?></span>
+								<span class="pull-right"><?= $course->time_test; ?> <?=UserModule::t('Minutes');?></span>
 							</li>
 							<li>
 								<?=UserModule::t('timeToUse');?> 
-								<span class="pull-right"><?= $timeTest ?> <?=UserModule::t('Minute');?></span>
+								<span class="pull-right"><?= $timeTest ?> <?=UserModule::t('Minutes');?></span>
 							</li>
 							<li>
 								<?=UserModule::t('totoal');?> 
