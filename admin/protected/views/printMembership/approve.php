@@ -6,6 +6,9 @@
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/highcharts.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/modules/exporting.js"></script>
 
+<script type="text/javascript">
+	$("[name='PrintMembership[nameSearch]']").hide();
+</script>
 
 <?php
 $titleName = 'พิมพ์ใบสมัครสำหรับคนประจำเรือ';
@@ -33,14 +36,13 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	}
 	$.appendFilter("PrintMembership[news_per_page]", "news_per_page");
 EOD
-    , CClientScript::POS_READY);
+, CClientScript::POS_READY);
 	?>
 	<div id="user" class="innerLR">
 		 <?php
 		$this->widget('AdvanceSearchForm', array(
 			'data'=>$model,
 			'route' => $this->route,
-        //'id'=>'SearchFormAjax',
 			'attributes'=>array(
 				array('name'=>'position_id','type'=>'list','query'=>Position::getPositionListSearch()),
                 array('name'=>'nameSearch','type'=>'text'),
@@ -87,29 +89,16 @@ EOD
 						</div> --><!-- search-form -->					  
 						<?php
 						$this->widget('AGridView', array(
-							'id'=>$formNameModel.'-grid',
+					'id'=>$formNameModel.'-grid',
 					'dataProvider'=>$model->searchapprove(),
 					'filter'=>$model,
-					'selectableRows' => 2,
-					'rowCssClassExpression'=>'"items[]_{$data->id}"',
+					'selectableRows' => 2,	
 					'htmlOptions' => array(
 						'style'=> "margin-top: -1px;",
 					),
 					'afterAjaxUpdate'=>'function(id, data){
 						$.appendFilter("PrintMembership[news_per_page]");
 						InitialSortTable();	
-				        jQuery("#course_date").datepicker({
-						   	"dateFormat": "dd/mm/yy",
-						   	"showAnim" : "slideDown",
-					        "showOtherMonths": true,
-					        "selectOtherMonths": true,
-				            "yearRange" : "-5+10", 
-					        "changeMonth": true,
-					        "changeYear": true,
-				            "dayNamesMin" : ["อา.","จ.","อ.","พ.","พฤ.","ศ.","ส."],
-				            "monthNamesShort" : ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.",
-				                "ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."],
-					   })
 					}',
 							'columns'=>array(
 								array(
@@ -117,17 +106,19 @@ EOD
 									'value'=>'$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
 								),
 								array(
-									'header' => 'ชื่อ - นามสกุล',
+									'name' => 'nameSearch',
 									// 'name' => 'fullname',
 									'type'=>'html',
+									// 'filter' => false,
 									'value'=>function($data){
 										return $data->profile->firstname_en . ' ' . $data->profile->lastname_en;
 									}
 								),
 								array(
-									'header' => 'ตำแหน่งที่สมัคร',
+									'name' => 'position_id',
 									// 'name' => 'position_id',
 									'type'=>'html',
+									// 'filter' => false,
 									'value'=>function($data){
 										return $data->position->position_title;
 									}
@@ -135,7 +126,7 @@ EOD
 								array(
 									'header' => 'วันที่ลงทะเบียน',
 									'type'=>'html',
-									'filter' => false,
+									// 'filter' => false,
 									'value'=>function($data){
 										return Helpers::changeFormatDate($data->create_at,'datetime');
 									},

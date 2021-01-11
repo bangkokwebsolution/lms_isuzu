@@ -39,13 +39,11 @@
 class PrintMembership extends CActiveRecord
 {
 	public $searchValue;
-	public $news_per_page;
 	public $supper_user_status;
 	public $idensearch;
 	public $nameSearch;
 	public $fullname;
-
-
+	public $news_per_page;
 
 	/**
 	 * @return string the associated database table name
@@ -70,11 +68,9 @@ class PrintMembership extends CActiveRecord
 			array('last_ip', 'length', 'max'=>100),
 			array('bookkeeper_id', 'length', 'max'=>13),
 			array('auditor_id', 'length', 'max'=>5),
-			array('lastvisit_at, last_activity', 'safe'),
+			array('lastvisit_at, last_activity,news_per_page,nameSearch', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('news_per_page', 'safe'),
-
 			array('id, username, password, email, pic_user, orgchart_lv2, department_id, activkey, create_at, lastvisit_at, superuser, status, online_status, online_user, last_ip, last_activity, lastactivity, avatar, company_id, division_id, position_id, bookkeeper_id, pic_cardid, auditor_id, pic_cardid2, del_status, group, identification, supper_user_status, idensearch, nameSearch, fullname', 'safe', 'on'=>'search'),
 		);
 	}
@@ -131,7 +127,7 @@ class PrintMembership extends CActiveRecord
 			'searchValue' => 'ชื่อ นามสกุล',
 			'supper_user_status' => 'สถานะ',
 			'idensearch' => 'รหัสบัตรประชาชน',
-			'nameSearch' => 'ชื่อ นามสกุล',
+			'nameSearch' => 'ชื่อ - นามสกุล',
 			'fullname' => 'ชื่อเต็ม',
 		);
 	}
@@ -181,13 +177,15 @@ class PrintMembership extends CActiveRecord
         // should not be searched.
         $criteria=new CDbCriteria;
 
-        $criteria->with = array('profile');
+        // $criteria->with = array('profile');
+		$criteria->with = array('profile','position');
 
         $criteria->compare('id',$this->id);
         $criteria->compare('username',$this->username,true);
         $criteria->compare('password',$this->password);
         $criteria->compare('pic_user',$this->pic_user);
         $criteria->compare('station_id',$this->station_id);
+		$criteria->compare('position_id',$this->position_id);
         $criteria->compare('department_id',$this->department_id);
         $criteria->compare('email',$this->email,true);
         $criteria->compare('activkey',$this->activkey);
@@ -376,23 +374,15 @@ public function searchapprove()
 	$criteria->compare('profile.identification',$this->idensearch,true);
 	$criteria->compare('CONCAT(profile.firstname , " " , profile.lastname , " ", " ", username," ",profile.firstname_en , " " , profile.lastname_en)',$this->nameSearch,true);
      
-	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
-	//$criteria->compare('orgchart_lv2',$org,true);
-	// $dataProvider = new CActiveDataProvider(get_class($this), array(
-	// 	'criteria'=>$criteria,
-	// 	'pagination'=>array(
-	// 		'pageSize'=>Yii::app()->getModule('user')->user_page_size,
-	// 	),
-	// ));
-	// return $dataProvider;
-	$dataProvider = array('criteria'=>$criteria);
-		// Page
-		if(isset($this->news_per_page))
-		{
-			$dataProvider['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
-		}
-		
-		return new CActiveDataProvider($this, $dataProvider);
+	 $poviderArray = array('criteria'=>$criteria);
+
+        // Page
+    if(isset($this->news_per_page))
+    {
+        $poviderArray['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
+    }
+
+    return new CActiveDataProvider($this, $poviderArray);
 
 }
 	/**
