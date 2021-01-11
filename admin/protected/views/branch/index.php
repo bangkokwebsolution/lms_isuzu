@@ -67,16 +67,25 @@ EOD
 	<?php 
 
 	 $department = Department::model()->findAll(array(
-        'condition' => 'active = "y"',
+        'condition' => 'type_employee_id = "2" AND active = "y"',
         'order' => 'dep_title ASC'
     ));
     $listdepartment = CHtml::listData($department,'id','dep_title');
 
-
-    $position = Position::model()->findAll(array(
-        'condition' => 'active = "y"',
-        'order' => 'position_title ASC'
-    ));
+    $Department_ID = [];
+	$Department = Department::model()->findAll('active = "y" AND lang_id = 1 AND type_employee_id = 2');
+	foreach ($Department as $key => $value) {
+	$Department_ID[] = $value->id;
+	}
+	$criteria= new CDbCriteria;
+	  $criteria->compare('active','y');
+	  $criteria->compare('lang_id',1);
+	  $criteria->addInCondition('department_id', $Department_ID);
+	  $position = Position::model()->findAll($criteria);
+    // $position = Position::model()->findAll(array(
+    //     'condition' => 'active = "y"',
+    //     'order' => 'position_title ASC'
+    // ));
     $listposition = CHtml::listData($position,'id','position_title');
 
 
