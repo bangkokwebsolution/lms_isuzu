@@ -48,6 +48,22 @@ EOD
              }
          });
     }
+    function deleteFile(file_id){
+
+         $.get("<?php echo $this->createUrl('VirtualClassroom/deletefile'); ?>",{id:file_id},function(data){console.log(data);
+            if(data){
+            	var obj = JSON.parse(data);
+            	if (obj['success'] === true) {
+            		swal(obj['message']);
+            		location.reload();
+            	}else{
+            		swal(obj['message']);
+            	}
+             }else{
+                swal('ไม่สามารถลบไฟล์ได้');
+             }
+         });
+    }
 </script>
 <div class="innerLR">
 	
@@ -178,7 +194,11 @@ EOD
 								$docList = '<br>';
 								if(count($data->docs) > 0){
 									foreach ($data->docs as $key => $doc) {
-										$docList .= "<a target='_blank' href='".Yii::app()->getUploadUrl('vc').$doc->name."'>".($key+1).". ".$doc->name."</a><br>";
+										if ($doc->active === "y") {
+											$docList .= "<a target='_blank' href='".Yii::app()->getUploadUrl('vc').$doc->name."'>".($key+1).". ".$doc->name."</a>&nbsp;";
+											$docList .= CHtml::link('<i></i>','', array('title'=>'ลบไฟล์','class'=>'btn-action fa fa-times btn-danger remove_2','style'=>'z-index:1; background-color:black; cursor:pointer;','onclick'=>'if(confirm("คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร")){ deleteFile("'.$doc->id.'"); }'));
+											$docList .= "<br>";
+										}
 									}
 								}
 
@@ -217,7 +237,7 @@ EOD
 											unset($result['messageKey']);
 											unset($result['message']);
 											foreach ($result as $key => $record) {
-														echo "<a href='".$record['playbackFormatUrl'][0]."' target='_blank'>".($key+1).". วีดีโอ</a>";
+														echo "<a href='".$record['playbackFormatUrl'][0]."' target='_blank'>".($key+1).". วีดีโอ</a>&nbsp;";
 														echo CHtml::link('<i></i>','', array('title'=>'ลบไฟล์','class'=>'btn-action fa fa-times btn-danger remove_2','style'=>'z-index:1; background-color:black; cursor:pointer;','onclick'=>'if(confirm("คุณต้องการลบไฟล์ใช่หรือไม่ ?\nเมื่อคุณตกลงระบบจะทำการลบไฟล์ออกจากระบบแบบถาวร")){ deletevdo("'.$record['recordId'][0].'","'.$data->id.'"); }'));
 														echo "<br>";
 											}
@@ -237,14 +257,12 @@ EOD
 						// 		$bbb = new BigBlueButton();
 
 						// 		$recordingsParams = array(
-						// 			'meetingId' => $data->id, 			// OPTIONAL - comma separate if multiples
-						// 			'recordId' => 'f38cfe2e2facbcc742bad63f91ad55637300cb45-1593514266630', 			
-						// 			'publish' => 'true',
+						// 			'recordId' => 'a2e33d344f272e100d4a8efeabc7ae8a60a8ba7a-1606211097089', 			
+						// 			//'publish' => 'true',
 						// 		);
-						// 		//var_dump($recordingsParams);
-						// 		// Get the URL to join meeting:
+
 						// 		$itsAllGood = true;
-						// 		try {$result = $bbb->publishRecordingsWithXmlResponseArray($recordingsParams);}
+						// 		try {$result = $bbb->getRecordingTextTracksWithXmlResponseArray($recordingsParams);}
 						// 		catch (Exception $e) {
 						// 			echo 'Caught exception: ', $e->getMessage(), "\n";
 						// 			$itsAllGood = false;
@@ -258,19 +276,15 @@ EOD
 						// 			}	
 						// 			else { 
 						// 			// We got an XML response, so let's see what it says:
-							
+						// 	//var_dump($result);
 						// 				if ($result['returncode'] == 'SUCCESS') {
-						// 					//var_dump($result['published']);
-						// 					// Then do stuff ...
-						// 					// unset($result['returncode']);
-						// 					// unset($result['messageKey']);
-						// 					// unset($result['message']);
+				
 						// 					foreach ($result as $key => $record) {
-      //                             			 var_dump($record['playbackFormatUrl'][0]);
-						// 						 //header('Content-Disposition: attachment; filename="'.$record['playbackFormatUrl'][0].'.mp4"');
+                                  	
+						// 						//header('Content-Disposition: attachment; filename="'.$record['playbackFormatUrl'][0].'.mp4"');
 
-						// 						echo "<a href='".$record['playbackFormatUrl'][0]."' target='_blank'>".($key+1).". วีดีโอ</a>";
-						// 						echo "<br>";
+						// 						// echo "<a href='".$record['published'][0]."' target='_blank'>".($key+1).". วีดีโอ</a>";
+						// 						// echo "<br>";
 						// 						// echo "<a href='".$record['playbackFormatUrl'][0]."' target='_blank'>".($key+1).". วีดีโอ</a>";
 						// 						// echo "<br>";
 						// 					} 

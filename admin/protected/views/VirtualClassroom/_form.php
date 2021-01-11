@@ -362,11 +362,11 @@ function upload()
            <?php foreach ($user as $key => $value) { ?>
             <option 
             id="director_ids_<?= $value->id; ?>" 
-            data-name="คุณ <?= $value->profile->firstname.' '.$value->profile->lastname; ?>"
+            data-name="<?= $value->profile->firstname_en.' '.$value->profile->lastname_en; ?>"
             data-prefix="คุณ" 
-            data-firstname="<?= $value->profile->firstname ?>"
-            data-lastname="<?= $value->profile->lastname ?>"
-            value="<?php echo $value->id ?>"><?php echo 'คุณ'.' '.$value->profile->firstname.' '.$value->profile->lastname;   ?></option>  
+            data-firstname="<?= $value->profile->firstname_en ?>"
+            data-lastname="<?= $value->profile->lastname_en ?>"
+            value="<?php echo $value->id ?>"><?php echo  $value->profile->firstname_en.' '.$value->profile->lastname_en;   ?></option>  
             <?php } ?></select>
 
           <!--   <span class="remove-cho"  style="cursor: pointer;">  

@@ -2,6 +2,15 @@
 
 class VirtualClassroomController extends Controller
 {
+	public function init()
+	{
+		// parent::init();
+		// $this->lastactivity();
+		if(Yii::app()->user->id == null){
+				$this->redirect(array('site/index'));
+			}
+		
+	}
 	private function RandomPassword(){
 
 			$number="abcdefghijklmnopqrstuvwxyz0123456789";
@@ -703,6 +712,48 @@ class VirtualClassroomController extends Controller
 			echo json_encode($response); 
     	}
     }
+
+    public function actionDeletefile($id)
+    {
+    	if(null !== Yii::app()->user && isset(Yii::app()->user->id)){
+	    	if ($id !== null) {
+	    		$VRoomDoc = VRoomDoc::model()->findByPk($id);
+	    		$VRoomDoc->active = 'n';
+	  
+	    		if(is_file(Yii::app()->getUploadPath('vc').$VRoomDoc->name))
+                        {
+                            unlink(Yii::app()->getUploadPath('vc').$VRoomDoc->name);        
+                        }
+	    		
+	    		if ($VRoomDoc->save()) {
+	    				$response = [ 
+						'success' => true,
+						'message' => 'Delete successful'
+						];
+						echo json_encode($response); 
+	    		}else{
+	    			$response = [ 
+						'success' => false,
+						'message' => 'Delete Unsuccessful'
+						];
+						echo json_encode($response); 
+	    		}
+	    	}else{
+	    		$response = [ 
+					'success' => false,
+					'message' => 'No data found'
+				];
+				echo json_encode($response); 
+	    	}
+    	}else{
+    		$response = [ 
+				'success' => false,
+				'message' => 'User not found'
+			];
+			echo json_encode($response); 
+    	}
+    }
+
 
 
        public function actionChecklearn()

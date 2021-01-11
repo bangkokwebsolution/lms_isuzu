@@ -81,6 +81,7 @@ class VRoomDoc extends CActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('room_id',$this->room_id);
 		$criteria->compare('name',$this->name,true);
+		$criteria->compare('active','y');
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
