@@ -70,7 +70,7 @@
                   $libra_type = $value->library_type_name;
                 }
                 ?>
-                <button style="white-space: normal;" class="tab-btn-cate-type btn btn-default filter-button btn-lg" data-filter="cate_<?= $value->library_type_id ?>"><?= $libra_type ?></button>
+                <button style="white-space: normal;" class="tab-btn-cate-type btn btn-default filter-button btn-lg text-left" data-filter="cate_<?= $value->library_type_id ?>"><?= $libra_type ?></button>
         <?php } // foreach ($library_type_2 ?>              
             </div>
           </div>
@@ -905,7 +905,7 @@
                   $libra_type = $value->library_type_name;
                 }
                 ?>
-                <button style="white-space: normal;" class="tab-btn-cate-type btn btn-default filter-button btn-lg" data-filter="cate_<?= $value->library_type_id ?>"><?= $libra_type ?></button>
+                <button style="white-space: normal;" class="tab-btn-cate-type btn btn-default filter-button btn-lg text-left" data-filter="cate_<?= $value->library_type_id ?>"><?= $libra_type ?></button>
                 <?php
               } // foreach ($library_type_1
 
