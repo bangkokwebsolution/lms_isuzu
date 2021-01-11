@@ -149,6 +149,20 @@ EOD
 									}
 								),
 								array(
+									'header' => 'เงินเดือนที่คาดหวัง',
+									'type'=>'html',
+									'value'=>function($data){
+										return $data->profile->expected_salary;
+									}
+								),
+								array(
+									'header' => 'วันที่พร้อมเริ่มทำงาน',
+									'type'=>'html',
+									'value'=>function($data){
+										return Helpers::lib()->changeFormatDateNew($data->profile->start_working,'date');;
+									}
+								),
+								array(
 									'header' => 'สถานะ',
 									'type'=>'html',
 									'value'=>function($data){
