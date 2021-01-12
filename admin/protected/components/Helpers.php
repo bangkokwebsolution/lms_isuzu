@@ -109,7 +109,7 @@ Class Helpers
                     $month = 'error';
                     break;
             }
-            return $days.' '.$month.' '.$year;
+            return $day.' '.$month.' '.$year;
         } else if($date != '') {
             if($date == '0000-00-00'){
             return '-';

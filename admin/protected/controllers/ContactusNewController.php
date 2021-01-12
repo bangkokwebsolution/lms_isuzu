@@ -2,11 +2,16 @@
 
 class ContactusNewController extends Controller
 {
-	// public function init()
-	// {
-	// 	parent::init();
-	// 	$this->lastactivity();
-	// }
+	public function init()
+	{
+		// parent::init();
+		// $this->lastactivity();
+		if(Yii::app()->user->id == null){
+				$this->redirect(array('site/index'));
+			}
+		
+	}
+	
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
 	 * using two-column layout. See 'protected/views/layouts/column2.php'.

@@ -2,6 +2,15 @@
 
 class MainMenuController extends Controller
 {
+	public function init()
+	{
+		// parent::init();
+		// $this->lastactivity();
+		if(Yii::app()->user->id == null){
+				$this->redirect(array('site/index'));
+			}
+		
+	}
 	public function filters()
 	{
 		return array(

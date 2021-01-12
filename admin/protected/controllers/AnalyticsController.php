@@ -2,6 +2,15 @@
 
 class AnalyticsController extends Controller
 {
+	public function init()
+	{
+		// parent::init();
+		// $this->lastactivity();
+		if(Yii::app()->user->id == null){
+				$this->redirect(array('site/index'));
+			}
+		
+	}
 	/**
 	 * Declares class-based actions.
 	 */

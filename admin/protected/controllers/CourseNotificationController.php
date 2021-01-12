@@ -2,6 +2,15 @@
 
 class CourseNotificationController extends Controller
 {
+	public function init()
+	{
+		// parent::init();
+		// $this->lastactivity();
+		if(Yii::app()->user->id == null){
+				$this->redirect(array('site/index'));
+			}
+		
+	}
 	public function filters()
 	{
 		return array(
@@ -117,6 +126,7 @@ class CourseNotificationController extends Controller
 					if($course_id->validate()){
 						$course_id->end_date = Yii::app()->dateFormatter->format("y-M-d",strtotime($course_id->end_date));
 						$course_id->create_date = date('Y-m-d H:i:s');
+						$course_id->create_by = Yii::app()->user->id;
 						$course_id->save();
 						$state = true;
 						if(Yii::app()->user->id){
@@ -157,6 +167,7 @@ class CourseNotificationController extends Controller
 			$model->attributes=$_POST['CourseNotification'];
 			$model->end_date = Yii::app()->dateFormatter->format("y-M-d",strtotime($model->end_date));
 			$model->update_date = date('Y-m-d H:i:s');
+			$model->update_by = Yii::app()->user->id;
 			if($model->save()){
 				if(Yii::app()->user->id){
 					Helpers::lib()->getControllerActionId($model->id);

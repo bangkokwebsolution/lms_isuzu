@@ -8,6 +8,17 @@ class LibraryFileController extends Controller
 	 */
 	public $layout='//layouts/column2';
 
+	public function init()
+	{
+		// parent::init();
+		// $this->lastactivity();
+		if(Yii::app()->user->id == null){
+				$this->redirect(array('site/index'));
+			}
+		
+	}
+	
+
 	/**
 	 * @return array action filters
 	 */

@@ -46,10 +46,10 @@ class CourseNotification extends CActiveRecord
 			array('course_id,notification_time','required'),
 			array('generation_id, notification_time', 'numerical', 'integerOnly'=>true),
 			array('active', 'length', 'max'=>255),
-			array('create_date, update_date, end_date, course_id_data', 'safe'),
+			array('create_date, update_date, end_date, course_id_data, create_by, update_by', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, course_id_data,course_id, generation_id, notification_time, create_date,end_date, update_date, active', 'safe', 'on'=>'search'),
+			array('id, course_id_data,course_id, generation_id, notification_time, create_date,end_date, update_date, active, create_by, update_by', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,6 +63,8 @@ class CourseNotification extends CActiveRecord
 		return array(
 			'courses' => array(self::BELONGS_TO, 'CourseOnline', 'course_id'),
 		    'generation' => array(self::BELONGS_TO, 'Generation', array('generation_id'=>'id_gen')),
+		    'usercreate' => array(self::BELONGS_TO, 'User', 'create_by'),
+			'userupdate' => array(self::BELONGS_TO, 'User', 'update_by'),
 
 		 );
 	}
@@ -81,6 +83,8 @@ class CourseNotification extends CActiveRecord
 			'notification_time' => 'ระยะเวลาแจ้งเตือนก่อนสิ้นสุด (วัน)',
 			'create_date' => 'วันที่สร้าง',
 			'update_date' => 'วันที่แก้ไข',
+			'create_by' => 'ผู้สร้าง',
+			'update_by' => 'ผู้แก้ไข',
 			'active' => 'สถานะ',
 		);
 	}
@@ -109,6 +113,8 @@ class CourseNotification extends CActiveRecord
 		$criteria->compare('notification_time',$this->notification_time);
 		$criteria->compare('create_date',$this->create_date,true);
 		$criteria->compare('update_date',$this->update_date,true);
+		$criteria->compare('create_by',$this->create_by);
+		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
 
 		return new CActiveDataProvider($this, array(

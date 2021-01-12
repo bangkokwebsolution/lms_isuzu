@@ -1,6 +1,16 @@
 <?php
 class UsabilityController extends Controller
 {
+    public function init()
+    {
+        // parent::init();
+        // $this->lastactivity();
+        if(Yii::app()->user->id == null){
+                $this->redirect(array('site/index'));
+            }
+        
+    }
+    
 	public function filters()
 	{
 		return array(
@@ -33,12 +43,12 @@ class UsabilityController extends Controller
         );
     }
     
-    public function init()
-    {
-    	parent::init();
-    	$this->lastactivity();
+    // public function init()
+    // {
+    // 	parent::init();
+    // 	$this->lastactivity();
 
-    }
+    // }
     // public function filters() 
     // {
     //     return array(
