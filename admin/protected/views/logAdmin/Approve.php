@@ -89,18 +89,6 @@ EOD
                     'afterAjaxUpdate'=>'function(id, data){
                         $.appendFilter("LogApprove[news_per_page]");
                         InitialSortTable(); 
-                        jQuery("#course_date").datepicker({
-                            "dateFormat": "dd/mm/yy",
-                            "showAnim" : "slideDown",
-                            "showOtherMonths": true,
-                            "selectOtherMonths": true,
-                            "yearRange" : "-5+10", 
-                            "changeMonth": true,
-                            "changeYear": true,
-                            "dayNamesMin" : ["อา.","จ.","อ.","พ.","พฤ.","ศ.","ส."],
-                            "monthNamesShort" : ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.",
-                                "ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."],
-                       })
                     }',
                     'columns'=>array(
                         array(
@@ -128,6 +116,8 @@ EOD
         ),
         array(
             'header' => 'ตำแหน่ง',
+            'name'=>'position_id',
+            'filter'=>Position::getPositionListSearch(),
             'type'=>'raw',
             'value'=>function($data){
                 return $data->position->position_title;
@@ -135,7 +125,8 @@ EOD
         ),
         array(
             'header' => 'วันที่เข้าสมัคร',
-           // 'name'=>'search_name',
+            'name'=>'register_date',
+            'filter'=>false,
             'type'=>'raw',
             'value'=>function($data){
                 return Helpers::changeFormatDate($data->register_date,'datetime');
@@ -143,6 +134,8 @@ EOD
         ),
         array(
             'header' => 'วันที่กดยืนยันการสมัคร',
+            'name'=>'confirm_date',
+            'filter'=>false,
             'type'=>'raw',
             'value'=>function($data){
                 return Helpers::changeFormatDate($data->confirm_date,'datetime');

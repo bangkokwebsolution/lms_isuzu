@@ -56,20 +56,9 @@ EOD
                         'style'=> "margin-top: -1px;",
                     ),
                     'afterAjaxUpdate'=>'function(id, data){
-                        $.appendFilter("CourseOnline[news_per_page]");
+                        $.appendFilter("LogAdmin[news_per_page]");
                         InitialSortTable(); 
-                        jQuery("#course_date").datepicker({
-                            "dateFormat": "dd/mm/yy",
-                            "showAnim" : "slideDown",
-                            "showOtherMonths": true,
-                            "selectOtherMonths": true,
-                            "yearRange" : "-5+10", 
-                            "changeMonth": true,
-                            "changeYear": true,
-                            "dayNamesMin" : ["อา.","จ.","อ.","พ.","พฤ.","ศ.","ส."],
-                            "monthNamesShort" : ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.",
-                                "ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."],
-                       })
+                       
                     }',
                     'columns'=>array(
                         array(
@@ -91,7 +80,7 @@ EOD
         //     }
         // ),
         array(
-            'header' => 'ชื่อ - นามสกุล',
+            //'header' => 'ชื่อ - นามสกุล',
             'name'=>'search_name',
             'type'=>'raw',
             'value'=>function($data){

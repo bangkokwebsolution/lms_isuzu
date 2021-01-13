@@ -114,7 +114,8 @@ EOD
         ),
         array(
             'header' => 'ตำแหน่ง',
-           // 'name'=>'search_name',
+            'name'=>'position_id',
+            'filter'=>Position::getPositionListSearch(),
             'type'=>'raw',
             'value'=>function($data){
                 return $data->position->position_title;
