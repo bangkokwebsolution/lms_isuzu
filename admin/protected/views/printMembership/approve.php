@@ -119,6 +119,7 @@ EOD
 									// 'name' => 'position_id',
 									'type'=>'html',
 									// 'filter' => false,
+									'filter'=>Position::getPositionListSearch($model,'position_id'),
 									'value'=>function($data){
 										return $data->position->position_title;
 									}

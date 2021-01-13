@@ -80,20 +80,20 @@ EOD
 							'model'=>$model,
 							)); ?>
 						</div> --><!-- search-form -->					  
-						<?php
-						$this->widget('AGridView', array(
-							'id'=>$formNameModel.'-grid',
-					'dataProvider'=>$model->searchmembership(),
-					'filter'=>$model,
-					'selectableRows' => 2,
-					'rowCssClassExpression'=>'"items[]_{$data->id}"',
-					'htmlOptions' => array(
-						'style'=> "margin-top: -1px;",
-					),
-					'afterAjaxUpdate'=>'function(id, data){
-						$.appendFilter("PrintMembership[news_per_page]");
-						InitialSortTable();	
-					}',
+					<?php
+					$this->widget('AGridView', array(
+						'id'=>$formNameModel.'-grid',
+						'dataProvider'=>$model->searchmembership(),
+						'filter'=>$model,
+						'selectableRows' => 2,
+						'rowCssClassExpression'=>'"items[]_{$data->id}"',
+						'htmlOptions' => array(
+							'style'=> "margin-top: -1px;",
+						),
+						'afterAjaxUpdate'=>'function(id, data){
+							$.appendFilter("PrintMembership[news_per_page]");
+							InitialSortTable();	
+						}',
 					
 							'columns'=>array(
 								array(
@@ -101,14 +101,17 @@ EOD
 									'value'=>'$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
 								),
 								array(
-									'header' => 'ชื่อ - นามสกุล',
+									'name' => 'nameSearch',
+									// 'header' => 'ชื่อ - นามสกุล',
 									'type'=>'html',
 									'value'=>function($data){
 										return $data->profile->firstname_en . ' ' . $data->profile->lastname_en;
 									}
 								),
 								array(
-									'header' => 'ตำแหน่งที่สมัคร',
+									// 'header' => 'ตำแหน่งที่สมัคร',
+									'name' => 'position_id',
+									'filter'=>Position::getPositionListSearch($model,'position_id'),
 									'type'=>'html',
 									'value'=>function($data){
 										return $data->position->position_title;
@@ -117,7 +120,7 @@ EOD
 								array(
 									'header' => 'วันที่ลงทะเบียน',
 									'type'=>'html',
-									'filter' => false,
+									//'filter' => false,
 									'value'=>function($data){
 										return Helpers::changeFormatDate($data->create_at,'datetime');
 									},
