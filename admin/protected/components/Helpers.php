@@ -1660,50 +1660,63 @@ Boston, MA 02110-1301, USA.
 public function getLogregister($model)
 {
     if ($model != null) {
-       $LogRegister = new LogRegister;
-       $LogRegister->firstname = $model->profile->firstname;
-       $LogRegister->lastname = $model->profile->lastname;
-       $LogRegister->register_date = $model->create_at;
-       $LogRegister->position_id = $model->position_id;
-       $LogRegister->confirm_date = date("Y-m-d H:i:s");
-       $LogRegister->confirm_user = Yii::app()->user->id;
-       $LogRegister->create_date = date("Y-m-d H:i:s");
-       $LogRegister->create_by = Yii::app()->user->id;
-       $LogRegister->user_id = $model->id;
-       $LogRegister->save();
+        $modelLogRegister = LogRegister::model()->findByAttributes(array('user_id'=>$model->id));
+
+        if (empty($modelLogRegister)) {
+           $LogRegister = new LogRegister;
+           $LogRegister->firstname = $model->profile->firstname;
+           $LogRegister->lastname = $model->profile->lastname;
+           $LogRegister->register_date = $model->create_at;
+           $LogRegister->position_id = $model->position_id;
+           $LogRegister->confirm_date = date("Y-m-d H:i:s");
+           $LogRegister->confirm_user = Yii::app()->user->id;
+           $LogRegister->create_date = date("Y-m-d H:i:s");
+           $LogRegister->create_by = Yii::app()->user->id;
+           $LogRegister->user_id = $model->id;
+           $LogRegister->save();
+        }
     }
 }
 
 public function getLogapprove($model)
 {
     if ($model != null) {
-       $LogApprove = new LogApprove;
-       $LogApprove->firstname = $model->profile->firstname;
-       $LogApprove->lastname = $model->profile->lastname;
-       $LogApprove->register_date = $model->create_at;
-       $LogApprove->position_id = $model->position_id;
-       $LogApprove->confirm_date = date("Y-m-d H:i:s");
-       $LogApprove->confirm_user = Yii::app()->user->id;
-       $LogApprove->create_date = date("Y-m-d H:i:s");
-       $LogApprove->create_by = Yii::app()->user->id;
-       $LogApprove->user_id = $model->id;
-       $LogApprove->save();
+        $modelLogApprove = LogApprove::model()->findByAttributes(array('user_id'=> $model->id));
+        
+        if (empty($modelLogApprove)) {
+           $LogApprove = new LogApprove;
+           $LogApprove->firstname = $model->profile->firstname;
+           $LogApprove->lastname = $model->profile->lastname;
+           $LogApprove->register_date = $model->create_at;
+           $LogApprove->position_id = $model->position_id;
+           $LogApprove->confirm_date = date("Y-m-d H:i:s");
+           $LogApprove->confirm_user = Yii::app()->user->id;
+           $LogApprove->create_date = date("Y-m-d H:i:s");
+           $LogApprove->create_by = Yii::app()->user->id;
+           $LogApprove->user_id = $model->id;
+           $LogApprove->save();
+        }
     }
 }
 
 public function getLogapprovePersonal($model)
 {
     if ($model != null) {
-       $LogApprove = new LogApprovePersonal;
-       $LogApprove->firstname = $model->profile->firstname;
-       $LogApprove->lastname = $model->profile->lastname;
-       $LogApprove->register_date = $model->create_at;
-       $LogApprove->confirm_date = date("Y-m-d H:i:s");
-       $LogApprove->confirm_user = Yii::app()->user->id;
-       $LogApprove->create_date = date("Y-m-d H:i:s");
-       $LogApprove->create_by = Yii::app()->user->id;
-       $LogApprove->user_id = $model->id;
-       $LogApprove->save();
+        $modelLogApprovePersonal = LogApprovePersonal::model()->findByAttributes(array('user_id'=> $model->id));
+       
+        if (empty($modelLogApprovePersonal)) {
+
+           $LogApprove = new LogApprovePersonal;
+           $LogApprove->firstname = $model->profile->firstname;
+           $LogApprove->lastname = $model->profile->lastname;
+           $LogApprove->register_date = $model->create_at;
+           $LogApprove->confirm_date = date("Y-m-d H:i:s");
+           $LogApprove->confirm_user = Yii::app()->user->id;
+           $LogApprove->create_date = date("Y-m-d H:i:s");
+           $LogApprove->create_by = Yii::app()->user->id;
+           $LogApprove->user_id = $model->id;
+           $LogApprove->save();
+       }
     }
 }
 
