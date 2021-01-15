@@ -4817,7 +4817,7 @@ ol.stat-alert li::before {
   margin: 5px 0;
   background: #EFEFEE;
   border-radius: 0;
-  padding: 15px 0;
+  padding: 15px 15px;
   border-color: #DDDDDD;
 }
 
