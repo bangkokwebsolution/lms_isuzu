@@ -118,12 +118,12 @@ class VideoController extends Controller{
             $library_type_1 = LibraryType::model()->findAll(array(
                 'condition' => 'active=:active AND library_cate=1',
                 'params' => array(':active' => 'y'),
-                'order' => 'library_type_name_en ASC'
+                'order' => 'library_type_name_en ASC,library_type_name ASC'
             ));
              $library_type_2 = LibraryType::model()->findAll(array(
                 'condition' => 'active=:active AND library_cate=2',
                 'params' => array(':active' => 'y'),
-                'order' => 'library_type_name_en ASC'
+                'order' => 'library_type_name_en ASC,library_type_name ASC'
             ));
            
             if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
