@@ -1744,13 +1744,32 @@
         },
         type: 'POST',
         success: function(data) {
-          if (data != "error") {
-            filePath = data;
-            var link = document.createElement('a');
-            link.href = filePath;
-            link.download = filePath.substr(filePath.lastIndexOf('/') + 1);
-            link.click();
-            // window.open(data, 'Download');
+
+          if (data != "error") {          
+            var req = new XMLHttpRequest();
+            req.open('HEAD', data, false);
+            req.send();
+            if (req.status==200) {
+              filePath = data;
+              var link = document.createElement('a');
+              link.href = filePath;
+              link.download = filePath.substr(filePath.lastIndexOf('/') + 1);
+              link.click();
+            }else{
+              if ("<?php echo Yii::app()->session['lang']; ?>" == "1") {
+ 
+                  var text_title = 'Waiting';
+                  var text_text = 'File not found!';
+                } else {
+  
+                  var text_title = 'แจ้งเตือน';
+                  var text_text = '!ไม่พบไฟล์';
+                }
+                swal({
+                  title: text_title,
+                  text: text_text,
+                });
+            }
           } else {
             alert("ทำรายการใหม่");
           }
@@ -1844,12 +1863,31 @@
                   val.innerHTML = '<i class="fa fa-download"></i> ขอดาวน์โหลด';
                 }
               } else {
-                filePath = data;
-                var link = document.createElement('a');
-                link.href = filePath;
-                link.download = filePath.substr(filePath.lastIndexOf('/') + 1);
-                link.click();
-              }
+                var req = new XMLHttpRequest(); 
+                req.open('HEAD', data, false);
+                req.send();
+                if (req.status==200) {
+                  filePath = data;
+                  var link = document.createElement('a');
+                  link.href = filePath;
+                  link.download = filePath.substr(filePath.lastIndexOf('/') + 1);
+                  link.click();
+                }else{
+                  if ("<?php echo Yii::app()->session['lang']; ?>" == "1") {
+ 
+                  var text_title = 'Waiting';
+                  var text_text = 'File not found!';
+                } else {
+  
+                  var text_title = 'แจ้งเตือน';
+                  var text_text = '!ไม่พบไฟล์';
+                }
+                swal({
+                  title: text_title,
+                  text: text_text,
+                });
+                }
+            }
             },
           });
         }
