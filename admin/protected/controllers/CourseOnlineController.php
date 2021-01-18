@@ -4,6 +4,9 @@ class CourseOnlineController extends Controller
 {
 	public function init()
 	{
+		if(Yii::app()->user->id == null){
+			$this->redirect(array('site/index'));
+		}
 		parent::init();
 		if (isset($_GET['lang_id']) || isset($_GET['parent_id']) ) {
 
