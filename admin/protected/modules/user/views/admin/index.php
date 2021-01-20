@@ -104,7 +104,7 @@ EOD
 									'selectableRows' => 2,
 									//'rowCssClassExpression'=>'"items[]_{$data->id}"',
 									'htmlOptions' => array(
-										'style'=> "margin-top: -1px;overflow-x:scroll;width:200%;",
+										'style'=> "margin-top: -1px;width:200%;",
 									),
 									'afterAjaxUpdate'=>'function(id, data){
 										$.appendFilter("User[news_per_page]");
