@@ -2472,7 +2472,7 @@ public function actionReportRegisterData()
 									$datatable .= '<th>แผนก</th>';
 									
 										if ($Leval != "" || $Position != "") {
-										$datatable .= '<th>เลเวล</th>';
+										$datatable .= '<th>ระดับตำแหน่ง</th>';
 										}
 									}else{
 									$datatable .= '<th>ฝ่าย</th>';
@@ -2646,7 +2646,12 @@ public function actionReportRegisterData()
 												$datatable .= '<td>'.$names_level[$key]
 												.'</td>';
 											}
-											$datatable .= '<td>'.$cou_use.'</td>';
+											if ($cou_use != 0) {
+												$datatable .= '<td>'.$cou_use.'</td>';
+											}else{
+												$datatable .= '<td>-</td>';
+											}
+											
 											if($TypeEmployee != 2){
 												if (Yii::app()->session['lang'] == 1) {		
 												$datatable .= '<td>';
