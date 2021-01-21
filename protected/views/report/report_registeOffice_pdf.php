@@ -218,11 +218,13 @@ $user_Department = $user_login->department_id;
 								<th style="border:1px solid #d8d8d8; padding: 8px;">Fullname</th>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">Department</th>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">Position</th>
+								<th style="border:1px solid #d8d8d8; padding: 8px;">Leval</th>
 							<?php }else{ ?>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">ลำดับ</th>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">ชื่อ - สกุล</th>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">ฝ่าย</th>
 								<th style="border:1px solid #d8d8d8; padding: 8px;">แผนก</th>
+								<th style="border:1px solid #d8d8d8; padding: 8px;">ระดับตำแหน่ง</th>
 						<?php	}
 							?>
 							
@@ -243,6 +245,13 @@ $user_Department = $user_login->department_id;
 								</td><?php } ?>
 								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $value->department->dep_title; ?></td>
 								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $value->position->position_title; ?></td>
+								<?php if ($value->branch_id != "") { ?>
+									<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $value->branch->branch_name; ?></td>
+								<?php }else{ ?>
+									<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo "-"; ?></td>
+								<?php }
+
+								?>
 							</tr>
 
 						<?php }

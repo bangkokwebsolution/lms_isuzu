@@ -47,7 +47,7 @@
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'Division':'ฝ่าย'; ?></label>
                                     <select class="form-control Department" name="" id="Department">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Division':'เลือกฝ่าย'; ?></option>
+                                        <option value="" selected ><?= Yii::app()->session['lang'] == 1?'Select Division':'เลือกฝ่าย'; ?></option>
                                         <?php
 
                                         $criteria= new CDbCriteria;
@@ -93,7 +93,7 @@
                                 <div class="form-group">
                                     <label for=""><?= Yii::app()->session['lang'] == 1?'Department':'แผนก'; ?></label>
                                     <select class="form-control Position" name="" id="x">
-                                        <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Select Department':'เลือกแผนก'; ?></label></option>
+                                        <option value="" selected ><?= Yii::app()->session['lang'] == 1?'Select Department':'เลือกแผนก'; ?></label></option>
                                         <?php
                                         $criteria= new CDbCriteria;
                                         if ($authority == 2) {
@@ -333,9 +333,10 @@
     });
     $(document).ready(function(){
         $('.Leval').attr('disabled',true);
-        $('.Department').on('change',function(){
+    $('.Department').on('change',function(){
         if($('.Department').val() != ''){
-            $('.Leval').attr('disabled',false);
+            // $('.Leval').attr('disabled',false);
+            $('.Leval').attr('disabled',true);
         }else{
             $('.Leval').attr('disabled',true);
         }

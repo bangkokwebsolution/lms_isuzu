@@ -397,56 +397,7 @@ $user_Department = $user_login->department_id;
 						</thead>
 						<tbody>
 							<?php if ($data['TypeEmployee'] == 2) {    
-								//foreach ($branch as $key => $value) { 	
-
-									// $criteria = new CDbCriteria;
-									// $criteria->compare('branch_id',$value->id);
-									// $criteria->compare('position_id',$value->Positions->id);
-									// $criteria->compare('department_id',$value->Positions->Departments->id);
-									// if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
-
-									// 	$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
-									// }
-									// $criteria->compare('superuser',0);
-									// $criteria->compare('del_status',0);
-									// if($status != null){
-									// 	$criteria->compare('status',$status);		
-									// }
-									// $users = Users::model()->findAll($criteria);
-
-									// $criteria = new CDbCriteria;
-									// $criteria->select = 'id';
-
-									// if($data['TypeEmployee']){
-									// 	$criteria->compare('type_employee',$data['TypeEmployee']);
-									// }
-									// if($data['Department']){
-									// 	$criteria->compare('department_id',$data['Department']);
-									// }
-									// if ($authority == 2 || $authority == 3) {
-									// 	$criteria->compare('department_id',$user_Department);
-									// }
-									// if ($data['Position'] != "") {
-									// 		if($data['Position']){
-									// 				$criteria->compare('position_id',$data['Position']);
-									// 			}
-									// 		}else{
-									// 			if ($authority == 2 || $authority == 3) {
-									// 				$criteria->compare('position_id',$user_Position);
-									// 			}
-									// 		}
-									// 		if($data['Leval'] != ""){
-									// 		if($data['Leval']){
-									// 			$criteria->compare('branch_id',$data['Leval']);
-									// 		}
-									// 		}else{
-									// 			if ($authority == 3) {
-									// 				$criteria->compare('branch_id',$user_Level);
-									// 			}
-									// 		}
-									// $criteria->compare('superuser',0);
-									// $criteria->compare('del_status',0);
-									// $usersAll = Users::model()->findAll($criteria);
+							
 								foreach ($result_pos_in as $key => $value) {
 										$criteria = new CDbCriteria;
 												$criteria->compare('position_id',$value);
@@ -532,57 +483,6 @@ $user_Department = $user_login->department_id;
 								}
 								foreach ($pos_back as $keypos_back => $valuepos_back) { 	
 
-									// $criteria = new CDbCriteria;
-									// $criteria->compare('position_id',$valuepos_back->id);
-									// $criteria->compare('department_id',$valuepos_back->Departments->id);
-									// if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
-
-									// 	$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
-									// }
-									// $criteria->compare('superuser',0);
-									// $criteria->compare('del_status',0);
-									// if($status != null){
-									// 	$criteria->compare('status',$status);		
-									// }
-									// $users = Users::model()->findAll($criteria);
-
-									// $criteria = new CDbCriteria;
-									// $criteria->select = 'id';
-
-									// if($data['TypeEmployee']){
-									// 	$criteria->compare('type_employee',$data['TypeEmployee']);
-									// }
-									// if($data['Department']){
-									// 	$criteria->compare('department_id',$data['Department']);
-									// }
-									// if ($authority == 2 || $authority == 3) {
-									// 	$criteria->compare('department_id',$user_Department);
-									// }
-									// if ($data['Position'] != "") {
-									// 		if($data['Position']){
-									// 				$criteria->compare('position_id',$data['Position']);
-									// 			}
-									// 		}else{
-									// 			if ($authority == 2 || $authority == 3) {
-									// 				$criteria->compare('position_id',$user_Position);
-									// 			}
-									// 		}
-									// 		if($data['Leval'] != ""){
-									// 		if($data['Leval']){
-									// 			$criteria->compare('branch_id',$data['Leval']);
-									// 		}
-									// 		}else{
-									// 			if ($authority == 3) {
-									// 				$criteria->compare('branch_id',$user_Level);
-									// 			}
-									// 		}
-									// $criteria->compare('superuser',0);
-									// $criteria->compare('del_status',0);
-									// $usersAll = Users::model()->findAll($criteria);
-
-									// $cou_use = count($users);
-									// $cou_useAll = count($usersAll);
-									// $per_cen = ($cou_use / $cou_useAll) * 100; 
 									$criteria = new CDbCriteria;
 										$criteria->compare('position_id',$valuepos_back->id);
 										$criteria->compare('department_id',$valuepos_back->Departments->id);
@@ -693,56 +593,6 @@ $user_Department = $user_login->department_id;
 
 								foreach ($dep_back as $keydep_back => $valuedep_back) { 
 
-									// $criteria = new CDbCriteria;
-									// $criteria->compare('department_id',$valuedep_back->id);
-									// if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
-
-									// 	$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
-									// }
-									// $criteria->compare('superuser',0);
-									// $criteria->compare('del_status',0);
-									// if($status != null){
-									// 	$criteria->compare('status',$status);		
-									// }
-									// $users = Users::model()->findAll($criteria);
-
-									// $criteria = new CDbCriteria;
-									// $criteria->select = 'id';
-
-									// if($data['TypeEmployee']){
-									// 	$criteria->compare('type_employee',$data['TypeEmployee']);
-									// }
-									// if($data['Department']){
-									// 	$criteria->compare('department_id',$data['Department']);
-									// }
-									// if ($authority == 2 || $authority == 3) {
-									// 	$criteria->compare('department_id',$user_Department);
-									// }
-									// if ($data['Position'] != "") {
-									// 		if($data['Position']){
-									// 				$criteria->compare('position_id',$data['Position']);
-									// 			}
-									// 		}else{
-									// 			if ($authority == 2 || $authority == 3) {
-									// 				$criteria->compare('position_id',$user_Position);
-									// 			}
-									// 		}
-									// 		if($data['Leval'] != ""){
-									// 		if($data['Leval']){
-									// 			$criteria->compare('branch_id',$data['Leval']);
-									// 		}
-									// 		}else{
-									// 			if ($authority == 3) {
-									// 				$criteria->compare('branch_id',$user_Level);
-									// 			}
-									// 		}
-									// $criteria->compare('superuser',0);
-									// $criteria->compare('del_status',0);
-									// $usersAll = Users::model()->findAll($criteria);
-
-									// $cou_use = count($users);
-									// $cou_useAll = count($usersAll);
-									// $per_cen = ($cou_use / $cou_useAll) * 100; 
 									$criteria = new CDbCriteria;
 										$criteria->compare('department_id',$valuedep_back->id);
 										if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
