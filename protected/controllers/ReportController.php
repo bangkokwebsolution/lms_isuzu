@@ -744,11 +744,13 @@ class ReportController extends Controller
 									$datatable .= '<th>Name - Surname</th>';
 									$datatable .= '<th>Division</th>';
 									$datatable .= '<th>Department</th>';
+									$datatable .= '<th>Leval</th>';
 									}else{
 									$datatable .= '<th>ลำดับ</th>';
 									$datatable .= '<th>ชื่อ - นามสกุล</th>';
 									$datatable .= '<th>ฝ่าย</th>';
 									$datatable .= '<th>แผนก</th>';
+									$datatable .= '<th>ระดับตำแหน่ง</th>';
 									}
 									$datatable .= '</tr>'; 
 									$datatable .= '</thead>';
@@ -770,6 +772,12 @@ class ReportController extends Controller
 											}else{
 												$datatable .="-";
 											}
+											if ($value->branch_id != "") {
+												$datatable .= '<td>'.$value->branch->branch_name.'</td>';
+											}else{
+												$datatable .= '<td>-</td>';
+											}
+											
 											$datatable .= '</td>';										
 											$datatable .= '</tr>';
 										}			 
@@ -1860,6 +1868,7 @@ public function actionReportRegisterData()
 
 							}
 							else if ($Department != "" && $Leval != "" && $Position != "") {
+
 								foreach ($result_pos_in as $key => $value) {		
 									$criteria = new CDbCriteria;
 									$criteria->compare('position_id',$value);
@@ -1958,6 +1967,7 @@ public function actionReportRegisterData()
 								}
 
 							}else{
+								$i = 0;
 								foreach ($result_dep_in as $key => $value) {		
 									$criteria = new CDbCriteria;
 									$criteria->with = array('department');
@@ -1974,10 +1984,12 @@ public function actionReportRegisterData()
 
 									$users_count = Users::model()->findAll($criteria);
 									$count_dep = count($users_count);
-									$data_year_end .= '["'.$result_dep_in_name[$key].'",'.$count_dep.',"'.$colorName[$key].'"],';
+									$data_year_end .= '["'.$result_dep_in_name[$i].'",'.$count_dep.',"'.$colorName[$key].'"],';
+									$i++;
 
 								}
 							}
+
 							foreach ($result_dep_not as $key => $value) {
 								$criteria = new CDbCriteria;
 								$criteria->with = array('department');
@@ -2440,7 +2452,14 @@ public function actionReportRegisterData()
 									}
 									if($TypeEmployee != 2){
 										$datatable .= '<th>Total of Register</th>';
-										$datatable .= '<th>Total of Approved</th>';
+										if ($status != "") {
+											if ($status == 1) {
+												$datatable .= '<th>Total of Approved</th>';	
+											}else{
+												$datatable .= '<th>Total of Disapproved</th>';	
+											}
+											
+										}
 										$datatable .= '<th>Status</th>';
 									}else{
 										$datatable .= '<th>Total</th>';
@@ -2461,7 +2480,13 @@ public function actionReportRegisterData()
 									}
 									$datatable .= '<th>จำนวนผู้สมัคร</th>';
 									if($TypeEmployee != 2){
-										$datatable .= '<th>จำนวนผู้อนุมัติ</th>';
+										if ($status != "") {
+											if ($status == 1) {
+												$datatable .= '<th>จำนวนผู้อนุมัติ</th>';	
+											}else{
+												$datatable .= '<th>จำนวนผู้ไม่อนุมัติ</th>';	
+											}
+										}
 										$datatable .= '<th>สถานะอนุมัติ</th>';
 									}
 									$datatable .= '<th>คิดเป็นร้อยละ</th>';
