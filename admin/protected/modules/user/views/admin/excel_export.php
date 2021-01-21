@@ -13,7 +13,7 @@
     // if((($model->date_start != '') && ($model->date_end != '')) || (($model->date_start_lastuse != '') && ($model->date_end_lastuse != '')) || ($model->generation != '') || ($model->identification != '') || ($model->nameSearch != '') || ($model->department != '') ||  ($model->email != '') || ($model->status_login != '')){
     if (!empty($_GET['ReportUser'])){ 
        $sqlUser = " SELECT * FROM tbl_users INNER JOIN tbl_profiles ON tbl_users.id = tbl_profiles.user_id 
-        WHERE del_status = 0 ";//INNER JOIN tbl_type_user ON tbl_type_user.id = tbl_users.department_id 
+        WHERE del_status = 0 AND tbl_users.superuser = 0 ";//INNER JOIN tbl_type_user ON tbl_type_user.id = tbl_users.department_id 
         
             if(($model->date_start != '') && ($model->date_end != '')){
                 $startDate = date("Y-m-d H:i:s", strtotime($model->date_start));
@@ -33,10 +33,10 @@
                 $sqlUser .= " AND tbl_users.lastvisit_at between '".$startDate."' and '".$endDate."' ";
                 
             }
-            if($model->generation !='') {
-                $sqlUser .= " AND tbl_profiles.generation = '".$model->generation."' ";
+            // if($model->generation !='') {
+            //     $sqlUser .= " AND tbl_profiles.generation = '".$model->generation."' ";
                 
-            }
+            // }
 
             //type_user
             if($model->type_user !='') {
@@ -52,6 +52,9 @@
             // if($model->department !='') {
             //     $sqlUser .= " AND tbl_users.department_id = '".$model->department."' ";   
             // }
+            if ($model->employee_type != ''){
+                $sqlUser .= " AND tbl_profiles.type_employee = " . $model->employee_type;
+            }
             // if($model->occupation !='') {
             //     $sqlUser .= " AND tbl_profiles.occupation LIKE '".$model->occupation."' ";
                 
@@ -87,10 +90,11 @@
                 $sqlUser .= " and tbl_users.department_id IN ( ".$departmentInarray." )";
             }
             //Station
-            if(!empty($model->station)){
-                $stationInarray =  implode(",",$model->station);
-                $sqlUser .= " and tbl_users.station_id IN ( ".$stationInarray." )";
-            }
+            // if(!empty($model->station)){
+            //     $stationInarray =  implode(",",$model->station);
+            //     $sqlUser .= " and tbl_users.station_id IN ( ".$stationInarray." )";
+            // }
+            $sqlUser .= " ORDER BY tbl_profiles.firstname_en ASC";
         // $item_count = Yii::app()->db->createCommand($sqlUser)->queryScalar();
         $modelAll = Yii::app()->db->createCommand($sqlUser)->queryAll();
         $dataProvider=new CArrayDataProvider($modelAll, array(
@@ -170,7 +174,7 @@
                 <tr>
                     <td class="center"><?= $i ?></td>
                     <td class="center"><?= $typeemp ?></td>
-                    <td class="center"><?= $userItem[firstname] . " " . $userItem[lastname] ?></td>
+                    <td class="center"><?= $userItem[firstname_en] . " " . $userItem[lastname_en] ?></td>
                     <td class="center"><?= ($Dep->dep_title) ? $Dep->dep_title : '-'; ?></td>
                     <td class="center"><?= ($Pos->position_title) ? $Pos->position_title : '-'; ?></td>
                     <td class="center"><?= $userItem[tel] ?></td>

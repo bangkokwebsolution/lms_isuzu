@@ -115,7 +115,7 @@ EOD
     <?php
     if((($model->date_start != '') && ($model->date_end != '')) || (($model->date_start_lastuse != '') && ($model->date_end_lastuse != '')) || ($model->generation != '') || ($model->identification != '') || ($model->nameSearch != '') || ($model->department != '') || ($model->occupation != '') || ($model->email != '') || ($model->status_login != '') || (isset($model->employee_type))){
         $sqlUser = " SELECT * FROM tbl_users INNER JOIN tbl_profiles ON tbl_users.id = tbl_profiles.user_id 
-        WHERE del_status = 0 ";//INNER JOIN tbl_type_user ON tbl_type_user.id = tbl_users.department_id 
+        WHERE del_status = 0 AND tbl_users.superuser = 0 ";//INNER JOIN tbl_type_user ON tbl_type_user.id = tbl_users.department_id 
             if(($model->date_start != '') && ($model->date_end != '')){
                 $startDate = date("Y-m-d H:i:s", strtotime($model->date_start));
                 $endDate = date("Y-m-d 23:59:59", strtotime($model->date_end));
@@ -134,33 +134,33 @@ EOD
                 $sqlUser .= " AND tbl_users.lastvisit_at between '".$startDate."' and '".$endDate."' ";
                 
             }
-            if($model->generation !='') {
-                $sqlUser .= " AND tbl_profiles.generation = '".$model->generation."' ";      
-            }
+            // if($model->generation !='') {
+            //     $sqlUser .= " AND tbl_profiles.generation = '".$model->generation."' ";      
+            // }
             if($model->status !='') {
                 $sqlUser .= " AND tbl_users.status = '".$model->status."' ";      
             }
 
             //type_user
-            if($model->type_user !='') {
-                if($model->type_user == 1){ //General
-                    $sqlUser .= " AND tbl_users.type_register != '3' ";
-                }else if($model->type_user == 2){ //Staff
-                    $sqlUser .= " AND tbl_users.type_register = '3' ";
+            // if($model->type_user !='') {
+            //     if($model->type_user == 1){ //General
+            //         $sqlUser .= " AND tbl_users.type_register != '3' ";
+            //     }else if($model->type_user == 2){ //Staff
+            //         $sqlUser .= " AND tbl_users.type_register = '3' ";
 
-                }
-                // $sqlUser .= " AND tbl_profiles.type_user LIKE '".$model->type_user."' ";
-            }
+            //     }
+            //     // $sqlUser .= " AND tbl_profiles.type_user LIKE '".$model->type_user."' ";
+            // }
             if ($model->employee_type != ''){
                 $sqlUser .= " AND tbl_profiles.type_employee = " . $model->employee_type;
             }
             // if($model->department !='') {
             //     $sqlUser .= " AND tbl_users.department_id = '".$model->department."' ";   
             // }
-            if($model->occupation !='') {
-                $sqlUser .= " AND tbl_profiles.occupation LIKE '".$model->occupation."' ";
+            // if($model->occupation !='') {
+            //     $sqlUser .= " AND tbl_profiles.occupation LIKE '".$model->occupation."' ";
                 
-            }
+            // }
             if($model->nameSearch !='') {
                 $search = explode(" ",$model->nameSearch);
                 foreach ($search as $key => $searchText) {
@@ -192,11 +192,12 @@ EOD
                 $sqlUser .= " and tbl_users.department_id IN ( ".$departmentInarray." )";
             }
             //Station
-            if(!empty($model->station)){
-                $stationInarray =  implode(",",$model->station);
-                $sqlUser .= " and tbl_users.station_id IN ( ".$stationInarray." )";
-            }
-            $sqlUser .= " ORDER BY tbl_profiles.type_employee DESC, tbl_profiles.firstname_en ASC";
+            // if(!empty($model->station)){
+            //     $stationInarray =  implode(",",$model->station);
+            //     $sqlUser .= " and tbl_users.station_id IN ( ".$stationInarray." )";
+            // }
+             // $sqlUser .= " ORDER BY tbl_profiles.type_employee DESC, tbl_profiles.firstname_en ASC";
+            $sqlUser .= " ORDER BY tbl_profiles.firstname_en ASC";
 
         // $item_count = Yii::app()->db->createCommand($sqlUser)->queryScalar();
 
@@ -418,6 +419,7 @@ ReportUser[generation]=<?=$_GET['ReportUser']['generation']?>
 &ReportUser[identification]=<?=$_GET['ReportUser']['identification']?>
 &ReportUser[nameSearch]=<?=$_GET['ReportUser']['nameSearch']?>
 &ReportUser[type_user]=<?=$_GET['ReportUser']['type_user']?>
+&ReportUser[employee_type]=<?=$_GET['ReportUser']['employee_type']?>
 &ReportUser[occupation]=<?=$_GET['ReportUser']['occupation']?>
 &ReportUser[email]=<?=$_GET['ReportUser']['email']?>
 &ReportUser[date_start]=<?=$_GET['ReportUser']['date_start']?>
