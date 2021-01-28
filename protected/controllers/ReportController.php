@@ -3760,7 +3760,7 @@ $model_position = Position::model()->findAll(array(
     		}else{
     			$criteria->order = 'course.course_title ASC, t.gen_id ASC, pro.firstname ASC, department.sortOrder ASC, position.sortOrder ASC';
     		}
-    		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+    		$model_search = LogStartcourse::model()->with("mem", "pro", "course", "mem.department", "mem.position")->findAll($criteria);
 
     		$criteria->order = 'yearrrr ASC';
     		$criteria->select ='t.start_date, t.course_id, YEAR(t.start_date) AS yearrrr';
@@ -4082,7 +4082,7 @@ $model_level = Branch::model()->findAll(array(
     		}else{
     			$criteria->order = 'course.course_title ASC, t.gen_id ASC, pro.firstname ASC, department.sortOrder ASC, position.sortOrder ASC, branch.sortOrder ASC';//, 
     		}
-    		$model_search = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+    		$model_search = LogStartcourse::model()->with("mem", "pro", "course", "mem.department", "mem.position", "mem.branch")->findAll($criteria);
 
     		$criteria->order = 'yearrrr ASC';
     		$criteria->select ='t.start_date, t.course_id, YEAR(t.start_date) AS yearrrr';
