@@ -221,7 +221,11 @@ if(isset($model_gen) && !empty($model_gen)){
                                 </div>
                             </div>
                             <?php } ?>
-                            <?php if($authority == 1){ ?>
+                            <?php if($authority == 1){ 
+                                 //  var_dump($_GET["search"]["department"]);
+                                 // // var_dump($model_gen);
+                                 //  exit();
+                                ?>
                             <div class="col-sm-3 col-md-3 col-xs-12">
                                 <div class="form-group">
                                     <label for="search_department" class="DepartmentLabel">
@@ -243,12 +247,15 @@ if(isset($model_gen) && !empty($model_gen)){
                                                 }
                                             ?>
                                         </option>
-<?php 
+<?php
 if(isset($model_department) && !empty($model_department)){
-    foreach ($model_gen as $key => $value) {
+    foreach ($model_department as $keydepartment => $valuedepartment) {
+    
+    // foreach ($model_gen as $key => $value) {
         ?>
-        <option <?php if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] == $value->id){ echo "selected"; $department = $_GET["search"]["department"];} ?> value="<?= $value->id?>"><?= $value->dep_title ?></option> 
+        <option <?php if(isset($_GET["search"]["department"]) && $_GET["search"]["department"] == $valuedepartment->id){ echo "selected"; $department = $_GET["search"]["department"];} ?> value="<?= $valuedepartment->id?>"><?= $valuedepartment->dep_title ?></option> 
         <?php
+    // }
     }
 }
 ?>
