@@ -1,25 +1,16 @@
-<?php
-$strExcelFileName = "รายงานภาพคนสมัครสมาชิกคนออฟฟิศ-" . date('Ymd-His') . ".xls";
-header("Content-Type: application/x-msexcel; name=\"" . $strExcelFileName . "\"");
-header("Content-Disposition: inline; filename=\"" . $strExcelFileName . "\"");
-header('Content-Type: text/plain; charset=UTF-8');
-header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("Content-Type: application/force-download");
-header("Content-Type: application/octet-stream");
-header("Content-Type: application/download");
-header("Pragma:no-cache");
 
-		$Department = $data['Department'];
-		$Position = $data['Position'];
-		$Leval = $data['Leval'];
-		$datetime_start = $data['datetime_start'];
-		$datetime_end = $data['datetime_end'];
-		// $Year_start = $data['Year_start'];
-		// $Year_end = $data['Year_end'];
-		$Chart = $data['Chart'];
-		// $start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
-		// $end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
-		if ($data['Year_start'] != null && $data['Year_end'] != null) {
+<?php
+$Department = $data['Department'];
+$Position = $data['Position'];
+$Leval = $data['Leval'];
+$datetime_start = $data['datetime_start'];
+$datetime_end = $data['datetime_end'];
+// $Year_start = $data['Year_start'];
+// $Year_end = $data['Year_end'];
+$Chart = $data['Chart'];
+// $start_date = date("Y-m-d", strtotime($datetime_start))." 00:00:00";
+// $end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
+if ($data['Year_start'] != null && $data['Year_end'] != null) {
 					if (Yii::app()->session['lang'] == 1) {
 						$Year_start = $data['Year_start'];
 						$Year_end = $data['Year_end'];
@@ -54,7 +45,7 @@ header("Pragma:no-cache");
 				    $end_date = date("Y-m-d", strtotime($datetime_end))." 23:59:59";
 				}
 
-		$user_login = User::model()->findByPk(Yii::app()->user->id);
+$user_login = User::model()->findByPk(Yii::app()->user->id);
 $authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 3=ผู้จัดการแผนกPosi
 $type_em = $user_login->profile->type_employee; // 1=คนเรือ 2=office
 $user_Level = $user_login->branch_id;
@@ -71,36 +62,29 @@ $user_Department = $user_login->department_id;
 	<div class="row">
 		<h1>
 		<?php
-		if (Yii::app()->session['lang'] != 1) {
-			echo "รายงานภาพรวมการสมัครสมาชิก คนออฟฟิศ";
-			
-		}else{
-			
+		if (Yii::app()->session['lang'] == 1) {
 			echo "Report register office";
+		}else{
+			echo "รายงานภาพรวมการสมัครสมาชิก คนออฟฟิศ";
 		}
 		?></h1>
-		<div class="col-sm-12">
-			<?php
+		<?php
 			if ($Chart != "") {
-			?>
+		?>
+		<div class="col-sm-12">
 			<?php if ($Chart === "accommodation=Bar_Graph") { ?>
-				<img src="<?= Yii::app()->getBaseUrl(true)?>/uploads/AttendPrint.png" width="500" height="auto">
+				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint.png"; ?>" width="500" height="auto">
 			<?php }else if($Chart === "accommodation=Pie_Charts"){ ?>
-				<img src="<?= Yii::app()->getBaseUrl(true)?>/uploads/AttendPrint1.png" width="500" height="auto">
-			<?php } 
-			$f = 20;
-			for ($p=0; $p <= $f ; $p++) { 
-			echo "<br>";
-		}
-			?>
+				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint1.png"; ?>" width="500" height="auto"> 
+			<?php } ?>
 		</div><br>
 	</div>
 	<?php
 	if ($Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") { ?>
 		<div class="row">
 			<div class="col-sm-12">
-				<img src="<?= Yii::app()->getBaseUrl(true) ?>/uploads/AttendPrint.png" width="500" height="auto">
-				<img src="<?= Yii::app()->getBaseUrl(true) ?>/uploads/AttendPrint1.png" width="500" height="auto">
+				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint.png"; ?>" width="500" height="auto">
+				<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint1.png"; ?>" width="500" height="auto">
 			</div><br>
 		</div>
 		<?php	$f = 20;
@@ -113,8 +97,8 @@ $user_Department = $user_login->department_id;
 		if ($Chart === "accommodation=Bar_Graph&accommodation=Pie_Charts") { ?>
 			<div class="row">
 				<div class="col-sm-12">
-					<img src="<?= Yii::app()->getBaseUrl(true) ?>/uploads/AttendPrint3.png" width="500" height="auto">
-					<img src="<?= Yii::app()->getBaseUrl(true) ?>/uploads/AttendPrint4.png" width="500" height="auto">
+					<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint3.png"; ?>" width="500" height="auto">
+					<img src="<?= Yii::app()->basePath."/../uploads/AttendPrint4.png"; ?>" width="500" height="auto">
 				</div><br>
 			</div>
 			<?php
@@ -123,7 +107,7 @@ $user_Department = $user_login->department_id;
 		for ($i=0; $i <= $l ; $i++) { 
 			echo "<br>";
 		}
-	}
+		}
 	}
 
 	$criteria = new CDbCriteria;
@@ -225,7 +209,7 @@ $user_Department = $user_login->department_id;
 					}
 					$User = User::model()->findAll($criteria);
 	if ($Year_start == null && $Year_end == null) {
-	 ?>
+	?>
 		<style type="text/css">
 			tr td,tr th{
 				border:1px solid #d8d8d8;
@@ -239,11 +223,11 @@ $user_Department = $user_login->department_id;
 				text-align: center;
 			}
 		</style>
-		
+
 		<div class="report-table">
 			<p style="text-align: right;"><?php echo Yii::app()->session['lang'] == 1?"No. of Staff":"จำนวนผู้สมัครทั้งหมด"; ?> <span style="font-weight:bold;"><?php echo count($User); ?></span> <?php echo Yii::app()->session['lang'] == 1?"People":"คน"; ?></p>
 			<div class="table-responsive w-100 t-regis-language">
-				<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 90%;">       
+				<table class="table" style="border:1px solid #d8d8d8;border-collapse: collapse;width: 100%;">       
 					<thead>
 						<tr style="background: #010C65;color: #fff; border:1px solid #d8d8d8;padding: 8px;">
 							<?php
@@ -261,11 +245,12 @@ $user_Department = $user_login->department_id;
 								<th style="border:1px solid #d8d8d8; padding: 8px;">ระดับตำแหน่ง</th>
 						<?php	}
 							?>
+							
 						</tr>
 					</thead>
 					<tbody>
 						<?php
-						if (!empty($User)) {
+						if (!empty($User)) { 
 							$i = 1;
 						foreach ($User as $key => $value) { ?>	
 
@@ -274,8 +259,8 @@ $user_Department = $user_login->department_id;
 								<?php if (Yii::app()->session['lang'] == 1) { ?>
 								<td style="border:1px solid #d8d8d8; padding: 8px;text-align: left;"><?php echo $value->profile->firstname_en; ?> <?php echo $value->profile->lastname_en; ?></td>
 								<?php }else{ ?>
-								<td style="border:1px solid #d8d8d8; padding: 8px;text-align: left;"><?php echo $value->profile->firstname; ?> <?php echo $value->profile->lastname; ?></td>
-								<?php } ?>
+								<td style="border:1px solid #d8d8d8; padding: 8px;text-align: left;"><?php echo $value->profile->firstname; ?> <?php echo $value->profile->lastname; ?> 
+								</td><?php } ?>
 								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $value->department->dep_title; ?></td>
 								<td style="border:1px solid #d8d8d8; padding: 8px;"><?php echo $value->position->position_title; ?></td>
 								<?php if ($value->branch_id != "") { ?>
@@ -287,9 +272,9 @@ $user_Department = $user_login->department_id;
 								?>
 							</tr>
 
-						<?php }  
+						<?php }
 					}else{ ?>
-						<tr>
+							<tr>
 								 <td colspan="4">
                                     <?php 
                                     if(Yii::app()->session['lang'] != 1){
@@ -299,8 +284,8 @@ $user_Department = $user_login->department_id;
                                     }
                                     ?></td>
 							</tr>
-				<?php	}
-					?>
+
+					<?php }  ?>
 
 					</tbody>
 				</table>
