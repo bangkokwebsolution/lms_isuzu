@@ -4350,7 +4350,7 @@ $model_level = Branch::model()->findAll(array(
 			}
     		$criteria->select ='t.start_date, t.course_id, YEAR(t.start_date) AS yearrrr, t.user_id, t.gen_id';
     		$criteria->distinct = true;
-    		$model_graph = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
+    		$model_graph = LogStartcourse::model()->with("mem", "pro", "course", "mem.department", "mem.position", "mem.branch")->findAll($criteria);
 
 
     		foreach ($model_graph as $key => $value) {
