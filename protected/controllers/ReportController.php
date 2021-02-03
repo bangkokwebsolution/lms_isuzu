@@ -3028,7 +3028,7 @@ public function actionReportRegisterData()
 			$criteria->order = 'sortOrder ASC';
 			$model = Position::model()->findAll($criteria);
 			if ($model) {
-				var_dump($_POST['Emp_id']);
+			
 				if ($_POST['Emp_id'] == 1) {
 					$sub_list = Yii::app()->session['lang'] == 1?'Select Position ':'เลือกตำแหน่ง';
 				}else{

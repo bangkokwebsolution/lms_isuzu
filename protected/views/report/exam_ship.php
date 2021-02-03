@@ -718,7 +718,7 @@ chart.draw(data, options);
 
                 <div class="row">
                     <?php 
-                    var_dump($arr_count_course); exit;
+                    // var_dump($arr_count_course); exit;
                     foreach ($arr_count_course as $key_y => $value_y) {                      
 
                         if(isset($_GET["search"]["graph"]) && in_array("bar", $_GET["search"]["graph"])){ ?>
