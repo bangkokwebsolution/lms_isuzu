@@ -3139,20 +3139,21 @@ public function actionReportRegisterData()
 			$model_level = [];
 		}
 
-		$year_start = LogStartcourse::model()->find(array(
-			'condition' => 'active=:active',
-			'params' => array(':active'=>'y'),
-			'order' => 'id ASC'
-		));
+		// $year_start = LogStartcourse::model()->find(array(
+		// 	'condition' => 'active=:active',
+		// 	'params' => array(':active'=>'y'),
+		// 	'order' => 'id ASC'
+		// ));
 
-		$year_start = date("Y", strtotime($year_start->start_date));
+		$year_start = date("Y", strtotime(date("Y-m-d H:i:s")));
 
-		$year_end = LogStartcourse::model()->find(array(
-			'condition' => 'active=:active',
-			'params' => array(':active'=>'y'),
-			'order' => 'id DESC'
-		));
-		$year_end = date("Y", strtotime($year_end->start_date));
+		// $year_end = LogStartcourse::model()->find(array(
+		// 	'condition' => 'active=:active',
+		// 	'params' => array(':active'=>'y'),
+		// 	'order' => 'id DESC'
+		// ));
+		$year_end = date("Y", strtotime(date("Y-m-d H:i:s")));
+		$year_end = $year_end+10;
 
 		if (Yii::app()->session['lang'] == 2) {
 			$year_start = $year_start+543;
@@ -5306,19 +5307,22 @@ if($course_score->score_past == 'y'){
 			$model_level = [];
 		}
 
-		$year_start = LogStartcourse::model()->find(array(
-			'condition' => 'active=:active',
-			'params' => array(':active'=>'y'),
-			'order' => 'id ASC'
-		));
-		$year_start = date("Y", strtotime($year_start->start_date));
+		// $year_start = LogStartcourse::model()->find(array(
+		// 	'condition' => 'active=:active',
+		// 	'params' => array(':active'=>'y'),
+		// 	'order' => 'id ASC'
+		// ));
 
-		$year_end = LogStartcourse::model()->find(array(
-			'condition' => 'active=:active',
-			'params' => array(':active'=>'y'),
-			'order' => 'id DESC'
-		));
-		$year_end = date("Y", strtotime($year_end->start_date));
+		$year_start = date("Y", strtotime(date("Y-m-d H:i:s")));
+
+		// $year_end = LogStartcourse::model()->find(array(
+		// 	'condition' => 'active=:active',
+		// 	'params' => array(':active'=>'y'),
+		// 	'order' => 'id DESC'
+		// ));
+		$year_end = date("Y", strtotime(date("Y-m-d H:i:s")));
+		$year_end = $year_end+10;
+
 
 		if (Yii::app()->session['lang'] == 2) {
 			$year_start = $year_start+543;
@@ -5328,7 +5332,6 @@ if($course_score->score_past == 'y'){
 			$year_end = $year_start+1;
 		}
     	//------------------- ค่า form search ------------------------//
-
 		if(isset($_GET["search"])){			
 
 			if($_GET["search"]["course_id"] != ""){
@@ -5554,6 +5557,7 @@ $meanpretest = 0 ;
 $meantotalpretest = 0 ;
 
 }
+
 $percentpass = ($num_pass / count($LogStartcourse)) * 100;
 $arr_course_gen[$key_c]["gen"][$key_gen]["register"] = count($LogStartcourse);
 $arr_course_gen[$key_c]["gen"][$key_gen]["postpass"] = $num_pass;

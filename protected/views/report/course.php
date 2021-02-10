@@ -680,7 +680,7 @@ chart.draw(data, options);
                                 }
                             }
                         }
-
+                        // var_dump($model_search);exit();
                          if(!empty($model_search)){
                             $no = 1;
                             foreach ($model_search as $key_c => $value_c) {
@@ -1055,7 +1055,7 @@ chart.draw(data, options);
             success: function(data) {
                 if(data != ""){
                     $("#search_level").html(data);
-                    $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกระดับตำแหน่ง"; }else{ echo "Select Level"; } ?></option>");
+                   // $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกระดับตำแหน่ง"; }else{ echo "Select Level"; } ?></option>");
                 }
             }
         });
