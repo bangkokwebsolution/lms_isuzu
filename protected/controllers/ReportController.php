@@ -5127,10 +5127,18 @@ if($course_score->score_past == 'y'){
 				?>
 				<option value="" selected>
 					<?php 
-					if(Yii::app()->session['lang'] != 1){
-						echo "ไม่มีตำแหน่ง";
+					if ($_POST['department_id'] == 4 || $_POST['department_id'] == 5) {
+						if(Yii::app()->session['lang'] != 1){
+							echo "ไม่มีตำแหน่ง";
+						}else{
+							echo "No Position";
+						}
 					}else{
-						echo "No Position";
+						if(Yii::app()->session['lang'] != 1){
+							echo "ไม่มีแผนก";
+						}else{
+							echo "No Department";
+						}
 					}
 					?>
 				</option>
