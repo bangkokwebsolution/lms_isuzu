@@ -3731,7 +3731,7 @@ $model_position = Position::model()->findAll(array(
     		
     		$model_search = LogStartcourse::model()->with("mem", "pro", "course", "mem.department", "mem.position")->findAll($criteria);
 
-    		$criteria->order = 't.course_id ASC';
+    		$criteria->order = 'course.course_title ASC';
     		$criteria->select ='t.course_id';
     		$criteria->distinct = true;
     		$model_graph = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
@@ -3767,7 +3767,7 @@ $model_position = Position::model()->findAll(array(
     		}
     		$model_search = LogStartcourse::model()->with("mem", "pro", "course", "mem.department", "mem.position")->findAll($criteria);
 
-    		$criteria->order = 'yearrrr ASC';
+    		$criteria->order = 'course.course_title ASC';
     		$criteria->select ='t.start_date, t.course_id, YEAR(t.start_date) AS yearrrr';
     		$criteria->distinct = true;
     		$model_graph = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
@@ -3787,7 +3787,7 @@ $model_position = Position::model()->findAll(array(
     		
     		$model_search = LogStartcourse::model()->with("mem", "pro", "course", "mem.department", "mem.position")->findAll($criteria);
 
-    		$criteria->order = 't.course_id ASC';
+    		$criteria->order = 'course.course_title ASC';
     		$criteria->select ='t.course_id';
     		$criteria->distinct = true;
     		$model_graph = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
@@ -4114,7 +4114,7 @@ $model_level = Branch::model()->findAll(array(
     		//$criteria->order = 'department.sortOrder ASC, position.sortOrder ASC, branch.sortOrder ASC';
     		$model_search = LogStartcourse::model()->with("mem", "pro", "course", "mem.department", "mem.position", "mem.branch")->findAll($criteria);
 
-    		$criteria->order = 't.course_id ASC';
+    		$criteria->order = 'course.course_title ASC';
     		$criteria->select ='t.course_id';
     		$criteria->distinct = true;
     		$model_graph = LogStartcourse::model()->with("mem", "pro", "course")->findAll($criteria);
