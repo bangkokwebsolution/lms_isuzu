@@ -4507,7 +4507,7 @@ if($course_score->score_past == 'y'){
 				$notpass = $model_search_graph[$key]["notpass"];
 				$model_search_graph[$key]["notpass"] = number_format(($notpass * 100) / $total_register, 2);
 				$process = $model_search_graph[$key]["process"];
-				$model_search_graph[$key]["perprocess"] = number_format(($process * 100) / $total_register, 2);
+				$model_search_graph[$key]["process"] = number_format(($process * 100) / $total_register, 2);
 				$notprocess = $model_search_graph[$key]["notprocess"];
 				$model_search_graph[$key]["notprocess"] = number_format(($notprocess * 100) / $total_register, 2);
 				$timeout = $model_search_graph[$key]["timeout"];
