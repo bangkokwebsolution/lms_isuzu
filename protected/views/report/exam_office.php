@@ -121,10 +121,10 @@ foreach ($model_course as $key => $value) {
                                                 }
                                             ?>
                                         </option>
-<?php 
+                                        <?php 
 if(isset($model_gen) && !empty($model_gen)){
     ?>
-    <option value="">
+     <option value="">
         <?php 
             if(Yii::app()->session['lang'] != 1){
                 echo "“เลือกทั้งหมด”";
@@ -149,7 +149,7 @@ if(isset($model_gen) && !empty($model_gen)){
         <?php
     }
 }
- ?>
+?>
                                     </select>
                                 </div>
                             </div>
@@ -380,7 +380,7 @@ else{
                                         ?>
                                         </option>
                                         <?php 
-                                        for ($i=($year_start-1); $i<$year_end ; $i++) {
+                                        for ($i=$year_start-2; $i<$year_end ; $i++) {
                                             ?> <option <?php if(isset($_GET["search"]["start_year"]) && $_GET["search"]["start_year"] == $i){ echo "selected"; } ?> value="<?= $i ?>"><?= $i ?></option> <?php
                                         }
                                          ?>
@@ -409,7 +409,7 @@ else{
                                         ?>
                                         </option>
                                         <?php 
-                                        for ($i=$year_start; $i<$year_end ; $i++) {
+                                        for ($i=($year_start-1); $i<=$year_end ; $i++) {
                                             ?> <option <?php if(isset($_GET["search"]["end_year"]) && $_GET["search"]["end_year"] == $i){ echo "selected"; } ?> value="<?= $i ?>"><?= $i ?></option> <?php
                                         }
                                          ?>
@@ -482,22 +482,24 @@ else{
                                 // if($value["register"] > 0){
 
                                     if ($value['title'] != ""){
-                                        echo "['".$value["title"]."', ".$value["pass"].", ".$value["fail"].", ".$value["process"].", ".$value["notprocess"].", ".$value["timeout"]." ],";
+                                        echo "['".$value["title"]."',".$value['pass'].", ".$value["fail"].", ".$value["process"].", ".$value["notprocess"].", ".$value["timeout"]." ],";
                                     }
                                         // }
                             } 
                             ?>
                           ]);
-
+                          
+                          
                           var options = {
                             seriesType: 'bars',
                             bar: {groupWidth: "50%"},
                             legend: { position: "right" },
                             chartArea:{ right:'15%' },
                         };
+                        
 
                         var chart = new google.visualization.ComboChart(document.getElementById('chart_bar'));
-
+                        
 google.visualization.events.addListener(chart, 'ready', function () {
     $.post('<?=$this->createUrl('report/SavePicChart')?>',{chart: chart.getImageURI().replace("data:image/png;base64,", ""), key : num_chart},function(json){
 
@@ -509,8 +511,8 @@ google.visualization.events.addListener(chart, 'ready', function () {
     num_chart = num_chart+1;
 });
 
-chart.draw(data, options);
-                    }
+chart.draw(data,options);
+}
                 </script>
                 </div>
             </div>
@@ -521,7 +523,7 @@ chart.draw(data, options);
         ?>
         </div>
         <!-- จบ กราฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟ -->
-
+        
         
         <li class="breadcrumb-item active" aria-current="page">
             <center>
@@ -1087,11 +1089,12 @@ chart.draw(data, options);
             success: function(data) {
                 if(data != ""){
                     $("#search_position").html(data);
+                    $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกระดับตำแหน่ง"; }else{ echo "Select Level"; } ?></option>");
                 }
             }
         });
     }
-
+    
     function change_level(){        
         var position_id = $("#search_position option:selected").val();
 

@@ -441,7 +441,7 @@ if(isset($model_level) && !empty($model_level)){
                                         if(Yii::app()->session['lang'] != 1){
                                             echo "เลือกปีสิ้นสุด";
                                         }else{
-                                            echo "Select From Year";
+                                            echo "Select To Year";
                                         }
                                         ?>
                                         </option>
@@ -559,8 +559,12 @@ chart.draw(data, options);
             <div class="col-md-12 text-right" style="padding-right: 47px;">
                 <p style="font-size: 18px; margin-bottom: 0px;">
                     <?php 
-                    
-                    echo count($model_search);
+                     foreach ($model_graph as $key => $value) {
+                        if($value["register"] <= 0){
+                            unset($model_graph[$key]);
+                        }
+                    }
+                    echo count($model_graph);
                     if(Yii::app()->session['lang'] != 1){
                         echo " หลักสูตร";
                     }else{
@@ -698,8 +702,6 @@ chart.draw(data, options);
                                         }
                                         ?>  
                                         <tr style="border: 1.5px solid #000; text-align: center;">
-                                            
-
                                             <td ><?php echo $no; $no++; ?></td>
                                             <td style="text-align: left;"><?= $course->course_title ?></td>
                                             <td><?= $gen_course->gen_title ?></td>
@@ -974,7 +976,7 @@ chart.draw(data, options);
                 if(data != ""){
                     $("#search_department").html(data);
                     //$("#search_position").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกตำแหน่ง"; }else{ echo "Select Position"; } ?></option>");
-                    $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกระดับตำแหน่ง"; }else{ echo "Select Level"; } ?></option>");
+                    // $("#search_level").html("<option value='' selected><?php if(Yii::app()->session['lang'] != 1){ echo "เลือกระดับตำแหน่ง"; }else{ echo "Select Level"; } ?></option>");
                 }
             }
         });
@@ -1024,7 +1026,6 @@ chart.draw(data, options);
         }else{
             var department_id = $("#search_department option:selected").val();
         }
-
         $.ajax({
             type: 'POST',
             url: '<?php echo Yii::app()->createAbsoluteUrl("/report/getPosition"); ?>',
@@ -1107,6 +1108,7 @@ chart.draw(data, options);
         if(status_pass == 1){
             $("#form_search").submit();
         }
+        
     }
 
 </script>

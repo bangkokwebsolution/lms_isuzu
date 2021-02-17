@@ -328,7 +328,7 @@ if(isset($model_position) && !empty($model_position)){
                                         ?>
                                         </option>
                                         <?php 
-                                        for ($i=$year_start; $i<$year_end ; $i++) {
+                                        for ($i=$year_start-2; $i<$year_end ; $i++) {
                                             ?> <option <?php if(isset($_GET["search"]["start_year"]) && $_GET["search"]["start_year"] == $i){ echo "selected"; } ?> value="<?= $i ?>"><?= $i ?></option> <?php
                                         }
                                          ?>
@@ -357,7 +357,7 @@ if(isset($model_position) && !empty($model_position)){
                                         ?>
                                         </option>
                                         <?php 
-                                        for ($i=($year_start+1); $i<=$year_end ; $i++) {
+                                        for ($i=($year_start-1); $i<=$year_end ; $i++) {
                                             ?> <option <?php if(isset($_GET["search"]["end_year"]) && $_GET["search"]["end_year"] == $i){ echo "selected"; } ?> value="<?= $i ?>"><?= $i ?></option> <?php
                                         }
                                          ?>

@@ -3227,7 +3227,7 @@ if($_GET["search"]["gen_id"] != ""){
     							$arr_course_graph[$value_c->course_id]["register"] = 0;		
     							$arr_course_graph[$value_c->course_id]["pass"] = 0;		
     							$key_gen = 0;
-    								$arr_course_gen[$key_c]["gen"][$key_gen]["gen_id"] = $value_cg;
+    							$arr_course_gen[$key_c]["gen"][$key_gen]["gen_id"] = $value_cg;
 
 $criteria = new CDbCriteria;
 $criteria->addCondition('user.id IS NOT NULL');
@@ -3585,25 +3585,29 @@ public function actionCourseCaptain(){ // อบรม คนเรือ
     	$model_position = [];
     }
 
-    $year_start = LogStartcourse::model()->find(array(
-    	'condition' => 'active=:active',
-    	'params' => array(':active'=>'y'),
-    	'order' => 'id ASC'
-    ));
-    $year_start = date("Y", strtotime($year_start->start_date));
+    // $year_start = LogStartcourse::model()->find(array(
+		// 	'condition' => 'active=:active',
+		// 	'params' => array(':active'=>'y'),
+		// 	'order' => 'id ASC'
+		// ));
 
-    $year_end = LogStartcourse::model()->find(array(
-    	'condition' => 'active=:active',
-    	'params' => array(':active'=>'y'),
-    	'order' => 'id DESC'
-    ));
-    $year_end = date("Y", strtotime($year_end->start_date));
-    if (Yii::app()->session['lang'] == 2) {
+		$year_start = date("Y", strtotime(date("Y-m-d H:i:s")));
+
+		// $year_end = LogStartcourse::model()->find(array(
+		// 	'condition' => 'active=:active',
+		// 	'params' => array(':active'=>'y'),
+		// 	'order' => 'id DESC'
+		// ));
+		$year_end = date("Y", strtotime(date("Y-m-d H:i:s")));
+		$year_end = $year_end+10;
+
+		if (Yii::app()->session['lang'] == 2) {
 			$year_start = $year_start+543;
 			$year_end = $year_end+543;
-	}
-    if($year_end <= $year_start){
-    	$year_end = $year_start+1;
+		}
+
+		if($year_end <= $year_start){
+			$year_end = $year_start+1;
     }
     //------------------- ค่า form search ------------------------//
 
@@ -3887,25 +3891,29 @@ public function actionCourseOffice(){ // อบรม office
     	$model_level = [];
     }
 
-    $year_start = LogStartcourse::model()->find(array(
-    	'condition' => 'active=:active',
-    	'params' => array(':active'=>'y'),
-    	'order' => 'id ASC'
-    ));
-    $year_start = date("Y", strtotime($year_start->start_date));
+    // $year_start = LogStartcourse::model()->find(array(
+		// 	'condition' => 'active=:active',
+		// 	'params' => array(':active'=>'y'),
+		// 	'order' => 'id ASC'
+		// ));
 
-    $year_end = LogStartcourse::model()->find(array(
-    	'condition' => 'active=:active',
-    	'params' => array(':active'=>'y'),
-    	'order' => 'id DESC'
-    ));
-    $year_end = date("Y", strtotime($year_end->start_date));
-    if (Yii::app()->session['lang'] == 2) {
+		$year_start = date("Y", strtotime(date("Y-m-d H:i:s")));
+
+		// $year_end = LogStartcourse::model()->find(array(
+		// 	'condition' => 'active=:active',
+		// 	'params' => array(':active'=>'y'),
+		// 	'order' => 'id DESC'
+		// ));
+		$year_end = date("Y", strtotime(date("Y-m-d H:i:s")));
+		$year_end = $year_end+10;
+
+		if (Yii::app()->session['lang'] == 2) {
 			$year_start = $year_start+543;
 			$year_end = $year_end+543;
-	}
-    if($year_end <= $year_start){
-    	$year_end = $year_start+1;
+		}
+
+		if($year_end <= $year_start){
+			$year_end = $year_start+1;
     }
     //------------------- ค่า form search ------------------------//
 
@@ -4212,26 +4220,31 @@ $model_level = Branch::model()->findAll(array(
     	$model_level = [];
     }
 
-    $year_start = LogStartcourse::model()->find(array(
-    	'condition' => 'active=:active',
-    	'params' => array(':active'=>'y'),
-    	'order' => 'id ASC'
-    ));
-    $year_start = date("Y", strtotime($year_start->start_date));
+	// $year_start = LogStartcourse::model()->find(array(
+		// 	'condition' => 'active=:active',
+		// 	'params' => array(':active'=>'y'),
+		// 	'order' => 'id ASC'
+		// ));
 
-    $year_end = LogStartcourse::model()->find(array(
-    	'condition' => 'active=:active',
-    	'params' => array(':active'=>'y'),
-    	'order' => 'id DESC'
-    ));
-    $year_end = date("Y", strtotime($year_end->start_date));
-    if (Yii::app()->session['lang'] == 2) {
+		$year_start = date("Y", strtotime(date("Y-m-d H:i:s")));
+
+		// $year_end = LogStartcourse::model()->find(array(
+		// 	'condition' => 'active=:active',
+		// 	'params' => array(':active'=>'y'),
+		// 	'order' => 'id DESC'
+		// ));
+		$year_end = date("Y", strtotime(date("Y-m-d H:i:s")));
+		$year_end = $year_end+10;
+
+
+		if (Yii::app()->session['lang'] == 2) {
 			$year_start = $year_start+543;
 			$year_end = $year_end+543;
-	}
-    if($year_end <= $year_start){
-    	$year_end = $year_start+1;
-    }
+		}
+		if($year_end <= $year_start){
+			$year_end = $year_start+1;
+		}
+
     //------------------- ค่า form search ------------------------//
 
     if(isset($_GET["search"])){
@@ -4278,18 +4291,25 @@ $model_level = Branch::model()->findAll(array(
 
     	if($_GET["search"]["course_id"] != ""){
     		$criteria->compare('t.course_id', $_GET["search"]["course_id"]);
+			$model_gen = CourseGeneration::model()->findAll(array(
+				'condition' => 'active=:active AND course_id=:course_id',
+				'params' => array(':active'=>'y', ':course_id'=>$_GET["search"]["course_id"]),
+				'order' => 'gen_title ASC'    	
+			));
 
     		if($_GET["search"]["gen_id"] != ""){
     			$criteria->compare('t.gen_id', $_GET["search"]["gen_id"]);
     		}
     	}    	
+		
 
     	if($authority == 2 || $authority == 3){ // ผู้จัดการฝ่าย
     		$_GET["search"]["department"] = $user_login->department_id;
+			
     	}
     	if($_GET["search"]["department"] != ""){
     		$criteria->compare('user.department_id', $_GET["search"]["department"]);
-
+			
     		$model_position = Position::model()->findAll(array(
     			'condition' => 'active=:active AND department_id=:department_id AND lang_id=:lang_id',
     			'params' => array(':active'=>'y',':department_id'=>$_GET["search"]["department"],':lang_id'=>1),
@@ -4487,7 +4507,7 @@ if($course_score->score_past == 'y'){
 				$notpass = $model_search_graph[$key]["notpass"];
 				$model_search_graph[$key]["notpass"] = number_format(($notpass * 100) / $total_register, 2);
 				$process = $model_search_graph[$key]["process"];
-				$model_search_graph[$key]["process"] = number_format(($process * 100) / $total_register, 2);
+				$model_search_graph[$key]["perprocess"] = number_format(($process * 100) / $total_register, 2);
 				$notprocess = $model_search_graph[$key]["notprocess"];
 				$model_search_graph[$key]["notprocess"] = number_format(($notprocess * 100) / $total_register, 2);
 				$timeout = $model_search_graph[$key]["timeout"];
@@ -4575,7 +4595,7 @@ public function actionExamShip(){
     	$model_department = [];
     }
 
-    if($authority == 1){
+    if($authority == 2){
     	$model_position = Position::model()->findAll(array(
     		'condition' => 'active=:active AND department_id=:department_id AND lang_id=:lang_id',
     		'params' => array(':active'=>'y',':department_id'=>$user_login->department_id,':lang_id'=>1),
@@ -4585,25 +4605,29 @@ public function actionExamShip(){
     	$model_position = [];
     }
 
-    $year_start = LogStartcourse::model()->find(array(
-    	'condition' => 'active=:active',
-    	'params' => array(':active'=>'y'),
-    	'order' => 'id ASC'
-    ));
-    $year_start = date("Y", strtotime($year_start->start_date));
+    // $year_start = LogStartcourse::model()->find(array(
+		// 	'condition' => 'active=:active',
+		// 	'params' => array(':active'=>'y'),
+		// 	'order' => 'id ASC'
+		// ));
 
-    $year_end = LogStartcourse::model()->find(array(
-    	'condition' => 'active=:active',
-    	'params' => array(':active'=>'y'),
-    	'order' => 'id DESC'
-    ));
-    $year_end = date("Y", strtotime($year_end->start_date));
-    if (Yii::app()->session['lang'] == 2) {
+		$year_start = date("Y", strtotime(date("Y-m-d H:i:s")));
+
+		// $year_end = LogStartcourse::model()->find(array(
+		// 	'condition' => 'active=:active',
+		// 	'params' => array(':active'=>'y'),
+		// 	'order' => 'id DESC'
+		// ));
+		$year_end = date("Y", strtotime(date("Y-m-d H:i:s")));
+		$year_end = $year_end+10;
+
+		if (Yii::app()->session['lang'] == 2) {
 			$year_start = $year_start+543;
 			$year_end = $year_end+543;
-	}
-    if($year_end <= $year_start){
-    	$year_end = $year_start+1;
+		}
+
+		if($year_end <= $year_start){
+			$year_end = $year_start+1;
     }
     //------------------- ค่า form search ------------------------//
 
@@ -5072,7 +5096,18 @@ if($course_score->score_past == 'y'){
 			));
 
 			if(!empty($model_position)){
-				?>
+				if ($_POST['department_id'] == 4 || $_POST['department_id'] == 5) {
+					$list_position = Yii::app()->session['lang'] == 1?'Select Position ':'เลือกตำแหน่ง';
+				}else{
+					$list_position = Yii::app()->session['lang'] == 1?'Select Department ':'เลือกแผนก';
+				}
+				
+				$data = '<option value ="">'.$list_position.'</option>';
+				foreach ($model_position as $key => $value) {
+					$data .= '<option value = "'.$value->id.'"'.'>'.$value->position_title.'</option>';
+				}
+				echo ($data);
+				/* ?>
 				<option value="" selected>
 					<?php 
 					if(Yii::app()->session['lang'] != 1){
@@ -5086,8 +5121,8 @@ if($course_score->score_past == 'y'){
 				foreach ($model_position as $key => $value) {					
 					?>
 					<option value="<?= $value->id ?>"><?= $value->position_title ?></option>
-					<?php
-				}
+					<?php */
+				// }
 			}else{
 				?>
 				<option value="" selected>
