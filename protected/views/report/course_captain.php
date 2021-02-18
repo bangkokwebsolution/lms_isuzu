@@ -520,6 +520,7 @@ if(isset($model_position) && !empty($model_position)){
             <div class="col-md-12 text-right" style="padding-right: 47px;">
                 <p style="font-size: 18px; margin-bottom: 0px;">
                     <?php 
+                    //var_dump($arr_count_course);
                     echo count($arr_count_course);
                     if(Yii::app()->session['lang'] != 1){
                         echo " หลักสูตร";
@@ -527,8 +528,9 @@ if(isset($model_position) && !empty($model_position)){
                         echo " Courses";
                     }
                     echo '<br>';
-                    $unique_val = Helpers::lib()->unique_multidim_array($model_search, 'user_id');
-                    echo count($unique_val);
+                    // $unique_val = Helpers::lib()->unique_multidim_array($model_search, 'user_id');
+                    // echo count($arr_count_course);
+                    echo count($model_search);
                     if(Yii::app()->session['lang'] != 1){
                         echo " คน";
                     }else{

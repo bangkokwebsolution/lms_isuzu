@@ -587,8 +587,9 @@ if(isset($model_level) && !empty($model_level)){
                         echo " Courses";
                     }
                     echo '<br>';
-                    $unique_val = Helpers::lib()->unique_multidim_array($model_search, 'user_id');
-                    echo count($unique_val);
+                    // $unique_val = Helpers::lib()->unique_multidim_array($model_search, 'user_id');
+                    // echo count($unique_val);
+                    echo count($model_search);
                     if(Yii::app()->session['lang'] != 1){
                         echo " คน";
                     }else{
@@ -635,7 +636,7 @@ if(isset($model_level) && !empty($model_level)){
                             if(Yii::app()->session['lang'] != 1){
                                 echo "ชื่อ - นามสกุล";
                             }else{
-                                echo "Fullname";
+                                echo "Name - Surname";
                             }
                             ?></th>
                             <th><?php 

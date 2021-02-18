@@ -486,6 +486,7 @@ if(isset($model_level) && !empty($model_level)){
         <!-- เริ่ม กราฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟฟ -->
         <div class="row">
         <?php 
+       
         if(isset($_GET["search"]["graph"]) && in_array("bar", $_GET["search"]["graph"])){
             ?>
             <div class="col-sm-1"></div>
@@ -503,11 +504,25 @@ if(isset($model_level) && !empty($model_level)){
                           var data = google.visualization.arrayToDataTable([
                             ["หลักสูตร", "No. of Registration", "No. of Finished" ],
                             <?php 
-                            foreach ($model_graph as $key => $value) {
-                                if($value["register"] > 0){
-                                    echo "['".$value["title"]."', ".$value["register"].", ".$value["pass"]." ],";
+                            foreach ($model_search as $key => $value_c) {
+
+                               $course = CourseOnline::model()->findByPk($value_c["course_id"]);
+                                if(!empty($value_c["gen"])){ // วนรุ่น
+                                    foreach ($value_c["gen"] as $key_g => $value_g) {
+                                        if($value_g["register"] > 0){
+                                            $regis ++;
+                                $gen_course = CourseGeneration::model()->findByPk($value_g["gen_id"]);
+
+                                        if($gen_course == ""){
+                                            $gen_course->gen_title = "-";
+                                        }
+                                        //echo "['".$value["title"]."', ".$value["register"].", ".$value["pass"]." ],";
+                                        echo "['".$course->course_title. " Gen ".$gen_course->gen_title."', ".$value_g["register"].", ".$value_g["postpass"]." ],";
+                                    }
+                                    
                                 }
                             } 
+                        }
                             ?>
                           ]);
 
@@ -561,12 +576,27 @@ chart.draw(data, options);
             <div class="col-md-12 text-right" style="padding-right: 47px;">
                 <p style="font-size: 18px; margin-bottom: 0px;">
                     <?php 
-                     foreach ($model_graph as $key => $value) {
-                        if($value["register"] <= 0){
-                            unset($model_graph[$key]);
+                    //  foreach ($model_graph as $key => $value) {
+                    //     if($value["register"] <= 0){
+                    //         unset($model_graph[$key]);
+                    //     }
+                    // }
+                    $regisddd= 0;
+                    foreach ($model_search as $key => $value_c) {
+
+                               $course = CourseOnline::model()->findByPk($value_c["course_id"]);
+                                if(!empty($value_c["gen"])){ // วนรุ่น
+                                    foreach ($value_c["gen"] as $key_g => $value_g) {
+                                        if($value_g["register"] > 0){
+                                            $regisddd ++;
+
+                                    }
+                                    
+                                }
+                            } 
                         }
-                    }
-                    echo count($model_graph);
+                    // var_dump();
+                    echo $regisddd;
                     if(Yii::app()->session['lang'] != 1){
                         echo " หลักสูตร";
                     }else{
@@ -702,6 +732,7 @@ chart.draw(data, options);
                                         if($gen_course == ""){
                                             $gen_course->gen_title = "-";
                                         }
+                                   
                                         ?>  
                                         <tr style="border: 1.5px solid #000; text-align: center;">
                                             <td ><?php echo $no; $no++; ?></td>
