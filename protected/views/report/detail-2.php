@@ -347,6 +347,8 @@ if(isset($model_level) && !empty($model_level)){
     ?>
         <option <?php echo ($Branch_list['id'] == $_GET['search']['level']) ? 'selected' : '';?> value="<?php echo $Branch_list['id']; ?>"><?php echo $Branch_list['branch_name']; ?></option>
     <?php }} ?>
+    
+            
                                     </select>
                                 </div>
                             </div>
@@ -1112,3 +1114,17 @@ chart.draw(data, options);
     }
 
 </script>
+<script>
+$(document ).ready(function() {
+var employee_type = $("#search_employee option:selected").val();
+if(employee_type == 1){
+$("#div_search_level").hide();
+}
+});
+</script>
+
+       
+        
+        
+        
+    
