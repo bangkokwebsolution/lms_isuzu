@@ -1061,7 +1061,10 @@ chart.draw(data, options);
         $("#search_start_date").val("");
         $("#search_end_date").val("");
     });
-
+    var course_id = $("#search_course_id option:selected").val();
+        if (course_id != "") {
+                    change_gen(course_id);
+    }
     function change_gen(){
         var course_id = $("#search_course_id option:selected").val();
         $.ajax({

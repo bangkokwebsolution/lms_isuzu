@@ -4503,15 +4503,25 @@ if($course_score->score_past == 'y'){
 				// ConvertToPercentang ----------------
 				$total_register = $model_search_graph[$key]["totalregister"];
 				$pass = $model_search_graph[$key]["pass"];
-				$model_search_graph[$key]["pass"] = number_format(($pass * 100) / $total_register, 2);
+				// $model_search_graph[$key]["pass"] = number_format(($pass * 100) / $total_register, 2);
+				// $notpass = $model_search_graph[$key]["notpass"];
+				// $model_search_graph[$key]["notpass"] = number_format(($notpass * 100) / $total_register, 2);
+				// $process = $model_search_graph[$key]["process"];
+				// $model_search_graph[$key]["process"] = number_format(($process * 100) / $total_register, 2);
+				// $notprocess = $model_search_graph[$key]["notprocess"];
+				// $model_search_graph[$key]["notprocess"] = number_format(($notprocess * 100) / $total_register, 2);
+				// $timeout = $model_search_graph[$key]["timeout"];
+				// $model_search_graph[$key]["timeout"] = number_format(($timeout * 100) / $total_register, 2);
+
+				$model_search_graph[$key]["pass"] = $pass;
 				$notpass = $model_search_graph[$key]["notpass"];
-				$model_search_graph[$key]["notpass"] = number_format(($notpass * 100) / $total_register, 2);
+				$model_search_graph[$key]["notpass"] = $notpass;
 				$process = $model_search_graph[$key]["process"];
-				$model_search_graph[$key]["process"] = number_format(($process * 100) / $total_register, 2);
+				$model_search_graph[$key]["process"] = $process;
 				$notprocess = $model_search_graph[$key]["notprocess"];
-				$model_search_graph[$key]["notprocess"] = number_format(($notprocess * 100) / $total_register, 2);
+				$model_search_graph[$key]["notprocess"] = $notprocess;
 				$timeout = $model_search_graph[$key]["timeout"];
-				$model_search_graph[$key]["timeout"] = number_format(($timeout * 100) / $total_register, 2);
+				$model_search_graph[$key]["timeout"] = $timeout;
 			}
     	} // else
 
@@ -4813,12 +4823,19 @@ if($course_score->score_past == 'y'){
 
     		$model_search_score = [];
     		$model_search_graph = [];
+
     		foreach ($model_search as $key => $value) {
     			$course_score = Coursescore::model()->find(array(
     				'condition' => 'active=:active AND user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id AND type=:type',
     				'params' => array(':active'=>'y',':user_id'=>$value->user_id,':course_id'=>$value->course_id, ':gen_id'=>$value->gen_id, ':type'=>'post'),
     				'order' => 'score_id DESC'
 				));
+			   // $Criteria = new CDbCriteria();
+      //          $Criteria->condition = "course_id = $course->id";
+      //          $CourseGeneration = CourseGeneration::model()->findAll($Criteria);
+      //          foreach ($CourseGeneration as $keyGeneration => $valueGeneration) {
+               	
+               	$model_search_graph[$value->course_id]["gen_id"] = $model_search_graph[$value->course_id]["process"];
 				$model_search_graph[$value->course_id]["process"] = $model_search_graph[$value->course_id]["process"];
 				$model_search_graph[$value->course_id]["notprocess"] = $model_search_graph[$value->course_id]["notprocess"];
 				$model_search_graph[$value->course_id]["timeout"] = $model_search_graph[$value->course_id]["timeout"];
@@ -4869,20 +4886,30 @@ if($course_score->score_past == 'y'){
 						}
 					}
 				}
+				//}
 			}
 			foreach ($model_search_graph as $key => $valll){
 				// ConvertToPercentang ----------------
 				$total_register = $model_search_graph[$key]["totalregister"];
 				$pass = $model_search_graph[$key]["pass"];
-				$model_search_graph[$key]["pass"] = number_format(($pass * 100) / $total_register, 2);
+				// $model_search_graph[$key]["pass"] = number_format(($pass * 100) / $total_register, 2);
+				// $notpass = $model_search_graph[$key]["notpass"];
+				// $model_search_graph[$key]["notpass"] = number_format(($notpass * 100) / $total_register, 2);
+				// $process = $model_search_graph[$key]["process"];
+				// $model_search_graph[$key]["process"] = number_format(($process * 100) / $total_register, 2);
+				// $notprocess = $model_search_graph[$key]["notprocess"];
+				// $model_search_graph[$key]["notprocess"] = number_format(($notprocess * 100) / $total_register, 2);
+				// $timeout = $model_search_graph[$key]["timeout"];
+				// $model_search_graph[$key]["timeout"] = number_format(($timeout * 100) / $total_register, 2);
+				$model_search_graph[$key]["pass"] = $pass;
 				$notpass = $model_search_graph[$key]["notpass"];
-				$model_search_graph[$key]["notpass"] = number_format(($notpass * 100) / $total_register, 2);
+				$model_search_graph[$key]["notpass"] = $notpass;
 				$process = $model_search_graph[$key]["process"];
-				$model_search_graph[$key]["process"] = number_format(($process * 100) / $total_register, 2);
+				$model_search_graph[$key]["process"] = $process;
 				$notprocess = $model_search_graph[$key]["notprocess"];
-				$model_search_graph[$key]["notprocess"] = number_format(($notprocess * 100) / $total_register, 2);
+				$model_search_graph[$key]["notprocess"] = $notprocess;
 				$timeout = $model_search_graph[$key]["timeout"];
-				$model_search_graph[$key]["timeout"] = number_format(($timeout * 100) / $total_register, 2);
+				$model_search_graph[$key]["timeout"] = $timeout;
 			}
     	} // else
 
