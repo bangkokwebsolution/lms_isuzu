@@ -465,6 +465,9 @@ else{
                             ["หลักสูตร", "Passed", "Failed", "On Process", "Not Process", "Timeout" ],
                             <?php 
                             foreach ($model_search_graph as $key => $value) {
+                                if($value["pass"] == null){
+                                    $value["pass"] = 0;
+                                }
                                 if($value["fail"] == null){
                                     $value["fail"] = 0;
                                 }else if($value["pass"] == null){
