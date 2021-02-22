@@ -156,7 +156,11 @@ class FaqTypeController extends Controller
 		//$this->loadModel($id)->delete();
 		$model = $this->loadModel($id);
 		$model->active = 'n';
-		$model->save();
+		 if ($model->save()) {
+			$model_parent_id = FaqType::model()->findByAttributes(array('parent_id'=> $model->faq_type_id));
+			$model_parent_id->active = 'n';
+			$model_parent_id->save();
+		}
 		if(Yii::app()->user->id){
 			Helpers::lib()->getControllerActionId();
 		}
