@@ -50,7 +50,7 @@
             $a = count($faq_type) - '1';
             $s = '1';
             $i = '1'; 
-
+            $data_id = [];
             ?>
             <?php while ($i <= $a) { ?> 
                 <div class="panel panel-default">
@@ -63,8 +63,39 @@
                             </a>
                         </h4>
                     </div>
-                <?php foreach ($faq_data as $key => $value) {
-                    if ($value->faq_type_id == $faq_type[$i]->faq_type_id) { ?>
+                <?php
+                
+                 foreach ($faq_data as $key => $value) {
+                    if ($value->faq_type_id == $faq_type[$i]->faq_type_id) {
+                        $criteria=new CDbCriteria();
+                        $criteria->condition = 'active="y"';
+                        $criteria->compare('lang_id',Yii::app()->session['lang']);
+                        $criteria->compare('faq_type_id',$value->faq_type_id);
+                        $criteria->order = 'create_date DESC';
+                        $faq=Faq::model()->findAll($criteria);
+                        if (count($faq) > 1) { 
+                           
+                            $f = 0; ?>
+                        <div id="collapse-<?= $i ?>" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne"> 
+                           <?php foreach ($faq as $key_faq => $value_faq) { ?>
+                            
+                            <div class="panel-body">
+                                <div class="well" style="background-color: #fff7be;">
+                                    <h4><b><?= $label->label_ques ?> : </b></h4>
+                                    <?=$value_faq->faq_THtopic ?>
+                                </div>
+                                <div class="well">
+                                    <h4><b><?= $label->label_ans ?> : </b></h4>
+                                    <p><?php echo htmlspecialchars_decode($value_faq->faq_THanswer) ?></p>
+                                </div>
+                            </div>
+ 
+                      <?php 
+                        } ?></div> 
+                        <?php
+                       }else{
+                  
+                     ?>
                             <div id="collapse-<?= $i ?>" class="panel-collapse collapse " role="tabpanel" aria-labelledby="headingOne">
                             <div class="panel-body">
                                 <div class="well" style="background-color: #fff7be;">
@@ -77,7 +108,7 @@
                                 </div>
                             </div>
                         </div>
-                  <?php  } } ?>
+                  <?php  } } } ?>
                 </div>
                 <?php
                 $i++;
