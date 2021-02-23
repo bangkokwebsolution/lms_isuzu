@@ -141,6 +141,7 @@ class FaqController extends Controller
 			$model->parent_id = isset($_GET['parent_id']) ? $_GET['parent_id'] : 0 ;
 			if($model->save()){
 				$model->sortOrder = $model->id;
+			    $model->faq_THanswer = CHtml::decode($model->faq_THanswer);
                 $model->save();
 				$langs = Language::model()->findAll(array('condition'=>'active = "y" and id != 1'));
 						if($model->parent_id == 0){
