@@ -702,7 +702,10 @@ chart.draw(data, options);
                         // var_dump($model_search);exit();
                          if(!empty($model_search)){
                             $no = 1;
+
+                            $course_arr = [];
                             foreach ($model_search as $key_c => $value_c) {
+
                                 // var_dump(count($value_c["gen"]));
                                 $course = CourseOnline::model()->findByPk($value_c["course_id"]);
                              
@@ -712,13 +715,23 @@ chart.draw(data, options);
                                         if($value_g["register"] > 0){
                                 $gen_course = CourseGeneration::model()->findByPk($value_g["gen_id"]);
 
-
                                         if($gen_course == ""){
                                             $gen_course->gen_title = "-";
                                         }
-                                        ?>  
+
+                                        ?>
                                         <tr style="border: 1.5px solid #000;">
-                                            <td><?php echo $no; $no++; ?></td>
+
+                                           <?php if (!in_array($value_c["course_id"], $course_arr)){
+                                            $course_arr[] = $value_c["course_id"]; ?>
+                                            <td><?php echo $no; ?></td>
+                                                <?php $no++; ?>
+                                        <?php }else{ ?>
+                                            <td></td>
+                                        <?php }
+
+                                        ?>  
+
                                             <td class="text-left"><?= $course->course_title ?></td>
                                             <td><?= $gen_course->gen_title ?></td>
                                             <td><?= $value_g["register"] ?></td>
@@ -753,6 +766,7 @@ chart.draw(data, options);
                                     //}
                                 //}                                                     
                             } // foreach search
+
                         }else{ // !empty
                             ?>  
                             <tr style="border: 1.5px solid #000;">
