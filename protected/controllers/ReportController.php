@@ -3219,6 +3219,7 @@ if($_GET["search"]["gen_id"] != ""){
 	}
 
 }
+$key_gen = 0;
     				// else{
     					if(!empty($gen_all)){
     						foreach ($gen_all as $key_cg => $value_cg) {
@@ -3226,7 +3227,7 @@ if($_GET["search"]["gen_id"] != ""){
     							$arr_course_graph[$value_c->course_id]["title"] = $value_c->course_title;
     							$arr_course_graph[$value_c->course_id]["register"] = 0;		
     							$arr_course_graph[$value_c->course_id]["pass"] = 0;		
-    							$key_gen = 0;
+    							
     							$arr_course_gen[$key_c]["gen"][$key_gen]["gen_id"] = $value_cg;
 
 $criteria = new CDbCriteria;

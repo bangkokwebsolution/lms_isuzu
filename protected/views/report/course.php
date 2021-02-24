@@ -488,11 +488,29 @@ if(isset($model_level) && !empty($model_level)){
                           var data = google.visualization.arrayToDataTable([
                             ["หลักสูตร", "No. of Registration", "No. of Finished" ],
                             <?php 
-                            foreach ($model_graph as $key => $value) {
-                                if($value["register"] > 0){
-                                    echo "['".$value["title"]."', ".$value["register"].", ".$value["pass"]." ],";
+                            // foreach ($model_graph as $key => $value) {
+                            //     if($value["register"] > 0){
+                            //         echo "['".$value["title"]."', ".$value["register"].", ".$value["pass"]." ],";
+                            //     }
+                            // } 
+                            foreach ($model_search as $key_c => $value_c) {
+                                $course = CourseOnline::model()->findByPk($value_c["course_id"]);
+                             
+                                if(!empty($value_c["gen"])){ // วนรุ่น
+                                    foreach ($value_c["gen"] as $key_g => $value_g) {
+                                     //   var_dump($value_g["gen_id"]);
+                                        if($value_g["register"] > 0){
+                                $gen_course = CourseGeneration::model()->findByPk($value_g["gen_id"]);
+
+
+                                        if($gen_course == ""){
+                                            $gen_course->gen_title = "-";
+                                        }
+                                        echo "['".$course->course_title." Gen ".$gen_course->gen_title."', ".$value_g["register"].", ".$value_g["pass"]." ],";
+                                        }
+                                    }
                                 }
-                            } 
+                            }
                             ?>
                           ]);
 
@@ -554,13 +572,14 @@ chart.draw(data, options);
                         echo "";
                     }
                     
-                    foreach ($model_graph as $key => $value) {
-                        if($value["register"] <= 0){
-                            unset($model_graph[$key]);
-                        }
-                    }
+                    // foreach ($model_graph as $key => $value) {
+                    //     if($value["register"] <= 0){
+                    //         unset($model_graph[$key]);
+                    //     }
+                    // }
 
-                    echo count($model_graph);
+                    // echo count($model_graph);
+                    echo count($model_search);
 
                     if(Yii::app()->session['lang'] != 1){
                         echo " หลักสูตร";
@@ -684,11 +703,15 @@ chart.draw(data, options);
                          if(!empty($model_search)){
                             $no = 1;
                             foreach ($model_search as $key_c => $value_c) {
+                                // var_dump(count($value_c["gen"]));
                                 $course = CourseOnline::model()->findByPk($value_c["course_id"]);
+                             
                                 if(!empty($value_c["gen"])){ // วนรุ่น
                                     foreach ($value_c["gen"] as $key_g => $value_g) {
+                                     //   var_dump($value_g["gen_id"]);
                                         if($value_g["register"] > 0){
                                 $gen_course = CourseGeneration::model()->findByPk($value_g["gen_id"]);
+
 
                                         if($gen_course == ""){
                                             $gen_course->gen_title = "-";
@@ -707,7 +730,7 @@ chart.draw(data, options);
                                             <td style="background-color: #5dff40;"><?= $value_g["pass"] ?></td>
                                             <td style="background-color: #5dff40;">
                                                 <?php if(is_nan($value_g["per_pass"])){ echo "-"; }else{ echo number_format($value_g["per_pass"], 2)."%"; } ?>
-                                                </td>
+                                            </td>
                                             <!-- <td><?= $value_g["user"] ?></td> -->
                                         </tr>
                                         <?php
