@@ -19,7 +19,9 @@ class FaqController extends Controller
 		$criteria->condition = 'active="y"';
 		$criteria->compare('lang_id',Yii::app()->session['lang']);
 		// $criteria->addSearchCondition('faq_THtopic',@$_POST['search_text'],true);
-		$criteria->order = 'create_date DESC';
+		//$criteria->order = 'create_date DESC';
+		$criteria->order = 'sortOrder ASC';
+
 		$faq_data=Faq::model()->findAll($criteria);
 
 		$faq_type = FaqType::model()->findAll(array(

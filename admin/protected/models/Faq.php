@@ -18,6 +18,7 @@
  */
 class Faq extends CActiveRecord
 {
+	public $news_per_page;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -41,7 +42,7 @@ class Faq extends CActiveRecord
 			array('faq_THanswer, create_date, update_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('faq_nid_, faq_THtopic, faq_THanswer, faq_type_id, faq_hideStatus, create_date, create_by, update_date, update_by, active, sortOrder', 'safe', 'on'=>'search'),
+			array('faq_nid_, faq_THtopic, faq_THanswer, faq_type_id, faq_hideStatus, create_date, create_by, update_date, update_by, active, sortOrder, news_per_page', 'safe', 'on'=>'search'),
 		);
 	}
 

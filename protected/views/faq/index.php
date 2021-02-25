@@ -20,16 +20,38 @@
                         </a>
                     </h4>
                 </div>
-                <?php if ($faq_type[0]->faq_type_id == $faq_data[0]->faq_type_id) { ?>
+                <?php
+
+                if ($faq_type[0]->faq_type_id) { 
+                        $criteria=new CDbCriteria();
+                        $criteria->condition = 'active="y"';
+                        $criteria->compare('lang_id',Yii::app()->session['lang']);
+                        $criteria->compare('faq_type_id',$faq_type[0]->faq_type_id);
+                        $criteria->order = 'sortOrder ASC ,create_date DESC';
+                        $faqfrist=Faq::model()->findAll($criteria);
+                        
+                    ?>
              <!-- show detail -->
                 <div id="collapse-0" class="panel-collapse collapse in" role="tabpanel" 
                      aria-labelledby="headingOne">
+                     <?php
+                     if (count($faqfrist) > 1) { 
+                        foreach ($faqfrist as $key => $value) {
+                     ?>
                     <div class="panel-body">
+                        <div class="well" style="background-color: #fff7be;">
+                            <h4><b><?= $label->label_ques ?> : </b></h4>
+                            <p><?php echo htmlspecialchars_decode($value->faq_THtopic) ?></p>
+                        </div>
                         <div class="well">
-                            <?= $faq_data[0]->faq_THtopic; ?>
-                            <p><?php echo htmlspecialchars_decode($faq_data[0]->faq_THanswer) ?></p>
+                            <h4><b><?= $label->label_ans ?> : </b></h4>
+                            <p><?php echo htmlspecialchars_decode($value->faq_THanswer) ?></p>
                         </div>
                     </div>
+                    <?php
+                        }
+                    }
+                    ?>
                 </div>
                 <?php }else{ ?>
                     <div id="collapse-0" class="panel-collapse collapse in" role="tabpanel" 
@@ -71,7 +93,7 @@
                         $criteria->condition = 'active="y"';
                         $criteria->compare('lang_id',Yii::app()->session['lang']);
                         $criteria->compare('faq_type_id',$value->faq_type_id);
-                        $criteria->order = 'create_date DESC';
+                        $criteria->order = 'sortOrder ASC, create_date DESC';
                         $faq=Faq::model()->findAll($criteria);
                         if (count($faq) > 1) { 
                            
