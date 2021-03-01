@@ -236,4 +236,44 @@ class FaqTypeController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+	public function actionSequence() {
+
+    if (isset($_POST['items']) && is_array($_POST['items'])) {
+       
+            // Get all current target items to retrieve available sortOrders
+        $cur_items = FaqType::model()->findAllByPk($_POST['items'], array('order'=>'sortOrder'));
+        
+            // Check 1 by 1 and update if neccessary
+
+        foreach ($cur_items as $keys => $values) {
+
+            for ($i = 0; $i < count($_POST['items']); $i++) {
+                $item = FaqType::model()->findByPk($_POST['items'][$i]);
+
+                if ($item->sortOrder != $cur_items[$i]->sortOrder) {
+                    $item->sortOrder = $cur_items[$i]->sortOrder ;
+                    $item->save(false);
+                } 
+
+                $modellang2 = FaqType::model()->findByAttributes(array('parent_id'=>$_POST['items'][$i])); 
+                 // var_dump($modellang2->sortOrder);exit();
+                
+                if ($modellang2->sortOrder != $cur_items[$i]->sortOrder) {
+                    if ($modellang2->parent_id == '') {
+                        $items = FaqType::model()->findByPk($_POST['items'][$i]);
+                        $items->sortOrder = $cur_items[$i]->sortOrder ;
+                        $items->save(false);
+                        
+                    }
+                    if ($modellang2->parent_id != null) {
+                        $modellang2->sortOrder = $cur_items[$i]->sortOrder ;
+                        $modellang2->save(false);   
+                    }
+                    
+                } 
+            }
+        }        
+    }
+}
 }

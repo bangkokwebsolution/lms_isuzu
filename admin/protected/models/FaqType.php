@@ -30,13 +30,13 @@ class FaqType extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('create_by, update_by', 'numerical', 'integerOnly'=>true),
+			array('create_by, update_by, sortOrder', 'numerical', 'integerOnly'=>true),
 			array('faq_type_title_TH', 'length', 'max'=>250),
 			array('active', 'length', 'max'=>1),
 			array('create_date, update_date,lang_id', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('faq_type_id, faq_type_title_TH, create_date, create_by, update_date, update_by, active,lang_id', 'safe', 'on'=>'search'),
+			array('faq_type_id, faq_type_title_TH, create_date, create_by, update_date, update_by, active,lang_id, sortOrder', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -74,7 +74,8 @@ class FaqType extends CActiveRecord
 			'update_date' => 'วันที่แก้ไขข้อมูล'.$label_lang,
 			'update_by' => 'ผู้แก้ไขข้อมูล'.$label_lang,
 			'active' => 'สถานะ',
-			'lang_id' => 'ภาษา'
+			'lang_id' => 'ภาษา',
+			'sortOrder' => 'เรียงลำดับ',
 		);
 	}
 
@@ -105,7 +106,7 @@ class FaqType extends CActiveRecord
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('lang_id',1);
 
-		// $criteria->order = 'sortOrder ASC';
+	    $criteria->order = 'sortOrder ASC';
 
 		$poviderArray = array('criteria'=>$criteria);
 

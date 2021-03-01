@@ -26,7 +26,7 @@ class FaqController extends Controller
 
 		$faq_type = FaqType::model()->findAll(array(
 			'condition'=>'active="y" AND lang_id="'.Yii::app()->session['lang'].'"',
-			'order'=>'create_date DESC',
+			'order'=>'sortOrder ASC',
 		));
 
 		if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){

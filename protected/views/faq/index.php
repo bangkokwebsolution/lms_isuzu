@@ -21,7 +21,6 @@
                     </h4>
                 </div>
                 <?php
-
                 if ($faq_type[0]->faq_type_id) { 
                         $criteria=new CDbCriteria();
                         $criteria->condition = 'active="y"';
@@ -35,7 +34,7 @@
                 <div id="collapse-0" class="panel-collapse collapse in" role="tabpanel" 
                      aria-labelledby="headingOne">
                      <?php
-                     if (count($faqfrist) > 1) { 
+                     if (count($faqfrist) >= 1) { 
                         foreach ($faqfrist as $key => $value) {
                      ?>
                     <div class="panel-body">
