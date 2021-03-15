@@ -9,7 +9,12 @@
     .form-control-danger:hover {
         border-color: #d9534f;
     }
+/*    table, tr, td {
+                border: 1px black solid;
+    }*/
 </style>
+<?php //var_dump(Yii::app()->basePath.'../themes/template2/excellentexport/'); ?>
+<!-- <script src="<?php Yii::app()->basePath; ?>../themes/template2/excellentexport/dist/excellentexport.js"></script> -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
     var num_chart = 0;
@@ -658,7 +663,19 @@ if(isset($model_position) && !empty($model_position)){
 
 <div class="pull-left ">
     <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
-    <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button>
+    <!-- <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button> -->
+     <a href="<?= $this->createUrl('report/reportCourseExcel',array(
+                                'reportCourseExcel[course_id]'=>$_GET["search"]["course_id"],
+                                'reportCourseExcel[gen_id]'=>$_GET["search"]["gen_id"],
+                                'reportCourseExcel[graph]'=>$_GET["search"]["graph"],
+                                'reportCourseExcel[department]'=>$_GET["search"]["department"],
+                                'reportCourseExcel[position]'=>$_GET["search"]["position"],
+                                'reportCourseExcel[fullname]'=>$_GET["search"]["fullname"],
+                                'reportCourseExcel[start_date]'=>$_GET["search"]["start_date"],
+                                'reportCourseExcel[end_date]'=>$_GET["search"]["end_date"],
+                                'reportCourseExcel[start_year]'=>$_GET["search"]["start_year"],
+                                'reportCourseExcel[end_year]'=>$_GET["search"]["end_year"],
+                                )); ?>" class="btn btn-excel"><i class="fas fa-file-excel"></i>Export Excel</a>
 </div>
 
     <?php }else{ // ไม่ค้นหา ช่วงเวลา ?>
@@ -779,7 +796,19 @@ if(isset($model_position) && !empty($model_position)){
 
             <div class="pull-left ">
                 <button class="btn btn-pdf"><i class="fas fa-file-pdf"></i> Export PDF</button>
-                <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button>
+                <!-- <button class="btn btn-excel"><i class="fas fa-file-excel"></i> Export Excel</button> -->
+                 <a href="<?= $this->createUrl('report/reportCourseExcel',array(
+                                'reportCourseExcel[course_id]'=>$_GET["search"]["course_id"],
+                                'reportCourseExcel[gen_id]'=>$_GET["search"]["gen_id"],
+                                'reportCourseExcel[graph]'=>$_GET["search"]["graph"],
+                                'reportCourseExcel[department]'=>$_GET["search"]["department"],
+                                'reportCourseExcel[position]'=>$_GET["search"]["position"],
+                                'reportCourseExcel[fullname]'=>$_GET["search"]["fullname"],
+                                'reportCourseExcel[start_date]'=>$_GET["search"]["start_date"],
+                                'reportCourseExcel[end_date]'=>$_GET["search"]["end_date"],
+                                'reportCourseExcel[start_year]'=>$_GET["search"]["start_year"],
+                                'reportCourseExcel[end_year]'=>$_GET["search"]["end_year"],
+                                )); ?>" class="btn btn-excel"><i class="fas fa-file-excel"></i>Export Excel</a>
             </div>
         <?php } // !empty($_GET["search"]["graph"]) ?>
 
@@ -794,7 +823,7 @@ if(isset($model_position) && !empty($model_position)){
         <input type="text" name="text_element1" id="text_element1" value="">
     </form>
 </div>
-
+<!-- <button><a download="somedata.xls" href="#" onclick="return ExcellentExport.excel(this, 'table_list', 'chart_graph');">Export to Excel</a></button> -->
 <script type="text/javascript">
     $(document).ready( function () {
 
@@ -803,10 +832,10 @@ if(isset($model_position) && !empty($model_position)){
             $("#export_pdf").submit();
         });
       
-        $('.btn-excel').click(function(e) {
-            window.open('data:application/vnd.ms-excel;charset=UTF-8;,' + encodeURIComponent("<h2><?= $name_report ?></h2>"+$('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br><font color="white">ตาราง</font>'+$('#result_search').html() ));
-            e.preventDefault();
-        });
+        // $('.btn-excel').click(function(e) {
+        //     window.open('data:application/vnd.ms-excel;charset=UTF-8;,' + encodeURIComponent("<h2><?= $name_report ?></h2>"+$('#result_search_graph').html()+'<br><br><br><br><br><br><br><br><br><br><br><br><font color="white">ตาราง</font>'+$('#result_search').html() ));
+        //     e.preventDefault();
+        // });
 
     });
 

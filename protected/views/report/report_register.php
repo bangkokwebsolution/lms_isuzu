@@ -268,6 +268,7 @@
                                         <option value="" selected disabled><?= Yii::app()->session['lang'] == 1?'Status':'เลือกสถานะ'; ?></option>
                                         <option value="1"><?= Yii::app()->session['lang'] == 1?'Approved':'อนุมัติ'; ?></option>
                                         <option value="0"><?= Yii::app()->session['lang'] == 1?'Disapproved':'ไม่อนุมัติ'; ?></option>
+                                        <option value="2"><?= Yii::app()->session['lang'] == 1?'Suspension':'ระงับการใช้งาน'; ?></option>
                                     </select>
                                 </div>
                             </div>

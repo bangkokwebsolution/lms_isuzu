@@ -353,8 +353,10 @@ $user_Department = $user_login->department_id;
 										if ($status != "") {
 											if ($status == 1) {
 												$datatable .= '<th style="border:1px solid #d8d8d8; padding: 8px;">Total of Approved</th>';	
-											}else{
+											}else if ($status == 0){
 												$datatable .= '<th style="border:1px solid #d8d8d8; padding: 8px;">Total of Disapproved</th>';	
+											}else{
+												$datatable .= '<th style="border:1px solid #d8d8d8; padding: 8px;">Total of Suspension</th>';
 											}
 											
 										}
@@ -381,8 +383,10 @@ $user_Department = $user_login->department_id;
 										if ($status != "") {
 											if ($status == 1) {
 												$datatable .= '<th style="border:1px solid #d8d8d8; padding: 8px;">จำนวนผู้อนุมัติ</th>';	
-											}else{
+											}else if ($status == 0){
 												$datatable .= '<th style="border:1px solid #d8d8d8; padding: 8px;">จำนวนผู้ไม่อนุมัติ</th>';	
+											}else{
+												$datatable .= '<th style="border:1px solid #d8d8d8; padding: 8px;">จำนวนผู้ถูกระงับการใช้งาน</th>';
 											}
 										}
 										$datatable .= '<th style="border:1px solid #d8d8d8; padding: 8px;">สถานะอนุมัติ</th>';
@@ -464,8 +468,10 @@ $user_Department = $user_login->department_id;
 													if($cou_use > 0){
 														if ($status == 1) {
 															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
-														}else{
+														}else if ($status == 0){
 															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
+														}else{
+															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Suspension</span>';
 														}
 													}else{
 														$datatable .= '-';
@@ -477,8 +483,10 @@ $user_Department = $user_login->department_id;
 													if($cou_use > 0){
 														if ($status == 1) {
 															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
-														}else{
+														}else if ($status == 0){
 															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+														}else{
+															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ระงับการใช้งาน</span>';
 														}
 													}else{
 														$datatable .= '-';
@@ -556,8 +564,10 @@ $user_Department = $user_login->department_id;
 													if($cou_use > 0){
 														if ($status == 1) {
 															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
-														}else{
+														}else if ($status == 0){
 															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
+														}else{
+															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Suspension</span>';
 														}
 													}else{
 														$datatable .= '-';
@@ -569,8 +579,10 @@ $user_Department = $user_login->department_id;
 													if($cou_use > 0){
 														if ($status == 1) {
 															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
-														}else{
+														}else if ($status == 0){
 															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+														}else{
+															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ระงับการใช้งาน</span>';
 														}
 													}else{
 														$datatable .= '-';
@@ -614,6 +626,10 @@ $user_Department = $user_login->department_id;
 											if($status == "0"){
 												$criteria->compare('register_status',0);
 												//$criteria->compare('status',0);				
+											}
+											if ($status == "2") {
+												$criteria->compare('register_status',1);
+												$criteria->compare('status',0);
 											}
 										}
 
@@ -665,8 +681,10 @@ $user_Department = $user_login->department_id;
 														if($cou_use > 0){
 															if ($status == 1 ) {
 																$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
-															}else{
+															}else if ($status == 0 ){
 																$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
+															}else{
+																$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Suspension</span>';
 															}
 														}else{
 															if ($status == 1){
@@ -680,8 +698,10 @@ $user_Department = $user_login->department_id;
 														if($cou_use > 0){
 															if ($status == 1 ) {
 																$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
-															}else{
+															}else if ($status == 0 ){
 																$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+															}else{
+																$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ระงับการใช้งาน</span>';
 															}
 														}else{
 															$datatable .= '-';

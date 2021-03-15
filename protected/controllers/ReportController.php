@@ -963,6 +963,10 @@ public function actionReportRegisterOfficeExcel()
 				if($status == "0"){
 					$criteria->compare('register_status', 0);
 					/* $criteria->compare('status', 0); */
+				}
+				if ($status == "2") {
+					$criteria->compare('register_status',1);
+					$criteria->compare('status',0);
 				}						
 			}
 			if ($age != null && $age2 != null || $age != "" && $age2 != "") {
@@ -1020,6 +1024,10 @@ public function actionReportRegisterOfficeExcel()
 						if($status == "0"){
 							$criteria->compare('register_status', 0);
 							/* $criteria->compare('status', 0); */
+						}
+						if ($status == "2") {
+							$criteria->compare('register_status',1);
+							$criteria->compare('status',0);
 						}						
 					}
 					$criteria->compare('superuser',0);
@@ -1076,6 +1084,10 @@ public function actionReportRegisterOfficeExcel()
 						}
 						if($status == "0"){
 							$criteria->compare('register_status',0);
+						}
+						if ($status == "2") {
+							$criteria->compare('register_status',1);
+							$criteria->compare('status',0);
 						}
 					}
 					$criteria->compare('superuser',0);
@@ -1474,19 +1486,23 @@ public function actionReportRegisterOfficeExcel()
 								$datatable .= '</td>';
 								if (Yii::app()->session['lang'] == 1) {
 									
-										$datatable .= '<td>';
-									if ($valuepos_back->status == 1 && $valuepos_back->register_status == 1) {
+									$datatable .= '<td>';
+									if ($status == 1) {
 										$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
-									}else{
+									}else if($tatus == 0){
 										$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
+									}else if ($status == 2) {
+										$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Suspension</span>';
 									}
 									$datatable .= '</td>';
 								}else{
 										$datatable .= '<td>';
-									if ($valuepos_back->status == 1 && $valuepos_back->register_status == 1) {
+									if ($status == 1) {
 										$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
-									}else{
+									}else if($status == 0){
 										$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+									}else if ($status == 2) {
+										$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ระงับการใช้งาน</span>';
 									}
 									$datatable .= '</td>';
 								}
@@ -1740,10 +1756,10 @@ public function actionReportRegisterData()
 								$criteria->compare('department_id',$value->Departments->id);
 								$criteria->compare('superuser',0);
 								$criteria->compare('del_status',0);
-								$criteria->addCondition('profile.user_id=user.id');
+								//$criteria->addCondition('profile.user_id=user.id');
 
 								if ($Year_start != null) {
-								$criteria->compare('YEAR(create_at)', $Year_start);
+									$criteria->compare('YEAR(create_at)', $Year_start);
 								}
 								if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
 
@@ -1761,12 +1777,15 @@ public function actionReportRegisterData()
 											if($status == "0"){
 												$criteria->compare('register_status',0);
 											}
+											if($status == "2"){
+												$criteria->compare('register_status',1);
+												$criteria->compare('status',0);
+											}
 										}
 								$users_count= Users::model()->findAll($criteria);
 								$count_pos = count($users_count);
 
 								$datas .= '["'.$name_pos.'",'.$count_pos.',"'.$colorName[$key].'"],';
-
 							}
 						
 							$data_year_end = '["Element", "Position", { role: "style" } ],';
@@ -1800,7 +1819,11 @@ public function actionReportRegisterData()
 											if($status == "0"){
 												$criteria->compare('register_status',0);
 											}
-										}
+											if($status == "2"){
+												$criteria->compare('register_status',1);
+												$criteria->compare('status',0);
+											}
+							    }
 
 								$users_count= Users::model()->findAll($criteria);
 								$count_pos = count($users_count);
@@ -2343,6 +2366,7 @@ public function actionReportRegisterData()
 												
 									<?php
 									$sumtotal = 0;
+
 									foreach ($result_pos_in as $key => $value) {
 										$var_result[] = $value;
 									}		
@@ -2378,14 +2402,6 @@ public function actionReportRegisterData()
 										$criteria->compare('superuser',0);
 										$criteria->compare('del_status',0);
 									if ($status != null) {
-
-											/*if ($status != "1") {
-												$criteria->compare('register_status',0);
-												$criteria->compare('status',array(0,1));
-											}else{
-												$criteria->compare('register_status',array(0,1));
-												$criteria->compare('status',array(0,1));
-											} */
 											$criteria->compare('register_status',array(0,1));
 											$criteria->compare('status',array(0,1));
 										}
@@ -2455,8 +2471,10 @@ public function actionReportRegisterData()
 										if ($status != "") {
 											if ($status == 1) {
 												$datatable .= '<th>Total of Approved</th>';	
-											}else{
+											}else if ($status == 0){
 												$datatable .= '<th>Total of Disapproved</th>';	
+											}else if ($status == 2){
+												$datatable .= '<th>Total of Suspension</th>';	
 											}
 											
 										}
@@ -2483,8 +2501,10 @@ public function actionReportRegisterData()
 										if ($status != "") {
 											if ($status == 1) {
 												$datatable .= '<th>จำนวนผู้อนุมัติ</th>';	
-											}else{
+											}else if ($status == 0){
 												$datatable .= '<th>จำนวนผู้ไม่อนุมัติ</th>';	
+											}else if ($status == 2){
+												$datatable .= '<th>จำนวนผู้ถูกระงับการใช้งาน</th>';	
 											}
 										}
 										$datatable .= '<th>สถานะอนุมัติ</th>';
@@ -2566,8 +2586,10 @@ public function actionReportRegisterData()
 													if($cou_use > 0){
 														if ($status == 1) {
 															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
-														}else{
+														}else if($status == 0){
 															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
+														}else{
+															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Suspension</span>';
 														}
 													}else{
 														$datatable .= '-';
@@ -2579,8 +2601,10 @@ public function actionReportRegisterData()
 													if($cou_use > 0){
 														if ($status == 1) {
 															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
-														}else{
+														}else if($status == 0){
 															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+														}else{
+															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ระงับการใช้งาน</span>';
 														}
 													}else{
 														$datatable .= '-';
@@ -2658,8 +2682,10 @@ public function actionReportRegisterData()
 													if($cou_use > 0){
 														if ($status == 1) {
 															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
-														}else{
+														}else if($status == 0){ 
 															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
+														}else{
+															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Suspension</span>';
 														}
 													}else{
 														$datatable .= '-';
@@ -2671,8 +2697,10 @@ public function actionReportRegisterData()
 													if($cou_use > 0){
 														if ($status == 1) {
 															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
-														}else{
+														}else if($status == 0){
 															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+														}else{
+															$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ระงับการใช้งาน</span>';
 														}
 													}else{
 														$datatable .= '-';
@@ -2694,20 +2722,17 @@ public function actionReportRegisterData()
 									}
 
 									foreach ($pos_back as $keypos_back => $valuepos_back) { 	
-										
+
 										$criteria = new CDbCriteria;
 										$criteria->with = array('profile');
 										$criteria->compare('profile.type_employee',$TypeEmployee);
 										$criteria->compare('position_id',$valuepos_back->id);
 										$criteria->compare('department_id',$valuepos_back->Departments->id);
 										if ($datetime_start != null && $datetime_end != null || $datetime_start != "" && $datetime_end != "") {
-
-
 											$criteria->addBetweenCondition('create_at', $start_date, $end_date, 'AND');
 										}
 										$criteria->compare('superuser',0);
 										$criteria->compare('del_status',0);
-										
 										if ($status != null) {
 
 											if ($status == "1") {
@@ -2718,9 +2743,14 @@ public function actionReportRegisterData()
 												$criteria->compare('register_status',0);
 												//$criteria->compare('status',0);				
 											}
+											if ($status == "2") {
+												$criteria->compare('register_status',1);
+												$criteria->compare('status',0);
+											}
 										}
 
 										$users = Users::model()->findAll($criteria);
+
 										$criteria = new CDbCriteria;
 										$criteria->compare('position_id',$valuepos_back->id);
 										$criteria->compare('department_id',$valuepos_back->Departments->id);
@@ -2739,6 +2769,7 @@ public function actionReportRegisterData()
 										$criteria->compare('superuser',0);
 										$criteria->addCondition('profile.user_id=id');
 										$usersAll = Users::model()->findAll($criteria);
+
 										$cou_use = count($users);
 										$cou_useAll = count($usersAll);
 
@@ -2758,18 +2789,21 @@ public function actionReportRegisterData()
 											$datatable .= '<td>'.$cou_useAll.'</td>';
 											
 											if($TypeEmployee != 2){
-												if ($status != 0){
-													$datatable .= '<td>'.$cou_use.'</td>';
-												}else{
-													$datatable .= '<td>'.$cou_use.'</td>';
-												}
+												// if ($status != 0){
+												// 	$datatable .= '<td>'.$cou_use.'</td>';
+												// }else{
+												// 	$datatable .= '<td>'.$cou_use.'</td>';
+												// }
+												    $datatable .= '<td>'.$cou_use.'</td>';
 													if (Yii::app()->session['lang'] == 1) {		
 													$datatable .= '<td>';
 														if($cou_use > 0){
-															if ($status == 1 ) {
-																$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
-															}else{
+															if ($status == 1) {
+															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
+															}else if($status == 0){ 
 																$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
+															}else{
+																$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Suspension</span>';
 															}
 														}else{
 															if ($status == 1){
@@ -2781,10 +2815,12 @@ public function actionReportRegisterData()
 													}else{
 													$datatable .= '<td>';
 														if($cou_use > 0){
-															if ($status == 1 ) {
-																$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
-															}else{
+															if ($status == 1) {
+															$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
+															}else if($status == 0){
 																$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+															}else{
+																$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ระงับการใช้งาน</span>';
 															}
 														}else{
 															$datatable .= '-';
@@ -2792,7 +2828,7 @@ public function actionReportRegisterData()
 														$datatable .= '</td>';
 													}
 													
-												}	
+											}	
 											if($cou_use > 0){
 												$datatable .= '<td>'.round($per_cen, 2).' %</td>';
 											}else{
@@ -3829,6 +3865,18 @@ $model_position = Position::model()->findAll(array(
 		'type_em'=>$type_em,
 		'user_login'=>$user_login,
     ));
+}
+
+public function actionReportCourseExcel()
+{
+	if (Yii::app()->user->id != null) { 
+			
+		if (isset($_GET['reportCourseExcel'])) {
+			$search = $_GET['reportCourseExcel'];
+
+			$this->renderPartial('report_course_excel',array('search' => $search));
+		}
+	}
 }
 
 public function actionCourseOffice(){ // อบรม office
