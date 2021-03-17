@@ -374,9 +374,7 @@ class VirtualClassroomController extends Controller
 				'attendeePw' => $room->attendeePw, 					// Match this value in getJoinMeetingURL() to join as attendee.
 				'moderatorPw' => $room->moderatorPw, 					// Match this value in getJoinMeetingURL() to join as moderator.
 				'welcomeMsg' => $room->welcomeMsg,
-			//	'logoutUrl' => 'http://thorconn.com/index.php/VirtualClassroom/logoutroom/?vroom_id='.$room->id.''
-				'logoutUrl' => 'http://thorconn.com/index.php/VirtualClassroom/index/?vroom_id='.$room->id.''
-				, 	 					// ''= use default. Change to customize.
+				'logoutUrl' => 'http://thorconn.com/index.php/VirtualClassroom/logoutroom/?vroom_id='.$room->id.''
 				/*'dialNumber' => '', 					// The main number to call into. Optional.
 				'voiceBridge' => '12345', 				// 5 digit PIN to join voice conference.  Required.
 				'webVoice' => '', 						// Alphanumeric to join voice. Optional.
@@ -502,6 +500,15 @@ class VirtualClassroomController extends Controller
 		$model->update_date =  date("Y-m-d H:i:s");
 		$model->save();
 
+		require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/Exception.php";
+	    require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/PHPMailer.php";
+	    require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/SMTP.php";
+
+	    $SettingAll = Helpers::lib()->SetUpSetting();
+
+	    $adminEmail = 'thoresen.elearning@gmail.com';
+        $adminEmailPass = 'lms@2020';
+
 		foreach ($user_decode as $key_decode => $value) {
 
 			$criteria = new CDbCriteria;
@@ -518,7 +525,37 @@ class VirtualClassroomController extends Controller
 			$nameshow = $user->profile->firstname." ".$user->profile->lastname;
 			$message = $this->renderPartial('mail_key',array('key'=>$model->key_mail,'name_vroom'=>$model_vroom->name,'nameshow'=>$nameshow,'Classroom_name'=>$model_vroom->name_EN),true);
 			$typemail = 'vroom';
-			$mail = Helpers::lib()->SendMail($to,'รหัสเข้าห้องเรียน',$message,$typemail);   
+
+			$mail =  new PHPMailer(true);
+	        $mail->SMTPOptions = array(
+	            'ssl' => array(
+	                'verify_peer' => false,
+	                'verify_peer_name' => false,
+	                'allow_self_signed' => true
+	                )
+	            );
+	        $mail->ClearAttachments();
+	        $mail->ClearAddresses();
+	        $mail->CharSet = 'utf-8';
+	        $mail->Host = 'smtp.gmail.com';
+	        $mail->Port = '587'; // port number
+	        $mail->SMTPSecure = "tls";
+	        $mail->SMTPKeepAlive = true;
+	        $mail->Mailer = "smtp";
+	        $mail->SMTPAuth = true;
+	        $mail->SMTPDebug = false;
+	        $mail->Username = $adminEmail;
+	        $mail->Password = $adminEmailPass;
+	        $mail->SetFrom($adminEmail, $typemail);
+			//$mail = Helpers::lib()->SendMailVroom($value->user_id,'รหัสเข้าห้องเรียน',$message,$typemail);
+	        $mail->AddAddress($email, 'คุณ' . $user->profile->firstname . ' ' . $user->profile->lastname);
+	        $mail->Subject = 'รหัสเข้าห้องเรียน';
+			$mail->Body = $message;
+			$mail->IsHTML(true);
+	        $mail->SMTPSecure = 'tls';
+			$mail->Send();
+	    	
+			// $mail = Helpers::lib()->SendMail($to,'รหัสเข้าห้องเรียน',$message,$typemail);   
 		}
 		$type = 'datetime';
 		$date_update = Helpers::lib()->changeFormatDate($model->update_date,$type);
@@ -546,15 +583,15 @@ class VirtualClassroomController extends Controller
 
     $data = array();
     foreach ($modeluser as $key => $value) {
-      $name = 'คุณ'.' '. $value->profile->firstname.' '.$value->profile->lastname;
+      $name = $value->profile->firstname_en.' '.$value->profile->lastname_en;
 	  $id = $value->id;
 
       $data[$key][0] = 0;
       $data[$key][1] = $name;
       $data[$key][2] = '<a class="btn-action glyphicons pencil btn-danger remove_2" title="ลบ"><i></i></a>';
       $data[$key][3] = $id;
-      $data[$key][4] = $value->profile->firstname;
-      $data[$key][5] = $value->profile->lastname;
+      $data[$key][4] = $value->profile->firstname_en;
+      $data[$key][5] = $value->profile->lastname_en;
       $data[$key][6] = 'คุณ';
 
     }

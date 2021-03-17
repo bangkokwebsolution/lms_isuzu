@@ -115,7 +115,7 @@ $this->breadcrumbs=array(
 									'header' => 'ชื่อ - นามสกุล',
 									'type'=>'html',
 									'value'=>function($data){
-										return $data->profile->firstname . ' ' . $data->profile->lastname;
+										return $data->profile->firstname_en . ' ' . $data->profile->lastname_en;
 									}
 								),
 								array(
