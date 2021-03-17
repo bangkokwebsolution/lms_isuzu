@@ -10,8 +10,7 @@
             confirmButtonText: "<?php echo Yii::app()->session['lang'] == 1?'OK':'ตกลง'?>",
             closeOnConfirm: false,
             closeOnCancel: false
-        })
-         .then((confirm) => {
+        },function () {
             if (confirm) {
              window.location.href = "index"
          }
@@ -33,8 +32,7 @@
         confirmButtonText: "<?php echo Yii::app()->session['lang'] == 1?'OK':'ตกลง'?>",
         closeOnConfirm: false,
         closeOnCancel: false
-    })
-       .then((confirm) => {
+    },function () {
         if (confirm) {
           <?php if(empty($_GET['error_date'])){ ?>
               window.close();
@@ -59,8 +57,7 @@
         confirmButtonText: "<?php echo Yii::app()->session['lang'] == 1?'OK':'ตกลง'?>",
         closeOnConfirm: false,
         closeOnCancel: false
-    })
-       .then((confirm) => {
+    },function () {
         if (confirm) {
            <?php if(empty($_GET['error_num'])){ ?>
               window.close();
@@ -84,8 +81,7 @@
         confirmButtonText: "<?php echo Yii::app()->session['lang'] == 1?'OK':'ตกลง'?>",
         closeOnConfirm: false,
         closeOnCancel: false
-    })
-       .then((confirm) => {
+    },function () {
         if (confirm) {
            window.close();
        }
