@@ -60,6 +60,15 @@ class LoginController extends Controller
             }else if (User::model()->findbyPk(Yii::app()->user->id)->repass_status=='0'){
               $this->redirect(array('registration/Repassword'));
             }
+            if (Profile::model()->findbyPk(Yii::app()->user->id)->type_employee == 1 ) {
+              if (strpos($_POST['UserLogin']['username'],"@")) {
+                 $this->actionLogout();
+              }
+            }else{
+              if (!strpos($_POST['UserLogin']['username'],"@")) {
+                 $this->actionLogout();
+              }
+            }
             
             Yii::app()->session['popup'] = 1;
             $this->lastViset();
@@ -568,12 +577,16 @@ class LoginController extends Controller
           if(Yii::app()->user->id){
             Helpers::lib()->getControllerActionId();
           }
-          $logoutid = Users::model()->notsafe()->findByPk(Yii::app()->user->id);
-          $logoutid->lastvisit_at = date("Y-m-d H:i:s",time()) ;
-          $logoutid->online_status = '0';
-          $logoutid->save(false);
-          Yii::app()->user->logout();
-          $this->redirect(array('site/index'));
+          if (Yii::app()->user->id) {
+            $logoutid = Users::model()->notsafe()->findByPk(Yii::app()->user->id);
+            $logoutid->lastvisit_at = date("Y-m-d H:i:s",time()) ;
+            $logoutid->online_status = '0';
+            $logoutid->save(false);
+            Yii::app()->user->logout();
+            $this->redirect(array('site/index'));
+          }else{
+            $this->redirect(array('site/index'));
+          }
         // $this->render('/site/index');
         }
       }
