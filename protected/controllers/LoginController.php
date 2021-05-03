@@ -64,7 +64,7 @@ class LoginController extends Controller
               if (strpos($_POST['UserLogin']['username'],"@")) {
                  $this->actionLogout();
               }
-            }else{
+            }else if (Profile::model()->findbyPk(Yii::app()->user->id)->type_employee == 5) {
               if (!strpos($_POST['UserLogin']['username'],"@")) {
                  $this->actionLogout();
               }
