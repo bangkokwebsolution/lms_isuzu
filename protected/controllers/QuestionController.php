@@ -294,7 +294,7 @@ class QuestionController extends Controller
                         'condition' => "user_id=".Yii::app()->user->id." and lesson=".$id." and type='".$testType."' AND gen_id='".$gen_id."'"
                     ));
 
-                    if(!$temp_all){            
+                    if(empty($temp_all)){            
                         $countchoice = 0;
                         foreach ($manage->getData() as $i => $value) {
                          $modelQuestion[] = Question::getLimitData($value['group_id'], $value['manage_row']);
