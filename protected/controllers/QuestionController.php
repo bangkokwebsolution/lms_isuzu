@@ -296,6 +296,7 @@ class QuestionController extends Controller
 
                     if(empty($temp_all)){            
                         $countchoice = 0;
+                        $created_date_temp = date("Y-m-d H:i:s");
                         foreach ($manage->getData() as $i => $value) {
                          $modelQuestion[] = Question::getLimitData($value['group_id'], $value['manage_row']);
                          foreach($modelQuestion as $key1 => $ques){
@@ -365,6 +366,7 @@ class QuestionController extends Controller
                                     $temp_test->time_start = new CDbExpression('NOW()');
                                     $temp_test->time_up = $lesson->time_test*60;
                                 }
+                                $temp_test->created_date = $created_date_temp;
                                 $temp_test->save();
                             }
                         }
