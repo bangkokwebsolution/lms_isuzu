@@ -26,6 +26,13 @@ class CourseController extends Controller {
     }
     if (Yii::app()->user->id == null) {
 
+        if(isset($_POST['page']) && $_POST['page'] == "courselearnsavetimevideo"){ // ถ้า logout แล้วกำลังเรียนอยู่
+            echo "logout"; exit();
+        }elseif(isset($_POST['page']) && $_POST['page'] == "LearnVdo"){ // ถ้า logout แล้วกำลังเรียนอยู่
+            echo "logout"; exit();
+        }
+
+
         $msg = $label->label_alert_msg_plsLogin;
         Yii::app()->user->setFlash('msg',$msg);
         Yii::app()->user->setFlash('icon','warning');
