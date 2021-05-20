@@ -7,41 +7,48 @@ class CourseController extends Controller {
     {
       parent::init();
 
-      if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
-        $langId = Yii::app()->session['lang'] = 1;
-        Yii::app()->language = 'en';
-    }else{
-        $langId = Yii::app()->session['lang'];
-        Yii::app()->language = (Yii::app()->session['lang'] == 1)? 'en':'th';
-    }
-    $label = MenuCourse::model()->find(array(
-        'condition' => 'lang_id=:lang_id',
-        'params' => array(':lang_id' => $langId)
-    ));
-    if(!$label){
-        $label = MenuCourse::model()->find(array(
-            'condition' => 'lang_id=:lang_id',
-            'params' => array(':lang_id' => 1)
-        ));
-    }
-    if (Yii::app()->user->id == null) {
-        if(isset($_POST['page']) && $_POST['page'] == "courselearnsavetimevideo"){ // ถ้า logout แล้วกำลังเรียนอยู่
-            echo "logout"; exit();
+        if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+            $langId = Yii::app()->session['lang'] = 1;
+            Yii::app()->language = 'en';
+
+        }else{
+            $langId = Yii::app()->session['lang'];
+            Yii::app()->language = (Yii::app()->session['lang'] == 1)? 'en':'th';
         }
 
-        $msg = $label->label_alert_msg_plsLogin;
-        Yii::app()->user->setFlash('msg',$msg);
-        Yii::app()->user->setFlash('icon','warning');
+        $label = MenuCourse::model()->find(array(
+            'condition' => 'lang_id=:lang_id',
+            'params' => array(':lang_id' => $langId)
+        ));
+
+        if(!$label){
+            $label = MenuCourse::model()->find(array(
+                'condition' => 'lang_id=:lang_id',
+                'params' => array(':lang_id' => 1)
+            ));
+        }
+
+        if (Yii::app()->user->id == null) {
+            // var_dump($_POST['page']); exit();
+            if(isset($_POST['page']) && $_POST['page'] == "courselearnsavetimevideo"){ // ถ้า logout แล้วกำลังเรียนอยู่
+                echo "logout"; exit();
+            }elseif(isset($_POST['page']) && $_POST['page'] == "LearnVdo"){ // ถ้า logout แล้วกำลังเรียนอยู่
+                echo "logout"; exit();
+            }
+
+            $msg = $label->label_alert_msg_plsLogin;
+            Yii::app()->user->setFlash('msg',$msg);
+            Yii::app()->user->setFlash('icon','warning');
 
 
 
-        $this->redirect(array('site/index'));
-        exit();
+            $this->redirect(array('site/index'));
+            exit();
+        }
+
+
+        $this->lastactivity();
     }
-
-
-    $this->lastactivity();
-}
     /**
      * Declares class-based actions.
      */
@@ -655,6 +662,13 @@ public function actionCateIndex($id) {
     }
 
     public function actionLearnVdo($id=null, $learn_id=null) {
+
+        if(Yii::app()->user->id == null){
+            echo "logout";
+            exit();
+        }
+
+
         if(Yii::app()->user->id){
             Helpers::lib()->getControllerActionId();
         }        

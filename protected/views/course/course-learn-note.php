@@ -1306,8 +1306,25 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                  myPlayer<?php echo $idx;?>.on('play', function () {
                                   $.post('<?php echo $this->createUrl("//course/LearnVdo"); ?>', {
                                    id: <?php echo $file->id; ?>,
-                                   learn_id: <?php echo $learn_id; ?>
+                                   learn_id: <?php echo $learn_id; ?>,
+                                    page: "LearnVdo",
                                  }, function (data) {
+
+                                  if(data == "logout"){
+                                    Swal.fire({
+                                      title: 'กรุณาเข้าสู่ระบบ',
+                                      icon: 'error',
+                                      showCancelButton: true,
+                                      confirmButtonColor: '#3085d6',
+                                      cancelButtonColor: '#d33',
+                                      confirmButtonText: 'ตกลง',
+                                      cancelButtonText: 'ยกเลิก'
+                                    }).then((result) => {
+                                      window.location = "http://thorconn.com/";
+                                    });
+
+                                  }else{
+
                                    data = JSON.parse(data);
                                    //อัพเดต ให้ไอคอนบอกว่า กำลังเรียน
                                    $('#imageCheck' + data.no).html(data.image);
@@ -1318,6 +1335,8 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                    $('#imageCheckBar' + data.no).removeClass();
                                    $('#imageCheckBar' + data.no).addClass(data.imageBar);
                                    init_knob();
+                                 }
+
                                  });
                                 });
 
@@ -1332,8 +1351,24 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                   $.post('<?php echo $this->createUrl("//course/LearnVdo"); ?>', {
                                    id: <?php echo $file->id; ?>,
                                    learn_id: <?php echo $learn_id; ?>,
-                                   status: "success"
+                                   status: "success",
+                                    page: "LearnVdo",
                                  }, function (data) {
+                                  if(data == "logout"){
+                                    Swal.fire({
+                                      title: 'กรุณาเข้าสู่ระบบ',
+                                      icon: 'error',
+                                      showCancelButton: true,
+                                      confirmButtonColor: '#3085d6',
+                                      cancelButtonColor: '#d33',
+                                      confirmButtonText: 'ตกลง',
+                                      cancelButtonText: 'ยกเลิก'
+                                    }).then((result) => {
+                                      window.location = "http://thorconn.com/";
+                                    });
+
+                                  }else{
+
                                    data = JSON.parse(data);
                                    $('#imageCheck' + data.no).html(data.image);
                                    $('#status_block_' + data.no).removeClass();
@@ -1361,6 +1396,7 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                   }
                                   );
                                   }
+                                }
                                 });
                                 });
                                  <?php
@@ -1409,9 +1445,23 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                                    $.post('<?php echo $this->createUrl("//course/LearnVdo"); ?>', {
                                     id: <?php echo $file->id; ?>,
                                     learn_id: <?php echo $learn_id; ?>,
-                                    slide_number: <?php echo $key; ?>
+                                    slide_number: <?php echo $key; ?>,
+                                    page: "LearnVdo",
                                   }, function (data) {
+                                    if(data == "logout"){
+                                    Swal.fire({
+                                      title: 'กรุณาเข้าสู่ระบบ',
+                                      icon: 'error',
+                                      showCancelButton: true,
+                                      confirmButtonColor: '#3085d6',
+                                      cancelButtonColor: '#d33',
+                                      confirmButtonText: 'ตกลง',
+                                      cancelButtonText: 'ยกเลิก'
+                                    }).then((result) => {
+                                      window.location = "http://thorconn.com/";
+                                    });
 
+                                  }else{ }
                                   });
                                    <?php
                                  }
@@ -1438,8 +1488,23 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                              $.post('<?php echo $this->createUrl("//course/LearnVdo"); ?>', {
                               id: <?php echo $file->id; ?>,
                               learn_id: <?php echo $learn_id; ?>,
-                              slide_number: currentTimeUpdate
+                              slide_number: currentTimeUpdate,
+                              page: "LearnVdo",
                             }, function (data) {
+                              if(data == "logout"){
+                                    Swal.fire({
+                                      title: 'กรุณาเข้าสู่ระบบ',
+                                      icon: 'error',
+                                      showCancelButton: true,
+                                      confirmButtonColor: '#3085d6',
+                                      cancelButtonColor: '#d33',
+                                      confirmButtonText: 'ตกลง',
+                                      cancelButtonText: 'ยกเลิก'
+                                    }).then((result) => {
+                                      window.location = "http://thorconn.com/";
+                                    });
+
+                                  }else{ }
 
                             });
                              nowPoint = currentTimeUpdate;
@@ -2095,8 +2160,25 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
 
               $.post('<?php echo $this->createUrl("//course/LearnVdo"); ?>', {
                id: id_you,
-               learn_id: <?php echo $learn_id; ?>
+               learn_id: <?php echo $learn_id; ?>,
+               page: "LearnVdo",
              }, function (data) {
+
+              if(data == "logout"){
+                Swal.fire({
+                  title: 'กรุณาเข้าสู่ระบบ',
+                  icon: 'error',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'ตกลง',
+                  cancelButtonText: 'ยกเลิก'
+                }).then((result) => {
+                  window.location = "http://thorconn.com/";
+                });
+
+              }else{
+
                data = JSON.parse(data);
               //อัพเดต ให้ไอคอนบอกว่า กำลังเรียน
                $('#imageCheck' + data.no).html(data.image);
@@ -2107,6 +2189,10 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
                $('#imageCheckBar' + data.no).removeClass();
                $('#imageCheckBar' + data.no).addClass(data.imageBar);
                init_knob();
+             }
+
+
+
              });
 
 
@@ -2119,8 +2205,25 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
           $.post('<?php echo $this->createUrl("//course/LearnVdo"); ?>', {
            id: file_id,
            learn_id: <?php echo $learn_id; ?>,
-           status: "success"
+           status: "success",
+           page: "LearnVdo",
          }, function (data) {
+
+          if(data == "logout"){
+            Swal.fire({
+              title: 'กรุณาเข้าสู่ระบบ',
+              icon: 'error',
+              showCancelButton: true,
+              confirmButtonColor: '#3085d6',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'ตกลง',
+              cancelButtonText: 'ยกเลิก'
+            }).then((result) => {
+              window.location = "http://thorconn.com/";
+            });
+
+          }else{
+
            data = JSON.parse(data);
            $('#imageCheck' + data.no).html(data.image);
            $('#status_block_' + data.no).removeClass();
@@ -2148,6 +2251,8 @@ if (!$passed && count($score) < $lessonListValue->cate_amount) { ?>
           }
           );
           }
+
+        }
            });
 
         }
