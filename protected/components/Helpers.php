@@ -3891,11 +3891,41 @@ public function Checkparentlesson($les_id, $gen_id=null){
         $lesson = Lesson::model()->findAllByAttributes(array('id' => $les_id,'active'=>'y'));
 
         if ($lesson[0]->sequence_id!=0) {
+
+            $chk_learn_pass = learn::model()->findByAttributes(array(
+                'lesson_id' => $lesson[0]->sequence_id,
+                'lesson_active'=>'y',
+                'user_id'=>Yii::app()->user->id, 'gen_id'=>$gen_id
+            ));
+
+            if($chk_learn_pass != null){
+
+            $learn_file_cou = LearnFile::model()->count(array(
+                'condition'=>'user_id_file=:user_id AND learn_id=:learn_id AND gen_id=:gen_id',
+                'params'=>array(':user_id'=>Yii::app()->user->id, ':learn_id'=>$chk_learn_pass->learn_id, ':gen_id'=>$gen_id),
+            ));
+
+            $learn_file_pass = LearnFile::model()->count(array(
+                'condition'=>'user_id_file=:user_id AND learn_id=:learn_id AND gen_id=:gen_id AND learn_file_status=:status',
+                'params'=>array(':user_id'=>Yii::app()->user->id, ':learn_id'=>$chk_learn_pass->learn_id, ':gen_id'=>$gen_id, ':status'=>'s'),
+            ));
+
+            if($learn_file_cou <= $learn_file_pass){
+
+                $chk_learn_pass->lesson_status = 'pass';
+                $chk_learn_pass->save(false);
+            }
+
+            }
+            
+
+
             $model = learn::model()->findAllByAttributes(array(
                 'lesson_id' => $lesson[0]->sequence_id,
                 'lesson_active'=>'y',
                 'user_id'=>Yii::app()->user->id, 'gen_id'=>$gen_id
             ));
+
 
             if (empty($model)) {
                 $stats = false;
