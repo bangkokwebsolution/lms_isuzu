@@ -44,14 +44,36 @@ $this->breadcrumbs=array(
 // 				return false;
 // 				});
 // 				");
-Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
-	$('#User_create_at').attr('readonly','readonly');
-	$('#User_create_at').css('cursor','pointer');
-	$('#User_create_at').daterangepicker();
+// Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
+// 	$('#User_create_at').attr('readonly','readonly');
+// 	$('#User_create_at').css('cursor','pointer');
+// 	$('#User_create_at').daterangepicker();
 
+// EOD
+// , CClientScript::POS_READY);
+Yii::app()->clientScript->registerScript('search', "
+	$('#SearchFormAjax').submit(function(){
+	    $.fn.yiiGridView.update('$formNameModel-grid', {
+	        data: $(this).serialize()
+	    });
+	    return false;
+	});
+");
+
+Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
+	$.updateGridView = function(gridID, name, value) {
+	    $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
+	    $.fn.yiiGridView.update(gridID, {data: $.param(
+	        $("#"+gridID+" input, #"+gridID+" .filters select")
+	    )});
+	}
+	$.appendFilter = function(name, varName) {
+	    var val = eval("$."+varName);
+	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
+	}
+	$.appendFilter("User[news_per_page]", "news_per_page");
 EOD
 , CClientScript::POS_READY);
-
 	?>
 	<div id="user" class="innerLR">
 		<?php
@@ -101,7 +123,7 @@ EOD
 				</div>
 				<div class="spacer"></div>
 				<div>
-
+					<div class="overflow-table">	
 					<!--  < ?php echo CHtml::link(UserModule::t('ค้นหาขั้นสูง'),'#',array('class'=>'search-button')); ?>
 					<div class="search-form" style="display:none">
 						< ?php $this->renderPartial('_search',array(
@@ -109,14 +131,40 @@ EOD
 							)); ?>
 						</div> --><!-- search-form -->					  
 						<?php
-						$this->widget('AGridView', array(
-							'id'=>'user-grid',
-							'dataProvider'=>$model->searchmembership(),
-							'filter'=>$model,
-							'afterAjaxUpdate'=>'function(id, data){
-								$.appendFilter("[news_per_page]");	
-								InitialSortTable();
-							}',
+							// $this->widget('AGridView', array(
+							// 	'id'=>'user-grid',
+							// 	'dataProvider'=>$model->searchmembership(),
+							// 	'filter'=>$model,
+							// 	'afterAjaxUpdate'=>'function(id, data){
+							// 		$.appendFilter("[news_per_page]");	
+							// 		InitialSortTable();
+							// 	}',
+							$this->widget('AGridView', array(
+
+									'id'=>$formNameModel.'-grid',
+									'dataProvider'=>$model->searchmembership(),
+									'filter'=>$model,
+									'selectableRows' => 2,
+									//'rowCssClassExpression'=>'"items[]_{$data->id}"',
+									// 'htmlOptions' => array(
+									// 	'style'=> "margin-top: -1px;width:200%;",
+									// ),
+									'afterAjaxUpdate'=>'function(id, data){
+										$.appendFilter("User[news_per_page]");
+										InitialSortTable();	
+										jQuery("#course_date").datepicker({
+											"dateFormat": "dd/mm/yy",
+											"showAnim" : "slideDown",
+											"showOtherMonths": true,
+											"selectOtherMonths": true,
+											"yearRange" : "-5+10", 
+											"changeMonth": true,
+											"changeYear": true,
+											"dayNamesMin" : ["อา.","จ.","อ.","พ.","พฤ.","ศ.","ส."],
+											"monthNamesShort" : ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.",
+											"ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."],
+											})
+										}',
 							'columns'=>array(
 								array(
 									'header'=>'No.',
@@ -293,6 +341,7 @@ EOD
 ));
 
 ?>
+
 <!-- modal message -->
 <div class="modal fade" tabindex="-1" role="dialog" id="selectModal1">
 	<div class="modal-dialog modal-lg" >
@@ -318,6 +367,7 @@ EOD
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 <!-- 
 						<div class="modal fade" id="modal-id-card">
