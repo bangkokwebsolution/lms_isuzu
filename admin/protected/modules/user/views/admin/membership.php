@@ -13,53 +13,7 @@ $this->breadcrumbs=array(
 	UserModule::t('Manage'),
 );
 //
-// $this->menu=array(
-//     array('label'=>UserModule::t('Create User'), 'url'=>array('create')),
-//     array('label'=>UserModule::t('Manage Users'), 'url'=>array('admin')),
-//     array('label'=>UserModule::t('Manage Profile Field'), 'url'=>array('profileField/admin')),
-//     array('label'=>UserModule::t('List User'), 'url'=>array('/user')),
-// );
-
-// Yii::app()->clientScript->registerScript('search', "
-// 	$('.search-button').click(function(){
-// 		$('.search-form').toggle();
-// 		return false;
-// 	});
-// 	$('.search-form form').submit(function(){
-// 		$.fn.yiiGridView.update('user-grid', {
-// 			data: $(this).serialize()
-// 		});
-// 		return false;
-// 	});
-// 	");$('#User_create_at').daterangepicker();
-// Yii::app()->clientScript->registerScript('search', "
-// 	$('.search-button').click(function(){
-// 		$('.search-form').toggle();
-// 		return false;
-// 		});
-// 		$('.search-form form').submit(function(){
-// 			$.fn.yiiGridView.update('user-grid', {
-// 				data: $(this).serialize()
-// 				});
-// 				return false;
-// 				});
-// 				");
-// Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
-// 	$('#User_create_at').attr('readonly','readonly');
-// 	$('#User_create_at').css('cursor','pointer');
-// 	$('#User_create_at').daterangepicker();
-
-// EOD
-// , CClientScript::POS_READY);
-Yii::app()->clientScript->registerScript('search', "
-	$('#SearchFormAjax').submit(function(){
-	    $.fn.yiiGridView.update('$formNameModel-grid', {
-	        data: $(this).serialize()
-	    });
-	    return false;
-	});
-");
-
+	
 Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	$.updateGridView = function(gridID, name, value) {
 	    $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
@@ -117,7 +71,7 @@ EOD
 				<div class="separator bottom form-inline small">
 					<span class="pull-right">
 						<label class="strong">แสดงแถว:</label>
-						<?php echo $this->listPageShow($formNameModel);
+						<?php echo $this->listPageShow($formNameModel); 
 						?>
 					</span>
 				</div>
@@ -270,10 +224,11 @@ EOD
 									'type'=>'raw',
 									'value'=>function($data){
 										 if($data->register_status == 0) {
-										 	return  CHtml::button("รอการตรวจสอบ",array('onclick'=>'sendMsg('.$data->id.')','class' => 'btn btn-info changeStatus','data-id' =>$data->id));
-										
+										 	return '<button class="btn btn-info changeStatus" onclick="sendMsg('.$data->id.')" data-id = '.$data->id.'>เปลี่ยนรหัสผ่าน</button>';
+										 // CHtml::button("รอการตรวจสอบ",array('onclick'=>'sendMsg('.$data->id.')','class' => 'btn btn-info changeStatus','data-id' =>$data->id));
 									} else if($data->register_status == 2){
-											echo CHtml::button("ไม่อนุมัติ",array('onclick'=>'',"class"=>"btn btn btn-secondary","data-id" => $data->id));
+											echo '<button class="btn btn btn-secondary" onclick="sendMsg()" data-id = '.$data->id.'>ไม่อนุมัติ</button>';
+											// CHtml::button("ไม่อนุมัติ",array('onclick'=>'',"class"=>"btn btn btn-secondary","data-id" => $data->id));
 										}
 									},
 									'header' => 'อนุมัติสมัครสมาชิก',
@@ -283,7 +238,8 @@ EOD
 								array(
 									'type'=>'raw',
 									'value'=>function($data){	
-										echo CHtml::button("ตรวจสอบ",array('onclick'=>'sendMsgCheck('.$data->id.')',"class"=>"btn btn-success Check_information","data-id" => $data->id));
+										echo '<button class="btn btn-success" onclick="sendMsgCheck('.$data->id.')" data-id = '.$data->id.'>ตรวจสอบ</button>';
+										// CHtml::button("ตรวจสอบ",array('onclick'=>'sendMsgCheck('.$data->id.')',"class"=>"btn btn-success Check_information","data-id" => $data->id));
 									},
 									'header' => 'ตรวจสอบข้อมูลการสมัคร',
 									'htmlOptions'=>array('style'=>'text-align: center;'),
@@ -550,3 +506,4 @@ EOD
 		</div>
 	</div>
 	<!-- END innerLR -->
+
