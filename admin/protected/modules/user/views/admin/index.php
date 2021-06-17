@@ -299,7 +299,8 @@ EOD
 											'type'=>'raw',
 											'value'=>function($data){
 
-												return  CHtml::button("เปลี่ยนรหัสผ่าน",array('onclick'=>'sendMsg('.$data->id.')','class' => 'btn btn-info','data-id' =>$data->id));
+												return  '<button class="btn btn-info" onclick="sendMsg('.$data->id.')">เปลี่ยนรหัสผ่าน</button>';
+												// CHtml::button("เปลี่ยนรหัสผ่าน",array('onclick'=>'sendMsg('.$data->id.')','class' => 'btn btn-info','data-id' =>$data->id));
 
 
 											},
