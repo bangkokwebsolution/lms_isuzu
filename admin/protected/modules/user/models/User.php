@@ -504,15 +504,89 @@ public function validateIdCard($attribute,$params){
 	$criteria->compare('CONCAT(profile.firstname , " " , profile.lastname , " ", " ", username," ",profile.firstname_en , " " , profile.lastname_en)',$this->fullname,true);
      
 	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
-	//$criteria->compare('orgchart_lv2',$org,true);
-	$dataProvider = new CActiveDataProvider(get_class($this), array(
-		'criteria'=>$criteria,
-		'pagination'=>array(
-			'pageSize'=>Yii::app()->getModule('user')->user_page_size,
-		),
-	));
-	return $dataProvider;
+	// $criteria->compare('orgchart_lv2',$org,true);
+	// $dataProvider = new CActiveDataProvider(get_class($this), array(
+	// 	'criteria'=>$criteria,
+	// 	'pagination'=>array(
+	// 		'pageSize'=>Yii::app()->getModule('user')->user_page_size,
+	// 	),
+	// ));
+	// return $dataProvider;
+	 $dataProvider = array('criteria'=>$criteria);
+		// Page
+		if(isset($this->news_per_page))
+		{
+			$dataProvider['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
+		}
+		
+		return new CActiveDataProvider($this, $dataProvider);
 }
+// public function searchmembership()
+// {
+//   $criteria=new CDbCriteria;
+//         $criteria->with = array('profile','position','department');
+
+//         if(isset($_GET['User']['fullname'])){
+//         	$ex_fullname = explode(" ", $_GET['User']['fullname']);
+
+//         	if(isset($ex_fullname[0])){
+//         		$pro_fname = $ex_fullname[0];
+//         		$criteria->compare('profile.firstname_en', $pro_fname, true);
+//         		$criteria->compare('profile.lastname_en', $pro_fname, true, 'OR');
+//         	}
+        	
+//         	if(isset($ex_fullname[1])){
+//         		$pro_lname = $ex_fullname[1];
+//         		$criteria->compare('profile.lastname_en',$pro_lname,true);
+//         	}
+//         }
+
+//         $criteria->compare('id',$this->id);
+//         $criteria->compare('username',$this->username,true);
+//         $criteria->compare('password',$this->password);
+//         $criteria->compare('pic_user',$this->pic_user);
+//         $criteria->compare('station_id',$this->station_id);
+//         $criteria->compare('position_id',$this->position_id);
+//         $criteria->compare('user.department_id',$this->department_id);
+//         $criteria->compare('branch_id',$this->branch_id);
+//         $criteria->compare('email',$this->email,true);
+//         $criteria->compare('activkey',$this->activkey);
+//         $criteria->compare('create_at',$this->create_at);
+//         $criteria->compare('lastvisit_at',$this->lastvisit_at);
+//         $criteria->compare('lastactivity',$this->lastactivity);
+//         $criteria->compare('report_authority',$this->report_authority);
+//         // $criteria->compare('superuser',$this->superuser);
+//         if(empty($this->supper_user_status)){
+//         	$criteria->compare('superuser',1);
+//         }else{
+//         	$criteria->compare('superuser',0);
+//         }     
+//         $criteria->compare('status',$this->status);
+//         $criteria->compare('del_status',0);
+//  		$criteria->compare('online_status',$this->online_status);
+//  		$criteria->compare('online_user',$this->online_user);
+//  		$criteria->compare('group',$this->group);
+//  		$criteria->compare('identification',$this->identification);
+//  		$criteria->compare('pic_cardid2',$this->pic_cardid2);
+//  		$criteria->compare('register_status',$this->register_status);
+//  		$criteria->compare('profile.type_user',$this->typeuser);
+//  		$criteria->compare('profile.type_employee',$this->type_employee);
+//  		$criteria->compare('profile.passport',$this->passport);
+//  		$criteria->order = 'user.id DESC';
+ 	   
+
+//  		// $criteria->compare('profile.identification',$this->idensearch,true);
+
+//       $dataProvider = array('criteria'=>$criteria);
+// 		// Page
+// 		if(isset($this->news_per_page))
+// 		{
+// 			$dataProvider['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
+// 		}
+		
+// 		return new CActiveDataProvider($this, $dataProvider);
+//     }
+
 public function searchmembership()
 {
         // Warning: Please modify the following code to remove attributes that
@@ -572,13 +646,21 @@ public function searchmembership()
 	//var_dump($_REQUEST);exit();
 	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
 	//$criteria->compare('orgchart_lv2',$org,true);
-	$dataProvider = new CActiveDataProvider(get_class($this), array(
-		'criteria'=>$criteria,
-		'pagination'=>array(
-			'pageSize'=>Yii::app()->getModule('user')->user_page_size,
-		),
-	));
-	return  $dataProvider;
+	// $dataProvider = new CActiveDataProvider(get_class($this), array(
+	// 	'criteria'=>$criteria,
+	// 	'pagination'=>array(
+	// 		'pageSize'=>Yii::app()->getModule('user')->user_page_size,
+	// 	),
+	// ));
+	// return  $dataProvider;
+	  $dataProvider = array('criteria'=>$criteria);
+		// Page
+		if(isset($this->news_per_page))
+		{
+			$dataProvider['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
+		}
+		
+		return new CActiveDataProvider($this, $dataProvider);
 }
 
 public function searchmembership_personal()
@@ -699,12 +781,20 @@ public function searchmembership_personal()
 	// $date_e = date('Y-m-d h:i:s', strtotime('-1 day'));
 	// $criteria->addBetweenCondition('lastvisit_at', $date_s, $date_e, 'AND');
 
-	return new CActiveDataProvider(get_class($this), array(
-		'criteria'=>$criteria,
-		'pagination'=>array(
-			'pageSize'=>Yii::app()->getModule('user')->user_page_size,
-		),
-	));
+	// return new CActiveDataProvider(get_class($this), array(
+	// 	'criteria'=>$criteria,
+	// 	'pagination'=>array(
+	// 		'pageSize'=>Yii::app()->getModule('user')->user_page_size,
+	// 	),
+	// ));
+		  $dataProvider = array('criteria'=>$criteria);
+		// Page
+		if(isset($this->news_per_page))
+		{
+			$dataProvider['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
+		}
+		
+		return new CActiveDataProvider($this, $dataProvider);
 }
 public function searchaccessPersonal()
 {
