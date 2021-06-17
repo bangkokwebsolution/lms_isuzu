@@ -257,10 +257,12 @@ EOD
 									'type'=>'raw',
 									'value'=>function($data){
 										 if($data->register_status == 0) {
-										 	return  CHtml::button("รอการตรวจสอบ",array('onclick'=>'sendMsg('.$data->id.')','class' => 'btn btn-info changeStatus','data-id' =>$data->id));
+										 	return '<button class="btn btn-info changeStatus" onclick="sendMsg('.$data->id.')" data-id = '.$data->id.'>รอการตรวจสอบ</button>';
+										 	 // CHtml::button("รอการตรวจสอบ",array('onclick'=>'sendMsg('.$data->id.')','class' => 'btn btn-info changeStatus','data-id' =>$data->id));
 										
 									} else if($data->register_status == 2){
-											echo CHtml::button("ไม่อนุมัติ",array('onclick'=>'',"class"=>"btn btn btn-secondary","data-id" => $data->id));
+											echo '<button class="btn btn btn-secondary" onclick="sendMsg()" data-id = '.$data->id.'>ไม่อนุมัติ</button>';
+											// CHtml::button("ไม่อนุมัติ",array('onclick'=>'',"class"=>"btn btn btn-secondary","data-id" => $data->id));
 										}
 									},
 									'header' => 'อนุมัติสมัครสมาชิก',
@@ -270,7 +272,8 @@ EOD
 								array(
 									'type'=>'raw',
 									'value'=>function($data){	
-										echo CHtml::button("ตรวจสอบ",array('onclick'=>'sendMsgCheck('.$data->id.')',"class"=>"btn btn-success ","data-id" => $data->id));
+										echo '<button class="btn btn-success" onclick="sendMsgCheck('.$data->id.')" data-id = '.$data->id.'>ตรวจสอบ</button>';
+										// CHtml::button("ตรวจสอบ",array('onclick'=>'sendMsgCheck('.$data->id.')',"class"=>"btn btn-success ","data-id" => $data->id));
 									},
 									'header' => 'ตรวจสอบข้อมูลการสมัคร',
 									'htmlOptions'=>array('style'=>'text-align: center;'),
@@ -307,7 +310,8 @@ EOD
 								array(
 									'type'=>'raw',
 									'value'=>function($data){
-											echo CHtml::button("ลบ",array("class"=>"btn btn-success change_del","data-id" => $data->id));			
+											echo '<button class="btn btn-success change_del" data-id = '.$data->id.'>ลบ</button>';
+											// CHtml::button("ลบ",array("class"=>"btn btn-success change_del","data-id" => $data->id));			
 									},
 									'header' => 'จัดการ',
 									'htmlOptions'=>array('style'=>'text-align: center;'),

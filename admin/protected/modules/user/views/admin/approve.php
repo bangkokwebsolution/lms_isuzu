@@ -238,9 +238,11 @@ EOD
 									'type'=>'raw',
 									'value'=>function($data){
 										if($data->status == 1 && $data->register_status == 0){
-											echo CHtml::button("รออนุมัติ",array('onclick'=>'sendMsgCheck('.$data->id.')',"class"=>"btn btn-info changeStatus","data-id" => $data->id));
+											echo '<button class="btn btn-info changeStatus" onclick="sendMsgCheck('.$data->id.')">รออนุมัติ</button>';
+											// CHtml::button("รออนุมัติ",array('onclick'=>'sendMsgCheck('.$data->id.')',"class"=>"btn btn-info changeStatus","data-id" => $data->id));
 										} else if($data->status == 0 && $data->register_status == 0) {
-											echo CHtml::button("ไม่ผ่านอนุมัติ",array("class"=>"btn btn-danger","data-id" => $data->id));
+											echo '<button class="btn btn-danger">ไม่ผ่านอนุมัติ</button>';
+											// CHtml::button("ไม่ผ่านอนุมัติ",array("class"=>"btn btn-danger","data-id" => $data->id));
 										}
 										// else {
 										// 	echo CHtml::button("ไม่ผ่าน",array("class"=>"btn btn-danger ","data-id" => $data->id));
