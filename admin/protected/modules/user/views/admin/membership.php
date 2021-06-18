@@ -224,7 +224,7 @@ EOD
 									'type'=>'raw',
 									'value'=>function($data){
 										 if($data->register_status == 0) {
-										 	return '<button class="btn btn-info changeStatus" onclick="sendMsg('.$data->id.')" data-id = '.$data->id.'>เปลี่ยนรหัสผ่าน</button>';
+										 	return '<button class="btn btn-info changeStatus" onclick="sendMsg('.$data->id.')" data-id = '.$data->id.'>รอการตรวจสอบ</button>';
 										 // CHtml::button("รอการตรวจสอบ",array('onclick'=>'sendMsg('.$data->id.')','class' => 'btn btn-info changeStatus','data-id' =>$data->id));
 									} else if($data->register_status == 2){
 											echo '<button class="btn btn btn-secondary" onclick="sendMsg()" data-id = '.$data->id.'>ไม่อนุมัติ</button>';
