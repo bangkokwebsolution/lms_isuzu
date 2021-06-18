@@ -262,7 +262,7 @@ EOD
 									'value' => function($data) {
 
 										// return CHtml::button('ดาวน์โหลดเอกสารแนบ', array('submit' => array('admin/Attach_load', 'id'=> $data->id),'class' => 'btn btn btn-success'));
-										return '<a href="'.$this->createUrl("/admin/Attach_load", array("id" => $data->id)).'" class="btn btn btn-success">ดาวน์โหลดเอกสารแนบ</a>';
+										return '<a href="'.$this->createUrl("/user/admin/Attach_load", array("id" => $data->id)).'" class="btn btn btn-success">ดาวน์โหลดเอกสารแนบ</a>';
 									},'htmlOptions' => array(
 										'style'=> "text-align: center;",
 									),
