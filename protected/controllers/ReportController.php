@@ -1087,7 +1087,7 @@ public function actionReportRegisterOfficeExcel()
 							$criteria->compare('register_status',0);
 						}
 						if ($status == "2") {
-							$criteria->compare('register_status',2);
+							$criteria->compare('register_status',1);
 							$criteria->compare('status',0);
 						}
 					}
