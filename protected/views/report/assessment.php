@@ -290,7 +290,7 @@ if(isset($model_department) && !empty($model_department)){
                                         <option value="" selected>
                                             <?php 
                                         if(Yii::app()->session['lang'] != 1){
-                                            echo "position";
+                                            echo "เลือกตำแหน่ง";
                                         }else{
                                             echo "Select Position";
                                         }
@@ -411,6 +411,7 @@ if(isset($model_level) && !empty($model_level)){
                                         ?>
                                         </option>
                                         <?php 
+
                                         for ($i=$year_start; $i<$year_end ; $i++) {
                                             ?> <option <?php if(isset($_GET["search"]["start_year"]) && $_GET["search"]["start_year"] == $i){ echo "selected"; } ?> value="<?= $i ?>"><?= $i ?></option> <?php
                                         }

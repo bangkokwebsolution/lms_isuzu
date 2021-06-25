@@ -969,6 +969,7 @@ public function actionReportRegisterOfficeExcel()
 					$criteria->compare('status',0);
 				}						
 			}
+		//========================================================================================//
 			if ($age != null && $age2 != null || $age != "" && $age2 != "") {
 				$criteria->addBetweenCondition('age', $age, $age2, 'AND');
 			}
@@ -1086,7 +1087,7 @@ public function actionReportRegisterOfficeExcel()
 							$criteria->compare('register_status',0);
 						}
 						if ($status == "2") {
-							$criteria->compare('register_status',1);
+							$criteria->compare('register_status',2);
 							$criteria->compare('status',0);
 						}
 					}
@@ -1484,24 +1485,46 @@ public function actionReportRegisterOfficeExcel()
 								}
 
 								$datatable .= '</td>';
+								// if (Yii::app()->session['lang'] == 1) {
+									
+								// 	$datatable .= '<td>';
+								// 	if ($status == 1) {
+								// 		$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
+								// 	}else if($tatus == 0){
+								// 		$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
+								// 	}else if ($status == 2) {
+								// 		$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Suspension</span>';
+								// 	}
+								// 	$datatable .= '</td>';
+								// }else{
+								// 		$datatable .= '<td>';
+								// 	if ($status == 1) {
+								// 		$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
+								// 	}else if($status == 0){
+								// 		$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
+								// 	}else if ($status == 2) {
+								// 		$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ระงับการใช้งาน</span>';
+								// 	}
+								// 	$datatable .= '</td>';
+								// }
 								if (Yii::app()->session['lang'] == 1) {
 									
 									$datatable .= '<td>';
-									if ($status == 1) {
+									if ($valuepos_back['register_status'] == 1 && $valuepos_back['status'] == 1) {
 										$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;Approved</span>';
-									}else if($tatus == 0){
+									}else if($valuepos_back['register_status'] == 0){
 										$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Disapproval</span>';
-									}else if ($status == 2) {
+									}else if ($valuepos_back['register_status'] == 1 && $valuepos_back['status'] == 0 ) {
 										$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;Suspension</span>';
 									}
 									$datatable .= '</td>';
 								}else{
 										$datatable .= '<td>';
-									if ($status == 1) {
+									if ($valuepos_back['register_status'] == 1 && $valuepos_back['status'] == 1) {
 										$datatable .= '<span class="text-success"><i class="fas fa-check"></i>&nbsp;อนุมัติ</span>';
-									}else if($status == 0){
+									}else if($valuepos_back['register_status'] == 0){
 										$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ไม่อนุมัติ</span>';
-									}else if ($status == 2) {
+									}else if ($valuepos_back['register_status'] == 1 && $valuepos_back['status'] == 0 ) {
 										$datatable .= '<span class="text-danger"><i class="fas fa-times"></i>&nbsp;ระงับการใช้งาน</span>';
 									}
 									$datatable .= '</td>';
