@@ -553,7 +553,7 @@ class LoginController extends Controller
         $token = UserModule::encrypting(time());
         $lastVisit->avatar = $token;
         //Set cookie token for login
-        $time = time()+3600; //1 hr.
+        $time = time()+7200; //1 hr.
         $cookie = new CHttpCookie('token_login', $token); //set value
         $cookie->expire = $time; 
         Yii::app()->request->cookies['token_login'] = $cookie;
