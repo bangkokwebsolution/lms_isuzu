@@ -54,13 +54,13 @@
 <section class="content" id="manual">
     <div class="container">
         <div class="row">
-           <form id="searchForm" class=" col-sm-4 col-md-3" action="<?php echo $this->createUrl('usability/search') ?>" style="margin-bottom: 15px; margin-top: 0;">
+           <!-- <form id="searchForm" class=" col-sm-4 col-md-3" action="<?php echo $this->createUrl('usability/search') ?>" style="margin-bottom: 15px; margin-top: 0;">
             <div class="input-group">
                 <input type="text" class="form-control" name="text" placeholder="<?= $labelSite->label_placeholder_search ?>">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span></button>
                 </span>
-            </div>
+            </div> -->
         </form>
         <div class="col-sm-4 col-md-4">
         </div>

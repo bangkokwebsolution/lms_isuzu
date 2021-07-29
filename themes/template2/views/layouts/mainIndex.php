@@ -18,13 +18,12 @@ Yii::app()->user->returnUrl = $http->getUrl();
 	<html lang="en">
 	
 	<head>
-
         <?php if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
             $langId = Yii::app()->session['lang'] = 1;
-            $this->pageTitle = 'Thoresen e-Learning';
+            $this->pageTitle = 'ISUZU E-Learning';
         }else{
             $langId = Yii::app()->session['lang'];
-            $this->pageTitle = 'ระบบการเรียนรู้โทรีเซน e-Learning';
+            $this->pageTitle = 'ระบบการเรียนรู้ ';
         }
       ?>
 		<title><?php echo CHtml::encode($this->pageTitle); ?></title>

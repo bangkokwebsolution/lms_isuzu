@@ -15,7 +15,7 @@
                 <div class="panel-heading" role="tab" id="headingOne">
                     <h4 class="text1">
                         <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-0" aria-expanded="true" aria-controls="collapseOne">
-                             <i class="fa fa-question-circle text-danger" aria-hidden="true"></i> &nbsp;<?= $faq_type[0]->faq_type_title_TH; ?>
+                             <i class="fa fa-question-circle text-white" aria-hidden="true"></i> &nbsp;<?= $faq_type[0]->faq_type_title_TH; ?>
                             <span class="pull-right"><i class="fa fa-angle-down"></i></span>
                         </a>
                     </h4>
@@ -79,7 +79,7 @@
                         <h4 class="text1">
                             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse-<?= $i ?>" aria-expanded="true" aria-controls="collapseOne">
 
-                                <i class="fa fa-question-circle text-danger" aria-hidden="true"></i> &nbsp;<?= $faq_type[$i]->faq_type_title_TH; ?>
+                                <i class="fa fa-question-circle text-white" aria-hidden="true"></i> &nbsp;<?= $faq_type[$i]->faq_type_title_TH; ?>
                                 <span class="pull-right"><i class="fa fa-angle-down"></i></span>
                             </a>
                         </h4>

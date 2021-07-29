@@ -1,4 +1,4 @@
-<?php 
+<?php
 $session = new CHttpSession;
 $session->open();
 $http = new CHttpRequest;
@@ -15,34 +15,34 @@ Yii::app()->user->returnUrl = $http->getUrl();
   <html class="ie ie8" lang="en"> <![endif]-->
 <!--[if (gte IE 9)|!(IE)]>
   <html lang="en" class="no-js"> <![endif]-->
-  <html lang="en">
+<html lang="en">
 
-  <head>
-  
-    <?php if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
-            $langId = Yii::app()->session['lang'] = 1;
-            $this->pageTitle = 'Thoresen e-Learning';
-        }else{
-            $langId = Yii::app()->session['lang'];
-            $this->pageTitle = 'ระบบการเรียนรู้โทรีเซน e-Learning';
-        }
-      ?>
-    <title><?php echo CHtml::encode($this->pageTitle); ?></title>
-    <?php include("themes/template2/include/css.php"); ?>
-  </head>
+<head>
+  <?php if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+    $langId = Yii::app()->session['lang'] = 1;
+    $this->pageTitle = 'ISUZU E-Learning';
+  } else {
+    $langId = Yii::app()->session['lang'];
+    $this->pageTitle = 'ระบบการเรียนรู้ ';
+  }
+  ?>
+  <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+  <?php include("themes/template2/include/css.php"); ?>
+</head>
 
-  <body>
-    <!-- <div id="loader">
+<body>
+  <!-- <div id="loader">
       <div class="spinner">
         <div class="dot1"></div>
         <div class="dot2"></div>
       </div>
     </div> -->
-    <div class="backtotop"><span><i class="fas fa-arrow-up"></i> <small>top</small></span></div>
-<?php //if(Yii::app()->user->id){ ?>
-    <a class="contact-admin" data-toggle="modal" href="#user-report">
-        <div id="mascot-contact"></div>
-        <!-- <div id="contact-mobile">
+  <div class="backtotop"><span><i class="fas fa-arrow-up"></i> <small>top</small></span></div>
+  <?php //if(Yii::app()->user->id){ 
+  ?>
+  <a class="contact-admin" data-toggle="modal" href="#user-report">
+    <div id="mascot-contact"></div>
+    <!-- <div id="contact-mobile">
           < ?php
           if (Yii::app()->session['lang'] == 1) {
             echo "<span><i class='fas fa-exclamation-triangle></i> Report Problem</span>"; //อังกฤษ
@@ -51,44 +51,46 @@ Yii::app()->user->returnUrl = $http->getUrl();
           }
           ?>
         </div> -->
-    </a>
+  </a>
 
-    <?php
+  <?php
 
-    if (Yii::app()->session['lang'] == 1) {
-  $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact-en/mascot-contact-en.json');//อังกฤษ
-    }else{
-   $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact/mascot-contact.json');//ไทย
-    }
+  if (Yii::app()->session['lang'] == 1) {
+    $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact-en/mascot-contact-en.json'); //อังกฤษ
+  } else {
+    $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact/mascot-contact.json'); //ไทย
+  }
 
-    ?>
-    <script>
-        var animation = bodymovin.loadAnimation({
-            container: document.getElementById('mascot-contact'),
-            renderer: 'svg',
-            autoplay : true,
-            loop: true,
-            path: '<?php echo $mascot_path; ?>'
-        });
-    </script>
- <?php// } ?>
-   
-    <?php include("themes/template2/include/header.php"); ?>
+  ?>
+  <script>
+    var animation = bodymovin.loadAnimation({
+      container: document.getElementById('mascot-contact'),
+      renderer: 'svg',
+      autoplay: true,
+      loop: true,
+      path: '<?php echo $mascot_path; ?>'
+    });
+  </script>
+  <? php // } 
+  ?>
 
-    <?php echo $content; ?>
+  <?php include("themes/template2/include/header.php"); ?>
 
-    <?php include("themes/template2/include/footer.php"); ?>
-    
-    <?php include("themes/template2/include/javascript.php"); ?>
-    
-    <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/plugins/jquery-validation/dist/jquery.validate.js"></script>
-    <!-- <script type="text/javascript" src="<?php //echo Yii::app()->theme->baseUrl; ?>/js/moment.js"></script> -->
-    <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/combodate.js"></script>
-    <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/sweetalert/dist/sweetalert.min.js"></script>
-    <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/script.js"></script>
-    <?php
-    //include_once("analyticstracking.php");
-    ?>
-  </body>
+  <?php echo $content; ?>
 
-  </html>
+  <?php include("themes/template2/include/footer.php"); ?>
+
+  <?php include("themes/template2/include/javascript.php"); ?>
+
+  <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/plugins/jquery-validation/dist/jquery.validate.js"></script>
+  <!-- <script type="text/javascript" src="<?php //echo Yii::app()->theme->baseUrl; 
+                                            ?>/js/moment.js"></script> -->
+  <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/combodate.js"></script>
+  <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/script.js"></script>
+  <?php
+  //include_once("analyticstracking.php");
+  ?>
+</body>
+
+</html>

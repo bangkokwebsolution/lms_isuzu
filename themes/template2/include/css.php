@@ -12,8 +12,10 @@
 
 
 <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/fontawesome/fontawesome.css" type="text/css" media="screen">
+<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/line-awesome-1.3.0/css/line-awesome.min.css" type="text/css" media="screen">
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/sweetalert/dist/sweetalert.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/style.css" media="screen">
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/responsive.css">
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/input.css" media="screen">
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/slicknav.css" media="screen">
 
