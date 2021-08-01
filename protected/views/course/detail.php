@@ -487,6 +487,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
 
                         <!-- Tab panes -->
                         <div class="tab-content" id="tab-content">
+
                             <div role="tabpanel" class="tab-pane active" id="course-info">
                                 <li class="list-group-item">
 
@@ -494,7 +495,80 @@ $FinalScore = Coursescore::model()->findAll($criteria);
 
                                 </li>
                             </div>
+
                             <div role="tabpanel" class="tab-pane" id="course-unit">
+
+                                <div class="">
+                                    <div class="course-section mb-3">
+                                        <div class="section-title">
+                                            <span>Lesson 1 Course Name</span>
+                                            <div class="pull-right d-flex">
+                                                <div class=" rounded-3 course-btn-documents text-center"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/download-icon.png"> Documents</div>
+                                            </div>
+                                        </div>
+                                        <ul class="section-list">
+                                            <li>
+                                                <a href="">
+                                                    <span class="staus-learn"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/check-icon.png"></span>Pre-Test
+                                                    <div class="pull-right d-flex"><small class="mx-2">Score</small>
+                                                        <div class="border border-2 rounded-3 text-center course-btn">8/15</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href=""><span class="staus-learn"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/halfcheck-icon.png"></span>Video Lesson 1
+                                                    <div class="pull-right d-flex"><small class="mx-2"><i class="far fa-clock"></i> 30 mins </small>
+                                                        <div class="btn-main rounded-3 course-btn text-center">Watch</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+
+                                            <li>
+                                                <a href=""><span class="staus-learn"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/uncheck-icon.png"></span>Post-Test
+                                                    <div class="pull-right d-flex">
+                                                        <div class="btn-main rounded-3 course-btn text-center">Click</div>
+                                                    </div>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                    <div class="course-section mb-3">
+                                        <div class="section-title">
+                                            <span>Lesson 2 Course Name</span>
+                                            <div class="pull-right d-flex">
+                                                <div class=" rounded-3 course-btn-no-documents text-center">No Documents</div>
+                                            </div>
+                                        </div>
+                                        <ul class="section-list">
+                                            <li>
+                                                <a href="">
+                                                    <span class="staus-learn"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/uncheck-icon.png"></span>Pre-Test
+                                                    <div class="pull-right d-flex">
+                                                        <div class="text-center course-btn"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/lock-icon.png"></div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href=""><span class="staus-learn"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/uncheck-icon.png"></span>Video Lesson 2
+                                                    <div class="pull-right d-flex"><small class="mx-2"><i class="far fa-clock"></i> 30 mins </small>
+                                                        <div class="course-btn text-center"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/lock-icon.png"></div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href=""><span class="staus-learn"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/uncheck-icon.png"></span>Post-Test
+                                                    <div class="pull-right d-flex">
+                                                        <div class="course-btn text-center"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/lock-icon.png"></div>
+                                                    </div>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+
+
                                 <ol class="course-ol">
                                     <div class="panel panel-default">
                                         <?php

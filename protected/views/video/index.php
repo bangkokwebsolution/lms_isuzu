@@ -53,21 +53,19 @@
                             <?php
                             $head_credit = "";
                             if (Yii::app()->session['lang'] == 1) {
-                               $head_credit = "Credit :";
-                            }else{
-                               $head_credit = "ที่มา :";
+                                $head_credit = "Credit :";
+                            } else {
+                                $head_credit = "ที่มา :";
                             }
                             if ($vdo->vdo_credit != null) {
-                               echo "<b>";
-                               echo $head_credit;
-                               echo "</b>";
-                               echo $vdo->vdo_credit;
-                               
+                                echo "<b>";
+                                echo $head_credit;
+                                echo "</b>";
+                                echo $vdo->vdo_credit;
                             }
 
                             ?>
                         </div>
-                        <!-- <span class="news-date"><i class="fa fa-calendar"></i>&nbsp;<?php echo DateThai($vdo->update_date); ?></span> -->
                         <span class="news-date"><i class="fa fa-calendar"></i>&nbsp;<?php echo Helpers::lib()->DateLang($vdo->update_date, Yii::app()->session['lang']); ?></span>
                     </div>
                 </div>

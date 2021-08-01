@@ -39,6 +39,29 @@ $("#carousel-banner").owlCarousel({
     },
   });
 
+  $(".coursequestion-num").owlCarousel({
+    margin: 0,
+    loop: false,
+    center:false,
+    nav: true,
+    dots: false,
+    autoHeight: true,
+    stagePadding: 40,
+    responsive: {
+      0: {
+        items: 3,
+        slideBy: 3,
+      },
+      500: {
+        items: 5,
+        slideBy: 5,
+      },
+      768: {
+        items: 10,
+        slideBy: 10,
+      }
+    }
+  });
 
   
 $("#menu-index").owlCarousel({

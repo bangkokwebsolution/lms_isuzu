@@ -40,39 +40,31 @@ Yii::app()->user->returnUrl = $http->getUrl();
   <div class="backtotop"><span><i class="fas fa-arrow-up"></i> <small>top</small></span></div>
   <?php //if(Yii::app()->user->id){ 
   ?>
+
   <a class="contact-admin" data-toggle="modal" href="#user-report">
-    <div id="mascot-contact"></div>
+    <?php
+    if (Yii::app()->session['lang'] == 1) {
+      $mascot_path = Yii::app()->createUrl('/themes/template2/images/mascot-report-en.png'); //อังกฤษ
+    } else {
+      $mascot_path = Yii::app()->createUrl('/themes/template2/images/mascot-report-th.png'); //ไทย
+    }
+    ?>
+    <?php  ?>
+    <div id="mascot-contact">
+      <img src="<?php echo $mascot_path; ?>" alt="">
+    </div>
+
     <!-- <div id="contact-mobile">
-          < ?php
-          if (Yii::app()->session['lang'] == 1) {
-            echo "<span><i class='fas fa-exclamation-triangle></i> Report Problem</span>"; //อังกฤษ
-          } else {
-            echo "<span><i class='fas fa-exclamation-triangle'></i> แจ้งปัญหาการใช้งาน</span>"; //ไทย
-          }
-          ?>
+            <?php
+            if (Yii::app()->session['lang'] == 1) {
+              echo "<span><i class='fas fa-exclamation-triangle></i> Report Problem</span>"; //อังกฤษ
+            } else {
+              echo "<span><i class='fas fa-exclamation-triangle'></i> แจ้งปัญหาการใช้งาน</span>"; //ไทย
+            }
+            ?>
         </div> -->
   </a>
 
-  <?php
-
-  if (Yii::app()->session['lang'] == 1) {
-    $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact-en/mascot-contact-en.json'); //อังกฤษ
-  } else {
-    $mascot_path = Yii::app()->createUrl('/themes/template2/animation/mascot-contact/mascot-contact.json'); //ไทย
-  }
-
-  ?>
-  <script>
-    var animation = bodymovin.loadAnimation({
-      container: document.getElementById('mascot-contact'),
-      renderer: 'svg',
-      autoplay: true,
-      loop: true,
-      path: '<?php echo $mascot_path; ?>'
-    });
-  </script>
-  <? php // } 
-  ?>
 
   <?php include("themes/template2/include/header.php"); ?>
 

@@ -357,6 +357,9 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                                                 <?php } ?>
 
                                                 <div class="card-body">
+                                                    <div class="course-category">
+                                                        <small class="text-muted"><i class="fa fa-play-circle"></i> Course Category</small>
+                                                    </div>
                                                     <a href="<?= $url ?>" <?= $evnt ?>>
                                                         <h5 class="card-title"><?= $value->course_title; ?></h5>
                                                     </a>
@@ -424,6 +427,9 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                                                     //}
 
                                                     ?>
+                                                    <div class="course-time">
+                                                        <small class="text-muted"><i class="fa fa-clock"></i> 1 hr 30 min.</small>
+                                                    </div>
                                                 </div>
                                         </div>
                                     </div>
@@ -584,7 +590,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                                     <div class="row">
                                         <div class="col-md-12 col-sm-12">
                                             <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/news/' . $value->cms_id . '/thumb/' . $value->cms_picture)) { ?>
-                                                <div class="news-img" >
+                                                <div class="news-img">
                                                     <img src="<?php echo Yii::app()->homeUrl; ?>uploads/news/<?php echo $value->cms_id ?>/thumb/<?php echo $value->cms_picture ?>" alt="">
                                                 </div>
                                             <?php } else { ?>
