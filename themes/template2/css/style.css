@@ -5851,12 +5851,9 @@ tr {
   background-color: #4BBC99;
 }
 
-
 .btn-plan4 {
   background-color: #E64D3B;
 }
-
-
 
 .row-plan2 {
   grid-row: 2;
@@ -5946,7 +5943,63 @@ tr {
 }
 
 .card-profile {
-  padding: 30px 20px;
+  padding: 0 20px 30px;
   z-index: 10;
   margin-bottom: 5rem;
+}
+
+
+.sidebar-account {
+  margin-top: 30px;
+  padding: 0;
+}
+
+.sidebar-account li{
+  padding: 10px 5px;
+}
+
+.sidebar-account li:not(:last-child){
+  border-bottom: 1px solid #333;
+}
+
+.sidebar-account li.active{
+  color: #e0001a;
+} 
+
+.card-profile-detail  {
+  padding: 4px 10px 0;
+  margin: 5px 0;
+}
+
+.card-profile-detail p{
+  color: #e0001a;
+  font-weight: 600;
+}
+
+.card-profile-detail p span{
+  color: #000;
+  font-weight: 500;
+}
+
+.title-account{
+  color:#3D418E;
+  margin-bottom: 10px;
+}
+
+.pic-profile{
+  margin-top: 3.2em;
+  text-align: center;
+}
+.card-course .card-body {
+  padding: 10px !important;
+}
+.card-course {
+  box-shadow: 0 10px 30px rgb(0 0 0 / 10%);
+  border: 1px solid #ddd;
+  background-color: #ffffff;
+}
+
+.card-course .progress{
+  height: 15px;
+  margin-bottom: 0;
 }
