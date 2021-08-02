@@ -4,55 +4,8 @@
     		display: inline;
     	}
     </style>
-    <style type="text/css">
-    	.exams p {
-    		display: inline !important;
-    		margin-top: -3px !important;
-    	}
-
-    	.exams label {
-    		margin-bottom: 15px !important;
-    	}
-
-    	.exams label:after {
-    		top: 3px !important;
-    	}
-
-    	.radio label:after {
-    		top: 5px !important;
-    	}
-
-    	.exams label:before {
-    		margin-top: -4px !important;
-    	}
-
-    	.li-cute {
-    		border: solid 1px black;
-    		background: white;
-    		padding-top: 10px;
-    		padding-bottom: 10px;
-    		margin-bottom: 10px;
-    		padding-left: 10px;
-    		padding-right: 10px;
-    	}
-    </style>
-    <!-- Header page -->
+    
     <div id="exam-result">
-    	<!-- <div class="header-page parallax-window" data-parallax="scroll" data-image-src="<?php //echo Yii::app()->theme->baseUrl.'/images/bg-header-page.png'; 
-																								?>">
-		<div class="container">
-			<h1><?= $course->course_title; ?>
-				<small class="pull-right">
-					<ul class="list-inline list-unstyled">
-						<li><a href="#">หน้าแรก</a></li>/
-						<li><a href="#">ชื่อหลักสูตร</a></li>
-					</ul>
-				</small>
-			</h1>
-		</div>
-		<div class="bottom1"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/kind-bottom.png" class="img-responsive" alt=""></div>
-	</div> -->
-
     	<div class="container">
     		<nav aria-label="breadcrumb">
     			<ol class="breadcrumb breadcrumb-main">
@@ -63,67 +16,61 @@
     	</div>
     	<section class="content" id="exams">
     		<div class="container">
-    			<!-- tabtime -->
 
     			<div class="">
     				<div class="timer">Time: &nbsp;<span id="tabtime">00:00:00</span< /div>
     				</div>
 
-    				<div class="row justify-content-center my-5">
-    					<!-- <div class="col-lg-9">
+    				<!-- <div class="col-lg-9">
     						<div class="coursequestion-num owl-carousel owl-theme stage-margin nav-style-1 mb-0">
     							<div class='exam-nav'>
 										<div  class="nav-item" >1 </div>
     							</div>
     						</div>
     					</div> -->
-    					<div class="col-sm-12">
-    						<div class="all-exams">
-    							<div class="exams-title">
-    								Question <span class="pull-right"><?= $countExam . ' / ' . count($temp_all); ?></span>
-    							</div>
-    							<table class="table table-bordered table-striped">
-    								<tbody>
-    									<tr>
-    										<?php
-											$loop = 0;
-											foreach ($temp_all as $key => $val_temp) {
-												$loop++;
-												if ($model->ques_id == $val_temp->ques_id) {
-													$class = 'btn-info';
-												} else {
-													$class = ($val_temp->status == '1') ? 'btn-success' : '';
-												}
-												$link = 'onclick="save_ans(\'' . $val_temp->number . '\')"';
-											?>
-    											<td><a href="javascript:void(0)" <?= $link; ?> class="btn <?= $class ?> btn-block">
-    													<div style="height:100%;width:100%"><?= $val_temp->number; ?></div>
-    												</a></td>
-    										<?php
-												if ($loop == 10) {
-													$loop = 0;
-													echo '</tr><tr style="background-color: #f9f9f9">';
-												}
-											}
-											?>
-    									</tr>
-    								</tbody>
-    							</table>
-    							<center style="margin-top: 80px">
-    								<?php if ($last_ques == 1) echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg', 'onclick' => 'save_ans("save")'), UserModule::t('sendQues')); ?>
-    							</center>
+    				<div class="col-lg-12">
+    					<div class="all-exams">
+    						<div class="exams-title">
+    							Question <span class="pull-right"><?= $countExam . ' / ' . count($temp_all); ?></span>
     						</div>
+    						<table class="table table-bordered table-striped">
+    							<tbody>
+    								<tr>
+    									<?php
+										$loop = 0;
+										foreach ($temp_all as $key => $val_temp) {
+											$loop++;
+											if ($model->ques_id == $val_temp->ques_id) {
+												$class = 'btn-info';
+											} else {
+												$class = ($val_temp->status == '1') ? 'btn-success' : '';
+											}
+											$link = 'onclick="save_ans(\'' . $val_temp->number . '\')"';
+										?>
+    										<td><a href="javascript:void(0)" <?= $link; ?> class="btn <?= $class ?> btn-block">
+    												<div style="height:100%;width:100%"><?= $val_temp->number; ?></div>
+    											</a></td>
+    									<?php
+											if ($loop == 10) {
+												$loop = 0;
+												echo '</tr><tr style="background-color: #f9f9f9">';
+											}
+										}
+										?>
+    								</tr>
+    							</tbody>
+    						</table>
 
     					</div>
+
     				</div>
-    				<hr>
 
     				<div class="well">
     					<div class="exams">
     						<div class="row">
     							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     								<div id="ques-show">
-    									<div class="col-sm-8">
+    									<div class="col-sm-12">
     										<form id="question-form" action="#" method="POST" role="form" onSubmit="return false">
     											<div class="form-group">
     												<?php
@@ -131,9 +78,9 @@
 													$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown', 6 => 'hidden');
 													$questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'เลือกได้คำตอบเดียว', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่', 6 => 'คำตอบแบบจัดเรียง');
 													?>
-    												<h4>ข้อสอบแบบ <?= $questionTypeArrayStr[$model->ques_type] ?> </h4>
+    												<h4>ข้อสอบแบบ :<?= $questionTypeArrayStr[$model->ques_type] ?> </h4>
     												<p><?= $currentQuiz->number; ?>. <?= $model->ques_title; ?></p>
-    												<div class="well answer" style="margin-top: 10px;">
+    												<div class="well answer">
     													<?php
 														$ansData = json_decode($currentQuiz->ans_id);
 														$choiceData = json_decode($currentQuiz->question);
@@ -274,8 +221,9 @@
 														$Next = "ถัดไป";
 													}
 													?>
-    												<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg', 'onclick' => 'save_ans("previous")'), $Previous); ?>
-    												<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg', 'onclick' => 'save_ans("next")'), $Next); ?>
+    												<?php echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark btn-lg', 'onclick' => 'save_ans("previous")'), $Previous); ?>
+    												<?php echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark btn-lg', 'onclick' => 'save_ans("next")'), $Next); ?>
+    												<?php if ($last_ques == 1) echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg', 'onclick' => 'save_ans("save")'), UserModule::t('sendQues')); ?>
     												<!-- <?php //if($last_ques==1)echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg','onclick'=>'save_ans("save")'), 'ส่งคำตอบ'); 
 															?> -->
     											</div>

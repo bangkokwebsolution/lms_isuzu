@@ -180,7 +180,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
             <div class=" mb-1">
                 <div class="featured-box featured-box-one  featured-box-effect-4 text-center">
                     <div class="box-content">
-                        <a href="#">
+                        <a href="<?php echo $this->createUrl('/video/library'); ?>">
                             <div class="icon-featured">
                                 <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/E-Library.svg">
                             </div>
@@ -204,7 +204,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
             <div class=" mb-1">
                 <div class="featured-box featured-box-one  featured-box-effect-4 text-center">
                     <div class="box-content">
-                        <a href="#">
+                        <a href="<?php echo $this->createUrl('/course/courseplan'); ?>">
                             <div class="icon-featured">
                                 <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/Course-Plan.svg">
                             </div>

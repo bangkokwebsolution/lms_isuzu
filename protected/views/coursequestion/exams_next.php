@@ -4,7 +4,7 @@
 	}
 </style>
 <div id="ques-show">
-	<div class="col-sm-8">
+	<div class="col-sm-12">
 		<form id="question-form" action="#" method="POST" role="form" onSubmit="return false">
 			<div class="form-group">
 				<?php
@@ -164,13 +164,13 @@
 			echo CHtml::hiddenField("idx_now",$currentQuiz->number);
 			?>
 			<div class="text-center">
-				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg','onclick'=>'save_ans("previous")'), 'Previous'); ?>
-				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg','onclick'=>'save_ans("next")'), 'Next'); ?>
+				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark btn-lg','onclick'=>'save_ans("previous")'), 'Previous'); ?>
+				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark  btn-lg','onclick'=>'save_ans("next")'), 'Next'); ?>
 				<?php //if($last_ques==1)echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg','onclick'=>'save_ans("savevvv")' ), UserModule::t('sendQues') ); ?>
 			</div>
 		</form>
 	</div>
-	<div class="col-sm-4">
+	<!-- <div class="col-sm-4">
 		<div class="all-exams">
 			<div class="exams-title">
 				<?= $label->label_testing ?> <span class="pull-right"><?= $countExam.' / '.count($temp_all);?></span>
@@ -204,5 +204,5 @@
 				<?php if($last_ques==1)echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg','onclick'=>'save_ans("save")' ), UserModule::t('sendQues') ); ?>
 			</center>
 		</div>
-	</div>
+	</div> -->
 </div>

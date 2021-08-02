@@ -18,6 +18,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/responsive.css">
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/input.css" media="screen">
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/slicknav.css" media="screen">
+<link href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/icheck/skins/square/red.css" rel="stylesheet">
 
 <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/bootstrap-select/bootstrap-select.min.css" crossorigin="anonymous">
 <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/fontawesome/fontawesome.css" media="screen" />
@@ -27,6 +28,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/js/bootstrap-daterangepicker/jquery.datetimepicker.css">
 <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/lottie.js"></script>
 <script src="<?php echo Yii::app()->theme->baseUrl; ?>/js/jquery.js"></script>
+<script src="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/icheck/icheck.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/bootstrap-daterangepicker/jquery.datetimepicker.full.min.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/chartjs/Chart.min.js"></script>
 

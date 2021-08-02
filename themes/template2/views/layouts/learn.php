@@ -1,4 +1,4 @@
-<?php 
+<?php
 $session = new CHttpSession;
 $session->open();
 $http = new CHttpRequest;
@@ -19,97 +19,74 @@ Yii::app()->user->returnUrl = $http->getUrl();
 
 <head>
 
-    <!-- Basic -->
-   <?php if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
-            $langId = Yii::app()->session['lang'] = 1;
-            $this->pageTitle = 'Thoresen e-Learning';
-        }else{
-            $langId = Yii::app()->session['lang'];
-            $this->pageTitle = 'ระบบการเรียนรู้โทรีเซน e-Learning';
-        }
-      ?>
-        <title><?php echo CHtml::encode($this->pageTitle); ?></title>
-   <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-            
-    <link rel="shortcout icon" type="icon/png" href="<?php echo Yii::app()->theme->baseUrl; ?>/images/icon.png">
-    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/bootstrap.min.css" crossorigin="anonymous">
+  <!-- Basic -->
+  <?php if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+    $langId = Yii::app()->session['lang'] = 1;
+    $this->pageTitle = 'ISUZU E-Learning';
+  } else {
+    $langId = Yii::app()->session['lang'];
+    $this->pageTitle = 'ระบบการเรียนรู้';
+  }
+  ?>
+  <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/fresco-2.3.0/css/fresco.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/owlcarousel/owl.carousel.min.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/owlcarousel/owl.theme.default.min.css" media="screen">
-    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/jasny-bootstrap.min.css" type="text/css" media="screen">
-
-
-    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/fontawesome/fontawesome.css" type="text/css" media="screen">
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/sweetalert/dist/sweetalert.css" />
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/style.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/input.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/slicknav.css" media="screen">
-
-    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/bootstrap-select/bootstrap-select.min.css" crossorigin="anonymous">
-    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/fontawesome/fontawesome.css" media="screen" />
-    <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/sweetalert/sweetalert2.css" crossorigin="anonymous">
-    <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/sweetalert/sweetalert2.min.js"></script>
-
-    <!-- <?php include("themes/template2/include/css.php"); ?>  -->
+  <?php include("themes/template2/include/css.php"); ?>
 </head>
 
 <body>
 
-<?php include("themes/template2/include/header.php"); ?>
+  <?php include("themes/template2/include/header.php"); ?>
 
-<?php echo $content; ?>
+  <?php echo $content; ?>
 
 
-<?php include("themes/template2/include/footer.php"); ?>
+  <?php include("themes/template2/include/footer.php"); ?>
 
-<?php
-$cs = Yii::app()->clientScript;
-$themePath = Yii::app()->theme->baseUrl;
-$cs->scriptMap = array(
+  <?php
+  $cs = Yii::app()->clientScript;
+  $themePath = Yii::app()->theme->baseUrl;
+  $cs->scriptMap = array(
     //'jquery.js' => $themePath.'/js/scorm/jquery.min.js',
-    'jquery.js' => $themePath.'/js/library/jquery-1.11.0.min.js',
-//    'jquery.yii.js' => Yii::app()->request->baseUrl.'/js/jquery.min.js',
-    );
-$cs->registerCoreScript('jquery')
-->registerCoreScript('jquery.ui', CClientScript::POS_END)
-->registerScriptFile($themePath.'/js/library/bootstrap.min.js',CClientScript::POS_END)
-->registerScriptFile($themePath.'/js/library/jquery.owl.carousel.js',CClientScript::POS_END)
-->registerScriptFile($themePath.'/js/library/jquery.appear.min.js',CClientScript::POS_END)
-->registerScriptFile($themePath.'/js/library/perfect-scrollbar.min.js',CClientScript::POS_END)
-->registerScriptFile($themePath.'/js/audiojs/audio.min.js')
-->registerScriptFile($themePath.'/js/library/jquery.easing.min.js',CClientScript::POS_END)
-->registerScriptFile($themePath.'/js/library/jquery.easing.min.js',CClientScript::POS_END)
+    'jquery.js' => $themePath . '/js/library/jquery-1.11.0.min.js',
+    //    'jquery.yii.js' => Yii::app()->request->baseUrl.'/js/jquery.min.js',
+  );
+  $cs->registerCoreScript('jquery')
+    ->registerCoreScript('jquery.ui', CClientScript::POS_END)
+    ->registerScriptFile($themePath . '/js/library/bootstrap.min.js', CClientScript::POS_END)
+    ->registerScriptFile($themePath . '/js/library/jquery.owl.carousel.js', CClientScript::POS_END)
+    ->registerScriptFile($themePath . '/js/library/jquery.appear.min.js', CClientScript::POS_END)
+    ->registerScriptFile($themePath . '/js/library/perfect-scrollbar.min.js', CClientScript::POS_END)
+    ->registerScriptFile($themePath . '/js/audiojs/audio.min.js')
+    ->registerScriptFile($themePath . '/js/library/jquery.easing.min.js', CClientScript::POS_END)
+    ->registerScriptFile($themePath . '/js/library/jquery.easing.min.js', CClientScript::POS_END)
 
-//scortm_insert_lerm
-->registerScriptFile($themePath.'/js/Lib/sscompat.js')
-->registerScriptFile($themePath.'/js/Lib/sscorlib.js')
-->registerScriptFile($themePath.'/js/Lib/ssfx.Core.js')
+    //scortm_insert_lerm
+    ->registerScriptFile($themePath . '/js/Lib/sscompat.js')
+    ->registerScriptFile($themePath . '/js/Lib/sscorlib.js')
+    ->registerScriptFile($themePath . '/js/Lib/ssfx.Core.js')
 
-->registerScriptFile($themePath.'/js/Lib/API_BASE.js')
-->registerScriptFile($themePath.'/js/Lib/API.js')
-->registerScriptFile($themePath.'/js/Lib/API_1484_11.js')
+    ->registerScriptFile($themePath . '/js/Lib/API_BASE.js')
+    ->registerScriptFile($themePath . '/js/Lib/API.js')
+    ->registerScriptFile($themePath . '/js/Lib/API_1484_11.js')
 
-->registerScriptFile($themePath.'/js/Lib/Controls.js')
-->registerScriptFile($themePath.'/js/Lib/LocalStorage.js')
-->registerScriptFile($themePath.'/js/Lib/Player.js')
+    ->registerScriptFile($themePath . '/js/Lib/Controls.js')
+    ->registerScriptFile($themePath . '/js/Lib/LocalStorage.js')
+    ->registerScriptFile($themePath . '/js/Lib/Player.js')
 
-->registerScriptFile($themePath.'/sweetalert/dist/sweetalert.min.js', CClientScript::POS_END);
-//->registerScriptFile($themePath.'/js/script.js',CClientScript::POS_END);
-/*->registerScriptFile($themePath.'/js/scorm/jquery.blockUI.js')
+    ->registerScriptFile($themePath . '/sweetalert/dist/sweetalert.min.js', CClientScript::POS_END);
+  //->registerScriptFile($themePath.'/js/script.js',CClientScript::POS_END);
+  /*->registerScriptFile($themePath.'/js/scorm/jquery.blockUI.js')
 ->registerScriptFile($themePath.'/js/scorm/jquery-ui.min.js');
 ->registerScriptFile($themePath.'/js/scorm/popup.js')
 ->registerScriptFile($themePath.'/js/scorm/treemenu.js')
 ->registerScriptFile($themePath.'/js/scorm/prototype.js')
 ->registerScriptFile($themePath.'/js/scorm/JSCookMenu.js')
 ->registerScriptFile($themePath.'/js/scorm/plugins.js');*/
-?>
+  ?>
 
-<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/plugins/jquery-validation/dist/jquery.validate.js"></script>
+  <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/plugins/jquery-validation/dist/jquery.validate.js"></script>
 
-<!-- <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/script.js"></script> -->
+  <!-- <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/script.js"></script> -->
 
 </body>
 
