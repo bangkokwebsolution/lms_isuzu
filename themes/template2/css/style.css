@@ -5944,3 +5944,9 @@ tr {
   border: 1px solid #333;
   border-radius: 50px;
 }
+
+.card-profile {
+  padding: 30px 20px;
+  z-index: 10;
+  margin-bottom: 5rem;
+}
