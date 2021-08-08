@@ -119,7 +119,7 @@ class ContactusNewController extends Controller
 
 			            // Create a thumbnail
 							$thumbImage = Yii::app()->phpThumb->create($originalPath);
-							$thumbImage->resize(900);
+							$thumbImage->resize(266);
 							$thumbImage->save($thumbPath);
 						} else {
 							unlink($originalPath);
@@ -194,7 +194,7 @@ class ContactusNewController extends Controller
 
 			            // Create a thumbnail
 							$thumbImage = Yii::app()->phpThumb->create($originalPath);
-							$thumbImage->resize(900);
+							$thumbImage->resize(266);
 							$thumbImage->save($thumbPath);
 						} else {
 							unlink($originalPath);

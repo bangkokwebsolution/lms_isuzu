@@ -16,18 +16,58 @@
                     <div class="col-lg-6">
                         <h4 class="contact-title"><span>Admin</span></h4>
                         <div class="row pt-2 gy-3">
+                            <?php 
+                                if ($ContactusNew_data) {
+                                foreach ($ContactusNew_data as $key => $value) {      
+                            ?>
                             <div class="col-sm-6">
                                 <div class="card border p-2">
-                                    <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/avatar-1.png" class="img-fโluid">
+                                    <?php
+                                        if ($value['con_image'] == null) {
+
+                                            $img  = Yii::app()->theme->baseUrl . "/images/thumbnail-profile.png";
+                                        } else {
+                                        
+                                            $img = Yii::app()->baseUrl . '/uploads/contactusnew/' . $value['id'] . '/thumb/' . $value['con_image'];
+                                        }
+                                    ?>
+                                      <img src="<?php echo $img ?>" class="img-fluid">
                                     <div class="contect-detial">
-                                        <p>Mr. FirstName LastName</p>
-                                        <p>Position : Admin staff</p>
-                                        <p>Phone Number : 0-2966-2222</p>
-                                        <p>Email : info@isuzu-tis.com</p>
+                                        <p>
+                                        <?php 
+                                            if (Yii::app()->session['lang'] == 1 || Yii::app()->session['lang'] == Null) {
+                                                echo $value['con_firstname_en']." ".$value['con_lastname_en'];
+                                            }else{
+                                                echo $value['con_firstname']." ".$value['con_lastname'];
+                                            }
+                                        ?>                                        
+                                        </p>
+                                        <p>Position : 
+                                        <?php
+                                            if (Yii::app()->session['lang'] == 1) {
+                                                echo $value['con_position_en'];
+                                            }else{
+                                                echo $value['con_position'];
+                                            }
+                                        ?> 
+                                        </p>
+                                        <p>Phone Number : 
+                                         <?php
+                                            echo $value['con_tel'];
+                                        ?>
+                                        </p>
+                                        <p>Email : <?php
+                                            echo $value['con_email'];
+                                        ?></p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <?php 
+                                }// end foreach
+                                }// end if
+                            ?>
+
+                            <!-- <div class="col-sm-6">
                                 <div class="card border p-2">
                                     <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/avatar-2.png" class="img-fluid">
                                     <div class="contect-detial">
@@ -37,7 +77,8 @@
                                         <p>Email : info@isuzu-tis.com</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
+
                         </div>
                     </div>
 

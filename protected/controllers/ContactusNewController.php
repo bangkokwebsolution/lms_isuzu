@@ -32,19 +32,20 @@ class ContactusNewController extends Controller {
             // 'condition'=>' active=:active',
             // 'params' => array(':active' => 'y')
             //   ));
+        
         $criteria = new CDbCriteria;
         $criteria->compare('active','y');
        // $criteriavdo->compare('lang_id',$langId);
-        $criteria->order = 'sortOrder ASC';
+        $criteria->order = 'sortOrder ASC limit 2';
         $ContactusNew_data = ContactusNew::model()->findAll($criteria);
             if($ContactusNew_data){
                 $label = MenuContactus::model()->find(array(
-                'condition' => 'lang_id=:lang_id',
+                'condition' => 'lang_id=:lang_id ',
                 'params' => array(':lang_id' => $langId)
             ));
             }else{
                 $label = MenuContactus::model()->find(array(
-                'condition' => 'lang_id=:lang_id',
+                'condition' => 'lang_id=:lang_id ',
                 'params' => array(':lang_id' => 1)
             ));
             }

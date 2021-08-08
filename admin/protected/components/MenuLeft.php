@@ -1229,49 +1229,7 @@ Class MenuLeft extends Controller
 	        	)
 	        ),
 
-	        array(
-	        	//////// print ////////
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'printMembership.*',
-	        		// 'printMembership.Index',
-	        		// 'printMembership.Approve'
-	        	)),
-	        	'label'=>'<span class="label label-primary"></span> <i></i><span>พิมพ์ใบสมัคร</span>',
-	        	'url'=>'#printMembership',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_open'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('printMembership') ), 'id' => 'printMembership'),
-	        	'active' => self::SetSubMenu( array('printMembership') ,false),
-	        	'items'=>array(
-	        		// array(
-	        		// 	/*====== Check Permissions Sup-Category (1) ======*/
-	        		// 	'visible'=>self::PermissionsMenu(array(
-	        		// 		'printMembership.*',
-	        		// 		'printMembership.Create'
-	        		// 	)),
-	        		// 	'label'=>'เพิ่มวีดีโอ'." (ภาษา ".$mainLang." )",
-	        		// 	'url'=>array('//printMembership/create')
-	        		// ),
-	        		array(
-	        			/*====== Check Permissions Sup-Category (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'printMembership.*',
-	        				'printMembership.Index'
-	        			)),
-	        			'label'=>'สมัครอนุมัติการตรวจสอบ',
-	        			'url'=>array('//printMembership/index')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-Category (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'printMembership.*',
-	        				'printMembership.approve'
-	        			)),
-	        			'label'=>'อนุมัติการยืนยัน',
-	        			'url'=>array('//printMembership/approve')
-	        		),
-	        	)
-	        ),
+	        
 	         array(
 	        	/*====== Check Permissions User (2) ======*/
 	        	'visible'=>self::PermissionsMenu(array(
@@ -1763,39 +1721,7 @@ Class MenuLeft extends Controller
 	        		),
 	        	)
 	        ),
-	         array(
-	        	/*====== Check Permissions Department (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Ship.*',
-	        		'Ship.index',
-	        		'Ship.Create'
-	        	)),
-	        	'label'=>'<i></i><span>เรือ</span>',
-	        	'url'=>'#Ship',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons anchor'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Ship') ), 'id' => 'Ship'),
-	        	'active' => self::SetSubMenu( array('Ship') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Position (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Ship.*',
-	        				'Ship.Create'
-	        			)),
-	        			'label'=>'เพิ่มเรือ',
-	        			'url'=>array('//Ship/create')
-	        		),
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Ship.*',
-	        				'Ship.index'
-	        			)),
-	        			'label'=>'จัดการเรือ',
-	        			'url'=>array('//Ship/index')
-	        		),
-	        	)
-	        ),
+	         
             array(
 	        	/*====== Check Permissions Department (2) ======*/
 	        	'visible'=>self::PermissionsMenu(array(

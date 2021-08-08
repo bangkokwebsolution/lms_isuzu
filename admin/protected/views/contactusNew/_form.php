@@ -120,7 +120,7 @@
 					<?php echo $form->error($model,'con_image'); ?>
 					<div class="row">
 						<font color="#990000">
-							<?php echo $this->NotEmpty();?> รูปภาพควรมีขนาด 900X500
+							<?php echo $this->NotEmpty();?> รูปภาพควรมีขนาด 266x266
 						</font>
 					</div>
 					<?php if ($notsave == 1) { ?>
