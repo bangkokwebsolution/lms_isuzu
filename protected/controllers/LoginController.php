@@ -56,21 +56,25 @@ class LoginController extends Controller
 
                 // validate user input and redirect to previous page if valid
           if($model->validate()) {
-            
-            // if(User::model()->findbyPk(Yii::app()->user->id)->superuser == 1){
-            //   $this->actionLogout();
-            // }else if (User::model()->findbyPk(Yii::app()->user->id)->repass_status=='0'){
-            //   $this->redirect(array('registration/Repassword'));
-            // }
-            // if (Profile::model()->findbyPk(Yii::app()->user->id)->type_employee == 1 ) {
-            //   if (strpos($_POST['UserLogin']['username'],"@")) {
-            //      $this->actionLogout();
-            //   }
-            // }else if (Profile::model()->findbyPk(Yii::app()->user->id)->type_employee == 5) {
-            //   if (!strpos($_POST['UserLogin']['username'],"@")) {
-            //      $this->actionLogout();
-            //   }
-            // }
+            if(User::model()->findbyPk(Yii::app()->user->id)->superuser == 1){
+              // $this->actionLogout();
+              $this->redirect('logout');
+
+            }else if (User::model()->findbyPk(Yii::app()->user->id)->repass_status=='0'){
+              $this->redirect(array('registration/Repassword'));
+            }
+            if (Profile::model()->findbyPk(Yii::app()->user->id)->type_employee == 1 ) {
+              if (strpos($_POST['UserLogin']['username'],"@")) {
+              $this->redirect('logout');
+
+                 // $this->actionLogout();
+              }
+            }else if (Profile::model()->findbyPk(Yii::app()->user->id)->type_employee == 5) {
+              if (!strpos($_POST['UserLogin']['username'],"@")) {
+              $this->redirect('logout');
+                 // $this->actionLogout();
+              }
+            }
 
             
             Yii::app()->session['popup'] = 1;
