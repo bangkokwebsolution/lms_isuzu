@@ -2772,4 +2772,11 @@ public function actionCaptchaPdf(){
 
         echo json_encode($data);
     }
+
+    public function actionCourseplan(){
+         $this->render('courseplan', array(
+        
+        'Model' => $Model
+    ));
+    }
 }
