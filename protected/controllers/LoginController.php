@@ -43,10 +43,12 @@ class LoginController extends Controller
         Yii::app()->request->cookies['cookie_name'] = $cookie;
       }
       if (Yii::app()->user->isGuest) {
+
         $model=new UserLogin;
             // collect user input data
         if(isset($_POST['UserLogin']))
         { 
+
                 // $model->attributes=$_POST['UserLogin'];
           
           $model->username=$_POST['UserLogin']['username'];
@@ -54,21 +56,22 @@ class LoginController extends Controller
 
                 // validate user input and redirect to previous page if valid
           if($model->validate()) {
-            if(User::model()->findbyPk(Yii::app()->user->id)->superuser == 1){
-              $this->actionLogout();
+            
+            // if(User::model()->findbyPk(Yii::app()->user->id)->superuser == 1){
+            //   $this->actionLogout();
+            // }else if (User::model()->findbyPk(Yii::app()->user->id)->repass_status=='0'){
+            //   $this->redirect(array('registration/Repassword'));
+            // }
+            // if (Profile::model()->findbyPk(Yii::app()->user->id)->type_employee == 1 ) {
+            //   if (strpos($_POST['UserLogin']['username'],"@")) {
+            //      $this->actionLogout();
+            //   }
+            // }else if (Profile::model()->findbyPk(Yii::app()->user->id)->type_employee == 5) {
+            //   if (!strpos($_POST['UserLogin']['username'],"@")) {
+            //      $this->actionLogout();
+            //   }
+            // }
 
-            }else if (User::model()->findbyPk(Yii::app()->user->id)->repass_status=='0'){
-              $this->redirect(array('registration/Repassword'));
-            }
-            if (Profile::model()->findbyPk(Yii::app()->user->id)->type_employee == 1 ) {
-              if (strpos($_POST['UserLogin']['username'],"@")) {
-                 $this->actionLogout();
-              }
-            }else if (Profile::model()->findbyPk(Yii::app()->user->id)->type_employee == 5) {
-              if (!strpos($_POST['UserLogin']['username'],"@")) {
-                 $this->actionLogout();
-              }
-            }
             
             Yii::app()->session['popup'] = 1;
             $this->lastViset();
