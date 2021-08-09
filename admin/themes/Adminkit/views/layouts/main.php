@@ -241,7 +241,7 @@
 		<div id="footer" class="hidden-print">
 
 			<!--  Copyright Line -->
-			<div class="copy">&copy;  <?php echo date('Y'); ?> -  ISUSZU E-Learning - All Rights Reserved.
+			<div class="copy">&copy;  <?php echo date('Y'); ?> -  ISUZU E-Learning - All Rights Reserved.
 			<!--  End Copyright Line -->
 
 		</div>
