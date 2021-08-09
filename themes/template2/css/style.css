@@ -404,14 +404,14 @@ header .navbar-toggle {
 }
 
 header span.photo {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   display: inline-block;
   vertical-align: middle;
-  margin-right: 10px;
+  margin-right: 5px;
   border-radius: 50px;
 }
 
@@ -687,7 +687,7 @@ section {
   font-size: 18px;
   border: 1px solid #ddd;
   border-radius: 8px;
-  padding: 4px 10px 0 0px;
+  padding: 8px 10px 0 10px;
 }
 
 @media (min-width: 768px) and (max-width: 991px) {

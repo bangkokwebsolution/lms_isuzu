@@ -107,7 +107,10 @@
                                 }
                             }
                             ?>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;"><span class="photo" style="background-image: url('<?= $img ?>"></span>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;">
+                                <!-- <span class="photo" style="background-image: url('<?= $img ?>"></span> -->
+                                <span class="photo" style="background-image: url('<?php echo Yii::app()->theme->baseUrl; ?>/images/username-icon.png"></span>
+                                <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/username-icon.png" class="profile-account" alt=""> -->
                                 <?php if (Yii::app()->session['lang'] == 1) {
                                     echo  $name->firstname_en;
                                 } else {
