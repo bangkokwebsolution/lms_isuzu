@@ -78,12 +78,12 @@ return array(
 
 		// ใช้ gii ให้ ปิด session
 
-		'session' => array (
-			'class' => 'application.components.DbHttpSession',
-			'connectionID' => 'db',
-			'sessionTableName' => 'session',
-			'userTableName' => 'tbl_users'
-		),
+		// 'session' => array (
+		// 	'class' => 'application.components.DbHttpSession',
+		// 	'connectionID' => 'db',
+		// 	'sessionTableName' => 'session',
+		// 	'userTableName' => 'tbl_users'
+		// ),
 
 
 		/*'bigbluebutton'=>array(
