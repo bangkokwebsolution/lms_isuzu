@@ -172,7 +172,15 @@ class ContactusNewController extends Controller
 
 					if(isset($con_image))
 					{
-						Yii::app()->getDeleteImageYush('ContactusNew',$model->id);
+						// Yii::app()->deleteImage('ContactusNew',$model->id);
+						$uploadDir = Yii::app()->getUploadPath(null);
+					$fileold = glob($uploadDir."".$model->id);
+
+						foreach($fileold as $file){
+				              if(is_file($file)){
+				                  unlink($file); // delete file
+				                }             
+				              }
 					}
 
 					if(isset($con_image))
