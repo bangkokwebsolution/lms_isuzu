@@ -242,19 +242,17 @@ public function PlusDate($givendate, $day = 0, $mth = 0, $yr = 0)
     return $newdate;
 }
 
-public function SendMail($to, $subject, $message, $fromText = 'E-Learning System Thoresen')
+public function SendMail($to, $subject, $message, $fromText = 'Isuzu')
 {
-
     require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/Exception.php";
     require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/PHPMailer.php";
     require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/SMTP.php";
-
     $SettingAll = Helpers::lib()->SetUpSetting();
     $adminEmail = $SettingAll['USER_EMAIL'];
     $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-    $adminEmail = 'thoresen.elearning@gmail.com';
-    $adminEmailPass = 'lms@2020';
+    $adminEmail = 'keng1155ker@gmail.com';
+    $adminEmailPass = 'keng12345678';
 
 
         /*$mail =  new PHPMailer(true);
@@ -285,13 +283,14 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
         $mail->Body = $message;
         $mail->IsHTML(true);*/
         $mail =  new PHPMailer(true);
-        // $mail->SMTPOptions = array(
-        //     'ssl' => array(
-        //         'verify_peer' => false,
-        //         'verify_peer_name' => false,
-        //         'allow_self_signed' => true
-        //     )
-        // );
+
+        $mail->SMTPOptions = array(
+            'ssl' => array(
+                'verify_peer' => false,
+                'verify_peer_name' => false,
+                'allow_self_signed' => true
+            )
+        );
 
 
         
@@ -347,6 +346,7 @@ public function SendMail($to, $subject, $message, $fromText = 'E-Learning System
 
 
         return $mail->Send();
+            
     }
 
     public function SendMailLearnPass($to, $subject, $message, $fromText = 'E-Learning System Thoresen'){
