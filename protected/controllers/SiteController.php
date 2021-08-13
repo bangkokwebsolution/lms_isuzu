@@ -778,7 +778,7 @@ class SiteController extends Controller
             	'condition' => 'user_id=:user_id AND active=:active',
             	'params' => array(':user_id'=>Yii::app()->user->id, ':active'=>'y')
             ));
-
+            $Passcours = Passcours::model()->findAll(array('condition'=>'passcours_user = '.Yii::app()->user->id));
             $arr_log_course_id = array();            
             $arr_log_course_gen_id = array();            
             $arr_log_gen_id = array();            
@@ -795,6 +795,7 @@ class SiteController extends Controller
 			'user'=>$user,
 			'label'=> $label,
 			'course'=> $course,
+            'Passcours'=>$Passcours,
 			'arr_course_id'=> $arr_course_id,
 			'arr_log_course_id'=> $arr_log_course_id,
 			'arr_log_gen_id'=> $arr_log_gen_id,
