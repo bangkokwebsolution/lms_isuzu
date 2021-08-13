@@ -53,12 +53,19 @@ if ($news_forms) {
 
                                 <div class="col-md-6 col-xs-12">
                                     <div class="card card-profile-detail">
-                                        <p>Firstname - Lastname <br> <span>อัศวรรณ์ จำเริญสม</span></p>
+                                        <p>Firstname - Lastname <br> <span><?php if($langId ==1){
+
+                                            echo $profile->firstname_en.' - '.$profile->lastname_en;
+                                        }else{
+
+                                            echo $profile->firstname.' - '.$profile->lastname;
+
+                                        } ?></span></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6  col-xs-12">
                                     <div class="card card-profile-detail">
-                                        <p>Employee ID <br><span> 7489287894756</span></p>
+                                        <p>Employee ID <br><span> <?= $profile->identification ?></span></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-xs-12">
