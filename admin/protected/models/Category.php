@@ -3,6 +3,7 @@
 class Category extends AActiveRecord
 {
 	public $labelState = false;
+	public $type_name_th;
 
 	public static function model($className=__CLASS__)
 	{
@@ -22,7 +23,7 @@ class Category extends AActiveRecord
 //			array('cate_image', 'file','types' => 'jpg, gif, png', 'allowEmpty'=>true),
 			array('cate_title', 'required'),
 			array('cate_short_detail, cate_detail, cate_image, create_date, update_date, news_per_page, special_category,lang_id,parent_id', 'safe'),
-			array('cate_image, cate_id ,cate_type, cate_title, cate_short_detail, cate_detail, create_date, create_by, update_date, update_by, active, special_category,lang_id,parent_id', 'safe', 'on'=>'search'),
+			array('cate_image, cate_id ,cate_type, cate_title, cate_short_detail, cate_detail, create_date, create_by, update_date, update_by, active, special_category,lang_id,parent_id,type_name_th', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -33,6 +34,7 @@ class Category extends AActiveRecord
 			'fileCount'=>array(self::STAT, 'Filecategory', 'category_id'),
 			'usercreate' => array(self::BELONGS_TO, 'User', 'create_by'),
 			'userupdate' => array(self::BELONGS_TO, 'User', 'update_by'),
+			'type' => array(self::BELONGS_TO, 'CourseType', 'type_id'),
 		);
 	}
 
@@ -62,6 +64,7 @@ class Category extends AActiveRecord
 			'filename'=>'วิดีโอตัวอย่างหลักสูตร (mp3,mp4)'.$label_lang,
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
+			'type_name_th'=>'type_name_th',
 		);
 	}
 
@@ -79,6 +82,9 @@ class Category extends AActiveRecord
 	{
 		$criteria=new CDbCriteria;
 
+		$criteria->with = 'type';
+		$criteria->compare('type.type_name',$this->type_name_th, true);
+
 		$criteria->compare('cate_id',$this->cate_id);
 		$criteria->compare('cate_type',$this->cate_type,true);
 		$criteria->compare('cate_title',$this->cate_title,true);
@@ -87,12 +93,12 @@ class Category extends AActiveRecord
 		$criteria->compare('cate_show',$this->cate_show,true);
 		$criteria->compare('create_date',$this->create_date,true);
 
-		////////////////// group id 7 และเป็นคนสร้าง ถึงจะเห็น
+		////////////////// group id 1 และเป็นคนสร้าง ถึงจะเห็น
 		$check_user = User::model()->findByPk(Yii::app()->user->id);
 		$group = $check_user->group;
 		$group_arr = json_decode($group);
 		$see_all = 2;
-		if(in_array("1", $group_arr) || in_array("7", $group_arr)){
+		if(in_array("1", $group_arr) ){
 			$see_all = 1;
 		}
             //////////////////
@@ -105,7 +111,7 @@ class Category extends AActiveRecord
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
-		$criteria->compare('parent_id',0);
+		$criteria->compare('categorys.parent_id',0);
 		$poviderArray = array('criteria'=>$criteria);
 
 

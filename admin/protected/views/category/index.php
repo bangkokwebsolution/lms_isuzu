@@ -102,6 +102,15 @@ EOD
 						// 	),
 						// ),
 						array(
+							'header'=>'จัดการประเภทหลักสูตร',
+							'name'=>'type_name_th',
+							'value'=>'$data->type->type_name',
+							// 'filter'=>CHtml::activeTextField($model,'cates_search'),
+			                'htmlOptions' => array(
+			                   'style' => 'width:130px',
+			                ),  
+						),
+						array(
 							'name' => 'cate_title',
 							'type'=>'raw',
 							'value' => 'UHtml::markSearch($data,"cate_title")',
