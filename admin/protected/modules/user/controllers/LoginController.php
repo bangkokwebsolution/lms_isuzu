@@ -29,7 +29,7 @@ class LoginController extends Controller
 				if($model->validate()) {
 
 					$this->lastViset();
-					// $this->saveToken();
+					$this->saveToken();
 					$this->redirect(array('/site/index'));
 					// if (Yii::app()->user->returnUrl=='/index.php'){
 					// 	$this->redirect(Yii::app()->controller->module->returnUrl);
@@ -50,7 +50,7 @@ class LoginController extends Controller
         $token = UserModule::encrypting(time());
         $lastVisit->avatar = $token;
         //Set cookie token for login
-        $time = time()+3600; //1 hr.
+        $time = time()+7200; //2 hr.
         $cookie = new CHttpCookie('token_login', $token); //set value
         $cookie->expire = $time; 
         Yii::app()->request->cookies['token_login'] = $cookie;
