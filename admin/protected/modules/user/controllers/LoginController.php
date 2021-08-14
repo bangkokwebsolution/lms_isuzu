@@ -29,7 +29,7 @@ class LoginController extends Controller
 				if($model->validate()) {
 
 					$this->lastViset();
-					$this->saveToken();
+					// $this->saveToken();
 					$this->redirect(array('/site/index'));
 					// if (Yii::app()->user->returnUrl=='/index.php'){
 					// 	$this->redirect(Yii::app()->controller->module->returnUrl);
