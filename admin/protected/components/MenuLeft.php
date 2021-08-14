@@ -828,40 +828,40 @@ Class MenuLeft extends Controller
 
                )
             ),
-            array(
+   //          array(
 				
-				'visible'=>self::PermissionsMenu(array(
-					'CheckLecture.*',
-					// 'CheckLecture.update',
-				)),
-				'label'=>'<i></i><span>ระบบตรวจข้อสอบบรรยาย</span>',
-				'url'=>'#CheckLecture',
-				'linkOptions' => array('data-toggle' => 'collapse'),
-				'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
-				'submenuOptions' => array('class' => self::SetSubMenu( array('CheckLecture') ), 'id' => 'CheckLecture'),
-				'active' => self::SetSubMenu( array('CheckLecture') ,false),
-				'items'=>array(
-					array(
+			// 	'visible'=>self::PermissionsMenu(array(
+			// 		'CheckLecture.*',
+			// 		// 'CheckLecture.update',
+			// 	)),
+			// 	'label'=>'<i></i><span>ระบบตรวจข้อสอบบรรยาย</span>',
+			// 	'url'=>'#CheckLecture',
+			// 	'linkOptions' => array('data-toggle' => 'collapse'),
+			// 	'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
+			// 	'submenuOptions' => array('class' => self::SetSubMenu( array('CheckLecture') ), 'id' => 'CheckLecture'),
+			// 	'active' => self::SetSubMenu( array('CheckLecture') ,false),
+			// 	'items'=>array(
+			// 		array(
 						
-						'visible'=>self::PermissionsMenu(array(
-							'CheckLecture.*',
-							'CheckLecture.index'
-						)),
-						'label'=>'ตรวจข้อสอบบรรยายบทเรียน',
-						'url'=>array('//CheckLecture/index')
-					),
-					array(
+			// 			'visible'=>self::PermissionsMenu(array(
+			// 				'CheckLecture.*',
+			// 				'CheckLecture.index'
+			// 			)),
+			// 			'label'=>'ตรวจข้อสอบบรรยายบทเรียน',
+			// 			'url'=>array('//CheckLecture/index')
+			// 		),
+			// 		array(
 						
-						'visible'=>self::PermissionsMenu(array(
-							'Signature.*',
-							'Signature.update'
-						)),
+			// 			'visible'=>self::PermissionsMenu(array(
+			// 				'Signature.*',
+			// 				'Signature.update'
+			// 			)),
 
-						'label'=>'ตรวจข้อสอบบรรยายหลักสูตร',
-						'url'=>array('//CheckLecture/coureCheck')
-					),
-				)
-			),
+			// 			'label'=>'ตรวจข้อสอบบรรยายหลักสูตร',
+			// 			'url'=>array('//CheckLecture/coureCheck')
+			// 		),
+			// 	)
+			// ),
              array(
 	        	
 	        	'visible'=>self::PermissionsMenu(array(
