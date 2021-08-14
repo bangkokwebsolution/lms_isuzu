@@ -164,11 +164,11 @@ Class MenuLeft extends Controller
 					),
 				)
 			),
-			array(
-				'label'=>'<i></i><span>สถิติการใช้งาน</span>',
-				'url'=>array('/analytics/index'),
-				'itemOptions' => array('class' => 'glyphicons stats'),
-			),
+			// array(
+			// 	'label'=>'<i></i><span>สถิติการใช้งาน</span>',
+			// 	'url'=>array('/analytics/index'),
+			// 	'itemOptions' => array('class' => 'glyphicons stats'),
+			// ),
 	        //====== END Menu Site ======//
 
 
@@ -446,6 +446,36 @@ Class MenuLeft extends Controller
 				)
 			),
 			//====== END Menu News ======//
+
+			array(
+				'visible'=>self::PermissionsMenu(array(
+					'CourseType.*',
+				)),
+				'label'=>'<i></i><span> ประเภทหลักสูตร</span>',
+				'url'=>'#CourseType',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons book'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('CourseType') ), 'id' => 'CourseType'),
+				'active' => self::SetSubMenu( array('CourseType') ,false),
+				'items'=>array(
+					// array(
+					// 	'visible'=>self::PermissionsMenu(array(
+					// 		'CourseType.*',
+					// 		'CourseType.Create'
+					// 	)),
+					// 	'label'=>'เพิ่ม '."(ภาษา ".$mainLang." )",
+					// 	'url'=>array('//CourseType/create')
+					// ),
+					array(
+						'visible'=>self::PermissionsMenu(array(
+							'CourseType.*',
+							'CourseType.Index'
+						)),
+						'label'=>'จัดการ',
+						'url'=>array('//CourseType/index')
+					),
+				)
+			),
 
 			array(
 				/*====== Check Permissions Category (2) ======*/
@@ -1244,33 +1274,33 @@ Class MenuLeft extends Controller
 	        	'submenuOptions' => array('class' => self::SetSubMenu( array('admin') ) , 'id' => 'admin'),
 	        	'active' => self::SetSubMenu( array('admin') ,false),
 	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Sup-User (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'admin.*',
-	        				'admin.membership_personal'
-	        			)),
-	        			'label'=>'อนุมัติการตรวจสอบการสมัครสำหรับบุคคลทั่วไป',
-	        			'url'=>array('//user/admin/membership_personal')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-User (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'admin.*',
-	        				'admin.Membership'
-	        			)),
-	        			'label'=>'อนุมัติการตรวจสอบการสมัครสมาชิกสำหรับคนประจำเรือ',
-	        			'url'=>array('//user/admin/membership')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-User (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'admin.*',
-	        				'admin.Approve'
-	        			)),
-	        			'label'=>'อนุมัติยืนยันการสมัคร',
-	        			'url'=>array('//user/admin/approve')
-	        		),
+	        		// array(
+	        		// 	/*====== Check Permissions Sup-User (1) ======*/
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'admin.*',
+	        		// 		'admin.membership_personal'
+	        		// 	)),
+	        		// 	'label'=>'อนุมัติการตรวจสอบการสมัครสำหรับบุคคลทั่วไป',
+	        		// 	'url'=>array('//user/admin/membership_personal')
+	        		// ),
+	        		// array(
+	        		// 	/*====== Check Permissions Sup-User (1) ======*/
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'admin.*',
+	        		// 		'admin.Membership'
+	        		// 	)),
+	        		// 	'label'=>'อนุมัติการตรวจสอบการสมัครสมาชิกสำหรับคนประจำเรือ',
+	        		// 	'url'=>array('//user/admin/membership')
+	        		// ),
+	        		// array(
+	        		// 	/*====== Check Permissions Sup-User (1) ======*/
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'admin.*',
+	        		// 		'admin.Approve'
+	        		// 	)),
+	        		// 	'label'=>'อนุมัติยืนยันการสมัคร',
+	        		// 	'url'=>array('//user/admin/approve')
+	        		// ),
 
 	        		array(
 	        			/*====== Check Permissions Sup-User (1) ======*/
@@ -1299,21 +1329,21 @@ Class MenuLeft extends Controller
 	        		array(
 	        			/*====== Check Permissions Sup-User (2) ======*/
 	        			'visible'=>true,
-	        			'label'=>'รายชื่อสมาชิก(พนักงานออฟฟิศ)',
+	        			'label'=>'รายชื่อสมาชิก',
 	        			'url'=>array('//user/admin/employee')
 	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-User (2) ======*/
-	        			'visible'=>true,
-	        			'label'=>'รายชื่อสมาชิก(พนักงานประจำเรือ)',
-	        			'url'=>array('//user/admin/employeeShip')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-User (2) ======*/
-	        			'visible'=>true,
-	        			'label'=>'รายชื่อสมาชิก(สมาชิกทั่วไป)',
-	        			'url'=>array('//user/admin/General')
-	        		),
+	        		// array(
+	        		// 	/*====== Check Permissions Sup-User (2) ======*/
+	        		// 	'visible'=>true,
+	        		// 	'label'=>'รายชื่อสมาชิก(พนักงานประจำเรือ)',
+	        		// 	'url'=>array('//user/admin/employeeShip')
+	        		// ),
+	        		// array(
+	        		// 	/*====== Check Permissions Sup-User (2) ======*/
+	        		// 	'visible'=>true,
+	        		// 	'label'=>'รายชื่อสมาชิก(สมาชิกทั่วไป)',
+	        		// 	'url'=>array('//user/admin/General')
+	        		// ),
 	        		// array(
 	        		// 	/*====== Check Permissions Sup-User (2) ======*/
 	        		// 	'visible'=>self::PermissionsMenu(array(
@@ -1335,57 +1365,57 @@ Class MenuLeft extends Controller
 	        	)
 	        ),
 
-	         array(
-	        	//////// print ////////
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'monthCheck.*',
-	        		// 'monthCheck.admin',
-	        	)),
-	        	'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบตรวจสอบการใช้งาน</span>',
-	        	'url'=>'#monthCheck',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_open'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('monthCheck') ), 'id' => 'monthCheck'),
-	        	'active' => self::SetSubMenu( array('monthCheck') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Sup-Category (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'monthCheck.*',
-	        				'monthCheck.admin'
-	        			)),
-	        			'label'=>'กำหนดระยะเวลาในการเข้าใช้งานคนประจำเรือ',
-	        			'url'=>array('//monthCheck/admin')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-Category (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'monthCheck.*',
-	        				'monthCheck.approve'
-	        			)),
-	        			'label'=>'กำหนดระยะเวลาในการเข้าใช้งานบุคคลทั่วไป',
-	        			'url'=>array('//monthCheck/personal')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-User (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'admin.*',
-	        				'admin.Access'
-	        			)),
-	        			'label'=>'ระบบตรวจสอบการเข้าใช้งานคนประจำเรือ',
-	        			'url'=>array('//user/admin/access')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-User (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'admin.*',
-	        				'admin.AccessPersonal'
-	        			)),
-	        			'label'=>'ระบบตรวจสอบการเข้าใช้งานคนบุคคลทั่วไป',
-	        			'url'=>array('//user/admin/accessPersonal')
-	        		),
-	        	)
-	        ),
+	        //  array(
+	        // 	//////// print ////////
+	        // 	'visible'=>self::PermissionsMenu(array(
+	        // 		'monthCheck.*',
+	        // 		// 'monthCheck.admin',
+	        // 	)),
+	        // 	'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบตรวจสอบการใช้งาน</span>',
+	        // 	'url'=>'#monthCheck',
+	        // 	'linkOptions' => array('data-toggle' => 'collapse'),
+	        // 	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_open'),
+	        // 	'submenuOptions' => array('class' => self::SetSubMenu( array('monthCheck') ), 'id' => 'monthCheck'),
+	        // 	'active' => self::SetSubMenu( array('monthCheck') ,false),
+	        // 	'items'=>array(
+	        // 		array(
+	        // 			/*====== Check Permissions Sup-Category (2) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'monthCheck.*',
+	        // 				'monthCheck.admin'
+	        // 			)),
+	        // 			'label'=>'กำหนดระยะเวลาในการเข้าใช้งานคนประจำเรือ',
+	        // 			'url'=>array('//monthCheck/admin')
+	        // 		),
+	        // 		array(
+	        // 			/*====== Check Permissions Sup-Category (2) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'monthCheck.*',
+	        // 				'monthCheck.approve'
+	        // 			)),
+	        // 			'label'=>'กำหนดระยะเวลาในการเข้าใช้งานบุคคลทั่วไป',
+	        // 			'url'=>array('//monthCheck/personal')
+	        // 		),
+	        // 		array(
+	        // 			/*====== Check Permissions Sup-User (2) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'admin.*',
+	        // 				'admin.Access'
+	        // 			)),
+	        // 			'label'=>'ระบบตรวจสอบการเข้าใช้งานคนประจำเรือ',
+	        // 			'url'=>array('//user/admin/access')
+	        // 		),
+	        // 		array(
+	        // 			/*====== Check Permissions Sup-User (2) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'admin.*',
+	        // 				'admin.AccessPersonal'
+	        // 			)),
+	        // 			'label'=>'ระบบตรวจสอบการเข้าใช้งานคนบุคคลทั่วไป',
+	        // 			'url'=>array('//user/admin/accessPersonal')
+	        // 		),
+	        // 	)
+	        // ),
             array(
 	        	//////// SlideImg ////////
 	        	'visible'=>self::PermissionsMenu(array(
@@ -1421,39 +1451,39 @@ Class MenuLeft extends Controller
 	        	)
 	        ),
 
-	        array(
-	        	//////// GalleryType ////////
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'GalleryType.*',
-	        		'GalleryType.Index',
-	        		'GalleryType.Create'
-	        	)),
-	        	'label'=>'<span class="label label-primary"></span> <i></i><span>ประเภทแกลลอรี่</span>',
-	        	'url'=>'#GalleryType',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons posterous_spaces'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('GalleryType') ), 'id' => 'GalleryType'),
-	        	'active' => self::SetSubMenu( array('GalleryType') ,false),
-	        	'items'=>array(
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'GalleryType.*',
-	        				'GalleryType.Create'
-	        			)),
-	        			'label'=>'เพิ่มประเภทแกลลอรี่',
-	        			'url'=>array('//GalleryType/create')
-	        		),
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'GalleryType.*',
-	        				'GalleryType.Index'
-	        			)),
-	        			'label'=>'จัดการประเภทแกลลอรี่',
-	        			'url'=>array('//GalleryType/index')
-	        		),
+	        // array(
+	        // 	//////// GalleryType ////////
+	        // 	'visible'=>self::PermissionsMenu(array(
+	        // 		'GalleryType.*',
+	        // 		'GalleryType.Index',
+	        // 		'GalleryType.Create'
+	        // 	)),
+	        // 	'label'=>'<span class="label label-primary"></span> <i></i><span>ประเภทแกลลอรี่</span>',
+	        // 	'url'=>'#GalleryType',
+	        // 	'linkOptions' => array('data-toggle' => 'collapse'),
+	        // 	'itemOptions' => array('class' => 'hasSubmenu glyphicons posterous_spaces'),
+	        // 	'submenuOptions' => array('class' => self::SetSubMenu( array('GalleryType') ), 'id' => 'GalleryType'),
+	        // 	'active' => self::SetSubMenu( array('GalleryType') ,false),
+	        // 	'items'=>array(
+	        // 		array(
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'GalleryType.*',
+	        // 				'GalleryType.Create'
+	        // 			)),
+	        // 			'label'=>'เพิ่มประเภทแกลลอรี่',
+	        // 			'url'=>array('//GalleryType/create')
+	        // 		),
+	        // 		array(
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'GalleryType.*',
+	        // 				'GalleryType.Index'
+	        // 			)),
+	        // 			'label'=>'จัดการประเภทแกลลอรี่',
+	        // 			'url'=>array('//GalleryType/index')
+	        // 		),
 	        		
-	        	)
-	        ),
+	        // 	)
+	        // ),
 	       
 
 	        // array(
@@ -1490,39 +1520,39 @@ Class MenuLeft extends Controller
 	        // 	)
 	        // ),
 
-	        array(
-	        	//////// Gallery ////////
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'GalleryGroup.*',
-	        		'GalleryGroup.Index',
-	        		'GalleryGroup.Create'
-	        	)),
-	        	'label'=>'<span class="label label-primary"></span> <i></i><span>แกลลอรี่</span>',
-	        	'url'=>'#GalleryGroup',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons posterous_spaces'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('GalleryGroup') ), 'id' => 'GalleryGroup'),
-	        	'active' => self::SetSubMenu( array('GalleryGroup') ,false),
-	        	'items'=>array(
+	        // array(
+	        // 	//////// Gallery ////////
+	        // 	'visible'=>self::PermissionsMenu(array(
+	        // 		'GalleryGroup.*',
+	        // 		'GalleryGroup.Index',
+	        // 		'GalleryGroup.Create'
+	        // 	)),
+	        // 	'label'=>'<span class="label label-primary"></span> <i></i><span>แกลลอรี่</span>',
+	        // 	'url'=>'#GalleryGroup',
+	        // 	'linkOptions' => array('data-toggle' => 'collapse'),
+	        // 	'itemOptions' => array('class' => 'hasSubmenu glyphicons posterous_spaces'),
+	        // 	'submenuOptions' => array('class' => self::SetSubMenu( array('GalleryGroup') ), 'id' => 'GalleryGroup'),
+	        // 	'active' => self::SetSubMenu( array('GalleryGroup') ,false),
+	        // 	'items'=>array(
 
-	        		// array(
-	        		// 	'visible'=>self::PermissionsMenu(array(
-	        		// 		'GalleryGroup.*',
-	        		// 		'GalleryGroup.create'
-	        		// 	)),
-	        		// 	'label'=>'เพิ่มแกลลอรี่',
-	        		// 	'url'=>array('//GalleryGroup/create')
-	        		// ),
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'GalleryGroup.*',
-	        				'GalleryGroup.Index'
-	        			)),
-	        			'label'=>'จัดการแกลลอรี่',
-	        			'url'=>array('//GalleryGroup/Index')
-	        		),
-	        	)
-	        ),
+	        // 		// array(
+	        // 		// 	'visible'=>self::PermissionsMenu(array(
+	        // 		// 		'GalleryGroup.*',
+	        // 		// 		'GalleryGroup.create'
+	        // 		// 	)),
+	        // 		// 	'label'=>'เพิ่มแกลลอรี่',
+	        // 		// 	'url'=>array('//GalleryGroup/create')
+	        // 		// ),
+	        // 		array(
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'GalleryGroup.*',
+	        // 				'GalleryGroup.Index'
+	        // 			)),
+	        // 			'label'=>'จัดการแกลลอรี่',
+	        // 			'url'=>array('//GalleryGroup/Index')
+	        // 		),
+	        // 	)
+	        // ),
 
 	        array(
 	        	'visible'=>self::PermissionsMenu(array(
@@ -1790,39 +1820,39 @@ Class MenuLeft extends Controller
 	        	)
 	        ),
 
-	        array(
-	        	/*====== Check Permissions Position (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Branch.*',
-	        		'Branch.admin',
-	        		'Branch.Create'
-	        	)),
-	        	'label'=>'<i></i><span>Level(ตำแหน่ง office)</span>',
-	        	'url'=>'#Branch',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Branch') ), 'id' => 'Branch'),
-	        	'active' => self::SetSubMenu( array('Branch') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Branch (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Branch.*',
-	        				'Branch.Create'
-	        			)),
-	        			'label'=>'เพิ่มLevel',
-	        			'url'=>array('//Branch/create')
-	        		),
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Branch.*',
-	        				'Branch.index'
-	        			)),
-	        			'label'=>'จัดการLevel',
-	        			'url'=>array('//Branch/index')
-	        		),
-	        	)
-	        ),
+	        // array(
+	        // 	/*====== Check Permissions Position (2) ======*/
+	        // 	'visible'=>self::PermissionsMenu(array(
+	        // 		'Branch.*',
+	        // 		'Branch.admin',
+	        // 		'Branch.Create'
+	        // 	)),
+	        // 	'label'=>'<i></i><span>Level(ตำแหน่ง office)</span>',
+	        // 	'url'=>'#Branch',
+	        // 	'linkOptions' => array('data-toggle' => 'collapse'),
+	        // 	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
+	        // 	'submenuOptions' => array('class' => self::SetSubMenu( array('Branch') ), 'id' => 'Branch'),
+	        // 	'active' => self::SetSubMenu( array('Branch') ,false),
+	        // 	'items'=>array(
+	        // 		array(
+	        // 			/*====== Check Permissions Branch (1) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'Branch.*',
+	        // 				'Branch.Create'
+	        // 			)),
+	        // 			'label'=>'เพิ่มLevel',
+	        // 			'url'=>array('//Branch/create')
+	        // 		),
+	        // 		array(
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'Branch.*',
+	        // 				'Branch.index'
+	        // 			)),
+	        // 			'label'=>'จัดการLevel',
+	        // 			'url'=>array('//Branch/index')
+	        // 		),
+	        // 	)
+	        // ),
 	         array(
 	        	
 	        	'visible'=>self::PermissionsMenu(array(
@@ -1915,40 +1945,40 @@ Class MenuLeft extends Controller
 	        ),
 
 
-	        array(	        	
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'ReportAuthority.*'
-	        	)),
-	        	'label'=>'<i></i><span>กำหนดสิทธิ์ Report หน้าบ้าน</span>',
-	        	'url'=>'#ReportAuthority',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons user_add'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('ReportAuthority', ) ), 'id' => 'ReportAuthority'),
-	        	'active' => self::SetSubMenu( array('ReportAuthority', ) ,false),
-	        	'items'=>array(
-	        		array(	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'ReportAuthority.Board',
-	        			)),
-	        			'label'=>'จัดการ ผู้บริหาร',
-	        			'url'=>array('//ReportAuthority/Board')
-	        		),
-	        		array(	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'ReportAuthority.DivisionManager',
-	        			)),
-	        			'label'=>'จัดการ ผู้จัดการฝ่าย',
-	        			'url'=>array('//ReportAuthority/DivisionManager')
-	        		),
-	        		array(	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'ReportAuthority.DepartmentManager',
-	        			)),
-	        			'label'=>'จัดการ ผู้จัดการแผนก',
-	        			'url'=>array('//ReportAuthority/DepartmentManager')
-	        		),
-	        	)
-	        ),
+	        // array(	        	
+	        // 	'visible'=>self::PermissionsMenu(array(
+	        // 		'ReportAuthority.*'
+	        // 	)),
+	        // 	'label'=>'<i></i><span>กำหนดสิทธิ์ Report หน้าบ้าน</span>',
+	        // 	'url'=>'#ReportAuthority',
+	        // 	'linkOptions' => array('data-toggle' => 'collapse'),
+	        // 	'itemOptions' => array('class' => 'hasSubmenu glyphicons user_add'),
+	        // 	'submenuOptions' => array('class' => self::SetSubMenu( array('ReportAuthority', ) ), 'id' => 'ReportAuthority'),
+	        // 	'active' => self::SetSubMenu( array('ReportAuthority', ) ,false),
+	        // 	'items'=>array(
+	        // 		array(	        			
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'ReportAuthority.Board',
+	        // 			)),
+	        // 			'label'=>'จัดการ ผู้บริหาร',
+	        // 			'url'=>array('//ReportAuthority/Board')
+	        // 		),
+	        // 		array(	        			
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'ReportAuthority.DivisionManager',
+	        // 			)),
+	        // 			'label'=>'จัดการ ผู้จัดการฝ่าย',
+	        // 			'url'=>array('//ReportAuthority/DivisionManager')
+	        // 		),
+	        // 		array(	        			
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'ReportAuthority.DepartmentManager',
+	        // 			)),
+	        // 			'label'=>'จัดการ ผู้จัดการแผนก',
+	        // 			'url'=>array('//ReportAuthority/DepartmentManager')
+	        // 		),
+	        // 	)
+	        // ),
 
 
 	        array(
@@ -1964,29 +1994,29 @@ Class MenuLeft extends Controller
 	        	'active' => self::SetSubMenu( array('Report', 'Questionnaire') ,false),
 	        	'items'=>array(
 					//set new menu	
-					array(
+					// array(
 	        			
-	        			'visible'=>self::PermissionsMenu(array(
-							'Report.*',
-	        			)),
-	        			'label'=>'1.) รายงานภาพรวมการสมัครสมาชิก',
-	        			'url'=>array('//Report/logAllRegister')
-					),			
-	        		array(
+	    //     			'visible'=>self::PermissionsMenu(array(
+					// 		'Report.*',
+	    //     			)),
+	    //     			'label'=>'1.) รายงานภาพรวมการสมัครสมาชิก',
+	    //     			'url'=>array('//Report/logAllRegister')
+					// ),			
+	    //     		array(
 	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'admin.*',
-	        			)),
-	        			'label'=>'2.) รายงานผลการสมัครสมาชิก (ผู้เรียน)',
-	        			'url'=>array('//user/admin/Status')
-	        		),
+	    //     			'visible'=>self::PermissionsMenu(array(
+	    //     				'admin.*',
+	    //     			)),
+	    //     			'label'=>'2.) รายงานผลการสมัครสมาชิก (ผู้เรียน)',
+	    //     			'url'=>array('//user/admin/Status')
+	    //     		),
 
 	        		array(
 	        			
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Report.*',
 	        			)),
-	        			'label'=>'3.) รายงานภาพรวมของหลักสูตร',
+	        			'label'=>'1.) รายงานภาพรวมของหลักสูตร',
 	        			'url'=>array('//Report/AttendPrint')
 	        		),
 	        		array(
@@ -1994,7 +2024,7 @@ Class MenuLeft extends Controller
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Report.*',
 	        			)),
-	        			'label'=>'4.) รายงานการฝึกอบรมหลักสูตร',
+	        			'label'=>'2.) รายงานการฝึกอบรมหลักสูตร',
 	        			'url'=>array('//Report/ByCourseDetail')
 	        		),
 	        		array(
@@ -2002,7 +2032,7 @@ Class MenuLeft extends Controller
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Report.*',
 	        			)),
-	        			'label'=>'5..) รายงานติดตามผู้เรียน',
+	        			'label'=>'3.) รายงานติดตามผู้เรียน',
 	        			'url'=>array('//Report/ByUser')
 	        		),
 
@@ -2011,7 +2041,7 @@ Class MenuLeft extends Controller
 	        			'visible'=>self::PermissionsMenu(array(
 							'Report.*',
 	        			)),
-	        			'label'=>'6.) รายงานแบบสอบถามสำหรับหลักสูตร',
+	        			'label'=>'4.) รายงานแบบสอบถามสำหรับหลักสูตร',
 	        			'url'=>array('//Report/logQuestioncourse')
 					),
 					array(
@@ -2019,7 +2049,7 @@ Class MenuLeft extends Controller
 	        			'visible'=>self::PermissionsMenu(array(
 							'Report.*',
 	        			)),
-	        			'label'=>'7.) รายงานภาพรวมแบบสอบถาม',
+	        			'label'=>'5.) รายงานภาพรวมแบบสอบถาม',
 	        			'url'=>array('//Report/logQuestionall')
 					),
 					array(
@@ -2027,7 +2057,7 @@ Class MenuLeft extends Controller
 	        			'visible'=>self::PermissionsMenu(array(
 	        				'Report.*',
 	        			)),
-	        			'label'=>'8.) รายงานการรีเซตหลักสูตร',
+	        			'label'=>'6.) รายงานการรีเซตหลักสูตร',
 	        			'url'=>array('//Report/logReset')
 					),
 
@@ -2263,33 +2293,33 @@ Class MenuLeft extends Controller
 	        			'label'=>'Log การใช้งานผู้ดูแลระบบ',
 	        			'url'=>array('//logAdmin/index')
 	        		),
-	        		array(
+	        		// array(
 	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'LogAdmin.*',
-	        				'LogAdmin.approve'
-	        			)),
-	        			'label'=>'Log การยืนยันสมัครสมาชิก',
-	        			'url'=>array('//logAdmin/approve')
-	        		),
-	        		array(
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'LogAdmin.*',
+	        		// 		'LogAdmin.approve'
+	        		// 	)),
+	        		// 	'label'=>'Log การยืนยันสมัครสมาชิก',
+	        		// 	'url'=>array('//logAdmin/approve')
+	        		// ),
+	        		// array(
 	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'LogAdmin.*',
-	        				'LogAdmin.approvePersonal'
-	        			)),
-	        			'label'=>'Log การยืนยันสมัครสมาชิกบุคคลทั่วไป',
-	        			'url'=>array('//logAdmin/approvePersonal')
-	        		),
-	        		array(
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'LogAdmin.*',
+	        		// 		'LogAdmin.approvePersonal'
+	        		// 	)),
+	        		// 	'label'=>'Log การยืนยันสมัครสมาชิกบุคคลทั่วไป',
+	        		// 	'url'=>array('//logAdmin/approvePersonal')
+	        		// ),
+	        		// array(
 	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'LogAdmin.*',
-	        				'LogAdmin.register'
-	        			)),
-	        			'label'=>'Log การตรวจสอบการสมัครสมาชิก',
-	        			'url'=>array('//logAdmin/register')
-	        		),
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'LogAdmin.*',
+	        		// 		'LogAdmin.register'
+	        		// 	)),
+	        		// 	'label'=>'Log การตรวจสอบการสมัครสมาชิก',
+	        		// 	'url'=>array('//logAdmin/register')
+	        		// ),
 	        		// array(
 	        		// 	
 	        		// 	'visible'=>self::PermissionsMenu(array(
