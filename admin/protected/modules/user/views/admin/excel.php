@@ -171,7 +171,7 @@ HTM;
                                 'dataProvider' => $dataProvider,
                                 'columns' => array(
                                     array(            // display 'author.username' using an expression
-                                        'header' => 'ID',
+                                        'header' => 'OrgChart ID',
                                         'value' => '$data->id',
                                     ),
                                     array(            // display 'author.username' using an expression
@@ -197,7 +197,7 @@ HTM;
                                 'dataProvider' => $dataProvider,
                                 'columns' => array(
                                     array(            // display 'author.username' using an expression
-                                        'header' => 'ID',
+                                        'header' => 'OrgChart ID',
                                         'value' => '$data->id',
                                     ),
                                     array(            // display 'author.username' using an expression
@@ -223,7 +223,7 @@ HTM;
                                 'dataProvider' => $dataProvider,
                                 'columns' => array(
                                     array(            // display 'author.username' using an expression
-                                        'header' => 'ID',
+                                        'header' => 'OrgChart ID',
                                         'value' => '$data->id',
                                     ),
                                     array(            // display 'author.username' using an expression
@@ -249,7 +249,7 @@ HTM;
                                 'dataProvider' => $dataProvider,
                                 'columns' => array(
                                     array(            // display 'author.username' using an expression
-                                        'header' => 'ID',
+                                        'header' => 'OrgChart ID',
                                         'value' => '$data->id',
                                     ),
                                     array(            // display 'author.username' using an expression
