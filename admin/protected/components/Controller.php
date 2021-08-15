@@ -751,4 +751,25 @@ IMG;
     public static function getWidthColumnLang(){
 		return $width = (count(Language::model()->findAll(array('condition' =>'status="y" and active = "y"')))*100) + 40;
     }
+
+    public function listCourseTypeShow2($model,$id,$class='',$readonly,$lang_id,$parent_id)
+	{
+		if($lang_id == 1){
+			$modelList = CourseType::model()->findAll(array(
+		"condition"=>" active = 'y' and lang_id = '".$lang_id."'"));
+			$list = CHtml::listData($modelList,'type_id', 'type_name');
+			$att = array('class'=>$class,'readonly' => $readonly,'onChange' => 'getState(this.value);');
+		}else{
+			$modelList = Category::model()->find(array(
+		"condition"=>" active = 'y' and cate_id = '".$parent_id."'"));
+			
+		// 	$list = CHtml::listData(Category::model()->findAll(array(
+		// "condition"=>" active = 'y' and lang_id = '".$lang_id."' and parent_id = '".$modelList->cate_id."'")),'cate_id', 'cate_title');
+			$list = CHtml::listData(CourseType::model()->findAll(array(
+		"condition"=>" active = 'y' and type_id = '".$modelList->type_id."'")),'type_id', 'type_name');
+			$att = array('class'=>$class,'readonly' => $readonly,'onChange' => 'getState(this.value);');
+		}
+		
+		return CHtml::activeDropDownList($model,'type_id',$list , $att);
+	}
 }

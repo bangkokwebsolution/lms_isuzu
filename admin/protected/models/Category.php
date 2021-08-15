@@ -21,9 +21,9 @@ class Category extends AActiveRecord
 			array('cate_show, create_by, update_by', 'numerical', 'integerOnly'=>true),
 			array('active', 'length', 'max'=>1),
 //			array('cate_image', 'file','types' => 'jpg, gif, png', 'allowEmpty'=>true),
-			array('cate_title', 'required'),
+			array('cate_title,type_id', 'required'),
 			array('cate_short_detail, cate_detail, cate_image, create_date, update_date, news_per_page, special_category,lang_id,parent_id', 'safe'),
-			array('cate_image, cate_id ,cate_type, cate_title, cate_short_detail, cate_detail, create_date, create_by, update_date, update_by, active, special_category,lang_id,parent_id,type_name_th', 'safe', 'on'=>'search'),
+			array('cate_image, cate_id ,cate_type, cate_title, cate_short_detail, cate_detail, create_date, create_by, update_date, update_by, active, special_category,lang_id,parent_id,type_id,type_name_th', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,6 +64,7 @@ class Category extends AActiveRecord
 			'filename'=>'วิดีโอตัวอย่างหลักสูตร (mp3,mp4)'.$label_lang,
 			'parent_id' => 'เมนูหลัก',
 			'lang_id' => 'ภาษา',
+			'type_id'=>'ประเภทหลักสูตร',
 			'type_name_th'=>'type_name_th',
 		);
 	}
