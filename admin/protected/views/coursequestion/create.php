@@ -65,10 +65,11 @@ $this->breadcrumbs=array(
 							'id'=>'add-checkbox-question'
 						));?>
 						<?php
-						echo CHtml::link('<i class="icon-book"></i> เพิ่มข้อสอบบรรยาย', '', array(
-							'class'=>'btn btn-icon btn-success',
-							'id'=>'add-textarea-question'
-						));?>
+						// echo CHtml::link('<i class="icon-book"></i> เพิ่มข้อสอบบรรยาย', '', array(
+						// 	'class'=>'btn btn-icon btn-success',
+						// 	'id'=>'add-textarea-question'
+						// ));
+						?>
 						<?php
 						echo CHtml::link('<i class="icon-book"></i> เพิ่มข้อสอบจับคู่', '', array(
 							'class'=>'btn btn-icon btn-success',

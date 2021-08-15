@@ -60,11 +60,7 @@ $this->breadcrumbs = array('ระบบรายชื่อสมาชิก'
                 </form>
                 <script type="text/javascript">
                     $('#sutdent-form').submit(function () {
-                        // if ($('#excel_import_student').parent().next('.fileupload-preview').text() == '') {
-                        //     alert('กรุณาเลือกไฟล์ Excel');
-                        //     return false;
-                        // }
-                        // return true;
+                        
                         console.log();
                         if ($('#User_excel_file').val() == '') {
                             alert('กรุณาเลือกไฟล์ Excel');
@@ -157,85 +153,17 @@ HTM;
 
         <div class="widget-body">
             <div class="row-fluid">
-                   <!--  <div class="span12" style="margin-top:16px;">
-                        <h5><?= $idx++; ?>. หลักสูตร</h5>
-                        <?php
-                        $criteria=new CDbCriteria;
-                        $criteria->compare('active',y);
-
-                        $dataProvider = new CActiveDataProvider('OrgChart', array(
-                            'criteria'=>$criteria,
-                            'pagination' => array(
-                                'pageSize' => 10,
-                            )));
-                        $this->widget('zii.widgets.grid.CGridView', array(
-                            'dataProvider' => $dataProvider,
-                            'columns' => array(
-                                array(            // display 'author.username' using an expression
-                                    'header' => 'รหัสหลักสูตร',
-                                    'value' => '$data->id',
-                                ),
-                                array(            // display 'author.username' using an expression
-                                    'header' => 'กลุ่มหลักสูตรย่อย',
-                                    'value' => '$data->title',
-                                ),
-                            ),
-                        ));
-                        ?>
-                    </div> -->
-            <!-- <div class="span12" style="margin-top:16px;">
-                        <h5><?= $idx++; ?>. ฝ่าย</h5>
-                            <?php
-                            $dataProvider = new CActiveDataProvider('Company', array(
-                            'criteria'=>$criteria,
-                                'pagination' => array(
-                                    'pageSize' => 10,
-                                )));
-                            $this->widget('zii.widgets.grid.CGridView', array(
-                                'dataProvider' => $dataProvider,
-                                'columns' => array(
-                                    array(            // display 'author.username' using an expression
-                                        'header' => 'รหัสฝ่าย',
-                                        'value' => '$data->company_id',
-                                    ),
-                                    array(            // display 'author.username' using an expression
-                                        'header' => 'ชื่อฝ่าย',
-                                        'value' => '$data->company_title',
-                                    ),
-                                ),
-                            ));
-                            ?>
-                    </div>-->
-              <!--   <?php $idx = 1; ?>
-                    <div class="span12" style="margin-top:16px;">
-                        <h5><?= $idx++; ?>. กอง</h5>
-                            <?php
-                            $dataProvider = new CActiveDataProvider('Division', array(
-                            'criteria'=>$criteria,
-                                'pagination' => array(
-                                    'pageSize' => 10,
-                                )));
-                            $this->widget('zii.widgets.grid.CGridView', array(
-                                'dataProvider' => $dataProvider,
-                                'columns' => array(
-                                    array(            // display 'author.username' using an expression
-                                        'header' => 'รหัสกอง',
-                                        'value' => '$data->id',
-                                    ),
-                                    array(            // display 'author.username' using an expression
-                                        'header' => 'ชื่อกอง',
-                                        'value' => '$data->div_title',
-                                    ),
-                                ),
-                            ));
-                            ?> 
-                    </div>-->
+                   
+              
                     <?php $idx = 1; ?>
-                    <div class="span12" style="margin-top:16px;">
-                        <h5><?= $idx++; ?>. แผนก</h5>
+                    <div class="widget-body" style="margin-top:16px;">
+                        <h5><?= $idx++; ?>. Divition</h5>
                             <?php
-                            $dataProvider = new CActiveDataProvider('Department', array(
-                            'criteria'=>$criteria,
+                            $dataProvider = new CActiveDataProvider('Orgchart', array(
+                                'criteria'=>array(
+                                    'condition'=>'level=2',
+                                    'order'=>'id ASC', 
+                                ),
                                 'pagination' => array(
                                     'pageSize' => 10,
                                 )));
@@ -243,22 +171,25 @@ HTM;
                                 'dataProvider' => $dataProvider,
                                 'columns' => array(
                                     array(            // display 'author.username' using an expression
-                                        'header' => 'รหัสแผนก',
+                                        'header' => 'ID',
                                         'value' => '$data->id',
                                     ),
                                     array(            // display 'author.username' using an expression
-                                        'header' => 'ชื่อแผนก',
-                                        'value' => '$data->dep_title',
+                                        'header' => 'Title',
+                                        'value' => '$data->title',
                                     ),
                                 ),
                             ));
                             ?>
                     </div>
-                     <div class="span12" style="margin-top:16px;">
-                        <h5><?= $idx++; ?>. ตำแหน่ง</h5>
+                     <div class="widget-body" style="margin-top:16px;">
+                        <h5><?= $idx++; ?>. Departmemt</h5>
                             <?php
-                            $dataProvider = new CActiveDataProvider('Position', array(
-                            'criteria'=>$criteria,
+                            $dataProvider = new CActiveDataProvider('Orgchart', array(
+                                'criteria'=>array(
+                                    'condition'=>'level=3',
+                                    'order'=>'id ASC', 
+                                ),
                                 'pagination' => array(
                                     'pageSize' => 10,
                                 )));
@@ -266,26 +197,25 @@ HTM;
                                 'dataProvider' => $dataProvider,
                                 'columns' => array(
                                     array(            // display 'author.username' using an expression
-                                        'header' => 'รหัสตำแหน่ง',
+                                        'header' => 'ID',
                                         'value' => '$data->id',
                                     ),
                                     array(            // display 'author.username' using an expression
-                                        'header' => 'รหัสแผนก',
-                                        'value' => '$data->department_id',
-                                    ),
-                                    array(            // display 'author.username' using an expression
-                                        'header' => 'ชื่อตำแหน่ง',
-                                        'value' => '$data->position_title',
+                                        'header' => 'Title',
+                                        'value' => '$data->title',
                                     ),
                                 ),
                             ));
                             ?>
                     </div>
-                     <div class="span12" style="margin-top:16px;">
-                        <h5><?= $idx++; ?>. Lavel</h5>
+                     <div class="widget-body" style="margin-top:16px;">
+                        <h5><?= $idx++; ?>. Group</h5>
                             <?php
-                            $dataProvider = new CActiveDataProvider('Branch', array(
-                            'criteria'=>$criteria,
+                            $dataProvider = new CActiveDataProvider('Orgchart', array(
+                                'criteria'=>array(
+                                    'condition'=>'level=4',
+                                    'order'=>'id ASC', 
+                                ),
                                 'pagination' => array(
                                     'pageSize' => 10,
                                 )));
@@ -293,16 +223,38 @@ HTM;
                                 'dataProvider' => $dataProvider,
                                 'columns' => array(
                                     array(            // display 'author.username' using an expression
-                                        'header' => 'รหัส Lavel',
+                                        'header' => 'ID',
                                         'value' => '$data->id',
                                     ),
                                     array(            // display 'author.username' using an expression
-                                        'header' => 'รหัสตำแหน่ง',
-                                        'value' => '$data->position_id',
+                                        'header' => 'Title',
+                                        'value' => '$data->title',
+                                    ),
+                                ),
+                            ));
+                            ?>
+                    </div>
+                    <div class="widget-body" style="margin-top:16px;">
+                        <h5><?= $idx++; ?>. Section</h5>
+                            <?php
+                            $dataProvider = new CActiveDataProvider('Orgchart', array(
+                                'criteria'=>array(
+                                    'condition'=>'level=5',
+                                    'order'=>'id ASC', 
+                                ),
+                                'pagination' => array(
+                                    'pageSize' => 10,
+                                )));
+                            $this->widget('zii.widgets.grid.CGridView', array(
+                                'dataProvider' => $dataProvider,
+                                'columns' => array(
+                                    array(            // display 'author.username' using an expression
+                                        'header' => 'ID',
+                                        'value' => '$data->id',
                                     ),
                                     array(            // display 'author.username' using an expression
-                                        'header' => 'Lavel',
-                                        'value' => '$data->branch_name',
+                                        'header' => 'Title',
+                                        'value' => '$data->title',
                                     ),
                                 ),
                             ));
