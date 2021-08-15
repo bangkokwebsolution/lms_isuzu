@@ -204,20 +204,20 @@ echo ($data);
         ));
 	}
 
-	public function actionMembership_personal ()
-	{
-		$model = new User('search');
-        $model->unsetAttributes();  // clear any default values
-        $model->register_status = array(0,2);
-        $model->supper_user_status = true;
+	// public function actionMembership_personal ()
+	// {
+	// 	$model = new User('search');
+ //        $model->unsetAttributes();  // clear any default values
+ //        $model->register_status = array(0,2);
+ //        $model->supper_user_status = true;
       
-        if(isset($_GET['User'])){
-        	$model->attributes=$_GET['User'];
-        }
-        $this->render('Membership_personal',array(
-        	'model'=>$model,
-        ));
-	}
+ //        if(isset($_GET['User'])){
+ //        	$model->attributes=$_GET['User'];
+ //        }
+ //        $this->render('Membership_personal',array(
+ //        	'model'=>$model,
+ //        ));
+	// }
 
 	public function loadDepartment($department_id){
 		$data=OrgChart::model()->findAll('id=:id',
@@ -347,22 +347,22 @@ echo ($data);
         ));
 	}
 
-	public function actionEmployeeShip()
-	{
-		$model=new User('search');
-        $model->unsetAttributes();  // clear any default values
+	// public function actionEmployeeShip()
+	// {
+	// 	$model=new User('search');
+ //        $model->unsetAttributes();  // clear any default values
 
-        $model->typeuser = array(1);
-        $model->type_employee = array(1);
-        $model->status = array(1);
-        $model->register_status = array(1);
-        $model->supper_user_status = true;
-        if(isset($_GET['User']))
-        	$model->attributes=$_GET['User'];
-        $this->render('index',array(
-        	'model'=>$model,
-        ));
-	}
+ //        $model->typeuser = array(1);
+ //        $model->type_employee = array(1);
+ //        $model->status = array(1);
+ //        $model->register_status = array(1);
+ //        $model->supper_user_status = true;
+ //        if(isset($_GET['User']))
+ //        	$model->attributes=$_GET['User'];
+ //        $this->render('index',array(
+ //        	'model'=>$model,
+ //        ));
+	// }
 
 	public function actionGeneral()
 	{
@@ -1310,7 +1310,7 @@ echo ($data);
 							$message = '
 							<strong>สวัสดี คุณ' . $modelProfile->firstname . ' ' . $modelProfile->lastname . '</strong><br /><br />
 
-							<h4>ระบบได้ทำการอนุมัติสมาชิกเข้าใช้งาน e-Learning Thoresen เรียบร้อยแล้ว โดยมี ชื่อผู้ใช้งานและรหัสผ่านดังนี้ </h4>
+							<h4>ระบบได้ทำการอนุมัติสมาชิกเข้าใช้งาน e-Learning Isuzu เรียบร้อยแล้ว โดยมี ชื่อผู้ใช้งานและรหัสผ่านดังนี้ </h4>
 	    					<h4>- User : '. $model->username.'</h4>
 							<h4>- Password : '.$genpass.'</h4>
 
@@ -1318,10 +1318,10 @@ echo ($data);
 							<a href="' . str_replace("/admin","",Yii::app()->getBaseUrl(true)) . '">' . str_replace("/admin","",Yii::app()->getBaseUrl(true)) . '</a><br />
 							<strong>Email</strong> : ' . $model->email . '<br />
 
-							ยินดีต้อนรับเข้าสู่ระบบ e-Learning Thoresen<br /><br />
+							ยินดีต้อนรับเข้าสู่ระบบ e-Learning Isuzu<br /><br />
 
 							';
-							$subject = 'ยินดีต้อนรับเข้าสู่ระบบ e-Learning Thoresen';
+							$subject = 'ยินดีต้อนรับเข้าสู่ระบบ e-Learning Isuzu';
 							$to['email'] = $model->email;
 							$to['firstname'] = $modelProfile->firstname;
 							$to['lastname'] = $modelProfile->lastname;

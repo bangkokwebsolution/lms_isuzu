@@ -119,6 +119,15 @@ body {
 					</div>
 
 					<div class="row">
+                    	<div class="col-md-12">
+                    	<?php echo $form->labelEx($model,'type_id'); ?>
+                    	<?php echo $this->listCourseTypeShow2($model,'type_id','span8',$readonly,$lang_id,$parent_id);?>
+                    	<?php echo $this->NotEmpty();?>
+                    	<?php echo $form->error($model,'type_id'); ?>
+	                    </div>
+                    </div>
+
+					<div class="row">
 						<div class="col-md-12">
 						<?php echo $form->labelEx($model,'cate_title'); ?>
 						<?php echo $form->textField($model,'cate_title',array('size'=>60,'maxlength'=>250, 'class'=>'span8')); ?>
