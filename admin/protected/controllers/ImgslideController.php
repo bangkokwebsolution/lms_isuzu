@@ -169,7 +169,7 @@ class ImgslideController extends Controller
 
 			            // Create a thumbnail
 							$thumbImage = Yii::app()->phpThumb->create($originalPath);
-							$thumbImage->resize(750,416);
+							$thumbImage->resize(1985,671);
 							$thumbImage->save($thumbPath);
 						} 
 						else {
