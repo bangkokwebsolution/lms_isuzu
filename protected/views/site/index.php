@@ -172,7 +172,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                             <div class="icon-featured">
                                 <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/online-class.svg">
                             </div>
-                            <h4 class="mb-0">Online Class</h4>
+                            <h4 class="mb-0">Classroom Online</h4>
                         </a>
                     </div>
                 </div>

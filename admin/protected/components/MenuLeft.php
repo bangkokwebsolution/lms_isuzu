@@ -209,45 +209,45 @@ Class MenuLeft extends Controller
 //			),
 			//====== END Menu Page ======//
 
-			array(
-				/*====== Check Permissions Setting (1)  ======*/
-				'visible'=>self::PermissionsMenu(array(
-					'Setting.*',
-					'Setting.Create'
-				)),
-				'label'=>'<i></i><span>ตั้งค่าระบบพื้นฐาน</span>',
-				'url'=>'#Setting',
-				'linkOptions' => array('data-toggle' => 'collapse'),
-				'itemOptions' => array('class' => 'hasSubmenu glyphicons cogwheel'),
-				'submenuOptions' => array('class' => self::SetSubMenu( array('Setting') ) , 'id' => 'Setting'),
-				'active' => self::SetSubMenu(array('Setting'),false),
-				'items'=>array(
-					array(
-						/*====== Check Permissions Sup-Setting (1) ======*/
-						'visible'=>self::PermissionsMenu(array(
-							'Setting.*',
-							'Setting.Create'
-						)),
-						'label'=>'ตั้งค่าระบบพื้นฐาน',
-						'url'=>array('//Setting/create')
-					),
-				)
-			),
+			// array(
+			// 	/*====== Check Permissions Setting (1)  ======*/
+			// 	'visible'=>self::PermissionsMenu(array(
+			// 		'Setting.*',
+			// 		'Setting.Create'
+			// 	)),
+			// 	'label'=>'<i></i><span>ตั้งค่าระบบพื้นฐาน</span>',
+			// 	'url'=>'#Setting',
+			// 	'linkOptions' => array('data-toggle' => 'collapse'),
+			// 	'itemOptions' => array('class' => 'hasSubmenu glyphicons cogwheel'),
+			// 	'submenuOptions' => array('class' => self::SetSubMenu( array('Setting') ) , 'id' => 'Setting'),
+			// 	'active' => self::SetSubMenu(array('Setting'),false),
+			// 	'items'=>array(
+			// 		array(
+			// 			/*====== Check Permissions Sup-Setting (1) ======*/
+			// 			'visible'=>self::PermissionsMenu(array(
+			// 				'Setting.*',
+			// 				'Setting.Create'
+			// 			)),
+			// 			'label'=>'ตั้งค่าระบบพื้นฐาน',
+			// 			'url'=>array('//Setting/create')
+			// 		),
+			// 	)
+			// ),
 
 
-			array(
-				/*====== Check Permissions About (2) ======*/
-				'visible'=>self::PermissionsMenu(array(
-					'About.*',
-					'About.index'
-				)),
-				'label'=>'<i></i><span>เกี่ยวกับเรา</span>',
-				'url'=>'#About',
-				'linkOptions' => array('data-toggle' => 'collapse'),
-				'itemOptions' => array('class' => 'hasSubmenu glyphicons posterous_spaces'),
-				'submenuOptions' => array('class' => self::SetSubMenu( array('About') ), 'id' => 'About'),
-				'active' => self::SetSubMenu( array('About') ,false),
-				'items'=>array(
+			// array(
+			// 	/*====== Check Permissions About (2) ======*/
+			// 	'visible'=>self::PermissionsMenu(array(
+			// 		'About.*',
+			// 		'About.index'
+			// 	)),
+			// 	'label'=>'<i></i><span>เกี่ยวกับเรา</span>',
+			// 	'url'=>'#About',
+			// 	'linkOptions' => array('data-toggle' => 'collapse'),
+			// 	'itemOptions' => array('class' => 'hasSubmenu glyphicons posterous_spaces'),
+			// 	'submenuOptions' => array('class' => self::SetSubMenu( array('About') ), 'id' => 'About'),
+			// 	'active' => self::SetSubMenu( array('About') ,false),
+			// 	'items'=>array(
 
 					// array(
 					// 	/*====== Check Permissions Sup-About (2) ======*/
@@ -258,15 +258,15 @@ Class MenuLeft extends Controller
 					// 	'label'=>'จัดการเกี่ยวกับเรา',
 					// 	'url'=>array('//About/index/')
 					// ),
-					array(
-						/*====== Check Permissions Sup-About (2) ======*/
-						'visible'=>self::PermissionsMenu(array(
-							'About.*',
-							'About.index'
-						)),
-						'label'=>'จัดการเกี่ยวกับเรา',
-						'url'=>array('//About/index/')
-					),
+					// array(
+					// 	/*====== Check Permissions Sup-About (2) ======*/
+					// 	'visible'=>self::PermissionsMenu(array(
+					// 		'About.*',
+					// 		'About.index'
+					// 	)),
+					// 	'label'=>'จัดการเกี่ยวกับเรา',
+					// 	'url'=>array('//About/index/')
+					// ),
 					// array(
 					// 	/*====== Check Permissions Sup-About (2) ======*/
 					// 	'visible'=>self::PermissionsMenu(array(
@@ -276,8 +276,8 @@ Class MenuLeft extends Controller
 					// 	'label'=>'เพิ่มเกี่ยวกับบริษัท',
 					// 	'url'=>array('//About/Create/')
 					// ),
-				)
-			),
+			// 	)
+			// ),
 			//====== END Menu About ======//
 
 
@@ -447,35 +447,35 @@ Class MenuLeft extends Controller
 			),
 			//====== END Menu News ======//
 
-			array(
-				'visible'=>self::PermissionsMenu(array(
-					'CourseType.*',
-				)),
-				'label'=>'<i></i><span> ประเภทหลักสูตร</span>',
-				'url'=>'#CourseType',
-				'linkOptions' => array('data-toggle' => 'collapse'),
-				'itemOptions' => array('class' => 'hasSubmenu glyphicons book'),
-				'submenuOptions' => array('class' => self::SetSubMenu( array('CourseType') ), 'id' => 'CourseType'),
-				'active' => self::SetSubMenu( array('CourseType') ,false),
-				'items'=>array(
-					// array(
-					// 	'visible'=>self::PermissionsMenu(array(
-					// 		'CourseType.*',
-					// 		'CourseType.Create'
-					// 	)),
-					// 	'label'=>'เพิ่ม '."(ภาษา ".$mainLang." )",
-					// 	'url'=>array('//CourseType/create')
-					// ),
-					array(
-						'visible'=>self::PermissionsMenu(array(
-							'CourseType.*',
-							'CourseType.Index'
-						)),
-						'label'=>'จัดการ',
-						'url'=>array('//CourseType/index')
-					),
-				)
-			),
+			// array(
+			// 	'visible'=>self::PermissionsMenu(array(
+			// 		'CourseType.*',
+			// 	)),
+			// 	'label'=>'<i></i><span> ประเภทหลักสูตร</span>',
+			// 	'url'=>'#CourseType',
+			// 	'linkOptions' => array('data-toggle' => 'collapse'),
+			// 	'itemOptions' => array('class' => 'hasSubmenu glyphicons book'),
+			// 	'submenuOptions' => array('class' => self::SetSubMenu( array('CourseType') ), 'id' => 'CourseType'),
+			// 	'active' => self::SetSubMenu( array('CourseType') ,false),
+			// 	'items'=>array(
+			// 		// array(
+			// 		// 	'visible'=>self::PermissionsMenu(array(
+			// 		// 		'CourseType.*',
+			// 		// 		'CourseType.Create'
+			// 		// 	)),
+			// 		// 	'label'=>'เพิ่ม '."(ภาษา ".$mainLang." )",
+			// 		// 	'url'=>array('//CourseType/create')
+			// 		// ),
+			// 		array(
+			// 			'visible'=>self::PermissionsMenu(array(
+			// 				'CourseType.*',
+			// 				'CourseType.Index'
+			// 			)),
+			// 			'label'=>'จัดการ',
+			// 			'url'=>array('//CourseType/index')
+			// 		),
+			// 	)
+			// ),
 
 			array(
 				/*====== Check Permissions Category (2) ======*/
@@ -748,7 +748,7 @@ Class MenuLeft extends Controller
                    'VirtualClassroom.*',
                    'VirtualClassroom.Index',
                 )),
-                'label'=>'<i></i><span>mess-room</span>',
+                'label'=>'<i></i><span>ห้องเรียนออนไลน์</span>',
                                 'url'=>'#VirtualClassroom',
                 'linkOptions' => array('data-toggle' => 'collapse'),
                 'itemOptions' => array('class' => 'hasSubmenu glyphicons eye_open'),
@@ -785,19 +785,19 @@ Class MenuLeft extends Controller
 
                )
             ),
-	         array(
-               /*====== Check Permissions AuthitemAccess (1) ======*/
-                'visible'=>self::PermissionsMenu(array(
-                   'LogStartcourse.*',
-                   'LogStartcourse.Index',
-                )),
-                'label'=>'<i></i><span>ระบบส่งเมลล์แจ้งเตือนผู้เรียน</span>',
-                                'url'=>'#LogStartcourse',
-                'linkOptions' => array('data-toggle' => 'collapse'),
-                'itemOptions' => array('class' => 'hasSubmenu glyphicons envelope'),
-                'submenuOptions' => array('class' => self::SetSubMenu( array('LogStartcourse') ), 'id' => 'LogStartcourse'),
-                'active' => self::SetSubMenu( array('LogStartcourse') ,false),
-                'items'=>array(
+	         // array(
+          //      /*====== Check Permissions AuthitemAccess (1) ======*/
+          //       'visible'=>self::PermissionsMenu(array(
+          //          'LogStartcourse.*',
+          //          'LogStartcourse.Index',
+          //       )),
+          //       'label'=>'<i></i><span>ระบบส่งเมลล์แจ้งเตือนผู้เรียน</span>',
+          //                       'url'=>'#LogStartcourse',
+          //       'linkOptions' => array('data-toggle' => 'collapse'),
+          //       'itemOptions' => array('class' => 'hasSubmenu glyphicons envelope'),
+          //       'submenuOptions' => array('class' => self::SetSubMenu( array('LogStartcourse') ), 'id' => 'LogStartcourse'),
+          //       'active' => self::SetSubMenu( array('LogStartcourse') ,false),
+          //       'items'=>array(
                  //    array(
 	                // 	/*====== Check Permissions Sup-User (1) ======*/
 	                // 	'visible'=>self::PermissionsMenu(array(
@@ -807,15 +807,15 @@ Class MenuLeft extends Controller
 	                // 	'label'=>'สมัครเข้าเรียนแล้ว',
 	                // 	'url'=>array('//LogStartcourse/index')
 	                // ),
-	                 array(
-	                	/*====== Check Permissions Sup-User (1) ======*/
-	                	'visible'=>self::PermissionsMenu(array(
-	                		'LogStartcourse.*',
-	                		'LogStartcourse.SendOrgChart'
-	                	)),
-	                	'label'=>'จัดการส่งเมลล์แจ้งเตือนผู้เรียน',
-	                	'url'=>array('//LogStartcourse/SendOrgChart')
-	                ),
+	                //  array(
+	                // 	/*====== Check Permissions Sup-User (1) ======*/
+	                // 	'visible'=>self::PermissionsMenu(array(
+	                // 		'LogStartcourse.*',
+	                // 		'LogStartcourse.SendOrgChart'
+	                // 	)),
+	                // 	'label'=>'จัดการส่งเมลล์แจ้งเตือนผู้เรียน',
+	                // 	'url'=>array('//LogStartcourse/SendOrgChart')
+	                // ),
 	                //    array(
 	                // 	/*====== Check Permissions Sup-User (1) ======*/
 	                // 	'visible'=>self::PermissionsMenu(array(
@@ -826,8 +826,8 @@ Class MenuLeft extends Controller
 	                // 	'url'=>array('//VirtualClassroom/logmeeting')
 	                // ),
 
-               )
-            ),
+            //    )
+            // ),
    //          array(
 				
 			// 	'visible'=>self::PermissionsMenu(array(
@@ -1752,73 +1752,73 @@ Class MenuLeft extends Controller
 	        	)
 	        ),
 	         
-            array(
-	        	/*====== Check Permissions Department (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Department.*',
-	        		'Department.admin',
-	        		'Department.Create'
-	        	)),
-	        	'label'=>'<i></i><span>แผนก</span>',
-	        	'url'=>'#Department',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Department') ), 'id' => 'Department'),
-	        	'active' => self::SetSubMenu( array('Department') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Position (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Department.*',
-	        				'Department.Create'
-	        			)),
-	        			'label'=>'เพิ่มแผนก',
-	        			'url'=>array('//Department/create')
-	        		),
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Department.*',
-	        				'Department.admin'
-	        			)),
-	        			'label'=>'จัดการแผนก',
-	        			'url'=>array('//Department/admin')
-	        		),
-	        	)
-	        ),
+         //    array(
+	        // 	/*====== Check Permissions Department (2) ======*/
+	        // 	'visible'=>self::PermissionsMenu(array(
+	        // 		'Department.*',
+	        // 		'Department.admin',
+	        // 		'Department.Create'
+	        // 	)),
+	        // 	'label'=>'<i></i><span>แผนก</span>',
+	        // 	'url'=>'#Department',
+	        // 	'linkOptions' => array('data-toggle' => 'collapse'),
+	        // 	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
+	        // 	'submenuOptions' => array('class' => self::SetSubMenu( array('Department') ), 'id' => 'Department'),
+	        // 	'active' => self::SetSubMenu( array('Department') ,false),
+	        // 	'items'=>array(
+	        // 		array(
+	        // 			/*====== Check Permissions Position (1) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'Department.*',
+	        // 				'Department.Create'
+	        // 			)),
+	        // 			'label'=>'เพิ่มแผนก',
+	        // 			'url'=>array('//Department/create')
+	        // 		),
+	        // 		array(
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'Department.*',
+	        // 				'Department.admin'
+	        // 			)),
+	        // 			'label'=>'จัดการแผนก',
+	        // 			'url'=>array('//Department/admin')
+	        // 		),
+	        // 	)
+	        // ),
 
-	        array(
-	        	/*====== Check Permissions Position (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Position.*',
-	        		'Position.admin',
-	        		'Position.Create'
-	        	)),
-	        	'label'=>'<i></i><span>ตำแหน่ง</span>',
-	        	'url'=>'#Position',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Position') ), 'id' => 'Position'),
-	        	'active' => self::SetSubMenu( array('Position') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Position (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Position.*',
-	        				'Position.Create'
-	        			)),
-	        			'label'=>'เพิ่มตำแหน่ง',
-	        			'url'=>array('//Position/create')
-	        		),
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Position.*',
-	        				'Position.index'
-	        			)),
-	        			'label'=>'จัดการตำแหน่ง',
-	        			'url'=>array('//Position/index')
-	        		),
-	        	)
-	        ),
+	        // array(
+	        // 	/*====== Check Permissions Position (2) ======*/
+	        // 	'visible'=>self::PermissionsMenu(array(
+	        // 		'Position.*',
+	        // 		'Position.admin',
+	        // 		'Position.Create'
+	        // 	)),
+	        // 	'label'=>'<i></i><span>ตำแหน่ง</span>',
+	        // 	'url'=>'#Position',
+	        // 	'linkOptions' => array('data-toggle' => 'collapse'),
+	        // 	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
+	        // 	'submenuOptions' => array('class' => self::SetSubMenu( array('Position') ), 'id' => 'Position'),
+	        // 	'active' => self::SetSubMenu( array('Position') ,false),
+	        // 	'items'=>array(
+	        // 		array(
+	        // 			/*====== Check Permissions Position (1) ======*/
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'Position.*',
+	        // 				'Position.Create'
+	        // 			)),
+	        // 			'label'=>'เพิ่มตำแหน่ง',
+	        // 			'url'=>array('//Position/create')
+	        // 		),
+	        // 		array(
+	        // 			'visible'=>self::PermissionsMenu(array(
+	        // 				'Position.*',
+	        // 				'Position.index'
+	        // 			)),
+	        // 			'label'=>'จัดการตำแหน่ง',
+	        // 			'url'=>array('//Position/index')
+	        // 		),
+	        // 	)
+	        // ),
 
 	        // array(
 	        // 	/*====== Check Permissions Position (2) ======*/
