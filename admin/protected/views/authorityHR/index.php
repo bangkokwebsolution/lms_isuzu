@@ -1,5 +1,5 @@
 <?php
-$titleName = 'จัดการ HR คนที่ 1';
+$titleName = 'จัดการผู้อนุมัติ คนที่ 1';
 $this->breadcrumbs=array($titleName);
 ?>
 
@@ -7,7 +7,7 @@ $this->breadcrumbs=array($titleName);
   <div class="row">
     <div class="col-md-12">
 
-       <h3>รายชื่อ HR คนที่ 1</h3>
+       <h3>จัดการผู้อนุมัติ คนที่ 1</h3>
        <table class="table table-bordered" id="user_board">
          <thead>
           <tr>
@@ -31,10 +31,10 @@ $this->breadcrumbs=array($titleName);
                 <td style="text-align: center;"><?php echo $no; $no++; ?></td>
                 <td><?= $value->profile->staff_id ?></td>
                 <td><?= $value->profile->firstname_en." ".$value->profile->lastname_en ?></td>
-                <td><?= $value->division->div_title ?></td>
-                <td><?= $value->dep->dep_title ?></td>
-                <td><?= $value->posi->position_title ?></td>
-                <td><?= $value->profile->worklo->work_location ?></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td>
                   <button type="button" class="btn btn-danger" onclick="if(confirm('แน่ใจว่าต้องการลบ <?= $value->profile->firstname." ".$value->profile->lastname ?> ?')){Deleteuser(<?= $value->id ?>);}else{ }" >
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
@@ -79,10 +79,10 @@ $this->breadcrumbs=array($titleName);
                 <td><input type="checkbox" name="user_list[]" value="<?= $value->id ?>"></td>
                 <td><?= $value->profile->staff_id ?></td>
                 <td><?= $value->profile->firstname_en." ".$value->profile->lastname_en ?></td>
-                <td><?= $value->division->div_title ?></td>
-                <td><?= $value->dep->dep_title ?></td>
-                <td><?= $value->posi->position_title ?></td>
-                <td><?= $value->profile->worklo->work_location ?></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
               </tr>
               <?php
             }

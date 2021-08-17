@@ -742,6 +742,57 @@ Class MenuLeft extends Controller
 	        		),
 	        	)
 	        ),
+
+
+	         array(
+                'visible'=>self::PermissionsMenu(array(
+                    'Orgmanage.*',
+                )),
+                'label'=>'<i></i> <span>Manage Organization</span>',
+                'url'=>'#Orgmanage',
+                'linkOptions' => array('data-toggle' => 'collapse'),
+                'itemOptions' => array('class' => 'hasSubmenu glyphicons show_thumbnails'),
+                'submenuOptions' => array('class' => self::SetSubMenu( array('Orgmanage') ), 'id' => 'Orgmanage'),
+                'active' => self::SetSubMenu( array('Orgmanage') ,false),
+                'items'=>array(                    
+                    array(
+                        'visible'=>self::PermissionsMenu(array(
+                            'Orgmanage.*',
+                            'Orgmanage.Division'
+                        )),
+                        'label'=>'จัดการ Division',
+                        'url'=>array('//Orgmanage/Division')
+                    ),
+                    array(
+                        'visible'=>self::PermissionsMenu(array(
+                            'Orgmanage.*',
+                            'Orgmanage.Department'
+                        )),
+                        'label'=>'จัดการ Department',
+                        'url'=>array('//doctor/Department')
+                    ),
+                    array(
+                        'visible'=>self::PermissionsMenu(array(
+                            'Orgmanage.*',
+                            'Orgmanage.Group'
+                        )),
+                        'label'=>'จัดการ Group',
+                        'url'=>array('//doctor/Group')
+                    ),
+                    array(
+                        'visible'=>self::PermissionsMenu(array(
+                            'Orgmanage.*',
+                            'Orgmanage.Section'
+                        )),
+                        'label'=>'จัดการ Section',
+                        'url'=>array('//doctor/Section')
+                    ),
+                    
+                    
+                )
+            ),
+
+
 	         array(
                /*====== Check Permissions AuthitemAccess (1) ======*/
                 'visible'=>self::PermissionsMenu(array(
@@ -1259,6 +1310,37 @@ Class MenuLeft extends Controller
 	        	)
 	        ),
 
+	        array(
+				'visible'=>self::PermissionsMenu(array(
+					'authorityHR.*',
+				)),
+				'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบจัดการสิทธิ์ผู้อนุมัติ</span>',
+				'url'=>'#authorityHR',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons magic'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('authorityHR') ), 'id' => 'authorityHR'),
+				'active' => self::SetSubMenu( array('authorityHR') ,false),
+				'items'=>array(
+
+					array(
+						'visible'=>self::PermissionsMenu(array(
+							'authorityHR.*',
+							'authorityHR.Index'
+						)),
+						'label'=>'จัดการสิทธิ์ผู้อนุมัติคนที่ 1',
+						'url'=>array('//authorityHR/index')
+					),
+					array(
+						'visible'=>self::PermissionsMenu(array(
+							'authorityHR.*',
+							'authorityHR.hr2'
+						)),
+						'label'=>'จัดการสิทธิ์ผู้อนุมัติคนที่ 2 (HR)',
+						'url'=>array('//authorityHR/hr2')
+					),
+				)
+			),
+
 	        
 	         array(
 	        	/*====== Check Permissions User (2) ======*/
@@ -1353,15 +1435,15 @@ Class MenuLeft extends Controller
 	        		// 	'label'=>'ระบบตรวจสอบการเข้าใช้งาน',
 	        		// 	'url'=>array('//user/admin/access')
 	        		// ),
-	        		array(
+	        		// array(
 	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'admin.*',
-	        				'admin.Status',
-	        			)),
-	        			'label'=>'รายงานสถานะของสมาชิก',
-	        			'url'=>array('//user/admin/Status')
-	        		),
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'admin.*',
+	        		// 		'admin.Status',
+	        		// 	)),
+	        		// 	'label'=>'รายงานสถานะของสมาชิก',
+	        		// 	'url'=>array('//user/admin/Status')
+	        		// ),
 	        	)
 	        ),
 
