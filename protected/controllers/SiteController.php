@@ -662,7 +662,7 @@ class SiteController extends Controller
 		$userPosition = $userModel->position_id;
 		$userBranch = $userModel->branch_id;
 
-        if($userModel->profile->type_user != 5){
+        if($userModel->profile->kind != 5){
 
 		$criteria = new CDbCriteria;
 		$criteria->compare('department_id',$userDepartment);
@@ -957,7 +957,7 @@ class SiteController extends Controller
 			$userPosition = $userModel->position_id;
 			$userBranch = $userModel->branch_id;
 
-            if($userModel->profile->type_user != 5){
+            if($userModel->profile->kind != 5){
 
              $criteria = new CDbCriteria;
 			// $criteria->with = array('orgchart');
