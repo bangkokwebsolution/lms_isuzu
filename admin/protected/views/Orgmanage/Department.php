@@ -1,5 +1,5 @@
 <?php
-$titleName = 'Division';
+$titleName = 'Department';
 $formNameModel = 'Orgchart';
 
 $this->breadcrumbs=array($titleName);

@@ -769,7 +769,7 @@ Class MenuLeft extends Controller
                             'Orgmanage.Department'
                         )),
                         'label'=>'จัดการ Department',
-                        'url'=>array('//doctor/Department')
+                        'url'=>array('//Orgmanage/Department')
                     ),
                     array(
                         'visible'=>self::PermissionsMenu(array(
@@ -777,7 +777,7 @@ Class MenuLeft extends Controller
                             'Orgmanage.Group'
                         )),
                         'label'=>'จัดการ Group',
-                        'url'=>array('//doctor/Group')
+                        'url'=>array('//Orgmanage/Group')
                     ),
                     array(
                         'visible'=>self::PermissionsMenu(array(
@@ -785,7 +785,7 @@ Class MenuLeft extends Controller
                             'Orgmanage.Section'
                         )),
                         'label'=>'จัดการ Section',
-                        'url'=>array('//doctor/Section')
+                        'url'=>array('//Orgmanage/Section')
                     ),
                     
                     

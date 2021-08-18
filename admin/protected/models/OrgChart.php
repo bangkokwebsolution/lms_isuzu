@@ -27,6 +27,8 @@ class OrgChart extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+
+			array('title', 'required'),
 			array('parent_id, level, department_id, position_id, branch_id', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
 			array('active', 'length', 'max'=>1),

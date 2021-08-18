@@ -42,9 +42,10 @@ class OrgmanageController extends Controller
 		$model = new Orgchart('search');
 		$model->unsetAttributes();  // clear any default values
 		$model->level = "2";
+		$model->active = "y";
 
-		if(isset($_GET['Orgchart'])){
-			$model->attributes=$_GET['Orgchart'];
+		if(isset($_GET['OrgChart'])){
+			$model->attributes=$_GET['OrgChart'];
 		}
 
 		$this->render('Division',array(
@@ -55,16 +56,16 @@ class OrgmanageController extends Controller
 	public function actionDivision_create()
 	{
 		$model = new Orgchart;
-		$model->scenario = 'validateCheckk';
+		// $model->scenario = 'validateCheckk';
 
-		if(isset($_POST['Orgchart']))
+		if(isset($_POST['OrgChart']))
 		{
-			// var_dump($_POST['Orgchart']);exit();
-			$model->attributes=$_POST['Orgchart'];
+			// var_dump($_POST['OrgChart']);exit();
+			$model->attributes=$_POST['OrgChart'];
 			$model->level = 2;
 			$model->parent_id = 1;
 
-			if($model->validate() && $model->save()){				
+			if($model->save()){				
 				// $model->sortOrder = $model->id;
 				$model->save(false);
 
@@ -82,38 +83,45 @@ class OrgmanageController extends Controller
 
 	}
 
-	public function actionOrgupdate($id)
+	public function actionDivision_update($id)
 	{
 		$model = Orgchart::model()->findByPk($id);
 
-		if(isset($_POST['Orgchart']))
+		if(isset($_POST['OrgChart']))
 		{
-			$model->attributes=$_POST['Orgchart'];
-			$model->scenario = 'validateCheckk';
+			
+			$model->attributes=$_POST['OrgChart'];
+
+			// var_dump($_POST['OrgChart']);exit();
+
+			// $model->scenario = 'validateCheckk';
 			// var_dump($model->validate()); 
 			// var_dump($model->getErrors()); 
 			// exit();
-			if($model->validate() && $model->save()){
+			// if($model->validate() && $model->save()){
+			
+			if($model->save(false)){
 
 				if(Yii::app()->user->id){
 					Helpers::lib()->getControllerActionId();
 				}
 
-				$this->redirect(array('ManageOrg'));
+				$this->redirect(array('Division'));
 			}
 		}
 
-		$this->render('Orgupdate',array(
+		$this->render('Division_update',array(
 			'model'=>$model,
 		));
 
 	}
 
-	public function actionOrgdelete($id)
+	public function actionDivision_delete($id)
 	{	
+		
 		$model = Orgchart::model()->findByPk($id);
 		$model->active = 'n';
-		$model->org_number = null;
+		// $model->org_number = null;
 		$model->save(false);
 
 		if(Yii::app()->user->id){
@@ -121,9 +129,84 @@ class OrgmanageController extends Controller
 		}
 
 		if(!isset($_GET['ajax'])){
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('ManageOrg'));
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('Division'));
 		}
 		// $this->redirect(array('ManageOrg'));
+	}
+
+
+	public function actionDepartment()
+	{
+		$model = new Orgchart('search');
+		$model->unsetAttributes();  // clear any default values
+		$model->level = "3";
+
+		if(isset($_GET['OrgChart'])){
+			$model->attributes=$_GET['OrgChart'];
+		}
+
+		$this->render('Department',array(
+			'model'=>$model,
+		));
+	}
+
+
+	public function actionDepartment_create()
+	{
+		$model = new Orgchart;
+
+		if(isset($_POST['OrgChart']))
+		{
+			
+			$model->attributes=$_POST['OrgChart'];
+			$model->level = 3;
+			// $model->parent_id = 1;
+
+			if($model->save()){				
+				
+				$model->save(false);
+
+				if(Yii::app()->user->id){
+					Helpers::lib()->getControllerActionId();
+				}
+				$this->redirect(array('Department'));
+			}
+		}
+
+		$this->render('Department_create',array(
+			'model'=>$model,
+		));
+
+	}
+
+
+
+	public function actionDepartment_create()
+	{
+		$model = new Orgchart;
+		// $model->scenario = 'validateCheckk';
+
+		if(isset($_POST['OrgChart']))
+		{
+			// var_dump($_POST['OrgChart']);exit();
+			$model->attributes=$_POST['OrgChart'];
+			$model->level = 3;
+			                                                                       
+
+			if($model->save()){				
+				$model->save(false);
+				if(Yii::app()->user->id){
+					Helpers::lib()->getControllerActionId();
+				}
+
+				$this->redirect(array('Department'));
+			}
+		}
+
+		$this->render('Department_create',array(
+			'model'=>$model,
+		));
+
 	}
 
 
