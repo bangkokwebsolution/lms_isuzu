@@ -1,3 +1,11 @@
+<?php $keyrecaptcha = '6LdxRgocAAAAADrcEFCe2HcHeETOZdREexT52B6R'; ?>
+<script src='https://www.google.com/recaptcha/api.js?hl=th'></script>
+<style type="text/css">
+.g-recaptcha {
+    transform:scale(0.66);
+    transform-origin:0 0;
+}
+</style>
 <header id="header" class="main-header">
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="container">
@@ -432,6 +440,7 @@ if (!empty($msg)) { ?>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     <h4 class="modal-title"><i class="fa fa-lock" aria-hidden="true"></i> <?= $label->label_header_login ?></h4>
                 </div>
+
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 col-xs-12">
@@ -463,23 +472,36 @@ if (!empty($msg)) { ?>
                                 <label for=""><?= $label->label_header_password ?></label>
                                 <input type="password" class="form-control" placeholder='<?= $label->label_header_password ?>' name="UserLogin[password]" required>
                             </div>
-                            <div class="form-group">
-                                <div class="checkbox checkbox-info checkbox-circle">
-                                    <input id="checkbox1" type="checkbox" name="UserLogin[checkbox]" value="on">
+                            <div class="form-group" style="display: flex">
+                                <!-- <div class="checkbox checkbox-info checkbox-circle"> -->
+                                    <!-- <input id="checkbox1" type="checkbox" name="UserLogin[checkbox]" value="on">
                                     <label for="checkbox1">
                                         <?= $label->label_header_remember ?>
                                     </label>
                                     <?php $chk_status_reg = $SettingAll = Helpers::lib()->SetUpSetting();
                                     $chk_status_reg = $SettingAll['ACTIVE_REGIS'];
                                     if ($chk_status_reg) {
-                                    ?>
-                                    <span class="pull-right">
+                                    ?> -->
+                                <script> // กำหนดปุ่มเป็น disable ไว้ ต้องทำ reCHAPTCHA ก่อนจึงกดได้
+                                  function makeaction(){
+                                        document.getElementById('submit').disabled = false;  
+                                  }
+                                  </script>
+                                    <div class="cap" style="width: 200px">
+                                        <div class="g-recaptcha" data-callback="makeaction" data-sitekey="<?php echo $keyrecaptcha; ?>" ></div>
+                                        </div>
+                                    <div class="cap" style="width: 100%">
+
+                                    <span class="pull-right">   
                                         <a class="btn-forgot" href="<?php echo $this->createUrl('Forgot_password/index') ?>"><?= $label->label_header_forgotPass ?></a>
                                         <!-- <a href="< ?php echo $this->createUrl('/registration/ShowForm'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a> -->
                                     </span>
-                                <?php } ?>
-
                                 </div>
+                                    
+
+                                <!-- <?php } ?> -->
+
+                                <!-- </div> -->
 
                             </div>
 
@@ -489,7 +511,7 @@ if (!empty($msg)) { ?>
                 <div class="modal-footer">
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 col-xs-12">
-                            <button type="submit" class="btn btn-submit" name="submit"><?= $label->label_header_yes ?></button>
+                            <button type="submit" class="btn btn-submit" disabled id="submit" name="submit"><?= $label->label_header_yes ?></button>
                         </div>
                     </div>
                 </div>
@@ -497,6 +519,7 @@ if (!empty($msg)) { ?>
         </div>
     </div>
 </div>
+
 
 
 
