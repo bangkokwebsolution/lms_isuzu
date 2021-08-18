@@ -63,13 +63,13 @@ class LoginController extends Controller
             }else if (User::model()->findbyPk(Yii::app()->user->id)->repass_status=='0'){
               $this->redirect(array('registration/Repassword'));
             }
-            if (Profile::model()->findbyPk(Yii::app()->user->id)->type_employee == 1 ) {
+            if (Profile::model()->findbyPk(Yii::app()->user->id)->kind == 1 ) {
               if (strpos($_POST['UserLogin']['username'],"@")) {
               $this->redirect('logout');
 
                  // $this->actionLogout();
               }
-            }else if (Profile::model()->findbyPk(Yii::app()->user->id)->type_employee == 5) {
+            }else if (Profile::model()->findbyPk(Yii::app()->user->id)->kind == 5) {
               if (!strpos($_POST['UserLogin']['username'],"@")) {
               $this->redirect('logout');
                  // $this->actionLogout();
