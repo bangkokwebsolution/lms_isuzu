@@ -1,6 +1,6 @@
 <?php
-$titleName = 'Division';
-$formNameModel = 'Division';
+$titleName = 'Section';
+$formNameModel = 'Section';
 
 $this->breadcrumbs=array($titleName);
 Yii::app()->clientScript->registerScript('search', "
@@ -23,7 +23,7 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	    var val = eval("$."+varName);
 	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
 	}
-	$.appendFilter("Division[news_per_page]", "news_per_page");
+	$.appendFilter("Section[news_per_page]", "news_per_page");
 EOD
 , CClientScript::POS_READY);
 ?>
@@ -36,9 +36,9 @@ EOD
 		</div>
 		<div class="widget-body">
 			<div class="separator bottom form-inline small">
-				<?php if (Controller::PButton(array($formNameModel.".Division_create"))) { ?>
+				<?php if (Controller::PButton(array($formNameModel.".Section_create"))) { ?>
 					<div class="btn-group" role="group" aria-label="...">
-						<a href="<?= Yii::app()->controller->createUrl('Division_create'); ?>/" type="button" class="btn btn-danger"><i class="fa fa-plus" aria-hidden="true"></i> เพิ่ม <?= $titleName ?></a>
+						<a href="<?= Yii::app()->controller->createUrl('Section_create'); ?>/" type="button" class="btn btn-danger"><i class="fa fa-plus" aria-hidden="true"></i> เพิ่ม <?= $titleName ?></a>
 					</div>
 				<?php } ?>
 
@@ -59,20 +59,8 @@ EOD
 						'style'=> "margin-top: -1px;",
 					),
 					'afterAjaxUpdate'=>'function(id, data){
-						$.appendFilter("Division[news_per_page]");
-						InitialSortTable();	
-				        jQuery("#course_date").datepicker({
-						   	"dateFormat": "dd/mm/yy",
-						   	"showAnim" : "slideDown",
-					        "showOtherMonths": true,
-					        "selectOtherMonths": true,
-				            "yearRange" : "-5+10", 
-					        "changeMonth": true,
-					        "changeYear": true,
-				            "dayNamesMin" : ["อา.","จ.","อ.","พ.","พฤ.","ศ.","ส."],
-				            "monthNamesShort" : ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.",
-				                "ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."],
-					   })
+						$.appendFilter("Section[news_per_page]");
+						InitialSortTable();
 					}',
 					'columns'=>array(
 						// array(
@@ -112,13 +100,13 @@ EOD
 								// ';
 
 								$text .= '
-								<a class="btn-action glyphicons pencil btn-success" title="แก้ไข" href="'.Yii::app()->controller->createUrl('Orgmanage/Division_update/'.$data->id).'"><i></i></a>
+								<a class="btn-action glyphicons pencil btn-success" title="แก้ไข" href="'.Yii::app()->controller->createUrl('Orgmanage/section_update/'.$data->id).'"><i></i></a>
 								';
 
 								// if($data->id >= 4){
 								if ($data->id > 10 ){
 									$text .= '
-									<a class="btn-action glyphicons pencil btn-danger remove_2" title="ลบ" href="'.Yii::app()->controller->createUrl('Orgmanage/Division_delete/'.$data->id).'" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i></i></a>
+									<a class="btn-action glyphicons pencil btn-danger remove_2" title="ลบ" href="'.Yii::app()->controller->createUrl('Orgmanage/section_delete/'.$data->id).'" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i></i></a>
 									';
 								}
 

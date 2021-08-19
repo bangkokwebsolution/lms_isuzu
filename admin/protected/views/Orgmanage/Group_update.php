@@ -1,11 +1,11 @@
 
 <?php
 $this->breadcrumbs=array(
-	'Department'=>array('Department'),
+	'Group'=>array('Group'),
 	'แก้ไข',
 );
 ?>
-<?php echo $this->renderPartial('_formDepartment', array(
+<?php echo $this->renderPartial('_formGroup', array(
 	'model'=>$model,
 	'formtext'=>'แก้ไข'
 )); ?>

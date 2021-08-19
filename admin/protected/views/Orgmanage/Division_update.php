@@ -1,7 +1,7 @@
 
 <?php
 $this->breadcrumbs=array(
-	'OrgChart'=>array('manageOrg'),
+	'Division'=>array('Division'),
 	'แก้ไข',
 );
 ?>

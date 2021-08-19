@@ -44,8 +44,8 @@ class OrgmanageController extends Controller
 		$model->level = "2";
 		$model->active = "y";
 
-		if(isset($_GET['OrgChart'])){
-			$model->attributes=$_GET['OrgChart'];
+		if(isset($_GET['Division'])){
+			$model->attributes=$_GET['Division'];
 		}
 
 		$this->render('Division',array(
@@ -140,9 +140,10 @@ class OrgmanageController extends Controller
 		$model = new Orgchart('search');
 		$model->unsetAttributes();  // clear any default values
 		$model->level = "3";
+		$model->active = "y";
 
-		if(isset($_GET['OrgChart'])){
-			$model->attributes=$_GET['OrgChart'];
+		if(isset($_GET['Department'])){
+			$model->attributes=$_GET['Department'];
 		}
 
 		$this->render('Department',array(
@@ -157,8 +158,9 @@ class OrgmanageController extends Controller
 
 		if(isset($_POST['OrgChart']))
 		{
-			
-			$model->attributes=$_POST['OrgChart'];
+			// var_dump($_POST);exit();
+			$model->parent_id=$_POST['OrgChart']["parent_id"];
+			$model->title=$_POST['OrgChart']["title"];
 			$model->level = 3;
 			// $model->parent_id = 1;
 
@@ -179,22 +181,17 @@ class OrgmanageController extends Controller
 
 	}
 
-
-
-	public function actionDepartment_create()
+	public function actionDepartment_update($id)
 	{
-		$model = new Orgchart;
-		// $model->scenario = 'validateCheckk';
+		$model = Orgchart::model()->findByPk($id);
 
 		if(isset($_POST['OrgChart']))
 		{
-			// var_dump($_POST['OrgChart']);exit();
+			
 			$model->attributes=$_POST['OrgChart'];
-			$model->level = 3;
-			                                                                       
+			
+			if($model->save(false)){
 
-			if($model->save()){				
-				$model->save(false);
 				if(Yii::app()->user->id){
 					Helpers::lib()->getControllerActionId();
 				}
@@ -203,12 +200,210 @@ class OrgmanageController extends Controller
 			}
 		}
 
-		$this->render('Department_create',array(
+		$this->render('Department_update',array(
 			'model'=>$model,
 		));
 
 	}
 
+	public function actionDepartment_delete($id)
+	{	
+		
+		$model = Orgchart::model()->findByPk($id);
+		$model->active = 'n';
+		// $model->org_number = null;
+		$model->save(false);
+
+		if(Yii::app()->user->id){
+			Helpers::lib()->getControllerActionId();
+		}
+
+		if(!isset($_GET['ajax'])){
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('Department'));
+		}
+		// $this->redirect(array('ManageOrg'));
+	}
+
+	
+	public function actionGroup()
+	{
+		$model = new Orgchart('search');
+		$model->unsetAttributes();  // clear any default values
+		$model->level = "4";
+		$model->active = "y";
+
+		if(isset($_GET['Group'])){
+			$model->attributes=$_GET['Group'];
+		}
+
+		$this->render('Group',array(
+			'model'=>$model,
+		));
+	}
+
+	public function actionGroup_create()
+	{
+		$model = new Orgchart;
+
+		if(isset($_POST['OrgChart']))
+		{
+			// var_dump($_POST);exit();
+			$model->parent_id=$_POST['OrgChart']["parent_id"];
+			$model->title=$_POST['OrgChart']["title"];
+			$model->level = 4;
+			// $model->parent_id = 1;
+
+			if($model->save()){				
+				
+				$model->save(false);
+
+				if(Yii::app()->user->id){
+					Helpers::lib()->getControllerActionId();
+				}
+				$this->redirect(array('Group'));
+			}
+		}
+
+		$this->render('Group_create',array(
+			'model'=>$model,
+		));
+
+	}
+
+	public function actionGroup_update($id)
+	{
+		$model = Orgchart::model()->findByPk($id);
+
+		if(isset($_POST['OrgChart']))
+		{
+			
+			$model->attributes=$_POST['OrgChart'];
+			
+			if($model->save(false)){
+
+				if(Yii::app()->user->id){
+					Helpers::lib()->getControllerActionId();
+				}
+
+				$this->redirect(array('Group'));
+			}
+		}
+
+		$this->render('Group_update',array(
+			'model'=>$model,
+		));
+
+	}
+
+	public function actionGroup_delete($id)
+	{	
+		
+		$model = Orgchart::model()->findByPk($id);
+		$model->active = 'n';
+		// $model->org_number = null;
+		$model->save(false);
+
+		if(Yii::app()->user->id){
+			Helpers::lib()->getControllerActionId();
+		}
+
+		if(!isset($_GET['ajax'])){
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('Group'));
+		}
+		// $this->redirect(array('ManageOrg'));
+	}
+
+
+
+
+	public function actionSection()
+	{
+		$model = new Orgchart('search');
+		$model->unsetAttributes();  // clear any default values
+		$model->level = "5";
+		$model->active = "y";
+
+		if(isset($_GET['Section'])){
+
+			$model->attributes=$_GET['Section'];
+		}
+
+		$this->render('Section',array(
+			'model'=>$model,
+		));
+	}
+
+	public function actionSection_create()
+	{
+		$model = new Orgchart;
+
+		if(isset($_POST['OrgChart']))
+		{
+			// var_dump($_POST);exit();
+			$model->parent_id=$_POST['OrgChart']["parent_id"];
+			$model->title=$_POST['OrgChart']["title"];
+			$model->level = 5;
+			// $model->parent_id = 1;
+
+			if($model->save()){				
+				
+				$model->save(false);
+
+				if(Yii::app()->user->id){
+					Helpers::lib()->getControllerActionId();
+				}
+				$this->redirect(array('Section'));
+			}
+		}
+
+		$this->render('Section_create',array(
+			'model'=>$model,
+		));
+
+	}
+
+	public function actionSection_update($id)
+	{
+		$model = Orgchart::model()->findByPk($id);
+
+		if(isset($_POST['OrgChart']))
+		{
+			
+			$model->attributes=$_POST['OrgChart'];
+			
+			if($model->save(false)){
+
+				if(Yii::app()->user->id){
+					Helpers::lib()->getControllerActionId();
+				}
+
+				$this->redirect(array('Section'));
+			}
+		}
+
+		$this->render('Section_update',array(
+			'model'=>$model,
+		));
+
+	}
+
+	public function actionSection_delete($id)
+	{	
+		
+		$model = Orgchart::model()->findByPk($id);
+		$model->active = 'n';
+		// $model->org_number = null;
+		$model->save(false);
+
+		if(Yii::app()->user->id){
+			Helpers::lib()->getControllerActionId();
+		}
+
+		if(!isset($_GET['ajax'])){
+			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('Section'));
+		}
+		// $this->redirect(array('ManageOrg'));
+	}
 
 	public function actionManageorguser()
 	{	
@@ -814,163 +1009,7 @@ class OrgmanageController extends Controller
 		));
 	}
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
-	{
-		$this->loadModel($id)->delete();
-		if(Yii::app()->user->id){
-			Helpers::lib()->getControllerActionId();
-		}
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
-
-	public function actionDeleteOrg()
-	{
-		
-		if(!empty($_GET)){
-		 	$all = $_GET['all'];
-		 	$position_id = $_GET['position_id'];
-		 	$course_id = $_GET['id'];
-		 	$user = $_GET['user_id'];
-	 		$Orgpos = OrgChart::model()->findByPk($position_id);
-
-			$criteria = new CDbCriteria();
-		 	$criteria->compare('parent_id',$course_id);
-			$Parent_course = CourseOnline::model()->findAll($criteria);
-
-			$criteria = new CDbCriteria();
-		 	$criteria->compare('user_id',$user);
-		 	$criteria->compare('course_id',$course_id);
-			$CheckUser = OrgPosition::model()->findAll($criteria);
-
- 			if (empty($CheckUser)) {
-				$model = new OrgPosition;
- 				$model->course_id = $course_id;
- 				$model->user_id = $user;
- 				$model->org_root_title = $orgRoot->title;
-				$model->state = "y";
- 				$model->save();
-
-				$model = new OrgPosition;
-				$model->user_id = $user;
- 				$model->org_root_title = $orgRoot->title;
- 				$model->course_id = $Parent_course[0]->course_id;
- 				$model->state = "y";
- 				$model->save();
- 			}else{
-
-				$model = OrgPosition::model()->findByAttributes(array(
-				        'user_id' => $user,
-				        'course_id' => $course_id,
-			   	));
-				$model->state='y';
-				$model->save();
-
-				$criteria = new CDbCriteria();
-			 	$criteria->compare('parent_id',$course_id);
-				$Parent_course = CourseOnline::model()->findAll($criteria);
-
-				$model = OrgPosition::model()->findByAttributes(array(
-				        'user_id' => $user,
-				        'course_id' => $Parent_course[0]->course_id,
-			   	));
-				$model->state='y';
-				$model->save();
-
- 			}
-			$this->redirect(array('CheckUser','id'=>$course_id,'all'=>$all,'position_id'=>$position_id));
-		}
-	}
-
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-
-
-/*		$root=new OrgChart;
-		$root->title='Mobile Phones';
-		$root->saveNode();
-		$root=new OrgChart;
-		$root->title='Cars';
-		$root->saveNode();
-		$OrgChart1=new OrgChart;
-		$OrgChart1->title='Ford';
-		$OrgChart2=new OrgChart;
-		$OrgChart2->title='Mercedes';
-		$OrgChart3=new OrgChart;
-		$OrgChart3->title='Audi';
-		$root=OrgChart::model()->findByPk(1);
-		$OrgChart1->appendTo($root);
-		$OrgChart2->insertAfter($OrgChart1);
-		$OrgChart3->insertBefore($OrgChart1);
-
-		$OrgChart1=new OrgChart;
-		$OrgChart1->title='Samsung';
-		$OrgChart2=new OrgChart;
-		$OrgChart2->title='Motorola';
-		$OrgChart3=new OrgChart;
-		$OrgChart3->title='iPhone';
-		$root=OrgChart::model()->findByPk(2);
-		$OrgChart1->appendTo($root);
-		$OrgChart2->insertAfter($OrgChart1);
-		$OrgChart3->prependTo($root);
-
-		$OrgChart1=new OrgChart;
-		$OrgChart1->title='X100';
-		$OrgChart2=new OrgChart;
-		$OrgChart2->title='C200';
-		$node=OrgChart::model()->findByPk(3);
-		$OrgChart1->appendTo($node);
-		$OrgChart2->prependTo($node);
-*/
-
-
-
-		$dataProvider=new CActiveDataProvider('OrgChart');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
-
-	public function actionOrgChart2()
-	{
-		$this->renderPartial('orgchart2');
-	}
-
-	public function actionOrgChartSave()
-	{
-
-	}
-
-	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
-	{
-		$model=new OrgChart('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['OrgChart']))
-			$model->attributes=$_GET['OrgChart'];
-
-		$this->render('admin',array(
-			'model'=>$model,
-		));
-	}
-
-	private function Strrename($name){
-		$replace = str_replace("*", "", $name);
-		return $replace;
-
-	}
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.

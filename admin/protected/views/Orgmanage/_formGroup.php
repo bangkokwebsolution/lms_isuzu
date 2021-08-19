@@ -55,8 +55,8 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <?php echo $form->labelEx($model, 'parent_id'); ?>
-                            <?php $div_model = OrgChart::model()->getDivisionListNew();
-                            echo $form->dropDownList($model, 'parent_id', $div_model, array('empty' => 'เลือก Division', 'class' => 'span8')); ?>
+                            <?php $dep_model = OrgChart::model()->getDepartmentListNew();
+                            echo $form->dropDownList($model, 'parent_id', $dep_model, array('empty' => 'เลือก Department', 'class' => 'span8')); ?>
                             <?php echo $form->error($model, 'parent_id'); ?>
                         </div>
                     </div>

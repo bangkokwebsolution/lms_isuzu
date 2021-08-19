@@ -14,9 +14,6 @@ class OrgChart extends CActiveRecord
 	/**
 	 * @return string the associated database table name
 	 */
-	public $div_id;
-	public $news_per_page;
-
 	public function tableName()
 	{
 		return '{{orgchart}}';
@@ -30,15 +27,12 @@ class OrgChart extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-
-			array('title,parent_id', 'required'),
-			array('parent_id, level, div_id,department_id, ', 'numerical', 'integerOnly'=>true),
+			array('parent_id, level, department_id, position_id, branch_id', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
 			array('active', 'length', 'max'=>1),
-			array('created_date, updated_date,news_per_page', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, parent_id, level ,active, department_id, sortOrder', 'safe', 'on'=>'search'),
+			array('id, title, parent_id, level ,active, department_id, position_id, branch_id, sortOrder', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -69,10 +63,9 @@ class OrgChart extends CActiveRecord
 			'level' => 'Level',
 			'active' => 'Active',
 			'department_id' => 'department_id',
-			
-		
+			'position_id' => 'position_id',
+			'branch_id' => 'branch_id',
 			'sortOrder' => 'sortOrder',
-			'div_id'=> 'Division'
 
 		);
 	}
@@ -107,27 +100,15 @@ class OrgChart extends CActiveRecord
 		$criteria->compare('level',$this->level);
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('department_id',$this->department_id,true);
-		
+		$criteria->compare('position_id',$this->position_id,true);
+		$criteria->compare('branch_id',$this->branch_id,true);
 		$criteria->compare('sortOrder',$this->sortOrder,true);
 
-		
 
-		$poviderArray = array('criteria'=>$criteria);
 
-		// Page
-		if(isset($this->news_per_page))
-		{
-			if(!is_numeric($this->news_per_page)){
-				$this->news_per_page = 10;
-			}
-
-			$poviderArray['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
-		}else{
-			$poviderArray['pagination'] = array( 'pageSize'=> intval(10) );
-
-		}
-			
-		return new CActiveDataProvider($this, $poviderArray);
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));
 	}
 
 	/**
@@ -136,27 +117,10 @@ class OrgChart extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return Orgchart the static model class
 	 */
+	
+	
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
-
-	public function getDivisionListNew(){
-		$model = Orgchart::model()->findAll('level = "2" and active = "y" ORDER BY id ASC');
-		$list = CHtml::listData($model,'id','title');
-		return $list;
-	}
-
-	public function getDepartmentListNew(){
-		$model = Orgchart::model()->findAll('level = "3" and active = "y" ORDER BY id ASC');
-		$list = CHtml::listData($model,'id','title');
-		return $list;
-	}
-
-	public function getGroupListNew(){
-		$model = Orgchart::model()->findAll('level = "4" and active = "y" ORDER BY id ASC');
-		$list = CHtml::listData($model,'id','title');
-		return $list;
-	}
-
 }
