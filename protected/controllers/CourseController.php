@@ -297,7 +297,7 @@ public function actionResetLearn($id) {
              $criteria = new CDbCriteria;
             // $criteria->with = array('orgchart');
              $criteria->compare('department_id',$userDepartment);
-             $criteria->compare('position_id',$userPosition);
+             // $criteria->compare('position_id',$userPosition);
              $criteria->compare('branch_id',$userBranch);
              $criteria->compare('active','y');
             // $criteria->group = 'orgchart_id';

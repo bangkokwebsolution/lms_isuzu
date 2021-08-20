@@ -666,7 +666,7 @@ class SiteController extends Controller
 
 		$criteria = new CDbCriteria;
 		$criteria->compare('department_id',$userDepartment);
-		$criteria->compare('position_id',$userPosition);
+		// $criteria->compare('position_id',$userPosition);
 		$criteria->compare('branch_id',$userBranch);
 		$criteria->compare('active','y');
 		$modelOrgDep = OrgChart::model()->findAll($criteria);
@@ -962,7 +962,7 @@ class SiteController extends Controller
              $criteria = new CDbCriteria;
 			// $criteria->with = array('orgchart');
              $criteria->compare('department_id',$userDepartment);
-             $criteria->compare('position_id',$userPosition);
+             // $criteria->compare('position_id',$userPosition);
              $criteria->compare('branch_id',$userBranch);
              $criteria->compare('active','y');
 			// $criteria->group = 'orgchart_id';

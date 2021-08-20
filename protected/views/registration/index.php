@@ -23,14 +23,14 @@ if(isset($_GET['type']) && $_GET['type'] == 'edit'){
   $edit = 0;
   $disabled = 'disabled';
 }
- if($langId ==1){
+ // if($langId ==1){
 
-             $fullname =  $profile->firstname_en.' - '.$profile->lastname_en;
-          }else{
+ //             $fullname =  $profile->firstname_en.' '.$profile->lastname_en;
+ //          }else{
 
-             $fullname =  $profile->firstname.' - '.$profile->lastname;
+ //             $fullname =  $profile->firstname.' '.$profile->lastname;
 
-        } 
+ //        } 
 
 ?>
 <style type="text/css">
@@ -77,7 +77,7 @@ figure figcaption {
 <section class="content" id="register">
     <div class="container">
         <div class="row g-0 position-relative">
-
+            
             <div class=" col-md-3 col-lg-3 col-xs-12">
                 <ul class="sidebar-account">
                     <li class="active">Personal Information</li>
@@ -87,16 +87,45 @@ figure figcaption {
 
             <div class="col col-md-9 col-lg-9">
                 <div class="card card-profile mt-20">
+                    <?php $form=$this->beginWidget('CActiveForm', array(
+                    'id'=>'registration-form',
+                    'enableAjaxValidation'=>false,
+                )); ?>
                     <div class="row">
                         <div class="col col-md-10 col-lg-9">
                             <h3 class="title-account">Personal Information</h3>
                             <div class="row form-group">
-
+                                <?php if($edit!=1){ ?>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="card card-profile-detail">
-                                        <p>Firstname - Lastname <br> 
+                                        <p>ชื่อ - นามสกุล (TH) <br> 
                                           <span>
-                                            <input type="text" class="form-control" name="firstname" <?= $disabled ?> id="firstname" value="<?= $fullname ?>">
+                                           <?php $nameTH = $profile->firstname.' '.$profile->lastname;
+
+                                           if(!empty($nameTH)){
+                                            echo $nameTH;
+                                           }else{
+                                            echo '&nbsp';
+                                           }
+
+                                            ?>
+
+                                          </span></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="card card-profile-detail">
+                                        <p>Firstname - Lastname (EN) <br> 
+                                          <span>
+                                           <?php $nameEN = $profile->firstname_en.' '.$profile->lastname_en;
+
+                                           if(!empty($nameEN)){
+                                            echo $nameTH;
+                                           }else{
+                                            echo '&nbsp';
+                                           }
+
+                                            ?>
                                           </span></p>
                                     </div>
                                 </div>
@@ -104,42 +133,125 @@ figure figcaption {
                                     <div class="card card-profile-detail">
                                         <p>Employee ID <br>
                                           <span> 
-                                            <input type="text" class="form-control" name="firstname" <?= $disabled ?> id="firstname" value="<?= $profile->user->employee_id ?>">
+                                            <?php $employee_id = $profile->user->employee_id;
+                                            if(!empty($employee_id)){
+                                            echo $employee_id;
+                                           }else{
+                                            echo '&nbsp';
+                                           }
+                                            ?>
+                                          </span></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-12 ">
+                                    <div class="card card-profile-detail">
+                                        <p>Email <br><span>
+                                          <?php  $email =  $profile->user->email; 
+                                    if(!empty($email)){
+                                            echo $email;
+                                           }else{
+                                            echo '&nbsp';
+                                           }
+                                          ?>
+                                        </span></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="card card-profile-detail">
+                                        <p>Employee class <br><span>
+                                            <?php $employee_class =  $profile->employee_class; 
+
+                                     if(!empty($employee_class)){
+                                            echo $employee_class;
+                                           }else{
+                                            echo '&nbsp';
+                                           }
+
+                                            ?>
+                                        </span></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="card card-profile-detail">
+                                        <p>Position description <br><span>
+                                          <?php $position_description = $profile->position_description ;
+
+                                        if(!empty($position_description)){
+                                            echo $position_description;
+                                           }else{
+                                            echo '&nbsp';
+                                           }
+                                          ?>
+                                        </span></p>
+                                    </div>
+                                </div>
+                                <?php }else{ ?>
+                                <div class="col-md-6 col-xs-12">
+                                    <div class="card card-profile-detail">
+                                        <p>ชื่อ - นามสกุล (TH) <br> 
+                                          <span>
+                                           <?php $nameTH = $profile->firstname.' '.$profile->lastname;
+                                           echo "<input class='form-control' name='fullnameTH' id='fullnameTH' value='".$nameTH."' >";
+                                            ?>
+
                                           </span></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="card card-profile-detail">
-                                        <p>Section code <br><span><input type="text" class="form-control" <?= $disabled ?> name="firstname" id="firstname" value="<?= $profile->user->employee_id ?>">
+                                        <p>Firstname - Lastname (EN) <br> 
+                                          <span>
+                                           <?php $nameEN = $profile->firstname_en.' '.$profile->lastname_en;
+                                                echo "<input class='form-control' name='fullnameEN' id='fullnameEN' value='".$nameEN."' >";
+                                            ?>
+                                          </span></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6  col-xs-12">
+                                    <div class="card card-profile-detail">
+                                        <p>Employee ID <br>
+                                          <span> 
+                                            <?php $employee_id = $profile->user->employee_id;
+                                                echo "<input class='form-control' name='employee_id' id='employee_id' value='".$employee_id."' >";
+                                            ?>
+                                          </span></p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-xs-12 ">
+                                    <div class="card card-profile-detail">
+                                        <p>Email <br><span>
+                                          <?php $email =  $profile->user->email ;
+                                          echo "<input class='form-control' name='email' id='email' value='".$email."' >";
+                                          ?>
                                         </span></p>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="card card-profile-detail">
-                                        <p>Section name <br><span>
-                                          <input type="text" class="form-control" name="firstname" <?= $disabled ?> id="firstname" value="<?= $profile->user->employee_id ?>">
+                                        <p>Employee class <br><span>
+                                            <?php $employee_class =  $profile->employee_class; 
+                                          echo "<input class='form-control' name='employee_class' id='employee_class' value='".$employee_class."' >";
+
+                                            ?>
                                         </span></p>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-xs-12 ">
+                                <div class="col-md-6 col-xs-12">
                                     <div class="card card-profile-detail">
-                                        <p>Class level <br><span>
-                                          <input type="text" class="form-control" name="firstname" <?= $disabled ?> id="firstname" value="<?= $profile->user->employee_id ?>">
+                                        <p>Position description <br><span>
+                                          <?php $position_description = $profile->position_description ;
+                                          echo "<input class='form-control' name='position_description' id='position_description' value='".$position_description."' >";
+                                          ?>
                                         </span></p>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-xs-12 ">
-                                    <div class="card card-profile-detail">
-                                        <p>Position Description <br><span>
-                                          <input type="text" class="form-control" name="firstname" <?= $disabled ?> id="firstname" value="<?= $profile->user->employee_id ?>">
-                                        </span></p>
-                                    </div>
-                                </div>
+                                <?php } ?>
+                                
                                  
                             </div>
                             <?php if($edit==1){ ?>
                             <div class="text-center">
-                                <a class="btn btn-warning btn-lg"  type="submit" name="sub-pro" >Submit</a>
+                                <button  class="btn btn-warning btn-lg" type="submit" name="sub-pro" >Submit</button>
                               </div>
                             <?php } ?>
                         </div>
@@ -166,8 +278,10 @@ figure figcaption {
                                                           $url_pro_pic = $img;
                                                           ?>
                                                           <img src="<?php echo $url_pro_pic; ?>" class="gambar img-responsive img-thumbnail" name="item-img-output" id="item-img-output" />
-                                                          <?php if($edit==1){ ?>
-
+                                                          <?php if($edit!=1){ ?>
+                                                            <div class="card-body text-center" style="padding:10px;">
+                                                                <a class="col-bt btn btn-main text-4 text-center" href='<?= Yii::app()->createUrl('registration/update/'.$users->id.'?type=edit'); ?>' >edit</a>
+                                                            </div>
                                                           <?php }else{ ?>
                                                           <figcaption>
                                                               <div class="btn btn-default btn-uploadimg"><i class="fa fa-camera"></i> <?= Yii::app()->session['lang'] == 1?'Select picture':'เลือกรูป'; ?> </div>
@@ -186,8 +300,11 @@ figure figcaption {
                         </div>
 
                     </div>
+<?php $this->endWidget(); ?>
+
                 </div>
             </div>
+
         </div>
     </div>
 </section>
