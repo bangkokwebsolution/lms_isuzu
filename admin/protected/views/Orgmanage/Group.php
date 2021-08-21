@@ -1,6 +1,6 @@
 <?php
 $titleName = 'Group';
-$formNameModel = 'Group';
+$formNameModel = 'OrgChart';
 
 $this->breadcrumbs=array($titleName);
 Yii::app()->clientScript->registerScript('search', "
@@ -23,7 +23,7 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	    var val = eval("$."+varName);
 	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
 	}
-	$.appendFilter("Group[news_per_page]", "news_per_page");
+	$.appendFilter("OrgChart[news_per_page]", "news_per_page");
 EOD
 , CClientScript::POS_READY);
 ?>
@@ -59,20 +59,9 @@ EOD
 						'style'=> "margin-top: -1px;",
 					),
 					'afterAjaxUpdate'=>'function(id, data){
-						$.appendFilter("Group[news_per_page]");
+						$.appendFilter("OrgChart[news_per_page]");
 						InitialSortTable();	
-				        jQuery("#course_date").datepicker({
-						   	"dateFormat": "dd/mm/yy",
-						   	"showAnim" : "slideDown",
-					        "showOtherMonths": true,
-					        "selectOtherMonths": true,
-				            "yearRange" : "-5+10", 
-					        "changeMonth": true,
-					        "changeYear": true,
-				            "dayNamesMin" : ["อา.","จ.","อ.","พ.","พฤ.","ศ.","ส."],
-				            "monthNamesShort" : ["ม.ค.","ก.พ.","มี.ค.","เม.ย.","พ.ค.","มิ.ย.",
-				                "ก.ค.","ส.ค.","ก.ย.","ต.ค.","พ.ย.","ธ.ค."],
-					   })
+				        
 					}',
 					'columns'=>array(
 						// array(
@@ -96,6 +85,21 @@ EOD
 							'name'=>'title',
 							'value'=>'$data->title',
 							// 'filter'=>CHtml::activeTextField($model,'cates_search'),  
+						),
+
+
+						array(
+							'name'=>'department_name',
+							'type'=>'raw',
+							 'filter'=>false,
+							'value'=> '$data->dep->title',    
+						),
+
+						array(
+							'name'=>'division_name',
+							'type'=>'raw',
+							 'filter'=>false,
+							'value'=> '$data->div->title',  
 						),
 
 						

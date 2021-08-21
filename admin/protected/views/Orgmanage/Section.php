@@ -86,6 +86,27 @@ EOD
 							// 'filter'=>CHtml::activeTextField($model,'cates_search'),  
 						),
 
+						array(
+							'name'=>'group_name',
+							'type'=>'raw',
+							 'filter'=>false,
+							'value'=> '$data->gro->title',  
+						),
+
+						array(
+							'name'=>'department_name',
+							'type'=>'raw',
+							 'filter'=>false,
+							'value'=> '$data->dep->title',  
+						),
+
+						array(
+							'name'=>'division_name',
+							'type'=>'raw',
+							 'filter'=>false,
+							'value'=> '$data->div->title',  
+						),
+
 						
 
 							array(

@@ -14,8 +14,11 @@ class OrgChart extends CActiveRecord
 	/**
 	 * @return string the associated database table name
 	 */
-	public $div_id;
+	
 	public $news_per_page;
+	public $division_name;
+	public $division_id;
+	public $department_id;
 
 	public function tableName()
 	{
@@ -31,14 +34,14 @@ class OrgChart extends CActiveRecord
 		// will receive user inputs.
 		return array(
 
-			array('title,parent_id', 'required'),
-			array('parent_id, level, div_id,department_id, ', 'numerical', 'integerOnly'=>true),
+			array('title,parent_id,division_id,department_id', 'required'),
+			array('parent_id, level ,department_id,division_id ', 'numerical', 'integerOnly'=>true),
 			array('title', 'length', 'max'=>255),
 			array('active', 'length', 'max'=>1),
 			array('created_date, updated_date,news_per_page', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, title, parent_id, level ,active, department_id, sortOrder', 'safe', 'on'=>'search'),
+			array('id, title, parent_id, level ,active, department_id, sortOrder, division_name,news_per_page', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,7 +55,9 @@ class OrgChart extends CActiveRecord
 		return array(
 			'orgchart'=>array(self::BELONGS_TO, 'Orgchart', 'parent_id'),
 			// 'orgchart'=>array(self::BELONGS_TO, 'Orgchart', 'department_id'),
-
+			'div'=>array(self::BELONGS_TO, 'Orgchart', 'division_id'),
+			'dep'=>array(self::BELONGS_TO, 'Orgchart', 'department_id'),
+			'gro'=>array(self::BELONGS_TO, 'Orgchart', 'group_id'),	
 
 		);
 	}
@@ -68,11 +73,14 @@ class OrgChart extends CActiveRecord
 			'parent_id' => 'Parent',
 			'level' => 'Level',
 			'active' => 'Active',
-			'department_id' => 'department_id',
+			'division_name'=>'Division',
+			'division_id'=> 'Division',
+			'department_name' => 'Department',
+			'department_id' => 'Department',
+			'section_name' => 'Section',
+			'group_name' => 'Group',		
+			'sortOrder' => 'sortOrder'
 			
-		
-			'sortOrder' => 'sortOrder',
-			'div_id'=> 'Division'
 
 		);
 	}
@@ -101,14 +109,32 @@ class OrgChart extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+
+
 		$criteria->compare('id',$this->id);
 		$criteria->compare('title',$this->title,true);
 		$criteria->compare('parent_id',$this->parent_id);
 		$criteria->compare('level',$this->level);
 		$criteria->compare('active',$this->active,true);
-		$criteria->compare('department_id',$this->department_id,true);
+
+		if(!empty($this->division_name)){
+			$div_name = $this->division_name;
+
+			$Division = Orgchart::model()->find("title LIKE '%".$div_name."%' and level=2 ");
+
+			$criteria->compare('division_id',$Division->id);
+
+
+
+		}
+
+
+
+
+
+		// $criteria->compare('department_id',$this->department_id,true);
 		
-		$criteria->compare('sortOrder',$this->sortOrder,true);
+		// $criteria->compare('sortOrder',$this->sortOrder,true);
 
 		
 

@@ -52,11 +52,35 @@
                 <p class="note">ค่าที่มี <span class="required">*</span> จำเป็นต้องใส่ให้ครบ</p>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <?php echo $form->labelEx($model, 'division_id'); ?>
+                            <?php $div_model = OrgChart::model()->getDivisionListNew();
+                            echo $form->dropDownList($model, 'division_id', $div_model, array('empty' => 'เลือก Division', 'class' => 'form-control', 'style' => 'width:100%','required'=>'required')); ?>
+                            <?php echo $form->error($model, 'division_id'); ?>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <?php echo $form->labelEx($model, 'department_id'); ?>
+                            <?php $dep_model = OrgChart::model()->getDepartmentListNew();
+                            echo $form->dropDownList($model, 'department_id', $dep_model, array('empty' => 'เลือก Department', 'class' => 'form-control','required'=>'required')); ?>
+                            <?php echo $form->error($model, 'department_id'); ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
                         <div class="form-group">
                             <?php echo $form->labelEx($model, 'parent_id'); ?>
                             <?php $dep_model = OrgChart::model()->getGroupListNew();
-                            echo $form->dropDownList($model, 'parent_id', $dep_model, array('empty' => 'เลือก Group', 'class' => 'span8')); ?>
+                            echo $form->dropDownList($model, 'parent_id', $dep_model, array('empty' => 'เลือก Group', 'class' => 'form-control','required'=>'required')); ?>
                             <?php echo $form->error($model, 'parent_id'); ?>
                         </div>
                     </div>
@@ -88,6 +112,36 @@
 <script type="text/javascript">
     $(function () {
         init_tinymce();
+    });
+
+    $("#OrgChart_division_id").change(function() {
+        var id = $("#OrgChart_division_id").val();
+        $.ajax({
+            type: 'POST',
+            url: "<?= Yii::app()->createUrl('Orgmanage/ListDepartment'); ?>",
+            data: {
+                id: id
+            },
+            success: function(data) {
+                $('#OrgChart_department_id').empty();
+                $('#OrgChart_department_id').append(data);
+            }
+        });
+    });
+
+    $("#OrgChart_department_id").change(function() {
+        var id = $("#OrgChart_department_id").val();
+        $.ajax({
+            type: 'POST',
+            url: "<?= Yii::app()->createUrl('Orgmanage/ListGroup'); ?>",
+            data: {
+                id: id
+            },
+            success: function(data) {
+                $('#OrgChart_parent_id').empty();
+                $('#OrgChart_parent_id').append(data);
+            }
+        });
     });
 </script>
 

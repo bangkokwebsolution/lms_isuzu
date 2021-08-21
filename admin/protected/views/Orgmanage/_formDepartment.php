@@ -56,7 +56,7 @@
                         <div class="form-group">
                             <?php echo $form->labelEx($model, 'parent_id'); ?>
                             <?php $div_model = OrgChart::model()->getDivisionListNew();
-                            echo $form->dropDownList($model, 'parent_id', $div_model, array('empty' => 'เลือก Division', 'class' => 'span8')); ?>
+                            echo $form->dropDownList($model, 'parent_id', $div_model, array('empty' => 'เลือก Division', 'class' => 'span8','required'=>'required')); ?>
                             <?php echo $form->error($model, 'parent_id'); ?>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                 <div class="row">
                 	<div class="col-md-8">
                     <?php echo $form->labelEx($model, 'title'); ?>
-                    <?php echo $form->textField($model, 'title', array('class' => 'form-control', 'autocomplete'=>'off')); ?>
+                    <?php echo $form->textField($model, 'title', array('class' => 'form-control', 'autocomplete'=>'off','required'=>'required')); ?>
                     <?php echo $form->error($model, 'title'); ?>
                     </div>
                 </div>

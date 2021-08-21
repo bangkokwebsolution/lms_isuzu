@@ -52,11 +52,24 @@
                 <p class="note">ค่าที่มี <span class="required">*</span> จำเป็นต้องใส่ให้ครบ</p>
 
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <?php echo $form->labelEx($model, 'division_id'); ?>
+                            <?php $div_model = OrgChart::model()->getDivisionListNew();
+                            echo $form->dropDownList($model, 'division_id', $div_model, array('empty' => 'เลือก Division', 'class' => 'form-control', 'style' => 'width:100%','required'=>'required')); ?>
+                            <?php echo $form->error($model, 'division_id'); ?>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
                         <div class="form-group">
                             <?php echo $form->labelEx($model, 'parent_id'); ?>
                             <?php $dep_model = OrgChart::model()->getDepartmentListNew();
-                            echo $form->dropDownList($model, 'parent_id', $dep_model, array('empty' => 'เลือก Department', 'class' => 'span8')); ?>
+                            echo $form->dropDownList($model, 'parent_id', $dep_model, array('empty' => 'เลือก Department', 'class' => 'form-control','required'=>'required')); ?>
                             <?php echo $form->error($model, 'parent_id'); ?>
                         </div>
                     </div>
@@ -66,7 +79,7 @@
                 <div class="row">
                 	<div class="col-md-8">
                     <?php echo $form->labelEx($model, 'title'); ?>
-                    <?php echo $form->textField($model, 'title', array('class' => 'form-control', 'autocomplete'=>'off')); ?>
+                    <?php echo $form->textField($model, 'title', array('class' => 'form-control', 'autocomplete'=>'off','required'=>'required')); ?>
                     <?php echo $form->error($model, 'title'); ?>
                     </div>
                 </div>
@@ -88,6 +101,21 @@
 <script type="text/javascript">
     $(function () {
         init_tinymce();
+    });
+
+    $("#OrgChart_division_id").change(function() {
+        var id = $("#OrgChart_division_id").val();
+        $.ajax({
+            type: 'POST',
+            url: "<?= Yii::app()->createUrl('Orgmanage/ListDepartment'); ?>",
+            data: {
+                id: id
+            },
+            success: function(data) {
+                $('#OrgChart_parent_id').empty();
+                $('#OrgChart_parent_id').append(data);
+            }
+        });
     });
 </script>
 
