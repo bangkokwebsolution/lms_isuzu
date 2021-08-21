@@ -252,6 +252,7 @@ figure figcaption {
                             <?php if($edit==1){ ?>
                             <div class="text-center">
                                 <button  class="btn btn-warning btn-lg" type="submit" name="sub-pro" >Submit</button>
+                                <a  class="btn btn-cancel btn-lg" style="background-color:#e2e2e2 " type="cancel" onclick="cancelForm()" name="cancel-pro" >cancel</a>
                               </div>
                             <?php } ?>
                         </div>
@@ -447,4 +448,9 @@ $('#cropImageBtn').on('click', function(ev) {
 $('#cropcancel').on('click', function(ev) {
 $("#Profile_pro_pic").val("");
     });
+    
+    function cancelForm(){
+        window.location.href = "<?= Yii::app()->createUrl('/registration/update') ?>";
+    }
+
 </script>
