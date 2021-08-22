@@ -1,4 +1,3 @@
-
 <?php 
 class AdminController extends Controller
 {
@@ -14,29 +13,11 @@ class AdminController extends Controller
   //    * This method is used by the 'accessControl' filter.
   //    * @return array access control rules
   //    */
-  //   public function accessRules()
-  //   {
-  //       return array(
-  //           array('allow',  // allow all users to perform 'index' and 'view' actions
-  //               'actions' => array('index', 'view'),
-  //               'users' => array('*'),
-  //           ),
-  //           array('allow',
-  //               // กำหนดสิทธิ์เข้าใช้งาน actionIndex
-  //               'actions' => AccessControl::check_action(),
-  //               // ได้เฉพาะ group 1 เท่านั่น
-  //               'expression' => 'AccessControl::check_access()',
-  //           ),
-  //           array('deny',  // deny all users
-  //               'users' => array('*'),
-  //           ),
-  //       );
-  //   }
+
 
 	public function init()
 	{
-		// parent::init();
-		// $this->lastactivity();
+
 			if(Yii::app()->user->id == null){
 				$this->redirect(array('site/index'));
 			}
@@ -47,59 +28,9 @@ class AdminController extends Controller
 
 	private $_model;
 
-	// public function filters() {
-	// 		return array(
-	// 				'rights',
-	// 		);
-	// }
 
-	// public function actionGetAjaxDivision(){
- //        if(isset($_GET['company_id']) && $_GET['company_id'] != ""){
- //            $datalist = Division::model()->findAll('active = "y" and company_id = '.$_GET['company_id']);
- //            if($datalist){
- //                    echo "<option value=''> เลือกกอง</option>";
- //                foreach($datalist as $index => $val){
- //                    echo "<option value='".$val->id."'>".$val->div_title."</option>";
- //                }
- //            }else{
- //                    echo "<option value=''> ไม่พบกอง</option>";
- //            }
- //        }else{
- //            echo "<option value=''> เลือกกอง</option>";
- //        }
- //    }
 
- //    public function actionGetAjaxDepartment(){
- //        if(isset($_GET['division_id']) && $_GET['division_id'] != ""){
- //            $datalist = Department::model()->findAll('active = "y" and division_id = '.$_GET['division_id']);
- //            if($datalist){
- //                    echo "<option value=''> เลือกแผนก</option>";
- //                foreach($datalist as $index => $val){
- //                    echo "<option value='".$val->id."'>".$val->dep_title."</option>";
- //                }
- //            }else{
- //                    echo "<option value=''> ไม่พบแผนก</option>";
- //            }
- //        }else{
- //            echo "<option value=''> เลือกแผนก</option>";
- //        }
- //    }
-
- //    public function actionGetAjaxPosition(){
- //        if(isset($_GET['department_id']) && $_GET['department_id'] != ""){
- //            $datalist = Position::model()->findAll('active = "y" and department_id = '.$_GET['department_id']);
- //            if($datalist){
- //                    echo "<option value=''> เลือกตำแหน่ง</option>";
- //                foreach($datalist as $index => $val){
- //                    echo "<option value='".$val->id."'>".$val->position_title."</option>";
- //                }
- //            }else{
- //                    echo "<option value=''> ไม่พบตำแหน่ง</option>";
- //            }
- //        }else{
- //            echo "<option value=''> เลือกตำแหน่ง</option>";
- //        }
- //    }
+	
    private function RandomPassword(){
 
             $number="abcdefghijklmnopqrstuvwxyz0123456789";
@@ -175,7 +106,6 @@ echo ($data);
 	{
 		$model = new User('search');
         $model->unsetAttributes();  // clear any default values
-       // $model->typeuser = array(1);
         $model->register_status = array(0);
         $model->status = array(1);
        $model->supper_user_status = false;
@@ -189,35 +119,6 @@ echo ($data);
         ));
 	}
 
-	public function actionMembership ()
-	{
-		$model = new User('search');
-        $model->unsetAttributes();  // clear any default values
-        $model->register_status = array(0,2);
-        $model->supper_user_status = true;
-      
-        if(isset($_GET['User'])){
-        	$model->attributes=$_GET['User'];
-        }
-        $this->render('Membership',array(
-        	'model'=>$model,
-        ));
-	}
-
-	// public function actionMembership_personal ()
-	// {
-	// 	$model = new User('search');
- //        $model->unsetAttributes();  // clear any default values
- //        $model->register_status = array(0,2);
- //        $model->supper_user_status = true;
-      
- //        if(isset($_GET['User'])){
- //        	$model->attributes=$_GET['User'];
- //        }
- //        $this->render('Membership_personal',array(
- //        	'model'=>$model,
- //        ));
-	// }
 
 	public function loadDepartment($department_id){
 		$data=OrgChart::model()->findAll('id=:id',
@@ -283,9 +184,7 @@ echo ($data);
 		$model=new ReportUser();
 		$model->unsetAttributes();
 		if(isset($_GET['ReportUser'])){
-			//$_GET['ReportUser']['type_user'] = 1 General , 2 = Staff
-			//type_user 1,2 General
-			//type_user 3 Staff
+			
 			$model->attributes=$_GET['ReportUser'];
 		}
 
@@ -304,33 +203,11 @@ echo ($data);
 			'model'=>$model
 		));
 
-
-
 		echo '<meta charset="UTF-8">';
 		echo $contentView;
 		exit();
 	}
 
-	// public function actionAdmin()
-	// {
-	// 	$model=new User('search');
- //        $model->unsetAttributes();  // clear any default values
- //        if(isset($_GET['User']))
- //        	$model->attributes=$_GET['User'];
-
- //        $this->render('index',array(
- //        	'model'=>$model,
- //        ));
-	// 	/*$dataProvider=new CActiveDataProvider('User', array(
-	// 		'pagination'=>array(
-	// 			'pageSize'=>Yii::app()->controller->module->user_page_size,
-	// 		),
-	// 	));
-
-	// 	$this->render('index',array(
-	// 		'dataProvider'=>$dataProvider,
-	// 	));//*/
-	// }
     public function actionEmployee()
 	{
 		$model=new User('search');
@@ -347,23 +224,7 @@ echo ($data);
         ));
 	}
 
-	// public function actionEmployeeShip()
-	// {
-	// 	$model=new User('search');
- //        $model->unsetAttributes();  // clear any default values
-
- //        $model->typeuser = array(1);
- //        $model->type_employee = array(1);
- //        $model->status = array(1);
- //        $model->register_status = array(1);
- //        $model->supper_user_status = true;
- //        if(isset($_GET['User']))
- //        	$model->attributes=$_GET['User'];
- //        $this->render('index',array(
- //        	'model'=>$model,
- //        ));
-	// }
-
+	
 	public function actionGeneral()
 	{
 		$model=new User('search');
@@ -385,7 +246,6 @@ echo ($data);
 		$profile = Profile::model()->findByPk($id);
 
 		if($model->status == 1 && $model->register_status == 0){
-			// $model->status = 0;
 		    $model->status = 1;
 			$model->register_status = 1;
 		    $profile->type_user = 1;
@@ -418,7 +278,7 @@ echo ($data);
 		$model = User::model()->findByPk($id);
 		$Profile = Profile::model()->findByPk($id);
 		if($model->register_status == 0 && $model->status == 0){
-			//$model->register_status = 1;
+			
 			$model->status = 1;
 		} else {
 			$model->register_status = 0;
@@ -554,13 +414,7 @@ echo ($data);
 			$model->position_id = $value;
 		}
 		$model->save(false);
-		// $to['email'] = $model->email;
-		// $to['firstname'] = $model->profile->firstname;
-		// $to['lastname'] = $model->profile->lastname;
-		// $message = $this->renderPartial('_mail_Changeposition',array('model' => $model,'value' => $value),true);
-		// if($message){
-		// 	 $send = Helpers::lib()->SendMail($to,'ไม่อนุมัติการสมัครสมาชิก',$message);
-		// }
+
 		$this->redirect(array('/user/admin/Membership'));
    }
 
@@ -766,14 +620,7 @@ echo ($data);
 				$nameold_file_register[] = basename($Register_all[0]);	
 			}
 
-			// $Register_all  = glob(Yii::app()->getUploadPath('pdf_regis').$name_register_file);
 
-	  //   	if(!empty($Register_all)){
-	    		
-	  //   			$path_zip_register[] = "../uploads/pdf_regis/".basename($Register_all[0]);	
-			// 	    $nameold_file_register[] = basename($Register_all[0]);	
-	    		
-			//    }  
 	
 		$criteria = new CDbCriteria;
         $criteria->addCondition('user_id ="'.$user_id.'"');
@@ -808,16 +655,7 @@ echo ($data);
 					}             
 				}										
 			}
-			// foreach ($path_zip_attach as $key => $link_file) {
 
-			// 	 $zip->makeZip_nn($link_file, $path_in_zip.$name_zip, $nameold_file_attach[$key]);
-			// }
-			// foreach ($path_zip_training as $keyt => $valuet) {
-   //               $zip->makeZip_nn($valuet, $path_in_zip.$name_zip, $nameold_file_training[$keyt]);
-			// }
-			// foreach ($path_zip_edu as $keye => $valuee) {
-   //               $zip->makeZip_nn($valuee, $path_in_zip.$name_zip, $nameold_file_edu[$keye]);
-			// }
 		
 			foreach ($path_zip_attach as $key => $link_file) {
 
@@ -943,29 +781,9 @@ echo ($data);
 			'model'=>$model,
 			'profile'=>$profile
 		));
-		/*$dataProvider=new CActiveDataProvider('User', array(
-			'pagination'=>array(
-				'pageSize'=>Yii::app()->controller->module->user_page_size,
-			),
-		));
-
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));//*/
+		
 	}
 
-	// private function RandomPassword(){
-	// 	$number="ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-	// 	$i = '';
-	// 	$result = '';
-	// 	for($i==1;$i<8;$i++){ // จำนวนหลักที่ต้องการสามารถเปลี่ยนได้ตามใจชอบนะครับ จาก 5 เป็น 3 หรือ 6 หรือ 10 เป็นต้น
-	// 		$random=rand(0,strlen($number)-1); //สุ่มตัวเลข
-	// 		$cut_txt=substr($number,$random,1); //ตัดตัวเลข หรือ ตัวอักษรจากตำแหน่งที่สุ่มได้มา 1 ตัว
-	// 		$result.=substr($number,$random,1); // เก็บค่าที่ตัดมาแล้วใส่ตัวแปร
-	// 		$number=str_replace($cut_txt,'',$number); // ลบ หรือ แทนที่ตัวอักษร หรือ ตัวเลขนั้นด้วยค่า ว่าง
-	// 	}
-	// 	return $result;
-	// }
 
 
 	public function actionExcelOld()
@@ -990,24 +808,14 @@ echo ($data);
 			foreach ($sheet_array as $key => $valueRow) {
 				if ($key == 1) { // Header first row
 				}else { // Data Row ALL 2 -
-					// $passwordGen = $this->RandomPassword();
-					// $HisImportUserPassArr[$key]['password'] = $passwordGen;
 
 					$modelUser = new User;
 					$modelUser->email = $valueRow['A'];
 					$modelUser->username = $valueRow['A'];
 					$modelUser->password = md5($valueRow['B']); // Random password
 					$modelUser->verifyPassword = $modelUser->password;
-					// $modelUser->department_id = $valueRow['G'];
-					// $modelUser->company_id = $valueRow['F'];
-					// $modelUser->division_id = $valueRow['G'];
-					// $modelUser->department_id = $valueRow['H'];
-					// $modelUser->position_id = $valueRow['I'];
-					// $modelUser->orgchart_lv2 = $valueRow['J'];
 					$modelUser->type_register = 2;
 					$modelUser->superuser = 0;
-					// $modelUser->auditor_id = $valueRow['G'];
-					// $modelUser->bookkeeper_id = $valueRow['H'];
 
 					$member = Helpers::lib()->ldapTms($modelUser->email);
 					if($member['count'] > 0){ //TMS
@@ -1039,30 +847,9 @@ echo ($data);
 						$modelProfile->title_id = $valueRow['C'];
 						$modelProfile->firstname = $valueRow['D'];
 						$modelProfile->lastname = $valueRow['E'];
-						$modelProfile->identification = $valueRow['B'];
+						
 						$modelProfile->phone = $valueRow['F'];
-						// $modelProfile->active = 1;
-						// $modelProfile->type_user = $valueRow['F'];
-						// $modelProfile->birthday = $valueRow['I'];
-						// $modelProfile->age = $valueRow['K'];
-						// $modelProfile->education = $valueRow['L'];
-						// $modelProfile->occupation = $valueRow['M'];
-						// $modelProfile->position = $valueRow['N'];
-						// $modelProfile->website = $valueRow['O'];
-						// $modelProfile->address = $valueRow['P'];
-						// $province=Province::model()->findByAttributes(array('pv_name_th'=>$valueRow['Q']));
-						// $modelProfile->province = $province->pv_id;
-						// $modelProfile->tel = $valueRow['R'];
-						// $modelProfile->phone = $valueRow['S'];
-						// $modelProfile->fax = $valueRow['T'];
-						// $modelProfile->generation = $valueRow['W'];
-						// $modelProfile->contactfrom = $valueRow['V'];
-						// $modelProfile->firstname_en = $valueRow['H'];
-						// $modelProfile->lastname_en = $valueRow['I'];
-						// $modelProfile->advisor_email1 = $valueRow['L'];
-						// $modelProfile->advisor_email2 = $valueRow['M'];
-						// var_dump($modelProfile);exit();
-						// $modelProfile->birthday = Yii::app()->dateFormatter->format("y-M-d",strtotime($valueRow['I']));
+						
 						if($modelProfile->validate()){
 							$modelProfile->save();
 							$Insert_success[$key] = "สร้างชื่อผู้ใช้เรียบร้อย";
@@ -1084,34 +871,12 @@ echo ($data);
 						}
 
 
-						/*$message = '
-						<strong>สวัสดี คุณ' . $modelProfile->firstname . ' ' . $modelProfile->lastname . '</strong><br /><br />
 
-						โปรดคลิกลิงค์ต่อไปนี้ เพื่อดำเนินการเข้าสู่ระบบ<br />
-						<a href="' . str_replace("/admin","",Yii::app()->getBaseUrl(true)) . '">' . str_replace("/admin","",Yii::app()->getBaseUrl(true)) . '</a><br />
-						<strong>Username</strong> : ' . $valueRow['A'] . '<br />
-						<strong>Password</strong> : ' . $passwordGen . '<br /><br />
-
-						ยินดีตอนรับเข้าสู่ระบบ Brother E-Traning<br /><br />
-
-						ทีมงาน SET
-
-						';
-						$subject = 'ยินดีต้อนรับเข้าสู่ระบบ SET E-Training';
-						$to['email'] = $valueRow['K'];
-						$to['firstname'] = $valueRow['F'];
-						$to['lastname'] = $valueRow['G'];
-
-						Helpers::lib()->SendMail($to,$subject,$message);*/
 
 						
 					} else {
 
-						/*if(!isset($orgchart->id) && $valueRow['E'] != ''){
-							//$modelUser->student_board = 0;
-							$modelUser->clearErrors('department_id');
-							$modelUser->addError('department_id','ไม่มีแผนกนี้');
-						}*/
+
 
 						$HisImportErrorArr[] = $HisImportArr[$key];
 
@@ -1215,7 +980,7 @@ echo ($data);
 					// $data[$key]['fullname'] = $result["ชื่อ"].' '.$result["นามสกุล"];
 					// $data[$key]['email'] = $result["email"];
 					// $data[$key]['phone'] =  $result["โทรศัพท์"];
-					// $data[$key]['identification'] =  $result["รหัสบัตรประชาชน"];
+				
 					//$member = Helpers::lib()->ldapTms($model->email);
 					// $member['count'] = 0;
 					// if($member['count'] > 0){ //TMS
@@ -1393,180 +1158,29 @@ echo ($data);
 		// $gen = Generation::model()->find('active=1');
 		$model=new User;
 		$profile=new Profile;
-		$this->performAjaxValidation(array($model,$profile));
-		if(isset($_POST['ajax']) && $_POST['ajax']==='registration-form')
-		{
-			echo UActiveForm::validate(array($model,$profile));
-			Yii::app()->end();
-		}
+		
 
 		if(isset($_POST['User']))
 		{
-			// $Neworg = $_POST['Orgchart'];           
-			// $Neworg = json_encode($Neworg);
-			// $PGoup = $_POST['PGoup'];           
-			// $PGoup = json_encode($PGoup);
-			// $model->orgchart_lv2 = $Neworg;
-			// $model->group = $PGoup;
-			// $criteria=new CDbCriteria;
-   //          $criteria->compare('department_id',$_POST['User']['department_id']);
-   //          $criteria->compare('position_title',$_POST['User']['position_name']);
-            // $position = Position::model()->find($criteria);
-    //         if(!$position){
-    //             $position = new Position;
-    //             $position->department_id = $_POST['User']['department_id'];
-    //             $position->position_title = $_POST['User']['position_name'];
-    //             $position->create_date = date("Y-m-d H:i:s");
-				// if(!empty($_POST['User']['department_id']) && !empty($_POST['User']['position_name']))$position->save();
-    //         }
-            $model->type_register = 1;
-          
-			// $model->position_name = $_POST['User']['position_name'];
-            // $model->position_id = $position->id;
-			// $model->division_id = $_POST['User']['division_id'];
-			// $model->company_id = $_POST['User']['company_id'];
-			$model->username = $_POST['User']['username'];
+			// var_dump($_POST['User']);exit();
+			$model->username = $_POST['User']['emp_id'];
+			$model->password = md5($_POST['User']['emp_id']);
+			$model->verifyPassword = $model->password;
+			$model->confirmpass = $model->password;
+			$model->email = $_POST['User']['email'];
 			$model->create_at = date('Y-m-d H:i:s');
-			// $model->identification = $_POST['User']['identification'];
-			// $model->passport = $_POST['User']['passport'];
-			// $model->password = $_POST['User']['password'];
-			// $model->verifyPassword = $_POST['User']['verifyPassword'];
-
-			//$member = Helpers::lib()->ldapTms($model->email);
-
-			////Test
-			// $member['count'] = 0;
-			//if($member['count'] > 0){ //TMS
-				//$model->type_register = 3;
-				// Helpers::lib()->_insertLdap($member);
-				// $modelStation = Station::model()->findByAttributes(array('station_title'=>$member[0]['st'][0]));
-				// $modelDepartment = Department::model()->findByAttributes(array('dep_title'=>$member[0]['department'][0]));
-				// $modelDivision = Division::model()->findByAttributes(array('div_title'=>$member[0]['division'][0]));
-
-				// $model->division_id = $modelDivision->id;
-				// $model->station_id = $modelStation->station_id;
-				// $model->department_id = $modelDepartment->id;
-				// $model->password = md5($model->email);
-				// $model->verifyPassword = $model->password;
-				// $model->confirmpass = $model->password;
-
-				// $model->status = 1;
-				//$model->email = $member[0]['mail'][0];
-			//} else { //LMS
-				$model->email = $_POST['User']['email'];
-				// $model->password = $_POST['User']['identification'];
-				$model->password = $_POST['User']['username'];
-				 $genpass = $this->RandomPassword();
-    			 $model->password = $genpass;
-    		     $model->verifyPassword = $genpass;
-
-				$model->verifyPassword = $model->password;
-				$model->confirmpass = $model->password;
-				// $model->department_id = 1;
-				$model->department_id = $_POST['User']['department_id'];
-				$model->position_id = $_POST['User']['position_id'];
-				$model->branch_id = $_POST['User']['branch_id'];
-				// $model->station_id = $_POST['User']['station_id'];
-				// $model->division_id = $_POST['User']['division_id'];
-				$model->repass_status= 0;
-				// $model->newpassword = $_POST['User']['identification'];
-				$model->status = 1;
-				// $model->status = 0;
-				$model->scenario = 'general';
-			//}
-			// $model->department_id = $_POST['User']['department_id'];
-
-			$model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
-			$profile->attributes=$_POST['Profile'];
-			$profile->user_id=0;
-				
-			// var_dump($profile->identification);
-			// 	var_dump($model->save());
-			// 	var_dump($model->getErrors());
-			// 	exit();
-			// var_dump($model->validate());
-			// var_dump($profile->validate());exit();
-
-			if($model->validate() && $profile->validate()) {
-
- 
-				$model->password=Yii::app()->controller->module->encrypting($genpass);
-				// $model->verifyPassword= UserModule::encrypting($model->password);
-				$model->verifyPassword=Yii::app()->controller->module->encrypting($genpass);
-
-
-				$uploadFile = CUploadedFile::getInstance($model,'pic_user');
-				if(isset($uploadFile))
-				{
-					$uglyName = strtolower($uploadFile->name);
-					$mediocreName = preg_replace('/[^a-zA-Z0-9]+/', '_', $uglyName);
-					$beautifulName = trim($mediocreName, '_') . "." . $uploadFile->extensionName;
-					$model->pic_user = $beautifulName;
-				}
-				// $model->status = 1;
 			
+			$model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
 				if($model->save()) {
 					if(Yii::app()->user->id){
 						Helpers::lib()->getControllerActionId();
 					}
-					// if(isset($uploadFile))
-					// {
-					// 	/////////// SAVE IMAGE //////////
-					// 	Yush::init($model);
-					// 				$originalPath = Yush::getPath($model, Yush::SIZE_ORIGINAL, $model->pic_user);
-					// 				$thumbPath = Yush::getPath($model, Yush::SIZE_THUMB, $model->pic_user);
-					// 				$smallPath = Yush::getPath($model, Yush::SIZE_SMALL, $model->pic_user);
-					// 				// Save the original resource to disk
-					// 				$uploadFile->saveAs($originalPath);
-
-					// 				// Create a small image
-					// 				$smallImage = Yii::app()->phpThumb->create($originalPath);
-					// 				$smallImage->resize(385, 220);
-					// 				$smallImage->save($smallPath);
-
-					// 				// Create a thumbnail
-					// 				$thumbImage = Yii::app()->phpThumb->create($originalPath);
-					// 				$thumbImage->resize(350, 200);
-					// 				$thumbImage->save($thumbPath);
-					// }
-					// if($profile->contactfrom){
-
-					// 	$contacts = $profile->contactfrom;
-					// 	foreach ($contacts as $key => $contact) {
-					// 				// var_dump($contact);
-					// 				// exit();
-					// 		if($contact != end($contacts)){
-					// 			$value .= $contact.',';
-					// 		} else {
-					// 			$value .= $contact;
-					// 		}
-
-					// 	}
-					// 	$profile->contactfrom = $value;
-					// }
-					// $profile->generation = $gen->id_gen;
 					$profile->user_id=$model->id;
-					$profile->type_user = 3;
-					$profile->save();
-
-					//if($model->type_register != 3 && $model->status != 0){
-						$to['email'] = $model->email;
-						$to['firstname'] = $profile->firstname;
-						$to['lastname'] = $profile->lastname;
-						$message = $this->renderPartial('_mail_message',array('model' => $model,'genpass'=>$genpass),true);
-						if($message){
-							$send = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
-						}
-					//}
-					
+					$profile->save();	
 				}
-				$this->redirect(array('view','id'=>$model->id));
-			} else {
-				// var_dump($model->getErrors());exit();
-				$profile->validate();
-				$profile->getErrors();
-				$model->getErrors();
-			}
+				// $this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('create'));
+			
 		}
 		$this->render('create',array(
 			'model'=>$model,
@@ -1591,158 +1205,46 @@ echo ($data);
 		}
 		if(isset($_POST['User']))
 		{			
-			// $Neworg = $_POST['Orgchart'];           
-			// $Neworg = json_encode($Neworg);
-			// $PGoup = $_POST['PGoup'];           
-			// $PGoup = json_encode($PGoup);
-			// $model->orgchart_lv2 = $Neworg;
-			// $model->group = $PGoup;
-			// $criteria=new CDbCriteria;
-   //          $criteria->compare('department_id',$_POST['User']['department_id']);
-   //          $criteria->compare('position_title',$_POST['User']['position_name']);
-   //          $position = Position::model()->find($criteria);
-    //         if(!$position){
-    //             $position = new Position;
-    //             $position->department_id = $_POST['User']['department_id'];
-    //             $position->position_title = $_POST['User']['position_name'];
-    //             $position->create_date = date("Y-m-d H:i:s");
-				// if(!empty($_POST['User']['department_id']) && !empty($_POST['User']['position_name']))$position->save();
-    //         }
-			// $model->position_name = $_POST['User']['position_name'];
-			// $model->position_id = $position->id;
-			// $model->position_id = isset($_POST['User']['position_id']) ? $_POST['User']['position_id'] : 1;
-			// $model->division_id = $_POST['User']['division_id'];
-			// $model->company_id = $_POST['User']['company_id'];
-			// $model->department_id = $_POST['User']['department_id'];
-			// $model->department_id = 2;
+			
 
 			$model->username = $_POST['User']['username'];
 			
-			// $model->identification = $_POST['User']['identification'];
-			// $model->passport = $_POST['User']['passport'];
 			$model->status = $_POST['User']['status'];
-			$model->superuser = $_POST['User']['superuser'];
-			// if($_POST['User']['newpassword'] != ''){
-			// 	$model->password = $_POST['User']['newpassword'];
-			// 	$model->verifyPassword = $_POST['User']['confirmpass'];
-			// }
-
-				    // $member = Helpers::lib()->ldapTms($model->email);
-			 // $member['çount'] = 0;
-				// if($member["count"] > 0){ //TMS
-				// 	Helpers::lib()->_insertLdap($member);
-				// 	$modelStation = Station::model()->findByAttributes(array('station_title'=>$member[0]['st'][0]));
-				// 	$modelDepartment = Department::model()->findByAttributes(array('dep_title'=>$member[0]['department'][0]));
-				// 	$modelDivision = Division::model()->findByAttributes(array('div_title'=>$member[0]['division'][0]));
-
-				// 	$model->division_id = $modelDivision->id;
-				// 	$model->station_id = $modelStation->station_id;
-				// 	$model->department_id = $modelDepartment->id;
-				// 	$model->password = md5($model->email);
-				// 	$model->verifyPassword = $model->password;
-				// 	$model->confirmpass = $model->password;
-					
-
-				// 	$model->email = $member[0]['mail'][0];
-				// }else{ //LMS
+			
 					$model->email = $_POST['User']['email'];
-					// $model->password = ($_POST['User']['identification']);
-					// $model->verifyPassword = $model->password;
-					// $model->department_id = 1;
+
 					$model->confirmpass = $model->password;
 					$model->department_id = $_POST['User']['department_id'];
 					$model->position_id = $_POST['User']['position_id'];
 					$model->branch_id = $_POST['User']['branch_id'];
-					// $model->station_id = $_POST['User']['station_id'];
-					// $model->division_id = $_POST['User']['division_id'];
+
 					if($_POST['User']['newpassword'] != null ){
 					$model->password=Yii::app()->controller->module->encrypting($_POST['User']['newpassword']);
-					// $model->verifyPassword=UserModule::encrypting($model->password);
+					
 					$model->confirmpass=UserModule::encrypting($_POST['User']['confirmpass']);
 					}
 					$model->scenario = 'general';
 				// }
 
 			$profile->attributes=$_POST['Profile'];
-			// $model->verifyPassword = $model->password;
-				// var_dump($model->password);
-				// var_dump($model->confirmpass);
-				// var_dump($model->save());
-				// var_dump($model->getErrors());exit();
+
 
 			if($model->validate()&&$profile->validate()) {
-				// $model->password=Yii::app()->controller->module->encrypting($model->password);
-				// $model->verifyPassword=UserModule::encrypting($model->verifyPassword);
-
-
-						// $model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->newpassword);
-
-				// $uploadFile = CUploadedFile::getInstance($model,'pic_user');
-				// if(isset($uploadFile))
-				// {
-				// 	$uglyName = strtolower($uploadFile->name);
-				// 	$mediocreName = preg_replace('/[^a-zA-Z0-9]+/', '_', $uglyName);
-				// 	$beautifulName = trim($mediocreName, '_') . "." . $uploadFile->extensionName;
-				// 	$model->pic_user = $beautifulName;
-
-				// // $rnd = rand(0,999);
-				// // $fileName = $time."_Picture.".$uploadFile->getExtensionName();
-				// // // $path = Yii::app()->basePath.'/../uploads/user/';
-				// // $destination = $path.$fileName;
-				// // $w = 200;
-				// // $h = 200;
-				// // $model->pic_user = $fileName;
-				// }
-
-				// if($profile->contactfrom){
-				// 	$contacts = $profile->contactfrom;
-				// 	foreach ($contacts as $key => $contact) {
-				// 					// var_dump($contact);
-				// 					// exit();
-				// 		if($contact != end($contacts)){
-				// 			$value .= $contact.',';
-				// 		} else {
-				// 			$value .= $contact;
-				// 		}
-
-				// 	}
-				// 	$profile->contactfrom = $value;
+				
 				// }
 
 				$model->save();
 				$profile->save();
 
-			// 	if(isset($uploadFile))
-			// 	{
-			// 		/////////// SAVE IMAGE //////////
-			// 		Yush::init($model);
-			// 					$originalPath = Yush::getPath($model, Yush::SIZE_ORIGINAL, $model->pic_user);
-			// 					$thumbPath = Yush::getPath($model, Yush::SIZE_THUMB, $model->pic_user);
-			// 					$smallPath = Yush::getPath($model, Yush::SIZE_SMALL, $model->pic_user);
-			// 					// Save the original resource to disk
-			// 					$uploadFile->saveAs($originalPath);
-
-			// 					// Create a small image
-			// 					$smallImage = Yii::app()->phpThumb->create($originalPath);
-			// 					$smallImage->resize(110);
-			// 					$smallImage->save($smallPath);
-
-			// 					// Create a thumbnail
-			// 					$thumbImage = Yii::app()->phpThumb->create($originalPath);
-			// 					$thumbImage->resize(240);
-			// 					$thumbImage->save($thumbPath);
-
-			// }
+		
 				if(Yii::app()->user->id){
 					Helpers::lib()->getControllerActionId($model->id);
 				}
 				$this->redirect(array('view','id'=>$model->id));
 			} 
-			// var_dump($model->getErrors());
-			// var_dump($profile->getErrors());
-			// exit();
+
 		}
-		//$model->position_name = isset($_POST['User']['position_name']) ? $_POST['User']['position_name'] : $model->position->position_title;
+
 		$this->render('update',array(
 			'model'=>$model,
 			'profile'=>$profile,
@@ -1829,43 +1331,6 @@ echo ($data);
 
 		}
 
-		// public function actionDivision()
-		// {
-		// 	$data=Division::model()->findAll('company_id=:company_id',
-		// 		array(':company_id'=>(int)$_POST['company_id']));
-		// 	$options[] = CHtml::tag('option',
-		// 		array('value'=>''),"---เลือกศูนย์/แผนก---",true);
-		// 	$data = CHtml::listData($data,'id','div_title');
-		// 	foreach($data as $value=>$name)
-		// 	{
-		// 		$options[] =  CHtml::tag('option',
-		// 			array('value'=>$value),CHtml::encode($name),true);
-		// 	}
-
-		// 	$data1=Position::model()->findAll('company_id=:company_id',
-		// 		array(':company_id'=>(int)$_POST['company_id']));
-		// 	$options1[] = CHtml::tag('option',
-		// 		array('value'=>''),"---เลือกตำแหน่ง---",true);
-		// 	$data1 =CHtml::listData($data1,'id','position_title');
-		// 	foreach($data1 as $value=>$name)
-		// 	{
-		// 		$options1[] =  CHtml::tag('option',
-		// 			array('value'=>$value),CHtml::encode($name),true);
-		// 	}
-
-		// 	echo json_encode(array("data_dsivision"=>$options,'data_position'=>$options1));
-		// }
-
-		// public function LoadDivision($company_id)
-		// {
-		// 	$data=Division::model()->findAll('company_id=:company_id',
-		// 		array(':company_id'=>$company_id)
-		// 	);
-
-		// 	$data=CHtml::listData($data,'id','dep_title');
-
-		// 	return $data;
-		// }
 
 
 
