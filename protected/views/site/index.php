@@ -168,7 +168,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
             <div class=" mb-1">
                 <div class="featured-box featured-box-one  featured-box-effect-4 text-center">
                     <div class="box-content">
-                        <a href="#">
+                        <a data-toggle="modal" href="<?php if(Yii::app()->user->id==null){echo '#modal-login';}else{ echo Yii::app()->createUrl('virtualclassroom/index'); }?>">
                             <div class="icon-featured">
                                 <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/online-class.svg">
                             </div>
@@ -204,7 +204,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
             <div class=" mb-1">
                 <div class="featured-box featured-box-one  featured-box-effect-4 text-center">
                     <div class="box-content">
-                        <a href="<?php echo $this->createUrl('/course/courseplan'); ?>">
+                        <a  data-toggle="modal" href="<?php if(Yii::app()->user->id==null){echo '#modal-login';}else{ echo Yii::app()->createUrl('course/courseplan'); }?>">
                             <div class="icon-featured">
                                 <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/Course-Plan.svg">
                             </div>
@@ -216,7 +216,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
             <div class=" mb-1">
                 <div class="featured-box featured-box-one  featured-box-effect-4 text-center">
                     <div class="box-content">
-                        <a href="#">
+                        <a data-toggle="modal" href="<?php if(Yii::app()->user->id==null){echo '#modal-login';}else{ echo Yii::app()->createUrl('site/dashboard'); }?>">
                             <div class="icon-featured">
                                 <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/Course-Status.svg">
                             </div>

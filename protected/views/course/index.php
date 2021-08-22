@@ -5,11 +5,13 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $flag = true;
     $learnn = "Learn Lesson";
     $genaral_course = 'General Course';
+    $specific_course ='Specific Course';
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
     $learnn = "สมัครเรียน";
     $genaral_course = 'หลักสูตรทั่วไป';
+    $specific_course ='หลักสูตรเฉพาะ';
 }
 function DateThai($strDate)
 {
@@ -34,7 +36,7 @@ function DateThai($strDate)
             <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/site/index'); ?>"><?php echo $label->label_homepage; ?></a></li>
             <li class="breadcrumb-item active"><a style="color: #757272" href="<?php echo $this->createUrl('/course/index'); ?>"><?php echo $label->label_course; ?></a></li>
             <li class="breadcrumb-item active"><a style="color: #757272" href="<?php echo $this->createUrl('/course/index?type=1'); ?>"><?= $genaral_course ?></a></li>
-            <li class="breadcrumb-item active"><a style="color: #757272" href="<?php echo $this->createUrl('/course/index?type=2'); ?>">หลักสูตรบังคับภายนอก</a></li>
+            <li class="breadcrumb-item active"><a style="color: #757272" href="<?php echo $this->createUrl('/course/index?type=2'); ?>"><?= $specific_course ?></a></li>
         </ol>
     </nav>
 </div>
@@ -61,22 +63,50 @@ function DateThai($strDate)
                     <?php
                     $arr_cate_id = [];
                     $cate_id_show = "";
-                    // var_dump($Model);exit()
-                    // var_dump($model_cate); exit();
-                    foreach ($model_cate as $m_c) {
+                   
+                    // foreach ($model_cate as $m_c) {
 
-                        if ($cate_id_show != $m_c->course->cate_id) {
-                            $cate_id_show = $m_c->course->cate_id;
+                    //     if ($cate_id_show != $m_c->course->cate_id) {
+                    //         $cate_id_show = $m_c->course->cate_id;
 
-                            $m_c  = $m_c->course->CategoryTitle;
+                    //         $m_c  = $m_c->course->CategoryTitle;
 
-                            if (!in_array($m_c->cate_id, $arr_cate_id)) {
+                    //         if (!in_array($m_c->cate_id, $arr_cate_id)) {
+                    //             $arr_cate_id[] = $m_c->cate_id;
+                    //         } else {
+                    //             continue;
+                    //         }
+
+                    //         if (!$flag) {
+                    //             $m_cChildren  = Category::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $m_c->cate_id, 'order' => 'cate_id'));
+                    //             if ($m_cChildren) {
+                    //                 $m_c->cate_title = $m_cChildren->cate_title;
+                    //                 $m_c->cate_short_detail = $m_cChildren->cate_short_detail;
+                    //                 $m_c->cate_detail = $m_cChildren->cate_detail;
+                    //                 $m_c->cate_image = $m_cChildren->cate_image;
+                    //             }
+                    //         }
+                    //         if ($m_c->lang_id != 1) {
+                    //             $m_c->cate_id = $m_c->parent_id;
+                    //         }
+                    ?>
+                            <!-- <button style="white-space: normal;" class="btn btn-default filter-button btn-lg" data-filter="<?= $m_c->cate_id ?>"><?= $m_c->cate_title ?></button> -->
+                    <?php
+                        // }
+                    // }
+                    $m_cChildreno1  = Category::model()->findAll(array('condition' => 'active = "y" AND lang_id = 1' ,'order' => 'cate_id'));
+                    foreach ($m_cChildreno1 as $val_Cate) {
+                        // $courseOn = CourseOnline::model()->findAll(array('condition'=>''));
+                        $cate_id_show = $val_Cate->cate_id;
+
+                            $m_c  = $val_Cate;
+
+                            if (!in_array($val_Cate->cate_id, $arr_cate_id)) {
                                 $arr_cate_id[] = $m_c->cate_id;
                             } else {
                                 continue;
                             }
-
-                            if (!$flag) {
+                        if (!$flag) {
                                 $m_cChildren  = Category::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $m_c->cate_id, 'order' => 'cate_id'));
                                 if ($m_cChildren) {
                                     $m_c->cate_title = $m_cChildren->cate_title;
@@ -88,15 +118,13 @@ function DateThai($strDate)
                             if ($m_c->lang_id != 1) {
                                 $m_c->cate_id = $m_c->parent_id;
                             }
-                    ?>
-                            <button style="white-space: normal;" class="btn btn-default filter-button btn-lg" data-filter="<?= $m_c->cate_id ?>"><?= $m_c->cate_title ?></button>
-                    <?php
-                        }
-                    }
-
+                     ?>
+                        <button style="white-space: normal;" class="btn btn-default filter-button btn-lg" data-filter="<?= $val_Cate->cate_id ?>"><?= $val_Cate->cate_title ?></button>
+                <?php }
                     ?>
 
                     <?php
+
                     if ($model_cate_tms) {
                         if ($model_cate_tms->lang_id != 1) {
                             $model_cate_tms->cate_id = $m_c->parent_id;
@@ -141,12 +169,13 @@ function DateThai($strDate)
                     <?php
                     unset($arr_cate_id);
                     $arr_cate_id = [];
-                    foreach ($model_cate as $m_c) {
-                        if ($cate_id_show != $m_c->course->cate_id) {
-                            $cate_id_show = $m_c->course->cate_id;
 
-                            $cate_id_cate_id = $m_c->course->cate_id;
-                            $m_c  = $m_c->course->CategoryTitle;
+                   foreach ($m_cChildreno1 as $m_c) {
+                        if ($cate_id_show != $m_c->cate_id) {
+                            $cate_id_show = $m_c->cate_id;
+
+                            $cate_id_cate_id = $m_c->cate_id;
+                            $m_c  = $m_c;
                             $m_c->cate_id = $cate_id_cate_id;
                             if (!in_array($m_c->cate_id, $arr_cate_id)) {
                                 $arr_cate_id[] = $m_c->cate_id;
@@ -168,7 +197,6 @@ function DateThai($strDate)
                                         <?php
 
                                         if (!$flag) {
-
                                             $m_cChildren  = Category::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $m_c->cate_id, 'order' => 'cate_id'));
                                             if ($m_cChildren) {
                                                 $m_c->cate_id = $m_cChildren->cate_id;
@@ -180,7 +208,8 @@ function DateThai($strDate)
                                         }
                                         ?>
 
-                                        <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/category/' . $m_c->cate_id . '/thumb/' . $m_c->cate_image)) { ?>
+                                        <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/category/' . $m_c->cate_id . '/thumb/' . $m_c->cate_image)) { 
+                                            ?>
                                             <div class="course-img">
                                                 <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/category/<?php echo $m_c->cate_id . '/thumb/' . $m_c->cate_image; ?>" alt="">
                                             </div>
@@ -277,7 +306,9 @@ function DateThai($strDate)
                                 </a>
                             </div>
                         </div>
-                    <?php  } ?>
+                    <?php  } 
+                    $Model = CourseOnline::model()->findAll(array('condition'=>'status = 1 AND lang_id = '.$langId));
+                    ?>
                     <?php foreach ($Model as $model) {
                         // var_dump($model->approve_status);exit();
                         if(isset($_GET['type']) && $_GET['type'] == $model->approve_status || !isset($_GET['type'])){
@@ -446,7 +477,6 @@ function DateThai($strDate)
         </div>
     </div>
 </section>
-
 <script type="text/javascript">
     function alertMsg() {
 
