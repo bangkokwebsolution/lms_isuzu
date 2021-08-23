@@ -1,11 +1,10 @@
-<?php $keyrecaptcha = '6LdxRgocAAAAADrcEFCe2HcHeETOZdREexT52B6R'; ?>
+<?php 
+// $keyrecaptcha = '6LdxRgocAAAAADrcEFCe2HcHeETOZdREexT52B6R'; //localhost
+$keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
+
+ ?>
 <script src='https://www.google.com/recaptcha/api.js?hl=th'></script>
-<style type="text/css">
-.g-recaptcha {
-    transform:scale(0.66);
-    transform-origin:0 0;
-}
-</style>
+
 <header id="header" class="main-header">
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="container">
@@ -117,7 +116,7 @@
                             ?>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;">
                                 <!-- <span class="photo" style="background-image: url('<?= $img ?>"></span> -->
-                                <span class="photo" style="background-image: url('<?php echo Yii::app()->theme->baseUrl; ?>/images/username-icon.png"></span>
+                                <span class="photo" style="background-image: url('<?= $img ?>"></span>
                                 <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/username-icon.png" class="profile-account" alt=""> -->
                                 <?php if (Yii::app()->session['lang'] == 1) {
                                     echo  $name->firstname_en;
@@ -205,11 +204,11 @@
 
                                 <a data-toggle="modal" class="btn-login-course" href="#modal-login" >' . $value->title . '</span></a>
                                 </li>';
-                                } elseif ($url == "video/library" && ($Profile_model->type_employee == 1 || $Profile_model->type_employee == 2)) {
-                                    //เห็นเฉพาะคนเรือ+ออฟฟิศ
-                                    echo '<li class="' . $clss . '">
-                                <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
-                                </li>';
+                                // } elseif ($url == "video/library" && ($Profile_model->type_employee == 1 || $Profile_model->type_employee == 2)) {
+                                //     //เห็นเฉพาะคนเรือ+ออฟฟิศ
+                                //     echo '<li class="' . $clss . '">
+                                // <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
+                                // </li>';
                                 } else {
                                     echo '<li class="' . $clss . '">
                                 <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
@@ -472,7 +471,7 @@ if (!empty($msg)) { ?>
                                 <label for=""><?= $label->label_header_password ?></label>
                                 <input type="password" class="form-control" placeholder='<?= $label->label_header_password ?>' name="UserLogin[password]" required>
                             </div>
-                            <div class="form-group" style="display: flex">
+                            <div class="form-group" style="display: grid;">
                                 <!-- <div class="checkbox checkbox-info checkbox-circle"> -->
                                     <!-- <input id="checkbox1" type="checkbox" name="UserLogin[checkbox]" value="on">
                                     <label for="checkbox1">
@@ -487,16 +486,16 @@ if (!empty($msg)) { ?>
                                         document.getElementById('submit').disabled = false;  
                                   }
                                   </script>
-                                    <div class="cap" style="width: 200px">
+                                    <!-- <div class="cap" style="width: 200px"> -->
                                         <div class="g-recaptcha" data-callback="makeaction" data-sitekey="<?php echo $keyrecaptcha; ?>" ></div>
-                                        </div>
-                                    <div class="cap" style="width: 100%">
+                                        <!-- </div> -->
+                                    <!-- <div class="cap" style="width: 100%"> -->
 
-                                    <span class="pull-right">   
+                                    <span class="pull-right" style="margin-top: 5px">   
                                         <a class="btn-forgot" href="<?php echo $this->createUrl('Forgot_password/index') ?>"><?= $label->label_header_forgotPass ?></a>
                                         <!-- <a href="< ?php echo $this->createUrl('/registration/ShowForm'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a> -->
                                     </span>
-                                </div>
+                                <!-- </div> -->
                                     
 
                                 <!-- <?php } ?> -->
@@ -559,7 +558,7 @@ if (!empty($msg)) { ?>
                             <div class="row report-row">
                                 <div class="col-md-6 col-xs-12 col-sm-6">
                                     <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Phone number' : 'เบอร์โทรศัพท์'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Phone number' : 'เบอร์โทรศัพท์'; ?>" name="ReportProblem[tel]" value="<?php echo $value->tel; ?>">
+                                    
                                 </div>
                             <?php }
                         $criteria = new CDbCriteria;
