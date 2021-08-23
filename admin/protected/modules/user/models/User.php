@@ -76,41 +76,41 @@ class User extends CActiveRecord
 		// will receive user inputs.CConsoleApplication
 		return ((get_class(Yii::app())=='CConsoleApplication' || (get_class(Yii::app())!='CConsoleApplication' && Yii::app()->getModule('user')->isAdmin()))?array(
 			// array('username', 'length', 'max'=>13, 'min' => 13,'message' => 'กรอกเลข E-mail เท่านั้น'),
-			array('emp_id', 'required'),
-			array('password', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
+			array('employee_id,org_id', 'required'),
+			// array('password', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 
-			array('auditor_id', 'length', 'max'=>5, 'min' => 5,'message' => 'กรุณาป้อนเลขผู้สอบ 5 หลัก'),
+			// array('auditor_id', 'length', 'max'=>5, 'min' => 5,'message' => 'กรุณาป้อนเลขผู้สอบ 5 หลัก'),
 			
-			array('status', 'in', 'range'=>array(self::STATUS_NOACTIVE,self::STATUS_ACTIVE,self::STATUS_BANNED)),
-			array('superuser', 'in', 'range'=>array(0,1,2)),
-            array('create_at', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
-            array('lastvisit_at', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
+			// array('status', 'in', 'range'=>array(self::STATUS_NOACTIVE,self::STATUS_ACTIVE,self::STATUS_BANNED)),
+			// array('superuser', 'in', 'range'=>array(0,1,2)),
+   //          array('create_at', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
+   //          array('lastvisit_at', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
 			
-			array('superuser, status', 'required'),
+			// array('superuser, status', 'required'),
 			
-			array('password', 'required', 'on' => 'reset_password'),
-			array('superuser, status, online_status,online_user,register_status', 'numerical', 'integerOnly'=>true),
-			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
-			array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'update'),
+			// array('password', 'required', 'on' => 'reset_password'),
+			// array('superuser, status, online_status,online_user,register_status', 'numerical', 'integerOnly'=>true),
+			// array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
+			// array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'update'),
 			array('news_per_page', 'safe'),
-			array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,company_id, division_id,position_id,lastactivity,orgchart_lv2, group,idensearch,identification,station_id,supper_user_status,pic_cardid2,employee_id,typeuser,register_status,dateRang,user_id,nameSearch,note,not_passed, avatar, month,type_employee, report_authority, branch_id, fullname, passport', 'safe', 'on'=>'search'),
+			// array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,company_id, division_id,position_id,lastactivity,orgchart_lv2, group,idensearch,identification,station_id,supper_user_status,pic_cardid2,employee_id,typeuser,register_status,dateRang,user_id,nameSearch,note,not_passed, avatar, month,type_employee, report_authority, branch_id, fullname, passport', 'safe', 'on'=>'search'),
 
-			array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
+			// array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 
-			array('username','checkEmail'),
+			// array('username','checkEmail'),
 		):((Yii::app()->user->id==$this->id)?array(
 
 			array('username,password', 'required'),
 
-			array('username,note,not_passed', 'length', 'max'=>255),
-			array('superuser, status, online_status,online_user,register_status', 'numerical', 'integerOnly'=>true),
+			// array('username,note,not_passed', 'length', 'max'=>255),
+			// array('superuser, status, online_status,online_user,register_status', 'numerical', 'integerOnly'=>true),
 
-			array('auditor_id', 'length', 'max'=>5, 'min' => 5,'message' => 'กรุณาป้อนเลขผู้สอบ 5 หลัก'),
+			// array('auditor_id', 'length', 'max'=>5, 'min' => 5,'message' => 'กรุณาป้อนเลขผู้สอบ 5 หลัก'),
 
-			array('idensearch', 'length', 'max'=>13),
-			array('username','checkEmail'),
-			array('excel_file', 'required', 'on'=>'import'),
-            array('excel_file', 'file', 'allowEmpty'=>false, 'types'=>'xls', 'on'=>'import'),
+			// array('idensearch', 'length', 'max'=>13),
+			// array('username','checkEmail'),
+			// array('excel_file', 'required', 'on'=>'import'),
+   //          array('excel_file', 'file', 'allowEmpty'=>false, 'types'=>'xls', 'on'=>'import'),
 		):array()));
 	}
 
@@ -240,7 +240,7 @@ class User extends CActiveRecord
 			'verifyCode'=>UserModule::t("Verification Code"),
 			'activkey' => UserModule::t("activation key"),
 			'createtime' => UserModule::t("Registration date"),
-			'create_at' => UserModule::t("Registration date"),
+			'create_at' => 'วันที่สร้าง',
 			'pic_user' => UserModule::t("Pic User"),
 			'orgchart_lv2' => UserModule::t("orgchart_lv2"),
 			'lastvisit_at' => UserModule::t("Last visit"),
@@ -261,7 +261,7 @@ class User extends CActiveRecord
 			'excel_file' => 'ไฟล์ Excel Import',
 			'supper_user_status' => 'สถานะ',
 			'pic_cardid2' => 'เลขประจำตัวพนักงาน', //ใช้ฟิลนี้ชั่วคราว
-			'employee_id' => 'เลขประจำตัวพนักงาน',
+			'employee_id' => 'รหัสพนักงาน',
 			'typeuser' =>'ประเภทผู้ใช้งาน',
 			'type_employee'=> 'ประเภทพนักงาน',
 		    'passport'=> 'รหัสหนังสือเดินทาง',
@@ -274,7 +274,8 @@ class User extends CActiveRecord
 			'branch_id'=>'เลเวล',
 			'fullname'=>'ชื่อ-นามสกุล',
 			'fullnamee'=>'ชื่อ-นามสกุล',
-			'emp_id'=>'รหัสพนักงาน'
+			'emp_id'=>'รหัสพนักงาน',
+			'org_id'=>'Org. Chat ID'
 		);
 	}
 
@@ -407,10 +408,10 @@ public function validateIdCard($attribute,$params){
         $criteria->compare('username',$this->username,true);
         $criteria->compare('password',$this->password);
         $criteria->compare('pic_user',$this->pic_user);
-        $criteria->compare('station_id',$this->station_id);
-        $criteria->compare('position_id',$this->position_id);
-        $criteria->compare('user.department_id',$this->department_id);
-        $criteria->compare('branch_id',$this->branch_id);
+        // $criteria->compare('station_id',$this->station_id);
+        // $criteria->compare('position_id',$this->position_id);
+        // $criteria->compare('user.department_id',$this->department_id);
+        // $criteria->compare('branch_id',$this->branch_id);
         $criteria->compare('email',$this->email,true);
         $criteria->compare('activkey',$this->activkey);
         $criteria->compare('create_at',$this->create_at);

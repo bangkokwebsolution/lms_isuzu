@@ -32,8 +32,10 @@ date_default_timezone_set("Asia/Bangkok");
     <div class="page-section">
         <div class="row">
             <div class="col-md-12">
-                    <?php $this->pageTitle = Yii::app()->name . ' - ' . UserModule::t("Registration");
-                    
+                    <?php 
+
+                    // $this->pageTitle = Yii::app()->name . ' - ' . UserModule::t("Registration");
+                    $this->pageTitle = Yii::app()->name . ' - เพิ่มสมาชิก';
                     ?>
                     <?php if (Yii::app()->user->hasFlash('registration')): ?>
                     <div class="success">
@@ -65,66 +67,164 @@ date_default_timezone_set("Asia/Bangkok");
                         <?php //echo $form->errorSummary(array($model, $profile)); ?>
 
                             <div class="wizard-header">
-                                <h3><strong><?php echo UserModule::t("Registration"); ?>
+                                <h3><strong>เพิ่มสมาชิก<!-- <?php echo UserModule::t("Registration"); ?> -->
                                 <!-- <small class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></small> --></strong>
                                 </h3>
-                                <p class="text-center"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
+                                <p class="text-left"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
                             </div>
                             
                             <div class="row pd-1em border">
                                     
-                                <div class="col-md-8">
+                                <div class="col-md-12">
                                     
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                         <div class="form-group">
-                                        <label><?php echo $form->labelEx($model, 'emp_id'); ?></label>
-                                        <?php echo $form->textField($model, 'emp_id', array('class' => 'form-control', 'placeholder' => 'รหัสพนักงาน','required'=>'required')); ?>
-                                        <?php echo $form->error($model, 'emp_id'); ?>
+                                        <label><?php echo $form->labelEx($model, 'employee_id'); ?></label>
+                                        <?php echo $form->textField($model, 'employee_id', array('class' => 'form-control', 'placeholder' => 'รหัสพนักงาน','required'=>'required')); ?>
+                                        <?php echo $form->error($model, 'employee_id'); ?>
                                         </div>
-                                    </div>
-                                    </div>
+                                        </div>
 
 
-                                    <div class="row">
-                                        
-                                    </div>                                    
-                                    
-                                   
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label><?php echo $form->labelEx($profile, 'firstname'); ?></label>
-                                                <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control', 'placeholder' => 'ชื่อจริง')); ?>
-                                                <?php echo $form->error($profile, 'firstname'); ?>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label><?php echo $form->labelEx($profile, 'lastname'); ?></label>
-                                                <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control', 'placeholder' => 'นามสกุล')); ?>
-                                                <?php echo $form->error($profile, 'lastname'); ?>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                            
-                                    <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 <label><?php echo $form->labelEx($model, 'email'); ?></label>
                                                 <?php echo $form->textField($model, 'email', array('class' => 'form-control', 'placeholder' => 'อีเมล')); ?>
                                                 <?php echo $form->error($model, 'email'); ?>
                                             </div>
                                         </div>  
+                                   
                                     </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($profile, 'firstname'); ?></label>
+                                                <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control', 'placeholder' => 'ชื่อจริง')); ?>
+                                                <?php echo $form->error($profile, 'firstname'); ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($profile, 'lastname'); ?></label>
+                                                <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control', 'placeholder' => 'นามสกุล')); ?>
+                                                <?php echo $form->error($profile, 'lastname'); ?>
+                                            </div>
+                                        </div>
+                                    </div>                                  
+                                    
+                                   
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($profile, 'firstname_en'); ?></label>
+                                                <?php echo $form->textField($profile, 'firstname_en', array('class' => 'form-control', 'placeholder' => 'ชื่ออังกฤษ')); ?>
+                                                <?php echo $form->error($profile, 'firstname_en'); ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($profile, 'lastname_en'); ?></label>
+                                                <?php echo $form->textField($profile, 'lastname_en', array('class' => 'form-control', 'placeholder' => 'นามสกุลอังกฤษ')); ?>
+                                                <?php echo $form->error($profile, 'lastname_en'); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($profile, 'kind'); ?></label>
+                                                <?php echo $form->textField($profile, 'kind', array('class' => 'form-control', 'placeholder' => 'ประเภทพนักงาน เช่น P หรือ J','maxlength'=> '1')); ?>
+                                                <?php echo $form->error($profile, 'kind'); ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($profile, 'organization_unit'); ?></label>
+                                                <?php echo $form->textField($profile, 'organization_unit', array('class' => 'form-control', 'placeholder' => 'รหัสส่วนงาน')); ?>
+                                                <?php echo $form->error($profile, 'organization_unit'); ?>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($profile, 'abbreviate_code'); ?></label>
+                                                <?php echo $form->textField($profile, 'abbreviate_code', array('class' => 'form-control', 'placeholder' => 'ชื่อส่วนงาน')); ?>
+                                                <?php echo $form->error($profile, 'abbreviate_code'); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($profile, 'location'); ?></label>
+                                                <?php echo $form->textField($profile, 'location', array('class' => 'form-control', 'placeholder' => 'สถานที่ทำงาน เช่น SR หรือ GW','maxlength'=> '2')); ?>
+                                                <?php echo $form->error($profile, 'location'); ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($profile, 'group_name'); ?></label>
+                                                <?php echo $form->textField($profile, 'group_name', array('class' => 'form-control', 'placeholder' => 'รหัสกลุ่มงาน')); ?>
+                                                <?php echo $form->error($profile, 'group_name'); ?>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($profile, 'shift'); ?></label>
+                                                <?php echo $form->textField($profile, 'shift', array('class' => 'form-control', 'placeholder' => 'กะทำงาน เช่น A B หรือ Z','maxlength'=> '1')); ?>
+                                                <?php echo $form->error($profile, 'shift'); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($profile, 'employee_class'); ?></label>
+                                                <?php echo $form->textField($profile, 'employee_class', array('class' => 'form-control', 'placeholder' => 'ระดับตำแหน่งงาน')); ?>
+                                                <?php echo $form->error($profile, 'employee_class'); ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($profile, 'position_description'); ?></label>
+                                                <?php echo $form->textField($profile, 'position_description', array('class' => 'form-control', 'placeholder' => 'ชื่อตำแหน่งงาน')); ?>
+                                                <?php echo $form->error($profile, 'position_description'); ?>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($profile, 'sex'); ?></label>
+                                                <?php echo $form->textField($profile, 'sex', array('class' => 'form-control', 'placeholder' => 'เพศ เช่น Male หรือ Female')); ?>
+                                                <?php echo $form->error($profile, 'sex'); ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                            
+                                    
                                     
                                     
 
                                     <div class="row">
                                        
                                        
-                                        
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                        <label><?php echo $form->labelEx($model, 'org_id'); ?></label>
+                                        <?php echo $form->textField($model, 'org_id', array('class' => 'form-control', 'placeholder' => 'รหัส org.chart e-learning','required'=>'required')); ?>
+                                        <?php echo $form->error($model, 'org_id'); ?>
+                                        </div>
+                                        </div>    
 
                                        
 
@@ -132,8 +232,8 @@ date_default_timezone_set("Asia/Bangkok");
                                       
                                     </div>
                                    
-                                    <div class="form-group" style="text-align: right;">
-                                        <?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t("Register") : 'บันทึก', array('class' => 'btn btn-primary',)); ?>
+                                    <div class="form-group" style="text-align: center;">
+                                        <?php echo CHtml::submitButton($model->isNewRecord ? 'เพิ่มสมาชิก' : 'บันทึก', array('class' => 'btn btn-primary',)); ?>
                                     </div>
                                 </div>
 

@@ -4,73 +4,31 @@ $this->breadcrumbs=array(
 	$model->username,
 );
 
-/*
-$this->menu=array(
-    array('label'=>UserModule::t('Create User'), 'url'=>array('create')),
-    array('label'=>UserModule::t('Update User'), 'url'=>array('update','id'=>$model->id)),
-    array('label'=>UserModule::t('Delete User'), 'url'=>'#','linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>UserModule::t('Are you sure to delete this item?'))),
-    array('label'=>UserModule::t('Manage Users'), 'url'=>array('admin')),
-    array('label'=>UserModule::t('Manage Profile Field'), 'url'=>array('profileField/admin')),
-    array('label'=>UserModule::t('List User'), 'url'=>array('/user')),
-);*/
 ?>
-<h1><?php echo UserModule::t('View User').' "'.$model->username.'"'; ?></h1>
-
-<?php
- 	// echo Yii::app()->homeUrl .'/uploads/users/'.$model->id.'/Thumb/'.$model->pic_user;
- 	// 	exit();
-	$attributes = array(
-		// 'id',
-		/*array(
-			'name'=>'pic_user',
-			'type'=>'raw',
-			'value'=> ($model->pic_user)?CHtml::image(Yush::getUrl($model, Yush::SIZE_THUMB, $model->pic_user), $model->pic_user,array(
-						"class"=>"thumbnail"
-					)):'-',
-		),*/
+<?php 
+	$this->widget('ADetailView', array(
+	'data'=>$model,
+	'attributes'=>array(
+		'employee_id',
 		'username',
-	);
-	
-	// $profileFields=ProfileField::model()->forOwner()->sort()->findAll();
-	// if ($profileFields) {
-	// 	foreach($profileFields as $field) {
-	// 		array_push($attributes,array(
-	// 				'label' => UserModule::t($field->title),
-	// 				'name' => $field->varname,
-	// 				'type'=>'raw',
-	// 				'value' => (($field->widgetView($model->profile))?$field->widgetView($model->profile):(($field->range)?Profile::range($field->range,$model->profile->getAttribute($field->varname)):$model->profile->getAttribute($field->varname))),
-	// 			));
-	// 	}
-	// }
-	
-	array_push($attributes,
 		// 'password',
 		'email',
-		'profile.ProfilesTitle.prof_title',
 		'profile.firstname',
 		'profile.lastname',
-		'profile.tel',
-		'department.dep_title',
-		'division.div_title',
-		'station.station_title',
-		// 'activkey',
-		'create_at',
-		'lastvisit_at',
-		array(
-			'name' => 'superuser',
-			'value' => User::itemAlias("AdminStatus",$model->superuser),
-		),
-		array(
-			'name' => 'status',
-			'value' => User::itemAlias("UserStatus",$model->status),
-		)
-	);
-	// unset($attributes[4],$attributes[5],$attributes[6],$attributes[7]);
-	
-	$this->widget('ADetailView', array(
-		'data'=>$model,
-		'attributes'=>$attributes,
-	));
-	
-
-?>
+		'profile.firstname_en',
+		'profile.lastname_en',
+		'profile.employment_date',
+        'profile.kind',
+        'profile.organization_unit',
+        'profile.abbreviate_code',
+        'profile.location',
+        'profile.group_name',
+        'profile.shift',
+        'profile.employee_class',
+        'profile.position_description',
+        'profile.sex',
+		
+		
+		'create_at'
+	),
+)); ?>

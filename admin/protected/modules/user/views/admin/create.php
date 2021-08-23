@@ -1,7 +1,7 @@
 <?php
 $this->breadcrumbs=array(
 	'รายชื่อสมาชิก'=>array('admin'),
-	'ระบบสมัครสมาชิก'
+	'เพิ่มสมาชิก'
 );
 
 /*$this->menu=array(

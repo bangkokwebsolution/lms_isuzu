@@ -1163,12 +1163,14 @@ echo ($data);
 		if(isset($_POST['User']))
 		{
 			// var_dump($_POST['User']);exit();
-			$model->username = $_POST['User']['emp_id'];
-			$model->password = md5($_POST['User']['emp_id']);
+			$model->employee_id = $_POST['User']['employee_id'];
+			$model->username = $_POST['User']['employee_id'];
+			$model->password = md5($_POST['User']['employee_id']);
 			$model->verifyPassword = $model->password;
-			$model->confirmpass = $model->password;
+			
 			$model->email = $_POST['User']['email'];
 			$model->create_at = date('Y-m-d H:i:s');
+			$model->online_status = 1;
 			
 			$model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
 				if($model->save()) {
@@ -1176,7 +1178,22 @@ echo ($data);
 						Helpers::lib()->getControllerActionId();
 					}
 					$profile->user_id=$model->id;
-					$profile->save();	
+					$profile->firstname=$_POST['Profile']['firstname'];
+					$profile->lastname=$_POST['Profile']['lastname'];
+					$profile->firstname_en=$_POST['Profile']['firstname_en'];
+					$profile->lastname_en=$_POST['Profile']['lastname_en'];
+					$profile->employment_date=$_POST['Profile']['employment_date'];
+					$profile->kind=$_POST['Profile']['kind'];
+					$profile->organization_unit=$_POST['Profile']['organization_unit'];
+					$profile->abbreviate_code=$_POST['Profile']['abbreviate_code'];
+					$profile->location=$_POST['Profile']['location'];
+					$profile->group_name=$_POST['Profile']['group_name'];
+					$profile->shift=$_POST['Profile']['shift'];
+					$profile->employee_class=$_POST['Profile']['employee_class'];
+					$profile->position_description=$_POST['Profile']['position_description'];
+					$profile->sex=$_POST['Profile']['sex'];
+					$profile->save();
+					$this->redirect(array('view','id'=>$model->id));
 				}
 				// $this->redirect(array('view','id'=>$model->id));
 				$this->redirect(array('create'));
