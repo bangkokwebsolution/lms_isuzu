@@ -2,8 +2,8 @@
 	<div class="pt-2 pb-2 text-gray">
 		<div class="container">
 			<small class="text-white"> Copyright <span class="sans-font">©</span> 2021 ISUZU Motors (Thailand) Co., Ltd.</small>
-			<small class="pull-right">
-					<a href="<?= $this->createUrl("dashboard/terms") ?>" class="text-white a-main">
+			<small class="terms-con">
+					<a href="<?= $this->createUrl("dashboard/terms") ?>" class="">
 						<?php
 						if (Yii::app()->session['lang'] == 1) {
 							echo "Terms & Conditions";

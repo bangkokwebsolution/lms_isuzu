@@ -6003,3 +6003,11 @@ tr {
   height: 15px;
   margin-bottom: 0;
 }
+
+.terms-con a{
+ color: #f33 !important;
+ border-left: 1px solid #777;
+ padding-left: 8px;
+ margin-left: 5px;
+} 
+
