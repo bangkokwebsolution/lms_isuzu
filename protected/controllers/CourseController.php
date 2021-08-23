@@ -291,7 +291,6 @@ public function actionResetLearn($id) {
             $userDepartment = $userModel->department_id;
             $userPosition = $userModel->position_id;
             $userBranch = $userModel->branch_id;
-
             if($userModel->profile->kind != 5){
 
              $criteria = new CDbCriteria;
@@ -302,6 +301,7 @@ public function actionResetLearn($id) {
              $criteria->compare('active','y');
             // $criteria->group = 'orgchart_id';
              $modelOrgDep = OrgChart::model()->findAll($criteria);
+
 
              foreach ($modelOrgDep as $key => $value) {
                 $courseArr[] = $value->id;
@@ -325,7 +325,7 @@ public function actionResetLearn($id) {
             // $criteria->limit = 5;
             $modelOrgCourse = OrgCourse::model()->findAll($criteria);
     
-    
+        
             if($modelOrgCourse){
                 foreach ($modelOrgCourse as $key => $value) {
             
@@ -357,9 +357,19 @@ public function actionResetLearn($id) {
                         $course_id[] += $val->course_id;
                     }
 
-            
+
                 $criteria = new CDbCriteria;
                 $criteria->addIncondition('course_id',$course_id);
+                // if(isset($_GET['type'])!=null){
+                //     if($_GET['type']==1){
+                //         $typeCoures = 1;
+                //     }else{
+                //         $typeCoures = 2;
+                //     }
+                //     $criteria->compare('approve_status',$typeCoures);
+                // }else{
+                    
+                // }
                 $criteria->order = 'course_title ASC';
                 $course = CourseOnline::model()->findAll($criteria);
             }
@@ -2774,6 +2784,12 @@ public function actionCaptchaPdf(){
     }
 
     public function actionCourseplan(){
+        if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+            $langId = Yii::app()->session['lang'] = 1;
+        }else{
+            $langId = Yii::app()->session['lang'];
+        }
+        $Model = CourseOnline::model()->findAll(array('condition'=>'status = 1 AND lang_id = '.$langId));
          $this->render('courseplan', array(
         
         'Model' => $Model
