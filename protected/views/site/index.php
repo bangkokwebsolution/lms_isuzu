@@ -612,7 +612,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                                                 <small><i class="far fa-clock"></i> <?php echo Helpers::lib()->DateLangTms($value->update_date, Yii::app()->session['lang']); ?></small>
                                             </div> -->
                                             <div class="news-more">
-                                                <a href="<?php echo $link; ?>" <?= $new_tab ?> class="more"><?= $more ?><i class="fas fa-angle-right"></i> </a>
+                                                <a href="<?php echo $link; ?>" <?= $new_tab ?> class="more"><?= $more ?> </a>
                                             </div>
                                         </div>
                                     </div>
