@@ -293,7 +293,7 @@ public function changeFormatDateEN($date)
 
          if($type=='datetime' && $date != ''){
         $date = explode('-', $date);
-        $year = $date[0]+543;
+        $year = $date[0];
         $month = $date[1];
         $day = $date[2];
         $day = explode(' ', $day);
@@ -348,7 +348,7 @@ public function changeFormatDateEN($date)
         return $days.' '.$month.' '.$year. ' '.$hour.':'.$minute.' น.';
     } else if($date != '') {
         $date = explode('-', $date);
-        $year = $date[0]+543;
+        $year = $date[0];
         $month = $date[1];
         $day = $date[2];
         $day = explode(' ', $day);

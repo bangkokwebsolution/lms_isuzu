@@ -5,12 +5,14 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $Docname ='Document Name';
     $An_name = 'Announced Date';
     $last_DOc = 'Latest Document';
+    $search_type = 'Type a search term';
 } else {
     $langId = Yii::app()->session['lang'];
     $No = 'ลำดับ';
     $Docname ='ชื่อเอกสาร';
     $An_name = 'วันที่ประกาศ';
     $last_DOc = 'เอกสารล่าสุด';
+    $search_type = 'พิมพ์คำค้นหา';
 }
 function DateThai($strDate)
 {
@@ -42,7 +44,7 @@ function DateThai($strDate)
                 <h4 class="topic mb-0"> <?= $last_DOc ?></h4>
             </div>
             <div class="col-5 col-md-4 col-lg-3">
-                <input class="form-control text-3" type="text" style="width: 100%;" placeholder="Type a search term">
+                <input class="form-control text-3" type="text" style="width: 100%;" placeholder="<?= $search_type ?>">
             </div>
         </div>
 

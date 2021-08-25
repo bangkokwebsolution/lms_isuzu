@@ -12,7 +12,10 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $peple = "Time";
     $status = "Status";
     $edu = "Not study";
-    $more = 'Read More';
+    $more = 'Read more';
+    $course_plan ='Course Plan';
+    $course_status = 'Course Status';
+    $classroom_online = 'Classroom Online';
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -27,6 +30,9 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $status = "สถานะ";
     $edu = "ยังไม่เรียน";
     $more = 'อ่านเพิ่มเติม';
+    $course_plan ='แผนการเรียน';
+    $course_status = 'สถานะของหลักสูตร';
+    $classroom_online = 'ห้องเรียนออนไลน์';
 }
 ?>
 <!-- // -->
@@ -172,7 +178,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                             <div class="icon-featured">
                                 <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/online-class.svg">
                             </div>
-                            <h4 class="mb-0">Classroom Online</h4>
+                            <h4 class="mb-0"><?= $classroom_online ?></h4>
                         </a>
                     </div>
                 </div>
@@ -208,7 +214,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                             <div class="icon-featured">
                                 <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/Course-Plan.svg">
                             </div>
-                            <h4 class="mb-0">Course Plan</h4>
+                            <h4 class="mb-0"><?= $course_plan ?></h4>
                         </a>
                     </div>
                 </div>
@@ -220,7 +226,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                             <div class="icon-featured">
                                 <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/Course-Status.svg">
                             </div>
-                            <h4 class="mb-0">Course Status</h4>
+                            <h4 class="mb-0"><?= $course_status ?></h4>
                         </a>
                     </div>
                 </div>
@@ -606,7 +612,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                                                 <small><i class="far fa-clock"></i> <?php echo Helpers::lib()->DateLangTms($value->update_date, Yii::app()->session['lang']); ?></small>
                                             </div> -->
                                             <div class="news-more">
-                                                <a href="<?php echo $link; ?>" <?= $new_tab ?> class="more"><?= $more ?> </a>
+                                                <a href="<?php echo $link; ?>" <?= $new_tab ?> class="more"><?= $more ?><i class="fas fa-angle-right"></i> </a>
                                             </div>
                                         </div>
                                     </div>

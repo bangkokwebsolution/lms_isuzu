@@ -29,85 +29,8 @@
                     <input type="hidden" name="header_id" value="<?php echo $header->survey_header_id; ?>">
                     <?php echo CHtml::decode($header->instructions); ?>
 
-                    <form>
-                        <div class="col table-responsive my-4">
-                            <table class="table table-bordered table-questionnaire">
-                                <thead class="questionnaire-title">
-                                    <tr>
-                                        <th rowspan="2">No</th>
-                                        <th rowspan="2" class="detail">Topic</th>
-                                        <th colspan="5">Score</th>
-                                    </tr>
-                                    <tr>
-                                        <th>5<br>Very Good</th>
-                                        <th>4<br>Good</th>
-                                        <th>3<br>Fair</th>
-                                        <th>2<br>Poor</th>
-                                        <th>1<br>Improve</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td class="text-left">Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
-                                        <!-- <form> -->
-                                        <td><input type="radio" name="1" value="5"></td>
-                                        <td><input type="radio" name="1" value="4"></td>
-                                        <td><input type="radio" name="1" value="3"></td>
-                                        <td><input type="radio" name="1" value="2"></td>
-                                        <td><input type="radio" name="1" value="1"></td>
-                                        <!-- </form> -->
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td class="text-left">Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
-                                        <!-- <form> -->
-                                        <td><input type="radio" name="2" value="5"></td>
-                                        <td><input type="radio" name="2" value="4"></td>
-                                        <td><input type="radio" name="2" value="3"></td>
-                                        <td><input type="radio" name="2" value="2"></td>
-                                        <td><input type="radio" name="2" value="1"></td>
-                                        <!-- </form> -->
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td class="text-left">Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
-                                        <!-- <form> -->
-                                        <td><input type="radio" name="3" value="5"></td>
-                                        <td><input type="radio" name="3" value="4"></td>
-                                        <td><input type="radio" name="3" value="3"></td>
-                                        <td><input type="radio" name="3" value="2"></td>
-                                        <td><input type="radio" name="3" value="1"></td>
-                                        <!-- </form> -->
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td class="text-left">Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
-                                        <!-- <form> -->
-                                        <td><input type="radio" name="4" value="5"></td>
-                                        <td><input type="radio" name="4" value="4"></td>
-                                        <td><input type="radio" name="4" value="3"></td>
-                                        <td><input type="radio" name="4" value="2"></td>
-                                        <td><input type="radio" name="4" value="1"></td>
-                                        <!-- </form> -->
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td class="text-left">Lorem ipsum dolor sit amet consectetur adipisicing elit.</td>
-                                        <!-- <form> -->
-                                        <td><input type="radio" name="5" value="5"></td>
-                                        <td><input type="radio" name="5" value="4"></td>
-                                        <td><input type="radio" name="5" value="3"></td>
-                                        <td><input type="radio" name="5" value="2"></td>
-                                        <td><input type="radio" name="5" value="1"></td>
-                                        <!-- </form> -->
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
 
-
-                    </form>
+                    <!-- </form> -->
 
                     <?php
                     if (count($header->sections) > 0) {
@@ -205,16 +128,23 @@
                                         <div class=" mtb-10 question-main">
                                             <div class="mt-2-5">
                                                 <table class="table table-bordered span10 topic-question" border="1">
-                                                    <tr>
-                                                        <th class="question-left"><strong><?php echo $questionValue->question_name; ?></strong></th>
-                                                        <?php
-                                                        if ($questionValue->question_range == "" || $questionValue->question_range == "5") {
+                                                    <?php
+                                                    if ($questionValue->question_range == "" || $questionValue->question_range == "5") {
                                                             $range = "5";
                                                             $scoreDetails = array('5' => 'มากที่สุด', '4' => 'มาก', '3' => 'ปานกลาง', '2' => 'น้อย', '1' => 'น้อยที่สุด');
                                                         } else {
                                                             $range = "10";
                                                             $scoreDetails = array('10' => 'มากที่สุด', '9' => '', '8' => '', '7' => '', '6' => '', '5' => 'ปานกลาง', '4' => '', '3' => '', '2' => '', '1' => 'น้อยที่สุด');
                                                         }
+                                                     ?>
+                                                        <tr>
+                                                            <th rowspan="2">No</th>
+                                                            <th class="question-left" rowspan="2" class="detail"><strong><?php echo $questionValue->question_name; ?></strong></th>
+                                                            <th colspan="<?= $range ?>">Score</th>
+                                                        </tr>
+                                                    <tr>
+                                                        <?php
+                                                        
                                                         for ($i = $range; $i >= 1; $i--) {
                                                         ?>
                                                             <th class="text-center" width="80"><strong><?php echo $i . " " . $scoreDetails[$i]; ?></strong></th>
@@ -224,14 +154,16 @@
                                                     </tr>
                                                     <?php
                                                     if (count($questionValue->choices) > 0) {
+                                                        $No = 1;
                                                         foreach ($questionValue->choices as $choiceKey => $choiceValue) {
                                                     ?>
                                                             <tr>
-                                                                <td class="question-left" <?php echo ($choiceKey % 2 == 0) ? 'style="background-color:#ececec"' : ''; ?>><?php echo $choiceValue->option_choice_name; ?><label for="choice[contentment][<?php echo $choiceValue->option_choice_id; ?>]" class="error"></label></td>
+                                                                <td><?= $No++ ?></td>
+                                                                <td class="question-left" <?php echo ($choiceKey % 2 == 0) ? : ''; ?>><?php echo $choiceValue->option_choice_name; ?><label for="choice[contentment][<?php echo $choiceValue->option_choice_id; ?>]" class="error"></label></td>
                                                                 <?php
                                                                 for ($i = $range; $i >= 1; $i--) {
                                                                 ?>
-                                                                    <td class="text-center" <?php echo ($choiceKey % 2 == 0) ? 'style="background-color:#ececec"' : ''; ?>><input style="margin:0px;" type="radio" name="choice[contentment][<?php echo $choiceValue->option_choice_id; ?>]" value="<?php echo $i; ?>" data-rule-required="true" data-msg-required="กรุณาเลือกคำตอบ"></td>
+                                                                    <td class="text-center" <?php echo ($choiceKey % 2 == 0) ?  : ''; ?>><input style="margin:0px;" type="radio" name="choice[contentment][<?php echo $choiceValue->option_choice_id; ?>]" value="<?php echo $i; ?>" data-rule-required="true" data-msg-required="กรุณาเลือกคำตอบ"></td>
                                                                 <?php
                                                                 }
                                                                 ?>
