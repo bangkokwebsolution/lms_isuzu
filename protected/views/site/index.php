@@ -2,7 +2,7 @@
 if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $langId = Yii::app()->session['lang'] = 1;
     $flag = true;
-    $doc_download = "Document download";
+    $doc_download = "Document Download";
     $system_guide_and_others = "System guide and others";
     $how_to_use = "How to use";
     $sys_eleaning = "E-Learning system";

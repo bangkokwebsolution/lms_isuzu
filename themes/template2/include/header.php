@@ -528,7 +528,7 @@ if (!empty($msg)) { ?>
             <form action="<?php echo $this->createUrl('/ReportProblem/ReportProblem'); ?>" method="POST" role="form" name='user-report' enctype="multipart/form-data">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>&nbsp;<?= Yii::app()->session['lang'] == 1 ? 'Report a problem' : 'แจ้งปัญหาการใช้งาน'; ?> </h4>
+                    <h4 class="modal-title"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>&nbsp;<?= Yii::app()->session['lang'] == 1 ? 'Report problem' : 'แจ้งปัญหาการใช้งาน'; ?> </h4>
                 </div>
                 <?php if (Yii::app()->user->id !== null) {
                     $criteria = new CDbCriteria;
@@ -557,7 +557,7 @@ if (!empty($msg)) { ?>
                             </div>
                             <div class="row report-row">
                                 <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Phone number' : 'เบอร์โทรศัพท์'; ?></label>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Internal Contact' : 'เบอร์ติดต่อภายใน'; ?></label>
                                     
                                 </div>
                             <?php }
@@ -643,12 +643,12 @@ if (!empty($msg)) { ?>
                             </div>
                             <div class="row report-row">
                                 <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Phone number' : 'เบอร์โทรศัพท์'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Phone number' : 'เบอร์โทรศัพท์'; ?>" name="ReportProblem[tel]">
+                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Internal Contact ' : 'เบอร์ติดต่อภายใน'; ?></label>
+                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Internal Contact' : 'เบอร์ติดต่อภายใน'; ?>" name="ReportProblem[tel]">
                                 </div>
                                 <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'email' : 'อีเมล์'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'email' : 'อีเมล์'; ?>" name="ReportProblem[email]">
+                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'E-mail' : 'อีเมล์'; ?></label>
+                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'E-mail' : 'อีเมล์'; ?>" name="ReportProblem[email]">
                                 </div>
                             </div>
 
@@ -693,7 +693,7 @@ if (!empty($msg)) { ?>
 
                             <div class="row report-row">
                                 <div class="col-md-12 col-xs-12">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'The message' : 'ข้อความ'; ?></label>
+                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Message' : 'ข้อความ'; ?></label>
                                     <textarea name="ReportProblem[report_detail]" class="form-control" placeholder="<?php echo Yii::app()->session['lang'] == 1 ? 'Type your message in this box.' : 'พิมพ์ข้อความในช่องนี้'; ?>" id="" cols="30" rows="6"></textarea>
                                 </div>
                             </div>

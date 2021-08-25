@@ -70,7 +70,13 @@ function DateThai($strDate)
                                             <a href="<?php echo $this->createUrl('news/detail/', array('id' => $all->parent_id)); ?>" style="text-decoration: none">
                                                 <h4 class="card-title  text-4 "><?php echo $all->cms_title ?></h4>
                                             </a>
-                                            <div class="mb-1"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/calendar-icon.png"><small>&nbsp;<?php echo DateThai($all->update_date) ?></small></div>
+                                            <div class="mb-1"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/calendar-icon.png"><small>&nbsp;<?php 
+                                                    if($langId==1){
+                                                         echo Helpers::changeFormatDateEN($all->update_date,'datetime');
+                                                    }else{
+                                                         echo Helpers::changeFormatDate($all->update_date,'datetime');
+                                                    }
+                                                ?></small></div>
                                             <a href="<?php echo $this->createUrl('news/detail/', array('id' => $all->parent_id)); ?>" class="more-news pull-right mt-1" style="text-decoration: none"><small><?= $more ?> <i class="fas fa-chevron-right text-1 ms-1"></i></small> </a>
                                         </div>
                                       

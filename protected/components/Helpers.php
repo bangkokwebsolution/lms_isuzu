@@ -234,7 +234,8 @@ public function changeFormatDateTHnew($date,$type=null)
             $month = 'error';
             break;
         }
-        return $days.' '.$month.' '.$year. ' '.$hour.':'.$minute.' น.';
+        
+        return $days.' '.$month.' '.$year. ' '.$hour.':'.$minute;
     } else if($date != '') {
         $date = explode('-', $date);
         $year = $date[0]+543;
@@ -288,7 +289,7 @@ public function changeFormatDateTHnew($date,$type=null)
     return $date;
 }
 
-public function changeFormatDateEN($date)
+public function changeFormatDateEN($date,$type=null)
     {   
 
          if($type=='datetime' && $date != ''){
@@ -345,7 +346,109 @@ public function changeFormatDateEN($date)
             $month = 'error';
             break;
         }
-        return $days.' '.$month.' '.$year. ' '.$hour.':'.$minute.' น.';
+        switch ($hour) {
+            case '00':
+                $hour ='12';
+                $N = 'AM';
+                break;
+            case '01':
+                $hour ='01';
+                $N = 'AM';
+                break;
+             case '02':
+                $hour ='02';
+                $N = 'AM';
+                break;
+                case '03':
+                $hour ='03';
+                $N = 'AM';
+                break;
+                case '04':
+                $hour ='04';
+                $N = 'AM';
+                break;
+                case '05':
+                $hour ='05';
+                $N = 'AM';
+                break;
+                case '06':
+                $hour ='06';
+                $N = 'AM';
+                break;
+                case '07':
+                $hour ='07';
+                $N = 'AM';
+                break;
+                case '08':
+                $hour ='08';
+                $N = 'AM';
+                break;
+                case '09':
+                $hour ='09';
+                $N = 'AM';
+                break;
+                case '10':
+                $hour ='10';
+                $N = 'AM';
+                break;
+                case '11':
+                $hour ='11';
+                $N = 'AM';
+                break;
+                case '12':
+                $hour ='12';
+                $N = 'PM';
+                break;
+                case '13':
+                $hour ='01';
+                $N = 'PM';
+                break;
+                case '14':
+                $hour ='02';
+                $N = 'PM';
+                break;
+                case '15':
+                $hour ='03';
+                $N = 'PM';
+                break;
+                case '16':
+                $hour ='04';
+                $N = 'PM';
+                break;
+                case '17':
+                $hour ='05';
+                $N = 'PM';
+                break;
+                case '18':
+                $hour ='06';
+                $N = 'PM';
+                break;
+                case '19':
+                $hour ='07';
+                $N = 'PM';
+                break;
+                case '20':
+                $hour ='08';
+                $N = 'PM';
+                break;
+                case '21':
+                $hour ='09';
+                $N = 'PM';
+                break;
+                case '22':
+                $hour ='10';
+                $N = 'PM';
+                break;
+                case '23':
+                $hour ='11';
+                $N = 'PM';
+                break;
+            default:
+                $hour = 'error';
+                $N = '';
+                break;
+        }
+        return $days.' '.$month.' '.$year. ' '.$hour.':'.$minute.' '.$N;
     } else if($date != '') {
         $date = explode('-', $date);
         $year = $date[0];

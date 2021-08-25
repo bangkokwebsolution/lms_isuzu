@@ -6,6 +6,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $An_name = 'Announced Date';
     $last_DOc = 'Latest Document';
     $search_type = 'Type a search term';
+    $Download = 'Download';
 } else {
     $langId = Yii::app()->session['lang'];
     $No = 'ลำดับ';
@@ -13,6 +14,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $An_name = 'วันที่ประกาศ';
     $last_DOc = 'เอกสารล่าสุด';
     $search_type = 'พิมพ์คำค้นหา';
+    $Download = 'ดาวน์โหลด';
 }
 function DateThai($strDate)
 {
@@ -88,7 +90,7 @@ function DateThai($strDate)
                                                         echo Helpers::changeFormatDate($doc->dow_createday);
                                                     }   ?>
                                                     <td>
-                                                        <a class="btn btn-download text-white" href="<?= Yii::app()->baseUrl ?>/admin/uploads/<?= $doc->dow_address ?>" download="<?= Yii::app()->baseUrl ?>/admin/uploads/<?= $doc->dow_address ?>" type="button">Download</a>
+                                                        <a class="btn btn-download text-white" href="<?= Yii::app()->baseUrl ?>/admin/uploads/<?= $doc->dow_address ?>" download="<?= Yii::app()->baseUrl ?>/admin/uploads/<?= $doc->dow_address ?>" type="button"><?= $Download ?></a>
                                                     </td>
                                                 </tr>
                                             </tbody>

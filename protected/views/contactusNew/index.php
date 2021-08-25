@@ -2,7 +2,7 @@
 if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $langId = Yii::app()->session['lang'] = 1;
     $Position = 'Position :';
-    $Desk_phone ='Desk phone :';
+    $Desk_phone ='Internal Contact No.';
     $Email ='E-mail :';
 } else {
     $langId = Yii::app()->session['lang'];
