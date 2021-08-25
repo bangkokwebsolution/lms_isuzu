@@ -157,7 +157,15 @@ class UsabilityController extends Controller
 
     public function actionDelete($id)
     {
-    	$this->loadModel($id)->delete();
+    	// $this->loadModel($id)->delete();
+        $model = $this->loadModel($id);
+        $model_2 = Usability::model()->findByAttributes(array('parent_id'=>$model->id));
+        $model->active = 'n';
+        $model->save();
+        if(!empty($model_2)){
+            $model_2->active = "n"; 
+            $model_2->save();
+        }
     	if(Yii::app()->user->id){
     		Helpers::lib()->getControllerActionId();
     	}
