@@ -288,6 +288,118 @@ public function changeFormatDateTHnew($date,$type=null)
     return $date;
 }
 
+public function changeFormatDateEN($date)
+    {   
+
+         if($type=='datetime' && $date != ''){
+        $date = explode('-', $date);
+        $year = $date[0]+543;
+        $month = $date[1];
+        $day = $date[2];
+        $day = explode(' ', $day);
+        $days = $day[0];
+        $time = explode(':', $day[1]);
+        $hour = $time[0];
+        $minute = $time[1];
+        if($year == '543' && $month == '00' && $days == '00'){
+            return 'ยังไม่เข้าสู่ระบบ';
+        }
+        switch ($month) {
+            case '01':
+            $month = 'JAN';
+            break;
+            case '02':
+            $month = 'FEB';
+            break;
+            case '03':
+            $month = 'MAR';
+            break;
+            case '04':
+            $month = 'APR';
+            break;
+            case '05':
+            $month = 'MAY';
+            break;
+            case '06':
+            $month = 'JUN';
+            break;
+            case '07':
+            $month = 'JUL';
+            break;
+            case '08':
+            $month = 'AUG';
+            break;
+            case '09':
+            $month = 'SEP';
+            break;
+            case '10':
+            $month = 'OCT';
+            break;
+            case '11':
+            $month = 'NOV';
+            break;
+            case '12':
+            $month = 'DEC';
+            break;
+            default:
+            $month = 'error';
+            break;
+        }
+        return $days.' '.$month.' '.$year. ' '.$hour.':'.$minute.' น.';
+    } else if($date != '') {
+        $date = explode('-', $date);
+        $year = $date[0]+543;
+        $month = $date[1];
+        $day = $date[2];
+        $day = explode(' ', $day);
+        $day = $day[0];
+        switch ($month) {
+             case '01':
+            $month = 'JAN';
+            break;
+            case '02':
+            $month = 'FEB';
+            break;
+            case '03':
+            $month = 'MAR';
+            break;
+            case '04':
+            $month = 'APR';
+            break;
+            case '05':
+            $month = 'MAY';
+            break;
+            case '06':
+            $month = 'JUN';
+            break;
+            case '07':
+            $month = 'JUL';
+            break;
+            case '08':
+            $month = 'AUG';
+            break;
+            case '09':
+            $month = 'SEP';
+            break;
+            case '10':
+            $month = 'OCT';
+            break;
+            case '11':
+            $month = 'NOV';
+            break;
+            case '12':
+            $month = 'DEC';
+            break;
+            default:
+            $month = 'error';
+            break;
+        }
+        return $day.' '.$month.' '.$year;
+    }
+    return $date;
+
+    }
+
 public function changeFormatDateENnew($date)
     {   
 

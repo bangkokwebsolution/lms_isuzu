@@ -1,8 +1,16 @@
 <?php
 if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $langId = Yii::app()->session['lang'] = 1;
+    $No = 'No.';
+    $Docname ='Document Name';
+    $An_name = 'Announced Date';
+    $last_DOc = 'Latest Document';
 } else {
     $langId = Yii::app()->session['lang'];
+    $No = 'ลำดับ';
+    $Docname ='ชื่อเอกสาร';
+    $An_name = 'วันที่ประกาศ';
+    $last_DOc = 'เอกสารล่าสุด';
 }
 function DateThai($strDate)
 {
@@ -31,7 +39,7 @@ function DateThai($strDate)
 
         <div class="row justify-content-between align-items-end mb-3">
             <div class="col-7 col-md-8 col-lg-9">
-                <h4 class="topic mb-0"> Latest Document</h4>
+                <h4 class="topic mb-0"> <?= $last_DOc ?></h4>
             </div>
             <div class="col-5 col-md-4 col-lg-3">
                 <input class="form-control text-3" type="text" style="width: 100%;" placeholder="Type a search term">
@@ -61,9 +69,9 @@ function DateThai($strDate)
                                         <table class="table table-condensed table-document ">
                                             <thead>
                                                 <tr>
-                                                    <td width="10%">No.</td>
-                                                    <td class="text-left">Document Name</td>
-                                                    <td width="20%">Announced Date</td>
+                                                    <td width="10%"><?= $No ?></td>
+                                                    <td class="text-left"><?= $Docname ?></td>
+                                                    <td width="20%"><?= $An_name ?></td>
                                                     <td width="15%"></td>
                                                 </tr>
                                             </thead>
@@ -71,7 +79,12 @@ function DateThai($strDate)
                                                 <tr>
                                                     <td>1</td>
                                                     <td class="text-left"><?= $doc->dow_name ?></td>
-                                                    <td><?php echo DateThai($doc->dow_createday); ?></td>
+                                                    <td><?php 
+                                                    if($langId==1){
+                                                        echo Helpers::changeFormatDateEN($doc->dow_createday);
+                                                    }else{
+                                                        echo Helpers::changeFormatDate($doc->dow_createday);
+                                                    }   ?>
                                                     <td>
                                                         <a class="btn btn-download text-white" href="<?= Yii::app()->baseUrl ?>/admin/uploads/<?= $doc->dow_address ?>" download="<?= Yii::app()->baseUrl ?>/admin/uploads/<?= $doc->dow_address ?>" type="button">Download</a>
                                                     </td>

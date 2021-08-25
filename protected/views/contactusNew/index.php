@@ -1,3 +1,16 @@
+<?php
+if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+    $langId = Yii::app()->session['lang'] = 1;
+    $Position = 'Position :';
+    $Desk_phone ='Desk phone :';
+    $Email ='E-mail :';
+} else {
+    $langId = Yii::app()->session['lang'];
+    $Position = 'ตำแหน่ง :';
+    $Desk_phone ='เบอร์ติดต่อภายใน :';
+    $Email ='อีเมล :';
+}
+ ?>
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-main">
@@ -42,7 +55,7 @@
                                             }
                                         ?>                                        
                                         </p>
-                                        <p>Position : 
+                                        <p><?= $Position ?> 
                                         <?php
                                             if (Yii::app()->session['lang'] == 1) {
                                                 echo $value['con_position_en'];
@@ -51,12 +64,12 @@
                                             }
                                         ?> 
                                         </p>
-                                        <p>Phone Number : 
+                                        <p><?= $Desk_phone ?>  
                                          <?php
                                             echo $value['con_tel'];
                                         ?>
                                         </p>
-                                        <p>Email : <?php
+                                        <p><?= $Email ?>  <?php
                                             echo $value['con_email'];
                                         ?></p>
                                     </div>

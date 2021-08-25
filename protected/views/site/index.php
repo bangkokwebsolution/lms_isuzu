@@ -12,6 +12,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $peple = "Time";
     $status = "Status";
     $edu = "Not study";
+    $more = 'Read More';
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -25,6 +26,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $peple = "ครั้ง";
     $status = "สถานะ";
     $edu = "ยังไม่เรียน";
+    $more = 'อ่านเพิ่มเติม';
 }
 ?>
 <!-- // -->
@@ -604,7 +606,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                                                 <small><i class="far fa-clock"></i> <?php echo Helpers::lib()->DateLangTms($value->update_date, Yii::app()->session['lang']); ?></small>
                                             </div> -->
                                             <div class="news-more">
-                                                <a href="<?php echo $link; ?>" <?= $new_tab ?>" class="more">อ่านเพิ่มเติม </a>
+                                                <a href="<?php echo $link; ?>" <?= $new_tab ?> class="more"><?= $more ?> </a>
                                             </div>
                                         </div>
                                     </div>
