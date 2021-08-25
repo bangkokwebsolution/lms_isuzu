@@ -21,8 +21,13 @@ $(".backtotop").click(function () {
 $("#carousel-banner").owlCarousel({
     items: 1,
     animateOut: "fadeOut",
-    loop: false,
+    loop: true,
     margin: 0,
+    autoplay:true,
+    autoplayTimeout:3000,
+    // autoplay:true,
+    // autoplayTimeout:1000,
+    // autoplayHoverPause:true
     // nav: true,
     // navText: ["<i class='fas fa-angle-left'></i>", "<i class='fas fa-angle-right'></i>"],
     responsiveClass: true,
