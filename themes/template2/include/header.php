@@ -558,7 +558,8 @@ if (!empty($msg)) { ?>
                             <div class="row report-row">
                                 <div class="col-md-6 col-xs-12 col-sm-6">
                                     <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Internal Contact' : 'เบอร์ติดต่อภายใน'; ?></label>
-                                    
+                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Internal Contact' : 'เบอร์ติดต่อภายใน'; ?>" name="ReportProblem[tel]" value="<?php echo $value->tel; ?>">
+
                                 </div>
                             <?php }
                         $criteria = new CDbCriteria;
