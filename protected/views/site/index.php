@@ -123,7 +123,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
     </script>
 <?php } ?>
 
-<section class="banner-main">
+<section class="container banner-main">
     <?php
     $criteriaimg = new CDbCriteria;
     $criteriaimg->compare('active', y);
