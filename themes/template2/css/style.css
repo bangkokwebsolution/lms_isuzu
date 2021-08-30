@@ -6011,3 +6011,6 @@ tr {
  margin-left: 5px;
 } 
 
+.banner-main .owl-item img{
+  border-radius: 0 0 5px 5px;
+}
