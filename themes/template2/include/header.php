@@ -1,8 +1,9 @@
-<?php 
+<?php
 // $keyrecaptcha = '6LdxRgocAAAAADrcEFCe2HcHeETOZdREexT52B6R'; //localhost
+
 $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
 
- ?>
+?>
 <script src='https://www.google.com/recaptcha/api.js?hl=th'></script>
 
 <header id="header" class="main-header">
@@ -124,7 +125,8 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
                                     echo   $name->firstname;
                                 }
                                 ?>
-                                <i class="br-left las la-bars"></i></a>
+                                <i class="br-left las la-bars"></i>
+                            </a>
                             <ul class="dropdown-menu">
                                 <?php if (Yii::app()->user->id !== null) { ?>
                                     <li class="<?= $bar == 'site' && $bar_action == 'dashboard' ? 'active' : '' ?>"><a href="<?php echo $this->createUrl('/site/dashboard'); ?>"><i class="fas fa-list-ul"></i><?= $label->label_header_dashboard ?></a></li>
@@ -204,11 +206,11 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
 
                                 <a data-toggle="modal" class="btn-login-course" href="#modal-login" >' . $value->title . '</span></a>
                                 </li>';
-                                // } elseif ($url == "video/library" && ($Profile_model->type_employee == 1 || $Profile_model->type_employee == 2)) {
-                                //     //เห็นเฉพาะคนเรือ+ออฟฟิศ
-                                //     echo '<li class="' . $clss . '">
-                                // <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
-                                // </li>';
+                                    // } elseif ($url == "video/library" && ($Profile_model->type_employee == 1 || $Profile_model->type_employee == 2)) {
+                                    //     //เห็นเฉพาะคนเรือ+ออฟฟิศ
+                                    //     echo '<li class="' . $clss . '">
+                                    // <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
+                                    // </li>';
                                 } else {
                                     echo '<li class="' . $clss . '">
                                 <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
@@ -467,13 +469,14 @@ if (!empty($msg)) { ?>
                                 <input type="text" class="form-control" placeholder='<?= $label->label_header_username ?>' name="UserLogin[username]" value="<?php echo Yii::app()->request->cookies['cookie_name']->value; ?>" required>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group password-group">
                                 <label for=""><?= $label->label_header_password ?></label>
-                                <input type="password" class="form-control" placeholder='<?= $label->label_header_password ?>' name="UserLogin[password]" required>
+                                <input type="password" id="password-field" class="form-control" placeholder='<?= $label->label_header_password ?>' name="UserLogin[password]" required>
+                                <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                             </div>
                             <div class="form-group" style="display: grid;">
                                 <!-- <div class="checkbox checkbox-info checkbox-circle"> -->
-                                    <!-- <input id="checkbox1" type="checkbox" name="UserLogin[checkbox]" value="on">
+                                <!-- <input id="checkbox1" type="checkbox" name="UserLogin[checkbox]" value="on">
                                     <label for="checkbox1">
                                         <?= $label->label_header_remember ?>
                                     </label>
@@ -481,22 +484,24 @@ if (!empty($msg)) { ?>
                                     $chk_status_reg = $SettingAll['ACTIVE_REGIS'];
                                     if ($chk_status_reg) {
                                     ?> -->
-                                <script> // กำหนดปุ่มเป็น disable ไว้ ต้องทำ reCHAPTCHA ก่อนจึงกดได้
-                                  function makeaction(){
-                                        document.getElementById('submit').disabled = false;  
-                                  }
-                                  </script>
-                                    <!-- <div class="cap" style="width: 200px"> -->
-                                        <div class="g-recaptcha" data-callback="makeaction" data-sitekey="<?php echo $keyrecaptcha; ?>" ></div>
-                                        <!-- </div> -->
-                                    <!-- <div class="cap" style="width: 100%"> -->
-
-                                    <span class="pull-right" style="margin-top: 5px">   
-                                        <a class="btn-forgot" href="<?php echo $this->createUrl('Forgot_password/index') ?>"><?= $label->label_header_forgotPass ?></a>
-                                        <!-- <a href="< ?php echo $this->createUrl('/registration/ShowForm'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a> -->
-                                    </span>
+                                <script>
+                                    // กำหนดปุ่มเป็น disable ไว้ ต้องทำ reCHAPTCHA ก่อนจึงกดได้
+                                    function makeaction() {
+                                        document.getElementById('submit').disabled = false;
+                                    }
+                                </script>
+                                <!-- <div class="cap" style="width: 200px"> -->
+                                <!-- <div class="g-recaptcha" data-callback="makeaction" data-sitekey="<?php echo $keyrecaptcha; ?>"></div> -->
+                                <div class="g-recaptcha" data-callback="makeaction" data-sitekey="<?php echo $keyrecaptcha; ?>"></div>
                                 <!-- </div> -->
-                                    
+                                <!-- <div class="cap" style="width: 100%"> -->
+
+                                <span class="pull-right" style="margin-top: 5px">
+                                    <a class="btn-forgot" href="<?php echo $this->createUrl('Forgot_password/index') ?>"><?= $label->label_header_forgotPass ?></a>
+                                    <!-- <a href="< ?php echo $this->createUrl('/registration/ShowForm'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a> -->
+                                </span>
+                                <!-- </div> -->
+
 
                                 <!-- <?php } ?> -->
 
@@ -510,7 +515,7 @@ if (!empty($msg)) { ?>
                 <div class="modal-footer">
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 col-xs-12">
-                            <button type="submit" class="btn btn-submit" disabled id="submit" name="submit"><?= $label->label_header_yes ?></button>
+                            <button type="submit" class="btn btn-submit login-main" disabled id="submit" name="submit"><?= $label->label_header_yes ?></button>
                         </div>
                     </div>
                 </div>
@@ -549,9 +554,6 @@ if (!empty($msg)) { ?>
                                 <div class="col-md-6 col-xs-12 col-sm-6">
                                     <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Last name' : 'นามสกุล'; ?></label>
                                     <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Last name' : 'นามสกุล'; ?>" name="ReportProblem[lastname]" value="<?php if (Yii::app()->session['lang'] == 1) {
-                                                                                                                                                                                                        echo $value->lastname_en;
-                                                                                                                                                                                                    } else {
-                                                                                                                                                                                                        echo $value->lastname;
                                                                                                                                                                                                     } ?>">
                                 </div>
                             </div>
@@ -717,3 +719,16 @@ if (!empty($msg)) { ?>
         </div>
     </div>
 </div>
+
+<script>
+    $(".toggle-password").click(function() {
+
+        $(this).toggleClass("fa-eye fa-eye-slash");
+        var input = $($(this).attr("toggle"));
+        if (input.attr("type") == "password") {
+            input.attr("type", "text");
+        } else {
+            input.attr("type", "password");
+        }
+    });
+</script>

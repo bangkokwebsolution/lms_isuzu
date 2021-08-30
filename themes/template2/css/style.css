@@ -679,7 +679,8 @@ section {
   background-color: #f0ad4e;
 }
 
-.a-main:hover,.a-main:focus{
+.a-main:hover,
+.a-main:focus {
   color: #fff;
 }
 
@@ -760,10 +761,11 @@ div.course-detail2 h4.text11 {
 }
 
 
-.well-term{
+.well-term {
   background: #fff;
-  margin:3em 0; 
+  margin: 3em 0;
 }
+
 .course .well {
   min-height: 350px;
   ;
@@ -2420,9 +2422,9 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
   background-color: #fff;
 }
 
-#exams .well .exams .well.answer div{
+#exams .well .exams .well.answer div {
   border: 1px solid #ddd;
-  padding: 10px ;
+  padding: 10px;
   border: 1px solid #ddd;
 }
 
@@ -4359,6 +4361,10 @@ ol.stat-alert li::before {
 
 }
 
+.login-main{
+  width: 140px;
+}
+
 .btn-submit:active {
   color: #fff;
   background-color: red;
@@ -5934,10 +5940,10 @@ tr {
   border-top: 1px solid #ddd;
   padding: 10px 0;
   margin: 20px 0;
-  font-weight:600;
+  font-weight: 600;
 }
 
-.btn-outline.btn-rounded.btn-dark{
+.btn-outline.btn-rounded.btn-dark {
   border: 1px solid #333;
   border-radius: 50px;
 }
@@ -5954,63 +5960,81 @@ tr {
   padding: 0;
 }
 
-.sidebar-account li{
+.sidebar-account li {
   padding: 10px 5px;
 }
 
-.sidebar-account li:not(:last-child){
+.sidebar-account li:not(:last-child) {
   border-bottom: 1px solid #333;
 }
 
-.sidebar-account li.active{
+.sidebar-account li.active {
   color: #e0001a;
-} 
+}
 
-.card-profile-detail  {
+.card-profile-detail {
   padding: 4px 10px 0;
   margin: 5px 0;
 }
 
-.card-profile-detail p{
+.card-profile-detail p {
   color: #e0001a;
   font-weight: 600;
 }
 
-.card-profile-detail p span{
+.card-profile-detail p span {
   color: #000;
   font-weight: 500;
 }
 
-.title-account{
-  color:#3D418E;
+.title-account {
+  color: #3D418E;
   margin-bottom: 10px;
 }
 
-.pic-profile{
+.pic-profile {
   margin-top: 3.2em;
   text-align: center;
 }
+
 .card-course .card-body {
   padding: 10px !important;
 }
+
 .card-course {
   box-shadow: 0 10px 30px rgb(0 0 0 / 10%);
   border: 1px solid #ddd;
   background-color: #ffffff;
 }
 
-.card-course .progress{
+.card-course .progress {
   height: 15px;
   margin-bottom: 0;
 }
 
-.terms-con a{
- color: #f33 !important;
- border-left: 1px solid #777;
- padding-left: 8px;
- margin-left: 5px;
-} 
+.terms-con a {
+  color: #f33 !important;
+  border-left: 1px solid #777;
+  padding-left: 8px;
+  margin-left: 5px;
+}
 
-.banner-main .owl-item img{
+.banner-main .owl-item img {
   border-radius: 0 0 5px 5px;
+}
+
+.cabinet.center-block #Profile_pro_pic {
+  display: none;
+}
+
+.password-group {
+  position: relative;
+}
+
+.toggle-password {
+  cursor: pointer;
+  position: absolute;
+  bottom: 13px;
+  right: 10px;
+  color: #888;
 }
