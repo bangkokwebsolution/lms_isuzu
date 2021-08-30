@@ -324,7 +324,7 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
                 <?php } else {
                 } ?>
             </ul>
-            <!-- <div class="box-search">
+            <div class="box-search">
                 <form id="searchForm" class="navbar-form" action="<?php echo $this->createUrl('Search/index') ?>">
                     <div class="simple-search input-group">
                         <input type="text" class="form-control" name="text" placeholder='<?= $label->label_placeholder_search ?>'>
@@ -333,7 +333,7 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
                         </button>
                     </div>
                 </form>
-            </div> -->
+            </div>
         </div>
     </div>
 

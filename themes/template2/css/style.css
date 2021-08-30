@@ -2632,22 +2632,28 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
   height: calc(2em + .75rem + 10px);
 }
 
+header .navbar-brand, header .navbar-nav li, header .navbar-form{
+  padding: 0;
+}
+
 .simple-search .form-control {
-  border-radius: 1.3rem 0 0 1.3rem;
+  border-radius: 5px!important;
   border-color: #EEE;
   border-right: 0;
+  font-size: 16px;
 }
 
 .simple-search .btn {
   border: 0;
   box-shadow: none !important;
-  border-radius: 0 1.3rem 1.3rem 0;
-  border: 1px solid #EEE;
   border-left: 0;
   position: absolute;
-  height: calc(2em + .75rem + 6px);
-  z-index: 2;
-  /* transform: translate(-20px, 0); */
+  height: calc(2em + .75rem + 2px);
+  z-index: 10;
+  background: transparent;
+  position: absolute;
+  border: 0;
+  right: 0;
 }
 
 .alert {
@@ -4361,7 +4367,7 @@ ol.stat-alert li::before {
 
 }
 
-.login-main{
+.login-main {
   width: 140px;
 }
 
