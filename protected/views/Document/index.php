@@ -1,4 +1,5 @@
 <?php
+$i=1;
 if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $langId = Yii::app()->session['lang'] = 1;
     $No = 'No.';
@@ -66,39 +67,40 @@ function DateThai($strDate)
                                 </a>
                             </div>
                             <div id="collapse<?= $key ?>">
-
-                                <?php foreach ($Document as $doc) {
+                                <table class="table table-condensed table-document ">
+                                    <thead>
+                                        <tr>
+                                            <td width="10%"><?= $No ?></td>
+                                            <td class="text-left"><?= $Docname ?></td>
+                                            <td width="20%"><?= $An_name ?></td>
+                                            <td width="15%"></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php foreach ($Document as $doc) {
                                     if ($doctype->dty_id == $doc->dty_id) { //3
-                                ?>
-                                        <table class="table table-condensed table-document ">
-                                            <thead>
-                                                <tr>
-                                                    <td width="10%"><?= $No ?></td>
-                                                    <td class="text-left"><?= $Docname ?></td>
-                                                    <td width="20%"><?= $An_name ?></td>
-                                                    <td width="15%"></td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td class="text-left"><?= $doc->dow_name ?></td>
-                                                    <td><?php 
-                                                    if($langId==1){
-                                                        echo Helpers::changeFormatDateEN($doc->dow_createday);
-                                                    }else{
-                                                        echo Helpers::changeFormatDate($doc->dow_createday);
-                                                    }   ?>
-                                                    <td>
-                                                        <a class="btn btn-download text-white" href="<?= Yii::app()->baseUrl ?>/admin/uploads/<?= $doc->dow_address ?>" download="<?= Yii::app()->baseUrl ?>/admin/uploads/<?= $doc->dow_address ?>" type="button"><?= $Download ?></a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                <?php
+                                        ?>
+                                        
+                                        <tr>
+                                            <td><?= $i++; ?></td>
+                                            <td class="text-left"><?= $doc->dow_name ?></td>
+                                            <td><?php 
+                                            if($langId==1){
+                                                echo Helpers::changeFormatDateEN($doc->dow_createday);
+                                            }else{
+                                                echo Helpers::changeFormatDate($doc->dow_createday);
+                                            }   ?>
+                                            <td>
+                                                <a class="btn btn-download text-white" href="<?= Yii::app()->baseUrl ?>/admin/uploads/<?= $doc->dow_address ?>" download="<?= Yii::app()->baseUrl ?>/admin/uploads/<?= $doc->dow_address ?>" type="button"><?= $Download ?></a>
+                                            </td>
+                                        </tr>
+
+                                        <?php
                                     }
                                 }
                                 ?>
+                            </tbody>
+                        </table>
                             </div>
                         <?php } ?>
 

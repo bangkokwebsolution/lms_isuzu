@@ -16,9 +16,11 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $course_plan ='Course Plan';
     $course_status = 'Course Status';
     $classroom_online = 'Classroom Online';
+    $library_show = 'E-Library';
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
+    $library_show = 'ห้องสมุดออนไลน์';
     $doc_download = "เอกสารดาวน์โหลด";
     $system_guide_and_others = "คู่มือระบบและอื่นๆ";
     $how_to_use = "วิธีการใช้งาน";
@@ -190,7 +192,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                             <div class="icon-featured">
                                 <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/E-Library.svg">
                             </div>
-                            <h4 class="mb-0">E-Library</h4>
+                            <h4 class="mb-0"><?= $library_show ?></h4>
                         </a>
                     </div>
                 </div>

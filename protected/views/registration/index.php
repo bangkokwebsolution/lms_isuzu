@@ -5,8 +5,21 @@ if (!Yii::app()->user->isGuest) {
 }
 if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $langId = Yii::app()->session['lang'] = 1;
+    $nameTHtitle = 'Firstname - Lastname';
+    $EmployeeID = 'Employee ID';
+    $mail = 'E-mail';
+    $Position_d = 'Position description';
+    $Employee_c  ='Employee class';
+
+
 } else {
+    $EmployeeID = 'รหัสพนักงาน';
+    $mail = 'อีเมล';
+    $Employee_c  ='ตำแหน่งพนักงาน';
+    $Position_d = 'คำอธิบายตำแหน่ง';
     $langId = Yii::app()->session['lang'];
+    $nameTHtitle = 'ชื่อนาม - สกุล';
+
 }
 
 $news_forms = $users->isNewRecord;
@@ -98,7 +111,7 @@ figure figcaption {
                                 <?php if($edit!=1){ ?>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="card card-profile-detail">
-                                        <p>ชื่อ - นามสกุล (TH) <br> 
+                                        <p><?= $nameTHtitle ?> (TH) <br> 
                                           <span>
                                            <?php $nameTH = $profile->firstname.' '.$profile->lastname;
 
@@ -115,7 +128,7 @@ figure figcaption {
                                 </div>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="card card-profile-detail">
-                                        <p>Firstname - Lastname (EN) <br> 
+                                        <p><?= $nameTHtitle ?> (EN) <br> 
                                           <span>
                                            <?php $nameEN = $profile->firstname_en.' '.$profile->lastname_en;
 
@@ -131,7 +144,7 @@ figure figcaption {
                                 </div>
                                 <div class="col-md-6  col-xs-12">
                                     <div class="card card-profile-detail">
-                                        <p>Employee ID <br>
+                                        <p><?= $EmployeeID ?> <br>
                                           <span> 
                                             <?php $employee_id = $profile->user->employee_id;
                                             if(!empty($employee_id)){
@@ -145,7 +158,7 @@ figure figcaption {
                                 </div>
                                 <div class="col-md-6 col-xs-12 ">
                                     <div class="card card-profile-detail">
-                                        <p>Email <br><span>
+                                        <p><?= $mail ?> <br><span>
                                           <?php  $email =  $profile->user->email; 
                                     if(!empty($email)){
                                             echo $email;
@@ -158,7 +171,7 @@ figure figcaption {
                                 </div>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="card card-profile-detail">
-                                        <p>Employee class <br><span>
+                                        <p><?= $Employee_c ?> <br><span>
                                             <?php $employee_class =  $profile->employee_class; 
 
                                      if(!empty($employee_class)){
@@ -173,7 +186,7 @@ figure figcaption {
                                 </div>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="card card-profile-detail">
-                                        <p>Position description <br><span>
+                                        <p><?= $Position_d ?> <br><span>
                                           <?php $position_description = $profile->position_description ;
 
                                         if(!empty($position_description)){
@@ -188,7 +201,7 @@ figure figcaption {
                                 <?php }else{ ?>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="card card-profile-detail">
-                                        <p>ชื่อ - นามสกุล (TH) <br> 
+                                        <p><?=$nameTHtitle ?> (TH) <br> 
                                           <span>
                                            <?php $nameTH = $profile->firstname.' '.$profile->lastname;
                                            echo "<input class='form-control' name='fullnameTH' id='fullnameTH' value='".$nameTH."' >";
@@ -199,7 +212,7 @@ figure figcaption {
                                 </div>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="card card-profile-detail">
-                                        <p>Firstname - Lastname (EN) <br> 
+                                        <p><?= $nameTHtitle ?> (EN) <br> 
                                           <span>
                                            <?php $nameEN = $profile->firstname_en.' '.$profile->lastname_en;
                                                 echo "<input class='form-control' name='fullnameEN' id='fullnameEN' value='".$nameEN."' >";
@@ -209,7 +222,7 @@ figure figcaption {
                                 </div>
                                 <div class="col-md-6  col-xs-12">
                                     <div class="card card-profile-detail">
-                                        <p>Employee ID <br>
+                                        <p><?= $EmployeeID ?> <br>
                                           <span> 
                                             <?php $employee_id = $profile->user->employee_id;
                                                 echo "<input class='form-control' name='employee_id' id='employee_id' value='".$employee_id."' >";
@@ -219,7 +232,7 @@ figure figcaption {
                                 </div>
                                 <div class="col-md-6 col-xs-12 ">
                                     <div class="card card-profile-detail">
-                                        <p>Email <br><span>
+                                        <p><?= $mail ?> <br><span>
                                           <?php $email =  $profile->user->email ;
                                           echo "<input class='form-control' name='email' id='email' value='".$email."' >";
                                           ?>
@@ -228,7 +241,7 @@ figure figcaption {
                                 </div>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="card card-profile-detail">
-                                        <p>Employee class <br><span>
+                                        <p><?= $Employee_c ?> <br><span>
                                             <?php $employee_class =  $profile->employee_class; 
                                           echo "<input class='form-control' name='employee_class' id='employee_class' value='".$employee_class."' >";
 
@@ -238,7 +251,7 @@ figure figcaption {
                                 </div>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="card card-profile-detail">
-                                        <p>Position description <br><span>
+                                        <p><?= $Position_d ?> <br><span>
                                           <?php $position_description = $profile->position_description ;
                                           echo "<input class='form-control' name='position_description' id='position_description' value='".$position_description."' >";
                                           ?>

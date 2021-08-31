@@ -559,8 +559,8 @@ if (!empty($msg)) { ?>
                             </div>
                             <div class="row report-row">
                                 <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Internal Contact' : 'เบอร์ติดต่อภายใน'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Internal Contact' : 'เบอร์ติดต่อภายใน'; ?>" name="ReportProblem[tel]" value="<?php echo $value->tel; ?>">
+                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Internal Contact No.' : 'เบอร์ติดต่อภายใน'; ?></label>
+                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Internal Contact No.' : 'เบอร์ติดต่อภายใน'; ?>" name="ReportProblem[tel]" value="<?php echo $value->tel; ?>">
 
                                 </div>
                             <?php }
@@ -646,8 +646,8 @@ if (!empty($msg)) { ?>
                             </div>
                             <div class="row report-row">
                                 <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Internal Contact ' : 'เบอร์ติดต่อภายใน'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Internal Contact' : 'เบอร์ติดต่อภายใน'; ?>" name="ReportProblem[tel]">
+                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Internal Contact No.' : 'เบอร์ติดต่อภายใน'; ?></label>
+                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Internal Contact No.' : 'เบอร์ติดต่อภายใน'; ?>" name="ReportProblem[tel]">
                                 </div>
                                 <div class="col-md-6 col-xs-12 col-sm-6">
                                     <label for=""><?= Yii::app()->session['lang'] == 1 ? 'E-mail' : 'อีเมล์'; ?></label>
