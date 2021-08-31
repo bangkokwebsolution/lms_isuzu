@@ -643,12 +643,12 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                     if ($vdoshow->vdo_type == 'link') {
                         $vdoName = $vdoshow->vdo_path;
                         $new_link = str_replace("watch?v=", "embed/", $vdoName);
-                        $show = '<iframe class="embed-responsive-item" width="100%" height="88"  src="' . $new_link . '" allowfullscreen style="box-shadow:1px 4px 6px #767676"></iframe>';
+                        $show = '<iframe class="embed-responsive-item" width="100%" height="88"  src="' . $new_link . '" allowfullscreen></iframe>';
                         echo $show;
                         $href = 'href="' . $vdoshow->vdo_path . '" target="_blank"';
                     } else {
                     ?>
-                        <video class="video-js" controls preload="auto" style="width: 100%; height: 315;">
+                        <video class="video-js" controls preload="auto" style="width: 100%; height: 300;">
                             <!--  <source src="<?php echo Yii::app()->homeurl . '/../uploads/' . $vdoshow->vdo_path; ?>" type='video/mp4'> -->
                             <source src="<?php echo Yii::app()->baseUrl . '/admin/uploads/' . $vdoshow->vdo_path; ?>" type='video/mp4'>
                             <p class="vjs-no-js">

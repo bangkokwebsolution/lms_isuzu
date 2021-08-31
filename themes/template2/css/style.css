@@ -835,7 +835,7 @@ div.course-detail2 h4.text11 {
 .news .well {
   background-color: #fff;
   border-radius: 3px;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
   border: 1px solid #00000030;
   -webkit-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
@@ -983,7 +983,7 @@ img {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  min-height: 4rem;
+  min-height: 2em;
 }
 
 .document {
@@ -2069,9 +2069,17 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
   margin-bottom: 10px;
 }
 
-.fluid-width-video-wrapper iframe{
-  box-shadow :none !important;
-  border:0;
+.fluid-width-video-wrapper iframe {
+  box-shadow: none !important;
+  border: 0;
+}
+
+.news-card .card-title {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  min-height: 3em;
 }
 
 #video .well:hover {
@@ -2638,12 +2646,14 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
   height: calc(2em + .75rem + 10px);
 }
 
-header .navbar-brand, header .navbar-nav li, header .navbar-form{
+header .navbar-brand,
+header .navbar-nav li,
+header .navbar-form {
   padding: 0;
 }
 
 .simple-search .form-control {
-  border-radius: 5px!important;
+  border-radius: 5px !important;
   border-color: #EEE;
   border-right: 0;
   font-size: 16px;
@@ -2980,7 +2990,7 @@ ol {
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  min-height: 4rem;
+  min-height: 3em;
 }
 
 .stepcourse {
@@ -4463,6 +4473,9 @@ ol.stat-alert li::before {
   min-height: 390px;
   overflow: hidden;
 }
+.slide-video .fluid-width-video-wrapper{
+  padding-top: 80% !important;
+}
 
 @media screen and (max-width:600px) {
   .main-slide .item {
@@ -5010,7 +5023,7 @@ header .navbar-nav li a {
   transition: all 0.3s ease 0s;
 }
 
-.showmascot{
+.showmascot {
   height: 210px;
 }
 
