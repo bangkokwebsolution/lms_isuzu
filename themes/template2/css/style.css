@@ -832,6 +832,12 @@ div.course-detail2 h4.text11 {
   padding-bottom: 0;
 }
 
+.news-img{
+  max-height: 130px;
+    min-height: 130px;
+    overflow: hidden;
+}
+
 .news .well {
   background-color: #fff;
   border-radius: 3px;
