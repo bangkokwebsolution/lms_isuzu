@@ -1,10 +1,17 @@
 <?php
+if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+    $langId = Yii::app()->session['lang'] = 1;
+    $langRe = 'en';
+} else {
+    $langId = Yii::app()->session['lang'];
+    $langRe = 'th';
+}
 // $keyrecaptcha = '6LdxRgocAAAAADrcEFCe2HcHeETOZdREexT52B6R'; //localhost
 
 $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
 
 ?>
-<script src='https://www.google.com/recaptcha/api.js?hl=th'></script>
+<script src='https://www.google.com/recaptcha/api.js?hl=<?= $langRe ?>'></script>
 
 <header id="header" class="main-header">
     <nav class="navbar navbar-inverse" role="navigation">
@@ -18,11 +25,7 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
                     <span class="icon-bar"></span>
                 </button>
                 <?php
-                if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
-                    $langId = Yii::app()->session['lang'] = 1;
-                } else {
-                    $langId = Yii::app()->session['lang'];
-                }
+                
                 $label = MenuSite::model()->findByPk(array('lang_id' => $langId));
                 if (!$label) {
                     $label = MenuSite::model()->findByPk(array('lang_id' => 1));
