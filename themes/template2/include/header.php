@@ -193,6 +193,7 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
                         }
                     }
                 } else {
+
                     $mainMenu = MainMenu::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y', 'lang_id' => Yii::app()->session['lang']));
 
                     $Profile_model = Profile::model()->findByPk(Yii::app()->user->id);
@@ -201,7 +202,7 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
                         $url = !empty($value->parent) ? $value->parent->url : $value->url;
                         $controller = explode('/', $url);
                         $controller[0] = strtolower($controller[0]);
-                        if ($controller[0] != "registration" && $controller[0] != "privatemessage" && $controller[0] != "search" && $controller[0] != "forgot_password" && $controller[0] != "question") {
+                        if ($controller[0] != "registration" && $controller[0] != "privatemessage" && $controller[0] != "search" && $controller[0] != "forgot_password" && $controller[0] != "question" && $controller[0] != "virtualclassroom" && $controller[0] != "video") {
                             $clss =  $bar == $controller[0] && $bar_action == "index" ? "active" : '';
                             if ($controller[0] != "webboard") {
                                 if ($controller[0] == "course" && Yii::app()->user->id == null) {
@@ -209,11 +210,7 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
 
                                 <a data-toggle="modal" class="btn-login-course" href="#modal-login" >' . $value->title . '</span></a>
                                 </li>';
-                                    // } elseif ($url == "video/library" && ($Profile_model->type_employee == 1 || $Profile_model->type_employee == 2)) {
-                                    //     //เห็นเฉพาะคนเรือ+ออฟฟิศ
-                                    //     echo '<li class="' . $clss . '">
-                                    // <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
-                                    // </li>';
+                                   
                                 } else {
                                     echo '<li class="' . $clss . '">
                                 <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
