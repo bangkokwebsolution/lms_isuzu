@@ -6,6 +6,12 @@
     .box-search {
         float: right;
     }
+
+    .news .well .news-img {
+        max-height: 120px;
+        min-height: 120px;
+        overflow: hidden;
+    }
 }
 
 @media only screen and (max-width:991px) {

@@ -25,7 +25,7 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
                     <span class="icon-bar"></span>
                 </button>
                 <?php
-                
+
                 $label = MenuSite::model()->findByPk(array('lang_id' => $langId));
                 if (!$label) {
                     $label = MenuSite::model()->findByPk(array('lang_id' => 1));
@@ -724,6 +724,24 @@ if (!empty($msg)) { ?>
 </div>
 
 <script>
+    var showmodal = $(".in");
+    var modalactive = $("#user-report").find(showmodal);
+
+    $(".contact-admin").click(function() {
+        $(".contact-admin").addClass("showmascot");
+    });
+
+    $("#user-report .close").click(function() {
+        $(".contact-admin").removeClass("showmascot");
+    });
+
+    $(document).ready(function() {
+        $("#user-report").modal({
+            show: false,
+            backdrop: 'static'
+        });
+    });
+
     $(".toggle-password").click(function() {
 
         $(this).toggleClass("fa-eye fa-eye-slash");
