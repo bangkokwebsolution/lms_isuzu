@@ -657,7 +657,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                             </p>
                         </video>
                     <?php } ?>
-                    <span class="pull-right"><a class="btn btn-viewall btn-sm" href="<?php echo $this->createUrl('/video/index'); ?>" role="button"><?= $label->label_viewAll ?> <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/add.svg"></a></span>
+                    <span class="pull-right"><a class="btn mt-1 btn-viewall btn-sm" href="<?php echo $this->createUrl('/video/index'); ?>" role="button"><?= $label->label_viewAll ?> <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/add.svg"></a></span>
                 </div>
 
             </div>

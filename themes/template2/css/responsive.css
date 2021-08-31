@@ -8,8 +8,8 @@
     }
 
     .news .well .news-img {
-        max-height: 120px;
-        min-height: 120px;
+        max-height: 110px;
+        min-height: 110px;
         overflow: hidden;
     }
 }
