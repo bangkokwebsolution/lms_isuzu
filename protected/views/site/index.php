@@ -567,7 +567,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
         <div class="container">
             <div class="row">
 
-                <div class="col-lg-8">
+                <div class="col-lg-8 col-sm-12">
                     <div class="page-header">
                         <h4><span><?= $label->label_news ?></span> </h4>
                     </div>
@@ -592,7 +592,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                             }
                         }
                     ?>
-                        <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="col-lg-4 col-sm-4 col-xs-12">
                             <div class="well">
                                 <a href="<?php echo $link; ?>" <?= $new_tab ?>>
                                     <div class="row">
@@ -635,7 +635,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                 $criteriavdo->order = 'sortOrder DESC';
                 $vdoshow = vdo::model()->find($criteriavdo);
                 ?>
-                <div class="col-lg-4 col-xs-12 col-sm-4">
+                <div class="col-lg-4 col-xs-12 col-sm-12">
                     <div class="page-header">
                         <h4><span><?= $label->label_vdo ?></span> </h4>
                     </div>

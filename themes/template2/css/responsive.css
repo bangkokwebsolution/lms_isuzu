@@ -1,3 +1,9 @@
+@media only screen and (min-width:992px) and (max-width:1360px) {
+    .contact-admin {
+        right: 100px;
+    }
+}
+
 @media only screen and (min-width:992px) {
     .menu-header {
         padding: 10px 0 0 0;
@@ -48,16 +54,32 @@
         line-height: 35px;
     }
 }
+
+@media only screen and (max-width:991px) and (min-width:767px) {
+    .contact-admin {
+        right: 55px;
+        height: 65px !important;
+        width: 160px !important;
+    }
+}
+
 @media only screen and (max-width:600px) {
-    .contact-admin{
-        width: 150px;
+    .contact-admin {
+        width: 150px !important;
         height: 60px !important;
         right: 10px;
     }
-    .contact-admin:hover{
+
+    .contact-admin:hover {
         height: 170px !important;
     }
-    .backtotop{
+
+    .backtotop {
         bottom: 30%;
+    }
+
+    .slide-video.news .page-header h4 {
+        font-size: 1.4em;
+        letter-spacing: 0.8px;
     }
 }
