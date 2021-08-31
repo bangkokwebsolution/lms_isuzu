@@ -5097,15 +5097,11 @@ header .navbar-nav li a {
 }
 
 .library-topic {
-  padding: 20px;
-  background: #0a146a;
-  color: #fff;
+  padding: 20px 3px 3px;
+  color: #000000;
   font-size: 16px;
 }
 
-.library-topic i {
-  margin-right: 5px;
-}
 
 #library-group .nav-tabs {
   display: flex;
@@ -5147,7 +5143,7 @@ header .navbar-nav li a {
 .filter-active:focus {
   color: #fff !important;
 }
-
+/* 
 .library-topic:after {
   content: '' !important;
   position: absolute;
@@ -5158,7 +5154,7 @@ header .navbar-nav li a {
   border-style: solid;
   border-width: 20px 0 20px 25px;
   border-color: transparent transparent transparent #0a146a;
-}
+} */
 
 #library-group .tab-content {
   margin-top: 3em;
@@ -5184,7 +5180,7 @@ header .navbar-nav li a {
 .library-detail {
   padding: 1em;
   text-align: center;
-  max-height: 120px;
+  max-height: 40px;
   margin-bottom: 10px;
   transform: translateY(-40px);
   background: #fff;

@@ -28,37 +28,21 @@
 <section class="content" id="library-group">
 
   <div class="container">
-    <ul class="nav nav-tabs">
+    <!-- <ul class="nav nav-tabs tab-library">
       <li <?php if(isset($_GET['cate_2'])){ echo 'class="active"'; }elseif(!isset($_GET['cate_1'])){ echo 'class="active"'; } ?>>
         <a data-toggle="tab" href="#lby-doc" onclick="tab_cate(this, 2);"><?php echo $label->label_library_document ?></a>
       </li>
       <li <?php if(isset($_GET['cate_1'])){ echo 'class="active"'; } ?>>
         <a data-toggle="tab" href="#lby-multi" onclick="tab_cate(this, 1);"><?php echo $label->label_library_media ?></a>
       </li>
-    </ul>
+    </ul> -->
 
     <div class="tab-content">
 
       <div id="lby-doc" class="tab-pane fade <?php if(isset($_GET['cate_2'])){ echo 'in active'; }elseif(!isset($_GET['cate_1'])){ echo 'in active'; } ?>">
         <div class="row">
           <div class="col-sm-4 col-md-3 col-xs-12">
-            <h4 class="library-topic"><i class="fas fa-list"></i><?php echo $label->label_list_docment ?></h4>
-            <form id="searchForm" action="<?php echo $this->createUrl('video/library'); ?>" method="GET">
-              <div class="input-group">
-                <input type="text" class="form-control" name="cate_2" value="<?= $_GET['cate_2'] ?>" placeholder=' <?php if (Yii::app()->session['lang'] == 1) { echo "Search"; } else { echo "ค้นหา"; } ?>'>
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span>
-                    <?php
-                    if (Yii::app()->session['lang'] == 1) {
-                      echo "Search";
-                    } else {
-                      echo "ค้นหา";
-                    }
-                    ?>
-                  </button>
-                </span>
-              </div>
-            </form>
+            <h4 class="library-topic"><?php echo $label->label_list_docment ?></h4>
 
             <div class="type-menu gallery">
               <button class="tab-btn-cate-type btn btn-default filter-button btn-lg" data-filter="cate-all-2"><?php echo $label->label_all ?></button>
@@ -875,25 +859,8 @@
           <div class="col-sm-4 col-md-3 col-xs-12">
 
             <h4 class="library-topic">
-              <i class="fas fa-list"></i><?php echo $label->label_list_media ?>
+             <?php echo $label->label_list_media ?>
             </h4>
-
-            <form id="searchForm" action="<?php echo $this->createUrl('video/library') ?>" method="GET">
-              <div class="input-group">
-                <input type="text" class="form-control" name="cate_1" value="<?= $_GET['cate_1'] ?>" placeholder=' <?php if (Yii::app()->session['lang'] == 1) { echo "Search"; } else { echo "ค้นหา"; } ?>'>
-                <span class="input-group-btn">
-                  <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search"></span>
-                    <?php
-                    if (Yii::app()->session['lang'] == 1) {
-                      echo "Search";
-                    } else {
-                      echo "ค้นหา";
-                    }
-                    ?>
-                  </button>
-                </span>
-              </div>
-            </form>
 
             <div class="type-menu gallery">
               <button class="tab-btn-cate-type btn btn-default filter-button btn-lg" data-filter="cate-all-1"><?php echo $label->label_all ?></button>
