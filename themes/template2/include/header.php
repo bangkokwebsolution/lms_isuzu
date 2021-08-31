@@ -91,7 +91,7 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
                     <ul class="dropdown-menu changelang">
                         <?php
                         foreach ($langauge as $key => $value) {
-                            echo '<li><a href="?lang=' . $value->id . '"><img src="' . Yii::app()->baseUrl . '/uploads/language/' . $value->id . '/small/' . $value->image . '" height="30px" alt=""></a></li>';
+                            echo '<li><a href="?lang=' . $value->id . '"><img src="' . Yii::app()->baseUrl . '/uploads/language/' . $value->id . '/small/' . $value->image . '" height="30px" alt="">'. $value->language .'</a></li>';
                         }
                         ?>
                     </ul>
