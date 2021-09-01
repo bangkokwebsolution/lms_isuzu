@@ -307,40 +307,40 @@ public function changeFormatDateEN($date,$type=null)
         }
         switch ($month) {
             case '01':
-            $month = 'JAN';
+            $month = 'Jan';
             break;
             case '02':
-            $month = 'FEB';
+            $month = 'Feb';
             break;
             case '03':
-            $month = 'MAR';
+            $month = 'Mar';
             break;
             case '04':
-            $month = 'APR';
+            $month = 'Apr';
             break;
             case '05':
-            $month = 'MAY';
+            $month = 'May';
             break;
             case '06':
-            $month = 'JUN';
+            $month = 'Jun';
             break;
             case '07':
-            $month = 'JUL';
+            $month = 'Jul';
             break;
             case '08':
-            $month = 'AUG';
+            $month = 'Aug';
             break;
             case '09':
-            $month = 'SEP';
+            $month = 'Sep';
             break;
             case '10':
-            $month = 'OCT';
+            $month = 'Oct';
             break;
             case '11':
-            $month = 'NOV';
+            $month = 'Nov';
             break;
             case '12':
-            $month = 'DEC';
+            $month = 'Dec';
             break;
             default:
             $month = 'error';
@@ -457,41 +457,41 @@ public function changeFormatDateEN($date,$type=null)
         $day = explode(' ', $day);
         $day = $day[0];
         switch ($month) {
-             case '01':
-            $month = 'JAN';
+           case '01':
+            $month = 'Jan';
             break;
             case '02':
-            $month = 'FEB';
+            $month = 'Feb';
             break;
             case '03':
-            $month = 'MAR';
+            $month = 'Mar';
             break;
             case '04':
-            $month = 'APR';
+            $month = 'Apr';
             break;
             case '05':
-            $month = 'MAY';
+            $month = 'May';
             break;
             case '06':
-            $month = 'JUN';
+            $month = 'Jun';
             break;
             case '07':
-            $month = 'JUL';
+            $month = 'Jul';
             break;
             case '08':
-            $month = 'AUG';
+            $month = 'Aug';
             break;
             case '09':
-            $month = 'SEP';
+            $month = 'Sep';
             break;
             case '10':
-            $month = 'OCT';
+            $month = 'Oct';
             break;
             case '11':
-            $month = 'NOV';
+            $month = 'Nov';
             break;
             case '12':
-            $month = 'DEC';
+            $month = 'Dec';
             break;
             default:
             $month = 'error';
@@ -520,41 +520,41 @@ public function changeFormatDateENnew($date)
             return 'ยังไม่เข้าสู่ระบบ';
         }
         switch ($month) {
-            case '01':
-            $month = 'JAN';
+           case '01':
+            $month = 'Jan';
             break;
             case '02':
-            $month = 'FEB';
+            $month = 'Feb';
             break;
             case '03':
-            $month = 'MAR';
+            $month = 'Mar';
             break;
             case '04':
-            $month = 'APR';
+            $month = 'Apr';
             break;
             case '05':
-            $month = 'MAY';
+            $month = 'May';
             break;
             case '06':
-            $month = 'JUN';
+            $month = 'Jun';
             break;
             case '07':
-            $month = 'JUL';
+            $month = 'Jul';
             break;
             case '08':
-            $month = 'AUG';
+            $month = 'Aug';
             break;
             case '09':
-            $month = 'SEP';
+            $month = 'Sep';
             break;
             case '10':
-            $month = 'OCT';
+            $month = 'Oct';
             break;
             case '11':
-            $month = 'NOV';
+            $month = 'Nov';
             break;
             case '12':
-            $month = 'DEC';
+            $month = 'Dec';
             break;
             default:
             $month = 'error';
@@ -569,41 +569,41 @@ public function changeFormatDateENnew($date)
         $day = explode(' ', $day);
         $day = $day[0];
         switch ($month) {
-             case '01':
-            $month = 'JAN';
+            case '01':
+            $month = 'Jan';
             break;
             case '02':
-            $month = 'FEB';
+            $month = 'Feb';
             break;
             case '03':
-            $month = 'MAR';
+            $month = 'Mar';
             break;
             case '04':
-            $month = 'APR';
+            $month = 'Apr';
             break;
             case '05':
-            $month = 'MAY';
+            $month = 'May';
             break;
             case '06':
-            $month = 'JUN';
+            $month = 'Jun';
             break;
             case '07':
-            $month = 'JUL';
+            $month = 'Jul';
             break;
             case '08':
-            $month = 'AUG';
+            $month = 'Aug';
             break;
             case '09':
-            $month = 'SEP';
+            $month = 'Sep';
             break;
             case '10':
-            $month = 'OCT';
+            $month = 'Oct';
             break;
             case '11':
-            $month = 'NOV';
+            $month = 'Nov';
             break;
             case '12':
-            $month = 'DEC';
+            $month = 'Dec';
             break;
             default:
             $month = 'error';

@@ -6,9 +6,12 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $langId = Yii::app()->session['lang'];
     $langRe = 'th';
 }
-// $keyrecaptcha = '6LdxRgocAAAAADrcEFCe2HcHeETOZdREexT52B6R'; //localhost
+if($_SERVER['REMOTE_ADDR']=='::1'){
+    $keyrecaptcha = '6LdxRgocAAAAADrcEFCe2HcHeETOZdREexT52B6R'; //localhost
+}else{
+    $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
 
-$keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
+}
 
 ?>
 <script src='https://www.google.com/recaptcha/api.js?hl=<?= $langRe ?>'></script>
@@ -46,52 +49,52 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
                             <div class="panel panel-default">
                                 <div class="panel-heading">
                                     <h3 class="panel-title"><span class="pull-right"><a href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></span><?= $label->label_header_msg  ?>
-                                    </h3>
-                                </div>
-                                <div class="panel-body">
-                                    <ul class="list-unstyled">
-                                        <?php for ($i = 0; $i <= 3; $i++) { ?>
-                                            <?php if (!empty($PrivatemessageReturn[$i]->pmr_return)) { ?>
-                                                <li>
-                                                    <span class="pull-right">
-                                                        <?php echo $PrivatemessageReturn[$i]->update_date; ?>
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <ul class="list-unstyled">
+                                    <?php for ($i = 0; $i <= 3; $i++) { ?>
+                                        <?php if (!empty($PrivatemessageReturn[$i]->pmr_return)) { ?>
+                                            <li>
+                                                <span class="pull-right">
+                                                    <?php echo $PrivatemessageReturn[$i]->update_date; ?>
+                                                </span>
+                                                <a href="<?php echo $this->createUrl('/privatemessage/index'); ?>">
+                                                    <span class="img-send" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/user.png);">
                                                     </span>
-                                                    <a href="<?php echo $this->createUrl('/privatemessage/index'); ?>">
-                                                        <span class="img-send" style="background-image: url(<?php echo Yii::app()->theme->baseUrl; ?>/images/user.png);">
-                                                        </span>
-                                                        <?php echo $PrivatemessageReturn[$i]->pmr_return; ?>
-                                                    </a>
-                                                </li>
+                                                    <?php echo $PrivatemessageReturn[$i]->pmr_return; ?>
+                                                </a>
+                                            </li>
                                         <?php }
-                                        } ?>
+                                    } ?>
 
-                                    </ul>
-                                </div>
+                                </ul>
+                            </div>
 
-                                <div class="panel-footer">
-                                    <a href="#" class="text-center"><?= $label->label_header_msgAll  ?></a>
-                                </div>
+                            <div class="panel-footer">
+                                <a href="#" class="text-center"><?= $label->label_header_msgAll  ?></a>
                             </div>
                         </div>
-
                     </div>
-                <?php } else {
-                } ?>
-                <a class="navbar-brand hidden-xs" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo.png" height="60px" alt=""></a>
-                <a class="navbar-brand visible-xs" style="width: auto" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-xs.png" height="35px" alt=""></a>
-            </div>
-            <div class="menu-header ">
-                <?php
-                $langauge = Language::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y'));
-                $currentlangauge = Language::model()->findByPk(Yii::app()->session['lang']);
-                ?>
-                <div class="changelg">
-                    <a class="btn dropdown-toggle selectpicker" type="button" data-toggle="dropdown"><img src="<?= Yii::app()->baseUrl . '/uploads/language/' . $currentlangauge->id . '/small/' . $currentlangauge->image; ?>" height="30px" alt="">
-                        <span class="caret"></span></a>
+
+                </div>
+            <?php } else {
+            } ?>
+            <a class="navbar-brand hidden-xs" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo.png" height="60px" alt=""></a>
+            <a class="navbar-brand visible-xs" style="width: auto" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-xs.png" height="35px" alt=""></a>
+        </div>
+        <div class="menu-header ">
+            <?php
+            $langauge = Language::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y'));
+            $currentlangauge = Language::model()->findByPk(Yii::app()->session['lang']);
+            ?>
+            <div class="changelg">
+                <a class="btn dropdown-toggle selectpicker" type="button" data-toggle="dropdown"><img src="<?= Yii::app()->baseUrl . '/uploads/language/' . $currentlangauge->id . '/small/' . $currentlangauge->image; ?>" height="30px" alt="">
+                    <span class="caret"></span></a>
                     <ul class="dropdown-menu changelang">
                         <?php
                         foreach ($langauge as $key => $value) {
-                            echo '<li><a href="?lang=' . $value->id . '"><img src="' . Yii::app()->baseUrl . '/uploads/language/' . $value->id . '/small/' . $value->image . '" height="30px" alt="">'. $value->language .'</a></li>';
+                            echo '<li><a href="?lang=' . $value->id . '"><img src="' . Yii::app()->baseUrl . '/uploads/language/' . $value->id . '/small/' . $value->image . '" height="30px" alt=""> '. $value->language .'</a></li>';
                         }
                         ?>
                     </ul>
@@ -102,63 +105,63 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
                     <div>
                         <a class="btn-login " data-toggle="modal" href='#modal-login'>
                             <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/login-icon.png" alt=""><span class="d-none d-sm-inline"> <?= $label->label_header_login ?></span></a></d>
-                    <?php } else { ?>
-                        <div class="dropdown user-menu">
-                            <?php
+                        <?php } else { ?>
+                            <div class="dropdown user-menu">
+                                <?php
 
-                            if (Yii::app()->user->id == null) {
+                                if (Yii::app()->user->id == null) {
 
-                                $img  = Yii::app()->theme->baseUrl . "/images/thumbnail-profile.png";
-                            } else {
-                                $criteria = new CDbCriteria;
-                                $criteria->addCondition('id =' . Yii::app()->user->id);
-                                $Users = Users::model()->findAll($criteria);
-                                foreach ($Users as $key => $value) {
-                                    $img = Yii::app()->baseUrl . '/uploads/user/' . $value->id . '/thumb/' . $value->pic_user;
-                                }
-                            }
-                            ?>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;">
-                                <!-- <span class="photo" style="background-image: url('<?= $img ?>"></span> -->
-                                <span class="photo" style="background-image: url('<?= $img ?>"></span>
-                                <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/username-icon.png" class="profile-account" alt=""> -->
-                                <?php if (Yii::app()->session['lang'] == 1) {
-                                    echo  $name->firstname_en;
+                                    $img  = Yii::app()->theme->baseUrl . "/images/thumbnail-profile.png";
                                 } else {
-                                    echo   $name->firstname;
+                                    $criteria = new CDbCriteria;
+                                    $criteria->addCondition('id =' . Yii::app()->user->id);
+                                    $Users = Users::model()->findAll($criteria);
+                                    foreach ($Users as $key => $value) {
+                                        $img = Yii::app()->baseUrl . '/uploads/user/' . $value->id . '/thumb/' . $value->pic_user;
+                                    }
                                 }
                                 ?>
-                                <i class="br-left las la-bars"></i>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <?php if (Yii::app()->user->id !== null) { ?>
-                                    <li class="<?= $bar == 'site' && $bar_action == 'dashboard' ? 'active' : '' ?>"><a href="<?php echo $this->createUrl('/site/dashboard'); ?>"><i class="fas fa-list-ul"></i><?= $label->label_header_dashboard ?></a></li>
-                                <?php } ?>
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;">
+                                    <!-- <span class="photo" style="background-image: url('<?= $img ?>"></span> -->
+                                    <span class="photo" style="background-image: url('<?= $img ?>"></span>
+                                    <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/username-icon.png" class="profile-account" alt=""> -->
+                                    <?php if (Yii::app()->session['lang'] == 1) {
+                                        echo  $name->firstname_en;
+                                    } else {
+                                        echo   $name->firstname;
+                                    }
+                                    ?>
+                                    <i class="br-left las la-bars"></i>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <?php if (Yii::app()->user->id !== null) { ?>
+                                        <li class="<?= $bar == 'site' && $bar_action == 'dashboard' ? 'active' : '' ?>"><a href="<?php echo $this->createUrl('/site/dashboard'); ?>"><i class="fas fa-list-ul"></i><?= $label->label_header_dashboard ?></a></li>
+                                    <?php } ?>
 
-                                <li>
-                                    <?php
-                                    $user = Users::model()->findByPk(Yii::app()->user->id);
-                                    if ($user->type_register != 3) { ?>
-                                <li>
-                                    <?php $url = Yii::app()->createUrl('registration/Update/'); ?>
-                                    <a href="<?= $url ?>"><i class="fas fa-edit"></i><?= $label->label_header_update ?></a>
-                                </li>
-                            <?php } ?>
-                            <?php if ($user->superuser == 1) { ?>
-                                <li>
-                                    <?php $url = Yii::app()->createUrl('admin'); ?>
-                                    <a href="<?= $url ?>"><i class="fas fa-cog"></i><?= UserModule::t("backend"); ?></a>
-                                </li>
-                            <?php } ?>
-                            <li>
+                                    <li>
+                                        <?php
+                                        $user = Users::model()->findByPk(Yii::app()->user->id);
+                                        if ($user->type_register != 3) { ?>
+                                            <li>
+                                                <?php $url = Yii::app()->createUrl('registration/Update/'); ?>
+                                                <a href="<?= $url ?>"><i class="fas fa-edit"></i><?= $label->label_header_update ?></a>
+                                            </li>
+                                        <?php } ?>
+                                        <?php if ($user->superuser == 1) { ?>
+                                            <li>
+                                                <?php $url = Yii::app()->createUrl('admin'); ?>
+                                                <a href="<?= $url ?>"><i class="fas fa-cog"></i><?= UserModule::t("backend"); ?></a>
+                                            </li>
+                                        <?php } ?>
+                                        <li>
                                 <!-- <a href="<?php //echo $this->createUrl('login/logout') 
-                                                ?>"> --><a href="javascript:void(0)" class="text-danger log-out" onclick="logout()"><i class="fas fa-sign-out-alt"></i><?= $label->label_header_logout ?></a>
+                                ?>"> --><a href="javascript:void(0)" class="text-danger log-out" onclick="logout()"><i class="fas fa-sign-out-alt"></i><?= $label->label_header_logout ?></a>
                             </li>
-                            </ul>
-                        </div>
-                    <?php } ?>
+                        </ul>
                     </div>
+                <?php } ?>
             </div>
+        </div>
 
     </nav>
     <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -178,17 +181,17 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
                                 if ($controller[0] == "course" && Yii::app()->user->id == null) {
                                     echo '<li class="' . $clss . '">
 
-                                <a data-toggle="modal" class="btn-login-course" href="#modal-login" >' . $value->title . '</span></a>
-                                </li>';
+                                    <a data-toggle="modal" class="btn-login-course" href="#modal-login" >' . $value->title . '</span></a>
+                                    </li>';
                                 } else {
                                     echo '<li class="' . $clss . '">
-                                <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
-                                </li>';
+                                    <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
+                                    </li>';
                                 }
                             } else {
                                 echo '<li class="' . $clss . '">
-                            <a href="' . $this->createUrl($url) . '?lang=' . Yii::app()->session['lang'] . '">' . $value->title . '</span></a>
-                            </li>';
+                                <a href="' . $this->createUrl($url) . '?lang=' . Yii::app()->session['lang'] . '">' . $value->title . '</span></a>
+                                </li>';
                             }
                         }
                     }
@@ -208,18 +211,18 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
                                 if ($controller[0] == "course" && Yii::app()->user->id == null) {
                                     echo '<li class="' . $clss . '">
 
-                                <a data-toggle="modal" class="btn-login-course" href="#modal-login" >' . $value->title . '</span></a>
-                                </li>';
-                                   
+                                    <a data-toggle="modal" class="btn-login-course" href="#modal-login" >' . $value->title . '</span></a>
+                                    </li>';
+
                                 } else {
                                     echo '<li class="' . $clss . '">
-                                <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
-                                </li>';
+                                    <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
+                                    </li>';
                                 }
                             } else {
                                 echo '<li class="' . $clss . '">
-                            <a href="' . $this->createUrl($url) . '?lang=' . Yii::app()->session['lang'] . '">' . $value->title . '</span></a>
-                            </li>';
+                                <a href="' . $this->createUrl($url) . '?lang=' . Yii::app()->session['lang'] . '">' . $value->title . '</span></a>
+                                </li>';
                             }
                         }
                     }
@@ -229,7 +232,7 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
                 <?php
                 $key = "DR6564UFP5858BU58448HYYGYCFRVTVYBHCFCGHJ";
                 if ($key) {
-                ?>
+                    ?>
                     <!-- <li class="">
                         <a href="<?= $this->createUrl("dashboard/terms") ?>">
                             <?php
@@ -241,13 +244,13 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
                             ?>
                         </a>
                     </li> -->
-                    <?php }
+                <?php }
 
                 if (Yii::app()->user->id) {
                     $user_login = User::model()->findByPk(Yii::app()->user->id);
                     $authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 
                     if ($authority == 1 || $authority == 2 || $authority == 3) {
-                    ?>
+                        ?>
                         <!-- <li class="">
                             <a href="<?= $this->createUrl("report/index") ?>">
                                 <?php
@@ -260,7 +263,7 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
 
                             </a>
                         </li> -->
-                <?php }
+                    <?php }
                 } ?>
 
 
@@ -271,9 +274,9 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
                     $chk_status_reg = $SettingAll = Helpers::lib()->SetUpSetting();
                     $chk_status_reg = $SettingAll['ACTIVE_REGIS'];
                     if ($chk_status_reg) {
-                ?>
+                        ?>
                         <!-- <li><a class="btn-register" href="<?php echo $this->createUrl('/registration/ShowForm'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a></li> -->
-                <?php }
+                    <?php }
                 } ?>
 
                 <?php if (Yii::app()->user->id !== null) { ?>
@@ -321,21 +324,21 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
                     </div>
                 </li> -->
 
-                <?php } else {
-                } ?>
-            </ul>
-            <div class="box-search">
-                <form id="searchForm" class="navbar-form" action="<?php echo $this->createUrl('Search/index') ?>">
-                    <div class="simple-search input-group">
-                        <input type="text" class="form-control" name="text" placeholder='<?= $label->label_placeholder_search ?>'>
-                        <button class="btn" type="submit">
-                            <i class="fas fa-search header-nav-top-icon"></i>
-                        </button>
-                    </div>
-                </form>
-            </div>
+            <?php } else {
+            } ?>
+        </ul>
+        <div class="box-search">
+            <form id="searchForm" class="navbar-form" action="<?php echo $this->createUrl('Search/index') ?>">
+                <div class="simple-search input-group">
+                    <input type="text" class="form-control" name="text" placeholder='<?= $label->label_placeholder_search ?>'>
+                    <button class="btn" type="submit">
+                        <i class="fas fa-search header-nav-top-icon"></i>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 
 </header>
 
@@ -382,28 +385,28 @@ $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
 
                 if (result.result == true) {
                     swal({
-                            position: 'top-end',
-                            type: 'success',
-                            title: result.msg,
-                            showConfirmButton: true,
-                        },
-                        function(isConfirm) {
-                            if (isConfirm) {
-                                location.reload();
-                            }
-                        });
+                        position: 'top-end',
+                        type: 'success',
+                        title: result.msg,
+                        showConfirmButton: true,
+                    },
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            location.reload();
+                        }
+                    });
                 } else {
                     swal({
-                            position: 'top-end',
-                            type: 'warning',
-                            title: result.msg,
-                            showConfirmButton: true
-                        },
-                        function(isConfirm) {
-                            if (isConfirm) {
-                                location.reload();
-                            }
-                        });
+                        position: 'top-end',
+                        type: 'warning',
+                        title: result.msg,
+                        showConfirmButton: true
+                    },
+                    function(isConfirm) {
+                        if (isConfirm) {
+                            location.reload();
+                        }
+                    });
                 }
             }
         });
@@ -454,7 +457,7 @@ if (!empty($msg)) { ?>
                                 } else if (!empty($_GET['error']['password'])) {
                                     $error = $_GET['error']['password'][0];
                                 }
-                            ?>
+                                ?>
                                 <script>
                                     $(document).ready(function() {
                                         window.history.replaceState({}, 'error', '<?= $this->createUrl('site/index') ?>');
@@ -483,270 +486,270 @@ if (!empty($msg)) { ?>
                                     <?php $chk_status_reg = $SettingAll = Helpers::lib()->SetUpSetting();
                                     $chk_status_reg = $SettingAll['ACTIVE_REGIS'];
                                     if ($chk_status_reg) {
-                                    ?> -->
-                                <script>
+                                        ?> -->
+                                        <script>
                                     // กำหนดปุ่มเป็น disable ไว้ ต้องทำ reCHAPTCHA ก่อนจึงกดได้
                                     function makeaction() {
                                         document.getElementById('submit').disabled = false;
                                     }
                                 </script>
                                 <!-- <div class="cap" style="width: 200px"> -->
-                                <!-- <div class="g-recaptcha" data-callback="makeaction" data-sitekey="<?php echo $keyrecaptcha; ?>"></div> -->
-                                <div class="g-recaptcha" data-callback="makeaction" data-sitekey="<?php echo $keyrecaptcha; ?>"></div>
-                                <!-- </div> -->
-                                <!-- <div class="cap" style="width: 100%"> -->
+                                    <!-- <div class="g-recaptcha" data-callback="makeaction" data-sitekey="<?php echo $keyrecaptcha; ?>"></div> -->
+                                    <div class="g-recaptcha" data-callback="makeaction" data-sitekey="<?php echo $keyrecaptcha; ?>"></div>
+                                    <!-- </div> -->
+                                    <!-- <div class="cap" style="width: 100%"> -->
 
-                                <span class="pull-right" style="margin-top: 5px">
-                                    <a class="btn-forgot" href="<?php echo $this->createUrl('Forgot_password/index') ?>"><?= $label->label_header_forgotPass ?></a>
-                                    <!-- <a href="< ?php echo $this->createUrl('/registration/ShowForm'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a> -->
-                                </span>
-                                <!-- </div> -->
+                                        <span class="pull-right" style="margin-top: 5px">
+                                            <a class="btn-forgot" href="<?php echo $this->createUrl('Forgot_password/index') ?>"><?= $label->label_header_forgotPass ?></a>
+                                            <!-- <a href="< ?php echo $this->createUrl('/registration/ShowForm'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a> -->
+                                        </span>
+                                        <!-- </div> -->
 
 
-                                <!-- <?php } ?> -->
+                                        <!-- <?php } ?> -->
 
-                                <!-- </div> -->
+                                        <!-- </div> -->
 
+                                    </div>
+
+                                </div>
                             </div>
-
                         </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <div class="row">
-                        <div class="col-sm-8 col-sm-offset-2 col-xs-12">
-                            <button type="submit" class="btn btn-submit login-main" disabled id="submit" name="submit"><?= $label->label_header_yes ?></button>
+                        <div class="modal-footer">
+                            <div class="row">
+                                <div class="col-sm-8 col-sm-offset-2 col-xs-12">
+                                    <button type="submit" class="btn btn-submit login-main" disabled id="submit" name="submit"><?= $label->label_header_yes ?></button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
-</div>
 
 
 
 
-<div class="modal fade" id="user-report">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <form action="<?php echo $this->createUrl('/ReportProblem/ReportProblem'); ?>" method="POST" role="form" name='user-report' enctype="multipart/form-data">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>&nbsp;<?= Yii::app()->session['lang'] == 1 ? 'Report problem' : 'แจ้งปัญหาการใช้งาน'; ?> </h4>
-                </div>
-                <?php if (Yii::app()->user->id !== null) {
-                    $criteria = new CDbCriteria;
-                    $criteria->addCondition('user_id =' . Yii::app()->user->id);
-                    $Profile = Profile::model()->findAll($criteria);
-                    foreach ($Profile as $key => $value) {
-                ?>
-                        <div class="modal-body">
-                            <div class="row report-row">
-                                <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Name' : 'ชื่อ'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Name' : 'ชื่อ'; ?>" name="ReportProblem[firstname]" value="<?php if (Yii::app()->session['lang'] == 1) {
-                                                                                                                                                                                                echo $value->firstname_en;
-                                                                                                                                                                                            } else {
-                                                                                                                                                                                                echo $value->firstname;
-                                                                                                                                                                                            } ?>">
-                                </div>
-                                <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Last name' : 'นามสกุล'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Last name' : 'นามสกุล'; ?>" name="ReportProblem[lastname]" value="<?php if (Yii::app()->session['lang'] == 1) {
-                                                                                                                                                                                                    } ?>">
-                                </div>
-                            </div>
-                            <div class="row report-row">
-                                <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Internal Contact No.' : 'เบอร์ติดต่อภายใน'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Internal Contact No.' : 'เบอร์ติดต่อภายใน'; ?>" name="ReportProblem[tel]" value="<?php echo $value->tel; ?>">
-
-                                </div>
-                            <?php }
-                        $criteria = new CDbCriteria;
-                        $criteria->addCondition('user_id =' . Yii::app()->user->id);
-                        $Users = Users::model()->findAll($criteria);
-                        foreach ($Users as $key => $value) {
-                            ?>
-                                <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'email' : 'อีเมล์'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'email' : 'อีเมล์'; ?>" name="ReportProblem[email]" value="<?php echo $value->email; ?>">
-                                </div>
-                            </div>
-                        <?php } ?>
-                        <div class="row report-row">
-                            <div class="col-md-6 col-xs-12 col-sm-6">
-                                <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Problem type' : 'ประเภทปัญหา'; ?></label>
-                                <select class="form-control d-inlineblock " name="ReportProblem[report_type]">
-                                    <option value=""><?= Yii::app()->session['lang'] == 1 ? 'Problem type' : 'ไม่ระบุประเภท'; ?></option>
-                                    <?php
-                                    $criteria = new CDbCriteria;
-                                    $criteria->addCondition('active ="y"');
-                                    $criteria->addCondition('lang_id = 1');
-                                    $Usability = Usability::model()->findAll($criteria);
-                                    foreach ($Usability as $key => $value) {
-
-                                    ?>
-                                        <option value="<?php echo $value->usa_id; ?>"><?php echo $value->usa_title; ?></option>
-                                    <?php
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="col-md-6 col-xs-12 col-sm-6">
-                                <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Course' : 'หลักสูตร'; ?></label>
-                                <select class="form-control d-inlineblock " name="ReportProblem[report_course]">
-                                    <option value=""><?= Yii::app()->session['lang'] == 1 ? 'No course specified' : 'ไม่ระบุหลักสูตร'; ?></option>
-                                    <?php
-                                    $criteria = new CDbCriteria;
-                                    $criteria->addCondition('active ="y"');
-                                    $criteria->addCondition('lang_id = 1');
-                                    $CourseOnline = CourseOnline::model()->findAll($criteria);
-                                    foreach ($CourseOnline as $key => $value) {
-
-                                    ?>
-                                        <option value="<?php echo $value->course_id; ?>"><?php echo $value->course_title; ?></option>
-                                    <?php
-                                    }
-                                    ?>
-                                </select>
-                            </div>
+        <div class="modal fade" id="user-report">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="<?php echo $this->createUrl('/ReportProblem/ReportProblem'); ?>" method="POST" role="form" name='user-report' enctype="multipart/form-data">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title"><i class="fa fa-exclamation-circle" aria-hidden="true"></i>&nbsp;<?= Yii::app()->session['lang'] == 1 ? 'Report problem' : 'แจ้งปัญหาการใช้งาน'; ?> </h4>
                         </div>
+                        <?php if (Yii::app()->user->id !== null) {
+                            $criteria = new CDbCriteria;
+                            $criteria->addCondition('user_id =' . Yii::app()->user->id);
+                            $Profile = Profile::model()->findAll($criteria);
+                            foreach ($Profile as $key => $value) {
+                                ?>
+                                <div class="modal-body">
+                                    <div class="row report-row">
+                                        <div class="col-md-6 col-xs-12 col-sm-6">
+                                            <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Name' : 'ชื่อ'; ?></label>
+                                            <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Name' : 'ชื่อ'; ?>" name="ReportProblem[firstname]" value="<?php if (Yii::app()->session['lang'] == 1) {
+                                                echo $value->firstname_en;
+                                                } else {
+                                                    echo $value->firstname;
+                                                } ?>">
+                                            </div>
+                                            <div class="col-md-6 col-xs-12 col-sm-6">
+                                                <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Last name' : 'นามสกุล'; ?></label>
+                                                <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Last name' : 'นามสกุล'; ?>" name="ReportProblem[lastname]" value="<?php if (Yii::app()->session['lang'] == 1) {
+                                                } ?>">
+                                            </div>
+                                        </div>
+                                        <div class="row report-row">
+                                            <div class="col-md-6 col-xs-12 col-sm-6">
+                                                <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Internal Contact No.' : 'เบอร์ติดต่อภายใน'; ?></label>
+                                                <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Internal Contact No.' : 'เบอร์ติดต่อภายใน'; ?>" name="ReportProblem[tel]" value="<?php echo $value->tel; ?>">
 
-                        <div class="row report-row">
-                            <div class="col-md-12 col-xs-12">
-                                <label for=""><?= Yii::app()->session['lang'] == 1 ? 'The message' : 'ข้อความ'; ?></label>
-                                <textarea name="ReportProblem[report_detail]" class="form-control" placeholder="<?php echo Yii::app()->session['lang'] == 1 ? 'Type your message in this box.' : 'พิมพ์ข้อความในช่องนี้'; ?>" id="" cols="30" rows="6"></textarea>
-                            </div>
-                        </div>
-
-
-                        <div class="row report-row">
-                            <div class="col-md-6 col-xs-12">
-                                <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Upload photo' : 'อัปโหลดรูปภาพ'; ?></label>
-                                <input type="file" class="form-control" name="ReportProblem[report_pic]">
-                            </div>
-                        </div>
-
-                        <hr>
-                        <div class="text-center"> <button type="submit" class="btn btn-submit btn-report" name=""><?= Yii::app()->session['lang'] == 1 ? 'Confirm' : 'ยืนยัน'; ?></button></div>
-                        </div>
-                    <?php } else { ?>
-                        <div class="modal-body">
-                            <div class="row report-row">
-                                <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Name' : 'ชื่อ'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Name' : 'ชื่อ'; ?>" name="ReportProblem[firstname]">
-                                </div>
-                                <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Last name' : 'นามสกุล'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Last name' : 'นามสกุล'; ?>" name="ReportProblem[lastname]">
-                                </div>
-                            </div>
-                            <div class="row report-row">
-                                <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Internal Contact No.' : 'เบอร์ติดต่อภายใน'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Internal Contact No.' : 'เบอร์ติดต่อภายใน'; ?>" name="ReportProblem[tel]">
-                                </div>
-                                <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'E-mail' : 'อีเมล์'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'E-mail' : 'อีเมล์'; ?>" name="ReportProblem[email]">
-                                </div>
-                            </div>
-
-                            <div class="row report-row">
-                                <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Problem type' : 'ประเภทปัญหา'; ?></label>
-                                    <select class="form-control d-inlineblock " name="ReportProblem[report_type]">
-                                        <option value=""><?= Yii::app()->session['lang'] == 1 ? 'Problem type' : 'ไม่ระบุประเภท'; ?></option>
-                                        <?php
+                                            </div>
+                                        <?php }
                                         $criteria = new CDbCriteria;
-                                        $criteria->addCondition('active ="y"');
-                                        $criteria->addCondition('lang_id =1');
-                                        $Usability = Usability::model()->findAll($criteria);
-                                        foreach ($Usability as $key => $value) {
+                                        $criteria->addCondition('user_id =' . Yii::app()->user->id);
+                                        $Users = Users::model()->findAll($criteria);
+                                        foreach ($Users as $key => $value) {
+                                            ?>
+                                            <div class="col-md-6 col-xs-12 col-sm-6">
+                                                <label for=""><?= Yii::app()->session['lang'] == 1 ? 'email' : 'อีเมล์'; ?></label>
+                                                <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'email' : 'อีเมล์'; ?>" name="ReportProblem[email]" value="<?php echo $value->email; ?>">
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                    <div class="row report-row">
+                                        <div class="col-md-6 col-xs-12 col-sm-6">
+                                            <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Problem type' : 'ประเภทปัญหา'; ?></label>
+                                            <select class="form-control d-inlineblock " name="ReportProblem[report_type]">
+                                                <option value=""><?= Yii::app()->session['lang'] == 1 ? 'Problem type' : 'ไม่ระบุประเภท'; ?></option>
+                                                <?php
+                                                $criteria = new CDbCriteria;
+                                                $criteria->addCondition('active ="y"');
+                                                $criteria->addCondition('lang_id = 1');
+                                                $Usability = Usability::model()->findAll($criteria);
+                                                foreach ($Usability as $key => $value) {
 
-                                        ?>
-                                            <option value="<?php echo $value->usa_id; ?>"><?php echo $value->usa_title; ?></option>
-                                        <?php
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Course' : 'หลักสูตร'; ?></label>
-                                    <select class="form-control d-inlineblock " name="ReportProblem[report_course]">
-                                        <option value=""><?= Yii::app()->session['lang'] == 1 ? 'No course specified' : 'ไม่ระบุหลักสูตร'; ?></option>
-                                        <?php
-                                        $criteria = new CDbCriteria;
-                                        $criteria->addCondition('active ="y"');
-                                        $criteria->addCondition('lang_id =1');
-                                        $CourseOnline = CourseOnline::model()->findAll($criteria);
-                                        foreach ($CourseOnline as $key => $value) {
+                                                    ?>
+                                                    <option value="<?php echo $value->usa_id; ?>"><?php echo $value->usa_title; ?></option>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 col-xs-12 col-sm-6">
+                                            <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Course' : 'หลักสูตร'; ?></label>
+                                            <select class="form-control d-inlineblock " name="ReportProblem[report_course]">
+                                                <option value=""><?= Yii::app()->session['lang'] == 1 ? 'No course specified' : 'ไม่ระบุหลักสูตร'; ?></option>
+                                                <?php
+                                                $criteria = new CDbCriteria;
+                                                $criteria->addCondition('active ="y"');
+                                                $criteria->addCondition('lang_id = 1');
+                                                $CourseOnline = CourseOnline::model()->findAll($criteria);
+                                                foreach ($CourseOnline as $key => $value) {
 
-                                        ?>
-                                            <option value="<?php echo $value->course_id; ?>"><?php echo $value->course_title; ?></option>
-                                        <?php
-                                        }
-                                        ?>
-                                    </select>
+                                                    ?>
+                                                    <option value="<?php echo $value->course_id; ?>"><?php echo $value->course_title; ?></option>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row report-row">
+                                        <div class="col-md-12 col-xs-12">
+                                            <label for=""><?= Yii::app()->session['lang'] == 1 ? 'The message' : 'ข้อความ'; ?></label>
+                                            <textarea name="ReportProblem[report_detail]" class="form-control" placeholder="<?php echo Yii::app()->session['lang'] == 1 ? 'Type your message in this box.' : 'พิมพ์ข้อความในช่องนี้'; ?>" id="" cols="30" rows="6"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row report-row">
+                                        <div class="col-md-6 col-xs-12">
+                                            <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Upload photo' : 'อัปโหลดรูปภาพ'; ?></label>
+                                            <input type="file" class="form-control" name="ReportProblem[report_pic]">
+                                        </div>
+                                    </div>
+
+                                    <hr>
+                                    <div class="text-center"> <button type="submit" class="btn btn-submit btn-report" name=""><?= Yii::app()->session['lang'] == 1 ? 'Confirm' : 'ยืนยัน'; ?></button></div>
                                 </div>
+                            <?php } else { ?>
+                                <div class="modal-body">
+                                    <div class="row report-row">
+                                        <div class="col-md-6 col-xs-12 col-sm-6">
+                                            <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Name' : 'ชื่อ'; ?></label>
+                                            <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Name' : 'ชื่อ'; ?>" name="ReportProblem[firstname]">
+                                        </div>
+                                        <div class="col-md-6 col-xs-12 col-sm-6">
+                                            <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Last name' : 'นามสกุล'; ?></label>
+                                            <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Last name' : 'นามสกุล'; ?>" name="ReportProblem[lastname]">
+                                        </div>
+                                    </div>
+                                    <div class="row report-row">
+                                        <div class="col-md-6 col-xs-12 col-sm-6">
+                                            <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Internal Contact No.' : 'เบอร์ติดต่อภายใน'; ?></label>
+                                            <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Internal Contact No.' : 'เบอร์ติดต่อภายใน'; ?>" name="ReportProblem[tel]">
+                                        </div>
+                                        <div class="col-md-6 col-xs-12 col-sm-6">
+                                            <label for=""><?= Yii::app()->session['lang'] == 1 ? 'E-mail' : 'อีเมล์'; ?></label>
+                                            <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'E-mail' : 'อีเมล์'; ?>" name="ReportProblem[email]">
+                                        </div>
+                                    </div>
+
+                                    <div class="row report-row">
+                                        <div class="col-md-6 col-xs-12 col-sm-6">
+                                            <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Problem type' : 'ประเภทปัญหา'; ?></label>
+                                            <select class="form-control d-inlineblock " name="ReportProblem[report_type]">
+                                                <option value=""><?= Yii::app()->session['lang'] == 1 ? 'Problem type' : 'ไม่ระบุประเภท'; ?></option>
+                                                <?php
+                                                $criteria = new CDbCriteria;
+                                                $criteria->addCondition('active ="y"');
+                                                $criteria->addCondition('lang_id =1');
+                                                $Usability = Usability::model()->findAll($criteria);
+                                                foreach ($Usability as $key => $value) {
+
+                                                    ?>
+                                                    <option value="<?php echo $value->usa_id; ?>"><?php echo $value->usa_title; ?></option>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 col-xs-12 col-sm-6">
+                                            <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Course' : 'หลักสูตร'; ?></label>
+                                            <select class="form-control d-inlineblock " name="ReportProblem[report_course]">
+                                                <option value=""><?= Yii::app()->session['lang'] == 1 ? 'No course specified' : 'ไม่ระบุหลักสูตร'; ?></option>
+                                                <?php
+                                                $criteria = new CDbCriteria;
+                                                $criteria->addCondition('active ="y"');
+                                                $criteria->addCondition('lang_id =1');
+                                                $CourseOnline = CourseOnline::model()->findAll($criteria);
+                                                foreach ($CourseOnline as $key => $value) {
+
+                                                    ?>
+                                                    <option value="<?php echo $value->course_id; ?>"><?php echo $value->course_title; ?></option>
+                                                    <?php
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="row report-row">
+                                        <div class="col-md-12 col-xs-12">
+                                            <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Message' : 'ข้อความ'; ?></label>
+                                            <textarea name="ReportProblem[report_detail]" class="form-control" placeholder="<?php echo Yii::app()->session['lang'] == 1 ? 'Type your message in this box.' : 'พิมพ์ข้อความในช่องนี้'; ?>" id="" cols="30" rows="6"></textarea>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="row report-row">
+                                        <div class="col-md-6 col-xs-12">
+                                            <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Upload photo' : 'อัปโหลดรูปภาพ'; ?></label>
+                                            <input type="file" class="form-control" name="ReportProblem[report_pic]">
+                                        </div>
+                                    </div>
+
+                                    <hr>
+                                    <div class="text-center"> <button type="submit" class="btn btn-submit btn-report" name=""><?= Yii::app()->session['lang'] == 1 ? 'Confirm' : 'ยืนยัน'; ?></button></div>
+                                </div>
+                            <?php } ?>
+                            <div class="modal-footer">
                             </div>
-
-                            <div class="row report-row">
-                                <div class="col-md-12 col-xs-12">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Message' : 'ข้อความ'; ?></label>
-                                    <textarea name="ReportProblem[report_detail]" class="form-control" placeholder="<?php echo Yii::app()->session['lang'] == 1 ? 'Type your message in this box.' : 'พิมพ์ข้อความในช่องนี้'; ?>" id="" cols="30" rows="6"></textarea>
-                                </div>
-                            </div>
-
-
-                            <div class="row report-row">
-                                <div class="col-md-6 col-xs-12">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Upload photo' : 'อัปโหลดรูปภาพ'; ?></label>
-                                    <input type="file" class="form-control" name="ReportProblem[report_pic]">
-                                </div>
-                            </div>
-
-                            <hr>
-                            <div class="text-center"> <button type="submit" class="btn btn-submit btn-report" name=""><?= Yii::app()->session['lang'] == 1 ? 'Confirm' : 'ยืนยัน'; ?></button></div>
-                        </div>
-                    <?php } ?>
-                    <div class="modal-footer">
+                        </form>
                     </div>
-            </form>
-        </div>
-    </div>
-</div>
+                </div>
+            </div>
 
-<script>
-    var showmodal = $(".in");
-    var modalactive = $("#user-report").find(showmodal);
+            <script>
+                var showmodal = $(".in");
+                var modalactive = $("#user-report").find(showmodal);
 
-    $(".contact-admin").click(function() {
-        $(".contact-admin").addClass("showmascot");
-    });
+                $(".contact-admin").click(function() {
+                    $(".contact-admin").addClass("showmascot");
+                });
 
-    $("#user-report .close").click(function() {
-        $(".contact-admin").removeClass("showmascot");
-    });
+                $("#user-report .close").click(function() {
+                    $(".contact-admin").removeClass("showmascot");
+                });
 
-    $(document).ready(function() {
-        $("#user-report").modal({
-            show: false,
-            backdrop: 'static'
-        });
-    });
+                $(document).ready(function() {
+                    $("#user-report").modal({
+                        show: false,
+                        backdrop: 'static'
+                    });
+                });
 
-    $(".toggle-password").click(function() {
+                $(".toggle-password").click(function() {
 
-        $(this).toggleClass("fa-eye fa-eye-slash");
-        var input = $($(this).attr("toggle"));
-        if (input.attr("type") == "password") {
-            input.attr("type", "text");
-        } else {
-            input.attr("type", "password");
-        }
-    });
-</script>
+                    $(this).toggleClass("fa-eye fa-eye-slash");
+                    var input = $($(this).attr("toggle"));
+                    if (input.attr("type") == "password") {
+                        input.attr("type", "text");
+                    } else {
+                        input.attr("type", "password");
+                    }
+                });
+            </script>
