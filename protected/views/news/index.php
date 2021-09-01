@@ -64,27 +64,33 @@ function DateThai($strDate)
                                             <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/news.jpg" alt="">
                                         <?php } ?>
                                         <!-- <span class="news-date"><?php echo DateThai($all->update_date) ?></span> -->
-                                         <!-- <span class="news-date"><?php echo Helpers::lib()->DateLang($all->update_date, Yii::app()->session['lang']); ?></span> -->
-                                        </div>
-                                        <div class="card-body" style="padding:10px;">
-                                            <a href="<?php echo $this->createUrl('news/detail/', array('id' => $all->parent_id)); ?>" style="text-decoration: none">
+                                        <!-- <span class="news-date"><?php echo Helpers::lib()->DateLang($all->update_date, Yii::app()->session['lang']); ?></span> -->
+                                    </div>
+                                    <div class="card-body" style="padding:10px;">
+                                        <?php if(Yii::app()->session['lang'] == 1){ ?>
+                                            <a href="<?php echo $this->createUrl('news/detail/', array('id' => $all->cms_id)); ?>" style="text-decoration: none">
                                                 <h4 class="card-title  text-4 "><?php echo $all->cms_title ?></h4>
                                             </a>
-                                            <div class="mb-1"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/calendar-icon.png"><small>&nbsp;<?php 
-                                            if($langId==1){
-                                               echo Helpers::changeFormatDateEN($all->update_date,'datetime');
-                                           }else{
-                                               echo Helpers::changeFormatDate($all->update_date,'datetime');
-                                           }
-                                           ?></small></div>
-                                           <?php if (Yii::app()->session['lang'] == 1) { ?>
-                                            <a href="<?php echo $this->createUrl('news/detail/', array('id' => $all->cms_id)); ?>" class="more-news pull-right mt-1" style="text-decoration: none"><small><?= $more ?> <i class="fas fa-chevron-right text-1 ms-1"></i></small> </a>
-                                        <?php }else{ ?>
-                                            <a href="<?php echo $this->createUrl('news/detail/', array('id' => $all->parent_id)); ?>" class="more-news pull-right mt-1" style="text-decoration: none"><small><?= $more ?> <i class="fas fa-chevron-right text-1 ms-1"></i></small> </a>
-                                        <?php  } ?>
-                                    </div>
-                                      
-                                </a>
+                                      <?php   }else{ ?>
+                                        <a href="<?php echo $this->createUrl('news/detail/', array('id' => $all->parent_id)); ?>" style="text-decoration: none">
+                                            <h4 class="card-title  text-4 "><?php echo $all->cms_title ?></h4>
+                                        </a>
+                                    <?php } ?>
+                                    <div class="mb-1"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/calendar-icon.png"><small>&nbsp;<?php 
+                                    if($langId==1){
+                                     echo Helpers::changeFormatDateEN($all->update_date,'datetime');
+                                 }else{
+                                     echo Helpers::changeFormatDate($all->update_date,'datetime');
+                                 }
+                                 ?></small></div>
+                                 <?php if (Yii::app()->session['lang'] == 1) { ?>
+                                    <a href="<?php echo $this->createUrl('news/detail/', array('id' => $all->cms_id)); ?>" class="more-news pull-right mt-1" style="text-decoration: none"><small><?= $more ?> <i class="fas fa-chevron-right text-1 ms-1"></i></small> </a>
+                                <?php }else{ ?>
+                                    <a href="<?php echo $this->createUrl('news/detail/', array('id' => $all->parent_id)); ?>" class="more-news pull-right mt-1" style="text-decoration: none"><small><?= $more ?> <i class="fas fa-chevron-right text-1 ms-1"></i></small> </a>
+                                <?php  } ?>
+                            </div>
+
+                        </a>
                     </div>
                 </div>
             <?php } ?>
