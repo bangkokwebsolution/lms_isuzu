@@ -25,6 +25,8 @@ label{font-weight: bold;}
     color:red;
 }
 </style>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <?php  
 date_default_timezone_set("Asia/Bangkok");
 ?>
@@ -34,8 +36,8 @@ date_default_timezone_set("Asia/Bangkok");
             <div class="col-md-12">
                     <?php 
 
-                    // $this->pageTitle = Yii::app()->name . ' - ' . UserModule::t("Registration");
-                    $this->pageTitle = Yii::app()->name . ' - เพิ่มสมาชิก';
+                    $this->pageTitle = Yii::app()->name . ' - ' . UserModule::t("Registration");
+                    
                     ?>
                     <?php if (Yii::app()->user->hasFlash('registration')): ?>
                     <div class="success">
@@ -67,17 +69,39 @@ date_default_timezone_set("Asia/Bangkok");
                         <?php //echo $form->errorSummary(array($model, $profile)); ?>
 
                             <div class="wizard-header">
-                                <h3><strong>เพิ่มสมาชิก<!-- <?php echo UserModule::t("Registration"); ?> -->
+                                <h3><strong><?php echo UserModule::t("Registration"); ?>
                                 <!-- <small class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></small> --></strong>
                                 </h3>
                                 <p class="text-left"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
                             </div>
                             
                             <div class="row pd-1em border">
+
+                                    
+                                    
                                     
                                 <div class="col-md-12">
+                                    <?php 
+                                        $model_org = OrgChart::model()->findAll(array("condition"=>"active =  'y' and id != '1' "));
+                                    ?>
+                                    <?php $list = CHtml::listData($model_org,'id', 'title'); ?>
+                                    <?php (empty($model->org_id)? $select = '' : $select = $model->org_id);?>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                        <?php echo $form->labelEx($model,'org_id'); ?>
+                                        <?php echo Chosen::activeDropDownList($model, 'org_id', $list, $attSearch); ?>
+                                        <?php echo $this->NotEmpty();?>
+                                        <?php echo $form->error($model,'org_id'); ?>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    
+
                                     
                                     <div class="row">
+                                        
+
+
                                         <div class="col-md-4">
                                         <div class="form-group">
                                         <label><?php echo $form->labelEx($model, 'employee_id'); ?></label>
@@ -218,19 +242,15 @@ date_default_timezone_set("Asia/Bangkok");
                                     <div class="row">
                                        
                                        
-                                    <div class="col-md-4">
-                                        <div class="form-group">
-                                        <label><?php echo $form->labelEx($model, 'org_id'); ?></label>
-                                        <?php echo $form->textField($model, 'org_id', array('class' => 'form-control', 'placeholder' => 'รหัส org.chart e-learning','required'=>'required')); ?>
-                                        <?php echo $form->error($model, 'org_id'); ?>
-                                        </div>
-                                        </div>    
+                             
 
-                                       
+                                        
 
                                         
                                       
                                     </div>
+
+                                    
                                    
                                     <div class="form-group" style="text-align: center;">
                                         <?php echo CHtml::submitButton($model->isNewRecord ? 'เพิ่มสมาชิก' : 'บันทึก', array('class' => 'btn btn-primary',)); ?>
@@ -247,7 +267,8 @@ date_default_timezone_set("Asia/Bangkok");
             </div>
         </div>
         <script type="text/javascript">
-            $('.branch').hide();
-            $('.label_branch').hide();
             
+            $(document).ready(function() {
+                $('.js-example-basic-single').select2();
+            });
         </script>
