@@ -2667,8 +2667,8 @@ header .navbar-form {
   border-color: #EEE;
   border-right: 0;
   font-size: 16px;
-  height: calc(2em + .75rem + 8px);
-  border:1px solid #ddd
+  height: calc(2em + .75rem + 8px) !important;
+  border:1px solid #ddd !important;
 }
 
 .simple-search .btn {
