@@ -39,7 +39,7 @@ class Profile extends UActiveRecord
 	{
 		return array( 
             array('firstname, lastname,firstname_en,lastname_en', 'required'),
-            
+			array('employee_class,position_description', 'numerical', 'integerOnly'=>true),
             array('user_id, title_id, firstname, lastname,  sex', 'safe', 'on'=>'search'),
             array('file_user', 'file', 'types'=>'pdf','allowEmpty' => true, 'on'=>'insert'),
 			array('file_user', 'file', 'types'=>'pdf',
@@ -62,6 +62,8 @@ class Profile extends UActiveRecord
 			'type_name'=>array(self::BELONGS_TO, 'TypeUser', 'type_user'),
 			'ProfilesTitle'=>array(self::BELONGS_TO, 'ProfilesTitle', 'title_id'),
 			'typeEmployee'=>array(self::BELONGS_TO, 'TypeEmployee', 'type_employee'),
+			'EmplClass'=>array(self::BELONGS_TO, 'EmplClass', 'employee_class'),
+
 		);
 		if (isset(Yii::app()->getModule('user')->profileRelations)) $relations = array_merge($relations,Yii::app()->getModule('user')->profileRelations);
 		return $relations;

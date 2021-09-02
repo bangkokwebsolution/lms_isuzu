@@ -1833,6 +1833,28 @@ Class MenuLeft extends Controller
 	        		),
 	        	)
 	        ),
+	           array(
+	        	
+	        	'visible'=>self::PermissionsMenu(array(
+	        		'employeeclass.*',
+	        	)),
+	        	'label'=>'<i></i><span>ระบบจัดการ Employee Class</span>',
+	        	'url'=>'#employeeclass',
+	        	'linkOptions' => array('data-toggle' => 'collapse'),
+	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
+	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Report') ), 'id' => 'employeeclass'),
+	        	'active' => self::SetSubMenu( array('employeeclass') ,false),
+	        	'items'=>array(
+	        		array(
+	        			
+	        			'visible'=>self::PermissionsMenu(array(
+	        				'employeeclass.*',
+	        			)),
+	        			'label'=>'จัดการ Employee class',
+	        			'url'=>array('//employeeclass/index')
+	        		),
+	        	)
+	        ),
 	         
          //    array(
 	        // 	/*====== Check Permissions Department (2) ======*/
@@ -1968,6 +1990,7 @@ Class MenuLeft extends Controller
 	        		
 	        	)
 	        ),
+
             //====== END Menu FormSurveyGroup ======//
 	        array(
 	        	
@@ -2187,6 +2210,7 @@ Class MenuLeft extends Controller
 					
 	        	)
 	        ),
+	      
     //         array(
 	   //      	/*====== Check Permissions PopUp (2) ======*/
 	   //      	'visible'=>self::PermissionsMenu(array(
