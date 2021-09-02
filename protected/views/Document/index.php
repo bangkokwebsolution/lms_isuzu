@@ -17,6 +17,10 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $search_type = 'พิมพ์คำค้นหา';
     $Download = 'ดาวน์โหลด';
 }
+$search = '';
+if(isset($_POST['search_type'])){
+    $search = $_POST['search_type'];
+}
 function DateThai($strDate)
 {
     $strYear = date("Y", strtotime($strDate)) + 543;
@@ -41,19 +45,33 @@ function DateThai($strDate)
 
 <section class="content" id="document">
     <div class="container">
-
+        <?php $form=$this->beginWidget('CActiveForm', array(
+                    'id'=>'Document-form',
+                    'enableAjaxValidation'=>false,
+                )); ?>
         <div class="row justify-content-between align-items-end mb-3">
             <div class="col-7 col-md-8 col-lg-9">
                 <h4 class="topic mb-0"> <?= $last_DOc ?></h4>
             </div>
             <div class="col-5 col-md-4 col-lg-3">
-                <input class="form-control text-3" type="text" style="width: 100%;" placeholder="<?= $search_type ?>">
+                <input class="form-control text-3" name='search_type' type="text" style="width: 100%;" placeholder="<?= $search_type ?>" value="<?= $search ?>" >
             </div>
         </div>
 
         <div class="tab-content mt-20">
 
-            <?php $DocumentType = DocumentType::model()->findAll('active = 1 and lang_id =' . $langId) ?>
+            <?php
+            $criteria = new CDbCriteria;
+            if(isset($_POST['search_type'])){
+                $keyword = $_POST['search_type'];
+
+                $criteria->condition = 'dty_name LIKE :keyword';
+                $criteria->params = array(':keyword'=>'%'.$keyword.'%');
+            }
+            $criteria->compare('active','1');
+            $criteria->compare('lang_id',$langId);
+            $DocumentType = DocumentType::model()->findAll($criteria);
+            ?>
             <div role="tabpanel" class="tab-pane fade in active" id="doc-1">
                 <div class="well">
                     <div class="panel panel-default">
@@ -77,8 +95,12 @@ function DateThai($strDate)
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach ($Document as $doc) {
+                                        <?php $i=1; 
+                                        foreach ($Document as $key =>$doc) {
                                     if ($doctype->dty_id == $doc->dty_id) { //3
+                                        if($key==0){
+                                            $i=1;
+                                        }
                                         ?>
                                         
                                         <tr>
@@ -101,14 +123,15 @@ function DateThai($strDate)
                                 ?>
                             </tbody>
                         </table>
-                            </div>
-                        <?php } ?>
-
                     </div>
-                </div>
-            </div>
+                <?php } ?>
 
+            </div>
         </div>
+    </div>
+
+</div>
+    <?php $this->endWidget(); ?>
     </div>
 </section>
 

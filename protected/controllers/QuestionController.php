@@ -178,11 +178,11 @@ class QuestionController extends Controller
         $to['firstname'] = $user_lesson->profile->firstname;
         $to['lastname'] = $user_lesson->profile->lastname;
 
-        $to_admin1['email'] = $user_lesson->profile->advisor_email1;
+        // $to_admin1['email'] = $user_lesson->profile->advisor_email1;
         $to_admin1['firstname'] = $user_lesson->profile->firstname;
         $to_admin1['lastname'] = $user_lesson->profile->lastname;
 
-        $to_admin2['email'] = $user_lesson->profile->advisor_email2;
+        // $to_admin2['email'] = $user_lesson->profile->advisor_email2;
         $to_admin2['firstname'] = $user_lesson->profile->firstname;
         $to_admin2['lastname'] = $user_lesson->profile->lastname;
 //        Helpers::lib()->SendMail($to,"คุณสอบผ่านแล้ว",'คุณสอบผ่านแล้ว');
@@ -341,7 +341,7 @@ class QuestionController extends Controller
 
                                 $criteria=new CDbCriteria;
                                 $criteria->addInCondition('choice_id',$choice);
-                                $criteria->order = 'RAND() ';
+                                $criteria->order = 'RAND()';
                                 $rand_choice =  Choice::model()->findAll($criteria);
                                 $choice_array = [];
                                 $num_checkk = 1;

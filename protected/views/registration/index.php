@@ -1,3 +1,4 @@
+
 <?php
 $my_org = '';
 if (!Yii::app()->user->isGuest) {
@@ -10,6 +11,12 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $mail = 'E-mail';
     $Position_d = 'Position description';
     $Employee_c  ='Employee class';
+    $Personal_Information = 'Personal Information';
+    $Course_Status = 'Course Status';
+    $lang_edit = 'edit';
+    $Submit = 'Submit';
+    $cancel = 'cancel';
+
 
 
 } else {
@@ -19,6 +26,11 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $Position_d = 'คำอธิบายตำแหน่ง';
     $langId = Yii::app()->session['lang'];
     $nameTHtitle = 'ชื่อนาม - สกุล';
+    $Personal_Information = 'ข้อมูลส่วนบุคคล';
+    $Course_Status = 'ข้อมูลหลักสูตร';
+    $lang_edit = 'แก้ไข';
+    $Submit = 'บันทึก';
+    $cancel = 'ยกเลืก';
 
 }
 
@@ -83,7 +95,7 @@ figure figcaption {
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-main">
             <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/site/index'); ?>"><?php echo $label->label_homepage; ?></a></li>
-            <li class="breadcrumb-item active" aria-current="page">Personal Information</li>
+            <li class="breadcrumb-item active" aria-current="page"><?= $Personal_Information ?></li>
         </ol>
     </nav>
 </div>
@@ -93,8 +105,8 @@ figure figcaption {
             
             <div class=" col-md-3 col-lg-3 col-xs-12">
                 <ul class="sidebar-account">
-                    <li class="active">Personal Information</li>
-                    <li class=""><a class="text-decoration-none" href="<?php echo $this->createUrl('/site/dashboard'); ?>">Course Status</a></p>
+                    <li class="active"><?= $Personal_Information ?></li>
+                    <li class=""><a class="text-decoration-none" href="<?php echo $this->createUrl('/site/dashboard'); ?>"><?= $Course_Status ?></a></p>
                 </ul>
             </div>
 
@@ -106,7 +118,7 @@ figure figcaption {
                 )); ?>
                     <div class="row">
                         <div class="col col-md-10 col-lg-9">
-                            <h3 class="title-account">Personal Information</h3>
+                            <h3 class="title-account"><?= $Personal_Information ?></h3>
                             <div class="row form-group">
                                 <?php if($edit!=1){ ?>
                                 <div class="col-md-6 col-xs-12">
@@ -264,8 +276,8 @@ figure figcaption {
                             </div>
                             <?php if($edit==1){ ?>
                             <div class="text-center">
-                                <button  class="btn btn-warning btn-lg" type="submit" name="sub-pro" >Submit</button>
-                                <a  class="btn btn-cancel btn-lg" style="background-color:#e2e2e2 " type="cancel" onclick="cancelForm()" name="cancel-pro" >cancel</a>
+                                <button  class="btn btn-warning btn-lg" type="submit" name="sub-pro" ><?= $Submit ?></button>
+                                <a  class="btn btn-cancel btn-lg" style="background-color:#e2e2e2 " type="cancel" onclick="cancelForm()" name="cancel-pro" ><?= $cancel ?></a>
                               </div>
                             <?php } ?>
                         </div>
@@ -294,7 +306,7 @@ figure figcaption {
                                                           <img src="<?php echo $url_pro_pic; ?>" class="gambar img-responsive img-thumbnail" name="item-img-output" id="item-img-output" />
                                                           <?php if($edit!=1){ ?>
                                                             <div class="card-body text-center" style="padding:10px;">
-                                                                <a class="col-bt btn btn-main text-4 text-center" href='<?= Yii::app()->createUrl('registration/update/'.$users->id.'?type=edit'); ?>' >edit</a>
+                                                                <a class="col-bt btn btn-main text-4 text-center" href='<?= Yii::app()->createUrl('registration/update/'.$users->id.'?type=edit'); ?>' ><?= $lang_edit ?></a>
                                                             </div>
                                                           <?php }else{ ?>
                                                           <figcaption>
