@@ -14,17 +14,17 @@
             <?php
 
             $search1 = Usability::model()->findAll(array(
-                'condition' => ' (usa_title LIKE "%' . $text . '%" OR usa_detail LIKE "%' . $text . '%" ) AND lang_id ="'.$lang_session.'"'));
+                'condition' => ' (usa_title LIKE "%' . $text . '%" OR usa_detail LIKE "%' . $text . '%" ) AND active="y" AND lang_id ="'.$lang_session.'"'));
             $search2 = News::model()->findAll(array(
-                'condition' => ' (cms_title LIKE "%' . $text . '%" OR cms_detail LIKE "%' . $text . '%") AND lang_id ="'.$lang_session.'"'));
+                'condition' => ' (cms_title LIKE "%' . $text . '%" OR cms_detail LIKE "%' . $text . '%") AND active="y" AND lang_id ="'.$lang_session.'"'));
             $search3 = CourseOnline::model()->findAll(array(
-                'condition' => ' (course_title LIKE "%' . $text . '%" OR course_short_title LIKE "%' . $text . '%" OR course_detail LIKE "%' . $text . '%" ) AND lang_id ="'.$lang_session.'"'));
+                'condition' => ' (course_title LIKE "%' . $text . '%" OR course_short_title LIKE "%' . $text . '%" OR course_detail LIKE "%' . $text . '%" ) AND active="y" AND lang_id ="'.$lang_session.'"'));
             $search4 = Vdo::model()->findAll(array(
                 'condition' => ' (vdo_title LIKE "%' . $text . '%") AND lang_id ="'.$lang_session.'"'));
             $search5 = Document::model()->findAll(array(
-                'condition' => ' (dow_name LIKE "%' . $text . '%" OR dow_detail LIKE "%' . $text . '%" ) AND lang_id ="'.$lang_session.'"'));
+                'condition' => ' (dow_name LIKE "%' . $text . '%" OR dow_detail LIKE "%' . $text . '%" ) AND active="y" AND lang_id ="'.$lang_session.'"'));
             $search6 = Imgslide::model()->findAll(array(
-                'condition' => ' (imgslide_title LIKE "%' . $text . '%" OR imgslide_detail LIKE "%' . $text . '%" )AND lang_id ="'.$lang_session.'"'));
+                'condition' => ' (imgslide_title LIKE "%' . $text . '%" OR imgslide_detail LIKE "%' . $text . '%" )AND active="y" AND lang_id ="'.$lang_session.'"'));
             
             $searchtotal1 = count($search1);
             $searchtotal2 = count($search2);
