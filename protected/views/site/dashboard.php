@@ -1,3 +1,14 @@
+<?php
+if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+    $langId = Yii::app()->session['lang'] = 1;
+    $Personal_Information = 'Personal Information';
+    $Course_Status = 'Course Status';
+} else {
+    $langId = Yii::app()->session['lang'];
+    $Personal_Information = 'ข้อมูลส่วนบุคคล';
+    $Course_Status = 'ข้อมูลหลักสูตร';
+}
+ ?>
 <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-main">
@@ -12,8 +23,8 @@
         <div class="row g-0 position-relative">
             <div class=" col-md-3 col-lg-3 col-xs-12">
                 <ul class="sidebar-account">
-                    <li class=""><a class="text-decoration-none" href="<?php echo $this->createUrl('/registration/Update'); ?>">Personal Information</a></li>
-                    <li class="active">Course Status</p>
+                    <li class=""><a class="text-decoration-none" href="<?php echo $this->createUrl('/registration/Update'); ?>"><?= $Personal_Information ?></a></li>
+                    <li class="active"><?= $Course_Status ?></p>
                 </ul>
             </div>
 
