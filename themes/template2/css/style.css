@@ -4,7 +4,7 @@
   --color-blackmain: #000;
 }
 
-@font-face {
+/* @font-face {
   font-family: 'supermarket';
   src: url('../fonts/supermarket.woff2') format('woff2'),
     url('../fonts/supermarket.woff') format('woff');
@@ -18,10 +18,10 @@
   src: url("../font/FontAwesome.otf") format("otf"), url("../font/fontawesome-webfont.eot") format("eot"), url("../font/fontawesome-webfont.svg") format("svg"), url("../font/fontawesome-webfont.ttf") format("ttf"), url("../font/fontawesome-webfont.woff") format("woff"), url("../font/fontawesome-webfont.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
-}
+} */
 
 * {
-  font-family: 'supermarket', sans-serif;
+  font-family: tahoma, sans-serif;
 }
 
 html {
@@ -31,7 +31,7 @@ html {
 
 body {
   position: relative;
-  font-size: 18px;
+  font-size: 16px;
   margin: 0;
   padding-bottom: 4rem;
   min-height: 100%;
@@ -89,7 +89,7 @@ label {
   max-width: 100%;
   margin-bottom: 5px;
   font-weight: 600 !important;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 button:hover,
@@ -840,6 +840,7 @@ div.course-detail2 h4.text11 {
 
 .news-img img {
   width: 100%;
+  max-width: 100%;
 }
 
 .news .well {
@@ -2668,7 +2669,7 @@ header .navbar-form {
   border-right: 0;
   font-size: 16px;
   height: calc(2em + .75rem + 8px) !important;
-  border:1px solid #ddd !important;
+  border: 1px solid #ddd !important;
 }
 
 .simple-search .btn {
@@ -2997,7 +2998,7 @@ ol {
   margin-bottom: 15px;
   letter-spacing: .05px;
   text-align: left;
-  line-height: 1;
+  line-height: 1.4;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -3834,9 +3835,9 @@ footer {
     width: 190px !important;
   }
 
-  .contact-admin:hover {
+  /* .contact-admin:hover {
     height: 190px !important;
-  }
+  } */
 }
 
 @media screen and (min-width:992px) {
@@ -4713,7 +4714,7 @@ header .navbar-nav li a {
 .form-control {
   height: calc(2em + .75rem + 2px);
   border: 2px solid #ddd !important;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .form-control:focus {
@@ -4819,7 +4820,7 @@ header .navbar-nav li a {
 
 .btn-report {
   padding: 10px 40px;
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .submit-register {
@@ -5042,9 +5043,9 @@ header .navbar-nav li a {
   height: 200px;
 }
 
-.contact-admin:hover {
+/* .contact-admin:hover {
   height: 200px;
-}
+} */
 
 .course-detail .tab-content {
   margin-top: 1em;
@@ -6026,23 +6027,29 @@ tr {
 }
 
 .logo-h30 {
-  min-height: 30vh;
+  min-height: 28rem;
+  background-image: url(../images/logo-index.png);
+  ;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
-  border-bottom: 1px solid #ddd;
+  /* border-bottom: 1px solid #ddd; */
+  border: 3px solid #e0001a;
+  border-top: 0;
+  width: 100%;
+  min-width: 100%;
 }
 
 
 
 @media (min-width:1024px) {
-  .banner-slide  {
-    min-height: 30vh;
-    max-height: 30vh;
+  .banner-slide {
+    min-height: 28rem;
+    max-height: 28rem;
     overflow: hidden;
   }
 
-  .banner-main .row [class*="col-"]{
+  .banner-main .row [class*="col-"] {
     padding: 0;
   }
 
@@ -6062,4 +6069,16 @@ tr {
   bottom: 13px;
   right: 10px;
   color: #888;
+}
+
+.dropdown-menu.changelang {
+  min-width: 90px;
+}
+
+.dropdown-menu.changelang img {
+  margin-right: 3px;
+}
+
+.dropdown-menu.changelang a:hover {
+  color: #E0001A;
 }
