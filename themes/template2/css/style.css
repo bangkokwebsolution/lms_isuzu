@@ -5483,7 +5483,7 @@ section#faq {
   letter-spacing: 0.1px;
   background: #E0001A;
   color: #FFFFFF;
-  padding: 8px 18px;
+  padding: 10px 18px;
   border-radius: 6px;
   transition: all .25s ease;
 }
@@ -6028,6 +6028,7 @@ tr {
 .logo-h30 {
   min-height: 30vh;
   background-size: contain;
+  background-repeat: no-repeat;
   background-position: center center;
   border-bottom: 1px solid #ddd;
 }
