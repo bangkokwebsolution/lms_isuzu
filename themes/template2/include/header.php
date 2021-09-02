@@ -80,8 +80,8 @@ if($_SERVER['REMOTE_ADDR']=='::1' || $_SERVER['REMOTE_ADDR']=='127.0.0.1'){
                 </div>
             <?php } else {
             } ?>
-            <a class="navbar-brand hidden-xs" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo.png" height="60px" alt=""></a>
-            <a class="navbar-brand visible-xs" style="width: auto" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-xs.png" height="35px" alt=""></a>
+            <!-- <a class="navbar-brand hidden-xs" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo.png" height="60px" alt=""></a> -->
+            <!-- <a class="navbar-brand visible-xs" style="width: auto" href="<?php echo $this->createUrl('/site/index'); ?>"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-xs.png" height="35px" alt=""></a> -->
         </div>
         <div class="menu-header ">
             <?php
@@ -163,8 +163,7 @@ if($_SERVER['REMOTE_ADDR']=='::1' || $_SERVER['REMOTE_ADDR']=='127.0.0.1'){
             </div>
         </div>
 
-    </nav>
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
         <div class="container">
             <ul class="nav navbar-nav ">
                 <?php $bar = Yii::app()->controller->id ?>
@@ -338,6 +337,9 @@ if($_SERVER['REMOTE_ADDR']=='::1' || $_SERVER['REMOTE_ADDR']=='127.0.0.1'){
             </form>
         </div>
     </div>
+
+    </nav>
+ 
 </div>
 
 </header>

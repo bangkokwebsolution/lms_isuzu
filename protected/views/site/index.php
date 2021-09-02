@@ -13,7 +13,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $status = "Status";
     $edu = "Not study";
     $more = 'Read more';
-    $course_plan ='Course Plan';
+    $course_plan = 'Course Plan';
     $course_status = 'Course Status';
     $classroom_online = 'Classroom Online';
     $library_show = 'E-Library';
@@ -32,7 +32,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $status = "สถานะ";
     $edu = "ยังไม่เรียน";
     $more = 'อ่านเพิ่มเติม';
-    $course_plan ='แผนการเรียน';
+    $course_plan = 'แผนการเรียน';
     $course_status = 'สถานะของหลักสูตร';
     $classroom_online = 'ห้องเรียนออนไลน์';
 }
@@ -124,50 +124,64 @@ if (!empty($msg) || !empty($_GET['msg'])) {
         });
     </script>
 <?php } ?>
-
 <section class="container banner-main">
-    <?php
-    $criteriaimg = new CDbCriteria;
-    $criteriaimg->compare('active', y);
-    $criteriaimg->compare('lang_id', Yii::app()->session['lang']);
-    // $criteriaimg->order = 'update_date  DESC';
-    $image = Imgslide::model()->findAll($criteriaimg);
-    ?>
-    <div id="carousel-banner" class="owl-carousel owl-theme owl-main">
-        <?php
-        foreach ($image as $key => $value) {
-            $criteriaType = new CDbCriteria;
-            $criteriaType->compare('active', y);
-            $criteriaType->compare('gallery_type_id', $value->gallery_type_id);
-            $criteriaType->order = 'id ASC';
-            $galleryType = Gallery::model()->findAll($criteriaType);
-        ?>
-            <div class="item <?php if ($key == 0) echo 'active'; ?>">
+    <div class="row">
+        <div class="col-md-3">
+            <a class="" href="<?php echo $this->createUrl('/site/index'); ?>">
+                <div class="logo-h30" style="background-image:url(<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-index.png">
+                    <!-- <img src="" alt=""> -->
+                </div>
+            </a>
+        </div>
+        <div class="col-md-9">
+            <div class="banner-slide h-30">
                 <?php
-                if ($value->imgslide_link == "" && $value->gallery_type_id != null) {
-                    foreach ($galleryType as $key_t => $data) {
+                $criteriaimg = new CDbCriteria;
+                $criteriaimg->compare('active', y);
+                $criteriaimg->compare('lang_id', Yii::app()->session['lang']);
+                // $criteriaimg->order = 'update_date  DESC';
+                $image = Imgslide::model()->findAll($criteriaimg);
                 ?>
-                        <a href="<?php echo Yii::app()->baseUrl; ?>/uploads/gallery/<?= $data->image; ?>" class="liquid-lp-read-more zoom fresco" data-fresco-group="ld-pf-1[<?= $value->id ?>]">
-                            <?php if ($key_t == 0) {
-                            ?>
-                                <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/main-bg.png" class="slide-main-thor" alt="">
-                                <!-- <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt=""> -->
+                <div id="carousel-banner" class="owl-carousel owl-theme owl-main">
+                    <?php
+                    foreach ($image as $key => $value) {
+                        $criteriaType = new CDbCriteria;
+                        $criteriaType->compare('active', y);
+                        $criteriaType->compare('gallery_type_id', $value->gallery_type_id);
+                        $criteriaType->order = 'id ASC';
+                        $galleryType = Gallery::model()->findAll($criteriaType);
+                    ?>
+                        <div class="item <?php if ($key == 0) echo 'active'; ?>">
                             <?php
-                            }  ?>
-                        </a>
+                            if ($value->imgslide_link == "" && $value->gallery_type_id != null) {
+                                foreach ($galleryType as $key_t => $data) {
+                            ?>
+                                    <a href="<?php echo Yii::app()->baseUrl; ?>/uploads/gallery/<?= $data->image; ?>" class="liquid-lp-read-more zoom fresco" data-fresco-group="ld-pf-1[<?= $value->id ?>]">
+                                        <?php if ($key_t == 0) {
+                                        ?>
+                                            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/main-bg.png" class="slide-main-thor" alt="">
+                                            <!-- <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt=""> -->
+                                        <?php
+                                        }  ?>
+                                    </a>
+                                <?php } ?>
+                            <?php } else if ($value->imgslide_link != "" && $value->gallery_type_id == null) { ?>
+                                <a href="<?= $value->imgslide_link;  ?>" target="_blank">
+                                    <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/main-bg.png" class="slide-main-thor" alt=""> -->
+                                    <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
+                                </a>
+                            <?php } else { ?>
+                                <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/main-bg.png" class="slide-main-thor" alt=""> -->
+                                <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
+                            <?php } ?>
+                        </div>
                     <?php } ?>
-                <?php } else if ($value->imgslide_link != "" && $value->gallery_type_id == null) { ?>
-                    <a href="<?= $value->imgslide_link;  ?>" target="_blank">
-                        <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/main-bg.png" class="slide-main-thor" alt=""> -->
-                        <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
-                    </a>
-                <?php } else { ?>
-                    <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/main-bg.png" class="slide-main-thor" alt=""> -->
-                    <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
-                <?php } ?>
+                </div>
             </div>
-        <?php } ?>
+        </div>
+
     </div>
+
 </section>
 
 <section class="menu-section menu-elearning featured-boxes featured-boxes-style-2">
@@ -176,7 +190,11 @@ if (!empty($msg) || !empty($_GET['msg'])) {
             <div class=" mb-1">
                 <div class="featured-box featured-box-one  featured-box-effect-4 text-center">
                     <div class="box-content">
-                        <a data-toggle="modal" href="<?php if(Yii::app()->user->id==null){echo '#modal-login';}else{ echo Yii::app()->createUrl('virtualclassroom/index'); }?>">
+                        <a data-toggle="modal" href="<?php if (Yii::app()->user->id == null) {
+                                                            echo '#modal-login';
+                                                        } else {
+                                                            echo Yii::app()->createUrl('virtualclassroom/index');
+                                                        } ?>">
                             <div class="icon-featured">
                                 <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/online-class.svg">
                             </div>
@@ -188,7 +206,11 @@ if (!empty($msg) || !empty($_GET['msg'])) {
             <div class=" mb-1">
                 <div class="featured-box featured-box-one  featured-box-effect-4 text-center">
                     <div class="box-content">
-                        <a data-toggle="modal" href="<?php if(Yii::app()->user->id==null){echo '#modal-login';}else{ echo Yii::app()->createUrl('video/library'); }?>">
+                        <a data-toggle="modal" href="<?php if (Yii::app()->user->id == null) {
+                                                            echo '#modal-login';
+                                                        } else {
+                                                            echo Yii::app()->createUrl('video/library');
+                                                        } ?>">
                             <div class="icon-featured">
                                 <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/E-Library.svg">
                             </div>
@@ -212,7 +234,11 @@ if (!empty($msg) || !empty($_GET['msg'])) {
             <div class=" mb-1">
                 <div class="featured-box featured-box-one  featured-box-effect-4 text-center">
                     <div class="box-content">
-                        <a  data-toggle="modal" href="<?php if(Yii::app()->user->id==null){echo '#modal-login';}else{ echo Yii::app()->createUrl('course/courseplan'); }?>">
+                        <a data-toggle="modal" href="<?php if (Yii::app()->user->id == null) {
+                                                            echo '#modal-login';
+                                                        } else {
+                                                            echo Yii::app()->createUrl('course/courseplan');
+                                                        } ?>">
                             <div class="icon-featured">
                                 <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/Course-Plan.svg">
                             </div>
@@ -224,7 +250,11 @@ if (!empty($msg) || !empty($_GET['msg'])) {
             <div class=" mb-1">
                 <div class="featured-box featured-box-one  featured-box-effect-4 text-center">
                     <div class="box-content">
-                        <a data-toggle="modal" href="<?php if(Yii::app()->user->id==null){echo '#modal-login';}else{ echo Yii::app()->createUrl('site/dashboard'); }?>">
+                        <a data-toggle="modal" href="<?php if (Yii::app()->user->id == null) {
+                                                            echo '#modal-login';
+                                                        } else {
+                                                            echo Yii::app()->createUrl('site/dashboard');
+                                                        } ?>">
                             <div class="icon-featured">
                                 <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/Course-Status.svg">
                             </div>

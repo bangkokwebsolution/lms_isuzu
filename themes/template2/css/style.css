@@ -396,7 +396,7 @@ header .navbar-nav li a {
 }
 
 header .navbar {
-  border-bottom: 1px solid #ddd;
+  /* border-bottom: 1px solid #ddd; */
 }
 
 header .navbar-toggle {
@@ -832,10 +832,14 @@ div.course-detail2 h4.text11 {
   padding-bottom: 0;
 }
 
-.news-img{
+.news-img {
   max-height: 130px;
-    min-height: 130px;
-    overflow: hidden;
+  min-height: 130px;
+  overflow: hidden;
+}
+
+.news-img img {
+  width: 100%;
 }
 
 .news .well {
@@ -2663,6 +2667,8 @@ header .navbar-form {
   border-color: #EEE;
   border-right: 0;
   font-size: 16px;
+  height: calc(2em + .75rem + 8px);
+  border:1px solid #ddd
 }
 
 .simple-search .btn {
@@ -4480,7 +4486,8 @@ ol.stat-alert li::before {
   min-height: 390px;
   overflow: hidden;
 }
-.slide-video .fluid-width-video-wrapper{
+
+.slide-video .fluid-width-video-wrapper {
   padding-top: 80% !important;
 }
 
@@ -4517,8 +4524,9 @@ ol.stat-alert li::before {
   .navbar-collapse.collapse {
     display: block !important;
     height: auto !important;
-    padding-bottom: 0;
+    /* padding-bottom: 0; */
     overflow: visible !important;
+    padding: 10px 0;
   }
 }
 
@@ -5144,6 +5152,7 @@ header .navbar-nav li a {
 .filter-active:focus {
   color: #fff !important;
 }
+
 /* 
 .library-topic:after {
   content: '' !important;
@@ -6013,7 +6022,29 @@ tr {
 }
 
 .banner-main .owl-item img {
-  border-radius: 0 0 5px 5px;
+  border-radius: 0;
+}
+
+.logo-h30 {
+  min-height: 30vh;
+  background-size: contain;
+  background-position: center center;
+  border-bottom: 1px solid #ddd;
+}
+
+
+
+@media (min-width:1024px) {
+  .banner-slide  {
+    min-height: 30vh;
+    max-height: 30vh;
+    overflow: hidden;
+  }
+
+  .banner-main .row [class*="col-"]{
+    padding: 0;
+  }
+
 }
 
 .cabinet.center-block #Profile_pro_pic {
