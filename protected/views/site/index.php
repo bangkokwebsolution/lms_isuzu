@@ -126,14 +126,14 @@ if (!empty($msg) || !empty($_GET['msg'])) {
 <?php } ?>
 <section class="container banner-main">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-lg-3">
             <a class="" href="<?php echo $this->createUrl('/site/index'); ?>">
                 <div class="logo-h30" style="background-image:url(<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-index.png">
                     <!-- <img src="" alt=""> -->
                 </div>
             </a>
         </div>
-        <div class="col-md-9">
+        <div class="col-lg-9">
             <div class="banner-slide h-30">
                 <?php
                 $criteriaimg = new CDbCriteria;
@@ -159,8 +159,8 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                                     <a href="<?php echo Yii::app()->baseUrl; ?>/uploads/gallery/<?= $data->image; ?>" class="liquid-lp-read-more zoom fresco" data-fresco-group="ld-pf-1[<?= $value->id ?>]">
                                         <?php if ($key_t == 0) {
                                         ?>
-                                            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/main-bg.png" class="slide-main-thor" alt="">
-                                            <!-- <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt=""> -->
+                                            <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/main-bg.png" class="slide-main-thor" alt=""> -->
+                                            <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
                                         <?php
                                         }  ?>
                                     </a>
