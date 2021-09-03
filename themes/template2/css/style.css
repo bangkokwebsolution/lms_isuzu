@@ -407,7 +407,7 @@ header .navbar {
 }
 
 header .navbar-toggle {
-  margin: 22px 4px 22px 0 ;
+  margin: 20px;
   padding: 15px 10px;
 }
 
@@ -5622,6 +5622,7 @@ section#faq {
   color: #fff;
   font-size: 14px;
   padding: 5px 10px;
+  border-radius: 3px;
 }
 
 #modal-login .modal-footer {

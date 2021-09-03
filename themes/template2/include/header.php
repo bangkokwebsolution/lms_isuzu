@@ -19,9 +19,8 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
 <header id="header" class="main-header">
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="container">
-            <div class="">
-                <!-- navbar-header -->
-                <button type="button" class="navbar-toggle text-center" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -76,15 +75,15 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 <?php } else {
                 } ?>
             </div>
             <div class="menu-header ">
-                <div class="dropdown box-search">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-search"></i></a>
+                <div class="dropdown box-search open">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-search"></i></a>
                     <ul class="dropdown-menu search ">
-                        <!--form search-->
                         <form id="searchForm" class="" action="<?php echo $this->createUrl('Search/index') ?>">
                             <div class="simple-search input-group">
                                 <input type="text" class="form-control" name="text" placeholder='<?= $label->label_placeholder_search ?>'>
@@ -95,7 +94,6 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                         </form>
                     </ul>
                 </div>
-
                 <?php
                 $langauge = Language::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y'));
                 $currentlangauge = Language::model()->findByPk(Yii::app()->session['lang']);
@@ -116,7 +114,8 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                 <?php if (Yii::app()->user->id == null) { ?>
                     <div>
                         <a class="btn-login " data-toggle="modal" href='#modal-login'>
-                            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/login-icon.png" alt=""><span class="d-none d-sm-inline"> <?= $label->label_header_login ?></span></a>
+                            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/login-icon.png" alt=""><span class="d-none d-sm-inline"> <?= $label->label_header_login ?></span>
+                        </a>
                     </div>
                 <?php } else { ?>
                     <div class="dropdown user-menu">
@@ -175,75 +174,75 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                 <?php } ?>
             </div>
 
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <div class="container">
-                    <ul class="nav navbar-nav ">
-                        <?php $bar = Yii::app()->controller->id ?>
-                        <?php $bar_action = Yii::app()->controller->action->id;
-                        if (Yii::app()->user->id == null) {
-                            $mainMenu = MainMenu::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y', 'lang_id' => Yii::app()->session['lang']));
-                            foreach ($mainMenu as $key => $value) {
-                                $url = !empty($value->parent) ? $value->parent->url : $value->url;
-                                $controller = explode('/', $url);
-                                $controller[0] = strtolower($controller[0]);
-                                if ($controller[0] != "registration" && $controller[0] != "privatemessage" && $controller[0] != "search" && $controller[0] != "forgot_password" && $controller[0] != "question" && $controller[0] != "virtualclassroom" && $controller[0] != "video") {
-                                    $clss =  $bar == $controller[0] && $bar_action == "index" ? "active" : '';
-                                    if ($controller[0] != "webboard") {
-                                        if ($controller[0] == "course" && Yii::app()->user->id == null) {
-                                            echo '<li class="' . $clss . '">
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <div class="">
+                <ul class="nav navbar-nav ">
+                    <?php $bar = Yii::app()->controller->id ?>
+                    <?php $bar_action = Yii::app()->controller->action->id;
+                    if (Yii::app()->user->id == null) {
+                        $mainMenu = MainMenu::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y', 'lang_id' => Yii::app()->session['lang']));
+                        foreach ($mainMenu as $key => $value) {
+                            $url = !empty($value->parent) ? $value->parent->url : $value->url;
+                            $controller = explode('/', $url);
+                            $controller[0] = strtolower($controller[0]);
+                            if ($controller[0] != "registration" && $controller[0] != "privatemessage" && $controller[0] != "search" && $controller[0] != "forgot_password" && $controller[0] != "question" && $controller[0] != "virtualclassroom" && $controller[0] != "video") {
+                                $clss =  $bar == $controller[0] && $bar_action == "index" ? "active" : '';
+                                if ($controller[0] != "webboard") {
+                                    if ($controller[0] == "course" && Yii::app()->user->id == null) {
+                                        echo '<li class="' . $clss . '">
 
                                     <a data-toggle="modal" class="btn-login-course" href="#modal-login" >' . $value->title . '</span></a>
                                     </li>';
-                                        } else {
-                                            echo '<li class="' . $clss . '">
-                                    <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
-                                    </li>';
-                                        }
                                     } else {
                                         echo '<li class="' . $clss . '">
-                                <a href="' . $this->createUrl($url) . '?lang=' . Yii::app()->session['lang'] . '">' . $value->title . '</span></a>
-                                </li>';
-                                    }
-                                }
-                            }
-                        } else {
-
-                            $mainMenu = MainMenu::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y', 'lang_id' => Yii::app()->session['lang']));
-
-                            $Profile_model = Profile::model()->findByPk(Yii::app()->user->id);
-
-                            foreach ($mainMenu as $key => $value) {
-                                $url = !empty($value->parent) ? $value->parent->url : $value->url;
-                                $controller = explode('/', $url);
-                                $controller[0] = strtolower($controller[0]);
-                                if ($controller[0] != "registration" && $controller[0] != "privatemessage" && $controller[0] != "search" && $controller[0] != "forgot_password" && $controller[0] != "question" && $controller[0] != "virtualclassroom" && $controller[0] != "video") {
-                                    $clss =  $bar == $controller[0] && $bar_action == "index" ? "active" : '';
-                                    if ($controller[0] != "webboard") {
-                                        if ($controller[0] == "course" && Yii::app()->user->id == null) {
-                                            echo '<li class="' . $clss . '">
-
-                                    <a data-toggle="modal" class="btn-login-course" href="#modal-login" >' . $value->title . '</span></a>
-                                    </li>';
-                                        } else {
-                                            echo '<li class="' . $clss . '">
                                     <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
                                     </li>';
-                                        }
-                                    } else {
-                                        echo '<li class="' . $clss . '">
+                                    }
+                                } else {
+                                    echo '<li class="' . $clss . '">
                                 <a href="' . $this->createUrl($url) . '?lang=' . Yii::app()->session['lang'] . '">' . $value->title . '</span></a>
                                 </li>';
-                                    }
                                 }
                             }
                         }
-                        ?>
+                    } else {
 
-                        <?php
-                        $key = "DR6564UFP5858BU58448HYYGYCFRVTVYBHCFCGHJ";
-                        if ($key) {
-                        ?>
-                            <!-- <li class="">
+                        $mainMenu = MainMenu::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y', 'lang_id' => Yii::app()->session['lang']));
+
+                        $Profile_model = Profile::model()->findByPk(Yii::app()->user->id);
+
+                        foreach ($mainMenu as $key => $value) {
+                            $url = !empty($value->parent) ? $value->parent->url : $value->url;
+                            $controller = explode('/', $url);
+                            $controller[0] = strtolower($controller[0]);
+                            if ($controller[0] != "registration" && $controller[0] != "privatemessage" && $controller[0] != "search" && $controller[0] != "forgot_password" && $controller[0] != "question" && $controller[0] != "virtualclassroom" && $controller[0] != "video") {
+                                $clss =  $bar == $controller[0] && $bar_action == "index" ? "active" : '';
+                                if ($controller[0] != "webboard") {
+                                    if ($controller[0] == "course" && Yii::app()->user->id == null) {
+                                        echo '<li class="' . $clss . '">
+
+                                    <a data-toggle="modal" class="btn-login-course" href="#modal-login" >' . $value->title . '</span></a>
+                                    </li>';
+                                    } else {
+                                        echo '<li class="' . $clss . '">
+                                    <a href="' . $this->createUrl($url) . '">' . $value->title . '</span></a>
+                                    </li>';
+                                    }
+                                } else {
+                                    echo '<li class="' . $clss . '">
+                                <a href="' . $this->createUrl($url) . '?lang=' . Yii::app()->session['lang'] . '">' . $value->title . '</span></a>
+                                </li>';
+                                }
+                            }
+                        }
+                    }
+                    ?>
+
+                    <?php
+                    $key = "DR6564UFP5858BU58448HYYGYCFRVTVYBHCFCGHJ";
+                    if ($key) {
+                    ?>
+                        <!-- <li class="">
                         <a href="<?= $this->createUrl("dashboard/terms") ?>">
                             <?php
                             if (Yii::app()->session['lang'] == 1) {
@@ -254,14 +253,14 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                             ?>
                         </a>
                     </li> -->
-                            <?php }
+                        <?php }
 
-                        if (Yii::app()->user->id) {
-                            $user_login = User::model()->findByPk(Yii::app()->user->id);
-                            $authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 
-                            if ($authority == 1 || $authority == 2 || $authority == 3) {
-                            ?>
-                                <!-- <li class="">
+                    if (Yii::app()->user->id) {
+                        $user_login = User::model()->findByPk(Yii::app()->user->id);
+                        $authority = $user_login->report_authority; // 1=ผู้บริการ 2=ผู้จัดการฝ่ายDep 
+                        if ($authority == 1 || $authority == 2 || $authority == 3) {
+                        ?>
+                            <!-- <li class="">
                             <a href="<?= $this->createUrl("report/index") ?>">
                                 <?php
                                 if (Yii::app()->session['lang'] == 1) {
@@ -273,33 +272,33 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
 
                             </a>
                         </li> -->
-                        <?php }
-                        } ?>
+                    <?php }
+                    } ?>
 
 
 
 
+                    <?php
+                    if (Yii::app()->user->id == null) {
+                        $chk_status_reg = $SettingAll = Helpers::lib()->SetUpSetting();
+                        $chk_status_reg = $SettingAll['ACTIVE_REGIS'];
+                        if ($chk_status_reg) {
+                    ?>
+                            <!-- <li><a class="btn-register" href="<?php echo $this->createUrl('/registration/ShowForm'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a></li> -->
+                    <?php }
+                    } ?>
+
+                    <?php if (Yii::app()->user->id !== null) { ?>
                         <?php
-                        if (Yii::app()->user->id == null) {
-                            $chk_status_reg = $SettingAll = Helpers::lib()->SetUpSetting();
-                            $chk_status_reg = $SettingAll['ACTIVE_REGIS'];
-                            if ($chk_status_reg) {
+                        // $name = Profile::model()->findByPk(Yii::app()->user->getId());
+
+                        // $criteria = new CDbCriteria;
+                        // $criteria->addCondition('create_by =' . $name->user_id);
+                        // $criteria->order = 'update_date  ASC';
+                        // $criteria->compare('status_answer', 1);
+                        // $PrivatemessageReturn = PrivateMessageReturn::model()->findAll($criteria);
                         ?>
-                                <!-- <li><a class="btn-register" href="<?php echo $this->createUrl('/registration/ShowForm'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a></li> -->
-                        <?php }
-                        } ?>
-
-                        <?php if (Yii::app()->user->id !== null) { ?>
-                            <?php
-                            // $name = Profile::model()->findByPk(Yii::app()->user->getId());
-
-                            // $criteria = new CDbCriteria;
-                            // $criteria->addCondition('create_by =' . $name->user_id);
-                            // $criteria->order = 'update_date  ASC';
-                            // $criteria->compare('status_answer', 1);
-                            // $PrivatemessageReturn = PrivateMessageReturn::model()->findAll($criteria);
-                            ?>
-                            <!-- <li class="dropdown visible-md visible-lg">
+                        <!-- <li class="dropdown visible-md visible-lg">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;"><i class="fa fa-envelope" aria-hidden="true"></i></a>
                         <div class="dropdown-menu user-message">
                             <div class="panel panel-default">
@@ -334,14 +333,12 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                     </div>
                 </li> -->
 
-                        <?php } else {
-                        } ?>
-                    </ul>
-
-                </div>
+                    <?php } else {
+                    } ?>
+                </ul>
             </div>
+        </div>
     </nav>
-
 
 </header>
 
