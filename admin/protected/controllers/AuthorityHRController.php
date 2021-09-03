@@ -40,7 +40,7 @@ class AuthorityHRController extends Controller
 		}elseif(isset($_POST['user_id'])){
 			if($_POST['user_id'] != ""){
 				$user = User::model()->findByPk($_POST['user_id']);
-				$user->authority_hr = null;
+				$user->authority_hr = 0;
 				$user->save(false);
 
 				if(Yii::app()->user->id){
@@ -55,7 +55,8 @@ class AuthorityHRController extends Controller
 
 		$criteria = new CDbCriteria;
 		$criteria->compare('superuser', 1);
-		$criteria->addCondition('authority_hr IS NULL');
+		$criteria->compare('authority_hr', 0);
+		// $criteria->addCondition('authority_hr IS NULL');
 		$userAll = User::model()->with('profile')->findAll($criteria);
 
 		$criteria = new CDbCriteria;
@@ -90,7 +91,7 @@ class AuthorityHRController extends Controller
 		}elseif(isset($_POST['user_id'])){
 			if($_POST['user_id'] != ""){
 				$user = User::model()->findByPk($_POST['user_id']);
-				$user->authority_hr = null;
+				$user->authority_hr = 0;
 				$user->save(false);
 
 				if(Yii::app()->user->id){
@@ -106,7 +107,7 @@ class AuthorityHRController extends Controller
 
 		$criteria = new CDbCriteria;
 		$criteria->compare('superuser', 1);
-		$criteria->addCondition('authority_hr IS NULL');
+		$criteria->compare('authority_hr', 0);
 		$userAll = User::model()->with('profile')->findAll($criteria);
 
 		$criteria = new CDbCriteria;

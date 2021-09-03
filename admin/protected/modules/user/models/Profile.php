@@ -62,7 +62,7 @@ class Profile extends UActiveRecord
 			'type_name'=>array(self::BELONGS_TO, 'TypeUser', 'type_user'),
 			'ProfilesTitle'=>array(self::BELONGS_TO, 'ProfilesTitle', 'title_id'),
 			'typeEmployee'=>array(self::BELONGS_TO, 'TypeEmployee', 'type_employee'),
-			'EmplClass'=>array(self::BELONGS_TO, 'EmplClass', 'employee_class'),
+			'EmpClass'=>array(self::BELONGS_TO, 'EmpClass', 'employee_class'),
 
 		);
 		if (isset(Yii::app()->getModule('user')->profileRelations)) $relations = array_merge($relations,Yii::app()->getModule('user')->profileRelations);
