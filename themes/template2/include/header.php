@@ -19,9 +19,9 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
 <header id="header" class="main-header">
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+            <div class="">
+                <!-- navbar-header -->
+                <button type="button" class="navbar-toggle text-center" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -76,23 +76,26 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 <?php } else {
                 } ?>
             </div>
             <div class="menu-header ">
-                
-                <div class="box-search">
-                    <form id="searchForm" class="" action="<?php echo $this->createUrl('Search/index') ?>">
-                        <div class="simple-search input-group">
-                            <input type="text" class="form-control" name="text" placeholder='<?= $label->label_placeholder_search ?>'>
-                            <button class="btn" type="submit">
-                                <i class="fas fa-search header-nav-top-icon"></i>
-                            </button>
-                        </div>
-                    </form>
+                <div class="dropdown box-search">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-search"></i></a>
+                    <ul class="dropdown-menu search ">
+                        <!--form search-->
+                        <form id="searchForm" class="" action="<?php echo $this->createUrl('Search/index') ?>">
+                            <div class="simple-search input-group">
+                                <input type="text" class="form-control" name="text" placeholder='<?= $label->label_placeholder_search ?>'>
+                                <button class="btn" type="submit">
+                                    <i class="fas fa-search header-nav-top-icon"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </ul>
                 </div>
+
                 <?php
                 $langauge = Language::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y'));
                 $currentlangauge = Language::model()->findByPk(Yii::app()->session['lang']);
@@ -113,63 +116,63 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                 <?php if (Yii::app()->user->id == null) { ?>
                     <div>
                         <a class="btn-login " data-toggle="modal" href='#modal-login'>
-                            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/login-icon.png" alt=""><span class="d-none d-sm-inline"> <?= $label->label_header_login ?></span></a></d>
-                    <?php } else { ?>
-                        <div class="dropdown user-menu">
-                            <?php
+                            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/login-icon.png" alt=""><span class="d-none d-sm-inline"> <?= $label->label_header_login ?></span></a>
+                    </div>
+                <?php } else { ?>
+                    <div class="dropdown user-menu">
+                        <?php
 
-                            if (Yii::app()->user->id == null) {
+                        if (Yii::app()->user->id == null) {
 
-                                $img  = Yii::app()->theme->baseUrl . "/images/thumbnail-profile.png";
+                            $img  = Yii::app()->theme->baseUrl . "/images/thumbnail-profile.png";
+                        } else {
+                            $criteria = new CDbCriteria;
+                            $criteria->addCondition('id =' . Yii::app()->user->id);
+                            $Users = Users::model()->findAll($criteria);
+                            foreach ($Users as $key => $value) {
+                                $img = Yii::app()->baseUrl . '/uploads/user/' . $value->id . '/thumb/' . $value->pic_user;
+                            }
+                        }
+                        ?>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;">
+                            <!-- <span class="photo" style="background-image: url('<?= $img ?>"></span> -->
+                            <span class="photo" style="background-image: url('<?= $img ?>"></span>
+                            <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/username-icon.png" class="profile-account" alt=""> -->
+                            <?php if (Yii::app()->session['lang'] == 1) {
+                                echo  $name->firstname_en;
                             } else {
-                                $criteria = new CDbCriteria;
-                                $criteria->addCondition('id =' . Yii::app()->user->id);
-                                $Users = Users::model()->findAll($criteria);
-                                foreach ($Users as $key => $value) {
-                                    $img = Yii::app()->baseUrl . '/uploads/user/' . $value->id . '/thumb/' . $value->pic_user;
-                                }
+                                echo   $name->firstname;
                             }
                             ?>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="height: 100%;">
-                                <!-- <span class="photo" style="background-image: url('<?= $img ?>"></span> -->
-                                <span class="photo" style="background-image: url('<?= $img ?>"></span>
-                                <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/username-icon.png" class="profile-account" alt=""> -->
-                                <?php if (Yii::app()->session['lang'] == 1) {
-                                    echo  $name->firstname_en;
-                                } else {
-                                    echo   $name->firstname;
-                                }
-                                ?>
-                                <i class="br-left las la-bars"></i>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <?php if (Yii::app()->user->id !== null) { ?>
-                                    <li class="<?= $bar == 'site' && $bar_action == 'dashboard' ? 'active' : '' ?>"><a href="<?php echo $this->createUrl('/site/dashboard'); ?>"><i class="fas fa-list-ul"></i><?= $label->label_header_dashboard ?></a></li>
-                                <?php } ?>
+                            <i class="br-left las la-bars"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <?php if (Yii::app()->user->id !== null) { ?>
+                                <li class="<?= $bar == 'site' && $bar_action == 'dashboard' ? 'active' : '' ?>"><a href="<?php echo $this->createUrl('/site/dashboard'); ?>"><i class="fas fa-list-ul"></i><?= $label->label_header_dashboard ?></a></li>
+                            <?php } ?>
 
-                                <li>
-                                    <?php
-                                    $user = Users::model()->findByPk(Yii::app()->user->id);
-                                    if ($user->type_register != 3) { ?>
-                                <li>
-                                    <?php $url = Yii::app()->createUrl('registration/Update/'); ?>
-                                    <a href="<?= $url ?>"><i class="fas fa-edit"></i><?= $label->label_header_update ?></a>
-                                </li>
-                            <?php } ?>
-                            <?php if ($user->superuser == 1) { ?>
-                                <li>
-                                    <?php $url = Yii::app()->createUrl('admin'); ?>
-                                    <a href="<?= $url ?>"><i class="fas fa-cog"></i><?= UserModule::t("backend"); ?></a>
-                                </li>
-                            <?php } ?>
                             <li>
-                                <!-- <a href="<?php //echo $this->createUrl('login/logout') 
-                                                ?>"> --><a href="javascript:void(0)" class="text-danger log-out" onclick="logout()"><i class="fas fa-sign-out-alt"></i><?= $label->label_header_logout ?></a>
+                                <?php
+                                $user = Users::model()->findByPk(Yii::app()->user->id);
+                                if ($user->type_register != 3) { ?>
+                            <li>
+                                <?php $url = Yii::app()->createUrl('registration/Update/'); ?>
+                                <a href="<?= $url ?>"><i class="fas fa-edit"></i><?= $label->label_header_update ?></a>
                             </li>
-                            </ul>
-                        </div>
-                    <?php } ?>
+                        <?php } ?>
+                        <?php if ($user->superuser == 1) { ?>
+                            <li>
+                                <?php $url = Yii::app()->createUrl('admin'); ?>
+                                <a href="<?= $url ?>"><i class="fas fa-cog"></i><?= UserModule::t("backend"); ?></a>
+                            </li>
+                        <?php } ?>
+                        <li>
+                            <!-- <a href="<?php //echo $this->createUrl('login/logout') 
+                                            ?>"> --><a href="javascript:void(0)" class="text-danger log-out" onclick="logout()"><i class="fas fa-sign-out-alt"></i><?= $label->label_header_logout ?></a>
+                        </li>
+                        </ul>
                     </div>
+                <?php } ?>
             </div>
 
             <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -336,10 +339,9 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                     </ul>
 
                 </div>
-
+            </div>
     </nav>
 
-    </div>
 
 </header>
 

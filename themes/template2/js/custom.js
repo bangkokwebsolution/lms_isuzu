@@ -17,87 +17,93 @@ $(".backtotop").click(function () {
   );
 });
 
+$("#carousel-banner").slick({
+  slidesToShow: 1,
+  dots: true,
+  speed: 300,
+  autoplay: true,
+  fade: true,
+  cssEase: 'linear'
+});
 
-$("#carousel-banner").owlCarousel({
-    items: 1,
-    animateOut: "fadeOut",
-    loop: true,
-    margin: 0,
-    autoplay:true,
-    autoplayTimeout:3000,
-    // autoplay:true,
-    // autoplayTimeout:1000,
-    // autoplayHoverPause:true
-    // nav: true,
-    // navText: ["<i class='fas fa-angle-left'></i>", "<i class='fas fa-angle-right'></i>"],
-    responsiveClass: true,
-    responsive: {
-      0: {
-        items: 1,
-      },
-      600: {
-        items: 1,
-      },
-      1000: {
-        items: 1,
-      },
+// $(".one-time").slick({
+//   dots: true,
+//   infinite: true,
+//   speed: 300,
+//   slidesToShow: 1,
+//   adaptiveHeight: true,
+// });
+console.log("test");
+
+// $("#carousel-banner").owlCarousel({
+//     items: 1,
+//     animateOut: "fadeOut",
+//     loop: false,
+//     margin: 0,
+//     autoplay:true,
+//     autoplayTimeout:3000,
+//     responsiveClass: true,
+//     responsive: {
+//       0: {
+//         items: 1,
+//       },
+//       600: {
+//         items: 1,
+//       },
+//       1000: {
+//         items: 1,
+//       },
+//     },
+//   });
+
+$(".coursequestion-num").owlCarousel({
+  margin: 0,
+  loop: false,
+  center: false,
+  nav: true,
+  dots: false,
+  autoHeight: true,
+  stagePadding: 40,
+  responsive: {
+    0: {
+      items: 3,
+      slideBy: 3,
     },
-  });
+    500: {
+      items: 5,
+      slideBy: 5,
+    },
+    768: {
+      items: 10,
+      slideBy: 10,
+    },
+  },
+});
 
-  $(".coursequestion-num").owlCarousel({
-    margin: 0,
-    loop: false,
-    center:false,
-    nav: true,
-    dots: false,
-    autoHeight: true,
-    stagePadding: 40,
-    responsive: {
-      0: {
-        items: 3,
-        slideBy: 3,
-      },
-      500: {
-        items: 5,
-        slideBy: 5,
-      },
-      768: {
-        items: 10,
-        slideBy: 10,
-      }
-    }
-  });
-
-  
 $("#menu-index").owlCarousel({
-    items: 5,
-    animateOut: "fadeOut",
-    loop: false,
-    margin: 0,
-    // nav: true,
-    // navText: ["<i class='fas fa-angle-left'></i>", "<i class='fas fa-angle-right'></i>"],
-    responsiveClass: true,
-    responsive: {
-      0: {
-        items: 2,
-      },
-      600: {
-        items: 2,
-      },
-      1000: {
-        items: 5,
-      },
+  items: 5,
+  animateOut: "fadeOut",
+  loop: false,
+  margin: 0,
+  responsiveClass: true,
+  responsive: {
+    0: {
+      items: 2,
     },
-  });
-
+    600: {
+      items: 2,
+    },
+    1000: {
+      items: 5,
+    },
+  },
+});
 
 $(".course-main").owlCarousel({
   items: 4,
   animateOut: "fadeOut",
   loop: false,
   margin: 20,
-  // nav: true,
-  // navText: ["<i class='fas fa-angle-left'></i>", "<i class='fas fa-angle-right'></i>"],
   responsiveClass: true,
   responsive: {
     0: {

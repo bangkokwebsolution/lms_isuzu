@@ -127,11 +127,9 @@ if (!empty($msg) || !empty($_GET['msg'])) {
 <section class="container banner-main">
     <div class="row">
         <div class="col-lg-3">
-            <a class="" href="<?php echo $this->createUrl('/site/index'); ?>">
-                <div class="logo-h30" style="background-image:url(<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-index.png">
-                    <!-- <img src="" alt=""> -->
-                </div>
-            </a>
+            <div class="logo-h30" style="background-image:url(<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-index.png">
+                <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-index.png">
+            </div>
         </div>
         <div class="col-lg-9">
             <div class="banner-slide h-30">
@@ -142,7 +140,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                 // $criteriaimg->order = 'update_date  DESC';
                 $image = Imgslide::model()->findAll($criteriaimg);
                 ?>
-                <div id="carousel-banner" class="owl-carousel owl-theme owl-main">
+                <div id="carousel-banner" class="">
                     <?php
                     foreach ($image as $key => $value) {
                         $criteriaType = new CDbCriteria;

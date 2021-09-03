@@ -2,6 +2,7 @@
     .menu-header{
         position: absolute;
         top: 20px;
+        right: 20px;
     }
 }
 @media only screen and (min-width:992px) and (max-width:1360px) {
