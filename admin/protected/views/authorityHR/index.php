@@ -29,7 +29,7 @@ $this->breadcrumbs=array($titleName);
               ?>
               <tr>
                 <td style="text-align: center;"><?php echo $no; $no++; ?></td>
-                <td><?= $value->profile->staff_id ?></td>
+                <td><?= $value->employee_id ?></td>
                 <td><?= $value->profile->firstname_en." ".$value->profile->lastname_en ?></td>
                 <td></td>
                 <td></td>
@@ -46,7 +46,7 @@ $this->breadcrumbs=array($titleName);
           }else{
             ?>
             <tr>
-              <td colspan="3">ไม่มีข้อมูล</td>
+              <td colspan="7">ไม่มีข้อมูล</td>
             </tr>
             <?php
           }
@@ -77,7 +77,7 @@ $this->breadcrumbs=array($titleName);
               ?>
               <tr>
                 <td><input type="checkbox" name="user_list[]" value="<?= $value->id ?>"></td>
-                <td><?= $value->profile->staff_id ?></td>
+                <td><?= $value->employee_id ?></td>
                 <td><?= $value->profile->firstname_en." ".$value->profile->lastname_en ?></td>
                 <td></td>
                 <td></td>
@@ -89,7 +89,7 @@ $this->breadcrumbs=array($titleName);
           }else{
             ?>
             <tr>
-              <td colspan="2">ไม่มีข้อมูล</td>
+              <td colspan="7">ไม่มีข้อมูล</td>
             </tr>
             <?php
           }
@@ -101,7 +101,7 @@ $this->breadcrumbs=array($titleName);
         </tbody>
       </table>
       <br>
-      <button type="submit" class="btn btn-success">+ เพิ่ม HR คนที่ 1</button>
+      <button type="submit" class="btn btn-success">+ เพิ่ม จัดการผู้อนุมัติ 1</button>
       </form>
 
 
