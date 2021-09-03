@@ -5,6 +5,7 @@
 <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/parallax.min.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/fresco-2.3.0/js/fresco.min.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/owlcarousel/owl.carousel.min.js"></script>
+<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/slick-1.8.1/slick/slick.min.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/jasny-bootstrap.min.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/script.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/js/video.js"></script>

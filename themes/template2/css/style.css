@@ -4,10 +4,19 @@
   --color-blackmain: #000;
 }
 
-/* @font-face {
-  font-family: 'supermarket';
-  src: url('../fonts/supermarket.woff2') format('woff2'),
-    url('../fonts/supermarket.woff') format('woff');
+@font-face {
+  font-family: 'NotoSansThai';
+  src: url('../fonts/NotoSansThai-Regular.woff2') format('woff2'),
+    url('../fonts/NotoSansThai-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'NotoSans';
+  src: url('../fonts/NotoSans-Regular.woff2') format('woff2'),
+    url('../fonts/NotoSans-Regular.woff') format('woff');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -18,10 +27,10 @@
   src: url("../font/FontAwesome.otf") format("otf"), url("../font/fontawesome-webfont.eot") format("eot"), url("../font/fontawesome-webfont.svg") format("svg"), url("../font/fontawesome-webfont.ttf") format("ttf"), url("../font/fontawesome-webfont.woff") format("woff"), url("../font/fontawesome-webfont.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
-} */
+}
 
 * {
-  font-family: tahoma, sans-serif;
+  font-family: "NotoSansThai","NotoSans", sans-serif;
 }
 
 html {
@@ -31,7 +40,7 @@ html {
 
 body {
   position: relative;
-  font-size: 16px;
+  font-size: 14px;
   margin: 0;
   padding-bottom: 4rem;
   min-height: 100%;
@@ -292,7 +301,6 @@ header .navbar-form a.btn-login {
   border-radius: 5px 5px;
   border: 1px solid #E0001A;
   background-color: #E0001A;
-  ;
   color: #fff;
   padding: 20px;
   margin-right: 10px;
@@ -379,7 +387,6 @@ header .navbar-nav li a {
   header .navbar-toggle {
     display: inline-block;
     position: relative;
-    float: right;
   }
 
   header .navbar-header {
@@ -400,7 +407,8 @@ header .navbar {
 }
 
 header .navbar-toggle {
-  margin: 23px 15px;
+  margin: 20px;
+  padding: 15px 10px;
 }
 
 header span.photo {
@@ -444,7 +452,8 @@ header .dropdown-menu.full-w {
 }
 
 header .dropdown-menu.search {
-  width: 320px;
+  width: 300px;
+  padding: 10px;
 }
 
 header .dropdown-menu.search form .input-group {
@@ -2667,7 +2676,7 @@ header .navbar-form {
   border-radius: 5px !important;
   border-color: #EEE;
   border-right: 0;
-  font-size: 16px;
+  font-size: 14px;
   height: calc(2em + .75rem + 8px) !important;
   border: 1px solid #ddd !important;
 }
@@ -2998,12 +3007,12 @@ ol {
   margin-bottom: 15px;
   letter-spacing: .05px;
   text-align: left;
-  line-height: 1.4;
+  line-height: 1.2;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  min-height: 3em;
+  min-height: 3.5em;
 }
 
 .stepcourse {
@@ -4411,7 +4420,7 @@ ol.stat-alert li::before {
 
 
 .btn-forgot {
-  font-size: 18px;
+  font-size: 16px;
   color: #23527C;
 }
 
@@ -4543,7 +4552,7 @@ ol.stat-alert li::before {
 }
 
 header .navbar-nav li a {
-  font-size: 18px !important;
+  font-size: 16px !important;
   color: #000;
 }
 
@@ -4712,9 +4721,9 @@ header .navbar-nav li a {
 }
 
 .form-control {
-  height: calc(2em + .75rem + 2px);
+  height: calc(2em + .75rem + 6px);
   border: 2px solid #ddd !important;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .form-control:focus {
@@ -5475,11 +5484,12 @@ section#faq {
   border-radius: 8px;
   padding: 10px;
   margin: 0px 10px;
+  height: 50px;
 }
 
 .menu-header .btn-login {
   display: inline-block;
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
   letter-spacing: 0.1px;
   background: #E0001A;
@@ -5487,6 +5497,20 @@ section#faq {
   padding: 10px 18px;
   border-radius: 6px;
   transition: all .25s ease;
+}
+
+.navbar-toggle{
+  float: left;
+}
+
+.box-search{
+  display: inline-block;
+  border: 1px solid #DDDDDD;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin: 0px ;
+  height: 50px;
 }
 
 
@@ -5598,6 +5622,7 @@ section#faq {
   color: #fff;
   font-size: 14px;
   padding: 5px 10px;
+  border-radius: 3px;
 }
 
 #modal-login .modal-footer {
@@ -5688,7 +5713,7 @@ tr {
 }
 
 .btn-download {
-  font-size: 18px;
+  font-size: 16px;
   background: #E0001A;
   padding: 4px 14px;
   border-radius: 6px;
@@ -5935,7 +5960,7 @@ tr {
 }
 
 .question-main .dp-block strong {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 500;
 }
 
@@ -6028,13 +6053,11 @@ tr {
 
 .logo-h30 {
   min-height: 28rem;
-  background-image: url(../images/logo-index.png);
-  ;
+  /* background-image: url(../images/logo-index.png); */
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
-  /* border-bottom: 1px solid #ddd; */
-  border: 3px solid #e0001a;
+  /* border: 3px solid #e0001a; */
   border-top: 0;
   width: 100%;
   min-width: 100%;

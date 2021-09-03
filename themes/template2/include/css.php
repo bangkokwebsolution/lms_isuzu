@@ -8,6 +8,8 @@
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/fresco-2.3.0/css/fresco.css" media="screen">
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/owlcarousel/owl.carousel.min.css" media="screen">
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/owlcarousel/owl.theme.default.min.css" media="screen">
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/slick-1.8.1/slick/slick.css" media="screen">
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/slick-1.8.1/slick/slick-theme.css" media="screen">
 <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/jasny-bootstrap.min.css" type="text/css" media="screen">
 
 
