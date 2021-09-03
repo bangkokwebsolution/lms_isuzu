@@ -100,7 +100,7 @@ EOD
 
 									'id'=>$formNameModel.'-grid',
 									'dataProvider'=>$model->search(),
-									'filter'=>$model,
+									// 'filter'=>$model,
 									'selectableRows' => 2,
 									//'rowCssClassExpression'=>'"items[]_{$data->id}"',
 									'htmlOptions' => array(
@@ -165,6 +165,7 @@ EOD
 										array(
 											'name'=>'fullname',
 											'type'=>'html',
+											'filter'=>false,
 											'value'=>'$data->fullnamee',
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
 											'htmlOptions'=>array('style'=>'text-align: center;'),
@@ -182,6 +183,7 @@ EOD
 											'header' => 'เลขประจำตัวบัตรประชาชน',
 											'name'=>'identification',
 											'type'=>'html',
+											'filter'=>false,
 											'visible' => $this->route === "user/admin/General",
 											'value'=>function($data){
 												return $data->identification;
@@ -191,23 +193,25 @@ EOD
 
 										),
 									
-										array(
-											'header' => 'เลขพาสปอร์ต',
-											'name'=>'passport',
-											'type'=>'html',
-											'visible' => $this->route == "user/admin/employeeShip",
-											'value'=>function($data){
-												return $data->profile->passport;
+										// array(
+										// 	'header' => 'เลขพาสปอร์ต',
+										// 	'name'=>'passport',
+										// 	'type'=>'html',
+										// 	'filter'=>false,
+										// 	'visible' => $this->route == "user/admin/employeeShip",
+										// 	'value'=>function($data){
+										// 		return $data->profile->passport;
 						  
-											},
-											'filterHtmlOptions'=>array('style'=>'width:30px'),
+										// 	},
+										// 	'filterHtmlOptions'=>array('style'=>'width:30px'),
 
-										),
+										// ),
 
 										array(
 											'header' => 'รหัสพนักงาน',
 											'name'=>'username',
 											'type'=>'html',
+											'filter'=>false,
 											'visible' =>  $this->route === "user/admin/employee" ,
 											'value'=>function($data){
 												return $data->username;
@@ -215,25 +219,35 @@ EOD
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
 										),
 										array(
-											'header' => 'แผนก',
+											'header' => 'employee class',
 											'name'=>'department_id',
 											'type'=>'html',
-											'visible' => $this->route != "user/admin/General",
-											'filter'=>CHtml::listData(Department::model()->findAll('active = "y" AND lang_id = 1 AND type_employee_id = "'.$type_emp.'" '),'id','dep_title'),
+											'filter'=>false,
+											// 'visible' => $this->route != "user/admin/General",
+											// 'filter'=>CHtml::listData(Department::model()->findAll('active = "y" AND lang_id = 1 AND type_employee_id = "'.$type_emp.'" '),'id','dep_title'),
 											'value'=>function($data){
-												return $data->department->dep_title;
+												$class = '';
+												if(isset($data->profile->EmpClass->title)){
+													$class = $data->profile->EmpClass->title;
+												}
+												return $class ;
 											},
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
 									
 										),
 										array(
-											'header' => 'ตำแหน่ง',
+											'header' => 'คำอธิบาย',
 											'name'=>'position_id',
 											'type'=>'html',
-											'visible' => $this->route != "user/admin/General",
-											'filter'=>CHtml::listData($ListPosition,'id','position_title'),
+											'filter'=>false,
+											// 'visible' => $this->route != "user/admin/General",
+											// 'filter'=>CHtml::listData($ListPosition,'id','position_title'),
 											'value'=>function($data){
-												return $data->position->position_title;
+												$classdes = '';
+												if(isset($data->profile->EmpClass->title)){
+													$classdes = $data->profile->EmpClass->descrpition;
+												}
+												return $classdes ;
 											},
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
 									
@@ -241,6 +255,7 @@ EOD
 										array(
 											'name'=>'email',
 											'type'=>'raw',
+											'filter'=>false,
 											'value'=>'CHtml::link(UHtml::markSearch($data,"email"), "mailto:".$data->email)',
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
 			
@@ -282,6 +297,7 @@ EOD
 										array(
 											'name'=>'status',
 											'type'=>'raw',
+											'filter' => false,
 											'value'=>'User::itemAlias("UserStatus",$data->status)',
 											'filter' => User::itemAlias("UserStatus"),
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
@@ -290,6 +306,7 @@ EOD
 										array(
 											'name'=>'online_status',
 											'type'=>'raw',
+											'filter' => false,
 											'value'=>'User::chk_online($data->id,$data->lastactivity,$data->online_status)',
 											'filter' => User::itemAlias("Online"),
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
