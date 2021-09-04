@@ -204,8 +204,7 @@ date_default_timezone_set("Asia/Bangkok");
                                         <label>
                                             <label><label for="Profile_identification" class="required">รหัสบัตรประชาชน</label></label>
                                         </label>
-                                        <?php echo $form->textField($profile, 'identification', array('class' => 'form-control','placeholder' => 'รหัสบัตรประชาชน','oninput' => 'fillfield(this.value)')); ?>
-                                        <?php echo $form->error($profile, 'identification'); ?>
+                                        
                                     </div> -->
                                     <div class="row">
                                     <?php if($model->isNewRecord) { ?>
