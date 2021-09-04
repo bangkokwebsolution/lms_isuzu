@@ -17,7 +17,7 @@ class AdminController extends Controller
 
 	public function init()
 	{
-
+       
 		if(Yii::app()->user->id == null){
 			$this->redirect(array('site/index'));
 		}
@@ -45,6 +45,26 @@ class AdminController extends Controller
 
         return $result;
 
+    }
+
+    public function actionCheck_email(){
+        $email = $_POST['email'];
+        $UserNew = UserNew::model()->findAll(array('condition'=>'email = "'.$email.'"'));
+        if(!empty($UserNew)){
+            echo 1;
+        }else{
+            echo 2;
+        }
+    }
+
+    public function actionCheck_empid(){
+        $emp_id = $_POST['emp_id'];
+        $UserNew = UserNew::model()->findAll(array('condition'=>'username = "'.$emp_id.'"'));
+        if(!empty($UserNew)){
+            echo 1;
+        }else{
+            echo 2;
+        }
     }
 
     public function actionListPosition(){
@@ -1150,13 +1170,14 @@ class AdminController extends Controller
 	}
     public function actionselectClass(){
         $Class = $_POST['Class'];
-        $data = Position::model()->findAll(array('condition'=>'class_id = '.$Class));
+        // $data = Position::model()->findAll(array('condition'=>'class_id = '.$Class));
 
-        $output = '<option value="">-- กรุณาเลือก Position description --</option>';
-        foreach ($data as $row) {
-            $output .= '<option value="' . $row->id . '">' . $row->position_title . '</option>';
-        }
-        echo $output;
+        // $output = '<option value="">-- กรุณาเลือก Position description --</option>';
+        // foreach ($data as $row) {
+        //     $output .= '<option value="' . $row->id . '">' . $row->position_title . '</option>';
+        // }
+        $empclass = EmpClass::model()->findbyPk($Class);
+        echo $empclass->descrpition;
     }
 	/**
 	 * Creates a new model.
@@ -1175,6 +1196,7 @@ class AdminController extends Controller
 			$model->employee_id = $_POST['User']['employee_id'];
 			$model->username = $_POST['User']['employee_id'];
 			$model->password = md5($_POST['User']['employee_id']);
+            $model->org_id = $_POST['User']['org_id'];
 			$model->verifyPassword = $model->password;
 			
 			$model->email = $_POST['User']['email'];
@@ -1259,20 +1281,25 @@ class AdminController extends Controller
 			echo UActiveForm::validate(array($model,$profile));
 			Yii::app()->end();
 		}
-		if(isset($_POST['User']))
+		if(isset($_POST['UserNew']))
 		{			
-			
-
-			$model->username = $_POST['User']['username'];
+            // var_dump($_POST['UserNew']);exit();
+			// $model->attributes = $_POST['UserNew'];
+            // var_dump($model->attributes);
+            // var_dump($_POST['UserNew']);exit();
+			// $model->username = $_POST['UserNew']['username'];
 			
 			// $model->status = $_POST['User']['status'];
 			
-			$model->email = $_POST['User']['email'];
+			// $model->email = $_POST['UserNew']['email'];
 
-			$model->confirmpass = $model->password;
-			$model->department_id = $_POST['User']['department_id'];
-			$model->position_id = $_POST['User']['position_id'];
-			$model->branch_id = $_POST['User']['branch_id'];
+			// $model->confirmpass = $model->password;
+			// $model->department_id = $_POST['UserNew']['department_id'];
+			// $model->position_id = $_POST['UserNew']['position_id'];
+			// $model->branch_id = $_POST['UserNew']['branch_id'];
+            $model->email = $_POST['UserNew']['email'];
+            $model->employee_id = $_POST['UserNew']['employee_id'];
+            $model->org_id = $_POST['UserNew']['org_id'];
 
 			if(isset($_POST['url_pro_pic']) && $_POST['url_pro_pic'] != ""){
 				$uploadDir = Yii::app()->getUploadPath(null);
@@ -1302,7 +1329,7 @@ class AdminController extends Controller
                 file_put_contents($targetFile,file_get_contents($_POST['url_pro_pic']));
             }
 
-            if($_POST['User']['newpassword'] != null ){
+            if($_POST['UserNew']['newpassword'] != null ){
                 $model->password=Yii::app()->controller->module->encrypting($_POST['User']['newpassword']);
 
                 $model->confirmpass=UserModule::encrypting($_POST['User']['confirmpass']);
@@ -1440,7 +1467,7 @@ class AdminController extends Controller
 		if($this->_model===null)
 		{
 			if(isset($_GET['id']))
-				$this->_model=User::model()->notsafe()->findbyPk($_GET['id']);
+				$this->_model=UserNew::model()->findbyPk($_GET['id']);
 			if($this->_model===null)
 				throw new CHttpException(404,'The requested page does not exist.');
 		}

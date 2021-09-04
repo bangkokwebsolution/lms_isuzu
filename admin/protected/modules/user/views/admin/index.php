@@ -66,7 +66,7 @@ EOD
 				?>
 				<div id="user" class="innerLR">
 
-					<?php $this->widget('AdvanceSearchForm', array(
+					<!-- <?php $this->widget('AdvanceSearchForm', array(
 						'data'=>$model,
 						'route' => $this->route,
 						'attributes'=>array( 
@@ -79,7 +79,7 @@ EOD
 							array('name'=>'status','type'=>'list','query' => $model->itemAlias('UserStatus')),
 						)
 					));
-					?>
+					?> -->
 					<div class="widget" style="margin-top: -1px;">
 						<div class="widget-head">
 							<h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $this->pageTitle=Yii::app()->name . ' - '.UserModule::t("Registration"); ?></h4>
@@ -100,7 +100,7 @@ EOD
 
 									'id'=>$formNameModel.'-grid',
 									'dataProvider'=>$model->search(),
-									// 'filter'=>$model,
+									'filter'=>$model,
 									'selectableRows' => 2,
 									//'rowCssClassExpression'=>'"items[]_{$data->id}"',
 									'htmlOptions' => array(
@@ -165,7 +165,7 @@ EOD
 										array(
 											'name'=>'fullname',
 											'type'=>'html',
-											'filter'=>false,
+											// 'filter'=>false,
 											'value'=>'$data->fullnamee',
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
 											'htmlOptions'=>array('style'=>'text-align: center;'),
@@ -179,19 +179,19 @@ EOD
 										// 	}
 										// ),
 										
-											array(
-											'header' => 'เลขประจำตัวบัตรประชาชน',
-											'name'=>'identification',
-											'type'=>'html',
-											'filter'=>false,
-											'visible' => $this->route === "user/admin/General",
-											'value'=>function($data){
-												return $data->identification;
-											},
-											'filterHtmlOptions'=>array('style'=>'width:30px'),
+										// 	array(
+										// 	'header' => 'เลขประจำตัวบัตรประชาชน',
+										// 	'name'=>'identification',
+										// 	'type'=>'html',
+										// 	'filter'=>false,
+										// 	'visible' => $this->route === "user/admin/General",
+										// 	'value'=>function($data){
+										// 		return $data->identification;
+										// 	},
+										// 	'filterHtmlOptions'=>array('style'=>'width:30px'),
 									
 
-										),
+										// ),
 									
 										// array(
 										// 	'header' => 'เลขพาสปอร์ต',
@@ -211,7 +211,7 @@ EOD
 											'header' => 'รหัสพนักงาน',
 											'name'=>'username',
 											'type'=>'html',
-											'filter'=>false,
+											// 'filter'=>false,
 											'visible' =>  $this->route === "user/admin/employee" ,
 											'value'=>function($data){
 												return $data->username;
@@ -219,10 +219,10 @@ EOD
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
 										),
 										array(
-											'header' => 'employee class',
+											'header' => 'Employee Class',
 											'name'=>'department_id',
 											'type'=>'html',
-											'filter'=>false,
+											// 'filter'=>false,
 											// 'visible' => $this->route != "user/admin/General",
 											// 'filter'=>CHtml::listData(Department::model()->findAll('active = "y" AND lang_id = 1 AND type_employee_id = "'.$type_emp.'" '),'id','dep_title'),
 											'value'=>function($data){
@@ -239,7 +239,7 @@ EOD
 											'header' => 'คำอธิบาย',
 											'name'=>'position_id',
 											'type'=>'html',
-											'filter'=>false,
+											// 'filter'=>false,
 											// 'visible' => $this->route != "user/admin/General",
 											// 'filter'=>CHtml::listData($ListPosition,'id','position_title'),
 											'value'=>function($data){
@@ -255,7 +255,7 @@ EOD
 										array(
 											'name'=>'email',
 											'type'=>'raw',
-											'filter'=>false,
+											// 'filter'=>false,
 											'value'=>'CHtml::link(UHtml::markSearch($data,"email"), "mailto:".$data->email)',
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
 			
@@ -265,7 +265,7 @@ EOD
 											'name'=>'create_at',
 											'type'=>'html',
 			// 'value'=>'UHtml::markSearch($data,"create_at")'
-											'filter' => false,
+											// 'filter' => false,
 											'value'=>function($data){
 												return Helpers::changeFormatDate($data->create_at,'datetime');
 											},
@@ -278,7 +278,7 @@ EOD
 											'name'=>'lastvisit_at',
 											'type'=>'html',
 			// 'value'=>'UHtml::markSearch($data,"lastvisit_at")'
-											'filter' => false,
+											// 'filter' => false,
 											'value'=>function($data){
 												return Helpers::changeFormatDate($data->lastvisit_at,'datetime');
 											},
@@ -306,7 +306,7 @@ EOD
 										array(
 											'name'=>'online_status',
 											'type'=>'raw',
-											'filter' => false,
+											// 'filter' => false,
 											'value'=>'User::chk_online($data->id,$data->lastactivity,$data->online_status)',
 											'filter' => User::itemAlias("Online"),
 											'filterHtmlOptions'=>array('style'=>'width:30px'),

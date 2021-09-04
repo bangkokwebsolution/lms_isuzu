@@ -3,7 +3,14 @@
 
 class UserNew extends CActiveRecord
 {
+	const STATUS_NOACTIVE=0;
+	const STATUS_ACTIVE=1;
 	
+	public $typeuser;
+	public $type_employee;
+	public $supper_user_status;
+	public $idensearch;
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -29,7 +36,7 @@ class UserNew extends CActiveRecord
 		return array(
 			// The following rule is used by search().
 			array('id', 'numerical', 'integerOnly'=>true),
-			array('username,email', 'length', 'max'=>255),
+			array('username', 'length', 'max'=>255),
 			array('create_date', 'safe'),
 			// Please remove those attributes that should not be searched.
 			array('id, username, password, email, group,online_status , avatar, department_id,position_id,branch_id,report_authority,authority_hr,superuser,status,type_register,repass_status,register_status,online_user,del_status,pic_user,identification,activkey,lastactivity,last_ip,lastvisit_at,last_activit,create_at,org_user_status,station_id,company_id,division_id,employee_id,bookkeeper_id,pic_cardid,orgchart_lv2,auditor_id,pic_cardid2,verifyPassword,note,not_passed,org_id', 'safe', 'on'=>'search'),
@@ -57,7 +64,7 @@ class UserNew extends CActiveRecord
 	 */
 
 	public function relations()
-	{
+	{	
         $relations = Yii::app()->getModule('user')->relations;
         if (!isset($relations['profile']))
             $relations['profile'] = array(self::HAS_ONE, 'Profile', 'user_id');
@@ -142,7 +149,7 @@ class UserNew extends CActiveRecord
                 INNER JOIN tbl_learn_file ON tbl_file.id = tbl_learn_file.file_id
                 AND t.learn_id = tbl_learn_file.learn_id',
         );
-
+        $relations['EmpClass'] = array(self::HAS_MANY, 'EmpClass', 'employee_id');
 
 
         return $relations;
@@ -219,6 +226,27 @@ class UserNew extends CActiveRecord
 
         return parent::beforeSave();
     }
+    public static function itemAlias($type,$code=NULL) {
+		$_items = array(
+			'UserStatus' => array(
+				self::STATUS_NOACTIVE => UserModule::t('ระงับการใช้งาน'),
+				self::STATUS_ACTIVE => UserModule::t('เปิดการใช้งาน'),
+//				self::STATUS_BANNED => UserModule::t('Banned'),
+			),
+			'AdminStatus' => array(
+				'0' => UserModule::t('ผู้ใช้งาน'),
+				'1' => UserModule::t('ผู้ดูแลระบบ'),
+			),
+			'Online' => array(
+				'1' => UserModule::t('ออนไลน์'),
+				'0' => UserModule::t('ออฟไลน์'),
+			)
+		);
+		if (isset($code))
+			return isset($_items[$type][$code]) ? $_items[$type][$code] : false;
+		else
+			return isset($_items[$type]) ? $_items[$type] : false;
+	}
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.

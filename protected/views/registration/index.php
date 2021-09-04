@@ -184,7 +184,7 @@ figure figcaption {
                                 <div class="col-md-6 col-xs-12">
                                     <div class="card card-profile-detail">
                                         <p><?= $Employee_c ?> <br><span>
-                                            <?php $employee_class =  $profile->employee_class; 
+                                            <?php $employee_class =  $profile->EmpClass->title; 
 
                                      if(!empty($employee_class)){
                                             echo $employee_class;
@@ -237,7 +237,7 @@ figure figcaption {
                                         <p><?= $EmployeeID ?> <br>
                                           <span> 
                                             <?php $employee_id = $profile->user->employee_id;
-                                                echo "<input class='form-control' name='employee_id' id='employee_id' value='".$employee_id."' >";
+                                                echo "<input class='form-control' readonly name='employee_id' id='employee_id' value='".$employee_id."' >";
                                             ?>
                                           </span></p>
                                     </div>
@@ -254,8 +254,8 @@ figure figcaption {
                                 <div class="col-md-6 col-xs-12">
                                     <div class="card card-profile-detail">
                                         <p><?= $Employee_c ?> <br><span>
-                                            <?php $employee_class =  $profile->employee_class; 
-                                          echo "<input class='form-control' name='employee_class' id='employee_class' value='".$employee_class."' >";
+                                            <?php $employee_class =  $profile->EmpClass->title; 
+                                          echo "<input class='form-control' readonly name='employee_class' id='employee_class' value='".$employee_class."' >";
 
                                             ?>
                                         </span></p>
@@ -265,7 +265,7 @@ figure figcaption {
                                     <div class="card card-profile-detail">
                                         <p><?= $Position_d ?> <br><span>
                                           <?php $position_description = $profile->position_description ;
-                                          echo "<input class='form-control' name='position_description' id='position_description' value='".$position_description."' >";
+                                          echo "<input class='form-control' readonly name='position_description' id='position_description' value='".$position_description."' >";
                                           ?>
                                         </span></p>
                                     </div>

@@ -140,14 +140,14 @@ date_default_timezone_set("Asia/Bangkok");
 
                     <div class="col-md-12">
                         <?php 
-                        $model_org = OrgChart::model()->findAll(array("condition"=>"active =  'y' and id != '1' "));
+                        $attSearch = array("class"=>"span3",'disable_search' => false);
+                        $org_all = CHtml::listData(OrgChart::model()->findAll("active = 'y' and id != 1"), 'id', 'title');
                         ?>
-                        <?php $list = CHtml::listData($model_org,'id', 'title'); ?>
                         <?php (empty($model->org_id)? $select = '' : $select = $model->org_id);?>
                         <div class="row">
                             <div class="col-md-12">
                                 <?php echo $form->labelEx($model,'org_id'); ?>
-                                <?php echo Chosen::activeDropDownList($model, 'org_id', $list, $attSearch); ?>
+                                <?php echo Chosen::activeDropDownList($model, 'org_id', $org_all, $attSearch); ?>
                                 <?php echo $this->NotEmpty();?>
                                 <?php echo $form->error($model,'org_id'); ?>
                             </div>
@@ -163,7 +163,7 @@ date_default_timezone_set("Asia/Bangkok");
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label><?php echo $form->labelEx($model, 'employee_id'); ?></label>
-                                    <?php echo $form->textField($model, 'employee_id', array('class' => 'form-control', 'placeholder' => 'รหัสพนักงาน','required'=>'required')); ?>
+                                    <?php echo $form->textField($model, 'employee_id', array('class' => 'form-control', 'placeholder' => 'รหัสพนักงาน','onclick'=>'check_id()','required'=>'required')); ?>
                                     <?php echo $form->error($model, 'employee_id'); ?>
                                 </div>
                             </div>
@@ -172,7 +172,7 @@ date_default_timezone_set("Asia/Bangkok");
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label><?php echo $form->labelEx($model, 'email'); ?></label>
-                                    <?php echo $form->textField($model, 'email', array('class' => 'form-control', 'placeholder' => 'อีเมล')); ?>
+                                    <?php echo $form->textField($model, 'email', array('class' => 'form-control', 'placeholder' => 'อีเมล','onkeyup'=>"checkMail('email')")); ?>
                                     <?php echo $form->error($model, 'email'); ?>
                                 </div>
                             </div>  
@@ -184,14 +184,14 @@ date_default_timezone_set("Asia/Bangkok");
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label><?php echo $form->labelEx($profile, 'firstname'); ?></label>
-                                    <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control', 'placeholder' => 'ชื่อจริง')); ?>
+                                    <?php echo $form->textField($profile, 'firstname', array('class' => 'form-control', 'placeholder' => 'ชื่อจริง','required'=>'required')); ?>
                                     <?php echo $form->error($profile, 'firstname'); ?>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label><?php echo $form->labelEx($profile, 'lastname'); ?></label>
-                                    <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control', 'placeholder' => 'นามสกุล')); ?>
+                                    <?php echo $form->textField($profile, 'lastname', array('class' => 'form-control', 'placeholder' => 'นามสกุล','required'=>'required')); ?>
                                     <?php echo $form->error($profile, 'lastname'); ?>
                                 </div>
                             </div>
@@ -202,14 +202,14 @@ date_default_timezone_set("Asia/Bangkok");
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label><?php echo $form->labelEx($profile, 'firstname_en'); ?></label>
-                                    <?php echo $form->textField($profile, 'firstname_en', array('class' => 'form-control', 'placeholder' => 'ชื่ออังกฤษ')); ?>
+                                    <?php echo $form->textField($profile, 'firstname_en', array('class' => 'form-control', 'placeholder' => 'ชื่ออังกฤษ','required'=>'required')); ?>
                                     <?php echo $form->error($profile, 'firstname_en'); ?>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label><?php echo $form->labelEx($profile, 'lastname_en'); ?></label>
-                                    <?php echo $form->textField($profile, 'lastname_en', array('class' => 'form-control', 'placeholder' => 'นามสกุลอังกฤษ')); ?>
+                                    <?php echo $form->textField($profile, 'lastname_en', array('class' => 'form-control', 'placeholder' => 'นามสกุลอังกฤษ','required'=>'required')); ?>
                                     <?php echo $form->error($profile, 'lastname_en'); ?>
                                 </div>
                             </div>
@@ -280,42 +280,42 @@ date_default_timezone_set("Asia/Bangkok");
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <?php 
-                                    if(!$profile->isNewRecord){
+                                    if(!$profile->isNewRecord && !empty($profile->employee_class)){
                                         $model_po = Position::model()->findAll(array("condition"=>"active =  'y' and class_id = ".$profile->employee_class));
                                         $list_po = CHtml::listData($model_po,'id', 'position_title');
                                         (empty($model->org_id)? $select = '' : $select = $model->org_id);
-                                        }else{
-                                            $list_po = array();
-                                        }?>
-                                        <label><?php echo $form->labelEx($profile, 'position_description'); ?></label>
-                                        <?php echo $form->dropDownList($profile,'position_description',$list_po, array('empty'=>'-- กรุณาเลือก Employee Class --')); ?>
-                                        <!--  <?php echo $form->textField($profile, 'position_description', array('class' => 'form-control', 'placeholder' => 'ชื่อตำแหน่งงาน')); ?> -->
-                                        <?php echo $form->error($profile, 'position_description'); ?>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label><?php echo $form->labelEx($profile, 'sex'); ?></label>
-                                        <?php echo $form->dropDownList($profile,'sex',array(0=>'Male',1=>'Female'), array('empty'=>'-- กรุณาเลือก เพศ --')); ?>
-                                        <!-- <?php echo $form->textField($profile, 'sex', array('class' => 'form-control', 'placeholder' => 'เพศ เช่น Male หรือ Female')); ?> -->
-                                        <?php echo $form->error($profile, 'sex'); ?>
-                                    </div>
+                                    }else{
+                                        $list_po = array();
+                                    }?>
+                                    <label><?php echo $form->labelEx($profile, 'position_description'); ?></label>
+                                    <!-- <?php echo $form->dropDownList($profile,'position_description',$list_po, array('empty'=>'-- กรุณาเลือก Employee Class --')); ?> -->
+                                    <?php echo $form->textField($profile, 'position_description', array('class' => 'form-control', 'placeholder' => 'Position Description','readonly'=>ture)); ?>
+                                    <?php echo $form->error($profile, 'position_description'); ?>
                                 </div>
                             </div>
-                            <div class="form-group" style="text-align: center;">
-                                <?php echo CHtml::submitButton($model->isNewRecord ? 'เพิ่มสมาชิก' : 'บันทึก', array('class' => 'btn btn-primary',)); ?>
+
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label><?php echo $form->labelEx($profile, 'sex'); ?></label>
+                                    <?php echo $form->dropDownList($profile,'sex',array('Male'=>'Male','Female'=>'Female'), array('empty'=>'-- กรุณาเลือก เพศ --')); ?>
+                                    <!-- <?php echo $form->textField($profile, 'sex', array('class' => 'form-control', 'placeholder' => 'เพศ เช่น Male หรือ Female')); ?> -->
+                                    <?php echo $form->error($profile, 'sex'); ?>
+                                </div>
                             </div>
                         </div>
-
+                        <div class="form-group" style="text-align: center;">
+                            <?php echo CHtml::submitButton($model->isNewRecord ? 'เพิ่มสมาชิก' : 'บันทึก', array('class' => 'btn btn-primary',)); ?>
+                        </div>
                     </div>
-                    <?php $this->endWidget(); ?>
 
-                    <!-- </div> --><!-- form -->
-                <?php endif; ?>
-            </div>
+                </div>
+                <?php $this->endWidget(); ?>
+
+                <!-- </div> --><!-- form -->
+            <?php endif; ?>
         </div>
     </div>
+</div>
 </div>
 <div class="modal fade" id="cropImagePop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -445,9 +445,57 @@ $('#cropcancel').on('click', function(ev) {
             }),
             success: function(result) {
                 // alert(result);
-                $('#Profile_position_description').html(result);
+                $('#Profile_position_description').val(result);
             }
         })
 
     }
+</script>
+<script type="text/javascript">
+   var focus_email = 0;
+   $("#User_email").on("click", function() {
+    if ($(this).is(":focus")) {
+        focus_email = 0;
+    }
+});
+   function checkMail(input){   
+    focus_email++;
+    if (focus_email > 0) {
+
+        var email = $('#User_email').val();
+        if (email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.*com)+$/)) {
+            $.ajax({
+                type: 'POST',
+                url: '<?php echo Yii::app()->createAbsoluteUrl("user/admin/check_email"); ?>',
+                data: ({
+                    email: email,
+                }),
+                success: function(data) {
+                    if(data == 1){
+                        $('#User_email').val('');
+                        alert('email ซ้ำ');
+                    }
+                }
+            });
+        } 
+    }
+}
+
+function check_id(){   
+
+    var emp_id = $('#User_employee_id').val();
+    $.ajax({
+        type: 'POST',
+        url: '<?php echo Yii::app()->createAbsoluteUrl("user/admin/check_empid"); ?>',
+        data: ({
+            emp_id: emp_id,
+        }),
+        success: function(data) {
+            if(data == 1){
+                $('#User_employee_id').val('');
+                alert('รหัสพนักงาน ซ้ำ');
+            }
+        }
+    });
+}
 </script>
