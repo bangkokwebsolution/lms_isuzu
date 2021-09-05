@@ -61,18 +61,24 @@ class OrgCourse extends CActiveRecord
 	
 
 	public static function getChilds($parent) {
+		if($_GET['typeCourse'] == null || $_GET['typeCourse']==1){
+			$typeCourse = 1;
+		}else{
+			$typeCourse =3;
+		}
 		$data = array();
 		$course_id_arr = array();
 
 		$OrgCourse = OrgCourse::model()->findAll('parent_id = '.$parent.' AND orgchart_id ='.$_GET['id']);
-
 		foreach($OrgCourse as $model) {
-			if(!in_array($model->course_id, $course_id_arr)){
-				$row['text'] = $model->courses->course_title;
-				$row['data'] = $model->id;
-				$row['children'] = OrgCourse::getChilds($model->id);
-				$data[] = $row;
-				$course_id_arr[] = $model->course_id;
+			if($model->courses->cates->type_id == $typeCourse){
+				if(!in_array($model->course_id, $course_id_arr)){
+					$row['text'] = $model->courses->course_title;
+					$row['data'] = $model->id;
+					$row['children'] = OrgCourse::getChilds($model->id);
+					$data[] = $row;
+					$course_id_arr[] = $model->course_id;
+				}
 			}
 		}
 		return $data;
@@ -93,11 +99,11 @@ class OrgCourse extends CActiveRecord
 
 	public function defaultScope()
 	{
-	    return array(
-	    	'alias' => 'orgcourse',
-	    	'order' => 'orgcourse.order desc',
-	    	'condition' => 'orgcourse.active = "y"',
-	    );
+		return array(
+			'alias' => 'orgcourse',
+			'order' => 'orgcourse.order desc',
+			'condition' => 'orgcourse.active = "y"',
+		);
 	}
 
 	/**

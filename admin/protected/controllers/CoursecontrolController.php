@@ -74,6 +74,35 @@ class CoursecontrolController extends Controller
 		));
 	}
 
+	public function actionGetChilds() {
+		$parent = $_POST['parent'];
+		if($_GET['typeCourse'] == null || $_GET['typeCourse']==1){
+			$typeCourse = 1;
+		}else{
+			$typeCourse =3;
+		}
+		$data = array();
+		$course_id_arr = array();
+
+		$OrgCourse = OrgCourse::model()->findAll('parent_id = '.$parent.' AND orgchart_id ='.$_GET['id']);
+		foreach($OrgCourse as $model) {
+			if($model->courses->cates->type_id == $typeCourse){
+				if(!in_array($model->course_id, $course_id_arr)){
+					$row['text'] = $model->courses->course_title;
+					$row['data'] = $model->id;
+					$row['children'] = OrgCourse::getChilds($model->id);
+					$data[] = $row;
+					$course_id_arr[] = $model->course_id;
+				}
+			}
+		}
+		if(!empty($data)){
+			echo 1;
+		}else{
+			echo 2;
+		}
+	}
+
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -117,6 +146,11 @@ class CoursecontrolController extends Controller
 	 */
 	public function actionIndex($id)
 	{
+		if($_GET['typeCourse'] == null || $_GET['typeCourse']==1){
+			$typeCourse = 1;
+		}else{
+			$typeCourse =3;
+		}
 		$OrgCourse=OrgCourse::model()->findAll(array(
 			'condition'=>'orgchart_id='.$id,
 		));
@@ -124,13 +158,15 @@ class CoursecontrolController extends Controller
 		$chk_orgcourse = array();
 		if($OrgCourse){
 			foreach ($OrgCourse as $key => $value) {
-				if(!in_array($value->course_id, $chk_orgcourse)){
-					$chk_orgcourse[] = $value->course_id;
+				if($value->courses->cates->type_id == $typeCourse){
+					if(!in_array($value->course_id, $chk_orgcourse)){
+						$chk_orgcourse[] = $value->course_id;
+					}
 				}
 			}
 
 		}
-
+		
 		// if($id == 4){
 		// 	$CourseOnline = CourseOnline::model()->courseonlinecheck()->findAll(array(
 		// 		'condition'=>'parent_id=:parent_id AND active=:active AND lang_id =:lang_id AND cate_id = 1',
@@ -146,11 +182,14 @@ class CoursecontrolController extends Controller
 		// }else{
 
 		// $CourseOnline=CourseOnline::model()->courseonlinecheck()->findAll();
-		$CourseOnline = CourseOnline::model()->courseonlinecheck()->findAll(array(
-			'condition'=>'parent_id=:parent_id AND active=:active AND lang_id =:lang_id AND cate_id != 1',
-			'params' => array(':parent_id' => 0, ':active' => 'y',':lang_id'=> 1 )
+		// $CourseOnline = CourseOnline::model()->courseonlinecheck()->findAll(array(
+		// 	'condition'=>'parent_id=:parent_id AND active=:active AND lang_id =:lang_id AND cate_id != 1',
+		// 	'params' => array(':parent_id' => 0, ':active' => 'y',':lang_id'=> 1 )
+		// ));
+		$CourseOnline =  CourseOnline::model()->with('cates')->courseonlinecheck()->findAll(array(
+			'condition'=>'courseonline.parent_id=:parent_id AND courseonline.active=:active AND categorys.type_id='.$typeCourse.' AND course_id!=1 AND courseonline.lang_id = 1',
+			'params' => array(':parent_id' => 0, ':active' => 'y')
 		));
-
 		$chk_courseonline = array();
 		if($CourseOnline){
 			foreach ($CourseOnline as $key => $value) {
@@ -166,6 +205,7 @@ class CoursecontrolController extends Controller
 		$this->render('index',array(
 			'result_courseonline'=> $result_courseonline,
 			'OrgCourse'=>$OrgCourse,
+			'typeCourse'=>$typeCourse,
 		));
 	}
 
@@ -345,9 +385,9 @@ class CoursecontrolController extends Controller
 				}else{
 
 					$orgchart_checkkk = OrgCourse::model()->findAll(array(
-							'condition'=>'parent_id=:parent_id AND orgchart_id=:orgchart_id AND course_id=:course_id',
-							'params' => array(':parent_id' => $value['parentID'], ':orgchart_id'=>$_POST['org_id'], ':course_id'=>$value['id'])
-						));
+						'condition'=>'parent_id=:parent_id AND orgchart_id=:orgchart_id AND course_id=:course_id',
+						'params' => array(':parent_id' => $value['parentID'], ':orgchart_id'=>$_POST['org_id'], ':course_id'=>$value['id'])
+					));
 
 					if(empty($orgchart_checkkk)){
 						$orgc = new OrgCourse;
@@ -379,12 +419,12 @@ class CoursecontrolController extends Controller
 							$orgc->save();
 						}
 
-							$orgchart44 = OrgChart::model()->findAll(array(
-								'condition'=>'parent_id=:parent_id',
-								'params' => array(':parent_id' =>  $val->id)
-							));
+						$orgchart44 = OrgChart::model()->findAll(array(
+							'condition'=>'parent_id=:parent_id',
+							'params' => array(':parent_id' =>  $val->id)
+						));
 
-							if(!empty($orgchart44)){
+						if(!empty($orgchart44)){
 								foreach ($orgchart44 as $key4 => $value4) { // LEVEL 5
 									$orgchart44_check = OrgCourse::model()->findAll(array(
 										'condition'=>'parent_id=:parent_id AND orgchart_id=:orgchart_id AND course_id=:course_id',
@@ -448,43 +488,43 @@ class CoursecontrolController extends Controller
 									} //5
 								}
 							} // 4
+						}
 					}
-				}
 
 				}
 				
 
 
-					echo $_GET['id'];
-					if(isset($value['children'])){
-						foreach ($value['children'] as $key_children => $value_children) {
-							$orgc2 = OrgCourse::model()->findByPk($value_children['id']);
-								if($orgc2){
+				echo $_GET['id'];
+				if(isset($value['children'])){
+					foreach ($value['children'] as $key_children => $value_children) {
+						$orgc2 = OrgCourse::model()->findByPk($value_children['id']);
+						if($orgc2){
 									// $course_online = CourseOnline::model()->findByPk($orgc2->course_id);
 									// $orgc->course_id = $course_online->course_id;
-									$orgc2->parent_id = $orgc->id;
-									$orgc2->save();
+							$orgc2->parent_id = $orgc->id;
+							$orgc2->save();
 									// echo $value_children['id'];
-								}else{
+						}else{
 
-									$orgchart_checkkk2 = OrgCourse::model()->findAll(array(
-										'condition'=>'parent_id=:parent_id AND orgchart_id=:orgchart_id AND course_id=:course_id',
-										'params' => array(':parent_id' => $orgc->id, ':orgchart_id'=>$_POST['org_id'], ':course_id'=>$value_children['id'])
-									));
-									if (empty($orgchart_checkkk2)) {
+							$orgchart_checkkk2 = OrgCourse::model()->findAll(array(
+								'condition'=>'parent_id=:parent_id AND orgchart_id=:orgchart_id AND course_id=:course_id',
+								'params' => array(':parent_id' => $orgc->id, ':orgchart_id'=>$_POST['org_id'], ':course_id'=>$value_children['id'])
+							));
+							if (empty($orgchart_checkkk2)) {
 
-										$orgc2 = new OrgCourse;
+								$orgc2 = new OrgCourse;
 									// $orgc->save();
 									// $course_online = CourseOnline::model()->findByPk($value['id']);
-										$orgc2->orgchart_id = $_POST['org_id'];
-										$orgc2->course_id = $value_children['id'];
-										$orgc2->parent_id = $orgc->id;
-										$orgc2->active = 'y';
-										$orgc2->save();
-									}
-								}
+								$orgc2->orgchart_id = $_POST['org_id'];
+								$orgc2->course_id = $value_children['id'];
+								$orgc2->parent_id = $orgc->id;
+								$orgc2->active = 'y';
+								$orgc2->save();
+							}
 						}
 					}
+				}
 
 			}
 
