@@ -1310,6 +1310,8 @@ Class MenuLeft extends Controller
 	        	)
 	        ),
 
+	        
+
 	        array(
 				'visible'=>self::PermissionsMenu(array(
 					'authorityHR.*',
@@ -1340,6 +1342,38 @@ Class MenuLeft extends Controller
 					),
 				)
 			),
+
+			array(
+				'visible'=>self::PermissionsMenu(array(
+					'ApproveCourse.*',
+				)),
+				'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบอนุมัติหลักสูตร</span>',
+				'url'=>'#ApproveCourse',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons check'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('ApproveCourse') ), 'id' => 'ApproveCourse'),
+				'active' => self::SetSubMenu( array('ApproveCourse') ,false),
+				'items'=>array(
+
+					array(
+						'visible'=>self::PermissionsMenu(array(
+							'ApproveCourse.*',
+							'ApproveCourse.Index'
+						)),
+						'label'=>'อนุมัติหลักสูตรเฉพาะ',
+						'url'=>array('//ApproveCourse/index')
+					),
+					array(
+						'visible'=>self::PermissionsMenu(array(
+							'ApproveCourse.*',
+							'ApproveCourse.general'
+						)),
+						'label'=>'อนุมัติหลักสูตรทั่วไป',
+						'url'=>array('//ApproveCourse/general')
+					),
+				)
+			),
+			
 
 	        
 	         array(
