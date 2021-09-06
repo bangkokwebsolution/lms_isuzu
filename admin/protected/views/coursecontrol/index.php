@@ -140,7 +140,7 @@ $orgchart = OrgChart::model()->findbypk($_GET['id']);
     <h1><?= $type_name ?>: <u><?= $orgchart->title ?></u></h1>
 
     <div class="span12">
-       <menu id="nestable-menu">
+     <menu id="nestable-menu">
         <button type="button" data-action="expand-all">Expand All</button>
         <button type="button" data-action="collapse-all">Collapse All</button>
         <button type="button" id="save">SAVE</button>
@@ -179,9 +179,10 @@ $orgchart = OrgChart::model()->findbypk($_GET['id']);
             -->
 
             <a href="<?= $url; ?>"><button type="button" class="btn btn-info pull-right">COURSE MANAGE</button></a>
-            <a href="<?= $urltypecourse.'?typeCourse='.'3'; ?>" ><button type="button" class="btn btn pull-right" style='margin-right: 10px'>หลักสูตรทั่วไป</button></a>
-            <a href="<?= $urltypecourse.'?typeCourse='.'1'; ?>" ><button type="button" class="btn btn pull-right"  style='margin-right: 10px'>หลักสูตรเฉพาะ</button></a>
+            
         <?php } ?>
+        <a href="<?= $urltypecourse.'?typeCourse='.'3'; ?>" ><button type="button" class="btn btn pull-right" style='margin-right: 10px'>หลักสูตรทั่วไป</button></a>
+        <a href="<?= $urltypecourse.'?typeCourse='.'1'; ?>" ><button type="button" class="btn btn pull-right"  style='margin-right: 10px'>หลักสูตรเฉพาะ</button></a>
     </menu>
 </div>
 
