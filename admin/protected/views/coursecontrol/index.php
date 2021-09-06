@@ -140,7 +140,7 @@ $orgchart = OrgChart::model()->findbypk($_GET['id']);
     <h1><?= $type_name ?>: <u><?= $orgchart->title ?></u></h1>
 
     <div class="span12">
-     <menu id="nestable-menu">
+       <menu id="nestable-menu">
         <button type="button" data-action="expand-all">Expand All</button>
         <button type="button" data-action="collapse-all">Collapse All</button>
         <button type="button" id="save">SAVE</button>
@@ -178,11 +178,14 @@ $orgchart = OrgChart::model()->findbypk($_GET['id']);
                 ห้ามเห็น course manage เพราะ org id ตั้งแต่ 1-5  มันไม่ได้มี แผนก ตำแหน่ง เลเวล ผูกอะ ทำให้ tbl_chkuser มัน error มันเก็บค่าไม่ได้ ว่า จะให้ใคร to หรือ ลบออก ค่าพวก แผนก ตำแหน่ง เลเวล ว่าง
             -->
 
-            <a href="<?= $url; ?>"><button type="button" class="btn btn-info pull-right">COURSE MANAGE</button></a>
+            <!-- <a href="<?= $url; ?>"><button type="button" class="btn btn-info pull-right">COURSE MANAGE</button></a> -->
             
         <?php } ?>
-        <a href="<?= $urltypecourse.'?typeCourse='.'3'; ?>" ><button type="button" class="btn btn pull-right" style='margin-right: 10px'>หลักสูตรทั่วไป</button></a>
-        <a href="<?= $urltypecourse.'?typeCourse='.'1'; ?>" ><button type="button" class="btn btn pull-right"  style='margin-right: 10px'>หลักสูตรเฉพาะ</button></a>
+        <?php if($typeCourse == 1 ){?>
+            <a href="<?= $urltypecourse.'?typeCourse='.'3'; ?>" ><button type="button" class="btn btn pull-right" style='margin-right: 10px;background-color:#e50000;color: #ffff'>หลักสูตรทั่วไป</button></a>
+        <?php  }else if($typeCourse == 3 ){ ?>
+            <a href="<?= $urltypecourse.'?typeCourse='.'1'; ?>" ><button type="button" class="btn btn pull-right"  style='margin-right: 10px;background-color:#e50000;color: #ffff'>หลักสูตรเฉพาะ</button></a>
+        <?php } ?>
     </menu>
 </div>
 
