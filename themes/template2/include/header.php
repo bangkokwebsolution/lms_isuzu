@@ -81,7 +81,7 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                 } ?>
             </div>
             <div class="menu-header ">
-                <div class="dropdown box-search open">
+                <div class="dropdown box-search ">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true"><i class="fa fa-search"></i></a>
                     <ul class="dropdown-menu search ">
                         <form id="searchForm" class="" action="<?php echo $this->createUrl('Search/index') ?>">

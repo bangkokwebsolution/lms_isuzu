@@ -2,9 +2,11 @@ $(window).scroll(function () {
   if ($(window).scrollTop() >= 300) {
     $(".main-header").addClass("fixed-header");
     $(".backtotop").css("opacity", "1");
+    $(".contact-admin").css("opacity", "1");
   } else {
     $(".main-header").removeClass("fixed-header");
     $(".backtotop").css("opacity", "0");
+    $(".contact-admin").css("opacity", "0");
   }
 });
 
