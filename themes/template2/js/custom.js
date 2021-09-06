@@ -20,8 +20,10 @@
 
       if (scrollPercentRounded  >= 95) {
         $(".contact-admin").css("opacity", "1");
+        $(".contact-admin").css("pointer-events", "initial");
       } else {
         $(".contact-admin").css("opacity", "0");
+        $(".contact-admin").css("pointer-events", "none");
       }
 
     });
