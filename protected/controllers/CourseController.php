@@ -276,7 +276,7 @@ public function actionResetLearn($id) {
      * This is the default 'index' action that is invoked
      * when an action is not explicitly requested by users.
      */
-    public function actionIndex($id = null) {
+   public function actionIndex($id = null) {
         if(Yii::app()->user->id){
             Helpers::lib()->getControllerActionId();
         }
@@ -288,20 +288,20 @@ public function actionResetLearn($id) {
         }
 
       $userModel = Users::model()->findByPK(Yii::app()->user->id);
-            $userDepartment = $userModel->department_id;
-            $userPosition = $userModel->position_id;
-            $userBranch = $userModel->branch_id;
+            // $userDepartment = $userModel->department_id;
+            // $userPosition = $userModel->position_id;
+            // $userBranch = $userModel->branch_id;
+
             if($userModel->profile->kind != 5){
 
              $criteria = new CDbCriteria;
             // $criteria->with = array('orgchart');
-             $criteria->compare('department_id',$userDepartment);
+             // $criteria->compare('department_id',$userDepartment);
              // $criteria->compare('position_id',$userPosition);
-             $criteria->compare('branch_id',$userBranch);
+             // $criteria->compare('branch_id',$userBranch);
              $criteria->compare('active','y');
             // $criteria->group = 'orgchart_id';
              $modelOrgDep = OrgChart::model()->findAll($criteria);
-
 
              foreach ($modelOrgDep as $key => $value) {
                 $courseArr[] = $value->id;
@@ -311,21 +311,22 @@ public function actionResetLearn($id) {
                 $courseArr[] = "2";
             }
 
-
             $criteria = new CDbCriteria;
             $criteria->with = array('course','course.CategoryTitle');
             $criteria->addIncondition('orgchart_id',$courseArr);
             $criteria->compare('course.active','y');
             $criteria->compare('course.status','1');
             $criteria->compare('categorys.cate_show','1');
+            if(isset($_GET['type'])){
+                $criteria->compare('categorys.type_id',$_GET['type']);
+            }
             // $criteria->group = 'course.cate_id';
             $criteria->addCondition('course.course_date_end >= :date_now');
             $criteria->params[':date_now'] = date('Y-m-d H:i');
             $criteria->order = 'course.course_id';
             // $criteria->limit = 5;
             $modelOrgCourse = OrgCourse::model()->findAll($criteria);
-    
-        
+
             if($modelOrgCourse){
                 foreach ($modelOrgCourse as $key => $value) {
             
@@ -357,19 +358,9 @@ public function actionResetLearn($id) {
                         $course_id[] += $val->course_id;
                     }
 
-
+            
                 $criteria = new CDbCriteria;
                 $criteria->addIncondition('course_id',$course_id);
-                // if(isset($_GET['type'])!=null){
-                //     if($_GET['type']==1){
-                //         $typeCoures = 1;
-                //     }else{
-                //         $typeCoures = 2;
-                //     }
-                //     $criteria->compare('approve_status',$typeCoures);
-                // }else{
-                    
-                // }
                 $criteria->order = 'course_title ASC';
                 $course = CourseOnline::model()->findAll($criteria);
             }

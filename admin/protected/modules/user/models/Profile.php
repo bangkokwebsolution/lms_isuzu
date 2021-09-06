@@ -39,7 +39,7 @@ class Profile extends UActiveRecord
 	{
 		return array( 
             array('firstname, lastname,firstname_en,lastname_en', 'required'),
-			array('employee_class,position_description', 'numerical', 'integerOnly'=>true),
+			array('employee_class', 'numerical', 'integerOnly'=>true),
             array('user_id, title_id, firstname, lastname,  sex', 'safe', 'on'=>'search'),
             array('file_user', 'file', 'types'=>'pdf','allowEmpty' => true, 'on'=>'insert'),
 			array('file_user', 'file', 'types'=>'pdf',

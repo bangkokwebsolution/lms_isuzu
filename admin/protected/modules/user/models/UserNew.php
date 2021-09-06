@@ -219,8 +219,8 @@ class UserNew extends CActiveRecord
 
 		if($this->isNewRecord)
 		{
-			$this->create_by = $id;
-			$this->create_date = date("Y-m-d H:i:s");
+			// $this->create_by = $id;
+			$this->create_at = date("Y-m-d H:i:s");
 		}
 		
 

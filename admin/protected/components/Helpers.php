@@ -299,7 +299,7 @@ Class Helpers
               // return ldap_get_entries($ldap, $search);
     }
 
-    public function SendMail($to, $subject, $message, $fromText = 'E-Learning System Thoresen')
+    public function SendMail($to, $subject, $message, $fromText = 'E-Learning System Isuzu')
     {
 
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/Exception.php";
@@ -307,11 +307,11 @@ Class Helpers
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/SMTP.php";
 
         $SettingAll = Helpers::lib()->SetUpSetting();
-        $adminEmail = $SettingAll['USER_EMAIL'];
-        $adminEmailPass = $SettingAll['PASS_EMAIL'];
+        // $adminEmail = $SettingAll['USER_EMAIL'];
+        // $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-        $adminEmail = 'thoresen.elearning@gmail.com';
-        $adminEmailPass = 'lms@2020';
+        $adminEmail = 'imctisuzu@gmail.com';
+        $adminEmailPass = 'admindemo';
 
         $mail =  new PHPMailer(true);
         $mail->SMTPOptions = array(
@@ -352,7 +352,7 @@ Class Helpers
        // $mail->Host = 'smtp.office365.com'; // gmail server
         $mail->Host = 'smtp.gmail.com';
         $mail->Port = '587'; // port number
-        $mail->SMTPSecure = "tls";
+        $mail->SMTPSecure = "ssl";
         $mail->SMTPKeepAlive = true;
         $mail->Mailer = "smtp";
         $mail->SMTPAuth = true;

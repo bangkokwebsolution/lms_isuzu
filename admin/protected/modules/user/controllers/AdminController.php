@@ -17,7 +17,7 @@ class AdminController extends Controller
 
 	public function init()
 	{
-       
+
 		if(Yii::app()->user->id == null){
 			$this->redirect(array('site/index'));
 		}
@@ -979,14 +979,15 @@ class AdminController extends Controller
 			}
 
 			$index = 0;
-
+            // var_dump($namedDataArray);exit();
 			foreach($namedDataArray as $key => $result){
 
-				$model = new User;
-				$profile=new Profile;
-				$model->email = $result[" email"];
-				$model->username = $result["username(รหัสพนักงาน)"];
-				$model->identification = $result["รหัสบัตรประชาชน (13หลัก)"];
+				$model = new UserNew;
+				$profile = new Profile;
+				$model->email = $result["Email"];
+				$model->username = $result["Employee ID."];
+                // $model->password = md5($model->username);
+                // $model->verifyPassword = md5($result["Employee ID."]);
 
 				$model->type_register = 2;
 				$model->superuser = 0;
@@ -994,154 +995,99 @@ class AdminController extends Controller
 
 				$model->create_at = date('Y-m-d H:i:s');
 				$model->status = 1;
-				$model->department_id = $result["รหัสแผนก"];
-				$model->position_id = $result["ตำแหน่ง"];
-				$model->branch_id = $result["Lavel"];
-					// $data[$key]['fullname'] = $result["ชื่อ"].' '.$result["นามสกุล"];
-					// $data[$key]['email'] = $result["email"];
-					// $data[$key]['phone'] =  $result["โทรศัพท์"];
-				
-					//$member = Helpers::lib()->ldapTms($model->email);
-					// $member['count'] = 0;
-					// if($member['count'] > 0){ //TMS
-					// 	$model->type_register = 3;
-					// 	Helpers::lib()->_insertLdap($member);
-					// 	$modelStation = Station::model()->findByAttributes(array('station_title'=>$member[0]['st'][0]));
-					// 	$modelDepartment = Department::model()->findByAttributes(array('dep_title'=>$member[0]['department'][0]));
-					// 	$modelDivision = Division::model()->findByAttributes(array('div_title'=>$member[0]['division'][0]));
-
-					// 	$model->division_id = $modelDivision->id;
-					// 	$model->station_id = $modelStation->station_id;
-					// 	$model->department_id = $modelDepartment->id;
-					// 	$model->password = md5($model->email);
-					// 	$model->verifyPassword = $model->password;
-					// 	$model->status = 1; //bypass not confirm
-					// }else{ //LMS
-					// 	$model->password = md5($model->email); // Random password
-					// 	$model->verifyPassword = $model->password;
-					// 	$model->department_id = 2;
-					// 	$model->status = 0;
-					// }
+                $model->org_id  =$result["Org. Chat ID"];
 
 
-				$genpass = $this->RandomPassword();
-				$model->verifyPassword = $genpass;
-				$model->password = UserModule::encrypting($genpass);
-				$model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
-				
-				if ($model->validate()) {
-					$model->save();
+				// $genpass = $this->RandomPassword();
+                $genpass = md5($result["Employee ID."]);
+                $model->verifyPassword = $genpass;
+                $model->password = $genpass;
+                $model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
+
+                if ($model->validate()) {
+                   $model->save(false);
 						//$data[$key]['msg'] = 'pass';
 
-					$modelProfile = new Profile;
-					$modelProfile->user_id = $model->id;
-					$modelProfile->type_user = 3;
-					$modelProfile->type_employee = 1;
-					$modelProfile->title_id = $result["คำนำหน้าชื่อ "];
-					$modelProfile->firstname = $result["ชื่อ"];
-					$modelProfile->lastname = $result["นามสกุล"];
-					$modelProfile->firstname_en = $result["ชื่อ-สกุล(EN)"];
-					$modelProfile->lastname_en = $result["นามสกุล(EN)"];
-					$modelProfile->sex = $result["เพศ"];
-					$modelProfile->date_of_expiry = $result["วันหมดอายุบัตรประชาชน"];
-					$modelProfile->place_issued = $result["สถานที่ออกบัตร"];
-					$modelProfile->date_issued = $result["วันที่ออกบัตรประชาชน"];
-					$modelProfile->passport = $result["เลขหนังสือเดินทาง"];
-					$modelProfile->passport_place_issued = $result["สถานที่ออกหนังสือเดินทาง"];
-					$modelProfile->passport_date_issued = $result["วันที่ออกหนังสือเดินทาง"];
-					$modelProfile->pass_expire = $result["วันหมดอายุหนังสือเดินทาง"];
-					$modelProfile->seamanbook = $result["เลขหนังสือเดินเรือ"];
-					$modelProfile->seaman_expire = $result["วันหมดอายุเลขหนังสือเดินเรือ"];
-					$modelProfile->tel = $result["โทรศัพท์"];
-					$modelProfile->domicile_address =  $result["ที่อยู่ตามบัตรประชาชน"]; 
-					$modelProfile->address =  $result["ที่อยู่"]; 
-					$modelProfile->identification = $result["รหัสบัตรประชาชน (13หลัก)"];
-					$modelProfile->birthday =  $result["วันเดือนปีเกิด"]; 
-					$modelProfile->age = $result["อายุ"];
-					$modelProfile->mouth_birth = $result["เดือน"];
-					$modelProfile->place_of_birth = $result["สถานที่เกิด"];
-					$modelProfile->blood = $result["กรุ๊ปเลือด"];
-					$modelProfile->hight = $result["ความสูง"];
-					$modelProfile->weight = $result["น้ำหนัก"];
-					$modelProfile->nationality = $result["สัญชาติ"];
-					$modelProfile->race = $result["เชื้อชาติ"];
-					$modelProfile->religion = $result["ศาสนา"];
-					$modelProfile->status_sm = $result["สถานะภาพทางการสมรส"];
-					$modelProfile->number_of_children = $result["จำนวนบุตร"];
-					$modelProfile->spouse_firstname = $result["ชื่อคู่สมรส"];
-					$modelProfile->spouse_lastname = $result["นามสกุลคู่สมรส"];
-					$modelProfile->occupation_spouse = $result["อาชีพคู่สมรส"];
-					$modelProfile->father_firstname = $result["ชื่อบิดา"];
-					$modelProfile->father_lastname = $result["นามสกุลบิดา"];
-					$modelProfile->occupation_father = $result["อาชีพบิดา"];
-					$modelProfile->mother_firstname = $result["ชื่อมารดา"];
-					$modelProfile->mother_lastname = $result["นามสกุลมารดา"];
-					$modelProfile->occupation_mother = $result["อาชีพมารดา"];
-					$modelProfile->phone = $result["โทรศัพท์ที่ติดต่อฉุกเฉิน"];
-					$modelProfile->name_emergency = $result["ชื่อผู้ที่ติดต่อฉุกเฉิน"];
-					$modelProfile->relationship_emergency = $result["ความสัมพันธ์"];
-					$modelProfile->line_id = $result["ไอดีไลน์"];
-					$modelProfile->military = $result["สถานะการรับใช้ชาติ"];
-					$modelProfile->history_of_illness = $result["ประวัติการเจ็บป่วยรุนแรง"];
-					$modelProfile->sickness = $result["โรคที่เคยป่วย"];
-					$modelProfile->accommodation = $result["ที่พัก"];
+                   $modelProfile = new Profile;
+                   $modelProfile->user_id = $model->id;
+                   $modelProfile->firstname = $result["Firstname (TH)"];
+                   $modelProfile->lastname = $result["Lastname (TH)"];
+                   $modelProfile->firstname_en = $result["Firstname (Eng)"];
+                   $modelProfile->lastname_en = $result["Lastname (Eng)"];
+                   $modelProfile->sex = $result["Gender"];
+                   // $modelProfile->tel = $result["tel"];
+                   $modelProfile->kind = $result["KIND"];
+                   $modelProfile->organization_unit = $result["Organization unit"];
+                   $modelProfile->abbreviate_code = $result["Abbreviate code"];
+                   $modelProfile->location = $result["Location"];
+                   $modelProfile->group_name = $result["Group"];
+                   $modelProfile->shift = $result["Shift"];
+                   $EmpClass = EmpClass::model()->findByAttributes(array('title'=>$result["Employee class"]));
+                   if(!empty($EmpClass)){
+                        $modelProfile->employee_class = $EmpClass->id ;
+                    }
+                   $modelProfile->position_description = $result["Position description"];
 
-					if($modelProfile->validate()){
-						$modelProfile->save();
-						$data[$key]['msg'] = 'pass';
+                   if($modelProfile->validate()){
+                      $modelProfile->save(false);
+                      $data[$key]['msg'] = 'pass';
 
-						$Insert_success[$key] = "สร้างชื่อผู้ใช้เรียบร้อย";
+                      $Insert_success[$key] = "สร้างชื่อผู้ใช้เรียบร้อย";
 
-						$message = '
-						<strong>สวัสดี คุณ' . $modelProfile->firstname . ' ' . $modelProfile->lastname . '</strong><br /><br />
+                      $message = '
+                      <strong>สวัสดี คุณ' . $modelProfile->firstname . ' ' . $modelProfile->lastname . '</strong><br /><br />
 
-						<h4>ระบบได้ทำการอนุมัติสมาชิกเข้าใช้งาน e-Learning Isuzu เรียบร้อยแล้ว โดยมี ชื่อผู้ใช้งานและรหัสผ่านดังนี้ </h4>
-						<h4>- User : '. $model->username.'</h4>
-						<h4>- Password : '.$genpass.'</h4>
+                      <h4>ระบบได้ทำการอนุมัติสมาชิกเข้าใช้งาน e-Learning Isuzu เรียบร้อยแล้ว โดยมี ชื่อผู้ใช้งานและรหัสผ่านดังนี้ </h4>
+                      <h4>- User : '. $model->username.'</h4>
+                      <h4>- Password : '.$genpass.'</h4>
 
-						โปรดคลิกลิงค์ต่อไปนี้ เพื่อดำเนินการเข้าสู่ระบบ<br />
-						<a href="' . str_replace("/admin","",Yii::app()->getBaseUrl(true)) . '">' . str_replace("/admin","",Yii::app()->getBaseUrl(true)) . '</a><br />
-						<strong>Email</strong> : ' . $model->email . '<br />
+                      โปรดคลิกลิงค์ต่อไปนี้ เพื่อดำเนินการเข้าสู่ระบบ<br />
+                      <a href="' . str_replace("/admin","",Yii::app()->getBaseUrl(true)) . '">' . str_replace("/admin","",Yii::app()->getBaseUrl(true)) . '</a><br />
+                      <strong>Email</strong> : ' . $model->email . '<br />
 
-						ยินดีต้อนรับเข้าสู่ระบบ e-Learning Isuzu<br /><br />
+                      ยินดีต้อนรับเข้าสู่ระบบ e-Learning Isuzu<br /><br />
 
-						';
-						$subject = 'ยินดีต้อนรับเข้าสู่ระบบ e-Learning Isuzu';
-						$to['email'] = $model->email;
-						$to['firstname'] = $modelProfile->firstname;
-						$to['lastname'] = $modelProfile->lastname;
+                      ';
+                      $subject = 'ยินดีต้อนรับเข้าสู่ระบบ e-Learning Isuzu';
+                      $to['email'] = $model->email;
+                      $to['firstname'] = $modelProfile->firstname;
+                      $to['lastname'] = $modelProfile->lastname;
+                        // try {
+                        //     $mail = Helpers::lib()->SendMail($to,$subject,$message);
+                        //     return "pass";
+                        // }catch (Exception $e) {
+                        //     return "fail";
+                        // }
+                      } else {
 
-						$mail = Helpers::lib()->SendMail($to,$subject,$message);
-					} else {
+                          $HisImportErrorArr[] = $HisImportArr[$key];
+                          $msgAllArr = array();
 
-						$HisImportErrorArr[] = $HisImportArr[$key];
-						$msgAllArr = array();
+                          $attrAllArr = array();
+                          foreach($modelProfile->getErrors() as $field => $msgArr){
+                             $attrAllArr[] = $field;
+                             $msgAllArr[] = $msgArr[0];
+                         }
 
-						$attrAllArr = array();
-						foreach($modelProfile->getErrors() as $field => $msgArr){
-							$attrAllArr[] = $field;
-							$msgAllArr[] = $msgArr[0];
-						}
-
-						$HisImportErrorMessageArr[$key] = implode(", ",$msgAllArr);
-						$data[$key]['msg'] = implode(", ",$msgAllArr);
-						$HisImportAttrErrorArr[] = $attrAllArr;
-						$HisImportArr = $sheet_array;
-						$deldata = User::model()->findbyPk($model->id);
-						$deldata->delete();
-						$Insert_success[$key] = "สร้างชื่อผู้ใช้ไม่สำเร็จ";
-					}
-				}else{
-					$msgAllArr = array();
-					$attrAllArr = array();
-					foreach($model->getErrors() as $field => $msgArr){
-						$attrAllArr[] = $field;
-						$msgAllArr[] = $msgArr[0];
-					}
-					$data[$key]['msg'] = implode(", ",$msgAllArr);
+                         $HisImportErrorMessageArr[$key] = implode(", ",$msgAllArr);
+                         $data[$key]['msg'] = implode(", ",$msgAllArr);
+                         $HisImportAttrErrorArr[] = $attrAllArr;
+                         $HisImportArr = $sheet_array;
+                         $deldata = User::model()->findbyPk($model->id);
+                         $deldata->delete();
+                         $Insert_success[$key] = "สร้างชื่อผู้ใช้ไม่สำเร็จ";
+                     }
+                 }else{
+                   $msgAllArr = array();
+                   $attrAllArr = array();
+                   foreach($model->getErrors() as $field => $msgArr){
+                      $attrAllArr[] = $field;
+                      $msgAllArr[] = $msgArr[0];
+                  }
+                  $data[$key]['msg'] = implode(", ",$msgAllArr);
 						// var_dump($model->getErrors());
 						// exit();
-				}
+              }
 
 				} //end loop add user
                 //if($model->save())
@@ -1197,13 +1143,13 @@ class AdminController extends Controller
 			$model->username = $_POST['User']['employee_id'];
 			$model->password = md5($_POST['User']['employee_id']);
             $model->org_id = $_POST['User']['org_id'];
-			$model->verifyPassword = $model->password;
-			
-			$model->email = $_POST['User']['email'];
-			$model->create_at = date('Y-m-d H:i:s');
-			$model->online_status = 1;
+            $model->verifyPassword = $model->password;
 
-			
+            $model->email = $_POST['User']['email'];
+            $model->create_at = date('Y-m-d H:i:s');
+            $model->online_status = 1;
+
+
 
             $model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
             if($model->save(false)) {
@@ -1261,9 +1207,9 @@ class AdminController extends Controller
 
   }
   $this->render('create',array(
-   'model'=>$model,
-   'profile'=>$profile,
-));
+     'model'=>$model,
+     'profile'=>$profile,
+ ));
 }
 
 	/**
@@ -1301,19 +1247,19 @@ class AdminController extends Controller
             $model->employee_id = $_POST['UserNew']['employee_id'];
             $model->org_id = $_POST['UserNew']['org_id'];
 
-			if(isset($_POST['url_pro_pic']) && $_POST['url_pro_pic'] != ""){
-				$uploadDir = Yii::app()->getUploadPath(null);
-				$path1 = "user";
-				$path2 = $model->id;
-				$path3 = "thumb";
-				if (!is_dir($uploadDir."../".$path1."/")) {
-					mkdir($uploadDir."../".$path1."/", 0777, true);
-				}
-				if (!is_dir($uploadDir."../".$path1."/".$path2."/")) {
-					mkdir($uploadDir."../".$path1."/".$path2."/", 0777, true);
-				}
-				if (!is_dir($uploadDir."../".$path1."/".$path2."/".$path3."/")) {
-					mkdir($uploadDir."../".$path1."/".$path2."/".$path3."/", 0777, true);
+            if(isset($_POST['url_pro_pic']) && $_POST['url_pro_pic'] != ""){
+                $uploadDir = Yii::app()->getUploadPath(null);
+                $path1 = "user";
+                $path2 = $model->id;
+                $path3 = "thumb";
+                if (!is_dir($uploadDir."../".$path1."/")) {
+                   mkdir($uploadDir."../".$path1."/", 0777, true);
+               }
+               if (!is_dir($uploadDir."../".$path1."/".$path2."/")) {
+                   mkdir($uploadDir."../".$path1."/".$path2."/", 0777, true);
+               }
+               if (!is_dir($uploadDir."../".$path1."/".$path2."/".$path3."/")) {
+                   mkdir($uploadDir."../".$path1."/".$path2."/".$path3."/", 0777, true);
             }else{ // ลบ file เก่า
             	$files = glob($uploadDir."../".$path1."/".$path2."/".$path3.'/*');
                     foreach($files as $file){ // iterate files
@@ -1348,56 +1294,56 @@ class AdminController extends Controller
 
 
             if(Yii::app()->user->id){
-               Helpers::lib()->getControllerActionId($model->id);
-           }
-           $this->redirect(array('view','id'=>$model->id));
+             Helpers::lib()->getControllerActionId($model->id);
+         }
+         $this->redirect(array('view','id'=>$model->id));
 			// } 
 
-       }
+     }
 
-       $this->render('update',array(
-         'model'=>$model,
-         'profile'=>$profile,
-     ));
-   }
-   public function actionPrintpdf(){
+     $this->render('update',array(
+       'model'=>$model,
+       'profile'=>$profile,
+   ));
+ }
+ public function actionPrintpdf(){
 
-      $user_id =$_GET['id'];
-      if ($user_id != '') {
-         $profiles = Profile::model()->find(array(
-            'condition' => 'user_id=:user_id ',
-            'params' => array('user_id' => $user_id)
-        ));
-         $user = User::model()->find(array(
-            'condition' => 'id=:id',
-            'params' => array('id' => $user_id)
-        ));
-         $path_img = Yii::app()->baseUrl. '/images/head_print.png';
+  $user_id =$_GET['id'];
+  if ($user_id != '') {
+   $profiles = Profile::model()->find(array(
+    'condition' => 'user_id=:user_id ',
+    'params' => array('user_id' => $user_id)
+));
+   $user = User::model()->find(array(
+    'condition' => 'id=:id',
+    'params' => array('id' => $user_id)
+));
+   $path_img = Yii::app()->baseUrl. '/images/head_print.png';
 
 		// $padding_left = 12.7;
 		// $padding_right = 12.7;
 		// $padding_top = 10;
 		// $padding_bottom = 20;
 
-         require_once __DIR__ . '/../../../vendors/mpdf7/autoload.php';
-         $mPDF = new \Mpdf\Mpdf();
+   require_once __DIR__ . '/../../../vendors/mpdf7/autoload.php';
+   $mPDF = new \Mpdf\Mpdf();
 		//$mPDF = Yii::app()->ePdf->mpdf('th', 'A4', '0', 'garuda', $padding_left, $padding_right, $padding_top, $padding_bottom);
-         $mPDF->useDictionaryLBR = false;
-         $mPDF->setDisplayMode('fullpage');
-         $mPDF->autoLangToFont = true;
-         $mPDF->autoPageBreak = true;
-         $mPDF->SetTitle("ใบสมัครสมาชิก");
-         $texttt= '
-         <style>
-         body { font-family: "garuda"; }
-         </style>
-         ';
-         $mPDF->WriteHTML($texttt);
-         $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('printpdf', array('profiles'=>$profiles,'user'=>$user), true), 'UTF-8', 'UTF-8'));
-         $mPDF->Output('ใบสมัครสมาชิก.pdf', 'I');
+   $mPDF->useDictionaryLBR = false;
+   $mPDF->setDisplayMode('fullpage');
+   $mPDF->autoLangToFont = true;
+   $mPDF->autoPageBreak = true;
+   $mPDF->SetTitle("ใบสมัครสมาชิก");
+   $texttt= '
+   <style>
+   body { font-family: "garuda"; }
+   </style>
+   ';
+   $mPDF->WriteHTML($texttt);
+   $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('printpdf', array('profiles'=>$profiles,'user'=>$user), true), 'UTF-8', 'UTF-8'));
+   $mPDF->Output('ใบสมัครสมาชิก.pdf', 'I');
 
-     }
- }
+}
+}
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'index' page.
