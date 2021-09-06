@@ -623,28 +623,22 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                         <div class="col-lg-4 col-sm-4 col-xs-12">
                             <div class="well">
                                 <a href="<?php echo $link; ?>" <?= $new_tab ?>>
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-12">
-                                            <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/news/' . $value->cms_id . '/thumb/' . $value->cms_picture)) { ?>
-                                                <div class="news-img">
-                                                    <img src="<?php echo Yii::app()->homeUrl; ?>uploads/news/<?php echo $value->cms_id ?>/thumb/<?php echo $value->cms_picture ?>" alt="">
-                                                </div>
-                                            <?php } else { ?>
-                                                <div class="news-img">
-                                                    <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/new-img.png" alt="">
-                                                </div>
-                                            <?php } ?>
+                                    <?php if (file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/news/' . $value->cms_id . '/thumb/' . $value->cms_picture)) { ?>
+                                        <div class="news-img">
+                                            <img src="<?php echo Yii::app()->homeUrl; ?>uploads/news/<?php echo $value->cms_id ?>/thumb/<?php echo $value->cms_picture ?>" alt="">
                                         </div>
-                                        <div class="col-md-12 col-sm-12  col-xs-12">
-                                            <h4 class="title-news"><?php echo $value->cms_title ?></h4>
-                                            <p class="detail-news "><?php echo $value->cms_short_title ?></p>
-                                            <!-- <div class="news-date">
+                                    <?php } else { ?>
+                                        <div class="news-img">
+                                            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/new-img.png" alt="">
+                                        </div>
+                                    <?php } ?>
+                                    <h4 class="title-news"><?php echo $value->cms_title ?></h4>
+                                    <p class="detail-news "><?php echo $value->cms_short_title ?></p>
+                                    <!-- <div class="news-date">
                                                 <small><i class="far fa-clock"></i> <?php echo Helpers::lib()->DateLangTms($value->update_date, Yii::app()->session['lang']); ?></small>
                                             </div> -->
-                                            <div class="news-more">
-                                                <a href="<?php echo $link; ?>" <?= $new_tab ?> class="more"><?= $more ?> </a>
-                                            </div>
-                                        </div>
+                                    <div class="news-more">
+                                        <a href="<?php echo $link; ?>" <?= $new_tab ?> class="more"><?= $more ?> </a>
                                     </div>
                                 </a>
                             </div>

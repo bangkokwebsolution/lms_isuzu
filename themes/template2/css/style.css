@@ -5045,6 +5045,7 @@ header .navbar-nav li a {
   cursor: pointer;
   height: 70px;
   width: 170px;
+  opacity: 0;
   transition: all 0.3s ease 0s;
 }
 
@@ -6104,4 +6105,32 @@ tr {
 
 .dropdown-menu.changelang a:hover {
   color: #E0001A;
+}
+
+#scrollPercentLabel {
+  position: fixed;
+  bottom: 18px;
+  left: 10px;
+  height: 35px;
+  width: 50px;
+  background-color: #ae2024;
+  z-index: 999;
+  border-radius: 0;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+
+.progress-bar.bar-percenter {
+  position: fixed;
+  z-index: 1;
+  top: auto;
+  bottom: 0 !important;
+  left: 0;
+  width: 0;
+  height: 6px;
+  background: #AE2024;
+  z-index: 1000;
 }
