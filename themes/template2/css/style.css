@@ -951,14 +951,14 @@ div.course-detail2 h4.text11 {
 }
 
 .btn {
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .btn-main {
   color: #ffffff !important;
   background: #E0001A;
   border-radius: 4px;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .course-btn {
@@ -3030,7 +3030,7 @@ ol {
 }
 
 .list-group-item span {
-  font-size: 18px !important;
+  font-size: 14px !important;
 }
 
 .detailmore {
@@ -4386,7 +4386,7 @@ ol.stat-alert li::before {
   border-radius: 60px;
   color: #fff;
   border: none;
-  font-size: 16px;
+  font-size: 14px;
   padding: 8px 8px 8px 10px;
 }
 
@@ -5995,6 +5995,7 @@ tr {
 
 .sidebar-account li {
   padding: 10px 5px;
+  font-size: 16px;
 }
 
 .sidebar-account li:not(:last-child) {
