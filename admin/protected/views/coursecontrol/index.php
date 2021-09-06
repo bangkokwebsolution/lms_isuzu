@@ -137,7 +137,7 @@ $orgchart = OrgChart::model()->findbypk($_GET['id']);
 
 </style>
 <div class="span12">
-    <h1><?= $type_name ?>: <?= $orgchart->title ?></h1>
+    <h1><?= $type_name ?>: <u><?= $orgchart->title ?></u></h1>
 
     <div class="span12">
        <menu id="nestable-menu">
@@ -179,8 +179,8 @@ $orgchart = OrgChart::model()->findbypk($_GET['id']);
             -->
 
             <a href="<?= $url; ?>"><button type="button" class="btn btn-info pull-right">COURSE MANAGE</button></a>
-            <a href="<?= $urltypecourse.'?typeCourse='.'3'; ?>" style='margin-right: 10px' ><button type="button" class="btn btn-info pull-right">หลักสูตรทั่วไป</button></a>
-            <a href="<?= $urltypecourse.'?typeCourse='.'1'; ?>" style='margin-right: 10px' ><button type="button" class="btn btn-info pull-right">หลักสูตรเฉพาะ</button></a>
+            <a href="<?= $urltypecourse.'?typeCourse='.'3'; ?>" ><button type="button" class="btn btn pull-right" style='margin-right: 10px'>หลักสูตรทั่วไป</button></a>
+            <a href="<?= $urltypecourse.'?typeCourse='.'1'; ?>" ><button type="button" class="btn btn pull-right"  style='margin-right: 10px'>หลักสูตรเฉพาะ</button></a>
         <?php } ?>
     </menu>
 </div>
@@ -245,7 +245,7 @@ $orgchart = OrgChart::model()->findbypk($_GET['id']);
                 });      
             </script> -->
             <?php 
-            // if(!empty($_GET['data_index'])){
+            if(!empty($data)){
                 $this->Widget('ATreeView', array(
                     'data' => OrgCourse::getChilds(0),
                     'animated' => 'slow',
@@ -253,9 +253,9 @@ $orgchart = OrgChart::model()->findbypk($_GET['id']);
                     'persist' => 'cookie',
                     'htmlOptions' => array('class'=>'dd-list'),
                 ));
-            // }else{
-                // echo '<div class="dd-empty"></div>';
-            // }
+            }else{
+                echo '<div class="dd-empty"></div>';
+            }
         }
     }else{
         ?>
