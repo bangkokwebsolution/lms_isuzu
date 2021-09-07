@@ -28,9 +28,6 @@
 }
 
 @media only screen and (max-width:991px) {
-    .user-menu {
-        margin-bottom: 10px;
-    }
 
     .terms-con {
         display: block !important;
