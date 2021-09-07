@@ -23,10 +23,6 @@ class ApproveCourseController extends Controller
 	{
 
 		$model=new ApproveCourse('search');
-		// $model->compare('parent_id', 0);
-		// $model->compare('active', 'y');
-		// $model->with=array('cates');
-		// $model->compare('categorys.cate_type', 1);
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['ApproveCourse']))
 			$model->attributes=$_GET['ApproveCourse'];
@@ -42,52 +38,15 @@ class ApproveCourseController extends Controller
 	public function actionGeneral()
 	{
 
-		if(isset($_GET['user_list'])){
-			$authority_hr = 2;
+		$model=new ApproveCourse('searchGeneral');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['ApproveCourse']))
+			$model->attributes=$_GET['ApproveCourse'];
 
-			if (!empty($_GET['user_list'])) {
-				foreach ($_GET['user_list'] as $key => $value) {
-					$user = User::model()->findByPk($value);
-					$user->authority_hr = $authority_hr;
-					$user->save(false);
+		$this->render('general',array(
+			'model'=>$model,
+		));
 
-					if(Yii::app()->user->id){
-						Helpers::lib()->getControllerActionId($value);
-					}
-				}
-			}
-
-			$this->redirect(array('AuthorityHR/hr2'));
-		}elseif(isset($_POST['user_id'])){
-			if($_POST['user_id'] != ""){
-				$user = User::model()->findByPk($_POST['user_id']);
-				$user->authority_hr = 0;
-				$user->save(false);
-
-				if(Yii::app()->user->id){
-					Helpers::lib()->getControllerActionId($_POST['user_id']);
-				}
-
-				echo "success";
-				exit();
-			}
-		}
-
-
-
-		$criteria = new CDbCriteria;
-		$criteria->compare('superuser', 1);
-		$criteria->compare('authority_hr', 0);
-		$userAll = User::model()->with('profile')->findAll($criteria);
-
-		$criteria = new CDbCriteria;
-		$criteria->compare('superuser', 1);
-		$criteria->compare('authority_hr', 2);
-		$user_hr2 = User::model()->with('profile')->findAll($criteria);
-
-
-
-		$this->render('general', array('userAll'=>$userAll, 'user'=>$user_hr2));
 	}
 
 	public function actionGetDatamodal()
