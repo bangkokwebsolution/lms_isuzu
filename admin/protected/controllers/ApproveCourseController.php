@@ -80,6 +80,29 @@ class ApproveCourseController extends Controller
 				$form_text .= "<input class='form-control' style='height: 40px;' readonly type='text' value='" . $CourseOnline->cates->cate_title . "'>";				
 				$form_text .= "</div>";
 				$form_text .= "</div>";
+
+				$form_text .= "<div class='row' style='margin-bottom: 20px;'>";
+				$form_text .= "<div class='col-md-6'>";
+				$form_text .= "<p class='pull-left' style='display: inline-block; font-size: 16px;'>สร้างโดย</p>";
+				$form_text .= "</div>";
+
+				$form_text .= "<div class='col-md-6'>";
+				$form_text .= "<p class='pull-left' style='display: inline-block; font-size: 16px;'>Org Chart</p>";
+				$form_text .= "</div>";
+
+
+				$form_text .= "<div class='col-md-6'>";
+				$form_text .= "<input class='form-control' style='height: 40px;' readonly type='text' value='" . $CourseOnline->usernewcreate->profile->firstname . " " . $CourseOnline->usercreate->profile->lastname ."'>";				
+				$form_text .= "</div>";
+
+				$form_text .= "<div class='col-md-6'>";
+				$form_text .= "<input class='form-control' style='height: 40px;' readonly type='text' value='" . $CourseOnline->usernewcreate->orgchart->title ."'>";				
+				$form_text .= "</div>";
+				$form_text .= "</div>";
+
+
+
+
 			}
 
 			echo $form_text;

@@ -73,8 +73,12 @@ class UserNew extends CActiveRecord
             self::BELONGS_TO, 'TypeUser', array('id'=>'type_register')
         );
 
+        // $relations['orgchart'] = array(
+        //     self::BELONGS_TO, 'OrgChart', array('id'=>'department_id')
+        // );
+
         $relations['orgchart'] = array(
-            self::BELONGS_TO, 'OrgChart', array('id'=>'department_id')
+            self::BELONGS_TO, 'OrgChart', 'org_id'
         );
 
         $relations['branch'] = array(

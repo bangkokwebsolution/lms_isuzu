@@ -40,7 +40,7 @@ class ApproveCourse extends AActiveRecord
 			'cates' => array(self::BELONGS_TO, 'Category', 'cate_id'),
 			'category' => array(self::BELONGS_TO, 'CategoryCourse', 'cate_course'),
 			'teachers' => array(self::BELONGS_TO, 'Teacher', 'course_lecturer'),
-			'usercreate' => array(self::BELONGS_TO, 'User', 'create_by'),
+			'usercreate' => array(self::BELONGS_TO, 'usernew', 'create_by'),
 			'userupdate' => array(self::BELONGS_TO, 'User', 'update_by'),
 			'CourseRelateLesson' => array(self::HAS_MANY, 'Lesson', 'course_id'),
 			'Schedules' => array(self::HAS_MANY, 'Schedule', 'course_id'),

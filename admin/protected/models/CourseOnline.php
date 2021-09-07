@@ -42,6 +42,7 @@ class CourseOnline extends AActiveRecord
 			'category' => array(self::BELONGS_TO, 'CategoryCourse', 'cate_course'),
 			'teachers' => array(self::BELONGS_TO, 'Teacher', 'course_lecturer'),
 			'usercreate' => array(self::BELONGS_TO, 'User', 'create_by'),
+			'usernewcreate' => array(self::BELONGS_TO, 'UserNew', 'create_by'),
 			'userupdate' => array(self::BELONGS_TO, 'User', 'update_by'),
 			'CourseRelateLesson' => array(self::HAS_MANY, 'Lesson', 'course_id'),
 			'Schedules' => array(self::HAS_MANY, 'Schedule', 'course_id'),
