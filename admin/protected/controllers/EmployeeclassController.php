@@ -94,27 +94,7 @@ class EmployeeclassController extends Controller
 		//$this->loadModel($id)->delete();
 		$model = $this->loadModel($id);
 		// $this->actionSort($model->sortOrder);
-		$model->active = 'n';
-
-		if($model->cms_picture != '')
-			Yii::app()->getDeleteImageYush('News',$model->id,$model->cms_picture);
-
-		$model->cms_picture = null;
-
-		$modelChrilden = News::model()->findAll(array(
-            'condition'=>'parent_id=:parent_id AND active=:active',
-            'params' => array(':parent_id' => $model->cms_id, ':active' => 'y')
-              ));
-		foreach ($modelChrilden as $key => $value) {
-			// $this->actionSort($value->sortOrder);
-			$value->active = 'n';
-
-			if($value->cms_picture != ''){
-				Yii::app()->getDeleteImageYush('News',$value->id,$value->cms_picture);
-			}
-			$value->cms_picture = null;
-			$value->save();
-		}
+		$model->active = 0;
 		$model->save();
 
 		if(Yii::app()->user->id){

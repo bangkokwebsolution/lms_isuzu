@@ -80,6 +80,7 @@ class EmpClass extends CActiveRecord
 		{
 			$this->create_by = $id;
 			$this->create_date = date("Y-m-d H:i:s");
+			$this->active = 1;
 		}
 		else
 		{
@@ -114,7 +115,7 @@ public function search()
 		$criteria->compare('create_by',$this->create_by);
 		$criteria->compare('update_date',$this->update_date);
 		$criteria->compare('update_by',$this->update_by);
-		$criteria->compare('active',$this->active,true);
+		$criteria->compare('active',1);
 		$criteria->compare('descrpition',$this->descrpition);
 
 		

@@ -91,6 +91,7 @@ class EmpClass extends CActiveRecord
 
         return parent::beforeSave();
     }
+    
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
@@ -118,6 +119,7 @@ public function search()
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('descrpition',$this->descrpition);
+		$criteria->compare('active',1);
 
 		
 

@@ -107,11 +107,11 @@ EOD
 								';
 
 								// if($data->id >= 4){
-								if ($data->id > 10 ){
+								// if ($data->id > 10 ){
 									$text .= '
 									<a class="btn-action glyphicons pencil btn-danger remove_2" title="ลบ" href="'.Yii::app()->controller->createUrl('EmployeeClass/delete/'.$data->id).'" onclick="return confirm(\'Are you sure you want to delete this item?\');"><i></i></a>
 									';
-								}
+								// }
 
 								return $text;
 							},
