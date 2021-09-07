@@ -155,6 +155,7 @@ class CourseOnline extends AActiveRecord
 			$this->create_date = date("Y-m-d H:i:s");
 			$this->update_by = $id;
 			$this->update_date = date("Y-m-d H:i:s");
+			$this->approve_status = 0;
 		}
 		else
 		{
