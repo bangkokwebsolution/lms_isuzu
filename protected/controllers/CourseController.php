@@ -287,20 +287,20 @@ public function actionResetLearn($id) {
             $langId = Yii::app()->session['lang'];
         }
 
-      $userModel = Users::model()->findByPK(Yii::app()->user->id);
+      $userModel = UserNew::model()->findByPK(Yii::app()->user->id);
             // $userDepartment = $userModel->department_id;
             // $userPosition = $userModel->position_id;
             // $userBranch = $userModel->branch_id;
 
             if($userModel->profile->kind != 5){
-
+                // var_dump($userModel->org_id);exit();
              $criteria = new CDbCriteria;
             // $criteria->with = array('orgchart');
              // $criteria->compare('department_id',$userDepartment);
              // $criteria->compare('position_id',$userPosition);
              // $criteria->compare('branch_id',$userBranch);
              $criteria->compare('active','y');
-            // $criteria->group = 'orgchart_id';
+             $criteria->compare('id',$userModel->org_id);
              $modelOrgDep = OrgChart::model()->findAll($criteria);
 
              foreach ($modelOrgDep as $key => $value) {
