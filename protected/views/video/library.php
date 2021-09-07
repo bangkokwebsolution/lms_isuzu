@@ -55,8 +55,14 @@
                 }
                 ?>
                 <button style="white-space: normal;" class="tab-btn-cate-type btn btn-default filter-button btn-lg text-left" data-filter="cate_<?= $value->library_type_id ?>"><?= $libra_type ?></button>
-        <?php } // foreach ($library_type_2 ?>              
+        <?php } // foreach ($library_type_2 ?>
             </div>
+          
+            <a href="#" class="se-ed-button">
+              <img src="/lms_isuzu/themes/template2/images/se-ed-logo.png" alt="" srcset="">
+              <span>SE-ED</span>&nbsp;Library
+              </a>
+
           </div>
 
           <div class="col-sm-8 col-md-9 col-xs-12">
