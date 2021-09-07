@@ -1,4 +1,3 @@
-
 <?php
 $titleName = 'อนุมัติหลักสูตรเฉพาะ';
 $formNameModel = 'ApproveCourse';
@@ -88,7 +87,7 @@ EOD
             array(
               'type'=>'raw',
               'value'=>function($data){
-                if($data->status == 1){
+                if($data->approve_status == 1){
                   return "อนุมัติแล้ว";
                 } else {
                   return "ยังไม่อนุมัติ";
