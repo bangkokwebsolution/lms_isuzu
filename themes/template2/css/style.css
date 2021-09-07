@@ -5195,6 +5195,29 @@ header .navbar-nav li a {
   border-color: #DDDDDD;
 }
 
+.se-ed-button {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 5px 0;
+  background: #fff;
+  border-radius: 0;
+  padding: 15px 15px;
+  border: 1px solid #dddddd;
+}
+
+.se-ed-button img{
+  margin:4px;
+  height: 40px;
+  width: auto;
+}
+
+.se-ed-button span {
+  color: #E64D3B;
+  font-weight: bold;
+  font-size: 18px;
+}
+
 .other-library {
   background-image: url(../images/other-bar.png);
   background-repeat: no-repeat;
@@ -6111,7 +6134,7 @@ tr {
 
 .dropdown-menu.changelang a:hover {
   color: #E0001A;
-  
+
 }
 
 #scrollPercentLabel {
