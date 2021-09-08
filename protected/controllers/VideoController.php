@@ -71,7 +71,7 @@ class VideoController extends Controller{
 
     public function actionLibrary()
     {
-        if(Yii::app()->user->id){
+        // if(Yii::app()->user->id){
 
             //2=DOC    1=Media
 
@@ -157,9 +157,9 @@ class VideoController extends Controller{
                 'label'=>$label,
             ));
 
-        }else{
-            $this->redirect(array('site/index'));
-        }
+        // }else{
+        //     $this->redirect(array('site/index'));
+        // }
     }
 
     public function actionDownloadFile(){
