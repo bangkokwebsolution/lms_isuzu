@@ -1696,13 +1696,13 @@ Class MenuLeft extends Controller
 	        			'label'=>'จัดการห้องสมุด',
 	        			'url'=>array('//LibraryFile/index')
 	        		),
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'LibraryFile.download'
-	        			)),
-	        			'label'=>'จัดการการอนุมัติการดาวน์โหลด',
-	        			'url'=>array('//LibraryFile/download')
-	        		),
+	        		// array(
+	        		// 	'visible'=>self::PermissionsMenu(array(
+	        		// 		'LibraryFile.download'
+	        		// 	)),
+	        		// 	'label'=>'จัดการการอนุมัติการดาวน์โหลด',
+	        		// 	'url'=>array('//LibraryFile/download')
+	        		// ),
 	        		
 	        	)
 	        ),
