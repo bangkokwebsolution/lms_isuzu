@@ -77,7 +77,7 @@
                 </div>
 
 
-                <div class="row">
+                <!-- <div class="row">
                     <div class="col-md-8">
                         <?php echo $form->labelEx($model,'status_ebook'); ?>
                         <?php echo $form->checkBox($model,'status_ebook',array(
@@ -85,7 +85,7 @@
                         )); ?>
                         <?php echo $form->error($model,'status_ebook'); ?>
                     </div>
-                </div>
+                </div> -->
                 
 
                 <div class="row">
@@ -97,39 +97,23 @@
                 </div>
 
                 <div class="row">
-                	<div class="col-md-8">
-                		<?php 
-                		if($model->status_ebook == 1){ // E book                            
-                            $file = glob(Yii::app()->getUploadPath(null)."../LibraryFile_ebook/".$model->library_id."/*");
-                            if(!empty($file)){
-                                foreach ($file as $key => $value) {
+                    <div class="col-md-8">
+                        <?php 
+                        if($model->library_filename != ""){
+                            $file = glob(Yii::app()->getUploadPath(null)."*");
+                             $path = Yii::app()->basePath;                           
+                            foreach ($file as $key => $value) {
+                                $filename = basename($value);
+                                if($model->library_filename == $filename){
                                     $ext = pathinfo($value, PATHINFO_EXTENSION);
-                                    if($ext == "html"){
-                                    $filename = basename($value);
                                     ?>
-                                    <a href="javascript:void(0)"><?= $filename ?></a>
+                                    <a target="blank_" href="../../../../uploads/<?= $filename ?>"><?= $model->library_name.".".$ext ?></a>
                                     <?php
                                     break;
-                                    }
                                 }
                             }
-                        }elseif($model->library_filename != ""){
-                			$file = glob(Yii::app()->getUploadPath(null)."*");
-                			 $path = Yii::app()->basePath;
-                			foreach ($file as $key => $value) {
-                				$filename = basename($value);
-
-
-                				if($model->library_filename == $filename){
-                					$ext = pathinfo($value, PATHINFO_EXTENSION);
-                					?>
-                					<a target="blank_" href="../../../../uploads/<?= $filename ?>"><?= $model->library_name.".".$ext ?></a>
-                					<?php
-                					break;
-                				}
-                			}
-                		}
-                		 ?>
+                        }
+                         ?>
                     </div>
                 </div>
                 

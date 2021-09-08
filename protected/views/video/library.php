@@ -296,12 +296,14 @@
                 <?php
                 } elseif ($extension == "pdf") {
                 ?>
+
+                <!--pdf-->
                 <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
                         <div class="library-card">
-                          <a href="javascript:void(0)" onclick="downloadFile(this)" class="" library-id="<?= $value->library_id ?>">
+                          <a href="../uploads/LibraryFile/<?php echo $value->library_filename ?>" target="_bank"> 
                             <span class="other-file">
                               <i class="fas fa-file-pdf pdf"></i>&nbsp;<small>PDF</small>
                             </span>
