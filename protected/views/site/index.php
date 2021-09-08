@@ -16,7 +16,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $course_plan = 'Course Plan';
     $course_status = 'Course Status';
     $classroom_online = 'Classroom Online';
-    $library_show = 'E-Library';
+    $library_show = 'e-Library';
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;

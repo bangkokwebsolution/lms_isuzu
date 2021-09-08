@@ -2780,10 +2780,21 @@ public function actionCaptchaPdf(){
         }else{
             $langId = Yii::app()->session['lang'];
         }
+        $label = MenuCourse::model()->find(array(
+        'condition' => 'lang_id=:lang_id',
+            'params' => array(':lang_id' => $langId)
+        ));
+        if(!$label){
+            $label = MenuCourse::model()->find(array(
+                'condition' => 'lang_id=:lang_id',
+                'params' => array(':lang_id' => 1)
+            ));
+        }
         $Model = CourseOnline::model()->findAll(array('condition'=>'status = 1 AND lang_id = '.$langId));
          $this->render('courseplan', array(
         
-        'Model' => $Model
+        'Model' => $Model,
+        'label'=>$label,
     ));
     }
 }

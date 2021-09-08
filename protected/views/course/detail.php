@@ -21,6 +21,7 @@
 </style>
 
 <?php
+
 $course_wait_cer = 1; // สถานะ 1=พิมใบ cer ได้    2=มีข้อสอบบรรยายรอตรวจ พิมไม่ได้
 $themeBaseUrl = Yii::app()->theme->baseUrl;
 $uploadFolder = Yii::app()->getUploadUrl("lesson");
@@ -498,7 +499,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
 
                             <div role="tabpanel" class="tab-pane" id="course-unit">
 
-                                <div class="">
+                               <!--  <div class="">
                                     <div class="course-section mb-3">
                                         <div class="section-title">
                                             <span>Lesson 1 Course Name</span>
@@ -566,7 +567,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
 
                                         </ul>
                                     </div>
-                                </div>
+                                </div> -->
 
 
                                 <ol class="course-ol">

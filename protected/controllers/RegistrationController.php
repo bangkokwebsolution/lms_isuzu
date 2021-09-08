@@ -994,6 +994,12 @@ $this->render('index', array('profile' => $profile, 'users' => $users,'label'=> 
 }
 public function actionUpdate() {
     
+     if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+                $langId = Yii::app()->session['lang'] = 1;
+            }else{
+                $langId = Yii::app()->session['lang'];
+            }
+
     $profile = Profiles::model()->findByPk(Yii::app()->user->id);
     $users = Users::model()->findByPk(Yii::app()->user->id);
 
@@ -1045,8 +1051,18 @@ public function actionUpdate() {
             $this->redirect('update');
         }
     }
+    $label = MenuCourse::model()->find(array(
+        'condition' => 'lang_id=:lang_id',
+        'params' => array(':lang_id' => $langId)
+    ));
+       if(!$label){
+        $label = MenuCourse::model()->find(array(
+            'condition' => 'lang_id=:lang_id',
+            'params' => array(':lang_id' => 1)
+        ));
+    }
 
-$this->render('index', array('profile' => $profile, 'users' => $users, 'page'=>'update'));
+$this->render('index', array('profile' => $profile, 'users' => $users, 'page'=>'update','label'=>$label));
 
 }
 

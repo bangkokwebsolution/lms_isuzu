@@ -22,8 +22,8 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 } else {
     $EmployeeID = 'รหัสพนักงาน';
     $mail = 'อีเมล';
-    $Employee_c  ='ตำแหน่งพนักงาน';
-    $Position_d = 'คำอธิบายตำแหน่ง';
+    $Employee_c  ='ระดับพนักงาน';
+    $Position_d = 'ตำแหน่งงาน';
     $langId = Yii::app()->session['lang'];
     $nameTHtitle = 'ชื่อนาม - สกุล';
     $Personal_Information = 'ข้อมูลส่วนบุคคล';
@@ -145,7 +145,7 @@ figure figcaption {
                                            <?php $nameEN = $profile->firstname_en.' '.$profile->lastname_en;
 
                                            if(!empty($nameEN)){
-                                            echo $nameTH;
+                                            echo $nameEN;
                                            }else{
                                             echo '&nbsp';
                                            }

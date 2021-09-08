@@ -1,9 +1,23 @@
-<?php if (Yii::app()->user->hasFlash('msg')) {  ?>
+<?php 
+
+if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+    $langId = Yii::app()->session['lang'] = 1;
+    $mail = 'Email';
+    $text_email = 'This email does not exist in the system.';
+    $warn = 'warn';
+} else {
+    $mail = 'อีเมล';
+    $warn = 'แจ้งเตือน';
+    $text_email = 'ไม่มี Email นี้อยู่ในระบบ';
+    $langId = Yii::app()->session['lang'];
+}  
+
+if (Yii::app()->user->hasFlash('msg')) {  ?>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript">
     swal({
-      title: "แจ้งเตือน",
-      text: "<?= Yii::app()->user->getFlash('msg'); ?>",
+      title: "<?= $warn ?>",
+      text: "<?= $text_email ?>",
       icon: "warning",
       buttons: true,
       dangerMode: true,
@@ -11,7 +25,8 @@
 </script>
 <?php 
 Yii::app()->user->setFlash('msg',null);
-} 
+}
+
 ?>
 
 <div class="container">
@@ -34,7 +49,7 @@ Yii::app()->user->setFlash('msg',null);
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3">
                     <div class="form-group">
-                        <label for="">Email</label><br>
+                        <label for=""><?= $mail ?></label><br>
                         <?php echo $form->textField($model, 'email', array('class' => 'form-control input-lg' , 'placeholder' => 'example@gmail.com' , 'required' => true)); ?>
                         <?php echo $form->error($model, 'email'); ?>
                     </div>

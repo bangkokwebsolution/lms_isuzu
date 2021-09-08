@@ -6,6 +6,10 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $topic = 'Time Schedule of each Course';
     $date_now = date('Y');
     $mont = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    $NotStarted = 'Not Started';
+    $InProgress = 'In Progress';
+    $Passed = 'Passed';
+    $Expired = 'Expired';
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -13,6 +17,10 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $topic = 'ตารางเวลาของแต่ละหลักสูตร';
     $date_now = date('Y')+543;
     $mont = ['มกราคม','กุมภาพันธ์','มีนาคม','เมษายน','พฤษภาคม','มิถุนายน','กรกฎาคม','สิงหาคม','กันยายน','ตุลาคม','พฤศจิกายน','ธันวาคม'];
+    $NotStarted = 'ยังไม่ได้เรียน';
+    $InProgress = 'กำลังเรียน';
+    $Passed = 'เรียนผ่าน';
+    $Expired = 'หมดเวลาเรียน';
 }
 ?>
 
@@ -99,10 +107,10 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                     </div>
 
                     <div class="form-group mt-20">
-                        <div class="btn-plan1 text-4 btn-plan py-2 my-4">Not Started</div>
-                        <div class="btn-plan2 text-4 btn-plan py-2 my-4">In Progress</div>
-                        <div class="btn-plan3 text-4 btn-plan py-2 my-4">Passed</div>
-                        <div class="btn-plan4 text-4 btn-plan py-2 my-4">Expired</div>
+                        <div class="btn-plan1 text-4 btn-plan py-2 my-4"><?= $NotStarted ?></div>
+                        <div class="btn-plan2 text-4 btn-plan py-2 my-4"><?= $InProgress ?></div>
+                        <div class="btn-plan3 text-4 btn-plan py-2 my-4"><?= $Passed ?> </div>
+                        <div class="btn-plan4 text-4 btn-plan py-2 my-4"><?= $Expired ?></div>
                        
                     </div>
 

@@ -15,9 +15,9 @@
       <li class="breadcrumb-item active" aria-current="page">
         <?php
         if (Yii::app()->session['lang'] == 1) {
-          echo "Library";
+          echo "e-Library";
         } else {
-          echo "ห้องสมุด";
+          echo "ห้องสมุดออนไลน์";
         }
         ?>
       </li>
