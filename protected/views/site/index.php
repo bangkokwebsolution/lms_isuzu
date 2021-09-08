@@ -204,11 +204,14 @@ if (!empty($msg) || !empty($_GET['msg'])) {
             <div class=" mb-1">
                 <div class="featured-box featured-box-one  featured-box-effect-4 text-center">
                     <div class="box-content">
-                        <a data-toggle="modal" href="<?php if (Yii::app()->user->id == null) {
-                                                            echo '#modal-login';
-                                                        } else {
-                                                            echo Yii::app()->createUrl('video/library');
-                                                        } ?>">
+                        <a data-toggle="modal" href="<?php 
+                        // if (Yii::app()->user->id == null) {
+                        //                                     echo '#modal-login';
+                        //                                 } else {
+                        //                                     echo Yii::app()->createUrl('video/library');
+                        //                                 }
+                        echo Yii::app()->createUrl('video/library');
+                         ?>">
                             <div class="icon-featured">
                                 <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/E-Library.svg">
                             </div>
