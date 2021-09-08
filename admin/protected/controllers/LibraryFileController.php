@@ -157,7 +157,7 @@ class LibraryFileController extends Controller
 	        				echo "<BR>Extract Complete";
 	        			}
 
-	        			copy('C:\inetpub\wwwroot\lms_thoresen\uploads\main.js', 'C:\inetpub\wwwroot\lms_thoresen\uploads\LibraryFile_ebook'.'\\'.$cid.'\mobile\javascript\main.js');
+	        			copy('C:\inetpub\wwwroot\lms_isuzu\uploads\main.js', 'C:\inetpub\wwwroot\lms_isuzu\uploads\LibraryFile_ebook'.'\\'.$cid.'\mobile\javascript\main.js');
 
 	        			unlink($_FILES['LibraryFile']['tmp_name']['library_filename']);
 	        		} else {
@@ -205,17 +205,9 @@ class LibraryFileController extends Controller
 		if(isset($_POST['LibraryFile']))
 		{
 			$model->attributes=$_POST['LibraryFile'];
-
-			// var_dump("<pre>");
-			// var_dump($_POST['LibraryFile']);	
-			// var_dump("<br><br><br>");
-			// var_dump($model);
-			// exit();
-
-			if($_POST['LibraryFile']['status_ebook'] == 2){
-
 			$model->scenario = 'validateCheckk';
 
+			// $model->library_name_en = str_replace(' ', '_', $model->library_name_en);
 			$filename_rename = str_replace(' ', '_', $model->library_name_en);
 			
 			
@@ -250,82 +242,6 @@ class LibraryFileController extends Controller
 
 				$this->redirect(array('view','id'=>$model->library_id));
 			}
-
-
-
-		}elseif($_POST['LibraryFile']['status_ebook'] == 1){ // E-Book
-				require_once(__DIR__.'/../vendors/scorm/classes/pclzip.lib.php');
-	        	require_once(__DIR__.'/../vendors/scorm/filemanager.inc.php');
-
-	        	$fileEbook = LibraryFile::model()->find(array('order'=>'library_id desc'));
-	        	$cid = $fileEbook['library_id']+1;
-
-	        	$webroot = Yii::app()->basePath."/../../uploads/LibraryFile_ebook/";
-	        	$import_path = $webroot.$cid."/";
-	        	$fileTypes = array('zip');
-
-	        	if(!empty($_FILES)){
-
-	        		$fileName = $_FILES['LibraryFile']['name']['library_filename'];
-
-	        		$fileName = str_replace(".zip","",$fileName);
-	        		$ext = pathinfo($_FILES['LibraryFile']['name']['library_filename']);
-	        		if (in_array(strtolower($ext['extension']), $fileTypes)) {
-
-	        			if (  !$_FILES['LibraryFile']['name']['library_filename'] || !is_uploaded_file($_FILES['LibraryFile']['tmp_name']['library_filename']) ||  ($_FILES['LibraryFile']['size']['library_filename'] == 0) ) {
-	        				echo 'File: '.$_FILES['LibraryFile']['name']['library_filename'].' upload problem.'.$_FILES['LibraryFile']['size']['library_filename'];
-	        				exit;
-	        			}else{
-	        				echo "<BR>upload Complete";
-	        			}
-
-	        			if (!is_dir($import_path)) {
-	        				if (!@mkdir($import_path, 0777)) {
-	        					echo 'Cannot make import directory.';
-	        					exit;
-	        				}
-	        			}
-
-	        			$pptFolder = Yii::app()->file->set($import_path);
-	        			$pptFolder->Delete();
-	        			if(!$pptFolder->CreateDir()){
-	        				echo "Can not create directory";
-	        				exit;
-	        			}
-	        			chmod($import_path, 0777);
-
-	        			$archive = new PclZip($_FILES['LibraryFile']['tmp_name']['library_filename']);
-	        			if ($archive->extract(  PCLZIP_OPT_PATH,    $import_path,
-	        				PCLZIP_CB_PRE_EXTRACT,  'preImportCallBack') == 0) {
-	        				echo 'Cannot extract to $import_path';
-	        				clr_dir($import_path);
-	        				exit;
-	        			}else {
-	        				echo "<BR>Extract Complete";
-	        			}
-
-	        			copy('C:\inetpub\wwwroot\lms_thoresen\uploads\main.js', 'C:\inetpub\wwwroot\lms_thoresen\uploads\LibraryFile_ebook'.'\\'.$cid.'\mobile\javascript\main.js');
-
-	        			unlink($_FILES['LibraryFile']['tmp_name']['library_filename']);
-	        		} else {
-	        			echo 'Invalid file type.';
-	        		}
-
-
-
-	        		$model->library_filename = $fileName;
-	        		$model->save();
-	        		$model->sortOrder = $model->library_id;
-					$model->save();
-					$this->redirect(array('view','id'=>$model->library_id));
-
-
-	        	} // if(!empty($_FILES)
-
-	        } // $_POST['LibraryFile']['status_ebook'] == 1
-
-
-
 		}
 
 		$this->render('update',array(
