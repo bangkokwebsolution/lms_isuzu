@@ -159,12 +159,11 @@ date_default_timezone_set("Asia/Bangkok");
                         <div class="row">
 
 
-
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><?php echo $form->labelEx($model, 'employee_id'); ?></label>
-                                    <?php echo $form->textField($model, 'employee_id', array('class' => 'form-control', 'placeholder' => 'รหัสพนักงาน','onclick'=>'check_id()','required'=>'required')); ?>
-                                    <?php echo $form->error($model, 'employee_id'); ?>
+                                    <label><?php echo $form->labelEx($model, 'username'); ?></label>
+                                    <?php echo $form->textField($model, 'username', array('class' => 'form-control', 'placeholder' => 'รหัสพนักงาน','onclick'=>'check_id()','required'=>'required')); ?>
+                                    <?php echo $form->error($model, 'username'); ?>
                                 </div>
                             </div>
 
@@ -483,7 +482,7 @@ $('#cropcancel').on('click', function(ev) {
 
 function check_id(){   
 
-    var emp_id = $('#User_employee_id').val();
+    var emp_id = $('#User_username').val();
     $.ajax({
         type: 'POST',
         url: '<?php echo Yii::app()->createAbsoluteUrl("user/admin/check_empid"); ?>',

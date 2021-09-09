@@ -986,6 +986,7 @@ class AdminController extends Controller
 				$profile = new Profile;
 				$model->email = $result["Email"];
 				$model->username = $result["Employee ID."];
+                $model->employee_id = $result["Employee ID."];
                 // $model->password = md5($model->username);
                 // $model->verifyPassword = md5($result["Employee ID."]);
 
@@ -1139,8 +1140,8 @@ class AdminController extends Controller
 		if(isset($_POST['User']))
 		{
 			// var_dump($_POST['User']);exit();
-			$model->employee_id = $_POST['User']['employee_id'];
-			$model->username = $_POST['User']['employee_id'];
+			$model->employee_id = $_POST['User']['username'];
+			$model->username = $_POST['User']['username'];
 			$model->password = md5($_POST['User']['employee_id']);
             $model->org_id = $_POST['User']['org_id'];
             $model->verifyPassword = $model->password;
@@ -1244,7 +1245,7 @@ class AdminController extends Controller
 			// $model->position_id = $_POST['UserNew']['position_id'];
 			// $model->branch_id = $_POST['UserNew']['branch_id'];
             $model->email = $_POST['UserNew']['email'];
-            $model->employee_id = $_POST['UserNew']['employee_id'];
+            $model->username = $_POST['UserNew']['username'];
             $model->org_id = $_POST['UserNew']['org_id'];
 
             if(isset($_POST['url_pro_pic']) && $_POST['url_pro_pic'] != ""){
