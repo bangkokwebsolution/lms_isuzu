@@ -6,7 +6,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $Docname ='Document Name';
     $An_name = 'Announced Date';
     $last_DOc = 'Latest Document';
-    $search_type = 'Type a search term';
+    $search_type = 'Type a search word';
     $Download = 'Download';
 } else {
     $langId = Yii::app()->session['lang'];

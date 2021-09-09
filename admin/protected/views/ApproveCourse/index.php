@@ -45,7 +45,7 @@ EOD
       <div class="overflow-table">
         <?php $this->widget('AGridView', array(
           'id'=>$formNameModel.'-grid',
-          'dataProvider'=>$model->search(),
+          'dataProvider'=>$model->searchSpecific(),
           'filter'=>$model,
           'rowCssClassExpression'=>'"items[]_{$data->course_id}"',
           'selectableRows' => 2,

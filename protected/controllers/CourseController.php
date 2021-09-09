@@ -319,6 +319,14 @@ public function actionResetLearn($id) {
             $criteria->compare('categorys.cate_show','1');
             if(isset($_GET['type'])){
                 $criteria->compare('categorys.type_id',$_GET['type']);
+                if($_GET['type']==1){
+                    $statusapprove = 1;
+                }else{
+                    $statusapprove = 2;
+                }
+                $criteria->compare('course.approve_status',$statusapprove);
+            }else{
+                $criteria->addCondition('course.approve_status > 0');
             }
             // $criteria->group = 'course.cate_id';
             $criteria->addCondition('course.course_date_end >= :date_now');

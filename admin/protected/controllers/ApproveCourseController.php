@@ -22,7 +22,7 @@ class ApproveCourseController extends Controller
 	public function actionIndex()
 	{
 
-		$model = new ApproveCourse('search');
+		$model = new ApproveCourse('searchSpecific');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['ApproveCourse']))
 			$model->attributes=$_GET['ApproveCourse'];
@@ -136,8 +136,10 @@ class ApproveCourseController extends Controller
 		
 		if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level){
 			$course->approve_status = 1;
+			$course->approve_by = Yii::app()->user->id;
 		}elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level) {
 			$course->approve_status = 1;
+			$course->approve_by = Yii::app()->user->id;
 		}else{
 			echo 2;
 			exit();

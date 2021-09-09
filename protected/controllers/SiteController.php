@@ -952,20 +952,20 @@ class SiteController extends Controller
 		$this->layout = '//layouts/mainIndex';
 
 		if(Yii::app()->user->id != null){
-			$userModel = Users::model()->findByPK(Yii::app()->user->id);
-			$userDepartment = $userModel->department_id;
-			$userPosition = $userModel->position_id;
-			$userBranch = $userModel->branch_id;
+			 $userModel = UserNew::model()->findByPK(Yii::app()->user->id);
+            // $userDepartment = $userModel->department_id;
+            // $userPosition = $userModel->position_id;
+            // $userBranch = $userModel->branch_id;
 
             if($userModel->profile->kind != 5){
-
+                // var_dump($userModel->org_id);exit();
              $criteria = new CDbCriteria;
-			// $criteria->with = array('orgchart');
-             $criteria->compare('department_id',$userDepartment);
+            // $criteria->with = array('orgchart');
+             // $criteria->compare('department_id',$userDepartment);
              // $criteria->compare('position_id',$userPosition);
-             $criteria->compare('branch_id',$userBranch);
+             // $criteria->compare('branch_id',$userBranch);
              $criteria->compare('active','y');
-			// $criteria->group = 'orgchart_id';
+             $criteria->compare('id',$userModel->org_id);
              $modelOrgDep = OrgChart::model()->findAll($criteria);
 
              foreach ($modelOrgDep as $key => $value) {
@@ -976,58 +976,68 @@ class SiteController extends Controller
                 $courseArr[] = "2";
             }
 
+            $criteria = new CDbCriteria;
+            $criteria->with = array('course','course.CategoryTitle');
+            $criteria->addIncondition('orgchart_id',$courseArr);
+            $criteria->compare('course.active','y');
+            $criteria->compare('course.status','1');
+            $criteria->compare('categorys.cate_show','1');
+            if(isset($_GET['type'])){
+                $criteria->compare('categorys.type_id',$_GET['type']);
+                if($_GET['type']==1){
+                    $statusapprove = 1;
+                }else{
+                    $statusapprove = 2;
+                }
+                $criteria->compare('course.approve_status',$statusapprove);
+            }else{
+                $criteria->addCondition('course.approve_status > 0');
+            }
+            // $criteria->group = 'course.cate_id';
+            $criteria->addCondition('course.course_date_end >= :date_now');
+            $criteria->params[':date_now'] = date('Y-m-d H:i');
+            $criteria->order = 'course.course_id';
+            // $criteria->limit = 5;
+            $modelOrgCourse = OrgCourse::model()->findAll($criteria);
 
-			$criteria = new CDbCriteria;
-			$criteria->with = array('course','course.CategoryTitle');
-			$criteria->addIncondition('orgchart_id',$courseArr);
-			$criteria->compare('course.active','y');
-			$criteria->compare('course.status','1');
-			$criteria->compare('categorys.cate_show','1');
-			// $criteria->group = 'course.cate_id';
-			$criteria->addCondition('course.course_date_end >= :date_now');
-			$criteria->params[':date_now'] = date('Y-m-d H:i');
-			$criteria->order = 'course.course_id';
-			// $criteria->limit = 5;
-			$modelOrgCourse = OrgCourse::model()->findAll($criteria);
-	
-	
-			if($modelOrgCourse){
-				foreach ($modelOrgCourse as $key => $value) {
+            if($modelOrgCourse){
+                foreach ($modelOrgCourse as $key => $value) {
+            
+                    $modelUsers_old = ChkUsercourse::model()->find(
+                        array(
+                            'condition' => 'course_id=:course_id AND user_id=:user_id AND org_user_status=:org_user_status',
+                            'params' => array(':course_id'=>$value->course_id, ':user_id'=>Yii::app()->user->id, ':org_user_status'=>1)
+                        )
+                    );
 
-					$modelUsers_old = ChkUsercourse::model()->find(
-						array(
-							'condition' => 'course_id=:course_id AND user_id=:user_id AND org_user_status=:org_user_status',
-							'params' => array(':course_id'=>$value->course_id, ':user_id'=>Yii::app()->user->id, ':org_user_status'=>1)
-						)
-					);
+                    if($modelUsers_old){
+                        if($modelUsers_old->course_id !=  $value->course_id){
+                    $course_id[] = $value->course_id;
+                        }
+                    }else{
+                    $course_id[] = $value->course_id;
+                    }
 
-					if($modelUsers_old){
-						if($modelUsers_old->course_id !=  $value->course_id){
-					$course_id[] = $value->course_id;
-						}
-					}else{
-					$course_id[] = $value->course_id;
-					}
+                }
 
-				}
+                $modelUsers_To = ChkUsercourseto::model()->findAll(
+                        array(
+                            'condition' => 'user_id=:user_id',
+                            'params' => array(':user_id'=>Yii::app()->user->id)
+                        )
+                    );
 
-				$modelUsers_To = ChkUsercourseto::model()->findAll(
-						array(
-							'condition' => 'user_id=:user_id',
-							'params' => array(':user_id'=>Yii::app()->user->id)
-						)
-					);
+                    foreach ($modelUsers_To as $key => $val) {
+                        $course_id[] += $val->course_id;
+                    }
 
-					foreach ($modelUsers_To as $key => $val) {
-						$course_id[] += $val->course_id;
-					}
-
-				
-				$criteria = new CDbCriteria;
+            
+                $criteria = new CDbCriteria;
                 $criteria->addIncondition('course_id',$course_id);
-				$criteria->order = 'course_title ASC';
-				$course = CourseOnline::model()->findAll($criteria);
-			}
+                $criteria->order = 'course_title ASC';
+                $course = CourseOnline::model()->findAll($criteria);
+            }
+
 		} 
 		
 
