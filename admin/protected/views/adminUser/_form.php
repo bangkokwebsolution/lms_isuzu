@@ -4,10 +4,10 @@
 <script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/multiple-select.js"></script>
 
 <script>
-function fillfield(val){
-    $('#User_bookkeeper_id').val(val);
-}
-$(function(){
+    function fillfield(val){
+        $('#User_bookkeeper_id').val(val);
+    }
+    $(function(){
     //                      var dropDown_department = document.getElementById("User_department_id");
     //                      var dropDown_position = document.getElementById("User_position_id");
     // $("#User_company_id").bind("change", function() {
@@ -48,60 +48,60 @@ $(function(){
              //         }
              //     });
              // });
-});
-</script>
+         });
+     </script>
 
-<style type="text/css">
-.ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year{
-    color: black;
-}
-input.form-control{
-    height: 40px;
-}
-.wizard-header{margin-bottom: 2em;}
-.form-control{height: 40px;}
-label{font-weight: bold;}
-.card{padding: 1em;background-color: rgba(255, 255, 255, 0.5);}
-.wizard-card .picture{width: 200px;height: 200px;border-radius: 0;}
-.wizard-card.ct-wizard-orange .picture:hover {
-    border-color: #26A69A;
-}
-</style>
-<?php 
-date_default_timezone_set("Asia/Bangkok");
-?>
+     <style type="text/css">
+        .ui-datepicker select.ui-datepicker-month, .ui-datepicker select.ui-datepicker-year{
+            color: black;
+        }
+        input.form-control{
+            height: 40px;
+        }
+        .wizard-header{margin-bottom: 2em;}
+        .form-control{height: 40px;}
+        label{font-weight: bold;}
+        .card{padding: 1em;background-color: rgba(255, 255, 255, 0.5);}
+        .wizard-card .picture{width: 200px;height: 200px;border-radius: 0;}
+        .wizard-card.ct-wizard-orange .picture:hover {
+            border-color: #26A69A;
+        }
+    </style>
+    <?php 
+    date_default_timezone_set("Asia/Bangkok");
+    ?>
 
-<div class="container">
-    <div class="page-section">
-        <div class="row">
-            <div class="col-md-12">
+    <div class="container">
+        <div class="page-section">
+            <div class="row">
+                <div class="col-md-12">
                     <?php 
                     $this->pageTitle = Yii::app()->name . ' - ' . UserModule::t("Registration");
                    /* $this->breadcrumbs = array(
                     UserModule::t("Registration"),
-                    );*/
-                    ?>
+                );*/
+                ?>
 
-                    <?php if (Yii::app()->user->hasFlash('registration')): ?>
-                    <div class="success">
-                        <div class="card wizard-card ct-wizard-orange" id="wizard">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <?php echo Yii::app()->user->getFlash('registration'); 
-                                    if(Yii::app()->user->hasFlash('error')) {
-                                        echo Yii::app()->user->getFlash('error'); 
-                                    } else if (Yii::app()->user->hasFlash('contact')){
-                                        echo Yii::app()->user->getFlash('contact'); 
-                                    }
-                                    ?>
+                <?php if (Yii::app()->user->hasFlash('registration')): ?>
+                <div class="success">
+                    <div class="card wizard-card ct-wizard-orange" id="wizard">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <?php echo Yii::app()->user->getFlash('registration'); 
+                                if(Yii::app()->user->hasFlash('error')) {
+                                    echo Yii::app()->user->getFlash('error'); 
+                                } else if (Yii::app()->user->hasFlash('contact')){
+                                    echo Yii::app()->user->getFlash('contact'); 
+                                }
+                                ?>
 
-                                </div>
                             </div>
                         </div>
                     </div>
-                    <?php unset(Yii::app()->session['rule']); else: ?>
-                    <div class="form">
-                        <?php $form = $this->beginWidget('UActiveForm', array(
+                </div>
+                <?php unset(Yii::app()->session['rule']); else: ?>
+                <div class="form">
+                    <?php $form = $this->beginWidget('UActiveForm', array(
                         'id'=>'registration-form',
                         // 'enableAjaxValidation'=>true,
                         // 'disableAjaxValidationAttributes'=>array('RegistrationForm_verifyCode'),
@@ -109,18 +109,18 @@ date_default_timezone_set("Asia/Bangkok");
                             'validateOnSubmit'=>true,
                         ),
                         'htmlOptions'=>array('enctype'=>'multipart/form-data'),
-                        )); ?>
-                        <?php echo $form->errorSummary(array($model, $profile)); ?>
-                        <div class="card wizard-card ct-wizard-orange" id="wizard">
+                    )); ?>
+                    <?php echo $form->errorSummary(array($model, $profile)); ?>
+                    <div class="card wizard-card ct-wizard-orange" id="wizard">
                         
-                            <!--        You can switch "ct-wizard-orange"  with one of the next bright colors: "ct-wizard-blue", "ct-wizard-green", "ct-wizard-orange", "ct-wizard-red"             -->
-                            <div class="wizard-header">
-                                <h3><strong><?php echo UserModule::t("Registration"); ?>
-                                <!-- <small class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></small> --></strong>
-                                </h3>
-                                <p class="text-center"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
-                            </div>
-                            <div class="row pd-1em border">
+                        <!--        You can switch "ct-wizard-orange"  with one of the next bright colors: "ct-wizard-blue", "ct-wizard-green", "ct-wizard-orange", "ct-wizard-red"             -->
+                        <div class="wizard-header">
+                            <h3><strong><?php echo UserModule::t("Registration"); ?>
+                            <!-- <small class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></small> --></strong>
+                        </h3>
+                        <p class="text-center"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
+                    </div>
+                    <div class="row pd-1em border">
                                 <!-- <div class="col-md-3">
                                     <div class="picture-container">
                                         <h4>รูปภาพโปรไฟล์</h4>
@@ -148,7 +148,7 @@ date_default_timezone_set("Asia/Bangkok");
                                     <div class="form-group">
                                         <label>กลุ่มผู้ใช้</label>
                                         <br>
-                                         <?php
+                                        <?php
                                         $UPGroup =  PGroup::model()->findAll(array('condition' => 'id != 1'));
                                         $UPGrouplist = CHtml::listData($UPGroup,'id','group_name');
                                         if(!$model->isNewRecord){
@@ -157,9 +157,9 @@ date_default_timezone_set("Asia/Bangkok");
                                                 $data_selected[$uGroup]=array('selected' => 'selected');
                                             }
                                         } 
-                                    
+                                        
                                         foreach ($UPGroup as $Group) {
-                                                $UGroup[$Group->id] = $Group->group_name;
+                                            $UGroup[$Group->id] = $Group->group_name;
                                         }
 
 
@@ -171,27 +171,40 @@ date_default_timezone_set("Asia/Bangkok");
                                         // }
                                         ?>
                                         <?php  $this->widget('booster.widgets.TbSelect2',
-                                                   array(
-                                                       'name' => 'PGoup[]',
-                                                       'data' => $UGroup,
-                                                       'options' => array(
-                                                           'placeholder' => 'type clever, or is, or just type!',
-                                                           'width' => '100%',
-                                                       ),
-                                                       'htmlOptions' => array(
-                                                           'multiple' => 'multiple',
-                                                           'options'=> 
-                                                               $data_selected
-                                                       ),
-                                               )
-                                           );?>   
-                                        
-                                    </div>                                
-                                     <div class="form-group">
-                                        <label><?php echo $form->labelEx($model, 'username'); ?></label>
-                                        <?php echo $form->textField($model, 'username', array('class' => 'form-control', 'placeholder' => 'ชื่อผู้ใช้ (Email)')); ?>
-                                        <?php echo $form->error($model, 'username'); ?>
+                                         array(
+                                             'name' => 'PGoup[]',
+                                             'data' => $UGroup,
+                                             'options' => array(
+                                                 'placeholder' => 'type clever, or is, or just type!',
+                                                 'width' => '100%',
+                                             ),
+                                             'htmlOptions' => array(
+                                                 'multiple' => 'multiple',
+                                                 'options'=> 
+                                                 $data_selected
+                                             ),
+                                         )
+                                     );?>   
+                                     
+                                 </div>
+                                 <?php 
+                                 $attSearch = array("class"=>"span3",'disable_search' => false);
+                                 $org_all = CHtml::listData(OrgChart::model()->findAll("active = 'y' and id != 1"), 'id', 'title');
+                                 ?>
+                                 <?php (empty($model->org_id)? $select = '' : $select = $model->org_id);?>
+                                 <div class="row">
+                                    <div class="col-md-12">
+                                        <?php echo $form->labelEx($model,'org_id'); ?>
+                                        <?php echo Chosen::activeDropDownList($model, 'org_id', $org_all, $attSearch); ?>
+                                        <?php echo $this->NotEmpty();?>
+                                        <?php echo $form->error($model,'org_id'); ?>
                                     </div>
+                                </div>                                
+                                <div class="form-group">
+                                    <label><?php echo $form->labelEx($model, 'username'); ?></label>
+                                    <?php echo $form->textField($model, 'username', array('class' => 'form-control', 'placeholder' => 'ชื่อผู้ใช้ (Email)')); ?>
+                                    <?php echo $form->error($model, 'username'); ?>
+                                </div>
                               <!--        <div class="form-group">
                                         <label>
                                             <label><label for="User_email" class="required">อีเมล</label></label>
@@ -207,37 +220,37 @@ date_default_timezone_set("Asia/Bangkok");
                                         
                                     </div> -->
                                     <div class="row">
-                                    <?php if($model->isNewRecord) { ?>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label><?php echo $form->labelEx($model, 'password'); ?></label>
-                                                <?php echo $form->passwordField($model, 'password', array('class' => 'form-control', 'placeholder' => 'รหัสผ่าน (ควรเป็น (A-z0-9) และมากกว่า 4 ตัวอักษร)')); ?>
-                                                <?php echo $form->error($model, 'password'); ?>
+                                        <?php if($model->isNewRecord) { ?>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label><?php echo $form->labelEx($model, 'password'); ?></label>
+                                                    <?php echo $form->passwordField($model, 'password', array('class' => 'form-control', 'placeholder' => 'รหัสผ่าน (ควรเป็น (A-z0-9) และมากกว่า 4 ตัวอักษร)')); ?>
+                                                    <?php echo $form->error($model, 'password'); ?>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label><?php echo $form->labelEx($model, 'verifyPassword'); ?></label>
-                                                <?php echo $form->passwordField($model, 'verifyPassword', array('class' => 'form-control', 'placeholder' => 'ยืนยันรหัสผ่าน')); ?>
-                                                <?php echo $form->error($model, 'verifyPassword'); ?>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label><?php echo $form->labelEx($model, 'verifyPassword'); ?></label>
+                                                    <?php echo $form->passwordField($model, 'verifyPassword', array('class' => 'form-control', 'placeholder' => 'ยืนยันรหัสผ่าน')); ?>
+                                                    <?php echo $form->error($model, 'verifyPassword'); ?>
+                                                </div>
                                             </div>
-                                        </div>
-                                    <?php } else { ?>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label><?php echo $form->labelEx($model, 'newpassword'); ?></label>
-                                                <?php echo $form->passwordField($model, 'newpassword', array('class' => 'form-control', 'placeholder' => 'รหัสผ่าน (ควรเป็น (A-z0-9) และมากกว่า 4 ตัวอักษร)')); ?>
-                                                <?php echo $form->error($model, 'newpassword'); ?>
+                                        <?php } else { ?>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label><?php echo $form->labelEx($model, 'newpassword'); ?></label>
+                                                    <?php echo $form->passwordField($model, 'newpassword', array('class' => 'form-control', 'placeholder' => 'รหัสผ่าน (ควรเป็น (A-z0-9) และมากกว่า 4 ตัวอักษร)')); ?>
+                                                    <?php echo $form->error($model, 'newpassword'); ?>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                <label><?php echo $form->labelEx($model, 'confirmpass'); ?></label>
-                                                <?php echo $form->passwordField($model, 'confirmpass', array('class' => 'form-control', 'placeholder' => 'ยืนยันรหัสผ่าน')); ?>
-                                                <?php echo $form->error($model, 'confirmpass'); ?>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label><?php echo $form->labelEx($model, 'confirmpass'); ?></label>
+                                                    <?php echo $form->passwordField($model, 'confirmpass', array('class' => 'form-control', 'placeholder' => 'ยืนยันรหัสผ่าน')); ?>
+                                                    <?php echo $form->error($model, 'confirmpass'); ?>
+                                                </div>
                                             </div>
-                                        </div>
-                                    <?php } ?>
+                                        <?php } ?>
                                     </div>
                                     <div class="form-group">
                                         <label><?php echo $form->labelEx($profile, 'title_id'); ?></label>
@@ -300,7 +313,7 @@ date_default_timezone_set("Asia/Bangkok");
                                             // $departmentdata = (!$model->division_id)?array():Department::model()->getDepartmentList($model->division_id);
 
                                             // $departmentdata = (!$model->department_id)?array():Department::model()->getDepartmentListNew($model->department_id);
-                                            $department = Department::model()->getDepartmentListNew();
+                                        $department = Department::model()->getDepartmentListNew();
                                         ?>
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -312,7 +325,7 @@ date_default_timezone_set("Asia/Bangkok");
                                             </div>
                                         </div>
                                         <?php   
-                                         $Positiondata = Position::model()->getPositionListNew();
+                                        $Positiondata = Position::model()->getPositionListNew();
                                         ?>
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -324,7 +337,7 @@ date_default_timezone_set("Asia/Bangkok");
                                             </div>
                                         </div>
 
-                                       
+                                        
 
                                         <?php
                                         //    $Branch = Branch::model()->getBranchList();
@@ -372,29 +385,29 @@ date_default_timezone_set("Asia/Bangkok");
                                         ?>
                                         <?php
                                         $Orgchart = OrgChart::model()->findAll(array(
-                                                            'condition' => 'active = "y"',
-                                                            'order' => 'id ASC'
-                                                            )
-                                                        );
-                                        ?>
-                                    </div>
-                                       <?php
-                                            $my_group = '';
-                                            if(!Yii::app()->user->isGuest){
-                                                $my_group = json_decode($model->group);
-                                            }
-                                        ?>
-                                        
-                                        <?php 
+                                            'condition' => 'active = "y"',
+                                            'order' => 'id ASC'
+                                        )
+                                    );
+                                    ?>
+                                </div>
+                                <?php
+                                $my_group = '';
+                                if(!Yii::app()->user->isGuest){
+                                    $my_group = json_decode($model->group);
+                                }
+                                ?>
+                                
+                                <?php 
                                            // $type = array(0 =>'สมาชิกทั่วไป',1 => 'แอดมิน');
-                                         ?>
+                                ?>
                                       <!--   <div class="form-group">
                                             <label><?php echo $form->labelEx($model, 'superuser'); ?></label>
                                             <?php
                                             echo $form->dropDownList($model, 'superuser', $type, array('class' => 'form-control', 'style' => 'width:100%')); ?>
                                             <?php echo $form->error($model, 'superuser'); ?>
                                         </div> -->
-                                    
+                                        
                                         <div class="form-group" style="text-align: right;">
                                             <?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t("Register") : 'บันทึก', array('class' => 'btn btn-primary',)); ?>
                                         </div>
@@ -403,51 +416,51 @@ date_default_timezone_set("Asia/Bangkok");
 
                             </div>
                             <?php $this->endWidget(); ?>
-                            </div><!-- form -->
-                            <?php endif; ?>
-                    </div>
+                        </div><!-- form -->
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
-        <script type="text/javascript">
-            $('.branch').hide();
-            $('.label_branch').hide();
-            $(".department").change(function() {
-                    var id = $(".department").val();
-                    $.ajax({
-                        type: 'POST',
-                        url: "<?= Yii::app()->createUrl('user/admin/ListPosition'); ?>",
-                        data: {
-                            id: id
-                        },
-                        success: function(data) {
-                            $('.position').empty();
-                            $('.position').append(data);
-                        }
-                    });
-                });
-                 $(".position").change(function() {
-                    var id = $(".position").val();
-                    $.ajax({
-                        type: 'POST',
-                        url: "<?= Yii::app()->createUrl('user/admin/ListBranch'); ?>",
-                        data: {
-                            id: id
-                        },
-                        success: function(data) {
-                                console.log(data);
-                                if (data == '<option value ="">เลือกระดับ</option>') {
-                                    console.log(555);
-                                    $('.branch').hide();
-                                    $('.label_branch').hide();
-                                }else{
-                                    console.log(666);
-                                    $('.branch').show();
-                                    $('.label_branch').show();
-                                    $('.branch').empty();
-                                    $('.branch').append(data);
-                                }
-                            }
-                        });
-                });
-        </script>
+    </div>
+    <script type="text/javascript">
+        $('.branch').hide();
+        $('.label_branch').hide();
+        $(".department").change(function() {
+            var id = $(".department").val();
+            $.ajax({
+                type: 'POST',
+                url: "<?= Yii::app()->createUrl('user/admin/ListPosition'); ?>",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    $('.position').empty();
+                    $('.position').append(data);
+                }
+            });
+        });
+        $(".position").change(function() {
+            var id = $(".position").val();
+            $.ajax({
+                type: 'POST',
+                url: "<?= Yii::app()->createUrl('user/admin/ListBranch'); ?>",
+                data: {
+                    id: id
+                },
+                success: function(data) {
+                    console.log(data);
+                    if (data == '<option value ="">เลือกระดับ</option>') {
+                        console.log(555);
+                        $('.branch').hide();
+                        $('.label_branch').hide();
+                    }else{
+                        console.log(666);
+                        $('.branch').show();
+                        $('.label_branch').show();
+                        $('.branch').empty();
+                        $('.branch').append(data);
+                    }
+                }
+            });
+        });
+    </script>

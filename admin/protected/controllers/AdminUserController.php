@@ -180,7 +180,6 @@ echo ($data);
 
 		if(isset($_POST['User']))
 		{		
-
 			$Neworg = $_POST['Orgchart'];           
             $Neworg = json_encode($Neworg);
             $PGoup = $_POST['PGoup'];           
@@ -199,20 +198,23 @@ echo ($data);
                 $position->create_date = date("Y-m-d H:i:s");
 				if(!empty($_POST['User']['department_id']) && !empty($_POST['User']['position_name']))$position->save();
             }
+            $model->org_id = $_POST['User']['org_id'];
 			$model->position_name = $_POST['User']['position_name'];
             $model->position_id = $position->id;
             $model->company_id = $_POST['User']['company_id'];
 			$model->username = $_POST['User']['username'];
+			$model->employee_id = $_POST['User']['username'];
             $model->email = $_POST['User']['email'];
             $model->group = $PGoup;
             $model->password = $_POST['User']['password'];
             $model->verifyPassword = $_POST['User']['verifyPassword'];
             $model->department_id = $_POST['User']['department_id'];
             $model->create_at = date("Y-m-d H:i:s");
-
-			$model->activkey=UserModule::encrypting(microtime().$model->password);
-			$profile->attributes=$_POST['Profile'];
-			$profile->user_id=0;
+			$model->activkey = UserModule::encrypting(microtime().$model->password);
+			$profile->attributes = $_POST['Profile'];
+			$profile->firstname = $_POST['Profile']['firstname'];
+			$profile->lastname  = $_POST['Profile']['lastname'];
+			// $profile->user_id=0;
 
  //$errors = $model->getErrors();
 
@@ -236,6 +238,7 @@ echo ($data);
                 $model->superuser = 1;
 
 				if($model->save()) {
+
 					// if(isset($uploadFile))
 					// {
 					// 	/////////// SAVE IMAGE //////////
@@ -256,20 +259,22 @@ echo ($data);
 					// 				$thumbImage->resize(350, 200);
 					// 				$thumbImage->save($thumbPath);
 					// }
-					if($profile->contactfrom){
-								$contacts = $profile->contactfrom;
-								foreach ($contacts as $key => $contact) {
-									// var_dump($contact);
-									// exit();
-									if($contact != end($contacts)){
-										$value .= $contact.',';
-									} else {
-										$value .= $contact;
-									}
+					// if($profile->contactfrom){
+					// 			$contacts = $profile->contactfrom;
+					// 			foreach ($contacts as $key => $contact) {
+					// 				// var_dump($contact);
+					// 				// exit();
+					// 				if($contact != end($contacts)){
+					// 					$value .= $contact.',';
+					// 				} else {
+					// 					$value .= $contact;
+					// 				}
 									
-								}
-								$profile->contactfrom = $value;
-							}
+					// 			}
+					// 			$profile->contactfrom = $value;
+					// 		}
+					// $profile->user_id=$model->id;
+							
 					$profile->generation = $gen->id_gen;
 					$profile->user_id=$model->id;
 					$profile->save(false);
