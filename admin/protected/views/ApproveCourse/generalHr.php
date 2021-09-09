@@ -1,5 +1,5 @@
 <?php
-$titleName = 'อนุมัติหลักทั่วไป';
+$titleName = 'อนุมัติหลักทั่วไปโดย (HR)';
 $formNameModel = 'ApproveCourse';
 
 $this->breadcrumbs=array($titleName);
@@ -45,7 +45,7 @@ EOD
       <div class="overflow-table">
         <?php $this->widget('AGridView', array(
           'id'=>$formNameModel.'-grid',
-          'dataProvider'=>$model->searchGeneral(),
+          'dataProvider'=>$model->searchGeneralHr2(),
           'filter'=>$model,
           'rowCssClassExpression'=>'"items[]_{$data->course_id}"',
           'selectableRows' => 2,
@@ -220,7 +220,7 @@ EOD
         if(val == 1){
           if(form_select != 0){
             $.ajax({
-              url: "<?= $this->createUrl('ApproveCourse/saveApprovalGeneral'); ?>", 
+              url: "<?= $this->createUrl('ApproveCourse/saveApprovalGeneralHR'); ?>", 
               type: "POST",
               data: {
                 request_id:form_select,

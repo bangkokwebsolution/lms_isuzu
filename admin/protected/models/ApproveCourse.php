@@ -262,13 +262,39 @@ class ApproveCourse extends AActiveRecord
 		$criteria->compare('active',$this->active,true);
 		// $criteria->compare('courseonline.lang_id',$this->lang_id,true);
 		$criteria->compare('courseonline.parent_id',0);
-		
+		$criteria->addCondition('approve_status != 1 AND approve_status !=2');
 		$criteria->order = 'sortOrder ASC';
 
 		
+		$poviderArray = array('criteria'=>$criteria);
+		// Page
+		if(isset($this->news_per_page))
+		{
+			$poviderArray['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
+		}
+		
+		return new CActiveDataProvider($this, $poviderArray);
+	}
+
+	public function searchGeneralHr2()
+	{
+		$criteria=new CDbCriteria;
+		$criteria->with=array('cates');
+		$criteria->compare('course_title',$this->course_id,true);
+		$criteria->compare('categorys.type_id',3);
+		$criteria->compare('categorys.cate_title',$this->cates_search,true);
+
+		$criteria->compare('categorys.active','y');
+		$criteria->compare('update_date',$this->update_date,true);
+		$criteria->compare('update_by',$this->update_by);
+		$criteria->compare('active',$this->active,true);
+		// $criteria->compare('courseonline.lang_id',$this->lang_id,true);
+		$criteria->compare('courseonline.parent_id',0);
+		$criteria->addCondition('approve_status = 1');
+		$criteria->order = 'sortOrder ASC';
+		
 		
 		$poviderArray = array('criteria'=>$criteria);
-
 		// Page
 		if(isset($this->news_per_page))
 		{

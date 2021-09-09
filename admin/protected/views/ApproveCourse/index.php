@@ -227,7 +227,11 @@ EOD
                 approval_status:val,
               },
               success: function(data){
-                if(data != "error"){
+                if(data != 1){
+                  alert('ท่านไม่มีสิทธื์ อนุมัติหลักสูตรนี้');
+                  // location.reload();
+                }else{
+                  alert('อนุมัติหลักสูตรนี้สำเร็จ');
                   location.reload();
                 }
               }

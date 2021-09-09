@@ -22,11 +22,11 @@ class ApproveCourseController extends Controller
 	public function actionIndex()
 	{
 
-		$model=new ApproveCourse('search');
+		$model = new ApproveCourse('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['ApproveCourse']))
 			$model->attributes=$_GET['ApproveCourse'];
-
+		$user = UserNew::model()->findByPk(Yii::app()->user->id);
 		$this->render('index',array(
 			'model'=>$model,
 		));
@@ -44,6 +44,20 @@ class ApproveCourseController extends Controller
 			$model->attributes=$_GET['ApproveCourse'];
 
 		$this->render('general',array(
+			'model'=>$model,
+		));
+
+	}
+
+	public function actionGeneralHr()
+	{
+
+		$model=new ApproveCourse('searchGeneralHr2');
+		$model->unsetAttributes();  // clear any default values
+		if(isset($_GET['ApproveCourse']))
+			$model->attributes=$_GET['ApproveCourse'];
+
+		$this->render('generalHr',array(
 			'model'=>$model,
 		));
 
@@ -111,38 +125,120 @@ class ApproveCourseController extends Controller
 
 	public function actionSaveApproval()
 	{
-		if (isset($_POST["request_id"]) && $_POST["request_id"] != "" && isset($_POST["approval_status"]) && $_POST["approval_status"] != "") {
-			$request_id = $_POST["request_id"];
-			$approval_status = $_POST["approval_status"];
+		$criteria = new CDbCriteria;
+		$criteria->compare('superuser', 1);
+		$criteria->compare('authority_hr', 1);
+		$criteria->compare('id', Yii::app()->user->id);
+		$user_hr1 = UserNew::model()->with('profile')->find($criteria);
 
-			$request = TrainingRequest::model()->findByPk($request_id);
-			$request_step = $request->request_step + 1;
-
-			if ($request_step <= 2 && $request->request_status == 3) {
-
-				$approve = new TrainingRequestApproval;
-				$approve->request_id = $request_id;
-				$approve->approval_status = $approval_status;
-				$approve->approval_user = Yii::app()->user->id;
-				$request->request_step = $request_step;
-
-				if ($approve->approval_status == 2) {
-					$request->request_status = 2;
-					$approve->approval_note = $_POST["comment"];
-				}
-
-				if ($approve->save() && $request->save()) {
-					if (Yii::app()->user->id) {
-						Helpers::lib()->getControllerActionId();
-					}
-					echo "success";
-				} else {
-					echo "error";
-				}
-			} else {
-				echo "error";
-			}
+		$course = CourseOnline::model()->findByPk($_POST['request_id']); 
+		$user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
+		
+		if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level){
+			$course->approve_status = 1;
+		}elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level) {
+			$course->approve_status = 1;
+		}else{
+			echo 2;
+			exit();
 		}
+		if($course->save(false)){
+				echo 1;
+		}else{
+				echo 2;
+		}
+		// if($user_org->id == $user_hr1['org_id']){
+
+		// }
+		// $user_create = UserNew::model()->findByPk();
+
+
+		// if (isset($_POST["request_id"]) && $_POST["request_id"] != "" && isset($_POST["approval_status"]) && $_POST["approval_status"] != "") {
+		// 	$request_id = $_POST["request_id"];
+		// 	$approval_status = $_POST["approval_status"];
+			
+		// }
+	}
+
+	public function actionSaveApprovalGeneral()
+	{
+		$criteria = new CDbCriteria;
+		$criteria->compare('superuser', 1);
+		$criteria->compare('authority_hr', 1);
+		$criteria->compare('id', Yii::app()->user->id);
+		$user_hr1 = UserNew::model()->with('profile')->find($criteria);
+
+		$course = CourseOnline::model()->findByPk($_POST['request_id']); 
+		$user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
+		
+		if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level){
+			$course->approve_status = 1;
+			$course->approve_by = Yii::app()->user->id;
+			$course->approve_by_hr = Yii::app()->user->id;
+		}elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level) {
+			$course->approve_status = 1;
+			$course->approve_by = Yii::app()->user->id;
+			$course->approve_by_hr = Yii::app()->user->id;
+		}else{
+			echo 2;
+			exit();
+		}
+		if($course->save(false)){
+				echo 1;
+		}else{
+				echo 2;
+		}
+		// if($user_org->id == $user_hr1['org_id']){
+
+		// }
+		// $user_create = UserNew::model()->findByPk();
+
+
+		// if (isset($_POST["request_id"]) && $_POST["request_id"] != "" && isset($_POST["approval_status"]) && $_POST["approval_status"] != "") {
+		// 	$request_id = $_POST["request_id"];
+		// 	$approval_status = $_POST["approval_status"];
+			
+		// }
+	}
+	public function actionSaveApprovalGeneralHR()
+	{
+		$criteria = new CDbCriteria;
+		$criteria->compare('superuser', 1);
+		$criteria->compare('authority_hr', 2);
+		$criteria->compare('id', Yii::app()->user->id);
+		$user_hr1 = UserNew::model()->with('profile')->find($criteria);
+
+		$course = CourseOnline::model()->findByPk($_POST['request_id']); 
+		$user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
+		
+		if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level){
+			$course->approve_status = 2;
+			// $course->approve_by = Yii::app()->user->id;
+			$course->approve_by_hr = Yii::app()->user->id;
+		}elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level) {
+			$course->approve_status = 2;
+			// $course->approve_by = Yii::app()->user->id;
+			$course->approve_by_hr = Yii::app()->user->id;
+		}else{
+			echo 2;
+			exit();
+		}
+		if($course->save(false)){
+				echo 1;
+		}else{
+				echo 2;
+		}
+		// if($user_org->id == $user_hr1['org_id']){
+
+		// }
+		// $user_create = UserNew::model()->findByPk();
+
+
+		// if (isset($_POST["request_id"]) && $_POST["request_id"] != "" && isset($_POST["approval_status"]) && $_POST["approval_status"] != "") {
+		// 	$request_id = $_POST["request_id"];
+		// 	$approval_status = $_POST["approval_status"];
+			
+		// }
 	}
 
 }

@@ -1371,6 +1371,14 @@ Class MenuLeft extends Controller
 						'label'=>'อนุมัติหลักสูตรทั่วไป',
 						'url'=>array('//ApproveCourse/general')
 					),
+					array(
+						'visible'=>self::PermissionsMenu(array(
+							'ApproveCourse.*',
+							'ApproveCourse.generalHr'
+						)),
+						'label'=>'อนุมัติหลักสูตรทั่วไปโดย HR',
+						'url'=>array('//ApproveCourse/generalHr')
+					),
 				)
 			),
 			
