@@ -260,6 +260,7 @@ class ApproveCourse extends AActiveRecord
 		$criteria->compare('active',$this->active,true);
 		// $criteria->compare('courseonline.lang_id',$this->lang_id,true);
 		$criteria->compare('courseonline.parent_id',0);
+		$criteria->addCondition('approve_status != 1');
 		$criteria->order = 'sortOrder ASC';
 
 		
