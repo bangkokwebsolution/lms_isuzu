@@ -31,7 +31,6 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
             <div class="col col-md-9 col-lg-9">
                 <div class="row g-5">
                     <?php
-
                      foreach ($Passcours as $key => $value) {
 
                       ?>
@@ -40,8 +39,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             <a href="#">
 
                                 <?php 
-                            // var_dump();exit();
-
+                                $gen_id = $value->CourseOnlines->getGenID($value->CourseOnlines->course_id);
                                 if(!empty($value->CourseOnlines->course_picture)){ 
                                 echo "<img class='card-img-top' src='".Yii::app()->createUrl("uploads/courseonline").'/'.$value->passcours_cours.'/original/'.$value->CourseOnlines->course_picture."'>";
                             }else{
@@ -51,10 +49,10 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             <div class="card-body" style="padding:10px;">
                                 <h4 class="card-title  text-4 text-main "><?= $value->CourseOnlines->course_title ?><a href="#"></a></h4>
                                 <div class="progress progress-sm progress-border-radius mt-4 ">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <?= Helpers::lib()->percent_CourseGen($value->CourseOnlines->course_id, $gen_id) ?>%;">
                                     </div>
                                 </div>
-                                <p class="text-dark ">100 % Complete </p>
+                                <p class="text-dark "><?= Helpers::lib()->percent_CourseGen($value->CourseOnlines->course_id, $gen_id) ?>%</p>
                             </div>
                         </div>
                     </div>

@@ -37,7 +37,13 @@ function DateThai($strDate)
              <?php 
             $CourseType = CourseType::model()->findAll(array('condition'=>'active = "y" AND lang_id=1'));
             foreach ($CourseType as $keyType => $valueType) { ?>
-                <li class="breadcrumb-item active"><a style="color: #757272" href="<?php echo $this->createUrl('/course/index?type='.$valueType->type_id); ?>"><?= $valueType->type_name ?></a></li>
+                <li class="breadcrumb-item active"><a style="color: #757272" href="<?php echo $this->createUrl('/course/index?type='.$valueType->type_id); ?>"><?php if($langId==2){ 
+
+                    $CourseType_th = CourseType::model()->find(array('condition'=>'active = "y" AND lang_id=2 AND parent_id = '.$valueType->type_id));
+                    if(isset($CourseType_th)){
+                        echo $CourseType_th->type_name;
+                    }
+                  }else{ echo  $valueType->type_name; } ?></a></li>
             <?php } ?>
         </ol>
     </nav>

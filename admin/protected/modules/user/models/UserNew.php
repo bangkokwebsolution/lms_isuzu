@@ -10,6 +10,9 @@ class UserNew extends CActiveRecord
 	public $type_employee;
 	public $supper_user_status;
 	public $idensearch;
+	public $newpassword;
+	public $confirmpass;
+	
 
 	public static function model($className=__CLASS__)
 	{

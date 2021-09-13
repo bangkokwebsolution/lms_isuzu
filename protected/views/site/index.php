@@ -17,6 +17,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $course_status = 'Course Status';
     $classroom_online = 'Classroom Online';
     $library_show = 'e-Library';
+    $CourseCategory = 'Course Category'; 
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -35,6 +36,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $course_plan = 'แผนการเรียน';
     $course_status = 'สถานะของหลักสูตร';
     $classroom_online = 'ห้องเรียนออนไลน์';
+    $CourseCategory = 'หมวดหมู่หลักสูตร'; 
 }
 ?>
 <!-- // -->
@@ -397,7 +399,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
 
                                                 <div class="card-body">
                                                     <div class="course-category">
-                                                        <small class="text-muted"><i class="fa fa-play-circle"></i> Course Category</small>
+                                                        <small class="text-muted"><i class="fa fa-play-circle"></i> <?= $CourseCategory ?></small>
                                                     </div>
                                                     <a href="<?= $url ?>" <?= $evnt ?>>
                                                         <h5 class="card-title"><?= $value->course_title; ?></h5>

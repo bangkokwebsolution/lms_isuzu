@@ -13,12 +13,33 @@ class ApproveCourseController extends Controller
 
       public function init()
     {
-        parent::init();
-        $this->lastactivity();
-
+	        parent::init();
+	        $this->lastactivity();
+			if(Yii::app()->user->id == null){
+				$this->redirect(array('site/index'));
+			}
+		
     }
 
-    
+     public function accessRules()
+    {
+        return array(
+        	array('allow',  // allow all users to perform 'index' and 'view' actions
+            	'actions' => array('index', 'view'),
+            	'users' => array('*'),
+            	),
+            array('allow',
+                // กำหนดสิทธิ์เข้าใช้งาน actionIndex
+                'actions' => AccessControl::check_action(),
+                // ได้เฉพาะ group 1 เท่านั่น
+                'expression' => 'AccessControl::check_access()',
+                ),
+            array('deny',  // deny all users
+                'users' => array('*'),
+                ),
+            );
+    }
+
 	public function actionIndex()
 	{
 

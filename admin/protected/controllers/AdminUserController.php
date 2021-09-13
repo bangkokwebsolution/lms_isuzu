@@ -147,9 +147,9 @@ echo ($data);
 
 }
 
-    public function actionTest(){
-    	var_dump("expression");exit();
-    }
+    // public function actionTest(){
+    // 	var_dump("expression");exit();
+    // }
 
     public function actionIndex()
     {
@@ -203,6 +203,7 @@ echo ($data);
             $model->position_id = $position->id;
             $model->company_id = $_POST['User']['company_id'];
 			$model->username = $_POST['User']['username'];
+			// var_dump($model->attributes);exit();
 			$model->employee_id = $_POST['User']['username'];
             $model->email = $_POST['User']['email'];
             $model->group = $PGoup;
@@ -214,6 +215,8 @@ echo ($data);
 			$profile->attributes = $_POST['Profile'];
 			$profile->firstname = $_POST['Profile']['firstname'];
 			$profile->lastname  = $_POST['Profile']['lastname'];
+			$profile->title_id  = $_POST['Profile']['title_id'];
+
 			// $profile->user_id=0;
 
  //$errors = $model->getErrors();
@@ -378,7 +381,7 @@ echo ($data);
 		// var_dump($model);
 		// exit();
 		if($id){
-			$model = User::model()->notsafe()->findbyPk($_GET['id']);
+			$model = UserNew::model()->findbyPk($_GET['id']);
 				// $model=$this->loadModel();
 			$profile=$model->profile;
 			$model->verifyPassword = $model->password;
@@ -388,9 +391,8 @@ echo ($data);
 					echo UActiveForm::validate(array($model,$profile));
 					Yii::app()->end();
 				}
-
-			if(isset($_POST['User']))
-			{				
+			if(isset($_POST['UserNew']))
+			{
 				// echo '<pre>';
 				// var_dump($_POST['Orgchart']);
 				// exit();
@@ -400,32 +402,32 @@ echo ($data);
             	$PGoup = json_encode($PGoup);
 	            $model->orgchart_lv2 = $Neworg;
 	            $criteria=new CDbCriteria;
-	            $criteria->compare('department_id',$_POST['User']['department_id']);
-	            $criteria->compare('position_title',$_POST['User']['position_name']);
+	            $criteria->compare('department_id',$_POST['UserNew']['department_id']);
+	            // $criteria->compare('position_title',$_POST['User']['position_name']);
 	            $position = Position::model()->find($criteria);
-	            if(!$position){
-	                $position = new Position;
-	                $position->department_id = $_POST['User']['department_id'];
-	                $position->position_title = $_POST['User']['position_name'];
-	                $position->create_date = date("Y-m-d H:i:s");
-					if(!empty($_POST['User']['department_id']) && !empty($_POST['User']['position_name']))$position->save();
-	            }
-				$model->position_name = $_POST['User']['position_name'];
-	            $model->position_id = $position->id;
+	   //          if(!$position){
+	   //              $position = new Position;
+	   //              $position->department_id = $_POST['User']['department_id'];
+	   //              $position->position_title = $_POST['User']['position_name'];
+	   //              $position->create_date = date("Y-m-d H:i:s");
+				// 	if(!empty($_POST['User']['department_id']) && !empty($_POST['User']['position_name']))$position->save();
+	   //          }
+				// $model->position_name = $_POST['User']['position_name'];
+	            // $model->position_id = $position->id;
 	            // $model->position_id = $_POST['User']['position_id'];
-	            $model->division_id = $_POST['User']['division_id'];
-	            $model->company_id = $_POST['User']['company_id'];
-	            $model->department_id = $_POST['User']['department_id'];
+	            // $model->division_id = $_POST['User']['division_id'];
+	            // $model->company_id = $_POST['User']['company_id'];
+	            $model->department_id = $_POST['UserNew']['department_id'];
 	            $model->group = $PGoup;
 
-				$model->username = $_POST['User']['username'];
-	            $model->email = $_POST['User']['email']; //**
+				$model->username = $_POST['UserNew']['username'];
+	            $model->email = $_POST['UserNew']['email']; //**
 	           	// $model->username = $model->email;
-	            $model->identification = $_POST['Profile']['identification'];
-	            $profile->identification = $_POST['Profile']['identification']; //**
-
-	            $model->superuser = $_POST['User']['superuser'];
-	             $model->superuser = 1;
+	            // $model->identification = $_POST['Profile']['identification'];
+	            // $profile->identification = $_POST['Profile']['identification']; //**
+	            $model->org_id = $_POST['UserNew']['org_id'];
+	            $model->superuser = $_POST['UserNew']['superuser'];
+	            $model->superuser = 1;
 	            //$member = Helpers::lib()->ldapTms($model->email);
 
 	            // $member['count']  = 1;
@@ -436,14 +438,16 @@ echo ($data);
 	            // 	 $model->username = $model->email;
 	            // 	 $model->scenario = 'general';
 	            // }
-	            if(!empty($_POST['User']['newpassword'])){
-		            $model->password = $_POST['User']['newpassword'];
-		            $model->verifyPassword = $_POST['User']['confirmpass'];
+	            if(!empty($_POST['UserNew']['newpassword'])){
+		            $model->password = $_POST['UserNew']['newpassword'];
+		            $model->verifyPassword = $_POST['UserNew']['confirmpass'];
 		        }
 				$profile->attributes=$_POST['Profile'];
+				$profile->title_id  = $_POST['Profile']['title_id'];
+
 				// $model->verifyPassword = $model->password;
 				if($model->validate()) { // &&$profile->validate()
-					if(!empty($_POST['User']['newpassword'])){
+					if(!empty($_POST['UserNew']['newpassword'])){
 						$model->password=UserModule::encrypting($model->password);
 						$model->verifyPassword=UserModule::encrypting($model->verifyPassword);
 					}
@@ -476,22 +480,21 @@ echo ($data);
 				// var_dump(UserModule::encrypting($model->password));
 				// exit();
 
-					if($profile->contactfrom){
-									$contacts = $profile->contactfrom;
-									foreach ($contacts as $key => $contact) {
-										// var_dump($contact);
-										// exit();
-										if($contact != end($contacts)){
-											$value .= $contact.',';
-										} else {
-											$value .= $contact;
-										}
+					// if($profile->contactfrom){
+					// 				$contacts = $profile->contactfrom;
+					// 				foreach ($contacts as $key => $contact) {
+					// 					// var_dump($contact);
+					// 					// exit();
+					// 					if($contact != end($contacts)){
+					// 						$value .= $contact.',';
+					// 					} else {
+					// 						$value .= $contact;
+					// 					}
 										
-									}
-									$profile->contactfrom = $value;
-								}
-
-					if(!$model->save()){
+					// 				}
+					// 				$profile->contactfrom = $value;
+					// 			}
+					if(!$model->save(false)){
 						echo 'Model not save';
 						exit();
 					}
@@ -531,80 +534,11 @@ echo ($data);
 			// echo '<pre>';
 			// var_dump($profile);
 			// exit();
-			$model->position_name = isset($_POST['User']['position_name']) ? $_POST['User']['position_name'] : $model->position->position_title;
+			// $model->position_name = isset($_POST['User']['position_name']) ? $_POST['User']['position_name'] : $model->position->position_title;
 			$this->render('update',array(
 				'model'=>$model,
 				'profile'=>$profile,
 			));
-
-		// 	$model = Profile::model()->find(array('condition' => 'user_id = '.$id));
-		// 	// $model = AdminUser::model()->find(array('condition' => 'm_id = '.$id));
-		// 	$modelUser = UsersAdmin::model()->find(array('condition'=> 'id ='.$id));
-
-		// 	// echo '<pre>';
-		// 	// var_dump(ProfilesTitle::getTitleList());
-		// 	// exit();
-		// 	if(isset($_POST['AdminUser']) || isset($_POST['UsersAdmin']) && !empty($_POST['UsersAdmin']['group'])){
-		// 		$group = json_encode($_POST['UsersAdmin']['group']);
-		// 		$modelUser->username =  str_replace('-', '', $_POST['UsersAdmin']['username']);
-		// 		$modelUser->identification = $modelUser->username;
-		// 		$password = $_POST['UsersAdmin']['update_password'];
-		// 		$repeat_password = $_POST['UsersAdmin']['repeat_updatepassword'];
-		// 		$modelUser->id_passport = $_POST['UsersAdmin']['username'];
-		// 		$modelUser->password =  ($password)?md5($password):$modelUser->password;
-		// 		$modelUser->repeat_password = ($repeat_password)?md5($repeat_password):$modelUser->password;
-		// 		$modelUser->email = $_POST['UsersAdmin']['email'];
-		// 	// $modelUser->activkey=md5(microtime().$model->password);
-		// 		$modelUser->status = 1;
-		// 		$modelUser->group = $group;
-		// 		if($modelUser->validate()){
-		// 			if($modelUser->save()){
-		// 				$model->attributes = $_POST['AdminUser'];
-		// 				$path =  Yii::app()->basePath."/../../uploads/member/";
-		// 				$profile_picture = Slim::getImages('profile');
-		// 			if($profile_picture){ //รูปโปรไฟล์
-		// 				$model->m_file_image = Helpers::lib()->uploadImage($profile_picture,$path);
-		// 				$image = Yii::app()->phpThumb->create($path.$model->m_file_image);    
-		// 				$image->resize(255, 213);    
-		// 				$image->save($path.$model->m_file_image);
-		// 			}
-		// 			$model->m_tel = str_replace('-', '',$_POST['AdminUser']['m_tel']);
-		// 			$model->update_date = date('Y-m-d H:i:s');
-		// 			// $model->m_id = $modelUser->id;
-		// 			// $model->status = 1;
-		// 			$model->update_by = Yii::app()->user->id;
-		// 			if($model->validate()){
-		// 				if($model->save()){
-		// 					$this->redirect(array('index'));
-		// 				} else {
-		// 					print_r($model->getErrors());
-		// 				}
-		// 			}else {
-		// 				var_dump($model->getErrors());
-		// 				$this->render('update',array(
-		// 					'model'=>$model,
-		// 					'modelUser' => $modelUser,
-		// 					'id' => $id
-		// 					));
-		// 			}
-		// 		} else {
-		// 			var_dump($modelUser->getErrors());
-		// 		}
-		// 	} else{
-		// 		$this->render('update',array(
-		// 			'model'=>$model,
-		// 			'modelUser' => $modelUser,
-		// 			'id' => $id
-		// 			));
-		// 	} // validate users
-
-		// } else { // if post
-		// 	$this->render('update',array(
-		// 		'model'=>$model,
-		// 		'modelUser' => $modelUser,
-		// 		'id' => $id
-		// 		));
-		// }
 
 	}
 }

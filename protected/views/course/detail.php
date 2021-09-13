@@ -41,6 +41,14 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $click_precourse = "Pre test";
     $pre_course = "Pre Test Course";
     $pre_course_wait = "Wait for inspection...";
+    $CourseInstructor = 'Course Instructor';
+    $CourseApprover = 'Course Approver';
+    $Time = 'Time';
+    $Lessons = 'Lessons';
+    $CourseEvaluation = 'Course Evaluation';
+    $Click = 'Click';
+    $Hr = 'Hr';
+
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -57,6 +65,13 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $click_precourse = "เข้าสู่การสอบ";
     $clickFinal = "เข้าสู่การสอบ";
     $pre_course_wait = "รอตรวจสอบ...";
+    $CourseInstructor = 'อาจารย์ผู้สอน';
+    $CourseApprover = 'ผู้อนุมัติหลักสูตร';
+    $Time = 'เวลา';
+    $Lessons = 'บทเรียน';
+    $CourseEvaluation = 'การประเมินผลหลักสูตร';
+    $Click = 'กด';
+    $Hr = 'ชั่วโมง';
 
 
 
@@ -309,8 +324,26 @@ $FinalScore = Coursescore::model()->findAll($criteria);
 
                                 <div class="text-center"> <a href="#tab-content" onclick="$('#change_tab2').click();" class="btn btn-success"><?= $lastStatus ?></a></div>
                                 <div class="course-admin">
-                                    <h4>Course Instructor : <span>Mr.Sanit</span></h4>
-                                    <h4>Course Approver : <span>Mr.Denail</span></h4>
+                                    <h4><?= $CourseInstructor ?> : <span><?php $profile = Profile::model()->findByPk($course->create_by); 
+                                    $ProfilesTitle = ProfilesTitle::model()->find($profile->title_id);
+                                    if($langId==1){
+                                        $pro_name = $profile->firstname_en;
+                                        $title_name = $ProfilesTitle->prof_title_en;
+                                    }else{
+                                        $pro_name = $profile->firstname;
+                                        $title_name = $ProfilesTitle->prof_title;
+                                    }
+                                       echo  $title_name.' '.$pro_name; ?></span></h4>
+                                    <h4><?= $CourseApprover ?> : <span><?php $profile = Profile::model()->findByPk($course->approve_by); 
+                                    $ProfilesTitle = ProfilesTitle::model()->find($profile->title_id);
+                                    if($langId==1){
+                                        $pro_name = $profile->firstname_en;
+                                        $title_name = $ProfilesTitle->prof_title_en;
+                                    }else{
+                                        $pro_name = $profile->firstname;
+                                        $title_name = $ProfilesTitle->prof_title;
+                                    }
+                                       echo  $title_name.' '.$pro_name; ?></span></h4>
                                 </div>
                             </div>
 
@@ -321,20 +354,20 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="c-item">
-                                        <small>Time</small>
+                                        <small><?= $Time ?></small>
                                         <div class="text-center mt-20">
                                             <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/clock-icon.png">
-                                            <small class="text-center detail-value">2 Hr</small>
+                                            <small class="text-center detail-value">2 <?= $Hr ?></small>
                                         </div>
                                     </div>
 
                                 </div>
                                 <div class="col-md-6">
                                     <div class="c-item">
-                                        <small>Lessons</small>
+                                        <small><?= $Lessons ?></small>
                                         <div class="text-center mt-20">
                                             <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/book-icon.png">
-                                            <small class="text-center detail-value">4 Lessons</small>
+                                            <small class="text-center detail-value">4 <?= $Lessons ?></small>
                                         </div>
                                     </div>
                                 </div>
@@ -451,11 +484,11 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                 </div>
                                 <div class="col-md-6">
                                     <div class="c-item">
-                                        <small>Course Evaluation</small>
+                                        <small><?= $CourseEvaluation ?></small>
                                         <div class="mt-20 text-center">
                                             <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/questionnaire-icon-mute.png"> -->
                                             <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/questionnaire-icon.png">
-                                            <small class="mt-20"><a href="" class="btn btn-main">Click</a></small>
+                                            <small class="mt-20"><a href="" class="btn btn-main"><?= $Click ?></a></small>
                                         </div>
                                     </div>
                                 </div>
