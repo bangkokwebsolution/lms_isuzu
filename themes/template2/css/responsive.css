@@ -29,7 +29,7 @@
 
 @media only screen and (max-width:991px) {
 
-    .terms-con {
+    .copyright {
         display: block !important;
     }
 
@@ -72,10 +72,6 @@
         width: 150px !important;
         height: 60px !important;
         right: 10px;
-    }
-
-    .backtotop {
-        bottom: 30%;
     }
 
     .slide-video.news .page-header h4 {

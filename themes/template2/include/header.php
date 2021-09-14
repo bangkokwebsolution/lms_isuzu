@@ -722,34 +722,3 @@ if (!empty($msg)) { ?>
         </div>
     </div>
 </div>
-
-<script>
-    var showmodal = $(".in");
-    var modalactive = $("#user-report").find(showmodal);
-
-    $(".contact-admin").click(function() {
-        $(".contact-admin").addClass("showmascot");
-    });
-
-    $("#user-report .close").click(function() {
-        $(".contact-admin").removeClass("showmascot");
-    });
-
-    $(document).ready(function() {
-        $("#user-report").modal({
-            show: false,
-            backdrop: 'static'
-        });
-    });
-
-    $(".toggle-password").click(function() {
-
-        $(this).toggleClass("fa-eye fa-eye-slash");
-        var input = $($(this).attr("toggle"));
-        if (input.attr("type") == "password") {
-            input.attr("type", "text");
-        } else {
-            input.attr("type", "password");
-        }
-    });
-</script>

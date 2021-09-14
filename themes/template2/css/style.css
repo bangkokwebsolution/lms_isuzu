@@ -30,7 +30,7 @@
 }
 
 * {
-  font-family: "NotoSansThai","NotoSans", sans-serif;
+  font-family: "NotoSansThai", "NotoSans", sans-serif;
 }
 
 html {
@@ -1278,7 +1278,7 @@ hr {
   text-align: center;
 }
 
-#manual .well h4{
+#manual .well h4 {
   font-size: 16px;
 }
 
@@ -5055,11 +5055,8 @@ header .navbar-nav li a {
 
 .showmascot {
   height: 200px;
+  opacity: 1;
 }
-
-/* .contact-admin:hover {
-  height: 200px;
-} */
 
 .course-detail .tab-content {
   margin-top: 1em;
@@ -5206,8 +5203,8 @@ header .navbar-nav li a {
   border: 1px solid #dddddd;
 }
 
-.se-ed-button img{
-  margin:4px;
+.se-ed-button img {
+  margin: 4px;
   height: 40px;
   width: auto;
 }
@@ -5527,17 +5524,17 @@ section#faq {
   transition: all .25s ease;
 }
 
-.navbar-toggle{
+.navbar-toggle {
   float: left;
 }
 
-.box-search{
+.box-search {
   display: inline-block;
   border: 1px solid #DDDDDD;
   box-sizing: border-box;
   border-radius: 8px;
   padding: 12px 15px;
-  margin: 0px ;
+  margin: 0px;
   height: 50px;
 }
 
@@ -6165,12 +6162,12 @@ tr {
   z-index: 1000;
 }
 
-.content-well  {
-    display: block;
-    height: 53px;
-    word-wrap: break-word;
+.content-well {
+  display: block;
+  height: 53px;
+  word-wrap: break-word;
 }
-.test-small
-{
-  margin-left: 60px;
+
+.report-small {
+ 
 }
