@@ -13,5 +13,14 @@
 						?>
 					</a>
 			</small>
+
+			<small class="test-small">
+				<a href="#user-report" data-toggle="modal"  style="color:white" > Report Problem  </a>
+					<!-- <div id="mascot-contact">
+						<img src="/lms_isuzu/themes/template2/images/mascot-report-en.png" alt="">
+					</div> -->
+			</small>
+
+			
 		</div>
 </footer>
