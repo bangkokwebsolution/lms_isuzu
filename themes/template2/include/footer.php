@@ -15,7 +15,14 @@
 			</small>
 			&nbsp;-&nbsp;
 			<small class="report-small">
-				<a href="#user-report" data-toggle="modal" style="color:white"> Report Problem</a>
+				<a href="#user-report" data-toggle="modal" style="color:white">
+					<?php
+					if (Yii::app()->session['lang'] == 1) {
+						echo "Report Problem";
+					} else {
+						echo "แจ้งปัญหาการใช้งาน";
+					}
+					?></a>
 			</small>
 
 
