@@ -32,7 +32,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 <div class="row g-5">
                     <?php
                      foreach ($Passcours as $key => $value) {
-
+                        if(isset($value->CourseOnlines)){
                       ?>
                         <div class="col-sm-6 col-lg-4">
                         <div class="card card-course">
@@ -57,6 +57,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         </div>
                     </div>
                   <?php   
+              }
               } ?>
                    
                 </div>
