@@ -1,34 +1,56 @@
-// window.onscroll = function () {
-//   scrollpercent()
-// };
-// function scrollpercent() {
-//   var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-//   var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-//   var scrolled = (winScroll / height) * 100;
-//   document.getElementById("myBar").style.width = scrolled + "%";
-// }
-(function ($) {
-  $(document).ready(function () {
-    $(window).scroll(function (e) {
-      var scrollTop = $(window).scrollTop();
-      var docHeight = $(document).height();
-      var winHeight = $(window).height();
-      var scrollPercent = (scrollTop) / (docHeight - winHeight);
-      var scrollPercentRounded = Math.round(scrollPercent * 100);
+$(".toggle-password").click(function() {
 
-      $('#scrollPercentLabel>span').html(scrollPercentRounded);
+  $(this).toggleClass("fa-eye fa-eye-slash");
+  var input = $($(this).attr("toggle"));
+  if (input.attr("type") == "password") {
+      input.attr("type", "text");
+  } else {
+      input.attr("type", "password");
+  }
+});
 
-      if (scrollPercentRounded  >= 95) {
-        $(".contact-admin").css("opacity", "1");
-        $(".contact-admin").css("pointer-events", "initial");
-      } else {
-        $(".contact-admin").css("opacity", "0");
-        $(".contact-admin").css("pointer-events", "none");
-      }
+var showmodal = $(".in");
+var modalactive = $("#user-report").find(showmodal);
 
+$(".report-small a").click(function() {
+    $(".contact-admin").addClass("showmascot");
+});
+
+$("#user-report .close").click(function() {
+    $(".contact-admin").removeClass("showmascot");
+});
+
+$(document).ready(function() {
+    $("#user-report").modal({
+        show: false,
+        backdrop: 'static'
     });
-  });
-})(jQuery);
+});
+
+// (function ($) {
+//   $(document).ready(function () {
+//     $(window).scroll(function (e) {
+//       var scrollTop = $(window).scrollTop();
+//       var docHeight = $(document).height();
+//       var winHeight = $(window).height();
+//       var scrollPercent = (scrollTop) / (docHeight - winHeight);
+//       var scrollPercentRounded = Math.round(scrollPercent * 100);
+
+//       $('#scrollPercentLabel>span').html(scrollPercentRounded);
+
+//       if (scrollPercentRounded  >= 95) {
+//         $(".contact-admin").css("opacity", "1");
+//         $(".contact-admin").css("pointer-events", "initial");
+//       } else {
+//         $(".contact-admin").css("opacity", "0");
+//         $(".contact-admin").css("pointer-events", "none");
+//       }
+
+//     });
+//   });
+// })(jQuery);
+
+
 
 $(window).scroll(function () {
   if ($(window).scrollTop() >= 300) {

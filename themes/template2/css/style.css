@@ -30,7 +30,7 @@
 }
 
 * {
-  font-family: "NotoSansThai","NotoSans", sans-serif;
+  font-family: "NotoSansThai", "NotoSans", sans-serif;
 }
 
 html {
@@ -802,7 +802,8 @@ div.course-detail2 h4.text11 {
 }
 
 .course-img img {
-  width: 100%;
+  width: 287px;
+  height: 216px;
 }
 
 .course .well .course-img .img-rounded {
@@ -855,7 +856,6 @@ div.course-detail2 h4.text11 {
 .news .well {
   background-color: #fff;
   border-radius: 3px;
-  margin-bottom: 1em;
   border: 1px solid #00000030;
   -webkit-transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
@@ -1278,7 +1278,7 @@ hr {
   text-align: center;
 }
 
-#manual .well h4{
+#manual .well h4 {
   font-size: 16px;
 }
 
@@ -3008,7 +3008,7 @@ ol {
 .detail-news {
   font-size: 16px;
   margin-top: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 42px;
   letter-spacing: .05px;
   text-align: left;
   line-height: 1.2;
@@ -5055,11 +5055,8 @@ header .navbar-nav li a {
 
 .showmascot {
   height: 200px;
+  opacity: 1;
 }
-
-/* .contact-admin:hover {
-  height: 200px;
-} */
 
 .course-detail .tab-content {
   margin-top: 1em;
@@ -5202,12 +5199,12 @@ header .navbar-nav li a {
   margin: 5px 0;
   background: #fff;
   border-radius: 0;
-  padding: 15px 15px;
+  padding: 10px 15px;
   border: 1px solid #dddddd;
 }
 
-.se-ed-button img{
-  margin:4px;
+.se-ed-button img {
+  margin: 4px;
   height: 40px;
   width: auto;
 }
@@ -5527,17 +5524,17 @@ section#faq {
   transition: all .25s ease;
 }
 
-.navbar-toggle{
+.navbar-toggle {
   float: left;
 }
 
-.box-search{
+.box-search {
   display: inline-block;
   border: 1px solid #DDDDDD;
   box-sizing: border-box;
   border-radius: 8px;
   padding: 12px 15px;
-  margin: 0px ;
+  margin: 0px;
   height: 50px;
 }
 
@@ -6163,4 +6160,14 @@ tr {
   height: 6px;
   background: #AE2024;
   z-index: 1000;
+}
+
+.content-well {
+  display: block;
+  height: 53px;
+  word-wrap: break-word;
+}
+
+.report-small {
+ 
 }

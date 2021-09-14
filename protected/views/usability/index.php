@@ -96,7 +96,9 @@
                             <div class="manual-icon"></i><i class="fas fa-info-circle fa-4x"></i></div>
                         <?php } ?>
                     </div>
-                    <h4><?php echo ($usa->usa_title); ?></h4>
+                    <div class="content-well">
+                        <h4><?php echo ($usa->usa_title); ?></h4>
+                    </div>
                 </a>
             </div>
         </div>
