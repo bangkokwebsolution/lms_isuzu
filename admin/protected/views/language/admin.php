@@ -72,22 +72,28 @@ EOD
 							'type'=>'html',
 							'value'=>'UHtml::markSearch($data,"language")'
 						),
-						array(            
-							'class'=>'AButtonColumn',
-							'visible'=>Controller::PButton( 
-								array("Language.*", "Language.View", "Language.Update", "Language.Delete") 
-							),
-							'buttons' => array(
-								'view'=> array( 
-									'visible'=>'Controller::PButton( array("Language.*", "Language.View") )' 
-								),
-								'update'=> array( 
-									'visible'=>'Controller::PButton( array("Language.*", "Language.Update") )' 
-								),
-								'delete'=> array( 
-									'visible'=>'Controller::PButton( array("Language.*", "Language.Delete") )' 
-								),
-							),
+						array(
+							'header'=>'จัดการ',
+							'type'=>'raw',
+							'htmlOptions' => array(
+			                   'style' => 'width:120px',
+			                ),
+							'value'=>function($data){
+								// $text = '
+								// <a class="btn-action glyphicons eye_open btn-info" title="ดูรายละเอียด" href="'.Yii::app()->controller->createUrl('orgChart/orgview/'.$data->id).'"><i></i></a>
+								// ';
+
+								$text .= '
+								<a class="btn-action glyphicons eye_open btn-info" title="ดูรายละเอียด" href="'.Yii::app()->controller->createUrl('language/'.$data->id).'"><i></i></a>
+								<a class="btn-action glyphicons pencil btn-success" title="แก้ไข" href="'.Yii::app()->controller->createUrl('language/update/'.$data->id).'"><i></i></a>
+								';
+
+								// if($data->id >= 4){
+
+								return $text;
+							},
+						
+
 						),
 					),
 				)); ?>

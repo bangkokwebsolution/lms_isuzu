@@ -112,15 +112,15 @@ Class MenuLeft extends Controller
 				'submenuOptions' => array('class' => self::SetSubMenu( array('Language') ), 'id' => 'Language'),
 				'active' => self::SetSubMenu( array('Language') ,false),
 				'items'=>array(
-					array(
-						/*====== Check Permissions Position (1) ======*/
-						'visible'=>self::PermissionsMenu(array(
-							'Language.*',
-							'Language.Create'
-						)),
-						'label'=>'เพิ่มภาษา',
-						'url'=>array('//Language/create')
-					),
+					// array(
+					// 	/*====== Check Permissions Position (1) ======*/
+					// 	'visible'=>self::PermissionsMenu(array(
+					// 		'Language.*',
+					// 		'Language.Create'
+					// 	)),
+					// 	'label'=>'เพิ่มภาษา',
+					// 	'url'=>array('//Language/create')
+					// ),
 					array(
 						'visible'=>self::PermissionsMenu(array(
 							'Language.*',
