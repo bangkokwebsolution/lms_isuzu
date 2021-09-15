@@ -2963,9 +2963,10 @@ ol {
 }
 
 .courseindex {
-  padding: 0px 0 20px;
-  color: #333;
-  font-size: 1.3em;
+  padding: 0px 0 10px;
+  color: #E0001A ;
+  font-size: 1.4em;
+  text-align: left;
 }
 
 .breadcrumb-main {
@@ -3130,6 +3131,7 @@ footer {
   left: 0;
   padding: 1rem;
 }
+
 
 .sans-font {
   font-family: sans-serif !important;
@@ -5051,6 +5053,10 @@ header .navbar-nav li a {
   width: 170px;
   opacity: 0;
   transition: all 0.3s ease 0s;
+  pointer-events:none;
+}
+.contact-admin img{
+  pointer-events:none;
 }
 
 .showmascot {
@@ -6169,5 +6175,11 @@ tr {
 }
 
 .report-small {
- 
+  margin-left: 10px;
+  float: right;
+  font-size: 95% !important;
+}
+
+.course-index{
+  margin-top: 2rem;
 }

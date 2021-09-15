@@ -13,9 +13,9 @@
 					?>
 				</a>
 			</small>
-			&nbsp;-&nbsp;
 			<small class="report-small">
 				<a href="#user-report" data-toggle="modal" style="color:white">
+					<i class="fa fa-info"></i>&nbsp;
 					<?php
 					if (Yii::app()->session['lang'] == 1) {
 						echo "Report Problem";
@@ -24,7 +24,5 @@
 					}
 					?></a>
 			</small>
-
-
 		</div>
 </footer>
