@@ -795,6 +795,7 @@ class SiteController extends Controller
 			'user'=>$user,
 			'label'=> $label,
 			'course'=> $course,
+            'start_course'=>$logStartCourse_model,
             'Passcours'=>$Passcours,
 			'arr_course_id'=> $arr_course_id,
 			'arr_log_course_id'=> $arr_log_course_id,

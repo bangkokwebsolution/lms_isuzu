@@ -573,8 +573,8 @@ if (!empty($msg)) { ?>
                         foreach ($Users as $key => $value) {
                             ?>
                                 <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'email' : 'อีเมล์'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'email' : 'อีเมล์'; ?>" name="ReportProblem[email]" value="<?php echo $value->email; ?>">
+                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'email' : 'อีเมล'; ?></label>
+                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'email' : 'อีเมล'; ?>" name="ReportProblem[email]" value="<?php echo $value->email; ?>">
                                 </div>
                             </div>
                         <?php } ?>
@@ -653,8 +653,8 @@ if (!empty($msg)) { ?>
                                     <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Internal Contact No.' : 'เบอร์ติดต่อภายใน'; ?>" name="ReportProblem[tel]">
                                 </div>
                                 <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'E-mail' : 'อีเมล์'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'E-mail' : 'อีเมล์'; ?>" name="ReportProblem[email]">
+                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'E-mail' : 'อีเมล'; ?></label>
+                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'E-mail' : 'อีเมล'; ?>" name="ReportProblem[email]">
                                 </div>
                             </div>
 

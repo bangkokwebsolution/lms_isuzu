@@ -702,7 +702,7 @@ Class MenuLeft extends Controller
 	        				'Questionnaireout.*',
 	        				'Questionnaireout.Create'
 	        			)),
-	        			'label'=>'เพิ่มแบบสอบถาม',
+	        			'label'=>'เพิ่มแบบประเมิน',
 	        			'url'=>array('//Questionnaireout/create')
 	        		),
 	        		array(
@@ -711,7 +711,7 @@ Class MenuLeft extends Controller
 	        				'Questionnaireout.*',
 	        				'Questionnaireout.Index'
 	        			)),
-	        			'label'=>'จัดการแบบสอบถาม',
+	        			'label'=>'จัดการแบบประเมิน',
 	        			'url'=>array('//Questionnaireout/index')
 	        		),
 	        	)

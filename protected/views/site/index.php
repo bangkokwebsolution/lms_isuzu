@@ -468,9 +468,9 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                                                     //}
 
                                                     ?>
-                                                    <div class="course-time">
+                                                    <!-- <div class="course-time">
                                                         <small class="text-muted"><i class="fa fa-clock"></i> 1 hr 30 min.</small>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
                                         </div>
                                     </div>

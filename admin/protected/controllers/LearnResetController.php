@@ -173,7 +173,7 @@ class LearnResetController extends Controller
         $message .= "เรียน ".$model->profiles->firstname." ".$model->profiles->lastname."<br> <br>";
         $message .= "<div style=\"text-indent: 4em;\">";
         $message .= $courseMsg."</div>";
-        $send = Helpers::lib()->SendMail($to,$subject,$message);
+        // $send = Helpers::lib()->SendMail($to,$subject,$message);
 
         echo $reset_type;
     }
@@ -302,7 +302,7 @@ class LearnResetController extends Controller
         // $message .= "<div style=\"text-indent: 4em;\">";
         $message .= $courseMsg_en;
 
-        $send = Helpers::lib()->SendMail($to,$subject,$message);
+        // $send = Helpers::lib()->SendMail($to,$subject,$message);
 
         echo $reset_type;
 
@@ -422,7 +422,7 @@ class LearnResetController extends Controller
         $message .= "เรียน ".$model->profiles->firstname." ".$model->profiles->lastname."<br> <br>";
         $message .= "<div style=\"text-indent: 4em;\">";
         $message .= $courseMsg."</div>";
-        $send = Helpers::lib()->SendMail($to,$subject,$message);
+        // $send = Helpers::lib()->SendMail($to,$subject,$message);
 
         echo $reset_type;
     }
@@ -581,7 +581,7 @@ class LearnResetController extends Controller
 
 
 
-        $send = Helpers::lib()->SendMail($to,$subject,$message);
+        // $send = Helpers::lib()->SendMail($to,$subject,$message);
 
         echo $reset_type;
 

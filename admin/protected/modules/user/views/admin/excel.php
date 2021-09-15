@@ -157,7 +157,7 @@ HTM;
               
                     <?php $idx = 1; ?>
                     <div class="widget-body" style="margin-top:16px;">
-                        <h5><?= $idx++; ?>. Divition</h5>
+                        <h5><?= $idx++; ?>. Division</h5>
                             <?php
                             $dataProvider = new CActiveDataProvider('Orgchart', array(
                                 'criteria'=>array(

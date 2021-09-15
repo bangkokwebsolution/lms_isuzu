@@ -31,28 +31,30 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
             <div class="col col-md-9 col-lg-9">
                 <div class="row g-5">
                     <?php
-                     foreach ($Passcours as $key => $value) {
-                        if(isset($value->CourseOnlines)){
+                    
+
+                     foreach ($start_course as $key => $value) {
+                        if(isset($value->course)){
                       ?>
                         <div class="col-sm-6 col-lg-4">
-                        <div class="card card-course">
+                        <div class="card card-course" style="margin-bottom: 10px">
                             <a href="#">
 
                                 <?php 
-                                $gen_id = $value->CourseOnlines->getGenID($value->CourseOnlines->course_id);
-                                if(!empty($value->CourseOnlines->course_picture)){ 
-                                echo "<img class='card-img-top' src='".Yii::app()->createUrl("uploads/courseonline").'/'.$value->passcours_cours.'/original/'.$value->CourseOnlines->course_picture."'>";
+                                $gen_id = $value->course->getGenID($value->course->course_id);
+                                if(!empty($value->course->course_picture) && file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/courseonline/' . $value->course_id . '/original/' . $value->course->course_picture)){ 
+                                echo "<img class='card-img-top' src='".Yii::app()->createUrl("uploads/courseonline").'/'.$value->course_id.'/original/'.$value->course->course_picture."'>";
                             }else{
                                 echo "<img class='card-img-top' src='".Yii::app()->theme->baseUrl."/images/course-image.png'>";
                                 } ?>
                             </a>
                             <div class="card-body" style="padding:10px;">
-                                <h4 class="card-title  text-4 text-main "><?= $value->CourseOnlines->course_title ?><a href="#"></a></h4>
+                                <h4 class="card-title  text-4 text-main "><?= $value->course->course_title ?><a href="#"></a></h4>
                                 <div class="progress progress-sm progress-border-radius mt-4 ">
-                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <?= Helpers::lib()->percent_CourseGen($value->CourseOnlines->course_id, $gen_id) ?>%;">
+                                    <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <?= Helpers::lib()->percent_CourseGen($value->course->course_id, $gen_id) ?>%;">
                                     </div>
                                 </div>
-                                <p class="text-dark "><?= Helpers::lib()->percent_CourseGen($value->CourseOnlines->course_id, $gen_id) ?>%</p>
+                                <p class="text-dark "><?= Helpers::lib()->percent_CourseGen($value->course->course_id, $gen_id) ?>%</p>
                             </div>
                         </div>
                     </div>

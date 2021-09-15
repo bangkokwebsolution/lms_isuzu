@@ -981,7 +981,8 @@ class AdminController extends Controller
 			$index = 0;
             // var_dump($namedDataArray);exit();
 			foreach($namedDataArray as $key => $result){
-
+                $search_user = UserNew::model()->findAll(array('condition'=>'username = '.$result["Employee ID."]));
+				if(empty($search_user)){
 				$model = new UserNew;
 				$profile = new Profile;
 				$model->email = $result["Email"];
@@ -1089,6 +1090,7 @@ class AdminController extends Controller
 						// var_dump($model->getErrors());
 						// exit();
               }
+			}
 
 				} //end loop add user
                 //if($model->save())
