@@ -1310,19 +1310,32 @@ Class MenuLeft extends Controller
 	        	)
 	        ),
 
-	        
+	         array(
+	        	/*====== Check Permissions Rights (6) ======*/
+	        	'visible'=>self::PermissionsMenu(array(
+	        		'AuthorityHR.*',
+	        		'AuthorityHR.index',
+	        	
+	        	)),
+	        	'label'=>'<i></i><span>ระบบจัดการสิทธิ์ผู้อนุมัติ</span>',
+	        	'url'=>'#authorityHR',
+	        	'linkOptions' => array('data-toggle' => 'collapse'),
+	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons magic'),
+	        	'submenuOptions' => array('class' => self::SetSubMenu( array('authorityHR') ), 'id' => 'authorityHR'),
+	        	'active' => self::SetSubMenu( array('authorityHR') ,false),
+	        	'items'=>array(
 
-	        array(
-				'visible'=>self::PermissionsMenu(array(
-					'authorityHR.*',
-				)),
-				'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบจัดการสิทธิ์ผู้อนุมัติ</span>',
-				'url'=>'#authorityHR',
-				'linkOptions' => array('data-toggle' => 'collapse'),
-				'itemOptions' => array('class' => 'hasSubmenu glyphicons magic'),
-				'submenuOptions' => array('class' => self::SetSubMenu( array('authorityHR') ), 'id' => 'authorityHR'),
-				'active' => self::SetSubMenu( array('authorityHR') ,false),
-				'items'=>array(
+	   //      array(
+				// 'visible'=>self::PermissionsMenu(array(
+				// 	'authorityHR.*',
+				// )),
+				// 'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบจัดการสิทธิ์ผู้อนุมัติ</span>',
+				// 'url'=>'#authorityHR',
+				// 'linkOptions' => array('data-toggle' => 'collapse'),
+				// 'itemOptions' => array('class' => 'hasSubmenu glyphicons magic'),
+				// 'submenuOptions' => array('class' => self::SetSubMenu( array('authorityHR') ), 'id' => 'authorityHR'),
+				// 'active' => self::SetSubMenu( array('authorityHR') ,false),
+				// 'items'=>array(
 
 					array(
 						'visible'=>self::PermissionsMenu(array(
@@ -1346,7 +1359,8 @@ Class MenuLeft extends Controller
 			array(
 				'visible'=>self::PermissionsMenu(array(
 					'ApproveCourse.*',
-				)),
+					'ApproveCourse.index',
+				)) ,
 				'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบอนุมัติหลักสูตร</span>',
 				'url'=>'#ApproveCourse',
 				'linkOptions' => array('data-toggle' => 'collapse'),
