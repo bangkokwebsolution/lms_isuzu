@@ -38,8 +38,8 @@ $(function() {
 </script>
 <?php
 $this->breadcrumbs=array(
-	'จัดการแบบสอบถาม'=>array('Index'),
-	'เพิ่มแบบสอบถาม',
+	'จัดการแบบประเมิน'=>array('Index'),
+	'เพิ่มแบบประเมิน',
 );
 ?>
 <script type="text/javascript">
@@ -57,7 +57,7 @@ label.error { display: none; }
 			<ul>
 				<li class="active">
 					<a class="glyphicons edit" href="#account-details" data-toggle="tab">
-						<i></i> เพิ่มแบบสอบถาม
+						<i></i> เพิ่มแบบประเมิน
 					</a>
 				</li>
 			</ul>
@@ -72,13 +72,13 @@ label.error { display: none; }
 				));?>
 				<div class="row">
 					<div>
-						<label><h4>หัวข้อแบบสอบถาม</h4></label>
+						<label><h4>หัวข้อแบบประเมิน</h4></label>
 						<input id="survey-header" name="surveyHeader" type="text" class="span8" required>
 					</div>
 				</div>
 				<div class="row">
 					<div>
-						<label><h4>รายละเอียดแบบสอบถาม</h4></label>
+						<label><h4>รายละเอียดแบบประเมิน</h4></label>
 						<textarea name="surveyHeaderDetail" class="survey-header-detail tinymce" cols="30" rows="10"></textarea>
 					</div>
 				</div>

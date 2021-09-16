@@ -4,11 +4,15 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $langId = Yii::app()->session['lang'] = 1;
     $mail = 'Email';
     $text_email = 'This email does not exist in the system.';
+    $cancel = 'Cancel';
+    $ok = 'OK';
     $warn = 'warn';
 } else {
     $mail = 'อีเมล';
     $warn = 'แจ้งเตือน';
-    $text_email = 'ไม่มี Email นี้อยู่ในระบบ';
+    $text_email = 'ไม่มี อีเมล นี้อยู่ในระบบ';
+    $ok = 'ตกลง';
+    $cancel = 'ยกเลิก';
     $langId = Yii::app()->session['lang'];
 }  
 
@@ -19,7 +23,7 @@ if (Yii::app()->user->hasFlash('msg')) {  ?>
       title: "<?= $warn ?>",
       text: "<?= $text_email ?>",
       icon: "warning",
-      buttons: true,
+      buttons: ['<?= $cancel ?>','<?= $ok ?>'],
       dangerMode: true,
   })  
 </script>

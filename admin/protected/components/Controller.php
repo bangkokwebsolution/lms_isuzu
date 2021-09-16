@@ -247,7 +247,7 @@ class Controller extends RController
 
 	public function listQHeader_new($model,$class='',$field)
 	{
-		$list = CHtml::listData(QHeader::model()->findAll(),'survey_header_id', 'survey_name');
+		$list = CHtml::listData(QHeader::model()->findAll(array('condition'=>'type is null')),'survey_header_id', 'survey_name');
 		return CHtml::activeDropDownList($model,$field,$list , array(
 			'empty'=>'กรุณาเลือก',
 			'class'=>$class

@@ -17,6 +17,9 @@ class QHeader extends CActiveRecord
 	 * @param string $className active record class name.
 	 * @return QHeader the static model class
 	 */
+
+	public $name_ques;
+
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -68,6 +71,7 @@ class QHeader extends CActiveRecord
 		return array(
 			'survey_header_id' => 'Survey Header',
 			'survey_name' => 'ชื่อแบบสอบถาม',
+			'name_ques'=>'ชื่อแบบประเมิน',
 			'instructions' => 'Instructions',
 			'instructions_en' => 'Instructions En',
 			'other_header_info' => 'Other Header Info',

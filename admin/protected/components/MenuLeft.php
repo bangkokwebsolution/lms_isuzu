@@ -376,7 +376,7 @@ Class MenuLeft extends Controller
 			// 		),
 			// 	)
 			// ),
-				array(
+			array(
 				/*====== Check Permissions Contactus (2) ======*/
 				'visible'=>self::PermissionsMenu(array(
 					'ContactusNew.*',
@@ -646,184 +646,184 @@ Class MenuLeft extends Controller
 
 
 
-            //array(
-			/*====== Check Permissions FormSurveyGroup (2) ======*/
-	        	/*'visible'=>self::PermissionsMenu(array(
-	        		'Questionnaire.*',
-	        		'Questionnaire.Index',
-	        		'Questionnaire.Create'
-	        	)),
-	            'label'=>' <span class="label label-primary">5</span> <i></i><span>ระบบแบบสอบถาม</span>',
-	            'url'=>'#Questionnaire',
-	            'linkOptions' => array('data-toggle' => 'collapse'),
-	            'itemOptions' => array('class' => 'hasSubmenu glyphicons notes'),
-	            'submenuOptions' => array('class' => self::SetSubMenu( array('Questionnaire') ), 'id' => 'Questionnaire'),
-	            'active' => self::SetSubMenu( array('Questionnaire') ,false),
-	            'items'=>array(
-	            array(*/
-	            	/*====== Check Permissions Sup-Questionnaire (1) ======*/
-	                	/*'visible'=>self::PermissionsMenu(array(
-	                		'Questionnaire.*',
-	                		'Questionnaire.Create'
-	                	)),
-	                	'label'=>'เพิ่มแบบสอบถาม',
-	                	'url'=>array('//Questionnaire/create')
-	                ),
-	                array(*/
-	                	/*====== Check Permissions Sup-Questionnaire (2) ======*/
-	                	/*'visible'=>self::PermissionsMenu(array(
-	                		'Questionnaire.*',
-	                		'Questionnaire.Index'
-	                	)),
-	                	'label'=>'จัดการแบบสอบถาม',
-	                	'url'=>array('//Questionnaire/index')
-	                ),
-	            )
-	        ),*/
+			array(
+				/*====== Check Permissions FormSurveyGroup (2) ======*/
+				'visible'=>self::PermissionsMenu(array(
+					'Questionnaire.*',
+					'Questionnaire.Index',
+					'Questionnaire.Create'
+				)),
+				'label'=>' <span class="label label-primary">5</span> <i></i><span>แบบประเมินผลการฝึกอบรม</span>',
+				'url'=>'#Questionnaire',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons notes'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('Questionnaire') ), 'id' => 'Questionnaire'),
+				'active' => self::SetSubMenu( array('Questionnaire') ,false),
+				'items'=>array(
+					array(
+						/*====== Check Permissions Sup-Questionnaire (1) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'Questionnaire.*',
+							'Questionnaire.Create'
+						)),
+						'label'=>'เพิ่มแบบประเมิน',
+						'url'=>array('//Questionnaire/create')
+					),
+					array(
+						/*====== Check Permissions Sup-Questionnaire (2) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'Questionnaire.*',
+							'Questionnaire.Index'
+						)),
+						'label'=>'จัดการแบบประเมิน',
+						'url'=>array('//Questionnaire/index')
+					),
+				)
+			),
 
-	        array(
-	        	/*====== Check Permissions FormSurveyGroup (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Questionnaireout.*',
-	        		'Questionnaireout.Index',
-	        		'Questionnaireout.Create'
-	        	)),
-	        	/*'label'=>' <i></i><span>ระบบแบบสอบถาม (ไม่ผูกบทเรียน)</span>',*/
-	        	'label'=>' <span class="label label-primary">5</span> <i></i><span>แบบประเมินผลการฝึกอบรม</span>',
-	        	'url'=>'#Questionnaireout',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons notes'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Questionnaireout') ), 'id' => 'Questionnaireout'),
-	        	'active' => self::SetSubMenu( array('Questionnaireout') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Sup-Questionnaireout (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Questionnaireout.*',
-	        				'Questionnaireout.Create'
-	        			)),
-	        			'label'=>'เพิ่มแบบประเมิน',
-	        			'url'=>array('//Questionnaireout/create')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-Questionnaireout (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Questionnaireout.*',
-	        				'Questionnaireout.Index'
-	        			)),
-	        			'label'=>'จัดการแบบประเมิน',
-	        			'url'=>array('//Questionnaireout/index')
-	        		),
-	        	)
-	        ),
-	         array(
-	        	/*====== Check Permissions AuthitemAccess (1) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'OrgChart.*',
-	        		'OrgChart.Index',
-	        	)),
-	        	'label'=>'<span class="label label-primary">6</span><i></i><span>ระบบจัดการระดับชั้นการเรียน (Organization)</span>',
-	        	'url'=>'#OrgChart',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons eye_open'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('OrgChart') ), 'id' => 'OrgChart'),
-	        	'active' => self::SetSubMenu( array('OrgChart') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Sup-AuthitemAccess (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'OrgChart.*',
-	        				'OrgChart.Index'
-	        			)),
+
+			array(
+				/*====== Check Permissions AuthitemAccess (1) ======*/
+				'visible'=>self::PermissionsMenu(array(
+					'OrgChart.*',
+					'OrgChart.Index',
+				)),
+				'label'=>'<span class="label label-primary">6</span><i></i><span>ระบบจัดการระดับชั้นการเรียน (Organization)</span>',
+				'url'=>'#OrgChart',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons eye_open'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('OrgChart') ), 'id' => 'OrgChart'),
+				'active' => self::SetSubMenu( array('OrgChart') ,false),
+				'items'=>array(
+					array(
+						/*====== Check Permissions Sup-AuthitemAccess (1) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'OrgChart.*',
+							'OrgChart.Index'
+						)),
 						// 'label'=>'Organization chart',
-	        			'label'=>'จัดการกลุ่มหลักสูตร',
+						'label'=>'จัดการกลุ่มหลักสูตร',
 
-	        			'url'=>array('//OrgChart/index')
-	        		),
-	        	)
-	        ),
+						'url'=>array('//OrgChart/index')
+					),
+				)
+			),
+			array(
+				/*====== Check Permissions FormSurveyGroup (2) ======*/
+				'visible'=>self::PermissionsMenu(array(
+					'Questionnaireout.*',
+					'Questionnaireout.Index',
+					'Questionnaireout.Create'
+				)),
+				/*'label'=>' <i></i><span>ระบบแบบสอบถาม (ไม่ผูกบทเรียน)</span>',*/
+				'label'=>'<i></i><span>ระบบแบบสอบถามภายนอก</span>',
+				'url'=>'#Questionnaireout',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons notes'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('Questionnaireout') ), 'id' => 'Questionnaireout'),
+				'active' => self::SetSubMenu( array('Questionnaireout') ,false),
+				'items'=>array(
+					array(
+						/*====== Check Permissions Sup-Questionnaireout (1) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'Questionnaireout.*',
+							'Questionnaireout.Create'
+						)),
+						'label'=>'เพิ่มแบบสอบถาม',
+						'url'=>array('//Questionnaireout/create')
+					),
+					array(
+						/*====== Check Permissions Sup-Questionnaireout (2) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'Questionnaireout.*',
+							'Questionnaireout.Index'
+						)),
+						'label'=>'จัดการแบบสอบถาม',
+						'url'=>array('//Questionnaireout/index')
+					),
+				)
+			),
+
+			array(
+				'visible'=>self::PermissionsMenu(array(
+					'Orgmanage.*',
+				)),
+				'label'=>'<i></i> <span>Manage Organization</span>',
+				'url'=>'#Orgmanage',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons show_thumbnails'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('Orgmanage') ), 'id' => 'Orgmanage'),
+				'active' => self::SetSubMenu( array('Orgmanage') ,false),
+				'items'=>array(                    
+					array(
+						'visible'=>self::PermissionsMenu(array(
+							'Orgmanage.*',
+							'Orgmanage.Division'
+						)),
+						'label'=>'จัดการ Division',
+						'url'=>array('//Orgmanage/Division')
+					),
+					array(
+						'visible'=>self::PermissionsMenu(array(
+							'Orgmanage.*',
+							'Orgmanage.Department'
+						)),
+						'label'=>'จัดการ Department',
+						'url'=>array('//Orgmanage/Department')
+					),
+					array(
+						'visible'=>self::PermissionsMenu(array(
+							'Orgmanage.*',
+							'Orgmanage.Group'
+						)),
+						'label'=>'จัดการ Group',
+						'url'=>array('//Orgmanage/Group')
+					),
+					array(
+						'visible'=>self::PermissionsMenu(array(
+							'Orgmanage.*',
+							'Orgmanage.Section'
+						)),
+						'label'=>'จัดการ Section',
+						'url'=>array('//Orgmanage/Section')
+					),
 
 
-	         array(
-                'visible'=>self::PermissionsMenu(array(
-                    'Orgmanage.*',
-                )),
-                'label'=>'<i></i> <span>Manage Organization</span>',
-                'url'=>'#Orgmanage',
-                'linkOptions' => array('data-toggle' => 'collapse'),
-                'itemOptions' => array('class' => 'hasSubmenu glyphicons show_thumbnails'),
-                'submenuOptions' => array('class' => self::SetSubMenu( array('Orgmanage') ), 'id' => 'Orgmanage'),
-                'active' => self::SetSubMenu( array('Orgmanage') ,false),
-                'items'=>array(                    
-                    array(
-                        'visible'=>self::PermissionsMenu(array(
-                            'Orgmanage.*',
-                            'Orgmanage.Division'
-                        )),
-                        'label'=>'จัดการ Division',
-                        'url'=>array('//Orgmanage/Division')
-                    ),
-                    array(
-                        'visible'=>self::PermissionsMenu(array(
-                            'Orgmanage.*',
-                            'Orgmanage.Department'
-                        )),
-                        'label'=>'จัดการ Department',
-                        'url'=>array('//Orgmanage/Department')
-                    ),
-                    array(
-                        'visible'=>self::PermissionsMenu(array(
-                            'Orgmanage.*',
-                            'Orgmanage.Group'
-                        )),
-                        'label'=>'จัดการ Group',
-                        'url'=>array('//Orgmanage/Group')
-                    ),
-                    array(
-                        'visible'=>self::PermissionsMenu(array(
-                            'Orgmanage.*',
-                            'Orgmanage.Section'
-                        )),
-                        'label'=>'จัดการ Section',
-                        'url'=>array('//Orgmanage/Section')
-                    ),
-                    
-                    
-                )
-            ),
+				)
+			),
 
 
-	         array(
-               /*====== Check Permissions AuthitemAccess (1) ======*/
-                'visible'=>self::PermissionsMenu(array(
-                   'VirtualClassroom.*',
-                   'VirtualClassroom.Index',
-                )),
-                'label'=>'<i></i><span>ห้องเรียนออนไลน์</span>',
-                                'url'=>'#VirtualClassroom',
-                'linkOptions' => array('data-toggle' => 'collapse'),
-                'itemOptions' => array('class' => 'hasSubmenu glyphicons eye_open'),
-                'submenuOptions' => array('class' => self::SetSubMenu( array('VirtualClassroom') ), 'id' => 'VirtualClassroom'),
-                'active' => self::SetSubMenu( array('VirtualClassroom') ,false),
-                'items'=>array(
-                    array(
-                        /*====== Check Permissions Sup-AuthitemAccess (1) ======*/
-                        'visible'=>self::PermissionsMenu(array(
-                            'VirtualClassroom.*',
-                            'VirtualClassroom.Create'
-                        )),
-                        'label'=>'เพิ่ม',
-                        'url'=>array('//VirtualClassroom/create')
-                    ),
-                    array(
-	                	/*====== Check Permissions Sup-User (1) ======*/
-	                	'visible'=>self::PermissionsMenu(array(
-	                		'VirtualClassroom.*',
-	                		'VirtualClassroom.Index'
-	                	)),
-	                	'label'=>'จัดการ',
-	                	'url'=>array('//VirtualClassroom/index')
-	                ),
+			array(
+				/*====== Check Permissions AuthitemAccess (1) ======*/
+				'visible'=>self::PermissionsMenu(array(
+					'VirtualClassroom.*',
+					'VirtualClassroom.Index',
+				)),
+				'label'=>'<i></i><span>ห้องเรียนออนไลน์</span>',
+				'url'=>'#VirtualClassroom',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons eye_open'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('VirtualClassroom') ), 'id' => 'VirtualClassroom'),
+				'active' => self::SetSubMenu( array('VirtualClassroom') ,false),
+				'items'=>array(
+					array(
+						/*====== Check Permissions Sup-AuthitemAccess (1) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'VirtualClassroom.*',
+							'VirtualClassroom.Create'
+						)),
+						'label'=>'เพิ่ม',
+						'url'=>array('//VirtualClassroom/create')
+					),
+					array(
+						/*====== Check Permissions Sup-User (1) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'VirtualClassroom.*',
+							'VirtualClassroom.Index'
+						)),
+						'label'=>'จัดการ',
+						'url'=>array('//VirtualClassroom/index')
+					),
 	                //    array(
 	                // 	/*====== Check Permissions Sup-User (1) ======*/
 	                // 	'visible'=>self::PermissionsMenu(array(
@@ -834,8 +834,8 @@ Class MenuLeft extends Controller
 	                // 	'url'=>array('//VirtualClassroom/logmeeting')
 	                // ),
 
-               )
-            ),
+				)
+			),
 	         // array(
           //      /*====== Check Permissions AuthitemAccess (1) ======*/
           //       'visible'=>self::PermissionsMenu(array(
@@ -880,7 +880,7 @@ Class MenuLeft extends Controller
             //    )
             // ),
    //          array(
-				
+
 			// 	'visible'=>self::PermissionsMenu(array(
 			// 		'CheckLecture.*',
 			// 		// 'CheckLecture.update',
@@ -893,7 +893,7 @@ Class MenuLeft extends Controller
 			// 	'active' => self::SetSubMenu( array('CheckLecture') ,false),
 			// 	'items'=>array(
 			// 		array(
-						
+
 			// 			'visible'=>self::PermissionsMenu(array(
 			// 				'CheckLecture.*',
 			// 				'CheckLecture.index'
@@ -902,7 +902,7 @@ Class MenuLeft extends Controller
 			// 			'url'=>array('//CheckLecture/index')
 			// 		),
 			// 		array(
-						
+
 			// 			'visible'=>self::PermissionsMenu(array(
 			// 				'Signature.*',
 			// 				'Signature.update'
@@ -913,76 +913,76 @@ Class MenuLeft extends Controller
 			// 		),
 			// 	)
 			// ),
-             array(
-	        	
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Certificate.*',
-	        	)),
-	        	'label'=>'<i></i><span>ระบบใบประกาศนียบัตร</span>',
-	        	'url'=>'#Certificate',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Certificate', 'Signature') ), 'id' => 'Certificate'),
-	        	'active' => self::SetSubMenu( array('Certificate', 'Signature') ,false),
-	        	'items'=>array(
-	        		array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Certificate.*',
-	        				'Certificate.index'
-	        			)),
-	        			'label'=>'จัดการประกาศนียบัตร',
-	        			'url'=>array('//Certificate/index')
-	        		),
-	        		array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Signature.*',
-	        				'Signature.index'
-	        			)),
-	        			'label'=>'จัดการลายเซนต์',
-	        			'url'=>array('//Signature/index')
-	        		),
-	        	)
-	        ),
-			 array(
-	        	
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Captcha.*',
-	        	)),
-	        	'label'=>'<i></i><span>ระบบ Captcha</span>',
-	        	'url'=>'#Captcha',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Captcha') ), 'id' => 'Captcha'),
-	        	'active' => self::SetSubMenu( array('Captcha') ,false),
-	        	'items'=>array(
+			array(
+
+				'visible'=>self::PermissionsMenu(array(
+					'Certificate.*',
+				)),
+				'label'=>'<i></i><span>ระบบใบประกาศนียบัตร</span>',
+				'url'=>'#Certificate',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('Certificate', 'Signature') ), 'id' => 'Certificate'),
+				'active' => self::SetSubMenu( array('Certificate', 'Signature') ,false),
+				'items'=>array(
+					array(
+
+						'visible'=>self::PermissionsMenu(array(
+							'Certificate.*',
+							'Certificate.index'
+						)),
+						'label'=>'จัดการประกาศนียบัตร',
+						'url'=>array('//Certificate/index')
+					),
+					array(
+
+						'visible'=>self::PermissionsMenu(array(
+							'Signature.*',
+							'Signature.index'
+						)),
+						'label'=>'จัดการลายเซนต์',
+						'url'=>array('//Signature/index')
+					),
+				)
+			),
+			array(
+
+				'visible'=>self::PermissionsMenu(array(
+					'Captcha.*',
+				)),
+				'label'=>'<i></i><span>ระบบ Captcha</span>',
+				'url'=>'#Captcha',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('Captcha') ), 'id' => 'Captcha'),
+				'active' => self::SetSubMenu( array('Captcha') ,false),
+				'items'=>array(
 					//set new menu
-	        		array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Captcha.*',
-	        			)),
-	        			'label'=>'ตั้งค่าแคปช่า',
-	        			'url'=>array('//Captcha/index')
-	        		),
-	        	)
-	        ),
-			 array(
-	        	/*====== Check Permissions PopUp (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Reset.*',
+					array(
+
+						'visible'=>self::PermissionsMenu(array(
+							'Captcha.*',
+						)),
+						'label'=>'ตั้งค่าแคปช่า',
+						'url'=>array('//Captcha/index')
+					),
+				)
+			),
+			array(
+				/*====== Check Permissions PopUp (2) ======*/
+				'visible'=>self::PermissionsMenu(array(
+					'Reset.*',
 					// 'Reset.admin',
 					// 'Reset.Create'
-	        	)),
-	        	'label'=>'<i></i><span>ระบบรีเซ็ทผลการเรียนการสอบ</span>',
-	        	'url'=>array('//LearnReset/ResetUser'),
+				)),
+				'label'=>'<i></i><span>ระบบรีเซ็ทผลการเรียนการสอบ</span>',
+				'url'=>array('//LearnReset/ResetUser'),
 				//'url'=>array('//Reset/index'),
 				//'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons refresh'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Reset') ), 'id' => 'Reset'),
-	        	'active' => self::SetSubMenu( array('Reset') ,false),
-	        ),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons refresh'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('Reset') ), 'id' => 'Reset'),
+				'active' => self::SetSubMenu( array('Reset') ,false),
+			),
 			//====== END Menu PopUp ======//
 
 
@@ -1061,269 +1061,269 @@ Class MenuLeft extends Controller
 			//====== END Menu FeaturedLinks ======//
 			
 
-	        array(
-	        	/*====== Check Permissions Usability (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Usability.*',
-	        		'Usability.Index',
-	        		'Usability.Create'
-	        	)),
-	        	'label'=>'<i></i><span>ระบบวิธีการใช้งาน</span>',
-	        	'url'=>'#Usability',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons wallet'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Usability') ), 'id' => 'Usability'),
-	        	'active' => self::SetSubMenu( array('Usability') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Sup-Usability (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Usability.*',
-	        				'Usability.Create'
-	        			)),
-	        			'label'=>'เพิ่มวิธีการใช้งาน'." (ภาษา ".$mainLang." )",
-	        			'url'=>array('//Usability/create')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-Usability (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Usability.*',
-	        				'Usability.Index'
-	        			)),
-	        			'label'=>'จัดการวิธีการใช้งาน',
-	        			'url'=>array('//Usability/index')
-	        		),
-	        	)
-	        ),
+			array(
+				/*====== Check Permissions Usability (2) ======*/
+				'visible'=>self::PermissionsMenu(array(
+					'Usability.*',
+					'Usability.Index',
+					'Usability.Create'
+				)),
+				'label'=>'<i></i><span>ระบบวิธีการใช้งาน</span>',
+				'url'=>'#Usability',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons wallet'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('Usability') ), 'id' => 'Usability'),
+				'active' => self::SetSubMenu( array('Usability') ,false),
+				'items'=>array(
+					array(
+						/*====== Check Permissions Sup-Usability (1) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'Usability.*',
+							'Usability.Create'
+						)),
+						'label'=>'เพิ่มวิธีการใช้งาน'." (ภาษา ".$mainLang." )",
+						'url'=>array('//Usability/create')
+					),
+					array(
+						/*====== Check Permissions Sup-Usability (2) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'Usability.*',
+							'Usability.Index'
+						)),
+						'label'=>'จัดการวิธีการใช้งาน',
+						'url'=>array('//Usability/index')
+					),
+				)
+			),
 			//====== END Menu Usability ======//
 
-	        array(
-	        	/*====== Check Permissions Group Contactus (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'ReportProblem.*',
-	        		'ReportProblem.index',
-	        	)),
-	        	'label'=>'<i></i><span>ระบบปัญหาการใช้งาน</span>',
-	        	'url'=>'#ReportProblem',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons adress_book'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('ReportProblem','Maildetail') ), 'id' => 'ReportProblem'),
-	        	'active' => self::SetSubMenu( array('ReportProblem','Maildetail') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Sup-Contactus (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'ReportProblem.*',
-	        				'ReportProblem.index'
-	        			)),
-	        			'label'=>'จัดการปัญหาการใช้งาน',
-	        			'url'=>array('//ReportProblem/index')
-	        		),
-	        	)
-	        ),
+			array(
+				/*====== Check Permissions Group Contactus (2) ======*/
+				'visible'=>self::PermissionsMenu(array(
+					'ReportProblem.*',
+					'ReportProblem.index',
+				)),
+				'label'=>'<i></i><span>ระบบปัญหาการใช้งาน</span>',
+				'url'=>'#ReportProblem',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons adress_book'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('ReportProblem','Maildetail') ), 'id' => 'ReportProblem'),
+				'active' => self::SetSubMenu( array('ReportProblem','Maildetail') ,false),
+				'items'=>array(
+					array(
+						/*====== Check Permissions Sup-Contactus (2) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'ReportProblem.*',
+							'ReportProblem.index'
+						)),
+						'label'=>'จัดการปัญหาการใช้งาน',
+						'url'=>array('//ReportProblem/index')
+					),
+				)
+			),
 
 
-	        array(
-	        	/*====== Check Permissions FAQ (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Faq.*',
-	        		'Faq.Index',
-	        		'Faq.Create'
+			array(
+				/*====== Check Permissions FAQ (2) ======*/
+				'visible'=>self::PermissionsMenu(array(
+					'Faq.*',
+					'Faq.Index',
+					'Faq.Create'
 					// 'Faqtype.*',
 					// 'Faqtype.Index',
 					// 'Faqtype.Create'
-	        	)),
-	        	'label'=>'<i></i><span>ระบบคำถามที่พบบ่อย</span>',
-	        	'url'=>'#Faq',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons no-js circle_question_mark'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Faq') ), 'id' => 'Faq'),
-	        	'active' => self::SetSubMenu( array('Faq') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions FAQ (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'faqType.*',
-	        				'faqType.Index'
-	        			)),
-	        			'label'=>'หมวดคำถาม'." (ภาษา ".$mainLang." )",
-	        			'url'=>array('//faqType/index')
-	        		),
-	        		array(
-	        			/*====== Check Permissions FAQ (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Faq.*',
-	        				'Faq.index'
-	        			)),
-	        			'label'=>'คำถามที่พบบ่อย',
-	        			'url'=>array('//Faq/index')
-	        		)
-	        	)
-	        ),
+				)),
+				'label'=>'<i></i><span>ระบบคำถามที่พบบ่อย</span>',
+				'url'=>'#Faq',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons no-js circle_question_mark'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('Faq') ), 'id' => 'Faq'),
+				'active' => self::SetSubMenu( array('Faq') ,false),
+				'items'=>array(
+					array(
+						/*====== Check Permissions FAQ (2) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'faqType.*',
+							'faqType.Index'
+						)),
+						'label'=>'หมวดคำถาม'." (ภาษา ".$mainLang." )",
+						'url'=>array('//faqType/index')
+					),
+					array(
+						/*====== Check Permissions FAQ (1) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'Faq.*',
+							'Faq.index'
+						)),
+						'label'=>'คำถามที่พบบ่อย',
+						'url'=>array('//Faq/index')
+					)
+				)
+			),
 			//====== END Menu FAQ ======//
 
 			//====== END Menu Rights ======//
-	        array(
-	        	/*====== Check Permissions Category (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Document.*',
-	        		'Document.Index',
-	        		'Document.Create',
-	        		'Document.CreateType', 
-	        	)),
-	        	'label'=>'<i></i><span>เอกสาร</span>',
-	        	'url'=>'#Document',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_open'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Document') ), 'id' => 'Document'),
-	        	'active' => self::SetSubMenu( array('Document') ,false),
-	        	'items'=>array(
+			array(
+				/*====== Check Permissions Category (2) ======*/
+				'visible'=>self::PermissionsMenu(array(
+					'Document.*',
+					'Document.Index',
+					'Document.Create',
+					'Document.CreateType', 
+				)),
+				'label'=>'<i></i><span>เอกสาร</span>',
+				'url'=>'#Document',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_open'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('Document') ), 'id' => 'Document'),
+				'active' => self::SetSubMenu( array('Document') ,false),
+				'items'=>array(
 
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Document.*',
-	        				'Document.CreateType'
-	        			)),
-	        			'label'=>'เพิ่มประเภทเอกสาร'." (ภาษา ".$mainLang." )",
+					array(
+						'visible'=>self::PermissionsMenu(array(
+							'Document.*',
+							'Document.CreateType'
+						)),
+						'label'=>'เพิ่มประเภทเอกสาร'." (ภาษา ".$mainLang." )",
 	                	'url'=>array('//Document/createtype')//ชื่อ action
 	                ),
 
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Document.*',
-	        				'Document.Index_type'
-	        			)),
-	        			'label'=>'จัดการประเภทเอกสาร',
-	        			'url'=>array('//Document/Index_type')
-	        		),
+					array(
+						'visible'=>self::PermissionsMenu(array(
+							'Document.*',
+							'Document.Index_type'
+						)),
+						'label'=>'จัดการประเภทเอกสาร',
+						'url'=>array('//Document/Index_type')
+					),
 
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Document.*',
-	        				'Document.Create'
-	        			)),
-	        			'label'=>'เพิ่มเอกสาร'." (ภาษา ".$mainLang." )",
-	        			'url'=>array('//Document/create')
-	        		),
+					array(
+						'visible'=>self::PermissionsMenu(array(
+							'Document.*',
+							'Document.Create'
+						)),
+						'label'=>'เพิ่มเอกสาร'." (ภาษา ".$mainLang." )",
+						'url'=>array('//Document/create')
+					),
 
 
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Document.*',
-	        				'Document.Index'
-	        			)),
-	        			'label'=>'จัดการเอกสาร',
-	        			'url'=>array('//Document/index')
-	        		),
-	        	)
-	        ),
+					array(
+						'visible'=>self::PermissionsMenu(array(
+							'Document.*',
+							'Document.Index'
+						)),
+						'label'=>'จัดการเอกสาร',
+						'url'=>array('//Document/index')
+					),
+				)
+			),
 
-	        array(
+			array(
 	        	//////// VDO ////////
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'vdo.*',
-	        		'vdo.Index',
-	        		'vdo.Create'
-	        	)),
-	        	'label'=>'<span class="label label-primary"></span> <i></i><span>VDO</span>',
-	        	'url'=>'#vdo',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons facetime_video'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('vdo') ), 'id' => 'vdo'),
-	        	'active' => self::SetSubMenu( array('vdo') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Sup-Category (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'vdo.*',
-	        				'vdo.Create'
-	        			)),
-	        			'label'=>'เพิ่มวีดีโอ'." (ภาษา ".$mainLang." )",
-	        			'url'=>array('//vdo/create')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-Category (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'vdo.*',
-	        				'vdo.Index'
-	        			)),
-	        			'label'=>'จัดการวีดีโอ',
-	        			'url'=>array('//vdo/index')
-	        		),
-	        	)
-	        ),
+				'visible'=>self::PermissionsMenu(array(
+					'vdo.*',
+					'vdo.Index',
+					'vdo.Create'
+				)),
+				'label'=>'<span class="label label-primary"></span> <i></i><span>VDO</span>',
+				'url'=>'#vdo',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons facetime_video'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('vdo') ), 'id' => 'vdo'),
+				'active' => self::SetSubMenu( array('vdo') ,false),
+				'items'=>array(
+					array(
+						/*====== Check Permissions Sup-Category (1) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'vdo.*',
+							'vdo.Create'
+						)),
+						'label'=>'เพิ่มวีดีโอ'." (ภาษา ".$mainLang." )",
+						'url'=>array('//vdo/create')
+					),
+					array(
+						/*====== Check Permissions Sup-Category (2) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'vdo.*',
+							'vdo.Index'
+						)),
+						'label'=>'จัดการวีดีโอ',
+						'url'=>array('//vdo/index')
+					),
+				)
+			),
 
-	        array(
-	        	/*====== Check Permissions Rights (6) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'adminUser.*',
-	        		'adminUser.Create',
-	        	)) || 
-	        	self::PermissionsMenu(array(
-	        		'pGroup.*',
-	        		'pGroup.Create',
-	        	)) ||
-	        	self::PermissionsMenu(array(
-	        		'pController.*',
-	        		'pController.Create',
-	        	)),
-	        	'label'=>'<i></i><span>ระบบการกำหนดสิทธิการใช้งาน</span>',
-	        	'url'=>'#Rights',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons magic'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('authItem','assignment','Level') ), 'id' => 'Rights'),
-	        	'active' => self::SetSubMenu( array('authItem','assignment','Level') ,false),
-	        	'items'=>array(
+			array(
+				/*====== Check Permissions Rights (6) ======*/
+				'visible'=>self::PermissionsMenu(array(
+					'adminUser.*',
+					'adminUser.Create',
+				)) || 
+				self::PermissionsMenu(array(
+					'pGroup.*',
+					'pGroup.Create',
+				)) ||
+				self::PermissionsMenu(array(
+					'pController.*',
+					'pController.Create',
+				)),
+				'label'=>'<i></i><span>ระบบการกำหนดสิทธิการใช้งาน</span>',
+				'url'=>'#Rights',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons magic'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('authItem','assignment','Level') ), 'id' => 'Rights'),
+				'active' => self::SetSubMenu( array('authItem','assignment','Level') ,false),
+				'items'=>array(
 					// array(
 					// 	/*====== Check Permissions Sup-Rights (3) ======*/
 					// 	'visible'=>Yii::app()->user->isSuperuser===true,
 					// 	'label'=>Rights::t('core', 'Assignments'),
 					// 	'url'=>array('//rights/assignment/view')
 					// ),
-	        		array(
-	        			/*====== Check Permissions Sup-Rights (3) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'adminUser.*',
-	        				'adminUser.Create'
-	        			)),
-	        			'label'=>'ข้อมูลผู้ดูแลระบบ',
-	        			'url'=>array('//adminUser/index')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-Rights (3) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'pGroup.*',
-	        				'pGroup.Create'
-	        			)),
-	        			'label'=>'กลุ่มผู้ใช้งาน',
-	        			'url'=>array('//pGroup/index')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-Rights (3) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'pController.*',
-	        				'pController.Create'
-	        			)),
-	        			'label'=>'เพิ่ม controller',
-	        			'url'=>array('//pController/index')
-	        		),
-	        	)
-	        ),
+					array(
+						/*====== Check Permissions Sup-Rights (3) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'adminUser.*',
+							'adminUser.Create'
+						)),
+						'label'=>'ข้อมูลผู้ดูแลระบบ',
+						'url'=>array('//adminUser/index')
+					),
+					array(
+						/*====== Check Permissions Sup-Rights (3) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'pGroup.*',
+							'pGroup.Create'
+						)),
+						'label'=>'กลุ่มผู้ใช้งาน',
+						'url'=>array('//pGroup/index')
+					),
+					array(
+						/*====== Check Permissions Sup-Rights (3) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'pController.*',
+							'pController.Create'
+						)),
+						'label'=>'เพิ่ม controller',
+						'url'=>array('//pController/index')
+					),
+				)
+			),
 
-	         array(
-	        	/*====== Check Permissions Rights (6) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'AuthorityHR.*',
-	        		'AuthorityHR.index',
-	        	
-	        	)),
-	        	'label'=>'<i></i><span>ระบบจัดการสิทธิ์ผู้อนุมัติ</span>',
-	        	'url'=>'#authorityHR',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons magic'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('authorityHR') ), 'id' => 'authorityHR'),
-	        	'active' => self::SetSubMenu( array('authorityHR') ,false),
-	        	'items'=>array(
+			array(
+				/*====== Check Permissions Rights (6) ======*/
+				'visible'=>self::PermissionsMenu(array(
+					'AuthorityHR.*',
+					'AuthorityHR.index',
+
+				)),
+				'label'=>'<i></i><span>ระบบจัดการสิทธิ์ผู้อนุมัติ</span>',
+				'url'=>'#authorityHR',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons magic'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('authorityHR') ), 'id' => 'authorityHR'),
+				'active' => self::SetSubMenu( array('authorityHR') ,false),
+				'items'=>array(
 
 	   //      array(
 				// 'visible'=>self::PermissionsMenu(array(
@@ -1405,21 +1405,21 @@ Class MenuLeft extends Controller
 			),
 			
 
-	        
-	         array(
-	        	/*====== Check Permissions User (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'admin.*',
+
+			array(
+				/*====== Check Permissions User (2) ======*/
+				'visible'=>self::PermissionsMenu(array(
+					'admin.*',
 	        		// 'admin.admin',
 	        		// 'admin.Create',
-	        	)),
-	        	'label'=>'<i></i><span>ระบบจัดการสมาชิก (สมาชิก)</span>',
-	        	'url'=>'#admin',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons user_add'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('admin') ) , 'id' => 'admin'),
-	        	'active' => self::SetSubMenu( array('admin') ,false),
-	        	'items'=>array(
+				)),
+				'label'=>'<i></i><span>ระบบจัดการสมาชิก (สมาชิก)</span>',
+				'url'=>'#admin',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons user_add'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('admin') ) , 'id' => 'admin'),
+				'active' => self::SetSubMenu( array('admin') ,false),
+				'items'=>array(
 	        		// array(
 	        		// 	/*====== Check Permissions Sup-User (1) ======*/
 	        		// 	'visible'=>self::PermissionsMenu(array(
@@ -1448,36 +1448,36 @@ Class MenuLeft extends Controller
 	        		// 	'url'=>array('//user/admin/approve')
 	        		// ),
 
-	        		array(
-	        			/*====== Check Permissions Sup-User (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'admin.*',
-	        				'admin.Create'
-	        			)),
-	        			'label'=>'เพิ่มสมาชิก',
-	        			'url'=>array('//user/admin/create')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-User (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'admin.*',
-	        				'admin.Excel'
-	        			)),
-	        			'label'=>'เพิ่มสมาชิกจาก Excel',
-	        			'url'=>array('//user/admin/excel')
-	        		),
+					array(
+						/*====== Check Permissions Sup-User (1) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'admin.*',
+							'admin.Create'
+						)),
+						'label'=>'เพิ่มสมาชิก',
+						'url'=>array('//user/admin/create')
+					),
+					array(
+						/*====== Check Permissions Sup-User (1) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'admin.*',
+							'admin.Excel'
+						)),
+						'label'=>'เพิ่มสมาชิกจาก Excel',
+						'url'=>array('//user/admin/excel')
+					),
 	        		// array(
 	        		// 	/*====== Check Permissions Sup-User (2) ======*/
 	        		// 	'visible'=>true,
 	        		// 	'label'=>'รายชื่อสมาชิก(ผู้ดูแลระบบ)',
 	        		// 	'url'=>array('//user/admin/admin')
 	        		// ),
-	        		array(
-	        			/*====== Check Permissions Sup-User (2) ======*/
-	        			'visible'=>true,
-	        			'label'=>'รายชื่อสมาชิก',
-	        			'url'=>array('//user/admin/employee')
-	        		),
+					array(
+						/*====== Check Permissions Sup-User (2) ======*/
+						'visible'=>true,
+						'label'=>'รายชื่อสมาชิก',
+						'url'=>array('//user/admin/employee')
+					),
 	        		// array(
 	        		// 	/*====== Check Permissions Sup-User (2) ======*/
 	        		// 	'visible'=>true,
@@ -1500,7 +1500,7 @@ Class MenuLeft extends Controller
 	        		// 	'url'=>array('//user/admin/access')
 	        		// ),
 	        		// array(
-	        			
+
 	        		// 	'visible'=>self::PermissionsMenu(array(
 	        		// 		'admin.*',
 	        		// 		'admin.Status',
@@ -1508,8 +1508,8 @@ Class MenuLeft extends Controller
 	        		// 	'label'=>'รายงานสถานะของสมาชิก',
 	        		// 	'url'=>array('//user/admin/Status')
 	        		// ),
-	        	)
-	        ),
+				)
+			),
 
 	        //  array(
 	        // 	//////// print ////////
@@ -1562,40 +1562,40 @@ Class MenuLeft extends Controller
 	        // 		),
 	        // 	)
 	        // ),
-            array(
+			array(
 	        	//////// SlideImg ////////
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'imgslide.*',
-	        		'imgslide.Index',
-	        		'imgslide.Create'
-	        	)),
-	        	'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบป้ายประชาสัมพันธ์</span>',
-	        	'url'=>'#imgslide',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons bullhorn'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('imgslide') ), 'id' => 'imgslide'),
-	        	'active' => self::SetSubMenu( array('imgslide') ,false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Sup-Category (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'imgslide.*',
-	        				'imgslide.Create'
-	        			)),
-	        			'label'=>'เพิ่มป้ายประชาสัมพันธ์'." (ภาษา ".$mainLang." )",
-	        			'url'=>array('//imgslide/create')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-Category (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'imgslide.*',
-	        				'imgslide.Index'
-	        			)),
-	        			'label'=>'จัดการป้ายประชาสัมพันธ์',
-	        			'url'=>array('//imgslide/index')
-	        		),
-	        	)
-	        ),
+				'visible'=>self::PermissionsMenu(array(
+					'imgslide.*',
+					'imgslide.Index',
+					'imgslide.Create'
+				)),
+				'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบป้ายประชาสัมพันธ์</span>',
+				'url'=>'#imgslide',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons bullhorn'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('imgslide') ), 'id' => 'imgslide'),
+				'active' => self::SetSubMenu( array('imgslide') ,false),
+				'items'=>array(
+					array(
+						/*====== Check Permissions Sup-Category (1) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'imgslide.*',
+							'imgslide.Create'
+						)),
+						'label'=>'เพิ่มป้ายประชาสัมพันธ์'." (ภาษา ".$mainLang." )",
+						'url'=>array('//imgslide/create')
+					),
+					array(
+						/*====== Check Permissions Sup-Category (2) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'imgslide.*',
+							'imgslide.Index'
+						)),
+						'label'=>'จัดการป้ายประชาสัมพันธ์',
+						'url'=>array('//imgslide/index')
+					),
+				)
+			),
 
 	        // array(
 	        // 	//////// GalleryType ////////
@@ -1627,10 +1627,10 @@ Class MenuLeft extends Controller
 	        // 			'label'=>'จัดการประเภทแกลลอรี่',
 	        // 			'url'=>array('//GalleryType/index')
 	        // 		),
-	        		
+
 	        // 	)
 	        // ),
-	       
+
 
 	        // array(
 	        // 	//////// Gallery ////////
@@ -1700,32 +1700,32 @@ Class MenuLeft extends Controller
 	        // 	)
 	        // ),
 
-	        array(
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'LibraryType.*',
-	        		'LibraryFile.*',
-	        	)),
-	        	'label'=>'<span class="label label-primary"></span> <i></i><span>ห้องสมุด</span>',
-	        	'url'=>'#LibraryType',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons posterous_spaces'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('LibraryType', 'LibraryFile') ), 'id' => 'LibraryType'),
-	        	'active' => self::SetSubMenu( array('LibraryType', 'LibraryFile') ,false),
-	        	'items'=>array(
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'LibraryType.Index'
-	        			)),
-	        			'label'=>'จัดการประเภทห้องสมุด',
-	        			'url'=>array('//LibraryType/index')
-	        		),
-	        		array(
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'LibraryFile.Index'
-	        			)),
-	        			'label'=>'จัดการห้องสมุด',
-	        			'url'=>array('//LibraryFile/index')
-	        		),
+			array(
+				'visible'=>self::PermissionsMenu(array(
+					'LibraryType.*',
+					'LibraryFile.*',
+				)),
+				'label'=>'<span class="label label-primary"></span> <i></i><span>ห้องสมุด</span>',
+				'url'=>'#LibraryType',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons posterous_spaces'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('LibraryType', 'LibraryFile') ), 'id' => 'LibraryType'),
+				'active' => self::SetSubMenu( array('LibraryType', 'LibraryFile') ,false),
+				'items'=>array(
+					array(
+						'visible'=>self::PermissionsMenu(array(
+							'LibraryType.Index'
+						)),
+						'label'=>'จัดการประเภทห้องสมุด',
+						'url'=>array('//LibraryType/index')
+					),
+					array(
+						'visible'=>self::PermissionsMenu(array(
+							'LibraryFile.Index'
+						)),
+						'label'=>'จัดการห้องสมุด',
+						'url'=>array('//LibraryFile/index')
+					),
 	        		// array(
 	        		// 	'visible'=>self::PermissionsMenu(array(
 	        		// 		'LibraryFile.download'
@@ -1733,10 +1733,10 @@ Class MenuLeft extends Controller
 	        		// 	'label'=>'จัดการการอนุมัติการดาวน์โหลด',
 	        		// 	'url'=>array('//LibraryFile/download')
 	        		// ),
-	        		
-	        	)
-	        ),
-	        
+
+				)
+			),
+
 
 	        // array(
 	        // 	//////// MainImage ////////
@@ -1864,62 +1864,62 @@ Class MenuLeft extends Controller
 
 			//====== END Menu Group Contactus ======//
 			
-	        array(
-	        	/*====== Check Permissions Setting (1)  ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'courseNotification.*',
-	        		'courseNotification.Create'
-	        	)),
-	        	'label'=>'<i></i><span>ระบบตั้งค่าการแจ้งเตือนบทเรียน</span>',
-	        	'url'=>'#courseNotification',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons cogwheel'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('courseNotification') ) , 'id' => 'courseNotification'),
-	        	'active' => self::SetSubMenu(array('courseNotification'),false),
-	        	'items'=>array(
-	        		array(
-	        			/*====== Check Permissions Sup-courseNotification (1) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'courseNotification.*',
-	        				'courseNotification.Create'
-	        			)),
-	        			'label'=>'สร้างระบบแจ้งเตือนบทเรียน',
-	        			'url'=>array('//courseNotification/create')
-	        		),
-	        		array(
-	        			/*====== Check Permissions Sup-courseNotification (2) ======*/
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'courseNotification.*',
-	        				'courseNotification.index'
-	        			)),
-	        			'label'=>'จัดการระบบแจ้งเตือนบทเรียน',
-	        			'url'=>array('//courseNotification/index')
-	        		),
-	        	)
-	        ),
-	           array(
-	        	
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'employeeclass.*',
-	        	)),
-	        	'label'=>'<i></i><span>ระบบจัดการ Employee Class</span>',
-	        	'url'=>'#employeeclass',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Report') ), 'id' => 'employeeclass'),
-	        	'active' => self::SetSubMenu( array('employeeclass') ,false),
-	        	'items'=>array(
-	        		array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'employeeclass.*',
-	        			)),
-	        			'label'=>'จัดการ Employee class',
-	        			'url'=>array('//employeeclass/index')
-	        		),
-	        	)
-	        ),
-	         
+			array(
+				/*====== Check Permissions Setting (1)  ======*/
+				'visible'=>self::PermissionsMenu(array(
+					'courseNotification.*',
+					'courseNotification.Create'
+				)),
+				'label'=>'<i></i><span>ระบบตั้งค่าการแจ้งเตือนบทเรียน</span>',
+				'url'=>'#courseNotification',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons cogwheel'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('courseNotification') ) , 'id' => 'courseNotification'),
+				'active' => self::SetSubMenu(array('courseNotification'),false),
+				'items'=>array(
+					array(
+						/*====== Check Permissions Sup-courseNotification (1) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'courseNotification.*',
+							'courseNotification.Create'
+						)),
+						'label'=>'สร้างระบบแจ้งเตือนบทเรียน',
+						'url'=>array('//courseNotification/create')
+					),
+					array(
+						/*====== Check Permissions Sup-courseNotification (2) ======*/
+						'visible'=>self::PermissionsMenu(array(
+							'courseNotification.*',
+							'courseNotification.index'
+						)),
+						'label'=>'จัดการระบบแจ้งเตือนบทเรียน',
+						'url'=>array('//courseNotification/index')
+					),
+				)
+			),
+			array(
+
+				'visible'=>self::PermissionsMenu(array(
+					'employeeclass.*',
+				)),
+				'label'=>'<i></i><span>ระบบจัดการ Employee Class</span>',
+				'url'=>'#employeeclass',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('Report') ), 'id' => 'employeeclass'),
+				'active' => self::SetSubMenu( array('employeeclass') ,false),
+				'items'=>array(
+					array(
+
+						'visible'=>self::PermissionsMenu(array(
+							'employeeclass.*',
+						)),
+						'label'=>'จัดการ Employee class',
+						'url'=>array('//employeeclass/index')
+					),
+				)
+			),
+
          //    array(
 	        // 	/*====== Check Permissions Department (2) ======*/
 	        // 	'visible'=>self::PermissionsMenu(array(
@@ -2021,79 +2021,79 @@ Class MenuLeft extends Controller
 	        // 		),
 	        // 	)
 	        // ),
-	         array(
-	        	
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Passcours.*',
-	        	)),
-	        	'label'=>'<i></i><span>ระบบพิมพ์ใบประกาศนียบัตร</span>',
-	        	'url'=>'#Passcours',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Passcours') ), 'id' => 'Passcours'),
-	        	'active' => self::SetSubMenu( array('Passcours') ,false),
-	        	'items'=>array(
-	        		array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Passcours.*',
-	        				'Passcours.index',
-	        			)),
-	        			'label'=>'รายงานผู้ผ่านการเรียน',
-	        			'url'=>array('//Passcours/index')
-	        		),
-	        	    array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Passcours.*',
-	        				'Passcours.PasscoursLog',
-	        			)),
-	        			'label'=>'รายงานสถิติจำนวนผู้พิมพ์ใบประกาศฯ',
-	        			'url'=>array('//Passcours/PasscoursLog')
-	        		),
-	        		
-	        	)
-	        ),
+			array(
+
+				'visible'=>self::PermissionsMenu(array(
+					'Passcours.*',
+				)),
+				'label'=>'<i></i><span>ระบบพิมพ์ใบประกาศนียบัตร</span>',
+				'url'=>'#Passcours',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('Passcours') ), 'id' => 'Passcours'),
+				'active' => self::SetSubMenu( array('Passcours') ,false),
+				'items'=>array(
+					array(
+
+						'visible'=>self::PermissionsMenu(array(
+							'Passcours.*',
+							'Passcours.index',
+						)),
+						'label'=>'รายงานผู้ผ่านการเรียน',
+						'url'=>array('//Passcours/index')
+					),
+					array(
+
+						'visible'=>self::PermissionsMenu(array(
+							'Passcours.*',
+							'Passcours.PasscoursLog',
+						)),
+						'label'=>'รายงานสถิติจำนวนผู้พิมพ์ใบประกาศฯ',
+						'url'=>array('//Passcours/PasscoursLog')
+					),
+
+				)
+			),
 
             //====== END Menu FormSurveyGroup ======//
-	        array(
-	        	
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Report.*',
-	        	)),
-	        	'label'=>'<i></i><span>ระบบ ติดตามผู้เรียน</span>',
-	        	'url'=>'#ReportFollow',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Report') ), 'id' => 'ReportFollow'),
-	        	'active' => self::SetSubMenu( array('Report') ,false),
-	        	'items'=>array(
-	        		array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Report.*',
-	        			)),
-	        			'label'=>'1.) ข้อมูลการฝึกอบรมของพนักงานรายบุคคล',
-	        			'url'=>array('//Report/Status')
-	        		),
-	        		array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Report.*',
-	        			)),
-	        			'label'=>'2.) ค้นหาโดยใช้หลักสูตร',
-	        			'url'=>array('//Report/ByCourse')
-	        		),
-	        		array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Report.*',
-	        			)),
-	        			'label'=>'3.) ค้นหาโดยใช้บทเรียน',
-	        			'url'=>array('//Report/ByLesson')
-	        		),
+			array(
+
+				'visible'=>self::PermissionsMenu(array(
+					'Report.*',
+				)),
+				'label'=>'<i></i><span>ระบบ ติดตามผู้เรียน</span>',
+				'url'=>'#ReportFollow',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('Report') ), 'id' => 'ReportFollow'),
+				'active' => self::SetSubMenu( array('Report') ,false),
+				'items'=>array(
+					array(
+
+						'visible'=>self::PermissionsMenu(array(
+							'Report.*',
+						)),
+						'label'=>'1.) ข้อมูลการฝึกอบรมของพนักงานรายบุคคล',
+						'url'=>array('//Report/Status')
+					),
+					array(
+
+						'visible'=>self::PermissionsMenu(array(
+							'Report.*',
+						)),
+						'label'=>'2.) ค้นหาโดยใช้หลักสูตร',
+						'url'=>array('//Report/ByCourse')
+					),
+					array(
+
+						'visible'=>self::PermissionsMenu(array(
+							'Report.*',
+						)),
+						'label'=>'3.) ค้นหาโดยใช้บทเรียน',
+						'url'=>array('//Report/ByLesson')
+					),
 	        		// array(
-	        			
+
 	        		// 	'visible'=>self::PermissionsMenu(array(
 	        		// 		'Report.*',
 	        		// 	)),
@@ -2110,8 +2110,8 @@ Class MenuLeft extends Controller
 	        		// 	//'url'=>array('//Report/score')
 	        		// ),
 
-	        	)
-	        ),
+				)
+			),
 
 
 	        // array(	        	
@@ -2150,21 +2150,21 @@ Class MenuLeft extends Controller
 	        // ),
 
 
-	        array(
-	        	
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'Report.*'
-	        	)),
-	        	'label'=>'<i></i><span>ระบบ Report</span>',
-	        	'url'=>'#Report',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('Report', 'Questionnaire') ), 'id' => 'Report'),
-	        	'active' => self::SetSubMenu( array('Report', 'Questionnaire') ,false),
-	        	'items'=>array(
+			array(
+
+				'visible'=>self::PermissionsMenu(array(
+					'Report.*'
+				)),
+				'label'=>'<i></i><span>ระบบ Report</span>',
+				'url'=>'#Report',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('Report', 'Questionnaire') ), 'id' => 'Report'),
+				'active' => self::SetSubMenu( array('Report', 'Questionnaire') ,false),
+				'items'=>array(
 					//set new menu	
 					// array(
-	        			
+
 	    //     			'visible'=>self::PermissionsMenu(array(
 					// 		'Report.*',
 	    //     			)),
@@ -2172,7 +2172,7 @@ Class MenuLeft extends Controller
 	    //     			'url'=>array('//Report/logAllRegister')
 					// ),			
 	    //     		array(
-	        			
+
 	    //     			'visible'=>self::PermissionsMenu(array(
 	    //     				'admin.*',
 	    //     			)),
@@ -2180,58 +2180,58 @@ Class MenuLeft extends Controller
 	    //     			'url'=>array('//user/admin/Status')
 	    //     		),
 
-	        		array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Report.*',
-	        			)),
-	        			'label'=>'1.) รายงานภาพรวมของหลักสูตร',
-	        			'url'=>array('//Report/AttendPrint')
-	        		),
-	        		array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Report.*',
-	        			)),
-	        			'label'=>'2.) รายงานการฝึกอบรมหลักสูตร',
-	        			'url'=>array('//Report/ByCourseDetail')
-	        		),
-	        		array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Report.*',
-	        			)),
-	        			'label'=>'3.) รายงานติดตามผู้เรียน',
-	        			'url'=>array('//Report/ByUser')
-	        		),
+					array(
 
-	        		array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
+						'visible'=>self::PermissionsMenu(array(
 							'Report.*',
-	        			)),
-	        			'label'=>'4.) รายงานแบบสอบถามสำหรับหลักสูตร',
-	        			'url'=>array('//Report/logQuestioncourse')
+						)),
+						'label'=>'1.) รายงานภาพรวมของหลักสูตร',
+						'url'=>array('//Report/AttendPrint')
 					),
 					array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
+
+						'visible'=>self::PermissionsMenu(array(
 							'Report.*',
-	        			)),
-	        			'label'=>'5.) รายงานภาพรวมแบบสอบถาม',
-	        			'url'=>array('//Report/logQuestionall')
+						)),
+						'label'=>'2.) รายงานการฝึกอบรมหลักสูตร',
+						'url'=>array('//Report/ByCourseDetail')
 					),
 					array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'Report.*',
-	        			)),
-	        			'label'=>'6.) รายงานการรีเซตหลักสูตร',
-	        			'url'=>array('//Report/logReset')
+
+						'visible'=>self::PermissionsMenu(array(
+							'Report.*',
+						)),
+						'label'=>'3.) รายงานติดตามผู้เรียน',
+						'url'=>array('//Report/ByUser')
+					),
+
+					array(
+
+						'visible'=>self::PermissionsMenu(array(
+							'Report.*',
+						)),
+						'label'=>'4.) รายงานแบบสอบถามสำหรับหลักสูตร',
+						'url'=>array('//Report/logQuestioncourse')
+					),
+					array(
+
+						'visible'=>self::PermissionsMenu(array(
+							'Report.*',
+						)),
+						'label'=>'5.) รายงานภาพรวมแบบสอบถาม',
+						'url'=>array('//Report/logQuestionall')
+					),
+					array(
+
+						'visible'=>self::PermissionsMenu(array(
+							'Report.*',
+						)),
+						'label'=>'6.) รายงานการรีเซตหลักสูตร',
+						'url'=>array('//Report/logReset')
 					),
 
 	        		// array(
-	        			
+
 	        		// 	'visible'=>self::PermissionsMenu(array(
 	        		// 		'Report.*',
 	        		// 	)),
@@ -2247,7 +2247,7 @@ Class MenuLeft extends Controller
 	        		// 	'url'=>array('//Passcours/index')
 	        		// ),
 	        		// array(
-	        			
+
 	        		// 	'visible'=>self::PermissionsMenu(array(
 	        		// 		'Passcours.*',
 	        		// 	)),
@@ -2255,7 +2255,7 @@ Class MenuLeft extends Controller
 	        		// 	'url'=>array('//Passcours/PasscoursLog')
 	        		// ),
 	        		// array(
-	        			
+
 	        		// 	'visible'=>self::PermissionsMenu(array(
 	        		// 		'Questionnaire.*',
 	        		// 	)),
@@ -2264,7 +2264,7 @@ Class MenuLeft extends Controller
 	        		// ),
 					
 					// array(
-	        			
+
 	    //     			'visible'=>self::PermissionsMenu(array(
 					// 		'Report.*',
 	    //     			)),
@@ -2272,9 +2272,9 @@ Class MenuLeft extends Controller
 	    //     			'url'=>array('//Report/logRegister')
 					// ),
 					
-	        	)
-	        ),
-	      
+				)
+			),
+
     //         array(
 	   //      	/*====== Check Permissions PopUp (2) ======*/
 	   //      	'visible'=>self::PermissionsMenu(array(
@@ -2288,7 +2288,7 @@ Class MenuLeft extends Controller
 	   //      	'submenuOptions' => array('class' => self::SetSubMenu( array('LogEmail') ), 'id' => 'LogEmail'),
 	   //      ),
 			//====== END Menu Information ======//
-	       
+
 
 	        // array(
 	        // 	
@@ -2419,52 +2419,52 @@ Class MenuLeft extends Controller
 	        // ),
 			//====== END Menu Company ======//
 
-	        array(
-	        	/*====== Check Permissions PopUp (2) ======*/
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'LogEmail.*',
-	        		'LogEmail.email'
-	        	)),
-	        	'label'=>'<i></i><span>ระบบการส่งผลการเรียนผ่านทางระบบอัตโนมัติ</span>',
-	        	'url'=>array('//LogEmail/email'),
+			array(
+				/*====== Check Permissions PopUp (2) ======*/
+				'visible'=>self::PermissionsMenu(array(
+					'LogEmail.*',
+					'LogEmail.email'
+				)),
+				'label'=>'<i></i><span>ระบบการส่งผลการเรียนผ่านทางระบบอัตโนมัติ</span>',
+				'url'=>array('//LogEmail/email'),
 				//'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('LogEmail') ), 'id' => 'LogEmail'),
-	        ),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('LogEmail') ), 'id' => 'LogEmail'),
+			),
 
-	        array(
-	        	
-	        	'visible'=>self::PermissionsMenu(array(
-	        		'LogAdmin.*',
+			array(
+
+				'visible'=>self::PermissionsMenu(array(
+					'LogAdmin.*',
 	        		// 'LogAdmin.update',
-	        	)),
-	        	'label'=>'<i></i><span>ระบบเก็บ Log การใช้งานระบบ</span>',
-	        	'url'=>'#LogAdmin',
-	        	'linkOptions' => array('data-toggle' => 'collapse'),
-	        	'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
-	        	'submenuOptions' => array('class' => self::SetSubMenu( array('LogAdmin') ), 'id' => 'LogAdmin'),
-	        	'active' => self::SetSubMenu( array('LogAdmin') ,false),
-	        	'items'=>array(
-	        		array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'LogAdmin.*',
-	        				'LogAdmin.users'
-	        			)),
-	        			'label'=>'Log การใช้งานผู้เรียน',
-	        			'url'=>array('//logAdmin/users')
-	        		),
-	        		array(
-	        			
-	        			'visible'=>self::PermissionsMenu(array(
-	        				'LogAdmin.*',
-	        				'LogAdmin.index'
-	        			)),
-	        			'label'=>'Log การใช้งานผู้ดูแลระบบ',
-	        			'url'=>array('//logAdmin/index')
-	        		),
+				)),
+				'label'=>'<i></i><span>ระบบเก็บ Log การใช้งานระบบ</span>',
+				'url'=>'#LogAdmin',
+				'linkOptions' => array('data-toggle' => 'collapse'),
+				'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
+				'submenuOptions' => array('class' => self::SetSubMenu( array('LogAdmin') ), 'id' => 'LogAdmin'),
+				'active' => self::SetSubMenu( array('LogAdmin') ,false),
+				'items'=>array(
+					array(
+
+						'visible'=>self::PermissionsMenu(array(
+							'LogAdmin.*',
+							'LogAdmin.users'
+						)),
+						'label'=>'Log การใช้งานผู้เรียน',
+						'url'=>array('//logAdmin/users')
+					),
+					array(
+
+						'visible'=>self::PermissionsMenu(array(
+							'LogAdmin.*',
+							'LogAdmin.index'
+						)),
+						'label'=>'Log การใช้งานผู้ดูแลระบบ',
+						'url'=>array('//logAdmin/index')
+					),
 	        		// array(
-	        			
+
 	        		// 	'visible'=>self::PermissionsMenu(array(
 	        		// 		'LogAdmin.*',
 	        		// 		'LogAdmin.approve'
@@ -2473,7 +2473,7 @@ Class MenuLeft extends Controller
 	        		// 	'url'=>array('//logAdmin/approve')
 	        		// ),
 	        		// array(
-	        			
+
 	        		// 	'visible'=>self::PermissionsMenu(array(
 	        		// 		'LogAdmin.*',
 	        		// 		'LogAdmin.approvePersonal'
@@ -2482,7 +2482,7 @@ Class MenuLeft extends Controller
 	        		// 	'url'=>array('//logAdmin/approvePersonal')
 	        		// ),
 	        		// array(
-	        			
+
 	        		// 	'visible'=>self::PermissionsMenu(array(
 	        		// 		'LogAdmin.*',
 	        		// 		'LogAdmin.register'
@@ -2499,11 +2499,11 @@ Class MenuLeft extends Controller
 	        		// 	'label'=>'Log การส่งข้อมูล API',
 	        		// 	'url'=>array('//logAdmin/api')
 	        		// )
-	        	)
-	        ),
+				)
+			),
 
 
-	    );
+		);
 
 
 

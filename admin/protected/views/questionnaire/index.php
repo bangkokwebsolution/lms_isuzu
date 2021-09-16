@@ -1,8 +1,8 @@
 <?php
-$titleName = 'แบบสอบถาม';
+$titleName = 'แบบประเมิน';
 $formNameModel = 'Questionnaire';
 $this->breadcrumbs = array(
-	'ระบบแบบสอบถาม'
+	'ระบบแบบประเมิน'
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -65,7 +65,7 @@ EOD
 						// 	'id'=>'chk',
 						// ),
 						array(
-							'name'=>'survey_name',
+							'name'=>'name_ques',
 							'type'=>'html',
 							'value'=>'CHtml::decode(UHtml::markSearch($data,"survey_name"))'
 						),

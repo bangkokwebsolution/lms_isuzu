@@ -155,10 +155,10 @@ class ApproveCourseController extends Controller
 		$course = CourseOnline::model()->findByPk($_POST['request_id']); 
 		$user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
 		
-		if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level){
+		if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->create_by != Yii::app()->user->id){
 			$course->approve_status = 1;
 			$course->approve_by = Yii::app()->user->id;
-		}elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level) {
+		}elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level && $course->create_by != Yii::app()->user->id) {
 			$course->approve_status = 1;
 			$course->approve_by = Yii::app()->user->id;
 		}else{
@@ -194,11 +194,11 @@ class ApproveCourseController extends Controller
 		$course = CourseOnline::model()->findByPk($_POST['request_id']); 
 		$user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
 		
-		if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level){
+		if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->create_by != Yii::app()->user->id){
 			$course->approve_status = 1;
 			$course->approve_by = Yii::app()->user->id;
 			$course->approve_by_hr = Yii::app()->user->id;
-		}elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level) {
+		}elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level && $course->create_by != Yii::app()->user->id) {
 			$course->approve_status = 1;
 			$course->approve_by = Yii::app()->user->id;
 			$course->approve_by_hr = Yii::app()->user->id;
@@ -234,11 +234,11 @@ class ApproveCourseController extends Controller
 		$course = CourseOnline::model()->findByPk($_POST['request_id']); 
 		$user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
 		
-		if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level){
+		if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->create_by != Yii::app()->user->id ){
 			$course->approve_status = 2;
 			// $course->approve_by = Yii::app()->user->id;
 			$course->approve_by_hr = Yii::app()->user->id;
-		}elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level) {
+		}elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level && $course->create_by != Yii::app()->user->id) {
 			$course->approve_status = 2;
 			// $course->approve_by = Yii::app()->user->id;
 			$course->approve_by_hr = Yii::app()->user->id;

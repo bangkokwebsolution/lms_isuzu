@@ -45,7 +45,8 @@ $this->breadcrumbs=array(
 			</div> -->
 
 			<div class="row">
-				<?php echo $form->labelEx($teacher,'survey_header_id'); ?>
+				<!-- <?php echo $form->labelEx($teacher,'survey_header_id'); ?> -->
+				<label for="CourseTeacher_survey_header_id" class="required">แบบประเมิน <span class="required">*</span></label>
 				<?php echo $this->listQHeader_new($teacher,'span8','survey_header_id');?>
 				<?php echo $this->NotEmpty();?>
 				<?php echo $form->error($teacher,'survey_header_id'); ?>
@@ -80,7 +81,7 @@ EOD
 ?>
 <div class="widget">
 	<div class="widget-head">
-		<h4 class="heading">รายละเอียดข้อสอบที่เลือก</h4>
+		<h4 class="heading">รายละเอียดแบบประเมินที่เลือก</h4>
 	</div>
 	<div class="widget-body">
 			<div class="separator bottom form-inline small">
