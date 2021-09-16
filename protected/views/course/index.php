@@ -448,7 +448,7 @@ function DateThai($strDate)
                                         <h4 class="text11"><?= $model->course_title ?> <?= $model->getGen($model->course_id) ?></h4>
                                         <p class="p-detail"><?= $model->course_short_title ?></p>
                                         <div class="exp-course">
-                                            <small class=""><span class="text-main"><i class="fa fa-calendar text-main"></i> <?= $label->label_dateStart ?> :</span> <?php echo Helpers::lib()->DateLangTms($schedule->training_date_start, Yii::app()->session['lang']); ?> - <?php echo Helpers::lib()->DateLangTms($schedule->training_date_end, Yii::app()->session['lang']); ?></small>
+                                            <small class=""><span class="text-main"><i class="fa fa-calendar text-main"></i> <?= $label->label_dateStart ?> :</span> <?php echo Helpers::lib()->DateLangTms($model->course_date_start, Yii::app()->session['lang']); ?> - <?php echo Helpers::lib()->DateLangTms($model->course_date_end, Yii::app()->session['lang']); ?></small>
                                         </div>
                                         <!-- <div class="course-time">
                                             <small class="text-muted"><i class="fa fa-clock"></i> 1 hr 30 min.</small>
