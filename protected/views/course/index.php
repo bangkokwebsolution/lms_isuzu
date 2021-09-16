@@ -72,7 +72,7 @@ function DateThai($strDate)
                         </a>
                     <?php } ?>
 
-                    <?php
+                    <!-- <?php
                     $arr_cate_id = [];
                     $cate_id_show = "";
                     // var_dump($model_cate); exit();
@@ -116,7 +116,7 @@ function DateThai($strDate)
                         }
                     ?>
                         <button style="white-space: normal;" class="btn btn-default filter-button btn-lg" data-filter="<?= $model_cate_tms->cate_id ?>"><?= $model_cate_tms->cate_title ?></button>
-                    <?php } ?>
+                    <?php } ?> -->
 
 
                 </div>
@@ -450,9 +450,9 @@ function DateThai($strDate)
                                         <div class="exp-course">
                                             <small class=""><span class="text-main"><i class="fa fa-calendar text-main"></i> <?= $label->label_dateStart ?> :</span> <?php echo Helpers::lib()->DateLangTms($schedule->training_date_start, Yii::app()->session['lang']); ?> - <?php echo Helpers::lib()->DateLangTms($schedule->training_date_end, Yii::app()->session['lang']); ?></small>
                                         </div>
-                                        <div class="course-time">
+                                        <!-- <div class="course-time">
                                             <small class="text-muted"><i class="fa fa-clock"></i> 1 hr 30 min.</small>
-                                        </div>
+                                        </div> -->
                                         <!-- <div class="text-center mt-20">
                                             <a href="<?= $url; ?>" class="btn <?= $btcl ?> btn-regislearn " <?= $evnt ?>><?= $learnn ?></a>
                                         </div> -->
