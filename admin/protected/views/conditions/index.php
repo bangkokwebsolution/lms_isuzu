@@ -112,22 +112,45 @@ EOD
                     'type'=>'raw',
                     'htmlOptions'=>array('style'=>'text-align: center','width'=>$this->getWidthColumnLang().'px;'),
                 		),
+						// array(
+						// 	'class'=>'AButtonColumn',
+						// 	'visible'=>Controller::PButton(
+						// 		array("Conditions.*", "Conditions.View", "Conditions.Update", "Conditions.Delete")
+						// 	),
+						// 	'buttons' => array(
+						// 		'view'=> array(
+						// 			'visible'=>'Controller::PButton( array("Conditions.*", "Conditions.View") )'
+						// 		),
+						// 		'update'=> array(
+						// 			'visible'=>'Controller::PButton( array("Conditions.*", "Conditions.Update") )'
+						// 		),
+						// 		'delete'=> array(
+						// 			'visible'=>'Controller::PButton( array("Conditions.*", "Conditions.Delete") )'
+						// 		),
+						// 	),
+						// ),
 						array(
-							'class'=>'AButtonColumn',
-							'visible'=>Controller::PButton(
-								array("Conditions.*", "Conditions.View", "Conditions.Update", "Conditions.Delete")
-							),
-							'buttons' => array(
-								'view'=> array(
-									'visible'=>'Controller::PButton( array("Conditions.*", "Conditions.View") )'
-								),
-								'update'=> array(
-									'visible'=>'Controller::PButton( array("Conditions.*", "Conditions.Update") )'
-								),
-								'delete'=> array(
-									'visible'=>'Controller::PButton( array("Conditions.*", "Conditions.Delete") )'
-								),
-							),
+							'header'=>'จัดการ',
+							'type'=>'raw',
+							'htmlOptions' => array(
+			                   'style' => 'width:120px',
+			                ),
+							'value'=>function($data){
+								// $text = '
+								// <a class="btn-action glyphicons eye_open btn-info" title="ดูรายละเอียด" href="'.Yii::app()->controller->createUrl('orgChart/orgview/'.$data->id).'"><i></i></a>
+								// ';
+
+								$text .= '
+								<a class="btn-action glyphicons eye_open btn-info" title="ดูรายละเอียด" href="'.Yii::app()->controller->createUrl('Conditions/'.$data->id).'"><i></i></a>
+								<a class="btn-action glyphicons pencil btn-success" title="แก้ไข" href="'.Yii::app()->controller->createUrl('Conditions/update/'.$data->id).'"><i></i></a>
+								';
+
+								// if($data->id >= 4){
+
+								return $text;
+							},
+						
+
 						),
 					),
 				)); ?>
