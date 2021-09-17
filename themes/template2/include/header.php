@@ -124,12 +124,18 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                         if (Yii::app()->user->id == null) {
 
                             $img  = Yii::app()->theme->baseUrl . "/images/thumbnail-profile.png";
+
                         } else {
                             $criteria = new CDbCriteria;
                             $criteria->addCondition('id =' . Yii::app()->user->id);
                             $Users = Users::model()->findAll($criteria);
                             foreach ($Users as $key => $value) {
-                                $img = Yii::app()->baseUrl . '/uploads/user/' . $value->id . '/thumb/' . $value->pic_user;
+                                if(file_exists(YiiBase::getPathOfAlias('webroot').'/uploads/user/' . $value->id . '/thumb/' . $value->pic_user)){
+                                    $img = Yii::app()->baseUrl . '/uploads/user/' . $value->id . '/thumb/' . $value->pic_user;
+                                }else{
+                                    $img  = Yii::app()->theme->baseUrl . "/images/login-icon.png";
+                                }
+                                
                             }
                         }
                         ?>

@@ -982,55 +982,55 @@ class AdminController extends Controller
             // var_dump($namedDataArray);exit();
 			foreach($namedDataArray as $key => $result){
                 $search_user = UserNew::model()->findAll(array('condition'=>'username = '.$result["Employee ID."]));
-				if(empty($search_user)){
-				$model = new UserNew;
-				$profile = new Profile;
-				$model->email = $result["Email"];
-				$model->username = $result["Employee ID."];
-                $model->employee_id = $result["Employee ID."];
+                if(empty($search_user)){
+                    $model = new UserNew;
+                    $profile = new Profile;
+                    $model->email = $result["Email"];
+                    $model->username = $result["Employee ID."];
+                    $model->employee_id = $result["Employee ID."];
                 // $model->password = md5($model->username);
                 // $model->verifyPassword = md5($result["Employee ID."]);
 
-				$model->type_register = 2;
-				$model->superuser = 0;
-				$model->repass_status = 0;
+                    $model->type_register = 2;
+                    $model->superuser = 0;
+                    $model->repass_status = 0;
 
-				$model->create_at = date('Y-m-d H:i:s');
-				$model->status = 1;
-                $model->org_id  =$result["Org. Chat ID"];
+                    $model->create_at = date('Y-m-d H:i:s');
+                    $model->status = 1;
+                    $model->org_id  =$result["Org. Chat ID"];
 
 
 				// $genpass = $this->RandomPassword();
-                $genpass = md5($result["Employee ID."]);
-                $model->verifyPassword = $genpass;
-                $model->password = $genpass;
-                $model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
+                    $genpass = md5($result["Employee ID."]);
+                    $model->verifyPassword = $genpass;
+                    $model->password = $genpass;
+                    $model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
 
-                if ($model->validate()) {
-                   $model->save(false);
+                    if ($model->validate()) {
+                     $model->save(false);
 						//$data[$key]['msg'] = 'pass';
 
-                   $modelProfile = new Profile;
-                   $modelProfile->user_id = $model->id;
-                   $modelProfile->firstname = $result["Firstname (TH)"];
-                   $modelProfile->lastname = $result["Lastname (TH)"];
-                   $modelProfile->firstname_en = $result["Firstname (Eng)"];
-                   $modelProfile->lastname_en = $result["Lastname (Eng)"];
-                   $modelProfile->sex = $result["Gender"];
+                     $modelProfile = new Profile;
+                     $modelProfile->user_id = $model->id;
+                     $modelProfile->firstname = $result["Firstname (TH)"];
+                     $modelProfile->lastname = $result["Lastname (TH)"];
+                     $modelProfile->firstname_en = $result["Firstname (Eng)"];
+                     $modelProfile->lastname_en = $result["Lastname (Eng)"];
+                     $modelProfile->sex = $result["Gender"];
                    // $modelProfile->tel = $result["tel"];
-                   $modelProfile->kind = $result["KIND"];
-                   $modelProfile->organization_unit = $result["Organization unit"];
-                   $modelProfile->abbreviate_code = $result["Abbreviate code"];
-                   $modelProfile->location = $result["Location"];
-                   $modelProfile->group_name = $result["Group"];
-                   $modelProfile->shift = $result["Shift"];
-                   $EmpClass = EmpClass::model()->findByAttributes(array('title'=>$result["Employee class"]));
-                   if(!empty($EmpClass)){
+                     $modelProfile->kind = $result["KIND"];
+                     $modelProfile->organization_unit = $result["Organization unit"];
+                     $modelProfile->abbreviate_code = $result["Abbreviate code"];
+                     $modelProfile->location = $result["Location"];
+                     $modelProfile->group_name = $result["Group"];
+                     $modelProfile->shift = $result["Shift"];
+                     $EmpClass = EmpClass::model()->findByAttributes(array('title'=>$result["Employee class"]));
+                     if(!empty($EmpClass)){
                         $modelProfile->employee_class = $EmpClass->id ;
                     }
-                   $modelProfile->position_description = $result["Position description"];
+                    $modelProfile->position_description = $result["Position description"];
 
-                   if($modelProfile->validate()){
+                    if($modelProfile->validate()){
                       $modelProfile->save(false);
                       $data[$key]['msg'] = 'pass';
 
@@ -1060,37 +1060,37 @@ class AdminController extends Controller
                         // }catch (Exception $e) {
                         //     return "fail";
                         // }
-                      } else {
+                  } else {
 
-                          $HisImportErrorArr[] = $HisImportArr[$key];
-                          $msgAllArr = array();
+                      $HisImportErrorArr[] = $HisImportArr[$key];
+                      $msgAllArr = array();
 
-                          $attrAllArr = array();
-                          foreach($modelProfile->getErrors() as $field => $msgArr){
-                             $attrAllArr[] = $field;
-                             $msgAllArr[] = $msgArr[0];
-                         }
+                      $attrAllArr = array();
+                      foreach($modelProfile->getErrors() as $field => $msgArr){
+                       $attrAllArr[] = $field;
+                       $msgAllArr[] = $msgArr[0];
+                   }
 
-                         $HisImportErrorMessageArr[$key] = implode(", ",$msgAllArr);
-                         $data[$key]['msg'] = implode(", ",$msgAllArr);
-                         $HisImportAttrErrorArr[] = $attrAllArr;
-                         $HisImportArr = $sheet_array;
-                         $deldata = User::model()->findbyPk($model->id);
-                         $deldata->delete();
-                         $Insert_success[$key] = "สร้างชื่อผู้ใช้ไม่สำเร็จ";
-                     }
-                 }else{
-                   $msgAllArr = array();
-                   $attrAllArr = array();
-                   foreach($model->getErrors() as $field => $msgArr){
-                      $attrAllArr[] = $field;
-                      $msgAllArr[] = $msgArr[0];
-                  }
-                  $data[$key]['msg'] = implode(", ",$msgAllArr);
+                   $HisImportErrorMessageArr[$key] = implode(", ",$msgAllArr);
+                   $data[$key]['msg'] = implode(", ",$msgAllArr);
+                   $HisImportAttrErrorArr[] = $attrAllArr;
+                   $HisImportArr = $sheet_array;
+                   $deldata = User::model()->findbyPk($model->id);
+                   $deldata->delete();
+                   $Insert_success[$key] = "สร้างชื่อผู้ใช้ไม่สำเร็จ";
+               }
+           }else{
+             $msgAllArr = array();
+             $attrAllArr = array();
+             foreach($model->getErrors() as $field => $msgArr){
+              $attrAllArr[] = $field;
+              $msgAllArr[] = $msgArr[0];
+          }
+          $data[$key]['msg'] = implode(", ",$msgAllArr);
 						// var_dump($model->getErrors());
 						// exit();
-              }
-			}
+      }
+  }
 
 				} //end loop add user
                 //if($model->save())
@@ -1144,7 +1144,7 @@ class AdminController extends Controller
 			// var_dump($_POST['User']);exit();
 			$model->employee_id = $_POST['User']['username'];
 			$model->username = $_POST['User']['username'];
-			$model->password = md5($_POST['User']['employee_id']);
+			$model->password = md5($_POST['User']['username']);
             $model->org_id = $_POST['User']['org_id'];
             $model->verifyPassword = $model->password;
 
@@ -1203,16 +1203,23 @@ class AdminController extends Controller
           $profile->position_description=$_POST['Profile']['position_description'];
           $profile->sex=$_POST['Profile']['sex'];
           $profile->save(false);
-          $this->redirect(array('view','id'=>$model->id));
-      }
+          $to['email'] = $model->email;
+          $to['firstname'] = $profile->firstname;
+          $to['lastname'] = $profile->lastname;
+          $message = $this->renderPartial('_mail_message',array('model' => $model,'genpass'=>$_POST['User']['username']),true);
+          if($message){
+            $send = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
+        }
+        $this->redirect(array('view','id'=>$model->id));
+    }
 				// $this->redirect(array('view','id'=>$model->id));
-      $this->redirect(array('create'));
+    $this->redirect(array('create'));
 
-  }
-  $this->render('create',array(
-     'model'=>$model,
-     'profile'=>$profile,
- ));
+}
+$this->render('create',array(
+   'model'=>$model,
+   'profile'=>$profile,
+));
 }
 
 	/**
@@ -1256,13 +1263,13 @@ class AdminController extends Controller
                 $path2 = $model->id;
                 $path3 = "thumb";
                 if (!is_dir($uploadDir."../".$path1."/")) {
-                   mkdir($uploadDir."../".$path1."/", 0777, true);
-               }
-               if (!is_dir($uploadDir."../".$path1."/".$path2."/")) {
-                   mkdir($uploadDir."../".$path1."/".$path2."/", 0777, true);
-               }
-               if (!is_dir($uploadDir."../".$path1."/".$path2."/".$path3."/")) {
-                   mkdir($uploadDir."../".$path1."/".$path2."/".$path3."/", 0777, true);
+                 mkdir($uploadDir."../".$path1."/", 0777, true);
+             }
+             if (!is_dir($uploadDir."../".$path1."/".$path2."/")) {
+                 mkdir($uploadDir."../".$path1."/".$path2."/", 0777, true);
+             }
+             if (!is_dir($uploadDir."../".$path1."/".$path2."/".$path3."/")) {
+                 mkdir($uploadDir."../".$path1."/".$path2."/".$path3."/", 0777, true);
             }else{ // ลบ file เก่า
             	$files = glob($uploadDir."../".$path1."/".$path2."/".$path3.'/*');
                     foreach($files as $file){ // iterate files
@@ -1297,56 +1304,56 @@ class AdminController extends Controller
 
 
             if(Yii::app()->user->id){
-             Helpers::lib()->getControllerActionId($model->id);
-         }
-         $this->redirect(array('view','id'=>$model->id));
+               Helpers::lib()->getControllerActionId($model->id);
+           }
+           $this->redirect(array('view','id'=>$model->id));
 			// } 
 
-     }
+       }
 
-     $this->render('update',array(
-       'model'=>$model,
-       'profile'=>$profile,
-   ));
- }
- public function actionPrintpdf(){
+       $this->render('update',array(
+         'model'=>$model,
+         'profile'=>$profile,
+     ));
+   }
+   public function actionPrintpdf(){
 
-  $user_id =$_GET['id'];
-  if ($user_id != '') {
-   $profiles = Profile::model()->find(array(
-    'condition' => 'user_id=:user_id ',
-    'params' => array('user_id' => $user_id)
-));
-   $user = User::model()->find(array(
-    'condition' => 'id=:id',
-    'params' => array('id' => $user_id)
-));
-   $path_img = Yii::app()->baseUrl. '/images/head_print.png';
+      $user_id =$_GET['id'];
+      if ($user_id != '') {
+         $profiles = Profile::model()->find(array(
+            'condition' => 'user_id=:user_id ',
+            'params' => array('user_id' => $user_id)
+        ));
+         $user = User::model()->find(array(
+            'condition' => 'id=:id',
+            'params' => array('id' => $user_id)
+        ));
+         $path_img = Yii::app()->baseUrl. '/images/head_print.png';
 
 		// $padding_left = 12.7;
 		// $padding_right = 12.7;
 		// $padding_top = 10;
 		// $padding_bottom = 20;
 
-   require_once __DIR__ . '/../../../vendors/mpdf7/autoload.php';
-   $mPDF = new \Mpdf\Mpdf();
+         require_once __DIR__ . '/../../../vendors/mpdf7/autoload.php';
+         $mPDF = new \Mpdf\Mpdf();
 		//$mPDF = Yii::app()->ePdf->mpdf('th', 'A4', '0', 'garuda', $padding_left, $padding_right, $padding_top, $padding_bottom);
-   $mPDF->useDictionaryLBR = false;
-   $mPDF->setDisplayMode('fullpage');
-   $mPDF->autoLangToFont = true;
-   $mPDF->autoPageBreak = true;
-   $mPDF->SetTitle("ใบสมัครสมาชิก");
-   $texttt= '
-   <style>
-   body { font-family: "garuda"; }
-   </style>
-   ';
-   $mPDF->WriteHTML($texttt);
-   $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('printpdf', array('profiles'=>$profiles,'user'=>$user), true), 'UTF-8', 'UTF-8'));
-   $mPDF->Output('ใบสมัครสมาชิก.pdf', 'I');
+         $mPDF->useDictionaryLBR = false;
+         $mPDF->setDisplayMode('fullpage');
+         $mPDF->autoLangToFont = true;
+         $mPDF->autoPageBreak = true;
+         $mPDF->SetTitle("ใบสมัครสมาชิก");
+         $texttt= '
+         <style>
+         body { font-family: "garuda"; }
+         </style>
+         ';
+         $mPDF->WriteHTML($texttt);
+         $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('printpdf', array('profiles'=>$profiles,'user'=>$user), true), 'UTF-8', 'UTF-8'));
+         $mPDF->Output('ใบสมัครสมาชิก.pdf', 'I');
 
-}
-}
+     }
+ }
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'index' page.

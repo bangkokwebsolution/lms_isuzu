@@ -161,8 +161,9 @@ date_default_timezone_set("Asia/Bangkok");
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><?php echo $form->labelEx($model, 'username'); ?></label>
-                                    <?php echo $form->textField($model, 'username', array('class' => 'form-control', 'placeholder' => 'รหัสพนักงาน','onclick'=>'check_id()','required'=>'required')); ?>
+                                    <label><label for="username" class="required">ชื่อผู้ใช้ <span class="required">*</span></label></label>
+                                    <!-- <label><?php echo $form->labelEx($model, 'username',array("class"=>'required')); ?> -->
+                                    <?php echo $form->textField($model, 'username', array('class' => 'form-control', 'placeholder' => 'รหัสพนักงาน','onchange'=>'check_id()','required'=>'required')); ?>
                                     <?php echo $form->error($model, 'username'); ?>
                                 </div>
                             </div>
@@ -170,8 +171,9 @@ date_default_timezone_set("Asia/Bangkok");
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><?php echo $form->labelEx($model, 'email'); ?></label>
-                                    <?php echo $form->textField($model, 'email', array('class' => 'form-control', 'placeholder' => 'อีเมล','onkeyup'=>"checkMail('email')")); ?>
+                                    <!-- <label><?php echo $form->labelEx($model, 'email',array("class"=>'required')); ?></label> -->
+                                    <label><label for="email" class="required">อีเมล <span class="required">*</span></label></label>
+                                    <?php echo $form->textField($model, 'email', array('class' => 'form-control', 'placeholder' => 'อีเมล','onchange'=>"checkMail('email')")); ?>
                                     <?php echo $form->error($model, 'email'); ?>
                                 </div>
                             </div>  
@@ -491,7 +493,8 @@ function check_id(){
         }),
         success: function(data) {
             if(data == 1){
-                $('#User_employee_id').val('');
+                // $('#User_employee_id').val('');
+                $('#User_username').val('');
                 alert('รหัสพนักงาน ซ้ำ');
             }
         }

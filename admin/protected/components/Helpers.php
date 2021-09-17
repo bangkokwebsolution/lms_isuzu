@@ -314,13 +314,14 @@ Class Helpers
         $adminEmailPass = 'admindemo';
 
         $mail =  new PHPMailer(true);
+
         $mail->SMTPOptions = array(
             'ssl' => array(
                 'verify_peer' => false,
                 'verify_peer_name' => false,
                 'allow_self_signed' => true
-                )
-            );
+            )
+        );
 
         // $mail =  new PHPMailer(true);
         // $mail->ClearAddresses();
@@ -346,13 +347,13 @@ Class Helpers
         // //     Yii::app()->user->setFlash('mail',$to['email']);
         // // }
         // return $mail->Send();
-         $mail->ClearAddresses();
+        $mail->ClearAddresses();
         $mail->CharSet = 'utf-8';
         $mail->IsSMTP();
-       // $mail->Host = 'smtp.office365.com'; // gmail server
+        //$mail->Host = 'smtp.office365.com'; // gmail server
         $mail->Host = 'smtp.gmail.com';
         $mail->Port = '587'; // port number
-        $mail->SMTPSecure = "ssl";
+        $mail->SMTPSecure = "tls";
         $mail->SMTPKeepAlive = true;
         $mail->Mailer = "smtp";
         $mail->SMTPAuth = true;
@@ -367,8 +368,12 @@ Class Helpers
 
        // $mail->SMTPSecure = 'tls';
         
-
-        return $mail->Send();
+        try {
+                $mail->Send();
+                return "pass";
+            } catch (Exception $e) {
+                return "fail";
+            }
     }
 
 

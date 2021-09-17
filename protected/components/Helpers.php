@@ -684,9 +684,10 @@ public function SendMail($to, $subject, $message, $fromText = 'Isuzu')
     require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/Exception.php";
     require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/PHPMailer.php";
     require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/SMTP.php";
+    
     $SettingAll = Helpers::lib()->SetUpSetting();
-    $adminEmail = $SettingAll['USER_EMAIL'];
-    $adminEmailPass = $SettingAll['PASS_EMAIL'];
+    // $adminEmail = $SettingAll['USER_EMAIL'];
+    // $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
     $adminEmail = 'keng1155ker@gmail.com';
     $adminEmailPass = 'keng12345678';
@@ -3622,7 +3623,6 @@ public function sendApiLms($scheduleMain,$scheduleId)
     }
 
     function DateLangTms($strDate,$lang_id) {
-
         $strMonth = date("n", strtotime($strDate));
         $strDay = date("j", strtotime($strDate));
         
