@@ -7,19 +7,19 @@ class AdminUserController extends Controller
 		// parent::init();
 		// $this->lastactivity();
 		if(Yii::app()->user->id == null){
-				$this->redirect(array('site/index'));
-			}
+			$this->redirect(array('site/index'));
+		}
 		
 	}
 	
 	// private $_model;
 	public function filters()
-    {
-        return array(
+	{
+		return array(
             'accessControl', // perform access control for CRUD operations
             // 'rights',
-            );
-    }
+        );
+	}
 
     /**
      * Specifies the access control rules.
@@ -28,21 +28,21 @@ class AdminUserController extends Controller
      */
     public function accessRules()
     {
-        return array(
+    	return array(
         	array('allow',  // allow all users to perform 'index' and 'view' actions
-            	'actions' => array('index', 'view'),
-            	'users' => array('*'),
-            	),
-            array('allow',
+        		'actions' => array('index', 'view'),
+        		'users' => array('*'),
+        	),
+        	array('allow',
                 // กำหนดสิทธิ์เข้าใช้งาน actionIndex
-                'actions' => AccessControl::check_action(),
+        		'actions' => AccessControl::check_action(),
                 // ได้เฉพาะ group 1 เท่านั่น
-                'expression' => 'AccessControl::check_access()',
-                ),
+        		'expression' => 'AccessControl::check_access()',
+        	),
             array('deny',  // deny all users
-                'users' => array('*'),
-                ),
-            );
+            	'users' => array('*'),
+            ),
+        );
     }
 
     // public function actionGetAjaxDivision(){
@@ -94,58 +94,58 @@ class AdminUserController extends Controller
     // }
     public function actionListPosition(){
 
-     $model=Position::model()->findAll('department_id=:department_id',
-        array(':department_id'=>$_POST['id']));
+    	$model=Position::model()->findAll('department_id=:department_id',
+    		array(':department_id'=>$_POST['id']));
 
-     $data=CHtml::listData($model,'id','position_title',array('empty' => 'ตำแหน่ง'));
-     if ($data) {  
-     $sub_list = 'เลือกตำแหน่ง';
-     $data = '<option value ="">'.$sub_list.'</option>';
-     foreach ($model as $key => $value) {
-        $data .= '<option value = "'.$value->id.'"'.'>'.$value->position_title.'</option>';
+    	$data=CHtml::listData($model,'id','position_title',array('empty' => 'ตำแหน่ง'));
+    	if ($data) {  
+    		$sub_list = 'เลือกตำแหน่ง';
+    		$data = '<option value ="">'.$sub_list.'</option>';
+    		foreach ($model as $key => $value) {
+    			$data .= '<option value = "'.$value->id.'"'.'>'.$value->position_title.'</option>';
+    		}
+    		echo ($data);
+    	}else{
+    		echo '<option value = "">ไม่พบข้อมูล</option>';
+
+    	}
+
     }
-    echo ($data);
-    }else{
-    echo '<option value = "">ไม่พบข้อมูล</option>';
-     	
-     }
 
-}
+    public function actionListBranch(){
 
-public function actionListBranch(){
+    	$model=Branch::model()->findAll('position_id=:position_id',
+    		array(':position_id'=>$_POST['id']));
 
- $model=Branch::model()->findAll('position_id=:position_id',
-    array(':position_id'=>$_POST['id']));
+    	$data=CHtml::listData($model,'id','branch_name',array('empty' => 'สาขา'));
+    	if ($data) {
+    		$sub_list = 'เลือกระดับ';
+    		$data = '<option value ="">'.$sub_list.'</option>';
+    		foreach ($model as $key => $value) {
+    			$data .= '<option value = "'.$value->id.'"'.'>'.$value->branch_name.'</option>';
+    		}
+    		echo ($data);
+    	}else{
+    		echo '<option value = "">ไม่พบข้อมูล</option>';
 
- $data=CHtml::listData($model,'id','branch_name',array('empty' => 'สาขา'));
- if ($data) {
- $sub_list = 'เลือกระดับ';
- $data = '<option value ="">'.$sub_list.'</option>';
- foreach ($model as $key => $value) {
-    $data .= '<option value = "'.$value->id.'"'.'>'.$value->branch_name.'</option>';
-}
-echo ($data);
-}else{
-    echo '<option value = "">ไม่พบข้อมูล</option>';
-     	
-     }
+    	}
 
-}
+    }
 
-public function actionListDepartment(){
+    public function actionListDepartment(){
 
- $model=Department::model()->findAll('type_employee_id=:type_employee_id',
-    array(':type_employee_id'=>$_POST['id']));
+    	$model=Department::model()->findAll('type_employee_id=:type_employee_id',
+    		array(':type_employee_id'=>$_POST['id']));
 
- $data=CHtml::listData($model,'id','dep_title',array('empty' => 'แผนก'));
- $sub_list = 'เลือกแผนก';
- $data = '<option value ="">'.$sub_list.'</option>';
- foreach ($model as $key => $value) {
-    $data .= '<option value = "'.$value->id.'"'.'>'.$value->dep_title.'</option>';
-}
-echo ($data);
+    	$data=CHtml::listData($model,'id','dep_title',array('empty' => 'แผนก'));
+    	$sub_list = 'เลือกแผนก';
+    	$data = '<option value ="">'.$sub_list.'</option>';
+    	foreach ($model as $key => $value) {
+    		$data .= '<option value = "'.$value->id.'"'.'>'.$value->dep_title.'</option>';
+    	}
+    	echo ($data);
 
-}
+    }
 
     // public function actionTest(){
     // 	var_dump("expression");exit();
@@ -165,57 +165,59 @@ echo ($data);
         }
         $this->render('index',array(
         	'model'=>$model,
-        	));
+        ));
     }
     public function actionCreate(){
     	$gen = Generation::model()->find('active=1');
-		$model=new User;
-		$profile=new Profile;
-		$this->performAjaxValidation(array($model,$profile));
-		if(isset($_POST['ajax']) && $_POST['ajax']==='registration-form')
-			{
-				echo UActiveForm::validate(array($model,$profile));
-				Yii::app()->end();
-			}
+    	$model=new User;
+    	$profile=new Profile;
+    	$this->performAjaxValidation(array($model,$profile));
+    	if(isset($_POST['ajax']) && $_POST['ajax']==='registration-form')
+    	{
+    		echo UActiveForm::validate(array($model,$profile));
+    		Yii::app()->end();
+    	}
 
-		if(isset($_POST['User']))
-		{		
-			$Neworg = $_POST['Orgchart'];           
-            $Neworg = json_encode($Neworg);
-            $PGoup = $_POST['PGoup'];           
-            $PGoup = json_encode($PGoup);
-            $model->orgchart_lv2 = $Neworg;
+    	if(isset($_POST['User'])){	
+
+    		$user_name = UserNew::model()->findAll(array('condition'=>'username = "'.$_POST['User']['username'].'"'));
+    	if(count($user_name) == 0){
+    		$Neworg = $_POST['Orgchart'];           
+    		$Neworg = json_encode($Neworg);
+    		$PGoup = $_POST['PGoup'];           
+    		$PGoup = json_encode($PGoup);
+    		$model->orgchart_lv2 = $Neworg;
             // $model->position_id = $_POST['User']['position_id'];
-            $model->division_id = $_POST['User']['division_id'];
-            $criteria=new CDbCriteria;
-            $criteria->compare('department_id',$_POST['User']['department_id']);
-            $criteria->compare('position_title',$_POST['User']['position_name']);
-            $position = Position::model()->find($criteria);
-            if(!$position){
-                $position = new Position;
-                $position->department_id = $_POST['User']['department_id'];
-                $position->position_title = $_POST['User']['position_name'];
-                $position->create_date = date("Y-m-d H:i:s");
-				if(!empty($_POST['User']['department_id']) && !empty($_POST['User']['position_name']))$position->save();
-            }
-            $model->org_id = $_POST['User']['org_id'];
-			$model->position_name = $_POST['User']['position_name'];
-            $model->position_id = $position->id;
-            $model->company_id = $_POST['User']['company_id'];
-			$model->username = $_POST['User']['username'];
+    		$model->division_id = $_POST['User']['division_id'];
+    		$criteria=new CDbCriteria;
+    		$criteria->compare('department_id',$_POST['User']['department_id']);
+    		$criteria->compare('position_title',$_POST['User']['position_name']);
+    		$position = Position::model()->find($criteria);
+    		if(!$position){
+    			$position = new Position;
+    			$position->department_id = $_POST['User']['department_id'];
+    			$position->position_title = $_POST['User']['position_name'];
+    			$position->create_date = date("Y-m-d H:i:s");
+    			if(!empty($_POST['User']['department_id']) && !empty($_POST['User']['position_name']))$position->save();
+    		}
+    		$model->org_id = $_POST['User']['org_id'];
+    		$model->position_name = $_POST['User']['position_name'];
+    		$model->position_id = $position->id;
+    		$model->company_id = $_POST['User']['company_id'];
+    		$model->username = $_POST['User']['username'];
 			// var_dump($model->attributes);exit();
-			$model->employee_id = $_POST['User']['username'];
-            $model->email = $_POST['User']['email'];
-            $model->group = $PGoup;
-            $model->password = $_POST['User']['password'];
-            $model->verifyPassword = $_POST['User']['verifyPassword'];
-            $model->department_id = $_POST['User']['department_id'];
-            $model->create_at = date("Y-m-d H:i:s");
-			$model->activkey = UserModule::encrypting(microtime().$model->password);
-			$profile->attributes = $_POST['Profile'];
-			$profile->firstname = $_POST['Profile']['firstname'];
-			$profile->lastname  = $_POST['Profile']['lastname'];
-			$profile->title_id  = $_POST['Profile']['title_id'];
+    		$model->employee_id = $_POST['User']['username'];
+    		$model->email = $_POST['User']['email'];
+    		$model->group = $PGoup;
+    		$model->password = $_POST['User']['password'];
+    		$model->verifyPassword = $_POST['User']['verifyPassword'];
+    		$model->department_id = $_POST['User']['department_id'];
+    		$model->create_at = date("Y-m-d H:i:s");
+    		$model->activkey = UserModule::encrypting(microtime().$model->password);
+    		$profile->attributes = $_POST['Profile'];
+    		$profile->firstname = $_POST['Profile']['firstname'];
+    		$profile->lastname  = $_POST['Profile']['lastname'];
+    		$profile->title_id  = $_POST['Profile']['title_id'];
 
 			// $profile->user_id=0;
 
@@ -223,7 +225,7 @@ echo ($data);
 
        // var_dump($errors);
        // exit();
-        
+
 			if($model->validate()) {	//&&$profile->validate()
 				$model->password=UserModule::encrypting($model->password);
 				$model->verifyPassword=UserModule::encrypting($model->verifyPassword);
@@ -237,8 +239,8 @@ echo ($data);
 		  //           $beautifulName = trim($mediocreName, '_') . "." . $uploadFile->extensionName;
 				// 	$model->pic_user = $beautifulName;
 				// }
-                $model->status = 1;
-                $model->superuser = 1;
+				$model->status = 1;
+				$model->superuser = 1;
 
 				if($model->save()) {
 
@@ -272,12 +274,12 @@ echo ($data);
 					// 				} else {
 					// 					$value .= $contact;
 					// 				}
-									
+
 					// 			}
 					// 			$profile->contactfrom = $value;
 					// 		}
 					// $profile->user_id=$model->id;
-							
+
 					$profile->generation = $gen->id_gen;
 					$profile->user_id=$model->id;
 					$profile->save(false);
@@ -286,12 +288,19 @@ echo ($data);
 			} else {
 				$profile->validate();
 			}
+		}else{
+			$this->render('create',array(
+				'model'=>$model,
+				'profile'=>$profile,
+			));
+			exit();
 		}
+	}
 
-		$this->render('create',array(
-			'model'=>$model,
-			'profile'=>$profile,
-		));
+	$this->render('create',array(
+		'model'=>$model,
+		'profile'=>$profile,
+	));
 		// $model = new AdminUser();
   //   	$model = new AdminUser;
   //   	$modelUser = new UsersAdmin;
@@ -333,7 +342,7 @@ echo ($data);
 		// 				if($model->save()){
 		// 					$this->redirect(array('index'));
 		// 				} 
-						
+
 		// 			} else {
 		// 				//var_dump($model->getErrors());
 		// 				$modelchk_validate = Users::model()->find(array('condition'=> 'id ='.$modelUser->id));
@@ -366,45 +375,55 @@ echo ($data);
 		// 		));
 		// }
 		// $this->render('create', array('model' => $model));
+}
+
+public function actioncheckuser(){
+	$UserNew = UserNew::model()->findAll(array('condition'=>'username = "'.$_POST['username'].'"'));
+	if(count($UserNew)>0){
+		echo 2;
+	}else{
+		echo 1;
 	}
-	public function actionView($id){		
-		if($id){
+}
+
+public function actionView($id){		
+	if($id){
 			// $model = Profile::model()->find(array('condition' => 'user_id = '.$id));
-			$model = User::model()->findByPk($id);
-			$this->render('view' ,array(
-				'model'=>$model
-				));
-		}
+		$model = User::model()->findByPk($id);
+		$this->render('view' ,array(
+			'model'=>$model
+		));
 	}
-	public function actionUpdate($id){
+}
+public function actionUpdate($id){
 		// echo '<pre>';
 		// var_dump($model);
 		// exit();
-		if($id){
-			$model = UserNew::model()->findbyPk($_GET['id']);
+	if($id){
+		$model = UserNew::model()->findbyPk($_GET['id']);
 				// $model=$this->loadModel();
-			$profile=$model->profile;
-			$model->verifyPassword = $model->password;
-			$this->performAjaxValidation(array($model,$profile));
-			if(isset($_POST['ajax']) && $_POST['ajax']==='registration-form')
-				{
-					echo UActiveForm::validate(array($model,$profile));
-					Yii::app()->end();
-				}
-			if(isset($_POST['UserNew']))
-			{
+		$profile=$model->profile;
+		$model->verifyPassword = $model->password;
+		$this->performAjaxValidation(array($model,$profile));
+		if(isset($_POST['ajax']) && $_POST['ajax']==='registration-form')
+		{
+			echo UActiveForm::validate(array($model,$profile));
+			Yii::app()->end();
+		}
+		if(isset($_POST['UserNew']))
+		{
 				// echo '<pre>';
 				// var_dump($_POST['Orgchart']);
 				// exit();
-				$Neworg = $_POST['Orgchart'];           
-	            $Neworg = json_encode($Neworg);
-	            $PGoup = $_POST['PGoup'];           
-            	$PGoup = json_encode($PGoup);
-	            $model->orgchart_lv2 = $Neworg;
-	            $criteria=new CDbCriteria;
-	            $criteria->compare('department_id',$_POST['UserNew']['department_id']);
+			$Neworg = $_POST['Orgchart'];           
+			$Neworg = json_encode($Neworg);
+			$PGoup = $_POST['PGoup'];           
+			$PGoup = json_encode($PGoup);
+			$model->orgchart_lv2 = $Neworg;
+			$criteria=new CDbCriteria;
+			$criteria->compare('department_id',$_POST['UserNew']['department_id']);
 	            // $criteria->compare('position_title',$_POST['User']['position_name']);
-	            $position = Position::model()->find($criteria);
+			$position = Position::model()->find($criteria);
 	   //          if(!$position){
 	   //              $position = new Position;
 	   //              $position->department_id = $_POST['User']['department_id'];
@@ -417,10 +436,10 @@ echo ($data);
 	            // $model->position_id = $_POST['User']['position_id'];
 	            // $model->division_id = $_POST['User']['division_id'];
 	            // $model->company_id = $_POST['User']['company_id'];
-	            $model->department_id = $_POST['UserNew']['department_id'];
-	            $model->group = $PGoup;
+			$model->department_id = $_POST['UserNew']['department_id'];
+			$model->group = $PGoup;
 
-				$model->username = $_POST['UserNew']['username'];
+			$model->username = $_POST['UserNew']['username'];
 	            $model->email = $_POST['UserNew']['email']; //**
 	           	// $model->username = $model->email;
 	            // $model->identification = $_POST['Profile']['identification'];
@@ -439,11 +458,11 @@ echo ($data);
 	            // 	 $model->scenario = 'general';
 	            // }
 	            if(!empty($_POST['UserNew']['newpassword'])){
-		            $model->password = $_POST['UserNew']['newpassword'];
-		            $model->verifyPassword = $_POST['UserNew']['confirmpass'];
-		        }
-				$profile->attributes=$_POST['Profile'];
-				$profile->title_id  = $_POST['Profile']['title_id'];
+	            	$model->password = $_POST['UserNew']['newpassword'];
+	            	$model->verifyPassword = $_POST['UserNew']['confirmpass'];
+	            }
+	            $profile->attributes=$_POST['Profile'];
+	            $profile->title_id  = $_POST['Profile']['title_id'];
 
 				// $model->verifyPassword = $model->password;
 				if($model->validate()) { // &&$profile->validate()
@@ -490,7 +509,7 @@ echo ($data);
 					// 					} else {
 					// 						$value .= $contact;
 					// 					}
-										
+
 					// 				}
 					// 				$profile->contactfrom = $value;
 					// 			}
@@ -540,9 +559,9 @@ echo ($data);
 				'profile'=>$profile,
 			));
 
+		}
 	}
-}
-public function actionDelete($id){
+	public function actionDelete($id){
 
 		/*if($id){
 			$model = AdminUser::model()->find(array('condition' => 'm_id = '.$id));
@@ -572,7 +591,7 @@ public function actionDelete($id){
 		echo true;
 	}
 
-		public function loadModel()
+	public function loadModel()
 	{
 		if($this->_model===null)
 		{
@@ -584,12 +603,12 @@ public function actionDelete($id){
 		return $this->_model;
 	}
 
-	    protected function performAjaxValidation($validate)
-    {
-        if(isset($_POST['ajax']) && $_POST['ajax']==='user-form')
-        {
-            echo CActiveForm::validate($validate);
-            Yii::app()->end();
-        }
-    }
+	protected function performAjaxValidation($validate)
+	{
+		if(isset($_POST['ajax']) && $_POST['ajax']==='user-form')
+		{
+			echo CActiveForm::validate($validate);
+			Yii::app()->end();
+		}
+	}
 }

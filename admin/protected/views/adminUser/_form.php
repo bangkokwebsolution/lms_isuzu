@@ -202,7 +202,7 @@
                                 </div>                                
                                 <div class="form-group">
                                     <label><?php echo $form->labelEx($model, 'username'); ?></label>
-                                    <?php echo $form->textField($model, 'username', array('class' => 'form-control', 'placeholder' => 'ชื่อผู้ใช้ (Email)')); ?>
+                                    <?php echo $form->textField($model, 'username', array('class' => 'form-control','onchange'=>'checkuser()', 'placeholder' => 'ชื่อผู้ใช้ (Email)')); ?>
                                     <?php echo $form->error($model, 'username'); ?>
                                 </div>
                               <!--        <div class="form-group">
@@ -463,4 +463,23 @@
                 }
             });
         });
+    </script>
+    <script type="text/javascript">
+        function checkuser(){
+            var username = $('#User_username').val();
+            
+            $.ajax({
+                type: 'POST',
+                url: "<?= Yii::app()->createUrl('AdminUser/checkuser'); ?>",
+                data: {
+                    username: username
+                },
+                success: function(data) {
+                    if(data!=1){
+                        alert('ชื่อผู้ใช้ ซ้ำ!!');
+                        $('#User_username').val('');
+                    }
+                }
+            });
+        }
     </script>
