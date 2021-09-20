@@ -11,34 +11,34 @@ class ApproveCourseController extends Controller
         );
 	}
 
-      public function init()
-    {
-	        parent::init();
-	        $this->lastactivity();
-			if(Yii::app()->user->id == null){
-				$this->redirect(array('site/index'));
-			}
+	public function init()
+	{
+		parent::init();
+		$this->lastactivity();
+		if(Yii::app()->user->id == null){
+			$this->redirect(array('site/index'));
+		}
 		
-    }
+	}
 
-     public function accessRules()
-    {
-        return array(
+	public function accessRules()
+	{
+		return array(
         	array('allow',  // allow all users to perform 'index' and 'view' actions
-            	'actions' => array('index', 'view'),
-            	'users' => array('*'),
-            	),
-            array('allow',
+        		'actions' => array('index', 'view'),
+        		'users' => array('*'),
+        	),
+        	array('allow',
                 // กำหนดสิทธิ์เข้าใช้งาน actionIndex
-                'actions' => AccessControl::check_action(),
+        		'actions' => AccessControl::check_action(),
                 // ได้เฉพาะ group 1 เท่านั่น
-                'expression' => 'AccessControl::check_access()',
-                ),
+        		'expression' => 'AccessControl::check_access()',
+        	),
             array('deny',  // deny all users
-                'users' => array('*'),
-                ),
-            );
-    }
+            	'users' => array('*'),
+            ),
+        );
+	}
 
 	public function actionIndex()
 	{
@@ -91,7 +91,7 @@ class ApproveCourseController extends Controller
 			$user_id = $_POST["user_id"];
 			$request_id = $_POST["request_id"];
 
-		
+
 			$CourseOnline = CourseOnline::model()->findByPk($course_id);
 
 			$form_text = "";
@@ -155,21 +155,51 @@ class ApproveCourseController extends Controller
 		$course = CourseOnline::model()->findByPk($_POST['request_id']); 
 		$user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
 		
-		if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->create_by != Yii::app()->user->id){
+		if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->usernewcreate->org_id == $user_hr1->org_id && $course->create_by != Yii::app()->user->id){
+
 			$course->approve_status = 1;
 			$course->approve_by = Yii::app()->user->id;
-		}elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level && $course->create_by != Yii::app()->user->id) {
+			$ceh = 1;
+		}elseif ($user_hr1 != null && $user_org->level == 3 && $user_hr1->orgchart->level <= $user_org->level && ($user_hr1->orgchart->id ==$user_org->division_id || $user_org->id == $user_hr1->org_id ) && $course->create_by != Yii::app()->user->id) {
+
 			$course->approve_status = 1;
 			$course->approve_by = Yii::app()->user->id;
+			$ceh = 1;
+
+		}elseif ($user_hr1 != null && $user_org->level == 4 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id ) && $course->create_by != Yii::app()->user->id) {
+
+			$course->approve_status = 1;
+			$course->approve_by = Yii::app()->user->id;
+			$ceh = 1;
+
+		}elseif ($user_hr1 != null && $user_org->level == 5 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id || $user_org->gro->id ==  $user_hr1->org_id ) && $course->create_by != Yii::app()->user->id) {
+
+			$course->approve_status = 1;
+			$course->approve_by = Yii::app()->user->id;
+			$ceh = 1;
+
 		}else{
-			echo 2;
-			exit();
+
+			$ceh = 2;
+			// echo 2;
+			// exit();
 		}
-		if($course->save(false)){
+
+		if($ceh == 1){
+			if($course->save(false)){
 				echo 1;
-		}else{
+			}else{
 				echo 2;
+			}
+		}else{
+			echo $ceh;
 		}
+		
+		// if($course->save(false)){
+		// 		echo 1;
+		// }else{
+		// 		echo 2;
+		// }
 		// if($user_org->id == $user_hr1['org_id']){
 
 		// }
@@ -179,7 +209,7 @@ class ApproveCourseController extends Controller
 		// if (isset($_POST["request_id"]) && $_POST["request_id"] != "" && isset($_POST["approval_status"]) && $_POST["approval_status"] != "") {
 		// 	$request_id = $_POST["request_id"];
 		// 	$approval_status = $_POST["approval_status"];
-			
+
 		// }
 	}
 
@@ -207,9 +237,9 @@ class ApproveCourseController extends Controller
 			exit();
 		}
 		if($course->save(false)){
-				echo 1;
+			echo 1;
 		}else{
-				echo 2;
+			echo 2;
 		}
 		// if($user_org->id == $user_hr1['org_id']){
 
@@ -220,7 +250,7 @@ class ApproveCourseController extends Controller
 		// if (isset($_POST["request_id"]) && $_POST["request_id"] != "" && isset($_POST["approval_status"]) && $_POST["approval_status"] != "") {
 		// 	$request_id = $_POST["request_id"];
 		// 	$approval_status = $_POST["approval_status"];
-			
+
 		// }
 	}
 	public function actionSaveApprovalGeneralHR()
@@ -247,9 +277,9 @@ class ApproveCourseController extends Controller
 			exit();
 		}
 		if($course->save(false)){
-				echo 1;
+			echo 1;
 		}else{
-				echo 2;
+			echo 2;
 		}
 		// if($user_org->id == $user_hr1['org_id']){
 
@@ -260,7 +290,7 @@ class ApproveCourseController extends Controller
 		// if (isset($_POST["request_id"]) && $_POST["request_id"] != "" && isset($_POST["approval_status"]) && $_POST["approval_status"] != "") {
 		// 	$request_id = $_POST["request_id"];
 		// 	$approval_status = $_POST["approval_status"];
-			
+
 		// }
 	}
 
