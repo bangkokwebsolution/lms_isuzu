@@ -17,7 +17,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $course_status = 'Course Status';
     $classroom_online = 'Classroom Online';
     $library_show = 'e-Library';
-    $CourseCategory = 'Course Category'; 
+    $CourseCategory = 'Course Category';
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -36,7 +36,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $course_plan = 'แผนการเรียน';
     $course_status = 'สถานะของหลักสูตร';
     $classroom_online = 'ห้องเรียนออนไลน์';
-    $CourseCategory = 'หมวดหมู่หลักสูตร'; 
+    $CourseCategory = 'หมวดหมู่หลักสูตร';
 }
 ?>
 <!-- // -->
@@ -134,12 +134,88 @@ if (!empty($msg) || !empty($_GET['msg'])) {
             </div>
         </div>
         <div class="col-lg-9">
-            <div class="banner-slide h-30">
+            <?php
+            $criteriaimg = new CDbCriteria;
+            $criteriaimg->compare('active', y);
+            $criteriaimg->compare('lang_id', Yii::app()->session['lang']);
+            // $criteriaimg->order = 'update_date  DESC';
+            $image = Imgslide::model()->findAll($criteriaimg);
+            ?>
+            <div id="carousel-id" class="banner-slide carousel slide main-slide" data-ride="carousel" data-interval="10000">
+
+                <ol class="carousel-indicators">
+
+                    <?php if (!isset($image[0])) { ?>
+                        <li data-target="#carousel-id" data-slide-to="0" class="active"></li>
+                        <li data-target="#carousel-id" data-slide-to="1" class=""></li>
+                        <li data-target="#carousel-id" data-slide-to="2" class=""></li>
+                        <?php } else {
+                        foreach ($image as $key => $value) {
+                        ?>
+                            <li data-target="#carousel-id" data-slide-to="<?= $key; ?>" class="<?php if ($key == 0) echo 'active'; ?>"></li>
+
+                    <?php
+                        }
+                    }
+                    ?>
+                </ol>
+
+                <div class="carousel-inner">
+
+                    <?php
+                    foreach ($image as $key => $value) {
+                        $criteriaType = new CDbCriteria;
+                        $criteriaType->compare('active', y);
+                        $criteriaType->compare('gallery_type_id', $value->gallery_type_id);
+                        $criteriaType->order = 'id ASC';
+                        $galleryType = Gallery::model()->findAll($criteriaType);
+                    ?>
+                        <div class="item <?php if ($key == 0) echo 'active'; ?>">
+                            <?php
+                            if ($value->imgslide_link == "" && $value->gallery_type_id != null) {
+                                foreach ($galleryType as $key_t => $data) {
+                            ?>
+                                    <a href="<?php echo Yii::app()->baseUrl; ?>/uploads/gallery/<?= $data->image; ?>" class="liquid-lp-read-more zoom fresco" data-fresco-group="ld-pf-1[<?= $value->id ?>]">
+                                        <?php if ($key_t == 0) {
+                                        ?>
+                                            <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
+                                        <?php
+                                        }  ?>
+                                    </a>
+                                <?php } ?>
+                            <?php } else if ($value->imgslide_link != "" && $value->gallery_type_id == null) { ?>
+                                <a href="<?= $value->imgslide_link;  ?>" target="_blank">
+                                    <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
+                                </a>
+                            <?php } else { ?>
+                                <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
+                            <?php } ?>
+
+                            <!-- <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt=""> -->
+                            <!-- </a> -->
+                        </div>
+
+                    <?php } ?>
+                    <!-- <?php
+                            foreach ($image as $key => $value) { ?>
+                            <div class="item <?php if ($key == 0) echo 'active'; ?>">
+                                <a class="fresco" href="<?= empty($value->imgslide_link) ? 'javascript:void(0)' : $value->imgslide_link;  ?>" target="_blank">
+                                    <img alt="<?= $value->imgslide_title; ?>" src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>">
+                                </a>
+                            </div>
+
+                            <?php } ?> -->
+                </div>
+                <a class="left carousel-control" href="#carousel-id" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
+                <a class="right carousel-control" href="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
+            </div>
+            
+            <!-- <div class="banner-slide h-30">
                 <?php
                 $criteriaimg = new CDbCriteria;
                 $criteriaimg->compare('active', y);
                 $criteriaimg->compare('lang_id', Yii::app()->session['lang']);
-                // $criteriaimg->order = 'update_date  DESC';
+
                 $image = Imgslide::model()->findAll($criteriaimg);
                 ?>
                 <div id="carousel-banner" class="">
@@ -159,7 +235,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                                     <a href="<?php echo Yii::app()->baseUrl; ?>/uploads/gallery/<?= $data->image; ?>" class="liquid-lp-read-more zoom fresco" data-fresco-group="ld-pf-1[<?= $value->id ?>]">
                                         <?php if ($key_t == 0) {
                                         ?>
-                                            <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/main-bg.png" class="slide-main-thor" alt=""> -->
+                                            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/main-bg.png" class="slide-main-thor" alt="">
                                             <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
                                         <?php
                                         }  ?>
@@ -167,17 +243,17 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                                 <?php } ?>
                             <?php } else if ($value->imgslide_link != "" && $value->gallery_type_id == null) { ?>
                                 <a href="<?= $value->imgslide_link;  ?>" target="_blank">
-                                    <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/main-bg.png" class="slide-main-thor" alt=""> -->
+                                    <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/main-bg.png" class="slide-main-thor" alt="">
                                     <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
                                 </a>
                             <?php } else { ?>
-                                <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/main-bg.png" class="slide-main-thor" alt=""> -->
+                                <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/main-bg.png" class="slide-main-thor" alt="">
                                 <img src="<?php echo Yii::app()->request->baseUrl; ?>/uploads/imgslide/<?= $value->imgslide_id; ?>/thumb/<?= $value->imgslide_picture; ?>" class="slide-main-thor" alt="">
                             <?php } ?>
                         </div>
                     <?php } ?>
                 </div>
-            </div>
+            </div> -->
         </div>
 
     </div>
@@ -206,14 +282,14 @@ if (!empty($msg) || !empty($_GET['msg'])) {
             <div class=" mb-1">
                 <div class="featured-box featured-box-one  featured-box-effect-4 text-center">
                     <div class="box-content">
-                        <a data-toggle="modal" href="<?php 
-                        // if (Yii::app()->user->id == null) {
-                        //                                     echo '#modal-login';
-                        //                                 } else {
-                        //                                     echo Yii::app()->createUrl('video/library');
-                        //                                 }
-                        echo Yii::app()->createUrl('video/library');
-                         ?>">
+                        <a data-toggle="modal" href="<?php
+                                                        // if (Yii::app()->user->id == null) {
+                                                        //                                     echo '#modal-login';
+                                                        //                                 } else {
+                                                        //                                     echo Yii::app()->createUrl('video/library');
+                                                        //                                 }
+                                                        echo Yii::app()->createUrl('video/library');
+                                                        ?>">
                             <div class="icon-featured">
                                 <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/E-Library.png">
                             </div>
