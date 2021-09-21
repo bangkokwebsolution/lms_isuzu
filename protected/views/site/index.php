@@ -196,7 +196,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                                                             echo Yii::app()->createUrl('virtualclassroom/index');
                                                         } ?>">
                             <div class="icon-featured">
-                                <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/online-class.svg">
+                                <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/online-class.png">
                             </div>
                             <h4 class="mb-0"><?= $classroom_online ?></h4>
                         </a>
@@ -215,7 +215,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                         echo Yii::app()->createUrl('video/library');
                          ?>">
                             <div class="icon-featured">
-                                <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/E-Library.svg">
+                                <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/E-Library.png">
                             </div>
                             <h4 class="mb-0"><?= $library_show ?></h4>
                         </a>
@@ -227,7 +227,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                     <div class="box-content">
                         <a href="<?php echo $this->createUrl('/document/index'); ?>">
                             <div class="icon-featured">
-                                <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/Download-Files.svg">
+                                <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/Download-Files.png">
                             </div>
                             <h4 class="mb-0"><?= $doc_download ?></h4>
                         </a>
@@ -243,7 +243,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                                                             echo Yii::app()->createUrl('course/courseplan');
                                                         } ?>">
                             <div class="icon-featured">
-                                <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/Course-Plan.svg">
+                                <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/Course-Plan.png">
                             </div>
                             <h4 class="mb-0"><?= $course_plan ?></h4>
                         </a>
@@ -259,7 +259,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                                                             echo Yii::app()->createUrl('site/dashboard');
                                                         } ?>">
                             <div class="icon-featured">
-                                <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/Course-Status.svg">
+                                <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/Course-Status.png">
                             </div>
                             <h4 class="mb-0"><?= $course_status ?></h4>
                         </a>

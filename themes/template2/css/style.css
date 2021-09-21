@@ -5584,14 +5584,12 @@ section#faq {
   width: 120px;
   height: 120px;
   padding: 8px 15px;
-  margin: 0 auto;
-  border-radius: 50%;
+  border: none;
 }
 
 .menu-elearning .icon-featured img {
   width: auto !important;
   max-width: 100%;
-  margin: 20px auto !important;
 }
 
 .featured-box-one .icon-featured {
