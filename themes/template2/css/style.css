@@ -6316,8 +6316,8 @@ tr {
 
 @media (min-width: 1024px) {
   .banner-slide {
-    min-height: 28rem;
-    max-height: 28rem;
+    min-height: 25rem;
+    max-height: 25rem;
     overflow: hidden;
   }
 
