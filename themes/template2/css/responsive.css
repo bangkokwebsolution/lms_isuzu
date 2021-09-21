@@ -25,6 +25,10 @@
         min-height: 110px;
         overflow: hidden;
     }
+    .slick-initialized .slick-slide {
+        max-height: 25rem;
+        overflow: hidden;
+      }
 }
 
 @media only screen and (max-width:991px) {

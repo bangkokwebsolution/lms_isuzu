@@ -6383,8 +6383,3 @@ tr {
   margin-top: 2rem;
 }
 
-.slick-initialized .slick-slide {
-  display: block;
-  max-height: 25rem;
-  overflow: hidden;
-}
