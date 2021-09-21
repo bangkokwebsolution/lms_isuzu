@@ -352,7 +352,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                     <div class="card course-detail-2">
                         <div class="card-body ">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-xs-6">
                                     <div class="c-item">
                                         <small><?= $Time ?></small>
                                         <div class="text-center mt-20">
@@ -362,7 +362,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                     </div>
 
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-6 col-xs-6">
                                     <div class="c-item">
                                         <small><?= $Lessons ?></small>
                                         <div class="text-center mt-20">
