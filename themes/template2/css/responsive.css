@@ -61,6 +61,10 @@
         margin-left: -8px;
         line-height: 35px;
     }
+
+    #searchbox {
+        max-width: 80%;
+      }
 }
 
 @media only screen and (max-width:991px) and (min-width:767px) {
