@@ -128,12 +128,12 @@ if (!empty($msg) || !empty($_GET['msg'])) {
 <?php } ?>
 <section class="container banner-main">
     <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-3 col-xs-12">
             <div class="logo-h30" style="background-image:url(<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-index.png">
                 <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-index.png">
             </div>
         </div>
-        <div class="col-lg-9">
+        <div class="col-lg-9 col-xs-12">
             <?php
             $criteriaimg = new CDbCriteria;
             $criteriaimg->compare('active', y);
@@ -209,7 +209,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                 <a class="left carousel-control" href="#carousel-id" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
                 <a class="right carousel-control" href="#carousel-id" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
             </div>
-            
+
             <!-- <div class="banner-slide h-30">
                 <?php
                 $criteriaimg = new CDbCriteria;

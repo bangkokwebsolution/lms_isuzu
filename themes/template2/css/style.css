@@ -6299,6 +6299,21 @@ tr {
   min-width: 100%;
 }
 
+.banner-slide .carousel-control.right,.banner-slide .carousel-control.left{
+  background-image: none;
+}
+
+.banner-slide .carousel-indicators .active{
+  background:#e0001a ;
+  border-color: #e0001a;
+}
+
+
+.banner-slide .carousel-indicators li{
+  background:#D6D6D6 ;
+  border-color: #D6D6D6;
+}
+
 @media (min-width: 1024px) {
   .banner-slide {
     min-height: 28rem;
