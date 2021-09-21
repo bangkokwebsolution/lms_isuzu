@@ -6299,6 +6299,10 @@ tr {
   min-width: 100%;
 }
 
+.logo-h30 img{
+  width: 100%;
+}
+
 .banner-slide .carousel-control.right,.banner-slide .carousel-control.left{
   background-image: none;
 }
