@@ -1361,7 +1361,7 @@ Class MenuLeft extends Controller
 					'ApproveCourse.*',
 					'ApproveCourse.index',
 				)) ,
-				'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบอนุมัติหลักสูตร</span>',
+				'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบอนุมัติหลักสูตร</span> <span class="label label-primary noti"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span> 106</span>',
 				'url'=>'#ApproveCourse',
 				'linkOptions' => array('data-toggle' => 'collapse'),
 				'itemOptions' => array('class' => 'hasSubmenu glyphicons check'),
@@ -1374,7 +1374,7 @@ Class MenuLeft extends Controller
 							'ApproveCourse.*',
 							'ApproveCourse.Index'
 						)),
-						'label'=>'อนุมัติหลักสูตรเฉพาะ',
+						'label'=>'อนุมัติหลักสูตรเฉพาะ <span class="label label-primary noti"> 2</span>',
 						'url'=>array('//ApproveCourse/index')
 					),
 					array(
@@ -1382,7 +1382,7 @@ Class MenuLeft extends Controller
 							'ApproveCourse.*',
 							'ApproveCourse.general'
 						)),
-						'label'=>'อนุมัติหลักสูตรทั่วไป',
+						'label'=>'อนุมัติหลักสูตรทั่วไป <span class="label label-primary noti"> 2</span>',
 						'url'=>array('//ApproveCourse/general')
 					),
 					array(
@@ -1390,7 +1390,7 @@ Class MenuLeft extends Controller
 							'ApproveCourse.*',
 							'ApproveCourse.generalhr2'
 						)),
-						'label'=>'อนุมัติหลักสูตรทั่วไปโดย HR',
+						'label'=>'อนุมัติหลักสูตรทั่วไปโดย HR <span class="label label-primary noti"> 2</span>',
 						'url'=>array('//ApproveCourse/generalHr')
 					),
 					// array(

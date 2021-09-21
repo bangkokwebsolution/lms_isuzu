@@ -7072,3 +7072,9 @@ a.thumbnail:focus {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
+
+.noti{
+    border-radius:10px;
+    margin: 0 5px;
+    padding: 4px 4px;
+}
