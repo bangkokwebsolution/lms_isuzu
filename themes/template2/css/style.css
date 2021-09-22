@@ -4574,10 +4574,8 @@ ol.stat-alert li::before {
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border: 4px solid #23527C !important;
-  border-radius: 27px;
-  padding: 20px 40px;
-  box-shadow: 10px 10px 5px #d1d0d0;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
 }
 
 .btn-secondary {
@@ -5875,8 +5873,9 @@ section#faq {
 }
 
 .contact-title {
-  margin-top: 50px;
-  margin-bottom: 50px;
+  padding-bottom: 8px;
+  border-bottom: 3px solid #dddddd;
+  font-size: 22px;
 }
 
 .contact-title span {
@@ -6458,25 +6457,23 @@ tr {
   color:#e0001a ;
 }
 
-/* .card:before {
-  top: 100%;
-  left: 30px;
-  border: solid transparent;
-  content: " ";
-  height: 0;
-  width: 0;
-  position: absolute;
-  pointer-events: none;
-  border-color: transparent;
-  border-top-color: #010C65;
-  border-width: 8px;
-  margin-left: -8px;
-  z-index: 1;
-  background: 0 0;
-} */
+.box-contact {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 4px solid #23527C !important;
+  border-radius: 27px;
+  padding: 20px 40px;
+  box-shadow: 10px 10px 5px #d1d0d0;
+}
 
-
-.card:before {
+.box-contact:before {
   content: " ";
   background-image: url(../images/notification.png);
   background-size: cover;
@@ -6488,9 +6485,4 @@ tr {
   background-color: transparent;
 }
 
-.image-company {
-  background-image: url(../images/contact.png);
-  width: 500px;
-  height: 390px;
-  background-size: cover;
-}
+

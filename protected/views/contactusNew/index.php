@@ -36,7 +36,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             ?>
                             <div class="col-sm-6">
 
-                                <div class="card border p-2">
+                                <div class="card box-contact border p-2">
                                     <!-- <?php
                                         if ($value['con_image'] == null) {
 
