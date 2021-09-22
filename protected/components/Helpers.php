@@ -783,7 +783,12 @@ public function SendMail($to, $subject, $message, $fromText = 'Isuzu')
        // $mail->SMTPSecure = 'tls';
 
 
-        return $mail->Send();
+        try {
+                $mail->Send();
+                return "pass";
+            } catch (Exception $e) {
+                return "fail";
+            }
             
     }
 
