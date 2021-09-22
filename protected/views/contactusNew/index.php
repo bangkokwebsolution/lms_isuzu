@@ -23,20 +23,20 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 <section class="content" id="contact-us">
     <div class="container">
     <div class="row justify-content-center gy-4">
-                    <div class="col-lg-12 pt-3 text-center">
+                    <div class="col-lg-12 pt-3 mb-2 text-center">
                         <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/Company.png" class="img-fluid mt-3" alt="Company"> -->
                         <img src="/lms_isuzu/themes/template2/images/contact.png" class="img-fluid mt-3" alt="Company">
                     </div>
-                    <div class="col-lg-10 mt-3">
+                    <div class="col-lg-10 ">
               
                         <div class="row pt-2 gy-3">
                             <?php 
                                 if ($ContactusNew_data) {
                                 foreach ($ContactusNew_data as $key => $value) {      
                             ?>
-                            <div class="col-sm-6">
+                            <div class="col-sm-6 col-xs-12 mb-2">
 
-                                <div class="card box-contact border p-2">
+                                <div class="card box-contact border p-2 ">
                                     <!-- <?php
                                         if ($value['con_image'] == null) {
 
