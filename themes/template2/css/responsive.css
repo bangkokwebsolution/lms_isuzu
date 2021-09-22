@@ -75,6 +75,14 @@
     }
 }
 
+
+@media screen and (min-width: 768px){
+    .carousel-indicators {
+        bottom: 0;
+    }
+}
+
+
 @media only screen and (max-width:600px) {
     .contact-admin {
         width: 150px !important;
