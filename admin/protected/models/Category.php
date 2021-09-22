@@ -99,7 +99,7 @@ class Category extends AActiveRecord
 		$group = $check_user->group;
 		$group_arr = json_decode($group);
 		$see_all = 2;
-		if(in_array("1", $group_arr) ){
+		if(in_array("1", $group_arr) || in_array("7", $group_arr) ){
 			$see_all = 1;
 		}
             //////////////////
