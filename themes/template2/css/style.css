@@ -4574,8 +4574,10 @@ ol.stat-alert li::before {
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem;
+  border: 4px solid #23527C !important;
+  border-radius: 27px;
+  padding: 20px 40px;
+  box-shadow: 10px 10px 5px #d1d0d0;
 }
 
 .btn-secondary {
@@ -5873,9 +5875,8 @@ section#faq {
 }
 
 .contact-title {
-  padding-bottom: 8px;
-  border-bottom: 3px solid #dddddd;
-  font-size: 22px;
+  margin-top: 50px;
+  margin-bottom: 50px;
 }
 
 .contact-title span {
@@ -6288,15 +6289,14 @@ tr {
 }
 
 .logo-h30 {
-  min-height: 28rem;
-  /* background-image: url(../images/logo-index.png); */
+  min-height: 25rem;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
-  /* border: 3px solid #e0001a; */
   border-top: 0;
   width: 100%;
   min-width: 100%;
+  background-color: #fafafa;
 }
 
 .logo-h30 img{
@@ -6456,4 +6456,41 @@ tr {
 }
 .btn-enter-search:hover,.btn-enter-search:focus{
   color:#e0001a ;
+}
+
+/* .card:before {
+  top: 100%;
+  left: 30px;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: transparent;
+  border-top-color: #010C65;
+  border-width: 8px;
+  margin-left: -8px;
+  z-index: 1;
+  background: 0 0;
+} */
+
+
+.card:before {
+  content: " ";
+  background-image: url(../images/notification.png);
+  background-size: cover;
+  width: 40px;
+  height: 40px;
+  margin-left: -60px;
+  margin-top: -40px;
+  position: absolute;
+  background-color: transparent;
+}
+
+.image-company {
+  background-image: url(../images/contact.png);
+  width: 500px;
+  height: 390px;
+  background-size: cover;
 }

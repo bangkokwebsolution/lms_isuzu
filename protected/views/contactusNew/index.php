@@ -23,28 +23,29 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 <section class="content" id="contact-us">
     <div class="container">
     <div class="row justify-content-center gy-4">
-                    <div class="col-lg-6 pt-3">
-                        <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/Company.png" class="img-fluid mt-3" alt="Company">
+                    <div class="col-lg-12 pt-3 text-center">
+                        <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/Company.png" class="img-fluid mt-3" alt="Company"> -->
+                        <img src="/lms_isuzu/themes/template2/images/contact.png" class="img-fluid mt-3" alt="Company">
                     </div>
-                    <div class="col-lg-6">
-                        <h4 class="contact-title"><span>Admin</span></h4>
+                    <div class="col-lg-10 mt-3">
+              
                         <div class="row pt-2 gy-3">
                             <?php 
                                 if ($ContactusNew_data) {
                                 foreach ($ContactusNew_data as $key => $value) {      
                             ?>
                             <div class="col-sm-6">
+
                                 <div class="card border p-2">
-                                    <?php
+                                    <!-- <?php
                                         if ($value['con_image'] == null) {
 
                                             $img  = Yii::app()->theme->baseUrl . "/images/thumbnail-profile.png";
                                         } else {
-                                        
                                             $img = Yii::app()->baseUrl . '/uploads/contactusnew/' . $value['id'] . '/thumb/' . $value['con_image'];
                                         }
                                     ?>
-                                      <img src="<?php echo $img ?>" class="img-fluid">
+                                      <img src="<?php echo $img ?>" class="img-fluid"> -->
                                     <div class="contect-detial">
                                         <p>
                                         <?php 
