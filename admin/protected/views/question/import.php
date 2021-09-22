@@ -39,7 +39,7 @@ $formtext = "Import excel ข้อสอบ";
 					
 					<div class="span4">
 						<span class="label label-primary">1</span><h4>แบบฟอร์มรูปแบบนำเข้าแบบทดสอบ</label></h4>
-						<a href="<?php echo Yii::app()->getBaseUrl().'/../uploads/templete_import_questions.xls'; ?>" class="glyphicons download_alt"><i></i>Download Excel</a>
+						<a href="<?php echo Yii::app()->getBaseUrl().'/../uploads/templete_import_questions_1.xlsx'; ?>" class="glyphicons download_alt"><i></i>Download Excel</a>
 					</div>
 
 					<div class="span8" style="padding-top: 20px;">
