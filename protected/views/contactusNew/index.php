@@ -54,7 +54,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                             }else{
                                                 echo $value['con_firstname']." ".$value['con_lastname'];
                                             }
-                                        ?>                                        
+                                        ?>
                                         </p>
                                         <p><?= $Position ?> 
                                         <?php

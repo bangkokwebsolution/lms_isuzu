@@ -1328,7 +1328,7 @@ hr {
 }
 
 #manual .well .manual-icon img {
-  max-height: 170px;
+  min-height: 142px;
   padding: 0.5em;
   border-radius: 15px;
   max-width: 100%;
@@ -4596,7 +4596,7 @@ ol.stat-alert li::before {
   border-color: #28a745;
 }
 
-.btn-viewall {
+.btn-viewall,.btn-viewall-recommanded{
   background: #333333;
   border-radius: 60px;
   color: #fff;
@@ -4605,9 +4605,13 @@ ol.stat-alert li::before {
   padding: 8px 8px 8px 10px;
 }
 
-.btn-viewall:hover {
+.btn-viewall,.btn-viewall-recommanded:hover {
   background: #333333;
   color: #fff;
+}
+
+.btn-viewall-recommanded {
+  margin-top: 20px;
 }
 
 .btn-submit {
@@ -4717,7 +4721,7 @@ ol.stat-alert li::before {
 }
 
 .slide-video .fluid-width-video-wrapper {
-  padding-top: 80% !important;
+  padding-top: 88% !important;
 }
 
 @media screen and (max-width: 600px) {
@@ -6459,11 +6463,6 @@ tr {
 
 .box-contact {
   position: relative;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  min-width: 0;
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
