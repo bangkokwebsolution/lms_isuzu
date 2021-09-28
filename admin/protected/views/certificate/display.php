@@ -166,7 +166,7 @@ $fontTH = "font-family: 'garuda'";
     Mr.Tester  Tester
 </div>
 
-<div style="position:absolute; top: 132mm;font-family: 'garuda'">
+<div style="position:absolute; top: 132mm;<?= $fontTH ?>">
    <div class="size12">
     <?php echo nl2br($model['cert_text']); ?>
     <!-- This course is intended to provide with understanding of IMO 2020 Global Sulphur regulation and the ship implementation plan in accorddance with the regulation 14.1.3 of MARPOL Annex VI. -->
@@ -177,10 +177,10 @@ $fontTH = "font-family: 'garuda'";
     <div style="position:absolute; top: 133mm;left: -130px;" >
         <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign']; ?>" >
     </div>
-     <div class="size12" style="position:absolute; top: 169mm; left: -130px;font-family: 'garuda'">
+     <div class="size12" style="position:absolute; top: 169mm; left: -130px;<?= $fontTH ?>">
     <?php echo $model['nameSign']; ?>
     </div>
-    <div class="size12" style="position:absolute; top: 174mm; left: -130px;">
+    <div class="size12" style="position:absolute; top: 174mm; left: -130px;<?= $fontTH ?>">
     <?php echo $model['positionSign']; ?>
     </div>
 <?php } ?>
@@ -189,10 +189,10 @@ $fontTH = "font-family: 'garuda'";
         <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign2']; ?>" >
         <!-- <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/sign_border.png"; ?>" > -->
     </div>
-    <div class="size12" style="position:absolute; top: 169mm; right: -130px; font-family: 'garuda'">
+    <div class="size12" style="position:absolute; top: 169mm; right: -130px; <?= $fontTH ?>">
     <?php echo $model['nameSign2']; ?>
     </div>
-    <div class="size12" style="position:absolute; top: 174mm; right: -130px;">
+    <div class="size12" style="position:absolute; top: 174mm; right: -130px;<?= $fontTH ?>">
     <?php echo $model['positionSign2']; ?>
     </div>
 <?php } ?>
