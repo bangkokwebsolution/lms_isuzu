@@ -41,7 +41,10 @@
     .red { color: #d05951; }
 </style>
 
+<?php
+$fontTH = "font-family: 'garuda'";
 
+ ?>
 
 
 
@@ -113,7 +116,7 @@
    <div style="position:absolute; top: 155mm;">
        <div class="size20"><b>On date <?php echo $model['courseDatePass']; ?></b></div>
    </div> 
-   <div style="position:absolute; top: 185mm;">
+   <div style="position:absolute; top: 185mm;<?= $fontTH ?>">
      <div class="size14">
         <?php echo nl2br($model['cert_text']); ?>
         <!-- This course is intended to provide with understanding of IMO 2020 Global Sulphur regulation and the ship implementation plan in accorddance with the regulation 14.1.3 of MARPOL Annex VI. -->
@@ -123,7 +126,7 @@
     <div style="position:absolute; top: 184.5mm; left: -150px;" >
        <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign']; ?>" >
    </div>
-   <div class="size14" style="position:absolute; top: 221mm; left: -150px;">
+   <div class="size14" style="position:absolute; top: 221mm; left: -150px;<?= $fontTH ?>">
     <b><?php echo $model['nameSign']; ?></b>
     </div>
     <div class="size14" style="position:absolute; top: 227mm; left: -150px;">
@@ -134,7 +137,7 @@
     <div style="position:absolute; top: 184.5mm; right: -190px;" >
         <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign2']; ?>" >
     </div>
-     <div class="size14" style="position:absolute; top: 221mm; right: -190px;">
+     <div class="size14" style="position:absolute; top: 221mm; right: -190px;<?= $fontTH ?>">
     <b><?php echo $model['nameSign2']; ?></b>
     </div>
     <div class="size14" style="position:absolute; top: 227mm; right: -190px;">
@@ -163,7 +166,7 @@
     Mr.Tester  Tester
 </div>
 
-<div style="position:absolute; top: 132mm;">
+<div style="position:absolute; top: 132mm;font-family: 'garuda'">
    <div class="size12">
     <?php echo nl2br($model['cert_text']); ?>
     <!-- This course is intended to provide with understanding of IMO 2020 Global Sulphur regulation and the ship implementation plan in accorddance with the regulation 14.1.3 of MARPOL Annex VI. -->
@@ -174,7 +177,7 @@
     <div style="position:absolute; top: 133mm;left: -130px;" >
         <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign']; ?>" >
     </div>
-     <div class="size12" style="position:absolute; top: 169mm; left: -130px;">
+     <div class="size12" style="position:absolute; top: 169mm; left: -130px;font-family: 'garuda'">
     <?php echo $model['nameSign']; ?>
     </div>
     <div class="size12" style="position:absolute; top: 174mm; left: -130px;">
@@ -186,7 +189,7 @@
         <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/".$model['renderSign2']; ?>" >
         <!-- <img src="<?php echo Yii::app()->basePath."/../../uploads/signature/sign_border.png"; ?>" > -->
     </div>
-    <div class="size12" style="position:absolute; top: 169mm; right: -130px;">
+    <div class="size12" style="position:absolute; top: 169mm; right: -130px; font-family: 'garuda'">
     <?php echo $model['nameSign2']; ?>
     </div>
     <div class="size12" style="position:absolute; top: 174mm; right: -130px;">
