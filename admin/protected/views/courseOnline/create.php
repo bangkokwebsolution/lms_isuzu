@@ -7,5 +7,5 @@ $this->breadcrumbs=array(
 ?>
 <?php echo $this->renderPartial('_form', array(
 	'model'=>$model,
-	'formtext'=>'เพิ่มหลักสูตรสนิสิต/นักศึกษา'
+	'formtext'=>'เพิ่มหลักสูตรนิสิต/นักศึกษา'
 )); ?>

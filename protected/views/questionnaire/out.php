@@ -1,3 +1,13 @@
+<?php
+if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+    $langId = Yii::app()->session['lang'] = 1;
+    $titleQues = 'Questionnaire';
+} else {
+    $langId = Yii::app()->session['lang'];
+    $titleQues = 'แบบสอบถาม';
+}
+
+ ?>
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/jquery-validation-1.14.0/dist/jquery.validate.min.js"></script>
 
 <div class="container">
@@ -6,15 +16,11 @@
         <ol class="breadcrumb breadcrumb-main">
             <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/site/index'); ?>"><?php echo $label->label_homepage; ?></a></li>
             <li class="breadcrumb-item active" aria-current="page">
-                <?php if ($langId == 2) { ?>
-                    ประเมินหลักสูตร
-                <?php } else { ?>
-                    Course Evaluation
-                <?php } ?></li>
+               <?= $titleQues ?></li>
         </ol>
     </nav>
     <div class="page-section">
-        <h4 class="mb-0 topic"> Course Evaluation</h4>
+        <h4 class="mb-0 topic"> <?= $titleQues ?></h4>
         <div class="panel panel-default head-quiz">
             <div class="">
 

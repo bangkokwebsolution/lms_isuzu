@@ -59,7 +59,7 @@
     <div class="page-section">
         <div class="panel panel-default head-quiz">
             <div class="row">
-                <div class="col-md-12 col-sm-12" style="margin-top: 10px;margin-bottom: 30px;text-align: center;"><img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/head-subject/quiz.png" alt="person"/></div>
+                <div class="col-md-12 col-sm-12" style="margin-top: 10px;margin-bottom: 30px;text-align: center;"><!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/head-subject/quiz.png" alt="person"/> --></div>
                 
                 <div class="bs-example">
                     <div class="alert alert-success">
