@@ -16,21 +16,19 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
 ?>
 <script src='https://www.google.com/recaptcha/api.js?hl=<?= $langRe ?>'></script>
 
-<header id="header" class="main-header">
+<form id="searchForm" class="" action="<?php echo $this->createUrl('Search/index') ?>">
+    <div id="search" class="fade">
+        <input placeholder="<?= $label->label_placeholder_search ?> " type="text" name="text" id="searchbox">
+        <button class="btn btn-enter-search" type="submit">
+            <i class="fas fa-search header-nav-top-icon"></i>
+        </button>
+        <a href="#" class="close-btn" id="close-search">
+            <em class="fa fa-times"></em>
+        </a>
+    </div>
+</form>
 
-    <form id="searchForm" class="" action="<?php echo $this->createUrl('Search/index') ?>">
-        <div id="search" class="fade">
-            <!-- <input placeholder="type here" id="searchbox" type="search"/> -->
-            <input placeholder="<?= $label->label_placeholder_search ?> " type="text" name="text"  id="searchbox">
-            <button class="btn btn-enter-search" type="submit">
-                <i class="fas fa-search header-nav-top-icon"></i>
-            </button>
-            <!-- <input type="text" name="text" id="searchbox" placeholder="<?= $label->label_placeholder_search ?>"> -->
-            <a href="#" class="close-btn" id="close-search">
-                <em class="fa fa-times"></em>
-            </a>
-        </div>
-    </form>
+<header id="header" class="main-header">
 
     <nav class="navbar navbar-inverse" role="navigation">
         <div class="container">
@@ -200,6 +198,7 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                     </div>
                 <?php } ?>
             </div>
+
 
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <div class="">
