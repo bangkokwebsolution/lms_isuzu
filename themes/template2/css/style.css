@@ -680,7 +680,7 @@ section {
 
 .slide-video.news .page-header {
   margin: 50px 0 35px;
-  padding: 20px;
+  padding: 20px 15px;
   margin-bottom: 1em;
   color: #333;
 }
@@ -691,6 +691,22 @@ section {
 }
 
 .slide-video.news .page-header span {
+  border-bottom: 5px solid #e0001a;
+}
+
+.slide-video.news .page-header-video {
+  margin: 50px 0 35px;
+  padding: 20px 0px;
+  margin-bottom: 1em;
+  color: #333;
+}
+
+.slide-video.news .page-header-video h4 {
+  font-size: 1.8em;
+  letter-spacing: 0.8px;
+}
+
+.slide-video.news .page-header-video span {
   border-bottom: 5px solid #e0001a;
 }
 

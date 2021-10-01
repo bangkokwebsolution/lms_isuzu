@@ -696,7 +696,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                 $vdoshow = vdo::model()->find($criteriavdo);
                 ?>
                 <div class="col-lg-4 col-xs-12 col-sm-12">
-                    <div class="page-header">
+                    <div class="page-header-video">
                         <h4><span><?= $label->label_vdo ?></span> </h4>
                     </div>
                     <?php
