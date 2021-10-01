@@ -161,7 +161,7 @@
 															foreach ($Type4Answer as $key => $val_1) {
 
 																$choice = Coursechoice::model()->findByPk($key);
-																echo 	'<div style="display:inline">' . $val_1 . '. ' . CHtml::decode($choice->choice_detail) . '</div>';
+																echo 	'<div style="display:inline-block">' . $val_1 . '. ' . CHtml::decode($choice->choice_detail) . '</div>';
 																echo 	'<br>';
 															}
 															echo '<br>';

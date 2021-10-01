@@ -49,7 +49,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                 } ?>
                             </a>
                             <div class="card-body" style="padding:10px;">
-                                <h4 class="card-title  text-4 text-main "><?= $value->course->course_title ?><a href="#"></a></h4>
+                                <h4 class="course-card-title  text-4 text-main "><?= $value->course->course_title ?><a href="#"></a></h4>
                                 <div class="progress progress-sm progress-border-radius mt-4 ">
                                     <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <?= Helpers::lib()->percent_CourseGen($value->course->course_id, $gen_id) ?>%;">
                                     </div>
