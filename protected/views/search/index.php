@@ -7,11 +7,14 @@
     </nav>
 </div> 
 
-<section class="content" id="search">
+<!-- <section class="content" id="search"> -->
+<section class="content" id="">
     <div class="container">
         <!--start total search-->
         <div class="text-center">
+            1
             <?php
+
 
             $search1 = Usability::model()->findAll(array(
                 'condition' => ' (usa_title LIKE "%' . $text . '%" OR usa_detail LIKE "%' . $text . '%" ) AND active="y" AND lang_id ="'.$lang_session.'"'));
@@ -32,8 +35,11 @@
             $searchtotal4 = count($search4);
             $searchtotal5 = count($search5);
             $searchtotal6 = count($search6);
+
             
             $total = $searchtotal1+$searchtotal2+$searchtotal3+$searchtotal4+$searchtotal5+$searchtotal6 ;
+
+
             ?>
             <strong>ผลลัพธ์ทั้งหมด : <?php echo $total; ?> รายการ</strong>
             <br><br>
@@ -55,6 +61,7 @@
                 </a>
             </div>
             <?php
+
         }
         ?>
         <!-- end usability search -->
