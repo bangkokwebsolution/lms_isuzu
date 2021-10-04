@@ -8,7 +8,7 @@
 </div> 
 
 <!-- <section class="content" id="search"> -->
-<section class="content" id="">
+<section class="content">
     <div class="container">
         <!--start total search-->
         <div class="text-center">
