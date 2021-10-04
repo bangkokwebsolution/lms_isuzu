@@ -85,15 +85,15 @@ EOD
             ),
             'value'=>'$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
         ),
-        array(
-            'header' => 'ประเภทพนักงาน',
-            'name'=>'type_employee',
-            'type'=>'raw',
-            'filter' => false,
-            'value'=>function($data){
-                return $data->user->profile->typeEmployee->type_employee_name;
-            }
-        ),
+        // array(
+        //     'header' => 'ประเภทพนักงาน',
+        //     'name'=>'type_employee',
+        //     'type'=>'raw',
+        //     'filter' => false,
+        //     'value'=>function($data){
+        //         return $data->user->profile->typeEmployee->type_employee_name;
+        //     }
+        // ),
         array(
             'header' => 'แผนก',
             'name'=>'department_id',
@@ -112,18 +112,18 @@ EOD
                 return $data->user->position->position_title;
             }
         ),
-        array(
-            'header' => 'รหัสบัตรประชาชน - พาสปอร์ต',
-            'name'=>'search_name',
-            'type'=>'raw',
-            'value'=>function($data){
-                if ($data->user->profile->identification  != null) {
-                  return $data->user->profile->identification;
-                }else{
-                  return $data->user->profile->passport;
-                }
-            }
-        ),
+        // array(
+        //     'header' => 'รหัสบัตรประชาชน - พาสปอร์ต',
+        //     'name'=>'search_name',
+        //     'type'=>'raw',
+        //     'value'=>function($data){
+        //         if ($data->user->profile->identification  != null) {
+        //           return $data->user->profile->identification;
+        //         }else{
+        //           return $data->user->profile->passport;
+        //         }
+        //     }
+        // ),
         array(
             'header' => 'ชื่อ - นามสกุล',
             'name'=>'search_name',
