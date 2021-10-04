@@ -88,7 +88,40 @@ Class MenuLeft extends Controller
 	}
 
 	public static function Menu()
-	{
+	{	
+		$criteria = new CDbCriteria;
+		$criteria->with = array('cates');
+		$criteria->compare('categorys.type_id',1);
+		$criteria->compare('courseonline.active','y');
+		$criteria->compare('courseonline.parent_id',0);
+		$criteria->addCondition('approve_status != 1');
+		$criteria->order = 'sortOrder ASC';
+
+		$Specific = ApproveCourse::model()->findAll($criteria);
+	 	$countSpecific = count($Specific);
+
+	 	$criteria = new CDbCriteria;
+		$criteria->with = array('cates');
+		$criteria->compare('categorys.type_id',3);
+		$criteria->compare('courseonline.active','y');
+		$criteria->compare('courseonline.parent_id',0);
+		$criteria->addCondition('approve_status != 1 AND approve_status !=2');
+		$criteria->order = 'sortOrder ASC';
+		$General = ApproveCourse::model()->findAll($criteria);
+	 	$countGeneral = count($General);
+
+	 	$criteria = new CDbCriteria;
+		$criteria->with = array('cates');
+		$criteria->compare('categorys.type_id',3);
+		$criteria->compare('courseonline.active','y');
+		$criteria->compare('courseonline.parent_id',0);
+		$criteria->addCondition('approve_status = 1');
+		$criteria->order = 'sortOrder ASC';
+		$GeneralHr = ApproveCourse::model()->findAll($criteria);
+	 	$countGeneralHr = count($GeneralHr);
+
+	 	$sumCourse = $countSpecific+$countGeneral+$countGeneralHr;
+
 		$lang = Language::model()->findByAttributes(1);
 		$mainLang = $lang->language;
 
@@ -1355,13 +1388,15 @@ Class MenuLeft extends Controller
 					),
 				)
 			),
+			
+			// $model = new ApproveCourse('searchGeneral');
 
 			array(
 				'visible'=>self::PermissionsMenu(array(
 					'ApproveCourse.*',
 					'ApproveCourse.index',
 				)) ,
-				'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบอนุมัติหลักสูตร</span> <span class="label label-primary noti"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span> 106</span>',
+				'label'=>'<span class="label label-primary"></span> <i></i><span>ระบบอนุมัติหลักสูตร</span> <span class="label label-primary noti"><span class="glyphicon glyphicon-bell" aria-hidden="true"></span> '.$sumCourse.'</span>',
 				'url'=>'#ApproveCourse',
 				'linkOptions' => array('data-toggle' => 'collapse'),
 				'itemOptions' => array('class' => 'hasSubmenu glyphicons check'),
@@ -1374,7 +1409,7 @@ Class MenuLeft extends Controller
 							'ApproveCourse.*',
 							'ApproveCourse.Index'
 						)),
-						'label'=>'อนุมัติหลักสูตรเฉพาะ <span class="label label-primary noti"> 2</span>',
+						'label'=>'อนุมัติหลักสูตรเฉพาะ <span class="label label-primary noti"> '.$countSpecific.'</span>',
 						'url'=>array('//ApproveCourse/index')
 					),
 					array(
@@ -1382,7 +1417,7 @@ Class MenuLeft extends Controller
 							'ApproveCourse.*',
 							'ApproveCourse.general'
 						)),
-						'label'=>'อนุมัติหลักสูตรทั่วไป <span class="label label-primary noti"> 2</span>',
+						'label'=>'อนุมัติหลักสูตรทั่วไป <span class="label label-primary noti"> '.$countGeneral.'</span>',
 						'url'=>array('//ApproveCourse/general')
 					),
 					array(
@@ -1390,7 +1425,7 @@ Class MenuLeft extends Controller
 							'ApproveCourse.*',
 							'ApproveCourse.generalhr2'
 						)),
-						'label'=>'อนุมัติหลักสูตรทั่วไปโดย HR <span class="label label-primary noti"> 2</span>',
+						'label'=>'อนุมัติหลักสูตรทั่วไปโดย HR <span class="label label-primary noti"> '.$countGeneralHr.'</span>',
 						'url'=>array('//ApproveCourse/generalHr')
 					),
 					// array(
