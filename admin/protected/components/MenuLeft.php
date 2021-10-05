@@ -826,49 +826,49 @@ Class MenuLeft extends Controller
 			),
 
 
-			array(
-				/*====== Check Permissions AuthitemAccess (1) ======*/
-				'visible'=>self::PermissionsMenu(array(
-					'VirtualClassroom.*',
-					'VirtualClassroom.Index',
-				)),
-				'label'=>'<i></i><span>ห้องเรียนออนไลน์</span>',
-				'url'=>'#VirtualClassroom',
-				'linkOptions' => array('data-toggle' => 'collapse'),
-				'itemOptions' => array('class' => 'hasSubmenu glyphicons eye_open'),
-				'submenuOptions' => array('class' => self::SetSubMenu( array('VirtualClassroom') ), 'id' => 'VirtualClassroom'),
-				'active' => self::SetSubMenu( array('VirtualClassroom') ,false),
-				'items'=>array(
-					array(
-						/*====== Check Permissions Sup-AuthitemAccess (1) ======*/
-						'visible'=>self::PermissionsMenu(array(
-							'VirtualClassroom.*',
-							'VirtualClassroom.Create'
-						)),
-						'label'=>'เพิ่ม',
-						'url'=>array('//VirtualClassroom/create')
-					),
-					array(
-						/*====== Check Permissions Sup-User (1) ======*/
-						'visible'=>self::PermissionsMenu(array(
-							'VirtualClassroom.*',
-							'VirtualClassroom.Index'
-						)),
-						'label'=>'จัดการ',
-						'url'=>array('//VirtualClassroom/index')
-					),
-	                //    array(
-	                // 	/*====== Check Permissions Sup-User (1) ======*/
-	                // 	'visible'=>self::PermissionsMenu(array(
-	                // 		'VirtualClassroom.*',
-	                // 		'VirtualClassroom.Logmeeting'
-	                // 	)),
-	                // 	'label'=>'Logmeeting',
-	                // 	'url'=>array('//VirtualClassroom/logmeeting')
-	                // ),
+			// array(
+			// 	/*====== Check Permissions AuthitemAccess (1) ======*/
+			// 	'visible'=>self::PermissionsMenu(array(
+			// 		'VirtualClassroom.*',
+			// 		'VirtualClassroom.Index',
+			// 	)),
+			// 	'label'=>'<i></i><span>ห้องเรียนออนไลน์</span>',
+			// 	'url'=>'#VirtualClassroom',
+			// 	'linkOptions' => array('data-toggle' => 'collapse'),
+			// 	'itemOptions' => array('class' => 'hasSubmenu glyphicons eye_open'),
+			// 	'submenuOptions' => array('class' => self::SetSubMenu( array('VirtualClassroom') ), 'id' => 'VirtualClassroom'),
+			// 	'active' => self::SetSubMenu( array('VirtualClassroom') ,false),
+			// 	'items'=>array(
+			// 		array(
+			// 			/*====== Check Permissions Sup-AuthitemAccess (1) ======*/
+			// 			'visible'=>self::PermissionsMenu(array(
+			// 				'VirtualClassroom.*',
+			// 				'VirtualClassroom.Create'
+			// 			)),
+			// 			'label'=>'เพิ่ม',
+			// 			'url'=>array('//VirtualClassroom/create')
+			// 		),
+			// 		array(
+			// 			/*====== Check Permissions Sup-User (1) ======*/
+			// 			'visible'=>self::PermissionsMenu(array(
+			// 				'VirtualClassroom.*',
+			// 				'VirtualClassroom.Index'
+			// 			)),
+			// 			'label'=>'จัดการ',
+			// 			'url'=>array('//VirtualClassroom/index')
+			// 		),
+	  //               //    array(
+	  //               // 	/*====== Check Permissions Sup-User (1) ======*/
+	  //               // 	'visible'=>self::PermissionsMenu(array(
+	  //               // 		'VirtualClassroom.*',
+	  //               // 		'VirtualClassroom.Logmeeting'
+	  //               // 	)),
+	  //               // 	'label'=>'Logmeeting',
+	  //               // 	'url'=>array('//VirtualClassroom/logmeeting')
+	  //               // ),
 
-				)
-			),
+			// 	)
+			// ),
 	         // array(
           //      /*====== Check Permissions AuthitemAccess (1) ======*/
           //       'visible'=>self::PermissionsMenu(array(
