@@ -267,15 +267,79 @@ class ReportController extends Controller
 
     }
 
-    public function actionByUser() {
-        
-        $model = new ReportProblem('search');
-        $model->unsetAttributes();  // clear any default values
-        if(isset($_GET['ReportProblem']))
-            $model->attributes=$_GET['ReportProblem'];
-        $this->render('ByUser',array(
+    public function actionByReportProblem() {
+
+        if(isset($_GET['ReportProblem'])){
+            $criteria = New CDbCriteria;
+            $firstname = $_GET['ReportProblem']['firstname'];
+            if(isset($_GET['ReportProblem']['firstname']) && $_GET['ReportProblem']['firstname'] != null){
+                $ex_fullname = explode(" ", $_GET['ReportProblem']['firstname']);
+                if(isset($ex_fullname[0])){
+                    $pro_fname = $ex_fullname[0];
+                    $criteria->compare('firstname', $pro_fname, true);
+                    $criteria->compare('lastname', $pro_fname, true, 'OR');
+                }
+
+                if(isset($ex_fullname[1])){
+                    $pro_lname = $ex_fullname[1];
+                    $criteria->compare('lastname',$pro_lname,true);
+                }
+            }
+            if(isset($_GET['ReportProblem']['report_date']) && $_GET['ReportProblem']['report_date'] != null) {
+                $report_date =  explode('/', $_GET['ReportProblem']['report_date']);
+                $Re_date = $report_date[2].'-'.$report_date[1].'-'.$report_date[0];
+                $criteria->compare('report_date', $Re_date,true);
+            }
+
+            if(isset($_GET['ReportProblem']['status']) && $_GET['ReportProblem']['status'] != null) {
+                $criteria->compare('status', $_GET['ReportProblem']['status']);
+            }
+
+            // $report_date = $_GET['ReportProblem']['report_date'];
+            // $status = $_GET['ReportProblem']['status'];
+            $model = ReportProblem::model()->findAll($criteria);
+        }else{
+            $model = [];
+        }
+        $this->render('ByReportProblem',array(
             'model'=>$model,
             ));
+    }
+
+    public function actionGenReportProblem(){
+        $criteria = New CDbCriteria;
+        if(isset($_GET['ReportProblem'])){
+            $firstname = $_GET['ReportProblem']['firstname'];
+            if(isset($_GET['ReportProblem']['firstname']) && $_GET['ReportProblem']['firstname'] != null){
+                $ex_fullname = explode(" ", $_GET['ReportProblem']['firstname']);
+                if(isset($ex_fullname[0])){
+                    $pro_fname = $ex_fullname[0];
+                    $criteria->compare('firstname', $pro_fname, true);
+                    $criteria->compare('lastname', $pro_fname, true, 'OR');
+                }
+
+                if(isset($ex_fullname[1])){
+                    $pro_lname = $ex_fullname[1];
+                    $criteria->compare('lastname',$pro_lname,true);
+                }
+            }
+            if(isset($_GET['ReportProblem']['report_date']) && $_GET['ReportProblem']['report_date'] != null) {
+                $report_date =  explode('/', $_GET['ReportProblem']['report_date']);
+                $Re_date = $report_date[2].'-'.$report_date[1].'-'.$report_date[0];
+                $criteria->compare('report_date', $Re_date,true);
+            }
+
+            if(isset($_GET['ReportProblem']['status']) && $_GET['ReportProblem']['status'] != null) {
+                $criteria->compare('status', $_GET['ReportProblem']['"status"']);
+            }
+
+            // $report_date = $_GET['ReportProblem']['report_date'];
+            // $status = $_GET['ReportProblem']['status'];
+        }
+        $model = ReportProblem::model()->findAll($criteria);
+        $this->renderPartial('ExcelByReportProblem', array(
+            'model'=>$model
+        ));
     }
 
     public function actionGenExcelByUser(){
