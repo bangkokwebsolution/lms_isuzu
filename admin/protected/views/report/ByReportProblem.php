@@ -171,7 +171,7 @@ EOD
         <?php }else{ ?>
             <div class="widget-body div-table" style="overflow: auto;">
                 <!-- Table -->
-                <h4>กรุณาค้นหาเพื่อ Excel ReportProblem</h4>
+                <h4>กรุณาค้นหาเพื่อ Export Excel</h4>
             </div>
         <?php } ?>
             <!-- <?php
