@@ -35,7 +35,7 @@ return array(
 	'Letters are not case-sensitive.' => 'ข้อความไม่ต้องตัวใหญ่ตัวเล็ก',
 	'Minimal password length 4 symbols.' => 'รหัสผ่านความยาวอย่างน้อย 4 ตัวอักษร',
 	'Lost Password?' => 'ลืมรหัสผ่าน?',
-	'Profile' => 'โพรไฟล์',
+	'Profile' => 'โปรไฟล์',
 	'activation key' => 'รหัสยืนยัน',
 	'User activation' => 'ยืนยันผู้ใช้งาน',
 	'You account is active.' => 'Account ยืนยัน',
