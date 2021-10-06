@@ -3370,6 +3370,11 @@ h2.classic-title span {
   background-color: #e0001a;
 }
 
+#pre-exams .btn-default {
+  background-color: #e0001a;
+  color: #fff;
+}
+
 input.btn.btn-default.bg-greenlight.btn-lg.center-block {
   color: #fff;
 }
