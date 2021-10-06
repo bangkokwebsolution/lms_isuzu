@@ -181,7 +181,7 @@ function typeVdo(val){
                 ?>
                 <div class="row vdo-file">
 				     <font color="#990000">
-				      <?php echo $this->NotEmpty();?> ไฟล์ขนาดไม่เกิน 100 Mb
+				      <?php echo $this->NotEmpty();?> ไฟล์ขนาดไม่เกิน 1 GB
 				     </font>
 				<br>
 				<br>
@@ -226,9 +226,10 @@ function checkFile(e) {
         var iConvert = (file.size / 1024).toFixed(2);
            
         //txt = "File type : " +fileExtension + "\n";
-        if(file.size > (1024 * 1024 * 100)){
+        // if(file.size > (1024 * 1024 * 100)){
+        if(file.size > (1024 * 1024 * 1024)){
        
-            swal("ไฟล์มีขนาดใหญ่เกิน กรุณาเลือกไฟล์ขนาดไม่เกิน 100 M");
+            swal("ไฟล์มีขนาดใหญ่เกิน กรุณาเลือกไฟล์ขนาดไม่เกิน 1 GB");
             document.getElementById('wizard-picture').value = []
            // txt += "Size: " + (file.size / (1024*1024)).toFixed(2) + " MB \n";
         } 
