@@ -73,8 +73,8 @@ if($modelScore->type=='post' && !$state){
 <!-- Content -->
 <section class="content" id="exams-finish">
 	<div class="container">
-		<div class="row">
-			<div class="col-sm-8 col-xs-12">
+		<div class="row exams-finish-content">
+			<div class="col-sm-8 col-xs-12 ">
 				<div class="well bg-greendark">
 
 					<?php if($testType != "pre" && $quesType_ != 3){ ?>
@@ -83,7 +83,7 @@ if($modelScore->type=='post' && !$state){
 					</div>
 				<?php } ?>
 
-					<div class="well detail">
+					<div class="well detail exams-finish-detail">
 						<ul class="list-unstyled">
 							<li><?= $labelCourse->label_totalTest ?> <span class="pull-right"><?= count($temp_all) ?> <?= $labelCourse->label_list ?></span></li>
 							<li><?=UserModule::t('timeTest');?> <span class="pull-right"><?= $lesson->time_test; ?> <?=UserModule::t('Minutes');?></span></li>
