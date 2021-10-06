@@ -2,11 +2,46 @@
 <script src="<?php echo $this->assetsBase; ?>/js/jquery.uploadifive.min.js" type="text/javascript"></script>
 <script src="<?php echo $this->assetsBase; ?>/js/jwplayer/jwplayer.js" type="text/javascript"></script>
 <script type="text/javascript">jwplayer.key = "J0+IRhB3+LyO0fw2I+2qT2Df8HVdPabwmJVeDWFFoplmVxFF5uw6ZlnPNXo=";</script>
-<script type="text/javascript">
+
+<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/plugins/croppie/croppie.css">
+<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/plugins/croppie/croppie.min.js"></script>
+<script src="<?php echo Yii::app()->theme->baseUrl; ?>/js/jquery.uploadifive.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/uploadifive.css">
+
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/uploadifive.css">
+
+<style type="text/css">
+  #upload-profileimg {
+    width: 250px;
+    height: 250px;
+    padding-bottom: 25px;
+}
+
+figure figcaption {
+    color: #fff;
+    width: 100%;
+    padding-left: 9px;
+    padding-bottom: 5px;
+    margin-top: 10px;
+}
+
+.btn-uploadimg {
+    font-size: 14px;
+    padding: 10px 20px;
+}
+
+.clearfix {
+    overflow: auto;
+}
+</style>
+<script>
+
+    $(function(){
+
+    });
 
 </script>
 
-<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/uploadifive.css">
 <style type="text/css">
     body {
         font: 13px Arial, Helvetica, Sans-serif;
@@ -116,7 +151,37 @@
                          ?>
                     </div>
                 </div>
-                
+                <div class="row" style="width: 20%">
+                        <div class="row form-mb-1 justify-content-center box-uploadimage">
+
+                            <div class="upload-img">
+                                <label class="cabinet center-block">
+                                    <figure>
+                                        <center>
+                                            <?php
+                                            if ($model->library_picture == null) {
+                                                $img  = Yii::app()->theme->baseUrl . "/images/default-avatar.png";
+                                            } else {
+                                                $img = Yii::app()->baseUrl . '/../uploads/library/' . $model->library_id . '/thumb/' . $model->library_picture;
+                                            }
+                                            $url_pro_pic = $img;
+                                            ?>
+                                            <img src="<?php echo $url_pro_pic; ?>" class="gambar img-responsive img-thumbnail" style="width: 150px;height: 150px" name="item-img-output" id="item-img-output" />
+                                            <figcaption>
+                                                <div class="btn btn-default btn-uploadimg"><i class="fa fa-camera"></i> เลือกรูป</div>
+                                            </figcaption>
+                                        </center>
+                                    </figure>
+                                    <input type="hidden" name="url_pro_pic" id="url_pro_pic">
+                                    <input type="file"  style="display: none;" id="Profile_pro_pic" class="item-img file center-block d-none" name="LibraryFile[picture]" />
+                                </label>
+                                <center>
+                                    <span class="text-danger"><font color="red">*</font>รูปภาพควรมีขนาด 2X2 นิ้ว</span>
+                                </center>
+                            </div>
+
+                        </div>
+                    </div>
                 
                 <br>
                 <div class="row buttons">
@@ -128,8 +193,112 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="cropImagePop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content crop-img">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">สร้างรูปข่าว
+                </h4>
+            </div>
+            <div class="modal-body">
+                <div id="upload-profileimg" class="center-block"></div>
+                <div class="text-center center-block mt-2" style="margin-top: 10px" >
+                    <button class="rotate_btn rotate_left btn" data-deg="90"><i class="glyphicon glyphicon-refresh"></i>
+                    หมุนซ้าย</button>
+                    <button class="rotate_btn rotate_right btn" data-deg="-90">
+                    หมุนขวา</button>
+                </div >
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="cropcancel" data-dismiss="modal">
+                    ยกเลิก                      
+                </button>
+                <button type="button" id="cropImageBtn" class="btn btn-primary">
+                    บันทึกรูป                                             
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    // crop รูปภาพ
+    var $uploadCrop,
+    tempFilename,
+    rawImg,
+    imageId;
 
 
+    function readFile(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('.upload-profileimg').addClass('ready');
+                $('#cropImagePop').modal('show');
+                rawImg = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+
+            console.log($("#Profile_pro_pic").val());
+        } else {
+            swal("ท่านยังไม่ได้เลือกรูป");                      
+        // swal("ขออภัย - เบราว์เซอร์ของคุณไม่รองรับ FileReader API");
+    }
+}
+
+$uploadCrop = $('#upload-profileimg').croppie({
+    viewport: {
+        width: 120,
+        height: 120,
+    },
+    showZoomer: true,
+    enableOrientation: true,
+    enforceBoundary: true,
+    enableExif: true
+});
+
+// $('.rotate_left, .rotate_right').on('click', function (ev) {
+//     imageCrop.croppie('rotate', parseInt($(this).data('deg')));
+//     });
+
+$('.rotate_btn').on('click', function(ev) {
+    $uploadCrop.croppie('rotate', $(this).attr("data-deg"));
+});
+
+$('#cropImagePop').on('shown.bs.modal', function() {
+    $uploadCrop.croppie('bind', {
+        url: rawImg,
+        // orientation: 2
+    }).then(function() {});
+});
+
+$('.item-img').on('change', function() {
+    imageId = $(this).data('id');
+    tempFilename = $(this).val();
+    $('#cancelCropBtn').data('id', imageId);
+    readFile(this);
+});
+$('#cropImageBtn').on('click', function(ev) {
+    $uploadCrop.croppie('result', {
+        type: 'base64',
+        format: 'jpeg',
+        size: {
+            width: 150,
+            height: 150
+        }
+    }).then(function(resp) {
+        $('#item-img-output').attr('src', resp);
+        $('#cropImagePop').modal('hide');
+        $('#url_pro_pic').val($('#item-img-output').attr('src'));
+    });
+});
+
+$('#cropcancel').on('click', function(ev) {
+    $("#Profile_pro_pic").val("");
+});
+
+
+</script>
 <script>
     $(function () {
         init_tinymce();

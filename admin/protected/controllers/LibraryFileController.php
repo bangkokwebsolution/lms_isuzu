@@ -101,7 +101,36 @@ class LibraryFileController extends Controller
 				}
 				
 				$model->sortOrder = $model->library_id;
-				$model->save();
+				if($model->save()){
+					if(isset($_POST['url_pro_pic']) && $_POST['url_pro_pic'] != ""){
+						$uploadDir = Yii::app()->getUploadPath(null);
+						$path1 = "library";
+						$path2 = $model->library_id;
+						$path3 = "thumb";
+						if (!is_dir($uploadDir."../".$path1."/")) {
+							mkdir($uploadDir."../".$path1."/", 0777, true);
+						}
+						if (!is_dir($uploadDir."../".$path1."/".$path2."/")) {
+							mkdir($uploadDir."../".$path1."/".$path2."/", 0777, true);
+						}
+						if (!is_dir($uploadDir."../".$path1."/".$path2."/".$path3."/")) {
+							mkdir($uploadDir."../".$path1."/".$path2."/".$path3."/", 0777, true);
+		            }else{ // ลบ file เก่า
+		            	$files = glob($uploadDir."../".$path1."/".$path2."/".$path3.'/*');
+		                    foreach($files as $file){ // iterate files
+		                    	if(is_file($file)){
+		                            unlink($file); // delete file
+		                        }             
+		                    }
+		                }
+
+		                $model->library_picture = date("YmdHis")."_.jpg";
+		                $uploadDir = $uploadDir."..\\".$path1."\\".$path2."\\".$path3."\\";
+		                $targetFile = $uploadDir.$model->library_picture;
+		                file_put_contents($targetFile,file_get_contents($_POST['url_pro_pic']));
+		                $model->save(false);
+		            }
+				}
 				$this->redirect(array('view','id'=>$model->library_id));
 			}
 		}
@@ -136,6 +165,33 @@ class LibraryFileController extends Controller
 			// $model->library_name_en = str_replace(' ', '_', $model->library_name_en);
 			$filename_rename = str_replace(' ', '_', $model->library_name_en);
 			
+			if(isset($_POST['url_pro_pic']) && $_POST['url_pro_pic'] != ""){
+						$uploadDir = Yii::app()->getUploadPath(null);
+						$path1 = "library";
+						$path2 = $model->library_id;
+						$path3 = "thumb";
+						if (!is_dir($uploadDir."../".$path1."/")) {
+							mkdir($uploadDir."../".$path1."/", 0777, true);
+						}
+						if (!is_dir($uploadDir."../".$path1."/".$path2."/")) {
+							mkdir($uploadDir."../".$path1."/".$path2."/", 0777, true);
+						}
+						if (!is_dir($uploadDir."../".$path1."/".$path2."/".$path3."/")) {
+							mkdir($uploadDir."../".$path1."/".$path2."/".$path3."/", 0777, true);
+		            }else{ // ลบ file เก่า
+		            	$files = glob($uploadDir."../".$path1."/".$path2."/".$path3.'/*');
+		                    foreach($files as $file){ // iterate files
+		                    	if(is_file($file)){
+		                            unlink($file); // delete file
+		                        }             
+		                    }
+		                }
+
+		                $model->library_picture = date("YmdHis")."_.jpg";
+		                $uploadDir = $uploadDir."..\\".$path1."\\".$path2."\\".$path3."\\";
+		                $targetFile = $uploadDir.$model->library_picture;
+		                file_put_contents($targetFile,file_get_contents($_POST['url_pro_pic']));
+		    }
 			
 			if($model->validate() && $model->save()){
 				$course_picture = CUploadedFile::getInstance($model, 'library_filename');
