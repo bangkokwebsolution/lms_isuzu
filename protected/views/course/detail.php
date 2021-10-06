@@ -52,7 +52,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
-    $statusEdu = "สถานนะการเรียน";
+    $statusEdu = "สถานะการเรียน";
     $lastStatus = "ไปยังสถานะเรียนล่าสุด";
     $failStudy = "ท่านยังเรียนไม่ผ่านตามเงื่อนไข";
     $successStudy = "ท่านเรียนผ่านตามเงื่อนไข";

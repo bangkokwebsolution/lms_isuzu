@@ -106,10 +106,10 @@ EOD
 					array(
 							'type'=>'raw',
 							'value'=>function($val){
-								if($val->active == 'n'){
-									return CHtml::link("ปิด",array("/PopUp/active","id"=>$val->id), array("class"=>"btn btn-danger"));
+								if($val->status == 0){
+									return CHtml::link("ปิด",array("/PopUp/status","id"=>$val->id), array("class"=>"btn btn-danger"));
 								} else {
-									return CHtml::link("เปิด",array("/PopUp/active","id"=>$val->id), array("class"=>"btn btn-danger"));
+									return CHtml::link("เปิด",array("/PopUp/status","id"=>$val->id), array("class"=>"btn btn-success"));
 								}
 							},
 							'header' => 'เปิด/ปิด การแสดงผล',

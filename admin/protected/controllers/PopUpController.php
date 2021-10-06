@@ -314,26 +314,26 @@ class PopupController extends Controller
 		));
 	}
 
-	public function actionActive($id){
+	public function actionStatus($id){
     	$model = Popup::model()->findByPk($id);
              $modelChildren = Popup::model()->findAll(array(
             'condition'=>'parent_id=:parent_id',
             'params' => array(':parent_id' => $model->id)
               ));
             foreach ($modelChildren as $key => $value) {
-                if($value->active == 'y'){
-                    $value->active = 'n';
+                if($value->status == 1){
+                    $value->status = 0;
                     $value->save(false);
                 } else {
-                    $value->active = 'y';
+                    $value->status = 1;
                     $value->save(false);
                 }
             }
-    	if($model->active == 'y'){
-    		$model->active = 'n';
+    	if($model->status == 1){
+    		$model->status = 0;
     		$model->save(false);
     	} else {
-    		$model->active = 'y';
+    		$model->status = 1;
     		$model->save(false);
     	}
     	$this->redirect(array('admin','id'=>$model->id));
