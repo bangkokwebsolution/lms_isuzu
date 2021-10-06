@@ -68,7 +68,7 @@ if ($course->cate_id != 1) { //LMS
 <section class="content" id="exams-finish">
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-8">
+			<div class="container col-sm-8">
 				<div class="well bg-greendark">
 
 					<?php if ($testType != "pre" && $quesType_ != 3) { // 3= บรรยาย   หัว icon ว่าผ่าน ไม่ผ่าน 
@@ -81,7 +81,7 @@ if ($course->cate_id != 1) { //LMS
 						</div>
 					<?php } ?>
 
-					<div class="well detail">
+					<div class="well detail" style="border-bottom: none;">
 						<ul class="list-unstyled">
 							<li>
 								<?= $labelCourse->label_totalTest ?>
