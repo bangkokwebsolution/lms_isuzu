@@ -2872,8 +2872,16 @@ box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14),
 }
 
 #exams-finish .col-sm-8 .detail ul li {
-  padding: 10px;
+  padding: 12px;
   border-bottom: 1px solid #ddd;
+}
+
+.exams-finish-content {
+  justify-content: center;
+}
+
+.exams-finish-detail {
+  border-bottom: none !important;
 }
 
 .bg-greendark{
