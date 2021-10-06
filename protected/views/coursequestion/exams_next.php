@@ -166,7 +166,7 @@
 			<div class="text-center">
 				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark btn-lg','onclick'=>'save_ans("previous")'), 'Previous'); ?>
 				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark  btn-lg','onclick'=>'save_ans("next")'), 'Next'); ?>
-				<?php //if($last_ques==1)echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg','onclick'=>'save_ans("savevvv")' ), UserModule::t('sendQues') ); ?>
+				<?php if($last_ques==1)echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg','onclick'=>'save_ans("save")' ), UserModule::t('sendQues') ); ?>
 			</div>
 		</form>
 	</div>
