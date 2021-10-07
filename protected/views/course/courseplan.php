@@ -63,7 +63,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         $date_end = explode('-', $M_C->course_date_end);
                             if($M_C->CategoryTitle->active == "y"){
                                     if($langId == 2){
-                                        $date_Course = Helpers::changeFormatDateTHnew($M_C->course_date_start).' - '.Helpers::changeFormatDateTHnew($M_C->course_date_end);
+                                        $date_Course = Helpers::changeFormatDateTHshort($M_C->course_date_start).' - '.Helpers::changeFormatDateTHshort($M_C->course_date_end);
                                         $course_id = $M_C->parent_id;
                                         // var_dump($M_C->course_id);exit();
                                     }else{
