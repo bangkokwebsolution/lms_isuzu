@@ -203,14 +203,7 @@
                               <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='audio/mpeg'>
                               </video>
 
-                              <!-- <a href="" class=""> -->
-                                <!-- <span class="other-file"> -->
-                                  <!-- <i class="fas fa-file-audio audio"></i>&nbsp;<small>Audio</small> -->
-                                  <!-- </span> -->
-                          <!-- <img src="<?php //echo Yii::app()->theme->baseUrl; 
-                          ?>/images/other-library.png" class="img-fluid "> -->
-                          <!-- <div class="library-detail"> -->
-                            <!-- <span> -->
+                              
                               <?= $libra_file ?>                                
                               </span>
                                 <div class="text-center">
@@ -218,8 +211,7 @@
                                     <i class="fa fa-download"></i> <?= $text_status ?>
                                   </button>
                                 </div>
-                          <!-- </div> -->
-                          <!-- </a> -->
+                        
                         </div>
                       </div>
                     </div>
@@ -297,7 +289,7 @@
                 } elseif ($extension == "pdf") {
                 ?>
 
-                <!--pdf-->
+                <!--pdf แสดงส่วน All -->
                 <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
@@ -455,20 +447,6 @@
                               <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='audio/mpeg'>
                               </video>
 
-                              <!-- <a href="" class=""> -->
-                                <!-- <span class="other-file"> -->
-                                  <!-- <i class="fas fa-file-audio audio"></i>&nbsp;<small>Audio</small> -->
-                                  <!-- </span> -->
-                          <!-- <img src="<?php //echo Yii::app()->theme->baseUrl; 
-                          ?>/images/other-library.png" class="img-fluid "> -->
-                          <!-- <div class="library-detail">
-                            <span><?= $libra_file ?></span>
-                                <div class="text-center">
-                                  <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
-                                    <i class="fa fa-download"></i> <?= $text_status ?>
-                                  </button>
-                                </div>
-                          </div> -->
                           <?= $libra_file ?>
                           <div class="text-center">
                               <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
@@ -822,12 +800,13 @@
                 <?php
                 } elseif ($extension == "pdf") {
                 ?>
+                <!--PDF ที่แสดงหน้านี้ -->
                 <div class="col-sm-6 col-md-4 col-xs-12">
                   <div class=" text-center">
                     <div class="library-item">
                       <div class="item item-library-index">
                         <div class="library-card">
-                          <a href="javascript:void(0)" onclick="downloadFile(this)" class="" library-id="<?= $value->library_id ?>">
+                          <a href="../uploads/LibraryFile/<?php echo $value->library_filename ?>"  class="" library-id="<?= $value->library_id ?>" >
                             <span class="other-file">
                               <i class="fas fa-file-pdf pdf"></i>&nbsp;<small>PDF</small>
                             </span>
@@ -1031,20 +1010,7 @@
                               <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='audio/mpeg'>
                               </video>
 
-                              <!-- <a href="" class=""> -->
-                                <!-- <span class="other-file"> -->
-                                  <!-- <i class="fas fa-file-audio audio"></i>&nbsp;<small>Audio</small> -->
-                                  <!-- </span> -->
-                          <!-- <img src="<?php //echo Yii::app()->theme->baseUrl; 
-                          ?>/images/other-library.png" class="img-fluid "> -->
-                          <!-- <div class="library-detail">
-                            <span><?= $libra_file ?></span>
-                            <div class="text-center">
-                              <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
-                              <i class="fa fa-download"></i> <?= $text_status ?>
-                            </button>
-                            </div>
-                          </div> -->
+                              
                           <?= $libra_file ?>
                           <div class="text-center">
                               <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
@@ -1287,20 +1253,7 @@
                               <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='audio/mpeg'>
                               </video>
 
-                              <!-- <a href="" class=""> -->
-                                <!-- <span class="other-file"> -->
-                                  <!-- <i class="fas fa-file-audio audio"></i>&nbsp;<small>Audio</small> -->
-                                  <!-- </span> -->
-                          <!-- <img src="<?php //echo Yii::app()->theme->baseUrl; 
-                          ?>/images/other-library.png" class="img-fluid "> -->
-                          <!-- <div class="library-detail">
-                            <span><?= $libra_file ?></span>
-                            <div class="text-center">
-                              <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
-                              <i class="fa fa-download"></i> <?= $text_status ?>
-                            </button>
-                            </div>
-                          </div> -->
+                              
                           <?= $libra_file ?>
                           <div class="text-center">
                               <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
@@ -1564,20 +1517,7 @@
                               <source src="../uploads/LibraryFile/<?= $value->library_filename ?>" type='audio/mpeg'>
                               </video>
 
-                              <!-- <a href="" class=""> -->
-                                <!-- <span class="other-file"> -->
-                                  <!-- <i class="fas fa-file-audio audio"></i>&nbsp;<small>Audio</small> -->
-                                  <!-- </span> -->
-                          <!-- <img src="<?php //echo Yii::app()->theme->baseUrl; 
-                          ?>/images/other-library.png" class="img-fluid "> -->
-                          <!-- <div class="library-detail">
-                            <span><?= $libra_file ?></span>
-                              <div class="text-center">
-                                 <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
-                                <i class="fa fa-download"></i> <?= $text_status ?>
-                              </button>
-                            </div>
-                          </div> -->
+                              
                           <?= $libra_file ?>
                           <div class="text-center">
                               <button class="<?= $text_class ?>"  onclick="downloadRequest(this)" library-id="<?= $value->library_id ?>">
@@ -1870,6 +1810,8 @@
 
     }
   }
+
+  
 
   $( document ).ready(function() {
     <?php if(isset($_GET['cate_1'])){
