@@ -49,7 +49,16 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         }
                         ?>
                         <?php $row = 2; 
-                        foreach ($Model as $key_C => $M_C) {
+                        if($langId==1){
+                            $models = $Model;
+                        }else{
+                            foreach ($Model as $key_N => $value_N) {
+                              $CourseOnline =  CourseOnline::model()->findByAttributes(['parent_id'=>$value_N->course_id,'active'=>'y','lang_id'=>2]);
+                              $CourseOnline->cate_id = $value_N->cate_id;
+                              $models[]  = $CourseOnline;
+                            }
+                        }
+                        foreach ($models as $key_C => $M_C) {
                         $date_start = explode('-', $M_C->course_date_start);
                         $date_end = explode('-', $M_C->course_date_end);
                             if($M_C->CategoryTitle->active == "y"){

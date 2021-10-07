@@ -12,8 +12,8 @@
 
 <style type="text/css">
   #upload-profileimg {
-    width: 250px;
-    height: 250px;
+    width: 297px;
+    height: 436px;
     padding-bottom: 25px;
 }
 
@@ -160,7 +160,7 @@ figure figcaption {
                                         <center>
                                             <?php
                                             if ($model->library_picture == null) {
-                                                $img  = Yii::app()->theme->baseUrl . "/images/default-avatar.png";
+                                                $img  = Yii::app()->theme->baseUrl . "/images/other-library.png";
                                             } else {
                                                 $img = Yii::app()->baseUrl . '/../uploads/library/' . $model->library_id . '/thumb/' . $model->library_picture;
                                             }
@@ -176,7 +176,7 @@ figure figcaption {
                                     <input type="file"  style="display: none;" id="Profile_pro_pic" class="item-img file center-block d-none" name="LibraryFile[picture]" />
                                 </label>
                                 <center>
-                                    <span class="text-danger"><font color="red">*</font>รูปภาพควรมีขนาด 2X2 นิ้ว</span>
+                                    <span class="text-danger"><font color="red">*</font>รูปภาพควรมีขนาด 297x436 นิ้ว</span>
                                 </center>
                             </div>
 
@@ -198,10 +198,10 @@ figure figcaption {
         <div class="modal-content crop-img">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">สร้างรูปข่าว
+                <h4 class="modal-title" id="myModalLabel">สร้างรูป PDF
                 </h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="max-height: 1000px">
                 <div id="upload-profileimg" class="center-block"></div>
                 <div class="text-center center-block mt-2" style="margin-top: 10px" >
                     <button class="rotate_btn rotate_left btn" data-deg="90"><i class="glyphicon glyphicon-refresh"></i>
@@ -248,8 +248,8 @@ figure figcaption {
 
 $uploadCrop = $('#upload-profileimg').croppie({
     viewport: {
-        width: 120,
-        height: 120,
+        width: 297,
+        height: 436,
     },
     showZoomer: true,
     enableOrientation: true,
@@ -283,8 +283,8 @@ $('#cropImageBtn').on('click', function(ev) {
         type: 'base64',
         format: 'jpeg',
         size: {
-            width: 150,
-            height: 150
+            width: 297,
+            height: 436
         }
     }).then(function(resp) {
         $('#item-img-output').attr('src', resp);
