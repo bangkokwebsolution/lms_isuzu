@@ -21,7 +21,6 @@
 </style>
 
 <?php
-
 $course_wait_cer = 1; // สถานะ 1=พิมใบ cer ได้    2=มีข้อสอบบรรยายรอตรวจ พิมไม่ได้
 $themeBaseUrl = Yii::app()->theme->baseUrl;
 $uploadFolder = Yii::app()->getUploadUrl("lesson");
@@ -367,7 +366,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                         <small><?= $Lessons ?></small>
                                         <div class="text-center mt-20">
                                             <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/book-icon.png">
-                                            <small class="text-center detail-value">4 <?= $Lessons ?></small>
+                                            <small class="text-center detail-value"><?= count($lessonModel).' '.$Lessons ?></small>
                                         </div>
                                     </div>
                                 </div>
@@ -1545,7 +1544,6 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                         $criteria->condition = ' course_id="' . $course->course_id . '" AND user_id="' . Yii::app()->user->id . '" AND score_number IS NOT NULL AND active="y"' . " AND gen_id='" . $gen_id . "'" . ' AND type="post"';
                                         $criteria->order = 'create_date ASC';
                                         $BestFinalTestScore = Coursescore::model()->findAll($criteria);
-
                                         $checkCourseTest = Helpers::lib()->checkCoursePass($course->course_id); //Chekc Lesson all pass to test course exam
                                         $checkHaveCourseTest = Helpers::lib()->checkHaveCourseTestInManage($course->course_id);
                                         $CourseSurvey = CourseTeacher::model()->findAllByAttributes(array('course_id' => $course->course_id));
