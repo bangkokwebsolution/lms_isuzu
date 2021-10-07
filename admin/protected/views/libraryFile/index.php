@@ -95,6 +95,18 @@ EOD
 							'id'=>'chk',
 						),
 						array(
+							'header'=>'รูปภาพ',
+							'type'=>'raw',
+							'value'=>function($data){
+								if($data->library_picture!=""){
+									echo "<img src='".Yii::app()->baseUrl ."/../uploads/library/". $data->library_id  ."/thumb/". $data->library_picture ."' width='100px' >";
+								}else{
+									echo "<img src='".Yii::app()->theme->baseUrl . "/images/other-library.png' width='100px' >";
+								}
+							},
+							
+						),
+						array(
 							'name'=>'library_type_id',
 							'value'=>'$data->type->library_type_name_en',
 							'filter'=>false,

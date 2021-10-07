@@ -255,7 +255,11 @@
                             <span class="other-file">
                               <i class="fas fa-file-pdf pdf"></i>&nbsp;<small>PDF</small>
                             </span>
+                            <?php if($value->library_picture!=""){ ?>
+                            <img src="<?php echo Yii::app()->baseUrl ?>/uploads/library/<?php echo $value->library_id ?>/thumb/<?php echo $value->library_picture; ?>" class="w-100" >
+                            <?php }else{?>
                             <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="w-100">
+                            <?php } ?>
                             <div class="library-detail">
                               <span><?= $libra_file ?></span>
                             </div>
@@ -479,7 +483,12 @@
                             <span class="other-file">
                               <i class="fas fa-file-pdf pdf"></i>&nbsp;<small>PDF</small>
                             </span>
+                            <?php if($value->library_picture!=""){ ?>
+                            
+                            <img src="<?php echo Yii::app()->baseUrl ?>/uploads/library/<?php echo $value->library_id ?>/thumb/<?php echo $value->library_picture; ?>" class="w-100" >
+                            <?php }else{?>
                             <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/other-library.png" class="w-100">
+                            <?php } ?>
                             <div class="library-detail">
                               <span><?= $libra_file ?></span>
                             </div>
