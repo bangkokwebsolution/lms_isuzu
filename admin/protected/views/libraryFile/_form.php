@@ -166,7 +166,7 @@ figure figcaption {
                                             }
                                             $url_pro_pic = $img;
                                             ?>
-                                            <img src="<?php echo $url_pro_pic; ?>" class="gambar img-responsive img-thumbnail" style="width: 150px;height: 150px" name="item-img-output" id="item-img-output" />
+                                            <img src="<?php echo $url_pro_pic; ?>" class="gambar img-responsive img-thumbnail" style="width: 150px;height: 250px" name="item-img-output" id="item-img-output" />
                                             <figcaption>
                                                 <div class="btn btn-default btn-uploadimg"><i class="fa fa-camera"></i> เลือกรูป</div>
                                             </figcaption>
