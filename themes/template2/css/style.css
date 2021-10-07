@@ -6049,11 +6049,15 @@ tr {
   overflow-x: auto;
 }
 
+.cell .event{
+  font-size: 12px;
+}
+
 .table-plan {
   border-collapse: collapse;
   display: grid;
   width: 100%;
-  grid-template-columns: minmax(280px, 3fr) repeat(12, minmax(70px, 1fr));
+  grid-template-columns: minmax(200px, 3fr) repeat(12, minmax(70px, 1fr));
   grid-template-rows: 60px;
 }
 
