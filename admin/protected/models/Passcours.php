@@ -168,14 +168,14 @@ class Passcours extends AActiveRecord
 		}
 
 		//check memtype
-		if(isset($this->type_register) && $this->type_register != null) {
-			$criteria->compare('Profiles.type_employee', $this->type_register);
-			// if($this->type_register == 1){ //General
-			// 	$criteria->addIncondition('user.type_employee',[1,2],false);
-   //              }else if($this->type_register == 2){ //Staff
-   //              	$criteria->compare('user.type_register', 3 , false);
-   //              }
-        }
+		// if(isset($this->type_register) && $this->type_register != null) {
+		// 	$criteria->compare('Profiles.type_employee', $this->type_register);
+		// 	// if($this->type_register == 1){ //General
+		// 	// 	$criteria->addIncondition('user.type_employee',[1,2],false);
+  //  //              }else if($this->type_register == 2){ //Staff
+  //  //              	$criteria->compare('user.type_register', 3 , false);
+  //  //              }
+  //       }
 
         //check Department
 		if(isset($this->department) && $this->department != null) {
@@ -199,7 +199,7 @@ class Passcours extends AActiveRecord
 		}
 
 
-		$criteria->order = 'Profiles.type_employee ASC, Profiles.firstname_en ASC';
+		$criteria->order = 'Profiles.firstname_en ASC';
 		// $criteria->order = 'passcours_date DESC';
 
 

@@ -167,28 +167,6 @@ EOD
     $listCourse = CHtml::listData($CourseOnline,'course_id','course_title');
 
 
-    $TypeEmployee = TypeEmployee::model()->findAll(array(
-    	'condition' => 'active = "y"',
-    	'order' => 'type_employee_name ASC'
-    ));
-    $listtype_user = CHtml::listData($TypeEmployee,'id','type_employee_name');
-
-
-
-    $department = Department::model()->findAll(array(
-    	'condition' => 'active = "y"',
-    	'order' => 'dep_title ASC'
-    ));
-    $listdepartment = CHtml::listData($department,'id','dep_title');
-
-
-    $position = Position::model()->findAll(array(
-    	'condition' => 'active = "y"',
-    	'order' => 'position_title ASC'
-    ));
-    $listposition = CHtml::listData($position,'id','position_title');
-
-
     if($passcours_cours != ""){
     	$arr_gen = CourseGeneration::model()->findAll(array(
     		'condition' => 'course_id=:course_id AND active=:active ',
@@ -215,9 +193,6 @@ EOD
 			array('name'=>'passcours_cours','type'=>'list','query'=>$listCourse),	
 			array('name'=>'gen_id','type'=>'list','query'=>$arr_gen),	
 			array('name'=>'search','type'=>'text'),		
-			array('name'=>'type_register','type'=>'list','query'=>$listtype_user),
-			array('name'=>'department','type'=>'list','query'=>$listdepartment),
-			array('name'=>'position','type'=>'list','query'=>$listposition),			
 			array('name'=>'period_start','type'=>'text'),
 			array('name'=>'period_end','type'=>'text'),
 	),
@@ -244,6 +219,7 @@ EOD
 			<div class="clear-div"></div>
 			<div class="overflow-table">
 				<?php
+				
 				$this->widget('AGridView', array(
 					'id'=>$formNameModel.'-grid',
 					'dataProvider'=>$model->passcourscheck()->highsearch(),
@@ -284,14 +260,6 @@ EOD
 							'value'=>'$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
 						),
 						array(
-							'header' => 'ประเภทพนักงาน',
-							'filter'=>false,
-							'type' => 'raw',
-							'value' => function($data) {
-								return $data->profile->typeEmployee->type_employee_name;
-							},
-						),
-						array(
 							'header' => 'Name – Surname',
 							'filter'=>false,
 							'type' => 'raw',
@@ -310,51 +278,7 @@ EOD
 						    	'width'=>'120',
 						  	),
 						),
-						array(
-							'header' => 'รหัสบัตรประชาชน',
-							'filter'=>false,
-							'type' => 'raw',
-							'value' => function($data) {
-								return $data->user->identification;
-							},
-						),
-						array(
-							'header' => 'Passport No.',
-							'filter'=>false,
-							'type' => 'raw',
-							'value' => function($data) {
-								return $data->Profiles->passport;
-							},
-						),
-						array(
-							'header' => 'Employee no.',
-							'filter'=>false,
-							'type' => 'raw',
-							'value' => function($data) {
-								if($data->profile->type_employee == 2){
-									return $data->user->username;
-								}
-								
-							},
-						),
-						array(
-							'header'=>'แผนก',
-							'filter'=>false,
-							'type' => 'raw',
-							'value'=>'$data->user->department->dep_title',
-							'htmlOptions' => array(
-								'width' => '100',
-							),
-						),
-						array(
-							'header'=>'ตำแหน่ง',
-							'filter'=>false,
-							'type' => 'raw',
-							'value'=>'$data->user->position->position_title',
-							'htmlOptions' => array(
-								'width' => '100',
-							),
-						),
+						
 						array(
 							'header'=>'หลักสูตร',
 							'filter'=>false,
@@ -425,6 +349,7 @@ EOD
 							'type'=>'raw',
 							// 'value'=>'$data->PrintCertificate',
 							'value'=>function($data){
+
 								$certIdModel = CertificateNameRelations::model()->find(array('condition' => 'course_id = '.$data->passcours_cours));
 								if(empty($certIdModel)){
 									return 'ไม่มีใบประกาศนียบัตร';
@@ -441,6 +366,7 @@ EOD
 							'type'=>'raw',
 							// 'value'=>'$data->SaveFile',
 							'value'=>function($data){
+
 								$certIdModel = CertificateNameRelations::model()->find(array('condition' => 'course_id = '.$data->passcours_cours));
 								if(empty($certIdModel)){
 									return 'ไม่มีใบประกาศนียบัตร';
@@ -451,7 +377,9 @@ EOD
 							},
 						),
 					),
-				)); ?>
+				));
+
+				 ?>
 			</div>
 		</div>
 
