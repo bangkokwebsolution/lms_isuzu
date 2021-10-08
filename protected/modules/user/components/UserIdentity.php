@@ -45,13 +45,13 @@ class UserIdentity extends CUserIdentity
 			$this->username=$user->username;
 			$this->errorCode=self::ERROR_NONE;
 			Yii::app()->session['ID']=$user->id;
-			$chatstatus=CometchatStatus::model()->find('userid='.Yii::app()->session['ID']);
-			if(!$chatstatus){
-				$chatstatus = new CometchatStatus;
-				$chatstatus->userid =  Yii::app()->session['ID'];
-				$chatstatus->status = "available";
-				$chatstatus->save();
-			}
+			// $chatstatus=CometchatStatus::model()->find('userid='.Yii::app()->session['ID']);
+			// if(!$chatstatus){
+			// 	$chatstatus = new CometchatStatus;
+			// 	$chatstatus->userid =  Yii::app()->session['ID'];
+			// 	$chatstatus->status = "available";
+			// 	$chatstatus->save();
+			// }
 		}
 		return !$this->errorCode;
 	}
