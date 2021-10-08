@@ -162,6 +162,22 @@ class UserNew extends CActiveRecord
         return $relations;
 	}
 
+	public function beforeSave()
+    {
+        if(null !== Yii::app()->user && isset(Yii::app()->user->id))
+            $id = Yii::app()->user->id;
+        else
+            $id = 0;
+
+        if($this->isNewRecord){
+            $this->create_by = $id;
+            // $this->create_date = date("Y-m-d H:i:s");
+            // $this->update_by = $id;
+            // $this->update_date = date("Y-m-d H:i:s");
+        }
+        return parent::beforeSave();
+    }
+
 	public function attributeLabels()
 	{
 		return array(
