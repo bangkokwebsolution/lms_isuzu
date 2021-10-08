@@ -165,11 +165,11 @@ if (!empty($msg) || !empty($_GET['msg'])) {
 
                     <?php
                     foreach ($image as $key => $value) {
-                        $criteriaType = new CDbCriteria;
-                        $criteriaType->compare('active', y);
-                        $criteriaType->compare('gallery_type_id', $value->gallery_type_id);
-                        $criteriaType->order = 'id ASC';
-                        $galleryType = Gallery::model()->findAll($criteriaType);
+                        // $criteriaType = new CDbCriteria;
+                        // $criteriaType->compare('active', y);
+                        // $criteriaType->compare('gallery_type_id', $value->gallery_type_id);
+                        // $criteriaType->order = 'id ASC';
+                        // $galleryType = Gallery::model()->findAll($criteriaType);
                     ?>
                         <div class="item <?php if ($key == 0) echo 'active'; ?>">
                             <?php
