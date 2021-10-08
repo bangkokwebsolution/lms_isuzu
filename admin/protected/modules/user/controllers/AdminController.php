@@ -1207,10 +1207,13 @@ class AdminController extends Controller
           $to['firstname'] = $profile->firstname;
           $to['lastname'] = $profile->lastname;
           $message = $this->renderPartial('_mail_message',array('model' => $model,'genpass'=>$_POST['User']['username']),true);
-          if($message){
-            $send = Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message);
+          if(($message) && ($model->email != null)){
+            if(Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message)){
+                $this->redirect(array('employee'));
+            }
+        }else{
+            $this->redirect(array('employee'));
         }
-        $this->redirect(array('view','id'=>$model->id));
     }
 				// $this->redirect(array('view','id'=>$model->id));
     $this->redirect(array('create'));
