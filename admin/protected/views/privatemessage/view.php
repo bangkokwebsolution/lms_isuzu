@@ -85,11 +85,7 @@ div.scroll {
         <?php echo $form->error($profile,'lastname'); ?>
     </div>
 
-    <div class="col-md-6">
-        <?php echo $form->labelEx($profile,'advisor_email1'); ?>
-        <?php echo $form->textField($profile,'advisor_email1',array('maxlength'=>255,'disabled'=>'disabled','style'=>'width:100%')); ?>
-        <?php echo $form->error($profile,'advisor_email1'); ?>
-    </div>
+    
 
     <div class="col-md-6">
         <?php echo $form->labelEx($profile,'phone'); ?>
