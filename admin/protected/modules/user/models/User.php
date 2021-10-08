@@ -63,8 +63,8 @@ class User extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		// return '{{users}}';
-		return Yii::app()->getModule('user')->tableUsers;
+		return '{{users}}';
+		// return Yii::app()->getModule('users')->tableUsers;
 	}
 
 	/**
@@ -135,19 +135,19 @@ class User extends CActiveRecord
 	 */
 	public function relations()
 	{
-        $relations = Yii::app()->getModule('user')->relations;
-        if (!isset($relations['profile']))
-            $relations['profile'] = array(self::HAS_ONE, 'Profile', 'user_id');
+		$relations = Yii::app()->getModule('user')->relations;
+		if (!isset($relations['profile']))
+			$relations['profile'] = array(self::HAS_ONE, 'Profile', 'user_id');
 
-        $relations['typeUsers'] = array(
-            self::BELONGS_TO, 'TypeUser', array('id'=>'type_register')
-        );
+		$relations['typeUsers'] = array(
+			self::BELONGS_TO, 'TypeUser', array('id'=>'type_register')
+		);
 
-        $relations['orgchart'] = array(
-            self::BELONGS_TO, 'OrgChart', array('id'=>'department_id')
-        );
+		$relations['orgchart'] = array(
+			self::BELONGS_TO, 'OrgChart', array('org_id'=>'id')
+		);
 
-        $relations['branch'] = array(
+		$relations['branch'] = array(
 			self::BELONGS_TO, 'Branch', 'branch_id'
 		);
 
@@ -171,58 +171,58 @@ class User extends CActiveRecord
 			self::BELONGS_TO, 'Position', array('position_id')
 		);
 
-        $relations['orgcourses'] = array(
-            self::HAS_MANY,'OrgCourse',array('id'=>'orgchart_id'),'through'=>'orgchart'
-        );
+		$relations['orgcourses'] = array(
+			self::HAS_MANY,'OrgCourse',array('id'=>'orgchart_id'),'through'=>'orgchart'
+		);
 
-				$relations['orders'] = array(
-        	self::HAS_MANY, 'Orderonline', 'user_id'
-        );
+		$relations['orders'] = array(
+			self::HAS_MANY, 'Orderonline', 'user_id'
+		);
 
-				$relations['orderDetails'] = array(
-                self::HAS_MANY,'OrderDetailonline',array('order_id'=>'order_id'),'through'=>'orders'
-        );
+		$relations['orderDetails'] = array(
+			self::HAS_MANY,'OrderDetailonline',array('order_id'=>'order_id'),'through'=>'orders'
+		);
 
-				$relations['ownerCourseOnline'] = array(
-                self::HAS_MANY,'CourseOnline',array('shop_id'=>'course_id'),'through'=>'orderDetails'
-        );
+		$relations['ownerCourseOnline'] = array(
+			self::HAS_MANY,'CourseOnline',array('shop_id'=>'course_id'),'through'=>'orderDetails'
+		);
 
-        $relations['learns'] = array(self::HAS_MANY, 'Learn', 'user_id');
+		$relations['learns'] = array(self::HAS_MANY, 'Learn', 'user_id');
 
-        $relations['learnFiles'] = array(
-            self::HAS_MANY,'LearnFile',array('learn_id'=>'learn_id'),'through'=>'learns'
-        );
+		$relations['learnFiles'] = array(
+			self::HAS_MANY,'LearnFile',array('learn_id'=>'learn_id'),'through'=>'learns'
+		);
 
-        $relations['learnVdos'] = array(
-            self::HAS_MANY,'File',array('file_id'=>'id'),'through'=>'learnFiles'
-        );
+		$relations['learnVdos'] = array(
+			self::HAS_MANY,'File',array('file_id'=>'id'),'through'=>'learnFiles'
+		);
 
-        $relations['learnLessons'] = array(
-            self::HAS_MANY,'Lesson',array('lesson_id'=>'id'),'through'=>'learns'
-        );
+		$relations['learnLessons'] = array(
+			self::HAS_MANY,'Lesson',array('lesson_id'=>'id'),'through'=>'learns'
+		);
 
-        $relations['group'] = array(
-            self::HAS_MANY,'PGroup',array('id'=>'group')
-        );
+		$relations['group'] = array(
+			self::HAS_MANY,'PGroup',array('id'=>'group')
+		);
 
 
 		$relations['sess'] = array(
-            self::HAS_ONE,'Sess','user_id');
+			self::HAS_ONE,'Sess','user_id');
 
-        $relations['countLearnCompareTrueVdos'] = array(
-            self::STAT,
-            'Learn',
-            'user_id',
-            'select' => 'COUNT(tbl_lesson.id)',
-            'join' => 'INNER JOIN tbl_lesson ON tbl_lesson.id = t.lesson_id
-                INNER JOIN tbl_file ON tbl_file.lesson_id = tbl_lesson.id
-                INNER JOIN tbl_learn_file ON tbl_file.id = tbl_learn_file.file_id
-                AND t.learn_id = tbl_learn_file.learn_id',
-        );
+		$relations['countLearnCompareTrueVdos'] = array(
+			self::STAT,
+			'Learn',
+			'user_id',
+			'select' => 'COUNT(tbl_lesson.id)',
+			'join' => 'INNER JOIN tbl_lesson ON tbl_lesson.id = t.lesson_id
+			INNER JOIN tbl_file ON tbl_file.lesson_id = tbl_lesson.id
+			INNER JOIN tbl_learn_file ON tbl_file.id = tbl_learn_file.file_id
+			AND t.learn_id = tbl_learn_file.learn_id',
+		);
+        // 'EmpClass' => array(self::HAS_ONE, 'EmpClass','employee_id'),
+		$relations['EmpClass'] = array(self::HAS_MANY, 'EmpClass', 'employee_id');
 
-
-
-        return $relations;
+		return $relations;
 	}
 
 	/**
@@ -264,7 +264,7 @@ class User extends CActiveRecord
 			'employee_id' => 'รหัสพนักงาน',
 			'typeuser' =>'ประเภทผู้ใช้งาน',
 			'type_employee'=> 'ประเภทพนักงาน',
-		    'passport'=> 'รหัสหนังสือเดินทาง',
+			'passport'=> 'รหัสหนังสือเดินทาง',
 			'register_status' => 'สถานะการสมัครสมาชิก',
 			'dateRang' => 'เลือกระยะเวลา',
 			'note' => 'หมายเหตุ',
@@ -280,33 +280,33 @@ class User extends CActiveRecord
 	}
 
 	public function scopes()
-    {
-        return array(
-            'active'=>array(
-                'condition'=>'status='.self::STATUS_ACTIVE,
-            ),
-            'notactive'=>array(
-                'condition'=>'status='.self::STATUS_NOACTIVE,
-            ),
+	{
+		return array(
+			'active'=>array(
+				'condition'=>'status='.self::STATUS_ACTIVE,
+			),
+			'notactive'=>array(
+				'condition'=>'status='.self::STATUS_NOACTIVE,
+			),
 //            'banned'=>array(
 //                'condition'=>'status='.self::STATUS_BANNED,
 //            ),
-            'superuser'=>array(
-                'condition'=>'superuser=1',
-            ),
-            'notsafe'=>array(
-            	'select' => 'id, username, password, department_id, branch_id, pic_user, email, activkey, create_at, superuser, status, online_status,online_user,company_id, division_id,position_id,orgchart_lv2,group,employee_id',
-            ),
-        );
-    }
+			'superuser'=>array(
+				'condition'=>'superuser=1',
+			),
+			'notsafe'=>array(
+				'select' => 'id, username, password, department_id, branch_id, pic_user, email, activkey, create_at, superuser, status, online_status,online_user,company_id, division_id,position_id,orgchart_lv2,group,employee_id',
+			),
+		);
+	}
 
 	public function defaultScope()
-    {
-        return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
-            'alias'=>'user',
-            'select' => 'user.id, user.username, user.pic_user,user.station_id, user.department_id, user.branch_id,user.company_id, user.division_id,user.position_id,user.auditor_id,user.bookkeeper_id, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.online_status, user.online_user, user.pic_cardid,lastactivity,group,user.identification,user.pic_cardid2,user.employee_id,user.avatar,user.register_status,user.note,user.not_passed',
-        ));
-    }
+	{
+		return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
+			'alias'=>'user',
+			'select' => 'user.id, user.username, user.pic_user,user.station_id, user.department_id, user.branch_id,user.company_id, user.division_id,user.position_id,user.auditor_id,user.bookkeeper_id, user.email, user.create_at, user.lastvisit_at, user.superuser, user.status, user.online_status, user.online_user, user.pic_cardid,lastactivity,group,user.identification,user.pic_cardid2,user.employee_id,user.avatar,user.register_status,user.note,user.not_passed,user.org_id',
+		));
+	}
 
 	public static function itemAlias($type,$code=NULL) {
 		$_items = array(
@@ -331,129 +331,129 @@ class User extends CActiveRecord
 	}
 
 
-public function validateIdCard($attribute,$params){
-        $str = $this->identification;
-        $chk = strlen($str);
-        if($chk == "13"){
+	public function validateIdCard($attribute,$params){
+		$str = $this->identification;
+		$chk = strlen($str);
+		if($chk == "13"){
             $id = str_split(str_replace('-', '', $this->identification)); //ตัดรูปแบบและเอา ตัวอักษร ไปแยกเป็น array $id
             $sum = 0;
             $total = 0;
             $digi = 13;
             for ($i = 0; $i < 12; $i++) {
-                $sum = $sum + (intval($id[$i]) * $digi);
-                $digi--;
+            	$sum = $sum + (intval($id[$i]) * $digi);
+            	$digi--;
             }
             $total = (11 - ($sum % 11)) % 10;
             if ($total != $id[12]) { //ตัวที่ 13 มีค่าไม่เท่ากับผลรวมจากการคำนวณ ให้ add error
-                $this->addError('identification', 'เลขบัตรประชาชนนี้ไม่ถูกต้อง ตามการคำนวณของระบบฐานข้อมูลทะเบียนราษฎร์*');
+            	$this->addError('identification', 'เลขบัตรประชาชนนี้ไม่ถูกต้อง ตามการคำนวณของระบบฐานข้อมูลทะเบียนราษฎร์*');
             }
         }
     }
-	public static function chk_online($id,$lastactivity,$online_status)
-	{	
-		if ($id!='' && $online_status == '0') {
-			echo "<span style='color: #c6c6c6'>ออฟไลน์</span>";
-		} else {
-			$id_chk = User::model()->findByPk($id);
-			$lasttime = time();
-			$time = $lasttime - $lastactivity;
-			$chktime = date("i:s",$time);
-			if($id!='' && $chktime > '30.00' && $online_status == '1'){
-				$id_chk->online_status = '0';
-				$id_chk->save(false);
-				echo "<span style='color: #c6c6c6'>ออฟไลน์</span>";
-			}else{
-				echo "<span style='color: #00A000;'>ออนไลน์</span>";
-			}
-		}
-		
-	}
+    public static function chk_online($id,$lastactivity,$online_status)
+    {	
+    	if ($id!='' && $online_status == '0') {
+    		echo "<span style='color: #c6c6c6'>ออฟไลน์</span>";
+    	} else {
+    		$id_chk = User::model()->findByPk($id);
+    		$lasttime = time();
+    		$time = $lasttime - $lastactivity;
+    		$chktime = date("i:s",$time);
+    		if($id!='' && $chktime > '30.00' && $online_status == '1'){
+    			$id_chk->online_status = '0';
+    			$id_chk->save(false);
+    			echo "<span style='color: #c6c6c6'>ออฟไลน์</span>";
+    		}else{
+    			echo "<span style='color: #00A000;'>ออนไลน์</span>";
+    		}
+    	}
 
-	public function getFullnamee(){
-		$profile = Profile::model()->findByPk($this->id);
-		$text = $profile->firstname_en.' '.$profile->lastname_en;
-		if($text == " "){
-			$text = "";
-		}
-		return $text;
-	}
+    }
+
+    public function getFullnamee(){
+    	$profile = Profile::model()->findByPk($this->id);
+    	$text = $profile->firstname_en.' '.$profile->lastname_en;
+    	if($text == " "){
+    		$text = "";
+    	}
+    	return $text;
+    }
 
 /**
      * Retrieves a list of models based on the current search/filter conditions.
      * @return CActiveDataProvider the data provider that can return the models based on the search/filter conditions.
      */
-    public function search()
-    {
+public function search()
+{
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
-        $criteria=new CDbCriteria;
-        $criteria->with = array('profile','position','department');
+	$criteria=new CDbCriteria;
+	$criteria->with = array('profile','position','department');
 
-        if(isset($_GET['User']['fullname'])){
-        	$ex_fullname = explode(" ", $_GET['User']['fullname']);
+	if(isset($_GET['User']['fullname'])){
+		$ex_fullname = explode(" ", $_GET['User']['fullname']);
 
-        	if(isset($ex_fullname[0])){
-        		$pro_fname = $ex_fullname[0];
-        		$criteria->compare('profile.firstname_en', $pro_fname, true);
-        		$criteria->compare('profile.lastname_en', $pro_fname, true, 'OR');
-        	}
-        	
-        	if(isset($ex_fullname[1])){
-        		$pro_lname = $ex_fullname[1];
-        		$criteria->compare('profile.lastname_en',$pro_lname,true);
-        	}
-        }
+		if(isset($ex_fullname[0])){
+			$pro_fname = $ex_fullname[0];
+			$criteria->compare('profile.firstname_en', $pro_fname, true);
+			$criteria->compare('profile.lastname_en', $pro_fname, true, 'OR');
+		}
 
-        $criteria->compare('id',$this->id);
-        $criteria->compare('username',$this->username,true);
-        $criteria->compare('password',$this->password);
-        $criteria->compare('pic_user',$this->pic_user);
+		if(isset($ex_fullname[1])){
+			$pro_lname = $ex_fullname[1];
+			$criteria->compare('profile.lastname_en',$pro_lname,true);
+		}
+	}
+
+	$criteria->compare('id',$this->id);
+	$criteria->compare('username',$this->username,true);
+	$criteria->compare('password',$this->password);
+	$criteria->compare('pic_user',$this->pic_user);
         // $criteria->compare('station_id',$this->station_id);
         // $criteria->compare('position_id',$this->position_id);
         // $criteria->compare('user.department_id',$this->department_id);
         // $criteria->compare('branch_id',$this->branch_id);
-        $criteria->compare('email',$this->email,true);
-        $criteria->compare('activkey',$this->activkey);
-        $criteria->compare('create_at',$this->create_at);
-        $criteria->compare('lastvisit_at',$this->lastvisit_at);
-        $criteria->compare('lastactivity',$this->lastactivity);
-      
-        
-        if(empty($this->supper_user_status)){
-        	$criteria->compare('superuser',1);
-        }else{
-        	$criteria->compare('superuser',0);
-        }     
-        $criteria->compare('status',$this->status);
-        $criteria->compare('del_status',0);
- 		$criteria->compare('online_status',$this->online_status);
- 		$criteria->compare('online_user',$this->online_user);
- 		$criteria->compare('group',$this->group);
- 		$criteria->compare('identification',$this->identification);
- 		$criteria->compare('pic_cardid2',$this->pic_cardid2);
- 		$criteria->compare('register_status',$this->register_status);
- 		
+	$criteria->compare('email',$this->email,true);
+	$criteria->compare('activkey',$this->activkey);
+	$criteria->compare('create_at',$this->create_at);
+	$criteria->compare('lastvisit_at',$this->lastvisit_at);
+	$criteria->compare('lastactivity',$this->lastactivity);
 
- 		$criteria->order = 'user.id DESC';
- 	   
+
+	if(empty($this->supper_user_status)){
+		$criteria->compare('superuser',1);
+	}else{
+		$criteria->compare('superuser',0);
+	}     
+	$criteria->compare('status',$this->status);
+	$criteria->compare('del_status',0);
+	$criteria->compare('online_status',$this->online_status);
+	$criteria->compare('online_user',$this->online_user);
+	$criteria->compare('group',$this->group);
+	$criteria->compare('identification',$this->identification);
+	$criteria->compare('pic_cardid2',$this->pic_cardid2);
+	$criteria->compare('register_status',$this->register_status);
+
+
+	$criteria->order = 'user.id DESC';
+
 
  		// $criteria->compare('profile.identification',$this->idensearch,true);
 
-      $dataProvider = array('criteria'=>$criteria);
+	$dataProvider = array('criteria'=>$criteria);
 		// Page
-		if(isset($this->news_per_page))
-		{
-			$dataProvider['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
-		}
-		
-		return new CActiveDataProvider($this, $dataProvider);
-    }
+	if(isset($this->news_per_page))
+	{
+		$dataProvider['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
+	}
 
-    public function searchapprove()
+	return new CActiveDataProvider($this, $dataProvider);
+}
+
+public function searchapprove()
 {
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
-    
+
 	$criteria=new CDbCriteria;
 
 	$criteria->with = array('profile');
@@ -485,10 +485,10 @@ public function validateIdCard($attribute,$params){
 	}else {
 		$start_date = substr($this->create_at,0,11);
 		$end_date = substr($this->create_at,13);
-	
+
 		$date_start = date('Y-m-d 00:00:00', strtotime($start_date));
 		$date_end = date('Y-m-d 23:59:59', strtotime($end_date));
-			
+
 		$criteria->addBetweenCondition('create_at', $date_start, $date_end, 'AND');
 	}
 	
@@ -497,7 +497,7 @@ public function validateIdCard($attribute,$params){
 	$criteria->compare('group',$this->group);
 	$criteria->compare('profile.identification',$this->idensearch,true);
 	$criteria->compare('CONCAT(profile.firstname , " " , profile.lastname , " ", " ", username," ",profile.firstname_en , " " , profile.lastname_en)',$this->fullname,true);
-     
+
 	//$org = !empty($this->orgchart_lv2) ? '"'.$this->orgchart_lv2.'"' : '';
 	// $criteria->compare('orgchart_lv2',$org,true);
 	// $dataProvider = new CActiveDataProvider(get_class($this), array(
@@ -507,22 +507,22 @@ public function validateIdCard($attribute,$params){
 	// 	),
 	// ));
 	// return $dataProvider;
-	 $dataProvider = array('criteria'=>$criteria);
+	$dataProvider = array('criteria'=>$criteria);
 		// Page
-		if(isset($this->news_per_page))
-		{
-			$dataProvider['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
-		}
-		
-		return new CActiveDataProvider($this, $dataProvider);
+	if(isset($this->news_per_page))
+	{
+		$dataProvider['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
+	}
+
+	return new CActiveDataProvider($this, $dataProvider);
 }
 
 
- public function searchaccess()
+public function searchaccess()
 {
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
-    
+
 	$criteria=new CDbCriteria;
 
 	$criteria->with = array('profile');
@@ -555,7 +555,7 @@ public function validateIdCard($attribute,$params){
 	
 	// 	$date_start = date('Y-m-d 00:00:00', strtotime($start_date));
 	// 	$date_end = date('Y-m-d 23:59:59', strtotime($end_date));
-			
+
 	// 	$criteria->addBetweenCondition('create_at', $date_start, $date_end, 'AND');
 	// }
 	
@@ -574,20 +574,20 @@ public function validateIdCard($attribute,$params){
 	// 		'pageSize'=>Yii::app()->getModule('user')->user_page_size,
 	// 	),
 	// ));
-		  $dataProvider = array('criteria'=>$criteria);
+	$dataProvider = array('criteria'=>$criteria);
 		// Page
-		if(isset($this->news_per_page))
-		{
-			$dataProvider['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
-		}
-		
-		return new CActiveDataProvider($this, $dataProvider);
+	if(isset($this->news_per_page))
+	{
+		$dataProvider['pagination'] = array( 'pageSize'=> intval($this->news_per_page) );
+	}
+
+	return new CActiveDataProvider($this, $dataProvider);
 }
 public function searchaccessPersonal()
 {
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
-    
+
 	$criteria=new CDbCriteria;
 
 	$criteria->with = array('profile');
@@ -610,8 +610,11 @@ public function searchaccessPersonal()
 	$criteria->compare('status',$this->status);
 	$criteria->compare('del_status',1); 
 	$criteria->compare('register_status',$this->register_status);
+	$criteria->compare('org_id',$this->org_id);
+
 	$criteria->compare('profile.type_user',array(5));
 	$criteria->order = 'lastvisit_at ASC';
+
 	// if(empty($this->create_at)) {
 	// 	$criteria->compare('create_at',$this->create_at,true);
 	// }else {
@@ -620,7 +623,7 @@ public function searchaccessPersonal()
 	
 	// 	$date_start = date('Y-m-d 00:00:00', strtotime($start_date));
 	// 	$date_end = date('Y-m-d 23:59:59', strtotime($end_date));
-			
+
 	// 	$criteria->addBetweenCondition('create_at', $date_start, $date_end, 'AND');
 	// }
 	
@@ -642,38 +645,38 @@ public function searchaccessPersonal()
 
 
 
-    public function getCreatetime() {
-        return strtotime($this->create_at);
-    }
+public function getCreatetime() {
+	return strtotime($this->create_at);
+}
 
-    public function setCreatetime($value) {
-        $this->create_at=date('Y-m-d H:i:s',$value);
-    }
+public function setCreatetime($value) {
+	$this->create_at=date('Y-m-d H:i:s',$value);
+}
 
-    public function getLastvisit() {
-        return strtotime($this->lastvisit_at);
-    }
+public function getLastvisit() {
+	return strtotime($this->lastvisit_at);
+}
 
-    public function setLastvisit($value) {
-        $this->lastvisit_at=date('Y-m-d H:i:s',$value);
-    }
+public function setLastvisit($value) {
+	$this->lastvisit_at=date('Y-m-d H:i:s',$value);
+}
 
 
 
-      public function getregisstatusList()
-    {
-        $getregisstatusList = array(
-            '1'=>'รอการตรวจสอบ',
-            '2'=>'ไม่อนุมัติ'
-        );
-        return $getregisstatusList;
-    }
-     public function getapproveList()
-    {
-        $getregisstatusList = array(
-            '1'=>'รออนุมัติ ',
-            '0'=>'ไม่ผ่านอนุมัติ '
-        );
-        return $getregisstatusList;
-    }
+public function getregisstatusList()
+{
+	$getregisstatusList = array(
+		'1'=>'รอการตรวจสอบ',
+		'2'=>'ไม่อนุมัติ'
+	);
+	return $getregisstatusList;
+}
+public function getapproveList()
+{
+	$getregisstatusList = array(
+		'1'=>'รออนุมัติ ',
+		'0'=>'ไม่ผ่านอนุมัติ '
+	);
+	return $getregisstatusList;
+}
 }

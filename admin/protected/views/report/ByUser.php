@@ -18,6 +18,9 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 EOD
 , CClientScript::POS_READY);
 ?>
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/jquery.dataTables.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/jquery.dataTables.min.css" />
 
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/bootstrap-chosen.css" />
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/chosen.jquery.js"></script>
@@ -133,7 +136,6 @@ EOD
     }
 
 </script>
-
 <div class="innerLR">
 <?php
 
@@ -334,15 +336,17 @@ if(!empty($_GET) && $_GET['Report']['course_id'] != null && $_GET['Report']['gen
                 </div>
             </div> 
             <div class="widget-body" style=" overflow-x: scroll;">
-                <table class="table table-bordered table-striped">
+                <table id="table_datatable" class="table table-bordered table-striped">
 
                     <thead>
                         <tr>
-                            <th rowspan="2">ลำดับ</th>
-                            <th rowspan="2">Name - Surname</th>
-                            <th rowspan="2">ชื่อ – นามสกุล</th>
-                            <th rowspan="2">แผนก/ฝ่าย</th>
-                            <th rowspan="2">ตำแหน่ง/แผนก</th>
+                            <th class="center" rowspan="2">ลำดับ</th>
+                            <th class="center" rowspan="2">Name - Surname (EN)</th>
+                            <th class="center" rowspan="2">Name - Surname (TH)</th>
+                            <th class="center" rowspan="2">Work Location</th>
+                            <th class="center" rowspan="2">Employee Class</th>
+                            <th class="center" rowspan="2">Position desc.</th>
+                            <th class="center" rowspan="2">Organization unit</th>
                             <th class="center" colspan="<?= count($lesson_online)+1 ?>">หลักสูตร <?= $course_online->course_title.$gen_title ?></th>
                             <th rowspan="2">Email ที่สมัคร</th>
 
@@ -380,8 +384,10 @@ if(!empty($_GET) && $_GET['Report']['course_id'] != null && $_GET['Report']['gen
                                         <td><?= $start_cnt+1 ?></td>
                                         <td><?= $user->profile->firstname_en . ' ' . $user->profile->lastname_en ?></td>
                                         <td><?= $user->profile->firstname . ' ' . $user->profile->lastname ?></td>
-                                        <td><?= $user->department->dep_title ?></td>
-                                        <td><?= $user->position->position_title ?></td>
+                                        <td><center><?= $user->profile->location ?></center></td>
+                                        <td><?= isset($user->profile->EmpClass->title) ? $user->profile->EmpClass->title :'' ?></td>
+                                        <td><?= $user->profile->position_description ?></td>
+                                        <td><?= $user->profile->organization_unit ?></td>
                                         <?php
                                            if($lesson_online) {
                                                 foreach($lesson_online as $lesson) {
@@ -472,3 +478,8 @@ if(!empty($_GET) && $_GET['Report']['course_id'] != null && $_GET['Report']['gen
     }  
 }
 ?>
+<script type="text/javascript">
+    $('#table_datatable').DataTable({
+                   "searching": true,
+                });
+</script>

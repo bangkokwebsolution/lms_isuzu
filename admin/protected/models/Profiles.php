@@ -61,6 +61,7 @@ class Profiles extends CActiveRecord
 			'Province' => array(self::HAS_ONE, 'Province', array('pv_id'=>'province')),
 			'Generation' => array(self::HAS_ONE, 'Generation', array('id_gen'=>'generation')),
 			'ProfilesTitle'=>array(self::BELONGS_TO, 'ProfilesTitle', 'title_id'),
+			'EmpClass'=>array(self::BELONGS_TO, 'EmpClass', 'employee_class'),
 			'Type' => array(self::HAS_ONE, 'TypeUser', array('id' => 'type_user')),
 		);
 	}
