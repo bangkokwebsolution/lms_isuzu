@@ -310,8 +310,10 @@ Class Helpers
         // $adminEmail = $SettingAll['USER_EMAIL'];
         // $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-        $adminEmail = 'imctisuzu@gmail.com';
-        $adminEmailPass = 'admindemo';
+        // $adminEmail = 'imctisuzu@gmail.com';
+        // $adminEmailPass = 'admindemo';
+        $adminEmail = 'keng1155ker@gmail.com';
+        $adminEmailPass = 'keng12345678';
 
         $mail =  new PHPMailer(true);
 
