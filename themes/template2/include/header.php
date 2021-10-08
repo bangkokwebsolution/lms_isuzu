@@ -49,11 +49,11 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                 <?php if (Yii::app()->user->id !== null) { ?>
                     <?php
                     $name = Profile::model()->findByPk(Yii::app()->user->getId());
-                    $criteria1 = new CDbCriteria;
-                    $criteria1->addCondition('create_by =' . $name->user_id);
-                    $criteria1->order = 'update_date  ASC';
-                    $criteria1->compare('status_answer', 1);
-                    $PrivatemessageReturn = PrivateMessageReturn::model()->findAll($criteria1);
+                    // $criteria1 = new CDbCriteria;
+                    // $criteria1->addCondition('create_by =' . $name->user_id);
+                    // $criteria1->order = 'update_date  ASC';
+                    // $criteria1->compare('status_answer', 1);
+                    // $PrivatemessageReturn = PrivateMessageReturn::model()->findAll($criteria1);
                     ?>
                     <div class="dropdown pull-right visible-xs visible-sm" style="margin: 25px 5px;">
                         <a href="#" class="dropdown-toggle" id="user-message" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="color: white"><i class="fa fa-envelope"></i></a>

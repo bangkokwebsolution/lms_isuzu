@@ -228,6 +228,7 @@ EOD
               },
               success: function(data){
                 if(data != 1){
+                  // alert(data);
                   alert('ท่านไม่มีสิทธื์ อนุมัติหลักสูตรนี้');
                   // location.reload();
                 }else{
