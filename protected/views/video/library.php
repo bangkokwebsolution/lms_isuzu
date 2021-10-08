@@ -289,6 +289,7 @@
 
              ?>
             <div class="gallery_product  filter cate_<?= $value_t->library_type_id ?>" style="display: none;">
+
               <?php 
 
                 $library_file = libraryFile::model()->findAll(array(
@@ -296,9 +297,11 @@
                 'params' => array(':active' => 'y', ':library_type_id' => $value_t->library_type_id),
                 'order' => 'sortOrder ASC'
               ));
+                // var_dump($library_file);
 
               foreach ($library_file as $key => $value) {
-                    if (Yii::app()->session['lang'] == 1) {
+                
+                if (Yii::app()->session['lang'] == 1) {
                   $libra_file = $value->library_name_en;
                 } else {
                   $libra_file = $value->library_name;
@@ -396,7 +399,7 @@
                                 <i class="fa fa-download"></i> <?= $text_status ?>
                               </button>
                           </div>
-                          <!-- </a> -->
+                          
                         </div>
                       </div>
                     </div>
