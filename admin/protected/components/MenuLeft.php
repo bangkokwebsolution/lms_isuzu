@@ -2091,62 +2091,62 @@ Class MenuLeft extends Controller
 			),
 
             //====== END Menu FormSurveyGroup ======//
-			array(
+			// array(
 
-				'visible'=>self::PermissionsMenu(array(
-					'Report.*',
-				)),
-				'label'=>'<i></i><span>ระบบ ติดตามผู้เรียน</span>',
-				'url'=>'#ReportFollow',
-				'linkOptions' => array('data-toggle' => 'collapse'),
-				'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
-				'submenuOptions' => array('class' => self::SetSubMenu( array('Report') ), 'id' => 'ReportFollow'),
-				'active' => self::SetSubMenu( array('Report') ,false),
-				'items'=>array(
-					array(
+			// 	'visible'=>self::PermissionsMenu(array(
+			// 		'Report.*',
+			// 	)),
+			// 	'label'=>'<i></i><span>ระบบ ติดตามผู้เรียน</span>',
+			// 	'url'=>'#ReportFollow',
+			// 	'linkOptions' => array('data-toggle' => 'collapse'),
+			// 	'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
+			// 	'submenuOptions' => array('class' => self::SetSubMenu( array('Report') ), 'id' => 'ReportFollow'),
+			// 	'active' => self::SetSubMenu( array('Report') ,false),
+			// 	'items'=>array(
+			// 		array(
 
-						'visible'=>self::PermissionsMenu(array(
-							'Report.*',
-						)),
-						'label'=>'1.) ข้อมูลการฝึกอบรมของพนักงานรายบุคคล',
-						'url'=>array('//Report/Status')
-					),
-					array(
+			// 			'visible'=>self::PermissionsMenu(array(
+			// 				'Report.*',
+			// 			)),
+			// 			'label'=>'1.) ข้อมูลการฝึกอบรมของพนักงานรายบุคคล',
+			// 			'url'=>array('//Report/Status')
+			// 		),
+			// 		array(
 
-						'visible'=>self::PermissionsMenu(array(
-							'Report.*',
-						)),
-						'label'=>'2.) ค้นหาโดยใช้หลักสูตร',
-						'url'=>array('//Report/ByCourse')
-					),
-					array(
+			// 			'visible'=>self::PermissionsMenu(array(
+			// 				'Report.*',
+			// 			)),
+			// 			'label'=>'2.) ค้นหาโดยใช้หลักสูตร',
+			// 			'url'=>array('//Report/ByCourse')
+			// 		),
+			// 		array(
 
-						'visible'=>self::PermissionsMenu(array(
-							'Report.*',
-						)),
-						'label'=>'3.) ค้นหาโดยใช้บทเรียน',
-						'url'=>array('//Report/ByLesson')
-					),
-	        		// array(
+			// 			'visible'=>self::PermissionsMenu(array(
+			// 				'Report.*',
+			// 			)),
+			// 			'label'=>'3.) ค้นหาโดยใช้บทเรียน',
+			// 			'url'=>array('//Report/ByLesson')
+			// 		),
+	  //       		// array(
 
-	        		// 	'visible'=>self::PermissionsMenu(array(
-	        		// 		'Report.*',
-	        		// 	)),
-	        		// 	'label'=>'4.) รายงานติดตามผู้เรียนรายบุคคล',
-	        		// 	'url'=>array('//Report/ByUser')
-	        		// ),
-	        		// array(
-	        		// 	
-	        		// 	'visible'=>self::PermissionsMenu(array(
-	        		// 		'Report.*',
-	        		// 	)),
-	        		// 	'label'=>'5.) รายงานผู้ประเมินระดับผู้เรียนรายบุคคล',
-	        		// 	'url'=>array('//Report/Individual')
-	        		// 	//'url'=>array('//Report/score')
-	        		// ),
+	  //       		// 	'visible'=>self::PermissionsMenu(array(
+	  //       		// 		'Report.*',
+	  //       		// 	)),
+	  //       		// 	'label'=>'4.) รายงานติดตามผู้เรียนรายบุคคล',
+	  //       		// 	'url'=>array('//Report/ByUser')
+	  //       		// ),
+	  //       		// array(
+	  //       		// 	
+	  //       		// 	'visible'=>self::PermissionsMenu(array(
+	  //       		// 		'Report.*',
+	  //       		// 	)),
+	  //       		// 	'label'=>'5.) รายงานผู้ประเมินระดับผู้เรียนรายบุคคล',
+	  //       		// 	'url'=>array('//Report/Individual')
+	  //       		// 	//'url'=>array('//Report/score')
+	  //       		// ),
 
-				)
-			),
+			// 	)
+			// ),
 
 
 	        // array(	        	
