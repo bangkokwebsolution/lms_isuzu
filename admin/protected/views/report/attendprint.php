@@ -273,9 +273,9 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
             $criteria->compare('t.gen_id', $_GET['Report']['gen_id']);
         }
 
-        if(isset($_GET['Report']['type_register']) && $_GET['Report']['type_register'] != null) {
-            $criteria->compare('pro.type_employee', $_GET['Report']['type_register']);
-        }
+        // if(isset($_GET['Report']['type_register']) && $_GET['Report']['type_register'] != null) {
+        //     $criteria->compare('pro.type_employee', $_GET['Report']['type_register']);
+        // }
 
         if(isset($_GET['Report']['department']) && $_GET['Report']['department'] != null) {
             $criteria->compare('user.department_id',$_GET['Report']['department']);

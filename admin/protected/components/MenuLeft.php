@@ -2220,8 +2220,8 @@ Class MenuLeft extends Controller
 						'visible'=>self::PermissionsMenu(array(
 							'Report.*',
 						)),
-						'label'=>'1.) รายงานภาพรวมของหลักสูตร',
-						'url'=>array('//Report/AttendPrint')
+						'label'=>'1.) รายงานการผลการเรียนของหลักสูตร',
+						'url'=>array('//Report/ByUser')
 					),
 					array(
 
@@ -2253,17 +2253,25 @@ Class MenuLeft extends Controller
 						'visible'=>self::PermissionsMenu(array(
 							'Report.*',
 						)),
-						'label'=>'5.) รายงานภาพรวมแบบสอบถาม',
-						'url'=>array('//Report/logQuestionall')
+						'label'=>'5.) รายงานภาพรวมของหลักสูตร',
+						'url'=>array('//Report/AttendPrint')
 					),
-					array(
+					// array(
 
-						'visible'=>self::PermissionsMenu(array(
-							'Report.*',
-						)),
-						'label'=>'6.) รายงานการรีเซตหลักสูตร',
-						'url'=>array('//Report/logReset')
-					),
+					// 	'visible'=>self::PermissionsMenu(array(
+					// 		'Report.*',
+					// 	)),
+					// 	'label'=>'5.) รายงานภาพรวมแบบสอบถาม',
+					// 	'url'=>array('//Report/logQuestionall')
+					// ),
+					// array(
+
+					// 	'visible'=>self::PermissionsMenu(array(
+					// 		'Report.*',
+					// 	)),
+					// 	'label'=>'6.) รายงานการรีเซตหลักสูตร',
+					// 	'url'=>array('//Report/logReset')
+					// ),
 
 	        		// array(
 

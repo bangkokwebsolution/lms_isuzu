@@ -1,5 +1,4 @@
 <?php
-
 $strExcelFileName = "Export-Data-" . date('Ymd-His') . ".xls";
 header("Content-Type: application/x-msexcel; name=\"" . $strExcelFileName . "\"");
 header("Content-Disposition: inline; filename=\"" . $strExcelFileName . "\"");
@@ -137,13 +136,11 @@ if($_GET['Report']['gen_id'] != 0){
                     <thead>
                         <tr>
                             <th rowspan="2">ลำดับ</th>
-                            <th rowspan="2">ประเภทพนักงาน</th>                            
                             <th rowspan="2">Name - Surname</th>
                             <th rowspan="2">ชื่อ – นามสกุล</th>
                             <th rowspan="2">แผนก/ฝ่าย</th>
                             <th rowspan="2">ตำแหน่ง/แผนก</th>
                             <th class="center" colspan="<?= count($lesson_online)+1 ?>">หลักสูตร <?= $course_online->course_title.$gen_title ?></th>
-                            <th rowspan="2">เบอร์โทรศัพท์</th>
                             <th rowspan="2">Email ที่สมัคร</th>
                         </tr>
                         <tr>
@@ -177,7 +174,6 @@ if($_GET['Report']['gen_id'] != 0){
                                     ?>
                                     <tr>
                                         <td><?= $start_cnt+1 ?></td>
-                                        <td><?= $user->profile->typeEmployee->type_employee_name; ?></td>
                                         <td><?= $user->profile->firstname_en . ' ' . $user->profile->lastname_en ?></td>
                                         <td><?= $user->profile->firstname . ' ' . $user->profile->lastname ?></td>
                                         <td><?= $user->department->dep_title ?></td>
@@ -214,7 +210,6 @@ if($_GET['Report']['gen_id'] != 0){
                                             }
                                             ?>
                                         </td>
-                                        <td><?= $user->profile->phone ?></td>
                                         <td><?= $user->email ?></td>
                                     </tr>
                                     <?php
