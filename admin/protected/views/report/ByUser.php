@@ -209,11 +209,11 @@ EOD
             array('name'=>'gen_id','type'=>'list','query'=>$arr_gen),   
             array('name'=>'lesson_id','type'=>'list','query'=>$listLesson),
             array('name'=>'search','type'=>'text'),     
-            array('name'=>'type_register','type'=>'list','query'=>$listtype_user),
-            array('name'=>'department','type'=>'list','query'=>$listdepartment),
-            array('name'=>'position','type'=>'list','query'=>$listposition),            
-            array('name'=>'period_start','type'=>'text'),
-            array('name'=>'period_end','type'=>'text'),
+            // array('name'=>'type_register','type'=>'list','query'=>$listtype_user),
+            // array('name'=>'department','type'=>'list','query'=>$listdepartment),
+            // array('name'=>'position','type'=>'list','query'=>$listposition),            
+            // array('name'=>'period_start','type'=>'text'),
+            // array('name'=>'period_end','type'=>'text'),
     ),
 
     ));
