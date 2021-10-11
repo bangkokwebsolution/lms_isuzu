@@ -49,7 +49,15 @@
 						<?php echo $form->error($model,'imgslide_link'); ?>
 						
 					</div>
-					<!--  -->
+					<div class="row" id="typeId">
+						<?php echo $form->labelEx($model,'gallery_type_id'); ?>
+
+						<?php echo $form->dropDownList($model, 'gallery_type_id', CHtml::listData(GalleryType::model()->findAll(array(
+					        'condition' => 'active=:active',
+					        'params' => array(':active'=>'y'))), 'id', 'name_gallery_type'),array('class'=>'span5','disable_search' => false,'empty' => "--เลือก--")); ?>
+
+						<?php echo $form->error($model,'gallery_type_id'); ?>
+					</div>
 					<div class="row">
 						<?php
 						if(isset($imageShow)){
