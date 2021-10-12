@@ -179,33 +179,7 @@ EOD
 
 </div>
 
-<div class="modal hide fade" id="myModal">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3>ส่งเมล</h3>
-  </div>
-  <div class="modal-body">
-    <p>
-    	<input type="hidden" value="" name="url" id="url">
-    	<label class="span1">มหาวิทยาลัย</label>
-	    <select name="university" class="span5" id="university">
-	    	<option value=""> -- ทั้งหมด -- </option>
-	    	<?php
-	    	$university = TbUniversity::getUniversityOptions();
-	    	foreach ($university as $key => $value) {
-	    	?>
-			<option value="<?php echo $key; ?>"><?php echo $value; ?></option>
-	    	<?php
-	    	}
-	    	?>
-	    </select>
-    </p>
-  </div>
-  <div class="modal-footer">
-    <a href="#" data-dismiss="modal" class="btn btn-default">ยกเลิก</a>
-    <a href="#" id="sendmail" class="btn btn-primary">ส่ง</a>
-  </div>
-</div>
+
 <script src="<?php echo Yii::app()->theme->baseUrl; ?>/assets/js/clipboard.min.js"></script>
 <script>
 var clipboard = new Clipboard('.btn');
