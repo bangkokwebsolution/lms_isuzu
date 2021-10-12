@@ -2254,7 +2254,7 @@ Class MenuLeft extends Controller
 							'Report.*',
 						)),
 						'label'=>'5.) รายงานภาพรวมของหลักสูตร',
-						'url'=>array('//Report/AttendPrint')
+						'url'=>array('//Report/SumdetailCourse')
 					),
 					// array(
 

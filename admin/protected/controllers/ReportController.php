@@ -212,6 +212,21 @@ class ReportController extends Controller
         $this->render('attendprint',array('model'=>$model));
     }
 
+    public function actionSumdetailCourse()
+    {
+        $model=new Report();
+        $model->unsetAttributes();
+        if(isset($_GET['Report'])){            
+            $model->attributes = $_GET['Report'];
+
+        }
+        $this->render('SumdetailCourse',array('model'=>$model));
+    }
+    public function actionExcelByAggregate (){
+        // $this->render('ExcelByAggregate');
+        $this->renderPartial('ExcelByAggregate');
+    }
+
     public function actionByCourseDetail($id=null) { // รายงานการฝึกอบรมหลักสูตร
 
         $model = new Report();
