@@ -1,6 +1,7 @@
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/moment.min.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker.js"></script>
-
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/jquery.dataTables.min.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/jquery.dataTables.min.css" />    
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker-bs2.css" />
 
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/highcharts.js"></script>
@@ -396,7 +397,7 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
 ?>
 
         <div class="widget-body div-table" style="overflow: auto;">
-            <table class="table table-bordered toggleairasia-table">
+            <table id="table_datatable" class="table table-bordered toggleairasia-table">
                 <thead>
                     <tr>
                         <th rowspan="2" style="vertical-align: middle;" class="center"><b>No.</b></th>
@@ -608,7 +609,11 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
     </div>
 
 </div>
-
+<script type="text/javascript">
+    $('#table_datatable').DataTable({
+                   "searching": true,
+                });
+</script>
 <?php
 
 
