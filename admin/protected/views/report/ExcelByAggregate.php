@@ -235,7 +235,7 @@ if(isset($_GET['Report'])){
                             $lesson_online = Lesson::model()->findAll(array(
                                 "condition"=>"active='y' AND lang_id='1' AND course_id='".$valueC->course_id."'","order"=>"title ASC"
                             ));
-                            if(($search['gen_id'] == "" || $search['gen_id'] != 0) && !empty($generation)){
+                            if(!empty($generation)){
                                 foreach ($generation as $keyG => $valueG) {
                                     $criteria = new CDbCriteria;
                                     $criteria->with = array('pro', 'course', 'mem');
@@ -350,7 +350,7 @@ if(isset($_GET['Report'])){
                                         <td class="center"><?= $num_per_pass ?> %</td>
                                     </tr>
                                 <?php    }
-                            }else if($search['gen_id']=='0'){  ?>
+                            }else{  ?>
                                 <tr>
                                     <td class="center"><?= $no++ ?></td>
                                     <td class="center"><?= isset($valueC->cates->type->type_name)? $valueC->cates->type->type_name :"" ?></td>
