@@ -222,9 +222,26 @@ class ReportController extends Controller
         }
         $this->render('SumdetailCourse',array('model'=>$model));
     }
-    public function actionExcelByAggregate (){
+
+    public function actionByCourseAll()
+    {
+        $model=new Report();
+        $model->unsetAttributes();
+        if(isset($_GET['Report'])){            
+            $model->attributes = $_GET['Report'];
+
+        }
+        $this->render('ByCourseAll',array('model'=>$model));
+    }
+
+    public function actionExcelByAggregate(){
         // $this->render('ExcelByAggregate');
         $this->renderPartial('ExcelByAggregate');
+    }
+
+    public function actionExcelByCourseAll(){
+        // $this->render('ExcelByAggregate');
+        $this->renderPartial('ExcelByCourseAll');
     }
 
     public function actionByCourseDetail($id=null) { // รายงานการฝึกอบรมหลักสูตร

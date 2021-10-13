@@ -275,6 +275,42 @@ Class Helpers
         return $date;
     }
 
+
+
+    public function StatusCourseGen($course_id, $gen_id,$user_id){ // สถานะของหลักสูตร pass learning notLearn
+            // $course_id = $course;
+            // $course_model = CourseOnline::model()->findByPk($course_id);
+            // $gen_id = $course_model->getGenID($course_model->course_id);
+
+            $user_id = $user_id;
+
+            $passcourse = Passcours::model()->findAll(array( 
+                'condition' => 'gen_id=:gen_id AND passcours_cours=:course_id AND passcours_user=:user_id',
+                'params' => array(':gen_id'=>$gen_id, ':course_id'=>$course_id, ':user_id'=>$user_id),
+            ));
+
+            if(!empty($passcourse)){ // สามารถพิมเซอได้
+                $status = "pass";
+            }else{ // if(!empty($passcourse)
+                $Learn = Learn::model()->findAll(array(
+                    'condition' => 'gen_id=:gen_id AND course_id=:course_id AND user_id=:user_id AND lesson_active=:active',
+                    'params' => array(':gen_id'=>$gen_id, ':course_id'=>$course_id, ':user_id'=>$user_id, ':active'=>'y'),
+                ));
+                // var_dump($course_id); 
+                // var_dump($gen_id); 
+                // var_dump($user_id); 
+                // var_dump($Learn); 
+                // exit();
+                if(!empty($Learn)){
+                    $status = "learning";
+                }else{
+                    $status = "notLearn";
+                }
+            } // if(!empty($passcourse)
+
+            return $status;
+        }
+
     public function ZoomCheckImage($imgMin, $imgMax)
     {
         $check = CHtml::link(CHtml::image($imgMin, '', array("class" => "thumbnail")), $imgMax, array("rel" => "prettyPhoto"));

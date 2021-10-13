@@ -127,6 +127,31 @@ class CourseOnline extends AActiveRecord
 		return $coursetitle;
 	}
 
+	public function getGenID($course_id){
+
+		$text_gen = 0;		
+		$today = date("Y-m-d H:i:s");
+
+		$model = CourseGeneration::Model()->findAll([
+			'condition' => "active=:active AND
+			status=:status AND
+			course_id=:course_id AND
+			(  ((gen_period_start IS NULL) AND (gen_period_end IS NULL)) OR 
+			((gen_period_start<=:today) AND (gen_period_end>=:today)) )",
+			'params' => [':active'=>'y',':status'=>'1',':course_id'=>$course_id, ':today'=>DATE($today)],
+		]);
+
+		if(!empty($model)){
+			foreach ($model as $key => $value) {
+				$text_gen = $value->gen_id;
+				break;
+			}
+		}
+
+		return $text_gen;
+	}
+
+
 	public function beforeSave() 
 	{
 		$this->cate_id = CHtml::encode($this->cate_id);

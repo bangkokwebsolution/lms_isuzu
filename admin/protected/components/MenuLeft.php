@@ -2245,8 +2245,8 @@ Class MenuLeft extends Controller
 						'visible'=>self::PermissionsMenu(array(
 							'Report.*',
 						)),
-						'label'=>'4.) รายงานแบบสอบถามสำหรับหลักสูตร',
-						'url'=>array('//Report/logQuestioncourse')
+						'label'=>'4.) รายงานการฝึกอบรมหลักสูตร',
+						'url'=>array('//Report/ByCourseAll')
 					),
 					array(
 
