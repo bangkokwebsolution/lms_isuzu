@@ -480,6 +480,43 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                     <?php } ?>
                                     <?php //} 
                                     ?>
+                                    <?php
+                                    if ($checkCourseTest == 'pass') { //Lesson All pass
+                                                if ($checkHaveCourseTest) {
+                                                    $criteria = new CDbCriteria;
+                                                    $criteria->compare('course_id', $course->course_id);
+                                                    $criteria->compare('gen_id', $gen_id);
+                                                    $criteria->compare('type', "post");
+                                                    $criteria->compare('user_id', Yii::app()->user->id);
+                                                    $criteria->compare('score_past', 'y');
+                                                    $criteria->compare('active', 'y');
+                                                    $criteria->order = 'score_id';
+                                                    $courseScorePass = Coursescore::model()->findAll($criteria);
+                                                    if ($courseScorePass) {
+
+                                                        if ($PaQuest) { //ทำแบบสอบถามแล้ว
+                                                            $step = 0;
+                                                            $pathSurvey = $this->createUrl('course/questionnaire', array('id' => $course->course_id));
+                                                        } else {
+                                                            $pathSurvey = $this->createUrl('questionnaire_course/index', array('id' => $CourseSurvey[0]->id));
+                                                        }
+                                                    } else { //ยังทำแบบทดสอบหลักสูตรไม่ผ่าน
+                                                        $pathSurvey = 'javascript:void(0);';
+                                                        $alrtSurvey = 'onclick="alertswalCourse()"';
+                                                    }
+                                                } else {
+                                                    if ($PaQuest) { //ทำแบบสอบถามแล้ว
+                                                        $step = 0;
+                                                        $pathSurvey = $this->createUrl('course/questionnaire', array('id' => $course->course_id));
+                                                    } else {
+                                                        $pathSurvey = $this->createUrl('questionnaire_course/index', array('id' => $CourseSurvey[0]->id));
+                                                    }
+                                                }
+                                            } else {
+                                                $pathSurvey = 'javascript:void(0);';
+                                                $alrtSurvey = 'onclick="alertswalCourse()"';
+                                            }
+                                     ?>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="c-item">
@@ -487,7 +524,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                         <div class="mt-20 text-center">
                                             <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/questionnaire-icon-mute.png"> -->
                                             <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/questionnaire-icon.png">
-                                            <small class="mt-20"><a href="" class="btn btn-main"><?= $Click ?></a></small>
+                                            <small class="mt-20"><a href="<?= $pathSurvey ?>" <?= $alrtSurvey  ?> class="btn btn-main"><?= $Click ?></a></small>
                                         </div>
                                     </div>
                                 </div>
