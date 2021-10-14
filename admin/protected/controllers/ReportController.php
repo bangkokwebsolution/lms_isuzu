@@ -2014,4 +2014,12 @@ public  function actionReport_list(){
     public function actionReportQuestionnair(){
         $this->render('reportquestionnair');
     }
+
+    public function actionExcelCourseReport(){
+        $model = new Report();
+        $model->unsetAttributes(); 
+        $this->renderPartial('CourseReport_Excel', array(
+            'model' => $model,
+        ));
+    }
 }
