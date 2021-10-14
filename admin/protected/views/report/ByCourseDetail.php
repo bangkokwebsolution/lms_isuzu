@@ -47,7 +47,7 @@ EOD
       $("#Report_type").change(function(){
             var value = $("#Report_type option:selected").val();
             if(value != ""){
-                alert(value);
+                // alert(value);
                 $.ajax({
                     type: 'POST',
                     url: '<?php echo Yii::app()->createAbsoluteUrl("/CourseType/ajaxGetCategory"); ?>',
