@@ -203,6 +203,8 @@ class CoursequestionController extends Controller
 
 					$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown', 6=>'hidden');
 					$key = array_search($result["ประเภท"], $questionTypeArray);
+					if($key == false){ continue; }
+					
 					$questionModel->ques_type = $key;
 
 					$questionModel->ques_title = $result["คำถาม"];
