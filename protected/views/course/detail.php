@@ -518,6 +518,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                             }
                                      ?>
                                 </div>
+                                <?php if ($CourseSurvey) { ?>
                                 <div class="col-md-6">
                                     <div class="c-item">
                                         <small><?= $CourseEvaluation ?></small>
@@ -528,6 +529,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                         </div>
                                     </div>
                                 </div>
+                            <?php } ?>
                             </div>
                         </div>
                     </div>
