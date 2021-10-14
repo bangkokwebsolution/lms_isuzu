@@ -44,7 +44,7 @@ function typeVdo(val){
         padding: 0 3px 3px;
         width: 600px;
     }
-</style>
+</style>    
 <!-- innerLR -->
 <div class="innerLR">
 	<div class="widget widget-tabs border-bottom-none">
@@ -156,16 +156,19 @@ function typeVdo(val){
                       $Vdos = Vdo::model()->findAll($criteria);
                        foreach ($Vdos as $vdo) { 
                             ?>
-                            <video class="video-js" poster="<?php echo Yii::app()->baseUrl . "/uploads/$vdo->vdo_thumbnail"; ?>" controls preload="auto" style="width: 40%; height: 300px;">
+                            <video class="video-js" poster="<?php echo Yii::app()->baseUrl . "/../uploads/$vdo->vdo_thumbnail"; ?>" controls preload="auto" style="width: 40%; height: 300px;">
+                                
+
                                 <!-- video show-->
                                 <?php
-                                if (file_exists(YiiBase::getPathOfAlias('webroot') . '/../admin/uploads/' . $vdo->vdo_path)) {
-                                    $file_name = Yii::app()->baseUrl . '/../admin/uploads/' . $vdo->vdo_path;
+                                if (file_exists(YiiBase::getPathOfAlias('webroot') . '/../uploads/' . $vdo->vdo_path)) {
+                                    $file_name = Yii::app()->baseUrl . '/../uploads/' . $vdo->vdo_path;
                              
                                 } 
-                                $show = "<source src=" . $file_name . " type='video/mp4'>";
+                                $show = "<source src=" . $file_name . " type='video/mp4' >";
                                 echo $show;
                                 ?>
+                               
                                 <!-- video show-->
                                 <p class="vjs-no-js">
                                     To view this video please enable JavaScript, and consider upgrading to a web browser that
