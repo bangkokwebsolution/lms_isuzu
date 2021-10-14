@@ -196,15 +196,15 @@ class QuestionController extends Controller
 //				var_dump($namedDataArray[0]["ตัวเลือกที่ 3"]);
 //				echo '</pre><hr />';
 				$index = 0;
-
+				// var_dump($namedDataArray);exit();
 				foreach($namedDataArray as $result){
-					
 					$questionModel = new Question();
 					$questionModel->group_id = $id;
 					// $questionModel->ques_type = 2;
 
 					$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown', 6=>'hidden');
 					$key = array_search($result["ประเภท"], $questionTypeArray);
+					if($key == false){ continue; }
 					$questionModel->ques_type = $key;
 
 					$questionModel->ques_title = $result["คำถาม"];
