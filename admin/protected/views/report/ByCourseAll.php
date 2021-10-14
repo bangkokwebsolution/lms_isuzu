@@ -1,14 +1,8 @@
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/moment.min.js"></script>
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/jquery.dataTables.min.js"></script>
-<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/jquery.dataTables.min.css" />    
-<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker-bs2.css" />
 
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/highcharts.js"></script>
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/modules/exporting.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/jquery.dataTables.min.css" />
 
-<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/chosen.min.css" />
-
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/bootstrap-chosen.css" />
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/chosen.jquery.js"></script>
 
 <style>
@@ -50,7 +44,6 @@
         z-index:1000!important;
         position:static!important;
     }
-
 </style>
 
 
@@ -211,13 +204,7 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
 
 ?>
 
-    <div class="widget" style="margin-top: -1px;">
-        <div class="widget-head">
-            <h4 class="heading glyphicons show_thumbnails_with_lines">
-                <i></i> <?php echo $titleName; ?>
-            </h4>
-        </div>
-
+</div>
 <?php 
     if(isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] !=''){
         $search = $_GET['Report'];
@@ -238,9 +225,14 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
 
 
 ?>
-
-        <div class="widget-body div-table" style="overflow: auto;">
-            <table id="table_datatable" class="table table-bordered toggleairasia-table">
+    <div class="widget" id="export-table33">
+            <div class="widget-head">
+                <div class="widget-head">
+                    <h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?= $titleName ?></h4>
+                </div>
+            </div> 
+         <div class="widget-body" style=" overflow-x: scroll;">
+            <table id="table_datatable" class="table table-bordered table-striped">
                 <thead>
                     <tr>
                         <th  style="vertical-align: middle;" class="center"><b>No.</b></th>
@@ -299,65 +291,33 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
                     <?php 
 
                 } ?>
-
-                    <!-- <tr>
-                        <td colspan="7" style="background-color: #e3c9ff;"><b>รายบทเรียน</b></td>
-                        <td colspan="7" ><b>Lession</b></td>
-                    </tr> -->
-                <!-- <?php
-                foreach ($lesson_online as $key => $value) {
-                    ?>
-                    <tr>
-                        <td colspan="2"><?= $value->title ?></td>
-                        <td class="center"><?= $lesson_learning[$value->id] ?></td>
-                        <td class="center"><?= $lesson_pass[$value->id] ?></td>
-                        <td class="center"><?= round(($lesson_pass[$value->id]*100)/$num_register, 2) ?> %</td>
-                        <td class="center"><?= $lesson_test_pass[$value->id] ?></td>
-                        <td class="center"><?= $lesson_test_notpass[$value->id] ?></td>
-                    </tr>
-
-                    <?php
-                }
-                ?> -->
                 </tbody>
             </table>
             <br>
-            <!-- <button type="button" id="btnExport" class="btn btn-primary btn-icon glyphicons file"><i></i> Export</button> -->
             <a href="<?= $this->createUrl('report/ExcelByCourseAll',array(
             'Report[course_id]'=>$_GET['Report']['course_id'],
             'Report[gen_id]'=>$_GET['Report']['gen_id'])); ?>" target="_blank" class="btn btn-primary btn-icon glyphicons file"><i></i>Export Excel</a>
         </div>
-        <!-- <button type="button" id="btnExportPdf" class="btn btn-primary btn-icon glyphicons file"> <i></i>ExportPDF</button> -->
-        
+    </div>
     <?php } else { ?>
-        <div class="widget-body div-table" style="overflow: auto;">
-            <!-- Table -->
-        <h4>กรุณาเลือกหลักสูตรและรุ่น แล้วกดปุ่มค้นหา</h4>
+       <div class="innerLR">
+        <div class="widget" style="margin-top: -1px;">
+            <div class="widget-head">
+                <h4 class="heading glyphicons show_thumbnails_with_lines">
+                    <i></i> </h4>
+                </div>
+                <div class="widget-body">
+
+                    <h3 class="text-success">กรุณาป้อนข้อมูลให้ถูกต้อง แล้วกด ปุ่มค้นหา</h3>
+
+                </div>
+            </div>
         </div>
     <?php } ?>
-    </div>
 
-</div>
 <script type="text/javascript">
     $('#table_datatable').DataTable({
                    "searching": true,
                    "sScrollX": '100%',
                 });
 </script>
-<?php
-
-
-Yii::app()->clientScript->registerScript('export', "
-
-  $(function(){
-      $('#btnExport').click(function(e) {
-        $('.toggle').css('display', 'table-row-group');
-        window.open('data:application/vnd.ms-excel,' + encodeURIComponent( '<h2>".$titleName."</h2>'+$('.div-table').html()));
-        e.preventDefault();
-        $('.toggle').css('display', 'none');
-      });
-  });
-
-", CClientScript::POS_END);
-
-?>
