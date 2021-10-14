@@ -212,4 +212,21 @@ class CourseTypeController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+
+	public function actionajaxGetCategory(){
+        if(isset($_POST["value"]) && $_POST["value"] != ""){  
+
+            $list_model = Category::model()->findAll(array(
+                'select'=>'cate_id, cate_title',
+                'condition'=>'active="y" AND lang_id="1" AND type_id="'.$_POST['value'].'"',
+                'order'=>'cate_title ASC'
+            ));   
+
+            ?> <option disabled="" selected="" value="">Select Course Group</option> <?php
+            foreach ($list_model as $key => $value) {
+                ?> <option value="<?= $value->cate_id ?>"><?= $value->cate_title ?></option> <?php
+            }
+        }        
+    }
 }

@@ -44,20 +44,21 @@ EOD
         startDate();
 
 
-      $("#Report_type_register").change(function(){
-            var value = $("#Report_type_register option:selected").val();
+      $("#Report_type").change(function(){
+            var value = $("#Report_type option:selected").val();
             if(value != ""){
+                alert(value);
                 $.ajax({
                     type: 'POST',
-                    url: '<?php echo Yii::app()->createAbsoluteUrl("/Passcours/ajaxgetdepartment"); ?>',
+                    url: '<?php echo Yii::app()->createAbsoluteUrl("/CourseType/ajaxGetCategory"); ?>',
                     data: ({
                         value: value,
                     }),
                     success: function(data) {
                         if(data != ""){
-                            $("#Report_department").html(data);
-                            $("#Report_position").html('<option value="">ทั้งหมด</option>');
-                            $('.chosen').trigger("chosen:updated");
+                            $("#Report_course_id").html(data);
+                            // $("#Report_position").html('<option value="">ทั้งหมด</option>');
+                            // $('.chosen').trigger("chosen:updated");
                         }
                     }
                 });
@@ -211,7 +212,7 @@ EOD
                 <div class="form-group">
                     <dt><label>Minor Course Type : </label></dt>
                     <dd>
-                        <select name="Report[type]"   style="width: 50%;"  required="">
+                        <select name="Report[Report_type]" id="Report_type"   style="width: 50%;"  required="">
                             <option value="">All</option>
                             <?php 
                         // if(isset($_GET['Report']['category']) && $_GET['Report']['category'] != ""){
