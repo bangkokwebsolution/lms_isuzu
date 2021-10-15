@@ -173,7 +173,9 @@ date_default_timezone_set("Asia/Bangkok");
                                 <div class="form-group">
                                     <!-- <label><?php echo $form->labelEx($model, 'email',array("class"=>'required')); ?></label> -->
                                     <label><label for="email" class="required">อีเมล <span class="required">*</span></label></label>
-                                    <?php echo $form->textField($model, 'email', array('class' => 'form-control', 'placeholder' => 'อีเมล','onchange'=>"checkMail('email')")); ?>
+                                    <!-- <?php echo $form->textField($model, 'email', array('class' => 'form-control', 'placeholder' => 'อีเมล','onchange'=>"",'type'=>'email')); ?> -->
+
+                                    <input type="email" name="User[email]" class="form-control" value="<?= $model->email ?>" id="User_email"  placeholder="อีเมล" onchange="checkMail('email')" required="required">
                                     <?php echo $form->error($model, 'email'); ?>
                                 </div>
                             </div>  
