@@ -1528,19 +1528,19 @@ public function actionDetail($id) {
         );
 
         //set user type
-        if (isset($model->Profiles)) {
-            switch ($model->Profiles->type_user) {
-                case '1':
-                $userAccountCode = null;
-                break;
-                case '4':
-                $userAccountCode = $PrintTypeArray['2']['text'] . ' ' . $PrintTypeArray['2']['id'] . ' ' . $PrintTypeArray['3']['text'] . ' ' . $PrintTypeArray['3']['id'];
-                break;
-                default:
-                $userAccountCode = $PrintTypeArray[$model->Profiles->type_user]['text'] . ' ' . $PrintTypeArray[$model->Profiles->type_user]['id'];
-                break;
-            }
-        }
+        // if (isset($model->Profiles)) {
+        //     switch ($model->Profiles->type_user) {
+        //         case '1':
+        //         $userAccountCode = null;
+        //         break;
+        //         case '4':
+        //         $userAccountCode = $PrintTypeArray['2']['text'] . ' ' . $PrintTypeArray['2']['id'] . ' ' . $PrintTypeArray['3']['text'] . ' ' . $PrintTypeArray['3']['id'];
+        //         break;
+        //         default:
+        //         $userAccountCode = $PrintTypeArray[$model->Profiles->type_user]['text'] . ' ' . $PrintTypeArray[$model->Profiles->type_user]['id'];
+        //         break;
+        //     }
+        // }
 
         //get start & end learn date of current course
         $StartDateLearnThisCourse = Learn::model()->with('LessonMapper')->find(array(
@@ -1628,12 +1628,12 @@ public function actionDetail($id) {
 
         //Company
         $company_id = $currentUser->company_id;
-        if(!empty($company_id)){
-            $company = Company::model()->find(array('condition' => 'company_id = '.$company_id));
-            $company_title = $company->company_title;
-        }else{
-            $company_title =$currentUser->profile->department;
-        }
+        // if(!empty($company_id)){
+        //     $company = Company::model()->find(array('condition' => 'company_id = '.$company_id));
+        //     $company_title = $company->company_title;
+        // }else{
+        //     $company_title =$currentUser->profile->department;
+        // }
         // var_dump($certDetail->certificate);exit();
 
         if($certDetail->certificate->cert_display == '1'){
@@ -1694,7 +1694,7 @@ public function actionDetail($id) {
 
         if ($model) {
             $fulltitle = $currentUser->profile->ProfilesTitle->prof_title ."". $currentUser->profile->firstname . " " . $currentUser->profile->lastname;
-            $identification = $currentUser->profile->identification ;
+            // $identification = $currentUser->profile->identification ;
 
             if (isset($model->Profiles)) {
                 $fulltitle = $model->Profiles->firstname . " " . $model->Profiles->lastname;
@@ -1732,7 +1732,7 @@ public function actionDetail($id) {
                 'positionUser' => $position_title,
                 'companyUser' => $company_title,
 
-                'identification' => $identification,
+                // 'identification' => $identification,
                 'bgPath' => $certDetail->certificate->cert_background,
                 'pageFormat' => $pageFormat,
                 'pageSide' => $certDetail->certificate->cert_display,
