@@ -42,12 +42,14 @@ class ApproveCourseController extends Controller
 
 	public function actionIndex()
 	{
-
 		$model = new ApproveCourse('searchSpecific');
+
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['ApproveCourse']))
 			$model->attributes=$_GET['ApproveCourse'];
-		$user = UserNew::model()->findByPk(Yii::app()->user->id);
+
+		$user = User::model()->findByPk(Yii::app()->user->id);
+
 		$this->render('index',array(
 			'model'=>$model,
 		));
@@ -91,8 +93,8 @@ class ApproveCourseController extends Controller
 			$user_id = $_POST["user_id"];
 			$request_id = $_POST["request_id"];
 
-
 			$CourseOnline = CourseOnline::model()->findByPk($course_id);
+			// var_dump($CourseOnline->usernewcreate->orgchart->title);exit();
 
 			$form_text = "";
 			if ($CourseOnline != "") {
@@ -150,7 +152,7 @@ class ApproveCourseController extends Controller
 		$criteria->compare('superuser', 1);
 		$criteria->compare('authority_hr', 1);
 		$criteria->compare('id', Yii::app()->user->id);
-		$user_hr1 = UserNew::model()->with('profile')->find($criteria);
+		$user_hr1 = User::model()->with('profile')->find($criteria);
 
 		$course = CourseOnline::model()->findByPk($_POST['request_id']); 
 		$user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
@@ -219,7 +221,7 @@ class ApproveCourseController extends Controller
 		$criteria->compare('superuser', 1);
 		$criteria->compare('authority_hr', 1);
 		$criteria->compare('id', Yii::app()->user->id);
-		$user_hr1 = UserNew::model()->with('profile')->find($criteria);
+		$user_hr1 = User::model()->with('profile')->find($criteria);
 
 		$course = CourseOnline::model()->findByPk($_POST['request_id']); 
 		$user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
@@ -259,7 +261,7 @@ class ApproveCourseController extends Controller
 		$criteria->compare('superuser', 1);
 		$criteria->compare('authority_hr', 2);
 		$criteria->compare('id', Yii::app()->user->id);
-		$user_hr1 = UserNew::model()->with('profile')->find($criteria);
+		$user_hr1 = User::model()->with('profile')->find($criteria);
 
 		$course = CourseOnline::model()->findByPk($_POST['request_id']); 
 		$user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
