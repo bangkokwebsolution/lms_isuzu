@@ -180,7 +180,7 @@ class AdminUserController extends Controller
 
     	if(isset($_POST['User'])){	
 
-    		$user_name = UserNew::model()->findAll(array('condition'=>'username = "'.$_POST['User']['username'].'"'));
+    		$user_name = User::model()->findAll(array('condition'=>'username = "'.$_POST['User']['username'].'"'));
     	if(count($user_name) == 0){
     		$Neworg = $_POST['Orgchart'];           
     		$Neworg = json_encode($Neworg);
@@ -378,8 +378,8 @@ class AdminUserController extends Controller
 }
 
 public function actioncheckuser(){
-	$UserNew = UserNew::model()->findAll(array('condition'=>'username = "'.$_POST['username'].'"'));
-	if(count($UserNew)>0){
+	$User = User::model()->findAll(array('condition'=>'username = "'.$_POST['username'].'"'));
+	if(count($User)>0){
 		echo 2;
 	}else{
 		echo 1;
@@ -400,7 +400,7 @@ public function actionUpdate($id){
 		// var_dump($model);
 		// exit();
 	if($id){
-		$model = UserNew::model()->findbyPk($_GET['id']);
+		$model = User::model()->findbyPk($_GET['id']);
 				// $model=$this->loadModel();
 		$profile=$model->profile;
 		$model->verifyPassword = $model->password;
@@ -410,7 +410,7 @@ public function actionUpdate($id){
 			echo UActiveForm::validate(array($model,$profile));
 			Yii::app()->end();
 		}
-		if(isset($_POST['UserNew']))
+		if(isset($_POST['User']))
 		{
 				// echo '<pre>';
 				// var_dump($_POST['Orgchart']);
@@ -421,7 +421,7 @@ public function actionUpdate($id){
 			$PGoup = json_encode($PGoup);
 			$model->orgchart_lv2 = $Neworg;
 			$criteria=new CDbCriteria;
-			$criteria->compare('department_id',$_POST['UserNew']['department_id']);
+			$criteria->compare('department_id',$_POST['User']['department_id']);
 	            // $criteria->compare('position_title',$_POST['User']['position_name']);
 			$position = Position::model()->find($criteria);
 	   //          if(!$position){
@@ -436,16 +436,16 @@ public function actionUpdate($id){
 	            // $model->position_id = $_POST['User']['position_id'];
 	            // $model->division_id = $_POST['User']['division_id'];
 	            // $model->company_id = $_POST['User']['company_id'];
-			$model->department_id = $_POST['UserNew']['department_id'];
+			$model->department_id = $_POST['User']['department_id'];
 			$model->group = $PGoup;
 
-			$model->username = $_POST['UserNew']['username'];
-	            $model->email = $_POST['UserNew']['email']; //**
+			$model->username = $_POST['User']['username'];
+	            $model->email = $_POST['User']['email']; //**
 	           	// $model->username = $model->email;
 	            // $model->identification = $_POST['Profile']['identification'];
 	            // $profile->identification = $_POST['Profile']['identification']; //**
-	            $model->org_id = $_POST['UserNew']['org_id'];
-	            $model->superuser = $_POST['UserNew']['superuser'];
+	            $model->org_id = $_POST['User']['org_id'];
+	            $model->superuser = $_POST['User']['superuser'];
 	            $model->superuser = 1;
 	            //$member = Helpers::lib()->ldapTms($model->email);
 
@@ -457,16 +457,16 @@ public function actionUpdate($id){
 	            // 	 $model->username = $model->email;
 	            // 	 $model->scenario = 'general';
 	            // }
-	            if(!empty($_POST['UserNew']['newpassword'])){
-	            	$model->password = $_POST['UserNew']['newpassword'];
-	            	$model->verifyPassword = $_POST['UserNew']['confirmpass'];
+	            if(!empty($_POST['User']['newpassword'])){
+	            	$model->password = $_POST['User']['newpassword'];
+	            	$model->verifyPassword = $_POST['User']['confirmpass'];
 	            }
 	            $profile->attributes=$_POST['Profile'];
 	            $profile->title_id  = $_POST['Profile']['title_id'];
 
 				// $model->verifyPassword = $model->password;
 				if($model->validate()) { // &&$profile->validate()
-					if(!empty($_POST['UserNew']['newpassword'])){
+					if(!empty($_POST['User']['newpassword'])){
 						$model->password=UserModule::encrypting($model->password);
 						$model->verifyPassword=UserModule::encrypting($model->verifyPassword);
 					}

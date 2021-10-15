@@ -12,7 +12,7 @@ $this->breadcrumbs=array(
     array('label'=>UserModule::t('Change password'), 'url'=>array('changepassword')),
     array('label'=>UserModule::t('Logout'), 'url'=>array('/user/logout')),
 );*/
-?><h1><?php echo UserModule::t('Edit profile'); ?></h1>
+?><h1>โปรไฟล์ของคุณ</h1>
 
 <?php if(Yii::app()->user->hasFlash('profileMessage')): ?>
 <div class="success">

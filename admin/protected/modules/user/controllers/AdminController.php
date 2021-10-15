@@ -49,8 +49,8 @@ class AdminController extends Controller
 
     public function actionCheck_email(){
         $email = $_POST['email'];
-        $UserNew = UserNew::model()->findAll(array('condition'=>'email = "'.$email.'"'));
-        if(!empty($UserNew)){
+        $User = User::model()->findAll(array('condition'=>'email = "'.$email.'"'));
+        if(!empty($User)){
             echo 1;
         }else{
             echo 2;
@@ -59,8 +59,8 @@ class AdminController extends Controller
 
     public function actionCheck_empid(){
         $emp_id = $_POST['emp_id'];
-        $UserNew = UserNew::model()->findAll(array('condition'=>'username = "'.$emp_id.'"'));
-        if(!empty($UserNew)){
+        $User = User::model()->findAll(array('condition'=>'username = "'.$emp_id.'"'));
+        if(!empty($User)){
             echo 1;
         }else{
             echo 2;
@@ -981,9 +981,9 @@ class AdminController extends Controller
 			$index = 0;
             // var_dump($namedDataArray);exit();
 			foreach($namedDataArray as $key => $result){
-                $search_user = UserNew::model()->findAll(array('condition'=>'username = '.$result["Employee ID."]));
+                $search_user = User::model()->findAll(array('condition'=>'username = '.$result["Employee ID."]));
                 if(empty($search_user)){
-                    $model = new UserNew;
+                    $model = new User;
                     $profile = new Profile;
                     $model->email = $result["Email"];
                     $model->username = $result["Employee ID."];
@@ -1240,25 +1240,25 @@ $this->render('create',array(
 			echo UActiveForm::validate(array($model,$profile));
 			Yii::app()->end();
 		}
-		if(isset($_POST['UserNew']))
+		if(isset($_POST['User']))
 		{			
-            // var_dump($_POST['UserNew']);exit();
-			// $model->attributes = $_POST['UserNew'];
+            // var_dump($_POST['User']);exit();
+			// $model->attributes = $_POST['User'];
             // var_dump($model->attributes);
-            // var_dump($_POST['UserNew']);exit();
-			// $model->username = $_POST['UserNew']['username'];
+            // var_dump($_POST['User']);exit();
+			// $model->username = $_POST['User']['username'];
 			
 			// $model->status = $_POST['User']['status'];
 			
-			// $model->email = $_POST['UserNew']['email'];
+			// $model->email = $_POST['User']['email'];
 
 			// $model->confirmpass = $model->password;
-			// $model->department_id = $_POST['UserNew']['department_id'];
-			// $model->position_id = $_POST['UserNew']['position_id'];
-			// $model->branch_id = $_POST['UserNew']['branch_id'];
-            $model->email = $_POST['UserNew']['email'];
-            $model->username = $_POST['UserNew']['username'];
-            $model->org_id = $_POST['UserNew']['org_id'];
+			// $model->department_id = $_POST['User']['department_id'];
+			// $model->position_id = $_POST['User']['position_id'];
+			// $model->branch_id = $_POST['User']['branch_id'];
+            $model->email = $_POST['User']['email'];
+            $model->username = $_POST['User']['username'];
+            $model->org_id = $_POST['User']['org_id'];
 
             if(isset($_POST['url_pro_pic']) && $_POST['url_pro_pic'] != ""){
                 $uploadDir = Yii::app()->getUploadPath(null);
@@ -1288,7 +1288,7 @@ $this->render('create',array(
                 file_put_contents($targetFile,file_get_contents($_POST['url_pro_pic']));
             }
 
-            if($_POST['UserNew']['newpassword'] != null ){
+            if($_POST['User']['newpassword'] != null ){
                 $model->password=Yii::app()->controller->module->encrypting($_POST['User']['newpassword']);
 
                 $model->confirmpass=UserModule::encrypting($_POST['User']['confirmpass']);
@@ -1426,7 +1426,7 @@ $this->render('create',array(
 		if($this->_model===null)
 		{
 			if(isset($_GET['id']))
-				$this->_model=UserNew::model()->findbyPk($_GET['id']);
+				$this->_model=User::model()->findbyPk($_GET['id']);
 			if($this->_model===null)
 				throw new CHttpException(404,'The requested page does not exist.');
 		}
