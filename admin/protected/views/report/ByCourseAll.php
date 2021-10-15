@@ -4,8 +4,9 @@
 
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/bootstrap-chosen.css" />
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/chosen.jquery.js"></script>
-
 <style>
+
+
     html {
         scroll-behavior: smooth;
     }
@@ -224,22 +225,20 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
 
 
 
-?>
+?><div class="innerLR">
     <div class="widget" id="export-table33">
-            <div class="widget-head">
                 <div class="widget-head">
                     <h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?= $titleName ?></h4>
                 </div>
-            </div> 
-         <div class="widget-body" style=" overflow-x: scroll;">
-            <table id="table_datatable" class="table table-bordered table-striped">
+         <div class="widget-body" >
+            <table id="table_datatable" class="table table-bordered table-striped"  >
                 <thead>
                     <tr>
                         <th  style="vertical-align: middle;" class="center"><b>No.</b></th>
                         <th  style="vertical-align: middle;" class="center"><b>Minor course type</b></th>
                         <th  style="vertical-align: middle;" class="center"><b>Subminor course type</b></th>
                         <th  style="vertical-align: middle;" class="center"><b>Course Name</b></th>
-                        <th  style="vertical-align: middle;" class="center"><b>Gen</b></th>
+                        <!-- <th  style="vertical-align: middle;" class="center"><b>Gen</b></th> -->
                         <th  style="vertical-align: middle;" class="center"><b>Group</b></th>
                         <th  style="vertical-align: middle;" class="center"><b>Employee</b></th>
                         <th  style="vertical-align: middle;" class="center"><b>Name</b></th>
@@ -277,7 +276,7 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
                             <td class="center"><?= isset($valueL->course->cates->type->type_name)? $valueL->course->cates->type->type_name :"" ?></td>
                             <td class="center"><?= $valueL->course->course_number ?></td>
                             <td><?= $valueL->course->course_title ?></td>
-                            <td class="center"><?= isset($valueL->gen->gen_title) ? $valueL->gen->gen_title : '-' ?></td>
+                            <!-- <td class="center"><?= isset($valueL->gen->gen_title) ? $valueL->gen->gen_title : '-' ?></td> -->
                             <td class="center"><?= $valueL->pro->group_name ?></td>
                             <td class="center"><?= $valueL->mem->employee_id ?></td>
                             <td class="center"><?= $valueL->pro->fullname ?></td>
@@ -299,6 +298,7 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
             'Report[gen_id]'=>$_GET['Report']['gen_id'])); ?>" target="_blank" class="btn btn-primary btn-icon glyphicons file"><i></i>Export Excel</a>
         </div>
     </div>
+</div>
     <?php } else { ?>
        <div class="innerLR">
         <div class="widget" style="margin-top: -1px;">
@@ -316,8 +316,15 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
     <?php } ?>
 
 <script type="text/javascript">
-    $('#table_datatable').DataTable({
-                   "searching": true,
-                   "sScrollX": '100%',
-                });
+    $('#table_datatable').DataTable({"searching": true,});
+
+    // $(document).ready(function() {
+    //     $('#table_datatable').DataTable( {
+    //         "scrollX": true,
+    //         "searching": true,
+    //         'responsive': true
+    //     } );
+    // } );
+
+
 </script>
