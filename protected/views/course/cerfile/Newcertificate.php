@@ -4,7 +4,7 @@
         background-position: 0 0;
         background-image-resize: 4;
         background-repeat: no-repeat;
-        font-family: 'tahoma';
+        font-family: 'garuda';
     }
     div {
         text-align: center;
