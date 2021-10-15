@@ -120,6 +120,7 @@ Yii::app()->user->returnUrl = $http->getUrl();
     $time = date("Y-m-d");
     $criteriapopup = new CDbCriteria;
     $criteriapopup->compare('active', 'y');
+    $criteriapopup->compare('status',1);
     $criteriapopup->condition = "start_date <= :time AND end_date >= :time";
     $criteriapopup->params = array(':time' => $time);
     $criteriapopup->addCondition('lang_id =' . Yii::app()->session['lang']);
