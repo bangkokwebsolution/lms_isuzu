@@ -2022,4 +2022,13 @@ public  function actionReport_list(){
             'model' => $model,
         ));
     }
+
+
+    public function actionExcelByUserReport(){
+        $model = new Report();
+        $model->unsetAttributes(); 
+        $this->renderPartial('ExcelByUserReport_Excel', array(
+            'model' => $model,
+        ));
+    }
 }

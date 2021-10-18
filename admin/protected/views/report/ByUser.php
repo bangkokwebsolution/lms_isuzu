@@ -63,24 +63,7 @@ EOD
                 });
             }
         });
-        $("#Report_department").change(function(){
-            var value = $("#Report_department option:selected").val();
-            if(value != ""){
-                $.ajax({
-                    type: 'POST',
-                    url: '<?php echo Yii::app()->createAbsoluteUrl("/Passcours/ajaxgetposition"); ?>',
-                    data: ({
-                        value: value,
-                    }),
-                    success: function(data) {
-                        if(data != ""){
-                            $("#Report_position").html(data);
-                            $('.chosen').trigger("chosen:updated");
-                        }
-                    }
-                });
-            }
-        });
+        
 
         $("#Report_course_id").change(function(){
             var value = $("#Report_course_id option:selected").val();
@@ -159,28 +142,7 @@ EOD
 
     $listLesson = CHtml::listData($modelLesson,'id','title');
 
-
-
-    $TypeEmployee = TypeEmployee::model()->findAll(array(
-        'condition' => 'active = "y"',
-        'order' => 'type_employee_name ASC'
-    ));
-    $listtype_user = CHtml::listData($TypeEmployee,'id','type_employee_name');
-
-
-
-    $department = Department::model()->findAll(array(
-        'condition' => 'active = "y"',
-        'order' => 'dep_title ASC'
-    ));
-    $listdepartment = CHtml::listData($department,'id','dep_title');
-
-
-    $position = Position::model()->findAll(array(
-        'condition' => 'active = "y"',
-        'order' => 'position_title ASC'
-    ));
-    $listposition = CHtml::listData($position,'id','position_title');
+  
 
     if($_GET['Report']['course_id'] != ""){
         $arr_gen = CourseGeneration::model()->findAll(array(
@@ -201,283 +163,199 @@ EOD
 
 
 
-    $this->widget('AdvanceSearchForm', array(
-        'data'=>$model,
-        'route' => $this->route,
-        'attributes'=>array(
-            array('name'=>'course_id','type'=>'list','query'=>$listCourse),            
-            array('name'=>'gen_id','type'=>'list','query'=>$arr_gen),   
-            array('name'=>'lesson_id','type'=>'list','query'=>$listLesson),
-            array('name'=>'search','type'=>'text'),     
-            // array('name'=>'type_register','type'=>'list','query'=>$listtype_user),
-            // array('name'=>'department','type'=>'list','query'=>$listdepartment),
-            // array('name'=>'position','type'=>'list','query'=>$listposition),            
-            // array('name'=>'period_start','type'=>'text'),
-            // array('name'=>'period_end','type'=>'text'),
-    ),
+    // $this->widget('AdvanceSearchForm', array(
+    //     'data'=>$model,
+    //     'route' => $this->route,
+    //     'attributes'=>array(
+    //         array('name'=>'course_id','type'=>'list','query'=>$listCourse),            
+    //         array('name'=>'gen_id','type'=>'list','query'=>$arr_gen),   
+    //         array('name'=>'lesson_id','type'=>'list','query'=>$listLesson),
+    //         array('name'=>'search','type'=>'text'),     
+            
+    // ),
 
-    ));
+    // ));
 
 
     ?>
-</div>
+    <div class="widget">
+
+        <div class="widget-head">
+            <h4 class="heading glyphicons search">
+                <i></i> High Search:
+            </h4>
+        </div>
+        <?php 
+            $form = $this->beginWidget('CActiveForm',
+                array(
+                    'action'=>Yii::app()->createUrl($this->route),
+                    'method'=>'get',
+                )
+            ); 
+        ?>
+        <div class="widget-body">
+            <dl class="dl-horizontal">
+
+                <div class="form-group">
+                <dt><label>Name : </label></dt>
+                <dd>
+                    <input type="text" name="Report[name]" style="width: 50%;" value="<?php if(isset($_GET['Report']['name']) && $_GET['Report']['name'] != ""){ echo $_GET['Report']['name']; } ?>" required>
+                </dd>
+                </div>
+
+
+
+            <div class="form-group">
+                <dt></dt>
+                <dd>
+                    <button type="submit" class="btn btn-primary btn-icon glyphicons search">
+                        <i></i> Search
+                    </button>
+                </dd>
+            </div>
+
+
+            </dl>
+        </div>
+    <?php $this->endWidget(); ?>
+</div><!--innerLR-->
 <?php 
-if(!empty($_GET) && $_GET['Report']['course_id'] != null && $_GET['Report']['gen_id'] != null){ 
-
-        $search = $_GET['Report'];
 
 
-        $course_online = CourseOnline::model()->findByPk($search["course_id"]);
+if(isset($_GET['Report']['name'])){ 
 
-        $statusArray = array(
-            'learning'=>'<b style="color: green;">กำลังเรียน</b>', 
-            'pass' => '<b style="color: blue;">เรียนสำเร็จ</b>',
-            'notlearn'=>'<b style="color: red;">ยังไม่เรียน</b>'
-        );
+        $report = $_GET['Report']; 
 
 
-        $criteria = new CDbCriteria;
-        $criteria->with = array('pro', 'course', 'mem');
-
-        if(isset($_GET['Report']['search']) && $_GET['Report']['search'] != null){
-            $ex_fullname = explode(" ", $_GET['Report']['search']);
-
-            if(isset($ex_fullname[0])){
-                $pro_fname = $ex_fullname[0];
-                $criteria->compare('pro.firstname_en', $pro_fname, true);
-                $criteria->compare('pro.lastname_en', $pro_fname, true, 'OR');
-
-                $criteria->compare('pro.firstname', $pro_fname, true, 'OR');
-                $criteria->compare('pro.lastname', $pro_fname, true, 'OR');
-            }
-
-            if(isset($ex_fullname[1])){
-                $pro_lname = $ex_fullname[1];
-                $criteria->compare('pro.lastname',$pro_lname,true);
-                $criteria->compare('pro.lastname_en', $pro_lname, true, 'OR');
-            }
-        }   
-
-        $criteria->compare('superuser',0);
-        $criteria->addCondition('user.id IS NOT NULL');
-
-        $criteria->compare('user.superuser', 0);
-
-        if(isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != null) {
-            $criteria->compare('t.course_id', $_GET['Report']['course_id']);
-        }
-
-        if(isset($_GET['Report']['gen_id']) && $_GET['Report']['gen_id'] != null) {
-            $criteria->compare('t.gen_id', $_GET['Report']['gen_id']);
-        }
-
-        // if(isset($_GET['Report']['type_register']) && $_GET['Report']['type_register'] != null) {
-        //     $criteria->compare('pro.type_employee', $_GET['Report']['type_register']);
-        // }
-
-        if(isset($_GET['Report']['department']) && $_GET['Report']['department'] != null) {
-            $criteria->compare('user.department_id',$_GET['Report']['department']);
-        }
-
-        if(isset($_GET['Report']['position']) && $_GET['Report']['position'] != null) {
-            $criteria->compare('user.position_id',$_GET['Report']['position']);
-        }
-
-        if(isset($_GET['Report']['period_start']) && $_GET['Report']['period_start'] != null) {
-            $criteria->compare('start_date >= "' . date('Y-m-d 00:00:00', strtotime($_GET['Report']['period_start'])) . '"');
-        }
-        if(isset($_GET['Report']['period_end']) && $_GET['Report']['period_end'] != null) {
-            $criteria->compare('start_date <= "' . date('Y-m-d 23:59:59', strtotime($_GET['Report']['period_end'])) . '"');
-        }
-
-        $user_Learn = LogStartcourse::model()->findAll($criteria);
-
-        $user_chk = array();
-        foreach ($user_Learn as $key => $val) {
-            if($val->user_id != ""){
-                $user_chk[] = $val->user_id;
-            }
-        }
-
-        if(count($user_chk) == 0){
-            $user_chk = array(0);
-        } 
-
-        $allUsers = User::model()->with('profile')->findAll(array(
-            'condition' => 'status ="1" and user.id IN ('.implode(",", $user_chk).')',
-            'order' => 'profile.firstname_en ASC'
-        ));
-
-
-        if(isset($_GET['Report']['lesson_id']) && $_GET['Report']['lesson_id'] != null) {
-
-           $lesson_online = Lesson::model()->findAll("active='y' AND id='".$_GET['Report']['lesson_id']."' AND course_id='".$search["course_id"]."'");
-
-       }else{
-          $lesson_online = Lesson::model()->findAll(array(
-            "condition"=>"active='y' AND lang_id='1' AND course_id='".$search["course_id"]."'",
-            "order"=>"title ASC"
-        ));
-      }
-
-        $gen_title = "";
-        if($_GET['Report']['gen_id'] != 0){
-            $gen_title = CourseGeneration::model()->findByPk($_GET['Report']['gen_id']);
-            $gen_title = " รุ่น ".$gen_title->gen_title;
-        }
+        // var_dump($report);exit();
 
 ?>
 
-
-<div class="widget" id="export-table33">
+<div class="widget" id="export-table">
             <div class="widget-head">
-                <div class="widget-head">
-                    <h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?= $title ?></h4>
-                </div>
+                <div class="widget-head"></div>
             </div> 
-            <div class="widget-body" style=" overflow-x: scroll;">
-                <table id="table_datatable" class="table table-bordered table-striped">
 
+            <div class="widget-body div-table" style=" overflow-x: scroll;">
+                <table class="table table-bordered table-striped" id="table_datatable">
                     <thead>
                         <tr>
-                            <th class="center" rowspan="2">ลำดับ</th>
-                            <th class="center" rowspan="2">Name - Surname (EN)</th>
-                            <th class="center" rowspan="2">Name - Surname (TH)</th>
-                            <th class="center" rowspan="2">Work Location</th>
-                            <th class="center" rowspan="2">Employee Class</th>
-                            <th class="center" rowspan="2">Position desc.</th>
-                            <th class="center" rowspan="2">Organization unit</th>
-                            <th class="center" colspan="<?= count($lesson_online)+1 ?>">หลักสูตร <?= $course_online->course_title.$gen_title ?></th>
-                            <th rowspan="2">Email ที่สมัคร</th>
+                            <th>No.</th>
+                            <th>Emp ID</th>
+                            <th>Full name</th>
+                            <th>Work Location</th>
+                            <th>Employee Class</th>                            
 
+                            <th>Minor course type</th>
+                            <th>Course Group</th>
+                            <th>Course Number</th>
+                            <th>Course Name</th>
+                            <th>Lesson</th>
                         </tr>
-                        <tr>
-                            <?php foreach($lesson_online as $lesson) { ?>
-                                <th class="center"><?= $lesson->title ?></th>
-                            <?php } ?>
-                            <th class="center">Percent</th>
-                        </tr>
+                        
                     </thead>
-
-
                     <tbody>
                         <?php
-                        if(!empty($allUsers)){
-                            
-                           $dataProvider=new CArrayDataProvider($allUsers, array(
-                            'pagination'=>array(
-                                'pageSize'=>25
-                            ),
-                        ));
 
-                            $getPages = $_GET['page'];
-                            if($getPages = $_GET['page']!=0 ){
-                                $getPages = $_GET['page'] -1;
+
+
+                        $model_result = [];
+                        $lesson_model = [];
+                        $model_count = 0;
+
+                        if($report['name'] != ""){ 
+
+                            $Report_course=$report['course'];
+
+                            // if($Report_course!= ""){ 
+                            //     $sql_course="AND course_id='".$Report_course."' ";
+                            // }else{
+                            //     $sql_course="";
+                            // }
+
+                            // $course_model = CourseOnline::model()->findAll(array(
+                            //     'select'=>'course_id, course_title',
+                            //     'condition'=>'active="y" AND lang_id="1" AND cate_id="'.$_GET['Report']['category'].'"'.$sql_course,
+                            //     'order'=>'course_title ASC'
+                            // ));
+
+                            $course_model = CourseOnline::model()->findAll(array(
+                                'select'=>'course_id, course_title',
+                                'condition'=>'active="y" AND lang_id="1" ',
+                                'order'=>'course_title ASC'
+                            ));
+
+
+
+                            if($report["lesson"] != ""){        
+                                $sql_lesson = " AND id='".$report["lesson"]."' ";
+                                $lesson_id = $report["lesson"];
+                            }else{
+                                $sql_lesson = "";
+                                $lesson_id = null;
                             }
 
-                            $start_cnt = $dataProvider->pagination->pageSize * $getPages;
+                            
 
-                            if($dataProvider->getData()) {
-                                foreach($dataProvider->getData() as $i => $user) {
-                                    ?>
+                            foreach ($course_model as $key => $value) {
+                                $result_list = Helpers::lib()->query_report_training($report, $value->course_id, $lesson_id);                               
+
+                                $lesson_list= Lesson::model()->findAll(array(
+                                    'select'=>'id, title', 
+                                    'condition'=>'course_id="'.$value->course_id.'" AND active="y" AND lang_id=1 '.$sql_lesson,
+                                    'order'=>'title ASC'
+                                )); 
+
+                                $model_count = $model_count+count($result_list);
+                                
+                                $model_result = $result_list;
+                                $lesson_model = $lesson_list;
+
+
+                        foreach($model_result as $i => $list) {
+                            foreach ($lesson_model as $k_lesson => $val_lesson) {
+                                ?>
                                     <tr>
                                         <td><?= $start_cnt+1 ?></td>
-                                        <td><?= $user->profile->firstname_en . ' ' . $user->profile->lastname_en ?></td>
-                                        <td><?= $user->profile->firstname . ' ' . $user->profile->lastname ?></td>
-                                        <td><center><?= $user->profile->location ?></center></td>
-                                        <td><?= isset($user->profile->EmpClass->title) ? $user->profile->EmpClass->title :'' ?></td>
-                                        <td><?= $user->profile->position_description ?></td>
-                                        <td><?= $user->profile->organization_unit ?></td>
-                                        <?php
-                                           if($lesson_online) {
-                                                foreach($lesson_online as $lesson) {
-                                                    $statusLearn_course =  Helpers::lib()->chk_status_course($course_online->course_id, $_GET['Report']['gen_id'], $user->id);
-
-                                                        ?>
-                                                        <td class="center" <?php if($statusLearn_course != "learning"){ echo 'colspan="'.count($lesson_online).'"'; } ?>>
-                                                            <?php 
-                                                            if($statusLearn_course != "learning"){
-                                                                echo $statusArray[$statusLearn_course];
-                                                            }else{
-                                                                $statusLearn_lesson =  Helpers::lib()->chk_status_lesson($lesson->id, $_GET['Report']['gen_id'], $user->id);
-                                                                echo $statusArray[$statusLearn_lesson];
-                                                            }
-                                                             ?>
-                                                        </td>
-                                                        <?php
-                                                        if($statusLearn_course != "learning"){
-                                                            break;
-                                                        }
-                                                }
-                                           }
-                                        ?>
-                                        <td class="center">
-                                            <?php 
-                                            if($statusLearn_course != "pass"){
-                                                echo Helpers::lib()->percent_CourseGen($course_online->course_id, $_GET['Report']['gen_id'], $user->id)." %"; 
-                                            }else{
-                                                echo "-";
-                                            }
-                                            ?>
+                                        <td><?= $list->mem->employee_id ?></td>
+                                        <td>
+                                            <?= $list->mem->profile->firstname_en . ' ' . $list->mem->profile->lastname_en ?>
                                         </td>
-                                        <td><?= $user->email ?></td>
+                                        <td><?= $list->mem->profile->location ?></td>
+                                        <td><?= $list->mem->profile->employee_class ?></td>                                        
+
+                                        <td><?= $list->course->cates->type->type_name ?></td>
+                                        <td><?= $list->course->cates->cate_title ?></td>
+                                        <td><?= $list->course->course_number ?></td>
+                                        <td><?= $list->course->course_title ?></td>
+                                        <td><?= $val_lesson->title ?></td>
+
+
                                     </tr>
                                     <?php
                                     $start_cnt++;
+                                    } // lesson
                                 }
-                            } else {
-                                ?>
-                                <tr>
-                                    <strong>ไม่พบข้อมูล</strong>
-                                </tr>
-                    <?php } ?>
+                            }
+                        }
+                        ?>
                     </tbody>
                 </table>
-                <br>
-                <br>
-                <br>
-                <?php 
-                $this->widget('CLinkPager',array(
-                    'pages'=>$dataProvider->pagination
-                ));
-                ?>
-                <br>
-                <br>
-                <a href="<?= $this->createUrl('report/GenExcelByUser',array(
-                'Report[course_id]'=>$_GET['Report']['course_id'],
-                'Report[gen_id]'=>$_GET['Report']['gen_id'],
-                'Report[lesson_id]'=>$_GET['Report']['lesson_id'],
-                'Report[search]'=>$_GET['Report']['search'],
-                'Report[type_register]'=>$_GET['Report']['type_register'],
-                'Report[department]'=>$_GET['Report']['department'],
-                'Report[position]'=>$_GET['Report']['position'],
-                'Report[period_start]'=>$_GET['Report']['period_start'],
-                'Report[period_end]'=>$_GET['Report']['period_end']
-                )); ?>" 
-                target="_blank">
-                <button type="button" id="btnExport" class="btn btn-primary btn-icon glyphicons file"><i></i> Export</button></a>
+               
             </div>
         </div>
-    </div>
-</div>
-        <?php }else{ ?>
-            <div class="innerLR">
-            <div class="widget" style="margin-top: -1px;">
-                <div class="widget-head">
-                    <h4 class="heading glyphicons show_thumbnails_with_lines">
-                        <i></i> </h4>
-                    </div>
-                    <div class="widget-body">
+<?php } ?>
 
-                        <h3 class="text-success">กรุณาป้อนข้อมูลให้ถูกต้อง แล้วกด ปุ่มค้นหา</h3>
 
-                    </div>
-                </div>
-                </div>
-        <?php 
-    }  
-}
-?>
+<?php if($model_count > 0){ ?>
+
+<a href="<?= $this->createUrl('Report/ExcelByUserReport', array(
+
+'Report[name]'=>$report["name"]
+)); ?>" target="_blank" class="btn btn-primary btn-icon glyphicons file"><i></i> Export Excel</a>
+
+<?php } ?>
+
 <script type="text/javascript">
     $('#table_datatable').DataTable({
                    "searching": true,

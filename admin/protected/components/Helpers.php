@@ -2473,6 +2473,220 @@ public function changeLink($link)
            
 
             return $statusLearn;
-        } 
+        }
+
+
+        //New Report By P'Pee
+        public function query_report_training($report, $course_id, $lesson_id=null){
+
+            $report["course"] = $course_id;
+            
+            $criteria = new CDbCriteria;
+            $criteria->with = array('course', 'user', 'user.profile');
+            $criteria->select = 't.course_id, t.user_id, t.id, t.create_date';
+            $criteria->compare('courseonline.active', "y");
+
+            // if($report["category"] != ""){        
+            //     $criteria->compare('courseonline.cate_id', $report["category"]);
+            // }
+
+            // if($report["course"] != ""){        
+            //     $criteria->compare('courseonline.course_id', $report["course"]);
+            // }
+
+
+            if($report["name"] != ""){
+                $criteria->compare('concat(profile.firstname," ",profile.lastname," ",profile.firstname_en," ",profile.lastname_en)',$report["name"],true);
+                $model_result = LogStartcourse::model()->findAll($criteria);
+                // var_dump($model_result);exit();
+
+            }
+
+            if($report["training_status"] != ""){
+                $arr_user_pass = []; // คนที่เรียน pass แล้ว
+                $arr_user_learning = []; // คนที่กำลังเรียน
+
+                $arr_log_start_course = []; // id log start course ที่สมัครเข้ามา        
+                $arr_user_coursescore = []; // คนที่สอบ pre course
+                $arr_user_score = []; // คนที่สอบ pre lesson
+                $arr_user_learn = []; // คนที่เรียน learn แล้ว
+
+                $log_start_course = LogStartcourse::model()->findAll(array(
+                    'select'=>'id, user_id',
+                    'condition'=>'course_id="'.$report["course"].'" AND active="y" ',
+                    'order'=>'id DESC',
+                    'group'=>'user_id'
+                ));        
+                foreach ($log_start_course as $key => $value) {
+                    $arr_log_start_course[] = $value->id;
+                }
+
+                if(!empty($arr_log_start_course)){
+                    $sql_logstartcourse = " AND startcourse_id IN (" . implode(',', $arr_log_start_course) . ")";
+                }else{
+                    $sql_logstartcourse = "";
+                }
+
+                ////////////////////////////////
+
+                $header_id = Helpers::lib()->chk_course_questionnaire($report["course"]); // มีแบบสอบถามไหม
+
+                $Passcours = Passcours::model()->findAll(array(
+                    'select'=>' passcours_user',
+                    'condition'=>'passcours_cours="'.$report["course"].'" ',
+                    'order'=>'passcours_id DESC',
+                    'group'=>'passcours_user'
+                )); 
+
+                foreach ($Passcours as $key => $value) {
+                    if($header_id != null){
+                        if(Helpers::lib()->chk_course_questionnaire_do($header_id, $report["course"], $value->passcours_user, "")){
+                            // ทำแบบสอบถามแล้ว
+                            $arr_user_pass[] = $value->passcours_user;
+                        }
+                    }else{
+                        $arr_user_pass[] = $value->passcours_user;
+                    }
+                }
+
+                if($report["training_status"] == 4){ // pass
+                    $criteria->addIncondition('t.user_id', $arr_user_pass);                  
+                }else{
+                    // notstart    learning
+
+                    $course['course_id'] = $report["course"];
+
+                    $score_course = Coursescore::model()->findAll(array(
+                        'select'=>'user_id',
+                        'condition'=>"active='y' AND type='pre' AND course_id='".$course['course_id']."' ".$sql_logstartcourse." ",
+                        'group'=>'user_id'
+
+                    ));
+                    foreach ($score_course as $key => $value) {
+                        $arr_user_coursescore[] = $value->user_id;
+                    }
+
+                    $score_lesson = Score::model()->findAll(array(
+                        'select'=>'user_id',
+                        'condition'=>"active='y' AND type='pre' AND course_id='".$course['course_id']."'  ".$sql_logstartcourse." ",
+                        'group'=>'user_id'
+                    ));
+                    foreach ($score_lesson as $key => $value) {
+                        $arr_user_score[] = $value->user_id;
+                    }
+
+                    $arr_user_learning = array_merge($arr_user_coursescore, $arr_user_score);
+                    $arr_user_learning = array_unique($arr_user_learning);
+
+                    $statusLearn = Learn::model()->findAll(array(
+                        'select'=>'user_id',
+                        'condition' => 'course_id ="'. $course['course_id'] .'"' . $sql_logstartcourse,
+                        'group'=>'user_id'                
+                    ));
+                    foreach ($statusLearn as $key => $value) {
+                        $arr_user_learn[] = $value->user_id;
+                    }
+
+                    $arr_user_learning = array_merge($arr_user_learning, $arr_user_learn);
+                    $arr_user_learning = array_unique($arr_user_learning);
+
+
+                    if($report["training_status"] == 1){ // notstart
+                        $criteria->addNotIncondition('t.user_id', $arr_user_pass);    
+                        $criteria->addNotIncondition('t.user_id', $arr_user_learning);    
+                    }elseif($report["training_status"] == 2){ // learning
+                        $criteria->addIncondition('t.user_id', $arr_user_learning);    
+                        $criteria->addNotIncondition('t.user_id', $arr_user_pass);    
+                    }
+                }
+
+            }
+
+            if($report["start_date"] != "" && $report["end_date"] != ""){
+                $criteria->addCondition("t.create_date>='".$report["start_date"]." 00:00:00"."'");
+                $criteria->addCondition("t.create_date<='".$report["end_date"]." 23:59:59"."'");
+            }
+
+            $criteria->order = "profile.firstname_en ASC";
+            $criteria->group = "t.user_id";
+            $model_result = LogStartcourse::model()->findAll($criteria);
+            $model_count = count($model_result);
+
+
+            return $model_result;
+        }
+
+        public function chk_course_questionnaire($course_id){ // เช็คว่าหลักสูตรมีแบบสอบถามไหม return id header arr
+            $header_id = null; // ไม่มีแบบสอบถาม
+            $CourseTeacher = CourseTeacher::model()->findAll(array(
+                'select'=>'survey_header_id',
+                'condition'=>'course_id="'.$course_id.'" ',
+                'order'=>'id DESC'
+            ));
+            if(!empty($CourseTeacher)){
+                foreach ($CourseTeacher as $key => $value_t) {
+                    $QHeader = QHeader::model()->findAll(array(
+                        'select'=>'survey_header_id',
+                        'condition'=>'survey_header_id="'.$value_t->survey_header_id.'" AND active="y" '
+                    ));
+                    if($QHeader){
+                        foreach ($QHeader as $key => $value) {
+                            $header_id = $value->survey_header_id; // มีแบบสอบถาม
+                        }                    
+                    }
+                }
+            }
+            return $header_id;
+        }
+
+
+        public function chk_course_questionnaire_do($header_id, $course_id, $user_id, $startcourse_id){ // เช็คว่าทำแบบสอบถาม รึยัง
+
+            // if($startcourse_id == null){
+            //     $startcourse_id = Helpers::lib()->chk_logstartcourse($course_id);
+            // }
+
+            $status = false;
+
+            $QQuestAns_course = QQuestAnsCourse::model()->find(array(
+                'select'=>'id',
+                'condition'=>'user_id="'.$user_id.'" AND course_id="'.$course_id.'" AND header_id="'.$header_id.'" '
+            ));
+            if($QQuestAns_course){
+                $status = true; // ทำแบบสอบถามแล้ว
+            }
+            return $status;
+        }
+
+        public function checkLessonFile_learn_id($file ,$learn_id, $user_id)
+        {
+                        // $user = Yii::app()->getModule('user')->user();
+                            /*$learnFiles = $user->learnFiles(
+                                array(
+                                    'condition' => 'file_id=:file_id',
+                                    'params' => array(':file_id' => $file->id)
+                                    )
+                                );*/
+                                //var_dump($user);exit();
+
+                                $user = User::model()->findByPk($user_id);
+
+
+                                $learnFiles = $user->learnFiles(
+                                    array(
+                                        'condition' => 'file_id=:file_id AND learns.learn_id=:learn_id AND learns.active=:status',
+                                        'params' => array(':file_id' => $file->id,':learn_id'=>$learn_id,':status'=>'y')
+                                    )
+                                );
+                                if ($learnFiles) {
+                                    if ($learnFiles[0]->learn_file_status != 's') {
+                                        return "learning";
+                                    } else {
+                                        return "pass";
+                                    }
+                                } else {
+                                    return "notLearn";
+                                }
+        }//end function 
 
 }

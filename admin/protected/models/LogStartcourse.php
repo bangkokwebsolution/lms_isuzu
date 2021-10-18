@@ -75,6 +75,7 @@ class LogStartcourse extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'pro' => array(self::BELONGS_TO, 'Profile', 'user_id'),
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
 			'mem' => array(self::BELONGS_TO, 'User', 'user_id','foreignKey' => array('user_id'=>'id')),
 			'course' => array(self::BELONGS_TO, 'CourseOnline', 'course_id'),
 			'gen' => array(self::BELONGS_TO, 'CourseGeneration', 'gen_id'),
