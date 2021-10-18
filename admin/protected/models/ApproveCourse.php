@@ -284,6 +284,8 @@ class ApproveCourse extends AActiveRecord
 		$criteria->compare('categorys.cate_title',$this->cates_search,true);
 
 		$criteria->compare('categorys.active','y');
+		$criteria->compare('courseonline.active','y');
+
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
@@ -312,6 +314,8 @@ class ApproveCourse extends AActiveRecord
 		$criteria->compare('categorys.cate_title',$this->cates_search,true);
 
 		$criteria->compare('categorys.active','y');
+		$criteria->compare('courseonline.active','y');
+		
 		$criteria->compare('update_date',$this->update_date,true);
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);

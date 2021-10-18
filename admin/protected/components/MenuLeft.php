@@ -93,6 +93,7 @@ Class MenuLeft extends Controller
 		$criteria->with = array('cates');
 		$criteria->compare('categorys.type_id',1);
 		$criteria->compare('categorys.active','y');
+		
 		$criteria->compare('courseonline.active','y');
 		$criteria->compare('courseonline.parent_id',0);
 		$criteria->addCondition('approve_status != 1');
@@ -104,6 +105,8 @@ Class MenuLeft extends Controller
 	 	$criteria = new CDbCriteria;
 		$criteria->with = array('cates');
 		$criteria->compare('categorys.type_id',3);
+		$criteria->compare('categorys.active','y');
+
 		$criteria->compare('courseonline.active','y');
 		$criteria->compare('courseonline.parent_id',0);
 		$criteria->addCondition('approve_status != 1 AND approve_status !=2');
@@ -114,6 +117,8 @@ Class MenuLeft extends Controller
 	 	$criteria = new CDbCriteria;
 		$criteria->with = array('cates');
 		$criteria->compare('categorys.type_id',3);
+		$criteria->compare('categorys.active','y');
+
 		$criteria->compare('courseonline.active','y');
 		$criteria->compare('courseonline.parent_id',0);
 		$criteria->addCondition('approve_status = 1');
