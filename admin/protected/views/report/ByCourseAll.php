@@ -279,7 +279,7 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
                             <!-- <td class="center"><?= isset($valueL->gen->gen_title) ? $valueL->gen->gen_title : '-' ?></td> -->
                             <td class="center"><?= $valueL->pro->group_name ?></td>
                             <td class="center"><?= $valueL->mem->employee_id ?></td>
-                            <td class="center"><?= $valueL->pro->fullname ?></td>
+                            <td class="center"><?= !empty($valueL->pro->Fullname_en) ? $valueL->pro->Fullname_en : $valueL->pro->Fullname ?></td>
                             <td class="center"><?= $valueL->pro->organization_unit ?></td>
                             <td class="center"><?= $valueL->mem->orgchart->title ?></td>
                             <td class="center"><?= $valueL->pro->EmpClass->title ?></td>
