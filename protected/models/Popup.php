@@ -73,7 +73,7 @@ class Popup extends CActiveRecord
 			array('start_date, end_date, create_date, update_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, name, detail, start_date, end_date, link, pic_file, create_date, create_by, update_date, update_by, active', 'safe', 'on'=>'search'),
+			array('id, name, detail, start_date,status, end_date, link, pic_file, create_date, create_by, update_date, update_by, active', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -145,6 +145,7 @@ public function defaultScope()
 		$criteria->compare('start_date',$this->start_date,true);
 		$criteria->compare('end_date',$this->end_date,true);
 		$criteria->compare('link',$this->link,true);
+		$criteria->compare('status',$this->status,true);
 		$criteria->compare('pic_file',$this->pic_file,true);
 		$criteria->compare('create_date',$this->create_date,true);
 		$criteria->compare('create_by',$this->create_by,true);
