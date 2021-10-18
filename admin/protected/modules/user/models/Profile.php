@@ -176,4 +176,10 @@ class Profile extends UActiveRecord
 		}
 		return $str;
 	}
+	public function getFullname_en() {
+		if(!empty($this->firstname_en) && !empty($this->lastname_en)){
+			$str = $this->firstname_en . ' ' . $this->lastname_en;
+		}
+		return $str;
+	}
 }

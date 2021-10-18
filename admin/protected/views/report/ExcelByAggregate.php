@@ -1,5 +1,5 @@
 <?php
-$strExcelFileName = "Export-Report_Overview_Traini-" . date('Ymd-His') . ".xls";
+$strExcelFileName = "Report_Overview_Traini-" . date('Ymd-His') . ".xls";
 header("Content-Type: application/x-msexcel; name=\"" . $strExcelFileName . "\"");
 header("Content-Disposition: inline; filename=\"" . $strExcelFileName . "\"");
 header('Content-Type: text/plain; charset=UTF-8');
