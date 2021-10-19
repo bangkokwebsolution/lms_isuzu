@@ -120,7 +120,7 @@ class VdoController extends Controller
 					$tempSave_thumbnail = CUploadedFile::getInstance($model, 'vdo_thumbnail');
 					$fileName_thumbnail = $beautifulName_thumbnail;
 					$model->vdo_thumbnail = $fileName_thumbnail;
-					$Pathuploadfile_thumbnail = Yii::app()->basePath.'/../uploads/'.$fileName_thumbnail;
+					$Pathuploadfile_thumbnail = Yii::app()->basePath.'/../../uploads/'.$fileName_thumbnail;
 
 						if(!empty($tempSave_thumbnail))  // check if uploaded file is set or not
 						{
@@ -226,8 +226,7 @@ class VdoController extends Controller
                 		$tempSave = CUploadedFile::getInstance($model, 'vdo_path');
                 		$fileName = $beautifulName;
                 		$model->vdo_path = $fileName;
-                		$Pathuploadfile = Yii::app()->basePath.'/../uploads/'.$fileName;
-
+                		$Pathuploadfile = Yii::app()->basePath.'/../../uploads/'.$fileName;
 						if(!empty($tempSave))  // check if uploaded file is set or not
 						{
 							$tempSave->saveAs($Pathuploadfile);
@@ -242,7 +241,7 @@ class VdoController extends Controller
 						$tempSave_thumbnail = CUploadedFile::getInstance($model, 'vdo_thumbnail');
 						$fileName_thumbnail = $beautifulName_thumbnail;
 						$model->vdo_thumbnail = $fileName_thumbnail;
-						$Pathuploadfile_thumbnail = Yii::app()->basePath.'/../uploads/'.$fileName_thumbnail;
+						$Pathuploadfile_thumbnail = Yii::app()->basePath.'/../../uploads/'.$fileName_thumbnail;
 
 						if(!empty($tempSave_thumbnail))  // check if uploaded file is set or not
 						{
