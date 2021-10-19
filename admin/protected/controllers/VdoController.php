@@ -205,12 +205,12 @@ class VdoController extends Controller
                     // $vdo_path = $beautifulName;
 			if($model->validate())
 			{
-				if(empty($_POST['Vdo']['vdo_thumbnail']) ){
+				if(empty($_FILES['Vdo']['vdo_thumbnail']) ){
 
 					$model->vdo_thumbnail = $old_vdo_thumbnail;
 						 // var_dump($model->vdo_thumbnail);exit();
 				}
-				if(empty($_POST['Vdo']['vdo_path']) ){
+				if(empty($_FILES['Vdo']['vdo_path']) ){
 
 					$model->vdo_path = $old_vdo_path;
 						 // var_dump($model->vdo_path);exit();
@@ -259,7 +259,7 @@ class VdoController extends Controller
 							exit();
 						}
 					}
-
+					$model->save();
 					if(Yii::app()->user->id){
 						Helpers::lib()->getControllerActionId();
 					}
