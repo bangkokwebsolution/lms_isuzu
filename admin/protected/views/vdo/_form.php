@@ -93,9 +93,9 @@ function typeVdo(val){
                     <?php echo $form->error($model, 'vdo_type'); ?>
                 </div>
                 <!-- thumbnail -->
-                <!-- <?php echo $form->labelEx($model, 'vdo_thumbnail'); ?> -->
-              <!--   รูปภาพหน้าปกวีดีโอ -->
-       <!--          <div class="fileupload fileupload-new" data-provides="fileupload">
+                <!-- <?php echo $form->labelEx($model, 'vdo_thumbnail'); ?>
+        
+                <div class="fileupload fileupload-new" data-provides="fileupload">
                     <div class="input-append">
                         <div class="uneditable-input span3"><i class="icon-file fileupload-exists"></i> <span class="fileupload-preview"></span>
                             </div>
@@ -107,9 +107,9 @@ function typeVdo(val){
                             <a href="#" class="btn fileupload-exists" data-dismiss="fileupload">Remove</a>
                         </div>
                     </div>
-                    <?php echo $form->error($model, 'vdo_thumbnail'); ?> -->
+                    <?php echo $form->error($model, 'vdo_thumbnail'); ?> 
                
-               <!--  <div class="row">
+              <div class="row">
 				     <font color="#990000">
 				      <?php echo $this->NotEmpty();?> ไฟล์รูปภาพนามสกุลต่างๆ
 				     </font>
@@ -156,13 +156,13 @@ function typeVdo(val){
                       $Vdos = Vdo::model()->findAll($criteria);
                        foreach ($Vdos as $vdo) { 
                             ?>
-                            <video class="video-js" poster="<?php echo Yii::app()->baseUrl . "/../uploads/$vdo->vdo_thumbnail"; ?>" controls preload="auto" style="width: 40%; height: 300px;">
+                            <video class="video-js"  controls preload="auto" style="width: 40%; height: 300px;">
                                 
 
                                 <!-- video show-->
                                 <?php
-                                if (file_exists(YiiBase::getPathOfAlias('webroot') . '/../uploads/' . $vdo->vdo_path)) {
-                                    $file_name = Yii::app()->baseUrl . '/../uploads/' . $vdo->vdo_path;
+                                if (file_exists(YiiBase::getPathOfAlias('webroot') . '/../uploads/vdo/'.$vdo->vdo_id.'/'. $vdo->vdo_path)) {
+                                    $file_name = Yii::app()->baseUrl . '/../uploads/vdo/'.$vdo->vdo_id.'/'. $vdo->vdo_path;
                              
                                 } 
                                 $show = "<source src=" . $file_name . " type='video/mp4' >";

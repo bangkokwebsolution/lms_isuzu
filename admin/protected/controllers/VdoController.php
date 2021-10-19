@@ -69,7 +69,6 @@ class VdoController extends Controller
 
     			$vdo_thumbnail = CUploadedFile::getInstance($model, 'vdo_thumbnail');
     			$uploadFile_thumbnail = CUploadedFile::getInstance($model, 'vdo_thumbnail');
-
     			if (isset($uploadFile)) {
                     // $uglyName = strtolower($uploadFile->name);
                     // $mediocreName = preg_replace('/[^a-zA-Z0-9ก-๙เ]+/', '_', $uglyName);
@@ -100,11 +99,12 @@ class VdoController extends Controller
                 	$model->sortOrder = $model->vdo_id;
                     $model->save();
                 	if(isset($vdo_path))
-                	{
+                	{	
+                		mkdir(Yii::app()->basePath.'/../../uploads/vdo/'.$model->vdo_id,0777, true);
                 		$tempSave = CUploadedFile::getInstance($model, 'vdo_path');
                 		$fileName = $beautifulName;
                 		$model->vdo_path = $fileName;
-                		$Pathuploadfile = Yii::app()->basePath.'/../../uploads/'.$fileName;
+                		$Pathuploadfile = Yii::app()->basePath.'/../../uploads/vdo/'.$model->vdo_id.'/'.$fileName;
 
 					if(!empty($tempSave))  // check if uploaded file is set or not
 					{
@@ -120,7 +120,7 @@ class VdoController extends Controller
 					$tempSave_thumbnail = CUploadedFile::getInstance($model, 'vdo_thumbnail');
 					$fileName_thumbnail = $beautifulName_thumbnail;
 					$model->vdo_thumbnail = $fileName_thumbnail;
-					$Pathuploadfile_thumbnail = Yii::app()->basePath.'/../../uploads/'.$fileName_thumbnail;
+					$Pathuploadfile_thumbnail = Yii::app()->basePath.'/../../uploads/vdo/'.$model->vdo_id.'/'.$fileName_thumbnail;
 
 						if(!empty($tempSave_thumbnail))  // check if uploaded file is set or not
 						{
@@ -205,13 +205,12 @@ class VdoController extends Controller
                     // $vdo_path = $beautifulName;
 			if($model->validate())
 			{
-
-				if( !isset($_POST['Vdo'][vdo_thumbnail]) ){
+				if(empty($_POST['Vdo']['vdo_thumbnail']) ){
 
 					$model->vdo_thumbnail = $old_vdo_thumbnail;
 						 // var_dump($model->vdo_thumbnail);exit();
 				}
-				if( !isset($_POST['Vdo'][vdo_path]) ){
+				if(empty($_POST['Vdo']['vdo_path']) ){
 
 					$model->vdo_path = $old_vdo_path;
 						 // var_dump($model->vdo_path);exit();
@@ -222,11 +221,22 @@ class VdoController extends Controller
                 {
 
                 	if(isset($vdo_path))
-                	{
+                	{	
+                		$filesOld = Yii::app()->basePath.'/../../uploads/vdo/'.$model->vdo_id;
+                		$files = glob(Yii::app()->basePath.'/../../uploads/vdo/'.$model->vdo_id.'/*');
+                		if(!is_dir($filesOld)){
+                			mkdir(Yii::app()->basePath.'/../../uploads/vdo/'.$model->vdo_id,0777, true);
+						}else{
+	                		foreach($files as $file){ // iterate files
+	                			if(is_file($file)){
+					                  unlink($file); // delete file
+					              }             
+					          }
+				      	}
                 		$tempSave = CUploadedFile::getInstance($model, 'vdo_path');
                 		$fileName = $beautifulName;
                 		$model->vdo_path = $fileName;
-                		$Pathuploadfile = Yii::app()->basePath.'/../../uploads/'.$fileName;
+                		$Pathuploadfile = Yii::app()->basePath.'/../../uploads/vdo/'.$model->vdo_id.'/'.$fileName;
 						if(!empty($tempSave))  // check if uploaded file is set or not
 						{
 							$tempSave->saveAs($Pathuploadfile);
@@ -235,14 +245,12 @@ class VdoController extends Controller
 							exit();
 						}
 					}
-
 					if(isset($vdo_thumbnail))
 					{
 						$tempSave_thumbnail = CUploadedFile::getInstance($model, 'vdo_thumbnail');
 						$fileName_thumbnail = $beautifulName_thumbnail;
 						$model->vdo_thumbnail = $fileName_thumbnail;
-						$Pathuploadfile_thumbnail = Yii::app()->basePath.'/../../uploads/'.$fileName_thumbnail;
-
+						$Pathuploadfile_thumbnail = Yii::app()->basePath.'/../../uploads/vdo/'.$model->vdo_id.'/'.$fileName_thumbnail;
 						if(!empty($tempSave_thumbnail))  // check if uploaded file is set or not
 						{
 							$tempSave_thumbnail->saveAs($Pathuploadfile_thumbnail);
