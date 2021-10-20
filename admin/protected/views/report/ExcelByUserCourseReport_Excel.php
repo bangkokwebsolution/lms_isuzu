@@ -270,9 +270,9 @@ header("Pragma:no-cache");
                                       <td><?= isset($Passcours->passcours_date) ? date("d-M-Y", strtotime(
                                         $Passcours->passcours_date)):'' ?></td>
                                       <td><?= isset($PasscoursLog->pclog_date) ? date('d-M-Y',strtotime($PasscoursLog->pclog_date)):'' ?></td>
-                                      <td><?= $lesson_pre_score ?></td>
+                                      <td><?= $lesson_pre_score ?>&nbsp;</td>
                                       <td><?= $lesson_pre_percent ?></td>
-                                      <td><?= $lesson_post_score ?></td>
+                                      <td><?= $lesson_post_score ?>&nbsp;</td>
                                       <td><?= $lesson_post_percent ?></td>
                                       <td><?= $course_post_score ?>&nbsp;</td>
                                       <td><?= $course_post_percent ?></td>
