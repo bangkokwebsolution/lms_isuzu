@@ -295,6 +295,26 @@ class ReportController extends Controller
     }
 
 
+    public function actionByUserCourse() {
+        $model = new Report();
+        $model->unsetAttributes(); 
+
+        if(isset($_GET['Report'])) {
+            $model->course_id = $_GET['Report']['course_id'];
+            $model->gen_id = $_GET['Report']['gen_id'];
+            $model->lesson_id = $_GET['Report']['lesson_id'];
+            $model->search = $_GET['Report']['search'];
+            $model->type_register = $_GET['Report']['type_register'];
+            $model->department = $_GET['Report']['department'];
+            $model->position = $_GET['Report']['position'];
+            $model->period_start = $_GET['Report']['period_start'];
+            $model->period_end = $_GET['Report']['period_end'];
+        }
+
+        $this->render('ByUserCourse', array(
+            'model' => $model,
+        ));
+    }
 
     public function actionGenExcelByCourseDetail(){
         $model = new Report();
@@ -2028,6 +2048,13 @@ public  function actionReport_list(){
         $model = new Report();
         $model->unsetAttributes(); 
         $this->renderPartial('ExcelByUserReport_Excel', array(
+            'model' => $model,
+        ));
+    }
+    public function actionExcelByUserCourseReport(){
+        $model = new Report();
+        $model->unsetAttributes(); 
+        $this->renderPartial('ExcelByUserCourseReport_Excel', array(
             'model' => $model,
         ));
     }
