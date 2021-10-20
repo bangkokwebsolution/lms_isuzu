@@ -51,7 +51,7 @@ return array(
     'Cancel'=> 'ยกเลิก',
 	'New password is saved.' => 'รหัสผ่านใหม่บันทึกแล้ว',
 	'Change password' => 'เปลี่ยนรหัสผ่าน',
-	'Your profile' => 'โพรไฟล์ของคุณ',
+	'Your profile' => 'โปรไฟล์ของคุณ',
 	'Thank you for your registration. Please check your email or login.' => 'ขอบคุณสำหรับการลงทะเบียน กรุณาตรวจสอบอีเมลล์หรือเข้าสู่ระบบ',
 	'Thank you for your registration. Please check your email.' => 'ขอบคุณสำหรับการลงทะเบียน กรุณาตรวจสอบอีเมลล์',
 	'Please check your email. An instructions was sent to your email address.' => 'กรุณาตรวจสอบอีเมลล์ เราได้ส่งข้อมูลไปยังอีเมลล์ของท่านแล้ว',
