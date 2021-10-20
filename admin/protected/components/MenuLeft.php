@@ -2221,13 +2221,21 @@ Class MenuLeft extends Controller
 	    //     			'url'=>array('//user/admin/Status')
 	    //     		),
 
+					// array(
+
+					// 	'visible'=>self::PermissionsMenu(array(
+					// 		'Report.*',
+					// 	)),
+					// 	'label'=>'1.) รายงานการผลการเรียนของหลักสูตร',
+					// 	'url'=>array('//Report/ByUser')
+					// ),
 					array(
 
 						'visible'=>self::PermissionsMenu(array(
 							'Report.*',
 						)),
 						'label'=>'1.) รายงานการผลการเรียนของหลักสูตร',
-						'url'=>array('//Report/ByUser')
+						'url'=>array('//Report/ByUserCourse')
 					),
 					array(
 
