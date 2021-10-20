@@ -293,7 +293,7 @@ EOD
                                             $date_table = "";
                                             $total_average = 0;
                                             $countQuest = count($questionValue->choices);
-                                            var_dump($countQuest);
+                                            // var_dump($countQuest);
                                             foreach ($questionValue->choices as $choiceKey => $choiceValue) {
                                                 $label = $choiceValue->option_choice_name;
                                                 
@@ -417,7 +417,7 @@ EOD
 
 
                                         }
-                                        var_dump($total_average);
+                                        // var_dump($total_average);
                                         ?>
                                     </div>
                                     <!-- Table  -->
