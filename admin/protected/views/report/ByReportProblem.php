@@ -5,8 +5,13 @@
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker.js"></script>
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker-bs2.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/jquery.dataTables.min.css" />
+<style type="text/css">
+    input[type="search"]{
+    height: 20px !important;
+    }
+</style>
 <?php
-$titleName = 'ปัญหาการใช้งาน';
+$titleName = 'Report Problem';
 $formNameModel = 'ReportProblem';
 
 $this->breadcrumbs=array($titleName);
@@ -100,25 +105,20 @@ EOD
                 <table id="table_datatable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th>ลำดับ</th>
-                            <th>ชื่อ - สกุล</th>                            
-                            <th>อีเมล์</th>
-                            <th>ประเภทปัญหา</th>
-                            <th>ประเภทคอร์ส</th>
-                            <th>ข้อความ</th>
-                            <th>วันที่ส่งปัญหา</th>
-                            <th>เบอร์โทรศัพท์</th>
+                            <th>No.</th>
+                            <th>Name</th>                            
+                            <th>Email</th>
+                            <th>Problem Type</th>
+                            <th>Course Name</th>
+                            <th>The Message</th>
+                            <th>Date of Issue</th>
+                            <th>Internal Phone No.</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        $AllProblem = array();
-                        // $AllProblem = ReportProblem::model()->findAll();
-                        // if(isset($_GET['ReportProblem']['firstname']) || isset($_GET['ReportProblem']['report_date']) || isset($_GET['ReportProblem']['status'])){
-
-                        //     $AllProblem = ReportProblem::model()->findAll();
-                        // }
-                        $dataProvider=new CArrayDataProvider($model, array(
+                        
+                        $dataProvider = new CArrayDataProvider($model, array(
                             'pagination'=>array(
                                 'pageSize'=>25
                             ),
@@ -134,7 +134,7 @@ EOD
                                 foreach($dataProvider->getData() as $i => $Problem) {
                                     ?>
                                     <tr>
-                                        <td><?= $start_cnt+1?></td>
+                                        <td><?= $start_cnt+1 ?></td>
                                         <td><?= $Problem->firstname.' '.$Problem->lastname ?></td>
                                         <td><?= $Problem->email ?></td>
                                         <td><?= $Problem->usa->usa_title ?></td>

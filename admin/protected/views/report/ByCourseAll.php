@@ -49,7 +49,7 @@
 
 
 <?php
-$titleName = 'รายงานภาพรวมหลักสูตร';
+$titleName = 'Report Training Course';
 $formNameModel = 'Report';
 
 $this->breadcrumbs=array($titleName);
