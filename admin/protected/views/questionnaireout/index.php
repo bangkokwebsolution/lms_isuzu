@@ -124,7 +124,7 @@ EOD
 							'type'=>'raw',
 							'htmlOptions'=>array('style'=>'text-align: center','width'=>'300px'),
 						),
-					/*	array(
+						array(
 							'header'=>'รายงาน',
 					    	'value'=>'CHtml::link("รายงาน", array(
 					      		"Questionnaireout/report",
@@ -134,7 +134,7 @@ EOD
 						    )); ',
 					    	'type'=>'raw',
 					    	'htmlOptions'=>array('style'=>'text-align: center','width'=>'100px'),
-					    ),*/
+					    ),
 						array(            
 							'class'=>'AButtonColumn',
 							'visible'=>Controller::PButton( 

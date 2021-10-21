@@ -720,13 +720,22 @@ class QuestionnaireoutController extends Controller
 		}
 	}
 
+	// public function actionReport($id)
+	// {
+	// 	$header = QHeader::model()->findByPk($id);
+	// 	$this->render('report',array(
+	// 		'header'=>$header
+	// 	));
+	// }
+
 	public function actionReport($id)
-	{
-		$header = QHeader::model()->findByPk($id);
-		$this->render('report',array(
-			'header'=>$header
-		));
-	}
+    {
+        $QEXHeader = QHeader::model()->findByPk($id);
+        $this->layout = false;
+        $this->render('reportExcel', array(
+            'QHeader' => $QEXHeader
+        ));
+    }
 
 	public function actionIndex()
 	{
