@@ -1193,6 +1193,94 @@ Class Helpers
         }
     }
 
+    public function ApprovalSpecifically($course_id){
+
+        $criteria = new CDbCriteria;
+        $criteria->compare('superuser', 1);
+        $criteria->compare('authority_hr', 1);
+        $criteria->compare('id', Yii::app()->user->id);
+        $user_hr1 = User::model()->with('profile')->find($criteria);
+
+        $course = CourseOnline::model()->findByPk($course_id); 
+        $user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
+        
+        if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->usernewcreate->org_id == $user_hr1->org_id && $course->create_by != Yii::app()->user->id){
+
+            $ceh = 1;
+        }elseif ($user_hr1 != null && $user_org->level == 3 && $user_hr1->orgchart->level <= $user_org->level && ($user_hr1->orgchart->id ==$user_org->division_id || $user_org->id == $user_hr1->org_id ) && $course->create_by != Yii::app()->user->id) {
+
+            $ceh = 1;
+
+        }elseif ($user_hr1 != null && $user_org->level == 4 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id ) && $course->create_by != Yii::app()->user->id) {
+
+            $ceh = 1;
+
+        }elseif ($user_hr1 != null && $user_org->level == 5 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id || $user_org->gro->id ==  $user_hr1->org_id ) && $course->create_by != Yii::app()->user->id) {
+
+            $ceh = 1;
+
+        }else{
+
+            $ceh = 2;
+            // echo 2;
+            // exit();
+        }
+
+        if($ceh == 1){
+            return 'pass';
+        }else{
+            return 'fail';
+        }
+    }
+
+    public function ApprovalGeneral($course_id){
+        $criteria = new CDbCriteria;
+        $criteria->compare('superuser', 1);
+        $criteria->compare('authority_hr', 1);
+        $criteria->compare('id', Yii::app()->user->id);
+        $user_hr1 = User::model()->with('profile')->find($criteria);
+
+        $course = CourseOnline::model()->findByPk($course_id); 
+        $user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
+        
+        if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->create_by != Yii::app()->user->id){
+            $status = 1;
+        }elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level && $course->create_by != Yii::app()->user->id) {
+            $status = 1;
+        }else{
+            $status = 2;
+        }
+        if($status == 1){
+            return 'pass';
+        }else{
+            return 'fail';
+        }
+    }
+
+    public function ApprovalGeneralHr($course_id){
+        $criteria = new CDbCriteria;
+        $criteria->compare('superuser', 1);
+        $criteria->compare('authority_hr', 2);
+        $criteria->compare('id', Yii::app()->user->id);
+        $user_hr1 = User::model()->with('profile')->find($criteria);
+
+        $course = CourseOnline::model()->findByPk($course_id); 
+        $user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
+        
+        if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->create_by != Yii::app()->user->id ){
+            $status = 1;
+        }elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level && $course->create_by != Yii::app()->user->id) {
+           $status = 1;
+        }else{
+            $status = 2;
+        }
+        if($status == 1){
+            return 'pass';
+        }else{
+            return 'fail';
+        }
+    }
+
     public function checkLessonPassById($lesson, $user_id, $date)
     {
 

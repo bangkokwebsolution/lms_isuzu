@@ -1,4 +1,5 @@
 <?php
+
 $titleName = 'อนุมัติหลักสูตรเฉพาะ';
 $formNameModel = 'ApproveCourse';
 
@@ -27,7 +28,12 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 EOD
 , CClientScript::POS_READY);
 ?>
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/jquery.dataTables.min.js"></script>
 
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/jquery.dataTables.min.css" />
+
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/bootstrap-chosen.css" />
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/chosen.jquery.js"></script>
 <div class="innerLR">
 
   <div class="widget" style="margin-top: -1px;">
@@ -35,84 +41,40 @@ EOD
       <h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $titleName;?></h4>
     </div>
     <div class="widget-body">
-      <div class="separator bottom form-inline small">
-        <span class="pull-right">
-          <label class="strong">แสดงแถว:</label>
-          <?php echo $this->listPageShow($formNameModel);?>
-        </span>
-      </div>
-      <div class="clear-div"></div>
       <div class="overflow-table">
-        <?php $this->widget('AGridView', array(
-          'id'=>$formNameModel.'-grid',
-          'dataProvider'=>$model->searchSpecific(),
-          'filter'=>$model,
-          'rowCssClassExpression'=>'"items[]_{$data->course_id}"',
-          'selectableRows' => 2,
-          'htmlOptions' => array(
-            'style'=> "margin-top: -1px;",
-          ),
-          'afterAjaxUpdate'=>'function(id, data){
-            $.appendFilter("ApproveCourse[news_per_page]");
-            InitialSortTable();
-          }',
-          'columns'=>array(
-
-            array(
-              'name'=>'course_id',
-              // 'filter'=>false,
-              'header'=>'หลักสูตร',
-              'type'=>'raw',              
-              'htmlOptions'=>array('width'=>'20%'),
-              'value'=>function($data){
-                if(is_numeric($data->course_id)){
-                  echo $data->course_title;
-                }else{
-                  echo $data->course_title;
-                }
-              }
-            ),
-
-            array(
-              'name'=>'cate_id',
-              'value'=>'$data->cates->cate_title',
-              'filter'=>CHtml::activeTextField($model,'cates_search'),
-                      'htmlOptions' => array(
-                         'style' => 'width:350px',
-                      ),  
-            ),
-            // 'course_title',
-
-
-            array(
-              'type'=>'raw',
-              'value'=>function($data){
-                if($data->approve_status == 1){
-                  return "อนุมัติแล้ว";
-                } else {
-                  return "ยังไม่อนุมัติ";
-                }
-              },
-              'header' => 'สถานะการอนุมัติ',
-              'htmlOptions'=>array('style'=>'text-align: center;'),
-              'headerHtmlOptions'=>array( 'style'=>'text-align:center;'),
-            ),
-
+        <table class="table table-striped table-bordered table-condensed dataTable table-primary js-table-sortable ui-sortable" id="table_datatable">
+          <thead>
+          <tr>
+            <th>หลักสูตร</th>
+            <th>หมวดอบรมออนไลน์ (ภาษา US )</th>
+            <th>สถานะการอนุมัติ</th>
+            <th>จัดการ</th>
+          </tr>
+          </thead>
+          <tbody>
+           <?php 
+           foreach ($model as $key => $value) {
             
-            array(
-              'header' => 'จัดการ',
-              'type'=>'html',
-              'value'=>function($data){
-                echo CHtml::button("จัดการ",array("class"=>"btn btn-success", "onclick"=>"btn_manage(this)","data-id" => $data->course_id."_".$data->course_id."_".$data->course_id));
-              },
-              'htmlOptions'=>array('style'=>'text-align:center; width:100px;', ),
-             
-            ),
+                   $check_validate = helpers::ApprovalSpecifically($value->course_id);
 
-
-            
-          ),
-        )); ?>
+                   if($check_validate != 'pass'){ continue; }
+                        if($value->approve_status == 1){
+                          $status =  "อนุมัติแล้ว";
+                        } else {
+                          $status =  "ยังไม่อนุมัติ";
+                        }
+                 ?>
+                 <tr>
+                  <td><?= $value->cates->cate_title ?></td>
+                  <td><?= $value->course_title ?></td>
+                  <td><?= $status ?></td>
+                  <td><?= CHtml::button("จัดการ",array("class"=>"btn btn-success", "onclick"=>"btn_manage(this)","data-id" => 
+                  $value->course_id."_".$value->course_id."_".$value->course_id)); ?></td>
+                </tr>
+              <?php  } 
+              ?>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
@@ -185,6 +147,7 @@ EOD
           request_id:request_id,
         },
         success: function(data){
+          console.log(data);
           if(data != "error"){
             $('#modal_data .modal-title').html('อนุมัติหลักสูตรเฉพาะ');
             $('#modal_data .modal-body').html(data);
@@ -278,4 +241,8 @@ EOD
       }
     });
   }
+
+   $('#table_datatable').DataTable({
+                   "searching": true,
+                });
 </script>

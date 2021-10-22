@@ -42,16 +42,25 @@ class ApproveCourseController extends Controller
 
 	public function actionIndex()
 	{
-		$model = new ApproveCourse('searchSpecific');
+		$criteria = new CDbCriteria;
+		$criteria->with = array('cates');
+		$criteria->compare('categorys.type_id',1);
+		$criteria->compare('categorys.active','y');
+		
+		$criteria->compare('courseonline.active','y');
+		$criteria->compare('courseonline.parent_id',0);
+		$criteria->addCondition('approve_status != 1');
+		$criteria->order = 'sortOrder ASC';
 
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['ApproveCourse']))
-			$model->attributes=$_GET['ApproveCourse'];
+		$Specific = ApproveCourse::model()->findAll($criteria);
 
+		// $model->unsetAttributes();  // clear any default values
+		// if(isset($_GET['ApproveCourse']))
+		// 	$model->attributes=$_GET['ApproveCourse'];
 		$user = User::model()->findByPk(Yii::app()->user->id);
 
 		$this->render('index',array(
-			'model'=>$model,
+			'model'=>$Specific,
 		));
 		
 
@@ -61,13 +70,19 @@ class ApproveCourseController extends Controller
 	public function actionGeneral()
 	{
 
-		$model=new ApproveCourse('searchGeneral');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['ApproveCourse']))
-			$model->attributes=$_GET['ApproveCourse'];
+		$criteria = new CDbCriteria;
+		$criteria->with = array('cates');
+		$criteria->compare('categorys.type_id',3);
+		$criteria->compare('categorys.active','y');
+
+		$criteria->compare('courseonline.active','y');
+		$criteria->compare('courseonline.parent_id',0);
+		$criteria->addCondition('approve_status != 1 AND approve_status !=2');
+		$criteria->order = 'sortOrder ASC';
+		$General = ApproveCourse::model()->findAll($criteria);
 
 		$this->render('general',array(
-			'model'=>$model,
+			'model'=>$General,
 		));
 
 	}
@@ -75,13 +90,19 @@ class ApproveCourseController extends Controller
 	public function actionGeneralHr()
 	{
 
-		$model=new ApproveCourse('searchGeneralHr2');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['ApproveCourse']))
-			$model->attributes=$_GET['ApproveCourse'];
+		$criteria = new CDbCriteria;
+		$criteria->with = array('cates');
+		$criteria->compare('categorys.type_id',3);
+		$criteria->compare('categorys.active','y');
+
+		$criteria->compare('courseonline.active','y');
+		$criteria->compare('courseonline.parent_id',0);
+		$criteria->addCondition('approve_status = 1');
+		$criteria->order = 'sortOrder ASC';
+		$GeneralHr = ApproveCourse::model()->findAll($criteria);
 
 		$this->render('generalHr',array(
-			'model'=>$model,
+			'model'=>$GeneralHr,
 		));
 
 	}

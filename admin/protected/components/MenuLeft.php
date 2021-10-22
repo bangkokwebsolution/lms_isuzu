@@ -100,7 +100,12 @@ Class MenuLeft extends Controller
 		$criteria->order = 'sortOrder ASC';
 
 		$Specific = ApproveCourse::model()->findAll($criteria);
-	 	$countSpecific = count($Specific);
+		$Specific_count = 0;
+		foreach ($Specific as $keyS => $valueS) {
+            $check_validate_specific = helpers::ApprovalSpecifically($valueS->course_id);
+           if($check_validate_specific != 'pass'){ continue; }
+           $Specific_count++;
+		}
 
 	 	$criteria = new CDbCriteria;
 		$criteria->with = array('cates');
@@ -112,7 +117,13 @@ Class MenuLeft extends Controller
 		$criteria->addCondition('approve_status != 1 AND approve_status !=2');
 		$criteria->order = 'sortOrder ASC';
 		$General = ApproveCourse::model()->findAll($criteria);
-	 	$countGeneral = count($General);
+	 	
+	 	$General_count = 0;
+		foreach ($General as $keyG => $valueG) {
+            $check_validate_General = helpers::ApprovalGeneral($valueG->course_id);
+           if($check_validate_General != 'pass'){ continue; }
+           $General_count++;
+		}
 
 	 	$criteria = new CDbCriteria;
 		$criteria->with = array('cates');
@@ -124,9 +135,15 @@ Class MenuLeft extends Controller
 		$criteria->addCondition('approve_status = 1');
 		$criteria->order = 'sortOrder ASC';
 		$GeneralHr = ApproveCourse::model()->findAll($criteria);
-	 	$countGeneralHr = count($GeneralHr);
 
-	 	$sumCourse = $countSpecific+$countGeneral+$countGeneralHr;
+	 	$GeneralHr_count = 0;
+		foreach ($GeneralHr as $keyGHr => $valueGHr) {
+            $check_validate_GeneralHr = helpers::ApprovalGeneralHr($valueGHr->course_id);
+           if($check_validate_GeneralHr != 'pass'){ continue; }
+           $GeneralHr_count++;
+		}
+
+	 	$sumCourse = $Specific_count+$General_count+$GeneralHr_count;
 
 		$lang = Language::model()->findByAttributes(1);
 		$mainLang = $lang->language;
@@ -1415,7 +1432,7 @@ Class MenuLeft extends Controller
 							'ApproveCourse.*',
 							'ApproveCourse.Index'
 						)),
-						'label'=>'อนุมัติหลักสูตรเฉพาะ <span class="label label-primary noti"> '.$countSpecific.'</span>',
+						'label'=>'อนุมัติหลักสูตรเฉพาะ <span class="label label-primary noti"> '.$Specific_count.'</span>',
 						'url'=>array('//ApproveCourse/index')
 					),
 					array(
@@ -1423,7 +1440,7 @@ Class MenuLeft extends Controller
 							'ApproveCourse.*',
 							'ApproveCourse.general'
 						)),
-						'label'=>'อนุมัติหลักสูตรทั่วไป <span class="label label-primary noti"> '.$countGeneral.'</span>',
+						'label'=>'อนุมัติหลักสูตรทั่วไป <span class="label label-primary noti"> '.$General_count.'</span>',
 						'url'=>array('//ApproveCourse/general')
 					),
 					array(
@@ -1431,7 +1448,7 @@ Class MenuLeft extends Controller
 							'ApproveCourse.*',
 							'ApproveCourse.generalhr2'
 						)),
-						'label'=>'อนุมัติหลักสูตรทั่วไปโดย HR <span class="label label-primary noti"> '.$countGeneralHr.'</span>',
+						'label'=>'อนุมัติหลักสูตรทั่วไปโดย HR <span class="label label-primary noti"> '.$GeneralHr_count.'</span>',
 						'url'=>array('//ApproveCourse/generalHr')
 					),
 					// array(
