@@ -195,7 +195,7 @@ EOD
 
         <div class="widget-head">
             <h4 class="heading glyphicons search">
-                <i></i> High Search:
+                <i></i> ค้นหา:
             </h4>
         </div>
         <?php 
@@ -210,10 +210,10 @@ EOD
             <dl class="dl-horizontal">
 
                 <div class="form-group">
-                    <dt><label>Minor Course Type : </label></dt>
+                    <dt><label>ประเภทหลักสูตร : </label></dt>
                     <dd>
                         <select name="Report[Report_type]" id="Report_type"   style="width: 50%;"  required="">
-                            <option value="">All</option>
+                            <option value="">กรุณาเลือกประเภทหลักสูตร</option>
                             <?php 
                         // if(isset($_GET['Report']['category']) && $_GET['Report']['category'] != ""){
                         //     $course_model = CourseOnline::model()->findAll(array(
@@ -236,10 +236,10 @@ EOD
                 </div>
 
                 <div class="form-group">
-                    <dt><label>Course Group : </label></dt>
+                    <dt><label>หมวดหมู่หลักสูตร : </label></dt>
                     <dd>
                         <select name="Report[category]" id="Report_course_id"  style="width: 50%;"  required="">
-                            <option value="">All</option>
+                            <option value="">กรุณาเลือกหมวดหมู่หลักสูตร</option>
                             <?php 
                         // if(isset($_GET['Report']['category']) && $_GET['Report']['category'] != ""){
                         //     $course_model = CourseOnline::model()->findAll(array(
@@ -425,7 +425,7 @@ if(isset($_GET['Report'])){
                         ?>
                     </tbody>
                 </table>
-               
+                *หากต้องการดูรายละเอียดกรุณากด Export Excel
             </div>
         </div>
        
