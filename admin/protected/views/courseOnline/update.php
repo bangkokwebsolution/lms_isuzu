@@ -1,12 +1,12 @@
 
 <?php
 $this->breadcrumbs=array(
-	'ระบบหลักสูตรนิสิต/นักศึกษา'=>array('index'),
-	'แก้ไขหลักสูตรนิสิต/นักศึกษา',
+	'ระบบหลักสูตร'=>array('index'),
+	'แก้ไขหลักสูตร',
 );
 ?>
 <?php echo $this->renderPartial('_form', array(
 	'model'=>$model,
-	'formtext'=>'แก้ไขหลักสูตรนิสิต/นักศึกษา',
+	'formtext'=>'แก้ไขหลักสูตร',
 	'imageShow'=>$imageShow
 )); ?>

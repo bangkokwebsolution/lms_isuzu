@@ -1,11 +1,11 @@
 
 <?php
 $this->breadcrumbs=array(
-	'ระบบหลักสูตรนิสิต/นักศึกษา'=>array('index'),
-	'เพิ่มหลักสูตรนิสิต/นักศึกษา',
+	'ระบบหลักสูตร'=>array('index'),
+	'เพิ่มหลักสูตร',
 );
 ?>
 <?php echo $this->renderPartial('_form', array(
 	'model'=>$model,
-	'formtext'=>'เพิ่มหลักสูตรนิสิต/นักศึกษา'
+	'formtext'=>'เพิ่มหลักสูตร'
 )); ?>
