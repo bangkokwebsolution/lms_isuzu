@@ -121,11 +121,12 @@ EOD
 						// 	'value'=>'$data->teacher->teacher_name'
 						// ),
 						array(
+							'header'=>'แบบประเมิน',
 							'name'=>'survey_header_id',
 							'value'=>'$data->q_header->survey_name'
 						),
 						array(
-							'header'=>'แบบประเมิน',
+							'header'=>'แบบสอบถาม',
 							//'value'=>'CHtml::button("เลือกแบบสอบถาม",  array("class" => "btn btn-primary btn-icon" ,"submit" => Yii::app()->createUrl("Lesson/ChooseQuestionnaire")))',
 							'value'=>function($data){
 								if($data->survey_header_id != ""){
