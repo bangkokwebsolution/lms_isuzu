@@ -1,5 +1,5 @@
 <?php
-$title = 'รายงานติดตามผู้เรียน';
+$title = 'รายงานผลการเรียนของหลักสูตร';
 $currentModel = 'Report';
 
 $this->breadcrumbs = array($title);
@@ -182,7 +182,7 @@ EOD
 
         <div class="widget-head">
             <h4 class="heading glyphicons search">
-                <i></i> High Search:
+                <i></i> ค้นหา:
             </h4>
         </div>
         <?php
@@ -197,7 +197,7 @@ EOD
             <dl class="dl-horizontal">
 
                 <div class="form-group">
-                <dt><label>Name : </label></dt>
+                <dt><label>ชื่อ : </label></dt>
                 <dd>
                     <input type="text" name="Report[name]" style="width: 50%;" value="<?php if(isset($_GET['Report']['name']) && $_GET['Report']['name'] != ""){ echo $_GET['Report']['name']; } ?>" required>
                 </dd>
@@ -335,7 +335,7 @@ if(isset($_GET['Report']['name'])){
                         ?>
                     </tbody>
                 </table>
-
+                *หากต้องการดูรายละเอียดกรุณากด Export Excel
             </div>
         </div>
 <?php } ?>
