@@ -2,7 +2,7 @@
 <?php
 $this->breadcrumbs=array(
 	'จัดการหลักสูตร'=>array('index'),
-	'เลือกผู้สอน',
+	'เลือกแบบประเมิน',
 );
 ?>
 <!-- innerLR -->
@@ -13,7 +13,7 @@ $this->breadcrumbs=array(
 			<ul>
 				<li class="active">
 					<a class="glyphicons edit" href="#account-details" data-toggle="tab">
-						<i></i>เลือกผู้สอน
+						<i></i>เลือกแบบประเมิน
 					</a>
 				</li>
 			</ul>
@@ -125,7 +125,7 @@ EOD
 							'value'=>'$data->q_header->survey_name'
 						),
 						array(
-							'header'=>'แบบสอบถาม',
+							'header'=>'แบบประเมิน',
 							//'value'=>'CHtml::button("เลือกแบบสอบถาม",  array("class" => "btn btn-primary btn-icon" ,"submit" => Yii::app()->createUrl("Lesson/ChooseQuestionnaire")))',
 							'value'=>function($data){
 								if($data->survey_header_id != ""){
