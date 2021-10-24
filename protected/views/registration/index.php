@@ -30,7 +30,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $Course_Status = 'ข้อมูลหลักสูตร';
     $lang_edit = 'แก้ไข';
     $Submit = 'บันทึก';
-    $cancel = 'ยกเลืก';
+    $cancel = 'ยกเลิก';
 
 }
 
