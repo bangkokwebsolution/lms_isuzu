@@ -24,7 +24,7 @@ $this->breadcrumbs=array(
         'profile.location',
         'profile.group_name',
         'profile.shift',
-        'profile.employee_class',
+        'profile.EmpClass.title',
         'profile.position_description',
         'profile.sex',
 		
