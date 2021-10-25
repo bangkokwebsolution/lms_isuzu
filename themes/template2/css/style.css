@@ -6545,7 +6545,7 @@ tr {
 }
 
 .login-content {
-  padding: 1.5em;
+  padding: 20px 60px;
   border-radius: 10px;
   background-color: #fff;
 }
@@ -6554,33 +6554,17 @@ tr {
   padding: 20px 0px 40px 0px;
 }
 
-
-
-/* 
-
-
-.login-group {
-  padding: 1.5em;
-  border-radius: 10px;
-  background-color: #fff;
+.login-content .form-group {
+  margin-bottom: 0px !important;
 }
 
-.login-group .form-control {
-  height: 45px;
-  font-size: 16px;
-  border: 2px   solid #ddd;
-  color: #333;
+.login-btn {
+  margin-top: 15px;
 }
 
-.login-group h3 {
-  margin: 15px 15px; 
+.login-form h3 {
+  font-weight:bold;
 }
-
-.login-group button {
-  width: 100%;
-    background-color: #e0001a;
-    color: #fff;
-} */
 
 
 
