@@ -1212,6 +1212,12 @@ class SiteController extends Controller
 		$this->render('login',array('model'=>$model));
 	}
 
+    public function actionLoginform()
+    {
+
+        $this->render('loginform',array('model'=>$model));
+    }
+
 	// Test Learning
 	// public function actionTestLearning()
 	// {
