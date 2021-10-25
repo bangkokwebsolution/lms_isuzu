@@ -6530,6 +6530,58 @@ tr {
   line-height: 1.5;
 }
 
+.login-group {
+  margin-top: 50px;
+}
+
+.body-login{
+    background: url(../images/bg.png);
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-repeat: repeat;
+    background-color: rgba(243, 243, 243, 1);
+}
+
+.login-content {
+  padding: 1.5em;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.logo-head {
+  padding: 20px 0px 40px 0px;
+}
+
+
+
+/* 
+
+
+.login-group {
+  padding: 1.5em;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.login-group .form-control {
+  height: 45px;
+  font-size: 16px;
+  border: 2px   solid #ddd;
+  color: #333;
+}
+
+.login-group h3 {
+  margin: 15px 15px; 
+}
+
+.login-group button {
+  width: 100%;
+    background-color: #e0001a;
+    color: #fff;
+} */
+
 
 
 
