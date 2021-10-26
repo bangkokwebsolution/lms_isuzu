@@ -1214,7 +1214,7 @@ class SiteController extends Controller
 
     public function actionLoginform()
     {
-
+        $this->layout = false;
         $this->render('loginform',array('model'=>$model));
     }
 
