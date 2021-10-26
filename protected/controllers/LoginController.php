@@ -133,7 +133,7 @@ class LoginController extends Controller
                     exit();*/
                   }
                 }
-                $this->redirect(array('site/index'));
+                $this->redirect(array('site/loginform'));
             // $this->render('/site/index');
               } else {
                 $this->redirect(Yii::app()->controller->module->returnUrl);
@@ -590,9 +590,9 @@ class LoginController extends Controller
             $logoutid->online_status = '0';
             $logoutid->save(false);
             Yii::app()->user->logout();
-            $this->redirect(array('site/index'));
+            $this->redirect(array('site/loginform'));
           }else{
-            $this->redirect(array('site/index'));
+            $this->redirect(array('site/loginform'));
           }
         // $this->render('/site/index');
         }

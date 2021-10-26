@@ -1215,7 +1215,25 @@ class SiteController extends Controller
     public function actionLoginform()
     {
         $this->layout = false;
-        $this->render('loginform',array('model'=>$model));
+        if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+            $langId = Yii::app()->session['lang'] = 1;
+        }else{
+            $langId = Yii::app()->session['lang'];
+        }
+
+        $label = MenuSite::model()->find(array(
+            'condition' => 'lang_id=:lang_id',
+            'params' => array(':lang_id' => $langId)
+        ));
+
+        if(!$label){
+            $label = MenuSite::model()->find(array(
+                'condition' => 'lang_id=:lang_id',
+                'params' => array(':lang_id' => 1)
+            ));
+        }
+
+        $this->render('loginform',array('model'=>$model,'label'=>$label));
     }
 
 	// Test Learning
