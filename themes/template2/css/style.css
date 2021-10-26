@@ -4657,7 +4657,7 @@ ol.stat-alert li::before {
   transition: background 0.8s;
 }
 
-.btn-submit:hover {
+.btn-submit:hover,.btn-submit:focus {
   color: #fff;
   background-color: #e0001a;
   background: #e0001a radial-gradient(circle, transparent 1%, #e0001a 1%)
@@ -6568,5 +6568,5 @@ tr {
 
 .login-form .btn {
   margin-top: 15px !important;
-  width: 100%;
+  width: 100% !important;
 }

@@ -11,7 +11,7 @@
             <div class="col-sm-6 col-md-5 text-center">
                 <div class="logo-head">
                     <a href="">
-                        <img src="../themes/template2/images/logo-imct.png" width="250px" class="logo-login">
+                        <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-imct.png" width="250px" class="logo-login">
                     </a>
                 </div>
                 <div class="login-content">
