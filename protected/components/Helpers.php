@@ -284,7 +284,7 @@ public function changeFormatDateTHshort($date,$type=null)
             $month = 'error';
             break;
         }
-        return $day.' '.$month;
+        return $day.' '.$month.' '.$year;
     }
     return $date;
 }
@@ -395,7 +395,8 @@ public function changeFormatDateTHnew($date,$type=null)
             $month = 'error';
             break;
         }
-        return $day.' '.$month;
+        // return $day.' '.$month;
+        return $day.' '.$month.' '.$year;
     }
     return $date;
 }
@@ -619,7 +620,7 @@ public function changeFormatDateENnew($date)
 
          if($type=='datetime' && $date != ''){
         $date = explode('-', $date);
-        $year = $date[0]+543;
+        $year = $date[0];
         $month = $date[1];
         $day = $date[2];
         $day = explode(' ', $day);
@@ -674,7 +675,7 @@ public function changeFormatDateENnew($date)
         return $days.' '.$month.' '.$year. ' '.$hour.':'.$minute.' น.';
     } else if($date != '') {
         $date = explode('-', $date);
-        $year = $date[0]+543;
+        $year = $date[0];
         $month = $date[1];
         $day = $date[2];
         $day = explode(' ', $day);
@@ -720,7 +721,7 @@ public function changeFormatDateENnew($date)
             $month = 'error';
             break;
         }
-        return $day.' '.$month;
+        return $day.' '.$month.' '.$year;
     }
     return $date;
 
