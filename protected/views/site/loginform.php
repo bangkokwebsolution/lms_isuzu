@@ -27,17 +27,17 @@
                             <label for=""><?= $label->label_header_password ?></label>
                             <input type="password" id="password-field" class="form-control" placeholder='<?= $label->label_header_password ?>' name="UserLogin[password]" required>
                             <span toggle="#password-field" class="field-icon toggle-password"></span>
-                            <!-- <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span> -->
+                            <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                         </div>
 
-                        <div class="login-btn">
+                        <div class="login-btn login-form">
                             <button type="submit" class="btn btn-submit login-main" id="submit" name="submit"><?= $label->label_header_yes ?>Login</button>
                         </div>
                         
                     </div>
                     <div class="row">
                         <div class="col-lg-12">
-                            <span class="pull-right" style="margin-top: 5px">
+                            <span class="pull-right" style="margin-top: 15px">
                                 <a class="btn-forgot" href="<?php echo $this->createUrl('Forgot_password/index') ?>"><?= $label->label_header_forgotPass ?>ลืมรหัสผ่าน</a>
                                 <!-- <a href="< ?php echo $this->createUrl('/registration/ShowForm'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a> -->
                             </span>

@@ -6383,7 +6383,7 @@ tr {
   cursor: pointer;
   position: absolute;
   bottom: 13px;
-  right: 10px;
+  right: 16px;
   color: #888;
 }
 
@@ -6566,6 +6566,7 @@ tr {
   font-weight:bold;
 }
 
-
-
-
+.login-form .btn {
+  margin-top: 15px !important;
+  width: 100%;
+}
