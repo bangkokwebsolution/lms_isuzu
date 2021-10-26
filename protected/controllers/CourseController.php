@@ -2803,7 +2803,7 @@ public function actionCaptchaPdf(){
             // $userPosition = $userModel->position_id;
             // $userBranch = $userModel->branch_id;
 
-            if($userModel->profile->kind != 5){
+            
                 // var_dump($userModel->org_id);exit();
              $criteria = new CDbCriteria;
             // $criteria->with = array('orgchart');
@@ -2818,9 +2818,7 @@ public function actionCaptchaPdf(){
                 $courseArr[] = $value->id;
             }
             
-            }else{ // general
-                $courseArr[] = "2";
-            }
+           
 
             $criteria = new CDbCriteria;
             $criteria->with = array('course','course.CategoryTitle');
@@ -2840,8 +2838,11 @@ public function actionCaptchaPdf(){
                 $criteria->addCondition('course.approve_status > 0');
             }
             // $criteria->group = 'course.cate_id';
-            $criteria->addCondition('course.course_date_end >= :date_now');
-            $criteria->params[':date_now'] = date('Y-m-d H:i');
+            // $criteria->addCondition('course.course_date_end >= :date_now');
+            // $criteria->params[':date_now'] = date('Y-m-d H:i');
+            $start_year_date = date("Y")."-01-01 00:00:00";
+            $end_year_date = date("Y")."-12-31 23:59:59";
+            $criteria->AddCondition("(course.course_date_start>='".$start_year_date."' AND course.course_date_start<='".$end_year_date."') OR (course.course_date_end>='".$start_year_date."' AND course.course_date_end<='".$end_year_date."')"); 
             $criteria->order = 'course.course_id';
             // $criteria->limit = 5;
             $modelOrgCourse = OrgCourse::model()->findAll($criteria);
