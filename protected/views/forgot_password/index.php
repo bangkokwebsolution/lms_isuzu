@@ -1,5 +1,5 @@
 <?php 
-
+include "themes/template2/include/css.php";
 if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $langId = Yii::app()->session['lang'] = 1;
     $mail = 'Email';
@@ -17,23 +17,23 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 }  
 
 if (Yii::app()->user->hasFlash('msg')) {  ?>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script type="text/javascript">
-    swal({
-      title: "<?= $warn ?>",
-      text: "<?= $text_email ?>",
-      icon: "warning",
-      buttons: ['<?= $cancel ?>','<?= $ok ?>'],
-      dangerMode: true,
-  })  
-</script>
-<?php 
-Yii::app()->user->setFlash('msg',null);
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script type="text/javascript">
+        swal({
+          title: "<?= $warn ?>",
+          text: "<?= $text_email ?>",
+          icon: "warning",
+          buttons: ['<?= $cancel ?>','<?= $ok ?>'],
+          dangerMode: true,
+      })  
+  </script>
+  <?php 
+  Yii::app()->user->setFlash('msg',null);
 }
 
 ?>
 
-<div class="container">
+<!-- <div class="container">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-main">
             <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/site/index'); ?>"><?= $label->label_homepage  ?></a></li>
@@ -41,31 +41,47 @@ Yii::app()->user->setFlash('msg',null);
         </ol>
     </nav>
 </div> 
+-->
 
-<section class="content" id="contact-us">
+
+
+
+<body class="body-login">
     <div class="container">
-        <?php
-        $form = $this->beginWidget('CActiveForm',array(
-            'action'=>Yii::app()->createUrl('/forgot_password/Sendpassword')
-        ));
-        ?>
-        <div class="well">
-            <div class="row">
-                <div class="col-sm-6 col-sm-offset-3">
-                    <div class="form-group">
-                        <label for=""><?= $mail ?></label><br>
-                        <?php echo $form->textField($model, 'email', array('class' => 'form-control input-lg' , 'placeholder' => 'example@gmail.com' , 'required' => true)); ?>
-                        <?php echo $form->error($model, 'email'); ?>
-                    </div>
-                </div>
-            </div>         
-            <div class="text-center">
-                <!--<button type="submit" class="btn btn-warning btn-lg">ส่งข้อความ</button>-->
-                <?php echo CHtml::submitButton( $label->label_button , array('class' => 'btn btn-warning btn-lg')); ?>
+        <div class="login-group row justify-content-center align-items-center">
+            <div class="logo-head">
+                <a href="">
+                    <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/logo-imct.png" width="250px" class="logo-login">
+                </a>
             </div>
-        </div>
+            <section class="content" id="contact-us">
+                <div class="container">
+                    <?php
+                    $form = $this->beginWidget('CActiveForm',array(
+                        'action'=>Yii::app()->createUrl('/forgot_password/Sendpassword')
+                    ));
+                    ?>
+                    <div class="well">
+                        <div class="row">
+                            <div class="col-sm-6 col-sm-offset-3">
+                                <div class="form-group">
+                                    <label for=""><?= $mail ?></label><br>
+                                    <?php echo $form->textField($model, 'email', array('class' => 'form-control input-lg' , 'placeholder' => 'example@gmail.com' , 'required' => true)); ?>
+                                    <?php echo $form->error($model, 'email'); ?>
+                                </div>
+                            </div>
+                        </div>         
+                        <div class="text-center">
+                            <!--<button type="submit" class="btn btn-warning btn-lg">ส่งข้อความ</button>-->
+                            <?php echo CHtml::submitButton( $label->label_button , array('class' => 'btn btn-warning btn-lg')); ?>
+                        </div>
+                    </div>
 
-        <?php $this->endWidget();
-        ?>
+                    <?php $this->endWidget();
+                    ?>
+                </div>
+            </section>
+        </div>
     </div>
-</section>
+</div>
+</body>

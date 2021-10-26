@@ -11,7 +11,7 @@ return array(
     'theme'=>'template2',
     'language'=>'TH',
     'timezone'=>'Asia/Bangkok',
-    'defaultController' => 'site/index',
+    'defaultController' => 'site/loginform',
 
     // preloading 'log' component
     'preload'=>array('log'),
