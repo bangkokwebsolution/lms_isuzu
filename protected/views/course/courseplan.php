@@ -96,7 +96,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             <div class="cell" style="grid-row:<?= $row ?>;"></div>
                             <div class="cell" style="grid-row:<?= $row ?>;"></div>
                             <div class="cell" style="grid-row:<?= $row ?>;"></div>
-                            <section class="event row-plan<?= $row ?>" style="grid-row:<?= $row ?>; grid-column: <?= $date_start[1]+1 ?> / span <?= $date_end[1]-$date_start[1]+1 ?>;background-color: <?= $status_user ?>"> <?= $date_Course ?></section>
+                            <section class="event row-plan<?= $row ?>" style="grid-row:<?= $row ?>; grid-column: <?= $date_start[0] < $date_end[0] && $date_start[0] != date('Y') ? 2 : $date_start[1]+1 ?> / span <?= $date_end[0] > $date_start[0] ? 13 :$date_end[1]-$date_start[1]+1 ?>;background-color: <?= $status_user ?>"> <?= $date_Course ?></section>
                     <?php 
 
                                 $row++;
