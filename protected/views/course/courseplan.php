@@ -81,6 +81,28 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                 }else{
                                     $status_user = '#3A8DDD';
                                 }
+
+
+
+                                if(date("Y", strtotime($M_C->course_date_start)) !=  date("Y", strtotime($M_C->course_date_end))){
+
+                                    if(date("Y", strtotime($M_C->course_date_start)) < date("Y")){
+                                        $month_start = 1;
+                                    }else{
+                                        $month_start = date("m", strtotime($M_C->course_date_start));
+                                    }
+
+                                    if(date("Y", strtotime($M_C->course_date_end)) > date("Y")){
+                                        $month_end = 12;
+                                    }else{
+                                        $month_end = date("m", strtotime($M_C->course_date_end));
+                                    }
+
+                                }else{
+                                    $month_start = date("m", strtotime($M_C->course_date_start));
+                                    $month_end = date("m", strtotime($M_C->course_date_end));
+                                }
+
                         // var_dump($date_start);exit();
                            ?>
                             <div class="cell" style="grid-row:<?= $row ?>;"><?= $M_C->course_title ?></div>
@@ -96,7 +118,9 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                             <div class="cell" style="grid-row:<?= $row ?>;"></div>
                             <div class="cell" style="grid-row:<?= $row ?>;"></div>
                             <div class="cell" style="grid-row:<?= $row ?>;"></div>
-                            <section class="event row-plan<?= $row ?>" style="grid-row:<?= $row ?>; grid-column: <?= $date_start[0] < $date_end[0] && $date_start[0] != date('Y') ? 2 : $date_start[1]+1 ?> / span <?= $date_end[0] > $date_start[0] ? 13 :$date_end[1]-$date_start[1]+1 ?>;background-color: <?= $status_user ?>"> <?= $date_Course ?></section>
+                            <section class="event row-plan<?= $row ?>" style="grid-row:<?= $row ?>; grid-column: 
+                            <?= $month_start+1 ?> / span <?= ($month_end-$month_start)+1 ?> ;
+                             background-color: <?= $status_user ?>"> <?= $date_Course ?></section>
                     <?php 
 
                                 $row++;
