@@ -104,9 +104,7 @@ class LoginController extends Controller
              $error .= $value[0];
 
            }
-
            if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
-
               switch ($error) {
                 case "ชื่อผู้ใช้ไม่ถูกต้อง":
                   $msg = "Username is incorrect.";
@@ -125,9 +123,8 @@ class LoginController extends Controller
                   break;
               }
               Yii::app()->user->setFlash('msg',$msg);
-              Yii::app()->user->setFlash('icon','warning');
+              Yii::app()->user->setFlash('icon','warning'); 
            }else{
-
                Yii::app()->user->setFlash('msg',$error);
                Yii::app()->user->setFlash('icon','warning'); 
            }        
@@ -136,8 +133,7 @@ class LoginController extends Controller
                     exit();*/
                   }
                 }
-                // var_dump($msg);exit();
-                $this->redirect(array('site/loginform'));
+                $this->redirect(array('site/index'));
             // $this->render('/site/index');
               } else {
                 $this->redirect(Yii::app()->controller->module->returnUrl);
@@ -594,9 +590,9 @@ class LoginController extends Controller
             $logoutid->online_status = '0';
             $logoutid->save(false);
             Yii::app()->user->logout();
-            $this->redirect(array('site/loginform'));
+            $this->redirect(array('site/index'));
           }else{
-            $this->redirect(array('site/loginform'));
+            $this->redirect(array('site/index'));
           }
         // $this->render('/site/index');
         }
