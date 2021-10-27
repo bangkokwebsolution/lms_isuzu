@@ -776,7 +776,8 @@ class SiteController extends Controller
 
             $logStartCourse_model = LogStartcourse::model()->findAll(array(
             	'condition' => 'user_id=:user_id AND active=:active',
-            	'params' => array(':user_id'=>Yii::app()->user->id, ':active'=>'y')
+            	'params' => array(':user_id'=>Yii::app()->user->id, ':active'=>'y'),
+                'order'=>'update_date DESC',
             ));
             $Passcours = Passcours::model()->findAll(array('condition'=>'passcours_user = '.Yii::app()->user->id));
             $arr_log_course_id = array();            
