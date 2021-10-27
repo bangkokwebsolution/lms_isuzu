@@ -62,7 +62,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
                                 $gen_id = $value->course->getGenID($value->course->course_id);
                                 if(!empty($value->course->course_picture) && file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/courseonline/' . $course_id . '/original/' . $value->course->course_picture)){ 
-                                echo "<img class='card-img-top' src='".Yii::app()->createUrl("uploads/courseonline").'/'.$value->course_id.'/original/'.$value->course->course_picture."'>";
+                                echo "<img class='card-img-top' src='".Yii::app()->createUrl("uploads/courseonline").'/'.$course_id.'/original/'.$value->course->course_picture."'>";
                             }else{
                                 echo "<img class='card-img-top' src='".Yii::app()->theme->baseUrl."/images/course-image.png'>";
                                 } ?>
