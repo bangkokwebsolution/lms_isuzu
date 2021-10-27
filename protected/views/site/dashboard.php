@@ -35,14 +35,33 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
                      foreach ($start_course as $key => $value) {
                         if(isset($value->course)){
+                            if($langId != 1){
+                                $CourseTH =  CourseOnline::model()->find(array('condition'=>'active = "y" AND lang_id = 2 AND parent_id = '.$value->course_id));
+                                if(!isset($CourseTH)){
+                                    continue;
+                                }else{
+                                    $value->course->course_picture = $CourseTH->course_picture;
+                                    $value->course->course_title = $CourseTH->course_title;
+                                }
+                            }
+
+                            $url = Yii::app()->createUrl('course/detail/', array('id' => $value->course_id));
+
                       ?>
                         <div class="col-sm-6 col-lg-4">
                         <div class="card card-course" style="margin-bottom: 10px">
-                            <a href="#">
+                            <a href="<?= $url ?>">
 
                                 <?php 
+
+                                if(isset($CourseTH)){
+                                    $course_id = $CourseTH->course_id;
+                                }else{
+                                    $course_id = $value->course_id;
+                                }
+
                                 $gen_id = $value->course->getGenID($value->course->course_id);
-                                if(!empty($value->course->course_picture) && file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/courseonline/' . $value->course_id . '/original/' . $value->course->course_picture)){ 
+                                if(!empty($value->course->course_picture) && file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/courseonline/' . $course_id . '/original/' . $value->course->course_picture)){ 
                                 echo "<img class='card-img-top' src='".Yii::app()->createUrl("uploads/courseonline").'/'.$value->course_id.'/original/'.$value->course->course_picture."'>";
                             }else{
                                 echo "<img class='card-img-top' src='".Yii::app()->theme->baseUrl."/images/course-image.png'>";
