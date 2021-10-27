@@ -406,6 +406,75 @@ function DateThai($strDate)
                         //         $url = 'javascript:void(0)';
                         //     }
                         // }
+                        $expireDate = Helpers::lib()->checkCourseExpire($model);
+                            if ($expireDate) {
+
+                                $date_start = date("Y-m-d H:i:s", strtotime($model->course_date_start));
+                                $dateStartStr = strtotime($date_start);
+                                $currentDate = strtotime(date("Y-m-d H:i:s"));
+
+                                if ($currentDate >= $dateStartStr) {
+
+                                    $chk = Helpers::lib()->getLearn($model->course_id);
+                                    if ($chk) {
+
+
+
+                                        $chk_logtime = LogStartcourse::model()->find(array(
+                                            'condition' => 'course_id=:course_id and user_id=:user_id and active=:active and gen_id=:gen_id',
+                                            'params' => array(':course_id' => $model->course_id, ':user_id' => Yii::app()->user->id, ':active' => 'y', ':gen_id' => $model->getGenID($model->course_id))
+                                        ));
+                                        $course_chk_time = CourseOnline::model()->findByPk($model->course_id);
+
+
+                                        if (!empty($chk_logtime)) {
+                                            if ($chk_logtime->course_day != $course_chk_time->course_day_learn) {
+                                                $Endlearncourse = strtotime("+" . $course_chk_time->course_day_learn . " day", strtotime($chk_logtime->start_date));
+
+                                                $Endlearncourse = date("Y-m-d", $Endlearncourse);
+
+                                                $chk_logtime->end_date = $Endlearncourse;
+                                                $chk_logtime->course_day = $course_chk_time->course_day_learn;
+                                                $chk_logtime->save(false);
+                                            }
+                                        }
+
+
+
+
+
+                                        $expireUser = Helpers::lib()->checkUserCourseExpire($model);
+                                        if (!$expireUser) {
+
+                                            $evnt = 'onclick="alertMsg(\'' . $label->label_swal_youtimeout . '\',\'\',\'error\')"';
+                                            $url = 'javascript:void(0)';
+                                        } else {
+
+                                            $evnt = '';
+                                            $url = Yii::app()->createUrl('course/detail/', array('id' => $model->course_id));
+                                        }
+                                    } else {
+                                        $evnt = 'data-toggle="modal"';
+                                        $url = '#modal-startcourse' . $model->course_id;
+                                        // $url = '#modal-login';
+
+                                        // $evnt = '';
+                                        //   $url = Yii::app()->createUrl('course/detail/', array('id' => $value->course_id));
+                                    }
+                                } else {
+
+                                    $evnt = 'onclick="alertMsg(\'ระบบ\',\'' . $labelcourse->label_swal_coursenoopen . '\',\'error\')"';
+                                    $url = 'javascript:void(0)';
+                                }
+                            } elseif ($expireDate == 3) {
+                                $evnt = 'onclick="alertMsg(\'ระบบ\',\'' . $labelcourse->label_swal_coursenoopen . '\',\'error\')"';
+                                $url = 'javascript:void(0)';
+                            } else {
+                                $evnt = 'onclick="alertMsg(\'ระบบ\',\'' . $labelcourse->label_swal_timeoutcourse . '\',\'error\')"';
+                                $url = 'javascript:void(0)';
+                            }
+
+                            
                     ?>
                         <div class="gallery_product col-sm-6 col-md-4 col-xs-12 filter <?= $model->cate_id ?> course-filter" style="display: none;">
                             <div class="well">
@@ -462,6 +531,115 @@ function DateThai($strDate)
                             </div>
                         </div>
                     <?php  } ?>
+                    <?php foreach ($Model as $model) {
+
+                        if ($model->status == 1) {
+
+                            if ($model->lang_id != 1) {
+                                $model->course_id = $model->parent_id;
+                            }
+                            if (!$flag) {
+                                $modelChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $model->course_id, 'order' => 'course_id'));
+                                if ($modelChildren) {
+                                    $model->course_title = $modelChildren->course_title;
+                                    $model->course_short_title = $modelChildren->course_short_title;
+                                    $model->course_detail = $modelChildren->course_detail;
+                                    $model->course_picture = $modelChildren->course_picture;
+                                }
+                            }
+                            if ($model->parent_id != 0) {
+                                $model->course_id = $model->parent_id;
+                            }
+                            $expireDate = Helpers::lib()->checkCourseExpire($model);
+                            if ($expireDate) {
+                                $date_start = date("Y-m-d H:i:s", strtotime($model->course_date_start));
+                                $dateStartStr = strtotime($date_start);
+                                $currentDate = strtotime(date("Y-m-d H:i:s"));
+                                if ($currentDate >= $dateStartStr) {
+                                    $chk = Helpers::lib()->getLearn($model->course_id);
+                                    if ($chk) {
+
+
+                                        $chk_logtime = LogStartcourse::model()->find(array(
+                                            'condition' => 'course_id=:course_id and user_id=:user_id and active=:active and gen_id=:gen_id',
+                                            'params' => array(':course_id' => $model->course_id, ':user_id' => Yii::app()->user->id, ':active' => 'y', ':gen_id' => $model->getGenID($model->course_id))
+                                        ));
+                                        $course_chk_time = CourseOnline::model()->findByPk($value->course_id);
+
+
+                                        if (!empty($chk_logtime)) {
+                                            if ($chk_logtime->course_day != $course_chk_time->course_day_learn) {
+                                                $Endlearncourse = strtotime("+" . $course_chk_time->course_day_learn . " day", strtotime($chk_logtime->start_date));
+
+                                                $Endlearncourse = date("Y-m-d", $Endlearncourse);
+
+                                                $chk_logtime->end_date = $Endlearncourse;
+                                                $chk_logtime->course_day = $course_chk_time->course_day_learn;
+                                                $chk_logtime->save(false);
+                                            }
+                                        }
+
+
+
+                                        $expireUser = Helpers::lib()->checkUserCourseExpire($model);
+                                        if (!$expireUser) {
+                                            $evnt = 'onclick="alertMsg(\'' . $labelcourse->label_swal_youtimeout . '\',\'\',\'error\')"';
+                                            $url = 'javascript:void(0)';
+                                        } else {
+                                            $evnt = '';
+                                            $url = Yii::app()->createUrl('course/detail/', array('id' => $model->course_id));
+                                        }
+                                    } else {
+                                        $evnt = '';
+                                        $url = Yii::app()->createUrl('course/detail/', array('id' => $model->course_id));
+                // $evnt = 'data-toggle="modal"';
+                // $url = '#modal-startcourse'.$value->course_id;
+                                    }
+                                } else {
+
+                                    $evnt = 'onclick="alertMsg(\'ระบบ\',\'' . $labelcourse->label_swal_coursenoopen . '\',\'error\')"';
+                                    $url = 'javascript:void(0)';
+                                }
+                            } elseif ($expireDate == 3) {
+
+                                $evnt = 'onclick="alertMsg(\'ระบบ\',\'' . $labelcourse->label_swal_coursenoopen . '\',\'error\')"';
+                                $url = 'javascript:void(0)';
+                            } else {
+                                
+                                $evnt = 'onclick="alertMsg(\'ระบบ\',\'' . $labelcourse->label_swal_timeoutcourse . '\',\'error\')"';
+                                $url = 'javascript:void(0)';
+                            }
+                            $chk = Helpers::lib()->getLearn($model->course_id);
+
+                            if (!$chk) { ?>
+
+                                <div class="modal fade" id="modal-startcourse<?= $model->course_id ?>">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title"><?= $labelcourse->label_learnlesson ?></h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-sm-8 col-sm-offset-2 text-center">
+                                                        <h3><?= (Yii::app()->user->id) ? $labelcourse->label_swal_regiscourse : $labelcourse->label_detail; ?></h3>
+                                                        <h2>"<?= $model->course_title ?>"</h2>
+                                                        <h3>(<?= $model->CategoryTitle->cate_title ?>)</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <a class="btn btn-success" href="<?= $url ?>" <?= $evnt ?>><?= UserModule::t("Ok") ?></a>
+                                                <a class="btn btn-warning" href="#" class="close" data-dismiss="modal" aria-hidden="true"><?= UserModule::t("Cancel") ?></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <?php }
+} //condition status
+} ?>
                 </div>
             </div>
         </div>
@@ -469,12 +647,15 @@ function DateThai($strDate)
 </section>
 
 <script type="text/javascript">
-    function alertMsg() {
+    // function alertMsg() {
 
-        var title = '<?= !empty($label->label_swal_warning) ? $label->label_swal_warning : ''; ?>';
-        var message = '<?= !empty($label->label_alert_msg_expired) ? $label->label_alert_msg_expired : ''; ?>';
-        var alert = 'error';
+    //     var title = '<?= !empty($label->label_swal_warning) ? $label->label_swal_warning : ''; ?>';
+    //     var message = '<?= !empty($label->label_alert_msg_expired) ? $label->label_alert_msg_expired : ''; ?>';
+    //     var alert = 'error';
 
+    //     swal(title, message, alert);
+    // }
+    function alertMsg(title, message, alert) {
         swal(title, message, alert);
     }
 

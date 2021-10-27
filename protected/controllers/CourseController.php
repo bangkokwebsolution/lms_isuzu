@@ -387,6 +387,16 @@ public function actionResetLearn($id) {
             'params' => array(':lang_id' => 1)
         ));
     }
+    $labelCourse = MenuCourse::model()->find(array(
+            'condition' => 'lang_id=:lang_id',
+            'params' => array(':lang_id' => $langId)
+        ));
+        if(!$labelCourse){
+            $labelCourse = MenuCourse::model()->find(array(
+                'condition' => 'lang_id=:lang_id',
+                'params' => array(':lang_id' => 1)
+            ));
+        }
  // var_dump($model_cate);exit();
     $this->render('index', array(
         'model_cate'=>$modelOrgCourse,
@@ -394,6 +404,7 @@ public function actionResetLearn($id) {
         'modelCourseTms'=>$modelCourseTms,
         'Model' => $course,
         'label' => $label,
+        'labelCourse'=>$labelCourse,
     ));
 }
 
