@@ -38,7 +38,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         </ol>
     </nav>
         <div class="py-5">
-            <h4 class="topic"><?= $date_now ?><span> : <?= $topic ?></span></h4>
+            <h4 class="topic"><span><?= $topic ?></span></h4>
             <div class=" my-4">
                 <div class="table-plan-container">
                     <div id="table-plan" class="table-plan">
