@@ -1,4 +1,9 @@
 <?php
+if (Yii::app()->user->id == null) {
+
+        $this->redirect(array('site/loginform'));
+        exit();
+}
 if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $langId = Yii::app()->session['lang'] = 1;
     $langRe = 'en';
@@ -14,6 +19,7 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
 }
 
 ?>
+
 <script src='https://www.google.com/recaptcha/api.js?hl=<?= $langRe ?>'></script>
 
 <form id="searchForm" class="" action="<?php echo $this->createUrl('Search/index') ?>">
