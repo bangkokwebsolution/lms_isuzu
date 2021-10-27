@@ -52,7 +52,7 @@ if (!empty($msg)) {
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   <script type="text/javascript">
     swal({
-      title: "แจ้งเตือน",
+      title: "Warning",
       text: "<?= $msg ?>",
       icon: "<?= $icon  ?>",
       dangerMode: true,
