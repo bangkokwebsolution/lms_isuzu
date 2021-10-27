@@ -24,19 +24,9 @@ if (Yii::app()->user->id != null) {
 
 $msg = Yii::app()->user->getFlash('msg');
 $icon = Yii::app()->user->getFlash('icon');
-if (!empty($msg)) { 
-  ?>
+?>
 
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script type="text/javascript">
-        swal({
-            title: "แจ้งเตือน",
-            text: "<?= $msg ?>",
-            icon: "<?= $icon  ?>",
-            dangerMode: true,
-        });
-    </script>
-<?php } ?>
+
 
 <script src='https://www.google.com/recaptcha/api.js?hl=<?= $langRe ?>'></script>
 <style>
@@ -54,6 +44,22 @@ if (!empty($msg)) {
 </script>
 
 <body class="body-login">
+  
+<?php
+if (!empty($msg)) { 
+?>
+
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript">
+    swal({
+      title: "แจ้งเตือน",
+      text: "<?= $msg ?>",
+      icon: "<?= $icon  ?>",
+      dangerMode: true,
+    });
+  </script>
+<?php } ?>
+
     <div class="container">
       <form action="<?php echo $this->createUrl('login/index') ?>" method="POST" role="form" name='loginform'>
         <div class="login-group row justify-content-center align-items-center">
