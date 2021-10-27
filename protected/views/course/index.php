@@ -532,11 +532,10 @@ function DateThai($strDate)
                         </div>
                     <?php  } ?>
                     <?php foreach ($Model as $model) {
-
                         if ($model->status == 1) {
-
-                            if ($model->lang_id != 1) {
-                                $model->course_id = $model->parent_id;
+                            if ($langId != 1) {
+                                $modelOld = CourseOnline::model()->findByPk($model->course_id);
+                                $model->course_id = $modelOld->parent_id;
                             }
                             if (!$flag) {
                                 $modelChildren  = CourseOnline::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $model->course_id, 'order' => 'course_id'));
@@ -547,9 +546,9 @@ function DateThai($strDate)
                                     $model->course_picture = $modelChildren->course_picture;
                                 }
                             }
-                            if ($model->parent_id != 0) {
-                                $model->course_id = $model->parent_id;
-                            }
+                            // if ($model->parent_id != 0) {
+                            //     $model->course_id = $model->parent_id;
+                            // }
                             $expireDate = Helpers::lib()->checkCourseExpire($model);
                             if ($expireDate) {
                                 $date_start = date("Y-m-d H:i:s", strtotime($model->course_date_start));
@@ -564,7 +563,7 @@ function DateThai($strDate)
                                             'condition' => 'course_id=:course_id and user_id=:user_id and active=:active and gen_id=:gen_id',
                                             'params' => array(':course_id' => $model->course_id, ':user_id' => Yii::app()->user->id, ':active' => 'y', ':gen_id' => $model->getGenID($model->course_id))
                                         ));
-                                        $course_chk_time = CourseOnline::model()->findByPk($value->course_id);
+                                        $course_chk_time = CourseOnline::model()->findByPk($model->course_id);
 
 
                                         if (!empty($chk_logtime)) {
@@ -611,7 +610,8 @@ function DateThai($strDate)
                             }
                             $chk = Helpers::lib()->getLearn($model->course_id);
 
-                            if (!$chk) { ?>
+                            if (!$chk) {
+                             ?>
 
                                 <div class="modal fade" id="modal-startcourse<?= $model->course_id ?>">
                                     <div class="modal-dialog">
