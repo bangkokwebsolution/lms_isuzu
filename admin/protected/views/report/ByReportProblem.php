@@ -11,7 +11,7 @@
     }
 </style>
 <?php
-$titleName = 'Report Problem';
+$titleName = 'รายงานปัญหาการใช้งาน';
 $formNameModel = 'ReportProblem';
 
 $this->breadcrumbs=array($titleName);
@@ -156,6 +156,7 @@ EOD
                         ?>
                     </tbody>
                 </table>
+                *หากต้องการดูรายละเอียดกรุณากด Export Excel
             <div class="widget-body">
                     <br>
                     <a href="<?= $this->createUrl('report/genReportProblem',array(

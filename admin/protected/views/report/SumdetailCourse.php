@@ -592,6 +592,7 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
                 ?> -->
                 </tbody>
             </table>
+            *หากต้องการดูรายละเอียดกรุณากด Export Excel
             <br>
             <!-- <button type="button" id="btnExport" class="btn btn-primary btn-icon glyphicons file"><i></i> Export</button> -->
             <a href="<?= $this->createUrl('report/ExcelByAggregate',array(

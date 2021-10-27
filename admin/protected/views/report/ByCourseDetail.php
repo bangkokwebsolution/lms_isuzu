@@ -1,5 +1,5 @@
 <?php
-$title = 'รายงานหลักสูตร';
+$title = 'รายงานการฝึกอบรมหลักสูตร';
 $currentModel = 'Report';
 
 $this->breadcrumbs = array($title);

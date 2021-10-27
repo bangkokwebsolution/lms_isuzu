@@ -49,7 +49,7 @@
 
 
 <?php
-$titleName = 'Report Training Course';
+$titleName = 'รายงานการฝึกอบรมหลักสูตร';
 $formNameModel = 'Report';
 
 $this->breadcrumbs=array($titleName);
@@ -292,6 +292,8 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
                 } ?>
                 </tbody>
             </table>
+            
+            *หากต้องการดูรายละเอียดกรุณากด Export Excel
             <br>
             <a href="<?= $this->createUrl('report/ExcelByCourseAll',array(
             'Report[course_id]'=>$_GET['Report']['course_id'],
