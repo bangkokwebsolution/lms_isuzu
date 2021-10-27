@@ -1346,6 +1346,8 @@ hr {
 
 #manual .well .manual-icon img {
   min-height: 142px;
+  max-height: 142px;
+  overflow: hidden;
   padding: 0.5em;
   border-radius: 15px;
   max-width: 100%;
