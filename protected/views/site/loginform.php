@@ -13,6 +13,11 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
     $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
 
 }
+if (Yii::app()->user->id != null) {
+
+        $this->redirect(array('site/index'));
+        exit();
+}
 
  ?>
 <?php 
