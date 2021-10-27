@@ -11,7 +11,7 @@ class Forgot_passwordController extends Controller
 	public function actionIndex()
 	{
         $model = new Users();
-
+        $this->layout = false;
         if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
             $langId = Yii::app()->session['lang'] = 1;
         }else{
