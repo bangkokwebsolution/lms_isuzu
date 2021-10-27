@@ -306,7 +306,6 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                             }
 
                             $percent_learn_net = count($lessonModel) > 0 ? $percent_learn_net / count($lessonModel) : 0;
-
                             ?>
                             <div class="text-left">
                                 <h3><?= $course->course_title ?> <?= $course->getGen($course->course_id); ?></h3>
@@ -1930,11 +1929,12 @@ $FinalScore = Coursescore::model()->findAll($criteria);
 
 </section>
 <script>
+    
     <?php
     if (!empty($logtime)) { ?>
         $(window).load(function() {
 
-            $('#showtime').modal('show');
+            // $('#showtime').modal('show');
 
         });
     <?php } ?>
