@@ -66,11 +66,12 @@ class ReportProblemController extends Controller
   //var_dump($_POST['ReportProblem']);exit();
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['ReportProblem']))
 		{
+
 			$ReportProblem = new ReportProblem;
 			$ReportProblem->attributes=$_POST['ReportProblem'];
+			$ReportProblem->user_id = Yii::app()->user->id;
 			$report_pic  = CUploadedFile::getInstance($ReportProblem, 'report_pic');
 			$rnd = rand(0,9999999999);
 			$fileName = "{$rnd}-{$report_pic}";
