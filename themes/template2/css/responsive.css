@@ -82,6 +82,12 @@
     }
 }
 
+@media screen and (max-width: 767px){
+    .dropdown-menu {
+        margin-left: -110px !important;
+    }
+}
+
 
 @media only screen and (max-width:600px) {
     .contact-admin {
@@ -94,11 +100,37 @@
         font-size: 1.4em;
         letter-spacing: 0.8px;
     }
+    .slide-video.news .page-header h4 {
+        font-size: 1.4em;
+        letter-spacing: 0.8px;
+    }
+    .user-menu .dropdown-toggle .name-user {
+        display: none;
+    }
+    .user-menu .dropdown-toggle .photo {
+        margin: 0 !important;
+    }
+    .user-menu .dropdown-toggle .la-bars {
+        display: none;
+    }
+    .user-menu .dropdown-toggle i {
+        border-left: 0 !important ;
+    }
 }
 
 @media only screen and (max-width:1360px){
     .box-contact {
         min-height: 230px;
+    }
+  }
+
+  @media only screen and (max-width:320px){
+    .btn-dowload-course {
+        font-size: 10px;
+        background: #e0001a;
+        border-radius: 6px;
+        margin: 0 !important;
+        padding: 7px;
     }
   }
 

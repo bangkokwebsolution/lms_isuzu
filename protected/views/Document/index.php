@@ -113,7 +113,7 @@ function DateThai($strDate)
                                                 echo Helpers::changeFormatDate($doc->dow_createday);
                                             }   ?>
                                             <td>
-                                                <a class="btn btn-download text-white" href="<?= Yii::app()->baseUrl ?>/admin/uploads/<?= $doc->dow_address ?>" download="<?= Yii::app()->baseUrl ?>/admin/uploads/<?= $doc->dow_address ?>" type="button"><?= $Download ?></a>
+                                                <a class="btn btn-download btn-dowload-course text-white" href="<?= Yii::app()->baseUrl ?>/admin/uploads/<?= $doc->dow_address ?>" download="<?= Yii::app()->baseUrl ?>/admin/uploads/<?= $doc->dow_address ?>" type="button"><?= $Download ?></a>
                                             </td>
                                         </tr>
 

@@ -168,19 +168,21 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                             <!-- <span class="photo" style="background-image: url('<?= $img ?>"></span> -->
                             <span class="photo" style="background-image: url('<?= $img ?>"></span>
                             <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/username-icon.png" class="profile-account" alt=""> -->
-                            <?php if (Yii::app()->session['lang'] == 1) {
-                                echo  $name->firstname_en;
-                            } else {
-                                echo   $name->firstname;
-                            }
-                            ?>
-                            <i class="br-left las la-bars"></i>
+                                <span class="name-user">
+                                <?php if (Yii::app()->session['lang'] == 1) {
+                                    echo  $name->firstname_en;
+                                } else {
+                                    echo   $name->firstname;
+                                }
+                                ?>
+                                </span>
+                                <i class="br-left las la-bars"></i>
                         </a>
                         <ul class="dropdown-menu">
                             <?php if (Yii::app()->user->id !== null) { ?>
                                 <li class="<?= $bar == 'site' && $bar_action == 'dashboard' ? 'active' : '' ?>"><a href="<?php echo $this->createUrl('/site/dashboard'); ?>"><i class="fas fa-list-ul"></i><?= $label->label_header_dashboard ?></a></li>
                             <?php } ?>
-
+                                
                             <li>
                                 <?php
                                 $user = Users::model()->findByPk(Yii::app()->user->id);
