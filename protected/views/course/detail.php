@@ -670,6 +670,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></a>
                                                     </li>
                                                 </div>
+                                                
                                             <?php
                                             } else { //มีคะแนนสอบ
                                                 $ScoreCoursePreTest = Helpers::lib()->ScoreCoursePreTest($course->course_id, $gen_id);
@@ -1556,7 +1557,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                                                 $onClickDownload =  'onclick="alertSequence();"';
                                                             }
                                                         ?>
-                                                            <li class="list-group-item "><a href="<?= $linkDownload; ?>" <?= $onClickDownload ?>><?= $filesDoc + 1 ?>. <span class="list__course"><i class="fa fa-file-pdf-o" aria-hidden="true" style="color: #ee0f10;"></i>&nbsp;&nbsp;<?= $doc->getRefileName() ?></span> <span class="pull-right"><i class="fa fa-download"></i> <?php echo  $label->label_download; ?></span></a></li>
+                                                            <li class="list-group-item "><a href="<?= $linkDownload; ?>"</a>  <span class="list-course-number"><?= $onClickDownload ?><?= $filesDoc + 1 ?>. </span> <span class="list__course"><i class="fa fa-file-pdf-o" aria-hidden="true" style="color: #ee0f10;"></i>&nbsp;&nbsp;<?= $doc->getRefileName() ?></span> <span class="pull-right"><i class="fa fa-download"></i> <?php echo  $label->label_download; ?></span></a></li>
                                                     <?php
                                                         }
                                                     endif;
