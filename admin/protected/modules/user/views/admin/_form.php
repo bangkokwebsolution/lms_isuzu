@@ -466,7 +466,7 @@ $('#cropcancel').on('click', function(ev) {
     if (focus_email > 0) {
 
         var email = $('#User_email').val();
-        if (email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.*com)+$/)) {
+        if (email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)+$/)) {
             $.ajax({
                 type: 'POST',
                 url: '<?php echo Yii::app()->createAbsoluteUrl("user/admin/check_email"); ?>',
