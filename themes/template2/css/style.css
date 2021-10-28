@@ -3202,6 +3202,13 @@ ol {
   color: #fff;
 }
 
+.list-course-number {
+  white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+}
+
 .list__course {
   height: 20px;
   max-width: 445px;
