@@ -788,6 +788,8 @@ Class Helpers
                 )
             );
         } else if($lesson->type == 'scorm'){
+            if(!isset($lesson->fileScormCount)){ return 'notLearn' ; }
+
             $countFile = $lesson->fileScormCount;
             $countLearnCompareTrueVdos = $user->countLearnCompareTrueScorm(
                 array(
@@ -982,6 +984,7 @@ Class Helpers
                     )
                 );
             } else if($lesson->type == 'scorm'){
+                if(!isset($lesson->fileScormCount)){ return 'notLearn' ; }
                 $countFile = $lesson->fileScormCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTrueScorm(
                     array(
