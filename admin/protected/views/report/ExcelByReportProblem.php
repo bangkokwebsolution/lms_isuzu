@@ -28,7 +28,13 @@ header("Pragma:no-cache");
                     <thead>
                         <tr>
                             <th>ลำดับ</th>
-                            <th>ชื่อ - สกุล</th>                            
+                            <th>รหัสพน้กงาน</th>
+                            <th>ชื่อ - สกุล</th>
+                            <th>Work Location</th>
+                            <th>Employee Class</th>
+                            <th>Position desc.</th>
+                            <th>Oganization Unit</th>
+                            <th>Abbreviate Code</th>                            
                             <th>อีเมล์</th>
                             <th>ประเภทปัญหา</th>
                             <th>ประเภทคอร์ส</th>
@@ -57,7 +63,13 @@ header("Pragma:no-cache");
                                     ?>
                                     <tr>
                                         <td style="vertical-align: top;" ><?= $start_cnt+1?></td>
+                                        <td style="vertical-align: top;"><?= $Problem->user->employee_id ?></td>
                                         <td style="vertical-align: top;"><?= $Problem->firstname.' '.$Problem->lastname ?></td>
+                                        <td style="vertical-align: top;"><?= $Problem->user->profile->location ?></td>
+                                        <td style="vertical-align: top;"><?= $Problem->user->profile->employee_class ?></td>
+                                        <td style="vertical-align: top;"><?= $Problem->user->profile->position_description ?></td>
+                                        <td style="vertical-align: top;"><?= $Problem->user->profile->organization_unit ?></td>
+                                        <td style="vertical-align: top;"><?= $Problem->user->profile->abbreviate_code ?></td>
                                         <td style="vertical-align: top;"><?= $Problem->email ?></td>
                                         <td style="vertical-align: top;"><?= $Problem->usa->usa_title ?></td>
                                         <td style="vertical-align: top;"><?= $Problem->course->course_title ?></td>
