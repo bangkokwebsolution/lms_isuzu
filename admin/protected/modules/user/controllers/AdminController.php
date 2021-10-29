@@ -981,13 +981,28 @@ class AdminController extends Controller
 			$index = 0;
             // var_dump($namedDataArray);exit();
 			foreach($namedDataArray as $key => $result){
-                $search_user = User::model()->findAll(array('condition'=>'username = '.$result["Employee ID."]));
+                if(!isset($result["Shift"]) && ($result["Shift"] != 'A' || $result["Shift"] != 'B' || $result["Shift"] != 'Z') ){ continue; }
+                $criteria  = new CDbCriteria;
+                if($result['Shift'] == 'A' || $result['Shift'] == 'B'){
+                    $criteria->compare('username',$result["Employee ID."]);
+                }else{
+                    $criteria->compare('username',$result["Email"]);
+                }
+                $search_user = User::model()->findAll($criteria);
+                
                 if(empty($search_user)){
                     $model = new User;
                     $profile = new Profile;
                     $model->email = $result["Email"];
-                    $model->username = $result["Employee ID."];
-                    $model->employee_id = $result["Employee ID."];
+                    if($result["Shift"] == 'A' || $result["Shift"] == 'B'){
+                        $model->username = $result["Employee ID."];
+                        $model->employee_id = $result["Employee ID."];
+                        $genpass = md5($result["Employee ID."]);
+                    }else{
+                        $model->username = $result["Email"];
+                        $model->employee_id = $result["Email"];
+                        $genpass = md5($result["Email"]);
+                    }
                 // $model->password = md5($model->username);
                 // $model->verifyPassword = md5($result["Employee ID."]);
 
@@ -1001,7 +1016,6 @@ class AdminController extends Controller
 
 
 				// $genpass = $this->RandomPassword();
-                    $genpass = md5($result["Employee ID."]);
                     $model->verifyPassword = $genpass;
                     $model->password = $genpass;
                     $model->activkey=Yii::app()->controller->module->encrypting(microtime().$model->password);
@@ -1142,12 +1156,16 @@ class AdminController extends Controller
 		if(isset($_POST['User']))
 		{
 			// var_dump($_POST['User']);exit();
+            if($_POST['Profile']['shift'] == 'A' || $_POST['Profile']['shift'] == 'B'){
+                $model->username = $_POST['User']['username'];
+                $model->password = md5($_POST['User']['username']);
+            }else{
+                $model->username = $_POST['User']['email'];
+                $model->password = md5($_POST['User']['email']);
+            }
 			$model->employee_id = $_POST['User']['username'];
-			$model->username = $_POST['User']['username'];
-			$model->password = md5($_POST['User']['username']);
             $model->org_id = $_POST['User']['org_id'];
             $model->verifyPassword = $model->password;
-
             $model->email = $_POST['User']['email'];
             $model->create_at = date('Y-m-d H:i:s');
             $model->online_status = 1;

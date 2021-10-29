@@ -139,19 +139,13 @@
 	}
 </style>
 
-
-<div class="header-page parallax-window" data-parallax="scroll">
-	<div class="container">
-		<h2 class="linebottom"><?php echo $title; ?>
-			<small class="pull-right">
-				<ol class="breadcrumb">
-					<li><a href="<?php echo $this->createUrl('/site/index'); ?>"></i><?= Yii::app()->session['lang'] == 1?'Home':'หน้าหลัก'; ?></a></li>
-					<li class="active"><a href=""><?= Yii::app()->session['lang'] == 1?'Change password':'เปลี่ยนรหัสผ่าน'; ?></a></li>
-				</ol>
-			</small>
-		</h2>
-		<hr>
-	</div>
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb breadcrumb-main">
+            <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/site/index'); ?>"><?= Yii::app()->session['lang'] == 1?'Home':'หน้าหลัก'; ?></a></li>
+            <li class="breadcrumb-item active" aria-current="page"><?= Yii::app()->session['lang'] == 1?'Change password':'เปลี่ยนรหัสผ่าน'; ?></li>
+        </ol>
+    </nav>
 </div>
 <!-- Content -->
 <section class="content" id="contact-us">
@@ -162,6 +156,7 @@
         ));
         ?>
         <div class="well">
+        	<h3 class="text-center" style="margin-bottom: 3rem;"><b><?= Yii::app()->session['lang'] == 1?'Change password':'เปลี่ยนรหัสผ่าน'; ?></b></h3>
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3">
                     <div class="form-group">

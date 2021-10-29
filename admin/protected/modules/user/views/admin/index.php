@@ -208,13 +208,13 @@ EOD
 										// ),
 
 										array(
-											'header' => 'รหัสพนักงาน',
-											'name'=>'username',
+											'header' => 'Employee ID',
+											'name'=>'employee_id',
 											'type'=>'html',
 											// 'filter'=>false,
 											'visible' =>  $this->route === "user/admin/employee" ,
 											'value'=>function($data){
-												return $data->username;
+												return $data->employee_id;
 											},
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
 										),
