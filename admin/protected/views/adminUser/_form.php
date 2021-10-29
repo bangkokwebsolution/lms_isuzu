@@ -273,6 +273,22 @@
                                             </div>
                                         </div>
                                     </div>
+                                     <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($profile, 'firstname_en'); ?></label>
+                                                <?php echo $form->textField($profile, 'firstname_en', array('class' => 'form-control', 'placeholder' => 'firstname')); ?>
+                                                <?php echo $form->error($profile, 'firstname_en'); ?>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label><?php echo $form->labelEx($profile, 'lastname_en'); ?></label>
+                                                <?php echo $form->textField($profile, 'lastname_en', array('class' => 'form-control', 'placeholder' => 'lastname')); ?>
+                                                <?php echo $form->error($profile, 'lastname_en'); ?>
+                                            </div>
+                                        </div>
+                                    </div>
                                 <!--  <div class="row">
                                         <div class="col-md-12">
                                             <div class="form-group">

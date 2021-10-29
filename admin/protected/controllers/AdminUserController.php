@@ -217,6 +217,8 @@ class AdminUserController extends Controller
     		$profile->attributes = $_POST['Profile'];
     		$profile->firstname = $_POST['Profile']['firstname'];
     		$profile->lastname  = $_POST['Profile']['lastname'];
+            $profile->firstname_en = $_POST['Profile']['firstname_en'];
+            $profile->lastname_en  = $_POST['Profile']['lastname_en'];
     		$profile->title_id  = $_POST['Profile']['title_id'];
 
 			// $profile->user_id=0;
