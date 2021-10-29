@@ -260,11 +260,18 @@ date_default_timezone_set("Asia/Bangkok");
                                     <?php echo $form->error($profile, 'group_name'); ?>
                                 </div>
                             </div>
-
+                            <?php $shift_list = ['A','B','Z'];
+                             ?>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label><?php echo $form->labelEx($profile, 'shift'); ?></label>
-                                    <?php echo $form->textField($profile, 'shift', array('class' => 'form-control', 'placeholder' => 'กะทำงาน เช่น A B หรือ Z','maxlength'=> '1')); ?>
+                                    <select  name="Profile[shift]" id="Profile_shift">
+                                        <option selected value="">-- กรุณาเลือก shift --</option>
+                                        <?php foreach ($shift_list as $keyShift => $valueShift) { ?>
+                                                <option <?= $profile->shift == $valueShift ? 'selected':'' ?> value="<?= $valueShift ?>"><?= $valueShift ?></option>
+                                        <?php } ?>
+                                    </select>
+                                   <!--  <?php echo $form->textField($profile, 'shift', array('class' => 'form-control', 'placeholder' => 'กะทำงาน เช่น A B หรือ Z','maxlength'=> '1')); ?> -->
                                     <?php echo $form->error($profile, 'shift'); ?>
                                 </div>
                             </div>
