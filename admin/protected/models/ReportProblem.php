@@ -56,6 +56,8 @@ class ReportProblem extends CActiveRecord
 		return array(
 			'usa' => array(self::BELONGS_TO, 'Usability', 'report_type'),
 			'course' => array(self::BELONGS_TO, 'CourseOnline', 'report_course'),
+			'user' => array(self::BELONGS_TO, 'User', 'user_id'),
+			
 		);
 	}
 
