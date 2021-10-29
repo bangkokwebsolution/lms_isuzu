@@ -1919,7 +1919,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                     <?php }  ?>
 
                     <div style="padding-top: 20px; padding-bottom: 20px;">
-                        <button type="button" class="btn btn-success" data-dismiss="modal" style="padding: 15px 32px; height: auto"><?= Yii::app()->session['lang'] == 1 ? 'OK' : 'ตกลง' ?></button>
+                        <button type="button" onclick="confirmModel(<?= $course->course_id ?>)" class="btn btn-success" data-dismiss="modal" style="padding: 15px 32px; height: auto"><?= Yii::app()->session['lang'] == 1 ? 'OK' : 'ตกลง' ?></button>
                     </div>
                 </center>
             </div>
@@ -1927,18 +1927,24 @@ $FinalScore = Coursescore::model()->findAll($criteria);
 
     </div>
 </div>
-
 </section>
 <script>
     
     <?php
-    if (!empty($logtime)) { ?>
+    if (!empty($logtime) && empty($_SESSION["alertConfirm".$course->course_id])) { ?>
         $(window).load(function() {
 
-            // $('#showtime').modal('show');
+            $('#showtime').modal('show');
 
         });
     <?php } ?>
+
+    function confirmModel(id){
+       <?php 
+            session_start();
+            $_SESSION["alertConfirm".$course->course_id] = 'done';
+        ?>
+    }
 
     function alertswal() {
         swal('<?= $label->label_swal_warning ?>', '<?= $label->label_swal_plsLearnPass ?>', "error");
