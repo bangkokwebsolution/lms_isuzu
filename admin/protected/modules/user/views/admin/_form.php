@@ -158,7 +158,8 @@ date_default_timezone_set("Asia/Bangkok");
                              ?>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><?php echo $form->labelEx($profile, 'shift'); ?></label>
+                                    <!-- <label><?php echo $form->labelEx($profile, 'shift'); ?></label> -->
+                                     <label><label for="shift" class="required">Shift <span class="required">*</span></label></label>
                                     <select onchange="SelectShift()" name="Profile[shift]" id="Profile_shift" required="required">
                                         <option selected value="">-- กรุณาเลือก shift --</option>
                                         <?php foreach ($shift_list as $keyShift => $valueShift) { ?>
@@ -174,7 +175,7 @@ date_default_timezone_set("Asia/Bangkok");
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><label for="username" class="required">employee ID <span class="required">*</span></label></label>
+                                    <label><label for="username" class="required">Employee ID <span class="required">*</span></label></label>
                                     <!-- <label><?php echo $form->labelEx($model, 'username',array("class"=>'required')); ?> -->
                                     <?php echo $form->textField($model, 'username', array('class' => 'form-control', 'placeholder' => 'รหัสพนักงาน','disabled'=>'disabled','onchange'=>'check_id()','required'=>'required')); ?>
                                     <?php echo $form->error($model, 'username'); ?>
