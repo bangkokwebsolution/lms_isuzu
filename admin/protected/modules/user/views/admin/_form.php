@@ -153,31 +153,17 @@ date_default_timezone_set("Asia/Bangkok");
                             </div>
                         </div>
                         <br>
+
+
+
                         <div class="row">
-                         <?php $shift_list = ['A','B','Z'];
-                             ?>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <!-- <label><?php echo $form->labelEx($profile, 'shift'); ?></label> -->
-                                     <label><label for="shift" class="required">Shift <span class="required">*</span></label></label>
-                                    <select onchange="SelectShift()" name="Profile[shift]" id="Profile_shift" required="required">
-                                        <option selected value="">-- กรุณาเลือก shift --</option>
-                                        <?php foreach ($shift_list as $keyShift => $valueShift) { ?>
-                                                <option <?= $profile->shift == $valueShift ? 'selected':'' ?> value="<?= $valueShift ?>"><?= $valueShift ?></option>
-                                        <?php } ?>
-                                    </select>
-                                   <!--  <?php echo $form->textField($profile, 'shift', array('class' => 'form-control', 'placeholder' => 'กะทำงาน เช่น A B หรือ Z','maxlength'=> '1')); ?> -->
-                                    <?php echo $form->error($profile, 'shift'); ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
+
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label><label for="username" class="required">Employee ID <span class="required">*</span></label></label>
+                                    <label><label for="username" class="required">ชื่อผู้ใช้ <span class="required">*</span></label></label>
                                     <!-- <label><?php echo $form->labelEx($model, 'username',array("class"=>'required')); ?> -->
-                                    <?php echo $form->textField($model, 'username', array('class' => 'form-control', 'placeholder' => 'รหัสพนักงาน','disabled'=>'disabled','onchange'=>'check_id()','required'=>'required')); ?>
+                                    <?php echo $form->textField($model, 'username', array('class' => 'form-control', 'placeholder' => 'รหัสพนักงาน','onchange'=>'check_id()','required'=>'required')); ?>
                                     <?php echo $form->error($model, 'username'); ?>
                                 </div>
                             </div>
@@ -189,7 +175,7 @@ date_default_timezone_set("Asia/Bangkok");
                                     <label><label for="email" class="required">อีเมล <span class="required">*</span></label></label>
                                     <!-- <?php echo $form->textField($model, 'email', array('class' => 'form-control', 'placeholder' => 'อีเมล','onchange'=>"",'type'=>'email')); ?> -->
 
-                                    <input type="email"  name="User[email]" class="form-control" value="<?= $model->email ?>" id="User_email"  placeholder="อีเมล" onchange="checkMail('email')" required="required" disabled>
+                                    <input type="email" name="User[email]" class="form-control" value="<?= $model->email ?>" id="User_email"  placeholder="อีเมล" onchange="checkMail('email')" required="required">
                                     <?php echo $form->error($model, 'email'); ?>
                                 </div>
                             </div>  
@@ -248,15 +234,18 @@ date_default_timezone_set("Asia/Bangkok");
                                     <?php echo $form->error($profile, 'organization_unit'); ?>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                             <div class="col-md-4">
+
+                            <div class="col-md-4">
                                 <div class="form-group">
                                     <label><?php echo $form->labelEx($profile, 'abbreviate_code'); ?></label>
                                     <?php echo $form->textField($profile, 'abbreviate_code', array('class' => 'form-control', 'placeholder' => 'ชื่อส่วนงาน')); ?>
                                     <?php echo $form->error($profile, 'abbreviate_code'); ?>
                                 </div>
                             </div>
+                        </div>
+
+
+                        <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label><?php echo $form->labelEx($profile, 'location'); ?></label>
@@ -272,6 +261,13 @@ date_default_timezone_set("Asia/Bangkok");
                                 </div>
                             </div>
 
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label><?php echo $form->labelEx($profile, 'shift'); ?></label>
+                                    <?php echo $form->textField($profile, 'shift', array('class' => 'form-control', 'placeholder' => 'กะทำงาน เช่น A B หรือ Z','maxlength'=> '1')); ?>
+                                    <?php echo $form->error($profile, 'shift'); ?>
+                                </div>
+                            </div>
                         </div>
 
 
@@ -506,21 +502,4 @@ function check_id(){
         }
     });
 }
-
-function SelectShift(){
-    var shift = $('#Profile_shift').val();
-    if(shift == 'A' || shift == 'B'){
-     $('#User_username').attr('required','required').removeAttr('disabled');
-     $('#User_email').attr('required','required').removeAttr('disabled');
-    }else if(shift == 'Z'){
-     $('#User_username').attr('disabled','disabled').removeAttr('required');
-     $('#User_email').attr('required','required').removeAttr('disabled');
-    }else{
-     $('#User_username').attr('disabled','disabled').attr('required');
-     $('#User_email').attr('disabled','disabled').attr('required');
-    }
-    // username.attr('disabled', 'disabled');
-    // alert(shift);
-}
-
 </script>
