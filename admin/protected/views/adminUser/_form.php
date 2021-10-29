@@ -199,11 +199,22 @@
                                         <?php echo $this->NotEmpty();?>
                                         <?php echo $form->error($model,'org_id'); ?>
                                     </div>
-                                </div>                                
-                                <div class="form-group">
-                                    <label><?php echo $form->labelEx($model, 'username'); ?></label>
-                                    <?php echo $form->textField($model, 'username', array('class' => 'form-control','onchange'=>'checkuser()', 'placeholder' => 'ชื่อผู้ใช้ (Email)')); ?>
-                                    <?php echo $form->error($model, 'username'); ?>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><?php echo $form->labelEx($model, 'username'); ?></label>
+                                            <?php echo $form->textField($model, 'username', array('class' => 'form-control','onchange'=>'checkuser()','required','placeholder' => 'ชื่อผู้ใช้')); ?>
+                                            <?php echo $form->error($model, 'username'); ?>
+                                        </div>
+                                    </div>
+                                     <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><?php echo $form->labelEx($model, 'email'); ?></label>
+                                            <?php echo $form->textField($model, 'email', array('class' => 'form-control','onchange'=>'checkMail("email")', 'placeholder' => 'email','required')); ?>
+                                            <?php echo $form->error($model, 'email'); ?>
+                                        </div>
+                                    </div>
                                 </div>
                               <!--        <div class="form-group">
                                         <label>
@@ -497,5 +508,34 @@
                     }
                 }
             });
+        }
+        var focus_email = 0;
+        $("#User_email").on("click", function() {
+            if ($(this).is(":focus")) {
+                focus_email = 0;
+            }
+        });
+
+        function checkMail(input){   
+            focus_email++;
+            if (focus_email > 0) {
+
+                var email = $('#User_email').val();
+                if (email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)+$/)) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '<?php echo Yii::app()->createAbsoluteUrl("user/admin/check_email"); ?>',
+                        data: ({
+                            email: email,
+                        }),
+                        success: function(data) {
+                            if(data == 1){
+                                $('#User_email').val('');
+                                alert('email ซ้ำ');
+                            }
+                        }
+                    });
+                } 
+            }
         }
     </script>
