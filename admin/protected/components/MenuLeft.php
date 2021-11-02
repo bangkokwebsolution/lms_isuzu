@@ -350,15 +350,15 @@ Class MenuLeft extends Controller
 				'submenuOptions' => array('class' => self::SetSubMenu( array('Conditions') ), 'id' => 'Conditions'),
 				'active' => self::SetSubMenu( array('Conditions') ,false),
 				'items'=>array(
-					array(
-						/*====== Check Permissions Sup-Conditions (2) ======*/
-						'visible'=>self::PermissionsMenu(array(
-							'Conditions.*',
-							'Conditions.index'
-						)),
-						'label'=>'แก้ไขเงื่อนไขการใช้งาน',
-						'url'=>array('//Conditions/index')
-					),
+					// array(
+					// 	/*====== Check Permissions Sup-Conditions (2) ======*/
+					// 	'visible'=>self::PermissionsMenu(array(
+					// 		'Conditions.*',
+					// 		'Conditions.index'
+					// 	)),
+					// 	'label'=>'แก้ไขเงื่อนไขการใช้งาน',
+					// 	'url'=>array('//Conditions/index')
+					// ),
 					array(
 						/*====== Check Permissions Sup-Conditions (2) ======*/
 						'visible'=>self::PermissionsMenu(array(
