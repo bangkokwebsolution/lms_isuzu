@@ -64,7 +64,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $click_precourse = "เข้าสู่การสอบ";
     $clickFinal = "เข้าสู่การสอบ";
     $pre_course_wait = "รอตรวจสอบ...";
-    $CourseInstructor = 'อาจารย์ผู้สอน';
+    $CourseInstructor = 'ผู้สร้างหลักสูตร';
     $CourseApprover = 'ผู้อนุมัติหลักสูตร';
     $Time = 'เวลา';
     $Lessons = 'บทเรียน';
