@@ -59,7 +59,7 @@ EOD
 
                    if($check_validate != 'pass'){ continue; }
                         if($value->approve_status == 1){
-                          $status =  "อนุมัติแล้ว";
+                          $status =  "รอการอนุมัติจาก HR";
                         } else {
                           $status =  "ยังไม่อนุมัติ";
                         }
