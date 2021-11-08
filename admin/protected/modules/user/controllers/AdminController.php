@@ -471,12 +471,10 @@ class AdminController extends Controller
 
         $model->password = $password;
         $model->verifyPassword = $verifyPassword;
-
-        if ($model->validate()) {
-
+        // if ($model->validate()) {
             $model->password = UserModule::encrypting($model->password);
             $model->verifyPassword = UserModule::encrypting($model->verifyPassword);
-            $model->save(false);
+            var_dump($model->save(false));
 
             $to['email'] = $model->email;
             $to['firstname'] = $model->profiles->firstname;
@@ -486,7 +484,7 @@ class AdminController extends Controller
             if($message){
                 $send = Helpers::lib()->SendMail($to,'แจ้งเปลี่ยน Password',$message);
             }
-        }
+        // }
 
         //$this->redirect(array('/user/admin/index'));
     }

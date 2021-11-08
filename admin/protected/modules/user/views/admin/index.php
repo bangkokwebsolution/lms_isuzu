@@ -396,7 +396,6 @@ EOD
 // 		//return false;
 // 	});
 function sendMsg(id){
-
 	swal({
 		title: "คุณต้องการเปลี่ยนรหัสผ่านใช่หรือไม่",
 		text: "เลือก",
@@ -424,31 +423,37 @@ function sendMsg(id){
 												$(".save_data").click(function(){
 													var password = $("#password").val();
 													var verifyPassword = $("#verifyPassword").val();
+													if (password == verifyPassword) { 
+														$.ajax({
+															url: "<?= $this->createUrl('admin/ChangePasswordUser'); ?>", 
+															type: "POST",
+															data:  {id:id,
+																password:password,
+																verifyPassword:verifyPassword,
 
-													$.ajax({
-														url: "<?= $this->createUrl('admin/ChangePasswordUser'); ?>", 
-														type: "POST",
-														data:  {id:id,
-															password:password,
-															verifyPassword:verifyPassword,
+															},
+															success: function(data){
+																if (data) {
+																	// setTimeout(function () {
+																		swal("สำเร็จ", "เปลี่ยนรหัสผ่านสำเร็จ", "success");
+																	// }, 3000);
+																	setTimeout(function () {
+																	location.reload();
+																	},3000);
+																}else{
+																	// setTimeout(function () {
+																		swal("ไม่สำเร็จ!", "ไม่สามารถเปลี่ยนรหัสผ่านสำเร็จ", "error");
+																	// }, 10000);
+																	setTimeout(function () {
+																	location.reload();
+																	}, 3000);
 
-														},
-														success: function(data){
-															console.log(data);
-															if (data) {
-																setTimeout(function () {
-																	swal("สำเร็จ", "เปลี่ยนรหัสผ่านสำเร็จ)", "success");
-																}, 10000);
-																location.reload();
-															}else{
-																setTimeout(function () {
-																	swal("ไม่สำเร็จ!", "ไม่สามารถเปลี่ยนรหัสผ่านสำเร็จ)", "error");
-																}, 10000);
-																location.reload();
+																}
 															}
-														}
-													});
-
+														});
+													}else{
+														swal("ไม่สำเร็จ!", "รหัสผ่านไม่ตรงกัน", "error");
+													}
 												});
 											}
 										});
