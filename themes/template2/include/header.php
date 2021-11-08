@@ -582,16 +582,11 @@ if (!empty($msg)) { ?>
                             <div class="row report-row">
                                 <div class="col-md-6 col-xs-12 col-sm-6">
                                     <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Name' : 'ชื่อ'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Name' : 'ชื่อ'; ?>" name="ReportProblem[firstname]" value="<?php if (Yii::app()->session['lang'] == 1) {
-                                                                                                                                                                                                echo $value->firstname_en;
-                                                                                                                                                                                            } else {
-                                                                                                                                                                                                echo $value->firstname;
-                                                                                                                                                                                            } ?>">
+                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Name' : 'ชื่อ'; ?>" name="ReportProblem[firstname]" value="<?php if (Yii::app()->session['lang'] == 1) {echo $value->firstname_en;} else { echo $value->firstname; } ?>">
                                 </div>
                                 <div class="col-md-6 col-xs-12 col-sm-6">
                                     <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Last name' : 'นามสกุล'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Last name' : 'นามสกุล'; ?>" name="ReportProblem[lastname]" value="<?php if (Yii::app()->session['lang'] == 1) {
-                                                                                                                                                                                                    } ?>">
+                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'Last name' : 'นามสกุล'; ?>" name="ReportProblem[lastname]" value="<?php if (Yii::app()->session['lang'] == 1){ echo $value->lastname_en; }else{ echo $value->lastname; } ?>">
                                 </div>
                             </div>
                             <div class="row report-row">
