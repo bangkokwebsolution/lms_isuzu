@@ -61,6 +61,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                         foreach ($models as $key_C => $M_C) {
                         $date_start = explode('-', $M_C->course_date_start);
                         $date_end = explode('-', $M_C->course_date_end);
+                        // var_dump($M_C->course_date_end);exit();
                             if($M_C->CategoryTitle->active == "y"){
                                     if($langId == 2){
                                         $date_Course = Helpers::changeFormatDateTHshort($M_C->course_date_start).' - '.Helpers::changeFormatDateTHshort($M_C->course_date_end);
@@ -72,14 +73,16 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                     }
                                 $LogStartcourse = LogStartcourse::Model()->find(array('condition'=>'course_id ='.$course_id.' AND user_id ='.Yii::app()->user->id));
                                 $passcourse = Passcours::Model()->find(array('condition'=>'passcours_cours = '.$course_id.' AND passcours_user ='.Yii::app()->user->id));
-                                if(!empty($passcourse)){
-                                    $status_user = '#4BBC99';
-                                }else if(!empty($LogStartcourse) && empty($passcourse)){
-                                    $status_user = '#FFA74A';
-                                }else if(date('Y-m-d H:i:s') > $date_end && empty($passcourse)){
-                                    $status_user = '#E64D3B';
-                                }else{
-                                    $status_user = '#3A8DDD';
+                                if(!empty($passcourse)){ // ผ่าน
+                                    $status_user = '#4BBC99'; // สีเขียว
+                                }else if(date('Y-m-d H:i:s') > $M_C->course_date_end){//ต่อให้เคยเรียน แต่ก็ให้ขึ้นหมดเวลา
+                                    $status_user = '#E64D3B'; //สีแดง
+                                }else if(!empty($LogStartcourse) && empty($passcourse)){//กำลังเรียน แต่ยังไม่ผ่าน
+                                    $status_user = '#FFA74A'; // สีส้ม
+                                }else if(date('Y-m-d H:i:s') > $date_end && empty($passcourse)){//หมดเวลาสมัครเรียน
+                                    $status_user = '#E64D3B'; //สีแดง
+                                }else{ // ยังไม่เริ่ม
+                                    $status_user = '#3A8DDD'; //สีน้ำเงิน
                                 }
 
 
