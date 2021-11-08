@@ -18,6 +18,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $classroom_online = 'Classroom Online';
     $library_show = 'e-Library';
     $CourseCategory = 'Course Category';
+    $Title_popup = 'Confirm Registration';
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -37,6 +38,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $course_status = 'สถานะของหลักสูตร';
     $classroom_online = 'ห้องเรียนออนไลน์';
     $CourseCategory = 'หมวดหมู่หลักสูตร';
+    $Title_popup = 'ยืนยันการลงทะเบียนคอสน์อบรม';
 }
 ?>
 <!-- // -->
@@ -606,7 +608,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                <h4 class="modal-title"><?= $labelcourse->label_learnlesson ?></h4>
+                                <h4 class="modal-title"><?= $Title_popup ?></h4>
                             </div>
                             <div class="modal-body">
                                 <div class="row">

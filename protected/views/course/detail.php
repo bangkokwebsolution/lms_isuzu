@@ -1902,7 +1902,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                     <h2 style="color: #575757;"><?= $label->label_swal_regis ?></h2>
                     <h2><?= $label->label_course ?> "<?= $course->course_title ?> <?= $course->getGen($course->course_id); ?>" <?= $label->label_swal_success ?></h2>
                     <p><?= $label->label_swal_alltimelearn ?>
-                        <?= $course->course_day_learn ?>
+                        <?php //echo  $course->course_day_learn ?>
                         <?= $label->label_day ?></p>
                     <?php if (Yii::app()->user->id) { ?>
                         <p>
