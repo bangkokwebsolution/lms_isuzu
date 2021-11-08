@@ -79,7 +79,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                     $status_user = '#E64D3B'; //สีแดง
                                 }else if(!empty($LogStartcourse) && empty($passcourse)){//กำลังเรียน แต่ยังไม่ผ่าน
                                     $status_user = '#FFA74A'; // สีส้ม
-                                }else if(date('Y-m-d H:i:s') > $date_end && empty($passcourse)){//หมดเวลาสมัครเรียน
+                                }else if(date('Y-m-d H:i:s') > $M_C->course_date_end && empty($passcourse)){//หมดเวลาสมัครเรียน
                                     $status_user = '#E64D3B'; //สีแดง
                                 }else{ // ยังไม่เริ่ม
                                     $status_user = '#3A8DDD'; //สีน้ำเงิน

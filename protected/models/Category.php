@@ -31,6 +31,7 @@ class Category extends AActiveRecord
 			'fileCount'=>array(self::STAT, 'Filecategory', 'category_id'),
 			'usercreate' => array(self::BELONGS_TO, 'User', 'create_by'),
 			'userupdate' => array(self::BELONGS_TO, 'User', 'update_by'),
+			'Type' => array(self::BELONGS_TO, 'CourseType', 'type_id'),
 		);
 	}
 

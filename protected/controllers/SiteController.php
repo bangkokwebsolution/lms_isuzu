@@ -774,10 +774,10 @@ class SiteController extends Controller
             // 	));
             // }
 
-            $logStartCourse_model = LogStartcourse::model()->findAll(array(
-            	'condition' => 'user_id=:user_id AND active=:active',
-            	'params' => array(':user_id'=>Yii::app()->user->id, ':active'=>'y'),
-                'order'=>'update_date DESC',
+            $logStartCourse_model = LogStartcourse::model()->with("course")->findAll(array(
+            	'condition' => 't.user_id=:user_id AND t.active=:active and course.active=:course_active ',
+            	'params' => array(':user_id'=>Yii::app()->user->id, ':active'=>'y', ':course_active'=>'y'),
+                'order'=>'t.update_date DESC',
             ));
             $Passcours = Passcours::model()->findAll(array('condition'=>'passcours_user = '.Yii::app()->user->id));
             $arr_log_course_id = array();            
@@ -959,7 +959,7 @@ class SiteController extends Controller
             // $userPosition = $userModel->position_id;
             // $userBranch = $userModel->branch_id;
 
-            if($userModel->profile->kind != 5){
+            // if($userModel->profile->kind != 5){
                 // var_dump($userModel->org_id);exit();
              $criteria = new CDbCriteria;
             // $criteria->with = array('orgchart');
@@ -974,9 +974,9 @@ class SiteController extends Controller
                 $courseArr[] = $value->id;
             }
             
-            }else{ // general
-                $courseArr[] = "2";
-            }
+            // }else{ // general
+            //     $courseArr[] = "2";
+            // }
 
             $criteria = new CDbCriteria;
             $criteria->with = array('course','course.CategoryTitle');
@@ -984,17 +984,17 @@ class SiteController extends Controller
             $criteria->compare('course.active','y');
             $criteria->compare('course.status','1');
             $criteria->compare('categorys.cate_show','1');
-            if(isset($_GET['type'])){
-                $criteria->compare('categorys.type_id',$_GET['type']);
-                if($_GET['type']==1){
-                    $statusapprove = 1;
-                }else{
-                    $statusapprove = 2;
-                }
-                $criteria->compare('course.approve_status',$statusapprove);
-            }else{
+            // if(isset($_GET['type'])){
+                // $criteria->compare('categorys.type_id',$_GET['type']);
+                // if($_GET['type']==1){
+                //     $statusapprove = 1;
+                // }else{
+                //     $statusapprove = 2;
+                // }
+                // $criteria->compare('course.approve_status',$statusapprove);
+            // }else{
                 $criteria->addCondition('course.approve_status > 0');
-            }
+            // }
             // $criteria->group = 'course.cate_id';
             $criteria->addCondition('course.course_date_end >= :date_now');
             $criteria->params[':date_now'] = date('Y-m-d H:i');
@@ -1004,20 +1004,46 @@ class SiteController extends Controller
 
             if($modelOrgCourse){
                 foreach ($modelOrgCourse as $key => $value) {
-            
-                    $modelUsers_old = ChkUsercourse::model()->find(
-                        array(
-                            'condition' => 'course_id=:course_id AND user_id=:user_id AND org_user_status=:org_user_status',
-                            'params' => array(':course_id'=>$value->course_id, ':user_id'=>Yii::app()->user->id, ':org_user_status'=>1)
-                        )
-                    );
 
-                    if($modelUsers_old){
-                        if($modelUsers_old->course_id !=  $value->course_id){
-                    $course_id[] = $value->course_id;
+                    $type=$value->course->CategoryTitle->Type->type_id;//type_id
+
+                    $approve_status=$value->course->approve_status;//approve_status
+
+                    if($type==3){//เช็คหลักสูตรทั่วไป
+
+                        if($approve_status==2){//อนุมัติหลักสูตรทั่วไป
+
+                           $modelUsers_old = ChkUsercourse::model()->find(
+                            array(
+                                'condition' => 'course_id=:course_id AND user_id=:user_id AND org_user_status=:org_user_status',
+                                'params' => array(':course_id'=>$value->course_id, ':user_id'=>Yii::app()->user->id, ':org_user_status'=>1)
+                            )
+                            );
+
+                            if($modelUsers_old){
+                                if($modelUsers_old->course_id !=  $value->course_id){
+                            $course_id[] = $value->course_id;
+                                }
+                            }else{
+                            $course_id[] = $value->course_id;
+                            }
                         }
                     }else{
-                    $course_id[] = $value->course_id;
+                        $modelUsers_old = ChkUsercourse::model()->find(
+                                array(
+                                    'condition' => 'course_id=:course_id AND user_id=:user_id AND org_user_status=:org_user_status',
+                                    'params' => array(':course_id'=>$value->course_id, ':user_id'=>Yii::app()->user->id, ':org_user_status'=>1)
+                                )
+                            );
+
+                            if($modelUsers_old){
+                                if($modelUsers_old->course_id !=  $value->course_id){
+                            $course_id[] = $value->course_id;
+                                }
+                            }else{
+                            $course_id[] = $value->course_id;
+                            }
+
                     }
 
                 }
