@@ -148,7 +148,7 @@ EOD
           },
           success: function(data){
             if(data != "error"){
-              $('#modal_data .modal-title').html('อนุมัติหลักสูตรเฉพาะ');
+              $('#modal_data .modal-title').html('อนุมัติหลักสูตรทั่วไป');
               $('#modal_data .modal-body').html(data);
               $('#modal_data').modal('show');
             }
