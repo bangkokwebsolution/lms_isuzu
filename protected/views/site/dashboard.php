@@ -69,9 +69,61 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                     <div class="card-body" style="padding:10px;">
                                         <h4 class="course-card-title  text-4 text-main "><?= $value->course->course_title ?><a href="#"></a></h4>
                                         <div class="progress-bottom">
-                                            <span class="badge badge-warning">กำลังเรียน</span>
+
+                                            <?php 
+                                            if ($langId == 2) {
+                                                $date_start =  Helpers::changeFormatDateTHshort($value->course->course_date_start);
+                                                $date_stop = Helpers::changeFormatDateTHshort($value->course->course_date_end);
+                                                $course_id = $value->course->parent_id;
+                                                // var_dump($M_C->course_id);exit();
+                                            } else {
+                                                $date_start = Helpers::changeFormatDateENnew($value->course->course_date_start);
+                                                $date_stop = Helpers::changeFormatDateENnew($value->course->course_date_end);
+                                                $course_id = $value->course->course_id;
+                                            }
+                                            $LogStartcourse = LogStartcourse::Model()->find(array('condition' => 'course_id =' . $course_id . ' AND user_id =' . Yii::app()->user->id));
+                                            $passcourse = Passcours::Model()->find(array('condition' => 'passcours_cours = ' . $course_id . ' AND passcours_user =' . Yii::app()->user->id));
+
+                                            if($langId == 2){
+                                                if (!empty($passcourse)) { // ผ่าน
+                                                    $status_user = 'success'; // สีเขียว
+                                                    $status_text = 'เรียนผ่านแล้ว';
+                                                } else if (date('Y-m-d H:i:s') > $value->course->course_date_end) { //ต่อให้เคยเรียน แต่ก็ให้ขึ้นหมดเวลา
+                                                    $status_user = 'danger'; //สีแดง
+                                                    $status_text = 'หมดเวลาเรียน';
+                                                } else if (!empty($LogStartcourse) && empty($passcourse)) { //กำลังเรียน แต่ยังไม่ผ่าน
+                                                    $status_user = 'warning'; // สีส้ม
+                                                    $status_text = 'กำลังเรียน';
+                                                } else if (date('Y-m-d H:i:s') > $value->course->course_date_end && empty($passcourse)) { //หมดเวลาสมัครเรียน
+                                                    $status_user = 'danger'; //สีแดง
+                                                    $status_text = 'หมดเวลาเรียน';
+                                                } else { // ยังไม่เริ่ม
+                                                    $status_user = ''; //สีน้ำเงิน
+                                                }
+                                            }else{
+                                                if (!empty($passcourse)) { // ผ่าน
+                                                    $status_user = 'success'; // สีเขียว
+                                                    $status_text = 'Passed';
+                                                } else if (date('Y-m-d H:i:s') > $value->course->course_date_end) { //ต่อให้เคยเรียน แต่ก็ให้ขึ้นหมดเวลา
+                                                    $status_user = 'danger'; //สีแดง
+                                                    $status_text = 'Expired';
+                                                } else if (!empty($LogStartcourse) && empty($passcourse)) { //กำลังเรียน แต่ยังไม่ผ่าน
+                                                    $status_user = 'warning'; // สีส้ม
+                                                    $status_text = 'In Progress';
+                                                } else if (date('Y-m-d H:i:s') > $value->course->course_date_end && empty($passcourse)) { //หมดเวลาสมัครเรียน
+                                                    $status_user = 'danger'; //สีแดง
+                                                    $status_text = 'Expired';
+                                                } else { // ยังไม่เริ่ม
+                                                    $status_user = ''; //สีน้ำเงิน
+                                                }
+                                            }
+                                            ?>
+                                            <!-- <span class="badge badge-warning">กำลังเรียน</span>
                                             <span class="badge badge-danger">หมดเวลาเรียน</span>
-                                            <span class="badge badge-success">เรียนผ่านแล้ว</span>
+                                            <span class="badge badge-success">เรียนผ่านแล้ว</span> -->
+
+                                            <span class="badge badge-<?php echo $status_user ?>"><?php echo $status_text ?></span>
+                                           
                                         </div>
                                         <div class="progress progress-sm progress-border-radius mt-4 ">
                                             <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <?= Helpers::lib()->percent_CourseGen($value->course->course_id, $gen_id) ?>%;">
@@ -79,8 +131,10 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                         </div>
                                         <p class="text-dark "><?= Helpers::lib()->percent_CourseGen($value->course->course_id, $gen_id) ?>%</p>
                                         <div class="exp-course dashboard-exp">
-                                            <p class=""> วันเริ่มต้น : 10 Jun. 2021</p>
-                                            <p class=""> วันสิ้นสุด : 10 Jun. 2021</p>
+                                            <!-- <p class=""> วันเริ่มต้น : 10 Jun. 2021</p>
+                                            <p class=""> วันสิ้นสุด : 10 Jun. 2021</p> -->
+                                            <p class=""> วันเริ่มต้น : <?= $date_start; ?></p>
+                                            <p class=""> วันสิ้นสุด : <?= $date_stop; ?></p>
                                         </div>
                                     </div>
                                 </div>
