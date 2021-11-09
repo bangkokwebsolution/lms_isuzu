@@ -6,7 +6,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $text_email = 'This email does not exist in the system.';
     $cancel = 'Cancel';
     $ok = 'OK';
-    $warn = 'warn';
+    $warn = 'Warning';
 } else {
     $mail = 'อีเมล';
     $warn = 'แจ้งเตือน';
@@ -47,6 +47,24 @@ if (Yii::app()->user->hasFlash('msg')) {  ?>
 
 
 <body class="body-login">
+
+
+<?php
+if ($_GET["msg"]=="error") { 
+?>
+
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script type="text/javascript">
+    swal({
+      title: "<?= $warn ?>",
+          text: "<?= $text_email ?>",
+          icon: "warning",
+          // buttons: ['<?= $ok ?>'],
+          dangerMode: true,
+    });
+  </script>
+<?php } ?>
+
     <div class="container">
         <div class="login-group row justify-content-center align-items-center">
             <div class="logo-head">

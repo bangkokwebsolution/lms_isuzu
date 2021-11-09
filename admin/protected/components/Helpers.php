@@ -348,8 +348,10 @@ Class Helpers
 
         // $adminEmail = 'imctisuzu@gmail.com';
         // $adminEmailPass = 'admindemo';
-        $adminEmail = 'keng1155ker@gmail.com';
-        $adminEmailPass = 'keng12345678';
+        // $adminEmail = 'keng1155ker@gmail.com';
+        // $adminEmailPass = 'keng12345678';
+        $adminEmail = 'elearningisuzu@gmail.com';
+        $adminEmailPass = 'isuzu123456';
 
         $mail =  new PHPMailer(true);
 

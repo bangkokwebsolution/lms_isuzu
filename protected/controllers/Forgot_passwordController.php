@@ -33,6 +33,9 @@ class Forgot_passwordController extends Controller
 	}
 
     public function actionSendpassword(){
+    		// if($_POST["Users"]["email"]){
+    		// 	var_dump($_POST["Users"]["email"]);exit();
+    		// }
             if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
                 $langId = Yii::app()->session['lang'] = 1;
             }else{
@@ -43,6 +46,7 @@ class Forgot_passwordController extends Controller
              $finduserbymail = Users::model()->notsafe()->findByAttributes(array('email'=>$email));
             if(isset($finduserbymail)){
             // $href = Yii::app()->createAbsoluteUrl('forgot_password/Checkpassword',array('oldpassword'=> $finduserbymail->password));
+
             $href = Yii::app()->createAbsoluteUrl('forgot_password/Checkpassword',array('oldpassword'=> $finduserbymail->activkey));
             $to = array();
             $to['email'] = $email;
@@ -52,6 +56,9 @@ class Forgot_passwordController extends Controller
             $message = 'ระบบรีเซ็ตรหัสผ่าน <br> สวัสดีคุณ '.$finduserbymail->profile->firstname.' '.$finduserbymail->profile->lastname.'<br><a href="'.$href.'">คลิกลิงค์เพื่อตั้งรหัสผ่านใหม่</a><br><br>Reset Password <br> Dear '.$finduserbymail->profile->firstname_en.' '.$finduserbymail->profile->lastname_en.'<br><a href="'.$href.'">Click link to reset your password</a>';
 
              $send = Helpers::lib()->SendMail($to, $subject, $message);
+
+             // var_dump($send);exit();
+
            // $send = Helpers::lib()->SendMailToUser($to, $subject, $message);
 
             // echo "<script>alert('ตรวจสอบ กล่องข้อความ');</script>"; 
@@ -74,8 +81,11 @@ class Forgot_passwordController extends Controller
             //     Yii::app()->user->setFlash('msg',$msg);
             //     Yii::app()->user->setFlash('icon','warning');
             // }
+
+
             
-          $this->redirect(array('site/index'));
+          	$this->redirect(array('site/index'));
+          	
             }else{
                 $model = new Users();
                 if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
@@ -95,7 +105,9 @@ class Forgot_passwordController extends Controller
                         ));
                  }
                 Yii::app()->user->setFlash('msg','ไม่มี Email นี้อยู่ในระบบ');
-                $this->render('index',array('model'=>$model,'label'=>$label));
+                // $this->render('index',array('model'=>$model,'label'=>$label));
+
+                $this->redirect(array('Forgot_password/index?&msg=error'));
             }
            
            

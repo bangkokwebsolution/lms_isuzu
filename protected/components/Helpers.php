@@ -801,9 +801,11 @@ public function SendMail($to, $subject, $message, $fromText = 'Isuzu')
     // $adminEmail = $SettingAll['USER_EMAIL'];
     // $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-    $adminEmail = 'keng1155ker@gmail.com';
-    $adminEmailPass = 'keng12345678';
-
+    // $adminEmail = 'keng1155ker@gmail.com';
+    // $adminEmailPass = 'keng12345678';
+    
+    $adminEmail = 'elearningisuzu@gmail.com';
+    $adminEmailPass = 'isuzu123456';
 
         /*$mail =  new PHPMailer(true);
         $mail->SMTPOptions = array(
