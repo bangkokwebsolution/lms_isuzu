@@ -5,12 +5,14 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $learnn = "Learn Lesson";
     $genaral_course = 'General Course';
     $specific_course = 'Specific Course';
+    $Title_popup = 'Confirm Registration';
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
     $learnn = "สมัครเรียน";
     $genaral_course = 'หลักสูตรทั่วไป';
     $specific_course = 'หลักสูตรเฉพาะ';
+    $Title_popup = 'ยืนยันการลงทะเบียนคอสน์อบรม';
 }
 function DateThai($strDate)
 {
@@ -618,7 +620,7 @@ function DateThai($strDate)
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                <h4 class="modal-title"><?= $labelcourse->label_learnlesson ?></h4>
+                                                <h4 class="modal-title"><?= $Title_popup ?></h4>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="row">

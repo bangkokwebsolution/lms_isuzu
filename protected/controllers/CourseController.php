@@ -292,7 +292,7 @@ public function actionResetLearn($id) {
             // $userPosition = $userModel->position_id;
             // $userBranch = $userModel->branch_id;
 
-            if($userModel->profile->kind != 5){
+            
                 // var_dump($userModel->org_id);exit();
              $criteria = new CDbCriteria;
             // $criteria->with = array('orgchart');
@@ -307,9 +307,7 @@ public function actionResetLearn($id) {
                 $courseArr[] = $value->id;
             }
             
-            }else{ // general
-                $courseArr[] = "2";
-            }
+          
 
             $criteria = new CDbCriteria;
             $criteria->with = array('course','course.CategoryTitle');
@@ -338,19 +336,60 @@ public function actionResetLearn($id) {
             if($modelOrgCourse){
                 foreach ($modelOrgCourse as $key => $value) {
             
-                    $modelUsers_old = ChkUsercourse::model()->find(
-                        array(
-                            'condition' => 'course_id=:course_id AND user_id=:user_id AND org_user_status=:org_user_status',
-                            'params' => array(':course_id'=>$value->course_id, ':user_id'=>Yii::app()->user->id, ':org_user_status'=>1)
-                        )
-                    );
+                    // $modelUsers_old = ChkUsercourse::model()->find(
+                    //     array(
+                    //         'condition' => 'course_id=:course_id AND user_id=:user_id AND org_user_status=:org_user_status',
+                    //         'params' => array(':course_id'=>$value->course_id, ':user_id'=>Yii::app()->user->id, ':org_user_status'=>1)
+                    //     )
+                    // );
 
-                    if($modelUsers_old){
-                        if($modelUsers_old->course_id !=  $value->course_id){
-                    $course_id[] = $value->course_id;
+                    // if($modelUsers_old){
+                    //     if($modelUsers_old->course_id !=  $value->course_id){
+                    // $course_id[] = $value->course_id;
+                    //     }
+                    // }else{
+                    // $course_id[] = $value->course_id;
+                    // }
+
+                    $type=$value->course->CategoryTitle->Type->type_id;//type_id
+
+                    $approve_status=$value->course->approve_status;//approve_status
+
+                    if($type==3){//เช็คหลักสูตรทั่วไป
+
+                        if($approve_status==2){//อนุมัติหลักสูตรทั่วไป
+
+                           $modelUsers_old = ChkUsercourse::model()->find(
+                            array(
+                                'condition' => 'course_id=:course_id AND user_id=:user_id AND org_user_status=:org_user_status',
+                                'params' => array(':course_id'=>$value->course_id, ':user_id'=>Yii::app()->user->id, ':org_user_status'=>1)
+                            )
+                            );
+
+                            if($modelUsers_old){
+                                if($modelUsers_old->course_id !=  $value->course_id){
+                            $course_id[] = $value->course_id;
+                                }
+                            }else{
+                            $course_id[] = $value->course_id;
+                            }
                         }
                     }else{
-                    $course_id[] = $value->course_id;
+                        $modelUsers_old = ChkUsercourse::model()->find(
+                                array(
+                                    'condition' => 'course_id=:course_id AND user_id=:user_id AND org_user_status=:org_user_status',
+                                    'params' => array(':course_id'=>$value->course_id, ':user_id'=>Yii::app()->user->id, ':org_user_status'=>1)
+                                )
+                            );
+
+                            if($modelUsers_old){
+                                if($modelUsers_old->course_id !=  $value->course_id){
+                            $course_id[] = $value->course_id;
+                                }
+                            }else{
+                            $course_id[] = $value->course_id;
+                            }
+
                     }
 
                 }
