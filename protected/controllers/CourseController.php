@@ -355,6 +355,7 @@ public function actionResetLearn($id) {
 
                     $approve_status=$value->course->approve_status;//approve_status
 
+                    
                     if($type==3){//เช็คหลักสูตรทั่วไป
 
                         if($approve_status==2){//อนุมัติหลักสูตรทั่วไป
@@ -368,10 +369,10 @@ public function actionResetLearn($id) {
 
                             if($modelUsers_old){
                                 if($modelUsers_old->course_id !=  $value->course_id){
-                            $course_id[] = $value->course_id;
+                                    $course_id[] = $value->course_id;
                                 }
                             }else{
-                            $course_id[] = $value->course_id;
+                                $course_id[] = $value->course_id;
                             }
                         }
                     }else{
@@ -2890,8 +2891,14 @@ public function actionCaptchaPdf(){
             // $criteria->group = 'course.cate_id';
             // $criteria->addCondition('course.course_date_end >= :date_now');
             // $criteria->params[':date_now'] = date('Y-m-d H:i');
-            $start_year_date = date("Y")."-01-01 00:00:00";//ต้นปีปัจจุบัน
-            $end_year_date = date("Y")."-12-31 23:59:59";//ปลายปีปัจจุบัน
+            if(isset($_GET["year"])){
+                $start_year_date = $_GET["year"]."-01-01 00:00:00";//ต้นปีปัจจุบัน
+                $end_year_date = $_GET["year"]."-12-31 23:59:59";//ปลายปีปัจจุบัน
+            }else{
+                $start_year_date = date("Y")."-01-01 00:00:00";//ต้นปีปัจจุบัน
+                $end_year_date = date("Y")."-12-31 23:59:59";//ปลายปีปัจจุบัน
+            }
+            
             $criteria->AddCondition("(course.course_date_start>='".$start_year_date."' AND course.course_date_start<='".$end_year_date."') OR (course.course_date_end>='".$start_year_date."' AND course.course_date_end<='".$end_year_date."') OR (course.course_date_start <='".$start_year_date."' AND course.course_date_end>='".$end_year_date."') "); 
             $criteria->order = 'course.course_id';
             // $criteria->limit = 5;

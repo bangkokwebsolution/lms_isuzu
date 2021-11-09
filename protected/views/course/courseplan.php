@@ -40,10 +40,32 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     <div class="py-5">
         <h4 class="topic" style="margin-bottom:1em;"><span> <?= $topic ?></span>
             <span class="pull-right">
-                <select class="form-select select-year" aria-label="">
-                    <option selected>เลือกปี</option>
-                    <option value="1">2564</option>
-                    <option value="2">2563</option>
+                <select class="form-select select-year" aria-label="" onChange="MM_jumpMenu('parent',this,0)">
+                    <?php
+                   
+                    for ($year=date("Y")+5; $year > 2015; $year--) { 
+
+                        if(isset($_GET["year"])){
+                            $now=$_GET["year"];
+                        }else{
+                            $now=date("Y");
+                        }
+
+                        if($year==$now){
+                            $sel="selected";
+                        }else{
+                            $sel="";
+                        }
+                    ?>
+                    <option <?php  echo $sel  ?> value="?year=<?php echo $year ?>"><?php 
+                        if($langId == 1){ 
+                            echo $year; 
+                        }else{
+                            echo $year+543;
+                        }    ?></option>
+                    <?php 
+                    }
+                    ?>
                 </select>
             </span>
         </h4>
@@ -95,15 +117,33 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
 
 
+                            // if (date("Y", strtotime($M_C->course_date_start)) !=  date("Y", strtotime($M_C->course_date_end))) {
+
+                            //     if (date("Y", strtotime($M_C->course_date_start)) < date("Y")) {
+                            //         $month_start = 1;
+                            //     } else {
+                            //         $month_start = date("m", strtotime($M_C->course_date_start));
+                            //     }
+
+                            //     if (date("Y", strtotime($M_C->course_date_end)) > date("Y")) {
+                            //         $month_end = 12;
+                            //     } else {
+                            //         $month_end = date("m", strtotime($M_C->course_date_end));
+                            //     }
+                            // } else {
+                            //     $month_start = date("m", strtotime($M_C->course_date_start));
+                            //     $month_end = date("m", strtotime($M_C->course_date_end));
+                            // }
+
                             if (date("Y", strtotime($M_C->course_date_start)) !=  date("Y", strtotime($M_C->course_date_end))) {
 
-                                if (date("Y", strtotime($M_C->course_date_start)) < date("Y")) {
+                                if (date("Y", strtotime($M_C->course_date_start)) < $now) {
                                     $month_start = 1;
                                 } else {
                                     $month_start = date("m", strtotime($M_C->course_date_start));
                                 }
 
-                                if (date("Y", strtotime($M_C->course_date_end)) > date("Y")) {
+                                if (date("Y", strtotime($M_C->course_date_end)) > $now) {
                                     $month_end = 12;
                                 } else {
                                     $month_end = date("m", strtotime($M_C->course_date_end));
@@ -164,3 +204,10 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
 
 </div>
+
+<script type="text/javascript"><!--
+function MM_jumpMenu(targ,selObj,restore){ //v3.0
+  eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+  if (restore) selObj.selectedIndex=0;
+}
+</script>
