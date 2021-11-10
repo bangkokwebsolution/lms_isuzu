@@ -2147,7 +2147,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
 
             function onPlayerReady(event) {
 
-              var id_you = $(event.target.o).attr("id").split("_");
+              var id_you = $(event.target.h).attr("id").split("_");
               id_you = id_you[1];
               arr_Duration[id_you] = event.target.getDuration();
             }
@@ -2176,7 +2176,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
 
               if (event.data == 1) { //play
                 youyube_playing = event;
-                var id_you = $(event.target.o).attr("id").split("_");
+                var id_you = $(event.target.h).attr("id").split("_");
                 id_you = id_you[1];
                 <?php foreach ($model->files as $file) { ?>
                   if (id_you != <?= $file->id ?>) {

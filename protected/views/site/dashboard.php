@@ -137,8 +137,8 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                         <div class="exp-course dashboard-exp">
                                             <!-- <p class=""> วันเริ่มต้น : 10 Jun. 2021</p>
                                             <p class=""> วันสิ้นสุด : 10 Jun. 2021</p> -->
-                                            <p class=""> <?= $start ?> : <?= $date_start; ?></p>
-                                            <p class=""> <?= $stop ?> : <?= $date_stop; ?></p>
+                                            <p class=""> <?= $Start ?> : <?= $date_start; ?></p>
+                                            <p class=""> <?= $Stop ?> : <?= $date_stop; ?></p>
                                         </div>
                                     </div>
                                 </div>
