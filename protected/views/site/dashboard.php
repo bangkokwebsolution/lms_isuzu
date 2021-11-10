@@ -3,10 +3,14 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $langId = Yii::app()->session['lang'] = 1;
     $Personal_Information = 'Personal Information';
     $Course_Status = 'Course Status';
+    $Start='Start';
+    $Stop='Stop';
 } else {
     $langId = Yii::app()->session['lang'];
     $Personal_Information = 'ข้อมูลส่วนบุคคล';
     $Course_Status = 'ข้อมูลหลักสูตร';
+    $Start='วันเริ่มต้น';
+    $Stop='วันสิ้นสุด';
 }
 ?>
 <div class="container">
@@ -133,8 +137,8 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                         <div class="exp-course dashboard-exp">
                                             <!-- <p class=""> วันเริ่มต้น : 10 Jun. 2021</p>
                                             <p class=""> วันสิ้นสุด : 10 Jun. 2021</p> -->
-                                            <p class=""> วันเริ่มต้น : <?= $date_start; ?></p>
-                                            <p class=""> วันสิ้นสุด : <?= $date_stop; ?></p>
+                                            <p class=""> <?= $start ?> : <?= $date_start; ?></p>
+                                            <p class=""> <?= $stop ?> : <?= $date_stop; ?></p>
                                         </div>
                                     </div>
                                 </div>
