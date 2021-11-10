@@ -8,7 +8,6 @@ class Controller extends CController
 	public function init()
 	{
 		parent::init();
-
 		if(empty(Yii::app()->session['lang'])){
 			Yii::app()->session['lang'] = 1;
 		}
@@ -32,13 +31,13 @@ class Controller extends CController
         }
         	//Check Session
 
-        if (User::model()->findbyPk(Yii::app()->user->id)->repass_status=='0' 
-	    	&& Yii::app()->controller->id != 'registration'){
-	    		$this->redirect(array('registration/Repassword'));
-				//var_dump(Yii::app()->controller->id);
-				//exit();
+    //     if (User::model()->findbyPk(Yii::app()->user->id)->repass_status=='0' 
+	   //  	&& Yii::app()->controller->id != 'registration'){
+	   //  		$this->redirect(array('registration/Repassword'));
+				// //var_dump(Yii::app()->controller->id);
+				// //exit();
 
-	      }
+	   //    }
 	     //  elseif (User::model()->findbyPk(Yii::app()->user->id)->repass_status=='2' 
 	    	// && Yii::app()->controller->id != 'registration') {
 	     //  	$this->redirect(array('registration/Update','id'=>Yii::app()->user->id));
