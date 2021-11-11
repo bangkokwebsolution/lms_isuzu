@@ -43,7 +43,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                 <select class="form-select select-year" aria-label="" onChange="MM_jumpMenu('parent',this,0)">
                     <?php
                    
-                    for ($year=date("Y")+5; $year > 2015; $year--) { 
+                    for ($year=date("Y")+1; $year > 2018; $year--) { 
 
                         if(isset($_GET["year"])){
                             $now=$_GET["year"];
