@@ -78,12 +78,14 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                             if ($langId == 2) {
                                                 $date_start =  Helpers::changeFormatDateTHshort($value->course->course_date_start);
                                                 $date_stop = Helpers::changeFormatDateTHshort($value->course->course_date_end);
-                                                $course_id = $value->course->parent_id;
+                                                $course_id = $value->course->course_id;
                                                 // var_dump($M_C->course_id);exit();
                                             } else {
                                                 $date_start = Helpers::changeFormatDateENnew($value->course->course_date_start);
                                                 $date_stop = Helpers::changeFormatDateENnew($value->course->course_date_end);
                                                 $course_id = $value->course->course_id;
+                                                // var_dump($value->course->course_id);exit();
+                                                
                                             }
                                             $LogStartcourse = LogStartcourse::Model()->find(array('condition' => 'course_id =' . $course_id . ' AND user_id =' . Yii::app()->user->id));
                                             $passcourse = Passcours::Model()->find(array('condition' => 'passcours_cours = ' . $course_id . ' AND passcours_user =' . Yii::app()->user->id));
