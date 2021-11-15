@@ -372,19 +372,25 @@ if (!empty($msg) || !empty($_GET['msg'])) {
 
 
                                         if (!empty($chk_logtime)) {
-                                            if ($chk_logtime->course_day != $course_chk_time->course_day_learn) {
-                                                $Endlearncourse = strtotime("+" . $course_chk_time->course_day_learn . " day", strtotime($chk_logtime->start_date));
+                                            // if ($chk_logtime->course_day != $course_chk_time->course_day_learn) {
+                                            //     $Endlearncourse = strtotime("+" . $course_chk_time->course_day_learn . " day", strtotime($chk_logtime->start_date));
 
+                                            //     $Endlearncourse = date("Y-m-d", $Endlearncourse);
+
+                                            //     $chk_logtime->end_date = $Endlearncourse;
+                                            //     $chk_logtime->course_day = $course_chk_time->course_day_learn;
+                                            //     $chk_logtime->save(false);
+                                            // }
+                                            if ($chk_logtime->end_date != $course_chk_time->course_date_end) {
+                                                $Endlearncourse = strtotime("+" . $course_chk_time->course_day_learn . " day", strtotime($chk_logtime->start_date));
                                                 $Endlearncourse = date("Y-m-d", $Endlearncourse);
 
-                                                $chk_logtime->end_date = $Endlearncourse;
+                                // $chk_logtime->end_date = $Endlearncourse;
+                                                $chk_logtime->end_date = $course_chk_time->course_date_end;
                                                 $chk_logtime->course_day = $course_chk_time->course_day_learn;
                                                 $chk_logtime->save(false);
                                             }
                                         }
-
-
-
 
 
                                         $expireUser = Helpers::lib()->checkUserCourseExpire($value);
@@ -559,14 +565,24 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                         ));
                         $course_chk_time = CourseOnline::model()->findByPk($value->course_id);
 
-
                         if (!empty($chk_logtime)) {
-                            if ($chk_logtime->course_day != $course_chk_time->course_day_learn) {
-                                $Endlearncourse = strtotime("+" . $course_chk_time->course_day_learn . " day", strtotime($chk_logtime->start_date));
+                            // if ($chk_logtime->course_day != $course_chk_time->course_day_learn) {
+                            //     $Endlearncourse = strtotime("+" . $course_chk_time->course_day_learn . " day", strtotime($chk_logtime->start_date));
 
+                            //     $Endlearncourse = date("Y-m-d", $Endlearncourse);
+
+                            //     $chk_logtime->end_date = $Endlearncourse;
+                            //     $chk_logtime->course_day = $course_chk_time->course_day_learn;
+                            //     $chk_logtime->save(false);
+
+                            // }
+
+                            if ($chk_logtime->end_date != $course_chk_time->course_date_end) {
+                                $Endlearncourse = strtotime("+" . $course_chk_time->course_day_learn . " day", strtotime($chk_logtime->start_date));
                                 $Endlearncourse = date("Y-m-d", $Endlearncourse);
 
-                                $chk_logtime->end_date = $Endlearncourse;
+                                // $chk_logtime->end_date = $Endlearncourse;
+                                $chk_logtime->end_date = $course_chk_time->course_date_end;
                                 $chk_logtime->course_day = $course_chk_time->course_day_learn;
                                 $chk_logtime->save(false);
                             }
