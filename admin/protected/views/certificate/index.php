@@ -1,4 +1,3 @@
-
 <?php
 $titleName = 'จัดการใบประกาศนียบัตร';
 $formNameModel = 'Certificate';
@@ -143,8 +142,10 @@ EOD
                     "sid"=>$data->sign_id,
                     "sid2"=>$data->sign_id2,
                     ), array(
-                "class"=>"btn btn-primary btn-icon"
+                "class"=>"btn btn-primary btn-icon",
+                "target" => "_blank"
                 ));',
+
               'type'=>'raw',
               'htmlOptions'=>array('style'=>'text-align: center','width'=>'100px'),
               'headerHtmlOptions'=>array('style'=>'text-align: center'),

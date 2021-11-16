@@ -31,11 +31,11 @@ $formNameModel = 'Certificate';
                         <?php echo $form->textField($model,'cert_name',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
                         <?php echo $form->error($model,'cert_name'); ?>
                     </div>
-                    <div class="row">
+                    <!-- <div class="row">
                         <?php echo $form->labelEx($model,'cert_text'); ?>
                         <?php echo $form->textarea($model,'cert_text',array('row'=>10, 'class'=>'span8')); ?>
                         <?php echo $form->error($model,'cert_text'); ?>
-                    </div>
+                    </div> -->
                     
                     <div class="row">
                         <?php echo $form->labelEx($model,'cert_background'); ?>
@@ -52,22 +52,22 @@ $formNameModel = 'Certificate';
                     </div>
 
                     <div class="row">
-                        <div>
+                        <!-- <div>
                          <?php echo 'ลายเซนต์ด้านซ้าย'; ?>
-                        </div>
+                        </div> -->
                         <!-- <?php echo $form->labelEx($model,'sign_id'); ?> -->
-                        <?php echo $form->dropDownList($model,'sign_id', CHtml::listData(Signature::model()->findAll('active="y"'), 'sign_id', 'sign_title'), array('empty'=>'-- กรุณาเลือกลายเซนต์ --','class'=>'span8')); ?>
+                        <!-- <?php echo $form->dropDownList($model,'sign_id', CHtml::listData(Signature::model()->findAll('active="y"'), 'sign_id', 'sign_title'), array('empty'=>'-- กรุณาเลือกลายเซนต์ --','class'=>'span8')); ?>
                         <?php echo $this->NotEmpty();?>
-                        <?php echo $form->error($model,'sign_id'); ?>
-                        <div>
+                        <?php echo $form->error($model,'sign_id'); ?> -->
+                        <!-- <div>
                          <?php echo 'ลายเซนต์ด้านขวา'; ?>
-                        </div>
+                        </div> -->
                         <!-- <?php echo $form->labelEx($model,'sign_id'); ?> -->
-                        <?php echo $form->dropDownList($model,'sign_id2', CHtml::listData(Signature::model()->findAll('active="y"'), 'sign_id', 'sign_title'), array('empty'=>'-- กรุณาเลือกลายเซนต์ --','class'=>'span8')); ?>
+                        <!-- <?php echo $form->dropDownList($model,'sign_id2', CHtml::listData(Signature::model()->findAll('active="y"'), 'sign_id', 'sign_title'), array('empty'=>'-- กรุณาเลือกลายเซนต์ --','class'=>'span8')); ?>
                         <?php echo $this->NotEmpty();?>
-                        <?php echo $form->error($model,'sign_id'); ?>
+                        <?php echo $form->error($model,'sign_id'); ?> -->
                     </div>
-                    <?php 
+                   <!--  <?php 
                     $display[1] = 'รูปแบบแนวตั้ง แบบที่1';
                     $display[3] = 'รูปแบบแนวตั้ง แบบที่2';
                     $display[2] = 'รูปแบบแนวนอน';
@@ -76,13 +76,15 @@ $formNameModel = 'Certificate';
                         <?php echo $form->labelEx($model,'cert_display'); ?>
                         <?php echo $form->dropDownList($model,'cert_display', $display, array('empty'=>'-- กรุณาเลือกรูปแบบแสดงผล --','class'=>'span8')); ?>
                         <?php echo $form->error($model,'cert_display'); ?>
-                    </div>
+                    </div> -->
 
                     <!-- <div class="row">
                         <?php echo $form->labelEx($model,'cert_number'); ?>
                         <?php echo $form->textField($model,'cert_number',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
                         <?php echo $form->error($model,'cert_number'); ?>
                     </div> -->
+
+                    <br>
 
                     <div class="row buttons">
                         <?php echo CHtml::tag('button',array('class' => 'btn btn-primary btn-icon glyphicons ok_2'),'<i></i>บันทึกข้อมูล');?>

@@ -57,16 +57,16 @@ class Certificate extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('sign_id', 'required'),
+			// array('sign_id', 'required'),
 			// array('sign_id2', 'required'),
-			array('sign_id , sign_id2, cert_hide, cert_hour, cert_display, create_by, update_by', 'numerical', 'integerOnly'=>true),
+			array('sign_id2, cert_hide, cert_hour, cert_display, create_by, update_by', 'numerical', 'integerOnly'=>true),
 			array('cert_number', 'length', 'max'=>100),
 			array('cert_name', 'length', 'max'=>250),
 			array('active', 'length', 'max'=>1),
 			array('cert_background, create_date, update_date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('cert_id, sign_id, sign_id2 , cert_course_number, cert_number,cert_name, cert_background, cert_hide, cert_hour, cert_display, create_date, create_by, update_date, update_by, active, cert_text', 'safe', 'on'=>'search'),
+			array('cert_id,  sign_id2 , cert_course_number, cert_number,cert_name, cert_background, cert_hide, cert_hour, cert_display, create_date, create_by, update_date, update_by, active, cert_text', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -133,7 +133,7 @@ class Certificate extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 		$criteria->compare('cert_id',$this->cert_id);
-		$criteria->compare('sign_id',$this->sign_id);
+		// $criteria->compare('sign_id',$this->sign_id);
 		$criteria->compare('cert_name',$this->cert_name,true);
 		$criteria->compare('cert_background',$this->cert_background,true);
 		$criteria->compare('cert_hide',$this->cert_hide);

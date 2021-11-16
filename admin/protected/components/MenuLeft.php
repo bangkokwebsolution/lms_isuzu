@@ -990,15 +990,15 @@ Class MenuLeft extends Controller
 						'label'=>'จัดการประกาศนียบัตร',
 						'url'=>array('//Certificate/index')
 					),
-					array(
+					// array(
 
-						'visible'=>self::PermissionsMenu(array(
-							'Signature.*',
-							'Signature.index'
-						)),
-						'label'=>'จัดการลายเซนต์',
-						'url'=>array('//Signature/index')
-					),
+					// 	'visible'=>self::PermissionsMenu(array(
+					// 		'Signature.*',
+					// 		'Signature.index'
+					// 	)),
+					// 	'label'=>'จัดการลายเซนต์',
+					// 	'url'=>array('//Signature/index')
+					// ),
 				)
 			),
 			array(

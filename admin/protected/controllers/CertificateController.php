@@ -52,19 +52,23 @@ class CertificateController extends Controller
 		// var_dump($model->cert_display);exit();
 		if(isset($_POST['Certificate']))
 		{
-			$model->attributes=$_POST['Certificate'];
-			$model->cert_text = $_POST['Certificate']['cert_text'];
+			// $model->attributes=$_POST['Certificate'];
+			$model->cert_name=$_POST['Certificate']['cert_name'];
+			$model->sign_id=0;
+			$model->sign_id2=0;
+			// var_dump($_POST['Certificate']);exit();
+			// $model->cert_text = $_POST['Certificate']['cert_text'];
 			$cert_background = Slim::getImages('cert_background');
 			$path =  Yii::app()->basePath."/../../uploads/certificate/";
 			
-			$signature_array =array();
+			// $signature_array =array();
 			if($model->validate()){
 				if($cert_background){ 
 					$model->cert_background = Helpers::lib()->uploadImage($cert_background,$path);
 				}
-				
+
 				// var_dump($model->attributes);exit();
-				if($model->save()){
+				if($model->save(false)){
 					if(Yii::app()->user->id){
 						Helpers::lib()->getControllerActionId();
 					}
