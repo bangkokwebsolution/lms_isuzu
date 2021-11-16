@@ -26,11 +26,11 @@
 // );
 
 
-  return  array(
+    return  array(
     'class' => 'CDbConnection',
-    'connectionString' => 'mysql:host=203.154.140.77;dbname=db_thoresen',
+    'connectionString' => 'mysql:host=203.154.39.185;dbname=db_isuzu',
     'emulatePrepare' => true,
-    'username' => 'lms_thoresen',
+    'username' => 'Db_Lms',
     'password' => 'Admin@123#',
     'tablePrefix' => 'tbl_',
     'charset' => 'utf8',
@@ -38,6 +38,7 @@
         "SET time_zone = '+07:00'"
     )
 );
+
 
 
 
