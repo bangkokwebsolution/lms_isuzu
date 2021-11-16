@@ -6,6 +6,9 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $genaral_course = 'General Course';
     $specific_course = 'Specific Course';
     $Title_popup = 'Confirm Registration';
+
+    $Time_out='Not Registered Now';
+    $Time_out_des='Course Registration Date ';
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -13,6 +16,9 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $genaral_course = 'หลักสูตรทั่วไป';
     $specific_course = 'หลักสูตรเฉพาะ';
     $Title_popup = 'ยืนยันการลงทะเบียนคอสน์อบรม';
+
+    $Time_out='ยังไม่ถึงเวลาลงทะเบียนเรียน';
+    $Time_out_des='เปิดลงทะเบียนเรียนหลักสูตร วันที่ ';
 }
 function DateThai($strDate)
 {
@@ -490,7 +496,9 @@ function DateThai($strDate)
                                 $evnt = 'onclick="alertMsg(\'ระบบ\',\'' . $labelcourse->label_swal_coursenoopen . '\',\'error\')"';
                                 $url = 'javascript:void(0)';
                             } else {
-                                $evnt = 'onclick="alertMsg(\'ระบบ\',\'' . $labelcourse->label_swal_timeoutcourse . '\',\'error\')"';
+                                $date_start=$model->course_date_start;
+                                $date_start=date("d/m/y", strtotime($date_start));   
+                                $evnt = 'onclick="alertMsg(\'' . $Time_out . '\',\'' . $Time_out_des . ''.$date_start.'\',\'error\')"';
                                 $url = 'javascript:void(0)';
                             }
 
@@ -634,7 +642,9 @@ function DateThai($strDate)
                                 $url = 'javascript:void(0)';
                             } else {
                                 
-                                $evnt = 'onclick="alertMsg(\'ระบบ\',\'' . $labelcourse->label_swal_timeoutcourse . '\',\'error\')"';
+                                $date_start=$model->course_date_start;
+                                $date_start=date("d/m/y", strtotime($date_start));   
+                                $evnt = 'onclick="alertMsg(\'' . $Time_out . '\',\'' . $Time_out_des . ''.$date_start.'\',\'error\')"';
                                 $url = 'javascript:void(0)';
                             }
                             $chk = Helpers::lib()->getLearn($model->course_id);

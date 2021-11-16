@@ -19,6 +19,9 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $library_show = 'e-Library';
     $CourseCategory = 'Course Category';
     $Title_popup = 'Confirm Registration';
+
+    $Time_out='Not Registered Now';
+    $Time_out_des='Course Registration Date ';
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -39,6 +42,9 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $classroom_online = 'ห้องเรียนออนไลน์';
     $CourseCategory = 'หมวดหมู่หลักสูตร';
     $Title_popup = 'ยืนยันการลงทะเบียนคอสน์อบรม';
+
+    $Time_out='ยังไม่ถึงเวลาลงทะเบียนเรียน';
+    $Time_out_des='เปิดลงทะเบียนเรียนหลักสูตร วันที่ ';
 }
 ?>
 <!-- // -->
@@ -420,7 +426,9 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                                 $evnt = 'onclick="alertMsg(\'ระบบ\',\'' . $labelcourse->label_swal_coursenoopen . '\',\'error\')"';
                                 $url = 'javascript:void(0)';
                             } else {
-                                $evnt = 'onclick="alertMsg(\'ระบบ\',\'' . $labelcourse->label_swal_timeoutcourse . '\',\'error\')"';
+                                $date_start=$value->course_date_start;
+                                $date_start=date("d/m/y", strtotime($date_start));   
+                                $evnt = 'onclick="alertMsg(\'' . $Time_out . '\',\'' . $Time_out_des . ''.$date_start.'\',\'error\')"';
                                 $url = 'javascript:void(0)';
                             }
                     ?>
@@ -612,7 +620,10 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                 $evnt = 'onclick="alertMsg(\'ระบบ\',\'' . $labelcourse->label_swal_coursenoopen . '\',\'error\')"';
                 $url = 'javascript:void(0)';
             } else {
-                $evnt = 'onclick="alertMsg(\'ระบบ\',\'' . $labelcourse->label_swal_timeoutcourse . '\',\'error\')"';
+                
+                $date_start=$value->course_date_start;
+                $date_start=date("d/m/y", strtotime($date_start));   
+                $evnt = 'onclick="alertMsg(\'' . $Time_out . '\',\'' . $Time_out_des . ''.$date_start.'\',\'error\')"';
                 $url = 'javascript:void(0)';
             }
             $chk = Helpers::lib()->getLearn($value->course_id);
