@@ -408,6 +408,7 @@ public function search()
 	$criteria->compare('username',$this->username,true);
 	$criteria->compare('password',$this->password);
 	$criteria->compare('pic_user',$this->pic_user);
+	$criteria->compare('employee_id',$this->employee_id);
         // $criteria->compare('station_id',$this->station_id);
         // $criteria->compare('position_id',$this->position_id);
         // $criteria->compare('user.department_id',$this->department_id);
