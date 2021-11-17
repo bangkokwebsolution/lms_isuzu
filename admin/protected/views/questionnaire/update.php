@@ -33,8 +33,8 @@ $(function() {
 </script>
 <?php
 $this->breadcrumbs=array(
-	'จัดการแบบสอบถาม'=>array('Index'),
-	'แก้ไขแบบสอบถาม',
+	'จัดการแบบประเมิน'=>array('Index'),
+	'แก้ไขแบบประเมิน',
 );
 ?>
 <script type="text/javascript">
@@ -52,7 +52,7 @@ label.error { display: none; }
 			<ul>
 				<li class="active">
 					<a class="glyphicons edit" href="#account-details" data-toggle="tab">
-						<i></i> แก้ไขแบบสอบถาม
+						<i></i> จัดการแบบประเมิน
 					</a>
 				</li>
 			</ul>

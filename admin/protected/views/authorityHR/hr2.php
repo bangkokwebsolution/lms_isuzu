@@ -7,7 +7,7 @@ $this->breadcrumbs=array($titleName);
   <div class="row">
     <div class="col-md-12">
 
-       <h3>รจัดการผู้อนุมัติ คนที่ 2 (HR)</h3>
+       <h3>จัดการผู้อนุมัติ คนที่ 2 (HR)</h3>
        <table class="table table-bordered" id="user_board">
          <thead>
           <tr>
