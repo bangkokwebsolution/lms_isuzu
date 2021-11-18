@@ -283,10 +283,10 @@ class ReportProblemController extends Controller
        	$to['lastname'] = $model->lastname;
        	if ($Usability) {
     	//$subject = 'ตอบคำถาม เรื่อง  : ' . $Usability->usa_title;
-    		$subject = 'ThorConn.com inquiry report system\ รายงานผลการสอบถามระบบ ThorConn.com : ' . $Usability->usa_title;
+    		$subject = 'ตอบคำถาม เรื่อง : ' . $Usability->usa_title;
        	}else{
        	//$subject = 'ตอบคำถามที่ท่านส่งมา';
-       		$subject = 'ThorConn.com inquiry report system\ รายงานผลการสอบถามระบบ ThorConn.com : ';
+       		$subject = 'ตอบคำถามที่ท่านส่งมา : ';
        	}      
        	$message = $msg;
         $mail = Helpers::lib()->SendMail($to, $subject, $message);
