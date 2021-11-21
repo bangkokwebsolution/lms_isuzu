@@ -209,6 +209,26 @@ EOD
                         },
                     ),
                     array(
+                            'header'=>'รูปภาพ',
+                            'type'=>'raw',
+                            'value'=>function($data){
+                            if($data->report_pic != null){
+                                $imgCheck = CHtml::image(Yii::app()->request->baseUrl.'/../uploads/reportproblem/'.$data->report_pic,$data->report_pic, array(
+                                    'style'=>'width:110px;height:90px;'
+                                ));
+                                $img_url=Yii::app()->request->baseUrl.'/../uploads/reportproblem/'.$data->report_pic;
+                            }else{
+                                $imgCheck = CHtml::image(Yii::app()->request->baseUrl.'/images/logo_course.png', 'No Image', array(
+                                    'style'=>'width:110px;height:90px;'
+                                ));
+                                $img_url="javascript:;";
+                            }
+
+                            return "<a href='".$img_url."' target='_bank'>".$imgCheck."</a>";
+                        },
+                            'htmlOptions'=>array('width'=>'100px','style'=>'max-width:100px;overflow: hidden;')
+                        ),
+                    array(
                 'header'=>'ส่งข้อความ',
                 'type' => 'raw',
                 'visible' => Controller::PButton( array("ReportProblem.*", "ReportProblem.sendMailMessage") ),
