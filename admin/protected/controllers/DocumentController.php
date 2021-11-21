@@ -167,8 +167,8 @@ class DocumentController extends Controller {
 					$model->dty_name = $_POST['DocumentType']['dty_name'];
 					$model->updatedate = date('Y-m-d H:i:s');
 
-					if($model->validate())
-					{
+					// if($model->validate())
+					// {
 						if($model->save())
 						{
 							if(Yii::app()->user->id){
@@ -177,10 +177,10 @@ class DocumentController extends Controller {
 							$this->redirect(array('index_type'));
 
 						}
-					} else {
-						var_Dump($model->getErrors());
-						exit();
-					}
+					// } else {
+					// 	// var_Dump($model->getErrors());
+					// 	exit();
+					// }
 				}
 				$this->render('update_type',array(
 					'model'=>$model,
