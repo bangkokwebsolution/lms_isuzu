@@ -43,7 +43,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $CourseCategory = 'หมวดหมู่หลักสูตร';
     $Title_popup = 'ยืนยันการลงทะเบียนคอสน์อบรม';
 
-    $Time_out='ยังไม่ถึงเวลาลงทะเบียนเรียน';
+    $Time_out='ยังไม่เปิดลงทะเบียนเรียน';
     $Time_out_des='เปิดลงทะเบียนเรียนหลักสูตร วันที่ ';
 }
 ?>
