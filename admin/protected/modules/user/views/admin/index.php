@@ -130,38 +130,7 @@ EOD
 											'filterHtmlOptions'=>array('style'=>'width:30px;'), 
 											'htmlOptions'=>array('style'=>'text-align: center;hight:5%;'),
 										),
-			// 					array(
-			// 						'name' => 'idensearch',
-			// 						'type'=>'raw',
-			// 						// 'value' => '$data->profile->identification',
-			// 						'value'=>function($data){
-			// 							if(!empty($data->identification)){
-			// 								return $data->identification;
-			// 							}else{
-			// 								return 'ไม่มีข้อมูลบัตรประชาชน';
-			// 							}
-			// 						},
-			// //'value' => 'CHtml::link(UHtml::markSearch($data, ),array("admin/view","id"=>$data->id))',
-			// 					),
-								// array(
-								// 	'name' => 'pic_cardid2',
-								// 	'type'=>'raw',
-								// 	'value'=>function($data){
-								// 		if(!empty($data->pic_cardid2)){
-								// 			return $data->pic_cardid2;
-								// 		}else{
-								// 			return 'ไม่พบเลขประจำตัวพนักงาน';
-								// 		}
-								// 	},
-								// ),
-										// array(
-										// 	'header' => 'ชื่อ - นามสกุล',
-										// 	'type'=>'html',
-										// 	'value'=>function($data){
-										// 		return $data->profile->firstname . ' ' . $data->profile->lastname;
-
-										// 	}
-										// ),
+	
 										array(
 											'name'=>'fullname',
 											'type'=>'html',
@@ -170,42 +139,9 @@ EOD
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
 											'htmlOptions'=>array('style'=>'text-align: center;'),
 										),
-										// array(
-										// 	'header' => 'รหัสพนักงาน',
-										// 	'name'=>'username',
-										// 	'type'=>'html',
-										// 	'value'=>function($data){
-										// 		return $data->username;
-										// 	}
-										// ),
 										
-										// 	array(
-										// 	'header' => 'เลขประจำตัวบัตรประชาชน',
-										// 	'name'=>'identification',
-										// 	'type'=>'html',
-										// 	'filter'=>false,
-										// 	'visible' => $this->route === "user/admin/General",
-										// 	'value'=>function($data){
-										// 		return $data->identification;
-										// 	},
-										// 	'filterHtmlOptions'=>array('style'=>'width:30px'),
-									
+										
 
-										// ),
-									
-										// array(
-										// 	'header' => 'เลขพาสปอร์ต',
-										// 	'name'=>'passport',
-										// 	'type'=>'html',
-										// 	'filter'=>false,
-										// 	'visible' => $this->route == "user/admin/employeeShip",
-										// 	'value'=>function($data){
-										// 		return $data->profile->passport;
-						  
-										// 	},
-										// 	'filterHtmlOptions'=>array('style'=>'width:30px'),
-
-										// ),
 
 										array(
 											'header' => 'Employee ID',
@@ -233,6 +169,7 @@ EOD
 												return $class ;
 											},
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
+											
 									
 										),
 										array(
@@ -257,7 +194,9 @@ EOD
 											'type'=>'raw',
 											// 'filter'=>false,
 											'value'=>'CHtml::link(UHtml::markSearch($data,"email"), "mailto:".$data->email)',
-											'filterHtmlOptions'=>array('style'=>'width:30px'),
+											'filterHtmlOptions'=>array('style'=>'width:30px',),
+											// 'htmlOptions'=>array('style'=>'width:300px'),
+											'htmlOptions'=>array('width'=>'110px','style'=>'max-width:110px;overflow: hidden;')
 			
 										),
 		// 'create_at',
@@ -323,6 +262,8 @@ EOD
 											},
 											'header' => 'เปลี่ยนรหัสผ่าน',
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
+											'htmlOptions'=>array('width'=>'100px','style'=>'max-width:100px;overflow: hidden;text-align: center;'),
+											
 											// 'htmlOptions'=>array('style'=>'text-align: center;'),
 											// 'headerHtmlOptions'=>array( 'style'=>'text-align:center;width:100%;'),
 										),
