@@ -67,13 +67,13 @@ label.error { display: none; }
 				));?>
 				<div class="row">
 					<div>
-						<label><h4>หัวข้อแบบสอบถาม</h4></label>
+						<label><h4>หัวข้อแบบประเมิน</h4></label>
 						<input id="survey-header" value="<?php echo $header->survey_name; ?>" name="surveyHeaderOld" type="text" class="span8" required>
 					</div>
 				</div>
 				<div class="row">
 					<div>
-						<label><h4>รายละเอียดแบบสอบถาม</h4></label>
+						<label><h4>รายละเอียดแบบประเมิน</h4></label>
 						<textarea name="surveyHeaderDetailOld" class="survey-header-detail tinymce" cols="30" rows="10"><?php echo CHtml::decode($header->instructions); ?></textarea>
 					</div>
 				</div>

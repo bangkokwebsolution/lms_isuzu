@@ -87,12 +87,17 @@ if ($_GET["msg"]=="error") {
                                     <?php echo $form->textField($model, 'email', array('class' => 'form-control input-lg' , 'placeholder' => 'example@gmail.com' , 'required' => true)); ?>
                                     <?php echo $form->error($model, 'email'); ?>
                                 </div>
+
                             </div>
                         </div>         
                         <div class="text-center">
                             <!--<button type="submit" class="btn btn-warning btn-lg">ส่งข้อความ</button>-->
                             <?php echo CHtml::submitButton( $label->label_button , array('class' => 'btn btn-warning btn-lg')); ?>
+
                         </div>
+                        <br>
+                            <label for="">หมายเหตุ ข้อความแจ้งให้ user ทราบว่าจะต้องติดต่อ system admin ยังไงในกรณีที่ตัวเค้าไม่มีทั้ง อีเมลบริษัทหรืออีเมลส่วนตัว เพื่อขอ reset password โดยแจ้งให้ user ทราบว่าต้องติดต่อ System Admin ที่เบอร์ 1210 หรือ 1211</label>
+                            <br>
                     </div>
 
                     <?php $this->endWidget();
