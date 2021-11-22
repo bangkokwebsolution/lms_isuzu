@@ -258,7 +258,7 @@ header("Pragma:no-cache");
                                       <td><?= $valueLog->user->employee_id ?></td>
                                       <td><?= $valueLog->pro->fullname_en ?></td>
                                       <td><?= $valueLog->pro->location ?></td>
-                                      <td><?= $valueLog->pro->employee_class ?></td>
+                                      <td><?= $valueLog->pro->EmpClass->title ?></td>
                                       <td><?= $lessonListStatus->courseonlines->cates->type->type_name ?></td>
                                       <td><?= $valueLog->course->cates->cate_title ?></td>
                                       <td><?= $valueLog->course->course_number ?></td>

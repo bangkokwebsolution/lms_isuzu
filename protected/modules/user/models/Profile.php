@@ -152,6 +152,7 @@ class Profile extends CActiveRecord {
             'type_name' => array(self::BELONGS_TO, 'TypeUser', 'type_user'),
             'ProfilesEdu' => array(self::BELONGS_TO, 'ProfilesEdu', 'user_id'),
             'ProfilesTitle' => array(self::BELONGS_TO, 'ProfilesTitle', 'title_id'),
+            'EmpClass' => array(self::BELONGS_TO, 'employee_class', 'employee_class'),
         );
         if (isset(Yii::app()->getModule('user')->profileRelations))
             $relations = array_merge($relations, Yii::app()->getModule('user')->profileRelations);
