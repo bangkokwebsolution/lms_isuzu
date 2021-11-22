@@ -93,11 +93,12 @@ if ($_GET["msg"]=="error") {
                         <div class="text-center">
                             <!--<button type="submit" class="btn btn-warning btn-lg">ส่งข้อความ</button>-->
                             <?php echo CHtml::submitButton( $label->label_button , array('class' => 'btn btn-warning btn-lg')); ?>
-
-                        </div>
+                        <br>    
                         <br>
-                            <label for="">หมายเหตุ ข้อความแจ้งให้ user ทราบว่าจะต้องติดต่อ system admin ยังไงในกรณีที่ตัวเค้าไม่มีทั้ง อีเมลบริษัทหรืออีเมลส่วนตัว เพื่อขอ reset password โดยแจ้งให้ user ทราบว่าต้องติดต่อ System Admin ที่เบอร์ 1210 หรือ 1211</label>
+                        <br>
+                            <label for=""><font color="red">*หมายเหตุ สำหรับผู้ใช้งานที่ไม่มีอีเมลบริษัทหรืออีเมลส่วนตัว เพื่อขอ Reset Pssword สามารถติดต่อผู้ดูแลระบบได้ที่เบอร์โทร 1210 หรือ 1211</font></label>
                             <br>
+                        </div>
                     </div>
 
                     <?php $this->endWidget();
