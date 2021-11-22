@@ -75,7 +75,8 @@ $path_theme = Yii::app()->theme->baseUrl . '/';
                             ?>
                             <div class="form-bottom">
                                 <div>
-                                    <h4>ชื่อกลุ่ม <?php echo $sectionValue->section_title; ?></h4>
+                                    <h4><?php echo $sectionValue->section_title; ?></h4>
+
 
                                     <?php
                                     if (count($sectionValue->questions) > 0) {
