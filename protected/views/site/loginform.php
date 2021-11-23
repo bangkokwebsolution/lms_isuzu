@@ -3,9 +3,11 @@
 if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $langId = Yii::app()->session['lang'] = 1;
     $langRe = 'en';
+    $this->pageTitle = 'IMCT e-Learning';
 } else {
     $langId = Yii::app()->session['lang'];
     $langRe = 'th';
+    $this->pageTitle = 'ระบบจัดการ IMCT e-Learning';
 }
 if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') {
     $keyrecaptcha = '6LdxRgocAAAAADrcEFCe2HcHeETOZdREexT52B6R'; //localhost
@@ -25,7 +27,7 @@ if (Yii::app()->user->id != null) {
 $msg = Yii::app()->user->getFlash('msg');
 $icon = Yii::app()->user->getFlash('icon');
 ?>
-
+<title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
 
 <script src='https://www.google.com/recaptcha/api.js?hl=<?= $langRe ?>'></script>
