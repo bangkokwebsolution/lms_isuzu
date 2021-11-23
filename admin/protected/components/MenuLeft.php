@@ -2493,18 +2493,18 @@ Class MenuLeft extends Controller
 	        // ),
 			//====== END Menu Company ======//
 
-			array(
-				/*====== Check Permissions PopUp (2) ======*/
-				'visible'=>self::PermissionsMenu(array(
-					'LogEmail.*',
-					'LogEmail.email'
-				)),
-				'label'=>'<i></i><span>ระบบการส่งผลการเรียนผ่านทางระบบอัตโนมัติ</span>',
-				'url'=>array('//LogEmail/email'),
-				//'linkOptions' => array('data-toggle' => 'collapse'),
-				'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
-				'submenuOptions' => array('class' => self::SetSubMenu( array('LogEmail') ), 'id' => 'LogEmail'),
-			),
+			// array(
+			// 	/*====== Check Permissions PopUp (2) ======*/
+			// 	'visible'=>self::PermissionsMenu(array(
+			// 		'LogEmail.*',
+			// 		'LogEmail.email'
+			// 	)),
+			// 	'label'=>'<i></i><span>ระบบการส่งผลการเรียนผ่านทางระบบอัตโนมัติ</span>',
+			// 	'url'=>array('//LogEmail/email'),
+			// 	//'linkOptions' => array('data-toggle' => 'collapse'),
+			// 	'itemOptions' => array('class' => 'hasSubmenu glyphicons folder_new'),
+			// 	'submenuOptions' => array('class' => self::SetSubMenu( array('LogEmail') ), 'id' => 'LogEmail'),
+			// ),
 
 			array(
 
