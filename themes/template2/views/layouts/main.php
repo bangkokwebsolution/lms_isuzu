@@ -19,12 +19,12 @@ Yii::app()->user->returnUrl = $http->getUrl();
 
 <head>
   <?php if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
-    $langId = Yii::app()->session['lang'] = 1;
-    $this->pageTitle = 'ISUZU E-Learning';
-  } else {
-    $langId = Yii::app()->session['lang'];
-    $this->pageTitle = 'ระบบการเรียนรู้ ';
-  }
+        $langId = Yii::app()->session['lang'] = 1;
+        $this->pageTitle = 'IMCT e-Learning';
+    } else {
+        $langId = Yii::app()->session['lang'];
+        $this->pageTitle = 'ระบบจัดการ IMCT e-Learning';
+    }
   ?>
   <title><?php echo CHtml::encode($this->pageTitle); ?></title>
   <?php include("themes/template2/include/css.php"); ?>
