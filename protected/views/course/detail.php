@@ -33,7 +33,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $successStudy = "You have passed the conditions";
     $Period = "Period";
     $day = "day";
-    $Questionnaire = "Questionnaire ";
+    $Questionnaire = "Course Evaluation ";
     $Click = "Click";
     $final = "Final";
     $clickFinal = "Final test";
@@ -48,6 +48,8 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $Click = 'Click';
     $Hr = 'Hr';
 
+    $Sequence="Please learn the previous lesson.";
+
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -57,7 +59,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $successStudy = "ท่านเรียนผ่านตามเงื่อนไข";
     $Period = "ระยะเวลา";
     $day = "วัน";
-    $Questionnaire = "แบบสอบถาม ";
+    $Questionnaire = "แบบสอบประเมิน ";
     $Click = "คลิก";
     $final = "การสอบวัดผล";
     $pre_course = "การสอบก่อนเรียนหลักสูตร";
@@ -71,6 +73,8 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $CourseEvaluation = 'การประเมินผลหลักสูตร';
     $Click = 'กด';
     $Hr = 'ชั่วโมง';
+
+    $Sequence="กรุณาเรียนบทเรียนก่อนหน้า";
 
 
 
@@ -1818,7 +1822,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                                     <?php if ($step == 5) { ?>
                                                         <!-- <div class="pt-now"> Step now</div> -->
                                                     <?php } ?>
-                                                    <span><i class="fa fa-list" aria-hidden="true"></i> <?= $label->label_surveyCourse; ?></span> <a href="<?= $pathSurvey ?>" <?= $alrtSurvey  ?> class="btn btn-warning detailmore pull-right"><?= $Click ?> <i class="fa fa-check-square-o" aria-hidden="true"></i></a>
+                                                    <span><i class="fa fa-list" aria-hidden="true"></i> Course Evaluation <?php //$label->label_surveyCourse; ?></span> <a href="<?= $pathSurvey ?>" <?= $alrtSurvey  ?> class="btn btn-warning detailmore pull-right"><?= $Click ?> <i class="fa fa-check-square-o" aria-hidden="true"></i></a>
                                                 </div>
                                             <?php } ?>
                                             <!-- end Survey -->
@@ -1951,7 +1955,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
     }
 
     function alertSequence() {
-        swal('<?= $label->label_swal_warning ?>', '<?= $label->label_swal_plsLearnPass ?>', "error");
+        swal('<?= $label->label_swal_warning ?>', '<?= $Sequence ?>', "error");
     }
 
     function alertswal_test() {

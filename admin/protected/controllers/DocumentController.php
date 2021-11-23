@@ -119,8 +119,8 @@ class DocumentController extends Controller {
     		}else{
     			$model->dow_address = $imageShow;
     		}
-    		if($model->validate())
-    		{
+    		// if($model->validate())
+    		// {
     			if($model->save())
     			{
     				if(isset($dow_address))
@@ -147,10 +147,10 @@ class DocumentController extends Controller {
 							echo "string";
 							exit();
 						}
-					} else {
-						var_Dump($model->getErrors());
-						exit();
-					}
+					// } else {
+					// 	var_Dump($model->getErrors());
+					// 	exit();
+					// }
 				}
 				$this->render('update',array(
 					'model'=>$model,
