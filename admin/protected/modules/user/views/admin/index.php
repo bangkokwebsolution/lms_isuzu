@@ -204,7 +204,7 @@ EOD
 											'name'=>'create_at',
 											'type'=>'html',
 			// 'value'=>'UHtml::markSearch($data,"create_at")'
-											// 'filter' => false,
+											'filter' => false,
 											'value'=>function($data){
 												return Helpers::changeFormatDate($data->create_at,'datetime');
 											},
@@ -217,7 +217,7 @@ EOD
 											'name'=>'lastvisit_at',
 											'type'=>'html',
 			// 'value'=>'UHtml::markSearch($data,"lastvisit_at")'
-											// 'filter' => false,
+											'filter' => false,
 											'value'=>function($data){
 												return Helpers::changeFormatDate($data->lastvisit_at,'datetime');
 											},
