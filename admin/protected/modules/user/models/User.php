@@ -46,6 +46,7 @@ class User extends CActiveRecord
 	public $passport;
 	public $empclass_title;
 	public $empclass_descrpition;
+	public $email;
 
 
 
@@ -97,7 +98,7 @@ class User extends CActiveRecord
 			array('news_per_page', 'safe'),
 			// array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,company_id, division_id,position_id,lastactivity,orgchart_lv2, group,idensearch,identification,station_id,supper_user_status,pic_cardid2,employee_id,typeuser,register_status,dateRang,user_id,nameSearch,note,not_passed, avatar, month,type_employee, report_authority, branch_id, fullname, passport', 'safe', 'on'=>'search'),
 
-			array('online_status,empclass_title,empclass_descrpition', 'safe', 'on'=>'search'),
+			array('online_status,empclass_title,empclass_descrpition,email', 'safe', 'on'=>'search'),
 
 			// array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 
