@@ -143,15 +143,16 @@ class DocumentController extends Controller {
 							$this->redirect(array('view','id'=>$model->dow_id));
 						//$this->redirect(array('Document/index','model'=>$model));
 					// $this->redirect('index');
-						} else {
-							echo "string";
-							exit();
-						}
+						// } else {
+						// 	echo "string";
+						// 	exit();
+						// }
 					// } else {
 					// 	var_Dump($model->getErrors());
 					// 	exit();
 					// }
-				}
+						}
+				}//document
 				$this->render('update',array(
 					'model'=>$model,
 					'imageShow'=>$imageShow,
