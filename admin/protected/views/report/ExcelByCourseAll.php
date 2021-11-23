@@ -62,6 +62,9 @@ if(isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] !=''){
                     <tbody>
                         <?php $no =1; 
                     foreach ($user_Learn as $keyL => $valueL) {
+                        if (!isset($valueL->user)) {
+                            continue;
+                        }
                         // if(isset($search['gen_id']) && $search['gen_id'] !=''){
                         //     if($search['gen_id'] != $valueL->course->getGenID($valueL->course_id)){ continue; }
                         // }

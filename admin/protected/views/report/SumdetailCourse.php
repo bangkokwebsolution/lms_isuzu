@@ -441,6 +441,7 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
                                 $criteria->compare('superuser',0);
                                 $criteria->addCondition('user.id IS NOT NULL');
                                 $criteria->compare('t.gen_id', $valueG->gen_id);
+                                $criteria->compare('t.course_id',$valueC->course_id);
                                 $user_Learn = LogStartcourse::model()->findAll($criteria);
 
                                 $user_chk = array();
@@ -549,7 +550,102 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
                         <td class="center"><?= $num_per_pass ?> %</td>
                     </tr>
                     <?php    }
-                    }else{  ?>
+                    }else{ 
+                                $criteria = new CDbCriteria;
+                                $criteria->with = array('pro', 'course', 'mem');
+                                $criteria->compare('superuser',0);
+                                $criteria->addCondition('user.id IS NOT NULL');
+                                $criteria->compare('t.gen_id',0);
+                                $criteria->compare('t.course_id',$valueC->course_id);
+                                $user_Learn = LogStartcourse::model()->findAll($criteria);
+
+                                $user_chk = array();
+                                foreach ($user_Learn as $key => $val) {
+                                    $user_chk[] = $val->user_id;
+                                }
+                                if(count($user_chk) == 0){
+                                    $user_chk = array(0);
+                                } 
+
+                                $allUsers = User::model()->with('profile')->findAll(array(
+                                    'condition' => 'status ="1" and user.id IN ('.implode(",",$user_chk).')',
+                                    'order' => 'profile.firstname_en ASC'
+                                ));
+
+                                $num_register = count($allUsers);
+                                $num_pass = 0;
+                                $num_learning = 0;
+                                $num_notlearn = 0;
+                                $num_final_pass = 0;
+                                $num_final_notpass = 0;
+                                $num_per_pass = 0;
+
+
+                                $lesson_learning =[];
+                                $lesson_pass =[];
+        // $lesson_per =[];
+                                $lesson_test_pass =[];
+                                $lesson_test_notpass =[];
+
+                                foreach ($lesson_online as $key_l => $value_l) {
+                                    $lesson_pass[$value_l->id] = 0;
+                                    $lesson_learning[$value_l->id] = 0;
+                                    $lesson_test_pass[$value_l->id] = 0;
+                                    $lesson_test_notpass[$value_l->id] = 0;
+                                }
+
+                                foreach ($allUsers as $key => $user) {
+                                    $statusLearn =  Helpers::lib()->chk_status_course($valueC->course_id, 0, $user->id);
+
+                                    if($statusLearn == "pass"){
+                                        $num_pass++;
+                                    }elseif($statusLearn == "learning"){
+                                        $num_learning++;
+                                    }else{
+                                        $num_notlearn++;
+                                    }
+
+                                    $final_score = Coursescore::model()->find("course_id='".$valueC->course_id."' AND gen_id = 0 AND user_id='".$user->id."' AND type='post' AND active='y' ORDER BY score_id DESC");
+
+                                    if($final_score){
+                                        if($final_score->score_past == "y"){
+                                            $num_final_pass++;
+                                        }elseif($final_score->score_past == "n"){
+                                            $num_final_notpass++;
+                                        }
+                                    }
+
+                                    foreach ($lesson_online as $key_l => $value_l) {
+
+                                        $statusLearn_lesson =  Helpers::lib()->chk_status_lesson($value_l->id, 0, $user->id);
+
+                                        if($statusLearn_lesson == "pass"){
+                                            $lesson_pass[$value_l->id] = $lesson_pass[$value_l->id]+1;                    
+                                        }elseif($statusLearn_lesson == "learning"){
+                                            $lesson_learning[$value_l->id] = $lesson_learning[$value_l->id]+1;
+                                        }
+
+
+                                        $test_score = Score::model()->find("lesson_id='".$value_l->id."' AND gen_id = 0 AND user_id='".$user->id."' AND type='post' AND active='y' ORDER BY score_id DESC"); 
+
+                                        if($test_score){
+                                            if($test_score->score_past == "y"){
+                                                $lesson_test_pass[$value_l->id] = $lesson_test_pass[$value_l->id]+1;
+                                            }elseif($test_score->score_past == "n"){
+                                                $lesson_test_notpass[$value_l->id] = $lesson_test_notpass[$value_l->id]+1;                        
+                                            }
+                                        }
+
+                                    }
+
+
+                                }
+                                if($num_register != 0){
+                                    $num_per_pass = ($num_pass*100)/$num_register;
+                                    $num_per_pass = round($num_per_pass, 2);
+                                }
+
+                                ?>
                         <tr>
                         <td class="center"><?= $no++ ?></td>
                         <td class="center"><?= isset($valueC->cates->type->type_name)? $valueC->cates->type->type_name :"" ?></td>
