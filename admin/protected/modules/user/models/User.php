@@ -44,6 +44,8 @@ class User extends CActiveRecord
 	public $fullname;
 	public $news_per_page;
 	public $passport;
+	public $empclass_title;
+	public $empclass_descrpition;
 
 
 
@@ -81,7 +83,7 @@ class User extends CActiveRecord
 
 			// array('auditor_id', 'length', 'max'=>5, 'min' => 5,'message' => 'กรุณาป้อนเลขผู้สอบ 5 หลัก'),
 			
-			// array('status', 'in', 'range'=>array(self::STATUS_NOACTIVE,self::STATUS_ACTIVE,self::STATUS_BANNED)),
+			 array('status', 'in', 'range'=>array(self::STATUS_NOACTIVE,self::STATUS_ACTIVE,self::STATUS_BANNED)),
 			// array('superuser', 'in', 'range'=>array(0,1,2)),
    //          array('create_at', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
    //          array('lastvisit_at', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
@@ -94,6 +96,8 @@ class User extends CActiveRecord
 			// array('pic_user', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'update'),
 			array('news_per_page', 'safe'),
 			// array('id, username, active, password, department_id, pic_user, email, activkey, create_at, lastvisit_at, superuser, status, online_status,online_user,company_id, division_id,position_id,lastactivity,orgchart_lv2, group,idensearch,identification,station_id,supper_user_status,pic_cardid2,employee_id,typeuser,register_status,dateRang,user_id,nameSearch,note,not_passed, avatar, month,type_employee, report_authority, branch_id, fullname, passport', 'safe', 'on'=>'search'),
+
+			array('online_status,empclass_title,empclass_descrpition', 'safe', 'on'=>'search'),
 
 			// array('newpassword', 'length', 'max'=>128, 'min' => 4,'message' => UserModule::t("Incorrect password (minimal length 4 symbols).")),
 
@@ -387,7 +391,7 @@ public function search()
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
 	$criteria=new CDbCriteria;
-	$criteria->with = array('profile','position','department');
+	$criteria->with = array('profile','profile.EmpClass');
 
 	if(isset($_GET['User']['fullname'])){
 		$ex_fullname = explode(" ", $_GET['User']['fullname']);
@@ -409,6 +413,11 @@ public function search()
 	$criteria->compare('password',$this->password);
 	$criteria->compare('pic_user',$this->pic_user);
 	$criteria->compare('employee_id',$this->employee_id);
+	
+	$criteria->compare('title',$this->empclass_title,true);
+	$criteria->compare('descrpition',$this->empclass_descrpition,true);
+
+
         // $criteria->compare('station_id',$this->station_id);
         // $criteria->compare('position_id',$this->position_id);
         // $criteria->compare('user.department_id',$this->department_id);
@@ -424,7 +433,11 @@ public function search()
 		$criteria->compare('superuser',1);
 	}else{
 		$criteria->compare('superuser',0);
-	}     
+	}
+	// if(isset($this->status)){
+	// 	var_dump($this->status);exit();
+	// }
+
 	$criteria->compare('status',$this->status);
 	$criteria->compare('del_status',0);
 	$criteria->compare('online_status',$this->online_status);

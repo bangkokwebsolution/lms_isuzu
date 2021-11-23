@@ -156,7 +156,7 @@ EOD
 										),
 										array(
 											'header' => 'Employee Class',
-											'name'=>'department_id',
+											'name'=>'empclass_title',
 											'type'=>'html',
 											// 'filter'=>false,
 											// 'visible' => $this->route != "user/admin/General",
@@ -174,7 +174,7 @@ EOD
 										),
 										array(
 											'header' => 'คำอธิบาย',
-											'name'=>'position_id',
+											'name'=>'empclass_descrpition',
 											'type'=>'html',
 											// 'filter'=>false,
 											// 'visible' => $this->route != "user/admin/General",
