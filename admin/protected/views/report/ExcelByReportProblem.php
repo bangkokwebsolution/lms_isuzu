@@ -66,7 +66,7 @@ header("Pragma:no-cache");
                                         <td style="vertical-align: top;"><?= $Problem->user->employee_id ?></td>
                                         <td style="vertical-align: top;"><?= $Problem->firstname.' '.$Problem->lastname ?></td>
                                         <td style="vertical-align: top;"><?= $Problem->user->profile->location ?></td>
-                                        <td style="vertical-align: top;"><?= $Problem->user->profile->employee_class ?></td>
+                                        <td style="vertical-align: top;"><?= isset($Problem->user->profile->EmpClass->title) ? $Problem->user->profile->EmpClass->title :'' ?></td>
                                         <td style="vertical-align: top;"><?= $Problem->user->profile->position_description ?></td>
                                         <td style="vertical-align: top;"><?= $Problem->user->profile->organization_unit ?></td>
                                         <td style="vertical-align: top;"><?= $Problem->user->profile->abbreviate_code ?></td>
