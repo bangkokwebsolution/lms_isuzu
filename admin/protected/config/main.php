@@ -8,7 +8,7 @@ header('Content-Type: text/html; charset=utf-8');
 require_once( dirname(__FILE__) . '/params.php');
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'ระบบบริหารจัดการ E learning IMCT',
+	'name'=>'ระบบบริหารจัดการ IMCT e-Learning',
 	'theme'=>'Adminkit',
 	'timeZone' => 'Asia/Bangkok',
 	'language'=>'th',
