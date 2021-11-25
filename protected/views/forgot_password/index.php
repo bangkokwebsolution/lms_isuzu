@@ -7,7 +7,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $cancel = 'Cancel';
     $ok = 'OK';
     $warn = 'Warning';
-    $note='* Note For users who do not have a company email or personal email address, to request a Reset Password, contact the administrator at the number 1210 or 1211.';
+    $note='* Remark : For user who do not have both company e-mail or private e-mail for reset password please contact system administrator at ext.no 1210 or 1211';
 } else {
     $mail = 'อีเมล';
     $warn = 'แจ้งเตือน';
@@ -15,7 +15,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $ok = 'ตกลง';
     $cancel = 'ยกเลิก';
     $langId = Yii::app()->session['lang'];
-    $note='* หมายเหตุ สำหรับผู้ใช้งานที่ไม่มีอีเมลบริษัทหรืออีเมลส่วนตัว เพื่อขอ Reset Password สามารถติดต่อผู้ดูแลระบบได้ที่เบอร์โทร 1210 หรือ 1211';
+    $note='* หมายเหตุ : สำหรับผู้ใช้ที่ไม่มีทั้งอีเมลบริษัทหรืออีเมลส่วนตัวสำหรับรีเซ็ตรหัสผ่าน โปรดติดต่อผู้ดูแลระบบที่เบอร์ต่อ 1210 หรือ 1211';
 }  
 
 if (Yii::app()->user->hasFlash('msg')) {  ?>

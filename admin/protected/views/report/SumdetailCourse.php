@@ -414,7 +414,7 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
                         <!--<th class="center"><b>จำนวนผ่าน</b></th>
                         <th class="center"><b>จำนวนไม่ผ่าน</b></th>-->
                         <th class="center"><b>Not Start</b></th>
-                        <th class="center"><b>Ongoing</b></th>
+                        <th class="center"><b>In progress</b></th>
                         <th class="center"><b>(Percent)</b></th>
                         <th style="vertical-align: middle;" class="center"><b>Completed</b></th>
                         <th style="vertical-align: middle;" class="center"><b>(Percent)</b></th>

@@ -125,7 +125,7 @@ EOD
 
 									'columns'=>array(
 										array(
-											'header'=>'No.',
+											'header'=>'ลำดับที่',
 											'value'=>'$this->grid->dataProvider->pagination->currentPage * $this->grid->dataProvider->pagination->pageSize + ($row+1)',
 											'filterHtmlOptions'=>array('style'=>'width:30px;'), 
 											'htmlOptions'=>array('style'=>'text-align: center;hight:5%;'),
@@ -144,7 +144,7 @@ EOD
 
 
 										array(
-											'header' => 'Employee ID',
+											'header' => 'รหัสพนักงาน',
 											'name'=>'employee_id',
 											'type'=>'html',
 											// 'filter'=>false,
@@ -155,7 +155,7 @@ EOD
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
 										),
 										array(
-											'header' => 'Employee Class',
+											'header' => 'ลำดับชั้นเรียน',
 											'name'=>'empclass_title',
 											'type'=>'html',
 											// 'filter'=>false,
@@ -173,7 +173,7 @@ EOD
 									
 										),
 										array(
-											'header' => 'คำอธิบาย',
+											'header' => 'ตำแหน่งงาน',
 											'name'=>'empclass_descrpition',
 											'type'=>'html',
 											// 'filter'=>false,
