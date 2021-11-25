@@ -363,11 +363,11 @@ public function actionCreate()
                             copy($webroot.$fileNamePpt,$dirPpt.$fileNamePpt);
                             $ppName = $dirPpt.$fileNamePpt;
 
-                            // if($_SERVER['HTTP_HOST'] == 'localhost'){
-                            //     $imagemagick = "\"C:/ImageMagick-6/convert.exe\"";
-                            // }else{
-                            //     $imagemagick = "\"C:/ImageMagick-6/convert.exe\"";
-                            // }
+                            if($_SERVER['HTTP_HOST'] == 'localhost'){
+                                $imagemagick = "\"C:/ImageMagick-6/convert.exe\"";
+                            }else{
+                                $imagemagick = "\"C:/ImageMagick-7.0.7-Q16/convert.exe\"";
+                            }
 
                             $imagemagick = "convert";
                             // $imagemagick = "convert";
@@ -721,6 +721,12 @@ public function actionFormLesson($id,$type)
                                 // }else{
                                 //     $imagemagick = "\"C:/ImageMagick-6/convert.exe\"";
                                 // }
+                                if($_SERVER['HTTP_HOST'] == 'localhost'){
+                                    $imagemagick = "\"C:/ImageMagick-6/convert.exe\"";
+                                }else{
+                                    $imagemagick = "\"C:/ImageMagick-7.0.7-Q16/convert.exe\"";
+                                }
+                            
                                 $imagemagick = "convert";
                                 // $imagemagick = "convert.exe";
                                 $ppt_file = $ppName;
