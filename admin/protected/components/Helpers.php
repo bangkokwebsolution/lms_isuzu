@@ -374,7 +374,6 @@ Class Helpers
         // $mail->From =  $adminEmail;
         // $mail->Username = $adminEmail;
         // $mail->Password = $adminEmailPass;
-        // $fromText = 'E-Learning System Thoresen';
         // $mail->SetFrom( $adminEmail, $fromText);
 
         // $mail->AddAddress($adminEmail, 'คุณ' . $to['firstname'] . ' ' . $to['lastname']);
@@ -417,7 +416,7 @@ Class Helpers
     }
 
 
-    public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System Thoresen'){
+    public function SendMailGroup($to,$subject,$message,$fromText='IMCT e-Learning'){
         $path = '../uploads/filemail/';
         $SettingAll = Helpers::lib()->SetUpSetting();
         $adminEmail = $SettingAll['USER_EMAIL'];
@@ -436,7 +435,7 @@ Class Helpers
         $mail->SMTPDebug = false;
         $mail->Username = $adminEmail;
         $mail->Password = $adminEmailPass;
-        $fromText = 'E-Learning System Thoresen';
+        $fromText = 'IMCT e-Learning';
         $mail->SetFrom($adminEmail, $fromText);
 
         $address = Mailuser::model()->findAll(array(
@@ -2624,7 +2623,7 @@ public function changeLink($link)
 
     }
 
-    public function SendMailNotification($to, $subject, $message, $fromText = 'E-Learning System Thoresen'){
+    public function SendMailNotification($to, $subject, $message, $fromText = 'IMCT e-Learning'){
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/Exception.php";
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/PHPMailer.php";
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/SMTP.php";
@@ -2633,8 +2632,8 @@ public function changeLink($link)
         $adminEmail = $SettingAll['USER_EMAIL'];
         $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-        $adminEmail = 'thoresen.elearning@gmail.com';
-        $adminEmailPass = 'lms@2020';
+        $adminEmail = 'elearningisuzu@gmail.com';
+        $adminEmailPass = 'isuzu123456';
 
         $mail =  new PHPMailer(true);
         $mail->SMTPOptions = array(
@@ -2658,7 +2657,7 @@ public function changeLink($link)
         $mail->From = 'mailerbws@gmail.com';
         $mail->Username = $adminEmail;
         $mail->Password = $adminEmailPass;
-        $fromText = 'E-Learning System Thoresen';
+        $fromText = 'IMCT e-Learning';
         $mail->SetFrom($adminEmail, $fromText);
         $mail->AddAddress($to['email'],'คุณ' . $to['firstname'] . ' ' . $to['lastname']);
         $mail->Subject = $subject;
@@ -2682,8 +2681,8 @@ public function changeLink($link)
                 $adminEmail = $SettingAll['USER_EMAIL'];
                 $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-                $adminEmail = 'thoresen.elearning@gmail.com';
-                $adminEmailPass = 'lms@2020';
+                $adminEmail = 'elearningisuzu@gmail.com';
+                $adminEmailPass = 'isuzu123456';
 
                 $mail =  new PHPMailer(true);
                 $mail->ClearAddresses();
@@ -2700,7 +2699,7 @@ public function changeLink($link)
             $mail->From = 'mailerbws@gmail.com';
             $mail->Username = $adminEmail;
             $mail->Password = $adminEmailPass;
-            $fromText = 'E-Learning System Thoresen';
+            $fromText = 'IMCT e-Learning';
             $mail->SetFrom($adminEmail, $fromText);
 
             foreach($address as $data_email){
