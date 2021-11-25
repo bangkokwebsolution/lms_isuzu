@@ -283,7 +283,7 @@ class ReportProblemController extends Controller
        	$to['lastname'] = $model->lastname;
        	if ($Usability) {
     	//$subject = 'ตอบคำถาม เรื่อง  : ' . $Usability->usa_title;
-    		$subject = 'IMCT e-Learning Admin ตอบกลับปัญหาการใช้งานระบบ IMCT e-Learning : ' . $Usability->usa_title;
+    		$subject = 'Reply the problem of using the IMCT e-Learning system / ตอบกลับปัญหาการใช้งานระบบ IMCT e-Learning : ' . $Usability->usa_title;
        	}else{
        	//$subject = 'ตอบคำถามที่ท่านส่งมา';
        		$subject = 'ตอบคำถามที่ท่านส่งมา : ';
