@@ -48,7 +48,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $Click = 'Click';
     $Hr = 'Hr';
 
-    $Sequence="Please learn the previous lesson.";
+    $Sequence="Please finish learn the previous lesson.";
 
 } else {
     $langId = Yii::app()->session['lang'];
@@ -74,7 +74,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $Click = 'กด';
     $Hr = 'ชั่วโมง';
 
-    $Sequence="กรุณาเรียนบทเรียนก่อนหน้า";
+    $Sequence="กรุณาเรียนบทเรียนก่อนหน้านี้ให้เสร็จสิ้น";
 
 
 
