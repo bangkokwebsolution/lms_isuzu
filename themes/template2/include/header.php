@@ -611,7 +611,7 @@ if (!empty($msg)) { ?>
                             <div class="col-md-6 col-xs-12 col-sm-6">
                                 <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Problem type' : 'ประเภทปัญหา'; ?></label>
                                 <select class="form-control d-inlineblock " name="ReportProblem[report_type]">
-                                    <option value=""><?= Yii::app()->session['lang'] == 1 ? 'Problem type' : 'ไม่ระบุประเภท'; ?></option>
+                                    <option value=""><?= Yii::app()->session['lang'] == 1 ? 'No Problem type Specified' : 'ไม่ระบุประเภท'; ?></option>
                                     <?php
                                     $criteria = new CDbCriteria;
                                     $criteria->addCondition('active ="y"');
@@ -658,6 +658,12 @@ if (!empty($msg)) { ?>
                             <div class="col-md-6 col-xs-12">
                                 <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Upload photo' : 'อัปโหลดรูปภาพ'; ?></label>
                                 <input type="file" class="form-control" name="ReportProblem[report_pic]">
+                                
+                            </div>
+                            <div class="col-md-6 col-xs-12">
+                                <br><br><label for="">(.JPG/.JPEG .PNG)</label>
+
+                            
                             </div>
                         </div>
 
@@ -691,7 +697,7 @@ if (!empty($msg)) { ?>
                                 <div class="col-md-6 col-xs-12 col-sm-6">
                                     <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Problem type' : 'ประเภทปัญหา'; ?></label>
                                     <select class="form-control d-inlineblock " name="ReportProblem[report_type]">
-                                        <option value=""><?= Yii::app()->session['lang'] == 1 ? 'Problem type' : 'ไม่ระบุประเภท'; ?></option>
+                                        <option value=""><?= Yii::app()->session['lang'] == 1 ? 'No Problem type Specified' : 'ไม่ระบุประเภท'; ?></option>
                                         <?php
                                         $criteria = new CDbCriteria;
                                         $criteria->addCondition('active ="y"');
@@ -738,6 +744,12 @@ if (!empty($msg)) { ?>
                                 <div class="col-md-6 col-xs-12">
                                     <label for=""><?= Yii::app()->session['lang'] == 1 ? 'Upload photo' : 'อัปโหลดรูปภาพ'; ?></label>
                                     <input type="file" class="form-control" name="ReportProblem[report_pic]">
+
+                                </div>
+                                <div class="col-md-6 col-xs-12">
+                                <br><br><label for="">(.JPG/.JPEG .PNG)</label>
+
+                            
                                 </div>
                             </div>
 
