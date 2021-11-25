@@ -782,6 +782,7 @@ Class Helpers
                 )
             );
         } else if($lesson->type == 'pdf'){
+            if(!isset($lesson->filePdfCount)){ return 'notLearn' ; }
             $countFile = $lesson->filePdfCount;
             $countLearnCompareTrueVdos = $user->countLearnCompareTruePdf(
                 array(
@@ -800,6 +801,7 @@ Class Helpers
                 )
             );
         } else if($lesson->type == 'ebook'){
+                if(!isset($lesson->fileCountEbook)){ return 'notLearn' ; }
                 $countFile = $lesson->fileCountEbook;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTrueEbook(
                     array(
@@ -810,6 +812,7 @@ Class Helpers
 
 
         } else if($lesson->type == 'audio'){
+            if(!isset($lesson->fileAudioCount)){ return 'notLearn' ; }
             $countFile = $lesson->fileAudioCount;
             $countLearnCompareTrueVdos = $user->countLearnCompareTrueAudio(
                 array(
@@ -978,6 +981,7 @@ Class Helpers
                     )
                 );
             } else if($lesson->type == 'pdf'){
+                if(!isset($lesson->filePdfCount)){ return 'notLearn' ; }
                 $countFile = $lesson->filePdfCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTruePdf(
                     array(
@@ -995,6 +999,7 @@ Class Helpers
                     )
                 );
             } else if($lesson->type == 'audio'){
+                if(!isset($lesson->fileAudioCount)){ return 'notLearn' ; }
                 $countFile = $lesson->fileAudioCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTrueAudio(
                     array(
@@ -1003,6 +1008,7 @@ Class Helpers
                     )
                 );
             } else if($lesson->type == 'youtube'){
+                if(!isset($lesson->fileCount)){ return 'notLearn' ; }
                 $countFile = $lesson->fileCount;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTrueVdos(
                     array(
@@ -1013,6 +1019,7 @@ Class Helpers
 
 
             } else if($lesson->type == 'ebook'){
+                if(!isset($lesson->fileCountEbook)){ return 'notLearn' ; }
                 $countFile = $lesson->fileCountEbook;
                 $countLearnCompareTrueVdos = $user->countLearnCompareTrueEbook(
                     array(
