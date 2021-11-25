@@ -98,7 +98,7 @@ if ($_GET["msg"]=="error") {
                         <br>    
                         <br>
                         <br>
-                            <label for=""><font color="red">* Note For users who do not have a company email or personal email address, to request a Reset Password, contact the administrator at the number 1210 or 1211. <br><br>* หมายเหตุ สำหรับผู้ใช้งานที่ไม่มีอีเมลบริษัทหรืออีเมลส่วนตัว เพื่อขอ Reset Password สามารถติดต่อผู้ดูแลระบบได้ที่เบอร์โทร 1210 หรือ 1211</font></label>
+                            <label for="" style="padding-left: 40px;padding-right: 40px"><font color="red">* Remark : For user who do not have both company e-mail or private e-mail for reset password please contact system administrator at ext.no 1210 or 1211 <br><br>* หมายเหตุ : สำหรับผู้ใช้ที่ไม่มีทั้งอีเมลบริษัทหรืออีเมลส่วนตัวสำหรับรีเซ็ตรหัสผ่าน โปรดติดต่อผู้ดูแลระบบที่เบอร์ต่อ 1210 หรือ 1211</font></label>
                             <br>
                         </div>
                     </div>
