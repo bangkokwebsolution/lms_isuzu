@@ -364,12 +364,12 @@ public function actionCreate()
                             $ppName = $dirPpt.$fileNamePpt;
 
                             if($_SERVER['HTTP_HOST'] == 'localhost'){
-                                $imagemagick = "\"C:/ImageMagick-6/convert.exe\"";
+                                $imagemagick = "\"C:/ImageMagick-6.8.4-Q16/convert.exe\"";
                             }else{
                                 $imagemagick = "\"C:/ImageMagick-7.0.7-Q16/convert.exe\"";
                             }
 
-                            $imagemagick = "convert";
+                            // $imagemagick = "convert";
                             // $imagemagick = "convert";
                             $ppt_file = $ppName;
                             $new_pdf_file  = str_replace(".pptx", ".pdf", $ppName);
@@ -722,12 +722,12 @@ public function actionFormLesson($id,$type)
                                 //     $imagemagick = "\"C:/ImageMagick-6/convert.exe\"";
                                 // }
                                 if($_SERVER['HTTP_HOST'] == 'localhost'){
-                                    $imagemagick = "\"C:/ImageMagick-6/convert.exe\"";
+                                    $imagemagick = "\"C:/ImageMagick-6.8.4-Q16/convert.exe\"";
                                 }else{
                                     $imagemagick = "\"C:/ImageMagick-7.0.7-Q16/convert.exe\"";
                                 }
                             
-                                $imagemagick = "convert";
+                                // $imagemagick = "convert";
                                 // $imagemagick = "convert.exe";
                                 $ppt_file = $ppName;
                                 $new_pdf_file  = str_replace(".pptx", ".pdf", $ppName);
