@@ -4,7 +4,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $Personal_Information = 'Personal Information';
     $Course_Status = 'Course Status';
     $Start='Start';
-    $Stop='Stop';
+    $Stop='End';
 } else {
     $langId = Yii::app()->session['lang'];
     $Personal_Information = 'ข้อมูลส่วนบุคคล';
