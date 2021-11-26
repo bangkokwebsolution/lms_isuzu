@@ -17,12 +17,7 @@ class DocumentController extends Controller{
         $langId = Yii::app()->session['lang'];
     }
     $Document = Document::model()->findAll('active = 1 and lang_id = '.$langId);
-    if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
-        $langId = Yii::app()->session['lang'] = 1;
-    }else{
-        $langId = Yii::app()->session['lang'];
-    }
-
+   
     $label = MenuSite::model()->find(array(
         'condition' => 'lang_id=:lang_id',
         'params' => array(':lang_id' => $langId)

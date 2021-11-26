@@ -58,18 +58,16 @@ function DateThai($strDate)
             </div>
         </div>
 
-        <div class="tab-content mt-20">
+        <div class="tab-content mt-20 " style="margin-bottom: 6rem;">
 
             <?php
             $criteria = new CDbCriteria;
+            $criteria->with = array('Doc');
+            $criteria->addCondition('Doc.active = 1 AND t.active = 1 AND Doc.lang_id = '.$langId.' AND t.lang_id = '.$langId);
             if(isset($_POST['search_type'])){
-                $keyword = $_POST['search_type'];
-
-                $criteria->condition = 'dty_name LIKE :keyword';
-                $criteria->params = array(':keyword'=>'%'.$keyword.'%');
+                $text =$_POST['search_type'];
+                $criteria->addCondition('Doc.dow_name LIKE "%'.$text.'%" OR t.dty_name LIKE "%'.$text.'%"');
             }
-            $criteria->compare('active','1');
-            $criteria->compare('lang_id',$langId);
             $DocumentType = DocumentType::model()->findAll($criteria);
             ?>
             <div role="tabpanel" class="tab-pane fade in active" id="doc-1">
@@ -77,14 +75,14 @@ function DateThai($strDate)
                     <div class="panel panel-default">
                         <?php foreach ($DocumentType as $key => $doctype) { ?>
                             <div class="panel-heading">
-                                <a role="button" data-toggle="collapse" data-target="#collapse<?= $key ?>" aria-expanded="true" aria-controls="collapseOne">
+                                <a role="button" data-toggle="collapse" data-target="#collapse<?= $key ?>" aria-expanded="true" aria-controls="collapse<?= $key ?>">
                                     <span class="pull-right"><i class="fa fa-angle-down"></i></span>
                                     <h2 class="panel-title">
                                         <li><i class="fa fa-file">&nbsp;&nbsp;</i><?= $doctype->dty_name ?></li>
                                     </h2>
                                 </a>
                             </div>
-                            <div id="collapse<?= $key ?>">
+                            <div id="collapse<?= $key ?>" class="collapse in">
                                 <table class="table table-condensed table-document ">
                                     <thead>
                                         <tr>
@@ -96,11 +94,8 @@ function DateThai($strDate)
                                     </thead>
                                     <tbody>
                                         <?php $i=1; 
-                                        foreach ($Document as $key =>$doc) {
-                                    if ($doctype->dty_id == $doc->dty_id) { //3
-                                        if($key==0){
-                                            $i=1;
-                                        }
+                                        // $Document = Document::model()->findAll('active = 1 and lang_id = '.$langId.' AND dty_id='.$doctype->dty_id);
+                                        foreach ($doctype->Doc as $key =>$doc) {
                                         ?>
                                         
                                         <tr>
@@ -118,16 +113,16 @@ function DateThai($strDate)
                                         </tr>
 
                                         <?php
-                                    }
                                 }
                                 ?>
                             </tbody>
-                        </table>
-                    </div>
-                <?php } ?>
+                            </table>
+                             </div>
+                         <?php } ?>
 
             </div>
         </div>
+
     </div>
 
 </div>
