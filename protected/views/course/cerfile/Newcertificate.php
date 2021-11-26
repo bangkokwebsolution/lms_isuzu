@@ -45,9 +45,9 @@
     Mr.Tester  Tester
 </div>
 
-<div style="position:absolute; top: 100mm;" ><img width="90mm" src="../../admin/images/cer_2.png" ></div>
+<div style="position:absolute; top: 100mm;" ><img width="90mm" src="admin/images/cer_2.png" ></div>
 
-<div style="position:absolute; top: 10mm;left: 130mm " ><img width="50mm" src="../../../admin/images/cer_3.png" ></div>
+<div style="position:absolute; top: 10mm;left: 130mm " ><img width="50mm" src="admin/images/cer_3.png" ></div>
 
 <!-- padding-left:610px; -->
 
