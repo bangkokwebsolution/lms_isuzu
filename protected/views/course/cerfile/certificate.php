@@ -33,96 +33,31 @@
             .dark-yellow { color: #EBA022; }
         </style> 
 
-        <?php if($model['pageSide']=='1'){ ?>
-        <div class="b size32 " style="position:absolute; top: 70mm;">
-            วุฒิบัตรฉบับนี้ให้ไว้เพื่อแสดงว่า
-        </div>
+      <div style="position:absolute; top: 10mm;text-align: center;" ><img width="140mm" src="../admin/images/cer_1.png" ></div>
 
-        <div class="b size32 " style="position:absolute; top: 85mm; font-weight: bold;">
-            <?= $model['fulltitle'] ?>
-        </div>
-        <div class="b size32 " style="position:absolute; top: 100mm;">
-            ได้รับการอบรมครบถ้วนตามหลักสูตร
-        </div>
-        <div class="b size30 " style="position:absolute; top: 115mm; font-weight: bold;">
-            <?= $model['courseTitle'] ?>
-        </div>
-
-        <div class="b size26 " style="position:absolute; top: 200mm;">
-            ให้ไว้ ณ วันที่ <?= Helpers::lib()->changeFormatDate(date('Y-m-d')) ?>
-        </div>
-
-        <!-- <img src="" id="tableBanner" /> -->
-        <div style="position:absolute; top: 215mm;" >
-            <img src="<?= Yii::app()->baseUrl."/uploads/signature/".$model['renderSign']; ?>">
-        </div>
-        <div style="position:absolute; top: 250mm;" >
-            <span class="b size26 "><?php echo $model['nameSign']; ?></span>
-        </div>
-        <div style="position:absolute; top: 260mm;" >
-            <div class="b size26 "><?php echo $model['positionSign']; ?></div>
-        </div>
-        <div class="b size26 " style="position:absolute; top: 270mm; ">
-            สมาคมบริษัทหลักทรัพย์ไทย
-        </div>
-        <?php
-    } else {
-        ?>
-
-<!-- $model['pageSide']=='2' -->
-<div class="b size30 " style="position:absolute; top: 88mm; left: 30mm; font-family: 'Maitree', serif;">
-            <?= $model['fulltitle'] ?>
+ <div class="b size30 " style="position:absolute; top: 80mm;">
+    Mr.Tester  Tester
 </div>
 
-<div class="b size20 " style="position:absolute; top: 101mm;left: 30mm; font-family: 'Trirong', serif;">
-            <?= $model['positionUser'] ?>
-</div>
-<div class="b size20 " style="position:absolute; top: 113mm;left: 30mm; font-family: 'Trirong', serif;">
-            <?= $model['companyUser'] ?>
-</div>
+<div style="position:absolute; top: 100mm;" ><img width="90mm" src="../admin/images/cer_2.png" ></div>
 
-<div class="size26 black" style="position:absolute; top: 124mm; left: 30mm; font-family: 'Maitree', serif;">
-     <?= $model['courseTitle'] ?>
-</div>
+<div style="position:absolute; top: 10mm;left: 130mm " ><img width="50mm" src="../admin/images/cer_3.png" ></div>
 
-<!-- Date*************** -->
-<?php
-    if($model['courseDatePassOver60Percent'] != null) {
-?>
-<div class="size30 black" style="position:absolute; top: 136mm;left: 44mm; font-family: 'Trirong', serif;">
-     <?= Helpers::lib()->changeFormatDate($model['courseDatePassOver60Percent']) ?>
-</div>
-<?php
-    }
-?>
+<!-- padding-left:610px; -->
 
-<!-- Signature********************
- --><div style="position:absolute; right: 95mm; top: 145mm" >
-    <img src="<?= Yii::app()->baseUrl."/uploads/signature/".$model['renderSign']; ?>">
-</div>
+    
+    <div style="position:absolute; top: 125mm;">
+     <div class="b size30 ">COURSE TITLE</div>
+ </div>
 
-<div style="position:absolute; left: 102mm; top: 147mm" >
-    <img src="<?= Yii::app()->baseUrl."/uploads/signature/".$model['renderSign2']; ?>">
-</div>
 
-<div style="position:absolute; right: 97mm; top: 163mm;font-family: 'Trirong', serif;" >
-    <span class="b size20 purple"><?php echo $model['nameSign']; ?></span>
-</div>
 
-<div style="position:absolute; left: 106mm; top: 163mm;font-family: 'Trirong', serif;" >
-    <span class="b size20 purple"><?php echo $model['nameSign2']; ?></span>
-</div>
-<!-- 
-<div style="position:absolute; right: 90mm; top: 179mm;font-family: 'Trirong', serif;" >
-    <div class="b size24 purple"><?php echo $model['positionSign']; ?></div>
-</div>
 
-<div style="position:absolute; left: 102mm; top: 179mm;font-family: 'Trirong', serif;" >
-    <div class="b size24 purple"><?php echo $model['positionSign2']; ?></div>
+
+
+
+<div style="position:absolute; top: 170mm; <?= $fontTH ?> ">
+ <div class="b size30">ให้ไว้ ณ วันที่ <?php echo Helpers::lib()->changeFormatDate(date("Y-m-d")); ?> </div>
 </div>
- -->    
-    <?php    
-}
-    ?>
     
 
