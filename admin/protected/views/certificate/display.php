@@ -48,15 +48,18 @@ $fontTH = "font-family: 'garuda'";
 
 
 
+<div style="position:absolute; top: 10mm;text-align: center;" ><img width="140mm" src="<?php echo Yii::app()->baseUrl ?>/images/cer_1.png" ></div>
 
+ <div class="b size30 " style="position:absolute; top: 80mm;">
+    Mr.Tester  Tester
+</div>
 
+<div style="position:absolute; top: 100mm;" ><img width="90mm" src="<?php echo Yii::app()->baseUrl ?>/images/cer_2.png" ></div>
 
+<div style="position:absolute; top: 10mm;left: 130mm " ><img width="50mm" src="<?php echo Yii::app()->baseUrl ?>/images/cer_3.png" ></div>
 
 <!-- padding-left:610px; -->
 
- <div class="b size30 " style="position:absolute; top: 85mm;">
-    Mr.Tester  Tester
-</div>
     
     <div style="position:absolute; top: 125mm;">
      <div class="b size30 ">COURSE TITLE</div>
