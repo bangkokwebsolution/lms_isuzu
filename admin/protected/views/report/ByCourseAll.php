@@ -264,7 +264,7 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
                         if ($status_course_gen == "notLearn") {
                             $lessonStatusStr = 'Not start';
                         } else if ($status_course_gen == "learning") {
-                            $lessonStatusStr = 'On process';
+                            $lessonStatusStr = 'In progress';
                         } else if ($status_course_gen == "pass") {
                             $lessonStatusStr =  'Completed';
                         }

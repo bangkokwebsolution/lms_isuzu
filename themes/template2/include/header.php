@@ -602,8 +602,8 @@ if (!empty($msg)) { ?>
                         foreach ($Users as $key => $value) {
                             ?>
                                 <div class="col-md-6 col-xs-12 col-sm-6">
-                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'email' : 'อีเมล'; ?></label>
-                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'email' : 'อีเมล'; ?>" name="ReportProblem[email]" value="<?php echo $value->email; ?>">
+                                    <label for=""><?= Yii::app()->session['lang'] == 1 ? 'E-mail' : 'อีเมล'; ?></label>
+                                    <input type="text" class="form-control" placeholder="<?= Yii::app()->session['lang'] == 1 ? 'E-mail' : 'อีเมล'; ?>" name="ReportProblem[email]" value="<?php echo $value->email; ?>">
                                 </div>
                             </div>
                         <?php } ?>
@@ -661,7 +661,7 @@ if (!empty($msg)) { ?>
                                 
                             </div>
                             <div class="col-md-6 col-xs-12">
-                                <br><br><label for="">(.JPG/.JPEG .PNG)</label>
+                                <br><br><label for="" style="font-size:13px ">(ประเภทไฟล์รูปภาพ .JPG/.JPEG.PNG เท่านั้น)</label>
 
                             
                             </div>
