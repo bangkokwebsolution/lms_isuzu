@@ -340,9 +340,9 @@
                                             // $departmentdata = (!$model->division_id)?array():Department::model()->getDepartmentList($model->division_id);
 
                                             // $departmentdata = (!$model->department_id)?array():Department::model()->getDepartmentListNew($model->department_id);
-                                        $department = Department::model()->getDepartmentListNew();
+                                        // $department = Department::model()->getDepartmentListNew();
                                         ?>
-                                        <div class="col-md-6">
+                                        <!-- <div class="col-md-6">
                                             <div class="form-group">
                                                 <label><?php echo $form->labelEx($model, 'department_id'); ?></label>
                                                 <?php
@@ -363,7 +363,7 @@
                                                 <?php echo $form->error($model, 'position_id'); ?>
                                             </div>
                                         </div>
-
+ -->
                                         
 
                                         <?php
