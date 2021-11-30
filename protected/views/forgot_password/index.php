@@ -2,7 +2,7 @@
 include "themes/template2/include/css.php";
 if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $langId = Yii::app()->session['lang'] = 1;
-    $mail = 'Email';
+    $mail = 'E-mail';
     $text_email = 'This email does not exist in the system.';
     $cancel = 'Cancel';
     $ok = 'OK';

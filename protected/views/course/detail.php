@@ -59,7 +59,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $successStudy = "ท่านเรียนผ่านตามเงื่อนไข";
     $Period = "ระยะเวลา";
     $day = "วัน";
-    $Questionnaire = "แบบสอบประเมิน ";
+    $Questionnaire = "แบบประเมินผลหลักสูตร ";
     $Click = "คลิก";
     $final = "การสอบวัดผล";
     $pre_course = "การสอบก่อนเรียนหลักสูตร";
