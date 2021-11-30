@@ -1951,31 +1951,31 @@ $FinalScore = Coursescore::model()->findAll($criteria);
     }
 
     function alertswal() {
-        swal('<?= $label->label_swal_warning ?>', '<?= $label->label_swal_plsLearnPass ?>', "error");
+        swal('<?= $label->label_swal_warning ?>', "<?= $label->label_swal_plsLearnPass ?>", "error");
     }
 
     function alertSequence() {
-        swal('<?= $label->label_swal_warning ?>', '<?= $Sequence ?>', "error");
+        swal('<?= $label->label_swal_warning ?>', "<?= $Sequence ?>", "error");
     }
 
     function alertswal_test() {
-        swal('<?= $label->label_swal_warning ?>', '<?= $label->label_swal_plsTestPost ?>', "error");
+        swal('<?= $label->label_swal_warning ?>', "<?= $label->label_swal_plsTestPost ?>", "error");
     }
 
     function alertswalpretest() {
-        swal('<?= $label->label_swal_warning ?>', '<?= $label->label_swal_plsTestPre ?>', "error");
+        swal('<?= $label->label_swal_warning ?>', "<?= $label->label_swal_plsTestPre ?>", "error");
     }
 
     function alertswalCourse() {
-        swal('<?= $label->label_swal_warning ?>', '<?= $label->label_noPermis ?>', "error");
+        swal('<?= $label->label_swal_warning ?>', "<?= $label->label_noPermis ?>", "error");
     }
 
     function alertswalNoCourse() {
-        swal('<?= $label->label_swal_warning ?>', '<?= $label->label_alert_msg_notFound ?>', "error");
+        swal('<?= $label->label_swal_warning ?>', "<?= $label->label_alert_msg_notFound ?>", "error");
     }
 
     function alertswalcert() {
-        swal('<?= $label->label_swal_warning ?>', '<?= $label->label_cantPrintCert ?>', "error");
+        swal('<?= $label->label_swal_warning ?>', "<?= $label->label_cantPrintCert ?>", "error");
         //   Swal.fire({
         //     icon: 'error',
         //     title: 'Oops...',
