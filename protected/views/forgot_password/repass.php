@@ -1,3 +1,6 @@
+<?php 
+include "themes/template2/include/css.php";
+?>
 <div class="header-page parallax-window" data-parallax="scroll" data-image-src="<?php echo Yii::app()->theme->baseUrl; ?>/images/bg-header-page.png">
     <div class="container">
         <h1>ลืมรหัสผ่าน
