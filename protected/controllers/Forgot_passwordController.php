@@ -160,6 +160,7 @@ class Forgot_passwordController extends Controller
     // }
 
     public function actionCheckpassword($oldpassword){
+        $this->layout = false;
         $model = new Users();
         if(isset($_GET['oldpassword'])){
                     // $users = Users::model()->notsafe()->findbyattributes(array('password'=>$_GET['oldpassword']));
