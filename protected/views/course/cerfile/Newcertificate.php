@@ -42,7 +42,7 @@
  <div style="position:absolute; top: 10mm;text-align: center;" ><img width="140mm" src="admin/images/cer_1.png" ></div>
 
  <div class="b size30 " style="position:absolute; top: 80mm;">
-    Mr.Tester  Tester
+    <?= $model['fulltitle'] ?>
 </div>
 
 <div style="position:absolute; top: 100mm;" ><img width="90mm" src="admin/images/cer_2.png" ></div>
@@ -53,7 +53,7 @@
 
     
     <div style="position:absolute; top: 125mm;">
-     <div class="b size30 ">COURSE TITLE</div>
+     <div class="b size30 "><?= $model['courseTitle_en'] ?></div>
  </div>
 
 
@@ -63,7 +63,7 @@
 
 
 <div style="position:absolute; top: 170mm; <?= $fontTH ?> ">
- <div class="b size30">ให้ไว้ ณ วันที่ <?php echo Helpers::lib()->changeFormatDate(date("Y-m-d")); ?> </div>
+  <div class="b size30">ให้ไว้ ณ วันที่ <?php echo Helpers::lib()->changeFormatDate(date("Y-m-j")); ?><?php //echo $model['format_date_pass']; ?></div>
 </div>
     
 
