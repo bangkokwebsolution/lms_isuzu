@@ -12,7 +12,6 @@
     <div class="container">
         <!--start total search-->
         <div class="text-center">
-            1
             <?php
 
 
