@@ -155,7 +155,7 @@ EOD
 											'filterHtmlOptions'=>array('style'=>'width:30px'),
 										),
 										array(
-											'header' => 'ลำดับชั้นเรียน',
+											'header' => 'ลำดับชั้นงาน',
 											'name'=>'empclass_title',
 											'type'=>'html',
 											// 'filter'=>false,
