@@ -2493,7 +2493,8 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                             ?>
                             <ol class="carousel-indicators carousel-indicators-numbers" id="indicators<?= $file->id; ?>">
                               <?php
-                              for ($x = 1; $x <= $filePdf; $x = $x + 5) {
+                              // for ($x = 1; $x <= $filePdf; $x = $x + 5) {
+                              for ($x = 1; $x <= $filePdf; $x++) {
                               ?>
                                 <?php
 
