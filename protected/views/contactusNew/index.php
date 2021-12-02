@@ -19,13 +19,12 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
         </ol>
     </nav>
 </div>
-
 <section class="content" id="contact-us">
     <div class="container">
     <div class="row justify-content-center gy-4">
                     <div class="col-lg-12 pt-3 mb-2 text-center">
                         <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/Company.png" class="img-fluid mt-3" alt="Company"> -->
-                        <img src="/lms_isuzu/themes/template2/images/contact.png" class="img-fluid mt-3" alt="Company">
+                        <img src="<?= Yii::app()->theme->baseUrl ?>/images/contact.png" class="img-fluid mt-3" alt="Company">
                     </div>
                     <div class="col-lg-10 ">
               
