@@ -661,7 +661,7 @@ if (!empty($msg)) { ?>
                                 
                             </div>
                             <div class="col-md-6 col-xs-12">
-                                <br><br><label for="" style="font-size:13px ">(JPG / JPEG / PNG image file type only)</label>
+                                <br><br><label for="" style="font-size:13px "><?= Yii::app()->session['lang'] == 1 ? '(JPG / JPEG / PNG image file type only)' : '(ไฟล์ประเภทรูปภาพ JPG / JPEG / PNG เท่านั้น)'; ?></label>
 
                             
                             </div>
@@ -747,7 +747,7 @@ if (!empty($msg)) { ?>
 
                                 </div>
                                 <div class="col-md-6 col-xs-12">
-                                <br><br><label for="">(ไฟล์ประเภทรูปภาพ JPG / JPEG / PNG เท่านั้น)</label>
+                                <br><br><label for=""><?= Yii::app()->session['lang'] == 1 ? '(JPG / JPEG / PNG image file type only)' : '(ไฟล์ประเภทรูปภาพ JPG / JPEG / PNG เท่านั้น)'; ?></label>
 
                             
                                 </div>
