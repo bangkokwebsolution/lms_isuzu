@@ -348,6 +348,7 @@ EOD
 							'filter'=>false,
 							'type'=>'raw',
 							// 'value'=>'$data->PrintCertificate',
+							'htmlOptions'=>array('style'=>'text-align: center','width'=>'200px'),
 							'value'=>function($data){
 
 								$certIdModel = CertificateNameRelations::model()->find(array('condition' => 'course_id = '.$data->passcours_cours));
@@ -365,6 +366,7 @@ EOD
 							'filter'=>false,
 							'type'=>'raw',
 							// 'value'=>'$data->SaveFile',
+							'htmlOptions'=>array('style'=>'text-align: center','width'=>'200px'),
 							'value'=>function($data){
 
 								$certIdModel = CertificateNameRelations::model()->find(array('condition' => 'course_id = '.$data->passcours_cours));

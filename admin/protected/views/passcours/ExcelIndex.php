@@ -44,26 +44,16 @@ if(isset($model->gen_id) && $model->gen_id != null) {
 	$criteria->compare('gen_id', $model->gen_id);
 }
 
-if($model->type_register != null) {
-	$criteria->compare('Profiles.type_employee', $model->type_register);
-}
 
-if($model->department != null) {
-	$criteria->compare('user.department_id',$model->department);
-}
-
-if($model->position != null) {
-	$criteria->compare('user.position_id',$model->position);
-}
 
 if($model->period_start != null) {
-	$criteria->compare('passcours_date >= "' . date('Y-m-d 00:00:00', strtotime($model->period_start)) . '"');
+	$criteria->addCondition('passcours_date >= "' . date('Y-m-d 00:00:00', strtotime($model->period_start)) . '"');
 }
 if($model->period_end != null) {
-	$criteria->compare('passcours_date <= "' . date('Y-m-d 23:59:59', strtotime($model->period_end)) . '"');
+	$criteria->addCondition('passcours_date <= "' . date('Y-m-d 23:59:59', strtotime($model->period_end)) . '"');
 }
 
-$criteria->order = 'Profiles.type_employee ASC, Profiles.firstname_en ASC';
+$criteria->order = 'Profiles.firstname_en ASC';
 
 
 $Passcours = Passcours::model()->findAll($criteria);
@@ -73,18 +63,14 @@ $Passcours = Passcours::model()->findAll($criteria);
 
 <h4>รายงานผู้ผ่านการเรียน</h4>
 <br>
-<table>
+<table border="1">
 	<thead>
 		<tr>
 			<th>ลำดับ</th>
 			<th>ประเภทพนักงาน</th>
 			<th>Name – Surname</th>
 			<th>ชื่อ - นามสกุล</th>
-			<th>รหัสบัตรประชาชน</th>
-			<th>Passport No.</th>
 			<th>Employee no.</th>
-			<th>แผนก</th>
-			<th>ตำแหน่ง</th>
 			<th>หลักสูตร</th>
 			<th>รุ่น</th>
 			<th>วันที่สอบผ่าน</th>
@@ -98,14 +84,10 @@ $Passcours = Passcours::model()->findAll($criteria);
 				?>
 				<tr>
 					<td><?php echo $no; $no++; ?></td>
-					<td><?= $data->profile->typeEmployee->type_employee_name ?></td>
+					<td><?= $data->Profiles->kind ?></td>
 					<td><?= $data->Profiles->firstname_en." ".$data->Profiles->lastname_en ?></td>
 					<td><?= $data->Profiles->firstname." ".$data->Profiles->lastname ?></td>
-					<td><?= $data->user->identification ?></td>
-					<td><?= $data->Profiles->passport ?></td>
-					<td><?php if($data->profile->type_employee == 2){ echo $data->user->username; } ?></td>
-					<td><?= $data->user->department->dep_title ?></td>
-					<td><?= $data->user->position->position_title ?></td>
+					<td><?= $data->user->employee_id ?></td>
 					<td><?= $data->CourseOnlines->course_title ?></td>
 					<td><?php if($data->gen_id != 0){ echo "รุ่น ".$data->gen->gen_title; } ?></td>
 					<td><?= Helpers::lib()->changeFormatDate($data->passcours_date, 'datetime') ?></td>

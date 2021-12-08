@@ -342,17 +342,19 @@ class PasscoursController extends Controller
         );
 
         //set user type
-        switch ($model->Profiles->type_user) {
-        	case '1':
-        		$userAccountCode = null;
-        		break;
-        	case '4':
-        		$userAccountCode = $PrintTypeArray['2']['text'] . ' ' . $PrintTypeArray['2']['id'] . ' ' . $PrintTypeArray['3']['text'] . ' ' . $PrintTypeArray['3']['id'];
-        		break;
-        	default:
-        		$userAccountCode = $PrintTypeArray[$model->Profiles->type_user]['text'] . ' ' . $PrintTypeArray[$model->Profiles->type_user]['id'];
-        		break;
-        }
+        // switch ($model->Profiles->type_user) {
+        // 	case '1':
+        // 		$userAccountCode = null;
+        // 		break;
+        // 	case '4':
+        // 		$userAccountCode = $PrintTypeArray['2']['text'] . ' ' . $PrintTypeArray['2']['id'] . ' ' . $PrintTypeArray['3']['text'] . ' ' . $PrintTypeArray['3']['id'];
+        // 		break;
+        // 	default:
+        // 		$userAccountCode = $PrintTypeArray[$model->Profiles->type_user]['text'] . ' ' . $PrintTypeArray[$model->Profiles->type_user]['id'];
+        // 		break;
+        // }
+
+        $userAccountCode = $PrintTypeArray['2']['text'] . ' ' . $PrintTypeArray['2']['id'] . ' ' . $PrintTypeArray['3']['text'] . ' ' . $PrintTypeArray['3']['id'];
 
         //get start & end learn date of current course
         $StartDateLearnThisCourse = Learn::model()->with('LessonMapper')->find(array(
@@ -441,22 +443,22 @@ class PasscoursController extends Controller
         // $renderFile = 'certificate';
         $renderFile = 'Newcertificate';
 
-        if( $CertificateType == 'cpd' ) {
-            $renderFile = 'certificate_cpd';
-            $renderSign = 'dbd_certificate_dbd_sign.png';
-            $nameSign = 'นางโสรดา เลิศอาภาจิตร์';
-            $positionSign = 'ผู้อำนวยการกองกำกับบัญชีธุรกิจ';
-        } else {
-            if(in_array($PassCoursId,$course_check_sign)){
-                $renderSign = 'dbd_certificate_sign_2.png';
-                $nameSign = 'ม.ล. ภู่ทอง  ทองใหญ่';
-            	$positionSign = 'ผู้อำนวยการกองพัฒนาผู้ประกอบธุรกิจ';
-            } else {
-                $renderSign = 'dbd_certificate_sign.png';
-                $nameSign = 'นายธานี  โอฬารรัตน์มณี';
-            	$positionSign = 'ผู้อำนวยการกองพาณิชย์อิเล็กทรอนิกส์';
-            }
-        }
+        // if( $CertificateType == 'cpd' ) {
+        //     $renderFile = 'certificate_cpd';
+        //     $renderSign = 'dbd_certificate_dbd_sign.png';
+        //     $nameSign = 'นางโสรดา เลิศอาภาจิตร์';
+        //     $positionSign = 'ผู้อำนวยการกองกำกับบัญชีธุรกิจ';
+        // } else {
+        //     if(in_array($PassCoursId,$course_check_sign)){
+        //         $renderSign = 'dbd_certificate_sign_2.png';
+        //         $nameSign = 'ม.ล. ภู่ทอง  ทองใหญ่';
+        //     	$positionSign = 'ผู้อำนวยการกองพัฒนาผู้ประกอบธุรกิจ';
+        //     } else {
+        //         $renderSign = 'dbd_certificate_sign.png';
+        //         $nameSign = 'นายธานี  โอฬารรัตน์มณี';
+        //     	$positionSign = 'ผู้อำนวยการกองพาณิชย์อิเล็กทรอนิกส์';
+        //     }
+        // }
 
         $renderSign = $modelSign->signature->sign_path;
         // var_dump($renderSign);exit();
@@ -518,7 +520,7 @@ class PasscoursController extends Controller
 	    		'positionSign' => $positionSign,
 	    		'positionSign2' => $positionSign2,
 	    		'bgPath' => $modelSign->cert_background,
-	    		'identification' => $identification['identification'],
+	    		// 'identification' => $identification['identification'],
 	    		'positionUser' => $positionUser,
 	    		'format_date_pass' => $format_date_pass,
 	    		'format_date_pass2' => $format_date_pass2,
