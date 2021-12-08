@@ -1879,7 +1879,8 @@ $idx++;
  }
  ?>
  <ol class="carousel-indicators carousel-indicators-numbers" id="indicators<?= $file->id; ?>" >
-   <?php for ($x = 1; $x <= $filePdf; $x = $x + 5) { ?>
+   <?php //for ($x = 1; $x <= $filePdf; $x = $x + 5) { ?>
+    <?php for ($x = 1; $x <= $filePdf; $x++ ) { ?>
      <?php 
 
      if($x == $filePdf){
@@ -1888,7 +1889,8 @@ $idx++;
       $active = 'class';
     }
     ?>
-    <li data-target="#myCarousel<?= $file->id; ?>" data-slide-to="<?= $x-1 ?>" <?= $active ?>><?= $x-1 ?></li>
+    <!-- <li data-target="#myCarousel<?= $file->id; ?>" data-slide-to="<?= $x-1 ?>" <?= $active ?>><?= $x-1 ?></li> -->
+    <li data-target="#myCarousel<?= $file->id; ?>" data-slide-to="<?= $x ?>" <?= $active ?> ><?= $x-1 ?></li>
     <?php
   }  ?>
                                                 <!--   <li data-target="#myCarousel<?= $file->id; ?>" data-slide-to="11">11</li>

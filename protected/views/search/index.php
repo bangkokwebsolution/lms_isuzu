@@ -56,7 +56,9 @@
             ?>
             <div class="well">
                 <a  href="<?php echo $this->createUrl('/usability/index'); ?>">
-                    <?php echo str_ireplace($keyword, '<span class="bg-success">' . $keyword . '</span>', $str); ?>
+                    <?php $str_usability = str_ireplace($keyword, '<span class="bg-success">' . $keyword . '</span>', $str); ?>
+
+                    <?php echo html_entity_decode($str_usability); ?>
                 </a>
             </div>
             <?php
@@ -76,7 +78,8 @@
             ?>
             <div class="well">
             <a  href="<?php echo $this->createUrl('/news/detail/'.$mod->cms_id ); ?>">
-                <?php echo str_ireplace($keyword, '<span class="bg-success">' . $keyword . '</span>', $str); ?>
+                <?php $str_news=str_ireplace($keyword, '<span class="bg-success">' . $keyword . '</span>', $str); ?>
+                <?php echo html_entity_decode($str_news); ?>
             </a>
             </div>
             <?php
@@ -94,7 +97,8 @@
             ?>
             <div class="well">
             <a  href="<?php echo $this->createUrl('/course/detail/'.$mod->course_id ); ?>">
-                <?php echo str_ireplace($keyword, '<span class="bg-success">' . $keyword . '</span>', $str); ?>
+                <?php $str_course=str_ireplace($keyword, '<span class="bg-success">' . $keyword . '</span>', $str); ?>
+                <?php echo html_entity_decode($str_course); ?>
             </a>
             </div>
             <?php
@@ -113,7 +117,8 @@
             ?>
             <div class="well">
             <a  href="<?php echo $this->createUrl('/video/detail/'.$mod->vdo_id ); ?>">
-                <?php echo str_ireplace($keyword, '<span class="bg-success">' . $keyword . '</span>', $str); ?>
+                <?php $str_vdo=str_ireplace($keyword, '<span class="bg-success">' . $keyword . '</span>', $str); ?>
+                <?php echo html_entity_decode($str_vdo); ?>
             </a>
             </div>
             <?php
@@ -132,7 +137,8 @@
             ?>
             <div class="well">
             <a  href="<?= Yii::app()->baseUrl?> /admin/uploads/<?= $mod->dow_address ?>" download="<?= Yii::app()->baseUrl?> /admin/uploads/<?= $mod->dow_address ?>">
-                <?php echo str_ireplace($keyword, '<span class="bg-success">' . $keyword . '</span>', $str); ?>
+                <?php $str_dow=str_ireplace($keyword, '<span class="bg-success">' . $keyword . '</span>', $str); ?>
+            	<?php echo html_entity_decode($str_dow); ?>
             </a>
             </div>
             <?php
@@ -150,7 +156,8 @@
             ?>
             <div class="well">
             <a  href="<?php echo $this->createUrl('/banner/detail',array('id'=> $mod->imgslide_id)); ?>">
-                <?php echo str_ireplace($keyword, '<span class="bg-success">' . $keyword . '</span>', $str); ?>
+                <?php $str_img=str_ireplace($keyword, '<span class="bg-success">' . $keyword . '</span>', $str); ?>
+                <?php echo html_entity_decode($str_img); ?>
             </a>
             </div>
             <?php
