@@ -14,23 +14,23 @@ class DocumentController extends Controller {
 				$this->redirect(array('site/index'));
 		}
 		parent::init();
-		if (isset($_GET['lang_id']) || isset($_GET['parent_id']) ) {
-			$langId = $_GET['lang_id'];
-			$actionName = Yii::app()->urlManager->parseUrl(Yii::app()->request);
+		// if (isset($_GET['lang_id']) || isset($_GET['parent_id']) ) {
+		// 	$langId = $_GET['lang_id'];
+		// 	$actionName = Yii::app()->urlManager->parseUrl(Yii::app()->request);
 			
-			if($langId != 1 && $actionName != "Document/createtype"){
-			$lang = Language::model()->findByPk($langId);
-			$parentId = $_GET['parent_id'];
-			$Root = Document::model()->findByAttributes(array('dow_id'=> $parentId,'active'=>'1'));
-			$cateRoot = DocumentType::model()->findByAttributes(array('parent_id'=> $Root->dty_id,'lang_id'=>$langId,'active'=>'1'));
-			$cateMain = DocumentType::model()->findByAttributes(array('dty_id'=> $Root->dty_id,'active'=>'1'));
-			if(!$cateRoot){
-				Yii::app()->user->setFlash('Success', 'กรุณาเพิ่มประเภทเอกสาร'.$cateMain->dty_name .',ภาษา '.$lang->language);
-				$this->redirect(array('Document/index_type'));
-				exit();
-			}
-			}
-		}
+		// 	if($langId != 1 && $actionName != "Document/createtype"){
+		// 	$lang = Language::model()->findByPk($langId);
+		// 	$parentId = $_GET['parent_id'];
+		// 	$Root = Document::model()->findByAttributes(array('dow_id'=> $parentId,'active'=>'1'));
+		// 	$cateRoot = DocumentType::model()->findByAttributes(array('parent_id'=> $Root->dty_id,'lang_id'=>$langId,'active'=>'1'));
+		// 	$cateMain = DocumentType::model()->findByAttributes(array('dty_id'=> $Root->dty_id,'active'=>'1'));
+		// 	if(!$cateRoot){
+		// 		Yii::app()->user->setFlash('Success', 'กรุณาเพิ่มประเภทเอกสาร'.$cateMain->dty_name .',ภาษา '.$lang->language);
+		// 		$this->redirect(array('Document/index_type'));
+		// 		exit();
+		// 	}
+		// 	}
+		// }
 		$this->lastactivity();
 	}
 
