@@ -335,7 +335,7 @@ Class Helpers
               // return ldap_get_entries($ldap, $search);
     }
 
-    public function SendMail($to, $subject, $message, $fromText = 'E-Learning System Isuzu')
+    public function SendMail($to, $subject, $message, $fromText = 'IMCT e-Learning System Admin')
     {
 
         require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/Exception.php";
