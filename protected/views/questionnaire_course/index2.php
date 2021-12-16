@@ -204,7 +204,7 @@ $path_theme = Yii::app()->theme->baseUrl . '/';
                                                                                         if($questionValue->question_range == 5){
                                                                                             $titleArray = array(
                                                                                                 '1' => 'ไม่พอใจเลย',
-                                                                                                '2' => 'เฉยๆอ่ะ',
+                                                                                                '2' => 'เฉยๆ',
                                                                                                 '3' => 'พอใจ',
                                                                                                 '4' => 'พอใจมาก',
                                                                                                 '5' => 'พอใจมากที่สุด',

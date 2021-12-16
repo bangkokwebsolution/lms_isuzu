@@ -122,9 +122,9 @@ $getLessonAll = Lesson::model()->findAll(array(
                                                             <div class="box-body panel-body">
                                                                 <div class="col-md-9">
                                                                     <div class="box-content-body panel-body">
-                                                                       <!--  <h4><?= $SurveyCourse->survey_name ?></h4> -->
-                                                                        <h5 style="font-size: 20px;"><?= $label->label_surveyCourse ?>: <font style="font-weight: 500;"><?= $course->course_title ?> <?= $course->getGen($course->course_id); ?></font></h5>
-                                                                        <hr>
+                                                                        <h4><?= $SurveyCourse->survey_name ?></h4>
+                                                                        <!-- <h5 style="font-size: 20px;"><?= $label->label_surveyCourse ?>: <font style="font-weight: 500;"><?= $course->course_title ?> <?= $course->getGen($course->course_id); ?></font></h5>
+                                                                        <hr> -->
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-md-3">
@@ -193,7 +193,7 @@ $getLessonAll = Lesson::model()->findAll(array(
                                                                                                 if($QQuestion->question_range == 5){
                                                                                                     $titleArray = array(
                                                                                                         '1' => 'ไม่พอใจเลย',
-                                                                                                        '2' => 'เฉยๆอ่ะ',
+                                                                                                        '2' => 'เฉยๆ',
                                                                                                         '3' => 'พอใจ',
                                                                                                         '4' => 'พอใจมาก',
                                                                                                         '5' => 'พอใจมากที่สุด',
