@@ -10,7 +10,17 @@
 				<?php
 				$strTotal = 0;
 				$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown', 6 => 'hidden');
-				$questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'เลือกได้คำตอบเดียว', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่', 6 => 'คำตอบแบบจัดเรียง');	
+
+				if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+	            	$langId = Yii::app()->session['lang'] = 1;
+	            	Yii::app()->language = 'en';
+
+	            	$questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'Exams can choose only one answer', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่', 6 => 'คำตอบแบบจัดเรียง');
+	            }else{
+	            	$langId = Yii::app()->session['lang'];
+	            	$questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'เลือกได้คำตอบเดียว', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่', 6 => 'คำตอบแบบจัดเรียง');
+	            }
+					
 				?>
 				<h4>ข้อสอบแบบ <?= $questionTypeArrayStr[$model->ques_type]?> </h4>
 				<p><?= $currentQuiz->number; ?>. <?= $model->ques_title; ?></p>
