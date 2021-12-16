@@ -60,7 +60,8 @@ class LearnResetController extends Controller
         $lesson = json_decode($_POST['checkedList']);
         $reset_type = $_POST['reset_type'];
         $courseMsg = 'ผู้ดูแลระบบ ทำการ Reset ข้อมูลการเรียนบทเรียนต่อไปนี้ <br>';
-
+        $val = array();
+        $val = explode(",", $lesson[0]);
         foreach ($lesson as $key => $value) {
             $val = array();
             $val = explode(",", $value);
@@ -68,7 +69,7 @@ class LearnResetController extends Controller
             $lesson_id = $val[1];
             $learn_id = $val[2];
             $gen_id = $val[3];
-
+            // var_dump($gen_id);
 
             $logReset = new LogReset;
             $logReset->user_id = $user_id;
@@ -157,6 +158,17 @@ class LearnResetController extends Controller
             $courseMsg .= ($key+1).". <b>หลักสูตร : </b> ".$lessonS->courseonlines->course_title.'<br> <b>บทเรียน : </b>'.$lessonS->title.'<br>';
             $reset_type = $_POST['reset_type'];
 
+        }
+
+        if(!empty($val)){
+            $passcourse = Passcours::model()->find(array( 
+                'condition' => 'gen_id=:gen_id AND passcours_cours=:course_id AND passcours_user=:user_id',
+                'params' => array(':gen_id'=>$val[3], ':course_id'=>$val[0], ':user_id'=>$user_id),
+            ));
+        }
+        
+        if(!empty($passcourse)){
+            $passcourse->delete();
         }
 
         if(Yii::app()->user->id){
@@ -315,7 +327,8 @@ class LearnResetController extends Controller
         $lesson = json_decode($_POST['checkedList']);
         $reset_type = $_POST['reset_type'];
         $courseMsg = 'ผู้ดูแลระบบ ทำการ Reset ข้อมูลการเรียนบทเรียนต่อไปนี้ <br>';
-
+        $val = array();
+        $val = explode(",", $lesson[0]);
         foreach ($lesson as $key => $value) {
             $val = array();
             $val = explode(",", $value);
@@ -398,14 +411,23 @@ class LearnResetController extends Controller
             }else{
                 var_dump($logReset->getErrors());
             }
-
+            
             $lessonS = Lesson::model()->findByPk($lesson_id);
             $courseMsg .= ($key+1).". <b>หลักสูตร : </b> ".$lessonS->courseonlines->course_title.'<br> <b>บทเรียน : </b>'.$lessonS->title.'<br>';
 
             $reset_type = $_POST['reset_type'];
 
         } // foreach
-
+        if(!empty($val)){
+            $passcourse = Passcours::model()->find(array( 
+                'condition' => 'gen_id=:gen_id AND passcours_cours=:course_id AND passcours_user=:user_id',
+                'params' => array(':gen_id'=>$val[3], ':course_id'=>$val[0], ':user_id'=>$user_id),
+            ));
+        }
+        
+        if(!empty($passcourse)){
+            $passcourse->delete();
+        }
 
         if(Yii::app()->user->id){
             Helpers::lib()->getControllerActionId();
