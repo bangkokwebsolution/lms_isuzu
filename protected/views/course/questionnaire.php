@@ -122,7 +122,7 @@ $getLessonAll = Lesson::model()->findAll(array(
                                                             <div class="box-body panel-body">
                                                                 <div class="col-md-9">
                                                                     <div class="box-content-body panel-body">
-                                                                        <h4><?= $SurveyCourse->survey_name ?></h4>
+                                                                       <!--  <h4><?= $SurveyCourse->survey_name ?></h4> -->
                                                                         <h5 style="font-size: 20px;"><?= $label->label_surveyCourse ?>: <font style="font-weight: 500;"><?= $course->course_title ?> <?= $course->getGen($course->course_id); ?></font></h5>
                                                                         <hr>
                                                                     </div>
