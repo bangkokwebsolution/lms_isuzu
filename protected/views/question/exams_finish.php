@@ -42,6 +42,24 @@ if($modelScore->type=='post' && !$state){
 	$linkNextStep = Yii::app()->createUrl('course/detail/', array('id' => $lesson->CourseOnlines->course_id));
 } 
 ?>
+
+<?php 
+if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+  $langId = Yii::app()->session['lang'] = 1;
+  $flag = true;
+
+  $Minutes="Minutes";
+  $score_number="Your score earned";
+
+} else {
+  $langId = Yii::app()->session['lang'];
+  $flag = false;
+
+  $Minutes="นาที";
+  $score_number="คะแนนของคุณ";
+}
+
+?>
 <script>
 	$(function(){
 		if("<?= $testType?>" != "pre" && $quesType_ != 3){
@@ -86,11 +104,11 @@ if($modelScore->type=='post' && !$state){
 					<div class="well detail exams-finish-detail">
 						<ul class="list-unstyled">
 							<li><?= $labelCourse->label_totalTest ?> <span class="pull-right"><?= count($temp_all) ?> <?= $labelCourse->label_list ?></span></li>
-							<li><?=UserModule::t('timeTest');?> <span class="pull-right"><?= $lesson->time_test; ?> <?=UserModule::t('Minutes');?></span></li>
+							<li><?=UserModule::t('timeTest');?> <span class="pull-right"><?= $lesson->time_test; ?> <?=$Minutes?></span></li>
 
-							<li><?=UserModule::t('timeToUse');?> <span class="pull-right"><?= $timeTest ?> <?=UserModule::t('Minutes');?></span></li>
+							<li><?=UserModule::t('timeToUse');?> <span class="pull-right"><?= $timeTest ?> <?=$Minutes?></span></li>
 							<li><?=UserModule::t('totoal');?> <span class="pull-right"><?= $modelScore->score_total; ?> <?= $labelCourse->label_point; ?></span></li>
-							<li><?= $labelCourse->label_haveCorrect; ?> <span class="pull-right"><?= $modelScore->score_number; ?> <?= $labelCourse->label_point; ?></span></li>
+							<li><?= $labelCourse->label_haveCorrect; ?> <span class="pull-right"><?= $score_number; ?> <?= $labelCourse->label_point; ?></span></li>
 							<li><?= $labelCourse->label_percentage ?> <span class="pull-right"><?= $percent; ?> %</span></li>
 						</ul>
 					</div>
