@@ -7,15 +7,22 @@ $uploadFolderScorm = Yii::app()->getUploadUrl("scorm");
 if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
   $langId = Yii::app()->session['lang'] = 1;
   $flag = true;
+
+
+  $pass_msg = "complate";
+
 } else {
   $langId = Yii::app()->session['lang'];
   $flag = false;
+
+  $pass_msg = UserModule::t('you_pass');
+
   $modelLessonChildren  = Lesson::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $model->id));
   if ($modelLessonChildren) {
     $model->title = $modelLessonChildren->title;
   }
 }
-$pass_msg = UserModule::t('you_pass');
+// $pass_msg = UserModule::t('you_pass');
 $next_step_msg = UserModule::t('next_step');
 $ok_msg = UserModule::t('Ok');
 $cancel_msg = UserModule::t('Cancel');
