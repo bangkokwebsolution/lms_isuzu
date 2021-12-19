@@ -1822,7 +1822,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                                     <?php if ($step == 5) { ?>
                                                         <!-- <div class="pt-now"> Step now</div> -->
                                                     <?php } ?>
-                                                    <span><i class="fa fa-list" aria-hidden="true"></i> Course Evaluation <?php //$label->label_surveyCourse; ?></span> <a href="<?= $pathSurvey ?>" <?= $alrtSurvey  ?> class="btn btn-warning detailmore pull-right"><?= $Click ?> <i class="fa fa-check-square-o" aria-hidden="true"></i></a>
+                                                    <span><i class="fa fa-list" aria-hidden="true"></i> <?=$Questionnaire; ?> <?php //$label->label_surveyCourse; ?></span> <a href="<?= $pathSurvey ?>" <?= $alrtSurvey  ?> class="btn btn-warning detailmore pull-right"><?= $Click ?> <i class="fa fa-check-square-o" aria-hidden="true"></i></a>
                                                 </div>
                                             <?php } ?>
                                             <!-- end Survey -->
