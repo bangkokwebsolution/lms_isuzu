@@ -44,6 +44,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
   $flag = true;
 
   $Minutes="Minutes";
+  $score_number="Your score earned";
 
 } else {
   $langId = Yii::app()->session['lang'];
