@@ -40,7 +40,7 @@ include "themes/template2/include/css.php";
             </div>         
             <div class="text-center">
                 <!--<button type="submit" class="btn btn-warning btn-lg">ส่งข้อความ</button>-->
-                <?php echo CHtml::submitButton('สร้างรหัสผ่านใหม่', array('class' => 'btn btn-warning btn-lg')); ?>
+                <?php echo CHtml::submitButton('Confirm', array('class' => 'btn btn-warning btn-lg')); ?>
             </div>
         </div>
         <?php $this->endWidget();

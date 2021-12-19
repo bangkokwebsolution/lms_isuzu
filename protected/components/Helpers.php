@@ -791,7 +791,7 @@ public function PlusDate($givendate, $day = 0, $mth = 0, $yr = 0)
     return $newdate;
 }
 
-public function SendMail($to, $subject, $message, $fromText = 'Isuzu')
+public function SendMail($to, $subject, $message, $fromText = 'IMCT e-Learning System')
 {
     require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/Exception.php";
     require dirname(__FILE__)."/../extensions/mailer/phpmailer/src/PHPMailer.php";
