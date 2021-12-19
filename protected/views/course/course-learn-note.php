@@ -9,13 +9,15 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
   $flag = true;
 
 
-  $pass_msg = "complate";
+  $pass_msg = "You Completed the class.";
+  $next_step_msg = "You Want to go to the next step?";
 
 } else {
   $langId = Yii::app()->session['lang'];
   $flag = false;
 
   $pass_msg = UserModule::t('you_pass');
+  $next_step_msg = UserModule::t('next_step');
 
   $modelLessonChildren  = Lesson::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $model->id));
   if ($modelLessonChildren) {
