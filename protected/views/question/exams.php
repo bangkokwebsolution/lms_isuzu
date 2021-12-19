@@ -3,6 +3,29 @@ $real = '["55","56","54"]';
 $arr = array();
 $arr = json_decode($real);
 ?>
+<?php 
+if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+  $langId = Yii::app()->session['lang'] = 1;
+  $flag = true;
+
+  $Time_allowed="Time allowed";
+  $questionTypeArrayStr = array(1 => 'Multiple Choices', 2 => 'The exams can choose only one answer.', 3 => 'Essay Test', 4 => 'Matching Test', 6 => 'Alignment Test');
+  $ok="OK";
+  $cancel="Cancel";
+  $Question="Question";
+
+} else {
+  $langId = Yii::app()->session['lang'];
+  $flag = false;
+
+  $Time_allowed="เวลา";
+  $questionTypeArrayStr = array(1 => 'ข้อสอบแบบ เลือกได้หลายคำตอบ', 2 => 'ข้อสอบแบบ เลือกได้คำตอบเดียว', 3 => 'ข้อสอบแบบ คำตอบแบบบรรยาย', 4 => 'ข้อสอบแบบ คำตอบแบบจับคู่', 6 => 'ข้อสอบแบบ คำตอบแบบจัดเรียง');
+  $ok="ยืนยัน";
+  $cancel="ยกเลิก";
+  $Question="คำถาม";
+}
+
+?>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <style type="text/css">
 	.exams p {
@@ -49,7 +72,7 @@ $arr = json_decode($real);
 			<div class="container">
 				<!-- tabtime -->
 				<div class="alert alert-danger stick center shadow">
-					<h4 class="mb-0 text-center">Time allowed : <span id="tabtime">00:00:00</span></h4>
+					<h4 class="mb-0 text-center"><?=$Time_allowed ?> : <span id="tabtime">00:00:00</span></h4>
 				</div>
 				<!-- Content -->
 
@@ -63,9 +86,9 @@ $arr = json_decode($real);
 											<?php
 											$strTotal = 0;
 											$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown', 6 => 'hidden');
-											$questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'เลือกได้คำตอบเดียว', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่', 6 => 'คำตอบแบบจัดเรียง');
+											
 											?>
-											<h4>ข้อสอบแบบ <?= $questionTypeArrayStr[$model->ques_type] ?></h4>
+											<h4><?= $questionTypeArrayStr[$model->ques_type] ?></h4>
 											<p><?= $currentQuiz->number; ?>. <?= $model->ques_title; ?></p>
 											<div class="well answer" style="margin-top: 10px;">
 												<?php
@@ -228,7 +251,7 @@ $arr = json_decode($real);
 								<div class="col-md-4">
 									<div class="all-exams">
 										<div class="exams-title">
-											Question <span class="pull-right"><?= $countExam . ' / ' . count($temp_all); ?></span>
+											<?=$Question?> <span class="pull-right"><?= $countExam . ' / ' . count($temp_all); ?></span>
 										</div>
 										<table class="table table-bordered table-striped">
 											<tbody>
@@ -348,7 +371,7 @@ $arr = json_decode($real);
 			if(<?= Yii::app()->session['lang'] ?> == 2){
 				var title_swal = "ยืนยันเพื่อส่งคำตอบ";
 			}else{
-				var title_swal = "Confirm";
+				var title_swal = "Confirm to send a reply.";
 			}
 
 			swal({
@@ -357,7 +380,8 @@ $arr = json_decode($real);
 				type: "warning",
 				showCancelButton: true,
 				confirmButtonColor: "#DD6B55",
-				confirmButtonText: "OK",
+				confirmButtonText: "<?=$ok?>",
+				cancelButtonText: "<?=$cancel?>",
 			}, function(isConfirm) {
 				if (isConfirm) {
 					$.ajax({
@@ -416,7 +440,8 @@ $arr = json_decode($real);
 							title: "<?= UserModule::t('success_test'); ?>",
 							text: '',
 							type: typeMsg,
-							confirmButtonText: "OK",
+							confirmButtonText: "<?=$ok?>",
+							cancelButtonText: "<?=$cancel?>",
 						},
 						function() {
 								$('#exam-result').html(data); //window.location.href = url;

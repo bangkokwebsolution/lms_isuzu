@@ -38,6 +38,22 @@ if ($course->cate_id != 1) { //LMS
 
 
 ?>
+<?php 
+if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+  $langId = Yii::app()->session['lang'] = 1;
+  $flag = true;
+
+  $Minutes="Minutes";
+
+} else {
+  $langId = Yii::app()->session['lang'];
+  $flag = false;
+
+  $Minutes="นาที";
+  $score_number="คะแนนของคุณ";
+}
+
+?>
 <script>
 	$(function() {
 		if ("<?= $testType ?>" != "pre" && $quesType_ != 3) { // 3= บรรยาย pop up
@@ -89,11 +105,11 @@ if ($course->cate_id != 1) { //LMS
 							</li>
 							<li>
 								<?= UserModule::t('timeTest'); ?>
-								<span class="pull-right"><?= $course->time_test; ?> <?= UserModule::t('Minutes'); ?></span>
+								<span class="pull-right"><?= $course->time_test; ?> <?= $Minutes; ?></span>
 							</li>
 							<li>
 								<?= UserModule::t('timeToUse'); ?>
-								<span class="pull-right"><?= $timeTest ?> <?= UserModule::t('Minutes'); ?></span>
+								<span class="pull-right"><?= $timeTest ?> <?= $Minutes; ?></span>
 							</li>
 							<li>
 								<?= UserModule::t('totoal'); ?>
@@ -101,7 +117,7 @@ if ($course->cate_id != 1) { //LMS
 							</li>
 							<li>
 								<?= $labelCourse->label_haveCorrect; ?>
-								<span class="pull-right"><?= $modelScore->score_number; ?> <?= $labelCourse->label_point; ?></span>
+								<span class="pull-right"><?= $score_number; ?> <?= $labelCourse->label_point; ?></span>
 							</li>
 							<li>
 								<?= $labelCourse->label_percentage ?>
