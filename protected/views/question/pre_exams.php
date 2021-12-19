@@ -1,3 +1,19 @@
+<?php 
+if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+  $langId = Yii::app()->session['lang'] = 1;
+  $flag = true;
+
+  $Minutes="Minutes";
+
+} else {
+  $langId = Yii::app()->session['lang'];
+  $flag = false;
+
+  $Minutes="นาที";
+}
+
+?>
+
 		<div class="container">
 			<nav aria-label="breadcrumb">
 				<ol class="breadcrumb breadcrumb-main">
