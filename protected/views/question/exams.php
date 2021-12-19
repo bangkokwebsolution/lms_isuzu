@@ -398,12 +398,12 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 									var strMsg = '<?= UserModule::t('fail_test'); ?>';
 									var typeMsg = 'warning';
 								}
-								swal({
-									title: "<?= UserModule::t('success_test'); ?>",
-									text: '',
-									type: typeMsg,
-									confirmButtonText: "OK",
-								},
+								// swal({
+								// 	title: "<?= UserModule::t('success_test'); ?>",
+								// 	text: '',
+								// 	type: typeMsg,
+								// 	confirmButtonText: "OK",
+								// },
 								function() {
 										$('#exam-result').html(data); //window.location.href = url;
 									});
