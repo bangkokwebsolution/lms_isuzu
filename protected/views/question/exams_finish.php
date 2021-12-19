@@ -106,9 +106,9 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 							<li><?= $labelCourse->label_totalTest ?> <span class="pull-right"><?= count($temp_all) ?> <?= $labelCourse->label_list ?></span></li>
 							<li><?=UserModule::t('timeTest');?> <span class="pull-right"><?= $lesson->time_test; ?> <?=$Minutes?></span></li>
 
-							<li><?=UserModule::t('timeToUse');?> <span class="pull-right"><?= $timeTest ?> <?=$Minutes?></span></li>
+							<li><?=UserModule::t('timeToUse');?> <span class="pull-right"><?= $timeTest ?> <?=$Minutes;?></span></li>
 							<li><?=UserModule::t('totoal');?> <span class="pull-right"><?= $modelScore->score_total; ?> <?= $labelCourse->label_point; ?></span></li>
-							<li><?= $labelCourse->label_haveCorrect; ?> <span class="pull-right"><?= $score_number; ?> <?= $labelCourse->label_point; ?></span></li>
+							<li><?= $labelCourse->label_haveCorrect; ?> <span class="pull-right"><?= $modelScore->score_number; ?> <?= $labelCourse->label_point; ?></span></li>
 							<li><?= $labelCourse->label_percentage ?> <span class="pull-right"><?= $percent; ?> %</span></li>
 						</ul>
 					</div>
