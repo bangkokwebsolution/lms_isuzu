@@ -1,3 +1,20 @@
+<?php
+
+if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+	            	$langId = Yii::app()->session['lang'] = 1;
+	            	Yii::app()->language = 'en';
+
+	$questionTypeArrayStr = array(1 => 'Multiple Choices', 2 => 'The exams can choose only one answer.', 3 => 'Essay Test', 4 => 'Matching Test', 6 => 'Alignment Test');
+	$Next="Next";
+	$Previous="Previous";
+}else{
+	            	$langId = Yii::app()->session['lang'];
+	$questionTypeArrayStr = array(1 => 'ข้อสอบแบบ เลือกได้หลายคำตอบ', 2 => 'ข้อสอบแบบ เลือกได้คำตอบเดียว', 3 => 'ข้อสอบแบบ คำตอบแบบบรรยาย', 4 => 'ข้อสอบแบบ คำตอบแบบจับคู่', 6 => 'ข้อสอบแบบ คำตอบแบบจัดเรียง');
+	$Next="ถัดไป";
+	$Previous="ย้อนกลับ";
+}
+
+?>
 <style type="text/css">
 	p{
 		display: inline;
@@ -11,18 +28,10 @@
 				$strTotal = 0;
 				$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown', 6 => 'hidden');
 
-				if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
-	            	$langId = Yii::app()->session['lang'] = 1;
-	            	Yii::app()->language = 'en';
-
-	            	$questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'Exams can choose only one answer', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่', 6 => 'คำตอบแบบจัดเรียง');
-	            }else{
-	            	$langId = Yii::app()->session['lang'];
-	            	$questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'เลือกได้คำตอบเดียว', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่', 6 => 'คำตอบแบบจัดเรียง');
-	            }
+				
 					
 				?>
-				<h4>ข้อสอบแบบ <?= $questionTypeArrayStr[$model->ques_type]?> </h4>
+				<h4><?= $questionTypeArrayStr[$model->ques_type]?> </h4>
 				<p><?= $currentQuiz->number; ?>. <?= $model->ques_title; ?></p>
 				<div class="well answer" style="margin-top: 10px;">
 					<?php 
@@ -174,8 +183,8 @@
 			echo CHtml::hiddenField("idx_now",$currentQuiz->number);
 			?>
 			<div class="text-center">
-				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark btn-lg','onclick'=>'save_ans("previous")'), 'Previous'); ?>
-				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark  btn-lg','onclick'=>'save_ans("next")'), 'Next'); ?>
+				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark btn-lg','onclick'=>'save_ans("previous")'), $Previous); ?>
+				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark  btn-lg','onclick'=>'save_ans("next")'), $Next); ?>
 				<?php if($last_ques==1)echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg','onclick'=>'save_ans("save")' ), UserModule::t('sendQues') ); ?>
 			</div>
 		</form>

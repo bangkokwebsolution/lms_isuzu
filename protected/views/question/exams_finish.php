@@ -1,4 +1,4 @@
-ิ<?php 
+<?php 
 $timeTest = Helpers::lib()->getTimeTest($lesson->time_test,$temp_all[0]->time_up);
 $percent = $modelScore->score_number > 0 ? number_format(($modelScore->score_number * 100) / $modelScore->score_total,2) : 0;
 if($modelScore->score_past == 'y'){
