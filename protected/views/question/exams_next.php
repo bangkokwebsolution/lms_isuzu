@@ -25,7 +25,27 @@
     	}
     });
 </script>
+<?php 
+if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+  $langId = Yii::app()->session['lang'] = 1;
+  $flag = true;
 
+  $Time_allowed="Time allowed";
+  $questionTypeArrayStr = array(1 => 'Multiple Choices', 2 => 'The exams can choose only one answer.', 3 => 'Essay Test', 4 => 'Matching Test', 6 => 'Alignment Test');
+  $ok="OK";
+  $cancel="Cancel";
+  $Question="Question";
+
+} else {
+  $langId = Yii::app()->session['lang'];
+  $flag = false;
+
+  $Time_allowed="เวลา";
+  $questionTypeArrayStr = array(1 => 'ข้อสอบแบบ เลือกได้หลายคำตอบ', 2 => 'ข้อสอบแบบ เลือกได้คำตอบเดียว', 3 => 'ข้อสอบแบบ คำตอบแบบบรรยาย', 4 => 'ข้อสอบแบบ คำตอบแบบจับคู่', 6 => 'ข้อสอบแบบ คำตอบแบบจัดเรียง');
+  $ok="ยืนยัน";
+  $cancel="ยกเลิก";
+  $Question="คำถาม";
+}
 <style type="text/css">
 	p{
 		display: inline;
@@ -38,7 +58,7 @@
 				<?php
 				$strTotal = 0;
 				$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown', 6 => 'hidden');
-				$questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'เลือกได้คำตอบเดียว', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่', 6 => 'คำตอบแบบจัดเรียง');
+				// $questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'เลือกได้คำตอบเดียว', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่', 6 => 'คำตอบแบบจัดเรียง');
 				?>
 				<h4>ข้อสอบแบบ <?= $questionTypeArrayStr[$model->ques_type] ?></h4>
 				<p><?= $currentQuiz->number; ?>. <?= $model->ques_title; ?></p>
@@ -214,7 +234,7 @@ if($model->ques_type == 3) {
 	<div class="col-sm-4">
 		<div class="all-exams">
 			<div class="exams-title">
-				<?= UserModule::t('testing'); ?> <span class="pull-right"><?= $countExam.' / '.count($temp_all);?></span>
+				<?= $Question; ?> <span class="pull-right"><?= $countExam.' / '.count($temp_all);?></span>
 			</div>
 			<table class="table table-bordered table-striped">
 				<tbody>
