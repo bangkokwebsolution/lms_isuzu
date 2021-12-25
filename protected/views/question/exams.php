@@ -371,7 +371,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 			if(<?= Yii::app()->session['lang'] ?> == 2){
 				var title_swal = "ยืนยันเพื่อส่งคำตอบ";
 			}else{
-				var title_swal = "Confirm to send a reply.";
+				var title_swal = "Confirm to send a answer.";
 			}
 
 			swal({
