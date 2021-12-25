@@ -9,8 +9,8 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
   $flag = true;
 
 
-  $pass_msg = "You Completed the class.";
-  $next_step_msg = "You Want to go to the next step?";
+  $pass_msg = "You Completed the Lesson.";
+  $next_step_msg = "Do You Want to go to the next step?";
 
 } else {
   $langId = Yii::app()->session['lang'];
