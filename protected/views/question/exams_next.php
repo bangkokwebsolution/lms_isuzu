@@ -46,6 +46,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
   $cancel="ยกเลิก";
   $Question="คำถาม";
 }
+?>
 <style type="text/css">
 	p{
 		display: inline;
