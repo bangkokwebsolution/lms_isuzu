@@ -61,7 +61,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 				$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown', 6 => 'hidden');
 				// $questionTypeArrayStr = array(1 => 'เลือกได้หลายคำตอบ', 2 => 'เลือกได้คำตอบเดียว', 3 => 'คำตอบแบบบรรยาย', 4 => 'คำตอบแบบจับคู่', 6 => 'คำตอบแบบจัดเรียง');
 				?>
-				<h4>ข้อสอบแบบ <?= $questionTypeArrayStr[$model->ques_type] ?></h4>
+				<h4><?= $questionTypeArrayStr[$model->ques_type] ?></h4>
 				<p><?= $currentQuiz->number; ?>. <?= $model->ques_title; ?></p>
 				<div class="well answer" style="margin-top: 10px;">
 					<?php 
@@ -248,9 +248,12 @@ if($model->ques_type == 3) {
 								$class = 'info';
 							}else {
 								$class = ($val_temp->status == '1') ? 'success' : '';
-							} 
+							}
+
 							$link = 'onclick="save_ans(\''.$val_temp->number.'\')"';
+
 							/*$this->createUrl('index',array('id'=>$lesson->id,'number'=>$val_temp->number));*/
+							
 							?>
 							<td><a href="javascript:void(0)" <?= $link ?> class="btn btn-<?= $class ?> btn-block"><div style="height:100%;width:100%"><?= $val_temp->number; ?></div></a></td>
 							<?php
