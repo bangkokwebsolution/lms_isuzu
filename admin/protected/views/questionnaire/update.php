@@ -9,8 +9,8 @@
 	}
 </style>
 <script type="text/javascript" src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.validate.js"></script>
-<script src="<?php echo Yii::app()->baseUrl; ?>/js/tinymce-4.3.4/tinymce.min.js" type="text/javascript"></script>
-<script type="text/javascript">
+<!-- <script src="<?php echo Yii::app()->baseUrl; ?>/js/tinymce-4.3.4/tinymce.min.js" type="text/javascript"></script> -->
+<!-- <script type="text/javascript">
 
 $(function() {
     tinymce.init({
@@ -30,6 +30,11 @@ $(function() {
      });
 });
 
+</script> -->
+<script type="text/javascript">
+	$(function () {
+		init_tinymce();
+	});
 </script>
 <?php
 $this->breadcrumbs=array(
