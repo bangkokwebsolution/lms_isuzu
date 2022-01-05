@@ -372,7 +372,7 @@ label.error { display: none; }
 					</div> -->
 				</div>
 				<div class="row buttons">
-				<?php echo CHtml::tag('button',array('class' => 'btn btn-primary btn-icon glyphicons ok_2','onclick'=>'tinyMCE.triggerSave();'),'<i></i>บันทึกข้อมูล');?>
+				<?php echo CHtml::tag('button',array('type'=>'submit','class' => 'btn btn-primary btn-icon glyphicons ok_2','onclick'=>'tinyMCE.triggerSave();'),'<i></i>บันทึกข้อมูล');?>
 				</div>
 				<?php echo CHtml::endForm(); ?>
 			</div>
