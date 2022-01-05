@@ -158,7 +158,7 @@ class OrgmanageController extends Controller
 			$model->level = 3;
 			$model->division_id = $_POST['OrgChart']["parent_id"];
 
-			if($model->save()){				
+			if($model->save(false)){				
 				$model->department_id = $model->id;
 				$model->save(false);
 
