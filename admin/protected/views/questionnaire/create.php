@@ -228,7 +228,7 @@ label.error { display: none; }
 				question += '<br>';
 				question += 'กลุ่ม (แบบให้คะแนน) <a class="btn btn-icon btn-danger question-remove"><i class="icon-remove"></i> ลบ</a><br>';
 				question += '<input type="hidden" value="contentment" name="questionType['+section_id+']['+question_id+']" required>';
-				question += '<input type="text" class="question-title" id="question-title" name="questionTitle['+section_id+']['+question_id+']"><br>';
+				question += '<input type="text" class="question-title" id="question-title" name="questionTitle['+section_id+']['+question_id+']" required><br>';
 				question += 'ระดับคะแนน <label><input type="radio" class="question-range" id="question-range" name="questionRange['+section_id+']['+question_id+']" value="5" checked> 5 คะแนน</label><label><input type="radio" class="question-range" id="question-range" name="questionRange['+section_id+']['+question_id+']" value="10"> 10 คะแนน</label><br>';
 				question += 'คำถาม <a class="btn btn-icon btn-success add-choice-score"><i class="icon-book"></i> เพิ่มคำถาม</a><br>';
 				question += '<div class="choice-list" data-section-id="'+section_id+'" data-question-id="'+question_id+'">';
