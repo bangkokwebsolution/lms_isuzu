@@ -124,14 +124,14 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                 <?php
                 $langauge = Language::model()->findAllByAttributes(array('status' => 'y', 'active' => 'y'));
                 $currentlangauge = Language::model()->findByPk(Yii::app()->session['lang']);
+                
+
                 $texturl =  explode('?',$_SERVER['REQUEST_URI']);
-                $texturltotal = "";
-                  if (!empty($texturl[1])) {
-                      $texturl2 =  explode('&lang=',$texturl[1]);
-                      if (!empty($texturl2[0])) {
-                        $texturltotal = $texturl2[0]."&";
-                    }
-                  }
+                
+
+                  
+                // var_dump($texturl[1]);
+                  
                   
                   // $texturl_1 = $texturl[1];
                 ?>
@@ -141,7 +141,28 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                     <ul class="dropdown-menu changelang">
                         <?php
                         foreach ($langauge as $key => $value) {
-                            echo '<li><a href="?'.$texturltotal.'lang=' . $value->id . '"><img src="' . Yii::app()->baseUrl . '/uploads/language/' . $value->id . '/small/' . $value->image . '" height="30px" alt=""> ' . $value->language . '</a></li>';
+
+                            if(!empty($texturl[1])){
+                                if(!empty($_GET["lang"])){
+                                    if($_GET["lang"]==1){
+                                        $texturltotal=str_replace("lang=1", "lang=". $value->id ,$texturl[1]);
+                                    }else{
+                                        $texturltotal=str_replace("lang=2", "lang=". $value->id ,$texturl[1]);
+                                    }
+
+                                    $texturltotal="?".$texturltotal;
+                                    
+                                }else{
+                                    
+                                    $texturltotal="?lang=" . $value->id."&".$texturl[1];
+                                }
+                            }else{
+                                $texturltotal="?lang=" . $value->id;
+                            }   
+
+                            echo '<li><a href="'.$texturltotal. '"><img src="' . Yii::app()->baseUrl . '/uploads/language/' . $value->id . '/small/' . $value->image . '" height="30px" alt=""> ' . $value->language . '</a></li>';
+
+                            // echo '<li><a href="?lang=' . $value->id . '"><img src="' . Yii::app()->baseUrl . '/uploads/language/' . $value->id . '/small/' . $value->image . '" height="30px" alt=""> ' . $value->language . '</a></li>';
                         }
                         ?>
                     </ul>
