@@ -996,7 +996,7 @@ class AdminController extends Controller
                     $model->create_at = date('Y-m-d H:i:s');
                     $model->status = 1;
                     $model->org_id  =$result["Org. Chat ID"];
-
+                    $model->created_by = Yii::app()->user->id;
 
                 // $genpass = $this->RandomPassword();
                     $genpass = md5($result["Employee ID."]);
