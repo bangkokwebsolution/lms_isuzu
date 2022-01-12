@@ -191,8 +191,8 @@ Class MenuLeft extends Controller
 				/*====== Check Permissions MainMenu (2) ======*/
 				'visible'=>self::PermissionsMenu(array(
 					'MainMenu.*',
-					'MainMenu.admin',
-					'MainMenu.Create'
+					// 'MainMenu.admin',
+					// 'MainMenu.Create'
 				)),
 				'label'=>'<i></i><span>เมนู</span>',
 				'url'=>'#MainMenu',
