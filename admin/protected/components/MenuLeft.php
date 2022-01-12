@@ -1532,7 +1532,10 @@ Class MenuLeft extends Controller
 	        		// ),
 					array(
 						/*====== Check Permissions Sup-User (2) ======*/
-						'visible'=>true,
+						'visible'=>self::PermissionsMenu(array(
+							'admin.*',
+							'admin.employee'
+						)),
 						'label'=>'รายชื่อสมาชิก',
 						'url'=>array('//user/admin/employee')
 					),
