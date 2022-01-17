@@ -1182,10 +1182,10 @@ Class MenuLeft extends Controller
 			array(
 				/*====== Check Permissions FAQ (2) ======*/
 				'visible'=>self::PermissionsMenu(array(
-					'Faq.*',
-					'Faq.Index',
-					'Faq.Create'
-					// 'Faqtype.*',
+					'faq.*',
+					// 'Faq.Index',
+					// 'Faq.Create'
+					'faqtype.*',
 					// 'Faqtype.Index',
 					// 'Faqtype.Create'
 				)),
@@ -1199,8 +1199,8 @@ Class MenuLeft extends Controller
 					array(
 						/*====== Check Permissions FAQ (2) ======*/
 						'visible'=>self::PermissionsMenu(array(
-							'faqType.*',
-							'faqType.Index'
+							'faqtype.*',
+							'faqtype.index'
 						)),
 						'label'=>'หมวดคำถาม'." (ภาษา ".$mainLang." )",
 						'url'=>array('//faqType/index')
@@ -1208,8 +1208,8 @@ Class MenuLeft extends Controller
 					array(
 						/*====== Check Permissions FAQ (1) ======*/
 						'visible'=>self::PermissionsMenu(array(
-							'Faq.*',
-							'Faq.index'
+							'faq.*',
+							'faq.index'
 						)),
 						'label'=>'คำถามที่พบบ่อย',
 						'url'=>array('//Faq/index')
