@@ -384,7 +384,7 @@ class CoursequestionController extends Controller
 //				$questionModel->group_id = $id;
 				$questionModel->ques_type = $questionTypeArray[$questionType];
 				$questionModel->ques_title = $questionTitle;
-
+				$questionModel->ques_explain = $_POST['Explain'][$id];
 				if($questionModel->ques_type == 3){
         			$questionModel->max_score = $_POST['Question_score'][$key]; //Max score
         		}
