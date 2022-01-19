@@ -56,6 +56,7 @@ class AuthorityHRController extends Controller
 		$criteria = new CDbCriteria;
 		$criteria->compare('superuser', 1);
 		$criteria->compare('authority_hr', 0);
+		$criteria->compare('status', 1);
 		// $criteria->addCondition('authority_hr IS NULL');
 		$userAll = User::model()->with('profile')->findAll($criteria);
 
@@ -108,6 +109,7 @@ class AuthorityHRController extends Controller
 		$criteria = new CDbCriteria;
 		$criteria->compare('superuser', 1);
 		$criteria->compare('authority_hr', 0);
+		$criteria->compare('status', 1);
 		$userAll = User::model()->with('profile')->findAll($criteria);
 
 		$criteria = new CDbCriteria;
