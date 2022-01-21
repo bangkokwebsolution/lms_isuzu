@@ -1411,7 +1411,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                                   confirmButtonText: 'ตกลง',
                                   cancelButtonText: 'ยกเลิก'
                                 }).then((result) => {
-                                  window.location = "http://thorconn.com/";
+                                  window.location = "https://elearning.imct.co.th/";
                                 });
 
                               } else {
@@ -1455,7 +1455,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                                   confirmButtonText: 'ตกลง',
                                   cancelButtonText: 'ยกเลิก'
                                 }).then((result) => {
-                                  window.location = "http://thorconn.com/";
+                                  window.location = "https://elearning.imct.co.th/";
                                 });
 
                               } else {
@@ -1549,7 +1549,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                                             confirmButtonText: 'ตกลง',
                                             cancelButtonText: 'ยกเลิก'
                                           }).then((result) => {
-                                            window.location = "http://thorconn.com/";
+                                            window.location = "https://elearning.imct.co.th/";
                                           });
 
                                         } else {}
@@ -1592,7 +1592,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                                       confirmButtonText: 'ตกลง',
                                       cancelButtonText: 'ยกเลิก'
                                     }).then((result) => {
-                                      window.location = "http://thorconn.com/";
+                                      window.location = "https://elearning.imct.co.th/";
                                     });
 
                                   } else {}
@@ -2256,7 +2256,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                       confirmButtonText: 'ตกลง',
                       cancelButtonText: 'ยกเลิก'
                     }).then((result) => {
-                      window.location = "http://thorconn.com/";
+                      window.location = "https://elearning.imct.co.th/";
                     });
 
                   } else {
@@ -2301,7 +2301,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                     confirmButtonText: 'ตกลง',
                     cancelButtonText: 'ยกเลิก'
                   }).then((result) => {
-                    window.location = "http://thorconn.com/";
+                    window.location = "https://elearning.imct.co.th/";
                   });
 
                 } else {
@@ -4199,7 +4199,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                 confirmButtonText: 'ตกลง',
                 cancelButtonText: 'ยกเลิก'
               }).then((result) => {
-                window.location = "http://thorconn.com/";
+                window.location = "https://elearning.imct.co.th/";
                 // if (result.value) {
 
                 // }
