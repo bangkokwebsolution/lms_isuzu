@@ -11,9 +11,10 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 }
 if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') {
     $keyrecaptcha = '6LdxRgocAAAAADrcEFCe2HcHeETOZdREexT52B6R'; //localhost
+    $checkcap = '';
 } else {
     $keyrecaptcha = '6LfcdBIcAAAAAI4VoG-z95NHdZL6XUIAvfxctrRn'; //servertest
-
+    $checkcap = 'disabled';
 }
 if (Yii::app()->user->id != null) {
 
@@ -91,7 +92,7 @@ if (!empty($msg)) {
                                     <!-- <a href="< ?php echo $this->createUrl('/registration/ShowForm'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a> -->
                             </span>
                         <div class="login-btn login-form">
-                           <button type="submit" class="btn btn-submit login-main" disabled id="submit" name="submit"><?= $label->label_header_yes ?></button>
+                           <button type="submit" class="btn btn-submit login-main" {{$checkcap}} id="submit" name="submit"><?= $label->label_header_yes ?></button>
                         </div>
                     </div>
                 </div>
