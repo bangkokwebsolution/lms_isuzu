@@ -92,7 +92,7 @@ if (!empty($msg)) {
                                     <!-- <a href="< ?php echo $this->createUrl('/registration/ShowForm'); ?>"><i class="fa fa-user-plus" aria-hidden="true"></i> <?= $label->label_header_regis ?></a> -->
                             </span>
                         <div class="login-btn login-form">
-                           <button type="submit" class="btn btn-submit login-main" {{$checkcap}} id="submit" name="submit"><?= $label->label_header_yes ?></button>
+                           <button type="submit" class="btn btn-submit login-main" <?= $checkcap ?> id="submit" name="submit"><?= $label->label_header_yes ?></button>
                         </div>
                     </div>
                 </div>
