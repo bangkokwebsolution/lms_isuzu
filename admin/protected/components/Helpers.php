@@ -1275,12 +1275,33 @@ Class Helpers
         $course = CourseOnline::model()->findByPk($course_id); 
         $user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
         
-        if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->create_by != Yii::app()->user->id){
-            $status = 1;
-        }elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level && $course->create_by != Yii::app()->user->id) {
-            $status = 1;
-        }else{
-            $status = 2;
+        // if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->create_by != Yii::app()->user->id){
+        //     $status = 1;
+        // }elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level && $course->create_by != Yii::app()->user->id) {
+        //     $status = 1;
+        // }else{
+        //     $status = 2;
+        // }
+        $ceh = 2;
+        if (!empty($user_hr1) && $course->create_by != Yii::app()->user->id) {
+            if ($user_org->id == $user_hr1->org_id) {
+                return 'pass';
+            }
+            if ($user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level) {
+
+                $ceh = 1;
+            }else if($user_org->level == 3 && $user_hr1->orgchart->level <= $user_org->level && ($user_hr1->orgchart->id ==$user_org->division_id || $user_org->id == $user_hr1->org_id )) {
+
+                $ceh = 1;
+
+            }else if($user_org->level == 4 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->id == $user_hr1->org_id || $user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id )){
+
+                $ceh = 1;
+
+            }else if($user_org->level == 5 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id || $user_org->gro->id ==  $user_hr1->org_id )){
+
+                $ceh = 1;
+            }
         }
         if($status == 1){
             return 'pass';
@@ -1299,12 +1320,33 @@ Class Helpers
         $course = CourseOnline::model()->findByPk($course_id); 
         $user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
         
-        if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->create_by != Yii::app()->user->id ){
-            $status = 1;
-        }elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level && $course->create_by != Yii::app()->user->id) {
-           $status = 1;
-        }else{
-            $status = 2;
+        // if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->create_by != Yii::app()->user->id ){
+        //     $status = 1;
+        // }elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level && $course->create_by != Yii::app()->user->id) {
+        //    $status = 1;
+        // }else{
+        //     $status = 2;
+        // }
+        $ceh = 2;
+        if (!empty($user_hr1) && $course->create_by != Yii::app()->user->id) {
+            if ($user_org->id == $user_hr1->org_id) {
+                return 'pass';
+            }
+            if ($user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level) {
+
+                $ceh = 1;
+            }else if($user_org->level == 3 && $user_hr1->orgchart->level <= $user_org->level && ($user_hr1->orgchart->id ==$user_org->division_id || $user_org->id == $user_hr1->org_id )) {
+
+                $ceh = 1;
+
+            }else if($user_org->level == 4 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->id == $user_hr1->org_id || $user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id )){
+
+                $ceh = 1;
+
+            }else if($user_org->level == 5 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id || $user_org->gro->id ==  $user_hr1->org_id )){
+
+                $ceh = 1;
+            }
         }
         if($status == 1){
             return 'pass';
