@@ -60,7 +60,7 @@ class LoginController extends Controller
               // $this->actionLogout();
               $this->redirect('logout');
 
-            }else if (User::model()->findbyPk(Yii::app()->user->id)->repass_status=='0'){
+            }else if (User::model()->findbyPk(Yii::app()->user->id)->repass_status == 0){
               $this->redirect(array('registration/Repassword'));
             }
             if (Profile::model()->findbyPk(Yii::app()->user->id)->kind == 1 ) {
