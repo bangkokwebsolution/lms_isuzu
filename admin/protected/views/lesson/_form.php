@@ -1172,10 +1172,13 @@ body {
     datepicker:false,
     format:'H:i'
 });
+   <?php if (empty($parent_id)) { ?> 
+        $( "#submit_btn" ).on( "click", function() {
+         $('#submit_btn').attr('disabled','disabled');
+         $('#submit_btn').attr('class','btn btn-primary btn-icon glyphicons refresh');
+         $('#submit_btn').html('<i></i>Loading..');
+     });
+   <?php } ?>
    // $('#default_datetimepicker').datetimepicker({step:10});
-   $( "#submit_btn" ).on( "click", function() {
-   $('#submit_btn').attr('disabled','disabled');
-   $('#submit_btn').attr('class','btn btn-primary btn-icon glyphicons refresh');
-   $('#submit_btn').html('<i></i>Loading..');
-});
+   
 </script>  

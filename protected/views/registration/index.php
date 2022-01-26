@@ -25,7 +25,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $Employee_c  ='ระดับพนักงาน';
     $Position_d = 'ตำแหน่งงาน';
     $langId = Yii::app()->session['lang'];
-    $nameTHtitle = 'ชื่อนาม - สกุล';
+    $nameTHtitle = 'ชื่อ - นามสกุล';
     $Personal_Information = 'ข้อมูลส่วนบุคคล';
     $Course_Status = 'ข้อมูลหลักสูตร';
     $lang_edit = 'แก้ไข';

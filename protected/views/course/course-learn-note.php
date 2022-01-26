@@ -11,11 +11,18 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
   $pass_msg = "You Completed the Lesson.";
   $next_step_msg = "Do You Want to go to the next step?";
+  $note_label = 'Note';
+  $note_list = 'list';
+  $note_des = 'Type a message and take notes.';
+  $Notes = 'Notes';
 
 } else {
   $langId = Yii::app()->session['lang'];
   $flag = false;
-
+  $note_list = 'รายการ';
+  $note_label = 'จดบันทึก';
+  $note_des = 'พิมพ์ข้อความและจดบันทึก';
+  $Notes = 'จดบันทึก';
   $pass_msg = UserModule::t('you_pass');
   $next_step_msg = UserModule::t('next_step');
 
@@ -470,7 +477,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
 
       <div class="box-note">
         <button class="h-course-title-main" type="button" data-toggle="collapse" data-target="#course-video" aria-expanded="false" aria-controls="course-video">
-          <i class="fas fa-list"></i>รายการ
+          <i class="fas fa-list"></i><?= $note_list ?>
           <span class="pull-right"><i class="fas fa-angle-up"></i></span>
         </button>
         <div class="collapse" id="course-video">
@@ -548,14 +555,14 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
         <button <?php if ($model->type != 'vdo') {
                   echo "style='display: none;'";
                 } ?> class="h-course-title" type="button" data-toggle="collapse" data-target="#course-note" aria-expanded="false" aria-controls="course-note">
-          <i class="fas fa-edit"></i> จดบันทึก
+          <i class="fas fa-edit"></i> <?= $note_label ?>
           <span class="pull-right"><i class="fas fa-angle-up"></i></span>
         </button>
         <div class="collapse" id="course-note">
           <div class="note-input">
             <div class="form-group">
-              <textarea class="form-control" placeholder="พิมพ์ข้อความและจดบันทึก" id="note-1" rows="3"></textarea>
-              <button type="button" onclick="save_learn_note();" class="btn btn-note">จดบันทึก</button>
+              <textarea class="form-control" placeholder="<?= $note_des ?>" id="note-1" rows="3"></textarea>
+              <button type="button" onclick="save_learn_note();" class="btn btn-note"><?= $note_label ?></button>
             </div>
             <div class="note-save">
               <?php
@@ -1188,7 +1195,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
       </div>
 
       <div class="col-xs-6 col-sm-4 pr-0">
-        <a class="pull-right menu menu-learn" href="javascript:void(0)" onclick="openNav()"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;Notes</a>
+        <a class="pull-right menu menu-learn" href="javascript:void(0)" onclick="openNav()"><i class="fa fa-edit" aria-hidden="true"></i>&nbsp;<?= $Notes ?></a>
       </div>
     </div>
   </div>
