@@ -1021,7 +1021,7 @@ body {
             <br><br>
 
             <div class="row buttons">
-                <?php echo CHtml::tag('button',array('class' => 'btn btn-primary btn-icon glyphicons ok_2','onclick'=>"return upload();"),'<i></i>บันทึกข้อมูล');?>
+                <?php echo CHtml::tag('button',array('id'=>'submit_btn','class' => 'btn btn-primary btn-icon glyphicons ok_2','onclick'=>"return upload();"),'<i></i>บันทึกข้อมูล');?>
             </div>
 
             <?php $this->endWidget(); ?>
@@ -1173,4 +1173,9 @@ body {
     format:'H:i'
 });
    // $('#default_datetimepicker').datetimepicker({step:10});
+   $( "#submit_btn" ).on( "click", function() {
+   $('#submit_btn').attr('disabled','disabled');
+   $('#submit_btn').attr('class','btn btn-primary btn-icon glyphicons refresh');
+   $('#submit_btn').html('<i></i>Loading..');
+});
 </script>  

@@ -65,8 +65,18 @@ class DashboardController extends Controller
 	            'params' => array(':lang_id' => 1)
 	        ));
 	    }
+	    $label = MenuSite::model()->find(array(
+			'condition' => 'lang_id=:lang_id',
+			'params' => array(':lang_id' => $langId)
+		));
+		if(!$label){
+			$label = MenuSite::model()->find(array(
+				'condition' => 'lang_id=:lang_id',
+				'params' => array(':lang_id' => 1)
+			));
+		}
 
-			$this->render('Terms',array('model' => $model));
+			$this->render('Terms',array('model' => $model,'label'=>$label,'langId'=>$langId));
 	}
 
 }
