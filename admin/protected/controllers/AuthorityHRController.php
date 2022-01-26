@@ -57,12 +57,15 @@ class AuthorityHRController extends Controller
 		$criteria->compare('superuser', 1);
 		$criteria->compare('authority_hr', 0);
 		$criteria->compare('status', 1);
+		$criteria->compare('del_status', 0);
 		// $criteria->addCondition('authority_hr IS NULL');
 		$userAll = User::model()->with('profile')->findAll($criteria);
 
 		$criteria = new CDbCriteria;
 		$criteria->compare('superuser', 1);
 		$criteria->compare('authority_hr', 1);
+		$criteria->compare('status', 1);
+		$criteria->compare('del_status', 0);
 		$user_hr1 = User::model()->with('profile')->findAll($criteria);
 
 
@@ -110,11 +113,14 @@ class AuthorityHRController extends Controller
 		$criteria->compare('superuser', 1);
 		$criteria->compare('authority_hr', 0);
 		$criteria->compare('status', 1);
+		$criteria->compare('del_status', 0);
 		$userAll = User::model()->with('profile')->findAll($criteria);
 
 		$criteria = new CDbCriteria;
 		$criteria->compare('superuser', 1);
 		$criteria->compare('authority_hr', 2);
+		$criteria->compare('status', 1);
+		$criteria->compare('del_status', 0);
 		$user_hr2 = User::model()->with('profile')->findAll($criteria);
 
 
