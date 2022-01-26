@@ -1303,7 +1303,7 @@ Class Helpers
                 $ceh = 1;
             }
         }
-        if($status == 1){
+        if($ceh == 1){
             return 'pass';
         }else{
             return 'fail';
@@ -1348,7 +1348,7 @@ Class Helpers
                 $ceh = 1;
             }
         }
-        if($status == 1){
+        if($ceh == 1){
             return 'pass';
         }else{
             return 'fail';
