@@ -1329,24 +1329,25 @@ Class Helpers
         // }
         $ceh = 2;
         if (!empty($user_hr1) && $course->create_by != Yii::app()->user->id) {
-            if ($user_org->id == $user_hr1->org_id) {
-                return 'pass';
-            }
-            if ($user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level) {
+            // if ($user_org->id == $user_hr1->org_id) {
+            //     return 'pass';
+            // }
+            // if ($user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level) {
 
-                $ceh = 1;
-            }else if($user_org->level == 3 && $user_hr1->orgchart->level <= $user_org->level && ($user_hr1->orgchart->id ==$user_org->division_id || $user_org->id == $user_hr1->org_id )) {
+            //     $ceh = 1;
+            // }else if($user_org->level == 3 && $user_hr1->orgchart->level <= $user_org->level && ($user_hr1->orgchart->id ==$user_org->division_id || $user_org->id == $user_hr1->org_id )) {
 
-                $ceh = 1;
+            //     $ceh = 1;
 
-            }else if($user_org->level == 4 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->id == $user_hr1->org_id || $user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id )){
+            // }else if($user_org->level == 4 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->id == $user_hr1->org_id || $user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id )){
 
-                $ceh = 1;
+            //     $ceh = 1;
 
-            }else if($user_org->level == 5 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id || $user_org->gro->id ==  $user_hr1->org_id )){
+            // }else if($user_org->level == 5 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id || $user_org->gro->id ==  $user_hr1->org_id )){
 
-                $ceh = 1;
-            }
+            //     $ceh = 1;
+            // }
+            $ceh = 1;
         }
         if($ceh == 1){
             return 'pass';
