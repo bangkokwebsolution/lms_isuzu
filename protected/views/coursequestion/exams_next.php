@@ -1,14 +1,15 @@
 <?php
 
 if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
-	            	$langId = Yii::app()->session['lang'] = 1;
-	            	Yii::app()->language = 'en';
-
+	$langId = Yii::app()->session['lang'] = 1;
+	Yii::app()->language = 'en';
+	$ques_title = 'Question';
 	$questionTypeArrayStr = array(1 => 'Multiple Choices', 2 => 'The exams can choose only one answer.', 3 => 'Essay Test', 4 => 'Matching Test', 6 => 'Alignment Test');
 	$Next="Next";
 	$Previous="Previous";
 }else{
-	            	$langId = Yii::app()->session['lang'];
+	$langId = Yii::app()->session['lang'];
+	$ques_title = 'คำถาม';
 	$questionTypeArrayStr = array(1 => 'ข้อสอบแบบ เลือกได้หลายคำตอบ', 2 => 'ข้อสอบแบบ เลือกได้คำตอบเดียว', 3 => 'ข้อสอบแบบ คำตอบแบบบรรยาย', 4 => 'ข้อสอบแบบ คำตอบแบบจับคู่', 6 => 'ข้อสอบแบบ คำตอบแบบจัดเรียง');
 	$Next="ถัดไป";
 	$Previous="ย้อนกลับ";
@@ -20,16 +21,54 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
 		display: inline;
 	}
 </style>
+
 <div id="ques-show">
+	<div class="col-lg-12">
+	<div class="all-exams">
+		<div class="exams-title">
+			<?= $ques_title ?> <span class="pull-right"><?= $countExam . ' / ' . count($temp_all); ?></span>
+		</div>
+		<table class="table table-bordered table-striped">
+			<tbody>
+				<tr>
+					<?php
+					$loop = 0;
+					foreach ($temp_all as $key => $val_temp) {
+						$loop++;
+						if ($model->ques_id == $val_temp->ques_id) {
+							$class = 'btn-info';
+						} else {
+							$class = ($val_temp->status == '1') ? 'btn-success' : '';
+						}
+						$link = 'onclick="save_ans(\'' . $val_temp->number . '\')"';
+						?>
+						<td><a href="javascript:void(0)" <?= $link; ?> class="btn <?= $class ?> btn-block">
+							<div style="height:100%;width:100%"><?= $val_temp->number; ?></div>
+						</a></td>
+						<?php
+						if ($loop == 10) {
+							$loop = 0;
+							echo '</tr><tr style="background-color: #f9f9f9">';
+						}
+					}
+					?>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+</div>
 	<div class="col-sm-12">
 		<form id="question-form" action="#" method="POST" role="form" onSubmit="return false">
+			
 			<div class="form-group">
 				<?php
 				$strTotal = 0;
 				$questionTypeArray = array(1 => 'checkbox', 2 => 'radio', 3 => 'textarea', 4 => 'dropdown', 6 => 'hidden');
 
 				
-					
+
 				?>
 				<h4><?= $questionTypeArrayStr[$model->ques_type]?> </h4>
 				<p><?= $currentQuiz->number; ?>. <?= $model->ques_title; ?></p>
@@ -48,16 +87,16 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
 
 						}
 
-					$Type4Question = array();
-					$arrType4Answer = array();
-					$Type4Answer = array();
+						$Type4Question = array();
+						$arrType4Answer = array();
+						$Type4Answer = array();
 
-					if($model->ques_type == 3) {
-												echo '										
-												<textarea class="examsta" rows="4" cols="50" name="lecture" >'.$currentQuiz->ans_id.'</textarea>
-												';
+						if($model->ques_type == 3) {
+							echo '										
+							<textarea class="examsta" rows="4" cols="50" name="lecture" >'.$currentQuiz->ans_id.'</textarea>
+							';
 
-											}else{
+						}else{
 
 					$countchoice = 1; // นับตัวเลือกข้อสอบแบบจับคู่
 					foreach ($choiceData as $key => $val_choice) {
@@ -79,116 +118,116 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
 						</li>
 						<?php
 					} else if($model->ques_type == 2) {
-							if(in_array($choice->choice_id, $ansData)){
-								$checked = 'checked';
-							}
-							echo '
-							<div class="radio radio-info radio-circle">
-							<input id="radio-'.$choice->choice_id.'" 
-							type="radio"'.$checked.' value='.$choice->choice_id.' name="Choice['.$model->ques_id.'][]">
-							<label for="radio-'.$choice->choice_id.'">
-							'.CHtml::decode($choice->choice_detail).'
-							</label>
-							</div>';
-						}else if($model->ques_type == 4) {
-							$thaichar = array('ก','ข','ค','ง','จ','ฉ','ช','ซ','ฌ','ญ','ฐ','ฑ','ฒ','ณ','ด','ต','ถ','ท','ธ','น','บ','ป','ผ','ฝ','พ','ฟ','ภ','ม','ย','ร','ล','ว','ศ','ษ','ส','ห','ฬ','อ','ฮ');  
+						if(in_array($choice->choice_id, $ansData)){
+							$checked = 'checked';
+						}
+						echo '
+						<div class="radio radio-info radio-circle">
+						<input id="radio-'.$choice->choice_id.'" 
+						type="radio"'.$checked.' value='.$choice->choice_id.' name="Choice['.$model->ques_id.'][]">
+						<label for="radio-'.$choice->choice_id.'">
+						'.CHtml::decode($choice->choice_detail).'
+						</label>
+						</div>';
+					}else if($model->ques_type == 4) {
+						$thaichar = array('ก','ข','ค','ง','จ','ฉ','ช','ซ','ฌ','ญ','ฐ','ฑ','ฒ','ณ','ด','ต','ถ','ท','ธ','น','บ','ป','ผ','ฝ','พ','ฟ','ภ','ม','ย','ร','ล','ว','ศ','ษ','ส','ห','ฬ','อ','ฮ');  
 						// $ranNumber = rand(1, 10000000);
-							if($choice->choice_answer == 2){
+						if($choice->choice_answer == 2){
 							// $arrType4Answer[$ranNumber] = $val_choice;
-								$Type4Answer[$choice->choice_id] = $thaichar[$countchoice-1];
-								$countchoice++;			
-							}
-							if($choice->choice_answer == 1){
-								$Type4Question[$val_choice] = $key;
-							}
+							$Type4Answer[$choice->choice_id] = $thaichar[$countchoice-1];
+							$countchoice++;			
+						}
+						if($choice->choice_answer == 1){
+							$Type4Question[$val_choice] = $key;
 						}
 					}
-}
-					if($model->ques_type == 4) {
-						echo '<label> ส่วนที่ 1 </label> <br>';
-					}
+				}
+			}
+			if($model->ques_type == 4) {
+				echo '<label> ส่วนที่ 1 </label> <br>';
+			}
 
 
-					foreach ($Type4Answer as $key => $val_1) {
+			foreach ($Type4Answer as $key => $val_1) {
 
-						$choice = Coursechoice::model()->findByPk($key);
-						echo 	'<div style="display:inline">'.$val_1.'. '.CHtml::decode($choice->choice_detail).'</div>';
-						echo 	'<br>';
-					}
-					echo '<br>';
+				$choice = Coursechoice::model()->findByPk($key);
+				echo 	'<div style="display:inline">'.$val_1.'. '.CHtml::decode($choice->choice_detail).'</div>';
+				echo 	'<br>';
+			}
+			echo '<br>';
 
-					if($model->ques_type == 4) {
-						echo '<label> ส่วนที่ 2 </label> <br>';
-					}
+			if($model->ques_type == 4) {
+				echo '<label> ส่วนที่ 2 </label> <br>';
+			}
 
-					$ansDatas = array_flip($ansData);
+			$ansDatas = array_flip($ansData);
 
-					$countQuest = 0;
-					foreach ($Type4Question as $key => $val_2) {
-						$selected = '';
-						if(in_array($countQuest, $ansDatas)){
-							$selected = $ansData[$countQuest];
-						}	
+			$countQuest = 0;
+			foreach ($Type4Question as $key => $val_2) {
+				$selected = '';
+				if(in_array($countQuest, $ansDatas)){
+					$selected = $ansData[$countQuest];
+				}	
 
-						$choice = Coursechoice::model()->findByPk($key);
-						echo 	CHtml::dropDownList('dropdownVal[]',
-							$selected_value=$selected,
-							$Type4Answer,
-							array('empty'=>UserModule::t('Choose'),'class'=>'dropdown_value','id'=>'Q'.$key)).' <label>'.CHtml::decode($choice->choice_detail).'</label>';
-						echo '<br>';
-						$countQuest++;
-					}
-					?>
-
-					<?php if($model->ques_type == 6 ){ 
-						echo "</ul>"; 
-
-						?>
-						<script type="text/javascript">
-							$(function() {
-								$('#sortable').sortable({
-									start: function(event, ui) {
-										var start_pos = ui.item.index();
-										ui.item.data('start_pos', start_pos);
-									},
-									change: function(event, ui) {
-										var start_pos = ui.item.data('start_pos');
-										var index = ui.placeholder.index();        
-									},
-									update: function(event, ui) {
-										var start_pos = ui.item.data('start_pos');
-										var index = ui.placeholder.index();
-										get_li();
-									}
-								});
-							});
-						</script>
-						<?php
-					} ?>
-				</div>
-			</div>
-			<!-- <button type="submit" class="btn btn-warning center-block">ส่งคำตอบ</button> -->
+				$choice = Coursechoice::model()->findByPk($key);
+				echo 	CHtml::dropDownList('dropdownVal[]',
+					$selected_value=$selected,
+					$Type4Answer,
+					array('empty'=>UserModule::t('Choose'),'class'=>'dropdown_value','id'=>'Q'.$key)).' <label>'.CHtml::decode($choice->choice_detail).'</label>';
+				echo '<br>';
+				$countQuest++;
+			}
+			?>
 
 			<?php if($model->ques_type == 6 ){ 
+				echo "</ul>"; 
+
 				?>
-				<input type="hidden" id="answer_sort" name="answer_sort" value="<?php echo implode(",", $choiceData); ?>">
+				<script type="text/javascript">
+					$(function() {
+						$('#sortable').sortable({
+							start: function(event, ui) {
+								var start_pos = ui.item.index();
+								ui.item.data('start_pos', start_pos);
+							},
+							change: function(event, ui) {
+								var start_pos = ui.item.data('start_pos');
+								var index = ui.placeholder.index();        
+							},
+							update: function(event, ui) {
+								var start_pos = ui.item.data('start_pos');
+								var index = ui.placeholder.index();
+								get_li();
+							}
+						});
+					});
+				</script>
 				<?php
 			} ?>
-			
-			<?php 
-			echo CHtml::hiddenField("Question_type[" . $model->ques_id . "]", $questionTypeArray[$model->ques_type]);
-			echo CHtml::hiddenField("last_ques");
-			echo CHtml::hiddenField("actionEvnt");
-			echo CHtml::hiddenField("course_id",$course->course_id);
-			echo CHtml::hiddenField("idx_now",$currentQuiz->number);
-			?>
-			<div class="text-center">
-				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark btn-lg','onclick'=>'save_ans("previous")'), $Previous); ?>
-				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark  btn-lg','onclick'=>'save_ans("next")'), $Next); ?>
-				<?php if($last_ques==1)echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg','onclick'=>'save_ans("save")' ), UserModule::t('sendQues') ); ?>
-			</div>
-		</form>
+		</div>
 	</div>
+	<!-- <button type="submit" class="btn btn-warning center-block">ส่งคำตอบ</button> -->
+
+	<?php if($model->ques_type == 6 ){ 
+		?>
+		<input type="hidden" id="answer_sort" name="answer_sort" value="<?php echo implode(",", $choiceData); ?>">
+		<?php
+	} ?>
+
+	<?php 
+	echo CHtml::hiddenField("Question_type[" . $model->ques_id . "]", $questionTypeArray[$model->ques_type]);
+	echo CHtml::hiddenField("last_ques");
+	echo CHtml::hiddenField("actionEvnt");
+	echo CHtml::hiddenField("course_id",$course->course_id);
+	echo CHtml::hiddenField("idx_now",$currentQuiz->number);
+	?>
+	<div class="text-center">
+		<?php echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark btn-lg','onclick'=>'save_ans("previous")'), $Previous); ?>
+		<?php echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark  btn-lg','onclick'=>'save_ans("next")'), $Next); ?>
+		<?php if($last_ques==1)echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg','onclick'=>'save_ans("save")' ), UserModule::t('sendQues') ); ?>
+	</div>
+</form>
+</div>
 	<!-- <div class="col-sm-4">
 		<div class="all-exams">
 			<div class="exams-title">
@@ -225,3 +264,6 @@ if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
 		</div>
 	</div> -->
 </div>
+<script type="text/javascript">
+	$('#exams_first_bar').remove();
+</script>
