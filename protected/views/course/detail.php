@@ -1923,7 +1923,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
 
 
 
-                        <p><?= $label->label_remaintime ?> <?= $diff ?> <?= $label->label_day ?></p>
+                        <p><?= $label->label_remaintime ?> <?= $countday ?> <?= $label->label_day ?></p>
                     <?php }  ?>
 
                     <div style="padding-top: 20px; padding-bottom: 20px;">
