@@ -21,6 +21,8 @@
 </style>
 
 <?php
+
+
 $course_wait_cer = 1; // สถานะ 1=พิมใบ cer ได้    2=มีข้อสอบบรรยายรอตรวจ พิมไม่ได้
 $themeBaseUrl = Yii::app()->theme->baseUrl;
 $uploadFolder = Yii::app()->getUploadUrl("lesson");
@@ -327,13 +329,13 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                 <div class="text-center"> <a href="#tab-content" onclick="$('#change_tab2').click();" class="btn btn-success"><?= $lastStatus ?></a></div>
                                 <div class="course-admin">
                                     <h4><?= $CourseInstructor ?> : <span><?php $profile = Profile::model()->findByPk($course->create_by); 
-                                    $ProfilesTitle = ProfilesTitle::model()->find($profile->title_id);
+                                    $ProfilesTitle = ProfilesTitle::model()->findByPk($profile->title_id);
                                     if($langId==1){
                                         $pro_name = $profile->firstname_en;
-                                        $title_name = $ProfilesTitle->prof_title_en;
+                                        $title_name = !empty($ProfilesTitle) ? $ProfilesTitle->prof_title_en: '';
                                     }else{
                                         $pro_name = $profile->firstname;
-                                        $title_name = $ProfilesTitle->prof_title;
+                                        $title_name = !empty($ProfilesTitle) ? $ProfilesTitle->prof_title : '';
                                     }
                                        echo  $title_name.' '.$pro_name; ?></span></h4>
                                     <h4><?= $CourseApprover ?> : <span><?php $profile = Profile::model()->findByPk($course->approve_by); 
@@ -541,10 +543,12 @@ $FinalScore = Coursescore::model()->findAll($criteria);
 
 
             <div class="col-sm-8 col-md-8 col-xs-12">
-
+                <?php
+                $countday = Helpers::Countday($course->course_date_start,$course->course_date_end,'day');
+                 ?>
                 <div class="topic-course">
                     <div class="alert alert-warning mt-20" role="alert">
-                        <?= $Period ?> <?= $course->course_day_learn ?> <?= $day ?> <?= (!empty($course)) ? "(" . Helpers::lib()->CuttimeLang($course->course_date_start, $langId) . " - " . Helpers::lib()->CuttimeLang($course->course_date_end, $langId) . ")" : ""; ?>
+                        <?= $Period ?> <?= $countday ?> <?= $day ?> <?= (!empty($course)) ? "(" . Helpers::lib()->CuttimeLang($course->course_date_start, $langId) . " - " . Helpers::lib()->CuttimeLang($course->course_date_end, $langId) . ")" : ""; ?>
                     </div>
                 </div>
 

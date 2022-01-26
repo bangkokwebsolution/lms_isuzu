@@ -5111,7 +5111,22 @@ public function checkStepLesson($lesson){
 
           return $colorName;
         }
+        public function Countday($data1 = null ,$data2 = null,$type = null){
+            $data = '';
+            if (!empty($type) && !empty($data1) && !empty($data2) ) {
+                $data_1 = new DateTime($data1);
+                $data_2 = new DateTime($data2);
+                $date = $data_1->diff($data_2);
 
+                if ($type = 'day') {
+                    $data = $date->days;
+                }
+            }else{
+                $data = '-';
+            }
+            
+            return $data;
+        }
 
 
     }
