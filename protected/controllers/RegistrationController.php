@@ -1379,7 +1379,7 @@ public function actionDeleteFilePassport($id)
 
     public function actionRepassword() {
 
-        if (User::model()->findbyPk(Yii::app()->user->id)->repass_status=='0'){
+        if (User::model()->findbyPk(Yii::app()->user->id)->repass_status == 0){
             $model = new Users();
             if (isset($_POST['Users'])) {
 

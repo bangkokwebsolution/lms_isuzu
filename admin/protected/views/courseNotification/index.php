@@ -39,7 +39,7 @@ $('.search-form form').submit(function(){
 			<div class="clear-div"></div>
 			<div class="overflow-table">
 			<?php $this->widget('zii.widgets.grid.CGridView', array(
-				'id'=>'popup-grid',
+				'id'=>'courseNotification-grid',
 				'dataProvider'=>$model->search(),
 				'filter'=>$model,
 				'columns'=>array(					
@@ -84,17 +84,17 @@ $('.search-form form').submit(function(){
 					array(            
 						'class'=>'AButtonColumn',
 						'visible'=>Controller::PButton( 
-							array("Popup.*", "Popup.View", "Popup.Update", "Popup.Delete") 
+							array("courseNotification.*", "courseNotification.View", "courseNotification.Update", "courseNotification.Delete") 
 						),
 						'buttons' => array(
 							'view'=> array( 
-								'visible'=>'Controller::PButton( array("Popup.*", "Popup.View") )' 
+								'visible'=>'Controller::PButton( array("courseNotification.*", "courseNotification.View") )' 
 							),
 							'update'=> array( 
-								'visible'=>'Controller::PButton( array("Popup.*", "Popup.Update") )' 
+								'visible'=>'Controller::PButton( array("courseNotification.*", "courseNotification.Update") )' 
 							),
 							'delete'=> array( 
-								'visible'=>'Controller::PButton( array("Popup.*", "Popup.Delete") )' 
+								'visible'=>'Controller::PButton( array("courseNotification.*", "courseNotification.Delete") )' 
 							),
 						),
 					),
