@@ -1009,15 +1009,15 @@ public function actionUpdate() {
         $fullnameTH = explode(' ',$_POST['fullnameTH']);
         $fullnameEN = explode(' ',$_POST['fullnameEN']);
 
-        $profile->firstname = $fullnameTH[0];
-        $profile->lastname = $fullnameTH[1];
-        $profile->firstname_en = $fullnameEN[0];
-        $profile->lastname_en = $fullnameEN[1];
+        // $profile->firstname = $fullnameTH[0];
+        // $profile->lastname = $fullnameTH[1];
+        // $profile->firstname_en = $fullnameEN[0];
+        // $profile->lastname_en = $fullnameEN[1];
         // $profile->employee_class = $_POST['employee_class'];
         // $profile->position_description = $_POST['position_description'];
 
         // $users->employee_id = $_POST['employee_id'];
-        $users->email = $_POST['email'];
+        // $users->email = $_POST['email'];
 
         if(isset($_POST['url_pro_pic']) && $_POST['url_pro_pic'] != ""){
             $uploadDir = Yii::app()->getUploadPath(null);

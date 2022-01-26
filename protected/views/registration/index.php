@@ -120,7 +120,6 @@ figure figcaption {
                         <div class="col col-md-10 col-lg-9">
                             <h3 class="title-account"><?= $Personal_Information ?></h3>
                             <div class="row form-group">
-                                <?php if($edit!=1){ ?>
                                 <div class="col-md-6 col-xs-12">
                                     <div class="card card-profile-detail">
                                         <p><?= $nameTHtitle ?> (TH) <br> 
@@ -210,67 +209,7 @@ figure figcaption {
                                         </span></p>
                                     </div>
                                 </div>
-                                <?php }else{ ?>
-                                <div class="col-md-6 col-xs-12">
-                                    <div class="card card-profile-detail">
-                                        <p><?=$nameTHtitle ?> (TH) <br> 
-                                          <span>
-                                           <?php $nameTH = $profile->firstname.' '.$profile->lastname;
-                                           echo "<input class='form-control' name='fullnameTH' id='fullnameTH' value='".$nameTH."' >";
-                                            ?>
-
-                                          </span></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-xs-12">
-                                    <div class="card card-profile-detail">
-                                        <p><?= $nameTHtitle ?> (EN) <br> 
-                                          <span>
-                                           <?php $nameEN = $profile->firstname_en.' '.$profile->lastname_en;
-                                                echo "<input class='form-control' name='fullnameEN' id='fullnameEN' value='".$nameEN."' >";
-                                            ?>
-                                          </span></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6  col-xs-12">
-                                    <div class="card card-profile-detail">
-                                        <p><?= $EmployeeID ?> <br>
-                                          <span> 
-                                            <?php $employee_id = $profile->user->employee_id;
-                                                echo "<input class='form-control' readonly name='employee_id' id='employee_id' value='".$employee_id."' >";
-                                            ?>
-                                          </span></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-xs-12 ">
-                                    <div class="card card-profile-detail">
-                                        <p><?= $mail ?> <br><span>
-                                          <?php $email =  $profile->user->email ;
-                                          echo "<input class='form-control' name='email' id='email' value='".$email."' >";
-                                          ?>
-                                        </span></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-xs-12">
-                                    <div class="card card-profile-detail">
-                                        <p><?= $Employee_c ?> <br><span>
-                                            <?php $employee_class =  $profile->EmpClass->title; 
-                                          echo "<input class='form-control' readonly name='employee_class' id='employee_class' value='".$employee_class."' >";
-
-                                            ?>
-                                        </span></p>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-xs-12">
-                                    <div class="card card-profile-detail">
-                                        <p><?= $Position_d ?> <br><span>
-                                          <?php $position_description = $profile->position_description ;
-                                          echo "<input class='form-control' readonly name='position_description' id='position_description' value='".$position_description."' >";
-                                          ?>
-                                        </span></p>
-                                    </div>
-                                </div>
-                                <?php } ?>
+                                
                                 
                                  
                             </div>
@@ -293,8 +232,8 @@ figure figcaption {
                                               <div class="text-center upload-img">
                                                   <label class="cabinet center-block">
                                                       <figure>
-                                                          <?php
-                                                          if ($profile->user->pic_user == null) {
+                                                          <?php 
+                                                          if (!file_exists(YiiBase::getPathOfAlias('webroot') . '/uploads/user/' . $users->id . '/thumb/' . $users->pic_user)) {
                                                               $img  = Yii::app()->theme->baseUrl . "/images/thumbnail-profile.png";
                                                           } else {
                                                               // $registor = new RegistrationForm;
