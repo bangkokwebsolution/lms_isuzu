@@ -339,13 +339,13 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                     }
                                        echo  $title_name.' '.$pro_name; ?></span></h4>
                                     <h4><?= $CourseApprover ?> : <span><?php $profile = Profile::model()->findByPk($course->approve_by); 
-                                    $ProfilesTitle = ProfilesTitle::model()->find($profile->title_id);
+                                    $ProfilesTitle = ProfilesTitle::model()->findByPk($profile->title_id);
                                     if($langId==1){
                                         $pro_name = $profile->firstname_en;
-                                        $title_name = $ProfilesTitle->prof_title_en;
+                                        $title_name = !empty($ProfilesTitle) ? $ProfilesTitle->prof_title_en: '';
                                     }else{
                                         $pro_name = $profile->firstname;
-                                        $title_name = $ProfilesTitle->prof_title;
+                                        $title_name = !empty($ProfilesTitle) ? $ProfilesTitle->prof_title : '';
                                     }
                                        echo  $title_name.' '.$pro_name; ?></span></h4>
                                 </div>
