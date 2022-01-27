@@ -68,6 +68,7 @@ label.error { display: none; }
 				<?php echo CHtml::beginForm(Yii::app()->request->requestUri,'POST',array(
 					'id'=>'questionnaire',
 					'name'=>'questionnaire',
+					'onSubmit'=>"JavaScript:return fncSubmit();",
 					'enableAjaxValidation'=>false,
 				));?>
 				<div class="row">
@@ -312,5 +313,24 @@ label.error { display: none; }
 		});
 
 	});
+</script>
+<script type="text/javascript">
+	function fncSubmit(){
+		var pass = true;
+		if($('.section-title').length > 0){
+			$.each($('.section-title'), function( key, valueSection ) {
+				var e =  valueSection.value.trim(); 
+				
+				if(e.length <= 0){
+					alert('กรุณาเพิ่ม ชื่อกลุ่ม');
+					pass = false;
+					return false;
+				}
+			});
+		}
+		if (!pass) {
+			return false;
+		}
+	}
 </script>
 <!-- END innerLR -->
