@@ -25,6 +25,8 @@
 	//Glyphicons Font Icons
 	?>
 	<script src="https://use.fontawesome.com/a38616fc2a.js"></script>
+	<link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/sweetalert/sweetalert2.css" crossorigin="anonymous">
+	<script type="text/javascript" src="<?php echo Yii::app()->theme->baseUrl; ?>/vendors/sweetalert/sweetalert2.min.js"></script>
 	<?php
 	$clientScript->registerCssFile($path_theme.'/theme/css/glyphicons.css');
 	//Uniform Pretty Checkboxes
@@ -43,6 +45,7 @@
 	$clientScript->registerCssFile($path_theme.'/theme/scripts/plugins/system/jquery-ui/css/smoothness/jquery-ui-1.9.2.custom.min.css');
 	
 	$clientScript->registerCssFile($path_theme.'/sweetalert/dist/sweetalert.css');
+	
 	$clientScript->registerCssFile($path_theme.'/codecanyon/css/slim.min.css');
 	//MiniColors ColorPicker Plugin
 	$clientScript->registerCssFile($path_theme.'/theme/scripts/plugins/color/jquery-miniColors/jquery.miniColors.css');
