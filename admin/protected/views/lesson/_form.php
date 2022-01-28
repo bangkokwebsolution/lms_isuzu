@@ -1168,17 +1168,24 @@ body {
 
 </script>
 <script type="text/javascript">
+            
    $('.default_datetimepicker').datetimepicker({
     datepicker:false,
     format:'H:i'
 });
-   <?php if (empty($parent_id)) { ?> 
-        $( "#submit_btn" ).on( "click", function() {
-         $('#submit_btn').attr('disabled','disabled');
+    $( "#submit_btn" ).on( "click", function() {
+        if ( $('#Lesson_title').val()!= '' && $('#Lesson_cate_percent').val() != '' && $('#Lesson_cate_amount').val() != '') {
+            Swal.fire({
+                // html:'Loading...',
+                title: 'กรุณารอสักครู่...',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+            });
          $('#submit_btn').attr('class','btn btn-primary btn-icon glyphicons refresh');
          $('#submit_btn').html('<i></i>Loading..');
-     });
-   <?php } ?>
+        }
+            
+    });
    // $('#default_datetimepicker').datetimepicker({step:10});
    
 </script>  
