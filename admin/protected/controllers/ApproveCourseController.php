@@ -178,62 +178,39 @@ class ApproveCourseController extends Controller
 		$course = CourseOnline::model()->findByPk($_POST['request_id']); 
 		$user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
 		
-		if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->usernewcreate->org_id == $user_hr1->org_id && $course->create_by != Yii::app()->user->id){
+		$ceh = 2;
+        if (!empty($user_hr1) && $course->create_by != Yii::app()->user->id) {
+            if ($user_org->id == $user_hr1->org_id) {
+                $ceh = 1;
+            }
+            if ($user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level) {
 
-			$course->approve_status = 1;
+                $ceh = 1;
+            }else if($user_org->level == 3 && $user_hr1->orgchart->level <= $user_org->level && ($user_hr1->orgchart->id ==$user_org->division_id || $user_org->id == $user_hr1->org_id )) {
+
+                $ceh = 1;
+
+            }else if($user_org->level == 4 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->id == $user_hr1->org_id || $user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id )){
+
+                $ceh = 1;
+
+            }else if($user_org->level == 5 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id || $user_org->gro->id ==  $user_hr1->org_id )){
+
+                $ceh = 1;
+            }
+        }
+        if ($ceh == 1) {
+        	$course->approve_status = 1;
 			$course->approve_by = Yii::app()->user->id;
-			$ceh = 1;
-		}elseif ($user_hr1 != null && $user_org->level == 3 && $user_hr1->orgchart->level <= $user_org->level && ($user_hr1->orgchart->id ==$user_org->division_id || $user_org->id == $user_hr1->org_id ) && $course->create_by != Yii::app()->user->id) {
-
-			$course->approve_status = 1;
-			$course->approve_by = Yii::app()->user->id;
-			$ceh = 1;
-
-		}elseif ($user_hr1 != null && $user_org->level == 4 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id ) && $course->create_by != Yii::app()->user->id) {
-
-			$course->approve_status = 1;
-			$course->approve_by = Yii::app()->user->id;
-			$ceh = 1;
-
-		}elseif ($user_hr1 != null && $user_org->level == 5 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id || $user_org->gro->id ==  $user_hr1->org_id ) && $course->create_by != Yii::app()->user->id) {
-
-			$course->approve_status = 1;
-			$course->approve_by = Yii::app()->user->id;
-			$ceh = 1;
-
-		}else{
-
-			$ceh = 2;
-			// echo 2;
-			// exit();
-		}
-
-		if($ceh == 1){
 			if($course->save(false)){
 				echo 1;
 			}else{
 				echo 2;
 			}
-		}else{
-			echo $ceh;
-		}
-		
-		// if($course->save(false)){
-		// 		echo 1;
-		// }else{
-		// 		echo 2;
-		// }
-		// if($user_org->id == $user_hr1['org_id']){
+        }else{
+        	echo 2;
+        }
 
-		// }
-		// $user_create = UserNew::model()->findByPk();
-
-
-		// if (isset($_POST["request_id"]) && $_POST["request_id"] != "" && isset($_POST["approval_status"]) && $_POST["approval_status"] != "") {
-		// 	$request_id = $_POST["request_id"];
-		// 	$approval_status = $_POST["approval_status"];
-
-		// }
 	}
 
 	public function actionSaveApprovalGeneral()
@@ -246,35 +223,41 @@ class ApproveCourseController extends Controller
 
 		$course = CourseOnline::model()->findByPk($_POST['request_id']); 
 		$user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
-		
-		if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->create_by != Yii::app()->user->id){
-			$course->approve_status = 1;
+
+		$ceh = 2;
+        if (!empty($user_hr1) && $course->create_by != Yii::app()->user->id) {
+            if ($user_org->id == $user_hr1->org_id) {
+                $ceh = 1;
+            }
+            if ($user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level) {
+
+                $ceh = 1;
+            }else if($user_org->level == 3 && $user_hr1->orgchart->level <= $user_org->level && ($user_hr1->orgchart->id ==$user_org->division_id || $user_org->id == $user_hr1->org_id )) {
+
+                $ceh = 1;
+
+            }else if($user_org->level == 4 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->id == $user_hr1->org_id || $user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id )){
+
+                $ceh = 1;
+
+            }else if($user_org->level == 5 && $user_hr1->orgchart->level <= $user_org->level && ($user_org->orgchart->id == $user_hr1->org_id || $user_org->div->id ==  $user_hr1->org_id || $user_org->dep->id ==  $user_hr1->org_id || $user_org->gro->id ==  $user_hr1->org_id )){
+
+                $ceh = 1;
+            }
+        }
+        if ($ceh == 1) {
+        	$course->approve_status = 1;
 			$course->approve_by = Yii::app()->user->id;
-			$course->approve_by_hr = Yii::app()->user->id;
-		}elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level && $course->create_by != Yii::app()->user->id) {
-			$course->approve_status = 1;
-			$course->approve_by = Yii::app()->user->id;
-			$course->approve_by_hr = Yii::app()->user->id;
-		}else{
-			echo 2;
-			exit();
-		}
-		if($course->save(false)){
-			echo 1;
-		}else{
-			echo 2;
-		}
-		// if($user_org->id == $user_hr1['org_id']){
-
-		// }
-		// $user_create = UserNew::model()->findByPk();
+			if($course->save(false)){
+				echo 1;
+			}else{
+				echo 2;
+			}
+        }else{
+        	echo 2;
+        }
 
 
-		// if (isset($_POST["request_id"]) && $_POST["request_id"] != "" && isset($_POST["approval_status"]) && $_POST["approval_status"] != "") {
-		// 	$request_id = $_POST["request_id"];
-		// 	$approval_status = $_POST["approval_status"];
-
-		// }
 	}
 	public function actionSaveApprovalGeneralHR()
 	{
@@ -286,24 +269,22 @@ class ApproveCourseController extends Controller
 
 		$course = CourseOnline::model()->findByPk($_POST['request_id']); 
 		$user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
-		
-		if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->create_by != Yii::app()->user->id ){
-			$course->approve_status = 2;
-			// $course->approve_by = Yii::app()->user->id;
+
+		$ceh = 2;
+        if (!empty($user_hr1) && $course->create_by != Yii::app()->user->id) {
+            $ceh = 1;
+        }
+        if ($ceh == 1) {
+        	$course->approve_status = 2;
 			$course->approve_by_hr = Yii::app()->user->id;
-		}elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level && $course->create_by != Yii::app()->user->id) {
-			$course->approve_status = 2;
-			// $course->approve_by = Yii::app()->user->id;
-			$course->approve_by_hr = Yii::app()->user->id;
-		}else{
-			echo 2;
-			exit();
-		}
-		if($course->save(false)){
-			echo 1;
-		}else{
-			echo 2;
-		}
+			if($course->save(false)){
+				echo 1;
+			}else{
+				echo 2;
+			}
+        }else{
+        	echo 2;
+        }
 		// if($user_org->id == $user_hr1['org_id']){
 
 		// }
