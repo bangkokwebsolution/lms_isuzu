@@ -175,7 +175,7 @@ EOD
 			<!-- With selected actions -->
 			<div class="buttons pull-left">
 				<?php
-				echo CHtml::link("<i></i> ลบข้อสอบทั้งหมด",
+				echo CHtml::link("<i></i> ลบแบบประเมินทั้งหมด",
 					"#",
 					array("class"=>"btn btn-primary btn-icon glyphicons circle_minus",
 						"onclick"=>"return multipleDeleteNews('".$this->createUrl('//CourseTeacher/MultiDelete')."','courseteacher-form');"));
