@@ -112,7 +112,8 @@ EOD
                                     foreach ($jsongroup as $key => $grp) {
                                         $groupUser =  PGroup::model()->find(array('condition' => 'id ='.$grp));
                                         $number =$key+1;
-                                        $groups .=   $number.').'.$groupUser->group_name.'<br>';
+                                        // $groups .=   $number.').'.$groupUser->group_name.'<br>';
+                                        $groups .=   $groupUser->group_name.'<br>';
                                     }
                                     return   $groups;
                                 } 
