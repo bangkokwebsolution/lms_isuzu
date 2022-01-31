@@ -411,7 +411,7 @@ $getLessonAll = Lesson::model()->findAll(array(
                     </div>
                     <div class="btn-learn hidden-xs">
                         <!-- href="<?php echo $this->createUrl('/course/detail', array('id' => $course->course_id)); ?>" -->
-                        <a id="btn_completed" class="btn btn-warning btn-lg" role="button" ><?= $Completed ?></a>
+                        <a href="<?php echo $this->createUrl('/course/detail', array('id' => $course->course_id)); ?>" id="btn_completed" class="btn btn-warning btn-lg" role="button" ><?= $Completed ?></a>
                     </div>
                 </div>
 
