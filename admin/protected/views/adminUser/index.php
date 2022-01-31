@@ -85,28 +85,39 @@ EOD
                             }
                         }
                     ),
-                     array(
-                       'header' => 'อีเมลล์',
-                       'type'=>'raw',
-                       'value' =>'$data->email'
-                    ),
-                    // array(
-                    //     'header' => 'กลุ่มผู้ดูแล',
-                    //     'type'=>'raw',
-                    //     'value' => function($val){
-                    //             $group =  $val->group;
-                    //             $jsongroup =  json_decode($group);
-                    //             $groups = '';
-                    //             if($jsongroup){
-                    //                 foreach ($jsongroup as $key => $grp) {
-                    //                     $groupUser =  PGroup::model()->find(array('condition' => 'id ='.$grp));
-                    //                     $number =$key+1;
-                    //                     $groups .=   $number.').'.$groupUser->group_name.'<br>';
-                    //                 }
-                    //                 return   $groups;
-                    //             } 
-                    //         }
+
+
+
+                    //  array(
+                    //    'header' => 'อีเมลล์',
+                    //    'type'=>'raw',
+                    //    'value' =>'$data->email'
                     // ),
+
+                    array(
+                        'header' => 'User ID',
+                        'type'=>'raw',
+                        'value' => '$data->username'
+                    ),
+
+
+                    array(
+                        'header' => 'Role',
+                        'type'=>'raw',
+                        'value' => function($val){
+                                $group =  $val->group;
+                                $jsongroup =  json_decode($group);
+                                $groups = '';
+                                if($jsongroup){
+                                    foreach ($jsongroup as $key => $grp) {
+                                        $groupUser =  PGroup::model()->find(array('condition' => 'id ='.$grp));
+                                        $number =$key+1;
+                                        $groups .=   $number.').'.$groupUser->group_name.'<br>';
+                                    }
+                                    return   $groups;
+                                } 
+                            }
+                    ),
                     array(
                         'header' => 'วันที่สมัคร',
                         'type'=>'raw',
