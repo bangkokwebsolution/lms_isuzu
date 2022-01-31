@@ -116,7 +116,7 @@ EOD
                                         
                                         // $groupUser =  PGroup::model()->find(array('condition' => 'id ='.$grp));
 
-                                        $groupUser =  PGroup::model()->find(array($criteria));
+                                        $groupUser =  PGroup::model()->find($criteria);
                                         $number =$key+1;
                                         // $groups .=   $number.').'.$groupUser->group_name.'<br>';
                                         $groups .=   $groupUser->group_name.'<br>';
