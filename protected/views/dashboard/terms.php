@@ -5,7 +5,7 @@
         <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/site/index'); ?>"><?php echo $label->label_homepage; ?></a></li>
         <li class="breadcrumb-item active" aria-current="page">
           <?php if ($langId == 2) { ?>
-            ข้อตกลง & เงื่อนไข
+            ข้อกำหนด & เงื่อนไข
           <?php } else { ?>
             Terms & Conditions
           <?php } ?></li>
