@@ -12,6 +12,8 @@ $this->breadcrumbs=array($titleName);
          <thead>
           <tr>
             <th width="5%" style="text-align: center;">ลำดับ</th>
+            <th>User id</th>
+            <th>Role</th>
             <th>รหัสพนักงาน</th>
             <th>ชื่อ - นามสกุล</th>
             <th>KIND</th>
@@ -29,6 +31,28 @@ $this->breadcrumbs=array($titleName);
               ?>
               <tr>
                 <td style="text-align: center;"><?php echo $no; $no++; ?></td>
+                <td><?= $value->username ?></td>
+                <?php 
+                        $group =  $value->group;
+                                $jsongroup =  json_decode($group);
+                                $groups = '';
+                                if($jsongroup){
+                                    foreach ($jsongroup as $key => $grp) {
+                                        $criteria = new CDbCriteria;
+                                        $criteria->addcondition('id ='.$grp);
+                                        $criteria->addcondition('id != 1');
+                                        
+                                        // $groupUser =  PGroup::model()->find(array('condition' => 'id ='.$grp));
+
+                                        $groupUser =  PGroup::model()->find($criteria);
+                                        $number =$key+1;
+                                        // $groups .=   $number.').'.$groupUser->group_name.'<br>';
+                                        $groups .=   $groupUser->group_name.'<br>';
+                                    }
+                                    
+                                } 
+                ?>
+                <td><?= $groups ?></td>
                 <td><?= $value->employee_id ?></td>
                 <td><?= $value->profile->firstname_en." ".$value->profile->lastname_en ?></td>
                 <td><?= $value->profile->kind ?></td>
@@ -65,6 +89,8 @@ $this->breadcrumbs=array($titleName);
          <thead>
           <tr>            
             <th width="5%"></th>
+            <th>User id</th>
+            <th>Role</th>
             <th>รหัสพนักงาน</th>
             <th>ชื่อ - นามสกุล</th>
             <th>KIND</th>
@@ -80,6 +106,28 @@ $this->breadcrumbs=array($titleName);
               ?>
               <tr>
                 <td><input type="checkbox" name="user_list[]" value="<?= $value->id ?>"></td>
+                <td><?= $value->username ?></td>
+                <?php 
+                        $group =  $value->group;
+                                $jsongroup =  json_decode($group);
+                                $groups = '';
+                                if($jsongroup){
+                                    foreach ($jsongroup as $key => $grp) {
+                                        $criteria = new CDbCriteria;
+                                        $criteria->addcondition('id ='.$grp);
+                                        $criteria->addcondition('id != 1');
+                                        
+                                        // $groupUser =  PGroup::model()->find(array('condition' => 'id ='.$grp));
+
+                                        $groupUser =  PGroup::model()->find($criteria);
+                                        $number =$key+1;
+                                        // $groups .=   $number.').'.$groupUser->group_name.'<br>';
+                                        $groups .=   $groupUser->group_name.'<br>';
+                                    }
+                                    
+                                } 
+                ?>
+                <td><?= $groups ?></td>
                 <td><?= $value->employee_id ?></td>
                 <td><?= $value->profile->firstname_en." ".$value->profile->lastname_en ?></td>
                 <td><?= $value->profile->kind ?></td>
