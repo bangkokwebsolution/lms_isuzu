@@ -50,8 +50,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $Click = 'Click';
     $Hr = 'Hr';
 
-    $Sequence="Please finish learn the previous lesson.";
-
+    $Sequence = "Please finish learn the previous lesson.";
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -76,7 +75,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $Click = 'กด';
     $Hr = 'ชั่วโมง';
 
-    $Sequence="กรุณาเรียนบทเรียนก่อนหน้านี้ให้เสร็จสิ้น";
+    $Sequence = "กรุณาเรียนบทเรียนก่อนหน้านี้ให้เสร็จสิ้น";
 
 
 
@@ -328,26 +327,26 @@ $FinalScore = Coursescore::model()->findAll($criteria);
 
                                 <div class="text-center"> <a href="#tab-content" onclick="$('#change_tab2').click();" class="btn btn-success"><?= $lastStatus ?></a></div>
                                 <div class="course-admin">
-                                    <h4><?= $CourseInstructor ?> : <span><?php $profile = Profile::model()->findByPk($course->create_by); 
-                                    $ProfilesTitle = ProfilesTitle::model()->findByPk($profile->title_id);
-                                    if($langId==1){
-                                        $pro_name = $profile->firstname_en;
-                                        $title_name = !empty($ProfilesTitle) ? $ProfilesTitle->prof_title_en: '';
-                                    }else{
-                                        $pro_name = $profile->firstname;
-                                        $title_name = !empty($ProfilesTitle) ? $ProfilesTitle->prof_title : '';
-                                    }
-                                       echo  $title_name.' '.$pro_name; ?></span></h4>
-                                    <h4><?= $CourseApprover ?> : <span><?php $profile = Profile::model()->findByPk($course->approve_by); 
-                                    $ProfilesTitle = ProfilesTitle::model()->findByPk($profile->title_id);
-                                    if($langId==1){
-                                        $pro_name = $profile->firstname_en;
-                                        $title_name = !empty($ProfilesTitle) ? $ProfilesTitle->prof_title_en: '';
-                                    }else{
-                                        $pro_name = $profile->firstname;
-                                        $title_name = !empty($ProfilesTitle) ? $ProfilesTitle->prof_title : '';
-                                    }
-                                       echo  $title_name.' '.$pro_name; ?></span></h4>
+                                    <h4><?= $CourseInstructor ?> : <span><?php $profile = Profile::model()->findByPk($course->create_by);
+                                                                            $ProfilesTitle = ProfilesTitle::model()->findByPk($profile->title_id);
+                                                                            if ($langId == 1) {
+                                                                                $pro_name = $profile->firstname_en;
+                                                                                $title_name = !empty($ProfilesTitle) ? $ProfilesTitle->prof_title_en : '';
+                                                                            } else {
+                                                                                $pro_name = $profile->firstname;
+                                                                                $title_name = !empty($ProfilesTitle) ? $ProfilesTitle->prof_title : '';
+                                                                            }
+                                                                            echo  $title_name . ' ' . $pro_name; ?></span></h4>
+                                    <h4><?= $CourseApprover ?> : <span><?php $profile = Profile::model()->findByPk($course->approve_by);
+                                                                        $ProfilesTitle = ProfilesTitle::model()->findByPk($profile->title_id);
+                                                                        if ($langId == 1) {
+                                                                            $pro_name = $profile->firstname_en;
+                                                                            $title_name = !empty($ProfilesTitle) ? $ProfilesTitle->prof_title_en : '';
+                                                                        } else {
+                                                                            $pro_name = $profile->firstname;
+                                                                            $title_name = !empty($ProfilesTitle) ? $ProfilesTitle->prof_title : '';
+                                                                        }
+                                                                        echo  $title_name . ' ' . $pro_name; ?></span></h4>
                                 </div>
                             </div>
 
@@ -371,7 +370,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                         <center><small><?= $Lessons ?></small></center>
                                         <div class="text-center mt-20">
                                             <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/book-icon.png">
-                                            <small class="text-center detail-value"><?= count($lessonModel).' '.$Lessons ?></small>
+                                            <small class="text-center detail-value"><?= count($lessonModel) . ' ' . $Lessons ?></small>
                                         </div>
                                     </div>
                                 </div>
@@ -487,54 +486,54 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                     ?>
                                     <?php
                                     if ($checkCourseTest == 'pass') { //Lesson All pass
-                                                if ($checkHaveCourseTest) {
-                                                    $criteria = new CDbCriteria;
-                                                    $criteria->compare('course_id', $course->course_id);
-                                                    $criteria->compare('gen_id', $gen_id);
-                                                    $criteria->compare('type', "post");
-                                                    $criteria->compare('user_id', Yii::app()->user->id);
-                                                    $criteria->compare('score_past', 'y');
-                                                    $criteria->compare('active', 'y');
-                                                    $criteria->order = 'score_id';
-                                                    $courseScorePass = Coursescore::model()->findAll($criteria);
-                                                    if ($courseScorePass) {
+                                        if ($checkHaveCourseTest) {
+                                            $criteria = new CDbCriteria;
+                                            $criteria->compare('course_id', $course->course_id);
+                                            $criteria->compare('gen_id', $gen_id);
+                                            $criteria->compare('type', "post");
+                                            $criteria->compare('user_id', Yii::app()->user->id);
+                                            $criteria->compare('score_past', 'y');
+                                            $criteria->compare('active', 'y');
+                                            $criteria->order = 'score_id';
+                                            $courseScorePass = Coursescore::model()->findAll($criteria);
+                                            if ($courseScorePass) {
 
-                                                        if ($PaQuest) { //ทำแบบสอบถามแล้ว
-                                                            $step = 0;
-                                                            $pathSurvey = $this->createUrl('course/questionnaire', array('id' => $course->course_id));
-                                                        } else {
-                                                            $pathSurvey = $this->createUrl('questionnaire_course/index', array('id' => $CourseSurvey[0]->id));
-                                                        }
-                                                    } else { //ยังทำแบบทดสอบหลักสูตรไม่ผ่าน
-                                                        $pathSurvey = 'javascript:void(0);';
-                                                        $alrtSurvey = 'onclick="alertswalCourse()"';
-                                                    }
+                                                if ($PaQuest) { //ทำแบบสอบถามแล้ว
+                                                    $step = 0;
+                                                    $pathSurvey = $this->createUrl('course/questionnaire', array('id' => $course->course_id));
                                                 } else {
-                                                    if ($PaQuest) { //ทำแบบสอบถามแล้ว
-                                                        $step = 0;
-                                                        $pathSurvey = $this->createUrl('course/questionnaire', array('id' => $course->course_id));
-                                                    } else {
-                                                        $pathSurvey = $this->createUrl('questionnaire_course/index', array('id' => $CourseSurvey[0]->id));
-                                                    }
+                                                    $pathSurvey = $this->createUrl('questionnaire_course/index', array('id' => $CourseSurvey[0]->id));
                                                 }
-                                            } else {
+                                            } else { //ยังทำแบบทดสอบหลักสูตรไม่ผ่าน
                                                 $pathSurvey = 'javascript:void(0);';
                                                 $alrtSurvey = 'onclick="alertswalCourse()"';
                                             }
-                                     ?>
+                                        } else {
+                                            if ($PaQuest) { //ทำแบบสอบถามแล้ว
+                                                $step = 0;
+                                                $pathSurvey = $this->createUrl('course/questionnaire', array('id' => $course->course_id));
+                                            } else {
+                                                $pathSurvey = $this->createUrl('questionnaire_course/index', array('id' => $CourseSurvey[0]->id));
+                                            }
+                                        }
+                                    } else {
+                                        $pathSurvey = 'javascript:void(0);';
+                                        $alrtSurvey = 'onclick="alertswalCourse()"';
+                                    }
+                                    ?>
                                 </div>
                                 <?php if ($CourseSurvey) { ?>
-                                <div class="col-md-6">
-                                    <div class="c-item">
-                                        <small><?= $CourseEvaluation ?></small>
-                                        <div class="mt-20 text-center">
-                                            <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/questionnaire-icon-mute.png"> -->
-                                            <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/questionnaire-icon.png">
-                                            <small class="mt-20"><a href="<?= $pathSurvey ?>" <?= $alrtSurvey  ?> class="btn btn-main"><?= $Click ?></a></small>
+                                    <div class="col-md-6">
+                                        <div class="c-item">
+                                            <small><?= $CourseEvaluation ?></small>
+                                            <div class="mt-20 text-center">
+                                                <!-- <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/questionnaire-icon-mute.png"> -->
+                                                <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/questionnaire-icon.png">
+                                                <small class="mt-20"><a href="<?= $pathSurvey ?>" <?= $alrtSurvey  ?> class="btn btn-main"><?= $Click ?></a></small>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            <?php } ?>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
@@ -544,8 +543,8 @@ $FinalScore = Coursescore::model()->findAll($criteria);
 
             <div class="col-sm-8 col-md-8 col-xs-12">
                 <?php
-                $countday = Helpers::Countday($course->course_date_start,$course->course_date_end,'day');
-                 ?>
+                $countday = Helpers::Countday($course->course_date_start, $course->course_date_end, 'day');
+                ?>
                 <div class="topic-course">
                     <div class="alert alert-warning mt-20" role="alert">
                         <?= $Period ?> <?= $countday ?> <?= $day ?> <?= (!empty($course)) ? "(" . Helpers::lib()->CuttimeLang($course->course_date_start, $langId) . " - " . Helpers::lib()->CuttimeLang($course->course_date_end, $langId) . ")" : ""; ?>
@@ -577,7 +576,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
 
                             <div role="tabpanel" class="tab-pane" id="course-unit">
 
-                               <!--  <div class="">
+                                <!--  <div class="">
                                     <div class="course-section mb-3">
                                         <div class="section-title">
                                             <span>Lesson 1 Course Name</span>
@@ -678,7 +677,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></a>
                                                     </li>
                                                 </div>
-                                                
+
                                             <?php
                                             } else { //มีคะแนนสอบ
                                                 $ScoreCoursePreTest = Helpers::lib()->ScoreCoursePreTest($course->course_id, $gen_id);
@@ -1565,7 +1564,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                                                 $onClickDownload =  'onclick="alertSequence();"';
                                                             }
                                                         ?>
-                                                            <li class="list-group-item "><a href="<?= $linkDownload; ?>"</a>  <span class="list-course-number"><?= $onClickDownload ?><?= $filesDoc + 1 ?>. </span> <span class="list__course"><i class="fa fa-file-pdf-o" aria-hidden="true" style="color: #ee0f10;"></i>&nbsp;&nbsp;<?= $doc->getRefileName() ?></span> <span class="pull-right"><i class="fa fa-download"></i> <?php echo  $label->label_download; ?></span></a></li>
+                                                            <li class="list-group-item "><a href="<?= $linkDownload; ?>" </a> <span class="list-course-number"><?= $onClickDownload ?><?= $filesDoc + 1 ?>. </span> <span class="list__course"><i class="fa fa-file-pdf-o" aria-hidden="true" style="color: #ee0f10;"></i>&nbsp;&nbsp;<?= $doc->getRefileName() ?></span> <span class="pull-right"><i class="fa fa-download"></i> <?php echo  $label->label_download; ?></span></a></li>
                                                     <?php
                                                         }
                                                     endif;
@@ -1759,7 +1758,8 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                                         <!-- <div class="pt-now"> You are here</div> -->
                                                     <?php } ?>
                                                     <a href="<?= $pathCourseTest ?>" <?= $alertCourseTest ?>>
-                                                        <span class="list__course"><?= $label->label_testFinalTimes; ?> <?php// count($BestFinalTestScore) + 1; ?></span>
+                                                        <span class="list__course"><?= $label->label_testFinalTimes; ?> <? php // count($BestFinalTestScore) + 1; 
+                                                                                                                        ?></span>
                                                         <!-- <span class="list__course"><?= $label->label_testFinalTimes; ?> <?= $key + 2; ?>5555</span> -->
                                                         <span class="btn btn-warning detailmore pull-right"><?= $clickFinal ?>
                                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></a>
@@ -1826,7 +1826,8 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                                     <?php if ($step == 5) { ?>
                                                         <!-- <div class="pt-now"> Step now</div> -->
                                                     <?php } ?>
-                                                    <span><i class="fa fa-list" aria-hidden="true"></i> <?=$Questionnaire; ?> <?php //$label->label_surveyCourse; ?></span> <a href="<?= $pathSurvey ?>" <?= $alrtSurvey  ?> class="btn btn-warning detailmore pull-right"><?= $Click ?> <i class="fa fa-check-square-o" aria-hidden="true"></i></a>
+                                                    <span><i class="fa fa-list" aria-hidden="true"></i> <?= $Questionnaire; ?> <?php //$label->label_surveyCourse; 
+                                                                                                                                ?></span> <a href="<?= $pathSurvey ?>" <?= $alrtSurvey  ?> class="btn btn-warning detailmore pull-right"><?= $Click ?> <i class="fa fa-check-square-o" aria-hidden="true"></i></a>
                                                 </div>
                                             <?php } ?>
                                             <!-- end Survey -->
@@ -1909,9 +1910,12 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                     <i class="fas fa-exclamation-triangle" style="font-size:6em; color: #F8BB86; padding-top: 15px;padding-bottom: 15px;"></i>
                     <h2 style="color: #575757;"><?= $label->label_swal_regis ?></h2>
                     <h2><?= $label->label_course ?> "<?= $course->course_title ?> <?= $course->getGen($course->course_id); ?>" <?= $label->label_swal_success ?></h2>
-                    <p><?php // echo $label->label_swal_alltimelearn ?>
-                        <?php //echo  $course->course_day_learn ?>
-                        <?php // echo $label->label_day ?></p>
+                    <p><?php // echo $label->label_swal_alltimelearn 
+                        ?>
+                        <?php //echo  $course->course_day_learn 
+                        ?>
+                        <?php // echo $label->label_day 
+                        ?></p>
                     <?php if (Yii::app()->user->id) { ?>
                         <p>
                             <?= $label->label_swal_since ?>
@@ -1923,7 +1927,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
 
 
 
-                        <p><?= $label->label_remaintime ?> <?= $countday ?> <?= $label->label_day ?></p>
+                        <p><?= $label->label_remaintime ?> <?= Helpers::Countday(date('Y-m-d'), $logtime->end_date, 'day'); ?> <?= $label->label_day ?></p>
                     <?php }  ?>
 
                     <div style="padding-top: 20px; padding-bottom: 20px;">
@@ -1937,9 +1941,8 @@ $FinalScore = Coursescore::model()->findAll($criteria);
 </div>
 </section>
 <script>
-    
     <?php
-    if (!empty($logtime) && empty($_SESSION["alertConfirm".$course->course_id])) { ?>
+    if (!empty($logtime) && empty($_SESSION["alertConfirm" . $course->course_id])) { ?>
         $(window).load(function() {
 
             $('#showtime').modal('show');
@@ -1947,10 +1950,10 @@ $FinalScore = Coursescore::model()->findAll($criteria);
         });
     <?php } ?>
 
-    function confirmModel(id){
-       <?php 
-            session_start();
-            $_SESSION["alertConfirm".$course->course_id] = 'done';
+    function confirmModel(id) {
+        <?php
+        session_start();
+        $_SESSION["alertConfirm" . $course->course_id] = 'done';
         ?>
     }
 
