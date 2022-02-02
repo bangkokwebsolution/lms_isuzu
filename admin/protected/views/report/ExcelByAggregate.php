@@ -339,7 +339,7 @@ if(isset($_GET['Report'])){
                                         <td class="center"><center><?= $valueC->course_number ?></center></td>
                                         <td><?= $valueC->course_title ?></td>
                                         <td class="center"><center><?= $valueG->gen_title != ''? $valueG->gen_title : '-' ?></center></td>
-                                        <td class="center"><center><?= date('Y-m-d h:i:s') >= $valueC->course_date_start && date('Y-m-d h:i:s') <= $valueC->course_date_end ? 'Open':'Closed' ?></center></td>
+                                        <td class="center"><center><?= date('Y-m-d H:i:s') >= $valueC->course_date_start && date('Y-m-d H:i:s') <= $valueC->course_date_end ? 'Open':'Closed' ?></center></td>
                                         <td class="center"><?= $num_register ?></td>
                                         <td class="center"><?= $num_notlearn ?></td>
                                         <td class="center"><?= $num_learning ?></td>
@@ -453,7 +453,7 @@ if(isset($_GET['Report'])){
                                     <td  class="center"><center><?= $valueC->course_number ?></center></td>
                                     <td><?= $valueC->course_title ?></td>
                                     <td class="center"><center><?= $gen_title != ''? $gen_title : '-' ?></center></td>
-                                    <td class="center"><center><?= date('Y-m-d h:i:s') >= $valueC->course_date_start && date('Y-m-d h:i:s') <= $valueC->course_date_end ? 'Open':'Closed' ?></center></td>
+                                    <td class="center"><center><?= date('Y-m-d H:i:s') >= $valueC->course_date_start && date('Y-m-d H:i:s') <= $valueC->course_date_end ? 'Open':'Closed' ?></center></td>
                                     <td class="center"><?= $num_register ?></td>
                                     <td class="center"><?= $num_notlearn ?></td>
                                     <td class="center"><?= $num_learning ?></td>

@@ -530,7 +530,6 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
                                     $num_per_pass = ($num_pass*100)/$num_register;
                                     $num_per_pass = round($num_per_pass, 2);
                                 }
-
                                 ?>
                     <tr>
                         <td class="center"><?= $no++ ?></td>
@@ -538,7 +537,7 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
                         <td class="center"><?= $valueC->course_number ?></td>
                         <td><?= $valueC->course_title ?></td>
                         <td class="center"><?= $valueG->gen_title != ''? $valueG->gen_title : '-' ?></td>
-                        <td class="center"><?= date('Y-m-d h:i:s') >= $valueC->course_date_start && date('Y-m-d h:i:s') <= $valueC->course_date_end ? 'Open':'Closed' ?></td>
+                        <td class="center"><?= date('Y-m-d H:i:s') >= $valueC->course_date_start && date('Y-m-d H:i:s') <= $valueC->course_date_end ? 'Open':'Closed' ?></td>
                         <td class="center"><?= $num_register ?></td>
                         <td class="center"><?= $num_notlearn ?></td>
                         <td class="center"><?= $num_learning ?></td>
@@ -652,7 +651,7 @@ $userModel = Users::model()->findByPk(Yii::app()->user->id);
                         <td class="center"><?= $valueC->course_number ?></td>
                         <td><?= $valueC->course_title ?></td>
                         <td class="center"><?= $gen_title != ''? $gen_title : '-' ?></td>
-                        <td class="center"><?= date('Y-m-d h:i:s') >= $valueC->course_date_start && date('Y-m-d h:i:s') <= $valueC->course_date_end ? 'Open':'Closed' ?></td>
+                        <td class="center"><?= date('Y-m-d H:i:s') >= $valueC->course_date_start && date('Y-m-d H:i:s') <= $valueC->course_date_end ? 'Open':'Closed' ?></td>
                         <td class="center"><?= $num_register ?></td>
                         <td class="center"><?= $num_notlearn ?></td>
                         <td class="center"><?= $num_learning ?></td>
