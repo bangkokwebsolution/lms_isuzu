@@ -1,3 +1,18 @@
+<?php 
+if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+	$Minutes="Minutes";
+	$Course_Examination="Course Examination";
+} else {
+    $langId = Yii::app()->session['lang'];
+    $Course_Examination="การสอบวัดผล";
+    $Minutes="นาที";
+   
+
+
+
+}
+
+?>
 <div class="container">
 	<nav aria-label="breadcrumb">
 		<ol class="breadcrumb breadcrumb-main">
@@ -13,7 +28,7 @@
 			<div class="col-xs-12 col-sm-6 col-sm-offset-3">
 				<div class="well">
 					<div class="exams-condition">
-						<h2 class="text-center">Course Examination</h2>
+						<h2 class="text-center"><?php echo $Course_Examination ?></h2>
 						<h4 class="text-center"><?= $labelCourse->label_courseName ?> : <?= $course->course_title; ?></h4>
 						<hr>
 						<ul class="list-unstyled">
@@ -26,7 +41,7 @@
 							<li>
 								<?= UserModule::t('timeTest') ?>
 								<span class="pull-right">
-									<?= $course->time_test; ?> <?= UserModule::t('Minutes') ?>
+									<?= $course->time_test; ?> <?= $Minutes ?>
 								</span>
 							</li>
 							<li>
