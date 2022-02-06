@@ -49,7 +49,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $CourseEvaluation = 'Course Evaluation';
     $Click = 'Click';
     $Hr = 'Hr';
-
+    $Complete="Complete";
     $Sequence = "Please finish learn the previous lesson.";
 } else {
     $langId = Yii::app()->session['lang'];
@@ -74,7 +74,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $CourseEvaluation = 'การประเมินผลหลักสูตร';
     $Click = 'กด';
     $Hr = 'ชั่วโมง';
-
+    $Complete="สำเร็จ";
     $Sequence = "กรุณาเรียนบทเรียนก่อนหน้านี้ให้เสร็จสิ้น";
 
 
@@ -2101,8 +2101,9 @@ $FinalScore = Coursescore::model()->findAll($criteria);
             var msg = '<?php echo Yii::app()->user->getFlash('CheckQues'); ?>';
             var cla = '<?php echo Yii::app()->user->getFlash('class'); ?>';
             swal({
-                title: '<?= $label->label_swal_system ?>',
-                text: msg,
+                // title: '<?= $label->label_swal_system ?>',
+                title: '<?php echo $Complete; ?>',
+                // text: msg,
                 type: cla,
                 confirmButtonText: '<?= $label->label_confirm ?>',
             });
