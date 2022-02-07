@@ -2101,9 +2101,9 @@ $FinalScore = Coursescore::model()->findAll($criteria);
             var msg = '<?php echo Yii::app()->user->getFlash('CheckQues'); ?>';
             var cla = '<?php echo Yii::app()->user->getFlash('class'); ?>';
             swal({
-                // title: '<?= $label->label_swal_system ?>',
-                title: '<?php echo $Complete; ?>',
-                // text: msg,
+                title: '<?= $label->label_swal_system ?>',
+                // title: '<?php echo $Complete; ?>',
+                text: msg,
                 type: cla,
                 confirmButtonText: '<?= $label->label_confirm ?>',
             });
