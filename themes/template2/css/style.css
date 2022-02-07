@@ -5284,7 +5284,7 @@ header .navbar-nav li a {
   text-align: center;
   max-height: 40px;
   margin-bottom: 10px;
-  transform: translateY(-40px);
+  /* transform: translateY(-40px); */
   background: #fff;
 }
 
@@ -5666,7 +5666,7 @@ section#faq {
 }
 
 .featured-box-effect-4:hover .icon-featured {
-  transform: scale(1.15);
+  transform: scale(1.07);
 }
 
 .featured-box h4 {
