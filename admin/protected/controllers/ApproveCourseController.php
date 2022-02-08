@@ -119,51 +119,11 @@ class ApproveCourseController extends Controller
 
 			$form_text = "";
 			if ($CourseOnline != "") {
-				$form_text .= "<h3 style='margin-bottom: 10px;'><b>ข้อมูล</b></h3>";
-
-				$form_text .= "<div class='row' style='margin-bottom: 20px;'>";
-				$form_text .= "<div class='col-md-12'>";
-				$form_text .= "<p class='pull-left' style='display: inline-block; font-size: 16px;'>หลักสูตร</p>";
-				$form_text .= "</div>";
-				$form_text .= "<div class='col-md-6'>";
-				$form_text .= "<input class='form-control' style='height: 40px;' readonly type='text' value='" . $CourseOnline->course_title . "'>";				
-				$form_text .= "</div>";
-				$form_text .= "</div>";
-
-				$form_text .= "<div class='row' style='margin-bottom: 20px;'>";
-				$form_text .= "<div class='col-md-12'>";
-				$form_text .= "<p class='pull-left' style='display: inline-block; font-size: 16px;'>หมวด</p>";
-				$form_text .= "</div>";
-				$form_text .= "<div class='col-md-6'>";
-				$form_text .= "<input class='form-control' style='height: 40px;' readonly type='text' value='" . $CourseOnline->cates->cate_title . "'>";				
-				$form_text .= "</div>";
-				$form_text .= "</div>";
-
-				$form_text .= "<div class='row' style='margin-bottom: 20px;'>";
-				$form_text .= "<div class='col-md-6'>";
-				$form_text .= "<p class='pull-left' style='display: inline-block; font-size: 16px;'>สร้างโดย</p>";
-				$form_text .= "</div>";
-
-				$form_text .= "<div class='col-md-6'>";
-				$form_text .= "<p class='pull-left' style='display: inline-block; font-size: 16px;'>Org Chart</p>";
-				$form_text .= "</div>";
-
-
-				$form_text .= "<div class='col-md-6'>";
-				$form_text .= "<input class='form-control' style='height: 40px;' readonly type='text' value='" . $CourseOnline->usernewcreate->profile->firstname . " " . $CourseOnline->usercreate->profile->lastname ."'>";				
-				$form_text .= "</div>";
-
-				$form_text .= "<div class='col-md-6'>";
-				$form_text .= "<input class='form-control' style='height: 40px;' readonly type='text' value='" . $CourseOnline->usernewcreate->orgchart->title ."'>";				
-				$form_text .= "</div>";
-				$form_text .= "</div>";
-
-
-
-
+				$this->renderPartial('coursedata',array('CourseOnline'=>$CourseOnline));
+			}else{
+				echo 'noData';
 			}
 
-			echo $form_text;
 		}
 	}
 
