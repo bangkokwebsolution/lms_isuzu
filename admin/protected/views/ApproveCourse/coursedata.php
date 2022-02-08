@@ -91,3 +91,5 @@
         <input class='form-control' style='height: 40px;' readonly type='text' value='<?= $CourseOnline->usernewcreate->orgchart->title ?>'>
     </div>
 </div>
+<div class='row' style='margin-bottom: 20px;'>
+</div>
