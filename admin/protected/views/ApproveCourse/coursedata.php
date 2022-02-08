@@ -75,7 +75,7 @@
 
 <div class='row' style='margin-bottom: 20px;'>
     <div class='col-md-6'>
-        <p class='pull-left' style='display: inline-block; font-size: 16px;'>สร้างโดย</p>
+        <p class='pull-left' style='display: inline-block; font-size: 16px;'>Create by</p>
     </div>
 
     <div class='col-md-6'>
@@ -90,6 +90,4 @@
     <div class='col-md-6'>
         <input class='form-control' style='height: 40px;' readonly type='text' value='<?= $CourseOnline->usernewcreate->orgchart->title ?>'>
     </div>
-</div>
-<div class='row' style='margin-bottom: 20px;'>
 </div>
