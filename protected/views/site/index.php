@@ -228,7 +228,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
 <section class="menu-section menu-elearning featured-boxes featured-boxes-style-2">
     <div class="container">
         <div id="menu-index" class="owl-carousel owl-theme nav-inside nav-style-1 nav-light">
-            <div class=" mb-1">
+            <!-- <div class=" mb-1">
                 <div class="featured-box featured-box-one  featured-box-effect-4 text-center">
                     <div class="box-content">
                         <a data-toggle="modal" href="<?php if (Yii::app()->user->id == null) {
@@ -243,7 +243,7 @@ if (!empty($msg) || !empty($_GET['msg'])) {
                         </a>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class=" mb-1">
                 <div class="featured-box featured-box-one  featured-box-effect-4 text-center">
                     <div class="box-content">
