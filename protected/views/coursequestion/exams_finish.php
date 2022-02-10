@@ -118,7 +118,8 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 							</li>
 							<li>
 								<?= $labelCourse->label_haveCorrect; ?>
-								<span class="pull-right"><?= $score_number; ?> <?= $labelCourse->label_point; ?></span>
+								<!-- <span class="pull-right"><?= $score_number; ?> <?= $labelCourse->label_point; ?></span> -->
+								<span class="pull-right"><?= $modelScore->score_number ?> <?= $labelCourse->label_point; ?></span>
 							</li>
 							<li>
 								<?= $labelCourse->label_percentage ?>
