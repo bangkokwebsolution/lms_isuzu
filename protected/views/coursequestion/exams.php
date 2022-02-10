@@ -10,11 +10,15 @@
         $ques_title = 'Question';
         $type_ques = 'The exams';
         $questionTypeArrayStr = array(1 => 'Multiple Choices', 2 => 'The exams can choose only one answer.', 3 => 'Essay Test', 4 => 'Matching Test', 6 => 'Alignment Test');
+        $title_popup="Completed";
+        $button="ok";
     }else{
         $langId = 2;
         $ques_title = 'คำถาม';
         $type_ques = 'ข้อสอบแบบ';
         $questionTypeArrayStr = array(1 => 'ข้อสอบแบบ เลือกได้หลายคำตอบ', 2 => 'ข้อสอบแบบ เลือกได้คำตอบเดียว', 3 => 'ข้อสอบแบบ คำตอบแบบบรรยาย', 4 => 'ข้อสอบแบบ คำตอบแบบจับคู่', 6 => 'ข้อสอบแบบ คำตอบแบบจัดเรียง');
+        $title_popup="สำเร็จ";
+        $button="ตกลง";
     }
 
     ?>
@@ -339,10 +343,10 @@
     						var typeMsg = 'warning';
     					}
     					swal({
-                         title: "Completed",
+                         title: "<?php echo $title_popup ?>",
                          text: strMsg,
                          type: typeMsg,
-                         confirmButtonText: "OK",
+                         confirmButtonText: "<?php echo $button ?>",
                      },
                      function() {
     							$('#exam-result').html(data); //window.location.href = url;
