@@ -5282,10 +5282,14 @@ header .navbar-nav li a {
 .library-detail {
   padding: 1em;
   text-align: center;
+  margin-bottom: 26px;
+  background: #fff;
+  /*   padding: 1em;
+  text-align: center;
   max-height: 40px;
   margin-bottom: 10px;
-  /* transform: translateY(-40px); */
-  background: #fff;
+  transform: translateY(-40px);
+  background: #fff; */
 }
 
 .library-detail span {
@@ -6434,7 +6438,7 @@ tr {
 
 .badge-success {
   color: #fff;
-  background-color:#4bbc99;
+  background-color: #4bbc99;
 }
 
 .badge-danger {
@@ -6442,6 +6446,6 @@ tr {
   background-color: #e64d3b;
 }
 
-.dashboard-exp p{
+.dashboard-exp p {
   margin-bottom: 0;
 }
