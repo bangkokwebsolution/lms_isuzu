@@ -413,7 +413,7 @@ $getLessonAll = Lesson::model()->findAll(array(
                         <!-- href="<?php echo $this->createUrl('/course/detail', array('id' => $course->course_id)); ?>" -->
                         <!-- <a href="<?php echo $this->createUrl('/course/detail', array('id' => '476')); ?>" id="btn_completed" class="btn btn-warning btn-lg" role="button" ><?= $Completed ?></a> -->
 
-                        <a href="<?php echo $this->createUrl('/course/detail', array('id' => '476')); ?>" id="" class="btn btn-warning btn-lg" role="button" ><?= $Completed ?></a>
+                        <a href="<?php echo $this->createUrl('/course/detail', array('id' => $course->course_id )); ?>" id="" class="btn btn-warning btn-lg" role="button" ><?= $Completed ?></a>
                     </div>
                 </div>
 

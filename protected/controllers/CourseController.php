@@ -1325,8 +1325,16 @@ public function actionDetail($id) {
                 $diff=date_diff($dateStart,$dateEnd);
                 $diff = $diff->format("%a");
             if($diff < 0 || (date('Y-m-d') > date($courseDateExpire))){//$course->course_date_end
+            if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
+                //set Flash
+                Yii::app()->user->setFlash('msg', 'You\'re expired course');
+            }else{
                 //set Flash
                 Yii::app()->user->setFlash('msg', 'คุณหมดเวลาเรียนแล้ว');
+            }
+                
+
+
                 $this->redirect(array('site/index'));
             }
             
