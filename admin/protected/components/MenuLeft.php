@@ -2213,33 +2213,33 @@ Class MenuLeft extends Controller
 
 			array(
 
-				'visible'=>self::PermissionsMenu(array(
+				'visible' => self::PermissionsMenu(array(
 					'Report.*'
 				)),
-				'label'=>'<i></i><span>ระบบ Report</span>',
-				'url'=>'#Report',
+				'label' => '<i></i><span>ระบบ Report</span>',
+				'url' => '#Report',
 				'linkOptions' => array('data-toggle' => 'collapse'),
 				'itemOptions' => array('class' => 'hasSubmenu glyphicons print'),
-				'submenuOptions' => array('class' => self::SetSubMenu( array('Report', 'Questionnaire') ), 'id' => 'Report'),
-				'active' => self::SetSubMenu( array('Report', 'Questionnaire') ,false),
-				'items'=>array(
+				'submenuOptions' => array('class' => self::SetSubMenu(array('Report', 'Questionnaire')), 'id' => 'Report'),
+				'active' => self::SetSubMenu(array('Report', 'Questionnaire'), false),
+				'items' => array(
 					//set new menu	
 					// array(
 
-	    //     			'visible'=>self::PermissionsMenu(array(
+					//     			'visible'=>self::PermissionsMenu(array(
 					// 		'Report.*',
-	    //     			)),
-	    //     			'label'=>'1.) รายงานภาพรวมการสมัครสมาชิก',
-	    //     			'url'=>array('//Report/logAllRegister')
+					//     			)),
+					//     			'label'=>'1.) รายงานภาพรวมการสมัครสมาชิก',
+					//     			'url'=>array('//Report/logAllRegister')
 					// ),			
-	    //     		array(
+					//     		array(
 
-	    //     			'visible'=>self::PermissionsMenu(array(
-	    //     				'admin.*',
-	    //     			)),
-	    //     			'label'=>'2.) รายงานผลการสมัครสมาชิก (ผู้เรียน)',
-	    //     			'url'=>array('//user/admin/Status')
-	    //     		),
+					//     			'visible'=>self::PermissionsMenu(array(
+					//     				'admin.*',
+					//     			)),
+					//     			'label'=>'2.) รายงานผลการสมัครสมาชิก (ผู้เรียน)',
+					//     			'url'=>array('//user/admin/Status')
+					//     		),
 
 					// array(
 
@@ -2251,44 +2251,50 @@ Class MenuLeft extends Controller
 					// ),
 					array(
 
-						'visible'=>self::PermissionsMenu(array(
+						'visible' => self::PermissionsMenu(array(
 							'Report.*',
+
+							'Report.byusercourse',
 						)),
-						'label'=>'1.) รายงานการผลการเรียนของหลักสูตร',
-						'url'=>array('//Report/ByUserCourse')
+						'label' => '1.) รายงานการผลการเรียนของหลักสูตร',
+						'url' => array('//Report/ByUserCourse')
 					),
 					array(
 
-						'visible'=>self::PermissionsMenu(array(
+						'visible' => self::PermissionsMenu(array(
 							'Report.*',
+							'Report.bycoursedetail',
 						)),
-						'label'=>'2.) รายงานการฝึกอบรมหลักสูตร',
-						'url'=>array('//Report/ByCourseDetail')
+						'label' => '2.) รายงานการฝึกอบรมหลักสูตร',
+						'url' => array('//Report/ByCourseDetail')
 					),
 					array(
 
-						'visible'=>self::PermissionsMenu(array(
+						'visible' => self::PermissionsMenu(array(
 							'Report.*',
+							'Report.byreportproblem',
 						)),
-						'label'=>'3.) รายงานปัญหาการใช้งาน',
-						'url'=>array('//Report/ByReportProblem')
+						'label' => '3.) รายงานปัญหาการใช้งาน',
+						'url' => array('//Report/ByReportProblem')
 					),
 
 					array(
 
-						'visible'=>self::PermissionsMenu(array(
+						'visible' => self::PermissionsMenu(array(
 							'Report.*',
+							'Report.bycourseall',
 						)),
-						'label'=>'4.) รายงานการฝึกอบรมหลักสูตร',
-						'url'=>array('//Report/ByCourseAll')
+						'label' => '4.) รายงานการฝึกอบรมหลักสูตร',
+						'url' => array('//Report/ByCourseAll')
 					),
 					array(
 
-						'visible'=>self::PermissionsMenu(array(
+						'visible' => self::PermissionsMenu(array(
 							'Report.*',
+							'Report.sumdetailcourse',
 						)),
-						'label'=>'5.) รายงานภาพรวมของหลักสูตร',
-						'url'=>array('//Report/SumdetailCourse')
+						'label' => '5.) รายงานภาพรวมของหลักสูตร',
+						'url' => array('//Report/SumdetailCourse')
 					),
 					// array(
 
@@ -2307,48 +2313,48 @@ Class MenuLeft extends Controller
 					// 	'url'=>array('//Report/logReset')
 					// ),
 
-	        		// array(
-
-	        		// 	'visible'=>self::PermissionsMenu(array(
-	        		// 		'Report.*',
-	        		// 	)),
-	        		// 	'label'=>'3.) รายงานผลสอบ',
-	        		// 	'url'=>array('//Report/BeforAndAfter')
-	        		// ),
-	        		// array(
-	        		// 	
-	        		// 	'visible'=>self::PermissionsMenu(array(
-	        		// 		'Passcours.*',
-	        		// 	)),
-	        		// 	'label'=>'4.) รายงานผู้ผ่านการเรียน',
-	        		// 	'url'=>array('//Passcours/index')
-	        		// ),
-	        		// array(
-
-	        		// 	'visible'=>self::PermissionsMenu(array(
-	        		// 		'Passcours.*',
-	        		// 	)),
-	        		// 	'label'=>'5.) รายงานสถิติจำนวนผู้พิมพ์ใบประกาศฯ',
-	        		// 	'url'=>array('//Passcours/PasscoursLog')
-	        		// ),
-	        		// array(
-
-	        		// 	'visible'=>self::PermissionsMenu(array(
-	        		// 		'Questionnaire.*',
-	        		// 	)),
-	        		// 	'label'=>'6.) รายงานแบบสอบถามสำหรับใช้ภายนอก',
-	        		// 	'url'=>array('//Questionnaire/Report_list')
-	        		// ),
-					
 					// array(
 
-	    //     			'visible'=>self::PermissionsMenu(array(
+					// 	'visible'=>self::PermissionsMenu(array(
 					// 		'Report.*',
-	    //     			)),
-	    //     			'label'=>'9.) รายงานการสมัครสมาชิก',
-	    //     			'url'=>array('//Report/logRegister')
+					// 	)),
+					// 	'label'=>'3.) รายงานผลสอบ',
+					// 	'url'=>array('//Report/BeforAndAfter')
 					// ),
-					
+					// array(
+					// 	
+					// 	'visible'=>self::PermissionsMenu(array(
+					// 		'Passcours.*',
+					// 	)),
+					// 	'label'=>'4.) รายงานผู้ผ่านการเรียน',
+					// 	'url'=>array('//Passcours/index')
+					// ),
+					// array(
+
+					// 	'visible'=>self::PermissionsMenu(array(
+					// 		'Passcours.*',
+					// 	)),
+					// 	'label'=>'5.) รายงานสถิติจำนวนผู้พิมพ์ใบประกาศฯ',
+					// 	'url'=>array('//Passcours/PasscoursLog')
+					// ),
+					// array(
+
+					// 	'visible'=>self::PermissionsMenu(array(
+					// 		'Questionnaire.*',
+					// 	)),
+					// 	'label'=>'6.) รายงานแบบสอบถามสำหรับใช้ภายนอก',
+					// 	'url'=>array('//Questionnaire/Report_list')
+					// ),
+
+					// array(
+
+					//     			'visible'=>self::PermissionsMenu(array(
+					// 		'Report.*',
+					//     			)),
+					//     			'label'=>'9.) รายงานการสมัครสมาชิก',
+					//     			'url'=>array('//Report/logRegister')
+					// ),
+
 				)
 			),
 
