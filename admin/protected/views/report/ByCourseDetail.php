@@ -129,7 +129,7 @@ EOD
     if($state){
         $modelType = CourseType::model()->findAll(array('condition'=>'active = "y" AND lang_id = 1'));
     }else{
-        $modelType = CourseType::model()->findAll(array('condition'=>'active = "y" AND lang_id = 1 AND create_by = "'.$userModel->id.'"'));
+        $modelType = CourseType::model()->findAll(array('condition'=>'active = "y" AND lang_id = 1 AND created_by = "'.$userModel->id.'"'));
     }
 
     if($state){
