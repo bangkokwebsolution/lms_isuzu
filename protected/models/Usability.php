@@ -107,6 +107,13 @@ class Usability extends CActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+	public function afterFind()
+    {
+    	// $this->how_title = CHtml::decode($this->how_title);
+    	$this->usa_detail = CHtml::decode($this->usa_detail);
+
+        return parent::afterFind();
+	}
 
 	/**
 	 * Returns the static model of the specified AR class.
