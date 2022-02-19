@@ -110,7 +110,7 @@ class Usability extends CActiveRecord
 	public function afterFind()
     {
     	// $this->how_title = CHtml::decode($this->how_title);
-    	$this->usa_detail = CHtml::decode($this->usa_detail);
+    	// $this->usa_detail = CHtml::decode($this->usa_detail);
 
         return parent::afterFind();
 	}
