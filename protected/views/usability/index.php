@@ -74,7 +74,7 @@
                             <h4 class="modal-title"><i class="fa fa-sign-in" aria-hidden="true"></i> <?php echo ($usa->usa_title); ?> </h4>
                         </div>
                         <div class="modal-body">
-                            <?php echo htmlspecialchars_decode($usa->usa_detail) ?>
+                            <?php echo htmlspecialchars_decode(htmlspecialchars_decode($usa->usa_detail)) ?>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-warning" data-dismiss="modal"><sapn class="fa fa-times" aria-hidden="true"></sapn></button>
