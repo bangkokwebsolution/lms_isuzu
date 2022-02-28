@@ -2256,7 +2256,7 @@ Class MenuLeft extends Controller
 
 							'Report.byusercourse',
 						)),
-						'label' => '1.) รายงานการผลการเรียนของหลักสูตร',
+						'label' => '1.) รายงานผลการอบรมรายบุคคล',
 						'url' => array('//Report/ByUserCourse')
 					),
 					array(
@@ -2265,7 +2265,7 @@ Class MenuLeft extends Controller
 							'Report.*',
 							'Report.bycoursedetail',
 						)),
-						'label' => '2.) รายงานการฝึกอบรมหลักสูตร',
+						'label' => '2.) รายงานรายละเอียดของหลักสูตร',
 						'url' => array('//Report/ByCourseDetail')
 					),
 					array(
@@ -2284,7 +2284,7 @@ Class MenuLeft extends Controller
 							'Report.*',
 							'Report.bycourseall',
 						)),
-						'label' => '4.) รายงานการฝึกอบรมหลักสูตร',
+						'label' => '4.) รายงานผลการอบรมรายหลักสูตร',
 						'url' => array('//Report/ByCourseAll')
 					),
 					array(
