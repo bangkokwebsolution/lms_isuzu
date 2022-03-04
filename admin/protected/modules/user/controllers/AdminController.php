@@ -977,7 +977,7 @@ class AdminController extends Controller
             $index = 0;
             // var_dump($namedDataArray);exit();
             foreach($namedDataArray as $key => $result){
-                $search_user = User::model()->findAll(array('condition'=>'username = '.$result["Employee ID."]));
+                $search_user = User::model()->find(array('condition'=>"username = '".$result["Employee ID."]."'"));
                 if(empty($search_user)){
                     $model = new User;
                     $profile = new Profile;
@@ -986,6 +986,9 @@ class AdminController extends Controller
                     $model->employee_id = $result["Employee ID."];
                 // $model->password = md5($model->username);
                 // $model->verifyPassword = md5($result["Employee ID."]);
+                    if($result["Status"]!="Active"){
+                        $model->del_status = 1;
+                    }
 
                     $model->type_register = 2;
                     $model->superuser = 0;
@@ -1028,8 +1031,12 @@ class AdminController extends Controller
 
                                 if($modelProfile->validate()){
                                   $modelProfile->save(false);
-                                  $data[$key]['msg'] = 'pass';
+                                  $data[$key]['msg'] = 'สร้างชื่อผู้ใช้เรียบร้อย';
+                                  $data[$key]['username'] = $result["Employee ID."];
+                                  $data[$key]['fullname'] = $result["Firstname (Eng)"]." ".$result["Lastname (Eng)"];
+                                  $data[$key]['email'] = $result["Email"];
                                   $Insert_success[$key] = "สร้างชื่อผู้ใช้เรียบร้อย";
+
 
                                   $message = '
                                   <strong>สวัสดี คุณ' . $modelProfile->firstname . ' ' . $modelProfile->lastname . '</strong><br /><br />
@@ -1085,7 +1092,42 @@ class AdminController extends Controller
                         // var_dump($model->getErrors());
                         // exit();
             }//end if validate user
-    }//end 
+    
+    }else{//ถ้ามี username ตรงกันให้ update
+        
+        if($result["Status"]!="Active"){
+            $search_user->del_status = 1;
+        }
+        $search_user->email = $result["Email"];
+        
+        // var_dump($search_user->id);exit();
+       
+        if ($search_user->validate()) {
+
+
+                    $search_user->save(false);
+
+                    $UpdateProfile = Profile::model()->find(array('condition'=>"user_id = '".$search_user->id."'"));
+                     
+                    $UpdateProfile->firstname_en = $result["Firstname (Eng)"];
+                    $UpdateProfile->lastname_en = $result["Lastname (Eng)"];
+                    $EmpClass = EmpClass::model()->findByAttributes(array('title'=>$result["Employee class"]));
+                        if(!empty($EmpClass)){
+                            $UpdateProfile->employee_class = $EmpClass->id ;
+                        }
+                    $UpdateProfile->sex = $result["Gender"];
+                    
+                    if($UpdateProfile->validate()){
+                                  $UpdateProfile->save(false);
+                                  $data[$key]['msg'] = 'แก้ไขชื่อผู้ใช้เรียบร้อย';
+                                  $data[$key]['username'] = $result["Employee ID."];
+                                  $data[$key]['fullname'] = $result["Firstname (Eng)"]." ".$result["Lastname (Eng)"];
+                                  $data[$key]['email'] = $result["Email"];
+                                  $Insert_success[$key] = "แก้ไขชื่อผู้ใช้เรียบร้อย";
+                    }//end if
+        }//end if
+
+    }//end if เช็ค username
 
             } //end loop add user
 

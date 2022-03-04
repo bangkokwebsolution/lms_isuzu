@@ -103,9 +103,9 @@ $this->breadcrumbs = array('ระบบรายชื่อสมาชิก'
                                 <thead>
                                     <tr>
                                         <th>ลำดับ</th>
-                                        <th>email (ชื่อผู้ใช้)</th>
+                                        <th>Employee ID</th>
                                         <th>ชื่อ-นามสกุล</th>
-                                        <th>เบอร์โทรศัพท์</th>
+                                        <th>Email (ชื่อผู้ใช้)</th>
                                         <th>สถานะ</th>
                                     </tr>
                                 </thead>
@@ -115,9 +115,11 @@ HTB;
                                     echo $headTable;
                             foreach ($data as $key => $valueRow) {
 
-                                    $email = $valueRow['email'];
+                                    
                                     $number = $key + 1;
+                                    $username = $valueRow['username'];
                                     $fullname = $valueRow['fullname'];
+                                    $email = $valueRow['email'];
                                     $phone = $valueRow['phone'];
                                     $identification = $valueRow['identification'];
                                     $msg = $valueRow['msg'];
@@ -125,9 +127,11 @@ HTB;
 										<!-- Table row -->
 										<tr class="gradeX">
 											<td>$number</td>
+                                            <td>$username</td>
+                                            <td class="left">$fullname</td>
                                             <td>$email</td>
-											<td class="left">$fullname</td>
-											<td class="left">$phone</td>
+											
+											
                                             <td class="left">$msg</td>
 										</tr>	
 HTM;
