@@ -940,9 +940,7 @@ class AdminController extends Controller
         {      
             $phpExcelPath = Yii::getPathOfAlias('ext.phpexcel.Classes');
             include($phpExcelPath . DIRECTORY_SEPARATOR . 'PHPExcel.php');
-
             $model->excel_file = CUploadedFile::getInstance($model,'excel_file');
-            // $model->excel_file =  $_FILES['excel_import_student'];
 
             //if ($model->excel_file && $model->validate()) {
                 // $webroot = YiiBase::getPathOfAlias('webroot');
@@ -972,9 +970,9 @@ class AdminController extends Controller
                     ++$r;
                     foreach($headingsArray as $columnKey => $columnHeading) {
                         $namedDataArray[$r][$columnHeading] = $dataRow[$row][$columnKey];
-                    }
-                }
-            }
+                    }//end foreach
+                }//end if
+            }//end for
 
             $index = 0;
             // var_dump($namedDataArray);exit();
@@ -1023,87 +1021,86 @@ class AdminController extends Controller
                      $modelProfile->group_name = $result["Group"];
                      $modelProfile->shift = $result["Shift"];
                      $EmpClass = EmpClass::model()->findByAttributes(array('title'=>$result["Employee class"]));
-                     if(!empty($EmpClass)){
-                        $modelProfile->employee_class = $EmpClass->id ;
-                    }
+                        if(!empty($EmpClass)){
+                            $modelProfile->employee_class = $EmpClass->id ;
+                        }
                     $modelProfile->position_description = $result["Position description"];
 
-                    if($modelProfile->validate()){
-                      $modelProfile->save(false);
-                      $data[$key]['msg'] = 'pass';
+                                if($modelProfile->validate()){
+                                  $modelProfile->save(false);
+                                  $data[$key]['msg'] = 'pass';
+                                  $Insert_success[$key] = "สร้างชื่อผู้ใช้เรียบร้อย";
 
-                      $Insert_success[$key] = "สร้างชื่อผู้ใช้เรียบร้อย";
+                                  $message = '
+                                  <strong>สวัสดี คุณ' . $modelProfile->firstname . ' ' . $modelProfile->lastname . '</strong><br /><br />
 
-                      $message = '
-                      <strong>สวัสดี คุณ' . $modelProfile->firstname . ' ' . $modelProfile->lastname . '</strong><br /><br />
+                                  <h4>ระบบได้ทำการอนุมัติสมาชิกเข้าใช้งาน e-Learning Isuzu เรียบร้อยแล้ว โดยมี ชื่อผู้ใช้งานและรหัสผ่านดังนี้ </h4>
+                                  <h4>- User : '. $model->username.'</h4>
+                                  <h4>- Password : '.$genpass.'</h4>
 
-                      <h4>ระบบได้ทำการอนุมัติสมาชิกเข้าใช้งาน e-Learning Isuzu เรียบร้อยแล้ว โดยมี ชื่อผู้ใช้งานและรหัสผ่านดังนี้ </h4>
-                      <h4>- User : '. $model->username.'</h4>
-                      <h4>- Password : '.$genpass.'</h4>
+                                  โปรดคลิกลิงค์ต่อไปนี้ เพื่อดำเนินการเข้าสู่ระบบ<br />
+                                  <a href="' . str_replace("/admin","",Yii::app()->getBaseUrl(true)) . '">' . str_replace("/admin","",Yii::app()->getBaseUrl(true)) . '</a><br />
+                                  <strong>Email</strong> : ' . $model->email . '<br />
 
-                      โปรดคลิกลิงค์ต่อไปนี้ เพื่อดำเนินการเข้าสู่ระบบ<br />
-                      <a href="' . str_replace("/admin","",Yii::app()->getBaseUrl(true)) . '">' . str_replace("/admin","",Yii::app()->getBaseUrl(true)) . '</a><br />
-                      <strong>Email</strong> : ' . $model->email . '<br />
+                                  ยินดีต้อนรับเข้าสู่ระบบ e-Learning Isuzu<br /><br />
 
-                      ยินดีต้อนรับเข้าสู่ระบบ e-Learning Isuzu<br /><br />
+                                  ';
+                                  $subject = 'ยินดีต้อนรับเข้าสู่ระบบ e-Learning Isuzu';
+                                  $to['email'] = $model->email;
+                                  $to['firstname'] = $modelProfile->firstname;
+                                  $to['lastname'] = $modelProfile->lastname;
+                                    // try {
+                                    //     $mail = Helpers::lib()->SendMail($to,$subject,$message);
+                                    //     return "pass";
+                                    // }catch (Exception $e) {
+                                    //     return "fail";
+                                    // }
+                                }else{
 
-                      ';
-                      $subject = 'ยินดีต้อนรับเข้าสู่ระบบ e-Learning Isuzu';
-                      $to['email'] = $model->email;
-                      $to['firstname'] = $modelProfile->firstname;
-                      $to['lastname'] = $modelProfile->lastname;
-                        // try {
-                        //     $mail = Helpers::lib()->SendMail($to,$subject,$message);
-                        //     return "pass";
-                        // }catch (Exception $e) {
-                        //     return "fail";
-                        // }
-                  } else {
+                                  $HisImportErrorArr[] = $HisImportArr[$key];
+                                  $msgAllArr = array();
 
-                      $HisImportErrorArr[] = $HisImportArr[$key];
-                      $msgAllArr = array();
+                                  $attrAllArr = array();
+                                    foreach($modelProfile->getErrors() as $field => $msgArr){
+                                       $attrAllArr[] = $field;
+                                       $msgAllArr[] = $msgArr[0];
+                                    }//end foreach
 
-                      $attrAllArr = array();
-                      foreach($modelProfile->getErrors() as $field => $msgArr){
-                       $attrAllArr[] = $field;
-                       $msgAllArr[] = $msgArr[0];
-                   }
-
-                   $HisImportErrorMessageArr[$key] = implode(", ",$msgAllArr);
-                   $data[$key]['msg'] = implode(", ",$msgAllArr);
-                   $HisImportAttrErrorArr[] = $attrAllArr;
-                   $HisImportArr = $sheet_array;
-                   $deldata = User::model()->findbyPk($model->id);
-                   $deldata->delete();
-                   $Insert_success[$key] = "สร้างชื่อผู้ใช้ไม่สำเร็จ";
-               }
-           }else{
+                                   $HisImportErrorMessageArr[$key] = implode(", ",$msgAllArr);
+                                   $data[$key]['msg'] = implode(", ",$msgAllArr);
+                                   $HisImportAttrErrorArr[] = $attrAllArr;
+                                   $HisImportArr = $sheet_array;
+                                   $deldata = User::model()->findbyPk($model->id);
+                                   $deldata->delete();
+                                   $Insert_success[$key] = "สร้างชื่อผู้ใช้ไม่สำเร็จ";
+                                }//end if Profile validate
+            }else{
              $msgAllArr = array();
              $attrAllArr = array();
-             foreach($model->getErrors() as $field => $msgArr){
-              $attrAllArr[] = $field;
-              $msgAllArr[] = $msgArr[0];
-          }
-          $data[$key]['msg'] = implode(", ",$msgAllArr);
+                foreach($model->getErrors() as $field => $msgArr){
+                        $attrAllArr[] = $field;
+                        $msgAllArr[] = $msgArr[0];
+                }// end foreach
+            $data[$key]['msg'] = implode(", ",$msgAllArr);
                         // var_dump($model->getErrors());
                         // exit();
-      }
-  }
+            }//end if validate user
+    }//end 
 
-                } //end loop add user
+            } //end loop add user
+
                 //if($model->save())
                 // $this->redirect(array('import','id'=>$id));
                 $this->render('excel',array('model'=>$model,'HisImportArr'=>$HisImportArr,'HisImportUserPassArr'=>$HisImportUserPassArr,'HisImportErrorArr'=>$HisImportErrorArr,'HisImportAttrErrorArr'=>$HisImportAttrErrorArr,'HisImportErrorMessageArr'=>$HisImportErrorMessageArr,'Insert_success'=>$Insert_success,'data' => $data));
                 exit();
-            //}
+            
             }
 
         // $this->render('excel',array('model'=>$model));
             $this->render('excel',array('model'=>$model,'HisImportArr'=>$HisImportArr,'HisImportUserPassArr'=>$HisImportUserPassArr,'HisImportErrorArr'=>$HisImportErrorArr,'HisImportAttrErrorArr'=>$HisImportAttrErrorArr,'HisImportErrorMessageArr'=>$HisImportErrorMessageArr,'Insert_success'=>$Insert_success));
-        // $this->render('import',array(
-        //     'model'=>$model,
-        // ));
-        }
+      
+    
+    }//end function
 
     /**
      * Displays a particular model.
