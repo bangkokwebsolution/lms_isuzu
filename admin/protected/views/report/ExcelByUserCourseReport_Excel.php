@@ -154,12 +154,10 @@ header("Pragma:no-cache");
                                       'condition'=>'id="'.$lessonListStatus->id.'" AND active="y" AND type="pre" ',
                                       'order'=>'manage_id ASC'
                                     ));
-
                                     if($manage_lesson_pre){
                                       $lesson_pre_score = "Not Start";
                                       $lesson_pre_percent = "Not Start";
                                       $lesson_pre_status = "Not Start";
-
                                       $lessonscore_pre = Score::model()->find(array(
                                         'select'=>'score_number, score_total, score_past',
                                         'condition'=>'type="pre" AND lesson_id="'.$lessonListStatus->id.'" AND user_id="'.$valueLog->user_id.'"  AND active="y" ',
@@ -179,6 +177,10 @@ header("Pragma:no-cache");
                                         }
 
                                       }
+                                    }else{
+                                      $lesson_pre_score = "ไม่มีข้อสอบบทเรียน";
+                                      $lesson_pre_percent = "ไม่มีข้อสอบบทเรียน";
+                                      $lesson_pre_status = "ไม่มีข้อสอบบทเรียน";
                                     }
 
                                     $manage_lesson_post = Manage::model()->findAll(array(
@@ -210,6 +212,10 @@ header("Pragma:no-cache");
                                         }
 
                                       }
+                                    }else{
+                                      $lesson_post_score = "ไม่มีข้อสอบบทเรียน";
+                                      $lesson_post_percent = "ไม่มีข้อสอบบทเรียน";
+                                      $lesson_post_status = "ไม่มีข้อสอบบทเรียน";
                                     }
                                     $gen_id = null;
                                     if($gen_id == null){
