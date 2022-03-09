@@ -10,7 +10,7 @@ Class Helpers
     }
 
     public function getStatePermission($user){
-        $dataPermissionGroup = array("1","7","15");
+        $dataPermissionGroup = array("1","7","15","17");
         $state = false;
         foreach ($dataPermissionGroup as $key => $value) {
             if(in_array($value,json_decode($user->group))){
