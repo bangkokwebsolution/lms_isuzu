@@ -142,20 +142,47 @@ EOD
 
     $OrgCourse = OrgCourse::model()->findAll(array('condition'=>'active = "y" AND orgchart_id ="'.$userModel->org_id.'"'));
 
-    $org_arr=array();
-    foreach ($OrgCourse as $key => $value) {
-        $org_arr[]=$value->course_id;
-    }
+    // $org_arr=array();
+    // foreach ($OrgCourse as $key => $value) {
+    //     $org_arr[]=$value->course_id;
+    // }
     // echo "<pre>";
     // echo count($OrgCourse);exit();
     // var_dump($org_arr);exit();
     if($state){
-        $modelCourse = CourseOnline::model()->findAll(array('condition'=>"active = 'y' AND lang_id = 1 AND 
-            course_id IN (".implode(',',$org_arr).") "));
+        // $modelCourse = CourseOnline::model()->findAll(array('condition'=>'active = "y" AND lang_id = 1'));
 
         // $modelCourse = OrgCourse::model()->with('courses')->findAll(array('condition'=>' orgcourse.active = "y" AND   orgcourse.orgchart_id = "'.$userModel->org_id.'" AND CourseOnline.active="y" AND  CourseOnline.lang_id = 1 '));
         // echo "<pre>";
         // var_dump($modelCourse);exit();
+
+        $criteria = new CDbCriteria;
+        $criteria->with = array('cates');
+        $criteria->compare('categorys.active','y');
+
+        $criteria->compare('courseonline.active','y');
+        $criteria->compare('courseonline.parent_id',0);
+        $criteria->addCondition('approve_status > 0');
+        $criteria->order = 'sortOrder ASC';
+        $course_list =ApproveCourse::model()->findAll($criteria);
+
+        $org_arr=array();
+        foreach ($course_list as $keyP => $valueP) {
+            $check_course_list = helpers::ChkCourse($valueP->course_id);
+            // var_dump($check_course_list);
+           if($check_course_list != 'pass'){ continue; }
+
+           $org_arr[]=$valueP->course_id;
+        }
+         // var_dump($org_arr);exit();
+
+         if(count($org_arr)==0){
+            $modelCourse = CourseOnline::model()->findAll(array('condition'=>"active = 'y' AND lang_id = 1 AND 
+            course_id IN (0) "));    
+         }else{
+            $modelCourse = CourseOnline::model()->findAll(array('condition'=>"active = 'y' AND lang_id = 1 AND 
+            course_id IN (".implode(',',$org_arr).") "));
+         }
 
     }else{
         $modelCourse = CourseOnline::model()->findAll(array('condition'=>'active = "y" AND lang_id = 1 AND create_by = "'.$userModel->id.'"'));
