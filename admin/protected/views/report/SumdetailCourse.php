@@ -143,11 +143,21 @@ EOD
 
 <?php
 
-$userModel = Users::model()->findByPk(Yii::app()->user->id);
+    $userModel = Users::model()->findByPk(Yii::app()->user->id);
     $state = Helpers::lib()->getStatePermission($userModel);
 
+
+    $OrgCourse = OrgCourse::model()->findAll(array('condition'=>'active = "y" AND orgchart_id ="'.$userModel->org_id.'"'));
+
+    $org_arr=array();
+    foreach ($OrgCourse as $key => $value) {
+        $org_arr[]=$value->course_id;
+    }
+
     if($state){
-        $modelCourse = CourseOnline::model()->findAll(array('condition'=>'active = "y" AND lang_id = 1'));
+        // $modelCourse = CourseOnline::model()->findAll(array('condition'=>'active = "y" AND lang_id = 1'));
+         $modelCourse = CourseOnline::model()->findAll(array('condition'=>"active = 'y' AND lang_id = 1 AND 
+            course_id IN (".implode(',',$org_arr).") "));
     }else{
         $modelCourse = CourseOnline::model()->findAll(array('condition'=>'active = "y" AND lang_id = 1 AND create_by = "'.$userModel->id.'"'));
     }

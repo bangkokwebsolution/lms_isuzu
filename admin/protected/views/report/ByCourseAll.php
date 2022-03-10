@@ -134,14 +134,29 @@ EOD
 
 
 <div class="innerLR">
-
 <?php
 
-$userModel = Users::model()->findByPk(Yii::app()->user->id);
+    $userModel = Users::model()->findByPk(Yii::app()->user->id);
     $state = Helpers::lib()->getStatePermission($userModel);
 
+
+    $OrgCourse = OrgCourse::model()->findAll(array('condition'=>'active = "y" AND orgchart_id ="'.$userModel->org_id.'"'));
+
+    $org_arr=array();
+    foreach ($OrgCourse as $key => $value) {
+        $org_arr[]=$value->course_id;
+    }
+    // echo "<pre>";
+    // echo count($OrgCourse);exit();
+    // var_dump($org_arr);exit();
     if($state){
-        $modelCourse = CourseOnline::model()->findAll(array('condition'=>'active = "y" AND lang_id = 1'));
+        $modelCourse = CourseOnline::model()->findAll(array('condition'=>"active = 'y' AND lang_id = 1 AND 
+            course_id IN (".implode(',',$org_arr).") "));
+
+        // $modelCourse = OrgCourse::model()->with('courses')->findAll(array('condition'=>' orgcourse.active = "y" AND   orgcourse.orgchart_id = "'.$userModel->org_id.'" AND CourseOnline.active="y" AND  CourseOnline.lang_id = 1 '));
+        // echo "<pre>";
+        // var_dump($modelCourse);exit();
+
     }else{
         $modelCourse = CourseOnline::model()->findAll(array('condition'=>'active = "y" AND lang_id = 1 AND create_by = "'.$userModel->id.'"'));
     }
