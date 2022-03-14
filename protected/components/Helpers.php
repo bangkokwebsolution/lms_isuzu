@@ -804,8 +804,10 @@ public function SendMail($to, $subject, $message, $fromText = 'IMCT e-Learning S
     // $adminEmail = 'keng1155ker@gmail.com';
     // $adminEmailPass = 'keng12345678';
     
-    $adminEmail = 'elearningimct@notes.isuzu.co.th';
-    $adminEmailPass = 'Melearning';
+    $adminEmail = 'elearningisuzu@gmail.com';
+    $adminEmailPass = 'isuzu123456';
+    // $adminEmail = 'elearningimct@notes.isuzu.co.th';
+    // $adminEmailPass = 'Melearning';
 
         /*$mail =  new PHPMailer(true);
         $mail->SMTPOptions = array(

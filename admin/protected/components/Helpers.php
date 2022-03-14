@@ -350,8 +350,8 @@ Class Helpers
         // $adminEmailPass = 'admindemo';
         // $adminEmail = 'keng1155ker@gmail.com';
         // $adminEmailPass = 'keng12345678';
-        $adminEmail = 'elearningimct@notes.isuzu.co.th';
-        $adminEmailPass = 'Melearning';
+        $adminEmail = 'elearningisuzu@gmail.com';
+        $adminEmailPass = 'isuzu123456';
 
         $mail =  new PHPMailer(true);
 
@@ -2736,8 +2736,8 @@ public function changeLink($link)
         $adminEmail = $SettingAll['USER_EMAIL'];
         $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-        $adminEmail = 'elearningimct@notes.isuzu.co.th';
-        $adminEmailPass = 'Melearning';
+        $adminEmail = 'elearningisuzu@gmail.com';
+        $adminEmailPass = 'isuzu123456';
 
         $mail =  new PHPMailer(true);
         $mail->SMTPOptions = array(
@@ -2785,8 +2785,8 @@ public function changeLink($link)
                 $adminEmail = $SettingAll['USER_EMAIL'];
                 $adminEmailPass = $SettingAll['PASS_EMAIL'];
 
-                $adminEmail = 'elearningimct@notes.isuzu.co.th';
-                $adminEmailPass = 'Melearning';
+                $adminEmail = 'elearningisuzu@gmail.com';
+                $adminEmailPass = 'isuzu123456';
 
                 $mail =  new PHPMailer(true);
                 $mail->ClearAddresses();
