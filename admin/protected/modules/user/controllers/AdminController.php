@@ -1097,6 +1097,8 @@ class AdminController extends Controller
         
         if($result["Status"]!="Active"){
             $search_user->del_status = 1;
+        }else{
+            $search_user->del_status = 0;
         }
         $search_user->email = $result["Email"];
         
@@ -1108,13 +1110,22 @@ class AdminController extends Controller
                     $search_user->save(false);
 
                     $UpdateProfile = Profile::model()->find(array('condition'=>"user_id = '".$search_user->id."'"));
-                     
+                    $UpdateProfile->firstname = $result["Firstname (TH)"];
+                    $UpdateProfile->lastname = $result["Lastname (TH)"]; 
                     $UpdateProfile->firstname_en = $result["Firstname (Eng)"];
                     $UpdateProfile->lastname_en = $result["Lastname (Eng)"];
+                    $UpdateProfile->kind = $result["KIND"];
+                    $UpdateProfile->organization_unit = $result["Organization unit"];
+                    $UpdateProfile->abbreviate_code = $result["Abbreviate code"];
+                    $UpdateProfile->location = $result["Location"];
+                    $UpdateProfile->group_name = $result["Group"];
+                    $UpdateProfile->shift = $result["Shift"];
                     $EmpClass = EmpClass::model()->findByAttributes(array('title'=>$result["Employee class"]));
                         if(!empty($EmpClass)){
                             $UpdateProfile->employee_class = $EmpClass->id ;
                         }
+
+                    $UpdateProfile->position_description = $result["Position description"];
                     $UpdateProfile->sex = $result["Gender"];
                     
                     if($UpdateProfile->validate()){
