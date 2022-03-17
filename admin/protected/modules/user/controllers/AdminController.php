@@ -1027,7 +1027,7 @@ class AdminController extends Controller
                         if(!empty($EmpClass)){
                             $modelProfile->employee_class = $EmpClass->id ;
                         }
-                    $modelProfile->position_description = $result["Position description"];
+                    $modelProfile->position_description = $EmpClass->description;
 
                                 if($modelProfile->validate()){
                                   $modelProfile->save(false);
@@ -1125,7 +1125,7 @@ class AdminController extends Controller
                             $UpdateProfile->employee_class = $EmpClass->id ;
                         }
 
-                    $UpdateProfile->position_description = $result["Position description"];
+                    $UpdateProfile->position_description = $EmpClass->description;
                     $UpdateProfile->sex = $result["Gender"];
                     
                     if($UpdateProfile->validate()){
