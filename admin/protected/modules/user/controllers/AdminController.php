@@ -1026,8 +1026,9 @@ class AdminController extends Controller
                      $EmpClass = EmpClass::model()->findByAttributes(array('title'=>$result["Employee class"]));
                         if(!empty($EmpClass)){
                             $modelProfile->employee_class = $EmpClass->id ;
+                            $modelProfile->position_description = $EmpClass->description;
                         }
-                    $modelProfile->position_description = $EmpClass->description;
+                    
 
                                 if($modelProfile->validate()){
                                   $modelProfile->save(false);
@@ -1122,10 +1123,11 @@ class AdminController extends Controller
                     $UpdateProfile->shift = $result["Shift"];
                     $EmpClass = EmpClass::model()->findByAttributes(array('title'=>$result["Employee class"]));
                         if(!empty($EmpClass)){
-                            $UpdateProfile->employee_class = $EmpClass->id ;
+                            $UpdateProfile->employee_class = $EmpClass->id;
+                            $UpdateProfile->position_description = $EmpClass->description;
                         }
 
-                    $UpdateProfile->position_description = $EmpClass->description;
+                    
                     $UpdateProfile->sex = $result["Gender"];
                     
                     if($UpdateProfile->validate()){
