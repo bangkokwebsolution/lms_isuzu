@@ -1024,6 +1024,7 @@ class AdminController extends Controller
                      $modelProfile->group_name = $result["Group"];
                      $modelProfile->shift = $result["Shift"];
                      $EmpClass = EmpClass::model()->findByAttributes(array('title'=>$result["Employee class"]));
+
                         if(!empty($EmpClass)){
                             $modelProfile->employee_class = $EmpClass->id ;
                             $modelProfile->position_description = $EmpClass->description;
@@ -1122,9 +1123,10 @@ class AdminController extends Controller
                     $UpdateProfile->group_name = $result["Group"];
                     $UpdateProfile->shift = $result["Shift"];
                     $EmpClass = EmpClass::model()->findByAttributes(array('title'=>$result["Employee class"]));
+                 
                         if(!empty($EmpClass)){
                             $UpdateProfile->employee_class = $EmpClass->id;
-                            $UpdateProfile->position_description = $EmpClass->description;
+                            $UpdateProfile->position_description = $EmpClass->descrpition;
                         }
 
                     
