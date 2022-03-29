@@ -45,7 +45,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $CourseInstructor = 'Course Instructor';
     $CourseApprover = 'Course Approver';
     $Time = 'Time';
-    $Lessons = 'Lessons';
+    $Lessons = 'Lesson';
     $CourseEvaluation = 'Course Evaluation';
     $Click = 'Click';
     $Hr = 'Hr';
