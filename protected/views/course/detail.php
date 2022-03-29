@@ -547,7 +547,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                 ?>
                 <div class="topic-course">
                     <div class="alert alert-warning mt-20" role="alert">
-                        <?= $Period ?> <?= $countday ?> <?= $day ?> <?= (!empty($course)) ? "(" . Helpers::lib()->CuttimeLang($course->course_date_start, $langId) . " - " . Helpers::lib()->CuttimeLang($course->course_date_end, $langId) . ")" : ""; ?>
+                        <?= $Period ?> <?= $countday ?> <?= $day ?> <?= (!empty($course)) ? "(" . Helpers::lib()->CuttimeLang2($course->course_date_start, $langId) . " - " . Helpers::lib()->CuttimeLang2($course->course_date_end, $langId) . ")" : ""; ?>
                     </div>
                 </div>
 

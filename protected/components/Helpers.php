@@ -3777,6 +3777,24 @@ public function sendApiLms($scheduleMain,$scheduleId)
         return "$strDay / $strMonthThai / $strYear";
     }
 
+    function CuttimeLang2($strDate,$lang_id) {
+        $strYear = date("Y", strtotime($strDate));
+        $strMonth = date("n", strtotime($strDate));
+        $strDay = date("j", strtotime($strDate));
+        $strHour= date("H",strtotime($strDate));
+        $strMinute= date("i",strtotime($strDate));
+        $strSeconds= date("s",strtotime($strDate));
+        if($lang_id != 1){
+            $strMonthCut = Array("", "ม.ค.", "ก.พ.", "มี.ค.", "เม.ย.", "พ.ค.", "มิ.ย.", "ก.ค.", "ส.ค.", "ก.ย.", "ต.ค.", "พ.ย.", "ธ.ค.");
+            $strYear += 543;
+        }else{
+            $strMonthCut = Array("", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+        }
+        
+        $strMonthThai = $strMonthCut[$strMonth];
+        return "$strDay / $strMonthThai / $strYear";
+    }
+
     function CoursePermission($user_id,$course_id){
         //Check Permission
         if($user_id != null){
