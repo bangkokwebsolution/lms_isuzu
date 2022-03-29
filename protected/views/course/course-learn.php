@@ -2200,9 +2200,9 @@ $idx++;
                                       </div>
                                       <div class="modal-footer">
                                         <?php if($model->type == 'vdo'){ ?>
-                                          <button type="button" id="yt0" class="btn btn-primary">ยืนยัน</button>
+                                          <button type="button" id="yt0" class="btn btn-primary">OK</button>
                                         <?php }else if($model->type == 'pdf'){ ?>
-                                          <button type="button" id="yt1" class="btn btn-primary">ยืนยัน</button>
+                                          <button type="button" id="yt1" class="btn btn-primary">OK</button>
                                         <?php } ?>
                                       </div>
                                     <?php endif; ?>
@@ -2245,9 +2245,9 @@ $idx++;
                                     </div>
                                     <div class="modal-footer">
                                       <?php if($model->type == 'vdo'){ ?>
-                                        <button type="button" id="yt2" class="btn btn-primary">ยืนยัน</button>
+                                        <button type="button" id="yt2" class="btn btn-primary">OK</button>
                                       <?php }else if($model->type == 'pdf'){ ?>
-                                        <button type="button" id="yt3" class="btn btn-primary">ยืนยัน</button>
+                                        <button type="button" id="yt3" class="btn btn-primary">OK</button>
                                       <?php } ?>
                                     </div>
                                   </div>
