@@ -16,7 +16,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
   $note_des = 'Type a message and take notes.';
   $Notes = 'Notes';
   $captcha = 'Please Click Confirm To Continue';
-  $buttonok = 'ok';
+  $buttonok = 'Confirm';
 } else {
   $langId = Yii::app()->session['lang'];
   $flag = false;

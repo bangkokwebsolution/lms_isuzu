@@ -46,6 +46,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $CourseApprover = 'Course Approver';
     $Time = 'Time';
     $Lessons = 'Lessons';
+    $LessonNos = 'Lesson';
     $CourseEvaluation = 'Course Evaluation';
     $Click = 'Click';
     $Hr = 'Hr';
@@ -71,6 +72,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $CourseApprover = 'ผู้อนุมัติหลักสูตร';
     $Time = 'เวลา';
     $Lessons = 'บทเรียน';
+    $LessonNos = 'บทเรียน';
     $CourseEvaluation = 'การประเมินผลหลักสูตร';
     $Click = 'กด';
     $Hr = 'ชั่วโมง';
@@ -370,7 +372,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                         <center><small><?= $Lessons ?></small></center>
                                         <div class="text-center mt-20">
                                             <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/book-icon.png">
-                                            <small class="text-center detail-value"><?= count($lessonModel) . ' ' . $Lessons ?></small>
+                                            <small class="text-center detail-value"><?= count($lessonModel) . ' ' . $LessonsNos ?></small>
                                         </div>
                                     </div>
                                 </div>
