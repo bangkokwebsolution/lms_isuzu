@@ -369,10 +369,10 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                 </div> -->
                                 <div class="col-md-6 col-xs-6" style="width: 100%">
                                     <div class="c-item">
-                                        <center><small><?= $Lessons ?></small></center>
+                                        <center><small><?= $LessonNos ?></small></center>
                                         <div class="text-center mt-20">
                                             <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/book-icon.png">
-                                            <small class="text-center detail-value"><?= count($lessonModel) . ' ' . $LessonsNos ?></small>
+                                            <small class="text-center detail-value"><?= count($lessonModel) . ' ' . $Lessons ?></small>
                                         </div>
                                     </div>
                                 </div>
