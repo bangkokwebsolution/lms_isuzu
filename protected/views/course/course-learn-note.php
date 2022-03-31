@@ -15,7 +15,8 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
   $note_list = 'list';
   $note_des = 'Type a message and take notes.';
   $Notes = 'Notes';
-
+  $captcha = 'Please Click Confirm To Continue';
+  $buttonok = 'ok';
 } else {
   $langId = Yii::app()->session['lang'];
   $flag = false;
@@ -25,7 +26,8 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
   $Notes = 'จดบันทึก';
   $pass_msg = UserModule::t('you_pass');
   $next_step_msg = UserModule::t('next_step');
-
+  $captcha = 'กรุณากดปุ่มยืนยันเพื่อเรียนต่อ';
+  $buttonok = 'ยืนยัน';
   $modelLessonChildren  = Lesson::model()->find(array('condition' => 'lang_id = ' . $langId . ' AND parent_id = ' . $model->id));
   if ($modelLessonChildren) {
     $model->title = $modelLessonChildren->title;
@@ -2884,15 +2886,15 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
             <input type="hidden" id="ValidateCaptcha_lid" name="ValidateCaptcha[lid]" value="">
             <div class="row">
               <div class="col-md-12">
-                Please Click Confirm To Continue
+                <?= $captcha ?>
               </div>
             </div>
           </div>
           <div class="modal-footer">
             <?php if ($model->type == 'vdo') { ?>
-              <button type="button" id="yt2" class="btn btn-primary">ยืนยัน</button>
+              <button type="button" id="yt2" class="btn btn-primary"><?= $buttonok ?></button>
             <?php } else if ($model->type == 'pdf') { ?>
-              <button type="button" id="yt3" class="btn btn-primary">ยืนยัน</button>
+              <button type="button" id="yt3" class="btn btn-primary"><?= $buttonok ?></button>
             <?php } ?>
           </div>
         </div>
