@@ -184,8 +184,14 @@ EOD
             $modelCourse = CourseOnline::model()->findAll(array('condition'=>"active = 'y' AND lang_id = 1 AND 
             course_id IN (0) "));    
          }else{
-            $modelCourse = CourseOnline::model()->findAll(array('condition'=>"active = 'y' AND lang_id = 1 AND 
-            course_id IN (".implode(',',$org_arr).") "));
+            if(in_array("1",json_decode($userModel->group)) OR in_array("7",json_decode($userModel->group)) OR in_array("15",json_decode($userModel->group))){
+
+                $modelCourse = CourseOnline::model()->findAll(array('condition'=>"active = 'y' AND lang_id = 1 "));
+            
+            }else{
+                $modelCourse = CourseOnline::model()->findAll(array('condition'=>"active = 'y' AND lang_id = 1 AND 
+                course_id IN (".implode(',',$org_arr).") "));
+            }
          }
          
     }else{

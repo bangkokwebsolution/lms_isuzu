@@ -139,6 +139,9 @@ EOD
     $userModel = Users::model()->findByPk(Yii::app()->user->id);
     $state = Helpers::lib()->getStatePermission($userModel);
 
+    $group=json_decode($userModel->group);
+
+    // var_dump($group); exit();
 
     $OrgCourse = OrgCourse::model()->findAll(array('condition'=>'active = "y" AND orgchart_id ="'.$userModel->org_id.'"'));
 
@@ -177,11 +180,20 @@ EOD
          // var_dump($org_arr);exit();
 
          if(count($org_arr)==0){
-            $modelCourse = CourseOnline::model()->findAll(array('condition'=>"active = 'y' AND lang_id = 1 AND 
-            course_id IN (0) "));    
+
+                $modelCourse = CourseOnline::model()->findAll(array('condition'=>"active = 'y' AND lang_id = 1 AND 
+                course_id IN (0) "));
+           
+                
          }else{
-            $modelCourse = CourseOnline::model()->findAll(array('condition'=>"active = 'y' AND lang_id = 1 AND 
-            course_id IN (".implode(',',$org_arr).") "));
+            if(in_array("1",json_decode($userModel->group)) OR in_array("7",json_decode($userModel->group)) OR in_array("15",json_decode($userModel->group))){
+
+                $modelCourse = CourseOnline::model()->findAll(array('condition'=>"active = 'y' AND lang_id = 1 "));
+            
+            }else{
+                $modelCourse = CourseOnline::model()->findAll(array('condition'=>"active = 'y' AND lang_id = 1 AND 
+                course_id IN (".implode(',',$org_arr).") "));
+            }
          }
 
     }else{
