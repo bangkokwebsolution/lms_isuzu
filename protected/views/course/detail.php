@@ -52,6 +52,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $Hr = 'Hr';
     $Complete="Complete";
     $Sequence = "Please finish learn the previous lesson.";
+    $text_status= "Status";
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -78,6 +79,8 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $Hr = 'ชั่วโมง';
     $Complete="สำเร็จ";
     $Sequence = "กรุณาเรียนบทเรียนก่อนหน้านี้ให้เสร็จสิ้น";
+    $text_status= "สถานะ";
+    
 
 
 
@@ -473,7 +476,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                     if ($CheckHaveCer) {
                                     ?>
                                         <div class="c-item">
-                                            <small>Status</small>
+                                            <small><?php echo $text_status ?></small>
                                             <div class="certificate-check mt-20">
                                                 <a href="<?php echo $pathPassed; ?>" <?= $pathPassed_Onclick; ?> <?php echo $targetBlank . " " . $certEvnt; ?>>
                                                     <div class="text-center">
