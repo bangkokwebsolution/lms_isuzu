@@ -53,7 +53,7 @@
           
             <a href="https://se-ed.belibcloud.com/login" target="_bank" class="se-ed-button">
               <img src="/lms_isuzu/themes/template2/images/se-ed-logo.png" alt="" srcset="">
-              <span>SE-ED</span>&nbsp;Library
+              <span></span>&nbsp;Hibrary
               </a>
 
           </div>
@@ -273,7 +273,7 @@
                 }
               } // foreach ($library_file_2
                    ?>                
-            </div> <!-- cate-all-2 -->
+            </div> <!-- all -->
 
 
         
