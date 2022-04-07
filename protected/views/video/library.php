@@ -51,7 +51,7 @@
         <?php } // foreach ($library_type_2 ?>
             </div>
           
-            <a href="https://se-ed.belibcloud.com/login" target="_bank" class="se-ed-button">
+            <a href="https://elibrary-isz.hibrary.me/" target="_bank" class="se-ed-button">
               <img src="/lms_isuzu/themes/template2/images/se-ed-logo.png" alt="" srcset="">
               <span></span>&nbsp;Hibrary
               </a>
