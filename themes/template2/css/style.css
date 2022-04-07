@@ -5249,7 +5249,7 @@ header .navbar-nav li a {
   border-color: #dddddd;
 }
 
-.se-ed-button {
+.hibrary-button {
   display: flex;
   align-items: center;
   width: 100%;
@@ -5260,13 +5260,13 @@ header .navbar-nav li a {
   border: 1px solid #dddddd;
 }
 
-.se-ed-button img {
+.hibrary-button img {
   margin: 4px;
-  height: 40px;
+  height: 30px;
   width: auto;
 }
 
-.se-ed-button span {
+.hibrary-button span {
   color: #e64d3b;
   font-weight: bold;
   font-size: 18px;

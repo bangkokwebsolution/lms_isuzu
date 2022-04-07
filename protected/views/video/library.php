@@ -51,9 +51,9 @@
         <?php } // foreach ($library_type_2 ?>
             </div>
           
-            <a href="https://elibrary-isz.hibrary.me/" target="_bank" class="se-ed-button">
-              <img src="/lms_isuzu/themes/template2/images/se-ed-logo.png" alt="" srcset="">
-              <span></span>&nbsp;Hibrary
+            <a href="https://elibrary-isz.hibrary.me/" target="_bank" class="hibrary-button">
+              <img src="<?php echo Yii::app()->theme->baseUrl; ?>/images/hibrary.png" alt="" srcset="">
+              <span></span>Hibrary
               </a>
 
           </div>
