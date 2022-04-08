@@ -55,9 +55,14 @@ if (isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != '') {
                     <th rowspan="2" style="vertical-align: middle;" class="center"><b>Position desc.</b></th>
                     <th rowspan="2" style="vertical-align: middle;" class="center"><b>Learning Status</b></th>
                     <th rowspan="2" style="vertical-align: middle;" class="center"><b>Completed Date</b></th>
+                    <th colspan="3">Pre Test</th>
                     <th colspan="4">Final Test</th>
                 </tr>
                 <tr>
+                    <th style="vertical-align: middle;" class="center">Score</th>
+                    <th style="vertical-align: middle;" class="center">Percent</th>
+                    <th style="vertical-align: middle;" class="center">Pre Test Status</th>
+                    
                     <th style="vertical-align: middle;" class="center">Score</th>
                     <th style="vertical-align: middle;" class="center">Percent</th>
                     <th style="vertical-align: middle;" class="center">Final Test Status</th>
@@ -112,6 +117,10 @@ if (isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != '') {
                     $course_post_percent = "ไม่มีข้อสอบหลักสูตร";
                     $course_post_status = "ไม่มีข้อสอบหลักสูตร";
 
+                    $course_pre_score = "ไม่มีข้อสอบหลักสูตร";
+                    $course_pre_percent = "ไม่มีข้อสอบหลักสูตร";
+                    $course_pre_status = "ไม่มีข้อสอบหลักสูตร";
+
                     $manage_course_post = Coursemanage::model()->findAll(array(
                         'select' => 'group_id',
                         'condition' => 'id="' . $valueL->course_id . '" AND active="y" AND type="course" ',
@@ -141,6 +150,29 @@ if (isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != '') {
                                 $course_post_status = "Not Passed";
                             }
                         }
+
+                        $course_pre_score = "Not Start";
+                        $course_pre_percent = "Not Start";
+                        $course_pre_status = "Not Start";
+
+
+                        $coursescore_pre = Coursescore::model()->find(array(
+                            'select' => 'score_number, score_total, score_past,course_id',
+                            'condition' => 'type="pre" AND course_id="' . $valueL->course_id . '" AND user_id="' . $valueL->user_id . '" AND active="y" ',
+                            'order' => 'score_id DESC'
+                        ));
+
+                        if ($coursescore_pre) {
+                            $course_pre_score = $coursescore_pre->score_number . "/" . $coursescore_pre->score_total;
+
+                            $course_pre_percent = number_format(($coursescore_pre->score_number * 100) / $coursescore_pre->score_total, 2) . " %";
+
+                            if ($coursescore_pre->score_past == "y") {
+                                $course_pre_status = "Passed";
+                            } else {
+                                $course_pre_status = "Not Passed";
+                            }
+                        }
                     }
                 ?>
                     <tr>
@@ -158,6 +190,10 @@ if (isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != '') {
                         <td class="center"><?= $valueL->pro->position_description ?></td>
                         <td class="center"><?= $lessonStatusStr ?></td>
                         <td class="center"><?= isset($passcourse) ? $passcourse->passcours_date : '' ?></td>
+                        <td class="center"><?= $course_pre_score ?>&nbsp;</td>
+                        <td class="center"><?= $course_pre_percent ?></td>
+                        <td class="center"><?= $course_pre_status ?></td>
+
                         <td class="center"><?= $course_post_score ?>&nbsp;</td>
                         <td class="center"><?= $course_post_percent ?></td>
                         <td class="center"><?= $course_post_status ?></td>
