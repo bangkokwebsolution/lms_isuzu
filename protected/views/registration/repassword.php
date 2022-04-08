@@ -156,15 +156,15 @@
         ));
         ?>
         <div class="well">
-        	<h3 class="text-center" style="margin-bottom: 3rem;"><b><?= Yii::app()->session['lang'] == 1?'Change password':'เปลี่ยนรหัสผ่าน'; ?></b></h3>
+        	// <h3 class="text-center" style="margin-bottom: 3rem;"><b><?php //echo Yii::app()->session['lang'] == 1?'Change password':'เปลี่ยนรหัสผ่าน'; ?><?php echo 'เปลี่ยนรหัสผ่าน / Change password'; ?></b></h3>
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3">
                     <div class="form-group">
-                        <label for=""><?= Yii::app()->session['lang'] == 1?'New password':'รหัสผ่านใหม่'; ?></label><br>
+                        <label for=""><?php //echo Yii::app()->session['lang'] == 1?'New password':'รหัสผ่านใหม่'; ?><?php echo 'รหัสผ่านใหม่ / New password'; ?></label><br>
                         <?php echo $form->passwordField($model, 'password', array('class' => 'form-control input-lg' , 'required' => true)); ?>
                         <?php echo $form->error($model, 'password'); ?>
                         <br>
-                         <label for=""><?= Yii::app()->session['lang'] == 1?'Confirm new password':'ยืนยันรหัสผ่านใหม่'; ?></label><br>
+                         <label for=""><?php //echo  Yii::app()->session['lang'] == 1?'Confirm new password':'ยืนยันรหัสผ่านใหม่'; ?><?php echo 'ยืนยันรหัสผ่านใหม่ / Confirm new password'; ?></label><br>
                         <?php echo $form->passwordField($model, 'verifyPassword', array('class' => 'form-control input-lg' , 'required' => true)); ?>
                         <?php echo $form->error($model, 'verifyPassword'); ?>
 
@@ -174,7 +174,7 @@
             </div>         
             <div class="text-center">
                 <!--<button type="submit" class="btn btn-warning btn-lg">ส่งข้อความ</button>-->
-                <?php echo CHtml::submitButton(Yii::app()->session['lang'] == 1?'Confirm create new password':'ยืนยันสร้างรหัสผ่านใหม่', array('class' => 'btn btn-warning btn-lg')); ?>
+                <?php echo CHtml::submitButton('ยืนยัน / Confirm', array('class' => 'btn btn-warning btn-lg')); ?>
             </div>
         </div>
         <?php $this->endWidget();
