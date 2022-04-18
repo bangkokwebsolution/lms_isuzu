@@ -1027,7 +1027,7 @@ class AdminController extends Controller
 
                         if(!empty($EmpClass)){
                             $modelProfile->employee_class = $EmpClass->id ;
-                            $modelProfile->position_description = $EmpClass->description;
+                            $modelProfile->position_description = $EmpClass->descrpition;
                         }
                     
 
