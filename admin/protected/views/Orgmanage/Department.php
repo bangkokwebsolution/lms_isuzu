@@ -1,6 +1,6 @@
 <?php
 $titleName = 'Department';
-$formNameModel = 'OrgChart';
+$formNameModel = 'Department';
 
 $this->breadcrumbs=array($titleName);
 Yii::app()->clientScript->registerScript('search', "
@@ -23,7 +23,7 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	    var val = eval("$."+varName);
 	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
 	}
-	$.appendFilter("OrgChart[news_per_page]", "news_per_page");
+	$.appendFilter("Department[news_per_page]", "news_per_page");
 EOD
 , CClientScript::POS_READY);
 ?>
@@ -59,7 +59,7 @@ EOD
 						'style'=> "margin-top: -1px;",
 					),
 					'afterAjaxUpdate'=>'function(id, data){
-						$.appendFilter("OrgChart[news_per_page]");
+						$.appendFilter("Department[news_per_page]");
 						InitialSortTable();	
 				       
 					}',
@@ -104,7 +104,7 @@ EOD
 			                ),
 							'value'=>function($data){
 								// $text = '
-								// <a class="btn-action glyphicons eye_open btn-info" title="ดูรายละเอียด" href="'.Yii::app()->controller->createUrl('orgChart/orgview/'.$data->id).'"><i></i></a>
+								// <a class="btn-action glyphicons eye_open btn-info" title="ดูรายละเอียด" href="'.Yii::app()->controller->createUrl('Department/orgview/'.$data->id).'"><i></i></a>
 								// ';
 
 								$text .= '
