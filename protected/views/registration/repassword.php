@@ -156,7 +156,7 @@
         ));
         ?>
         <div class="well">
-        	// <h3 class="text-center" style="margin-bottom: 3rem;"><b><?php //echo Yii::app()->session['lang'] == 1?'Change password':'เปลี่ยนรหัสผ่าน'; ?><?php echo 'เปลี่ยนรหัสผ่าน / Change password'; ?></b></h3>
+        	 <h3 class="text-center" style="margin-bottom: 3rem;"><b><?php //echo Yii::app()->session['lang'] == 1?'Change password':'เปลี่ยนรหัสผ่าน'; ?><?php echo 'เปลี่ยนรหัสผ่าน / Change password'; ?></b></h3>
             <div class="row">
                 <div class="col-sm-6 col-sm-offset-3">
                     <div class="form-group">

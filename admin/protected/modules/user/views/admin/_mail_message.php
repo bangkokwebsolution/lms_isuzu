@@ -8,7 +8,7 @@
 <body>
   <h3><u>อนุมัติการสมัครสมาชิก\ Approval</u></h3>
   <h4>เรียน : <?= $model->profile->firstname.' '.$model->profile->lastname; ?></h4>
-  <h4>ท่านได้ทำการสมัครเพื่อเข้าใช้บริการ thorconn.com และแอพพลิเคชั่น Thoresen e-Leaning เรียบร้อยแล้ว </h4>
+  <h4>ท่านได้ทำการสมัครเพื่อเข้าใช้บริการ elearning.imct.co.th และแอพพลิเคชั่น IMCT e-Leaning เรียบร้อยแล้ว </h4>
   <h4>โดยมีชื่อผู้ใช้และรหสัผ่านดังนี้</h4>
   <h4>- User : <?= $model->username; ?></h4>
   <h4>- Password : <?= $genpass; ?></h4>
@@ -19,11 +19,11 @@
   <h4>4. ระยะเวลาที่หมดอายุของรหัสผ่าน คือ 90 วัน</h4>
   <h4>5. รายงานต่อแอดมินทันทีเมื่อมีเหตุอันเชื่อได้ว่า ชื่อผู้ใช้และรหัสผ่านของตนเองถูกผู้อื่นนำไปใช้งานโดยไม่ถูกต้อง พร้อมกับเปลี่ยนรหัสผ่านของท่านทันที</h4>
   <h4>6. ไม่กระทำการเปลี่ยนแปลงแก้ไข หรือทำลายระบบป้องกันของระบบ ที่จะเข้าไปเรียกใช้ข้อมูลในส่วนที่ตนเองไม่มีสิทธิ</h4>
-  <h4>7. ท่านสามารถเข้าสู่ระบบของเราได้ที่<a href="http://thorconn.com">http://thorconn.com</a></h4>
+  <h4>7. ท่านสามารถเข้าสู่ระบบของเราได้ที่<a href="https://elearning.imct.co.th/">https://elearning.imct.co.th/</a></h4>
   <br><br>
   <h3><u>Registered successfully</u></h3>
   <h4>Dear : <?= $model->profile->firstname_en.' '.$model->profile->lastname_en; ?></h4>
-  <h4>You have successfully applied a member of thorconn.com and Thoresen e-Leaning application</h4>
+  <h4>You have successfully applied a member of elearning.imct.co.th and IMCT e-Leaning application</h4>
   <h4>Please see a username and password as follows.</h4>
   <h4>- Username : <?= $model->username; ?></h4>
   <h4>- Password : <?= $genpass; ?></h4>
@@ -35,6 +35,6 @@
   <h4>5. Report to web admin immediately. When there is reason to believe that your username and password being to used by the others incorrectly.
 Along with changing your password immediately.</h4>
   <h4>6. Don't to alter, modify or destroy the web system's security to access information in the area that they don't have authority.</h4>
-  <h4>7. You can login to our system at <a href="http://thorconn.com">http://thorconn.com</a></h4>
+  <h4>7. You can login to our system at <a href="https://elearning.imct.co.th/">https://elearning.imct.co.th/</a></h4>
 </body>
 </html>
