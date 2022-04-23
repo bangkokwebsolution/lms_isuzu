@@ -1399,7 +1399,38 @@ public function SendMailGroup($to,$subject,$message,$fromText='E-Learning System
                 public function checkLessonFile($file,$learn_id, $gen_id=null)
                 {
                     $user = Yii::app()->getModule('user')->user();
+                    $learn_model = Learn::model()->findByPk($learn_id);
+                    if($learn_model != null){
+                        if($gen_id == null){                        
+                            $gen_id = $learn_model->LessonMapper->CourseOnlines->getGenID($learn_model->LessonMapper->course_id);
+                        }
+                    }
 
+                /*$learnFiles = $user->learnFiles(
+                    array(
+                        'condition' => 'file_id=:file_id',
+                        'params' => array(':file_id' => $file->id)
+                        )
+                    );*/
+                    $learnFiles = $user->learnFiles(
+                        array(
+                            'condition' => 'file_id=:file_id AND learns.learn_id=:learn_id AND lesson_active=:status AND learns.gen_id=:gen_id',
+                            'params' => array(':file_id' => $file->id,':learn_id'=>$learn_id,':status'=>'y', ':gen_id'=>$gen_id)
+                        )
+                    );
+                    if ($learnFiles) {
+                        if ($learnFiles[0]->learn_file_status != 's') {
+                            return "learning";
+                        } else {
+                            return "pass";
+                        }
+                    } else {
+                        return "notLearn";
+                    }
+                }
+                public function checkLessonFileMobile($file,$learn_id, $gen_id=null,$User_id)
+                {
+                    $user = Users::model()->findByPk($User_id) ;
                     $learn_model = Learn::model()->findByPk($learn_id);
                     if($learn_model != null){
                         if($gen_id == null){                        
@@ -4960,6 +4991,114 @@ public function checkStepLesson($lesson){
                 $percent_pass = $step_pass*$percent_average;
             }
             return round($percent_pass, 2);
+        }
+
+        public function percent_CourseGenMobile($course_id, $gen_id,$user_id){ // คำนวน % ของหลักสูตร ที่เรียนไป
+            // สอบก่อนเรียนของบทเรียน จำนวนวิดีโอ สอบหลังเรียนของบทเรียน สอบfinalของหลักสูตร
+
+            $course = CourseOnline::model()->find(array(
+                'condition' => 'course_id=:course_id AND active=:active',
+                'params' => array(':course_id'=>$course_id, ':active'=>'y'),
+            ));
+            $lesson = Lesson::model()->findAll(array(
+                'condition' => 'course_id=:course_id AND active=:active',
+                'params' => array(':course_id'=>$course_id, ':active'=>'y'),
+            ));
+
+            $num_step = 0; // สอบก่อนเรียน วิดีโอ สอบหลังเรียน สอบ final
+            $step_pass = 0; // step ที่ผ่าน
+            foreach ($lesson as $key => $lessonListValue) {
+                $checkPreTest = Helpers::checkHavePreTestInManage($lessonListValue->id);
+                if ($checkPreTest) { 
+                    $num_step++; 
+                    $score_pre = Score::model()->find(array(
+                        'condition' => 'course_id=:course_id AND gen_id=:gen_id AND user_id=:user_id AND lesson_id=:lesson_id AND active=:active AND type=:type',
+                        'params' => array(':course_id'=>$course->course_id, ':gen_id'=>$gen_id, ':user_id'=>$user_id, ':lesson_id'=>$lessonListValue->id, ':active'=>'y', ':type'=>'pre'),
+                    ));
+                    if($score_pre != ""){
+                        $step_pass++;
+                    }
+                }
+                $checkPostTest = Helpers::checkHavePostTestInManage($lessonListValue->id);
+                if ($checkPostTest) { 
+                    $num_step++; 
+                    $score_post = Score::model()->find(array( // หลังเรียน ต้องผ่าน
+                        'condition' => 'course_id=:course_id AND gen_id=:gen_id AND user_id=:user_id AND lesson_id=:lesson_id AND active=:active AND type=:type AND score_past=:score_past',
+                        'params' => array(':course_id'=>$course->course_id, ':gen_id'=>$gen_id, ':user_id'=>$user_id, ':lesson_id'=>$lessonListValue->id, ':active'=>'y', ':type'=>'post', ':score_past'=>'y'),
+                    ));
+                    if($score_post != ""){
+                        $step_pass++;
+                    }
+                }
+                if($lessonListValue->type == 'vdo' || $lessonListValue->type == 'youtube'){
+                    foreach ($lessonListValue->files as $les) { // วนไฟล์ วิดีโอ
+                        $num_step++;
+                        $learnModel = Learn::model()->find(array(
+                            'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active=:status AND gen_id=:gen_id',
+                            'params'=>array(':lesson_id'=>$lessonListValue->id,':user_id'=>$user_id,':status'=>'y', ':gen_id'=>$gen_id)
+                        ));
+                        $learnFiles = self::lib()->checkLessonFileMobile($les,$learnModel->learn_id, $gen_id,$user_id);
+                        if($learnFiles == 'pass'){
+                            $step_pass++;
+                        }
+                    }
+                }elseif($lessonListValue->type == 'pdf'){
+                    foreach ($lessonListValue->filePdf as $les) { // วนไฟล์ pdf
+                        $num_step++;
+                        $learnModel = Learn::model()->find(array(
+                            'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active=:status AND gen_id=:gen_id',
+                            'params'=>array(':lesson_id'=>$lessonListValue->id,':user_id'=>$user_id,':status'=>'y', ':gen_id'=>$gen_id)
+                        ));
+                        $learnFiles = self::lib()->checkLessonFileMobile($les,$learnModel->learn_id, $gen_id,$user_id);
+                        if($learnFiles == 'pass'){
+                            $step_pass++;
+                        }
+                    }
+                }
+            }
+            $checkHaveCourseTest = Helpers::lib()->checkHaveCourseTestInManage($course->course_id);
+            if ($checkHaveCourseTest) { // สอบ final
+                $num_step++; 
+                $score_final = Coursescore::model()->find(array( // หลังเรียน ต้องผ่าน
+                    'condition' => 'course_id=:course_id AND gen_id=:gen_id AND user_id=:user_id AND score_past=:score_past AND active=:active AND type=:type',
+                    'params' => array(':course_id'=>$course->course_id, ':gen_id'=>$gen_id, ':user_id'=>$user_id, ':score_past'=>'y', ':active'=>'y', ':type'=>"post"),
+                ));
+                if($score_final != ""){
+                    $step_pass++;
+                }
+            } 
+
+             $checkHaveCoursePreTest = Helpers::lib()->checkHaveCoursePreTestInManage($course->course_id);
+            if($checkHaveCoursePreTest){ // สอบ ก่อนเรียน course
+                 $num_step++; 
+                 $checkHaveScoreCoursePreTest = Helpers::lib()->checkHaveScoreCoursePreTest($course->course_id, $gen_id);
+                 if(!$checkHaveScoreCoursePreTest){
+                    $step_pass++;
+                 }
+            }
+
+            $CourseSurvey = CourseTeacher::model()->findAllByAttributes(array('course_id'=>$course->course_id));
+            if($CourseSurvey){ // มี แบบสอบถาม
+                foreach ($CourseSurvey as $key => $value) {
+                     $num_step++; 
+                     $passQuest = QQuestAns_course::model()->find(array(
+                        'condition' => 'user_id = "' . $user_id . '" AND course_id ="' . $course->course_id . '"'." AND gen_id='".$gen_id."'",
+                    ));
+                     if ($passQuest) { //ตอบแบบสอบถามแล้ว
+                        $step_pass++;
+                     }
+                 }
+             }
+
+
+            if($num_step != 0){
+                $percent_average = 100/$num_step; // % แต่ละ step
+            }
+            $percent_pass = 0;
+            if($step_pass != 0){
+                $percent_pass = $step_pass*$percent_average;
+            }
+            return round($percent_pass, 2);
         }       
 
         public function CheckHaveCer($course_id){ // เช็คว่า หลักสูตรนี้มีใบ Cer ไหม
@@ -5148,5 +5287,7 @@ public function checkStepLesson($lesson){
             return $data;
         }
 
-
+        public function APImobil(){
+            return '5b95ea8de89545a3802c92145f9edf38';
+        }
     }
