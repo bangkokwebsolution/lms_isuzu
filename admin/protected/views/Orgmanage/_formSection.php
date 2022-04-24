@@ -78,7 +78,7 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
-                            <?php echo $form->labelEx($model, 'parent_id'); ?>
+                        <label for="OrgChart_parent_id" class="required">Group <span class="required">*</span></label>
                             <?php $dep_model = OrgChart::model()->getGroupListNew();
                             echo $form->dropDownList($model, 'parent_id', $dep_model, array('empty' => 'เลือก Group', 'class' => 'form-control','required'=>'required')); ?>
                             <?php echo $form->error($model, 'parent_id'); ?>
@@ -89,7 +89,7 @@
 
                 <div class="row">
                 	<div class="col-md-8">
-                    <?php echo $form->labelEx($model, 'title'); ?>
+                    <label for="OrgChart_title" class="required">Section <span class="required">*</span></label>
                     <?php echo $form->textField($model, 'title', array('class' => 'form-control', 'autocomplete'=>'off')); ?>
                     <?php echo $form->error($model, 'title'); ?>
                     </div>

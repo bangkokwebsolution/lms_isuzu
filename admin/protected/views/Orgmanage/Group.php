@@ -82,6 +82,7 @@ EOD
 
 
 						array(
+							'header'=>'Group',
 							'name'=>'title',
 							'value'=>'$data->title',
 							// 'filter'=>CHtml::activeTextField($model,'cates_search'),  

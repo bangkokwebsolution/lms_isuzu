@@ -54,7 +54,8 @@
 
                 <div class="row">
                 	<div class="col-md-8">
-                    <?php echo $form->labelEx($model, 'title'); ?>
+                    <!--?php echo $form->labelEx($model, 'title'); ?-->
+                    <label for="OrgChart_title" class="required">Division <span class="required">*</span></label>
                     <?php echo $form->textField($model, 'title', array('class' => 'form-control', 'autocomplete'=>'off')); ?>
                     <?php echo $form->error($model, 'title'); ?>
                     </div>
