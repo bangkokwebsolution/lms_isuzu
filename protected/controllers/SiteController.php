@@ -1991,6 +1991,6 @@ class SiteController extends Controller
 			$data = ['status_api' => 'fail', 'data' => ['null' => 'null']];
 		}
 
-		return json_encode($data);
+		echo json_encode($data);
 	}
 }
