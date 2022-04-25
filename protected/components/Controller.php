@@ -9,7 +9,7 @@ class Controller extends CController
 	{
 		parent::init();
 		if(empty(Yii::app()->session['lang'])){
-			Yii::app()->session['lang'] = 1;
+			Yii::app()->session['lang'] = 2;
 		}
 		if(!empty($_GET['lang'])) {
 			$lang = Language::model()->findByAttributes(array('id'=>$_GET['lang']));
