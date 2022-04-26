@@ -1745,7 +1745,7 @@ class SiteController extends Controller
 	}
 	public function actionMobiledashboard()
 	{
-		$headers = apache_request_headers()['api-key'];
+		$headers = apache_request_headers()['Api-Key'];
 		if (!empty($headers) && $headers == Helpers::lib()->APImobil() && !empty($_POST['user'] && $_POST['lang'])) {
 			$langId = $_POST['lang'];
 			//Label Multi lang
