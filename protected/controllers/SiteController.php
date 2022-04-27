@@ -1745,8 +1745,8 @@ class SiteController extends Controller
 	}
 	public function actionMobiledashboard()
 	{
-		if (!empty($_POST['user']) && !empty($_POST['lang'])) {
-			$langId = $_POST['lang'];
+		if (!empty($_GET['user']) && !empty($_GET['lang'])) {
+			$langId = $_GET['lang'];
 			//Label Multi lang
 			$label = MenuSite::model()->find(array(
 				'condition' => 'lang_id=:lang_id',
@@ -1761,7 +1761,7 @@ class SiteController extends Controller
 
 			// query course ตาม org
 
-			$userModel = Users::model()->findByPK($_POST['user']);
+			$userModel = Users::model()->findByPK($_GET['user']);
 			$userDepartment = $userModel->department_id;
 			$userPosition = $userModel->position_id;
 			$userBranch = $userModel->branch_id;
@@ -1798,7 +1798,7 @@ class SiteController extends Controller
 					$modelUsers_old = ChkUsercourse::model()->find(
 						array(
 							'condition' => 'course_id=:course_id AND user_id=:user_id AND org_user_status=:org_user_status',
-							'params' => array(':course_id' => $value->course_id, ':user_id' => $_POST['user'], ':org_user_status' => 1)
+							'params' => array(':course_id' => $value->course_id, ':user_id' => $_GET['user'], ':org_user_status' => 1)
 						)
 					);
 
@@ -1814,7 +1814,7 @@ class SiteController extends Controller
 				$modelUsers_To = ChkUsercourseto::model()->findAll(
 					array(
 						'condition' => 'user_id=:user_id',
-						'params' => array(':user_id' => $_POST['user'])
+						'params' => array(':user_id' => $_GET['user'])
 					)
 				);
 
@@ -1865,10 +1865,10 @@ class SiteController extends Controller
 
 			$logStartCourse_model = LogStartcourse::model()->with("course")->findAll(array(
 				'condition' => 't.user_id=:user_id AND t.active=:active and course.active=:course_active ',
-				'params' => array(':user_id' => $_POST['user'], ':active' => 'y', ':course_active' => 'y'),
+				'params' => array(':user_id' => $_GET['user'], ':active' => 'y', ':course_active' => 'y'),
 				'order' => 't.update_date DESC',
 			));
-			$Passcours = Passcours::model()->findAll(array('condition' => 'passcours_user = ' . $_POST['user']));
+			$Passcours = Passcours::model()->findAll(array('condition' => 'passcours_user = ' . $_GET['user']));
 			$arr_log_course_id = array();
 			$arr_log_course_gen_id = array();
 			$arr_log_gen_id = array();
@@ -1937,8 +1937,8 @@ class SiteController extends Controller
 						// var_dump($value->course->course_id);exit();
 
 					}
-					$LogStartcourse = LogStartcourse::Model()->find(array('condition' => 'course_id =' . $course_id . ' AND user_id =' . $_POST['user']));
-					$passcourse = Passcours::Model()->find(array('condition' => 'passcours_cours = ' . $course_id . ' AND passcours_user =' . $_POST['user']));
+					$LogStartcourse = LogStartcourse::Model()->find(array('condition' => 'course_id =' . $course_id . ' AND user_id =' . $_GET['user']));
+					$passcourse = Passcours::Model()->find(array('condition' => 'passcours_cours = ' . $course_id . ' AND passcours_user =' . $_GET['user']));
 
 					if ($langId == 2) {
 						if (!empty($passcourse)) { // ผ่าน
@@ -1978,7 +1978,7 @@ class SiteController extends Controller
 					// <span class="badge badge-danger">หมดเวลาเรียน</span>
 					// <span class="badge badge-success">เรียนผ่านแล้ว</span> -->
 
-					$percentage = 	Helpers::lib()->percent_CourseGenMobile($value->course->course_id, $gen_id, $_POST['user']);
+					$percentage = 	Helpers::lib()->percent_CourseGenMobile($value->course->course_id, $gen_id, $_GET['user']);
 
 
 
