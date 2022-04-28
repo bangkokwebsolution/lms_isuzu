@@ -114,10 +114,17 @@ class VideoController extends Controller{
                 'params' => array(':active' => 'y'),
                 'order' => 't.sortOrder ASC'
             ));
+
+            $library_file_all = LibraryFile::model()->findAll(array(
+                'condition' => 'active=:active ',
+                'params' => array(':active' => 'y'),
+                'order' => 't.sortOrder ASC'
+            ));
+
             if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
-                $orders = "library_type_name_en ASC";
+                $orders = "sortOrder ASC";
             }else{
-                $orders = "library_type_name ASC";
+                $orders = "sortOrder ASC";
             }
             $library_type_1 = LibraryType::model()->findAll(array(
                 'condition' => 'active=:active AND library_cate=1',
@@ -153,6 +160,7 @@ class VideoController extends Controller{
                 'library_file_2'=>$library_file_2,
                 'library_type_1'=>$library_type_1,
                 'library_type_2'=>$library_type_2,
+                'library_file_all'=>$library_file_all,
                 'library_file_search'=>$library_file_search,
                 'label'=>$label,
             ));
