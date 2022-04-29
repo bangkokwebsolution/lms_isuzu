@@ -15,7 +15,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $learnn = "สมัครเรียน";
     $genaral_course = 'หลักสูตรทั่วไป';
     $specific_course = 'หลักสูตรเฉพาะ';
-    $Title_popup = 'ยืนยันการลงทะเบียนคอสน์อบรม';
+    $Title_popup = 'ยืนยันการลงทะเบียนคอร์สอบรม';
 
     $Time_out='ยังไม่เปิดลงทะเบียนเรียน';
     $Time_out_des='เปิดลงทะเบียนเรียนหลักสูตร วันที่ ';
