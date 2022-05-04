@@ -19,7 +19,7 @@ class VideoController extends Controller{
         $criteriavdo = new CDbCriteria;
         $criteriavdo->compare('active','y');
         $criteriavdo->compare('lang_id',$langId);
-        $criteriavdo->order = 'sortOrder DESC';
+        $criteriavdo->order = 'sortOrder ASC';
         $Video = Vdo::model()->findAll($criteriavdo);
 //        var_dump($Vdo);        exit();
         if(empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1 ){
