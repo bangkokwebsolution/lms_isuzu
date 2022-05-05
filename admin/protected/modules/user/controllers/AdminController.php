@@ -1260,7 +1260,7 @@ class AdminController extends Controller
           $to['lastname'] = $profile->lastname;
           $message = $this->renderPartial('_mail_message',array('model' => $model,'genpass'=>$_POST['User']['username']),true);
           if(($message) && ($model->email != null)){
-            if(Helpers::lib()->SendMail($to,'สมัครสมาชิกสำเร็จ',$message)){
+            if(Helpers::lib()->SendMail($to,'อนุมัติการเข้าใช้งานระบบ IMCT e-Learning',$message)){
                 $this->redirect(array('employee'));
             }
         }else{
