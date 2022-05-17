@@ -8,7 +8,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 } else {
     $langId = Yii::app()->session['lang'];
     $Personal_Information = 'ข้อมูลส่วนบุคคล';
-    $Course_Status = 'ข้อมูลหลักสูตร';
+    $Course_Status = 'สถานะของหลักสูตร';
     $Start='วันเริ่มต้น';
     $Stop='วันสิ้นสุด';
 }
@@ -35,7 +35,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
             <div class="col col-md-9 col-lg-9">
                 <div class="row g-5">
                     <?php
-
+                    
                     foreach ($start_course as $key => $value) {
                         if (isset($value->course)) {
                             if ($langId != 1) {
