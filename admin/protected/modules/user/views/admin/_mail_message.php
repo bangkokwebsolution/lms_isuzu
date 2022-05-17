@@ -28,7 +28,7 @@
   <h4>- Username : <?= $model->username; ?></h4>
   <h4>- Password : <?= $genpass; ?></h4>
   <h4>Instructions for login system and setting password</h4>
-  <h4>1. After got approve username and password please change your password immediately after the first login. </h4>
+  <h4>1. After got approve username and password, please change your password immediately after the first login. </h4>
   <h4>2. The password should be 6 characters or more.</h4>
   <h4>3. Do not use personal information or easily guessable information such as birthdate   or ID number to set password. </h4>
   <h4>4. Report to the system administrator immediately when user expect that his/her username and password was  used by others without permission. Along with changing the password immediately.</h4>
