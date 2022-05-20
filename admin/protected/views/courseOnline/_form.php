@@ -120,7 +120,7 @@
             //////////////////
 						if($see_all != 1){
 							$modelList = Category::model()->findAll(array(
-								"condition"=>" active = 'y' and lang_id = 1 and create_by='".Yii::app()->user->id."'"));
+								"condition"=>" active = 'y' and lang_id = 1 "));
 						}else{
 							$modelList = Category::model()->findAll(array(
 								"condition"=>" active = 'y' and lang_id = 1"));
