@@ -549,10 +549,12 @@ $FinalScore = Coursescore::model()->findAll($criteria);
             <div class="col-sm-8 col-md-8 col-xs-12">
                 <?php
                 $countday = Helpers::Countday($course->course_date_start, $course->course_date_end, 'day');
+
+
                 ?>
                 <div class="topic-course">
                     <div class="alert alert-warning mt-20" role="alert">
-                        <?= $Period ?> <?= $countday ?> <?= $day ?> <?= (!empty($course)) ? "(" . Helpers::lib()->CuttimeLang2($course->course_date_start, $langId) . " - " . Helpers::lib()->CuttimeLang2($course->course_date_end, $langId) . ")" : ""; ?>
+                        <?= $Period ?> <?= Helpers::Countday(date('Y-m-d'), $logtime->end_date, 'day'); ?> <?= $label->label_day ?>  <?= (!empty($course)) ? "(" . Helpers::lib()->CuttimeLang2($course->course_date_start, $langId) . " - " . Helpers::lib()->CuttimeLang2($course->course_date_end, $langId) . ")" : ""; ?>
                     </div>
                 </div>
 
