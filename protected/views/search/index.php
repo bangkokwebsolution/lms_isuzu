@@ -57,8 +57,14 @@
             <div class="well">
                 <a  href="<?php echo $this->createUrl('/usability/index'); ?>">
                     <?php $str_usability = str_ireplace($keyword, '<span class="bg-success">' . $keyword . '</span>', $str); ?>
-
-                    <?php echo html_entity_decode($str_usability); ?>
+                    <?php 
+                        if( strpos( $str, ".pdf" )) {
+                            echo $str;
+                        } else {
+                            echo html_entity_decode($str_usability);
+                        }
+                    ?>
+                    <?php //echo html_entity_decode($str_usability); ?>
                 </a>
             </div>
             <?php
