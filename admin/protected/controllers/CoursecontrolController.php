@@ -552,4 +552,15 @@ class CoursecontrolController extends Controller
 			Yii::app()->end();
 		}
 	}
+	public function actionManageorguser(){ 
+		$model=new Popup('search');
+		$model->unsetAttributes();  // clear any default values
+		$model->active = 'y';
+		if(isset($_GET['Popup'])){
+			$model->attributes=$_GET['Popup'];
+		}
+		$this->render('Manageorguser',array(
+			'model'=>$model,
+		));
+	}
 }
