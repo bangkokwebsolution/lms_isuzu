@@ -186,6 +186,7 @@ $orgchart = OrgChart::model()->findbypk($_GET['id']);
         <?php  }else if($typeCourse == 3 ){ ?>
             <a href="<?= $urltypecourse.'?typeCourse='.'1'; ?>" ><button type="button" class="btn btn pull-right"  style='margin-right: 10px;background-color:#e50000;color: #ffff'>หลักสูตรเฉพาะ</button></a>
         <?php } ?>
+        <button type="button" class="btn btn pull-right" style="margin-right: 10px;background-color:#e50000;color: #ffff">จัดการสมาชิกในกล่อง</button>
     </menu>
 </div>
 
