@@ -14,7 +14,7 @@ $this->breadcrumbs=array($titleName);
             <th width="5%" style="text-align: center;">ลำดับ</th>
             <th>User id</th>
             <th>Role</th>
-            <th>รหัสพนักงาน</th>
+            <!-- <th>รหัสพนักงาน</th> -->
             <th>ชื่อ - นามสกุล</th>
             <th>KIND</th>
             <th>Employee class</th>
@@ -53,7 +53,7 @@ $this->breadcrumbs=array($titleName);
                                 } 
                 ?>
                 <td><?= $groups ?></td>
-                <td><?= $value->employee_id ?></td>
+                <!-- <td><?= $value->employee_id ?></td> -->
                 <td><?= $value->profile->firstname_en." ".$value->profile->lastname_en ?></td>
                 <td><?= $value->profile->kind ?></td>
                 <td><?= $value->profile->EmpClass->title ?></td>
@@ -91,7 +91,7 @@ $this->breadcrumbs=array($titleName);
             <th width="5%"></th>
             <th>User id</th>
             <th>Role</th>
-            <th>รหัสพนักงาน</th>
+            <!-- <th>รหัสพนักงาน</th> -->
             <th>ชื่อ - นามสกุล</th>
             <th>KIND</th>
             <th>Employee class</th>
@@ -128,7 +128,7 @@ $this->breadcrumbs=array($titleName);
                                 } 
                 ?>
                 <td><?= $groups ?></td>
-                <td><?= $value->employee_id ?></td>
+                <!-- <td><?= $value->employee_id ?></td> -->
                 <td><?= $value->profile->firstname_en." ".$value->profile->lastname_en ?></td>
                 <td><?= $value->profile->kind ?></td>
                 <td><?= $value->profile->EmpClass->title ?></td>
