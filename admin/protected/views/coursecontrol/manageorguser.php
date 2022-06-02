@@ -63,6 +63,7 @@ EOD
             <th>รหัสพนักงาน</th>
             <th>ลำดับชั้นงาน</th>
             <th>ตำแหน่งงาน</th>
+            <th>section name</th>
             <th>จัดการ</th>
           </tr>
           </thead>
@@ -73,10 +74,13 @@ EOD
             <td><input class="w-100" name="LibraryFile[library_name_en]" type="text" maxlength="255"></td>
             <td><input class="w-100" name="LibraryFile[library_name_en]" type="text" maxlength="255"></td>
             <td><input class="w-100" name="LibraryFile[library_name_en]" type="text" maxlength="255"></td>
+            <td></td>
+            <td></td>
            </tr>
            <tr>
            <td class="checkbox-column"><input class="select-on-check" value="120" id="chk_0" type="checkbox" name="chk[]"></td>
             <td>text</td>
+            <td>test</td>
             <td>test</td>
             <td>test</td>
             <td>test</td>
@@ -85,6 +89,7 @@ EOD
            <tr>
            <td class="checkbox-column"><input class="select-on-check" value="120" id="chk_0" type="checkbox" name="chk[]"></td>
             <td>text</td>
+            <td>test</td>
             <td>test</td>
             <td>test</td>
             <td>test</td>
@@ -92,6 +97,7 @@ EOD
            </tr><tr>
            <td class="checkbox-column"><input class="select-on-check" value="120" id="chk_0" type="checkbox" name="chk[]"></td>
             <td>text</td>
+            <td>test</td>
             <td>test</td>
             <td>test</td>
             <td>test</td>
@@ -118,6 +124,7 @@ EOD
             <th>รหัสพนักงาน</th>
             <th>ลำดับชั้นงาน</th>
             <th>ตำแหน่งงาน</th>
+            <th>section name</th>
             <th>จัดการ</th>
           </tr>
           </thead>
@@ -128,6 +135,8 @@ EOD
             <td><input class="w-100" name="LibraryFile[library_name_en]" type="text" maxlength="255"></td>
             <td><input class="w-100" name="LibraryFile[library_name_en]" type="text" maxlength="255"></td>
             <td><input class="w-100" name="LibraryFile[library_name_en]" type="text" maxlength="255"></td>
+            <td></td>
+            <td></td>
            </tr>
            <tr>
            <td class="checkbox-column"><input class="select-on-check" value="120" id="chk_0" type="checkbox" name="chk[]"></td>
@@ -135,17 +144,20 @@ EOD
             <td>test</td>
             <td>test</td>
             <td>test</td>
-            <td><a class="btn-action glyphicons pencil btn-danger remove_2" title="ลบ" href="/lms_isuzu/admin/index.php/libraryFile/delete/120"><i></i></a></td>
-           </tr><tr>
-           <td class="checkbox-column"><input class="select-on-check" value="120" id="chk_0" type="checkbox" name="chk[]"></td>
-            <td>text</td>
-            <td>test</td>
-            <td>test</td>
             <td>test</td>
             <td><a class="btn-action glyphicons pencil btn-danger remove_2" title="ลบ" href="/lms_isuzu/admin/index.php/libraryFile/delete/120"><i></i></a></td>
            </tr><tr>
            <td class="checkbox-column"><input class="select-on-check" value="120" id="chk_0" type="checkbox" name="chk[]"></td>
             <td>text</td>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+            <td>test</td>
+            <td><a class="btn-action glyphicons pencil btn-danger remove_2" title="ลบ" href="/lms_isuzu/admin/index.php/libraryFile/delete/120"><i></i></a></td>
+           </tr><tr>
+           <td class="checkbox-column"><input class="select-on-check" value="120" id="chk_0" type="checkbox" name="chk[]"></td>
+            <td>text</td>
+            <td>test</td>
             <td>test</td>
             <td>test</td>
             <td>test</td>
