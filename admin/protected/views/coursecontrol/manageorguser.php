@@ -155,7 +155,12 @@ EOD
         </table>
       </div>
     </div>
+    <div class="pull-left" style=margin-top:14px;>
+      <a class="btn btn-icon btn-success" id="add-section"><i class="glyphicon glyphicon-plus"></i> เพิ่มสมาชิก</a>					
+    </div>
+					
   </div>
+  
 
 
 </div>
