@@ -181,7 +181,9 @@ EOD
                         ),
                         'btn_delete' => array(
                             'options' => array(
-                                'rel' => 'tooltip', 
+                                'rel' => 'tooltip',
+                                // 'onclick'=>"return confirm('Are you sure?')",
+                                'title' => 'Delete',
                                 'data-toggle' => 'tooltip', 
                                 'title' => 'Delete',
                                 'class' => 'btn_del'
