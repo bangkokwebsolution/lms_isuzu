@@ -1998,7 +1998,7 @@ class SiteController extends Controller
 			$per = Helpers::lib()->percent_CourseGenMobile($_GET['course'], $_GET['gen'], $_GET['user']);
 			echo $per;
 		}else{
-			echo 0; 
+			echo 'Api fail'; 
 		}
 	}
 }
