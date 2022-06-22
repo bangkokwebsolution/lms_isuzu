@@ -1992,4 +1992,13 @@ class SiteController extends Controller
 
 		echo json_encode($data);
 	}
+	public function actionPercourse()
+	{	
+		if(!empty($_GET['course']) && isset($_GET['gen']) && !empty($_GET['user'])){
+			$per = Helpers::lib()->percent_CourseGenMobile($_GET['course'], $_GET['gen'], $_GET['user']);
+			echo $per;
+		}else{
+			echo 0; 
+		}
+	}
 }
