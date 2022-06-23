@@ -115,7 +115,7 @@
                         
                         <!--        You can switch "ct-wizard-orange"  with one of the next bright colors: "ct-wizard-blue", "ct-wizard-green", "ct-wizard-orange", "ct-wizard-red"             -->
                         <div class="wizard-header">
-                            <h3><strong><?php echo UserModule::t("Registration"); ?>
+                            <h3><strong><?php //echo UserModule::t("Registration"); ?>เพิ่มผู้ดูแลระบบ
                             <!-- <small class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></small> --></strong>
                         </h3>
                         <p class="text-center"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
@@ -263,11 +263,11 @@
                                             </div>
                                         <?php } ?>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label><?php echo $form->labelEx($profile, 'title_id'); ?></label>
                                         <?php echo $form->dropDownList($profile, 'title_id', ProfilesTitle::getTitleList(), array('empty' => '---เลือกคำนำหน้าชื่อ---', 'class' => 'form-control', 'style' => 'width:100%')); ?>
                                         <?php echo $form->error($profile, 'title_id'); ?>
-                                    </div>
+                                    </div> -->
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -436,7 +436,7 @@
                                         </div> -->
                                         
                                         <div class="form-group" style="text-align: right;">
-                                            <?php echo CHtml::submitButton($model->isNewRecord ? UserModule::t("Register") : 'บันทึก', array('class' => 'btn btn-primary',)); ?>
+                                            <?php echo CHtml::submitButton($model->isNewRecord ? 'บันทึก' : 'บันทึก', array('class' => 'btn btn-primary',)); ?>
                                         </div>
                                     </div>
                                 </div>
