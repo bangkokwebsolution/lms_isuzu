@@ -1204,7 +1204,12 @@ class Helpers
 
         $course = CourseOnline::model()->findByPk($course_id);
         $user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
+        $user = User::model()->findByPk(Yii::app()->user->id);
+        $check =  Helpers::getStatePermission($user);
 
+        if($check){
+            return 'pass';
+        }
         // if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->usernewcreate->org_id == $user_hr1->org_id && $course->create_by != Yii::app()->user->id){
 
         //     $ceh = 1;
@@ -1264,6 +1269,12 @@ class Helpers
         $course = CourseOnline::model()->findByPk($course_id);
         $user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
 
+        $user = User::model()->findByPk(Yii::app()->user->id);
+        $check =  Helpers::getStatePermission($user);
+
+        if($check){
+            return 'pass';
+        }
         // if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->create_by != Yii::app()->user->id){
         //     $status = 1;
         // }elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level && $course->create_by != Yii::app()->user->id) {
@@ -1308,6 +1319,12 @@ class Helpers
         $course = CourseOnline::model()->findByPk($course_id);
         $user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
 
+        $user = User::model()->findByPk(Yii::app()->user->id);
+        $check =  Helpers::getStatePermission($user);
+
+        if($check){
+            return 'pass';
+        }
         // if($user_hr1 != null && $user_org->level == 2 && $user_hr1->orgchart->level == $user_org->level && $course->create_by != Yii::app()->user->id ){
         //     $status = 1;
         // }elseif ($user_hr1 != null && $user_org->level > 2 && $user_hr1->orgchart->level <= $user_org->level && $course->create_by != Yii::app()->user->id) {
