@@ -21,6 +21,18 @@ class Helpers
         }
         return $state;
     }
+    public function getStatePermissionapprove($user)
+    {
+        $dataPermissionGroup = array("1", "7");
+        $state = false;
+        foreach ($dataPermissionGroup as $key => $value) {
+            if (in_array($value, json_decode($user->group))) {
+                $state = true;
+                break;
+            }
+        }
+        return $state;
+    }
 
     public function changeNameCourse($nameCourse)
     {
@@ -1205,7 +1217,7 @@ class Helpers
         $course = CourseOnline::model()->findByPk($course_id);
         $user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
         $user = User::model()->findByPk(Yii::app()->user->id);
-        $check =  Helpers::getStatePermission($user);
+        $check =  Helpers::getStatePermissionapprove($user);
 
         if($check){
             return 'pass';
@@ -1270,7 +1282,7 @@ class Helpers
         $user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
 
         $user = User::model()->findByPk(Yii::app()->user->id);
-        $check =  Helpers::getStatePermission($user);
+        $check =  Helpers::getStatePermissionapprove($user);
 
         if($check){
             return 'pass';
@@ -1320,7 +1332,7 @@ class Helpers
         $user_org = orgchart::model()->findByPk($course->usernewcreate->org_id);
 
         $user = User::model()->findByPk(Yii::app()->user->id);
-        $check =  Helpers::getStatePermission($user);
+        $check =  Helpers::getStatePermissionapprove($user);
 
         if($check){
             return 'pass';
