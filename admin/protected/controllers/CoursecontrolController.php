@@ -552,15 +552,112 @@ class CoursecontrolController extends Controller
 			Yii::app()->end();
 		}
 	}
+
 	public function actionManageorguser(){ 
-		$model=new Popup('search');
-		$model->unsetAttributes();  // clear any default values
-		$model->active = 'y';
-		if(isset($_GET['Popup'])){
-			$model->attributes=$_GET['Popup'];
+
+		if(isset($_GET["id"]) && $_GET["id"] != ""){
+			$orgid = $_GET["id"];
+		}else{
+			$this->redirect(array('OrgChart/index'));
+		}	
+
+		if (!empty($_GET['user_list'])) {
+			foreach ($_GET['user_list'] as $key => $value) {
+
+				$chk_old = OrgUser::model()->find("orgchart_id='".$orgid."' AND user_id='".$value."' ");
+
+				if($chk_old != ""){
+					$model = OrgUser::model()->findByPk($chk_old->id);
+					$model->active = 'y';
+					$model->authority_id = null;
+				}else{
+					$model = new OrgUser;
+					$model->orgchart_id = $orgid;
+					$model->user_id = $value;
+				}
+				
+				$model->save();
+
+				// if(Yii::app()->user->id){
+				// 	Helpers::lib()->getControllerActionId($value);
+				// }
+			
+			}//foreach
+
+			$this->redirect(array('Coursecontrol/Manageorguser/'.$orgid));
+
+		}elseif(isset($_POST['user_id'])){
+			if($_POST['user_id'] != ""){
+				$value = $_POST['user_id'];
+				$chk_old = OrgUser::model()->find("orgchart_id='".$orgid."' AND user_id='".$value."' ");
+				$chk_old->active = 'n';
+				$chk_old->save();
+
+				$org_position = OrgPosition::model()->findAll(array(
+					'select'=>'id',
+					'condition'=>'user_id="'.$value.'" AND state="y" ',
+				));
+				foreach ($org_position as $key_p => $val_p) {
+					$mo_posi = OrgPosition::model()->findByPk($val_p->id);
+					if($mo_posi){
+						$mo_posi->state = "n";
+						$mo_posi->save();
+					}
+				}
+
+
+
+				// if(Yii::app()->user->id){
+				// 	Helpers::lib()->getControllerActionId($_POST['user_id']);
+				// }
+
+				echo "success";
+				exit();
+			}
 		}
-		$this->render('Manageorguser',array(
-			'model'=>$model,
-		));
+
+		//--------------------*******************************************-------------------------//
+
+		$arr_user_all = [];
+		$OrgUser = OrgUser::model()->findAll('active="y" GROUP BY user_id');
+		if(!empty($OrgUser)){
+			foreach ($OrgUser as $key => $value) {
+				$arr_user_all[] = $value->user_id;
+			}
+		}
+		$criteria = new CDbCriteria;
+		// $criteria->compare('superuser', 1);
+		$criteria->compare('del_status', 0);
+		$criteria->compare('status', 1);
+		$criteria->compare('org_id', $orgid);
+		// $criteria->addCondition('authority_hr IS NULL');
+		$criteria->addNotInCondition('id',$arr_user_all);
+		$userAll = User::model()->with('profile')->findAll($criteria);
+
+		$arr_user = [];
+		$OrgUser_2 = OrgUser::model()->findAll('orgchart_id="'.$orgid.'" AND active="y" GROUP BY user_id');
+		if(!empty($OrgUser_2)){
+			foreach ($OrgUser_2 as $key => $value) {
+				$arr_user[] = $value->user_id;
+			}
+		}
+
+		$criteria = new CDbCriteria;
+		$criteria->addInCondition('id',$arr_user);
+		$criteria->compare('del_status', 0);
+		$criteria->compare('status', 1);
+		$user = User::model()->with('profile')->findAll($criteria);
+
+		$this->render('Manageorguser', array('userAll'=>$userAll, 'user'=>$user));
+
+		// $model=new Popup('search');
+		// $model->unsetAttributes();  // clear any default values
+		// $model->active = 'y';
+		// if(isset($_GET['Popup'])){
+		// 	$model->attributes=$_GET['Popup'];
+		// }
+		// $this->render('Manageorguser',array(
+		// 	'model'=>$model,
+		// ));
 	}
 }
