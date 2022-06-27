@@ -170,9 +170,9 @@ $url_form = $this->createUrl('Coursecontrol/Manageorguser/'.$_GET['id']);
                 <td style="text-align: center;"><?php echo $num++; ?></td>
                 <td><?= $value->profile->firstname." ".$value->profile->lastname ?></td>
                 <td><?= $value->employee_id ?></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td><?= $value->profile->EmpClass->title ?></td>
+                <td><?= $value->profile->EmpClass->descrpition ?></td>
+                <td><?= $value->orgchart->title ?></td>
                 <td>
                   <button type="button" class="btn btn-danger" onclick="if(confirm('แน่ใจว่าต้องการลบ <?= $value->profile->firstname_en." ".$value->profile->lastname_en ?> ?')){Deleteuser(<?= $value->id ?>);}else{ }" >
                     <i class="fa fa-trash-o" aria-hidden="true"></i>
@@ -223,9 +223,9 @@ $url_form = $this->createUrl('Coursecontrol/Manageorguser/'.$_GET['id']);
                 <td style="text-align: center;"><?php echo $num++; ?></td>
                 <td><?= $value->profile->firstname." ".$value->profile->lastname ?></td>
                 <td><?= $value->employee_id ?></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td><?= $value->profile->EmpClass->title ?></td>
+                <td><?= $value->profile->EmpClass->descrpition ?></td>
+                <td><?= $value->orgchart->title ?></td>
               </tr>
               <?php
             }
