@@ -561,7 +561,7 @@ class CoursecontrolController extends Controller
 			$this->redirect(array('OrgChart/index'));
 		}	
 
-		if (!empty($_GET['user_list'])) {
+		if (!empty($_GET['user_list'])) {//เพิ่ม
 			foreach ($_GET['user_list'] as $key => $value) {
 
 				$chk_old = OrgUser::model()->find("orgchart_id='".$orgid."' AND user_id='".$value."' ");
@@ -592,20 +592,6 @@ class CoursecontrolController extends Controller
 				$chk_old = OrgUser::model()->find("orgchart_id='".$orgid."' AND user_id='".$value."' ");
 				$chk_old->active = 'n';
 				$chk_old->save();
-
-				$org_position = OrgPosition::model()->findAll(array(
-					'select'=>'id',
-					'condition'=>'user_id="'.$value.'" AND state="y" ',
-				));
-				foreach ($org_position as $key_p => $val_p) {
-					$mo_posi = OrgPosition::model()->findByPk($val_p->id);
-					if($mo_posi){
-						$mo_posi->state = "n";
-						$mo_posi->save();
-					}
-				}
-
-
 
 				// if(Yii::app()->user->id){
 				// 	Helpers::lib()->getControllerActionId($_POST['user_id']);

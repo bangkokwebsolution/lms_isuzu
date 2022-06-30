@@ -149,7 +149,7 @@ $url_form = $this->createUrl('Coursecontrol/Manageorguser/'.$_GET['id']);
        <table class="table table-bordered dataTable-Orguser table-primary" id="user_list">
          <thead>
           <tr>            
-            <th width="5%"></th>
+            <!-- <th width="5%"></th> -->
             <th width="5%">ลำดับ</th>
             <th>ชื่อ - นามสกุล</th>
             <th>รหัสพนักงาน</th>
@@ -166,7 +166,7 @@ $url_form = $this->createUrl('Coursecontrol/Manageorguser/'.$_GET['id']);
             foreach ($user as $key => $value) {
               ?>
               <tr>
-                <td><input type="checkbox" name="user_list[]" value="<?= $value->id ?>"></td>
+                <!-- <td><input type="checkbox" name="user_list[]" value="<?= $value->id ?>"></td> -->
                 <td style="text-align: center;"><?php echo $num++; ?></td>
                 <td><?= $value->profile->firstname." ".$value->profile->lastname ?></td>
                 <td><?= $value->employee_id ?></td>
@@ -203,7 +203,7 @@ $url_form = $this->createUrl('Coursecontrol/Manageorguser/'.$_GET['id']);
        <table class="table table-bordered dataTable-Orguser table-primary" id="user_list">
          <thead>
           <tr>            
-            <th width="5%"></th>
+            <th width="5%" align="center"><input type="checkbox" id="chkAll" /></th>
             <th width="5%">ลำดับ</th>
             <th>ชื่อ - นามสกุล</th>
             <th>รหัสพนักงาน</th>
@@ -214,12 +214,12 @@ $url_form = $this->createUrl('Coursecontrol/Manageorguser/'.$_GET['id']);
         </thead>
         <tbody>
           <?php 
-          if(!empty($userAll)){
+         
             $num=1;
             foreach ($userAll as $key => $value) {
               ?>
               <tr>
-                <td><input type="checkbox" name="user_list[]" value="<?= $value->id ?>"></td>
+                <td align="center"><input type="checkbox" class="chk" name="user_list[]" value="<?= $value->id ?>"></td>
                 <td style="text-align: center;"><?php echo $num++; ?></td>
                 <td><?= $value->profile->firstname." ".$value->profile->lastname ?></td>
                 <td><?= $value->employee_id ?></td>
@@ -229,15 +229,7 @@ $url_form = $this->createUrl('Coursecontrol/Manageorguser/'.$_GET['id']);
               </tr>
               <?php
             }
-          }else{
-            ?>
-            <tr>
-              <td colspan="2">ไม่มีข้อมูล</td>
-            </tr>
-            <?php
-          }//end if
-
-
+         
 
 
            ?>
@@ -281,7 +273,22 @@ $url_form = $this->createUrl('Coursecontrol/Manageorguser/'.$_GET['id']);
   }
 
   $(document).ready(function() {
-    $('.dataTable-Orguser').DataTable();
-  } );
+    $('.dataTable-Orguser').DataTable({
+                    aoColumnDefs: [
+                      {
+                         bSortable: false,
+                         aTargets: [ 0]
+                      }
+                    ]
+    });//datatable
+
+
+   $("#chkAll").click(function(){
+              $(".chk").prop("checked",$("#chkAll").prop("checked"))
+        
+    });//chkall
+
+
+  });
 
 </script>
