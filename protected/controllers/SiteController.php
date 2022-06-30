@@ -940,7 +940,8 @@ class SiteController extends Controller
 		$this->layout = '//layouts/mainIndex';
 
 		if (Yii::app()->user->id != null) {
-			$userModel = UserNew::model()->findByPK(Yii::app()->user->id);
+			// $userModel = UserNew::model()->findByPK(Yii::app()->user->id);
+			$OrgUser = OrgUser::model()->find("active='y' AND user_id='" . Yii::app()->user->id . "' ");
 			// $userDepartment = $userModel->department_id;
 			// $userPosition = $userModel->position_id;
 			// $userBranch = $userModel->branch_id;
@@ -953,7 +954,12 @@ class SiteController extends Controller
 			// $criteria->compare('position_id',$userPosition);
 			// $criteria->compare('branch_id',$userBranch);
 			$criteria->compare('active', 'y');
-			$criteria->compare('id', $userModel->org_id);
+			// $criteria->compare('id', $userModel->org_id);
+			if ($OrgUser) {
+                $criteria->compare('id',$OrgUser->orgchart_id);
+            }else{
+                $criteria->compare('id',0);
+            }
 			$modelOrgDep = OrgChart::model()->findAll($criteria);
 
 			foreach ($modelOrgDep as $key => $value) {
