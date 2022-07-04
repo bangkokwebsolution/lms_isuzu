@@ -941,7 +941,12 @@ class SiteController extends Controller
 
 		if (Yii::app()->user->id != null) {
 			// $userModel = UserNew::model()->findByPK(Yii::app()->user->id);
-			$OrgUser = OrgUser::model()->find("active='y' AND user_id='" . Yii::app()->user->id . "' ");
+			
+			if($_SERVER['HTTP_HOST']="elearning.imct.co.th"){
+	            $OrgUser = UserNew::model()->findByPK(Yii::app()->user->id);
+	        }else{
+	            $OrgUser = OrgUser::model()->find("active='y' AND user_id='" . Yii::app()->user->id . "' ");
+	        }
 			// $userDepartment = $userModel->department_id;
 			// $userPosition = $userModel->position_id;
 			// $userBranch = $userModel->branch_id;
@@ -956,7 +961,11 @@ class SiteController extends Controller
 			$criteria->compare('active', 'y');
 			// $criteria->compare('id', $userModel->org_id);
 			if ($OrgUser) {
-                $criteria->compare('id',$OrgUser->orgchart_id);
+                if($_SERVER['HTTP_HOST']="elearning.imct.co.th"){
+                    $criteria->compare('id',$userModel->org_id);
+                }else{
+                    $criteria->compare('id',$OrgUser->orgchart_id);
+                }
             }else{
                 $criteria->compare('id',0);
             }
