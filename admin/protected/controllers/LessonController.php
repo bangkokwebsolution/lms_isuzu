@@ -969,7 +969,7 @@ public function actionFormLesson($id,$type)
 
         if (!empty($_FILES) && $_POST['token'] == $verifyToken) {
 
-            $rnd = rand(0,9999999999);
+            $rnd = rand(0,999999999);
             $tempFile   = $_FILES['Filedata']['tmp_name'];
             $uploadedFile = CUploadedFile::getInstanceByName('Filedata');
             $fileName = "{$rnd}-{$session['idx']}.".strtolower($uploadedFile->getExtensionName());
@@ -1031,7 +1031,7 @@ public function actionFormLesson($id,$type)
 
         if (!empty($_FILES) && $_POST['token'] == $verifyToken) {
 
-            $rnd = rand(0,9999999999);
+            $rnd = rand(0,999999999);
             $tempFile   = $_FILES['Filedata']['tmp_name'];
             $uploadedFile = CUploadedFile::getInstanceByName('Filedata');
             $fileName = "{$rnd}-{$session['idx']}.".strtolower($uploadedFile->getExtensionName());
@@ -1093,7 +1093,7 @@ public function actionFormLesson($id,$type)
 
         if (!empty($_FILES) && $_POST['token'] == $verifyToken) {
 
-            $rnd = rand(0,9999999999);
+            $rnd = rand(0,999999999);
             $tempFile   = $_FILES['Filedata']['tmp_name'];
             $uploadedFile = CUploadedFile::getInstanceByName('Filedata');
             $fileName = "{$rnd}-{$session['idxPdf']}.".strtolower($uploadedFile->getExtensionName());
@@ -1163,7 +1163,7 @@ public function actionFormLesson($id,$type)
 
         if (!empty($_FILES) && $_POST['token'] == $verifyToken) {
 
-            $rnd = rand(0,9999999999);
+            $rnd = rand(0,999999999);
             $tempFile   = $_FILES['Filedata']['tmp_name'];
             $uploadedFile = CUploadedFile::getInstanceByName('Filedata');
             $fileName = "{$rnd}-{$session['idxDoc']}.".strtolower($uploadedFile->getExtensionName());
