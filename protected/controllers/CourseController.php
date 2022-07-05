@@ -289,7 +289,7 @@ public function actionResetLearn($id) {
 
       // $userModel = UserNew::model()->findByPK(Yii::app()->user->id);
         if($_SERVER['HTTP_HOST']="elearning.imct.co.th"){
-            $OrgUser = UserNew::model()->findByPK(Yii::app()->user->id);
+            $userModel = UserNew::model()->findByPK(Yii::app()->user->id);
         }else{
             $OrgUser = OrgUser::model()->find("active='y' AND user_id='" . Yii::app()->user->id . "' ");
         }
