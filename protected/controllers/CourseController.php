@@ -289,7 +289,7 @@ public function actionResetLearn($id) {
 
       // $userModel = UserNew::model()->findByPK(Yii::app()->user->id);
         if($_SERVER['HTTP_HOST']="elearning.imct.co.th"){
-            $userModel = UserNew::model()->findByPK(Yii::app()->user->id);
+            $OrgUser = UserNew::model()->findByPK(Yii::app()->user->id);
         }else{
             $OrgUser = OrgUser::model()->find("active='y' AND user_id='" . Yii::app()->user->id . "' ");
         }
@@ -314,7 +314,7 @@ public function actionResetLearn($id) {
              if ($OrgUser) {
                 
                 if($_SERVER['HTTP_HOST']="elearning.imct.co.th"){
-                    $criteria->compare('id',$userModel->org_id);
+                    $criteria->compare('id',$OrgUser->org_id);
                 }else{
                     $criteria->compare('id',$OrgUser->orgchart_id);
                 }
