@@ -188,7 +188,7 @@ $orgchart = OrgChart::model()->findbypk($_GET['id']);
         <?php } ?>
 
         <?php 
-            if($_SERVER['HTTP_HOST']="elearning.imct.co.th"){
+            if($_SERVER['HTTP_HOST']=="elearning.imct.co.th"){
                
             }else{ ?>
                 <a  class="btn btn pull-right" href="<?= $this->createUrl('Coursecontrol/Manageorguser/'.$_GET["id"].''); ?>"  style="margin-right: 10px;background-color:#e50000;color: #ffff">จัดการสมาชิกในกล่อง</a>z
