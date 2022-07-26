@@ -377,14 +377,37 @@ class CourseApiMobileController extends Controller
                 $target = $model->course_id;
             }
             if ($dl != null && $dl == 'dl') {
-                self::savePassCourseLog('Download', $target);
+                self::savePassCourseLog('Download', $target,$UserId);
                 $mPDF->Output($fulltitle . '.pdf', 'D');
             } else {
-                self::savePassCourseLog('Print', $target);
+                self::savePassCourseLog('Print', $target,$UserId);
                 $mPDF->Output();
             }
         } else {
             throw new CHttpException(404, 'The requested page does not exist.');
+        }
+    }
+
+    private function savePassCourseLog($action, $passcours_id,$UserId) {
+
+        if ($UserId) {
+            
+            $passcours_model = Passcours::model()->findByPk($passcours_id);
+            $course_model = CourseOnline::model()->findByPk($passcours_model->passcours_cours);
+            $gen_id = $course_model->getGenID($course_model->course_id);
+    
+            $model = new PasscoursLog();
+                //set model data
+            $model->pclog_userid = $UserId;
+            $model->pclog_event = $action;
+            $model->gen_id = $gen_id;
+            $model->pclog_target = $passcours_id;
+            $model->pclog_date = date('Y-m-d H:i:s');
+    
+                //save
+            if (!$model->save()) {
+                throw new CHttpException(404, 'The requested page does not exist.');
+            }
         }
     }
 
