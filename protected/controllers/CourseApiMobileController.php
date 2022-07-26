@@ -36,70 +36,59 @@ class CourseApiMobileController extends Controller
 
   
 
-    public function actionCourseLearnSaveTimeVideo()
-    {
-
-        // var_dump($_POST);  exit();
-        if (isset($_POST["time"]) && isset($_POST["file"])) {
-            $user_id = $_POST['user_id'];
+    public function actionCourseLearnSaveTimeVideo(){
+        // var_dump($_POST); 
+        if(isset($_POST["time"]) && isset($_POST["file"])){
+            $user_id = $_POST["user_id"];
             $file_id = $_POST["file"];
-            $time = $_POST["current_time"];
-            $lesson = $_POST["lesson_id"];
-
-            $lesson2 = Lesson::model()->find(array(
-                'condition' => 'id=:id AND active=:active',
-                'params' => array(':id' => $lesson, ':active' => 'y'),
-            ));
-
-            $chk_start = Helpers::lib()->chk_logstartcourse($lesson2->course_id);
-
+            $gen_id = $_POST["gen_id"];
+            $time = $_POST["time"];
+            $lesson = $_POST["lesson"];
+    
             $lesson_fine_course = Lesson::model()->findByPk($lesson);
-
+    
             $learn_model = Learn::model()->find(array(
-                'condition' => 'lesson_id=:lesson_id AND startcourse_id=:startcourse_id AND user_id=:user_id AND course_id=:course_id ',
-                'params' => array(':lesson_id' => $lesson, ':startcourse_id' => $chk_start, ':user_id' => $user_id, ':course_id' => $lesson_fine_course->course_id),
-            ));
-
+                    'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id',
+                    'params'=>array(':lesson_id'=>$lesson,':user_id'=>$user_id, ':course_id'=>$lesson_fine_course->course_id, ':gen_id'=>$gen_id),
+                ));
+    
             $model = LearnFile::model()->find(array(
-                'condition' => 'file_id=:file_id AND startcourse_id=:startcourse_id AND user_id_file=:user_id AND learn_id=:learn_id AND learn_file_status!="s"',
-                'params' => array(':file_id' => $file_id, ':startcourse_id' => $chk_start, ':user_id' => $user_id, ':learn_id' => $learn_model->learn_id),
+                'condition'=>'file_id=:file_id AND user_id_file=:user_id AND learn_id=:learn_id AND gen_id=:gen_id AND learn_file_status!="s"',
+                'params'=>array(':file_id'=>$file_id,':user_id'=>$user_id, ':gen_id'=>$gen_id, ':learn_id'=>$learn_model->learn_id),
             ));
-
+    
             // var_dump($learn_model); 
             // var_dump($model); exit();
-
-            if ($model->learn_file_status == "l" || (is_numeric($model->learn_file_status) && (int)$model->learn_file_status < (int)$time)) {
+    
+            if( $model->learn_file_status == "l" || (is_numeric($model->learn_file_status) && (int)$model->learn_file_status < (int)$time) ){
                 $model->learn_file_status = $time;
                 $model->save();
                 echo "success";
-            } else {
-                echo (int)$model->learn_file_status . " < " . (int)$time;
+            }else{
+                echo (int)$model->learn_file_status." < ".(int)$time;
             }
+    
+            
         }
     }
 
-    public function actionPrintCertificate()
-    {
-        $user_id = $_GET['user_id'];
-        $id = $_GET['course_id'];
-        $langId = $_GET['lang_id'];
-
-        $chk_start = Helpers::lib()->chk_logstartcourse($id,$user_id);
-
+    public function actionPrintCertificate($id, $dl = null) {
+        // if(Yii::app()->user->id){
+        //     Helpers::lib()->getControllerActionId();
+        // }
         //get all $_POST data
-        $UserId = $user_id;
+        $UserId = $_GET["user_id"];
         $PassCoursId = $id;
-
-        $certDetail = CertificateNameRelations::model()->find(array('condition' => 'course_id=' . $id));
-
-        $currentlangauge = Language::model()->findByPk($langId);
-
-        if (empty($certDetail)) {
-            Yii::app()->user->setFlash('Nocert', 'เกิดข้อผิดพลาด \n กรุณาติดต่อผู้ดูแลระบบ');
-            $this->redirect(array('/course/detail/', 'id' => $id));
-        }
+        $certDetail = CertificateNameRelations::model()->find(array('condition'=>'course_id='.$id));
         //
         $currentUser = User::model()->findByPk($UserId);
+
+        $course_model = CourseOnline::model()->findByPk($id);
+        if(isset($_GET['gen']) && $_GET['gen'] != ""){
+            $gen_id = $_GET['gen'];
+        }else{
+            $gen_id = $course_model->getGenID($course_model->course_id);
+        }
 
         if ($PassCoursId != null) {
             $CourseModel = CourseOnline::model()->findByAttributes(array(
@@ -111,29 +100,27 @@ class CourseApiMobileController extends Controller
             $this->redirect(array('category/index'));
         }
 
-
-
         $CertificateType = ($CourseModel->CategoryTitle->special_category == 'y') ? 'cpd' : null;
 
         if ($CertificateType) {
             $model = Passcours::model()->find(array(
-                'condition' => 'passcours_cours = "' . $PassCoursId . '" AND startcourse_id="' . $chk_start . '"  AND passcours_user = "' . $UserId . '"',
-            ));
+                'condition' => 'passcours_cours = "' . $PassCoursId . '" AND passcours_user = "' . $UserId . '" AND gen_id="'.$gen_id.'"',
+            )
+        );
             if ($model == null) {
                 $model = Coursescore::model()->find(array(
-                    'condition' => 'course_id= " ' . $PassCoursId . '" AND startcourse_id="' . $chk_start . '"  AND user_id= "' . $UserId . '"'
+                    'condition' => 'course_id= " ' . $PassCoursId . '" AND user_id= "' . $UserId . '" AND gen_id="'.$gen_id.'"'
                 ));
             }
         } else {
             $model = Passcours::model()->find(array(
-                'condition' => 'passcours_cours = "' . $PassCoursId . '" AND startcourse_id="' . $chk_start . '"  AND passcours_user = "' . $UserId . '"',
-            ));
+                'condition' => 'passcours_cours = "' . $PassCoursId . '" AND passcours_user = "' . $UserId . '" AND gen_id="'.$gen_id.'"',
+            )
+        );
             if ($model == null) {
                 $model = $CourseModel;
             }
         }
-
-        // var_dump($chk_start);exit();
 
         //set default text + data
         $PrintTypeArray = array(
@@ -142,23 +129,23 @@ class CourseApiMobileController extends Controller
         );
 
         //set user type
-        if (isset($model->Profiles)) {
-            switch ($model->Profiles->type_user) {
-                case '1':
-                    $userAccountCode = null;
-                    break;
-                case '4':
-                    $userAccountCode = $PrintTypeArray['2']['text'] . ' ' . $PrintTypeArray['2']['id'] . ' ' . $PrintTypeArray['3']['text'] . ' ' . $PrintTypeArray['3']['id'];
-                    break;
-                default:
-                    $userAccountCode = $PrintTypeArray[$model->Profiles->type_user]['text'] . ' ' . $PrintTypeArray[$model->Profiles->type_user]['id'];
-                    break;
-            }
-        }
+        // if (isset($model->Profiles)) {
+        //     switch ($model->Profiles->type_user) {
+        //         case '1':
+        //         $userAccountCode = null;
+        //         break;
+        //         case '4':
+        //         $userAccountCode = $PrintTypeArray['2']['text'] . ' ' . $PrintTypeArray['2']['id'] . ' ' . $PrintTypeArray['3']['text'] . ' ' . $PrintTypeArray['3']['id'];
+        //         break;
+        //         default:
+        //         $userAccountCode = $PrintTypeArray[$model->Profiles->type_user]['text'] . ' ' . $PrintTypeArray[$model->Profiles->type_user]['id'];
+        //         break;
+        //     }
+        // }
 
         //get start & end learn date of current course
         $StartDateLearnThisCourse = Learn::model()->with('LessonMapper')->find(array(
-            'condition' => 'learn.user_id = ' . $UserId . ' AND startcourse_id="' . $chk_start . '"  AND learn.course_id = ' . $PassCoursId,
+            'condition' => 'learn.user_id = ' . $UserId . ' AND learn.course_id = ' . $PassCoursId.' AND gen_id='.$gen_id,
             'alias' => 'learn',
             'order' => 'learn.create_date ASC',
         ));
@@ -171,7 +158,7 @@ class CourseApiMobileController extends Controller
         //get date passed final test **future change
         $CourseDatePass = null;
         //Pass Course Date
-        $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = ' . $UserId . ' AND startcourse_id="' . $chk_start . '" '));
+        $CourseDatePassModel = Passcours::model()->find(array('condition' => 'passcours_user = '.$UserId.' AND gen_id='.$gen_id." AND passcours_cours='".$PassCoursId."'"));
         $CourseDatePass = $CourseDatePassModel->passcours_date;
 
         // $CoursePassedModel = Coursescore::model()->find(array(
@@ -179,8 +166,16 @@ class CourseApiMobileController extends Controller
         //     'order' => 'create_date ASC'
         //     ));
         $CoursePassedModel = Passcours::model()->find(array(
-            'condition' => 'passcours_user = ' . $UserId . ' AND startcourse_id="' . $chk_start . '"  AND passcours_cours = ' . $PassCoursId
+            'condition' => 'passcours_user = ' . $UserId . ' AND passcours_cours = ' . $PassCoursId .' AND gen_id='.$gen_id
         ));
+
+        $num_pass = PasscourseNumber::model()->find(array(
+            'condition' => 'course_id=:course_id AND gen_id=:gen_id AND user_id=:user_id',
+            'params' => array(':course_id'=>$PassCoursId, ':gen_id'=>$gen_id, ':user_id'=>$UserId,),
+            'order' => 'id DESC',
+        ));
+        $num_pass = $num_pass->code_number;
+        
 
         // if ($CoursePassedModel) {
         //     $CourseDatePass = date('Y-m-d', strtotime($CoursePassedModel->passcours_date));
@@ -199,23 +194,33 @@ class CourseApiMobileController extends Controller
 
         $course_check_sign = array('170', '174', '186', '187', '188', '189', '190', '191', '192', '193', '194');
         // $renderFile = 'certificate';
-        if ($CourseModel->cate_id == 77) {
-            $renderFile = 'Eventcertificate';
+        $renderFile = 'Newcertificate';
+        /*if ($CertificateType == 'cpd') {
+            $renderFile = 'certificate_cpd';
+            $renderSign = 'dbd_certificate_dbd_sign.png';
+            $nameSign = '( นางโสรดา เลิศอาภาจิตร์ )';
+            $positionSign = 'ผู้อำนวยการกองกำกับบัญชีธุรกิจ';
         } else {
-            $renderFile = 'Newcertificate';
-        }
-
-        
+            if (in_array($PassCoursId, $course_check_sign)) {
+                $renderSign = 'dbd_certificate_sign_2.png';
+                $nameSign = '( ม.ล. ภู่ทอง  ทองใหญ่ )';
+                $positionSign = 'ผู้อำนวยการกองพัฒนาผู้ประกอบธุรกิจ';
+            } else {
+                $renderSign = 'dbd_certificate_sign.png';
+                $nameSign = '( นายธานี  โอฬารรัตน์มณี )';
+                $positionSign = 'ผู้อำนวยการกองพาณิชย์อิเล็กทรอนิกส์';
+            }
+        }*/
         $renderSign = $certDetail->certificate->signature->sign_path;
         $nameSign = $certDetail->certificate->signature->sign_title;
         $positionSign = $certDetail->certificate->signature->sign_position;
 
-        // $sign_id2 = $certDetail->certificate->sign_id2; //key
-        // $model2 = signature::model()->find(array('condition' => 'sign_id = '.$sign_id2)); //model PK = sign_id2
+        $sign_id2 = $certDetail->certificate->sign_id2; //key
+        $model2 = Signature::model()->find(array('condition' => 'sign_id = '.$sign_id2)); //model PK = sign_id2
 
-        // $renderSign2 = $model2->sign_path;
-        // $nameSign2 = $model2->sign_title;
-        // $positionSign2 = $model2->sign_position;
+        $renderSign2 = $model2->sign_path;
+        $nameSign2 = $model2->sign_title;
+        $positionSign2 = $model2->sign_position;
 
         //position
         // $position_id = $currentUser->position_id;
@@ -224,94 +229,119 @@ class CourseApiMobileController extends Controller
 
         //Company
         $company_id = $currentUser->company_id;
-        if (!empty($company_id)) {
-            $company = company::model()->find(array('condition' => 'company_id = ' . $company_id));
-            $company_title = $company->company_title;
-        } else {
-            $company_title = $currentUser->profile->department;
-        }
+        // if(!empty($company_id)){
+        //     $company = Company::model()->find(array('condition' => 'company_id = '.$company_id));
+        //     $company_title = $company->company_title;
+        // }else{
+        //     $company_title =$currentUser->profile->department;
+        // }
         // var_dump($certDetail->certificate);exit();
 
-        if ($certDetail->certificate->cert_display == '1') {
+        if($certDetail->certificate->cert_display == '1'){
+            $pageFormat = 'P';
+        }elseif($certDetail->certificate->cert_display == '3'){
             $pageFormat = 'P';
         } else {
             $pageFormat = 'L';
         }
-        if ($model) {
-            // $fulltitle = $currentUser->profile->ProfilesTitle->prof_title ."". $currentUser->profile->firstname . " " . $currentUser->profile->lastname;
-            if ($currentlangauge->id == 1) { //EN
-                $fulltitle = $currentUser->profile->firstname_en . " " . $currentUser->profile->lastname_en;
-            } else {
-                $fulltitle = $currentUser->profile->firstname . " " . $currentUser->profile->lastname;
+
+        $course_model = CourseOnline::model()->findByPk($PassCoursId);
+        $gen_id = $course_model->getGenID($course_model->course_id);
+
+        $logStartTime = LogStartcourse::model()->findByAttributes(array('user_id' => $UserId,'course_id'=> $PassCoursId, 'gen_id'=>$gen_id));
+
+
+        if(!$logStartTime){
+
+            $logStartTime->start_date =  date('Y-m-d');
+            $logStartTime->end_date = date('Y-m-d');
+
+            if($logStartTime->start_date == $logStartTime->end_date){
+                $period = Helpers::lib()->PeriodDate($logStartTime->end_date,true);
+            }
+        }else{
+            $startLogDate = Helpers::lib()->PeriodDate($logStartTime->start_date,false);
+            $endLogDate = Helpers::lib()->PeriodDate($logStartTime->end_date,true);
+
+            $ckMonthStart = explode(' ', $startLogDate);
+            $ckMonthEnd = explode(' ', $endLogDate);
+
+
+            if($ckMonthStart[1] == $ckMonthEnd[1]){
+                $period = $ckMonthStart[0]." - ".$ckMonthEnd[0]." ".$ckMonthStart[1]." ".$ckMonthEnd[2];
+            }else{
+                $period = $startLogDate." - ".$endLogDate;
             }
 
-            $identification = $currentUser->profile->identification;
+        }
+
+        $course_model = CourseOnline::model()->findByAttributes(array(
+            'course_id' => $PassCoursId,
+            'active' => 'y'
+        ));
+        if(!empty($course_model->course_date_end)){ //LMS
+            $course_model->course_date_end =  Helpers::lib()->PeriodDate($course_model->course_date_end,true);
+        }else{ //TMS
+            $course_model->course_date_end = Helpers::lib()->PeriodDate($course_model->Schedules->training_date_end,true);
+        }
+
+        $lastPasscourse = Helpers::lib()->PeriodDate($CourseDatePass, true);
+
+        $year_pass = date("y", strtotime($CourseDatePass));
+
+        $format_date_pass = date('jS F Y', strtotime($lastPasscourse));
+        $format_date_pass2 = date('d M Y', strtotime($lastPasscourse));
+
+
+        if ($model) {
+            $fulltitle = $currentUser->profile->ProfilesTitle->prof_title ."". $currentUser->profile->firstname . " " . $currentUser->profile->lastname;
+            // $identification = $currentUser->profile->identification ;
 
             if (isset($model->Profiles)) {
-                // $fulltitle = $model->Profiles->ProfilesTitle->prof_title . $model->Profiles->firstname . " " . $model->Profiles->lastname;
-                if ($currentlangauge->id == 1) {
-                    $fulltitle = $model->Profiles->firstname_en . " " . $model->Profiles->lastname_en;
-                } else {
-                    $fulltitle = $model->Profiles->firstname . " " . $model->Profiles->lastname;
-                }
-            }
-
-            if (isset($model->CourseOnlines)) {
-                $courseCer = $model->CourseOnlines;
-            } else {
-                $courseCer = $model;
-            }
-
-            if ($currentlangauge->id == 1) {
-                $courseCertitle =  $courseCer->course_title;
-            } else {
-                $modelParent = CourseOnline::model()->findByAttributes(array('parent_id' => $courseCer->course_id, 'lang_id' => $currentlangauge->id));
-                if (empty($modelParent)) {
-                    $courseCertitle = $courseCer->course_title;
-                } else {
-                    $courseCertitle = $modelParent->course_title;
-                }
+                $fulltitle = $model->Profiles->firstname . " " . $model->Profiles->lastname;
+                $fulltitle_en =  $model->Profiles->firstname_en . " " . $model->Profiles->lastname_en;
             }
             $setCertificateData = array(
                 'fulltitle' => $fulltitle,
+                'fulltitle_en' => $fulltitle_en,
+                'cert_text' => $certDetail->certificate->cert_text,
                 'userAccountCode' => $userAccountCode,
-                // 'courseTitle' => (isset($model->CourseOnlines)) ? $model->CourseOnlines->course_title : $model->course_title,
-                'courseTitle' => $courseCertitle,
+                'courseTitle_en' => (isset($model->CourseOnlines)) ? $model->CourseOnlines->course_title : $model->course_title,
+                'coursenumber' => $model->CourseOnlines->course_number,
+                'format_date_pass' => $format_date_pass,                
+                'format_date_pass2' => $format_date_pass2,                
                 'courseCode' => (isset($courseCode)) ? 'รหัสหลักสูตร ' . $courseCode : null,
                 'courseAccountHour' => (isset($courseAccountHour)) ? $courseAccountHour : null,
                 'courseEtcHour' => (isset($courseEtcHour)) ? $courseEtcHour : null,
                 'startLearnDate' => $startDate,
-                'endLearnDate' => (isset($model->passcours_date)) ? $model->passcours_date : $model->create_date,
-                'courseDatePass' => $CourseDatePass,
+                
+                'period' => $period,
+                'endDateCourse' => $course_model->course_date_end,
 
+                'endLearnDate' => (isset($model->passcours_date)) ? $model->passcours_date : $model->create_date,
+                'courseDatePassOver60Percent' => $CourseDatePass,
+                'year_pass' => $year_pass,
+                'num_pass' => $num_pass,
                 'renderSign' => $renderSign,
                 'nameSign' => $nameSign,
                 'positionSign' => $positionSign,
 
-                // 'renderSign2' => $renderSign2,
-                // 'nameSign2' => $nameSign2,
-                // 'positionSign2' => $positionSign2,
+                'renderSign2' => $renderSign2,
+                'nameSign2' => $nameSign2,
+                'positionSign2' => $positionSign2,
 
                 'positionUser' => $position_title,
                 'companyUser' => $company_title,
 
-                'identification' => $identification,
+                // 'identification' => $identification,
                 'bgPath' => $certDetail->certificate->cert_background,
                 'pageFormat' => $pageFormat,
                 'pageSide' => $certDetail->certificate->cert_display,
-                'hr_name' => $certDetail->certificate->cert_hr_fullname,
-                'hr_position' => $certDetail->certificate->cert_hr_position,
-                'langId' => $langId,
-
-
-
-                'qr_user' => Yii::app()->user->id,
-                'qr_course' => $courseCer->course_id,
-                'qr_chk_start' => $chk_start,
-
+                'user' => $UserId,
+                'course' => $course_model->course_id,
+                'gen' => $gen_id
             );
 
-            // var_dump($certDetail->certificate->cert_background);exit();
 
             //Print
             // $mPDF = Yii::app()->ePdf->mpdf('th', 'A4-L', '0', 'dbhelvethaicax');
@@ -320,24 +350,24 @@ class CourseApiMobileController extends Controller
             // $mPDF->SetTitle($certDetail->certificate->cert_name);
             // $mPDF->AddPage($pageFormat);
 
-            // //encode html for UTF-8 before write to html
-            // $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('cerfile/' . $renderFile, array('model' => $setCertificateData), true), 'UTF-8', 'UTF-8'));
-            require_once __DIR__ . '/../../admin/protected/vendors/mpdf7/autoload.php';
-            $mPDF = new \Mpdf\Mpdf(['format' => 'A4-' . $pageFormat]);
-
-            // $mPDF = Yii::app()->ePdf->mpdf('th', 'A4-L', '0', 'dbhelvethaicax');
-            $mPDF->setDisplayMode('fullpage');
-            $mPDF->autoLangToFont = true;
-            $mPDF->SetTitle($certDetail->certificate->cert_name);
-
-            $mPDF->showImageErrors = false;
-            //$mPDF->setAutoFont();
-            $mPDF->AddPage($pageFormat);
             //encode html for UTF-8 before write to html
-            $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('cerfile/' . $renderFile, array('model' => $setCertificateData), true), 'UTF-8', 'UTF-8'));
+            // $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('cerfile/' . $renderFile, array('model' => $setCertificateData), true), 'UTF-8', 'UTF-8'));
+            if($certDetail->certificate->cert_display == '1'){
+            $pageFormat = 'P';
+        }elseif($certDetail->certificate->cert_display == '3'){
+            $pageFormat = 'P';
+        }  else {
+            $pageFormat = 'L';
+        }
+
+
+            require_once __DIR__ . '/../../admin/protected/vendors/mpdf7/autoload.php';
+            $mPDF = new \Mpdf\Mpdf(['format' => 'A4-'.$pageFormat]);
+            // $mPDF = new \Mpdf\Mpdf(['orientation' => $pageFormat]);
+            $mPDF->WriteHTML(mb_convert_encoding($this->renderPartial('cerfile/' . $renderFile, array('model'=>$setCertificateData), true), 'UTF-8', 'UTF-8'));
 
             //output
-            if (isset($model->passcours_id) or isset($model->score_id)) {
+            if (isset($model->passcours_id) OR isset($model->score_id)) {
                 if (isset($model->passcours_id)) {
                     $target = $model->passcours_id;
                 } else if (isset($model->score_id)) {
