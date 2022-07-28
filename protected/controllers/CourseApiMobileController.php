@@ -43,30 +43,32 @@ class CourseApiMobileController extends Controller
             $file_id = $_POST["file"];
             $gen_id = $_POST["gen_id"];
             $time = $_POST["time"];
-            $lesson = $_POST["lesson"];
+            $learn_id = $_POST["learn_id"];
     
-            $lesson_fine_course = Lesson::model()->findByPk($lesson);
-    
-            $learn_model = Learn::model()->find(array(
-                    'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND course_id=:course_id AND gen_id=:gen_id',
-                    'params'=>array(':lesson_id'=>$lesson,':user_id'=>$user_id, ':course_id'=>$lesson_fine_course->course_id, ':gen_id'=>$gen_id),
-                ));
     
             $model = LearnFile::model()->find(array(
                 'condition'=>'file_id=:file_id AND user_id_file=:user_id AND learn_id=:learn_id AND gen_id=:gen_id AND learn_file_status!="s"',
-                'params'=>array(':file_id'=>$file_id,':user_id'=>$user_id, ':gen_id'=>$gen_id, ':learn_id'=>$learn_model->learn_id),
+                'params'=>array(':file_id'=>$file_id,':user_id'=>$user_id, ':gen_id'=>$gen_id, ':learn_id'=>$learn_id),
             ));
     
             // var_dump($learn_model); 
             // var_dump($model); exit();
-    
-            if( $model->learn_file_status == "l" || (is_numeric($model->learn_file_status) && (int)$model->learn_file_status < (int)$time) ){
-                $model->learn_file_status = $time;
-                $model->save();
-                echo "success";
+
+            $count_model=count($model);
+
+            if($count_model>0){
+                if( $model->learn_file_status == "l" || (is_numeric($model->learn_file_status) && (int)$model->learn_file_status < (int)$time) ){
+                    $model->learn_file_status = $time;
+                    $model->save();
+                    echo "success";
+                }else{
+                    echo (int)$model->learn_file_status." < ".(int)$time;
+                }
             }else{
-                echo (int)$model->learn_file_status." < ".(int)$time;
+                echo "ไม่มีเบส";
             }
+    
+            
     
             
         }
