@@ -12,11 +12,11 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') {
     $keyrecaptcha = '6LdxRgocAAAAADrcEFCe2HcHeETOZdREexT52B6R'; //localhost
     $checkcap = '';
-}else if($_SERVER['REMOTE_ADDR'] == '172.24.4.254'){
-    $keyrecaptcha = '6LcrED0hAAAAABs1r3b90Sra9SZUbg8ztpBL4xCT'; //test
-    $checkcap = 'disabled';
-} else {
+}else if(Yii::app()->createAbsoluteUrl('') == 'https://elearning.imct.co.th'){
     $keyrecaptcha = '6LdHyRMgAAAAAKPltirPHX2kZkEv3mF8YVKZLpRa'; //product
+    $checkcap = 'disabled';
+}else{
+    $keyrecaptcha = '6LcrED0hAAAAABs1r3b90Sra9SZUbg8ztpBL4xCT'; //test
     $checkcap = 'disabled';
 }
 if (Yii::app()->user->id != null) {
