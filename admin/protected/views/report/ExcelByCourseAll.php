@@ -90,12 +90,11 @@ if (isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != '') {
 
                     $passcourse = Passcours::model()->find(array(
                         'condition' => 'gen_id=:gen_id AND passcours_cours=:course_id AND passcours_user=:user_id',
-                        'params' => array(':gen_id' => $valueL->course->getGenID($valueL->course_id), ':course_id' => $valueL->course_id, ':user_id' => $valueL->user_id),
+                        'params' => array(':gen_id' => (int) $valueL->course->getGenID($valueL->course_id), ':course_id' => $valueL->course_id, ':user_id' => $valueL->user_id),
                     ));
                     //---------------คะแนนหลักสูตร-----------------//
                     $Evaluation = "Pending";
-                    $header_id = Helpers::lib()->chk_course_questionnaire($valueLog->course_id);
-
+                    $header_id = Helpers::lib()->chk_course_questionnaire($valueL->course_id);
                     if ($passcourse != null) {
                         if ($header_id != null) {
                             if (Helpers::lib()->chk_course_questionnaire_do($header_id, $valueL->course_id, $passcourse->passcours_user, "")) {
