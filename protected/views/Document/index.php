@@ -51,7 +51,7 @@ function DateThai($strDate)
                 )); ?>
         <div class="row justify-content-between align-items-end mb-3">
             <div class="col-7 col-md-8 col-lg-9">
-                <h4 class="topic mb-0"> <?= $last_DOc ?></h4>
+                <!-- <h4 class="topic mb-0"> <?= $last_DOc ?></h4> -->
             </div>
             <div class="col-5 col-md-4 col-lg-3">
                 <input class="form-control text-3" name='search_type' type="text" style="width: 100%;" placeholder="<?= $search_type ?>" value="<?= $search ?>" >
