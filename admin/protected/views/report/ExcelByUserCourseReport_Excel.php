@@ -242,7 +242,7 @@ header("Pragma:no-cache");
                                       $coursescore_post = Coursescore::model()->find(array(
                                         'select'=>'score_number, score_total, score_past,course_id',
                                         'condition'=>'type="post" AND course_id="'.$valueLog->course_id.'" AND user_id="'.$valueLog->user_id.'" AND active="y" ',
-                                        'order'=>'score_id DESC'
+                                        'order'=>'score_number DESC'
                                       ));
 
                                       if($coursescore_post){
