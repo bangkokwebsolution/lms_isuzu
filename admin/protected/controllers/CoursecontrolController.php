@@ -612,7 +612,7 @@ class CoursecontrolController extends Controller
 			}
 		}
 		$criteria = new CDbCriteria;
-		// $criteria->compare('superuser', 1);
+		 $criteria->compare('superuser', 0);
 		$criteria->compare('del_status', 0);
 		$criteria->compare('status', 1);
 		$criteria->compare('org_id', $orgid);
@@ -632,6 +632,7 @@ class CoursecontrolController extends Controller
 		$criteria->addInCondition('id',$arr_user);
 		$criteria->compare('del_status', 0);
 		$criteria->compare('status', 1);
+		$criteria->compare('superuser', 0);
 		$user = User::model()->with('profile')->findAll($criteria);
 
 		$this->render('Manageorguser', array('userAll'=>$userAll, 'user'=>$user));
