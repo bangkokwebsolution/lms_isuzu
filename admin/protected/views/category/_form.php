@@ -106,7 +106,7 @@ body {
 				<?php 
 					}
 				?>
-				<p class="note">ค่าที่มี <?php echo $this->NotEmpty();?> จำเป็นต้องใส่ให้ครบ</p>
+				<p class="note">ค่าที่มี <font color="red">*</font> จำเป็นต้องใส่ให้ครบ</p>
 					<div class="row">
 						<?php $model->cate_type = 1; ?>
 					</div>
@@ -122,7 +122,6 @@ body {
                     	<div class="col-md-12">
                     	<?php echo $form->labelEx($model,'type_id'); ?>
                     	<?php echo $this->listCourseTypeShow2($model,'type_id','span8',$readonly,$lang_id,$parent_id);?>
-                    	<?php echo $this->NotEmpty();?>
                     	<?php echo $form->error($model,'type_id'); ?>
 	                    </div>
                     </div>
@@ -131,7 +130,6 @@ body {
 						<div class="col-md-12">
 						<?php echo $form->labelEx($model,'cate_title'); ?>
 						<?php echo $form->textField($model,'cate_title',array('size'=>60,'maxlength'=>250, 'class'=>'span8')); ?>
-						<?php echo $this->NotEmpty();?>
 						<?php echo $form->error($model,'cate_title'); ?>
 						</div>
 					</div>
@@ -140,7 +138,6 @@ body {
 						<div class="col-md-12">
 						<?php echo $form->labelEx($model,'cate_short_detail'); ?>
 						<?php echo $form->textArea($model,'cate_short_detail',array('rows'=>4, 'cols'=>40,'class'=>'span8','maxlength'=>255)); ?>
-						<?php echo $this->NotEmpty();?>
 						<?php echo $form->error($model,'cate_short_detail'); ?>
 						</div>
 					</div>
@@ -189,7 +186,7 @@ body {
 
 					<div class="row">
 						<font color="#990000">
-							<?php echo $this->NotEmpty();?> รูปภาพควรมีขนาด 250x180(แนวนอน) หรือ ขนาด 250x(xxx) (แนวยาว)
+							* รูปภาพควรมีขนาด 250x180(แนวนอน) หรือ ขนาด 250x(xxx) (แนวยาว)
 						</font>
 					</div>
 					<br>
