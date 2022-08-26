@@ -60,14 +60,14 @@ $attTime = array('readonly'=>true,'autocomplete'=>'off');
 
 }
 ?>
-				<p class="note">ค่าที่มี <?php echo $this->NotEmpty();?> จำเป็นต้องใส่ให้ครบ</p>
+				<p class="note">ค่าที่มี  <font color="red">*</font> จำเป็นต้องใส่ให้ครบ</p>
 
 				<?php echo $form->errorSummary($model); ?>
 
 				<div class="row">
 					<?php echo $form->labelEx($model,'name'); ?>
 					<?php echo $form->textField($model,'name',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
-					<?php echo $this->NotEmpty();?>
+					
 					<?php echo $form->error($model,'name'); ?>
 				</div>
 
@@ -80,21 +80,21 @@ $attTime = array('readonly'=>true,'autocomplete'=>'off');
 				<div class="row">
 					<?php echo $form->labelEx($model,'start_date'); ?>
 					<?php echo $form->textField($model,'start_date', $attTime); ?>
-			        <?php echo $this->NotEmpty();?>
+			      
 					<?php echo $form->error($model,'start_date'); ?>
 				</div>
 				
 				<div class="row">
 					<?php echo $form->labelEx($model,'end_date'); ?>
 					<?php echo $form->textField($model,'end_date', $attTime); ?>
-			        <?php echo $this->NotEmpty();?>
+			    
 					<?php echo $form->error($model,'end_date'); ?>
 				</div>
 
 				<div class="row">
 					<?php echo $form->labelEx($model,'link'); ?>
 					<?php echo $form->textField($model,'link',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
-					<?php echo $this->NotEmpty();?>
+				
 					<?php echo $form->error($model,'link'); ?>
 				</div>
 				<div class="row">
@@ -123,7 +123,7 @@ $attTime = array('readonly'=>true,'autocomplete'=>'off');
 					<?php echo $form->error($model,'pic_file'); ?>
 					<div class="row">
 						<font color="#990000">
-							<?php echo $this->NotEmpty();?> รูปภาพควรมีขนาด 900X500 Pixel
+							* รูปภาพควรมีขนาด 900X500 Pixel
 						</font>
 					</div>
 					<?php if ($notsave == 1) { ?>
