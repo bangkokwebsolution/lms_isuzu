@@ -196,7 +196,7 @@
                                     <div class="col-md-12">
                                         <?php echo $form->labelEx($model,'org_id'); ?>
                                         <?php echo Chosen::activeDropDownList($model, 'org_id', $org_all, $attSearch); ?>
-                                        <?php echo $this->NotEmpty();?>
+                                       
                                         <?php echo $form->error($model,'org_id'); ?>
                                     </div>
                                 </div>
