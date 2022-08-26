@@ -85,7 +85,7 @@ figure figcaption {
                     'htmlOptions' => array('enctype' => 'multipart/form-data')
                 ));
                 ?>
-                <p class="note">ค่าที่มี <?php echo $this->NotEmpty(); ?> จำเป็นต้องใส่ให้ครบ</p>
+                <p class="note">ค่าที่มี <font color="red">*</font> จำเป็นต้องใส่ให้ครบ</p>
 
                 <div class="row">
                 	<div class="col-md-8">
