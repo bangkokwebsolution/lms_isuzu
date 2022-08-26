@@ -288,7 +288,7 @@ body {
                         <?php 
                             }
                         ?>
-                        <p class="note">ค่าที่มี <?php echo $this->NotEmpty();?> จำเป็นต้องใส่ให้ครบ</p>
+                        <p class="note">ค่าที่มี <font color="red">*</font> จำเป็นต้องใส่ให้ครบ</p>
                         <?php    
                         if($lang_id == 1){ 
                             $flag = true;
@@ -321,7 +321,6 @@ body {
                         <!-- <?php echo $form->labelEx($lesson,'course_id'); ?> -->
                         <!-- <?php echo $form->dropDownList($lesson,'course_id', $courseAll, array('empty'=>'-- กรุณาเลือกหลักสูตร --','class'=>'span8')); ?> -->
                         <!-- <?php echo $form->dropDownList($lesson,'course_id', $courseAll,$att); ?> -->
-                        <!-- <?php echo $this->NotEmpty();?> -->
                         <!-- <?php echo $form->error($lesson,'course_id'); ?> -->
                     <!-- </div> -->
                     <?php (empty($model->course_id)? $select = '' : $select = $model->course_id); ?>
@@ -329,7 +328,6 @@ body {
                         <?php echo $form->labelEx($lesson,'course_id'); ?>
                         <!-- <?php echo Chosen::dropDownList('course_id', $select, $courseAll, $attSearch); ?> -->
                         <?php echo Chosen::activeDropDownList($lesson, 'course_id', $courseAll, $attSearch); ?>
-                        <?php echo $this->NotEmpty();?>
                         <?php echo $form->error($lesson,'course_id'); ?>
                     </div>
                     <?php if($lessonChildren){
@@ -341,7 +339,6 @@ body {
                         <!-- <div class="col-md-12"> -->
                         <?php echo $form->labelEx($lesson,'title'); ?>
                         <?php echo $form->textField($lesson,'title',array('size'=>60,'maxlength'=>80,'class'=>'span8')); ?>
-                        <?php echo $this->NotEmpty();?>
                         <?php echo $form->error($lesson,'title'); ?>
                         <!-- </div> -->
                     </div>
@@ -372,7 +369,6 @@ body {
         //             'n' => 'ดูได้เฉพาะกลุ่ม')
         // ); // choose your own separator text
                         ?>
-                        <?php echo $this->NotEmpty();?>
                         <?php echo $form->error($lesson,'view_all'); ?>
                         <!-- </div> -->
                     </div>
@@ -385,7 +381,6 @@ body {
                 <!-- <div class="col-md-12"> -->
                 <?php echo $form->labelEx($lesson,'cate_percent'); ?>
                 <?php echo $form->textField($lesson,'cate_percent',$attCateAmount); ?> %
-                <?php echo $this->NotEmpty();?>
                 <?php echo $form->error($lesson,'cate_percent'); ?>
                 <!-- </div> -->
             </div>
@@ -394,7 +389,6 @@ body {
                 <!-- <div class="col-md-12"> -->
                 <?php echo $form->labelEx($lesson,'cate_amount'); ?>
                 <?php echo $form->textField($lesson,'cate_amount',$attCateAmount); ?> ครั้ง
-                <?php echo $this->NotEmpty();?>
                 <?php echo $form->error($lesson,'cate_amount'); ?>
                 <!-- </div> -->
             </div>
@@ -402,7 +396,6 @@ body {
                 <!-- <div class="col-md-12"> -->
                 <?php echo $form->labelEx($lesson,'time_test'); ?>
                 <?php echo $form->textField($lesson,'time_test',$attCateAmount); ?> นาที
-                <?php echo $this->NotEmpty();?>
                 <?php echo $form->error($lesson,'time_test'); ?>
                 <!-- </div> -->
             </div>
@@ -1015,7 +1008,7 @@ body {
 
             <div class="row">
                 <font color="#990000">
-                    <?php echo $this->NotEmpty();?> รูปภาพควรมีขนาด 175x130(แนวนอน) หรือ ขนาด 175x(xxx) (แนวยาว)
+                    * รูปภาพควรมีขนาด 175x130(แนวนอน) หรือ ขนาด 175x(xxx) (แนวยาว)
                 </font>
             </div>
             <br><br>

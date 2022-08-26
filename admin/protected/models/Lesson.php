@@ -60,7 +60,7 @@ class Lesson extends AActiveRecord
     public function rules()
     {
         return array(
-            array('course_id, title, cate_amount,cate_percent, view_all', 'required' ),
+            array('course_id, title, cate_amount,cate_percent, view_all,time_test', 'required' ),
             array('course_id', 'numerical', 'integerOnly'=>true),
             array('title', 'length', 'max'=>255),
             // array('description', 'length', 'max'=>255),
