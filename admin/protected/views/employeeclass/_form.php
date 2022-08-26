@@ -49,18 +49,18 @@ figure figcaption {
                  'errorMessageCssClass' => 'label label-important',
                  'htmlOptions' => array('enctype' => 'multipart/form-data')
              )); ?>
-             <p class="note">ค่าที่มี <?php echo $this->NotEmpty();?> จำเป็นต้องใส่ให้ครบ</p>
+             <p class="note">ค่าที่มี <font color="red">*</font> จำเป็นต้องใส่ให้ครบ</p>
              <div class="row">
               <?php echo $form->labelEx($model,'title'); ?>
               <?php echo $form->textField($model,'title',array('size'=>60,'maxlength'=>250, 'class'=>'span8','required'=>'required')); ?>
-              <?php echo $this->NotEmpty();?>
+              <font color="red">*</font>
               <?php echo $form->error($model,'title'); ?>
           </div>
 
           <div class="row">
               <?php echo $form->labelEx($model,'descrpition'); ?>
               <?php echo $form->textField($model,'descrpition',array('rows'=>4, 'cols'=>40,'class'=>'span8','required'=>'required','maxlength'=>255)); ?>
-              <?php echo $this->NotEmpty();?>
+              <font color="red">*</font>
               <?php echo $form->error($model,'descrpition'); ?>
           </div>
 
