@@ -184,7 +184,7 @@ function typeVdo(val){
                 ?>
                 <div class="row vdo-file">
 				     <font color="#990000">
-				      <?php echo $this->NotEmpty();?> ไฟล์ขนาดไม่เกิน 1 GB
+				      * ไฟล์ขนาดไม่เกิน 1 GB
 				     </font>
 				<br>
 				<br>
