@@ -22,7 +22,7 @@
 			        'errorMessageCssClass' => 'label label-important',
 			        'htmlOptions' => array('enctype' => 'multipart/form-data')
 				)); ?>
-				<p class="note">ค่าที่มี <?php echo $this->NotEmpty();?> จำเป็นต้องใส่ให้ครบ</p>
+				<p class="note">ค่าที่มี <font color="red">*</font> จำเป็นต้องใส่ให้ครบ</p>
 
 					<!-- <div class="row"> -->
 	                   <!--  <?php echo $form->labelEx($model, 'lang_id'); ?>
@@ -46,14 +46,14 @@
 						<?php echo $form->labelEx($model,'lesson_id'); ?>
 						<!-- <?php echo Chosen::dropDownList('lesson_id', $select, $list, $attSearch); ?> -->
 						<?php echo Chosen::activeDropDownList($model, 'lesson_id', $list, $attSearch); ?>
-						<?php echo $this->NotEmpty();?>
+						
 						<?php echo $form->error($model,'lesson_id'); ?>
 					</div>
 
 					<div class="row">
 						<?php echo $form->labelEx($model,'group_title'); ?>
 						<?php echo $form->textField($model,'group_title',array('size'=>60,'maxlength'=>250, 'class'=>'span8')); ?>
-						<?php echo $this->NotEmpty();?>
+						
 						<?php echo $form->error($model,'group_title'); ?>
 					</div>
 					<div class="row buttons">
