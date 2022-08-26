@@ -25,7 +25,7 @@ $formNameModel = 'Certificate';
                      'errorMessageCssClass' => 'label label-important',
                     'htmlOptions' => array('enctype' => 'multipart/form-data')
                 )); ?>
-                <p class="note">ค่าที่มี <?php echo $this->NotEmpty();?> จำเป็นต้องใส่ให้ครบ</p>                    
+                <p class="note">ค่าที่มี <font color="red">*</font> จำเป็นต้องใส่ให้ครบ</p>                    
                     <div class="row">
                         <?php echo $form->labelEx($model,'cert_name'); ?>
                         <?php echo $form->textField($model,'cert_name',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
