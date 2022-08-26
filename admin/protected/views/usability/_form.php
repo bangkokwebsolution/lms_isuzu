@@ -21,12 +21,11 @@
 			        'errorMessageCssClass' => 'label label-important',
 			        'htmlOptions' => array('enctype' => 'multipart/form-data')
 				)); ?>
-					<p class="note">ค่าที่มี <?php echo $this->NotEmpty();?> จำเป็นต้องใส่ให้ครบ</p>	
+					<p class="note">ค่าที่มี <font color="red">*</font> จำเป็นต้องใส่ให้ครบ</p>	
 
 					<div class="row">
 						<?php echo $form->labelEx($model,'usa_title'); ?>
 						<?php echo $form->textField($model,'usa_title',array('size'=>60,'maxlength'=>250, 'class'=>'span8')); ?>
-						<?php echo $this->NotEmpty();?>
 						<?php echo $form->error($model,'usa_title'); ?>
 					</div>
 
@@ -68,7 +67,7 @@
 			<div class="row">
 					<div class="col-md-12">
 					<font color="#990000">
-						<?php echo $this->NotEmpty();?> รูปภาพควรมีขนาด 225x150px(แนวนอน) หรือ ขนาด 255x(xxx)px (แนวยาว)
+						* รูปภาพควรมีขนาด 225x150px(แนวนอน) หรือ ขนาด 255x(xxx)px (แนวยาว)
 					</font>
 					</div>
 				</div>
