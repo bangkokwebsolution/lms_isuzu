@@ -27,12 +27,12 @@
 					'errorMessageCssClass' => 'label label-important',
 					'htmlOptions' => array('enctype' => 'multipart/form-data')
 				)); ?>
-				<p class="note">ค่าที่มี <?php echo $this->NotEmpty();?> จำเป็นต้องใส่ให้ครบ</p>
+				<p class="note">ค่าที่มี <font color="red">*</font> จำเป็นต้องใส่ให้ครบ</p>
 
 				<div class="row">
 					<?php echo $form->labelEx($model,'faq_type_title_TH'); ?>
 					<?php echo $form->textField($model,'faq_type_title_TH',array('size'=>60,'maxlength'=>250,'class'=>'span8')); ?>
-					<?php echo $this->NotEmpty();?>
+					
 					<?php echo $form->error($model,'faq_type_title_TH'); ?>
 				</div>
 

@@ -34,6 +34,7 @@ class FaqType extends CActiveRecord
 			array('faq_type_title_TH', 'length', 'max'=>250),
 			array('active', 'length', 'max'=>1),
 			array('create_date, update_date,lang_id', 'safe'),
+			array('faq_type_title_TH','required'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('faq_type_id, faq_type_title_TH, create_date, create_by, update_date, update_by, active,lang_id, sortOrder', 'safe', 'on'=>'search'),
