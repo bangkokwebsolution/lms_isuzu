@@ -49,18 +49,18 @@ figure figcaption {
                  'errorMessageCssClass' => 'label label-important',
                  'htmlOptions' => array('enctype' => 'multipart/form-data')
              )); ?>
-             <p class="note">ค่าที่มี <?php echo $this->NotEmpty();?> จำเป็นต้องใส่ให้ครบ</p>
+             <p class="note">ค่าที่มี <font color="red">*</font> จำเป็นต้องใส่ให้ครบ</p>
              <div class="row">
               <?php echo $form->labelEx($model,'cms_title'); ?>
               <?php echo $form->textField($model,'cms_title',array('size'=>60,'maxlength'=>250, 'class'=>'span8')); ?>
-              <?php echo $this->NotEmpty();?>
+              
               <?php echo $form->error($model,'cms_title'); ?>
           </div>
 
           <div class="row">
               <?php echo $form->labelEx($model,'cms_short_title'); ?>
               <?php echo $form->textArea($model,'cms_short_title',array('rows'=>4, 'cols'=>40,'class'=>'span8','maxlength'=>255)); ?>
-              <?php echo $this->NotEmpty();?>
+              
               <?php echo $form->error($model,'cms_short_title'); ?>
           </div>
 
@@ -147,7 +147,7 @@ figure figcaption {
                                                 <input type="file"  style="display: none;" id="Profile_pro_pic" class="item-img file center-block d-none" name="News[picture]" />
                                             </label>
                                            <font style="margin-top: 10px;color: red">
-                                               <?php echo $this->NotEmpty();?>รูปภาพควรมีขนาด 250x180(แนวนอน) หรือ ขนาด 250x(xxx) (แนวยาว)
+                                           <font color="red">*</font> รูปภาพควรมีขนาด 250x180(แนวนอน) หรือ ขนาด 250x(xxx) (แนวยาว)
                                            </font>
                                         </div>
 

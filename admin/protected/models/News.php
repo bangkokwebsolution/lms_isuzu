@@ -23,7 +23,7 @@ class News extends AActiveRecord
 			// array('cms_picture', 'length', 'max'=>200, 'on'=>'insert,update'),
 			// array('cms_picture', 'file','types' => 'jpg, gif, png', 'allowEmpty'=>true),
 			array('active', 'length', 'max'=>1),
-			array('cms_title', 'required'),
+			array('cms_title,cms_short_title', 'required'),
 			array('cms_short_title, cms_detail, create_date, cms_picture, update_date ,news_per_page, lang_id,parent_id', 'safe'),
 			array('cms_id, cms_title, cms_picture, cms_short_title, cms_detail, create_date, create_by, update_date, update_by, active,cms_tab,cms_link,cms_url,cms_type_display, lang_id,parent_id', 'safe', 'on'=>'search'),
 			array('picture', 'file', 'types'=>'jpg, png, gif','allowEmpty' => true, 'on'=>'insert'),
