@@ -28,7 +28,7 @@ class CourseOnline extends AActiveRecord
 			array('course_picture', 'file','types' => 'jpg, gif, png', 'allowEmpty'=>true),
 			array('active', 'length', 'max'=>1),
 			//array('cate_id,course_title, course_lecturer ,course_point,course_price,course_short_title,course_detail,course_number,course_rector_date, course_type, course_book_number, course_book_date, course_tax, course_refer', 'required'),
-			array('cate_id,time_test,cate_amount,percen_test,course_title,course_short_title,course_day_learn', 'required'),
+			array('cate_id,time_test,cate_amount,percen_test,course_number,course_date_start,course_date_end,course_title,course_short_title,course_day_learn', 'required'),
 			array('course_date_start, course_date_end, cates.cate_title, course_point, cates_search, course_number, course_lecturer, course_short_title, course_detail, create_date, update_date, news_per_page, course_rector_date, course_hour, course_other, course_type, course_book_number, course_book_date, course_status, course_tax, course_refer, course_note,recommend, lang_id, parent_id,course_day_learn', 'safe'),
 			array('cate_type,cate_course,time_test,cate_amount,percen_test,cates.cate_title,course_point,cates_search,course_id, course_number, course_lecturer, cate_id, course_title, course_short_title, course_detail, course_price, course_picture, create_date, create_by, update_date, update_by, active, course_rector_date, course_hour, course_other, course_type, course_book_number, course_book_date, course_status, course_tax, course_refer, course_note,recommend, lang_id, parent_id,course_day_learn', 'safe', 'on'=>'search'),
 		);

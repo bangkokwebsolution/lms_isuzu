@@ -151,7 +151,7 @@
 					<?php 
 						}
 					?>
-                    <p class="note">ค่าที่มี <?php echo $this->NotEmpty();?> จำเป็นต้องใส่ให้ครบ</p>
+                    <p class="note">ค่าที่มี <font color="red">*</font> จำเป็นต้องใส่ให้ครบ</p>
                     <!-- <div class="row"> -->
                     	<!-- <div class="col-md-12"> -->
                     	<!-- <?php echo $form->labelEx($model,'cate_id'); ?> -->
@@ -168,7 +168,7 @@
                     	<?php echo $form->labelEx($model,'cate_id'); ?>
                     	<?php //echo Chosen::dropDownList('cate_id', $select, $list, $attSearch); ?>
                     	<?php echo Chosen::activeDropDownList($model, 'cate_id', $list, $attSearch); ?>
-                    	<?php echo $this->NotEmpty();?>
+                    	
                     	<?php echo $form->error($model,'cate_id'); ?>
 	                    </div>
                     </div>
@@ -236,7 +236,7 @@
 		<div class="col-md-12">
 		<?php echo $form->labelEx($model,'course_title'); ?>
 		<?php echo $form->textField($model,'course_title',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
-		<?php echo $this->NotEmpty();?>
+		
 		<?php echo $form->error($model,'course_title'); ?>
 		</div>
 	</div>
@@ -249,7 +249,7 @@
 		<div class="col-md-12">
 		 <?php echo $form->labelEx($model,'course_number'); ?>
 		<?php echo $form->textField($model,'course_number',$attCateAmount); ?>
-		<?php echo $this->NotEmpty();?>
+	
 		<?php echo $form->error($model,'course_number'); ?>
 		 </div>
 	</div> 
@@ -263,7 +263,7 @@
 		<div class="col-md-12">
 		<?php echo $form->labelEx($model,'course_short_title'); ?>
 		<?php echo $form->textArea($model,'course_short_title',array('rows'=>6, 'cols'=>50, 'class'=>'span8')); ?>
-		<?php echo $this->NotEmpty();?>
+		
 		<?php echo $form->error($model,'course_short_title'); ?>
 		</div>
 	</div>
@@ -284,7 +284,7 @@
 		<div class="col-md-12">
 		<?php echo $form->labelEx($model,'course_date_start'); ?>
 		<?php echo $form->textField($model,'course_date_start',$attTime); ?>
-		<?php echo $this->NotEmpty();?>
+		
 		<?php echo $form->error($model,'course_date_start'); ?>
 		</div>
 	</div>
@@ -293,7 +293,7 @@
 		<div class="col-md-12">
 		<?php echo $form->labelEx($model,'course_date_end'); ?>
 		<?php echo $form->textField($model,'course_date_end',$attTime); ?>
-		<?php echo $this->NotEmpty();?>
+		
 		<?php echo $form->error($model,'course_date_end'); ?>
 		</div>
 	</div>
@@ -302,7 +302,7 @@
 		<div class="col-md-12">
 		<?php echo $form->labelEx($model,'course_day_learn'); ?>
 		<?php echo $form->textField($model,'course_day_learn',$attCateAmount); ?> วัน
-		<?php echo $this->NotEmpty();?>
+		
 		<?php echo $form->error($model,'course_day_learn'); ?>
 		</div>
 	</div>
@@ -312,7 +312,7 @@
 		<div class="col-md-12">
 		<?php echo $form->labelEx($model,'percen_test'); ?>
 		<?php echo $form->textField($model,'percen_test',$attCateAmount); ?> %
-		<?php echo $this->NotEmpty();?>
+		
 		<?php echo $form->error($model,'percen_test'); ?>
 		</div>
 	</div>
@@ -321,7 +321,7 @@
 		<div class="col-md-12">
 		<?php echo $form->labelEx($model,'cate_amount'); ?>
 		<?php echo $form->textField($model,'cate_amount',$attCateAmount); ?> ครั้ง
-		<?php echo $this->NotEmpty();?>
+		
 		<?php echo $form->error($model,'cate_amount'); ?>
 		</div>
 	</div>
@@ -330,7 +330,7 @@
 		<div class="col-md-12">
 		<?php echo $form->labelEx($model,'time_test'); ?>
 		<?php echo $form->textField($model,'time_test',$attCateAmount); ?> นาที
-		<?php echo $this->NotEmpty();?>
+		
 		<?php echo $form->error($model,'time_test'); ?>
 		</div>
 	</div>
@@ -498,7 +498,7 @@
 				<div class="row">
 					<div class="col-md-12">
 					<font color="#990000">
-						<?php echo $this->NotEmpty();?> รูปภาพควรมีขนาด 250x180(แนวนอน) หรือ ขนาด 250x(xxx) (แนวยาว)
+						* รูปภาพควรมีขนาด 250x180(แนวนอน) หรือ ขนาด 250x(xxx) (แนวยาว)
 					</font>
 					</div>
 				</div>
