@@ -45,7 +45,6 @@ $this->breadcrumbs = array('ระบบรายชื่อสมาชิก'
                         <!-- <span class="btn btn-default btn-file">เลือกไฟล์ -->
                             <?php echo $form->fileField($model,'excel_file',array('class'=>'form-control')); ?>
                             <!-- </span> -->
-                            <?php echo $this->NotEmpty();?>
                             <?php echo $form->error($model,'excel_file'); ?>
 
                         <?php $this->endWidget(); ?>
