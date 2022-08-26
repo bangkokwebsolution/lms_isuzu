@@ -41,56 +41,48 @@
 						        'errorMessageCssClass' => 'label label-important',
 						        'htmlOptions' => array('enctype' => 'multipart/form-data')
 							)); ?>
-				<p class="note">ค่าที่มี <?php echo $this->NotEmpty();?> จำเป็นต้องใส่ให้ครบ</p>
+				<p class="note">ค่าที่มี <font color="red">*</font> จำเป็นต้องใส่ให้ครบ</p>
 
 				<?php echo $form->errorSummary($model); ?>
 
 				<div class="row">
 					<?php echo $form->labelEx($model,'con_firstname'); ?>
 					<?php echo $form->textField($model,'con_firstname',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
-					<?php echo $this->NotEmpty();?>
 					<?php echo $form->error($model,'con_firstname'); ?>
 				</div>
 				<div class="row">
 					<?php echo $form->labelEx($model,'con_lastname'); ?>
 					<?php echo $form->textField($model,'con_lastname',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
-					<?php echo $this->NotEmpty();?>
 					<?php echo $form->error($model,'con_lastname'); ?>
 				</div>
 				<div class="row">
 					<?php echo $form->labelEx($model,'con_firstname_en'); ?>
 					<?php echo $form->textField($model,'con_firstname_en',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
-					<?php echo $this->NotEmpty();?>
 					<?php echo $form->error($model,'con_firstname_en'); ?>
 				</div>
 				<div class="row">
 					<?php echo $form->labelEx($model,'con_lastname_en'); ?>
 					<?php echo $form->textField($model,'con_lastname_en',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
-					<?php echo $this->NotEmpty();?>
 					<?php echo $form->error($model,'con_lastname_en'); ?>
 				</div>
 				<div class="row">
 					<?php echo $form->labelEx($model,'con_position'); ?>
 					<?php echo $form->textField($model,'con_position',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
-					<?php echo $this->NotEmpty();?>
 					<?php echo $form->error($model,'con_position'); ?>
 				</div>
 				<div class="row">
 					<?php echo $form->labelEx($model,'con_position_en'); ?>
 					<?php echo $form->textField($model,'con_position_en',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
-					<?php echo $this->NotEmpty();?>
 					<?php echo $form->error($model,'con_position_en'); ?>
 				</div>
 				<div class="row">
 					<?php echo $form->labelEx($model,'con_tel'); ?>
 					<?php echo $form->textField($model,'con_tel',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
-					<?php echo $this->NotEmpty();?>
 					<?php echo $form->error($model,'con_tel'); ?>
 				</div>
 				<div class="row">
 					<?php echo $form->labelEx($model,'con_email'); ?>
 					<?php echo $form->textField($model,'con_email',array('size'=>60,'maxlength'=>255, 'class'=>'span8')); ?>
-					<?php echo $this->NotEmpty();?>
 					<?php echo $form->error($model,'con_email'); ?>
 				</div>
 
@@ -120,7 +112,7 @@
 					<?php echo $form->error($model,'con_image'); ?>
 					<div class="row">
 						<font color="#990000">
-							<?php echo $this->NotEmpty();?> รูปภาพควรมีขนาด 266x266
+							* รูปภาพควรมีขนาด 266x266
 						</font>
 					</div>
 					<?php if ($notsave == 1) { ?>
