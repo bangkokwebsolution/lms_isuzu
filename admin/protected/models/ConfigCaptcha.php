@@ -35,7 +35,7 @@ class ConfigCaptcha extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			// array('capt_name, capt_time_random, capt_time_back, capt_wait_time, capt_times,type', 'required'),
-			array('capt_name, capt_wait_time, capt_times,type', 'required'),
+			array('capt_name,capt_time_random,slide, capt_wait_time, capt_times,type', 'required'),
 			array('capt_time_random, capt_time_back, capt_wait_time, capt_times, created_by, updated_by,slide,prev_slide', 'numerical', 'integerOnly'=>true),
 			array('capt_name', 'length', 'max'=>255),
 			array('capt_hide, capt_active', 'length', 'max'=>1),

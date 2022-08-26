@@ -32,12 +32,12 @@
 				<p class="note"><span style="color:red;font-size: 20px;">เพิ่มเนื้อหาของภาษา <?= $modelLang->language; ?></span></p>
 				<?php } ?>
 
-				<p class="note">ค่าที่มี <?php echo $this->NotEmpty();?> จำเป็นต้องใส่ให้ครบ</p>
+				<p class="note">ค่าที่มี <font color="red">*</font> จำเป็นต้องใส่ให้ครบ</p>
 				<div class="row">
 					<div class="col-md-12">
 						<?php echo $form->labelEx($model,'capt_name'); ?>
 						<?php echo $form->textField($model,'capt_name',array('size'=>60,'maxlength'=>250, 'class'=>'span8')); ?>
-						<?php echo $this->NotEmpty();?>
+						
 						<?php echo $form->error($model,'capt_name'); ?>
 					</div>
 				</div>
@@ -70,7 +70,7 @@
 					<div class="col-md-12">
 						<?php echo $form->labelEx($cap,'cnid'); ?>
 						<?php echo Chosen::dropDownList('cnid',$selected, $courseAll, $attSearch); ?>
-						<?php echo $this->NotEmpty();?>
+						
 						<?php echo $form->error($cap,'cnid'); ?>
 					</div>
 				</div> -->
@@ -80,7 +80,7 @@
 					<div class="col-md-12">
 						<?php echo $form->labelEx($model,'type'); ?>
 						<?php echo Chosen::multiSelect('type',$select, $type); ?>
-						<?php echo $this->NotEmpty();?>
+						
 						<?php echo $form->error($model,'type'); ?>
 					</div>
 				</div>
@@ -100,7 +100,7 @@
 					<div class="col-md-12">
 						<?php echo $form->labelEx($model,'capt_time_random'); ?>
 						<?php echo $form->textField($model,'capt_time_random',array('size'=>60,'maxlength'=>250, 'class'=>'span2')); ?>
-						<?php echo $this->NotEmpty();?>
+						
 						Note: หน่วยเป็นนาที
 						<?php echo $form->error($model,'capt_time_random'); ?>
 					</div>
@@ -111,6 +111,7 @@
 						<?php echo $form->labelEx($model,'capt_time_back'); ?>
 						<?php echo $form->textField($model,'capt_time_back',array('size'=>60,'maxlength'=>250, 'class'=>'span2')); ?>
 						<?php echo $this->NotEmpty();?>
+
 						Note: หน่วยเป็นนาที
 						<?php echo $form->error($model,'capt_time_back'); ?>
 					</div>
@@ -139,7 +140,6 @@
 					<div class="col-md-12">
 						<?php echo $form->labelEx($model,'slide'); ?>
 						<?php echo $form->textField($model,'slide',array('size'=>60,'maxlength'=>250, 'class'=>'span2')); ?>
-						<?php echo $this->NotEmpty();?>
 						<?php echo $form->error($model,'slide'); ?>
 					</div>
 				</div>
