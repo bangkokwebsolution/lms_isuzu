@@ -47,7 +47,7 @@ function toggle(source) {
 	'enableAjaxValidation'=>false,
 )); ?>
 
-	<p class="note">ค่าที่มี <?php echo $this->NotEmpty();?> จำเป็นต้องใส่ให้ครบ</p>
+	<p class="note">ค่าที่มี <font color="red">*</font> จำเป็นต้องใส่ให้ครบ</p>
 
 	<?php echo $form->errorSummary($model); ?>
 
@@ -98,7 +98,7 @@ function toggle(source) {
 			<?php echo Chosen::multiSelect($name, $select, $course, $attSearch); ?>
 			<button type="button" class="chosen-toggle select">เลือกทั้งหมด</button>
   			<button type="button" class="chosen-toggle deselect">ยกเลิกทั้งหมด</button>
-  			<?php echo $this->NotEmpty();?>
+  			
 			<?php echo $form->error($model,'course_id'); ?>
 	</div>
 	<div class="row">
@@ -139,7 +139,7 @@ function toggle(source) {
 		    '150' => '150',);
 		?>
 		<?php echo $form->dropDownList($model,'notification_time',$time,array('empty'=>'---วัน---')); ?>
-		<?php echo $this->NotEmpty();?>
+		
 		<?php echo $form->error($model,'notification_time'); ?>
 	</div>
 	<?php
