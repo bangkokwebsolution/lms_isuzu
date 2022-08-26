@@ -67,7 +67,7 @@ class Popup extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('name, start_date, end_date', 'required'),
+			array('name, detail,start_date, end_date,', 'required'),
 			array('name, detail, link, create_by, update_by', 'length', 'max'=>255),
 			array('active', 'length', 'max'=>1),
 			array('start_date, end_date, create_date, update_date,lang_id,parent_id', 'safe'),
