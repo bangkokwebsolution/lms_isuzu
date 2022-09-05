@@ -3,6 +3,8 @@ $titleName = 'รายชื่อผู้เรียน';
 $this->breadcrumbs=array($titleName);
 
 $url_form = $this->createUrl('Coursecontrol/Manageorguser/'.$_GET['id']);
+
+$url_delAll = $this->createUrl('Coursecontrol/delAll/'.$_GET['id']);
 ?>
 <style>
   .w-100 {
@@ -188,7 +190,7 @@ $url_form = $this->createUrl('Coursecontrol/Manageorguser/'.$_GET['id']);
         </tbody>
       </table>
       <br>
-      
+      <a href="<?= $url_delAll ?>" class="btn btn-danger" onclick="return confirm('คุณต้องการล้างข้อมูลทั้งหมดหรือไม่ ?')" >- ล้างทั้งหมด</a>
       </div>
 
     </div>

@@ -647,4 +647,25 @@ class CoursecontrolController extends Controller
 		// 	'model'=>$model,
 		// ));
 	}
+
+
+	public function actiondelAll(){ 
+		$orgid=$_GET["id"];
+
+		if(isset($_GET["id"])){
+			
+				$del_org = OrgUser::model()->findAll("orgchart_id='".$orgid."' ");
+				if(!empty($del_org)){
+					foreach ($del_org as $key => $value) {
+						$value->active = 'n';
+						$value->save();
+					}
+				}
+				
+		}
+
+		$this->redirect(array('Coursecontrol/Manageorguser/'.$orgid));
+				
+	
+	}
 }
