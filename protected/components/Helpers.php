@@ -4469,17 +4469,21 @@ class Helpers
 
                 if ($chk_learn_pass != null) {
 
-                    $learn_file_cou = LearnFile::model()->count(array(
-                        'condition' => 'user_id_file=:user_id AND learn_id=:learn_id AND gen_id=:gen_id',
-                        'params' => array(':user_id' => Yii::app()->user->id, ':learn_id' => $chk_learn_pass->learn_id, ':gen_id' => $gen_id),
+                    // $learn_file_cou = LearnFile::model()->count(array(
+                    //     'condition'=>'user_id_file=:user_id AND learn_id=:learn_id AND gen_id=:gen_id',
+                    //     'params'=>array(':user_id'=>Yii::app()->user->id, ':learn_id'=>$chk_learn_pass->learn_id, ':gen_id'=>$gen_id),
+                    // ));
+                    $lessonfileAll = File::model()->findAll(array(
+                        'condition' => 'lesson_id=:lesson_id AND active=:active',
+                        'params' => array(':lesson_id' => $chk_learn_pass->lesson_id, ':active' => "y")
                     ));
 
                     $learn_file_pass = LearnFile::model()->count(array(
                         'condition' => 'user_id_file=:user_id AND learn_id=:learn_id AND gen_id=:gen_id AND learn_file_status=:status',
                         'params' => array(':user_id' => Yii::app()->user->id, ':learn_id' => $chk_learn_pass->learn_id, ':gen_id' => $gen_id, ':status' => 's'),
                     ));
-
-                    if ($learn_file_cou <= $learn_file_pass) {
+                    // var_dump($learn_file_pass."-".count($lessonfileAll));
+                    if ($learn_file_pass >= count($lessonfileAll)) {
 
                         $chk_learn_pass->lesson_status = 'pass';
                         $chk_learn_pass->save(false);
@@ -4521,7 +4525,6 @@ class Helpers
             return false;
         }
     }
-
     public function checkStepLesson($lesson)
     {
         // 1 = สอบก่อนเรียน
