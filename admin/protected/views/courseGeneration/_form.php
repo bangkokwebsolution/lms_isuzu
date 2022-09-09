@@ -46,11 +46,11 @@
 					<?php echo $form->error($model,'gen_detail_en'); ?>
 				</div>
 
-				<div class="row">
+				<!-- <div class="row">
 					<?php echo $form->labelEx($model,'gen_person'); ?>
 					<?php echo $form->textField($model,'gen_person',array('size'=>60,'maxlength'=>250, 'class'=>'span8')); ?>
 					<?php echo $form->error($model,'gen_person'); ?>
-				</div>
+				</div> -->
 
 				<div class="row">
 					<?php echo $form->labelEx($model,'gen_period_start'); ?>

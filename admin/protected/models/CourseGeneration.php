@@ -48,7 +48,7 @@ class CourseGeneration extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('gen_title, course_id', 'validateCheck', 'on' => 'validateCheck'),
-			array('course_id, gen_person, gen_title, gen_period_start, gen_period_end', 'required'),
+			array('course_id,  gen_title, gen_period_start, gen_period_end', 'required'),
 			array('course_id, gen_person, create_by, update_by, gen_title', 'numerical', 'integerOnly'=>true),
 			// array('gen_title', 'length', 'max'=>255),
 			array('status, active', 'length', 'max'=>1),
