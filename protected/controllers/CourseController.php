@@ -319,7 +319,7 @@ class CourseController extends Controller
         // $criteria->compare('branch_id',$userBranch);
         $criteria->compare('active', 'y');
         // $criteria->compare('id',$userModel->org_id);
-        if ($OrgUser) {
+        if (count($OrgUser)>0) {
 
             if ($_SERVER['HTTP_HOST'] = "elearning.imct.co.th") {
                 $criteria->compare('id', $OrgUser->org_id);
