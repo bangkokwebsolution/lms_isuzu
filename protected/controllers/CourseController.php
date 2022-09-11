@@ -296,7 +296,7 @@ class CourseController extends Controller
         }
 
         // $userModel = UserNew::model()->findByPK(Yii::app()->user->id);
-        if ($_SERVER['HTTP_HOST'] = "elearning.imct.co.th") {
+        if ($_SERVER['HTTP_HOST'] == "elearning.imct.co.th") {
             $OrgUser = UserNew::model()->findByPK(Yii::app()->user->id);
         } else {
             $OrgUser = OrgUser::model()->find("active='y' AND user_id='" . Yii::app()->user->id . "' ");
@@ -321,7 +321,7 @@ class CourseController extends Controller
         // $criteria->compare('id',$userModel->org_id);
         if (count($OrgUser)>0) {
 
-            if ($_SERVER['HTTP_HOST'] = "elearning.imct.co.th") {
+            if ($_SERVER['HTTP_HOST'] == "elearning.imct.co.th") {
                 $criteria->compare('id', $OrgUser->org_id);
             } else {
                 $criteria->compare('id', $OrgUser->orgchart_id);
