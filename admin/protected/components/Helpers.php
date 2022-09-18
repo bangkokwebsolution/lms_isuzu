@@ -3260,6 +3260,29 @@ Boston, MA 02110-1301, USA.
         }
         return $header_id;
     }
+    public function chk_course_questionnaire_report($course_id)
+    { // เช็คว่าหลักสูตรมีแบบสอบถามไหม return id header arr
+        $header_id = null; // ไม่มีแบบสอบถาม
+        $CourseTeacher = CourseTeacher::model()->findAll(array(
+            'select' => 'survey_header_id',
+            'condition' => 'course_id="' . $course_id . '" ',
+            'order' => 'id DESC'
+        ));
+        if (!empty($CourseTeacher)) {
+            foreach ($CourseTeacher as $key => $value_t) {
+                $QHeader = QHeader::model()->findAll(array(
+                    'select' => 'survey_header_id',
+                    'condition' => 'survey_header_id="' . $value_t->survey_header_id . '"'
+                ));
+                if ($QHeader) {
+                    foreach ($QHeader as $key => $value) {
+                        $header_id = $value->survey_header_id; // มีแบบสอบถาม
+                    }
+                }
+            }
+        }
+        return $header_id;
+    }
 
 
     public function chk_course_questionnaire_do($header_id, $course_id, $user_id, $startcourse_id)
