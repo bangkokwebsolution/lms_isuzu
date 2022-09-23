@@ -98,7 +98,7 @@
 			<?php 
 				if($scorePre){
 					?>
-					<h4  class="prepost_test"><span>ผลสอบก่อนเรียน</span> </h4>
+					<h4  class="prepost_test"><span>Pre-Test บทเรียน</span> </h4>
 					<span class="exams-list">
 					<?php
 					foreach ($scorePre as $key => $scoreP) {
@@ -122,7 +122,7 @@
 			<?php 
 				if($scorePosts){
 					?>
-					<h4 class="prepost_test"><span>ผลสอบหลังเรียน</span> </h4>
+					<h4 class="prepost_test"><span>Post-Test บทเรียน</span> </h4>
 					<span class="exams-list">
 					<?php
 					foreach ($scorePosts as $key => $scorePost) {
@@ -151,7 +151,7 @@
 			
 				<?php foreach ($score_course as $key => $scoreC) { ?>
 					<span class="exams-list">
-					ผลทดสอบครั้งที่  <span class="passorno"><?= ($key+1); ?> :  <?= ($scoreC->score_number); ?>/ <?= ($scoreC->score_total); ?> [<?= ($scoreC->score_past == "y")? 'ผ่าน':'ไม่ผ่าน' ?>]</span>
+					ผลทดสอบ<?= $scoreC->type == "pre" ? "ก่อนเรียน": "หลังเรียน" ?>ครั้งที่  <span class="passorno"><?= ($key+1); ?> :  <?= ($scoreC->score_number); ?>/ <?= ($scoreC->score_total); ?> [<?= ($scoreC->score_past == "y")? 'ผ่าน':'ไม่ผ่าน' ?>]</span>
 					</span>
 					<br>
 				<?php
@@ -219,12 +219,11 @@
 			<?php 
 				if($scorePosts){
 					?>
-					<h4 class="prepost_test"><span>Test score</span> </h4>
-					<span class="exams-list">
+					<h4 class="prepost_test"><span>Post Test score</span> </h4>
 					<?php
 					foreach ($scorePosts as $key => $scorePost) {
 						?>
-					<span class="exams-list">Test   <span class="passorno"><?= ($key+1); ?> :  <?= ($scorePost->score_number); ?>/  <?= ($scorePost->score_total); ?> (<?= ($scorePost->score_past == "y")? 'Pass':'Fail' ?>)</span></span><br>
+					<span class="exams-list">Post Test <span class="passorno"><?= ($key+1); ?> :  <?= ($scorePost->score_number); ?>/  <?= ($scorePost->score_total); ?> (<?= ($scorePost->score_past == "y")? 'Pass':'Fail' ?>)</span></span><br>
 						
 						<?php
 					}
@@ -247,7 +246,7 @@
 
 <?php foreach ($score_course as $key => $scoreC) { ?>
 <span class="exams-list">
-Test  <span class="passorno"><?= ($key+1); ?> :  <?= ($scoreC->score_number); ?>/ <?= ($scoreC->score_total); ?> [<?= ($scoreC->score_past == "y")? 'Pass':'Fail' ?>]</span>
+<?= $scoreC->type == "pre" ? "Pre": "Post" ?> Test  <span class="passorno"><?= ($key+1); ?> :  <?= ($scoreC->score_number); ?>/ <?= ($scoreC->score_total); ?> [<?= ($scoreC->score_past == "y")? 'Pass':'Fail' ?>]</span>
 </span>
 <br>
 <?php }  
