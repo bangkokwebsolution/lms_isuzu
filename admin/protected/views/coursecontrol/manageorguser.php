@@ -238,7 +238,7 @@ $url_delAll = $this->createUrl('Coursecontrol/delAll/'.$_GET['id']);
         </tbody>
       </table>
       <br>
-      <button type="submit" class="btn btn-success">+ เพิ่มสมาชิก</button>
+      <button type="submit" class="btn btn-success">+ เพิ่มผู้เรียน</button>
       </form>
       </div>
 
