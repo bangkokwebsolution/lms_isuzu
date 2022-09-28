@@ -645,17 +645,30 @@ class SiteController extends Controller
 
 		// query course ตาม org
 
-		$userModel = Users::model()->findByPK(Yii::app()->user->id);
-		$userDepartment = $userModel->department_id;
-		$userPosition = $userModel->position_id;
-		$userBranch = $userModel->branch_id;
+		 $userModel = Users::model()->findByPK(Yii::app()->user->id);
+
+		if($_SERVER['HTTP_HOST']=="elearning.imct.co.th"){
+				
+            $OrgUser = UserNew::model()->findByPK(Yii::app()->user->id);
+        }else{
+            
+            $OrgUser = OrgUser::model()->find("active='y' AND user_id='" . Yii::app()->user->id . "' ");
+        }
+		// $userDepartment = $userModel->department_id;
+		// $userPosition = $userModel->position_id;
+		// $userBranch = $userModel->branch_id;
 
 		if ($userModel->profile->kind != 5) {
 
 			$criteria = new CDbCriteria;
-			$criteria->compare('department_id', $userDepartment);
+			// $criteria->compare('department_id', $userDepartment);
 			// $criteria->compare('position_id',$userPosition);
-			$criteria->compare('branch_id', $userBranch);
+			// $criteria->compare('branch_id', $userBranch);
+			if($_SERVER['HTTP_HOST']=="elearning.imct.co.th"){
+                $criteria->compare('id',$OrgUser->org_id);
+            }else{
+                $criteria->compare('id',$OrgUser->orgchart_id);
+            }
 			$criteria->compare('active', 'y');
 			$modelOrgDep = OrgChart::model()->findAll($criteria);
 
