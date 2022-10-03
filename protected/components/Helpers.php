@@ -12,7 +12,11 @@ class Helpers
         $learn = false;
 
         $course_model = CourseOnline::model()->findByPk($course_id);
-        $gen_id = $course_model->getGenID($course_model->course_id);
+        if(!empty($course_model)){
+            $gen_id = $course_model->getGenID($course_model->course_id);
+        }else{
+            $gen_id = 0;
+        }
 
         $chk = LogStartcourse::model()->find(array(
             'condition' => 'course_id=:course_id AND user_id=:user_id AND active=:active AND gen_id=:gen_id',
