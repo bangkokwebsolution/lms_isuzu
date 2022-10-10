@@ -103,7 +103,7 @@
 					<?php
 					foreach ($scorePre as $key => $scoreP) {
 						?>
-					ผลสอบครั้งที่</span><span class="passorno"> <?= ($key+1); ?> :  <?= ($scoreP->score_number); ?>/  <?= ($scoreP->score_total); ?> (<?= ($scoreP->score_past == "y")? 'ผ่าน':'ไม่ผ่าน' ?>)</span><br>
+					ผลสอบ</span><span class="passorno"> :  <?= ($scoreP->score_number); ?>/  <?= ($scoreP->score_total); ?> (<?= ($scoreP->score_past == "y")? 'ผ่าน':'ไม่ผ่าน' ?>)</span><br>
 						
 						<?php
 					}
@@ -149,9 +149,9 @@
 			?>
 			<h4  class="prepost_test"><span>ผลการทดสอบหลักสูตร</span></h4>
 			
-				<?php foreach ($score_course as $key => $scoreC) { ?>
+				<?php $i1 = 1; foreach ($score_course as $key => $scoreC) { ?>
 					<span class="exams-list">
-					ผลทดสอบ<?= $scoreC->type == "pre" ? "ก่อนเรียน": "หลังเรียน" ?>หลักสูตรครั้งที่  <span class="passorno"><?= ($key+1); ?> :  <?= ($scoreC->score_number); ?>/ <?= ($scoreC->score_total); ?> [<?= ($scoreC->score_past == "y")? 'ผ่าน':'ไม่ผ่าน' ?>]</span>
+					ผลทดสอบ<?= $scoreC->type == "pre" ? "ก่อนเรียน": "หลังเรียน" ?>หลักสูตร <?= $scoreC->type == "pre" ? "<span class='passorno'>": "ครั้งที่ <span class='passorno'>".$i1++ ?> :  <?= ($scoreC->score_number); ?>/ <?= ($scoreC->score_total); ?> [<?= ($scoreC->score_past == "y")? 'ผ่าน':'ไม่ผ่าน' ?>]</span>
 					</span>
 					<br>
 				<?php
@@ -200,7 +200,7 @@
 					<?php
 					foreach ($scorePre as $key => $scoreP) {
 						?>
-					<span class="exams-list">Pre Test <span class="passorno"> <?= ($key+1); ?> :  <?= ($scoreP->score_number); ?>/  <?= ($scoreP->score_total); ?> (<?= ($scoreP->score_past == "y")? 'Pass':'Fail' ?>)</span></span><br>
+					<span class="exams-list">Pre Test <span class="passorno"> :  <?= ($scoreP->score_number); ?>/  <?= ($scoreP->score_total); ?> (<?= ($scoreP->score_past == "y")? 'Pass':'Fail' ?>)</span></span><br>
 						
 						<?php
 					}
@@ -244,9 +244,9 @@
 			?>
 <h4  class="prepost_test"><span>Exams score</span></h4>
 
-<?php foreach ($score_course as $key => $scoreC) { ?>
+<?php $i2 = 1; foreach ($score_course as $key => $scoreC) { ?>
 <span class="exams-list">
-<?= $scoreC->type == "pre" ? "Pre": "Post" ?> Test  <span class="passorno"><?= ($key+1); ?> :  <?= ($scoreC->score_number); ?>/ <?= ($scoreC->score_total); ?> [<?= ($scoreC->score_past == "y")? 'Pass':'Fail' ?>]</span>
+<?= $scoreC->type == "pre" ? "Pre Test": "Post Test <span class='passorno'>".$i2++ ?> :  <?= ($scoreC->score_number); ?>/ <?= ($scoreC->score_total); ?> [<?= ($scoreC->score_past == "y")? 'Pass':'Fail' ?>]</span>
 </span>
 <br>
 <?php }  
