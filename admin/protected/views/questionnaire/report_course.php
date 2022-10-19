@@ -1,11 +1,8 @@
 <!-- Include Required Prerequisites -->
-<script type="text/javascript"
-        src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/moment.min.js"></script>
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/moment.min.js"></script>
 <!-- Include Date Range Picker -->
-<script type="text/javascript"
-        src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker.js"></script>
-<link rel="stylesheet" type="text/css"
-      href="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker-bs2.css"/>
+<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker-bs2.css" />
 
 <!--<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/highcharts.js"></script>-->
 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
@@ -14,6 +11,10 @@
     th {
         background-color: #E25F39;
         color: white;
+    }
+
+    .text-center {
+        text-align: center;
     }
 </style>
 <?php
@@ -32,7 +33,9 @@ Yii::app()->clientScript->registerScript('search', "
 	});
 ");
 
-Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
+Yii::app()->clientScript->registerScript(
+    'updateGridView',
+    <<<EOD
 	/*$.updateGridView = function(gridID, name, value) {
 	    $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
 	    $.fn.yiiGridView.update(gridID, {data: $.param(
@@ -48,41 +51,43 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	$('.collapse-toggle').click();
 
 
-EOD
-    , CClientScript::POS_READY);
+EOD,
+    CClientScript::POS_READY
+);
 
-    function checkRange($val,$max){
-        switch ($max) {
-            case 5:
-                    if($val >= 4){
-                        $msg_range = "มากที่สุด";
-                    }else if($val >= 3){
-                        $msg_range = "มาก";
-                    }else if($val >= 2){
-                        $msg_range = "ปานกลาง";
-                    }else if($val >= 1){
-                        $msg_range = "น้อย";
-                    }else if($val >= 0){
-                        $msg_range = "น้อยมาก";
-                    }
+function checkRange($val, $max)
+{
+    switch ($max) {
+        case 5:
+            if ($val >= 4) {
+                $msg_range = "มากที่สุด";
+            } else if ($val >= 3) {
+                $msg_range = "มาก";
+            } else if ($val >= 2) {
+                $msg_range = "ปานกลาง";
+            } else if ($val >= 1) {
+                $msg_range = "น้อย";
+            } else if ($val >= 0) {
+                $msg_range = "น้อยมาก";
+            }
             break;
-            case 10:
-                    if($val >= 8){
-                        $msg_range = "มากที่สุด";
-                    }else if($val >= 6){
-                        $msg_range = "มาก";
-                    }else if($val >= 4){
-                        $msg_range = "ปานกลาง";
-                    }else if($val >= 2){
-                        $msg_range = "น้อย";
-                    }else if($val >= 0){
-                        $msg_range = "น้อยมาก";
-                    }
+        case 10:
+            if ($val >= 8) {
+                $msg_range = "มากที่สุด";
+            } else if ($val >= 6) {
+                $msg_range = "มาก";
+            } else if ($val >= 4) {
+                $msg_range = "ปานกลาง";
+            } else if ($val >= 2) {
+                $msg_range = "น้อย";
+            } else if ($val >= 0) {
+                $msg_range = "น้อยมาก";
+            }
             break;
-        }
-        return $msg_range;
     }
-    
+    return $msg_range;
+}
+
 ?>
 <div class="innerLR">
 
@@ -103,74 +108,73 @@ EOD
 
                 $course_gen = CourseGeneration::model()->findAll(array(
                     'condition' => 'course_id=:course_id AND active=:active ',
-                    'params' => array(':course_id'=>$course_id, ':active'=>"y"),
+                    'params' => array(':course_id' => $course_id, ':active' => "y"),
                     'order' => 'gen_title ASC',
                 ));
-                if(empty($course_gen)){
+                if (empty($course_gen)) {
                     $course_gen[]->gen_id = 0;
                 }
-                foreach($course_gen as $key => $gen) {
+                foreach ($course_gen as $key => $gen) {
                     $text_gen = "";
-                    if($gen->gen_id != 0){
-                        $text_gen = " รุ่น ".$gen->gen_title;
-                        ?>
+                    if ($gen->gen_id != 0) {
+                        $text_gen = " รุ่น " . $gen->gen_title;
+            ?>
                         <h4><?php echo $text_gen; ?></h4>
-                        <?php
+                    <?php
                     }
-                ?>                
-                <h2><?php echo $header->survey_name; ?></h2>
-                <?php echo CHtml::decode($header->instructions); ?>
-                <hr>
-                <?php
+                    ?>
+                    <h2><?php echo $header->survey_name; ?></h2>
+                    <?php echo CHtml::decode($header->instructions); ?>
+                    <hr>
+                    <?php
 
-                if (count($header->sections) > 0) {
+                    if (count($header->sections) > 0) {
 
-                    $sections = $header->sections;
-                    foreach ($sections as $sectionKey => $sectionValue) {
+                        $sections = $header->sections;
+                        foreach ($sections as $sectionKey => $sectionValue) {
 
-                        ?>
-                        <h4><?php echo $sectionValue->section_title; ?></h4>
-                        <hr>
-                        <?php
+                    ?>
+                            <h4><?php echo $sectionValue->section_title; ?></h4>
+                            <hr>
+                            <?php
 
-                        if (count($sectionValue->questions) > 0) {
+                            if (count($sectionValue->questions) > 0) {
 
-                            foreach ($sectionValue->questions as $questionKey => $questionValue) {
-                                //radio
-                                if ($questionValue->input_type_id == '2') {
+                                foreach ($sectionValue->questions as $questionKey => $questionValue) {
+                                    //radio
+                                    if ($questionValue->input_type_id == '2') {
 
 
-                                    ?>
-                                    <div style="font-size:20px;">
-                                        <strong><?php echo $questionValue->question_name; ?></strong><label
-                                            for="choice[radio][<?php echo $questionValue->question_id; ?>]"
-                                            class="error"></label></div>
-                                    <div>
-                                        <?php
+                            ?>
+                                        <div style="font-size:20px;">
+                                            <strong><?php echo $questionValue->question_name; ?></strong><label for="choice[radio][<?php echo $questionValue->question_id; ?>]" class="error"></label>
+                                        </div>
+                                        <div>
+                                            <?php
 
-                                        if (count($questionValue->choices) > 0) {
-                                            $labelArray = array();
-                                            $countArray = array();
-                                            $dataArray = array();
-                                            $dataArray[] = array('ตัวเลือก', 'จำนวน');
-                                            foreach ($questionValue->choices as $choiceKey => $choiceValue) {
-                                                $label = $choiceValue->option_choice_name;
-                                                $sql = "SELECT COUNT(*) AS radiocount FROM q_answers_course INNER JOIN q_quest_ans_course ON q_answers_course.quest_ans_id = q_quest_ans_course.id ";
-                                                $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id . "' AND q_quest_ans_course.teacher_id='" . $teacher_id . "' AND q_quest_ans_course.gen_id='".$gen->gen_id."'";
+                                            if (count($questionValue->choices) > 0) {
+                                                $labelArray = array();
+                                                $countArray = array();
+                                                $dataArray = array();
+                                                $dataArray[] = array('ตัวเลือก', 'จำนวน');
+                                                foreach ($questionValue->choices as $choiceKey => $choiceValue) {
+                                                    $label = $choiceValue->option_choice_name;
+                                                    $sql = "SELECT COUNT(*) AS radiocount FROM q_answers_course INNER JOIN q_quest_ans_course ON q_answers_course.quest_ans_id = q_quest_ans_course.id ";
+                                                    $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id . "' AND q_quest_ans_course.teacher_id='" . $teacher_id . "' AND q_quest_ans_course.gen_id='" . $gen->gen_id . "'";
 
-                                                if($schedule){
-                                                    $sql .= ' AND (q_quest_ans_course.date >= "'.$schedule->training_date_start.'" AND q_quest_ans_course.date <= "'.$schedule->training_date_end.'")';
+                                                    if ($schedule) {
+                                                        $sql .= ' AND (q_quest_ans_course.date >= "' . $schedule->training_date_start . '" AND q_quest_ans_course.date <= "' . $schedule->training_date_end . '")';
+                                                    }
+
+                                                    $count = Yii::app()->db->createCommand($sql)->queryRow();
+                                                    $count = intval($count['radiocount']);
+                                                    $dataArray[] = array($label, $count);
                                                 }
 
-                                                $count = Yii::app()->db->createCommand($sql)->queryRow();
-                                                $count = intval($count['radiocount']);
-                                                $dataArray[] = array($label, $count);
-                                            }
 
-
-                                            echo '<div id="container' . $questionValue->question_id . '" style="min-width: 310px; height: 400px; margin: 0 auto"></div>';
-                                            $data = json_encode($dataArray);
-                                            Yii::app()->clientScript->registerScript('chart' . $questionValue->question_id, "
+                                                echo '<div id="container' . $questionValue->question_id . '" style="min-width: 310px; height: 400px; margin: 0 auto"></div>';
+                                                $data = json_encode($dataArray);
+                                                Yii::app()->clientScript->registerScript('chart' . $questionValue->question_id, "
 
 							  google.load('visualization', '1.0', {packages:['corechart']});
 							  google.setOnLoadCallback(drawChart" . $questionValue->question_id . ");
@@ -202,44 +206,43 @@ EOD
 							      });
 							  });*/
 							", CClientScript::POS_END);
-                                        }
-                                        ?>
-                                    </div>
-                                    <br>
+                                            }
+                                            ?>
+                                        </div>
+                                        <br>
                                     <?php
-                                    //checkbox
-                                } else if ($questionValue->input_type_id == '3') {
+                                        //checkbox
+                                    } else if ($questionValue->input_type_id == '3') {
 
 
                                     ?>
-                                    <div style="font-size:20px;">
-                                        <strong><?php echo $questionValue->question_name; ?></strong><label
-                                            for="choice[checkbox][<?php echo $questionValue->question_id; ?>][]"
-                                            class="error"></label></div>
-                                    <div>
-                                        <?php
-                                        if (count($questionValue->choices) > 0) {
-                                            $labelArray = array();
-                                            $countArray = array();
-                                            $dataArray = array();
-                                            $dataArray[] = array('ตัวเลือก', 'จำนวน');
-                                            foreach ($questionValue->choices as $choiceKey => $choiceValue) {
-                                                $label = $choiceValue->option_choice_name;
-                                                $sql = "SELECT COUNT(*) AS radiocount FROM q_answers_course INNER JOIN q_quest_ans_course ON q_answers_course.quest_ans_id = q_quest_ans_course.id ";
-                                                $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id . "' AND q_quest_ans_course.teacher_id='" . $teacher_id . "'  AND q_quest_ans_course.gen_id='".$gen->gen_id."'";
+                                        <div style="font-size:20px;">
+                                            <strong><?php echo $questionValue->question_name; ?></strong><label for="choice[checkbox][<?php echo $questionValue->question_id; ?>][]" class="error"></label>
+                                        </div>
+                                        <div>
+                                            <?php
+                                            if (count($questionValue->choices) > 0) {
+                                                $labelArray = array();
+                                                $countArray = array();
+                                                $dataArray = array();
+                                                $dataArray[] = array('ตัวเลือก', 'จำนวน');
+                                                foreach ($questionValue->choices as $choiceKey => $choiceValue) {
+                                                    $label = $choiceValue->option_choice_name;
+                                                    $sql = "SELECT COUNT(*) AS radiocount FROM q_answers_course INNER JOIN q_quest_ans_course ON q_answers_course.quest_ans_id = q_quest_ans_course.id ";
+                                                    $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id . "' AND q_quest_ans_course.teacher_id='" . $teacher_id . "'  AND q_quest_ans_course.gen_id='" . $gen->gen_id . "'";
 
-                                                if($schedule){
-                                                    $sql .= ' AND (q_quest_ans_course.date >= "'.$schedule->training_date_start.'" AND q_quest_ans_course.date <= "'.$schedule->training_date_end.'")';
+                                                    if ($schedule) {
+                                                        $sql .= ' AND (q_quest_ans_course.date >= "' . $schedule->training_date_start . '" AND q_quest_ans_course.date <= "' . $schedule->training_date_end . '")';
+                                                    }
+
+                                                    $count = Yii::app()->db->createCommand($sql)->queryRow();
+                                                    $count = intval($count['radiocount']);
+                                                    $dataArray[] = array($label, $count);
                                                 }
-                                                
-                                                $count = Yii::app()->db->createCommand($sql)->queryRow();
-                                                $count = intval($count['radiocount']);
-                                                $dataArray[] = array($label, $count);
-                                            }
 
-                                            echo '<div id="container' . $questionValue->question_id . '" style="min-width: 310px; height: 400px; margin: 0 auto"></div>';
-                                            $data = json_encode($dataArray);
-                                            Yii::app()->clientScript->registerScript('chart' . $questionValue->question_id, "
+                                                echo '<div id="container' . $questionValue->question_id . '" style="min-width: 310px; height: 400px; margin: 0 auto"></div>';
+                                                $data = json_encode($dataArray);
+                                                Yii::app()->clientScript->registerScript('chart' . $questionValue->question_id, "
 
 							  google.load('visualization', '1.0', {packages:['corechart']});
 							  google.setOnLoadCallback(drawChart" . $questionValue->question_id . ");
@@ -271,34 +274,35 @@ EOD
 							      });
 							  });*/
 							", CClientScript::POS_END);
-                                        }
-                                        ?>
-                                    </div>
-                                    <br>
+                                            }
+                                            ?>
+                                        </div>
+                                        <br>
                                     <?php
-                                    //contentment
-                                } else if ($questionValue->input_type_id == '4') {
+                                        //contentment
+                                    } else if ($questionValue->input_type_id == '4') {
 
 
                                     ?>
-                                    <div style="font-size:20px;">
-                                        <strong><?php echo $questionValue->question_name; ?></strong></div>
-                                    <div>
-                                        <?php
-                                        if (count($questionValue->choices) > 0) {
-                                            $labelArray = array();
-                                            $countArray = array();
-                                            $dataArray = array();
-                                            $dataArray[] = array('คำถาม', 'ค่าเฉลี่ย');
-                                            $date_table = "";
-                                            $total_average = 0;
-                                            $countQuest = count($questionValue->choices);
-                                            // var_dump($countQuest);
-                                            foreach ($questionValue->choices as $choiceKey => $choiceValue) {
-                                                $label = $choiceValue->option_choice_name;
-                                                
-                                            if($questionValue->question_range == "" || $questionValue->question_range == "5"){
-                                    $sql = "SELECT 
+                                        <div style="font-size:20px;">
+                                            <strong><?php echo $questionValue->question_name; ?></strong>
+                                        </div>
+                                        <div>
+                                            <?php
+                                            if (count($questionValue->choices) > 0) {
+                                                $labelArray = array();
+                                                $countArray = array();
+                                                $dataArray = array();
+                                                $dataArray[] = array('คำถาม', 'ค่าเฉลี่ย');
+                                                $date_table = "";
+                                                $total_average = 0;
+                                                $countQuest = count($questionValue->choices);
+                                                // var_dump($countQuest);
+                                                foreach ($questionValue->choices as $choiceKey => $choiceValue) {
+                                                    $label = $choiceValue->option_choice_name;
+
+                                                    if ($questionValue->question_range == "" || $questionValue->question_range == "5") {
+                                                        $sql = "SELECT 
                                     SUM(CASE WHEN (answer_numeric=5) THEN 1 ELSE 0 END) AS five,
                                     SUM(CASE WHEN (answer_numeric=4) THEN 1 ELSE 0 END) AS four,
                                     SUM(CASE WHEN (answer_numeric=3) THEN 1 ELSE 0 END) AS three,
@@ -310,17 +314,17 @@ EOD
                                     SUM(CASE WHEN (answer_numeric=2) THEN 1 ELSE 0 END)*2 AS twom,
                                     SUM(CASE WHEN (answer_numeric=1) THEN 1 ELSE 0 END)*1 AS onem
                                     FROM q_answers_course INNER JOIN q_quest_ans_course ON q_answers_course.quest_ans_id = q_quest_ans_course.id ";
-                                    $sql .= " WHERE header_id='".$header_id."' AND choice_id ='".$choiceValue->option_choice_id."' ";
+                                                        $sql .= " WHERE header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id . "' ";
 
-                                    $count = Yii::app()->db->createCommand($sql)->queryRow();
-                                    $totalCount = $count['five']+$count['four']+$count['three']+$count['two']+$count['one'];
-                                    $totalCountM = $count['fivem']+$count['fourm']+$count['threem']+$count['twom']+$count['onem'];
-                                    $average = $totalCountM/(($totalCount!=0)?$totalCount:1);
-                                    $percent = ($average*100/5)-5;
-//                                    var_dump($percent);
+                                                        $count = Yii::app()->db->createCommand($sql)->queryRow();
+                                                        $totalCount = $count['five'] + $count['four'] + $count['three'] + $count['two'] + $count['one'];
+                                                        $totalCountM = $count['fivem'] + $count['fourm'] + $count['threem'] + $count['twom'] + $count['onem'];
+                                                        $average = $totalCountM / (($totalCount != 0) ? $totalCount : 1);
+                                                        $percent = ($average * 100 / 5) - 5;
+                                                        //                                    var_dump($percent);
 
-                                }else{
-                                    $sql = "SELECT 
+                                                    } else {
+                                                        $sql = "SELECT 
                                     SUM(CASE WHEN (answer_numeric=10) THEN 1 ELSE 0 END) AS ten,
                                     SUM(CASE WHEN (answer_numeric=9) THEN 1 ELSE 0 END) AS nine,
                                     SUM(CASE WHEN (answer_numeric=8) THEN 1 ELSE 0 END) AS eight,
@@ -342,39 +346,39 @@ EOD
                                     SUM(CASE WHEN (answer_numeric=2) THEN 1 ELSE 0 END)*2 AS twom,
                                     SUM(CASE WHEN (answer_numeric=1) THEN 1 ELSE 0 END)*1 AS onem 
                                     FROM q_answers_course INNER JOIN q_quest_ans_course ON q_answers_course.quest_ans_id = q_quest_ans_course.id ";
-                                    $sql .= " WHERE header_id='".$header_id."' AND choice_id ='".$choiceValue->option_choice_id."' ";
+                                                        $sql .= " WHERE header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id . "' ";
 
-                                    // $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id."' AND q_quest_ans_course.gen_id='".$gen->gen_id."'";
-                                    // $sql .= 'AND q_answers_course.user_id IS NOT NULL';
+                                                        // $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id."' AND q_quest_ans_course.gen_id='".$gen->gen_id."'";
+                                                        // $sql .= 'AND q_answers_course.user_id IS NOT NULL';
 
-                                    $count = Yii::app()->db->createCommand($sql)->queryRow();
-                                    $totalCount = $count['ten']+$count['nine']+$count['eight']+$count['seven']+$count['six']+$count['five']+$count['four']+$count['three']+$count['two']+$count['one'];
-                                    $totalCountM = $count['tenm']+$count['ninem']+$count['eightm']+$count['sevenm']+$count['sixm']+$count['fivem']+$count['fourm']+$count['threem']+$count['twom']+$count['onem'];
-                                    // var_dump($count);
+                                                        $count = Yii::app()->db->createCommand($sql)->queryRow();
+                                                        $totalCount = $count['ten'] + $count['nine'] + $count['eight'] + $count['seven'] + $count['six'] + $count['five'] + $count['four'] + $count['three'] + $count['two'] + $count['one'];
+                                                        $totalCountM = $count['tenm'] + $count['ninem'] + $count['eightm'] + $count['sevenm'] + $count['sixm'] + $count['fivem'] + $count['fourm'] + $count['threem'] + $count['twom'] + $count['onem'];
+                                                        // var_dump($count);
 
-                                    // var_dump($totalCount);
-                                    $average = $totalCountM/(($totalCount!=0)?$totalCount:1);
-                                    $percent = $average*100/10;
-                                }
+                                                        // var_dump($totalCount);
+                                                        $average = $totalCountM / (($totalCount != 0) ? $totalCount : 1);
+                                                        $percent = $average * 100 / 10;
+                                                    }
 
-								
-                                                // echo $sql;
-                                                // echo '<br >';
-                                                $dataArray[] = array($label, $average);
 
-                                                $total_average += $average;
-                                                $msg_range = checkRange($average,$questionValue->question_range);
-                                                $date_table .= '<tr>
-                                                                    <td>'.$label.'</td>
-                                                                    <td  style=" text-align: center;">'.round($average,2).'</td>
-                                                                    <td  style=" text-align: center;">'.$msg_range.'</td>
+                                                    // echo $sql;
+                                                    // echo '<br >';
+                                                    $dataArray[] = array($label, $average);
+
+                                                    $total_average += $average;
+                                                    $msg_range = checkRange($average, $questionValue->question_range);
+                                                    $date_table .= '<tr>
+                                                                    <td>' . $label . '</td>
+                                                                    <td  style=" text-align: center;">' . round($average, 2) . '</td>
+                                                                    <td  style=" text-align: center;">' . $msg_range . '</td>
                                                                 </tr>';
-                                            }
+                                                }
 
 
-                                            echo '<div id="container' . $questionValue->question_id . '" style="min-width: 310px; height: 400px; margin: 0 auto"></div>';
-                                            $data = json_encode($dataArray);
-                                            Yii::app()->clientScript->registerScript('chart' . $questionValue->question_id, "
+                                                echo '<div id="container' . $questionValue->question_id . '" style="min-width: 310px; height: 400px; margin: 0 auto"></div>';
+                                                $data = json_encode($dataArray);
+                                                Yii::app()->clientScript->registerScript('chart' . $questionValue->question_id, "
 
 							  google.load('visualization', '1.0', {packages:['corechart']});
 							  google.setOnLoadCallback(drawChart" . $questionValue->question_id . ");
@@ -386,9 +390,9 @@ EOD
 							    var options = {
                                     title: '" . $questionValue->question_name . "',
                                     vAxis: { 
-                                            gridlines: { count: ".($questionValue->question_range+1)." },
+                                            gridlines: { count: " . ($questionValue->question_range + 1) . " },
                                             minValue: 1,
-                                            maxValue: ".$questionValue->question_range.",
+                                            maxValue: " . $questionValue->question_range . ",
                                         },
                                      hAxis: {
                                                 // slantedText: true,
@@ -414,28 +418,26 @@ EOD
 
 
 							", CClientScript::POS_END);
+                                            }
+                                            // var_dump($total_average);
+                                            ?>
+                                        </div>
+                                        <!-- Table  -->
+                                        <table class="table table-bordered">
+                                            <thead style="background-color: #eec4b7; font-weight: bold;">
+                                                <tr>
+                                                    <th rowspan="2" style=" text-align: center; vertical-align: middle; width: 60%;">หัวข้อประเมิน</th>
+                                                    <th colspan="2" style=" text-align: center;">ระดับความพึงพอใจ (ร้อยละ)</th>
+                                                </tr>
+                                                <tr>
+                                                    <th style=" text-align: center;">ค่าเฉลี่ย</th>
+                                                    <th style=" text-align: center;">ระดับความพึงพอใจ</th>
+                                                </tr>
+                                            </thead>
 
-
-                                        }
-                                        // var_dump($total_average);
-                                        ?>
-                                    </div>
-                                    <!-- Table  -->
-                                    <table class="table table-bordered">
-                                        <thead style="background-color: #eec4b7; font-weight: bold;">
-                                        <tr>
-                                            <th rowspan="2" style=" text-align: center; vertical-align: middle; width: 60%;">หัวข้อประเมิน</th>
-                                            <th colspan="2" style=" text-align: center;">ระดับความพึงพอใจ (ร้อยละ)</th>
-                                        </tr>
-                                        <tr>
-                                            <th style=" text-align: center;">ค่าเฉลี่ย</th>
-                                            <th style=" text-align: center;">ระดับความพึงพอใจ</th>
-                                        </tr>
-                                        </thead>
-
-                                        <tbody>
-                                        <?= $date_table ?>
-                                       <!--  <tr>
+                                            <tbody>
+                                                <?= $date_table ?>
+                                                <!--  <tr>
                                             <td>John</td>
                                             <td  style=" text-align: center;">Doe</td>
                                             <td  style=" text-align: center;">john@example.com</td>
@@ -446,41 +448,111 @@ EOD
                                             <td  style=" text-align: center;">john@example.com2</td>
                                         </tr>
  -->
-                                        </tbody>
+                                            </tbody>
 
-                                        <tfoot  style="background-color: #eec4b7; font-weight: bold;">
-                                            <tr>
-                                                <td style=" text-align: center;">รวม</td>
-                                                <td style=" text-align: center;"><?= round($total_average/$countQuest,2); ?></td>
-                                                <?php $totalCount = ($total_average/$countQuest > 5)? 10: 5; ?>
-                                                <td style=" text-align: center;"><?= checkRange($total_average/$countQuest,$totalCount); ?></td>
-                                            </tr>
-                                        </tfoot>
-                                    </table>
-                                    
-                                    <br>
+                                            <tfoot style="background-color: #eec4b7; font-weight: bold;">
+                                                <tr>
+                                                    <td style=" text-align: center;">รวม</td>
+                                                    <td style=" text-align: center;"><?= round($total_average / $countQuest, 2); ?></td>
+                                                    <?php $totalCount = ($total_average / $countQuest > 5) ? 10 : 5; ?>
+                                                    <td style=" text-align: center;"><?= checkRange($total_average / $countQuest, $totalCount); ?></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+
+                                        <br>
                                     <?php
-                                    //text
-                                } else if ($questionValue->input_type_id == '5') {
+                                        //text
+                                    } else if ($questionValue->input_type_id == '5') {
                                     ?>
-                                    <!-- <label style="font-size:20px;">
+                                        <!-- <label style="font-size:20px;">
                             <div><strong><?php echo $questionValue->question_name; ?></strong><label for="choice[text][<?php echo $questionValue->choices[0]->option_choice_id; ?>]" class="error"></label></div>
                             <textarea data-rule-required="true" data-msg-required="กรุณาตอบ" name="choice[text][<?php echo $questionValue->choices[0]->option_choice_id; ?>]" rows="8" cols="50"></textarea>
                         </label> -->
-                                    <?php
+                            <?php
+                                    }
                                 }
                             }
+                            ?>
+                            <hr>
+            <?php
                         }
-                        ?>
-                        <hr>
-                        <?php
                     }
-                }
-            } // gen
+                } // gen
             }
             ?>
-            <a href="<?= Yii::app()->createUrl('Questionnaire/excel_course', array('id' => $course->id,'schedule_id' => $schedule->schedule_id)); ?>"
-               id="btnExport" class="btn btn-primary btn-icon glyphicons file"><i></i> Export</a>
+            <a href="<?= Yii::app()->createUrl('Questionnaire/excel_course', array('id' => $course->id, 'schedule_id' => $schedule->schedule_id)); ?>" id="btnExport" class="btn btn-primary btn-icon glyphicons file"><i></i> Export</a>
+
+
+            <!-- คำบรรยาย -->
+
+            <?php
+            if (isset($course->q_header)) {
+
+                $header = $course->q_header;
+                $teacher_id = $course->teacher_id;
+                $header_id = $header->survey_header_id;
+                $course_id = $course->course_id;
+
+                $course_gen = CourseGeneration::model()->findAll(array(
+                    'condition' => 'course_id=:course_id AND active=:active ',
+                    'params' => array(':course_id' => $course_id, ':active' => "y"),
+                    'order' => 'gen_title ASC',
+                ));
+                if (empty($course_gen)) {
+                    $course_gen[]->gen_id = 0;
+                }
+                foreach ($course_gen as $key => $gen) {
+                    if (count($header->sections) > 0) {
+
+                        $sections = $header->sections;
+                        foreach ($sections as $sectionKey => $sectionValue) { ?>
+                            <h4><?php echo $sectionValue->section_title; ?></h4>
+                            <hr>
+                            <?php
+
+                            if (count($sectionValue->questions) > 0) {
+                                // echo '<pre>';
+                                // var_dump($sectionValue->questions);exit;
+                                foreach ($sectionValue->questions as $questionKey => $questionValue) {
+                                    //radio
+                                    if ($questionValue->input_type_id == '5') {
+                                        $genint = $gen->gen_id;
+                                        if (empty($gen->gen_id)) {
+                                            $genint = 0;
+                                        }
+                                        $AnsCourseType5 =  QAnswers_course::model()->findAll(['condition' => '(answer_textarea IS NOT NULL AND answer_textarea != "" ) AND gen_id = ' . $genint . ' AND choice_id =' . $questionValue->choices[0]->option_choice_id]);
+                            ?>
+                                        <div>
+                                            <strong><?php echo $questionValue->question_name; ?></strong>
+                                            <label for="choice[text][<?php echo $questionValue->choices[0]->option_choice_id; ?>]" class="error"></label>
+                                        </div>
+                                        <table style="width:100%">
+                                            <tr>
+                                                <td class="text-center">ลำดับ</td>
+                                                <td class="text-center">คำตอบ</td>
+                                            </tr>
+                                            <?php foreach ($AnsCourseType5 as $keyType5 => $UserAns) { ?>
+                                                <tr>
+                                                    <td class="text-center"><?= $keyType5 + 1 ?></td>
+                                                    <td><?= $UserAns->answer_textarea ?></td>
+                                                </tr>
+                                            <?php } ?>
+
+                                        </table>
+                                        <br>
+
+                            <?php
+                                    }
+                                }
+                            }
+                            ?>
+                            <hr>
+            <?php
+                        }
+                    }
+                } // gen
+            } ?>
         </div>
     </div>
 </div>
