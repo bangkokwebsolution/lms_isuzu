@@ -16,6 +16,27 @@
     .text-center {
         text-align: center;
     }
+
+    .rot {
+        /* background-color: yellow; */
+        position: relative;
+        margin: 0 auto;
+        top: 0px;
+        -webkit-transition: all 1s ease;
+        -moz-transition: all 1s ease;
+        -ms-transition: all 1s ease;
+        -o-transition: all 1s ease;
+        transition: all 1s ease;
+        text-align: center;
+    }
+
+    .example {
+        transform: rotate(180deg);
+        -webkit-transform: rotate(180deg);
+        -moz-transform: rotate(180deg);
+        -o-transform: rotate(180deg);
+        -ms-transform: rotate(180deg);
+    }
 </style>
 <?php
 $titleName = 'รายงานแบบสอบถาม';
@@ -464,11 +485,44 @@ function checkRange($val, $max)
                                     <?php
                                         //text
                                     } else if ($questionValue->input_type_id == '5') {
+
+                                        $genint = $gen->gen_id;
+                                        if (empty($gen->gen_id)) {
+                                            $genint = 0;
+                                        }
+                                        $AnsCourseType5 =  QAnswers_course::model()->findAll(['condition' => '(answer_textarea IS NOT NULL AND answer_textarea != "" ) AND gen_id = ' . $genint . ' AND choice_id =' . $questionValue->choices[0]->option_choice_id]);
                                     ?>
-                                        <!-- <label style="font-size:20px;">
-                            <div><strong><?php echo $questionValue->question_name; ?></strong><label for="choice[text][<?php echo $questionValue->choices[0]->option_choice_id; ?>]" class="error"></label></div>
-                            <textarea data-rule-required="true" data-msg-required="กรุณาตอบ" name="choice[text][<?php echo $questionValue->choices[0]->option_choice_id; ?>]" rows="8" cols="50"></textarea>
-                        </label> -->
+
+                                        <div id="accordion<?= $questionValue->choices[0]->option_choice_id; ?>">
+                                            <div class="card">
+                                                <div class="card-header" id="heading<?= $questionValue->choices[0]->option_choice_id; ?>">
+                                                    <h5 class="mb-0">
+                                                        <button onclick="opencollapse(<?= $questionValue->choices[0]->option_choice_id; ?>)" class="btn btn-link" data-toggle="collapse" data-target="#collapse<?= $questionValue->choices[0]->option_choice_id; ?>" aria-expanded="true" aria-controls="collapse<?= $questionValue->choices[0]->option_choice_id; ?>">
+                                                            <strong><?php echo $questionValue->question_name; ?><span id="icon-collapse<?= $questionValue->choices[0]->option_choice_id ?>" class="rot glyphicon glyphicon-chevron-down"></span></strong>
+                                                        </button>
+                                                    </h5>
+                                                </div>
+
+                                                <div id="collapse<?= $questionValue->choices[0]->option_choice_id; ?>" class="show in collapse" aria-labelledby="heading<?= $questionValue->choices[0]->option_choice_id; ?>" data-parent="#accordion<?= $questionValue->choices[0]->option_choice_id; ?>" style="padding-left: 10px;">
+                                                    <div class="card-body">
+                                                        <table style="width:50%" border=1 cellpadding=0 cellspacing=1>
+                                                            <tr class="toggle">
+                                                                <td class="text-center">ลำดับ</td>
+                                                                <td class="text-center">คำตอบ</td>
+                                                            </tr>
+                                                            <?php foreach ($AnsCourseType5 as $keyType5 => $UserAns) { ?>
+                                                                <tr>
+                                                                    <td class="text-center"><?= $keyType5 + 1 ?></td>
+                                                                    <td><?= $UserAns->answer_textarea ?></td>
+                                                                </tr>
+                                                            <?php } ?>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <br>
+
                             <?php
                                     }
                                 }
@@ -484,75 +538,20 @@ function checkRange($val, $max)
             <a href="<?= Yii::app()->createUrl('Questionnaire/excel_course', array('id' => $course->id, 'schedule_id' => $schedule->schedule_id)); ?>" id="btnExport" class="btn btn-primary btn-icon glyphicons file"><i></i> Export</a>
 
 
-            <!-- คำบรรยาย -->
 
-            <?php
-            if (isset($course->q_header)) {
-
-                $header = $course->q_header;
-                $teacher_id = $course->teacher_id;
-                $header_id = $header->survey_header_id;
-                $course_id = $course->course_id;
-
-                $course_gen = CourseGeneration::model()->findAll(array(
-                    'condition' => 'course_id=:course_id AND active=:active ',
-                    'params' => array(':course_id' => $course_id, ':active' => "y"),
-                    'order' => 'gen_title ASC',
-                ));
-                if (empty($course_gen)) {
-                    $course_gen[]->gen_id = 0;
-                }
-                foreach ($course_gen as $key => $gen) {
-                    if (count($header->sections) > 0) {
-
-                        $sections = $header->sections;
-                        foreach ($sections as $sectionKey => $sectionValue) { ?>
-                            <h4><?php echo $sectionValue->section_title; ?></h4>
-                            <hr>
-                            <?php
-
-                            if (count($sectionValue->questions) > 0) {
-                                // echo '<pre>';
-                                // var_dump($sectionValue->questions);exit;
-                                foreach ($sectionValue->questions as $questionKey => $questionValue) {
-                                    //radio
-                                    if ($questionValue->input_type_id == '5') {
-                                        $genint = $gen->gen_id;
-                                        if (empty($gen->gen_id)) {
-                                            $genint = 0;
-                                        }
-                                        $AnsCourseType5 =  QAnswers_course::model()->findAll(['condition' => '(answer_textarea IS NOT NULL AND answer_textarea != "" ) AND gen_id = ' . $genint . ' AND choice_id =' . $questionValue->choices[0]->option_choice_id]);
-                            ?>
-                                        <div>
-                                            <strong><?php echo $questionValue->question_name; ?></strong>
-                                            <label for="choice[text][<?php echo $questionValue->choices[0]->option_choice_id; ?>]" class="error"></label>
-                                        </div>
-                                        <table style="width:100%">
-                                            <tr>
-                                                <td class="text-center">ลำดับ</td>
-                                                <td class="text-center">คำตอบ</td>
-                                            </tr>
-                                            <?php foreach ($AnsCourseType5 as $keyType5 => $UserAns) { ?>
-                                                <tr>
-                                                    <td class="text-center"><?= $keyType5 + 1 ?></td>
-                                                    <td><?= $UserAns->answer_textarea ?></td>
-                                                </tr>
-                                            <?php } ?>
-
-                                        </table>
-                                        <br>
-
-                            <?php
-                                    }
-                                }
-                            }
-                            ?>
-                            <hr>
-            <?php
-                        }
-                    }
-                } // gen
-            } ?>
         </div>
     </div>
 </div>
+<script>
+    function opencollapse(id) {
+        var model = $('#icon-collapse' + id);
+        model.toggleClass( "example");
+        // $('#collapse' + id).on('shown.bs.collapse', function() {
+        //     model.css("transform", "rotate(0deg)", 300);
+        // });
+
+        // $('#collapse' + id).on('hidden.bs.collapse', function() {
+        //     model.css("transform", "rotate(180deg)", 300);
+        // });
+    }
+</script>

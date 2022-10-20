@@ -21,6 +21,7 @@ header('Content-Disposition: attachment; filename="MyXls.xls"');
     .text-center {
         text-align: center;
     }
+    
 </style>
 
 <BODY>
@@ -170,7 +171,7 @@ header('Content-Disposition: attachment; filename="MyXls.xls"');
                                 }
                                 ?>
                                 <!-- Table  -->
-                                <table class="table table-bordered">
+                                <table class="table table-bordered" border=1 cellpadding=0 cellspacing=1>
                                     <thead style="background-color: #eec4b7; font-weight: bold;">
                                         <tr>
                                             <th rowspan="2" style=" text-align: center; vertical-align: middle; width: 60%;">หัวข้อประเมิน</th>
@@ -208,7 +209,7 @@ header('Content-Disposition: attachment; filename="MyXls.xls"');
                             }
                             $AnsCourseType5 =  QAnswers_course::model()->findAll(['condition' => '(answer_textarea IS NOT NULL AND answer_textarea != "" ) AND gen_id = ' . $genint . ' AND choice_id =' . $questionValue->choices[0]->option_choice_id]);
                         ?>
-                            <table style="width:100%">
+                            <table border=1 cellpadding=0 cellspacing=1>
                                 <tr>
                                     <td align="center" colspan=2><?= $questionValue->question_name ?></td>
                                 </tr>
@@ -219,7 +220,7 @@ header('Content-Disposition: attachment; filename="MyXls.xls"');
                                 <?php foreach ($AnsCourseType5 as $keyType5 => $UserAns) { ?>
                                     <tr>
                                         <td valign="top" align="center"><?= $keyType5 + 1 ?></td>
-                                        <td><?= $UserAns->answer_textarea ?></td>
+                                        <td valign="top"><?= $UserAns->answer_textarea ?></td>
                                     </tr>
                                 <?php } ?>
 
