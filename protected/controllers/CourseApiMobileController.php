@@ -413,6 +413,31 @@ class CourseApiMobileController extends Controller
         }
     }
 
+    public function actionDownload($id)
+    {
+        if (Yii::app()->user->id) {
+            Helpers::lib()->getControllerActionId();
+        }
+        $fileDoc = FileDoc::model()->findByPK($id);
+        if ($fileDoc) {
+            // $webroot = Yii::app()->getUploadPath('filedoc');
+            $webroot = Yii::app()->basePath . '/../uploads/filedoc/';
+            // var_dump($webroot);exit();
+            $uploadDir = $webroot;
+            $filename = $fileDoc->filename;
+            $filename = $uploadDir . $filename;
+            // var_dump($filename);
+            // exit;
+            if (file_exists($filename)) {
+                return Yii::app()->request->sendFile($fileDoc->file_name, file_get_contents($filename));
+            } else {
+                throw new CHttpException(404, 'The requested page does not exist.');
+            }
+        } else {
+            throw new CHttpException(404, 'The requested page does not exist.');
+        }
+    }
+
 
 
 
