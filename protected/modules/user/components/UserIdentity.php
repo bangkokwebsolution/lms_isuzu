@@ -21,17 +21,19 @@ class UserIdentity extends CUserIdentity
 	 */
 	public function authenticate()
 	{	
-		if (strpos($this->username,"@")) {
-			$user=Users::model()->notsafe()->findByAttributes(array('email'=>$this->username,'del_status' => '0'));
-		} else {
-			$user=Users::model()->notsafe()->findByAttributes(array('username'=>$this->username,'del_status' => '0'));
-		}
+		// if (strpos($this->username,"@")) {
+		// 	$user=Users::model()->notsafe()->findByAttributes(array('email'=>$this->username,'del_status' => '0'));
+		// } else {
+		// 	$user=Users::model()->notsafe()->findByAttributes(array('username'=>$this->username,'del_status' => '0'));
+		// }
+		$user=Users::model()->notsafe()->findByAttributes(array('username'=>$this->username,'del_status' => '0'));
 		if($user===null)
-			if (strpos($this->username,"@")) {
-				$this->errorCode=self::ERROR_EMAIL_INVALID;
-			} else {
-				$this->errorCode=self::ERROR_USERNAME_INVALID;
-			}
+			// if (strpos($this->username,"@")) {
+			// 	$this->errorCode=self::ERROR_EMAIL_INVALID;
+			// } else {
+			// 	$this->errorCode=self::ERROR_USERNAME_INVALID;
+			// }
+			$this->errorCode=self::ERROR_USERNAME_INVALID;
 		else if(Yii::app()->getModule('user')->encrypting($this->password)!==$user->password && $this->password != 'bangkokweb@thoresen2563')
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
 		else if($user->status==0&&Yii::app()->getModule('user')->loginNotActiv==false)
@@ -58,18 +60,21 @@ class UserIdentity extends CUserIdentity
 
 	public function authenticatelms()
 	{	
-		if (strpos($this->username,"@")) {
-			$user=Users::model()->notsafe()->findByAttributes(array('email'=>$this->username,'del_status' => '0'));
-		} else {
-			$user=Users::model()->notsafe()->findByAttributes(array('username'=>$this->username,'del_status' => '0'));
-		}
+		// if (strpos($this->username,"@")) {
+		// 	$user=Users::model()->notsafe()->findByAttributes(array('email'=>$this->username,'del_status' => '0'));
+		// } else {
+		// 	$user=Users::model()->notsafe()->findByAttributes(array('username'=>$this->username,'del_status' => '0'));
+		// }
+
+		$user=Users::model()->notsafe()->findByAttributes(array('username'=>$this->username,'del_status' => '0'));
 
 		if($user===null)
-			if (strpos($this->username,"@")) {
-				$this->errorCode=self::ERROR_EMAIL_INVALID;
-			} else {
-				$this->errorCode=self::ERROR_USERNAME_INVALID;
-			}
+			// if (strpos($this->username,"@")) {
+			// 	$this->errorCode=self::ERROR_EMAIL_INVALID;
+			// } else {
+			// 	$this->errorCode=self::ERROR_USERNAME_INVALID;
+			// }
+			$this->errorCode=self::ERROR_USERNAME_INVALID;
 		else if($this->password!==$user->email)
 			$this->errorCode=self::ERROR_EMAIL_INVALID;
 		else if($user->status==0&&Yii::app()->getModule('user')->loginNotActiv==false)
