@@ -490,7 +490,10 @@ function checkRange($val, $max)
                                         if (empty($gen->gen_id)) {
                                             $genint = 0;
                                         }
-                                        $AnsCourseType5 =  QAnswers_course::model()->findAll(['condition' => '(answer_textarea IS NOT NULL AND answer_textarea != "" ) AND gen_id = ' . $genint . ' AND choice_id =' . $questionValue->choices[0]->option_choice_id]);
+                                        $criteria = new CDbCriteria;
+                                        $criteria->join =  'INNER JOIN q_quest_ans_course ON t.quest_ans_id = q_quest_ans_course.id ';
+                                        $criteria->condition = '(t.answer_textarea IS NOT NULL AND t.answer_textarea != "" ) AND t.gen_id = ' . $genint . ' AND t.choice_id =' . $questionValue->choices[0]->option_choice_id.' AND q_quest_ans_course.course_id = '.$course_id;
+                                        $AnsCourseType5 =  QAnswers_course::model()->findAll($criteria);
                                     ?>
 
                                         <div id="accordion<?= $questionValue->choices[0]->option_choice_id; ?>">

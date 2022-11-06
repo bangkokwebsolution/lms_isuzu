@@ -136,7 +136,7 @@ header('Content-Disposition: attachment; filename="MyXls.xls"');
                                 SUM(CASE WHEN (answer_numeric=1) THEN 1 ELSE 0 END)*1 AS onem 
                                 FROM q_answers_course INNER JOIN q_quest_ans_course ON q_answers_course.quest_ans_id = q_quest_ans_course.id ";
                                 // $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id . "' AND q_quest_ans_course.teacher_id='" . $teacher_id . "' ";
-                                $sql .= " WHERE course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id . "'";
+                                $sql .= " WHERE q_quest_ans_course.course_id ='" . $course_id . "' AND header_id='" . $header_id . "' AND choice_id ='" . $choiceValue->option_choice_id . "'";
 
                                 if (!empty($teacher_id)) {
                                     $sql .= " AND q_quest_ans_course.teacher_id='" . $teacher_id . "' ";
@@ -146,8 +146,8 @@ header('Content-Disposition: attachment; filename="MyXls.xls"');
                                     $sql .= ' AND (q_quest_ans_course.date >= "' . $schedule->training_date_start . '" AND q_quest_ans_course.date <= "' . $schedule->training_date_end . '")';
                                 }
                                 $sql .= 'AND q_answers_course.user_id IS NOT NULL';
-
                                 $count = Yii::app()->db->createCommand($sql)->queryRow();
+
                                 $totalCount = $count['five'] + $count['four'] + $count['three'] + $count['two'] + $count['one'];
                                 $totalCountM = $count['fivem'] + $count['fourm'] + $count['threem'] + $count['twom'] + $count['onem'];
                                 $average = $totalCountM / (($totalCount != 0) ? $totalCount : 1);
@@ -207,7 +207,10 @@ header('Content-Disposition: attachment; filename="MyXls.xls"');
                             if (empty($gen->gen_id)) {
                                 $genint = 0;
                             }
-                            $AnsCourseType5 =  QAnswers_course::model()->findAll(['condition' => '(answer_textarea IS NOT NULL AND answer_textarea != "" ) AND gen_id = ' . $genint . ' AND choice_id =' . $questionValue->choices[0]->option_choice_id]);
+                            $criteria = new CDbCriteria;
+                            $criteria->join =  'INNER JOIN q_quest_ans_course ON t.quest_ans_id = q_quest_ans_course.id ';
+                            $criteria->condition = '(t.answer_textarea IS NOT NULL AND t.answer_textarea != "" ) AND t.gen_id = ' . $genint . ' AND t.choice_id =' . $questionValue->choices[0]->option_choice_id.' AND q_quest_ans_course.course_id = '.$course_id;
+                            $AnsCourseType5 =  QAnswers_course::model()->findAll($criteria);
                         ?>
                             <table border=1 cellpadding=0 cellspacing=1>
                                 <tr>
