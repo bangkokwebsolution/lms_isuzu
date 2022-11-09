@@ -724,7 +724,7 @@ public function actionFormLesson($id,$type)
                                 if($_SERVER['HTTP_HOST'] == 'localhost'){
                                     $imagemagick = "\"C:/ImageMagick-6.8.4-Q16/convert.exe\"";
                                 }else{
-                                    $imagemagick = "\"C:/ImageMagick-7.0.7-Q16/convert.exe\"";
+                                    $imagemagick = "\"C:/ImageMagick-6.8.4-Q16/convert.exe\"";
                                 }
                             
                                 // $imagemagick = "convert";
