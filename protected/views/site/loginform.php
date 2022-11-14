@@ -6,19 +6,20 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $this->pageTitle = 'IMCT e-Learning';
 } else {
     $langId = Yii::app()->session['lang'];
-    $langRe = 'th';
+    $langRe = 'en';
     $this->pageTitle = 'ระบบจัดการ IMCT e-Learning';
 }
 if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') {
     $keyrecaptcha = '6LdxRgocAAAAADrcEFCe2HcHeETOZdREexT52B6R'; //localhost
     $checkcap = '';
 }else if(Yii::app()->createAbsoluteUrl('') == 'https://elearning.imct.co.th'){
-    $keyrecaptcha = '6LdHyRMgAAAAAKPltirPHX2kZkEv3mF8YVKZLpRa'; //product
+    $keyrecaptcha = '6LcFJEchAAAAAA17Y3H4SBkUingTovn8R43kd1PW'; //product
     $checkcap = 'disabled';
 }else{
     $keyrecaptcha = '6LcrED0hAAAAABs1r3b90Sra9SZUbg8ztpBL4xCT'; //test
     $checkcap = 'disabled';
 }
+// 
 if (Yii::app()->user->id != null) {
 
         $this->redirect(array('site/index'));
