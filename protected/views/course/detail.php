@@ -94,6 +94,18 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 $course_model = CourseOnline::model()->findByPk($course->course_id);
 $gen_id = $course_model->getGenID($course_model->course_id);
 
+$perCourse = Helpers::lib()->percent_CourseGen($course->course_id, $gen_id);
+if($perCourse >= 100){
+  $chkpasscourse =   Passcours::model()->find(['condition'=>"passcours_cates = ".$course_model->cate_id.' AND passcours_cours = '.$course_model->course_id.' AND passcours_user = '.Yii::app()->user->id]);
+    if(empty($chkpasscourse)){
+        $chkpasscourse = new Passcours();
+        $chkpasscourse->passcours_cates = $course_model->cate_id;
+        $chkpasscourse->passcours_cours = $course_model->course_id;
+        $chkpasscourse->passcours_user = Yii::app()->user->id;
+        $chkpasscourse->save();
+    }
+}
+
 function Cuttime($date)
 {
     $strYear = date("Y", strtotime($date)) + 543;
