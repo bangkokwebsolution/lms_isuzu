@@ -102,6 +102,8 @@ if($perCourse >= 100){
         $chkpasscourse->passcours_cates = $course_model->cate_id;
         $chkpasscourse->passcours_cours = $course_model->course_id;
         $chkpasscourse->passcours_user = Yii::app()->user->id;
+        $chkpasscourse->gen_id = $gen_id;
+        $chkpasscourse->passcours_date = date("Y-m-d H:i:s");
         $chkpasscourse->save();
     }
 }
