@@ -211,7 +211,15 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                         </a>
                         <ul class="dropdown-menu">
                             <?php if (Yii::app()->user->id !== null) { ?>
-                                <li class="<?= $bar == 'site' && $bar_action == 'dashboard' ? 'active' : '' ?>"><a href="<?php echo $this->createUrl('/site/dashboard'); ?>"><i class="fas fa-list-ul"></i><?= $label->label_header_dashboard ?></a></li>
+                                <li class="<?= $bar == 'site' && $bar_action == 'dashboard' ? 'active' : '' ?>"><a href="<?php echo $this->createUrl('/site/dashboard'); ?>"><i class="fas fa-list-ul"></i>
+                                <?php //echo $label->label_header_dashboard ?>
+                                <?php if (Yii::app()->session['lang'] == 1) {
+                                    echo  "Dashboard";
+                                } else {
+                                    echo  "สถานะของหลักสูตร";
+                                }
+                                ?>
+                                </a></li>
                             <?php } ?>
                                 
                             <li>

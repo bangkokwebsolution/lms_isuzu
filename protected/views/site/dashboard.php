@@ -17,7 +17,15 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb breadcrumb-main">
             <li class="breadcrumb-item"><a href="<?php echo $this->createUrl('/site/index'); ?>"><?php echo $label->label_homepage; ?></a></li>
-            <li class="breadcrumb-item active" aria-current="page"><?= $label->label_statusLearn ?></li>
+            <li class="breadcrumb-item active" aria-current="page">
+                <?php // $label->label_statusLearn ?>
+                <?php if (Yii::app()->session['lang'] == 1) {
+                                    echo  "Dashboard";
+                                } else {
+                                    echo  "สถานะของหลักสูตร";
+                                }
+                ?>
+            </li>
         </ol>
     </nav>
 </div>
@@ -93,7 +101,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                             if($langId == 2){
                                                 if (!empty($passcourse)) { // ผ่าน
                                                     $status_user = 'success'; // สีเขียว
-                                                    $status_text = 'เรียนผ่านแล้ว';
+                                                    $status_text = 'เรียนผ่าน';
                                                 } else if (date('Y-m-d H:i:s') > $value->course->course_date_end) { //ต่อให้เคยเรียน แต่ก็ให้ขึ้นหมดเวลา
                                                     $status_user = 'danger'; //สีแดง
                                                     $status_text = 'หมดเวลาเรียน';
@@ -109,7 +117,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
                                             }else{
                                                 if (!empty($passcourse)) { // ผ่าน
                                                     $status_user = 'success'; // สีเขียว
-                                                    $status_text = 'Passed';
+                                                    $status_text = 'Complete';
                                                 } else if (date('Y-m-d H:i:s') > $value->course->course_date_end) { //ต่อให้เคยเรียน แต่ก็ให้ขึ้นหมดเวลา
                                                     $status_user = 'danger'; //สีแดง
                                                     $status_text = 'Expired';
