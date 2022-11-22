@@ -272,7 +272,7 @@ if (isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != '') {
                         <td class="center"><?= $lessonStatusStr ?></td>
                         <td class="center"><?= isset($passcourse) ? $passcourse->passcours_date : '' ?></td>
 
-                        <td><?php echo $lesson_pre_score ?>&nbsp;<?php echo $lessonListStatus->id ?></td>
+                        <td><?php echo $lesson_pre_score ?>&nbsp;</td>
                         <td><?php echo $lesson_pre_percent ?></td>
 
                         <td class="center"><?= $course_pre_score ?>&nbsp;</td>

@@ -241,11 +241,11 @@ class ReportController extends Controller
 
     public function actionExcelByCourseAll(){
         // $this->render('ExcelByAggregate');
-        if($_SERVER['HTTP_HOST']=="elearning.imct.co.th"){
-            $this->renderPartial('ExcelByLessonAll');
-        }else{
+  
+            // $this->renderPartial('ExcelByLessonAll');
+       
             $this->renderPartial('ExcelByCourseLessonAll');
-        }
+       
 
     }
 
