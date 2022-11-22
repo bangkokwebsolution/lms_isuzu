@@ -1804,7 +1804,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                                                     <?php //} ?>
                                                                     
                                                                     <!-- <a href="<?= $pathCourseTest ?>" <?= $alertCourseTest ?>> -->
-                                                                        <!-- <span class="list__course"><?= $label->label_testFinalTimes; ?> <? php // count($BestFinalTestScore) + 1;  -->
+                                                                        <!-- <span class="list__course"><?= $label->label_testFinalTimes; ?> <?php // count($BestFinalTestScore) + 1;  
                                                                                                                                         ?></span>-->
                                                                         <!-- <span class="list__course"><?= $label->label_testFinalTimes; ?> <?= $key + 2; ?>5555</span> -->
                                                                         <!-- <span class="btn btn-warning detailmore pull-right"><?= $clickFinal ?>
@@ -1816,7 +1816,13 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                             ?>
 
 
-                                            <?php
+
+
+
+                                                <!--------- ปุ่มสอบ ------------>
+
+                                                <?php
+                                                
                                                 //  ตัวบอกว่า ไม่มีคะแนนสอบ 
                                                 if ($checkHaveCourseTest && $CheckPreTestAnsTextAreaCoursePost == true && count($BestFinalTestScore_pass) > 0 ) { ?>
                                                                                                             
@@ -1835,7 +1841,13 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                                     </li>
                                                 
                                                 <?php } ?>
+                                                <!--------- ปุ่มสอบ ------------>
 
+
+
+
+
+                                                
 
                                             <!-- end Course question  -->
                                             <?php
