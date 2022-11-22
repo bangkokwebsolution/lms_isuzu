@@ -104,8 +104,8 @@ if (isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != '') {
 
                     $percent_learn_net = 0;
                         foreach ($lessonModel as $keyLesson => $lessonListStatus) {
-                                    $checkLessonPass = Helpers::lib()->checkLessonPass_Now($lessonListStatus,$valueL->user_id);
-                                    $checkLessonPass_Percent = Helpers::lib()->checkLessonPass_Percent($lessonListStatus,$valueL->user_id, 0);
+                                    // $checkLessonPass = Helpers::lib()->checkLessonPass_Now($lessonListStatus,$valueL->user_id);
+                                    // $checkLessonPass_Percent = Helpers::lib()->checkLessonPass_Percent($lessonListStatus,$valueL->user_id, 0);
 
                                     // if($checkLessonPass == 'notLearn'){
                                     //   $checkLessonPass = 'Not Learn';
@@ -117,11 +117,11 @@ if (isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != '') {
 
                                     
 
-                                    $manage_lesson_pre = Manage::model()->find(array(
+                                        $manage_lesson_pre = Manage::model()->find(array(
                                         'select'=>'group_id',
                                         'condition'=>'id="'.$lessonListStatus->id.'" AND active="y" AND type="pre" ',
                                         'order'=>'manage_id ASC'
-                                      ));
+                                        ));
 
                                       if($manage_lesson_pre){
                                         $lesson_pre_score = "Not Start";
