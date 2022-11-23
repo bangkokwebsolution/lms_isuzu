@@ -20,7 +20,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
             <li class="breadcrumb-item active" aria-current="page">
                 <?php // $label->label_statusLearn ?>
                 <?php if (Yii::app()->session['lang'] == 1) {
-                                    echo  "Dashboard";
+                                    echo  "Course Status";
                                 } else {
                                     echo  "สถานะของหลักสูตร";
                                 }
