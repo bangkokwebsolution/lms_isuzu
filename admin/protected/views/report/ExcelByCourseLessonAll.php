@@ -59,7 +59,7 @@ if (isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != '') {
                     <th rowspan="3" style="vertical-align: middle;" class="center"><b>Learning Status</b></th>
                     <th rowspan="3" style="vertical-align: middle;" class="center"><b>Completed Date</b></th>
                     
-                    <th colspan="2" style="vertical-align: middle;" class="center">Lesson</th>
+                    <th colspan="4" style="vertical-align: middle;" class="center">Lesson</th>
                     <th colspan="7" style="vertical-align: middle;" class="center">Course</th>
                     
                 </tr>
@@ -67,6 +67,8 @@ if (isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != '') {
                 <tr>
                     <th rowspan="2">Pre Test Score</th>
                     <th rowspan="2">Pre Test %</th>
+                    <th rowspan="2">Post Test Score</th>
+                    <th rowspan="2">Post Test %</th>
 
                     <th colspan="3">Pre Test</th>
                     <th colspan="4">Final Test</th>
@@ -151,6 +153,35 @@ if (isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != '') {
                                         $lesson_pre_score = "ไม่มีข้อสอบบทเรียน";
                                         $lesson_pre_percent = "ไม่มีข้อสอบบทเรียน";
                                  
+                                      }
+
+                                      if($manage_lesson_post){
+                                        $lesson_post_score = "Not Start";
+                                        $lesson_post_percent = "Not Start";
+                                        $lesson_post_status = "Not Start";
+  
+                                        $lessonscore_post = Score::model()->find(array(
+                                          'select'=>'score_number, score_total, score_past,course_id',
+                                          'condition'=>'type="post" AND lesson_id="'.$lessonListStatus->id.'" AND user_id="'.$valueLog->user_id.'" AND course_id = '.$valueLog->course_id.'  AND active="y" ',
+                                          'order'=>'score_id DESC'
+                                        ));
+  
+                                        if($lessonscore_post){
+                                          $lesson_post_score = $lessonscore_post->score_number."/".$lessonscore_post->score_total;
+  
+                                          $lesson_post_percent = number_format(($lessonscore_post->score_number*100)/$lessonscore_post->score_total, 2)." %";
+  
+                                          if($lessonscore_post->score_past == "y"){
+                                            $lesson_post_status = "Passed";
+                                          }else{
+                                            $lesson_post_status = "Not Passed";
+                                          }
+  
+                                        }
+                                      }else{
+                                        $lesson_post_score = "ไม่มีข้อสอบบทเรียน";
+                                        $lesson_post_percent = "ไม่มีข้อสอบบทเรียน";
+                                        $lesson_post_status = "ไม่มีข้อสอบบทเรียน";
                                       }
                         
                     //lesson 
@@ -274,6 +305,8 @@ if (isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != '') {
 
                         <td><?php echo $lesson_pre_score ?>&nbsp;</td>
                         <td><?php echo $lesson_pre_percent ?></td>
+                        <td><?= $lesson_post_score ?>&nbsp;</td>
+                        <td><?= $lesson_post_percent ?></td>
 
                         <td class="center"><?= $course_pre_score ?>&nbsp;</td>
                         <td class="center"><?= $course_pre_percent ?></td>
