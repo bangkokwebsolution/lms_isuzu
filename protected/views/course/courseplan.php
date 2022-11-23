@@ -8,7 +8,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $mont = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     $NotStarted = 'Not Started';
     $InProgress = 'In Progress';
-    $Passed = 'Passed';
+    $Passed = 'Complete';
     $Expired = 'Expired';
 } else {
     $langId = Yii::app()->session['lang'];
