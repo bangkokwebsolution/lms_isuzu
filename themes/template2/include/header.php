@@ -214,7 +214,7 @@ if ($_SERVER['REMOTE_ADDR'] == '::1' || $_SERVER['REMOTE_ADDR'] == '127.0.0.1') 
                                 <li class="<?= $bar == 'site' && $bar_action == 'dashboard' ? 'active' : '' ?>"><a href="<?php echo $this->createUrl('/site/dashboard'); ?>"><i class="fas fa-list-ul"></i>
                                 <?php //echo $label->label_header_dashboard ?>
                                 <?php if (Yii::app()->session['lang'] == 1) {
-                                    echo  "Dashboard";
+                                    echo  "Course Status";
                                 } else {
                                     echo  "สถานะของหลักสูตร";
                                 }
