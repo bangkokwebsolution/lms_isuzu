@@ -3,7 +3,7 @@
 
 class EmpClass extends CActiveRecord
 {
-	
+	public $news_per_page;
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
@@ -31,7 +31,7 @@ class EmpClass extends CActiveRecord
 			array('title', 'length', 'max'=>255),
 			array('create_date', 'safe'),
 			// Please remove those attributes that should not be searched.
-			array('id, title, creaete_date, create_by, descrpition,update_date , update_by, active', 'safe', 'on'=>'search'),
+			array('id, title, creaete_date, create_by, descrpition,update_date , update_by, active,news_per_page', 'safe', 'on'=>'search'),
 		);
 	}
 

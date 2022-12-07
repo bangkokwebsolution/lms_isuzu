@@ -121,6 +121,12 @@ class EmployeeclassController extends Controller
 	public function actionIndex()
 	{
 		$model= new EmpClass('search');
+
+		if(isset($_GET['EmpClass'])){
+			// var_dump($_GET['EmpClass']);exit();
+			$model->attributes=$_GET['EmpClass'];
+		}
+
 		$this->render('index',array(
 			'model'=>$model,
 			));
