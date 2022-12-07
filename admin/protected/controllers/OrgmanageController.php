@@ -138,6 +138,8 @@ class OrgmanageController extends Controller
 
 		if(isset($_GET['OrgChart'])){
 			$model->attributes=$_GET['OrgChart'];
+			$model->level = "3";
+			$model->active = "y";
 		}
 
 		$this->render('Department',array(
@@ -231,6 +233,8 @@ class OrgmanageController extends Controller
 
 		if(isset($_GET['OrgChart'])){
 			$model->attributes=$_GET['OrgChart'];
+			$model->level = "4";
+			$model->active = "y";
 		}
 
 		$this->render('Group',array(
@@ -327,9 +331,11 @@ class OrgmanageController extends Controller
 
 	
 
-		if(isset($_GET['Section'])){
-
-			$model->attributes=$_GET['Section'];
+		if(isset($_GET['OrgChart'])){
+			// var_dump($_GET);exit();
+			$model->attributes=$_GET['OrgChart'];
+			$model->level = "5";
+			$model->active = "y";
 		}
 
 		$this->render('Section',array(

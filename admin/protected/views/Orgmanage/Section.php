@@ -1,6 +1,9 @@
 <?php
 $titleName = 'Section';
-$formNameModel = 'Section';
+$formNameModel = 'OrgChart';
+
+
+
 
 $this->breadcrumbs=array($titleName);
 Yii::app()->clientScript->registerScript('search', "
@@ -23,7 +26,7 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	    var val = eval("$."+varName);
 	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
 	}
-	$.appendFilter("Section[news_per_page]", "news_per_page");
+	$.appendFilter("OrgChart[news_per_page]", "news_per_page");
 EOD
 , CClientScript::POS_READY);
 ?>
@@ -59,7 +62,7 @@ EOD
 						'style'=> "margin-top: -1px;",
 					),
 					'afterAjaxUpdate'=>'function(id, data){
-						$.appendFilter("Section[news_per_page]");
+						$.appendFilter("OrgChart[news_per_page]");
 						InitialSortTable();
 					}',
 					'columns'=>array(
@@ -117,9 +120,7 @@ EOD
 			                   'style' => 'width:120px',
 			                ),
 							'value'=>function($data){
-								// $text = '
-								// <a class="btn-action glyphicons eye_open btn-info" title="ดูรายละเอียด" href="'.Yii::app()->controller->createUrl('orgChart/orgview/'.$data->id).'"><i></i></a>
-								// ';
+								
 
 								$text .= '
 								<a class="btn-action glyphicons pencil btn-success" title="แก้ไข" href="'.Yii::app()->controller->createUrl('Orgmanage/section_update/'.$data->id).'"><i></i></a>
