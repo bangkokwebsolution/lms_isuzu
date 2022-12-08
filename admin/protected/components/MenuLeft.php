@@ -706,8 +706,8 @@ Class MenuLeft extends Controller
 				/*====== Check Permissions FormSurveyGroup (2) ======*/
 				'visible'=>self::PermissionsMenu(array(
 					'Questionnaire.*',
-					'Questionnaire.Index',
-					'Questionnaire.Create'
+					// 'Questionnaire.index',
+					// 'Questionnaire.create'
 				)),
 				'label'=>' <span class="label label-primary">5</span> <i></i><span>แบบประเมินผลการฝึกอบรม</span>',
 				'url'=>'#Questionnaire',
@@ -720,7 +720,7 @@ Class MenuLeft extends Controller
 						/*====== Check Permissions Sup-Questionnaire (1) ======*/
 						'visible'=>self::PermissionsMenu(array(
 							'Questionnaire.*',
-							'Questionnaire.Create'
+							'Questionnaire.create'
 						)),
 						'label'=>'เพิ่มแบบประเมิน',
 						'url'=>array('//Questionnaire/create')
@@ -729,7 +729,7 @@ Class MenuLeft extends Controller
 						/*====== Check Permissions Sup-Questionnaire (2) ======*/
 						'visible'=>self::PermissionsMenu(array(
 							'Questionnaire.*',
-							'Questionnaire.Index'
+							'Questionnaire.index'
 						)),
 						'label'=>'จัดการแบบประเมิน',
 						'url'=>array('//Questionnaire/index')

@@ -708,7 +708,8 @@ class QuestionnaireController extends Controller
 
     public function actionIndex()
     {
-        $header = New QHeader('Search');
+        // $header = New QHeader('Search');
+        $header = QHeader::model()->findAll(['condition'=>'active = "y"']);
         $this->render('index', array(
             'header' => $header
         ));

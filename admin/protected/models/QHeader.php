@@ -46,8 +46,8 @@ class QHeader extends CActiveRecord
 			array('other_header_info', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('type,survey_header_id, survey_name, instructions, instructions_en, other_header_info', 'safe', 'on'=>'search'),
-			array('type,survey_header_id, survey_name, instructions, instructions_en, other_header_info', 'safe', 'on'=>'searchout'),
+			array('type,survey_header_id, survey_name, instructions, instructions_en,create_by, other_header_info', 'safe', 'on'=>'search'),
+			array('type,survey_header_id, survey_name, instructions, instructions_en,create_by, other_header_info', 'safe', 'on'=>'searchout'),
 		);
 	}
 
@@ -83,6 +83,31 @@ class QHeader extends CActiveRecord
         return array(
             'condition'=>"active='y'",
         );
+    }
+
+	public function beforeSave()
+    {
+        if(null !== Yii::app()->user && isset(Yii::app()->user->id))
+        {
+            $id = Yii::app()->user->id;
+        }
+        else
+        {
+            $id = 0;
+        }
+
+        if($this->isNewRecord)
+        {
+            $this->create_by = $id;
+            $this->create_date = date("Y-m-d H:i:s");
+        }
+        else
+        {
+            $this->update_by = $id;
+            $this->update_date = date("Y-m-d H:i:s");
+        }
+
+        return parent::beforeSave();
     }
 
 	/**

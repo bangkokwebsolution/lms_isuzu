@@ -14,7 +14,9 @@ Yii::app()->clientScript->registerScript('search', "
 	});
 ");
 
-Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
+Yii::app()->clientScript->registerScript(
+	'updateGridView',
+	<<<EOD
 	$.updateGridView = function(gridID, name, value) {
 	    $("#"+gridID+" input[name*="+name+"], #"+gridID+" select[name*="+name+"]").val(value);
 	    $.fn.yiiGridView.update(gridID, {data: $.param(
@@ -26,83 +28,89 @@ Yii::app()->clientScript->registerScript('updateGridView', <<<EOD
 	    $("#$formNameModel-grid").append('<input type="hidden" name="'+name+'" value="">');
 	}
 	$.appendFilter("Questionnaire[news_per_page]", "news_per_page");
-EOD
-, CClientScript::POS_READY);
-?>
+EOD,
+	CClientScript::POS_READY
+);
 
+$user = User::model()->findByPk(Yii::app()->user->id);
+$perarray = json_decode($user->group);
+?>
+<style type="text/css">
+	div.dataTables_filter label {
+		float: right;
+	}
+</style>
 <div class="innerLR">
 	<div class="widget" style="margin-top: -1px;">
 		<div class="widget-head">
-			<h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $titleName;?></h4>
+			<h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $titleName; ?></h4>
 		</div>
 		<div class="widget-body">
-			<div class="separator bottom form-inline small">
-				<span class="pull-right">
-					<label class="strong">แสดงแถว:</label>
-					<?php echo $this->listPageShow($formNameModel);?>
-				</span>	
-			</div>
-			<div class="clear-div"></div>
-			<div class="overflow-table">
-				<?php $this->widget('AGridView', array(
-					'id'=>$formNameModel.'-grid',
-					'dataProvider'=>$header->search(),
-					'filter'=>$header,
-					'selectableRows' => 2,	
-					'htmlOptions' => array(
-						'style'=> "margin-top: -1px;",
-					),
-					'afterAjaxUpdate'=>'function(id, data){
-						$.appendFilter("Questionnaire[news_per_page]");	
-						InitialSortTable();
-					}',
-					'columns'=>array(
-						// array(
-						// 	'visible'=>Controller::DeleteAll(
-						// 		array("Questionnaire.*", "Questionnaire.Delete", "Questionnaire.MultiDelete")
-						// 	),
-						// 	'class'=>'CCheckBoxColumn',
-						// 	'id'=>'chk',
-						// ),
-						array(
-							'name'=>'name_ques',
-							'type'=>'html',
-							'value'=>'CHtml::decode(UHtml::markSearch($data,"survey_name"))'
-						),
-						array(            
-							'class'=>'AButtonColumn',
-							'visible'=>Controller::PButton( 
-								array("Questionnaire.*", "Questionnaire.View", "Questionnaire.Update", "Questionnaire.Delete") 
-							),
-							'template'=>'{update} {delete}',
-							'buttons' => array(
-								// 'view'=> array( 
-								// 	'visible'=>'Controller::PButton( array("Questionnaire.*", "Questionnaire.View") )' 
-								// ),
-								'update'=> array( 
-									'visible'=>'Controller::PButton( array("Questionnaire.*", "Questionnaire.Update") )' 
-								),
-								'delete'=> array( 
-									'visible'=>'Controller::PButton( array("Questionnaire.*", "Questionnaire.Delete") )' 
-								),
-							),
-						),
-					),
-				)); ?>
-			</div>
+			<table id="table_datatable" class="table table-bordered table-striped">
+				<thead style="background-color: #e50000; font-weight: bold;color:aliceblue">
+					<tr>
+						<th>ชื่อแบบประเมิน</th>
+						<th>จัดการ</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach ($header as $key => $val) {
+
+						//System Admin เห็นทุกๆ แบบประเมิน
+						if (!in_array("1", $perarray) || !in_array("7", $perarray) || $val->create_by == Yii::app()->user->id) {
+
+							//Instructor เห็นเฉพาะแบบประเมินที่ตนเองสร้างเท่านั้น
+							if (in_array("18", $perarray) && $val->create_by != Yii::app()->user->id) {
+								continue;
+							}
+
+							//Instructor Manager เห็นเฉพาะแบบประเมินที่ instructor ในส่วนงานตนเองสร้างเท่านั้น
+							if (in_array("17", $perarray)) {
+								$userGroup = User::model()->findByPk($val->create_by);
+								if (!empty($userGroup)) {
+									$jsongroup = json_decode($userGroup->group);
+									if (!in_array("17", $jsongroup)) {
+										continue;
+									}
+								} else {
+									continue;
+								}
+							}
+
+							//HR Manager ไม่เห็นแบบประเมินของส่วนงานใด ๆ เลย
+							if (in_array("15", $perarray)) {
+								continue;
+							}
+						}
+					?>
+						<tr>
+							<td><?= CHtml::decode(UHtml::markSearch($val, "survey_name")) ?></td>
+							<td style="width: 90px;" class="center">
+								<a class="btn-action glyphicons pencil btn-success" title="แก้ไข" href="<?= $this->createUrl("Questionnaire/update") . '/' . $val->survey_header_id ?>"><i></i></a>
+								<a class="btn-action glyphicons pencil btn-danger remove_2" title="ลบ" href="<?= $this->createUrl("Questionnaire/delete") . '/' . $val->survey_header_id ?>"><i></i></a>
+							</td>
+						</tr>
+					<?php } ?>
+				</tbody>
+			</table>
+
 		</div>
 	</div>
 
-	<?php if( Controller::DeleteAll(array("Questionnaire.*", "Questionnaire.Delete", "Questionnaire.MultiDelete")) ) : ?>
+	<?php if (Controller::DeleteAll(array("Questionnaire.*", "Questionnaire.Delete", "Questionnaire.MultiDelete"))) : ?>
 		<!-- Options -->
 		<div class="separator top form-inline small">
 			<!-- With selected actions -->
 			<div class="buttons pull-left">
-				<?php 
-				echo CHtml::link("<i></i> ลบข้อมูลทั้งหมด",
+				<?php
+				echo CHtml::link(
+					"<i></i> ลบข้อมูลทั้งหมด",
 					"#",
-					array("class"=>"btn btn-primary btn-icon glyphicons circle_minus",
-						"onclick"=>"return multipleDeleteNews('".$this->createUrl('//'.$formNameModel.'/MultiDelete')."','$formNameModel-grid');")); 
+					array(
+						"class" => "btn btn-primary btn-icon glyphicons circle_minus",
+						"onclick" => "return multipleDeleteNews('" . $this->createUrl('//' . $formNameModel . '/MultiDelete') . "','$formNameModel-grid');"
+					)
+				);
 				?>
 			</div>
 			<!-- // With selected actions END -->
@@ -112,3 +120,10 @@ EOD
 	<?php endif; ?>
 
 </div>
+<script>
+	$(document).ready(function() {
+		$('#table_datatable').DataTable({
+			"searching": true,
+		});
+	});
+</script>
