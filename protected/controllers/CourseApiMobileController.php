@@ -438,6 +438,124 @@ class CourseApiMobileController extends Controller
         }
     }
 
+    public function actionCourseLearn($id = null)
+    { // อันใหม่ ใส่ note Note ด้านหลัง
+        $user_id = $_GET['user_id'];
+        $param = $_GET['file'];
+        $str = CHtml::encode($param);
+
+        if (!is_numeric($str)) {
+            throw new CHttpException(404, 'The requested page does not exist.');
+        }
+
+
+        if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
+            $langId = Yii::app()->session['lang'] = 1;
+            Yii::app()->language = 'en';
+        } else {
+            $langId = Yii::app()->session['lang'];
+            Yii::app()->language = (Yii::app()->session['lang'] == 1) ? 'en' : 'th';
+        }
+
+        $label = MenuCourse::model()->find(array(
+            'condition' => 'lang_id=:lang_id',
+            'params' => array(':lang_id' => $langId)
+        ));
+        if (!$label) {
+            $label = MenuCourse::model()->find(array(
+                'condition' => 'lang_id=:lang_id',
+                'params' => array(':lang_id' => 1)
+            ));
+        }
+
+        $modelCapt = new ValidateCaptcha;
+        $model = Lesson::model()->findByPk($id);
+        $gen_id = $model->CourseOnlines->getGenID($model->course_id);
+        $time = ConfigCaptchaCourseRelation::model()->with('captchaTime')->find(array(
+            'condition' => 'cnid=:cnid AND captchaTime.capt_hide="1" AND captchaTime.capt_active="y"',
+            'params' => array('cnid' => $model->course_id)
+        ));
+        if (!$time) {
+            $time = ConfigCaptchaCourseRelation::model()->findByPk(0);
+        }
+
+
+        $lessonList = Lesson::model()->findAll(array(
+            'condition' => 'course_id=:course_id AND active=:active AND lang_id=:lang_id',
+            'params' => array(':course_id' => $model->course_id, ':active' => 'y', ':lang_id' => 1),
+            'order' => 'lesson_no ASC'
+        ));
+
+
+        Helpers::lib()->checkDateStartandEnd($user_id, $model->course_id);
+
+        if (Helpers::lib()->CheckBuyItem($model->course_id, false) == true && !Helpers::isPretestState($id)) {
+            $learn_id = "";
+            // if($model->count() > 0)
+            if (count($model) > 0) {
+                // $user = Yii::app()->getModule('user')->user();
+
+                $lesson_model = Lesson::model()->findByPk($id);
+                $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
+
+                $learnModel = Learn::model()->find(array(
+                    'condition' => 'lesson_id=:lesson_id AND user_id=:user_id AND lesson_active="y" AND gen_id=:gen_id',
+                    'params' => array(':lesson_id' => $id, ':user_id' => $user_id, ':gen_id' => $gen_id)
+                ));
+                if (!$learnModel) {
+                    $learnLog = new Learn;
+                    $learnLog->user_id = $user->id;
+                    $learnLog->lesson_id = $id;
+                    $learnLog->gen_id = $gen_id;
+                    $learnLog->learn_date = new CDbExpression('NOW()');
+                    $learnLog->course_id = $model->course_id;
+                    $learnLog->save();
+                    $learn_id = $learnLog->learn_id;
+                } else {
+                    $learnModel->learn_date = new CDbExpression('NOW()');
+                    $learnModel->save();
+                    $learn_id = $learnModel->learn_id;
+                }
+            }
+
+            $file_id_learn_note = $_GET['file'];
+            // $learn_note = LearnNote::model()->findAll(array(
+            //     'condition'=>'lesson_id=:lesson_id AND user_id=:user_id AND active="y" AND file_id=:file_id',
+            //     'params'=>array(':lesson_id'=>$id,':user_id'=>$user->id, ':file_id'=>$file_id_learn_note),
+            //     'order'=> 'note_time ASC'
+            // ));
+
+            $lesson_model = Lesson::model()->findByPk($id);
+            $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+
+            $learn_note = LearnNote::model()->findAll(array(
+                'condition' => 'lesson_id=:lesson_id AND user_id=:user_id AND active="y" AND gen_id=:gen_id',
+                'params' => array(':lesson_id' => $id, ':user_id' => $user_id, ':gen_id' => $gen_id),
+                'order' => 'file_id DESC, note_time + 0 ASC'
+            ));
+
+
+
+            // $this->layout = "//layouts/learn";
+            $this->layout = false;
+            $this->render('course-learn-note', array(
+                'model' => $model,
+                'learn_id' => $learn_id,
+                'modelCapt' => $modelCapt,
+                'time' => $time,
+                'lessonList' => $lessonList,
+                'label' => $label,
+                'gen_id' => $gen_id,
+                'learn_note' => $learn_note,
+                'user_id' => $user_id
+            ));
+        } else {
+            Yii::app()->user->setFlash('CheckQues', array('msg' => 'Error', 'class' => 'error'));
+            $this->redirect(array('//courseOnline/index', 'id' => Yii::app()->user->getState('getLesson')));
+        }
+    }//function
+
 
 
 
