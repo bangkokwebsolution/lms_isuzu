@@ -3491,7 +3491,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
         success: function(data) {
           if (data != "error") {
 
-            if (data == "logout") {
+            /* if (data == "logout") {
               Swal.fire({
                 title: 'กรุณาเข้าสู่ระบบ',
                 // text: "ว่าต้องการลบบันทึก",
@@ -3517,7 +3517,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
               // console.log(xhr);
               // console.log(xhr.status);
 
-            }
+            } */
 
 
             // console.log(data);
