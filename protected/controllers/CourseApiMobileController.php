@@ -206,14 +206,12 @@ class CourseApiMobileController extends Controller
                     'condition' => 'learn_id=:learn_id AND gen_id=:gen_id AND user_id_file=:user_id_file AND learn_file_status="s"',
                     'params' => ['learn_id' => $learn_model->learn_id, 'gen_id' => $gen_id, ':user_id_file' => $user_id]
                 ));
-                echo count($LearnFileAll);
-                echo "<br>";
-                echo count($lessonfileAll);
-                exit;
+
                 if (count($LearnFileAll) == count($lessonfileAll)) {
                     $staatussave == true;
                 }
-                if ($lesson == true && $staatussave == true) {
+                if ($staatussave == true) {
+                    echo "savesss";
                     Helpers::lib()->checkDateStartandEnd($user_id, $lesson->course_id);
 
                     $user = Yii::app()->getModule('user')->user();
