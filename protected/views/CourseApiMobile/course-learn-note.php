@@ -733,7 +733,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                               id: <?php echo $file->id; ?>,
                               learn_id: <?php echo $learn_id; ?>,
                               status: "success",
-                              user_id: <?php echo $user_id; ?>
+                              user_id: <?php echo $user_id; ?>,
                               page: "LearnVdo",
                             }, function(data) {
                               
@@ -815,7 +815,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                                         id: <?php echo $file->id; ?>,
                                         learn_id: <?php echo $learn_id; ?>,
                                         slide_number: <?php echo $key; ?>,
-                                        user_id: <?php echo $usre_id ?>
+                                        user_id: <?php echo $usre_id ?>,
                                         page: "LearnVdo",
                                       }, function(data) {
                                         /* if (data == "logout") {
