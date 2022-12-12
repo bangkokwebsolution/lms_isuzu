@@ -3479,12 +3479,13 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
 
       $.ajax({
         type: 'POST',
-        url: '<?php echo Yii::app()->createAbsoluteUrl("/Course/CourseLearnSaveTimeVideo"); ?>',
+        url: '<?php echo Yii::app()->createAbsoluteUrl("/CourseApiMobile/CourseLearnSaveTimeVideo"); ?>',
         data: ({
           time: time,
           file: file,
           gen_id: gen_iddd,
           lesson: lesson,
+          user_id: <?php echo $user_id ?>,
           page: "courselearnsavetimevideo",
         }),
         success: function(data) {
