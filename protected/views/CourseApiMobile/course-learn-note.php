@@ -550,7 +550,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                             <div class="row">
                               <?php
                               // $learnFiles = $user->learnFiles(array('condition' => 'file_id=' . $file->id));
-                              $learnFiles = LearnFile::model()->findAll(array('condition' => 'file_id =' . $file->id . ' AND user_id_file = ' . Yii::app()->user->id . " AND gen_id='" . $gen_id . "'"));
+                              $learnFiles = LearnFile::model()->findAll(array('condition' => 'file_id =' . $file->id . ' AND user_id_file = ' . $user_id . " AND gen_id='" . $gen_id . "'"));
                               foreach ($imageSlide as $key => $imageSlideItem) {
                                 $displayNone = "display:none;";
                                 if ($learnFiles[0]->learn_file_status != 'l' && $learnFiles[0]->learn_file_status != 's') {
@@ -1115,7 +1115,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                               <div class="row">
                                 <?php
                                 // $learnFiles = $user->learnFiles(array('condition' => 'file_id=' . $file->id));
-                                $learnFiles = LearnFile::model()->findAll(array('condition' => 'file_id =' . $file->id . ' AND user_id_file = ' . Yii::app()->user->id . " AND gen_id='" . $gen_id . "'"));
+                                $learnFiles = LearnFile::model()->findAll(array('condition' => 'file_id =' . $file->id . ' AND user_id_file = ' . $user_id . " AND gen_id='" . $gen_id . "'"));
                                 foreach ($imageSlide as $key => $imageSlideItem) {
                                   $displayNone = "display:none;";
                                   if ($learnFiles[0]->learn_file_status != 'l' && $learnFiles[0]->learn_file_status != 's') {
