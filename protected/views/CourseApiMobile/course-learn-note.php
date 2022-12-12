@@ -752,11 +752,17 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                                       title: "<?= $pass_msg ?>",
                                       text: "<?= $next_step_msg ?>",
                                       type: "success",
-                                      confirmButtonText: "<?= $ok_msg ?>",
+                                      /* confirmButtonText: "<?= $ok_msg ?>",
                                       cancelButtonText: "<?= $cancel_msg ?>",
                                       showCancelButton: false,
                                       closeOnConfirm: false,
-                                      closeOnCancel: false
+                                      closeOnCancel: false, */
+
+                                      buttons: false,      
+                                      closeOnClickOutside: false,
+                                      closeOnConfirm: false,
+                                      disableButtonsOnConfirm: true,
+                                      showConfirmButton: false
                                     },
                                     /* function(isConfirm) {
                                       if (isConfirm) {
