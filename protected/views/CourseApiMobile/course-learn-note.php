@@ -733,6 +733,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                               id: <?php echo $file->id; ?>,
                               learn_id: <?php echo $learn_id; ?>,
                               status: "success",
+                              user_id: <?php echo $user_id; ?>
                               page: "LearnVdo",
                             }, function(data) {
                               
@@ -753,9 +754,9 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                                       type: "success",
                                       confirmButtonText: "<?= $ok_msg ?>",
                                       cancelButtonText: "<?= $cancel_msg ?>",
-                                      showCancelButton: true,
-                                      closeOnConfirm: true,
-                                      closeOnCancel: true
+                                      showCancelButton: false,
+                                      closeOnConfirm: false,
+                                      closeOnCancel: false
                                     },
                                     /* function(isConfirm) {
                                       if (isConfirm) {
