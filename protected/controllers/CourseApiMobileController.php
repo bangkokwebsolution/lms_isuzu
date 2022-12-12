@@ -220,9 +220,9 @@ class CourseApiMobileController extends Controller
                             'params' => array(':lesson_id' => $lesson->id, ':gen_id' => $gen_id)
                         )
                     );
-                    echo "<pre>";
-                    print_r($user);
-                    print_r($learnLesson);
+                    // echo "<pre>";
+                    // print_r($user);
+                    // print_r($learnLesson);
 
                     $learn = Learn::model()->findByPk($learnLesson[0]->learn_id);
                     $learn->lesson_status = $lessonStatus;
