@@ -748,6 +748,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                                 $('#imageCheckBar' + data.no).addClass(data.imageBar);
                                 init_knob();
                                 if (data.imageBar == 'success') { // แถบสถานะ เรียบจบ
+                                  myPlayer.exitFullscreen();
                                   swal({
                                       title: "<?= $pass_msg ?>",
                                       /* text: "<?= $next_step_msg ?>", */
