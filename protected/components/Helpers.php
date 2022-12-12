@@ -1756,6 +1756,116 @@ class Helpers
         }
     }
 
+    public function checkLessonPass2($lesson, $gen_id = null, $user_id)
+    {
+        // $user = Yii::app()->getModule('user')->user();
+        $user = User::model()->findByPk($user_id);
+        // $user = Yii::app()->getModule('user')->user();
+        if ($user) {
+            if ($gen_id == null) {
+                $lesson_model = Lesson::model()->findByPk($lesson->id);
+                $gen_id = $lesson_model->CourseOnlines->getGenID($lesson_model->course_id);
+            }
+            $learnLesson = $user->learns(
+                array(
+                    'condition' => 'lesson_id=:lesson_id AND lesson_active=:status AND gen_id=:gen_id',
+                    'params' => array(':lesson_id' => $lesson->id, ':status' => "y", ':gen_id' => $gen_id)
+                )
+            );
+
+            $countFile = 0;
+            $countLearnCompareTrueVdos = 0;
+            if ($lesson->type == 'vdo') {
+                $countFile = $lesson->fileCount;
+                $countLearnCompareTrueVdos = $user->countLearnCompareTrueVdos(
+                    array(
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id' => $gen_id)
+                    )
+                );
+            } else if ($lesson->type == 'pdf') {
+                $countFile = $lesson->filePdfCount;
+                $countLearnCompareTrueVdos = $user->countLearnCompareTruePdf(
+                    array(
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id' => $gen_id)
+                    )
+                );
+            } else if ($lesson->type == 'scorm') {
+                $countFile = $lesson->fileScormCount;
+                $countLearnCompareTrueVdos = $user->countLearnCompareTrueScorm(
+                    array(
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id' => $gen_id)
+                    )
+                );
+            } else if ($lesson->type == 'audio') {
+                $countFile = $lesson->fileAudioCount;
+                $countLearnCompareTrueVdos = $user->countLearnCompareTrueAudio(
+                    array(
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id' => $gen_id)
+                    )
+                );
+            } else if ($lesson->type == 'youtube') {
+                $countFile = $lesson->fileCount;
+                $countLearnCompareTrueVdos = $user->countLearnCompareTrueVdos(
+                    array(
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id' => $gen_id)
+                    )
+                );
+            } else if ($lesson->type == 'ebook') {
+                $countFile = $lesson->fileCountEbook;
+                $countLearnCompareTrueVdos = $user->countLearnCompareTrueEbook(
+                    array(
+                        'condition' => 't.lesson_id=:lesson_id AND learn_file_status = \'s\' AND lesson_active="y" AND t.gen_id=:gen_id',
+                        'params' => array(':lesson_id' => $lesson->id, ':gen_id' => $gen_id)
+                    )
+                );
+            }
+
+            if ($learnLesson && $learnLesson[0]->lesson_status == 'pass') {
+                return "pass";
+            } else {
+                if ($countFile == 0 /*&& $learnLesson*/) {
+                    $return = 'pass';
+                    //// check pretest
+                    if (self::isPretestState($lesson->id)) { ///ถ้ามีข้อสอบก่อนเรียน
+                        $checkpretest_do = self::CheckTest($lesson, 'pre');
+                        if (!$checkpretest_do->value->boolean) {
+                            $return = "notLearn";
+                        }
+                    }
+                    ////end check pretest
+
+                    //// check posttest
+                    if (self::isPosttestState($lesson->id)) { ///ถ้ามีข้อสอบหลังเรียน
+                        $checkpretest_do = self::CheckTest($lesson, 'post');
+                        if (!$checkpretest_do->value->boolean) {
+                            $return = "notLearn";
+                        }
+                    }
+                    //end check posttest
+                    if ($countFile == 0) {
+                        $return = 'pass';
+                    }
+                    return $return;
+                } else {
+                    if ($countFile != 0 && $learnLesson) {
+                        if ($countLearnCompareTrueVdos != $countFile) {
+                            return "learning";
+                        } else {
+                            return "pass";
+                        }
+                    } else {
+                        return "notLearn";
+                    }
+                }
+            }
+        }
+    }
+
     public function checkCourseStatus($lesson)
     {
         // var_dump($lesson);

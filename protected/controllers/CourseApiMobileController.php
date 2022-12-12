@@ -210,20 +210,21 @@ class CourseApiMobileController extends Controller
                 if (count($LearnFileAll) == count($lessonfileAll)) {
                     $staatussave == true;
                 }
-                if ($staatussave == true) {
-                    echo "savesss";
+
+                if (count($LearnFileAll) == count($lessonfileAll)) {
+                    // exit;
                     Helpers::lib()->checkDateStartandEnd($user_id, $lesson->course_id);
 
-                    $user = Yii::app()->getModule('user')->user();
-                    $lessonStatus = Helpers::lib()->checkLessonPass($lesson);
+                    // $user = Yii::app()->getModule('user')->user();
+                    $user = User::model()->findByPk($user_id);
+                   
+                    $lessonStatus = Helpers::lib()->checkLessonPass2($lesson, $gen_id, $user_id);
                     $learnLesson = $user->learns(
                         array(
                             'condition' => 'lesson_id=:lesson_id AND lesson_active="y" AND gen_id=:gen_id',
                             'params' => array(':lesson_id' => $lesson->id, ':gen_id' => $gen_id)
                         )
                     );
-                    // echo "<pre>";
-                    // print_r($user);
                     // print_r($learnLesson);
 
                     $learn = Learn::model()->findByPk($learnLesson[0]->learn_id);
@@ -252,6 +253,7 @@ class CourseApiMobileController extends Controller
                             $modelPasscours->save();
                         }
                     }
+                    //    print_r($user);exit;
                     if ($courseStats == "pass") {
                         // $this->SendMailLearn($lesson->course_id);
                     }
