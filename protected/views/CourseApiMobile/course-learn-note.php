@@ -750,7 +750,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                                 if (data.imageBar == 'success') { // แถบสถานะ เรียบจบ
                                   swal({
                                       title: "<?= $pass_msg ?>",
-                                      text: "<?= $next_step_msg ?>",
+                                      /* text: "<?= $next_step_msg ?>", */
                                       type: "success",
                                       /* confirmButtonText: "<?= $ok_msg ?>",
                                       cancelButtonText: "<?= $cancel_msg ?>",
