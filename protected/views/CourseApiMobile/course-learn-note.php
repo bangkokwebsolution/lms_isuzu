@@ -697,26 +697,14 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                         if ($learnVdoModel->learn_file_status != 's') {
                         ?>
                           myPlayer<?php echo $idx; ?>.on('play', function() {
-                            $.post('<?php echo $this->createUrl("//course/LearnVdo"); ?>', {
+                            $.post('<?php echo $this->createUrl("//CourseApiMobile/LearnVdo"); ?>', {
                               id: <?php echo $file->id; ?>,
                               learn_id: <?php echo $learn_id; ?>,
+                              user_id: <?php echo $user_id ?>,
                               page: "LearnVdo",
                             }, function(data) {
 
-                              if (data == "logout") {
-                                Swal.fire({
-                                  title: 'กรุณาเข้าสู่ระบบ',
-                                  icon: 'error',
-                                  showCancelButton: true,
-                                  confirmButtonColor: '#3085d6',
-                                  cancelButtonColor: '#d33',
-                                  confirmButtonText: 'ตกลง',
-                                  cancelButtonText: 'ยกเลิก'
-                                }).then((result) => {
-                                  window.location = "https://elearning.imct.co.th/";
-                                });
-
-                              } else {
+                              
 
                                 data = JSON.parse(data);
                                 //อัพเดต ให้ไอคอนบอกว่า กำลังเรียน
@@ -728,7 +716,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                                 $('#imageCheckBar' + data.no).removeClass();
                                 $('#imageCheckBar' + data.no).addClass(data.imageBar);
                                 init_knob();
-                              }
+                              
 
                             });
                           });
@@ -741,26 +729,13 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                             //   showConfirmButton: true,
                             //   showCancelButton: false,
                             // });
-                            $.post('<?php echo $this->createUrl("//course/LearnVdo"); ?>', {
+                            $.post('<?php echo $this->createUrl("//CourseApiMobile/LearnVdo"); ?>', {
                               id: <?php echo $file->id; ?>,
                               learn_id: <?php echo $learn_id; ?>,
                               status: "success",
                               page: "LearnVdo",
                             }, function(data) {
-                              if (data == "logout") {
-                                Swal.fire({
-                                  title: 'กรุณาเข้าสู่ระบบ',
-                                  icon: 'error',
-                                  showCancelButton: true,
-                                  confirmButtonColor: '#3085d6',
-                                  cancelButtonColor: '#d33',
-                                  confirmButtonText: 'ตกลง',
-                                  cancelButtonText: 'ยกเลิก'
-                                }).then((result) => {
-                                  window.location = "https://elearning.imct.co.th/";
-                                });
-
-                              } else {
+                              
 
                                 data = JSON.parse(data);
                                 $('#imageCheck' + data.no).html(data.image);
@@ -782,14 +757,14 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                                       closeOnConfirm: true,
                                       closeOnCancel: true
                                     },
-                                    function(isConfirm) {
+                                    /* function(isConfirm) {
                                       if (isConfirm) {
                                         window.location.href = "<?php echo $this->createUrl('course/detail'); ?>" + "/" + <?= $model->course_id; ?>;
                                       }
-                                    }
+                                    } */
                                   );
                                 }
-                              }
+                              
                             });
                           });
                         <?php
@@ -841,7 +816,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                                         slide_number: <?php echo $key; ?>,
                                         page: "LearnVdo",
                                       }, function(data) {
-                                        if (data == "logout") {
+                                        /* if (data == "logout") {
                                           Swal.fire({
                                             title: 'กรุณาเข้าสู่ระบบ',
                                             icon: 'error',
@@ -854,7 +829,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                                             window.location = "https://elearning.imct.co.th/";
                                           });
 
-                                        } else {}
+                                        } else {} */
                                       });
                                     <?php
                                     }
@@ -882,9 +857,10 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                                   id: <?php echo $file->id; ?>,
                                   learn_id: <?php echo $learn_id; ?>,
                                   slide_number: currentTimeUpdate,
+                                  
                                   page: "LearnVdo",
                                 }, function(data) {
-                                  if (data == "logout") {
+                                  /* if (data == "logout") {
                                     Swal.fire({
                                       title: 'กรุณาเข้าสู่ระบบ',
                                       icon: 'error',
@@ -897,7 +873,7 @@ $msg_do_test = $label->label_DoTest; //ทำแบบทดสอบ
                                       window.location = "https://elearning.imct.co.th/";
                                     });
 
-                                  } else {}
+                                  } else {} */
 
                                 });
                                 nowPoint = currentTimeUpdate;
