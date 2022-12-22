@@ -1,8 +1,8 @@
 <?php 
-	if(Yii::app()->user->isSuperuser===true){
-		// $this->redirect(array('/user/login'));
-	}else{
+	if(Yii::app()->user->id==null){
+		
 		$this->redirect(array('/user/login'));
+		
 	} 
 	
 
