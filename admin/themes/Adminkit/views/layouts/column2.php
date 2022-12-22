@@ -1,3 +1,12 @@
+<?php 
+	if(Yii::app()->user->isSuperuser===true){
+		// $this->redirect(array('/user/login'));
+	}else{
+		$this->redirect(array('/user/login'));
+	} 
+	
+
+?>
 <?php /* @var $this Controller */ ?>
 <?php $this->beginContent('//layouts/main'); ?>
 <!-- <div class="span-19"> -->
