@@ -356,7 +356,6 @@
                                 var typeMsg = 'warning';
                             }
                             swal({
-                                    title: "<?php echo $title_popup ?>",
                                     text: strMsg,
                                     type: typeMsg,
                                     confirmButtonText: "<?php echo $button ?>",
