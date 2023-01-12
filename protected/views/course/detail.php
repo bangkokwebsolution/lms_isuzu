@@ -355,8 +355,10 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                                                                 $pro_name = $profile->firstname;
                                                                                 $title_name = !empty($ProfilesTitle) ? $ProfilesTitle->prof_title : '';
                                                                             }
-                                                                         
-                                                                            $user_org = orgchart::model()->findByPk($course->create_by->org_ig);
+                                                                           
+                                                                            $user_Create = UserNew::model()->findByPk($course->create_by);
+                                                                            // echo $user_Create->org_id;
+                                                                            $user_org = orgchart::model()->findByPk($user_Create->org_id);
                                                                             echo $user_org->title;
                                                                             // echo  $title_name . ' ' . $pro_name; ?>
                                                                             
@@ -370,8 +372,9 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                                                             $pro_name = $profile->firstname;
                                                                             $title_name = !empty($ProfilesTitle) ? $ProfilesTitle->prof_title : '';
                                                                         }
-                                                                        $approve_org = orgchart::model()->findByPk($course->approve_by->org_ig);
-                                                                        echo $approve_org->title;
+                                                                        $approve_org = UserNew::model()->findByPk($course->approve_by);
+                                                                        $user_org = orgchart::model()->findByPk($approve_org->org_id);
+                                                                        echo $user_org->title;
                                                                         // echo  $title_name . ' ' . $pro_name; ?>
                                                                         </span></h4>
                                 </div>
