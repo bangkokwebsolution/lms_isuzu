@@ -1838,7 +1838,11 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                                 //  ตัวบอกว่า ไม่มีคะแนนสอบ 
                                                 if ($checkHaveCourseTest && $CheckPreTestAnsTextAreaCoursePost == true && count($BestFinalTestScore_pass) > 0 ) { ?>
                                                                                                             
-                                                <?php }else{ ?>
+                                                <?php }else{ 
+                                                     if($checkHaveCourseTest==false){
+
+                                                     }else{
+                                                    ?>
                                                     <li class="list-group-item ">
                                                         <?php if ($step == 4) { ?>
                                                             <!-- <div class="pt-now"> You are here</div> -->
@@ -1851,7 +1855,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                                             <span class="btn btn-warning detailmore pull-right"><?= $clickFinal ?>
                                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i></span></a>
                                                     </li>
-                                                
+                                                    <?php } ?>
                                                 <?php } ?>
                                                 <!--------- ปุ่มสอบ ------------>
 
