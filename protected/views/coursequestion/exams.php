@@ -350,7 +350,7 @@
                             // var url = '<?php echo Yii::app()->createUrl('coursequestion/exams_finish', array('id' => $course->course_id, 'type' => $_GET['type'])); ?>';
                             if (evnt == 'save') {
                                 // var strMsg = 'คุณทำข้อสอบสำเร็จ';
-                                var strMsg = '';
+                                var strMsg = '<?php echo $title_popup?>';
                                 var typeMsg = 'success';
                             } else {
                                 var strMsg = 'Time out';
@@ -362,6 +362,7 @@
                                     text: strMsg,
                                     type: typeMsg,
                                     confirmButtonText: "<?php echo $button ?>",
+                                    closeOnConfirm: true,
                                 },
                                 function() {
                                     $('#exam-result').html(data); //window.location.href = url;
