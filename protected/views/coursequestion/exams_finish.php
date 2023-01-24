@@ -56,11 +56,11 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
 ?>
 <script>
-	$(function() {
-		if ("<?= $testType ?>" != "pre" && $quesType_ != 3) { // 3= บรรยาย pop up
-			$('<?= $link ?>').modal('show');
-		}
-	});
+	// $(function() {
+	// 	if ("<?= $testType ?>" != "pre" && $quesType_ != 3) { // 3= บรรยาย pop up
+	// 		$('<?= $link ?>').modal('show');
+	// 	}
+	// });
 </script>
 <style type="text/css">
 	.text-success {
