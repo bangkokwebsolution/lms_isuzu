@@ -275,7 +275,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 	</div>
 </div>
 
-<div class="modal fade" id="modal-pass">
+<!-- <div class="modal fade" id="modal-pass">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -285,17 +285,16 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 				<center>
 					<i class="fa fa-check" style="font-size:6em; color: #4cdb20; padding-top: 15px;padding-bottom: 15px;"></i>
 					<h2 style="color: #575757;"><?= $labelCourse->label_passTest; ?></h2>
-					<!-- <p><?= UserModule::t('msg_pass'); ?></p> -->
+					
 				</center>
 			</div>
 			<div class="modal-footer">
 				<center>
-					<!-- <button type="button" class="btn btn-success"  style="padding: 15px 32px; height: auto" data-dismiss="modal" onclick="location.href='<?php //echo $linkPrint 
-																																								?>'">OK</button> -->
+					
 					<button type="button" class="btn btn-success" style="padding: 15px 32px; height: auto" data-dismiss="modal">OK</button>
 				</center>
 			</div>
 
 		</div>
 	</div>
-</div>
+</div> -->
