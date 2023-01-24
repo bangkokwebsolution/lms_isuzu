@@ -346,7 +346,8 @@
                         return false;
                     } else {
                         if ($('#last_ques').val() == 1) {
-                            var url = '<?php echo Yii::app()->createUrl('coursequestion/exams_finish', array('id' => $course->course_id, 'type' => $_GET['type'])); ?>';
+                            
+                            // var url = '<?php echo Yii::app()->createUrl('coursequestion/exams_finish', array('id' => $course->course_id, 'type' => $_GET['type'])); ?>';
                             if (evnt == 'save') {
                                 // var strMsg = 'คุณทำข้อสอบสำเร็จ';
                                 var strMsg = '';
@@ -355,7 +356,9 @@
                                 var strMsg = 'Time out';
                                 var typeMsg = 'warning';
                             }
+                           
                             swal({
+                                    title : '',
                                     text: strMsg,
                                     type: typeMsg,
                                     confirmButtonText: "<?php echo $button ?>",
