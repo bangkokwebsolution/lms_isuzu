@@ -151,7 +151,7 @@
 					<?php 
 						}
 					?>
-                    <p class="note">ค่าที่มี <font color="red">*</font> จำเป็นต้องใส่ให้ครบ</p>
+                    <!-- <p class="note">ค่าที่มี <font color="red">*</font> จำเป็นต้องใส่ให้ครบ</p> -->
                     <!-- <div class="row"> -->
                     	<!-- <div class="col-md-12"> -->
                     	<!-- <?php echo $form->labelEx($model,'cate_id'); ?> -->
@@ -300,7 +300,8 @@
 	
 	<div class="row">
 		<div class="col-md-12">
-		<?php echo $form->labelEx($model,'course_day_learn'); ?>
+		<!-- <?php echo $form->labelEx($model,'course_day_learn'); ?> -->
+		<label for="CourseOnline_course_day_learn" class="required">จำนวนวันที่เข้าเรียนได้  (ภาษา US ) <span class="required">*</span> <font color="red">(หมายเหตุ จำนวนวันที่เข้าเรียนไม่ควรเกิน 10,000 วัน)</font></label>
 		<?php echo $form->textField($model,'course_day_learn',$attCateAmount); ?> วัน
 		
 		<?php echo $form->error($model,'course_day_learn'); ?>
