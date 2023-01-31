@@ -1349,7 +1349,7 @@ $this->render('create',array(
                 // }
 
             $profile->attributes=$_POST['Profile'];
-
+            $profile->group_name=$_POST['Profile']['group_name'];
 
             // if($model->validate() &&  $profile->validate()) {
                 // }
