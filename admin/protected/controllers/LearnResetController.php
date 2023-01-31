@@ -260,9 +260,17 @@ class LearnResetController extends Controller
                                 'params' => array(':lesson_id' => $lesson_id,':user_id' => $user_id,':score_id'=>$sc->score_id, ':gen_id'=>$gen_id)));
                         }
 
-                        $data->lesson_status = null;
-                        $data->lesson_active = 'n';
-                        $data->save(false);
+                        // $data->lesson_status = null;
+                        // $data->lesson_active = 'n';
+                        // $data->save(false);
+
+                        $del_learn = Learn::model()->deleteAll(array(
+                            'user_id' => $user_id,
+                            'lesson_id' => $lesson_id,
+                            'gen_id' => $gen_id,
+                            'course_id' => $course_id,
+                            'lesson_active' => 'y'
+                        ));
 
                     }
 
