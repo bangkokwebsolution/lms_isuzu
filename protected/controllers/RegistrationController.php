@@ -1610,4 +1610,57 @@ public function actionCalculateBirthday(){
 }
 }
 
+public function actionSaveImgProfile()
+{
+  if (isset($_POST['image']) && $_POST['image'] != "" && !empty($_POST['user'])) {
+
+    // $img = str_replace('data:image/png;base64,', '', $_POST['image']);
+    // $img = str_replace(' ', '+', $img);
+    // $data = base64_decode($img);
+
+    $img = trim($_POST['image']);
+    $img = str_replace('data:image/png;base64,', '', $img);
+    $img = str_replace('data:image/jpg;base64,', '', $img);
+    $img = str_replace('data:image/jpeg;base64,', '', $img);
+    $img = str_replace('data:image/gif;base64,', '', $img);
+    $img = str_replace(' ', '+', $img);
+
+    $imageData = base64_decode($img);
+
+    $users = Users::model()->findByPk($_POST['user']);
+    $uploadDir = Yii::app()->getUploadPath(null);
+    $path1 = "user";
+    $path2 = $users->id;
+    $path3 = "thumb";
+    if (!is_dir($uploadDir . "../" . $path1 . "/")) {
+      mkdir($uploadDir . "../" . $path1 . "/", 0777, true);
+    }
+    if (!is_dir($uploadDir . "../" . $path1 . "/" . $path2 . "/")) {
+      mkdir($uploadDir . "../" . $path1 . "/" . $path2 . "/", 0777, true);
+    }
+    if (!is_dir($uploadDir . "../" . $path1 . "/" . $path2 . "/" . $path3 . "/")) {
+      mkdir($uploadDir . "../" . $path1 . "/" . $path2 . "/" . $path3 . "/", 0777, true);
+    } else { // ลบ file เก่า
+      $files = glob($uploadDir . "../" . $path1 . "/" . $path2 . "/" . $path3 . '/*');
+      foreach ($files as $file) { // iterate files
+        if (is_file($file)) {
+          unlink($file); // delete file
+        }
+      }
+    }
+
+    $users->pic_user = date("YmdHis") . "_.jpg";
+    $uploadDir = $uploadDir . "..\\" . $path1 . "\\" . $path2 . "\\" . $path3 . "\\";
+    $targetFile = $uploadDir . $users->pic_user;
+    file_put_contents($targetFile, $imageData);
+    if($users->save(false)){
+        echo 'success';
+    }else{
+        echo 'try again';
+    }
+  }else{
+    echo 'try again';
+  }
+}
+
 }
