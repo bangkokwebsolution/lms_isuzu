@@ -873,7 +873,7 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                                             $ckLinkTest = $this->createUrl('/question/preexams', array('id' => $lessonListValue->id, 'type' => 'pre'));
                                                             $ckLinkTest_onClick = '';
                                                         } else {
-                                                            if ($checkHaveCoursePreTest) {//ยังไม่ทำ CoursePreTest
+                                                            if ($checkHaveScoreCoursePreTest) {//ยังไม่ทำ CoursePreTest
                                                                 $ckLinkTest = 'javascript:void(0);';
                                                                 $ckLinkTest_onClick = 'onclick="alertdo_pretest();"';
                                                             }else{
