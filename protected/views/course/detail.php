@@ -53,6 +53,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $Complete="Complete";
     $Sequence = "Please finish learn the previous lesson.";
     $text_status= "Status";
+    $do_pretest="Please do a Pre-test before";
 } else {
     $langId = Yii::app()->session['lang'];
     $flag = false;
@@ -80,7 +81,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
     $Complete="สำเร็จ";
     $Sequence = "กรุณาเรียนบทเรียนก่อนหน้านี้ให้เสร็จสิ้น";
     $text_status= "สถานะ";
-    
+    $do_pretest="กรุณาทำแบบทดสอบก่อนเรียนก่อน";
 
 
 
@@ -872,8 +873,14 @@ $FinalScore = Coursescore::model()->findAll($criteria);
                                                             $ckLinkTest = $this->createUrl('/question/preexams', array('id' => $lessonListValue->id, 'type' => 'pre'));
                                                             $ckLinkTest_onClick = '';
                                                         } else {
-                                                            $ckLinkTest = 'javascript:void(0);';
-                                                            $ckLinkTest_onClick = 'onclick="alertSequence();"';
+                                                            if ($checkHaveCoursePreTest) {//ยังไม่ทำ CoursePreTest
+                                                                $ckLinkTest = 'javascript:void(0);';
+                                                                $ckLinkTest_onClick = 'onclick="alertdo_pretest();"';
+                                                            }else{
+                                                                $ckLinkTest = 'javascript:void(0);';
+                                                                $ckLinkTest_onClick = 'onclick="alertSequence();"';   
+                                                            }
+                                                            
                                                         }
 
                                                         if ($isPreTest) { // สอบ pre 1 ครั้ง แล้ว ไม่เข้า
@@ -2060,7 +2067,31 @@ $FinalScore = Coursescore::model()->findAll($criteria);
     }
 
     function alertSequence() {
-        swal('<?= $label->label_swal_warning ?>', "<?= $Sequence ?>", "error");
+        swal({
+                title: '<?= $label->label_swal_warning ?>',
+                text: "<?= $Sequence ?>",
+                type: "error",
+                html: true,
+                showCancelButton: false,
+                // confirmButtonColor: "#DD6B55",
+                confirmButtonText: '<?= $label->label_confirm ?>',
+                closeOnConfirm: true
+        });
+        // swal('<?= $label->label_swal_warning ?>', "<?= $Sequence ?>", "error");
+    }
+
+    function alertdo_pretest() {
+        swal({
+                title: '<?= $label->label_swal_warning ?>',
+                text: "<?= $do_pretest ?>",
+                type: "error",
+                html: true,
+                showCancelButton: false,
+                // confirmButtonColor: "#DD6B55",
+                confirmButtonText: '<?= $label->label_confirm ?>',
+                closeOnConfirm: true
+        });
+        // swal('<?= $label->label_swal_warning ?>', "<?= $do_pretest ?>", "error");
     }
 
     function alertswal_test() {
