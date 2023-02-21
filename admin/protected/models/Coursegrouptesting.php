@@ -206,7 +206,8 @@ class Coursegrouptesting extends AActiveRecord
 		$criteria->with=array('course');
 		$criteria->compare('group_id',$this->group_id);
 		$criteria->compare('course_id',$this->course_id);
-		$criteria->compare('course.course_title',$this->course_search,true);
+		// $criteria->compare('course.title',$this->course_search,true);
+		$criteria->compare('course_title',$this->course_search,true);
 		$criteria->compare('group_title',$this->group_title,true);
 		$criteria->compare('step_id',$this->step_id);
 		$criteria->compare('create_date',$this->create_date,true);
