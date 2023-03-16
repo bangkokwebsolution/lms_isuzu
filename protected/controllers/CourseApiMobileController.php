@@ -606,9 +606,7 @@ class CourseApiMobileController extends Controller
 
     public function actionDownload($id)
     {
-        if ($user_id) {
-            Helpers::lib()->getControllerActionId();
-        }
+        
         $fileDoc = FileDoc::model()->findByPK($id);
         if ($fileDoc) {
             // $webroot = Yii::app()->getUploadPath('filedoc');
@@ -746,6 +744,7 @@ class CourseApiMobileController extends Controller
             $this->redirect(array('//courseOnline/index', 'id' => Yii::app()->user->getState('getLesson')));
         }
     }//function
+
 
 
 
