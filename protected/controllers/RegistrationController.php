@@ -1380,24 +1380,25 @@ public function actionDeleteFilePassport($id)
     public function actionRepassword() {
 
         if (User::model()->findbyPk(Yii::app()->user->id)->repass_status == 0){
-            $model = new Users();
-            if (isset($_POST['Users'])) {
+            $model = new RepassForm();
+            if (isset($_POST['RepassForm'])) {
 
                // $user = User::model()->notsafe()->findbyPk(Yii::app()->user->id);
-                $model = Users::model()->findbyattributes(array('id'=>Yii::app()->user->id));
-               // var_dump($model);
-                $model->password = $_POST['Users']['password'];
-                $model->verifyPassword = $_POST['Users']['verifyPassword'];
+                $repass = RepassForm::model()->findbyattributes(array('id'=>Yii::app()->user->id));
+              
+                $repass->password = $_POST['RepassForm']['password'];
+                $repass->verifyPassword = $_POST['RepassForm']['verifyPassword'];
                     // var_dump($model->save());
                     // var_dump($model->getErrors());
                     // exit();
-                if ($model->validate()) {
+                if ($repass->validate()) {
 
-                    $model->password = UserModule::encrypting($model->password);
-                    $model->verifyPassword = UserModule::encrypting($model->verifyPassword);
-                    $model->repass_status = 1;
+                    $repass->password = UserModule::encrypting($model->password);
+                    $repass->verifyPassword = UserModule::encrypting($model->verifyPassword);
+                    $repass->repass_status = 1;
+                
 
-                    if ($model->save(false)) {
+                    if ($repass->save(false)) {
 
                         // $to['email'] = $model->email;
                         // $to['firstname'] = $model->profile->firstname;
@@ -1417,6 +1418,8 @@ public function actionDeleteFilePassport($id)
                     }
                     //$this->redirect(array('site/index','status' => $status,'type_status'=> $type_status));
                     $this->redirect(array('site/index'));
+                }else{
+                    // var_dump($repass->getErrors());
                 }
             }
             $this->render('repassword',array('model'=>$model));
