@@ -1393,8 +1393,8 @@ public function actionDeleteFilePassport($id)
                     // exit();
                 if ($repass->validate()) {
 
-                    $repass->password = UserModule::encrypting($model->password);
-                    $repass->verifyPassword = UserModule::encrypting($model->verifyPassword);
+                    $repass->password = UserModule::encrypting($repass->password);
+                    $repass->verifyPassword = UserModule::encrypting($repass->verifyPassword);
                     $repass->repass_status = 1;
                 
 
