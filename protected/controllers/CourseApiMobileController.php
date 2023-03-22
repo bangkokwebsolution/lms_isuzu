@@ -773,7 +773,7 @@ class CourseApiMobileController extends Controller
     private function ArrLesson($model)
     {
         $arr_course = [
-            'id' => $model->id,
+            'id' => $model->lang_id == 1 ? $model->id : $model->parent_id,
             'course_id' => $model->course_id,
             'title' => $model->title,
             'lesson_number' => $model->lesson_number,
