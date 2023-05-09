@@ -645,15 +645,15 @@ class SiteController extends Controller
 
 		// query course ตาม org
 
-		 $userModel = Users::model()->findByPK(Yii::app()->user->id);
+		$userModel = Users::model()->findByPK(Yii::app()->user->id);
 
 		if($_SERVER['HTTP_HOST']=="elearning.imct.co.th"){
-				
-            $OrgUser = UserNew::model()->findByPK(Yii::app()->user->id);
+
+			$OrgUser = UserNew::model()->findByPK(Yii::app()->user->id);
         }else{
-            
-            $OrgUser = OrgUser::model()->find("active='y' AND user_id='" . Yii::app()->user->id . "' ");
-        }
+
+			$OrgUser = OrgUser::model()->find("active='y' AND user_id='" . Yii::app()->user->id . "' ");
+		}
 		// $userDepartment = $userModel->department_id;
 		// $userPosition = $userModel->position_id;
 		// $userBranch = $userModel->branch_id;
@@ -668,7 +668,7 @@ class SiteController extends Controller
                 $criteria->compare('id',$OrgUser->org_id);
             }else{
                 $criteria->compare('id',$OrgUser->orgchart_id);
-            }
+			}
 			$criteria->compare('active', 'y');
 			$modelOrgDep = OrgChart::model()->findAll($criteria);
 
@@ -954,12 +954,12 @@ class SiteController extends Controller
 
 		if (Yii::app()->user->id != null) {
 			// $userModel = UserNew::model()->findByPK(Yii::app()->user->id);
-			
+
 			if($_SERVER['HTTP_HOST']=="elearning.imct.co.th"){
-				
-	            $OrgUser = UserNew::model()->findByPK(Yii::app()->user->id);
+
+			$OrgUser = UserNew::model()->findByPK(Yii::app()->user->id);
 	        }else{
-				
+
 	            $OrgUser = OrgUser::model()->find("active='y' AND user_id='" . Yii::app()->user->id . "' ");
 	        }
 			// $userDepartment = $userModel->department_id;
@@ -967,7 +967,7 @@ class SiteController extends Controller
 			// $userBranch = $userModel->branch_id;
 
 			// if($userModel->profile->kind != 5){
-			
+
 			$criteria = new CDbCriteria;
 			// $criteria->with = array('orgchart');
 			// $criteria->compare('department_id',$userDepartment);
@@ -983,7 +983,7 @@ class SiteController extends Controller
                 }
             }else{
                 $criteria->compare('id',0);
-            }
+			}
 			$modelOrgDep = OrgChart::model()->findAll($criteria);
 
 			foreach ($modelOrgDep as $key => $value) {
@@ -2023,12 +2023,117 @@ class SiteController extends Controller
 		echo json_encode($data);
 	}
 	public function actionPercourse()
-	{	
-		if(!empty($_GET['course']) && isset($_GET['gen']) && !empty($_GET['user'])){
+	{
+		if (!empty($_GET['course']) && isset($_GET['gen']) && !empty($_GET['user'])) {
 			$per = Helpers::lib()->percent_CourseGenMobile($_GET['course'], $_GET['gen'], $_GET['user']);
 			echo $per;
-		}else{
-			echo 'Api fail'; 
+		} else {
+			echo 'Api fail';
+		}
+	}
+
+	public function actionApiCourseplan($user, $lang = 1, $year = null)
+	{
+
+
+		$OrgUser = UserNew::model()->findByPK($user);
+
+		$criteria = new CDbCriteria;
+		if (count($OrgUser) > 0) {
+			$criteria->compare('id', $OrgUser->org_id);
+		} else {
+			$criteria->compare('id', 0);
+		}
+
+		$criteria->compare('active', 'y');
+		$modelOrgDep = OrgChart::model()->findAll($criteria);
+
+		foreach ($modelOrgDep as $key => $value) {
+			$courseArr[] = $value->id;
+		}
+
+
+		$criteria = new CDbCriteria;
+		$criteria->with = array('course', 'course.CategoryTitle');
+		$criteria->addIncondition('orgchart_id', $courseArr);
+		$criteria->compare('course.active', 'y');
+		$criteria->compare('course.status', '1');
+		$criteria->compare('categorys.cate_show', '1');
+		$criteria->addCondition('course.approve_status > 0');
+
+		if (isset($year)) {
+			$start_year_date = $year . "-01-01 00:00:00"; //ต้นปีปัจจุบัน
+			$end_year_date = $year . "-12-31 23:59:59"; //ปลายปีปัจจุบัน
+		} else {
+			$start_year_date = date("Y") . "-01-01 00:00:00"; //ต้นปีปัจจุบัน
+			$end_year_date = date("Y") . "-12-31 23:59:59"; //ปลายปีปัจจุบัน
+		}
+
+		$criteria->AddCondition("(course.course_date_start>='" . $start_year_date . "' AND course.course_date_start<='" . $end_year_date . "') OR (course.course_date_end>='" . $start_year_date . "' AND course.course_date_end<='" . $end_year_date . "') OR (course.course_date_start <='" . $start_year_date . "' AND course.course_date_end>='" . $end_year_date . "') ");
+		$criteria->order = 'course.course_id';
+		// $criteria->limit = 5;
+		$modelOrgCourse = OrgCourse::model()->findAll($criteria);
+		if ($modelOrgCourse) {
+			foreach ($modelOrgCourse as $key => $value) {
+
+				$modelUsers_old = ChkUsercourse::model()->find(
+					array(
+						'condition' => 'course_id=:course_id AND user_id=:user_id AND org_user_status=:org_user_status',
+						'params' => array(':course_id' => $value->course_id, ':user_id' => $user, ':org_user_status' => 1)
+					)
+				);
+
+				if ($modelUsers_old) {
+					if ($modelUsers_old->course_id !=  $value->course_id) {
+						$course_id[] = $value->course_id;
+					}
+				} else {
+					$course_id[] = $value->course_id;
+				}
+			}
+
+			$modelUsers_To = ChkUsercourseto::model()->findAll(
+				array(
+					'condition' => 'user_id=:user_id',
+					'params' => array(':user_id' => $user)
+				)
+			);
+
+			foreach ($modelUsers_To as $key => $val) {
+				$data[] = CourseOnline::model()->findByPk($val->course_id);
+			}
+
+			$course = Yii::app()->db->createCommand(
+				'SELECT course_id,
+				course_title,
+				course_date_start,
+				course_date_end,
+				cate_id FROM tbl_course_online WHERE course_id IN (' . implode(',', $course_id) . ') ORDER BY course_title ASC'
+			)->queryAll();
+			$Models = [];
+			if ($lang == 1) {
+				$Models = $course;
+			} else {
+				foreach ($course as $key_N => $value_N) {
+					$CourseOnline = Yii::app()->db->createCommand(
+						"SELECT course_id,
+						course_title,
+						course_date_start,
+						course_date_end,
+						cate_id FROM tbl_course_online WHERE parent_id = " . $value_N['course_id'] . " AND active='y' AND lang_id = 2"
+					)->queryAll();
+					if (!empty($CourseOnline[0])) {
+						$CourseOnline[0]['course_id'] = $value_N['course_id'];
+						$CourseOnline[0]['cate_id'] = $value_N["cate_id"];
+
+						$Models[]  = $CourseOnline[0];
+					} else {
+						$Models[] = $value_N;
+					}
+				}
+			}
+
+			echo CJSON::encode(['data'=>$Models]);
 		}
 	}
 }
