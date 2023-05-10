@@ -2133,7 +2133,7 @@ class SiteController extends Controller
 				}
 			}
 
-			echo CJSON::encode(['data'=>$Models]);
+			echo CJSON::encode($Models);
 		}
 	}
 }
