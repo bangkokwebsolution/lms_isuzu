@@ -2132,6 +2132,23 @@ class SiteController extends Controller
 					}
 				}
 			}
+			foreach($Models as $key => $val){
+				$LogStartcourse = LogStartcourse::Model()->find(array('condition' => 'course_id =' . $val['course_id'] . ' AND user_id =' . $user));
+				$passcourse = Passcours::Model()->find(array('condition' => 'passcours_cours = ' . $val['course_id'] . ' AND passcours_user =' . $user));
+				if (!empty($passcourse)) { // ผ่าน
+					$status_user = 'pass'; // สีเขียว
+				} else if (date('Y-m-d H:i:s') > $val['course_date_end']) { //ต่อให้เคยเรียน แต่ก็ให้ขึ้นหมดเวลา
+					$status_user = 'expired'; //สีแดง
+				} else if (!empty($LogStartcourse) && empty($passcourse)) { //กำลังเรียน แต่ยังไม่ผ่าน
+					$status_user = 'learning'; // สีส้ม
+				} else if (date('Y-m-d H:i:s') > $val['course_date_end'] && empty($passcourse)) { //หมดเวลาสมัครเรียน
+					$status_user = 'expired'; //สีแดง
+				} else { // ยังไม่เริ่ม
+					$status_user = 'notLearn'; //สีน้ำเงิน
+				}
+				$Models[$key]['learn_status'] = $status_user;
+			}
+		
 
 			echo CJSON::encode($Models);
 		}
