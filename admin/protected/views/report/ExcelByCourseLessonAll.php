@@ -294,7 +294,7 @@ if (isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != '') {
                         
                         <td class="center"><?= isset($valueL->gen->gen_title) ? $valueL->gen->gen_title : '-' ?></td>
                         <td class="center"><?= $valueL->pro->group_name ?></td>
-                        <td class="center"><?= $valueL->mem->employee_id ?></td>
+                        <td class="center">'<?= $valueL->mem->employee_id ?></td>
                         <td class="center"><?= $valueL->pro->fullname ?></td>
                         <td class="center"><?= $valueL->pro->organization_unit ?></td>
                         <td class="center"><?= $valueL->mem->orgchart->title ?></td>
