@@ -109,7 +109,7 @@ if (Yii::app()->user->hasFlash('msg')) {  ?>
                             <br>
                             <br>
                             <label for="" style="padding-left: 40px;padding-right: 40px">
-                                <font color="red">* Remark : For user who do not have both company e-mail or private e-mail for reset password please contact system administrator at ext.no 1210 or 1211 <br><br>* หมายเหตุ : สำหรับผู้ใช้ที่ไม่มีทั้งอีเมลบริษัทหรืออีเมลส่วนตัวสำหรับรีเซ็ตรหัสผ่าน โปรดติดต่อผู้ดูแลระบบที่เบอร์ต่อ 1210 หรือ 1211</font>
+                                <font color="red">* Remark : For user who do not have both company e-mail or private e-mail for reset password please contact system administrator at ext.no 1307 or 1229 <br><br>* หมายเหตุ : สำหรับผู้ใช้ที่ไม่มีทั้งอีเมลบริษัทหรืออีเมลส่วนตัวสำหรับรีเซ็ตรหัสผ่าน โปรดติดต่อผู้ดูแลระบบที่เบอร์ต่อ 1210 หรือ 1211</font>
                             </label>
                             <br>
                         </div>
