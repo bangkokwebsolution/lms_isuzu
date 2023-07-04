@@ -261,7 +261,7 @@ header("Pragma:no-cache");
                                     ?>
                                   <tr>
                                       <td><?= $start_count++ ?></td>
-                                      <td>'<?= $valueLog->user->employee_id ?></td>
+                                      <td><?php echo $valueLog->user->employee_id." "; ?></td>
                                       <td><?= $valueLog->pro->fullname_en ?></td>
                                       <td><?= $valueLog->pro->location ?></td>
                                       <td><?= $valueLog->pro->EmpClass->title ?></td>
