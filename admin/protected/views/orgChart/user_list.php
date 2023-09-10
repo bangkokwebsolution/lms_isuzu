@@ -1,326 +1,298 @@
-
 <?php
-$titleName = 'จัดการหลักสูตร';
-$formNameModel = 'CourseOnline';
+$titleName = 'รายชื่อผู้เรียน';
+$this->breadcrumbs = array($titleName);
 
-$this->breadcrumbs=array($titleName);
+$url_form = $this->createUrl('Coursecontrol/Manageorguser/' . $_GET['id']);
+
+$url_delAll = $this->createUrl('Coursecontrol/delAll/' . $_GET['id']);
 ?>
-<?php
+<style>
+  .w-100 {
+    width: 100% !important;
+  }
+
+  .dataTables_filter {
+    text-align: right;
+  }
+
+  .head-sec2 {
+    display: flex;
+    justify-content: space-between;
+    margin: 8px 0px 14px 0px;
+  }
+
+  .head-sec2 .wrap {
+    display: flex;
+    flex-direction: row-reverse;
+    column-gap: 12px;
+  }
+
+  .head-sec2 .span6 {
+    display: none !important;
+  }
+</style>
+<div class="innerLR">
+    <div class="widget widget-tabs border-bottom-none">
+        <div class="widget-head">
+            <ul>
+                <li class="active">
+                    <a class="glyphicons edit" href="#account-details" data-toggle="tab">
+                        <i></i><?php echo $formtext; ?>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="widget-body">
+            <div class="form">
+                <?php
+                $form = $this->beginWidget('AActiveForm', array(
+                    'id' => 'Orgchart-form',
+                    'clientOptions' => array(
+                        'validateOnSubmit' => true
+                    ),
+                    'errorMessageCssClass' => 'label label-important',
+                    'htmlOptions' => array('enctype' => 'multipart/form-data')
+                ));
                 ?>
-<!--  <form enctype="multipart/form-data" id="frm-example" action="<?=$this->createUrl('OrgChart/CheckUser/').'/'.$_GET['id']?>?orgchart_id=<?=$_GET['orgchart_id']?>&all=<?=$_GET['all']?>" method="post"><div class="container-fluid"> -->
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-12">
-       <b>รายชื่อ ที่ลบ</b><br>
-      <table class="table table-bordered" id="user-list">
-         <thead>
-          <tr>
-           <?php if($model){ ?>
-            <th><input name="select_all" onclick="toggle(this , 'all');" value="1" id="example-select-all" type="checkbox" /></th>
-          <?php } ?>
-            <th>Identification</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <?php if($state == "personnel_office") { ?>
-                <th>แผนก</th>
-                <!-- <th>Department</th> -->
-                <th>ตำแหน่ง</th>
-                <!-- <th>Position</th> -->
-                <th>Level</th>
-            <?php }elseif ($state == "master_captain") { ?>
-                <!-- <th>Department</th> -->
-                <th>แผนก</th>
-                <th>ตำแหน่ง</th>
-                <!-- <th>Position</th> -->
-            <?php }elseif ($state == "state_dep_office") { ?>
-                <th>ตำแหน่ง</th>
-                <!-- <th>Position</th> -->
-                <th>Level</th>
-            <?php }elseif ($state == "state_dep_captain") { ?>
-                <th>ตำแหน่ง</th>
-                 <!-- <th>Position</th> -->
-            <?php }elseif ($state == "state_posi_office") { ?>
-                <th>Level</th>
-           <?php } ?>
+               
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                        <label for="OrgChart_parent_id" class="required">Division <span class="required">*</span></label>
+                            <?php $div_model = OrgChart::model()->getDivisionListNew();
+                            echo $form->dropDownList($model, 'division_id', $div_model, array('empty' => 'เลือก Division', 'class' => 'form-control', 'style' => 'width:100%','required'=>'required')); ?>
+                            <?php echo $form->error($model, 'division_id'); ?>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                        <label for="OrgChart_parent_id" class="required">Department <span class="required">*</span></label>
+                            <?php $dep_model = OrgChart::model()->getDepartmentListNew();
+                            echo $form->dropDownList($model, 'department_id', $dep_model, array('empty' => 'เลือก Department', 'class' => 'form-control','required'=>'required')); ?>
+                            <?php echo $form->error($model, 'department_id'); ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="form-group">
+                        <label for="OrgChart_parent_id" class="required">Group <span class="required">*</span></label>
+                            <?php $dep_model = OrgChart::model()->getGroupListNew();
+                            echo $form->dropDownList($model, 'parent_id', $dep_model, array('empty' => 'เลือก Group', 'class' => 'form-control','required'=>'required')); ?>
+                            <?php echo $form->error($model, 'parent_id'); ?>
+                        </div>
+                    </div>
+                </div>
 
 
-          </tr>
-        </thead>
-        <tbody>
-          <?php 
+                <div class="row">
+                	<div class="col-md-8">
+                    <label for="OrgChart_title" class="required">Section <span class="required">*</span></label>
+                            <?php $dep_model = OrgChart::model()->getSectionListNew();
+                            echo $form->dropDownList($model, 'parent_id', $dep_model, array('empty' => 'เลือก Section', 'class' => 'form-control','required'=>'required')); ?>
+                            <?php echo $form->error($model, 'parent_id'); ?>
+                    </div>
+                </div>
+                                           
+                
+                <br>
 
-          if($model){
-          foreach ($model as $key => $userItem) {
-           ?>
-           <tr>
-             <?php if($model){ ?>
-            <td><input name="chk_<?php echo $userItem->id; ?>" value="<?php echo $userItem->id; ?>" type="checkbox" class="chk_id" onchange="myFunction(<?= $userItem->id; ?>)"/></td>
-             <?php } ?>
-            <td><?= $userItem->identification ?></td>
-            <td><?= $userItem->profiles->firstname.' '.$userItem->profiles->lastname ?></td>
-            <td><?= $userItem->email ?></td>
-            <td><?= $userItem->profiles->phone ?></td>
+                <div class="row buttons">
+                    <?php echo CHtml::tag('button',array('class' => 'btn btn-primary btn-icon glyphicons ok_2'),'<i></i>บันทึกข้อมูล');?>
+                </div>
 
-           <?php if($state == "personnel_office"){ ?>
-              <td><?= $userItem->department->dep_title ?></td>
-              <td><?= $userItem->position->position_title ?></td>
-              <td><?= $userItem->branch->branch_name ?></td>
-            <?php }elseif ($state == "master_captain") { ?>
-              <td><?= $userItem->department->dep_title ?></td>
-              <td><?= $userItem->position->position_title ?></td>
-            <?php }elseif ($state == "state_dep_office") { ?>
-              <td><?= $userItem->position->position_title ?></td>
-              <td><?= $userItem->branch->branch_name ?></td>
-            <?php }elseif ($state == "state_dep_captain") { ?>
-              <td><?= $userItem->position->position_title ?></td>
-            <?php }elseif ($state == "state_posi_office") { ?>
-              <td><?= $userItem->branch->branch_name ?></td>
-            <?php } ?>
-
-          </tr>
-          <?php }
-          }else{?>
-             <td colspan ="999">ไม่พบข้อมูล</td>
-         <?php }
-           ?>
-          
-
-
-
-
-        </tbody>
-
-      </table>
-      <hr>
-      <!-- <p>Press <b>Submit</b> and check console for URL-encoded form data that would be submitted.</p> -->
-      <p>
-      <input type="hidden" name="chk_val_all" id="chk_val_all">
-
-      <!-- <button>Submit</button> -->
-      <?php foreach ($model as $key => $val) { ?>
-
-      <input type="hidden" name="chk_val_[<?= $val->id ?>]" class="chk_val_cl" id="chk_test<?= $val->id ?>"><br>
-
-    <?php   } ?>
-       
-       <input type="button" onclick="Savenew()" class="btn btn-info btn-lg center-block btn-rigis" value="บันทึกข้อมูล">
-      </p>
-    <!-- </form> -->
-      <b>รายชื่อ ที่เพิ่ม</b><br>
-     <!--  <pre id="example-console">
-      </pre> -->
-
-       <table class="table table-bordered" id="user-list">
-         <thead>
-          <tr>
-            <th>Identification</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <?php if($state == "personnel_office") { ?>
-                <!-- <th>Department</th> -->
-                <th>แผนก</th>
-                <!-- <th>Position</th> -->
-                <th>ตำแหน่ง</th>
-                <th>Level</th>
-            <?php }elseif ($state == "master_captain") { ?>
-                <th>แผนก</th>
-                <!-- <th>Department</th> -->
-                <th>ตำแหน่ง</th>
-                <!-- <th>Position</th> -->
-            <?php }elseif ($state == "state_dep_office") { ?>
-                <th>ตำแหน่ง</th>
-                <!-- <th>Position</th> -->
-                <th>Level</th>
-            <?php }elseif ($state == "state_dep_captain") { ?>
-                <th>ตำแหน่ง</th>
-                 <!-- <th>Position</th> -->
-            <?php }elseif ($state == "state_posi_office") { ?>
-                <th>Level</th>
-           <?php } ?>
-            <th>ลบ</th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <?php 
-
-          if($modelall){
-          foreach ($modelall as $key => $userItem) {
-           ?>
-           <tr>
-            <td><?= $userItem->identification ?></td>
-            <td><?= $userItem->profiles->firstname.' '.$userItem->profiles->lastname ?></td>
-            <td><?= $userItem->email ?></td>
-            <td><?= $userItem->profiles->phone ?></td>
-
-           <?php if($state == "personnel_office"){ ?>
-              <td><?= $userItem->department->dep_title ?></td>
-              <td><?= $userItem->position->position_title ?></td>
-              <td><?= $userItem->branch->branch_name ?></td>
-            <?php }elseif ($state == "master_captain") { ?>
-              <td><?= $userItem->department->dep_title ?></td>
-              <td><?= $userItem->position->position_title ?></td>
-            <?php }elseif ($state == "state_dep_office") { ?>
-              <td><?= $userItem->position->position_title ?></td>
-              <td><?= $userItem->branch->branch_name ?></td>
-            <?php }elseif ($state == "state_dep_captain") { ?>
-              <td><?= $userItem->position->position_title ?></td>
-            <?php }elseif ($state == "state_posi_office") { ?>
-              <td><?= $userItem->branch->branch_name ?></td>
-            <?php } ?>
-              <td class="center"><button type="button" class="btn btn-danger"  onclick="Deleteuser(<?= $userItem->id ?>);" ><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
-          </tr>
-          <?php } 
-
-           }else{?>
-             <td colspan ="999">ไม่พบข้อมูล</td>
-         <?php }
-           ?>
-
-        </tbody>
-
-      </table>
-
-
-
-
-
+                <?php $this->endWidget(); ?>
+            </div>
+        </div>
     </div>
+</div>
+<div class="innerLR">
+
+  
+
+  <div class="widget" style="margin-top: -1px;">
+    <div class="widget-head">
+      <h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> <?php echo $titleName; ?></h4>
+    </div>
+
+    <div class="widget-body">
+
+      <table class="table table-bordered dataTable-Orguser table-primary" id="user_list">
+        <thead>
+          <tr>
+            <!-- <th width="5%"></th> -->
+            <th width="5%">ลำดับ</th>
+            <th>ชื่อ - นามสกุล</th>
+            <th>รหัสพนักงาน</th>
+            <th>ลำดับชั้นงาน</th>
+            <th>ตำแหน่งงาน</th>
+            <th>Section Name</th>
+            <th width="5%">จัดการ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+
+          $num = 1;
+          foreach ($user as $key => $value) {
+          ?>
+            <tr>
+              <!-- <td><input type="checkbox" name="user_list[]" value="<?= $value->id ?>"></td> -->
+              <td style="text-align: center;"><?php echo $num++; ?></td>
+              <td><?= $value->profile->firstname . " " . $value->profile->lastname ?></td>
+              <td><?= $value->employee_id ?></td>
+              <td><?= $value->profile->EmpClass->title ?></td>
+              <td><?= $value->profile->EmpClass->descrpition ?></td>
+              <td><?= $value->orgchart->title ?></td>
+              <td>
+                <button type="button" class="btn btn-danger" onclick="if(confirm('แน่ใจว่าต้องการลบ <?= $value->profile->firstname_en . " " . $value->profile->lastname_en ?> ?')){Deleteuser(<?= $value->id ?>);}else{ }">
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                </button>
+              </td>
+            </tr>
+          <?php
+          }
+
+          ?>
+
+
+        </tbody>
+      </table>
+      <br>
+      <a href="<?= $url_delAll ?>" class="btn btn-danger" onclick="return confirm('คุณต้องการล้างข้อมูลทั้งหมดหรือไม่ ?')">- ล้างทั้งหมด</a>
+    </div>
+
   </div>
+
+  <div class="widget" style="margin-top: -1px;">
+    <div class="widget-head">
+      <h4 class="heading glyphicons show_thumbnails_with_lines"><i></i> รายชื่อผู้เรียนทั้งหมด</h4>
+    </div>
+
+    <div class="widget-body">
+      <form action="<?= $url_form ?>" method="GET">
+        <table class="table table-bordered dataTable-Orguser table-primary" id="user_list">
+          <thead>
+            <tr>
+              <th width="5%" align="center"><input type="checkbox" id="chkAll" /></th>
+              <th width="5%">ลำดับ</th>
+              <th>ชื่อ - นามสกุล</th>
+              <th>รหัสพนักงาน</th>
+              <th>ลำดับชั้นงาน</th>
+              <th>ตำแหน่งงาน</th>
+              <th>Section Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+
+            $num = 1;
+            foreach ($userAll as $key => $value) {
+            ?>
+              <tr>
+                <td align="center"><input type="checkbox" class="chk" name="user_list[]" value="<?= $value->id ?>"></td>
+                <td style="text-align: center;"><?php echo $num++; ?></td>
+                <td><?= $value->profile->firstname . " " . $value->profile->lastname ?></td>
+                <td><?= $value->employee_id ?></td>
+                <td><?= $value->profile->EmpClass->title ?></td>
+                <td><?= $value->profile->EmpClass->descrpition ?></td>
+                <td><?= $value->orgchart->title ?></td>
+              </tr>
+            <?php
+            }
+
+
+
+            ?>
+          </tbody>
+        </table>
+        <br>
+        <button type="submit" class="btn btn-success">+ เพิ่มผู้เรียน</button>
+      </form>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
 </div>
 
-<?php 
-
-  foreach ($modelall as $key => $userItem) { ?>
-              <input type="hidden" name="user_id_all" class="user_id_all_cl" value="<?= $userItem->id ?>">
-          <?php } ?>
 
 
-<!-- </form> -->
-<script>
 
-
-function myFunction(val) {
-
-   var id = $("#chk_test"+val).val();
-  if(id == val){
-  $("#chk_test"+val).val("");
-  }else{
-    $("#chk_test"+val).val(val);
+<script type="text/javascript">
+  function Deleteuser(user) {
+    if (user != "") {
+      $.ajax({
+        type: 'POST',
+        url: '<?= $url_form ?>',
+        data: ({
+          user_id: user,
+        }),
+        success: function(data) {
+          if (data == "success") {
+            location.reload();
+          }
+        }
+      });
+    }
   }
 
+  $(document).ready(function() {
+    $('.dataTable-Orguser').DataTable({
+      aoColumnDefs: [{
+        bSortable: false,
+        aTargets: [0]
+      }]
+    }); //datatable
 
 
-}
+    $("#chkAll").click(function() {
+      $(".chk").prop("checked", $("#chkAll").prop("checked"))
 
-//   $( ".chk_id" ).change(function() {
-//     var val = $(".chk_id").val();
-// alert(val);
-// });
+    }); //chkall
 
 
-
-function toggle(source , all) {
-      
-   var id = $("#chk_val_all").val();
+  });
 
 
-    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-    for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i] != source)
-            checkboxes[i].checked = source.checked;
-    }
-
-    if(id == all){
-      $("#chk_val_all").val("");
-    }else{
-      $("#chk_val_all").val(all);
-    }
-    
-}
-
-function Savenew() {
-  var all = $("#chk_val_all").val();
-
-  var org_id = <?= $_GET['orgchart_id'] ?>;
-   var course_id = <?=  $_GET['id'] ?>;
-
-  if(!all){
-       var id_arr= Array();
-  $(".chk_val_cl").each(function (i, v) {
-   id_arr[i] = $(this).val();
- });
-
-      $.ajax({
-            type: 'POST',
-            url: '<?php echo Yii::app()->createAbsoluteUrl('OrgChart/CreateUser'); ?>',
-            data: ({
-              id_arr:id_arr,
-              org_id:org_id,
-              course_id:course_id
-
-            }),
-            success: function(data) {
-           // swal("Good job!", "เพิ่มผู้ใช้งานสำเร็จ", "success");
-            location.reload();
-            }
-        });
-
-
-  }else{
-
+  $("#OrgChart_division_id").change(function() {
+        var id = $("#OrgChart_division_id").val();
         $.ajax({
             type: 'POST',
-            url: '<?php echo Yii::app()->createAbsoluteUrl('OrgChart/CreateUser'); ?>',
-            data: ({
-              all:all,
-              org_id:org_id,
-              course_id:course_id
-            }),
+            url: "<?= Yii::app()->createUrl('Orgmanage/ListDepartment'); ?>",
+            data: {
+                id: id
+            },
             success: function(data) {
-           // swal("Good job!", "เพิ่มผู้ใช้งานสำเร็จ", "success");
-           location.reload();
+                $('#OrgChart_department_id').empty();
+                $('#OrgChart_department_id').append(data);
             }
         });
+    });
 
-  }
-
-    
-}
-
-
-
-</script>
-        <script type="text/javascript">
-
-          function Deleteuser(id) {
-
-           var id_arr= Array();
-           $(".user_id_all_cl").each(function (i, v) {
-            // if(id !=  $(this).val()){
-             id_arr[i] = $(this).val();
-            // }
-           });
-
-            var id_all = id_arr;
-            var org_id = <?= $_GET['orgchart_id'] ?>;
-            var course_id = <?=  $_GET['id'] ?>;
-            var user_id = id;
-           $.ajax({
+    $("#OrgChart_department_id").change(function() {
+        var id = $("#OrgChart_department_id").val();
+        $.ajax({
             type: 'POST',
-            url: '<?php echo Yii::app()->createAbsoluteUrl('OrgChart/DelteUser'); ?>',
-            data: ({
-              user_id:user_id,
-              org_id:org_id,
-              course_id:course_id,
-              id_all:id_all
-            }),
+            url: "<?= Yii::app()->createUrl('Orgmanage/ListGroup'); ?>",
+            data: {
+                id: id
+            },
             success: function(data) {
-           // swal("Good job!", "ลบผู้ใช้งานสำเร็จ", "success");
-           location.reload();
+                $('#OrgChart_parent_id').empty();
+                $('#OrgChart_parent_id').append(data);
             }
         });
-          }
-        </script>
+    });
+</script>
