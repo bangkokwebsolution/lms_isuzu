@@ -116,17 +116,17 @@ EOD
                         //       'htmlOptions'=>array('style'=>'text-align: center;vertical-align: middle;','width'=>'100px'),
                         //       'headerHtmlOptions'=>array('style'=>'text-align: center'),
                         //       ),
-                        array(
-                          'header'=>'เลื่อนตำแหน่ง',
+                        // array(
+                        //   'header'=>'เลื่อนตำแหน่ง',
                     
-                            'value'=>function($data){
-                                return CHtml::link( '<i class=""></i> To', 'javascript:void(0)', array( 'class' => 'btn btn-primary btn-icon', 'onclick' => 'getUserTo(' . $data->course_id . ')'));
-                              },
+                        //     'value'=>function($data){
+                        //         return CHtml::link( '<i class=""></i> To', 'javascript:void(0)', array( 'class' => 'btn btn-primary btn-icon', 'onclick' => 'getUserTo(' . $data->course_id . ')'));
+                        //       },
 
-                          'type'=>'raw',
-                                'htmlOptions'=>array('style'=>'text-align: center;vertical-align: middle;','width'=>'100px'),
-                              'headerHtmlOptions'=>array('style'=>'text-align: center'),
-                          ),
+                        //   'type'=>'raw',
+                        //         'htmlOptions'=>array('style'=>'text-align: center;vertical-align: middle;','width'=>'100px'),
+                        //       'headerHtmlOptions'=>array('style'=>'text-align: center'),
+                        //   ),
 
                         array(
                           'header'=>'เพิ่ม / ลบ ผู้เรียน',

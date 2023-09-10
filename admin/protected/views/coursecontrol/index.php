@@ -181,6 +181,7 @@ $orgchart = OrgChart::model()->findbypk($_GET['id']);
             <!-- <a href="<?= $url; ?>"><button type="button" class="btn btn-info pull-right">COURSE MANAGE</button></a> -->
             
         <?php } ?>
+       
         <?php if($typeCourse == 1 ){?>
             <a href="<?= $urltypecourse.'?typeCourse='.'3'; ?>" ><button type="button" class="btn btn pull-right" style='margin-right: 10px;background-color:#e50000;color: #ffff'>หลักสูตรทั่วไป</button></a>
         <?php  }else if($typeCourse == 3 ){ ?>
@@ -191,7 +192,8 @@ $orgchart = OrgChart::model()->findbypk($_GET['id']);
             if($_SERVER['HTTP_HOST']=="elearning.imct.co.th"){
                
             }else{ ?>
-                <a  class="btn btn pull-right" href="<?= $this->createUrl('Coursecontrol/Manageorguser/'.$_GET["id"].''); ?>"  style="margin-right: 10px;background-color:#e50000;color: #ffff">จัดการผู้เรียน</a>
+                <a href="<?= $url; ?>" class="btn btn-info pull-right" style='margin-right: 10px;background-color:#e50000;color: #ffff'>  จัดการผู้เรียน </a>
+                <!-- <a  class="btn btn pull-right" href="<?= $this->createUrl('Coursecontrol/Manageorguser/'.$_GET["id"].''); ?>"  style="margin-right: 10px;background-color:#e50000;color: #ffff">จัดการผู้เรียน</a>-->
             <?php
             }
         ?>

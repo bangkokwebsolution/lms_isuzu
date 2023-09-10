@@ -185,4 +185,10 @@ class OrgChart extends CActiveRecord
 		return $list;
 	}
 
+	public function getSectionListNew(){
+		$model = Orgchart::model()->findAll('level = "5" and active = "y" ORDER BY id ASC');
+		$list = CHtml::listData($model,'id','title');
+		return $list;
+	}
+
 }
