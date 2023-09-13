@@ -84,8 +84,8 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                         <div class="form-group">
                         <label for="OrgChart_parent_id" class="required">Group <span class="required">*</span></label>
                             <?php $dep_model = OrgChart::model()->getGroupListNew();
-                            echo $form->dropDownList($model, 'parent_id', $dep_model, array('empty' => 'เลือก Group', 'class' => 'form-control','required'=>'required')); ?>
-                            <?php echo $form->error($model, 'parent_id'); ?>
+                            echo $form->dropDownList($model, 'group_id', $dep_model, array('empty' => 'เลือก Group', 'class' => 'form-control','required'=>'required')); ?>
+                            <?php echo $form->error($model, 'group_id'); ?>
                         </div>
                     </div>
                 </div>
@@ -95,8 +95,8 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                 	<div class="col-md-8">
                     <label for="OrgChart_title" class="required">Section <span class="required">*</span></label>
                             <?php $dep_model = OrgChart::model()->getSectionListNew();
-                            echo $form->dropDownList($model, 'parent_id', $dep_model, array('empty' => 'เลือก Section', 'class' => 'form-control','required'=>'required')); ?>
-                            <?php echo $form->error($model, 'parent_id'); ?>
+                            echo $form->dropDownList($model, 'section_id', $dep_model, array('empty' => 'เลือก Section', 'class' => 'form-control','required'=>'required')); ?>
+                            <?php echo $form->error($model, 'section_id'); ?>
                     </div>
                 </div>
                                            
@@ -104,7 +104,7 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                 <br>
 
                 <div class="row buttons">
-                    <?php echo CHtml::tag('button',array('class' => 'btn btn-primary btn-icon glyphicons ok_2'),'<i></i>บันทึกข้อมูล');?>
+                    <?php echo CHtml::tag('button',array('class' => 'btn btn-primary btn-icon glyphicons search'),'<i></i>ค้นหาข้อมูล');?>
                 </div>
 
                 <?php $this->endWidget(); ?>
@@ -291,8 +291,23 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                 id: id
             },
             success: function(data) {
-                $('#OrgChart_parent_id').empty();
-                $('#OrgChart_parent_id').append(data);
+                $('#OrgChart_group_id').empty();
+                $('#OrgChart_group_id').append(data);
+            }
+        });
+    });
+
+    $("#OrgChart_group_id").change(function() {
+        var id = $("#OrgChart_group_id").val();
+        $.ajax({
+            type: 'POST',
+            url: "<?= Yii::app()->createUrl('Orgmanage/ListSection'); ?>",
+            data: {
+                id: id
+            },
+            success: function(data) {
+                $('#OrgChart_section_id').empty();
+                $('#OrgChart_section_id').append(data);
             }
         });
     });

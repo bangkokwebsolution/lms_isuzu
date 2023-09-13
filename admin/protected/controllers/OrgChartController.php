@@ -340,7 +340,7 @@ class OrgChartController extends Controller
 		}elseif(isset($_POST['user_id'])){
 			if($_POST['user_id'] != ""){
 				$value = $_POST['user_id'];
-				$chk_old = UserCourse::model()->find("course_id='".$orgid."' AND user_id='".$value."' ");
+				$chk_old = UserCourse::model()->find("course_id='".$course_id."' AND user_id='".$value."' ");
 				$chk_old->active = 'n';
 				$chk_old->save();
 
@@ -937,6 +937,26 @@ class OrgChartController extends Controller
 		foreach ($datalist as $value => $Branch){ 
 			echo CHtml::tag('option',array('value' => $value),CHtml::encode($Branch),true);
 		}
+	}
+
+	public function actiondelAll(){ 
+		$orgid=$_GET["id"];
+
+		if(isset($_GET["id"])){
+			
+				$del_org = UserCourse::model()->findAll("delete='".$orgid."' ");
+				if(!empty($del_org)){
+					foreach ($del_org as $key => $value) {
+						$value->active = 'n';
+						$value->save();
+					}
+				}
+				
+		}
+
+		$this->redirect(array('OrgChart/CheckUser/'.$orgid));
+				
+	
 	}
 
 

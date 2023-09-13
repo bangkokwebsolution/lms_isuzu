@@ -444,7 +444,16 @@ class OrgmanageController extends Controller
 		echo ($data);
 	}
 
-
+	public function actionListSection(){
+		$model = OrgChart::model()->findAll("active='y' AND parent_id='".$_POST["id"]."'");
+		$data = CHtml::listData($model,'id','title',array('empty' => 'Group'));
+		$sub_list = 'เลือก Section';
+		$data = '<option value ="">'.$sub_list.'</option>';
+		foreach ($model as $key => $value) {
+			$data .= '<option value = "'.$value->id.'"'.'>'.$value->title.'</option>';
+		}
+		echo ($data);
+	}
 
 	/**
 	 * Returns the data model based on the primary key given in the GET variable.
