@@ -60,7 +60,9 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                         <div class="form-group">
                         <label for="OrgChart_parent_id" class="required">Division <span class="required">*</span></label>
                             <?php $div_model = OrgChart::model()->getDivisionListNew();
-                            echo $form->dropDownList($model, 'division_id', $div_model, array('empty' => 'เลือก Division', 'class' => 'form-control', 'style' => 'width:100%','required'=>'required')); ?>
+                            // echo $form->dropDownList($model, 'division_id', $div_model, array('empty' => 'เลือก Division', 'class' => 'form-control', 'style' => 'width:100%','required'=>'required')); 
+                            echo $form->dropDownList($model, 'division_id', $div_model, array('empty' => 'เลือก Division', 'class' => 'form-control', 'style' => 'width:100%')); 
+                            ?>
                             <?php echo $form->error($model, 'division_id'); ?>
                         </div>
                     </div>
@@ -73,7 +75,10 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                         <div class="form-group">
                         <label for="OrgChart_parent_id" class="required">Department <span class="required">*</span></label>
                             <?php $dep_model = OrgChart::model()->getDepartmentListNew();
-                            echo $form->dropDownList($model, 'department_id', $dep_model, array('empty' => 'เลือก Department', 'class' => 'form-control','required'=>'required')); ?>
+                            // echo $form->dropDownList($model, 'department_id', $dep_model, array('empty' => 'เลือก Department', 'class' => 'form-control','required'=>'required')); 
+                            echo $form->dropDownList($model, 'department_id', $dep_model, array('empty' => 'เลือก Department', 'class' => 'form-control')); 
+                            
+                            ?>
                             <?php echo $form->error($model, 'department_id'); ?>
                         </div>
                     </div>
@@ -84,7 +89,9 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                         <div class="form-group">
                         <label for="OrgChart_parent_id" class="required">Group <span class="required">*</span></label>
                             <?php $dep_model = OrgChart::model()->getGroupListNew();
-                            echo $form->dropDownList($model, 'group_id', $dep_model, array('empty' => 'เลือก Group', 'class' => 'form-control','required'=>'required')); ?>
+                            // echo $form->dropDownList($model, 'group_id', $dep_model, array('empty' => 'เลือก Group', 'class' => 'form-control','required'=>'required')); 
+                            echo $form->dropDownList($model, 'group_id', $dep_model, array('empty' => 'เลือก Group', 'class' => 'form-control')); 
+                            ?>
                             <?php echo $form->error($model, 'group_id'); ?>
                         </div>
                     </div>
@@ -95,7 +102,9 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                 	<div class="col-md-8">
                     <label for="OrgChart_title" class="required">Section <span class="required">*</span></label>
                             <?php $dep_model = OrgChart::model()->getSectionListNew();
-                            echo $form->dropDownList($model, 'section_id', $dep_model, array('empty' => 'เลือก Section', 'class' => 'form-control','required'=>'required')); ?>
+                            // echo $form->dropDownList($model, 'section_id', $dep_model, array('empty' => 'เลือก Section', 'class' => 'form-control','required'=>'required')); 
+                            echo $form->dropDownList($model, 'section_id', $dep_model, array('empty' => 'เลือก Section', 'class' => 'form-control')); 
+                            ?>
                             <?php echo $form->error($model, 'section_id'); ?>
                     </div>
                 </div>

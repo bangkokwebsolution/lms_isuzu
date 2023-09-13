@@ -304,8 +304,39 @@ class OrgChartController extends Controller
 //*********************************************************************************************************************************************************************************
 	 public function actionCheckUser(){
 
-		$model = new Orgchart;
+		$model = new Orgchart();
+		$model->unsetAttributes();  // clear any default values
 
+	
+
+		if(isset($_POST['OrgChart']))
+		{
+			// var_dump($_POST);exit();
+			$criteria = new CDbCriteria;
+			$criteria->compare('division_id', $_POST['OrgChart']["division_id"]);
+			$criteria->compare('department_id', $_POST['OrgChart']["department_id"]);
+			$criteria->compare('group_id', $_POST['OrgChart']["group_id"]);
+			$criteria->compare('section_id', $_POST['OrgChart']["section_id"]);
+			$Orgchart_all = Orgchart::model()->findAll($criteria);
+			// echo "<pre>";
+			// echo $_POST['OrgChart']["division_id"];
+			// echo "<hr>";
+
+			$arr_org = [];
+			foreach ($Orgchart_all as $key => $value) {
+				$arr_org[] = $value->id;
+			};
+
+			$model->division_id=$_POST['OrgChart']["division_id"];
+			$model->department_id=$_POST['OrgChart']["department_id"];
+			$model->group_id=$_POST['OrgChart']["group_id"];
+			$model->section_id=$_POST['OrgChart']["section_id"];
+
+		}
+
+		
+		
+		
 
 		$course_id=$_GET["id"];
 	 	
@@ -360,10 +391,13 @@ class OrgChartController extends Controller
 			}
 		}
 		$criteria = new CDbCriteria;
-		 $criteria->compare('superuser', 0);
+		$criteria->compare('superuser', 0);
 		$criteria->compare('del_status', 0);
 		$criteria->compare('status', 1);
+		$criteria->addInCondition('org_id',$arr_org);
 		$criteria->addNotInCondition('id',$arr_user_all);
+		
+		// $criteria->limit = 10;
 		$userAll = User::model()->with('profile')->findAll($criteria);
 
 		$arr_user = [];
@@ -375,10 +409,12 @@ class OrgChartController extends Controller
 		}
 
 		$criteria = new CDbCriteria;
+		$criteria->addInCondition('org_id',$arr_org);
 		$criteria->addInCondition('id',$arr_user);
 		$criteria->compare('del_status', 0);
 		$criteria->compare('status', 1);
 		$criteria->compare('superuser', 0);
+		$criteria->limit = 10;
 		$user = User::model()->with('profile')->findAll($criteria);
 
 		$this->render('user_list', array('userAll'=>$userAll, 'user'=>$user ,'model'=>$model));
@@ -940,11 +976,11 @@ class OrgChartController extends Controller
 	}
 
 	public function actiondelAll(){ 
-		$orgid=$_GET["id"];
-
+		$course_id=$_GET["id"];
+		$orgchart_id=$_GET["orgchart_id"];
 		if(isset($_GET["id"])){
 			
-				$del_org = UserCourse::model()->findAll("delete='".$orgid."' ");
+				$del_org = UserCourse::model()->findAll("course_id='".$course_id."' ");
 				if(!empty($del_org)){
 					foreach ($del_org as $key => $value) {
 						$value->active = 'n';
@@ -954,7 +990,7 @@ class OrgChartController extends Controller
 				
 		}
 
-		$this->redirect(array('OrgChart/CheckUser/'.$orgid));
+		$this->redirect(array('OrgChart/CheckUser/'.$course_id.'&orgchart_id='.$orgchart_id));
 				
 	
 	}
