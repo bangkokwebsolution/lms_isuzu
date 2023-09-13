@@ -2,9 +2,9 @@
 $titleName = 'รายชื่อผู้เรียน';
 $this->breadcrumbs = array($titleName);
 
-$url_form = $this->createUrl('Coursecontrol/Manageorguser/' . $_GET['id']);
+$url_form = $this->createUrl('OrgChart/CheckUser/' . $_GET['id'].'?orgchart_id='.$_GET['orgchart_id']);
 
-$url_delAll = $this->createUrl('Coursecontrol/delAll/' . $_GET['id']);
+$url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.$_GET['orgchart_id']);
 ?>
 <style>
   .w-100 {
@@ -178,6 +178,7 @@ $url_delAll = $this->createUrl('Coursecontrol/delAll/' . $_GET['id']);
     <div class="widget-body">
       <form action="<?= $url_form ?>" method="GET">
         <table class="table table-bordered dataTable-Orguser table-primary" id="user_list">
+        <input type="hidden" name="orgchart_id" value="<?php echo $_GET["orgchart_id"]?>" />
           <thead>
             <tr>
               <th width="5%" align="center"><input type="checkbox" id="chkAll" /></th>

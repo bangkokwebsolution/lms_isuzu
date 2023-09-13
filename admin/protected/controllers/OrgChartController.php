@@ -305,6 +305,9 @@ class OrgChartController extends Controller
 	 public function actionCheckUser(){
 
 		$model = new Orgchart;
+
+
+		$course_id=$_GET["id"];
 	 	
 		if(isset($_GET["orgchart_id"]) && $_GET["orgchart_id"] != ""){
 			$orgid = $_GET["orgchart_id"];
@@ -315,15 +318,14 @@ class OrgChartController extends Controller
 		if (!empty($_GET['user_list'])) {//เพิ่ม
 			foreach ($_GET['user_list'] as $key => $value) {
 
-				$chk_old = OrgUser::model()->find("orgchart_id='".$orgid."' AND user_id='".$value."' ");
+				$chk_old = UserCourse::model()->find("course_id='".$course_id."' AND user_id='".$value."' ");
 
 				if($chk_old != ""){
-					$model = OrgUser::model()->findByPk($chk_old->id);
+					$model = UserCourse::model()->findByPk($chk_old->id);
 					$model->active = 'y';
-					$model->authority_id = null;
 				}else{
-					$model = new OrgUser;
-					$model->orgchart_id = $orgid;
+					$model = new UserCourse;
+					$model->course_id = $course_id;
 					$model->user_id = $value;
 				}
 				
@@ -333,12 +335,12 @@ class OrgChartController extends Controller
 			
 			}//foreach
 
-			$this->redirect(array('Coursecontrol/CheckUser/'.$orgid));
+			$this->redirect(array('OrgChart/CheckUser/'.$course_id."?orgchart_id=".$orgid));
 
 		}elseif(isset($_POST['user_id'])){
 			if($_POST['user_id'] != ""){
 				$value = $_POST['user_id'];
-				$chk_old = OrgUser::model()->find("orgchart_id='".$orgid."' AND user_id='".$value."' ");
+				$chk_old = UserCourse::model()->find("course_id='".$orgid."' AND user_id='".$value."' ");
 				$chk_old->active = 'n';
 				$chk_old->save();
 
@@ -351,7 +353,7 @@ class OrgChartController extends Controller
 		//-----------------------------------------------------//
 
 		$arr_user_all = [];
-		$OrgUser = OrgUser::model()->findAll('active="y" GROUP BY user_id');
+		$OrgUser = UserCourse::model()->findAll('course_id="'.$course_id.'" AND active="y" GROUP BY user_id');
 		if(!empty($OrgUser)){
 			foreach ($OrgUser as $key => $value) {
 				$arr_user_all[] = $value->user_id;
@@ -361,12 +363,11 @@ class OrgChartController extends Controller
 		 $criteria->compare('superuser', 0);
 		$criteria->compare('del_status', 0);
 		$criteria->compare('status', 1);
-		$criteria->compare('org_id', $orgid);
 		$criteria->addNotInCondition('id',$arr_user_all);
 		$userAll = User::model()->with('profile')->findAll($criteria);
 
 		$arr_user = [];
-		$OrgUser_2 = OrgUser::model()->findAll('orgchart_id="'.$orgid.'" AND active="y" GROUP BY user_id');
+		$OrgUser_2 = UserCourse::model()->findAll('course_id="'.$course_id.'" AND active="y" GROUP BY user_id');
 		if(!empty($OrgUser_2)){
 			foreach ($OrgUser_2 as $key => $value) {
 				$arr_user[] = $value->user_id;
