@@ -347,8 +347,30 @@ class OrgChartController extends Controller
 		}	
 
 		if (!empty($_GET['user_list'])) {//เพิ่ม
+
+			$criteria = new CDbCriteria;
+			$criteria->compare('division_id', $_GET["division_id"]);
+			$criteria->compare('department_id', $_GET["department_id"]);
+			$criteria->compare('group_id', $_GET["group_id"]);
+			$criteria->compare('section_id', $_GET["section_id"]);
+			$Orgchart_all = Orgchart::model()->findAll($criteria);
+			// echo "<pre>";
+			// echo $_POST['OrgChart']["division_id"];
+			// echo "<hr>";
+
+			$arr_org = [];
+			foreach ($Orgchart_all as $key => $value) {
+				$arr_org[] = $value->id;
+			};
+
+			$model->division_id=$_GET["division_id"];
+			$model->department_id=$_GET["department_id"];
+			$model->group_id=$_GET["group_id"];
+			$model->section_id=$_GET["section_id"];
+
 			foreach ($_GET['user_list'] as $key => $value) {
 
+				
 				$chk_old = UserCourse::model()->find("course_id='".$course_id."' AND user_id='".$value."' ");
 
 				if($chk_old != ""){

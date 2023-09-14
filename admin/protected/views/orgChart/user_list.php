@@ -186,6 +186,11 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
 
     <div class="widget-body">
       <form action="<?= $url_form ?>" method="GET">
+      <input type="hidden" name="division_id" value="<?php echo $_POST['OrgChart']["division_id"]?>" />
+      <input type="hidden" name="department_id" value="<?php echo $_POST['OrgChart']["department_id"]?>" />
+      <input type="hidden" name="group_id" value="<?php echo $_POST['OrgChart']["group_id"]?>" />
+      <input type="hidden" name="section_id" value="<?php echo $_POST['OrgChart']["section_id"]?>" />
+
         <table class="table table-bordered dataTable-Orguser table-primary" id="user_list">
         <input type="hidden" name="orgchart_id" value="<?php echo $_GET["orgchart_id"]?>" />
           <thead>
@@ -245,6 +250,7 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
     if (user != "") {
       $.ajax({
         type: 'POST',
+        data: { division_id: <?php echo $_POST['OrgChart']["division_id"]?> , department_id: <?php echo $_POST['OrgChart']["department_id"]?> ,group_id:<?php echo $_POST['OrgChart']["group_id"]?>,section_id:<?php echo $_POST['OrgChart']["section_id"]?>}
         url: '<?= $url_form ?>',
         data: ({
           user_id: user,
