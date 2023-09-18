@@ -307,7 +307,7 @@ class OrgChartController extends Controller
 		$model = new Orgchart();
 		$model->unsetAttributes();  // clear any default values
 
-	
+		$course_id=$_GET["id"];
 
 		if(isset($_POST['OrgChart']))
 		{
@@ -338,7 +338,7 @@ class OrgChartController extends Controller
 		
 		
 
-		$course_id=$_GET["id"];
+		
 	 	
 		if(isset($_GET["orgchart_id"]) && $_GET["orgchart_id"] != ""){
 			$orgid = $_GET["orgchart_id"];
@@ -406,7 +406,7 @@ class OrgChartController extends Controller
 			
 			}//foreach
 
-			// $this->redirect(array('OrgChart/CheckUser/'.$course_id."?orgchart_id=".$orgid));
+			$this->redirect(array('OrgChart/CheckUser/'.$course_id."?orgchart_id=".$orgid));
 
 		}elseif(isset($_POST['user_id'])){
 
@@ -445,9 +445,10 @@ class OrgChartController extends Controller
 
 		//-----------------------------------------------------//
 
+		/* user ทั้งหมด */
 		$arr_user_all = [];
-		$OrgUser = UserCourse::model()->findAll('course_id="'.$course_id.'" AND active="y" GROUP BY user_id');
-		if(!empty($OrgUser)){
+		$OrgUser = UserCourse::model()->findAll('course_id="' . $course_id . '" AND active="y" GROUP BY user_id');
+		if (!empty($OrgUser)) {
 			foreach ($OrgUser as $key => $value) {
 				$arr_user_all[] = $value->user_id;
 			}
@@ -456,24 +457,29 @@ class OrgChartController extends Controller
 		$criteria->compare('superuser', 0);
 		$criteria->compare('del_status', 0);
 		$criteria->compare('status', 1);
-		$criteria->addInCondition('org_id',$arr_org);
-		$criteria->addNotInCondition('id',$arr_user_all);
-		
+		if ($orgid != 1) {
+			$criteria->addInCondition('org_id', $arr_org);
+		}
+		$criteria->addNotInCondition('id', $arr_user_all);
 		$criteria->limit = 10;
 		$userAll = User::model()->with('profile')->findAll($criteria);
 
+		/* user ที่เรียน */
 		$arr_user = [];
-		$OrgUser_2 = UserCourse::model()->findAll('course_id="'.$course_id.'" AND active="y" GROUP BY user_id');
-		if(!empty($OrgUser_2)){
+		$OrgUser_2 = UserCourse::model()->findAll('course_id="' . $course_id . '" AND active="y" GROUP BY user_id');
+		if (!empty($OrgUser_2)) {
 			foreach ($OrgUser_2 as $key => $value) {
 				$arr_user[] = $value->user_id;
 			}
 		}
 
 		$criteria = new CDbCriteria;
-		$criteria->addInCondition('org_id',$arr_org);
-		$criteria->addInCondition('id',$arr_user);
+		
+		$criteria->addInCondition('id', $arr_user);
 		$criteria->compare('del_status', 0);
+		if ($orgid != 1) {
+			$criteria->addInCondition('org_id', $arr_org);
+		}
 		$criteria->compare('status', 1);
 		$criteria->compare('superuser', 0);
 		$criteria->limit = 10;

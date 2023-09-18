@@ -68,7 +68,7 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                     'htmlOptions' => array('enctype' => 'multipart/form-data')
                 ));
                 ?>
-               <?php if($model_lvl->level==1 || $model_lvl->level==2 ) { ?>
+               <?php if($model_lvl->level==1) { ?>
                 <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
@@ -85,7 +85,7 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                 </div>
                 <?php } ?>
 
-                <?php if($model_lvl->level==1 || $model_lvl->level==2 || $model_lvl->level==3) { ?>
+                <?php if($model_lvl->level==1 || $model_lvl->level==2 ) { ?>
                 <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
@@ -101,7 +101,7 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                 </div>
                 <?php } ?>
 
-                <?php if($model_lvl->level==1 || $model_lvl->level==2 || $model_lvl->level==3 || $model_lvl->level==4) { ?>
+                <?php if($model_lvl->level==1 || $model_lvl->level==2 || $model_lvl->level==3 ) { ?>
                 <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
@@ -116,7 +116,7 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                 </div>
                 <?php } ?>  
 
-                <?php if($model_lvl->level==1 || $model_lvl->level==2 || $model_lvl->level==3 || $model_lvl->level==4 || $model_lvl->level==5) { ?>
+                <?php if($model_lvl->level==1 || $model_lvl->level==2 || $model_lvl->level==3 || $model_lvl->level==4 ) { ?>
                 <div class="row">
                 	<div class="col-md-8">
                     <label for="OrgChart_title" class="required">Section <span class="required">*</span></label>
@@ -127,14 +127,14 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                             <?php echo $form->error($model, 'section_id'); ?>
                     </div>
                 </div>
-                <?php } ?>                            
+                                          
                 
                 <br>
 
                 <div class="row buttons">
                     <?php echo CHtml::tag('button',array('class' => 'btn btn-primary btn-icon glyphicons search'),'<i></i>ค้นหาข้อมูล');?>
                 </div>
-
+                <?php } ?>  
                 <?php $this->endWidget(); ?>
             </div>
         </div>
@@ -271,7 +271,7 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
         type: 'POST',
         url: '<?= $url_form ?>',
         data: ({
-          user_id: user,division_id: <?php echo $_POST['OrgChart']["division_id"]?> , department_id: <?php echo $_POST['OrgChart']["department_id"]?> ,group_id:<?php echo $_POST['OrgChart']["group_id"]?>,section_id:<?php echo $_POST['OrgChart']["section_id"]?>
+          user_id: user,division_id: "<?php echo $_POST['OrgChart']["division_id"]?>" , department_id: "<?php echo $_POST['OrgChart']["department_id"]?>" ,group_id:"<?php echo $_POST['OrgChart']["group_id"]?>",section_id:"<?php echo $_POST['OrgChart']["section_id"]?>"
         }),
         success: function(data) {
           if (data == "success") {
