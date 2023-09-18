@@ -114,7 +114,8 @@ var node_to_edit;
     //start loop the json and form the html
     function loops(root) {
       if (root.level == 1) {
-        items.push("<li class='btn_add unic" + root.id + " root' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='#'>" + root.name + "</a></br></span>");
+        items.push("<li class='btn_add unic" + root.id + " root' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='<?=Yii::app()->createUrl('Coursecontrol/index/id');?>/" + root.id + "'  target='_blank'>" + root.name + "</a></br></span>");
+        
       }else if (root.level == 2 &&  root.parent == 1) {
         items.push("<li class='btn_add unic" + root.id + "' id='" + root.id + "' data-parent='" + root.parent + "' data-department='"+ root.department +"'><span class='label_node'><a href='<?=Yii::app()->createUrl('Coursecontrol/index/id');?>/" + root.id + "' class='move_down' data-name='"+root.name+"' target='_blank'><span class='RootName'>" + root.name + "</span></a></br></span>");
       } else {

@@ -5,6 +5,20 @@ $this->breadcrumbs = array($titleName);
 $url_form = $this->createUrl('OrgChart/CheckUser/' . $_GET['id'].'?orgchart_id='.$_GET['orgchart_id']);
 
 $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.$_GET['orgchart_id']);
+
+      $orgid = $_GET["orgchart_id"];
+      $criteria = new CDbCriteria;
+			$criteria->compare('id', $orgid);
+			$model_lvl = Orgchart::model()->find($criteria);
+
+      
+      // var_dump($model_lvl->level);exit();
+
+
+      
+      if($model_lvl==5){
+        $model->section_id=$orgid;
+      }
 ?>
 <style>
   .w-100 {
@@ -54,7 +68,7 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                     'htmlOptions' => array('enctype' => 'multipart/form-data')
                 ));
                 ?>
-               
+               <?php if($model_lvl->level==1 || $model_lvl->level==2 ) { ?>
                 <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
@@ -69,7 +83,9 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
 
                     
                 </div>
+                <?php } ?>
 
+                <?php if($model_lvl->level==1 || $model_lvl->level==2 || $model_lvl->level==3) { ?>
                 <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
@@ -83,7 +99,9 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                         </div>
                     </div>
                 </div>
+                <?php } ?>
 
+                <?php if($model_lvl->level==1 || $model_lvl->level==2 || $model_lvl->level==3 || $model_lvl->level==4) { ?>
                 <div class="row">
                     <div class="col-md-8">
                         <div class="form-group">
@@ -96,8 +114,9 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                         </div>
                     </div>
                 </div>
+                <?php } ?>  
 
-
+                <?php if($model_lvl->level==1 || $model_lvl->level==2 || $model_lvl->level==3 || $model_lvl->level==4 || $model_lvl->level==5) { ?>
                 <div class="row">
                 	<div class="col-md-8">
                     <label for="OrgChart_title" class="required">Section <span class="required">*</span></label>
@@ -108,7 +127,7 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                             <?php echo $form->error($model, 'section_id'); ?>
                     </div>
                 </div>
-                                           
+                <?php } ?>                            
                 
                 <br>
 
@@ -160,7 +179,7 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
               <td><?= $value->profile->EmpClass->descrpition ?></td>
               <td><?= $value->orgchart->title ?></td>
               <td>
-                <button type="button" class="btn btn-danger" onclick="if(confirm('แน่ใจว่าต้องการลบ <?= $value->profile->firstname_en . " " . $value->profile->lastname_en ?> ?')){Deleteuser(<?= $value->id ?>);}else{ }">
+                <button type="button" class="btn btn-danger" onclick="if(confirm('แน่ใจว่าต้องการลบ <?= $value->profile->firstname . " " . $value->profile->lastname ?> ?')){Deleteuser(<?= $value->id ?>);}else{ }">
                   <i class="fa fa-trash-o" aria-hidden="true"></i>
                 </button>
               </td>
@@ -250,10 +269,9 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
     if (user != "") {
       $.ajax({
         type: 'POST',
-        data: { division_id: <?php echo $_POST['OrgChart']["division_id"]?> , department_id: <?php echo $_POST['OrgChart']["department_id"]?> ,group_id:<?php echo $_POST['OrgChart']["group_id"]?>,section_id:<?php echo $_POST['OrgChart']["section_id"]?>}
         url: '<?= $url_form ?>',
         data: ({
-          user_id: user,
+          user_id: user,division_id: <?php echo $_POST['OrgChart']["division_id"]?> , department_id: <?php echo $_POST['OrgChart']["department_id"]?> ,group_id:<?php echo $_POST['OrgChart']["group_id"]?>,section_id:<?php echo $_POST['OrgChart']["section_id"]?>
         }),
         success: function(data) {
           if (data == "success") {

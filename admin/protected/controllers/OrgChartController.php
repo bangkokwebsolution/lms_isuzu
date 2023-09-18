@@ -342,6 +342,24 @@ class OrgChartController extends Controller
 	 	
 		if(isset($_GET["orgchart_id"]) && $_GET["orgchart_id"] != ""){
 			$orgid = $_GET["orgchart_id"];
+			$criteria = new CDbCriteria;
+			$criteria->compare('id', $orgid);
+			$model_lvl = Orgchart::model()->find($criteria);
+
+			if($model_lvl->level==5){
+				$model->section_id=$orgid;
+			}
+
+			$criteria = new CDbCriteria;
+			$criteria->compare('id', $orgid);
+			$Orgchart_all = Orgchart::model()->findAll($criteria);
+
+			$arr_org = [];
+			foreach ($Orgchart_all as $key => $value) {
+				$arr_org[] = $value->id;
+			};
+
+			
 		}else{
 			$this->redirect(array('OrgChart/index'));
 		}	
@@ -374,21 +392,21 @@ class OrgChartController extends Controller
 				$chk_old = UserCourse::model()->find("course_id='".$course_id."' AND user_id='".$value."' ");
 
 				if($chk_old != ""){
-					$model = UserCourse::model()->findByPk($chk_old->id);
-					$model->active = 'y';
+					$model_usercourse = UserCourse::model()->findByPk($chk_old->id);
+					$model_usercourse->active = 'y';
 				}else{
-					$model = new UserCourse;
-					$model->course_id = $course_id;
-					$model->user_id = $value;
+					$model_usercourse = new UserCourse;
+					$model_usercourse->course_id = $course_id;
+					$model_usercourse->user_id = $value;
 				}
 				
-				$model->save();
+				$model_usercourse->save();
 
 				
 			
 			}//foreach
 
-			$this->redirect(array('OrgChart/CheckUser/'.$course_id."?orgchart_id=".$orgid));
+			// $this->redirect(array('OrgChart/CheckUser/'.$course_id."?orgchart_id=".$orgid));
 
 		}elseif(isset($_POST['user_id'])){
 
@@ -441,7 +459,7 @@ class OrgChartController extends Controller
 		$criteria->addInCondition('org_id',$arr_org);
 		$criteria->addNotInCondition('id',$arr_user_all);
 		
-		// $criteria->limit = 10;
+		$criteria->limit = 10;
 		$userAll = User::model()->with('profile')->findAll($criteria);
 
 		$arr_user = [];
