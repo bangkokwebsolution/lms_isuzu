@@ -14,10 +14,17 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
       
       // var_dump($model_lvl->level);exit();
 
-
       
       if($model_lvl==5){
         $model->section_id=$orgid;
+      }elseif($model_lvl==4){
+        $model->group_id=$orgid;
+      }elseif($model_lvl==3){
+        $model->department_id=$orgid;
+      }elseif($model_lvl==2){
+        $model->division_id=$orgid;
+      }elseif($model_lvl==1){
+
       }
 ?>
 <style>
@@ -73,7 +80,8 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
                     <div class="col-md-8">
                         <div class="form-group">
                         <label for="OrgChart_parent_id" class="required">Division <span class="required">*</span></label>
-                            <?php $div_model = OrgChart::model()->getDivisionListNew();
+                            <?php 
+                            $div_model = OrgChart::model()->getDivisionListNew();
                             // echo $form->dropDownList($model, 'division_id', $div_model, array('empty' => 'เลือก Division', 'class' => 'form-control', 'style' => 'width:100%','required'=>'required')); 
                             echo $form->dropDownList($model, 'division_id', $div_model, array('empty' => 'เลือก Division', 'class' => 'form-control', 'style' => 'width:100%')); 
                             ?>
