@@ -1,15 +1,25 @@
 <?php
-$titleName = 'รายชื่อผู้เรียน';
+
+      $criteria = new CDbCriteria;
+      $criteria->compare('id', $_GET["id"]);
+      $course_online = CourseOnline::model()->find($criteria);
+      
+
+      $orgid = $_GET["orgchart_id"];
+      $criteria = new CDbCriteria;
+			$criteria->compare('id', $orgid);
+			$model_lvl = Orgchart::model()->find($criteria);
+
+      
+
+$titleName = 'รายชื่อผู้เรียน / หลักสูตร'.$course_online->course_title."/".$model_lvl->title;
 $this->breadcrumbs = array($titleName);
 
 $url_form = $this->createUrl('OrgChart/CheckUser/' . $_GET['id'].'?orgchart_id='.$_GET['orgchart_id']);
 
 $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.$_GET['orgchart_id']);
 
-      $orgid = $_GET["orgchart_id"];
-      $criteria = new CDbCriteria;
-			$criteria->compare('id', $orgid);
-			$model_lvl = Orgchart::model()->find($criteria);
+      
 
       
       // var_dump($model_lvl->level);exit();
