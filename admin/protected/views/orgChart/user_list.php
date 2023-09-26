@@ -1,7 +1,7 @@
 <?php
 
       $criteria = new CDbCriteria;
-      $criteria->compare('id', $_GET["id"]);
+      $criteria->compare('course_id', $_GET["id"]);
       $course_online = CourseOnline::model()->find($criteria);
       
 
@@ -10,9 +10,25 @@
 			$criteria->compare('id', $orgid);
 			$model_lvl = Orgchart::model()->find($criteria);
 
+      if($model_lvl->level==5){
+        $model->section_id=$orgid;
+        $org_title = "Division : ".$model_lvl->div->title." / Department : ".$model_lvl->dep->title." / Group : ".$model_lvl->gro->title." / ".$model_lvl->title;
+      }elseif($model_lvl->level==4){
+        $model->group_id=$orgid;
+        $org_title = "Division : ".$model_lvl->div->title." / Department : ".$model_lvl->dep->title." / ".$model_lvl->gro->title;
+      }elseif($model_lvl->level==3){
+        $model->department_id=$orgid;
+        $org_title = "Division : ".$model_lvl->div->title." / ".$model_lvl->dep->title;
+      }elseif($model_lvl->level==2){
+        $model->division_id=$orgid;
+        $org_title = $model_lvl->div->title;
+      }elseif($model_lvl->level==1){
+        $org_title = $model_lvl->title;
+      }
+
       
 
-$titleName = 'รายชื่อผู้เรียน / หลักสูตร'.$course_online->course_title."/".$model_lvl->title;
+$titleName = 'รายชื่อผู้เรียน / หลักสูตร'.$course_online->course_title." / ".$org_title;
 $this->breadcrumbs = array($titleName);
 
 $url_form = $this->createUrl('OrgChart/CheckUser/' . $_GET['id'].'?orgchart_id='.$_GET['orgchart_id']);
@@ -25,17 +41,7 @@ $url_delAll = $this->createUrl('OrgChart/delAll/' . $_GET['id'].'?orgchart_id='.
       // var_dump($model_lvl->level);exit();
 
       
-      if($model_lvl==5){
-        $model->section_id=$orgid;
-      }elseif($model_lvl==4){
-        $model->group_id=$orgid;
-      }elseif($model_lvl==3){
-        $model->department_id=$orgid;
-      }elseif($model_lvl==2){
-        $model->division_id=$orgid;
-      }elseif($model_lvl==1){
-
-      }
+      
 ?>
 <style>
   .w-100 {

@@ -1,5 +1,28 @@
 <?php
-$titleName = 'หลักสูตร';
+        $orgid = $_GET["id"];
+        $criteria = new CDbCriteria;
+        $criteria->compare('id', $orgid);
+        $model_lvl = Orgchart::model()->find($criteria);
+
+      if($model_lvl->level==5){
+        
+        $org_title = "Division : ".$model_lvl->div->title." / Department : ".$model_lvl->dep->title." / Group : ".$model_lvl->gro->title." / ".$model_lvl->title;
+      }elseif($model_lvl->level==4){
+        
+        $org_title = "Division : ".$model_lvl->div->title." / Department : ".$model_lvl->dep->title." / ".$model_lvl->gro->title;
+      }elseif($model_lvl->level==3){
+        
+        $org_title = "Division : ".$model_lvl->div->title." / ".$model_lvl->dep->title;
+      }elseif($model_lvl->level==2){
+        
+        $org_title = $model_lvl->div->title;
+      }elseif($model_lvl->level==1){
+        $org_title = $model_lvl->title;
+      }
+
+      
+
+$titleName = 'รายชื่อผู้เรียน / หลักสูตร'.$course_online->course_title." / ".$org_title;
 $formNameModel = 'CourseOnline';
 $this->breadcrumbs=array($titleName);
 Yii::app()->clientScript->registerScript('search', "
