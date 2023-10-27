@@ -223,6 +223,15 @@ class ReportController extends Controller
         $this->render('SumdetailCourse',array('model'=>$model));
     }
 
+    public function actionAnswerAnalyze(){
+        $model=new Report();
+        $model->unsetAttributes();
+        if(isset($_GET['Report'])){            
+            $model->attributes = $_GET['Report'];
+        }
+        $this->render('AnswerAnalyze',array('model'=>$model));
+    }
+
     public function actionByCourseAll()
     {
         $model=new Report();

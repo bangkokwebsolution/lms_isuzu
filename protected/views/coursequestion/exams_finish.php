@@ -166,7 +166,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 	</div>
 </section>
 <div class="container">
-	<?php if ($course->course_refer == 'y' && $testType != "pre" && $quesType_ != 3) { ?>
+	<?php if ($course->course_refer == 'AnswerAfter' && $testType != "pre" && $quesType_ != 3) { ?>
 		<div class="question-content-wrap">
 			<div class="row">
 				<div class="col-md-8">
@@ -274,27 +274,3 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 		</div>
 	</div>
 </div>
-
-<!-- <div class="modal fade" id="modal-pass">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 class="modal-title"><?= $labelCourse->label_swal_warning; ?></h4>
-			</div>
-			<div class="modal-body">
-				<center>
-					<i class="fa fa-check" style="font-size:6em; color: #4cdb20; padding-top: 15px;padding-bottom: 15px;"></i>
-					<h2 style="color: #575757;"><?= $labelCourse->label_passTest; ?></h2>
-					
-				</center>
-			</div>
-			<div class="modal-footer">
-				<center>
-					
-					<button type="button" class="btn btn-success" style="padding: 15px 32px; height: auto" data-dismiss="modal">OK</button>
-				</center>
-			</div>
-
-		</div>
-	</div>
-</div> -->
