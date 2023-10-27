@@ -979,9 +979,15 @@ body {
             ?>
             <div class="row">
             <?php echo $form->labelEx($lesson,'status'); ?>
-            <?php echo $form->checkBox($lesson,'status',array(
-                'data-toggle'=> 'toggle','value'=>"y", 'uncheckValue'=>"n"
-            )); ?>
+            <select name="Lesson[status]" class="span8">
+						<?php
+						$list_Lesson_refer = ["n" => "ไม่เลือกเฉลย", "y" => "เฉลยข้อสอบภายหลัง"];
+
+						foreach ($list_Lesson_refer  as $key => $val) { ?>
+							<option <?= $lesson->status == $key ? "selected" : "" ?> value="<?= $key ?>"><?= $val ?> </option>
+						<?php } ?>
+						<option value="">เฉลยข้อสอบทีละข้อ</option>
+					</select>
             <?php echo $form->error($lesson,'status'); ?>
             </div>
             <div class="row">

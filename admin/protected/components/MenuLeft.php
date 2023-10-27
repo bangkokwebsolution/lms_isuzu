@@ -2223,32 +2223,6 @@ Class MenuLeft extends Controller
 				'submenuOptions' => array('class' => self::SetSubMenu(array('Report', 'Questionnaire')), 'id' => 'Report'),
 				'active' => self::SetSubMenu(array('Report', 'Questionnaire'), false),
 				'items' => array(
-					//set new menu	
-					// array(
-
-					//     			'visible'=>self::PermissionsMenu(array(
-					// 		'Report.*',
-					//     			)),
-					//     			'label'=>'1.) รายงานภาพรวมการสมัครสมาชิก',
-					//     			'url'=>array('//Report/logAllRegister')
-					// ),			
-					//     		array(
-
-					//     			'visible'=>self::PermissionsMenu(array(
-					//     				'admin.*',
-					//     			)),
-					//     			'label'=>'2.) รายงานผลการสมัครสมาชิก (ผู้เรียน)',
-					//     			'url'=>array('//user/admin/Status')
-					//     		),
-
-					// array(
-
-					// 	'visible'=>self::PermissionsMenu(array(
-					// 		'Report.*',
-					// 	)),
-					// 	'label'=>'1.) รายงานการผลการเรียนของหลักสูตร',
-					// 	'url'=>array('//Report/ByUser')
-					// ),
 					array(
 
 						'visible' => self::PermissionsMenu(array(
@@ -2295,6 +2269,14 @@ Class MenuLeft extends Controller
 						)),
 						'label' => '5.) รายงานภาพรวมของหลักสูตร',
 						'url' => array('//Report/SumdetailCourse')
+					),array(
+
+						'visible' => self::PermissionsMenu(array(
+							'Report.*',
+							'Report.AnswerAnalyze',
+						)),
+						'label' => '6.) รายงานวิเคราะห์คำตอบรายคำถาม',
+						'url' => array('//Report/AnswerAnalyze')
 					),
 					// array(
 

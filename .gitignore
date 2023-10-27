@@ -1,3 +1,4 @@
 admin/protected/vendors
+admin/assets/*
 protected/runtime/*
 admin/protected/runtime/*
