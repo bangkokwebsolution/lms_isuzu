@@ -1,14 +1,8 @@
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/moment.min.js"></script>
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker.js"></script>
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/jquery.dataTables.min.js"></script>
+
 <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/jquery.dataTables.min.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/js/bootstrap-daterangepicker/daterangepicker-bs2.css" />
 
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/highcharts.js"></script>
-<script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/Highcharts-4.1.5/js/modules/exporting.js"></script>
-
-<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/chosen.min.css" />
-
+<link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->baseUrl; ?>/css/bootstrap-chosen.css" />
 <script type="text/javascript" src="<?php echo Yii::app()->baseUrl; ?>/js/chosen.jquery.js"></script>
 
 <style>
@@ -206,7 +200,7 @@ EOD,
         if (empty($arr_lesson)) {
             $arr_lesson[0] = "ไม่มีบทเรียน";
         } else {
-            $arr_lesson = CHtml::listData($arr_lesson, 'lesson_id', 'title');
+            $arr_lesson = CHtml::listData($arr_lesson, 'id', 'title');
         }
     } else {
         $arr_lesson[""] = "กรุณาเลือกหลักสูตร";
@@ -221,8 +215,19 @@ EOD,
         ),
 
     ));
+    if (!empty($_GET['Report']['lesson_id']) && is_numeric($_GET['Report']['lesson_id']) && !empty($_GET['Report']['course_id'])) {
+        $course = CourseOnline::model()->findByPk($_GET['Report']['course_id']);
+        $lesson = Lesson::model()->findByPk($_GET['Report']['lesson_id']);
+        $Lmanage_pre = Manage::model()->find(["condition" => "id = $lesson->id AND active ='y' AND type='pre'"]);
+        $Lmanage_post = Manage::model()->find(["condition" => "id = $lesson->id AND active ='y' AND type='post'"]);
+        $Lessonquestion = [];
 
-    if ($_GET['Report']['course_id'] != null) {
+        if (!empty($Lmanage_post)) {
+            $Lessonquestion = Question::model()->findAll(["condition" => "group_id = $Lmanage_post->group_id "]);
+        }
+
+        $logstart = LogStartcourse::model()->findAll(["condition" => "course_id = $course->course_id"]);
+    } else if (!empty($_GET['Report']['course_id']) && is_numeric($_GET['Report']['course_id'])) {
         $course = CourseOnline::model()->findByPk($_GET['Report']['course_id']);
         $Cmanage_pre = Coursemanage::model()->find(["condition" => "id = $course->course_id AND active ='y' AND type='pre'"]);
         $Cmanage_post = Coursemanage::model()->find(["condition" => "id = $course->course_id AND active ='y' AND type='course'"]);
@@ -235,15 +240,94 @@ EOD,
         $logstart = LogStartcourse::model()->findAll(["condition" => "course_id = $course->course_id"]);
     }
     ?>
-
     <div class="widget" style="margin-top: -1px;">
         <div class="widget-head">
             <h4 class="heading glyphicons show_thumbnails_with_lines">
                 <i></i> <?php echo $titleName; ?>
             </h4>
         </div>
-        <div class="widget-body div-table">
-            <?php if ($_GET['Report']['course_id'] != null) { ?>
+        <div class="widget-body">
+            <?php if (!empty($course) && !empty($lesson)) { ?>
+                <table class="table table-bordered table-striped" id="table_datatable">
+                    <thead>
+                        <tr>
+                            <td colspan="11"></td>
+                            <?php if (!empty($Lmanage_pre)) { ?>
+                                <td class="center" colspan="2">Pre-Test</td>
+                            <?php  } ?>
+                            <?php if (!empty($Lmanage_post)) { ?>
+                                <td class="center" colspan="2">Post-Test</td>
+                            <?php  } ?>
+                            <?php if (!empty($Lessonquestion)) { ?>
+                                <td class="center" colspan="<?= count($Lessonquestion) ?>">จำนวนครั้งที่ตอบผิด (No. of Wrong Answer)</td>
+                            <?php  } ?>
+                        </tr>
+                        <tr>
+                            <td class="center">Lesson Name</td>
+                            <td class="center">Gen</td>
+                            <td class="center">Group</td>
+                            <td class="center">Employee Code</td>
+                            <td class="center">Name</td>
+                            <td class="center">Surname</td>
+                            <td class="center">Department</td>
+                            <td class="center">Organization Unit</td>
+                            <td class="center">Abbreviate Code</td>
+                            <td class="center">Employee Class</td>
+                            <td class="center">Type</td>
+                            <?php if (!empty($Lmanage_pre)) { ?>
+                                <td class="center">Score</td>
+                                <td class="center">Percent</td>
+                            <?php  } ?>
+                            <?php if (!empty($Lmanage_post)) { ?>
+                                <td class="center">Score</td>
+                                <td class="center">Percent</td>
+                            <?php  } ?>
+                            <?php
+                            $ques_i = 1;
+                            foreach ($Lessonquestion as $key_cq => $val_cq) { ?>
+                                <td class="center">Q<?= $ques_i++ ?></td>
+                            <?php } ?>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        foreach ($logstart as $log => $val_log) {
+                            $ScoreLog = HelperCourseQuest::lib()->getScoreLogLesson($val_log, $lesson);
+                        ?>
+                            <tr>
+                                <td class="left"><?= $course->course_title ?></td>
+                                <td class="center"><?= $val_log->gen_id ?></td>
+                                <td class="center"><?= $val_log->pro->group_name ?></td>
+                                <td class="center"><?= $val_log->mem->employee_id ?></td>
+                                <td class="center"><?= $val_log->pro->firstname ?></td>
+                                <td class="center"><?= $val_log->pro->lastname ?></td>
+                                <td class="center">-</td>
+                                <td class="center"><?= $val_log->pro->organization_unit ?></td>
+                                <td class="center"><?= $val_log->pro->abbreviate_code ?></td>
+                                <td class="center"><?= $val_log->pro->employee_class ?></td>
+                                <td class="center"><?= HelperCourseQuest::lib()->getTypeReferLesson($ScoreLog); ?></td>
+                                <?php if (!empty($Lmanage_pre)) {
+                                    $score_log_pre = HelperCourseQuest::lib()->getScoresLesson($val_log, $lesson, "pre");
+                                ?>
+                                    <td class="center"><?= $score_log_pre["score"] ?></td>
+                                    <td class="center"><?= $score_log_pre["percent"] ?></td>
+                                <?php  } ?>
+                                <?php if (!empty($Lmanage_post)) {
+                                    $score_log_post = HelperCourseQuest::lib()->getScoresLesson($val_log, $lesson, "post");
+                                ?>
+                                    <td class="center"><?= $score_log_post["score"] ?></td>
+                                    <td class="center"><?= $score_log_post["percent"] ?></td>
+                                <?php  } ?>
+                                <?php
+                                foreach ($Lessonquestion as $key_cq => $val_cq) { ?>
+                                    <td class="center"><?= HelperCourseQuest::lib()->getAnswersLesson($ScoreLog, $val_cq->ques_id) ?></td>
+                                <?php } ?>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+
+            <?php } elseif (!empty($course) && empty($lesson)) { ?>
                 <table class="table table-bordered table-striped" id="table_datatable">
                     <thead>
                         <tr>
@@ -328,8 +412,10 @@ EOD,
         </div>
         <div style="padding:10px;">
             <?php
-            if (!empty($_GET['Report']['course_id'])) {
+            if (!empty($_GET['Report']['course_id']) && empty($_GET['Report']['lesson_id'])) {
                 echo '<a class="btn btn-primary" target="-blank" href="' . Yii::app()->createUrl('ReportExcel/AnswerAnalyze', array('Report' => ["course_id" => $_GET['Report']['course_id']])) . '">Export Excel</a>';
+            } elseif (!empty($_GET['Report']['course_id']) && !empty($_GET['Report']['lesson_id'])) {
+                echo '<a class="btn btn-primary" target="-blank" href="' . Yii::app()->createUrl('ReportExcel/AnswerAnalyzeLesson', array('Report' => ["course_id" => $_GET['Report']['course_id'], "lesson_id" => $_GET['Report']['lesson_id']])) . '">Export Excel</a>';
             }
             ?>
         </div>
@@ -338,7 +424,6 @@ EOD,
 
 <script type="text/javascript">
     $('#table_datatable').DataTable({
-        "searching": true,
-        scrollX: true
+        searching: true,
     });
 </script>

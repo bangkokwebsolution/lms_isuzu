@@ -148,7 +148,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 	</div>
 </section>
 <div class="container">
-	<?php if($lesson->status == 'y' && $testType != "pre" && $quesType_ != 3){ ?>	
+	<?php if($lesson->status == 'AnswerAfter' && $testType != "pre" && $quesType_ != 3){ ?>	
 		<div class="question-content-wrap">
 			<div class="row">
 				<div class="col-md-8">
