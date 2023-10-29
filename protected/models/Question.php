@@ -43,7 +43,7 @@ class Question extends CActiveRecord
         $Question->condition = " group_id = '".$id."'  AND active = 'y' ";
         $Question->offset    = 0;
         $Question->limit     = $limit;
-        $Question->order     = ' RAND() ';
+        // $Question->order     = ' RAND() ';
 
         return Question::model()->findAll($Question);
     }

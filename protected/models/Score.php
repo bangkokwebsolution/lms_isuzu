@@ -22,7 +22,7 @@ class Score extends CActiveRecord
      * @param string $className active record class name.
      * @return Score the static model class
      */
-    public static function model($className=__CLASS__)
+    public static function model($className = __CLASS__)
     {
         return parent::model($className);
     }
@@ -43,12 +43,12 @@ class Score extends CActiveRecord
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('lesson_id, user_id, score_number,score_total, create_by, update_by', 'numerical', 'integerOnly'=>true),
-            array('active', 'length', 'max'=>1),
+            array('lesson_id, user_id, score_number,score_total, create_by, update_by', 'numerical', 'integerOnly' => true),
+            array('active', 'length', 'max' => 1),
             array('create_date, update_date, type', 'safe'),
             // The following rule is used by search().
             // Please remove those attributes that should not be searched.
-            array('score_id, lesson_id, user_id, score_number,score_total, create_date, create_by, update_date, update_by, active, gen_id', 'safe', 'on'=>'search'),
+            array('score_id, lesson_id, user_id, score_number,score_total, create_date, create_by, update_date, update_by, active, gen_id,status', 'safe', 'on' => 'search'),
         );
     }
 
@@ -60,23 +60,23 @@ class Score extends CActiveRecord
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
-            'Lessons'=>array(self::BELONGS_TO, 'Lesson', 'lesson_id'),
+            'Lessons' => array(self::BELONGS_TO, 'Lesson', 'lesson_id'),
         );
     }
 
     public function beforeSave()
     {
-        if(null !== Yii::app()->user && isset(Yii::app()->user->id))
+        if (null !== Yii::app()->user && isset(Yii::app()->user->id))
             $id = Yii::app()->user->id;
         else
             $id = 0;
 
-        if($this->isNewRecord){
+        if ($this->isNewRecord) {
             $this->create_by = $id;
             $this->create_date = date("Y-m-d H:i:s");
             $this->update_by = $id;
             $this->update_date = date("Y-m-d H:i:s");
-        }else{
+        } else {
             $this->update_by = $id;
             $this->update_date = date("Y-m-d H:i:s");
         }
@@ -120,24 +120,25 @@ class Score extends CActiveRecord
         // Warning: Please modify the following code to remove attributes that
         // should not be searched.
 
-        $criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-        $criteria->compare('score_id',$this->score_id);
-        $criteria->compare('lesson_id',$this->lesson_id);
-        $criteria->compare('user_id',$this->user_id);
-        $criteria->compare('type',$this->type);
-        $criteria->compare('score_total',$this->score_total);
-        $criteria->compare('score_number',$this->score_number);
-        $criteria->compare('create_date',$this->create_date,true);
-        $criteria->compare('create_by',$this->create_by);
-        $criteria->compare('update_date',$this->update_date,true);
-        $criteria->compare('update_by',$this->update_by);
-        $criteria->compare('active',$this->active,true);
-        $criteria->compare('gen_id',$this->gen_id,true);
+        $criteria->compare('score_id', $this->score_id);
+        $criteria->compare('lesson_id', $this->lesson_id);
+        $criteria->compare('user_id', $this->user_id);
+        $criteria->compare('type', $this->type);
+        $criteria->compare('score_total', $this->score_total);
+        $criteria->compare('score_number', $this->score_number);
+        $criteria->compare('create_date', $this->create_date, true);
+        $criteria->compare('create_by', $this->create_by);
+        $criteria->compare('update_date', $this->update_date, true);
+        $criteria->compare('update_by', $this->update_by);
+        $criteria->compare('active', $this->active, true);
+        $criteria->compare('gen_id', $this->gen_id, true);
+        $criteria->compare('status', $this->status, true);
 
 
         return new CActiveDataProvider($this, array(
-            'criteria'=>$criteria,
+            'criteria' => $criteria,
         ));
     }
 }

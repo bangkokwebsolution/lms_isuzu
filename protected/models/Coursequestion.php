@@ -188,7 +188,7 @@ class Coursequestion extends AActiveRecord
         $Coursequestion->addCondition("active='y'");
         // $Coursequestion->offset    = 0;
         $Coursequestion->limit     = $limit;
-        $Coursequestion->order     = ' RAND() ';
+        // $Coursequestion->order     = ' RAND() ';
 
         return Coursequestion::model()->findAll($Coursequestion);
     }

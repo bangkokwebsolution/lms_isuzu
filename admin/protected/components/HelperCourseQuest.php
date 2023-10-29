@@ -29,7 +29,7 @@ class HelperCourseQuest
         $courseScore = $this->getScoreLog($log, $type);
 
         if (!empty($courseScore)) {
-            $score = $courseScore->score_number . '/' . $courseScore->score_total;
+            $score = $courseScore->score_number . '/' . $courseScore->score_total."&nbsp;";
             $percent = $courseScore->score_number * 100 / $courseScore->score_total;
         }
         return ['score' => $score, 'percent' => $percent . "%"];
@@ -45,12 +45,13 @@ class HelperCourseQuest
         return $status;
     }
 
+
+
     public function getAnswers($courseScore, $ques_id)
     {
         $status = "-";
 
         if (!empty($courseScore)) {
-            SumAnsLogCourse::model()->find(["condition" => "course_id"]);
             $SumAnsLogCourse = SumAnsLogCourse::model()->find([
                 'condition' => 'score_id = :score_id AND quest_id = :quest_id',
                 'params' => [
@@ -61,6 +62,68 @@ class HelperCourseQuest
             ]);
             if (!empty($SumAnsLogCourse)) {
                 $status = $SumAnsLogCourse->status;
+            }
+        }
+
+        return $status;
+    }
+    // ---------------------------------------------------------------- Lessons ----------------------------------------------------------------
+
+    public function getScoreLogLesson($log, $lesson, $type = "post")
+    {
+        $lessonScore = Score::model()->find([
+            'condition' => 'course_id = :course_id AND lesson_id = :lesson_id AND user_id = :user_id AND type = :type AND active = :active',
+            'params' => [
+                ':course_id' => $log->course_id,
+                ':lesson_id' => $lesson->id,
+                ':user_id' => $log->user_id,
+                ':type' => $type,
+                ':active' => 'y',
+            ],
+            'order' => 'score_id DESC',
+        ]);
+
+        return $lessonScore;
+    }
+
+    public function getTypeReferLesson($lessonScore)
+    {
+        $status = "N/A";
+        if (!empty($lessonScore)) {
+            $list_status = ['Close' => "None", 'AnswerAfter' => "General", 'AnswerByOne' => "Special"];
+            $status =  !empty($list_status[$lessonScore->status]) ? $list_status[$lessonScore->status] : "None";
+        }
+        return $status;
+    }
+
+    public function getScoresLesson($log, $lesson, $type = "post")
+    {
+        $score = 'N/A';
+        $percent = 0;
+        $lessonScore = $this->getScoreLogLesson($log, $lesson, $type);
+
+        if (!empty($lessonScore)) {
+            $score = $lessonScore->score_number . '/' . $lessonScore->score_total."&nbsp;";
+            $percent = $lessonScore->score_number * 100 / $lessonScore->score_total;
+        }
+        return ['score' => $score, 'percent' => $percent . "%"];
+    }
+
+    public function getAnswersLesson($lessonScore, $ques_id)
+    {
+        $status = "-";
+
+        if (!empty($lessonScore)) {
+            $SumAnsLogLesson = SumAnsLogLesson::model()->find([
+                'condition' => 'score_id = :score_id AND quest_id = :quest_id',
+                'params' => [
+                    ':score_id' => $lessonScore->score_id,
+                    ':quest_id' => $ques_id
+                ],
+                'order' => 'id DESC',
+            ]);
+            if (!empty($SumAnsLogLesson)) {
+                $status = $SumAnsLogLesson->status;
             }
         }
 

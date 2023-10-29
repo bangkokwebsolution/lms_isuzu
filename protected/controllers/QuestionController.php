@@ -404,14 +404,26 @@ class QuestionController extends Controller
 
                     $model = Question::getTempData($currentQuiz['ques_id']);
                     if (count($model) != null || count($model) != 0) {
+
+                        $chk_byone = ["total" => null, "ans_status" => true, "status" => false];
+                        $ChkByOne = ["status" => true, "text_status" => "none"];
+
                         if (isset($_POST['actionEvnt'])) {
                             if (isset($_POST['Choice'])) {
                                 foreach ($_POST['Question_type'] as $question_id => $value) {
                                     $update_temp = TempQuiz::model()->find(array(
                                         'condition' => "user_id=" . Yii::app()->user->id . " and lesson=" . $lesson->id . " and ques_id=" . $question_id . " and type='" . $testType . "' AND gen_id='" . $gen_id . "'"
                                     ));
-                                    $update_temp->status = 1;
                                     $update_temp->ans_id = json_encode($_POST['Choice'][$question_id]);
+
+                                    $chk_byone =  $this->chkQuestionByOne($lesson, $update_temp, $update_temp->ans_id);
+                                    $ChkByOne = $this->ChkByOne($chk_byone, $update_temp);
+                                    if ($ChkByOne["status"] == false) {
+                                        continue;
+                                    }
+
+                                    $update_temp->status = 1;
+
                                     if (!$update_temp->update()) var_dump($update_temp->getErrors());
                                 }
                             }
@@ -422,8 +434,14 @@ class QuestionController extends Controller
                                     $update_temp = TempQuiz::model()->find(array(
                                         'condition' => "user_id=" . Yii::app()->user->id . " and lesson=" . $lesson->id . " and ques_id=" . $question_id . " and type='" . $testType . "' AND gen_id='" . $gen_id . "'"
                                     ));
-                                    $update_temp->status = 1;
                                     $update_temp->ans_id = json_encode($_POST["answer_sort"]);
+                                    $chk_byone =  $this->chkQuestionByOne($lesson, $update_temp, $update_temp->ans_id);
+                                    $ChkByOne = $this->ChkByOne($chk_byone, $update_temp);
+                                    if ($ChkByOne["status"] == false) {
+                                        continue;
+                                    }
+                                    $update_temp->status = 1;
+
                                     if (!$update_temp->update()) var_dump($update_temp->getErrors());
                                 }
                             }
@@ -434,9 +452,13 @@ class QuestionController extends Controller
                                     $update_temp = TempQuiz::model()->find(array(
                                         'condition' => "user_id=" . Yii::app()->user->id . " and lesson=" . $lesson->id . " and ques_id=" . $question_id . " and type='" . $testType . "' AND gen_id='" . $gen_id . "'"
                                     ));
-                                    $update_temp->status = 1;
                                     $update_temp->ans_id = json_encode($_POST['dropdownVal']);
-
+                                    $chk_byone =  $this->chkQuestionByOne($lesson, $update_temp, $update_temp->ans_id);
+                                    $ChkByOne = $this->ChkByOne($chk_byone, $update_temp);
+                                    if ($ChkByOne["status"] == false) {
+                                        continue;
+                                    }
+                                    $update_temp->status = 1;
                                     if (!$update_temp->update()) var_dump($update_temp->getErrors());
                                 }
                             }
@@ -458,14 +480,15 @@ class QuestionController extends Controller
 
 
                             if ($_POST['actionEvnt'] == "save" || $_POST['actionEvnt'] == "timeup") {
-                                $modelCoursescore = new Score;
-                                $modelCoursescore->lesson_id = $id;
-                                $modelCoursescore->gen_id = $gen_id;
-                                //$modelCoursescore->manage_id = $value['group_id'];
-                                $modelCoursescore->type = $testType;
-                                $modelCoursescore->course_id = $lesson->course_id;
-                                $modelCoursescore->user_id = Yii::app()->user->id;
-                                $modelCoursescore->save();
+                                $modelLessonscore = new Score;
+                                $modelLessonscore->lesson_id = $id;
+                                $modelLessonscore->gen_id = $gen_id;
+                                //$modelLessonscore->manage_id = $value['group_id'];
+                                $modelLessonscore->status = $lesson->status;
+                                $modelLessonscore->type = $testType;
+                                $modelLessonscore->course_id = $lesson->course_id;
+                                $modelLessonscore->user_id = Yii::app()->user->id;
+                                $modelLessonscore->save();
 
                                 $temp_accept = TempQuiz::model()->findAll(
                                     array(
@@ -511,10 +534,10 @@ class QuestionController extends Controller
                                         }
                                     }
 
-                                    $modelCoursescore->score_number = 0;
-                                    $modelCoursescore->score_total = $AllCoursequestion;
-                                    $modelCoursescore->score_past = 'n';
-                                    $modelCoursescore->update();
+                                    $modelLessonscore->score_number = 0;
+                                    $modelLessonscore->score_total = $AllCoursequestion;
+                                    $modelLessonscore->score_past = 'n';
+                                    $modelLessonscore->update();
                                     TempQuiz::model()->deleteAll(
                                         array(
                                             'condition' => "user_id=" . Yii::app()->user->id . " and lesson=" . $id . " and type='" . $testType . "' AND gen_id='" . $gen_id . "'"
@@ -524,8 +547,38 @@ class QuestionController extends Controller
                                 }
 
                                 foreach ($temp_accept as $key => $value) {
-                                    $result = 0;
+                                    $LogAnsCourse = LogAnsLesson::model()->find(array(
+                                        'condition' => 'temp_id = :value_id',
+                                        'params' => array(':value_id' => $value->id),
+                                        'order' => 'id DESC'
+                                    ));
 
+                                    if (!empty($LogAnsCourse) && $lesson->status == "AnswerByOne") {
+                                        $status_new = "";
+                                        if ($LogAnsCourse->status == "correct") {
+                                            $status_new  = $LogAnsCourse->number - 1;
+                                        } else {
+                                            $status_new  = $LogAnsCourse->number;
+                                        }
+
+                                        $New_Sum = new SumAnsLogLesson();
+                                        $New_Sum->score_id = $modelLessonscore->score_id;
+                                        $New_Sum->course_id = $lesson->course_id;
+                                        $New_Sum->lesson_id = $LogAnsCourse->lesson_id;
+                                        $New_Sum->user_id = $LogAnsCourse->user_id;
+                                        $New_Sum->gen_id = $LogAnsCourse->gen_id;
+                                        $New_Sum->quest_id = $LogAnsCourse->quest_id;
+                                        $New_Sum->status = $status_new;
+                                        $New_Sum->create_date = date("Y-m-d H:i:s");
+                                        $New_Sum->save(false);
+                                    }
+                                    LogAnsLesson::model()->deleteAll(array(
+                                        'condition' => 'temp_id = :value_id',
+                                        'params' => array(':value_id' => $value->id),
+                                        'order' => 'id DESC'
+                                    ));
+
+                                    $result = 0;
                                     if ($value->quest->ques_type == 1) {
                                         $countAllCoursequestion += 1;
 
@@ -551,13 +604,17 @@ class QuestionController extends Controller
                                             $result = 1;
                                         }
 
+                                        if ($lesson->status != "AnswerByOne") {
+                                            $this->save_SumAnsLogLesson($modelLessonscore, $value, $result, $lesson);
+                                        }
+
                                         foreach ($coursequestion->chioce as $keyChoice => $choice) {
                                             // Save Logchoice
                                             $modelCourselogchoice = new Logchoice;
                                             $modelCourselogchoice->lesson_id = $id; // $_POST ID
                                             $modelCourselogchoice->logchoice_select = 1;
                                             $modelCourselogchoice->gen_id = $gen_id;
-                                            $modelCourselogchoice->score_id = $modelCoursescore->score_id;
+                                            $modelCourselogchoice->score_id = $modelLessonscore->score_id;
                                             $modelCourselogchoice->choice_id = $choice->choice_id;
                                             $modelCourselogchoice->ques_id = $coursequestion->ques_id;
                                             $modelCourselogchoice->user_id = Yii::app()->user->id;
@@ -572,7 +629,7 @@ class QuestionController extends Controller
                                         $modelCourselogques = new Logques;
                                         $modelCourselogques->lesson_id = $id; // $_POST ID
                                         $modelCourselogques->gen_id = $gen_id;
-                                        $modelCourselogques->score_id = $modelCoursescore->score_id;
+                                        $modelCourselogques->score_id = $modelLessonscore->score_id;
                                         $modelCourselogques->ques_id = $value->ques_id;
                                         $modelCourselogques->user_id = Yii::app()->user->id;
                                         $modelCourselogques->test_type = $testType;
@@ -596,7 +653,7 @@ class QuestionController extends Controller
                                         $modelCourselogchoice->lesson_id = $id; // $_POST ID
                                         $modelCourselogchoice->logchoice_select = 1;
                                         $modelCourselogchoice->gen_id = $gen_id;
-                                        $modelCourselogchoice->score_id = $modelCoursescore->score_id;
+                                        $modelCourselogchoice->score_id = $modelLessonscore->score_id;
                                         $modelCourselogchoice->choice_id = '0';
                                         $modelCourselogchoice->ques_id = $coursequestion->ques_id;
                                         $modelCourselogchoice->user_id = Yii::app()->user->id;
@@ -609,7 +666,7 @@ class QuestionController extends Controller
                                         $modelCourselogques = new Logques;
                                         $modelCourselogques->lesson_id = $id; // $_POST ID
                                         $modelCourselogques->gen_id = $gen_id;
-                                        $modelCourselogques->score_id = $modelCoursescore->score_id;
+                                        $modelCourselogques->score_id = $modelLessonscore->score_id;
                                         $modelCourselogques->ques_id = $value->ques_id;
                                         $modelCourselogques->user_id = Yii::app()->user->id;
                                         $modelCourselogques->test_type = $testType;
@@ -648,13 +705,17 @@ class QuestionController extends Controller
                                             $result = 1;
                                         }
 
+                                        if ($lesson->status != "AnswerByOne") {
+                                            $this->save_SumAnsLogLesson($modelLessonscore, $value, $result, $lesson);
+                                        }
+
                                         foreach ($coursequestion->chioce as $keyChoice => $choice) {
                                             // Save Logchoice
                                             $modelCourselogchoice = new Logchoice;
                                             $modelCourselogchoice->lesson_id = $id; // $_POST ID
                                             $modelCourselogchoice->logchoice_select = 1;
                                             $modelCourselogchoice->gen_id = $gen_id;
-                                            $modelCourselogchoice->score_id = $modelCoursescore->score_id;
+                                            $modelCourselogchoice->score_id = $modelLessonscore->score_id;
                                             $modelCourselogchoice->choice_id = $choice->choice_id;
                                             $modelCourselogchoice->ques_id = $coursequestion->ques_id;
                                             $modelCourselogchoice->user_id = Yii::app()->user->id;
@@ -669,7 +730,7 @@ class QuestionController extends Controller
                                         $modelCourselogques = new Logques;
                                         $modelCourselogques->lesson_id = $id; // $_POST ID
                                         $modelCourselogques->gen_id = $gen_id;
-                                        $modelCourselogques->score_id = $modelCoursescore->score_id;
+                                        $modelCourselogques->score_id = $modelLessonscore->score_id;
                                         $modelCourselogques->ques_id = $value->ques_id;
                                         $modelCourselogques->user_id = Yii::app()->user->id;
                                         $modelCourselogques->test_type = $testType;
@@ -703,13 +764,18 @@ class QuestionController extends Controller
                                             $scoreSum++;
                                             $result = 1;
                                         }
+
+                                        if ($lesson->status != "AnswerByOne") {
+                                            $this->save_SumAnsLogLesson($modelLessonscore, $value, $result, $lesson);
+                                        }
+
                                         foreach ($coursequestion->chioce as $keyChoice => $choice) {
                                             // Save Logchoice
                                             $modelCourselogchoice = new Logchoice;
                                             $modelCourselogchoice->lesson_id = $id; // $_POST ID
                                             $modelCourselogchoice->logchoice_select = 1;
                                             $modelCourselogchoice->gen_id = $gen_id;
-                                            $modelCourselogchoice->score_id = $modelCoursescore->score_id;
+                                            $modelCourselogchoice->score_id = $modelLessonscore->score_id;
                                             $modelCourselogchoice->choice_id = $choice->choice_id;
                                             $modelCourselogchoice->ques_id = $coursequestion->ques_id;
                                             $modelCourselogchoice->user_id = Yii::app()->user->id;
@@ -724,7 +790,7 @@ class QuestionController extends Controller
                                         $modelCourselogques = new Logques;
                                         $modelCourselogques->lesson_id = $id; // $_POST ID
                                         $modelCourselogques->gen_id = $gen_id;
-                                        $modelCourselogques->score_id = $modelCoursescore->score_id;
+                                        $modelCourselogques->score_id = $modelLessonscore->score_id;
                                         $modelCourselogques->ques_id = $value->ques_id;
                                         $modelCourselogques->user_id = Yii::app()->user->id;
                                         $modelCourselogques->test_type = $testType;
@@ -736,6 +802,7 @@ class QuestionController extends Controller
                                             $quesType_ = 1;
                                         }
                                     } else if ($value->quest->ques_type == 4) {
+                                        $countAllCoursequestion += 1;
                                         $coursequestion = Question::model()->with('chioce')->find("question.ques_id=:id", array(
                                             "id" => $value->ques_id,
                                         ));
@@ -746,65 +813,45 @@ class QuestionController extends Controller
                                         }
 
                                         $choiceUserQuestionArray = array();
-                                        // $choiceUserQuestionArray = $coursequestion->chioce(array(
-                                        //     'condition' => 'choice_answer=1'
-                                        // ));
-                                        // var_dump(count($choiceUserAnswerArray));
-                                        // var_dump(json_decode($value->question)); 
-                                        // var_dump(count(json_decode($value->question))); 
 
                                         $key_atart = count(json_decode($value->question)) - count($choiceUserAnswerArray);
 
-                                        // var_dump(count(json_decode($value->question)));
-                                        // var_dump(count($choiceUserAnswerArray));
-                                        // var_dump($key_atart);
                                         foreach (json_decode($value->question) as $key_q => $value_q) {
-                                            // var_dump($key_q);
-                                            // var_dump($key_atart." <= ".$key_q);
                                             if ($key_atart <= $key_q) {
                                                 $choiceUserQuestionArray[] = Choice::model()->findByPk($value_q);
                                             }
                                         }
 
-                                        // var_dump($choiceUserQuestionArray);
-
-                                        // exit();
-
-
-
-
                                         $choiceCorrectIDs = array();
                                         $choiceIsQuest = array();
-                                        // var_dump("<pre>");
+                                        $checkValue = 0;
 
-                                        // var_dump($choiceUserQuestionArray); // ช้อย ข้อถูก
-                                        // var_dump($choiceUserAnswerArray); //ช้อย คำตอบ
-
-
-
-                                        foreach ($choiceUserQuestionArray as $key => $value) {
-                                            $countAllCoursequestion += 1;
-                                            $choiceIsQuest[] = $value->choice_id;
+                                        foreach ($choiceUserQuestionArray as $key => $value_c) {
+                                            $choiceIsQuest[] = $value_c->choice_id;
                                             $choiceCorrectID['Anschoice_id'] = $choiceUserAnswerArray[$key];
-                                            $checkValue = 0;
 
                                             $AnsChoice = $coursequestion->chioce(array(
                                                 'condition' => 'choice_id=' . $choiceUserAnswerArray[$key] .
                                                     ' AND reference IS NOT NULL '
                                             ));
 
-                                            // var_dump($AnsChoice);
-                                            // var_dump($AnsChoice[0]->reference." == ".$value->choice_id);
                                             if ($AnsChoice) {
-                                                if ($AnsChoice[0]->reference == $value->choice_id) {
-                                                    $checkValue = 1;
-                                                    $scoreSum++;
-                                                    $result = 1;
+                                                if ($AnsChoice[0]->reference == $value_c->choice_id) {
+                                                    $checkValue++;
                                                 }
                                             }
 
                                             $choiceCorrectID['checkVal'] = $checkValue;
-                                            $choiceCorrectIDs[$value->choice_id] = $choiceCorrectID;
+                                            $choiceCorrectIDs[$value_c->choice_id] = $choiceCorrectID;
+                                        }
+                                        
+                                        if (count($choiceUserAnswerArray) == $checkValue) {
+                                            $result = 1;
+                                            $scoreSum++;
+                                        }
+
+                                        if ($lesson->status != "AnswerByOne") {
+                                            $this->save_SumAnsLogLesson($modelLessonscore, $value, $result, $lesson);
                                         }
 
                                         $quest_score = 0;
@@ -816,7 +863,7 @@ class QuestionController extends Controller
                                             $modelCourselogchoice->lesson_id = $id; // $_POST ID
                                             $modelCourselogchoice->logchoice_select = 1;
                                             $modelCourselogchoice->gen_id = $gen_id;
-                                            $modelCourselogchoice->score_id = $modelCoursescore->score_id;
+                                            $modelCourselogchoice->score_id = $modelLessonscore->score_id;
                                             $modelCourselogchoice->choice_id = $choice->choice_id;
                                             $modelCourselogchoice->ques_id = $coursequestion->ques_id;
                                             $modelCourselogchoice->user_id = Yii::app()->user->id;
@@ -854,7 +901,7 @@ class QuestionController extends Controller
                                         $modelCourselogques = new Logques;
                                         $modelCourselogques->lesson_id = $id; // $_POST ID
                                         $modelCourselogques->gen_id = $gen_id;
-                                        $modelCourselogques->score_id = $modelCoursescore->score_id;
+                                        $modelCourselogques->score_id = $modelLessonscore->score_id;
                                         $modelCourselogques->ques_id = $value->ques_id;
                                         $modelCourselogques->user_id = Yii::app()->user->id;
                                         $modelCourselogques->test_type = $testType;
@@ -870,13 +917,13 @@ class QuestionController extends Controller
                                 // exit();
 
                                 $sumPoint = $scoreSum * 100 / $countAllCoursequestion;
-                                Score::model()->updateByPk($modelCoursescore->score_id, array(
+                                Score::model()->updateByPk($modelLessonscore->score_id, array(
                                     'score_number' => $scoreSum,
                                     'update_date' => date('Y-m-d H:i:s'),
                                     'score_total' => $countAllCoursequestion,
                                     'score_past' => ($sumPoint >= $scorePercent) ? 'y' : 'n',
                                 ));
-                                $modelScore = Score::model()->findByPk($modelCoursescore->score_id);
+                                $modelScore = Score::model()->findByPk($modelLessonscore->score_id);
                                 $courseStats = Helpers::lib()->checkCoursePass($lesson->course_id);
                                 $courseManageHave = Helpers::lib()->checkHaveCourseTestInManage($lesson->course_id);
                                 if ($courseStats == "pass" && !$isPreTest && !$courseManageHave) {
@@ -912,8 +959,12 @@ class QuestionController extends Controller
                                 //     exit();        
                                 $temp_count = count($temp_all);
                                 if ($_POST['actionEvnt'] == "next") {
-                                    $idx = $_POST['idx_now'] + 1;
-                                    if ($_POST['idx_now'] == $temp_count) $idx = 1;
+                                    if ($chk_byone['status'] == true && (($ChkByOne['status'] == false && $ChkByOne['text_status'] == "try") || ($ChkByOne['status'] == true && $ChkByOne['text_status'] == "done"))) {
+                                        $idx = $_POST['idx_now'];
+                                    } else {
+                                        $idx = $_POST['idx_now'] + 1;
+                                        if ($_POST['idx_now'] == $temp_count) $idx = 1;
+                                    }
                                 } elseif ($_POST['actionEvnt'] == "previous") {
                                     $idx = $_POST['idx_now'] - 1;
                                     if ($_POST['idx_now'] == 1) $idx = $temp_count;
@@ -931,6 +982,10 @@ class QuestionController extends Controller
                                     'params' => array(':user_id' => Yii::app()->user->id, ':lesson' => $id, ':type' => $testType, ':number' => $idx, ':gen_id' => $gen_id)
                                 ));
                                 $model = Question::getTempData($currentQuiz['ques_id']);
+                                $ans_lesson = new LogAnsLesson();
+                                if ($chk_byone["status"] == true) {
+                                    $ans_lesson = LogAnsLesson::model()->find(["condition" => "temp_id = $currentQuiz->id AND choice_correct IS NOT NULL"]);
+                                }
                                 $temp_all = TempQuiz::model()->findAll(array(
                                     'condition' => "user_id=" . Yii::app()->user->id . " and lesson=" . $id . " and type='" . $testType . "' AND gen_id='" . $gen_id . "'"
                                 ));
@@ -941,6 +996,9 @@ class QuestionController extends Controller
                                     'temp_all' => $temp_all,
                                     'testType' => $testType,
                                     'currentQuiz' => $currentQuiz,
+                                    'OneStep_exam' => $chk_byone,
+                                    'ans_course' => $ans_lesson,
+                                    'ChkByOne' => $ChkByOne,
                                     'last_ques' => $last_ques,
                                     'countExam' => $countExam,
                                     'label' => $label,
@@ -992,6 +1050,219 @@ class QuestionController extends Controller
             $this->redirect(array('//course/detail', 'id' => $lesson->course_id, 'lesson_id' => $id));
         }
     }
+
+    public function chkQuestionByOne($lesson, $temp_lesson, $user_ans)
+    {
+        $ex_total = null;
+        $ex_status = false;
+        $ex_ans_status = true;
+        $model = LogAnsLesson::model()->findAll(["condition" => "temp_id = $temp_lesson->id"]);
+        if ($lesson->status == "AnswerByOne") {
+            $result = 0;
+            $chk_true = LogAnsLesson::model()->findAll(["condition" => "temp_id = $temp_lesson->id AND status = 'correct'"]);
+
+            if (count($chk_true) > 0) {
+                return ["total" => $ex_total, "ans_status" => $ex_ans_status, "status" => $ex_status];
+            }
+            if (count($model) < 2) {
+                //ตอบหลายคำตอบ
+                if ($temp_lesson->quest->ques_type == 1) {
+                    $lessonquestion = Question::model()->with('chioce')->find("question.ques_id=:id", array(
+                        "id" => $temp_lesson->ques_id,
+                    ));
+
+                    $choiceUserAnswerArray = array();
+                    if (isset($temp_lesson->ans_id)) {
+                        $choiceUserAnswerArray = json_decode($user_ans);
+                    }
+
+                    $choiceCorrect = $lessonquestion->chioce(array(
+                        'condition' => 'choice_answer=1'
+                    ));
+
+                    $choiceCorrectArray = array();
+                    foreach ($choiceCorrect as $choiceCorrectItem) {
+                        $choiceCorrectArray[] = $choiceCorrectItem->choice_id;
+                    }
+                    sort($choiceUserAnswerArray);
+                    if ($choiceUserAnswerArray === $choiceCorrectArray) {
+                        $result = 1;
+                    }
+
+                    $ex_ans_status = $result == 1 ? true : false;
+                    $ex_total = 2 - $this->saveCountByOne($model, $temp_lesson, $user_ans, $choiceCorrectArray, $result);
+                    $ex_status = true;
+                }
+
+                if ($temp_lesson->quest->ques_type == 2) {
+
+                    $lessonquestion = Question::model()->with('chioce')->find("question.ques_id=:id", array(
+                        "id" => $temp_lesson->ques_id,
+                    ));
+
+                    $choiceUserAnswerArray = array();
+                    if (isset($temp_lesson->ans_id)) {
+                        $choiceUserAnswerArray = json_decode($user_ans);
+                    }
+
+                    $choiceCorrect = $lessonquestion->chioce(array(
+                        'condition' => 'choice_answer=1'
+                    ));
+
+                    $choiceCorrectArray = array();
+                    foreach ($choiceCorrect as $choiceCorrectItem) {
+                        $choiceCorrectArray[] = $choiceCorrectItem->choice_id;
+                    }
+
+                    if ($choiceUserAnswerArray === $choiceCorrectArray) {
+                        $result = 1;
+                    }
+
+                    $ex_ans_status = $result == 1 ? true : false;
+                    $ex_total = 2 - $this->saveCountByOne($model, $temp_lesson, $user_ans, $choiceCorrectArray, $result);
+                    $ex_status = true;
+                }
+
+                if ($temp_lesson->quest->ques_type == 4) {
+
+                    $lessonquestion = Question::model()->with('chioce')->find("question.ques_id=:id", array(
+                        "id" => $temp_lesson->ques_id,
+                    ));
+
+                    $choiceUserAnswerArray = array();
+                    if (isset($temp_lesson->ans_id)) {
+                        $choiceUserAnswerArray = json_decode($user_ans);
+                    }
+                    $choiceUserQuestionArray = array();
+                    $key_atart = count(json_decode($temp_lesson->question)) - count($choiceUserAnswerArray);
+
+                    foreach (json_decode($temp_lesson->question) as $key_q => $value_q) {
+                        if ($key_atart <= $key_q) {
+                            $choiceUserQuestionArray[] = Choice::model()->findByPk($value_q);
+                        }
+                    }
+                    $choiceCorrectIDs = array();
+                    $choiceIsQuest = array();
+
+                    $checkValue = 0;
+                    foreach ($choiceUserQuestionArray as $key => $value) {
+                        $choiceIsQuest[] = $value->choice_id;
+                        $choiceCorrectID['Anschoice_id'] = $choiceUserAnswerArray[$key];
+
+                        $AnsChoice = $lessonquestion->chioce(array(
+                            'condition' => 'choice_id=' . $choiceUserAnswerArray[$key] .
+                                ' AND reference IS NOT NULL '
+                        ));
+
+                        $ans_true = $lessonquestion->chioce(array(
+                            'condition' => 'reference = ' . $value->choice_id
+                        ));
+                        if ($ans_true) {
+                            $choiceCorrectIDs[] = [$ans_true[0]->reference => $ans_true[0]->choice_id];
+                        }
+
+                        if ($AnsChoice) {
+                            if ($AnsChoice[0]->reference == $value->choice_id) {
+                                $checkValue++;
+                            }
+                        }
+                    }
+                    if (count($choiceUserAnswerArray) == $checkValue) {
+                        $result = 1;
+                    }
+
+                    $ex_ans_status = $result == 1 ? true : false;
+                    $ex_total = 2 - $this->saveCountByOne($model, $temp_lesson, $user_ans, $choiceCorrectIDs, $result);
+                    $ex_status = true;
+                }
+
+                if ($temp_lesson->quest->ques_type == 6) {
+                    $lessonquestion = Question::model()->with('chioce')->find("question.ques_id=:id", array(
+                        "id" => $temp_lesson->ques_id,
+                    ));
+                    $choiceUserAnswerArray = array();
+                    if (isset($temp_lesson->ans_id)) {
+                        $choiceUserAnswerArray = $user_ans;
+                    }
+
+                    $choiceCorrect = $lessonquestion->chioce(array(
+                        'condition' => 'choice_answer=1'
+                    ));
+
+                    $choiceCorrectArray = array();
+                    foreach ($choiceCorrect as $choiceCorrectItem) {
+                        $choiceCorrectArray[] = $choiceCorrectItem->choice_id;
+                    }
+                    $choiceCorrectArray = json_encode($choiceCorrectArray);
+                    if ($choiceUserAnswerArray === $choiceCorrectArray) {
+                        $result = 1;
+                    }
+
+                    $ex_ans_status = $result == 1 ? true : false;
+                    $ex_total = 2 - $this->saveCountByOne($model, $temp_lesson, $user_ans, json_decode($choiceCorrectArray), $result);
+                    $ex_status = true;
+                }
+            }
+        }
+
+        return ["total" => $ex_total, "ans_status" => $ex_ans_status, "status" => $ex_status];
+    }
+
+    public function ChkByOne($chk_byone, $temp)
+    {
+        $chk = true;
+        $text_status = "none";
+
+        if ($chk_byone["status"] = true) {
+            $text_status = "done";
+            if ($chk_byone["total"] == 0 && $temp->status == 1) {
+                $chk  = false;
+                $text_status = "none";
+            } else {
+                if ($chk_byone["total"] == 1 && $chk_byone["ans_status"] == false) {
+                    $chk  = false;
+                    $text_status = "try";
+                }
+            }
+        }
+
+        return ["status" => $chk, "text_status" => $text_status];
+    }
+
+    public function saveCountByOne($model, $temp_lesson, $choiceUserAnswerArray, $choiceCorrectArray, $result)
+    {
+
+        $count_total = count($model) + 1;
+        $newLog = new LogAnsLesson();
+        $newLog->lesson_id = $temp_lesson->lesson;
+        $newLog->user_id = $temp_lesson->user_id;
+        $newLog->gen_id = $temp_lesson->gen_id;
+        $newLog->quest_id = $temp_lesson->ques_id;
+        $newLog->answer_choice = $choiceUserAnswerArray;
+        if ($result == 1 || $count_total == 2) {
+            $newLog->choice_correct = json_encode($choiceCorrectArray);
+        }
+        $newLog->temp_id = $temp_lesson->id;
+        $newLog->number = $count_total;
+        $newLog->status = $result ==  1 ? 'correct' : 'incorrect';
+        $newLog->save(false);
+        return $count_total;
+    }
+
+    public function save_SumAnsLogLesson($modelLessonscore, $temp, $status, $lesson)
+    {
+        $New_Sum = new SumAnsLogLesson();
+        $New_Sum->score_id = $modelLessonscore->score_id;
+        $New_Sum->course_id = $lesson->course_id;
+        $New_Sum->lesson_id = $lesson->id;
+        $New_Sum->user_id = $temp->user_id;
+        $New_Sum->gen_id = $temp->gen_id;
+        $New_Sum->quest_id = $temp->ques_id;
+        $New_Sum->status = $status;
+        $New_Sum->create_date = date("Y-m-d H:i:s");
+        $New_Sum->save(false);
+    }
+
 
     public function actionExamsFinish()
     {

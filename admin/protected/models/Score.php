@@ -48,7 +48,7 @@ class Score extends CActiveRecord
 			array('create_date, update_date', 'safe'),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('score_id, lesson_id, user_id, score_number,score_total, create_date, create_by, update_date, update_by, active, gen_id', 'safe', 'on'=>'search'),
+			array('score_id, lesson_id, user_id, score_number,score_total, create_date, create_by, update_date, update_by, active, gen_id,status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -134,6 +134,7 @@ class Score extends CActiveRecord
 		$criteria->compare('update_by',$this->update_by);
 		$criteria->compare('active',$this->active,true);
 		$criteria->compare('gen_id',$this->gen_id,true);
+		$criteria->compare('status',$this->status,true);
 
 
 		return new CActiveDataProvider($this, array(
