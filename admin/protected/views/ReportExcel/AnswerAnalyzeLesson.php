@@ -68,7 +68,7 @@ header("Content-Disposition: attachment; filename=AnswerAnalyze-report.xls");
                 $ScoreLog = HelperCourseQuest::lib()->getScoreLogLesson($val_log, $lesson);
             ?>
                 <tr>
-                    <td class="left"><?= $course->course_title ?></td>
+                    <td class="left"><?= $lesson->title ?></td>
                     <td class="center"><?= $val_log->gen_id ?></td>
                     <td class="center"><?= $val_log->pro->group_name ?></td>
                     <td class="center"><?= $val_log->mem->employee_id ?></td>
