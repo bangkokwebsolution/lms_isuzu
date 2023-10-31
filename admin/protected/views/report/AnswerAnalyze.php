@@ -57,59 +57,13 @@ $formNameModel = 'Report';
 
 $this->breadcrumbs = array($titleName);
 
-
-Yii::app()->clientScript->registerScript(
-    'updateGridView',
-    <<<EOD
-    $('.collapse-toggle').click();
-    $('#Report_dateRang').attr('readonly','readonly');
-    $('#Report_dateRang').css('cursor','pointer');
-    $('#Report_dateRang').daterangepicker({dateFormat: 'dd/mm/yy'});
-
-EOD,
-    CClientScript::POS_READY
-);
 ?>
 
 <script>
     $(document).ready(function() {
 
-        function startDate() {
-            $('#passcoursStartDateBtn').datepicker({
-                dateFormat: 'yy/mm/dd',
-                showOtherMonths: true,
-                selectOtherMonths: true,
-                onSelect: function() {
-                    $("#passcoursEndDateBtn").datepicker("option", "minDate", this.value);
-                },
-            });
-        }
-
-        function endDate() {
-            $('#passcoursEndDateBtn').datepicker({
-                dateFormat: 'yy/mm/dd',
-                showOtherMonths: true,
-                selectOtherMonths: true,
-            });
-        }
-
-
         $(".chosen").chosen();
-        $(".widget-body").css("overflow", "");
-
-        $("#Report_period_start").datepicker({
-            onSelect: function(selected) {
-                $("#Report_period_end").datepicker("option", "minDate", selected)
-            }
-        });
-        $("#Report_period_end").datepicker({
-            onSelect: function(selected) {
-                $("#Report_period_start").datepicker("option", "maxDate", selected)
-            }
-        });
-
-        endDate();
-        startDate();
+        $(".widget-body").css("overflow-x", "sroll");
 
         $("#Report_course_id").change(function() {
             var value = $("#Report_course_id option:selected").val();
@@ -206,15 +160,54 @@ EOD,
         $arr_lesson[""] = "กรุณาเลือกหลักสูตร";
     }
 
-    $this->widget('AdvanceSearchForm', array(
-        'data' => $model,
-        'route' => $this->route,
-        'attributes' => array(
-            array('name' => 'course_id', 'type' => 'list', 'query' => $listCourse),
-            array('name' => 'lesson_id', 'type' => 'list', 'query' => $arr_lesson),
-        ),
+    // $this->widget('AdvanceSearchForm', array(
+    //     'data' => $model,
+    //     'route' => $this->route,
+    //     'attributes' => array(
+    //         array('name' => 'course_id', 'type' => 'list', 'query' => $listCourse),
+    //         array('name' => 'lesson_id', 'type' => 'list', 'query' => $arr_lesson),
+    //     ),
 
-    ));
+    // ));
+    ?>
+
+    <div class="widget" data-toggle="collapse-widget" data-collapse-closed="false">
+        <div class="widget-head">
+            <h4 class="heading  glyphicons search"><i></i>ค้นหา</h4>
+            <span class="collapse-toggle"></span>
+        </div>
+        <div class="widget-body of-out in collapse" style="height: auto;">
+            <div class="search-form">
+                <div class="wide form" style="padding-top:6px;">
+                    <form id="SearchFormAjax" action="<?= Yii::app()->createUrl("Report/AnswerAnalyze") ?>" method="get">
+                        <div class="row">
+                            <label>เลือกหลักสูตร (บังคับ)</label>
+                            <select class="span6 chosen" name="Report[course_id]" id="Report_course_id">
+                                <option value="">เลือกหลักสูตร</option>
+                                <?php foreach ($listCourse as $key => $val) { ?>
+                                    <option <?= !empty($_GET['Report']['course_id']) && $_GET['Report']['course_id'] == $key ? "selected" : null ?> value="<?= $key ?>"><?= $val ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <label>เลือกบทเรียน</label>
+                            <select class="span6 chosen" name="Report[lesson_id]" id="Report_lesson_id">
+                                <?= !empty($listCourse) && !empty($arr_lesson) ? '<option value="">เลือกบทเรียน</option>' : "" ?>
+                                <?php foreach ($arr_lesson as $key => $val) { ?>
+                                    <option <?= !empty($_GET['Report']['lesson_id']) && $_GET['Report']['lesson_id'] == $key ? "selected" : null ?> value="<?= $key ?>"><?= $val ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <button class="btn btn-primary mt-10 btn-icon glyphicons search"><i></i> ค้นหา</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <?php
     if (!empty($_GET['Report']['lesson_id']) && is_numeric($_GET['Report']['lesson_id']) && !empty($_GET['Report']['course_id'])) {
         $course = CourseOnline::model()->findByPk($_GET['Report']['course_id']);
         $lesson = Lesson::model()->findByPk($_GET['Report']['lesson_id']);
@@ -246,46 +239,46 @@ EOD,
                 <i></i> <?php echo $titleName; ?>
             </h4>
         </div>
-        <div class="widget-body">
+        <div class="widget-body" style="overflow-x: scroll;">
             <?php if (!empty($course) && !empty($lesson)) { ?>
                 <table class="table table-bordered table-striped" id="table_datatable">
                     <thead>
                         <tr>
-                            <td colspan="11"></td>
+                            <th colspan="11"></th>
                             <?php if (!empty($Lmanage_pre)) { ?>
-                                <td class="center" colspan="2">Pre-Test</td>
+                                <th class="center" colspan="2">Pre-Test</th>
                             <?php  } ?>
                             <?php if (!empty($Lmanage_post)) { ?>
-                                <td class="center" colspan="2">Post-Test</td>
+                                <th class="center" colspan="2">Post-Test</th>
                             <?php  } ?>
                             <?php if (!empty($Lessonquestion)) { ?>
-                                <td class="center" colspan="<?= count($Lessonquestion) ?>">จำนวนครั้งที่ตอบผิด (No. of Wrong Answer)</td>
+                                <th class="center" colspan="<?= count($Lessonquestion) ?>">จำนวนครั้งที่ตอบผิด (No. of Wrong Answer)</th>
                             <?php  } ?>
                         </tr>
                         <tr>
-                            <td class="center">Lesson Name</td>
-                            <td class="center">Gen</td>
-                            <td class="center">Group</td>
-                            <td class="center">Employee Code</td>
-                            <td class="center">Name</td>
-                            <td class="center">Surname</td>
-                            <td class="center">Department</td>
-                            <td class="center">Organization Unit</td>
-                            <td class="center">Abbreviate Code</td>
-                            <td class="center">Employee Class</td>
-                            <td class="center">Type</td>
+                            <th class="center">Lesson Name</th>
+                            <th class="center">Gen</th>
+                            <th class="center">Group</th>
+                            <th class="center">Employee Code</th>
+                            <th class="center">Name</th>
+                            <th class="center">Surname</th>
+                            <th class="center">Department</th>
+                            <th class="center">Organization Unit</th>
+                            <th class="center">Abbreviate Code</th>
+                            <th class="center">Employee Class</th>
+                            <th class="center">Type</th>
                             <?php if (!empty($Lmanage_pre)) { ?>
-                                <td class="center">Score</td>
-                                <td class="center">Percent</td>
+                                <th class="center">Score</th>
+                                <th class="center">Percent</th>
                             <?php  } ?>
                             <?php if (!empty($Lmanage_post)) { ?>
-                                <td class="center">Score</td>
-                                <td class="center">Percent</td>
+                                <th class="center">Score</th>
+                                <th class="center">Percent</th>
                             <?php  } ?>
                             <?php
                             $ques_i = 1;
                             foreach ($Lessonquestion as $key_cq => $val_cq) { ?>
-                                <td class="center">Q<?= $ques_i++ ?></td>
+                                <th class="center">Q<?= $ques_i++ ?></th>
                             <?php } ?>
                         </tr>
                     </thead>
@@ -295,7 +288,7 @@ EOD,
                             $ScoreLog = HelperCourseQuest::lib()->getScoreLogLesson($val_log, $lesson);
                         ?>
                             <tr>
-                                <td class="left"><?= $course->course_title ?></td>
+                                <td class="left"><?= $lesson->title ?></td>
                                 <td class="center"><?= $val_log->gen_id ?></td>
                                 <td class="center"><?= $val_log->pro->group_name ?></td>
                                 <td class="center"><?= $val_log->mem->employee_id ?></td>
