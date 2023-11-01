@@ -1166,7 +1166,7 @@ class CoursequestionController extends Controller
         $New_Sum->user_id = $temp->user_id;
         $New_Sum->gen_id = $temp->gen_id;
         $New_Sum->quest_id = $temp->ques_id;
-        $New_Sum->status = $status;
+        $New_Sum->status = $status == 1 ? 0 : 1;
         $New_Sum->create_date = date("Y-m-d H:i:s");
         $New_Sum->save(false);
     }
