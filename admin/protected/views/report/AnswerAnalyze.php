@@ -216,7 +216,7 @@ $this->breadcrumbs = array($titleName);
         $Lessonquestion = [];
 
         if (!empty($Lmanage_post)) {
-            $Lessonquestion = Question::model()->findAll(["condition" => "group_id = $Lmanage_post->group_id "]);
+            $Lessonquestion = Question::model()->findAll(["condition" => "group_id = $Lmanage_post->group_id ","order"=>"ques_id ASC"]);
         }
 
         $logstart = LogStartcourse::model()->findAll(["condition" => "course_id = $course->course_id"]);
@@ -227,7 +227,7 @@ $this->breadcrumbs = array($titleName);
         $Coursequestion = [];
 
         if (!empty($Cmanage_post)) {
-            $Coursequestion = Coursequestion::model()->findAll(["condition" => "group_id = $Cmanage_post->group_id "]);
+            $Coursequestion = Coursequestion::model()->findAll(["condition" => "group_id = $Cmanage_post->group_id","order"=>"ques_id ASC"]);
         }
 
         $logstart = LogStartcourse::model()->findAll(["condition" => "course_id = $course->course_id"]);
