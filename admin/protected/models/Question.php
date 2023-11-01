@@ -180,7 +180,7 @@ class Question extends AActiveRecord
 
 		if(!isset($_GET['Question_sort']))
 		{
-			$criteria->order = 'ques_id desc';
+			$criteria->order = 'ques_id asc';
 		}
 
 		$poviderArray = array('criteria'=>$criteria);

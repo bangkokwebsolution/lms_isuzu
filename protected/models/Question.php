@@ -44,6 +44,8 @@ class Question extends CActiveRecord
         $Question->offset    = 0;
         $Question->limit     = $limit;
         // $Question->order     = ' RAND() ';
+		$Question->order = 'ques_id ASC';
+
 
         return Question::model()->findAll($Question);
     }
