@@ -29,10 +29,10 @@ class HelperCourseQuest
         $courseScore = $this->getScoreLog($log, $type);
 
         if (!empty($courseScore)) {
-            $score = $courseScore->score_number . '/' . $courseScore->score_total."&nbsp;";
+            $score = $courseScore->score_number . '/' . $courseScore->score_total . "&nbsp;";
             $percent = $courseScore->score_number * 100 / $courseScore->score_total;
         }
-        return ['score' => $score, 'percent' => $percent . "%"];
+        return ['score' => $score, 'percent' => number_format($percent, 2) . "%"];
     }
 
     public function getTypeRefer($courseScore)
@@ -103,10 +103,10 @@ class HelperCourseQuest
         $lessonScore = $this->getScoreLogLesson($log, $lesson, $type);
 
         if (!empty($lessonScore)) {
-            $score = $lessonScore->score_number . '/' . $lessonScore->score_total."&nbsp;";
+            $score = $lessonScore->score_number . '/' . $lessonScore->score_total . "&nbsp;";
             $percent = $lessonScore->score_number * 100 / $lessonScore->score_total;
         }
-        return ['score' => $score, 'percent' => $percent . "%"];
+        return ['score' => $score, 'percent' => number_format($percent, 2) . "%"];
     }
 
     public function getAnswersLesson($lessonScore, $ques_id)
