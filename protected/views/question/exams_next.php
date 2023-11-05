@@ -337,15 +337,15 @@ $ans_last_question =  json_decode($ans_course->choice_correct);
 										foreach ($val as $key_s => $val_s) {
 											$head = Choice::model()->findByPk($key_s);
 											$title_c = Choice::model()->findByPk($val_s); ?>
-											คำถาม: <?= $head->choice_detail ?><br>
-											คำตอบ: <?= $title_c->choice_detail ?> <br>
+											คำถาม: <?= CHtml::decode($head->choice_detail) ?><br>
+											คำตอบ: <?= CHtml::decode($title_c->choice_detail) ?> <br>
 										<?php	} ?>
 										<hr>
 									<?php	}
 								} else {
 									foreach ($ans_last_question as $key => $val) {
 										$title_c = Choice::model()->findByPk($val); ?>
-										<?= $title_c->choice_detail ?> <br>
+										<?= CHtml::decode($title_c->choice_detail) ?> <br>
 								<?php }
 								} ?>
 
@@ -375,7 +375,7 @@ $ans_last_question =  json_decode($ans_course->choice_correct);
 								<td class="td-quest" style="text-align: left; width: 70%;">
 									<?php foreach ($last_question_id as $key_ans => $val_ans) {
 										$title_c = Choice::model()->findByPk($val_ans); ?>
-										<?= $title_c->choice_detail ?> <br>
+										<?= CHtml::decode($title_c->choice_detail) ?> <br>
 									<?php } ?>
 								</td>
 								<td style="width: 10%;">
