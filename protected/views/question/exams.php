@@ -83,7 +83,42 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 					<div class="row">
 						<div id="ques-show" class="col-md-12 col-sm-12 col-xs-12">
 							<form id="question-form" action="#" method="POST" role="form" onSubmit="return false">
-								<div class="col-md-8 col-sm-12 col-xs-12">
+								<div class="col-8">
+									<div class="all-exams">
+										<div class="exams-title">
+											<?= $Question ?> <span class="pull-right"><?= $countExam . ' / ' . count($temp_all); ?></span>
+										</div>
+										<table class="table table-bordered table-striped">
+											<tbody>
+												<tr>
+													<?php
+													$loop = 0;
+													foreach ($temp_all as $key => $val_temp) {
+														$loop++;
+														if ($model->ques_id == $val_temp->ques_id) {
+															$class = 'btn-info';
+														} else {
+															$class = ($val_temp->status == '1') ? 'btn-success' : '';
+														}
+														$link = 'onclick="save_ans(\'' . $val_temp->number . '\')"';
+														/*$this->createUrl('index',array('id'=>$lesson->id,'number'=>$val_temp->number));*/
+													?>
+														<td><a href="javascript:void(0)" <?= $link; ?> class="btn <?= $class ?> btn-block">
+																<div style="height:100%;width:100%"><?= $val_temp->number; ?></div>
+															</a></td>
+													<?php
+														if ($loop == 10) {
+															$loop = 0;
+															echo '</tr><tr style="background-color: #f9f9f9">';
+														}
+													}
+													?>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								<div class="col-8">
 									<div class="form-group">
 										<?php
 										$strTotal = 0;
@@ -240,54 +275,26 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 										if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 											$Previous = "Previous";
 											$Next = "Next";
+											$SendAns = "Send";
 										} else {
 											$Previous = "ก่อน";
 											$Next = "ถัดไป";
+											$SendAns = "ส่งคำตอบ";
 										}
 										?>
-										<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg', 'onclick' => 'save_ans("previous")'), $Previous); ?>
-										<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg', 'onclick' => 'save_ans("next")'), $Next); ?>
-										<!-- 	<.?php if($last_ques==1)echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg','onclick'=>'save_ans("save")'), 'ส่งคำตอบ'); ?> -->
-									</div>
-								</div>
-								<div class="col-md-4">
-									<div class="all-exams">
-										<div class="exams-title">
-											<?= $Question ?> <span class="pull-right"><?= $countExam . ' / ' . count($temp_all); ?></span>
-										</div>
-										<table class="table table-bordered table-striped">
-											<tbody>
-												<tr>
-													<?php
-													$loop = 0;
-													foreach ($temp_all as $key => $val_temp) {
-														$loop++;
-														if ($model->ques_id == $val_temp->ques_id) {
-															$class = 'btn-info';
-														} else {
-															$class = ($val_temp->status == '1') ? 'btn-success' : '';
-														}
-														$link = 'onclick="save_ans(\'' . $val_temp->number . '\')"';
-														/*$this->createUrl('index',array('id'=>$lesson->id,'number'=>$val_temp->number));*/
-													?>
-														<td><a href="javascript:void(0)" <?= $link; ?> class="btn <?= $class ?> btn-block">
-																<div style="height:100%;width:100%"><?= $val_temp->number; ?></div>
-															</a></td>
-													<?php
-														if ($loop == 10) {
-															$loop = 0;
-															echo '</tr><tr style="background-color: #f9f9f9">';
-														}
-													}
-													?>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<center style="margin-top: 80px">
+										<?php
+										if ($lesson->status != "AnswerByOne") {
+											echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg', 'onclick' => 'save_ans("previous")'), $Previous);
+											echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg', 'onclick' => 'save_ans("next")'), $Next);
+										} else {
+											echo CHtml::tag('button', array('class' => 'submit btn btn-warning btn-lg', 'onclick' => 'save_ans("next")'), $SendAns);
+										}
+
+										?>
 										<?php if ($last_ques == 1) echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg', 'onclick' => 'save_ans("save")'), UserModule::t('sendQues')); ?>
-									</center>
+									</div>
 								</div>
+
 							</form>
 
 						</div>
