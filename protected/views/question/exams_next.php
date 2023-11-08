@@ -74,7 +74,45 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 	}
 </style>
 <div id="ques-show" style="margin-bottom: 60px;">
-	<div class="col-sm-8">
+	<div class="col-8">
+		<div class="all-exams">
+			<div class="exams-title">
+				<?= $Question; ?> <span class="pull-right"><?= $countExam . ' / ' . count($temp_all); ?></span>
+			</div>
+			<table class="table table-bordered table-striped">
+				<tbody>
+					<tr>
+						<?php
+						$loop = 0;
+						foreach ($temp_all as $key => $val_temp) {
+							$loop++;
+							if ($model->ques_id == $val_temp->ques_id) {
+								$class = 'info';
+							} else {
+								$class = ($val_temp->status == '1') ? 'success' : '';
+							}
+
+							$link = 'onclick="save_ans(\'' . $val_temp->number . '\')"';
+
+							/*$this->createUrl('index',array('id'=>$lesson->id,'number'=>$val_temp->number));*/
+
+						?>
+							<td><a href="javascript:void(0)" <?= $link ?> class="btn btn-<?= $class ?> btn-block">
+									<div style="height:100%;width:100%"><?= $val_temp->number; ?></div>
+								</a></td>
+						<?php
+							if ($loop == 10) {
+								$loop = 0;
+								echo '</tr><tr style="background-color: #f9f9f9">';
+							}
+						}
+						?>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div class="col-8">
 		<form id="question-form" action="#" method="POST" role="form" onSubmit="return false">
 			<div class="form-group">
 				<?php
@@ -242,68 +280,47 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 				if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 					$Previous = "Previous";
 					$Next = "Next";
+					$SendAns = "Send";
 				} else {
 					$Previous = "ก่อน";
 					$Next = "ถัดไป";
+					$SendAns = "ส่งคำตอบ";
+				}
+
+				if (!empty($OneStep_exam) && $OneStep_exam["status"] == true) {
+					// if ($OneStep_exam["total"] != null && $ChkByOne["text_status"] == "try") {
+					// }else{
+					// 	$SendAns = $Next;
+					// }
+					if ($ChkByOne["text_status"] == "done") {
+						$SendAns = $Next;
+					}
 				}
 				?>
-				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg', 'onclick' => 'save_ans("previous")'), $Previous); ?>
-				<?php echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg', 'onclick' => 'save_ans("next")'), $Next); ?>
 
+				<?php
+				if ($lesson->status != "AnswerByOne") {
+					echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg', 'onclick' => 'save_ans("previous")'), $Previous);
+					echo CHtml::tag('button', array('class' => 'submit btn btn-info btn-lg', 'onclick' => 'save_ans("next")'), $Next);
+				} else {
+					echo CHtml::tag('button', array('class' => 'submit btn btn-warning btn-lg', 'onclick' => 'save_ans("next")'), $SendAns);
+				}
+
+				?>
+				<?php if ($last_ques == 1) echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg', 'onclick' => 'save_ans("save")'), UserModule::t('sendQues')); ?>
 			</div>
 		</form>
 	</div>
-	<div class="col-sm-4">
-		<div class="all-exams">
-			<div class="exams-title">
-				<?= $Question; ?> <span class="pull-right"><?= $countExam . ' / ' . count($temp_all); ?></span>
-			</div>
-			<table class="table table-bordered table-striped">
-				<tbody>
-					<tr>
-						<?php
-						$loop = 0;
-						foreach ($temp_all as $key => $val_temp) {
-							$loop++;
-							if ($model->ques_id == $val_temp->ques_id) {
-								$class = 'info';
-							} else {
-								$class = ($val_temp->status == '1') ? 'success' : '';
-							}
 
-							$link = 'onclick="save_ans(\'' . $val_temp->number . '\')"';
-
-							/*$this->createUrl('index',array('id'=>$lesson->id,'number'=>$val_temp->number));*/
-
-						?>
-							<td><a href="javascript:void(0)" <?= $link ?> class="btn btn-<?= $class ?> btn-block">
-									<div style="height:100%;width:100%"><?= $val_temp->number; ?></div>
-								</a></td>
-						<?php
-							if ($loop == 10) {
-								$loop = 0;
-								echo '</tr><tr style="background-color: #f9f9f9">';
-							}
-						}
-						?>
-					</tr>
-				</tbody>
-			</table>
-			<center style="margin-top: 80px">
-				<?php if ($last_ques == 1) echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg', 'onclick' => 'save_ans("save")'), UserModule::t('sendQues')); ?>
-			</center>
-
-		</div>
-	</div>
 	<?php if (!empty($OneStep_exam) && $OneStep_exam["status"] == true) { ?>
-		<div class="col-sm-4">
+		<div class="col-8 d-flex justify-content-center">
 			<?php
 			if ($OneStep_exam["total"] != null && $ChkByOne["text_status"] == "try") { ?>
 				<div class="total-lebal">
 					คุณสามารถตอบได้อีก <?= $OneStep_exam["total"] ?> ครั้ง
 				</div>
 			<?php } else { ?>
-				<div class="total-lebal success">
+				<div class="total-lebal success " style="width: 25%;">
 					ตอบสำเร็จ
 				</div>
 			<?php } ?>
@@ -314,83 +331,83 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 
 <?php if (!empty($OneStep_exam) && $OneStep_exam["status"] == true && !empty($ans_course) && !empty($ans_course->choice_correct)) {
 
-$ans_last_question = [];
-$ans_last_question =  json_decode($ans_course->choice_correct);
+	$ans_last_question = [];
+	$ans_last_question =  json_decode($ans_course->choice_correct);
 ?>
-<div class="con-answer">
-	<div class="question-content-wrap">
-		<div class="">
-			<div class="col-md">
+	<div class="con-answer">
+		<div class="question-content-wrap">
+			<div class="">
+				<div class="col-md">
 
-				<table class="table-question table table-bordered">
-					<thead>
-						<tr class="bg-success">
-							<th style="text-align: center">เฉลย</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td class="td-quest" style="text-align: left">
-								<?php
-								if ($model->ques_type == 4) {
-									foreach ($ans_last_question as $key => $val) {
-										foreach ($val as $key_s => $val_s) {
-											$head = Choice::model()->findByPk($key_s);
-											$title_c = Choice::model()->findByPk($val_s); ?>
-											คำถาม: <?= CHtml::decode($head->choice_detail) ?><br>
-											คำตอบ: <?= CHtml::decode($title_c->choice_detail) ?> <br>
-										<?php	} ?>
-										<hr>
-									<?php	}
-								} else {
-									foreach ($ans_last_question as $key => $val) {
-										$title_c = Choice::model()->findByPk($val); ?>
-										<?= CHtml::decode($title_c->choice_detail) ?> <br>
-								<?php }
-								} ?>
-
-							</td>
-						</tr>
-					</tbody>
-				</table>
-
-				<table class="table-question table table-bordered">
-					<thead>
-						<tr class="bg-success">
-							<th style="text-align: center">ครั้งที่</th>
-							<th style="text-align: left">คำตอบ</th>
-							<th style="text-align: center">สถานะ</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php
-						$LogAnsLesson = LogAnsLesson::model()->findAll(["condition" => "temp_id = $currentQuiz->id"]);
-						$i  = 1;
-						foreach ($LogAnsLesson as $key => $value) {
-							$last_question_id = [];
-							$last_question_id =  json_decode($value->answer_choice);
-						?>
+					<table class="table-question table table-bordered">
+						<thead>
+							<tr class="bg-success">
+								<th style="text-align: center">เฉลย</th>
+							</tr>
+						</thead>
+						<tbody>
 							<tr>
-								<td style="width: 10%;"><?= $i++ ?></td>
-								<td class="td-quest" style="text-align: left; width: 70%;">
-									<?php foreach ($last_question_id as $key_ans => $val_ans) {
-										$title_c = Choice::model()->findByPk($val_ans); ?>
-										<?= CHtml::decode($title_c->choice_detail) ?> <br>
-									<?php } ?>
-								</td>
-								<td style="width: 10%;">
-									<?php if ($value->status == "correct") { ?>
-										<i class="fa fa-check text-success"></i>
-									<?php } else { ?>
-										<i class="fa fa-times text-danger"></i>
-									<?php } ?>
+								<td class="td-quest" style="text-align: left">
+									<?php
+									if ($model->ques_type == 4) {
+										foreach ($ans_last_question as $key => $val) {
+											foreach ($val as $key_s => $val_s) {
+												$head = Choice::model()->findByPk($key_s);
+												$title_c = Choice::model()->findByPk($val_s); ?>
+												คำถาม: <?= CHtml::decode($head->choice_detail) ?><br>
+												คำตอบ: <?= CHtml::decode($title_c->choice_detail) ?> <br>
+											<?php	} ?>
+											<hr>
+										<?php	}
+									} else {
+										foreach ($ans_last_question as $key => $val) {
+											$title_c = Choice::model()->findByPk($val); ?>
+											<?= CHtml::decode($title_c->choice_detail) ?> <br>
+									<?php }
+									} ?>
+
 								</td>
 							</tr>
-						<?php } ?>
-					</tbody>
-				</table>
+						</tbody>
+					</table>
+
+					<table class="table-question table table-bordered">
+						<thead>
+							<tr class="bg-success">
+								<th style="text-align: center">ครั้งที่</th>
+								<th style="text-align: left">คำตอบ</th>
+								<th style="text-align: center">สถานะ</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php
+							$LogAnsLesson = LogAnsLesson::model()->findAll(["condition" => "temp_id = $currentQuiz->id"]);
+							$i  = 1;
+							foreach ($LogAnsLesson as $key => $value) {
+								$last_question_id = [];
+								$last_question_id =  json_decode($value->answer_choice);
+							?>
+								<tr>
+									<td style="width: 10%;"><?= $i++ ?></td>
+									<td class="td-quest" style="text-align: left; width: 70%;">
+										<?php foreach ($last_question_id as $key_ans => $val_ans) {
+											$title_c = Choice::model()->findByPk($val_ans); ?>
+											<?= CHtml::decode($title_c->choice_detail) ?> <br>
+										<?php } ?>
+									</td>
+									<td style="width: 10%;">
+										<?php if ($value->status == "correct") { ?>
+											<i class="fa fa-check text-success"></i>
+										<?php } else { ?>
+											<i class="fa fa-times text-danger"></i>
+										<?php } ?>
+									</td>
+								</tr>
+							<?php } ?>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
 <?php } ?>
