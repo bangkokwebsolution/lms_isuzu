@@ -88,7 +88,7 @@ class HelperCourseQuest
 
     public function getTypeReferLesson($lessonScore)
     {
-        $status = "N/A";
+        $status = "None";
         if (!empty($lessonScore)) {
             $list_status = ['Close' => "None", 'AnswerAfter' => "General", 'AnswerByOne' => "Special"];
             $status =  !empty($list_status[$lessonScore->status]) ? $list_status[$lessonScore->status] : "None";

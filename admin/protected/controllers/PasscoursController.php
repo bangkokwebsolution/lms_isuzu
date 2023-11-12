@@ -697,7 +697,7 @@ class PasscoursController extends Controller
 				$Lesson[0]->title = "ไม่มีบทเรียน";
 			}
 
-			$list .= '<option value="">กรุณาเลือกบทเรียน</option>';
+			$list .= '<option value="">เลือกบทเรียน</option>';
 
 			if (!empty($Lesson)) {
 				foreach ($Lesson as $key => $value) {

@@ -142,7 +142,7 @@ $this->breadcrumbs = array($titleName);
     ));
 
     $listtype_user = CHtml::listData($TypeEmployee, 'id', 'type_employee_name');
-
+    $arr_lesson = [];
     if ($_GET['Report']['course_id'] != "") {
 
         $arr_lesson = Lesson::model()->findAll([
@@ -156,19 +156,8 @@ $this->breadcrumbs = array($titleName);
         } else {
             $arr_lesson = CHtml::listData($arr_lesson, 'id', 'title');
         }
-    } else {
-        $arr_lesson[""] = "กรุณาเลือกหลักสูตร";
     }
 
-    // $this->widget('AdvanceSearchForm', array(
-    //     'data' => $model,
-    //     'route' => $this->route,
-    //     'attributes' => array(
-    //         array('name' => 'course_id', 'type' => 'list', 'query' => $listCourse),
-    //         array('name' => 'lesson_id', 'type' => 'list', 'query' => $arr_lesson),
-    //     ),
-
-    // ));
     ?>
 
     <div class="widget" data-toggle="collapse-widget" data-collapse-closed="false">
@@ -191,10 +180,10 @@ $this->breadcrumbs = array($titleName);
                         </div>
                         <div class="row">
                             <label>เลือกบทเรียน</label>
-                            <select class="span6 chosen" name="Report[lesson_id]" id="Report_lesson_id">
-                                <?= !empty($listCourse) && !empty($arr_lesson) ? '<option value="">เลือกบทเรียน</option>' : "" ?>
+                            <select data-placeholder="เลือกบทเรียน" class="span6 chosen" name="Report[lesson_id][]" id="Report_lesson_id" multiple>
+                                <option value="">เลือกบทเรียน</option>
                                 <?php foreach ($arr_lesson as $key => $val) { ?>
-                                    <option <?= !empty($_GET['Report']['lesson_id']) && $_GET['Report']['lesson_id'] == $key ? "selected" : null ?> value="<?= $key ?>"><?= $val ?></option>
+                                    <option <?= !empty($_GET['Report']['lesson_id']) && in_array($key, $_GET['Report']['lesson_id']) ? "selected" : null ?> value="<?= $key ?>"><?= $val ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -208,18 +197,8 @@ $this->breadcrumbs = array($titleName);
     </div>
 
     <?php
-    if (!empty($_GET['Report']['lesson_id']) && is_numeric($_GET['Report']['lesson_id']) && !empty($_GET['Report']['course_id'])) {
+    if (!empty($_GET['Report']['course_id']) && !empty($_GET['Report']['lesson_id']) && count($_GET['Report']['lesson_id']) > 0 && !empty($_GET['Report']['lesson_id'][0])) {
         $course = CourseOnline::model()->findByPk($_GET['Report']['course_id']);
-        $lesson = Lesson::model()->findByPk($_GET['Report']['lesson_id']);
-        $Lmanage_pre = Manage::model()->find(["condition" => "id = $lesson->id AND active ='y' AND type='pre'"]);
-        $Lmanage_post = Manage::model()->find(["condition" => "id = $lesson->id AND active ='y' AND type='post'"]);
-        $Lessonquestion = [];
-
-        if (!empty($Lmanage_post)) {
-            $Lessonquestion = Question::model()->findAll(["condition" => "group_id = $Lmanage_post->group_id ","order"=>"ques_id ASC"]);
-        }
-
-        $logstart = LogStartcourse::model()->findAll(["condition" => "course_id = $course->course_id"]);
     } else if (!empty($_GET['Report']['course_id']) && is_numeric($_GET['Report']['course_id'])) {
         $course = CourseOnline::model()->findByPk($_GET['Report']['course_id']);
         $Cmanage_pre = Coursemanage::model()->find(["condition" => "id = $course->course_id AND active ='y' AND type='pre'"]);
@@ -227,7 +206,7 @@ $this->breadcrumbs = array($titleName);
         $Coursequestion = [];
 
         if (!empty($Cmanage_post)) {
-            $Coursequestion = Coursequestion::model()->findAll(["condition" => "group_id = $Cmanage_post->group_id","order"=>"ques_id ASC"]);
+            $Coursequestion = Coursequestion::model()->findAll(["condition" => "group_id = $Cmanage_post->group_id", "order" => "ques_id ASC"]);
         }
 
         $logstart = LogStartcourse::model()->findAll(["condition" => "course_id = $course->course_id"]);
@@ -240,86 +219,11 @@ $this->breadcrumbs = array($titleName);
             </h4>
         </div>
         <div class="widget-body" style="overflow-x: scroll;">
-            <?php if (!empty($course) && !empty($lesson)) { ?>
-                <table class="table table-bordered table-striped" id="table_datatable">
-                    <thead>
-                        <tr>
-                            <th colspan="11"></th>
-                            <?php if (!empty($Lmanage_pre)) { ?>
-                                <th class="center" colspan="2">Pre-Test</th>
-                            <?php  } ?>
-                            <?php if (!empty($Lmanage_post)) { ?>
-                                <th class="center" colspan="2">Post-Test</th>
-                            <?php  } ?>
-                            <?php if (!empty($Lessonquestion)) { ?>
-                                <th class="center" colspan="<?= count($Lessonquestion) ?>">จำนวนครั้งที่ตอบผิด (No. of Wrong Answer)</th>
-                            <?php  } ?>
-                        </tr>
-                        <tr>
-                            <th class="center">Lesson Name</th>
-                            <th class="center">Gen</th>
-                            <th class="center">Group</th>
-                            <th class="center">Employee Code</th>
-                            <th class="center">Name</th>
-                            <th class="center">Surname</th>
-                            <th class="center">Department</th>
-                            <th class="center">Organization Unit</th>
-                            <th class="center">Abbreviate Code</th>
-                            <th class="center">Employee Class</th>
-                            <th class="center">Type</th>
-                            <?php if (!empty($Lmanage_pre)) { ?>
-                                <th class="center">Score</th>
-                                <th class="center">Percent</th>
-                            <?php  } ?>
-                            <?php if (!empty($Lmanage_post)) { ?>
-                                <th class="center">Score</th>
-                                <th class="center">Percent</th>
-                            <?php  } ?>
-                            <?php
-                            $ques_i = 1;
-                            foreach ($Lessonquestion as $key_cq => $val_cq) { ?>
-                                <th class="center">Q<?= $ques_i++ ?></th>
-                            <?php } ?>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        foreach ($logstart as $log => $val_log) {
-                            $ScoreLog = HelperCourseQuest::lib()->getScoreLogLesson($val_log, $lesson);
-                        ?>
-                            <tr>
-                                <td class="left"><?= $lesson->title ?></td>
-                                <td class="center"><?= $val_log->gen_id ?></td>
-                                <td class="center"><?= $val_log->pro->group_name ?></td>
-                                <td class="center"><?= $val_log->mem->employee_id ?></td>
-                                <td class="center"><?= $val_log->pro->firstname ?></td>
-                                <td class="center"><?= $val_log->pro->lastname ?></td>
-                                <td class="center">-</td>
-                                <td class="center"><?= $val_log->pro->organization_unit ?></td>
-                                <td class="center"><?= $val_log->pro->abbreviate_code ?></td>
-                                <td class="center"><?= $val_log->pro->employee_class ?></td>
-                                <td class="center"><?= HelperCourseQuest::lib()->getTypeReferLesson($ScoreLog); ?></td>
-                                <?php if (!empty($Lmanage_pre)) {
-                                    $score_log_pre = HelperCourseQuest::lib()->getScoresLesson($val_log, $lesson, "pre");
-                                ?>
-                                    <td class="center"><?= $score_log_pre["score"] ?></td>
-                                    <td class="center"><?= $score_log_pre["percent"] ?></td>
-                                <?php  } ?>
-                                <?php if (!empty($Lmanage_post)) {
-                                    $score_log_post = HelperCourseQuest::lib()->getScoresLesson($val_log, $lesson, "post");
-                                ?>
-                                    <td class="center"><?= $score_log_post["score"] ?></td>
-                                    <td class="center"><?= $score_log_post["percent"] ?></td>
-                                <?php  } ?>
-                                <?php
-                                foreach ($Lessonquestion as $key_cq => $val_cq) { ?>
-                                    <td class="center"><?= HelperCourseQuest::lib()->getAnswersLesson($ScoreLog, $val_cq->ques_id) ?></td>
-                                <?php } ?>
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-
+            <?php if (!empty($course) && count($_GET['Report']['lesson_id']) > 0 && !empty($_GET['Report']['lesson_id'][0])) {
+                $this->renderPartial("reportAnswerAnalyze/AnswerLesson", [
+                    'course' => $course,
+                    'array_lesson' => $_GET['Report']['lesson_id'],
+                ]) ?>
             <?php } elseif (!empty($course) && empty($lesson)) { ?>
                 <table class="table table-bordered table-striped" id="table_datatable">
                     <thead>
@@ -405,10 +309,10 @@ $this->breadcrumbs = array($titleName);
         </div>
         <div style="padding:10px;">
             <?php
-            if (!empty($_GET['Report']['course_id']) && empty($_GET['Report']['lesson_id'])) {
+             if (!empty($_GET['Report']['lesson_id']) && count($_GET['Report']['lesson_id']) > 0 && !empty($_GET['Report']['lesson_id'][0])) {
+                echo '<a class="btn btn-primary" target="-blank" href="' . Yii::app()->createUrl('ReportExcel/AnswerAnalyzeLesson', array('course' => $_GET['Report']['course_id'], 'array_lesson' => $_GET['Report']['lesson_id'])) . '">Export Excel</a>';
+            }elseif (!empty($_GET['Report']['course_id']) && empty($_GET['Report']['lesson_id'])) {
                 echo '<a class="btn btn-primary" target="-blank" href="' . Yii::app()->createUrl('ReportExcel/AnswerAnalyze', array('Report' => ["course_id" => $_GET['Report']['course_id']])) . '">Export Excel</a>';
-            } elseif (!empty($_GET['Report']['course_id']) && !empty($_GET['Report']['lesson_id'])) {
-                echo '<a class="btn btn-primary" target="-blank" href="' . Yii::app()->createUrl('ReportExcel/AnswerAnalyzeLesson', array('Report' => ["course_id" => $_GET['Report']['course_id'], "lesson_id" => $_GET['Report']['lesson_id']])) . '">Export Excel</a>';
             }
             ?>
         </div>
@@ -418,5 +322,6 @@ $this->breadcrumbs = array($titleName);
 <script type="text/javascript">
     $('#table_datatable').DataTable({
         searching: true,
+        order: [],
     });
 </script>
