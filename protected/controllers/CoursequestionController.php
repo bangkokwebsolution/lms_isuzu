@@ -417,7 +417,7 @@ class CoursequestionController extends Controller
                                     $model = Coursequestion::getTempData($currentQuiz['ques_id']);
                                     $ans_course = new LogAnsCourse();
                                     if ($chk_byone["status"] == true) {
-                                        $ans_course = LogAnsCourse::model()->find(["condition" => "temp_id = $currentQuiz->id AND choice_correct IS NOT NULL"]);
+                                        $ans_course = LogAnsCourse::model()->find(["condition" => "temp_id = $currentQuiz->id","order"=>'id DESC']);
                                     }
 
                                     $temp_all = TempCourseQuiz::model()->findAll(array(

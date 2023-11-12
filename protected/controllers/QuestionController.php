@@ -984,8 +984,9 @@ class QuestionController extends Controller
                                 $model = Question::getTempData($currentQuiz['ques_id']);
                                 $ans_lesson = new LogAnsLesson();
                                 if ($chk_byone["status"] == true) {
-                                    $ans_lesson = LogAnsLesson::model()->find(["condition" => "temp_id = $currentQuiz->id AND choice_correct IS NOT NULL"]);
+                                    $ans_lesson = LogAnsLesson::model()->find(["condition" => "temp_id = $currentQuiz->id" ,"order"=>'id DESC']);
                                 }
+                                
                                 $temp_all = TempQuiz::model()->findAll(array(
                                     'condition' => "user_id=" . Yii::app()->user->id . " and lesson=" . $id . " and type='" . $testType . "' AND gen_id='" . $gen_id . "'"
                                 ));
@@ -997,7 +998,7 @@ class QuestionController extends Controller
                                     'testType' => $testType,
                                     'currentQuiz' => $currentQuiz,
                                     'OneStep_exam' => $chk_byone,
-                                    'ans_course' => $ans_lesson,
+                                    'ans_lesson' => $ans_lesson,
                                     'ChkByOne' => $ChkByOne,
                                     'last_ques' => $last_ques,
                                     'countExam' => $countExam,

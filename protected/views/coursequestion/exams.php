@@ -13,6 +13,7 @@
         $title_popup = "Completed";
         $time_out = "time out";
         $button = "ok";
+        $SendAns = "Send";
     } else {
         $langId = 2;
         $ques_title = 'คำถาม';
@@ -21,6 +22,7 @@
         $title_popup = "สำเร็จ";
         $button = "ตกลง";
         $time_out = "หมดเวลาทำข้อสอบ";
+        $SendAns = "ส่งคำตอบ";
     }
 
     ?>
@@ -241,12 +243,16 @@
                                                     $Previous = "ก่อน";
                                                     $Next = "ถัดไป";
                                                 }
+
+                                                if ($course->course_refer != "AnswerByOne") {
+                                                    echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark btn-lg', 'onclick' => 'save_ans("previous")'), $Previous);
+                                                    echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark btn-lg', 'onclick' => 'save_ans("next")'), $Next);
+                                                } else {
+                                                    echo CHtml::tag('button', array('class' => 'submit btn btn-warning btn-lg', 'onclick' => 'save_ans("next")'), $SendAns);
+                                                }
                                                 ?>
-                                                <?php echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark btn-lg', 'onclick' => 'save_ans("previous")'), $Previous); ?>
-                                                <?php echo CHtml::tag('button', array('class' => 'submit btn btn-outline btn-rounded btn-dark btn-lg', 'onclick' => 'save_ans("next")'), $Next); ?>
+                                                
                                                 <?php if ($last_ques == 1) echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg', 'onclick' => 'save_ans("save")'), UserModule::t('sendQues')); ?>
-                                                <!-- <?php //if($last_ques==1)echo CHtml::tag('button', array('class' => 'submit btn btn-success btn-lg','onclick'=>'save_ans("save")'), 'ส่งคำตอบ'); 
-                                                        ?> -->
                                             </div>
                                         </form>
                                     </div>

@@ -169,7 +169,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 	<?php if ($course->course_refer == 'AnswerAfter' && $testType != "pre" && $quesType_ != 3) { ?>
 		<div class="question-content-wrap">
 			<div class="row">
-				<div class="col-md-8">
+				<div class="col-md-8" style="width: 100%;">
 
 					<table class="table-question table table-bordered">
 						<thead>
