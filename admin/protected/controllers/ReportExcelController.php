@@ -46,6 +46,9 @@ class ReportExcelController extends Controller
                 'course' => $course,
                 'array_lesson' => $_GET["array_lesson"],
             ));
-        }exit;
+        }else{
+            $this->redirect("site/index");
+        }
+        exit;
     }
 }

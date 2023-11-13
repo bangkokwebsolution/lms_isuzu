@@ -181,7 +181,7 @@ $this->breadcrumbs = array($titleName);
                         <div class="row">
                             <label>เลือกบทเรียน</label>
                             <select data-placeholder="เลือกบทเรียน" class="span6 chosen" name="Report[lesson_id][]" id="Report_lesson_id" multiple>
-                                <option value="">เลือกบทเรียน</option>
+                                <option value="" disabled>เลือกบทเรียน</option>
                                 <?php foreach ($arr_lesson as $key => $val) { ?>
                                     <option <?= !empty($_GET['Report']['lesson_id']) && in_array($key, $_GET['Report']['lesson_id']) ? "selected" : null ?> value="<?= $key ?>"><?= $val ?></option>
                                 <?php } ?>
@@ -228,7 +228,7 @@ $this->breadcrumbs = array($titleName);
                 <table class="table table-bordered table-striped" id="table_datatable">
                     <thead>
                         <tr>
-                            <td colspan="11"></td>
+                            <td colspan="10"></td>
                             <?php if (!empty($Cmanage_pre)) { ?>
                                 <td class="center" colspan="2">Pre-Test</td>
                             <?php  } ?>
@@ -246,7 +246,6 @@ $this->breadcrumbs = array($titleName);
                             <td class="center">Employee Code</td>
                             <td class="center">Name</td>
                             <td class="center">Surname</td>
-                            <td class="center">Department</td>
                             <td class="center">Organization Unit</td>
                             <td class="center">Abbreviate Code</td>
                             <td class="center">Employee Class</td>
@@ -278,10 +277,9 @@ $this->breadcrumbs = array($titleName);
                                 <td class="center"><?= $val_log->mem->employee_id ?></td>
                                 <td class="center"><?= $val_log->pro->firstname ?></td>
                                 <td class="center"><?= $val_log->pro->lastname ?></td>
-                                <td class="center">-</td>
                                 <td class="center"><?= $val_log->pro->organization_unit ?></td>
                                 <td class="center"><?= $val_log->pro->abbreviate_code ?></td>
-                                <td class="center"><?= $val_log->pro->employee_class ?></td>
+                                <td class="center"><?= !empty($val_log->pro->EmpClass->title) ? $val_log->pro->EmpClass->title : "" ?></td>
                                 <td class="center"><?= HelperCourseQuest::lib()->getTypeRefer($ScoreLog); ?></td>
                                 <?php if (!empty($Cmanage_pre)) {
                                     $score_log_pre = HelperCourseQuest::lib()->getScores($val_log, "pre");

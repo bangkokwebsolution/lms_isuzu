@@ -321,30 +321,10 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 										<?php
 										if (!empty($ans_course->choice_correct)) { ?>
 											<div class="items-quest font-weight-bold">
-												เฉลย:
+												คำอธิบาย:
 											</div>
 											<div class="items-quest">
-												<?php
-												$ans_last_question = [];
-												$ans_last_question =  json_decode($ans_course->choice_correct);
-
-												if ($model->ques_type == 4) {
-													foreach ($ans_last_question as $key => $val) {
-														foreach ($val as $key_s => $val_s) {
-															$head = Coursechoice::model()->findByPk($key_s);
-															$title_c = Coursechoice::model()->findByPk($val_s); ?>
-															คำถาม: <?= CHtml::decode($head->choice_detail) ?><br>
-															คำตอบ: <?= CHtml::decode($title_c->choice_detail) ?> <br>
-														<?php	} ?>
-														<hr>
-													<?php	}
-												} else {
-													foreach ($ans_last_question as $key => $val) {
-														$title_c = Coursechoice::model()->findByPk($val); ?>
-														<?= CHtml::decode($title_c->choice_detail) ?> <br>
-												<?php }
-												} ?>
-
+												<?= $model->ques_explain ?>
 											</div>
 										<?php }
 										?>

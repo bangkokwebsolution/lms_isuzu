@@ -82,6 +82,7 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 	.td-quest>.items-quest {
 		text-align: left;
 	}
+
 	.table-question th {
 		background-color: #5CB85C;
 		color: white;
@@ -369,30 +370,10 @@ if (!empty($OneStep_exam) && $OneStep_exam["status"] == true && !empty($ans_less
 								<?php
 								if (!empty($ans_lesson->choice_correct)) { ?>
 									<div class="items-quest font-weight-bold">
-										เฉลย:
+										คำอธิบาย:
 									</div>
 									<div class="items-quest">
-										<?php
-										$ans_last_question = [];
-										$ans_last_question =  json_decode($ans_lesson->choice_correct);
-
-										if ($model->ques_type == 4) {
-											foreach ($ans_last_question as $key => $val) {
-												foreach ($val as $key_s => $val_s) {
-													$head = Choice::model()->findByPk($key_s);
-													$title_c = Choice::model()->findByPk($val_s); ?>
-													คำถาม: <?= CHtml::decode($head->choice_detail) ?><br>
-													คำตอบ: <?= CHtml::decode($title_c->choice_detail) ?> <br>
-												<?php	} ?>
-												<hr>
-											<?php	}
-										} else {
-											foreach ($ans_last_question as $key => $val) {
-												$title_c = Choice::model()->findByPk($val); ?>
-												<?= CHtml::decode($title_c->choice_detail) ?> <br>
-										<?php }
-										} ?>
-
+										<?= $model->ques_explain ?>
 									</div>
 								<?php }
 								?>
