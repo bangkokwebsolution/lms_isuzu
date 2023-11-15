@@ -80,6 +80,9 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 								$class = ($val_temp->status == '1') ? 'btn-success' : '';
 							}
 							$link = 'onclick="save_ans(\'' . $val_temp->number . '\')"';
+							if ($course->course_refer == "AnswerByOne") {
+								$link = null;
+							}
 						?>
 							<td><a href="javascript:void(0)" <?= $link; ?> class="btn <?= $class ?> btn-block">
 									<div style="height:100%;width:100%"><?= $val_temp->number; ?></div>
@@ -260,11 +263,10 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 			echo CHtml::hiddenField("course_id", $course->course_id);
 			echo CHtml::hiddenField("idx_now", $currentQuiz->number);
 
-			if (!empty($OneStep_exam) && $OneStep_exam["status"] == true) {
-				if ($ChkByOne["text_status"] == "done") {
-					$SendAns = $Next;
-				}
+			if ($course->course_refer == "AnswerByOne" && $chk_passquest == true) {
+				$SendAns = $Next;
 			}
+
 			?>
 			<div class="text-center">
 				<?php
@@ -350,4 +352,5 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 		} ?>
 		<script type="text/javascript">
 			$('#exams_first_bar').remove();
+			<?= $alert_select_ans == true ? "alert('กรุณาเลือกคำตอบ')" : "" ?>
 		</script>

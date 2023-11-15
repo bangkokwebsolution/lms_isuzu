@@ -101,6 +101,9 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 															$class = ($val_temp->status == '1') ? 'btn-success' : '';
 														}
 														$link = 'onclick="save_ans(\'' . $val_temp->number . '\')"';
+														if($lesson->status == "AnswerByOne"){
+															$link = null;
+														}
 														/*$this->createUrl('index',array('id'=>$lesson->id,'number'=>$val_temp->number));*/
 													?>
 														<td><a href="javascript:void(0)" <?= $link; ?> class="btn <?= $class ?> btn-block">
@@ -281,6 +284,11 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 											$Next = "ถัดไป";
 											$SendAns = "ส่งคำตอบ";
 										}
+
+										if ($lesson->status == "AnswerByOne" && $chk_passquest == true) {
+											$SendAns = $Next;
+										}
+
 										?>
 										<?php
 										if ($lesson->status != "AnswerByOne") {

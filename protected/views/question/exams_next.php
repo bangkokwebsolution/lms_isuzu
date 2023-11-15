@@ -108,7 +108,9 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 							}
 
 							$link = 'onclick="save_ans(\'' . $val_temp->number . '\')"';
-
+							if ($lesson->status == "AnswerByOne") {
+								$link = null;
+							}
 							/*$this->createUrl('index',array('id'=>$lesson->id,'number'=>$val_temp->number));*/
 
 						?>
@@ -307,6 +309,10 @@ if (empty(Yii::app()->session['lang']) || Yii::app()->session['lang'] == 1) {
 						$SendAns = $Next;
 					}
 				}
+
+				if ($lesson->status == "AnswerByOne" && $chk_passquest == true) {
+					$SendAns = $Next;
+				}
 				?>
 
 				<?php
@@ -397,3 +403,6 @@ if (!empty($OneStep_exam) && $OneStep_exam["status"] == true && !empty($ans_less
 	</div>
 <?php
 } ?>
+<script type="text/javascript">
+	<?= $alert_select_ans == true ? "alert('กรุณาเลือกคำตอบ')" : "" ?>
+</script>

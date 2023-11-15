@@ -75,6 +75,10 @@
                                                                 $class = ($val_temp->status == '1') ? 'btn-success' : '';
                                                             }
                                                             $link = 'onclick="save_ans(\'' . $val_temp->number . '\')"';
+
+                                                            if($course->course_refer == "AnswerByOne"){
+                                                                $link = null;
+                                                            }
                                                         ?>
                                                             <td><a href="javascript:void(0)" <?= $link; ?> class="btn <?= $class ?> btn-block">
                                                                     <div style="height:100%;width:100%"><?= $val_temp->number; ?></div>
@@ -242,6 +246,10 @@
                                                 } else {
                                                     $Previous = "ก่อน";
                                                     $Next = "ถัดไป";
+                                                }
+
+                                                if($course->course_refer == "AnswerByOne" && $chk_passquest == true){
+                                                    $SendAns = $Next;
                                                 }
 
                                                 if ($course->course_refer != "AnswerByOne") {
