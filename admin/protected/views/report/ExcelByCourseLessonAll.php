@@ -1,11 +1,13 @@
+<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 <?php
 $strExcelFileName = "Report_Training_Course-" . date('Ymd-His') . ".xls";
 header("Content-Type: application/x-msexcel; name=\"" . $strExcelFileName . "\"");
 header("Content-Disposition: inline; filename=\"" . $strExcelFileName . "\"");
-header('Content-Type: text/plain; charset=UTF-8');
+//header('Content-Type: text/plain; charset=UTF-8');
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Content-Type: application/force-download");
-header("Content-Type: application/octet-stream");
+header('Content-Type: application/vnd.ms-excel;charset=UTF-8');
+header('Content-Type: application/octet-stream');
 header("Content-Type: application/download");
 header("Pragma:no-cache");
 
