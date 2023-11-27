@@ -465,7 +465,7 @@ class QuestionnaireoutController extends Controller
 								}
 								$questionModel->save();
 
-								if(isset($_POST['choiceTitleOld'][$section_id][$question_id])){
+								if(isset($_POST['choiceTitleOld'][$section_id][$question_id]) || $_POST['choiceTitleOld'][$section_id][$question_id] == null){
 
 									$choiceModel = $questionModel->choices;
 									$choice_old_ids = array();
