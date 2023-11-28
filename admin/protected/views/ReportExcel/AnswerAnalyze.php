@@ -68,12 +68,12 @@ header("Content-Disposition: attachment; filename=AnswerAnalyze-report.xls");
                 <tr>
                     <td class="left"><?= $course->course_title ?></td>
                     <td class="center"><?= $val_log->gen_id ?></td>
-                    <td class="center"><?= $val_log->pro->group_name ?></td>
-                    <td class="center"><?= $val_log->mem->employee_id ?></td>
+                    <td class="center"><?= $val_log->pro->group_name ?>&nbsp;</td>
+                    <td class="center"><?= $val_log->mem->employee_id ?>&nbsp;</td>
                     <td class="center"><?= $val_log->pro->firstname ?></td>
                     <td class="center"><?= $val_log->pro->lastname ?></td>
-                    <td class="center"><?= $val_log->pro->organization_unit ?></td>
-                    <td class="center"><?= $val_log->pro->abbreviate_code ?></td>
+                    <td class="center"><?= $val_log->pro->organization_unit ?>&nbsp;</td>
+                    <td class="center"><?= $val_log->pro->abbreviate_code ?>&nbsp;</td>
                     <td class="center"><?= !empty($val_log->pro->EmpClass->title) ? $val_log->pro->EmpClass->title : "" ?></td>
                     <td class="center"><?= HelperCourseQuest::lib()->getTypeRefer($ScoreLog); ?></td>
                     <?php if (!empty($Cmanage_pre)) {

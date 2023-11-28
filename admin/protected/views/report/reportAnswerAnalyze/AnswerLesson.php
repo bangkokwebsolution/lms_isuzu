@@ -59,12 +59,12 @@ $logstart = LogStartcourse::model()->findAll(["condition" => "course_id = $cours
             <tr>
                 <td class="left"><?= $course->course_title ?></td>
                 <td class="center"><?= $val_log->gen_id ?></td>
-                <td class="center"><?= $val_log->pro->group_name ?></td>
+                <td class="center"><?= $val_log->pro->group_name ?>&nbsp;</td>
                 <td class="center"><?= $val_log->mem->employee_id ?>&nbsp;</td>
                 <td class="center"><?= $val_log->pro->firstname ?></td>
                 <td class="center"><?= $val_log->pro->lastname ?></td>
-                <td class="center"><?= $val_log->pro->organization_unit ?></td>
-                <td class="center"><?= $val_log->pro->abbreviate_code ?></td>
+                <td class="center"><?= $val_log->pro->organization_unit ?>&nbsp;</td>
+                <td class="center"><?= $val_log->pro->abbreviate_code ?>&nbsp;</td>
                 <td class="center"><?= !empty($val_log->pro->EmpClass->title) ? $val_log->pro->EmpClass->title : "" ?></td>
                 <?php
                 $score_log_post =  HelperCourseQuest::lib()->sumLessonPosttest($lessons, $list_queston, $val_log);
