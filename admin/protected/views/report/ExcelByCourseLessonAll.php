@@ -295,10 +295,10 @@ if (isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != '') {
                         
                         
                         <td class="center"><?= isset($valueL->gen->gen_title) ? $valueL->gen->gen_title : '-' ?></td>
-                        <td class="center"><?= $valueL->pro->group_name ?></td>
+                        <td class="center"><?= $valueL->pro->group_name ?>&nbsp;</td>
                         <td class="center"><?php echo $valueL->mem->employee_id."&nbsp;"; ?></td>
                         <td class="center"><?= $valueL->pro->fullname ?></td>
-                        <td class="center"><?= $valueL->pro->organization_unit ?></td>
+                        <td class="center"><?= $valueL->pro->organization_unit ?>&nbsp;</td>
                         <td class="center"><?= $valueL->mem->orgchart->title ?></td>
                         <td class="center"><?= $valueL->pro->EmpClass->title ?></td>
                         <td class="center"><?= $valueL->pro->position_description ?></td>
