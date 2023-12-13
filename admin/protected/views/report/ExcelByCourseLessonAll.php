@@ -156,18 +156,25 @@ if (isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != '') {
                                         $lesson_pre_percent = "ไม่มีข้อสอบบทเรียน";
                                  
                                       }
+                                      $manage_lesson_post = Manage::model()->find(array(
+                                        'select'=>'group_id',
+                                        'condition'=>'id="'.$lessonListStatus->id.'" AND active="y" AND type="post" ',
+                                        'order'=>'manage_id ASC'
+                                        ));
 
                                       if($manage_lesson_post){
                                         $lesson_post_score = "Not Start";
                                         $lesson_post_percent = "Not Start";
                                         $lesson_post_status = "Not Start";
-  
+                                        
                                         $lessonscore_post = Score::model()->find(array(
                                           'select'=>'score_number, score_total, score_past,course_id',
-                                          'condition'=>'type="post" AND lesson_id="'.$lessonListStatus->id.'" AND user_id="'.$valueLog->user_id.'" AND course_id = '.$valueLog->course_id.'  AND active="y" ',
+                                          'condition'=>'type="post" AND lesson_id="'.$lessonListStatus->id.'" AND user_id="'.$valueL->user_id.'" AND course_id = "'.$valueL->course_id.'" AND active="y" ',
                                           'order'=>'score_id DESC'
+                                          
                                         ));
-  
+
+                                        
                                         if($lessonscore_post){
                                           $lesson_post_score = $lessonscore_post->score_number."/".$lessonscore_post->score_total;
   
