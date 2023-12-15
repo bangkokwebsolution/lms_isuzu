@@ -23,7 +23,7 @@ header("Content-Disposition: attachment; filename=AnswerAnalyze-report.xls");
     <table border="1">
         <thead>
             <tr>
-                <td colspan="11"></td>
+                <td colspan="10"></td>
                 <?php if (!empty($Cmanage_pre)) { ?>
                     <td class="center" colspan="2">Pre-Test</td>
                 <?php  } ?>
@@ -41,7 +41,6 @@ header("Content-Disposition: attachment; filename=AnswerAnalyze-report.xls");
                 <td class="center">Employee Code</td>
                 <td class="center">Name</td>
                 <td class="center">Surname</td>
-                <td class="center">Department</td>
                 <td class="center">Organization Unit</td>
                 <td class="center">Abbreviate Code</td>
                 <td class="center">Employee Class</td>
@@ -69,14 +68,13 @@ header("Content-Disposition: attachment; filename=AnswerAnalyze-report.xls");
                 <tr>
                     <td class="left"><?= $course->course_title ?></td>
                     <td class="center"><?= $val_log->gen_id ?></td>
-                    <td class="center"><?= $val_log->pro->group_name ?></td>
-                    <td class="center"><?= $val_log->mem->employee_id ?></td>
+                    <td class="center"><?= $val_log->pro->group_name ?>&nbsp;</td>
+                    <td class="center"><?= $val_log->mem->employee_id ?>&nbsp;</td>
                     <td class="center"><?= $val_log->pro->firstname ?></td>
                     <td class="center"><?= $val_log->pro->lastname ?></td>
-                    <td class="center">-</td>
-                    <td class="center"><?= $val_log->pro->organization_unit ?></td>
-                    <td class="center"><?= $val_log->pro->abbreviate_code ?></td>
-                    <td class="center"><?= $val_log->pro->employee_class ?></td>
+                    <td class="center"><?= $val_log->pro->organization_unit ?>&nbsp;</td>
+                    <td class="center"><?= $val_log->pro->abbreviate_code ?>&nbsp;</td>
+                    <td class="center"><?= !empty($val_log->pro->EmpClass->title) ? $val_log->pro->EmpClass->title : "" ?></td>
                     <td class="center"><?= HelperCourseQuest::lib()->getTypeRefer($ScoreLog); ?></td>
                     <?php if (!empty($Cmanage_pre)) {
                         $score_log_pre = HelperCourseQuest::lib()->getScores($val_log, "pre");

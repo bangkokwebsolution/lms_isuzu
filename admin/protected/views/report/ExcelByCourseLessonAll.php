@@ -1,11 +1,13 @@
+<meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
 <?php
 $strExcelFileName = "Report_Training_Course-" . date('Ymd-His') . ".xls";
 header("Content-Type: application/x-msexcel; name=\"" . $strExcelFileName . "\"");
 header("Content-Disposition: inline; filename=\"" . $strExcelFileName . "\"");
-header('Content-Type: text/plain; charset=UTF-8');
+//header('Content-Type: text/plain; charset=UTF-8');
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
 header("Content-Type: application/force-download");
-header("Content-Type: application/octet-stream");
+header('Content-Type: application/vnd.ms-excel;charset=UTF-8');
+header('Content-Type: application/octet-stream');
 header("Content-Type: application/download");
 header("Pragma:no-cache");
 
@@ -154,18 +156,25 @@ if (isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != '') {
                                         $lesson_pre_percent = "ไม่มีข้อสอบบทเรียน";
                                  
                                       }
+                                      $manage_lesson_post = Manage::model()->find(array(
+                                        'select'=>'group_id',
+                                        'condition'=>'id="'.$lessonListStatus->id.'" AND active="y" AND type="post" ',
+                                        'order'=>'manage_id ASC'
+                                        ));
 
                                       if($manage_lesson_post){
                                         $lesson_post_score = "Not Start";
                                         $lesson_post_percent = "Not Start";
                                         $lesson_post_status = "Not Start";
-  
+                                        
                                         $lessonscore_post = Score::model()->find(array(
                                           'select'=>'score_number, score_total, score_past,course_id',
-                                          'condition'=>'type="post" AND lesson_id="'.$lessonListStatus->id.'" AND user_id="'.$valueLog->user_id.'" AND course_id = '.$valueLog->course_id.'  AND active="y" ',
+                                          'condition'=>'type="post" AND lesson_id="'.$lessonListStatus->id.'" AND user_id="'.$valueL->user_id.'" AND course_id = "'.$valueL->course_id.'" AND active="y" ',
                                           'order'=>'score_id DESC'
+                                          
                                         ));
-  
+
+                                        
                                         if($lessonscore_post){
                                           $lesson_post_score = $lessonscore_post->score_number."/".$lessonscore_post->score_total;
   
@@ -293,10 +302,10 @@ if (isset($_GET['Report']['course_id']) && $_GET['Report']['course_id'] != '') {
                         
                         
                         <td class="center"><?= isset($valueL->gen->gen_title) ? $valueL->gen->gen_title : '-' ?></td>
-                        <td class="center"><?= $valueL->pro->group_name ?></td>
+                        <td class="center"><?= $valueL->pro->group_name ?>&nbsp;</td>
                         <td class="center"><?php echo $valueL->mem->employee_id."&nbsp;"; ?></td>
                         <td class="center"><?= $valueL->pro->fullname ?></td>
-                        <td class="center"><?= $valueL->pro->organization_unit ?></td>
+                        <td class="center"><?= $valueL->pro->organization_unit ?>&nbsp;</td>
                         <td class="center"><?= $valueL->mem->orgchart->title ?></td>
                         <td class="center"><?= $valueL->pro->EmpClass->title ?></td>
                         <td class="center"><?= $valueL->pro->position_description ?></td>

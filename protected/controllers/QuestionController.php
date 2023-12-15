@@ -959,12 +959,8 @@ class QuestionController extends Controller
                                 //     exit();        
                                 $temp_count = count($temp_all);
                                 if ($_POST['actionEvnt'] == "next") {
-                                    if ($chk_byone['status'] == true && (($ChkByOne['status'] == false && $ChkByOne['text_status'] == "try") || ($ChkByOne['status'] == true && $ChkByOne['text_status'] == "done"))) {
-                                        $idx = $_POST['idx_now'];
-                                    } else {
-                                        $idx = $_POST['idx_now'] + 1;
-                                        if ($_POST['idx_now'] == $temp_count) $idx = 1;
-                                    }
+                                    $idx = $_POST['idx_now'] + 1;
+                                    if ($_POST['idx_now'] == $temp_count) $idx = 1;
                                 } elseif ($_POST['actionEvnt'] == "previous") {
                                     $idx = $_POST['idx_now'] - 1;
                                     if ($_POST['idx_now'] == 1) $idx = $temp_count;
@@ -977,15 +973,50 @@ class QuestionController extends Controller
                                 ));
 
                                 $last_ques = $count_no_select == 0 ? 1 : 0;
-                                $currentQuiz = TempQuiz::model()->find(array(
-                                    'condition' => "user_id=:user_id AND lesson=:lesson AND type=:type AND number=:number AND gen_id=:gen_id order by id",
-                                    'params' => array(':user_id' => Yii::app()->user->id, ':lesson' => $id, ':type' => $testType, ':number' => $idx, ':gen_id' => $gen_id)
-                                ));
-                                $model = Question::getTempData($currentQuiz['ques_id']);
+                                $currentQuiz =
+
+                                    $currentQuiz = $this->getTempQuiz($id, $idx, $gen_id, $testType);
+
                                 $ans_lesson = new LogAnsLesson();
-                                if ($chk_byone["status"] == true) {
-                                    $ans_lesson = LogAnsLesson::model()->find(["condition" => "temp_id = $currentQuiz->id AND choice_correct IS NOT NULL"]);
+                                $chk_passquest = false;
+                                $alert_select_ans = false;
+
+                                if ($lesson->status == "AnswerByOne") {
+                                    $idx = $idx - 1;
+                                    if ($_POST['idx_now'] == $temp_count) {
+                                        $idx = $temp_count;
+                                    }
+
+                                    $Quiz_now = $this->getTempQuiz($id, $idx, $gen_id, $testType);
+                                    if (!empty($Quiz_now)) {
+                                        $ans_lesson = LogAnsLesson::model()->find(["condition" => "temp_id = $Quiz_now->id", "order" => 'id DESC']);
+                                    }
+
+                                    if (!empty($ans_lesson) && ($ans_lesson->status == "correct" || $ans_lesson->number == 2)) { //ตรวจสอบว่า ข้อสอบเฉลยทีละข้อ หากตอบถูก($ans_lesson->status) หรือ ตอบครบ 2 ครั้ง($ans_lesson->number)ให้แสดงข้อความถัดไป
+                                        $chk_passquest = true;
+                                    } else if (empty($ans_lesson) || (!empty($ans_lesson->status != "correct") && $ans_lesson->number == 1)) {  //ตรวจสอบว่า ข้อสอบเฉลยทีละข้อ ถ้าไม่เคยตอบ หรือ ตอบผิดในรอบแรกทำการค้างอยู่หน้าเดิม
+                                        $currentQuiz = $this->getTempQuiz($id, $idx, $gen_id, $testType);
+                                        $alert_select_ans = true; //ขึ้นข้อสอบเลือกคำตอบ
+                                    }
+
+                                    if ($chk_byone['status'] == true) {
+
+                                        if ($ChkByOne['status'] == false && $ChkByOne['text_status'] == "try") {
+                                            $chk_passquest = false;
+                                        }
+
+                                        if ($ChkByOne['status'] == true && $ChkByOne['text_status'] == "done") {
+                                            $chk_passquest = true;
+                                        }
+
+                                        $alert_select_ans = false;
+                                        $currentQuiz = $this->getTempQuiz($id, $idx, $gen_id, $testType);
+                                    }
                                 }
+
+                                $model = Question::getTempData($currentQuiz['ques_id']);
+                                
+
                                 $temp_all = TempQuiz::model()->findAll(array(
                                     'condition' => "user_id=" . Yii::app()->user->id . " and lesson=" . $id . " and type='" . $testType . "' AND gen_id='" . $gen_id . "'"
                                 ));
@@ -997,12 +1028,14 @@ class QuestionController extends Controller
                                     'testType' => $testType,
                                     'currentQuiz' => $currentQuiz,
                                     'OneStep_exam' => $chk_byone,
-                                    'ans_course' => $ans_lesson,
+                                    'ans_lesson' => $ans_lesson,
                                     'ChkByOne' => $ChkByOne,
                                     'last_ques' => $last_ques,
                                     'countExam' => $countExam,
                                     'label' => $label,
                                     'labelCourse' => $labelCourse,
+                                    'chk_passquest' => $chk_passquest,
+                                    'alert_select_ans' => $alert_select_ans
                                 ));
                             }
                         } else {
@@ -1015,6 +1048,15 @@ class QuestionController extends Controller
                             $temp_all = TempQuiz::model()->findAll(array(
                                 'condition' => "user_id=" . Yii::app()->user->id . " and lesson=" . $id . " and type='" . $testType . "' AND gen_id='" . $gen_id . "'"
                             ));
+
+                            $chk_passquest = false;
+                            if ($lesson->status == "AnswerByOne") {
+                                $ans_lesson = LogAnsLesson::model()->find(["condition" => "temp_id = $currentQuiz->id", "order" => 'id DESC']);
+                                if (!empty($ans_lesson) && ($ans_lesson->status == "correct" || $ans_lesson->number == 2)) {
+                                    $chk_passquest = true;
+                                }
+                            }
+
                             $countExam = count($temp_all) - $count_no_select;
                             $this->render('exams', array(
                                 'model' => $model,
@@ -1027,6 +1069,7 @@ class QuestionController extends Controller
                                 'time_up' => $temp_all[0]->time_up,
                                 'label' => $label,
                                 'labelCourse' => $labelCourse,
+                                'chk_passquest' => $chk_passquest
                             ));
                         }
                     } else {
@@ -1049,6 +1092,14 @@ class QuestionController extends Controller
 
             $this->redirect(array('//course/detail', 'id' => $lesson->course_id, 'lesson_id' => $id));
         }
+    }
+
+    public function getTempQuiz($id, $idx, $gen_id, $testType)
+    {
+        return TempQuiz::model()->find(array(
+            'condition' => "user_id=:user_id AND lesson=:lesson AND type=:type AND number=:number AND gen_id=:gen_id order by id",
+            'params' => array(':user_id' => Yii::app()->user->id, ':lesson' => $id, ':type' => $testType, ':number' => $idx, ':gen_id' => $gen_id)
+        )); //ข้อสอบข้อถัดไป
     }
 
     public function chkQuestionByOne($lesson, $temp_lesson, $user_ans)

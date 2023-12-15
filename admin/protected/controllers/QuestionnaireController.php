@@ -386,6 +386,7 @@ class QuestionnaireController extends Controller
             //old (update)
 
             $sectionOldModel = $header->sections;
+            //var_dump($_POST['sectionTitleOld']);exit();
             $section_old_ids = array();
             if (count($sectionOldModel) > 0) {
                 foreach ($sectionOldModel as $sectionKey => $section) {
@@ -440,15 +441,17 @@ class QuestionnaireController extends Controller
                                     $questionModel->question_range = ($questionRange[$question_id] != "" ? $questionRange[$question_id] : "5");
                                 }
                                 $questionModel->save();
-
-                                if (isset($_POST['choiceTitleOld'][$section_id][$question_id])) {
-
+                                // echo "<pre>";
+                                // var_dump($_POST['choiceTitleOld'][$section_id][$question_id]);
+                                if (isset($_POST['choiceTitleOld'][$section_id][$question_id]) || $_POST['choiceTitleOld'][$section_id][$question_id] == null) {                             
                                     $choiceModel = $questionModel->choices;
                                     $choice_old_ids = array();
                                     if (count($choiceModel) > 0) {
                                         foreach ($choiceModel as $choiceKey => $choice) {
                                             $choice_old_ids[] = $choice->option_choice_id;
                                         }
+                                        //var_dump($choice_old_ids[1]);
+                                        
                                     }
 
                                     $choiceTitle = $_POST['choiceTitleOld'][$section_id][$question_id];
@@ -457,10 +460,12 @@ class QuestionnaireController extends Controller
                                         foreach ($choiceTitle as $choiceKey => $choice) {
                                             $choice_new_ids[] = $choiceKey;
                                         }
+                                        //var_dump($choice_new_ids[0]);exit();
                                     }
 
                                     $update_choice_ids = array_intersect($choice_new_ids, $choice_old_ids);
                                     $delete_choice_ids = array_diff($choice_old_ids, $choice_new_ids);
+                                   
 
 
                                     if (count($update_choice_ids) > 0) {

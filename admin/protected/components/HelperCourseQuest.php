@@ -29,10 +29,10 @@ class HelperCourseQuest
         $courseScore = $this->getScoreLog($log, $type);
 
         if (!empty($courseScore)) {
-            $score = $courseScore->score_number . '/' . $courseScore->score_total."&nbsp;";
+            $score = $courseScore->score_number . '/' . $courseScore->score_total . "&nbsp;";
             $percent = $courseScore->score_number * 100 / $courseScore->score_total;
         }
-        return ['score' => $score, 'percent' => $percent . "%"];
+        return ['score' => $score, 'percent' => number_format($percent, 2) . "%"];
     }
 
     public function getTypeRefer($courseScore)
@@ -44,8 +44,6 @@ class HelperCourseQuest
         }
         return $status;
     }
-
-
 
     public function getAnswers($courseScore, $ques_id)
     {
@@ -88,7 +86,7 @@ class HelperCourseQuest
 
     public function getTypeReferLesson($lessonScore)
     {
-        $status = "N/A";
+        $status = "None";
         if (!empty($lessonScore)) {
             $list_status = ['Close' => "None", 'AnswerAfter' => "General", 'AnswerByOne' => "Special"];
             $status =  !empty($list_status[$lessonScore->status]) ? $list_status[$lessonScore->status] : "None";
@@ -98,15 +96,15 @@ class HelperCourseQuest
 
     public function getScoresLesson($log, $lesson, $type = "post")
     {
-        $score = 'N/A';
-        $percent = 0;
+        $score_number = 0;
+        $score_total = 0;
         $lessonScore = $this->getScoreLogLesson($log, $lesson, $type);
 
         if (!empty($lessonScore)) {
-            $score = $lessonScore->score_number . '/' . $lessonScore->score_total."&nbsp;";
-            $percent = $lessonScore->score_number * 100 / $lessonScore->score_total;
+            $score_number = $lessonScore->score_number;
+            $score_total = $lessonScore->score_total;
         }
-        return ['score' => $score, 'percent' => $percent . "%"];
+        return ['score_number' => $score_number, 'score_total' => $score_total];
     }
 
     public function getAnswersLesson($lessonScore, $ques_id)
@@ -128,5 +126,33 @@ class HelperCourseQuest
         }
 
         return $status;
+    }
+
+    public function sumLessonPosttest($lessons, $list_queston, $log)
+    {
+        $score = "N/A";
+        $percent = 0;
+        $answer_list = [];
+        $score_number = 0;
+        $score_total = 0;
+        foreach ($lessons as $key_l => $val_l) {
+            $ScoreLog = HelperCourseQuest::lib()->getScoreLogLesson($log, $val_l);
+            $score_log_post = HelperCourseQuest::lib()->getScoresLesson($log, $val_l, "post");
+            $score_number += $score_log_post['score_number'];
+            $score_total += $score_log_post['score_total'];
+
+            if (!empty($list_queston[$val_l->id])) {
+                foreach ($list_queston[$val_l->id] as $key_ques => $val_ques) {
+                    $answer_list[] = HelperCourseQuest::lib()->getAnswersLesson($ScoreLog, $val_ques->ques_id);
+                }
+            }
+        }
+
+        if ($score_total > 0) {
+            $score = $score_number . "/" . $score_total . "&nbsp;";
+            $percent = ($score_number * 100) / $score_total;
+        }
+        
+        return ['score' => $score, 'percent' => number_format($percent, 2) . "%", "answer_list" => $answer_list];
     }
 }

@@ -1,4 +1,7 @@
+assets
+protected/vendors
+admin/assets
 admin/protected/vendors
-admin/assets/*
-protected/runtime/*
-admin/protected/runtime/*
+uploads
+*vendors.rar
+protected/runtime
